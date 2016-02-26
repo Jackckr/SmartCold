@@ -53,21 +53,37 @@ coldWeb.controller('info', function ($scope, $location, $stateParams, $http) {
 	}
 	$scope.name = $stateParams.id;
 	$scope.load = function(){
-		var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+		var lineChartCanvas = $("#areaChart").get(0).getContext("2d");
 	    // This will get the first returned node in the jQuery collection.
-	    var areaChart = new Chart(areaChartCanvas);
+	    var lineChart = new Chart(lineChartCanvas);
 	    $http.get('/i/scinfo/findALLInfoByKey?key='+$stateParams.id).success(function(data,status,header,config){
 	    	$scope.data = data;
 	    	$scope.time = [];
 	    	$scope.temperature = [];
-	    	angular.forEach($scope.data,function(item){
+	    	$scope.warning = [];
+	    	angular.forEach($scope.data.ananysis,function(item){
+	    		item.startTime = $scope.dateToStr(new Date(Date.parse(item.startTime)));
+	    		item.endTime = $scope.dateToStr(new Date(Date.parse(item.endTime)));
+	    	})
+	    	angular.forEach($scope.data.temperature,function(item){
 	    		item.addtime = $scope.dateToStr(new Date(Date.parse(item.addtime)))
 	    		$scope.time.push(item.addtime);
 	    		$scope.temperature.push(item.info1);
-	    	})
-	    	var areaChartData = {
+	    		$scope.warning.push(-9);
+	    	});
+	    	var lineChartOptions = {
 	    		      labels: $scope.time,//["一月", "二月", "三月", "四月", "五月", "六月", "七月"],
 	    		      datasets: [
+					    { 
+						  label: "warning",
+						  fillColor: "rgba(255,255,255,1)",
+						  strokeColor: "rgba(255,0,0,1)",
+						  pointColor: "#fff",
+						  pointStrokeColor: "rgba(255,255,255,1)",
+						  pointHighlightFill: "#fff",
+						  pointHighlightStroke: "rgba(255,255,255,1)",
+						  data: $scope.warning
+					    },
 	    		        {
 	    		          label: "Digital Goods",
 	    		          fillColor: "rgba(60,141,188,0.9)",
@@ -100,7 +116,7 @@ coldWeb.controller('info', function ($scope, $location, $stateParams, $http) {
 	    		            //Boolean - Whether to show a dot for each point
 	    		            pointDot: false,
 	    		            //Number - Radius of each point dot in pixels
-	    		            pointDotRadius: 4,
+	    		            pointDotRadius: 1,
 	    		            //Number - Pixel width of point dot stroke
 	    		            pointDotStrokeWidth: 1,
 	    		            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
@@ -118,7 +134,8 @@ coldWeb.controller('info', function ($scope, $location, $stateParams, $http) {
 	    		            //Boolean - whether to make the chart responsive to window resizing
 	    		            responsive: true
 	    		          };
-	    		    areaChart.Line(areaChartData, areaChartOptions);
+	    		    lineChartOptions.datasetFill = false;
+	    	        lineChart.Line(lineChartOptions, lineChartOptions);
 	    })
 	  };
     $scope.load();
