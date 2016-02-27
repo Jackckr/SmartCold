@@ -2,7 +2,7 @@ package com.smartcold.manage.cold.entity;
 
 import java.util.List;
 
-public class SingleType {
+public class SingleTypeEntity {
 
 	private String name;
 	
