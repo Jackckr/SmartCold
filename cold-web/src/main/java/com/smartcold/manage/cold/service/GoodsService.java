@@ -2,10 +2,10 @@ package com.smartcold.manage.cold.service;
 
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.SingleType;
+import com.smartcold.manage.cold.entity.SingleTypeEntity;
 
 public interface GoodsService {
 
-	public List<SingleType> getAllGoods();
+	public List<SingleTypeEntity> getAllGoods();
 
 }

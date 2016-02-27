@@ -25,6 +25,7 @@ public class UserController extends BaseController {
 		if (user != null) {
 			user.setPassword("******");
 			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("cookie", user);
 			return true;
 		}
 		return false;

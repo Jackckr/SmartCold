@@ -2,17 +2,19 @@ var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkb
                                          'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
 var user;
 
-angular.element(document).ready(function($ngCookies) {
+angular.element(document).ready(function($ngCookies, $location) {
 	$.ajax({
 	      url: '/i/user/findUser',
 	      type: "GET",
 	      dataType: 'json'
 	    }).success(function(data){
-//	    	user = data;
-//	    	if(user.username == null){
-//	        	document.location.href = "login.html";
-//	        }
-	        angular.bootstrap(document, ['ColdWeb']);
+	    	user = data;
+	    	if(user.username == null){
+	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
+	    			document.location.href = "login.html";
+	    		}
+	        }
+	    	angular.bootstrap(document, ['ColdWeb']);
 	    });
 });
 
