@@ -140,6 +140,13 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.4</version>
 		</dependency>
+
+		<!-- Util -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -176,6 +183,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.16.v20140903</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
