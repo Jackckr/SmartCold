@@ -2,7 +2,9 @@ package com.smartcold.manage.cold.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.smartcold.manage.cold.entity.SingleType;
+import com.smartcold.manage.cold.controller.ColdStorageController;
+import com.smartcold.manage.cold.dao.ColdStorageMapper;
+import com.smartcold.manage.cold.entity.SingleTypeEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,10 @@ public class GoodsServiceTest {
     @Test
     @Rollback(true)
     public void findBudgetListByBusinessIdAndRoleId_corret() throws Exception {
-        List<SingleType> list = goodsService.getAllGoods();
-        System.out.println("list:" + Lists.transform(list, new Function<SingleType, Integer>() {
+        List<SingleTypeEntity> list = goodsService.getAllGoods();
+        System.out.println("list:" + Lists.transform(list, new Function<SingleTypeEntity, Integer>() {
             @Override
-            public Integer apply(SingleType input) {
+            public Integer apply(SingleTypeEntity input) {
                 return input.getGoodsEntity().size();
             }
         }));
