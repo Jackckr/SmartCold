@@ -13,21 +13,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from Role_user
+    from RoleUser
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from Role_user
+    delete from RdcUser
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.smartcold.manage.cold.entity.RoleUser" >
-    insert into Role_user (id, userid, roleid, 
+    insert into RdcUser (id, userid, roleid, 
       addtime)
     values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, 
       #{addtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.RoleUser" >
-    insert into Role_user
+    insert into RdcUser
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -58,7 +58,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.RoleUser" >
-    update Role_user
+    update RdcUser
     <set >
       <if test="userid != null" >
         userid = #{userid,jdbcType=INTEGER},
@@ -73,7 +73,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.RoleUser" >
-    update Role_user
+    update RdcUser
     set userid = #{userid,jdbcType=INTEGER},
       roleid = #{roleid,jdbcType=INTEGER},
       addtime = #{addtime,jdbcType=TIMESTAMP}
@@ -87,7 +87,7 @@
   <select id="getRoleUserByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from Role_user
+    from RdcUser
     where userid = #{userid,jdbcType=INTEGER}
   </select>
 </mapper>

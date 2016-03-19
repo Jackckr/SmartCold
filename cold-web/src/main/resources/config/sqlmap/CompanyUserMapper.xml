@@ -13,21 +13,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from Company_user
+    from CompanyUser
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from Company_user
+    delete from CompanyUser
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.smartcold.manage.cold.entity.CompanyUser" >
-    insert into Company_user (id, companyid, userid, 
+    insert into CompanyUser (id, companyid, userid, 
       addtime)
     values (#{id,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
       #{addtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.CompanyUser" >
-    insert into Company_user
+    insert into CompanyUser
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -58,7 +58,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.CompanyUser" >
-    update Company_user
+    update CompanyUser
     <set >
       <if test="companyid != null" >
         companyid = #{companyid,jdbcType=INTEGER},
@@ -73,7 +73,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.CompanyUser" >
-    update Company_user
+    update CompanyUser
     set companyid = #{companyid,jdbcType=INTEGER},
       userid = #{userid,jdbcType=INTEGER},
       addtime = #{addtime,jdbcType=TIMESTAMP}
@@ -86,7 +86,7 @@
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from Company_user
+    from CompanyUser
     where userid = #{userid,jdbcType=INTEGER}
   </select>
 </mapper>
