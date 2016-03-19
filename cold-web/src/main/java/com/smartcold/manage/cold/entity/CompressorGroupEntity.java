@@ -4,204 +4,143 @@ import java.util.Date;
 
 public class CompressorGroupEntity {
 
-  private int id;
-  
-  private int groupId;
-  
-  private float highPress;
-  
-  private float lowPress;
-  
-  private float exhaustTemperature;
-  private float oilColdTemperature;
-  
-  private float oilInnerTemperature;
-  
-  private float breatheTemperature;
-  
-  private float outWaterPress;
-  
-  private float outWaterTemperature;
-  
-  private int waterPumpTime;
-  
-  private int fanTime;
-  
-  private int groupStatus;
-  
-  private int oilLowSwitch;
-  
-  private int waterSwitch;
-  
-  private int refrigerationSwitch;
-  
-  private int contactorSwitch;
-  
-  private int externalSwitch;
-  
-  private int powerProtected;
-  
-  private Date addTime;
+    private int id;
 
-public int getId() {
-	return id;
-}
+    private int groupId;
 
-public void setId(int id) {
-	this.id = id;
-}
+    private float highPress;
 
-public int getGroupId() {
-	return groupId;
-}
+    private float lowPress;
 
-public void setGroupId(int groupId) {
-	this.groupId = groupId;
-}
+    private float exhaustTemperature;
 
-public float getHighPress() {
-	return highPress;
-}
+    private float oilColdTemperature;
 
-public void setHighPress(float highPress) {
-	this.highPress = highPress;
-}
+    private float oilInnerTemperature;
 
-public float getLowPress() {
-	return lowPress;
-}
+    private float breatheTemperature;
 
-public void setLowPress(float lowPress) {
-	this.lowPress = lowPress;
-}
+    private float outWaterPress;
 
-public float getExhaustTemperature() {
-	return exhaustTemperature;
-}
+    private float outWaterTemperature;
 
-public void setExhaustTemperature(float exhaustTemperature) {
-	this.exhaustTemperature = exhaustTemperature;
-}
+    private float refrigerationTime;
 
-public float getOilColdTemperature() {
-	return oilColdTemperature;
-}
+    private int fanStatus;
 
-public void setOilColdTemperature(float oilColdTemperature) {
-	this.oilColdTemperature = oilColdTemperature;
-}
+    private float meltFrostTime;
 
-public float getOilInnerTemperature() {
-	return oilInnerTemperature;
-}
+    private Date addTime;
 
-public void setOilInnerTemperature(float oilInnerTemperature) {
-	this.oilInnerTemperature = oilInnerTemperature;
-}
+    public int getId() {
+        return id;
+    }
 
-public float getBreatheTemperature() {
-	return breatheTemperature;
-}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-public void setBreatheTemperature(float breatheTemperature) {
-	this.breatheTemperature = breatheTemperature;
-}
+    public int getGroupId() {
+        return groupId;
+    }
 
-public float getOutWaterPress() {
-	return outWaterPress;
-}
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
 
-public void setOutWaterPress(float outWaterPress) {
-	this.outWaterPress = outWaterPress;
-}
+    public float getHighPress() {
+        return highPress;
+    }
 
-public float getOutWaterTemperature() {
-	return outWaterTemperature;
-}
+    public void setHighPress(float highPress) {
+        this.highPress = highPress;
+    }
 
-public void setOutWaterTemperature(float outWaterTemperature) {
-	this.outWaterTemperature = outWaterTemperature;
-}
+    public float getLowPress() {
+        return lowPress;
+    }
 
-public int getWaterPumpTime() {
-	return waterPumpTime;
-}
+    public void setLowPress(float lowPress) {
+        this.lowPress = lowPress;
+    }
 
-public void setWaterPumpTime(int waterPumpTime) {
-	this.waterPumpTime = waterPumpTime;
-}
+    public float getExhaustTemperature() {
+        return exhaustTemperature;
+    }
 
-public int getFanTime() {
-	return fanTime;
-}
+    public void setExhaustTemperature(float exhaustTemperature) {
+        this.exhaustTemperature = exhaustTemperature;
+    }
 
-public void setFanTime(int fanTime) {
-	this.fanTime = fanTime;
-}
+    public float getOilColdTemperature() {
+        return oilColdTemperature;
+    }
 
-public int getGroupStatus() {
-	return groupStatus;
-}
+    public void setOilColdTemperature(float oilColdTemperature) {
+        this.oilColdTemperature = oilColdTemperature;
+    }
 
-public void setGroupStatus(int groupStatus) {
-	this.groupStatus = groupStatus;
-}
+    public float getOilInnerTemperature() {
+        return oilInnerTemperature;
+    }
 
-public int getOilLowSwitch() {
-	return oilLowSwitch;
-}
+    public void setOilInnerTemperature(float oilInnerTemperature) {
+        this.oilInnerTemperature = oilInnerTemperature;
+    }
 
-public void setOilLowSwitch(int oilLowSwitch) {
-	this.oilLowSwitch = oilLowSwitch;
-}
+    public float getBreatheTemperature() {
+        return breatheTemperature;
+    }
 
-public int getWaterSwitch() {
-	return waterSwitch;
-}
+    public void setBreatheTemperature(float breatheTemperature) {
+        this.breatheTemperature = breatheTemperature;
+    }
 
-public void setWaterSwitch(int waterSwitch) {
-	this.waterSwitch = waterSwitch;
-}
+    public float getOutWaterPress() {
+        return outWaterPress;
+    }
 
-public int getRefrigerationSwitch() {
-	return refrigerationSwitch;
-}
+    public void setOutWaterPress(float outWaterPress) {
+        this.outWaterPress = outWaterPress;
+    }
 
-public void setRefrigerationSwitch(int refrigerationSwitch) {
-	this.refrigerationSwitch = refrigerationSwitch;
-}
+    public float getOutWaterTemperature() {
+        return outWaterTemperature;
+    }
 
-public int getContactorSwitch() {
-	return contactorSwitch;
-}
+    public void setOutWaterTemperature(float outWaterTemperature) {
+        this.outWaterTemperature = outWaterTemperature;
+    }
 
-public void setContactorSwitch(int contactorSwitch) {
-	this.contactorSwitch = contactorSwitch;
-}
+    public float getRefrigerationTime() {
+        return refrigerationTime;
+    }
 
-public int getExternalSwitch() {
-	return externalSwitch;
-}
+    public void setRefrigerationTime(float refrigerationTime) {
+        this.refrigerationTime = refrigerationTime;
+    }
 
-public void setExternalSwitch(int externalSwitch) {
-	this.externalSwitch = externalSwitch;
-}
+    public int getFanStatus() {
+        return fanStatus;
+    }
 
-public int getPowerProtected() {
-	return powerProtected;
-}
+    public void setFanStatus(int fanStatus) {
+        this.fanStatus = fanStatus;
+    }
 
-public void setPowerProtected(int powerProtected) {
-	this.powerProtected = powerProtected;
-}
+    public float getMeltFrostTime() {
+        return meltFrostTime;
+    }
 
-public Date getAddTime() {
-	return addTime;
-}
+    public void setMeltFrostTime(float meltFrostTime) {
+        this.meltFrostTime = meltFrostTime;
+    }
 
-public void setAddTime(Date addTime) {
-	this.addTime = addTime;
-}
+    public Date getAddTime() {
+        return addTime;
+    }
 
-
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
 }
