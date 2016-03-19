@@ -172,6 +172,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/designStorage',
     	controller: 'designStorage',
         templateUrl: 'app/template/designStorage.html'
+    }).state('report',{
+    	url:'/report-{time}-{item}',
+    	controller: 'report',
+        templateUrl: 'app/template/report.html'
     });
     
 });
