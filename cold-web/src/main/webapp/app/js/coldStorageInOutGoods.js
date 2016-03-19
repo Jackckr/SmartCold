@@ -3,18 +3,6 @@
  */
 coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateParams, $http) {
     console.log($stateParams.storageID);
-    $http.get('/i/coldStorage/findColdStorageById',{
-        params: {
-            "storageID":$stateParams.storageID,
-            "npoint":2
-        }
-    }).success(function(data){
-        console.log("data:"+data);
-        for (var i=0;i<data.length;i++){
-            console.log("data:"+data[i].Temperature);
-        }
-
-    });
 
     $scope.load = function () {
 

@@ -3,21 +3,8 @@
  */
 coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParams, $http) {
     console.log($stateParams.storageID);
-    $http.get('/i/coldStorage/findColdStorageById',{
-        params: {
-            "storageID":$stateParams.storageID,
-            "npoint":2
-        }
-    }).success(function(data){
-        console.log("data:"+data);
-        for (var i=0;i<data.length;i++){
-            console.log("data:"+data[i].Temperature);
-        }
-
-    });
 
     $scope.load = function () {
-
 
         // 温度实时图——仪表盘
         var temper;
@@ -45,7 +32,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                         color: 'auto',
                         fontSize: 30
                     },
-                    data: [{value: -20, name: '冷库温度'}]
+                    data: [{value: 18, name: '冷库温度'}]
                 }
             ]
         };
@@ -79,16 +66,31 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
                                 // set up the updating of the chart each second
                                 var series = this.series[0];
+
                                 setInterval(function () {
-                                    var x = (new Date()).getTime(), // current time
-                                        y = (Math.random() * (-30)).toFixed(2) - 0;
-                                    temper = y;
-                                    series.addPoint([x, y], true, true);
+                                    $http.get('/i/coldStorage/findColdStorageById', {
+                                        params: {
+                                            "storageID": $stateParams.storageID,
+                                            "npoint": 2
+                                        }
+                                    }).success(function (data) {
+                                        console.log("data:" + data);
+                                        for (var i = 0; i < data.length; i++) {
+                                            console.log("data:" + data[i].Temperature);
+                                        }
+                                        //TODO 修改为时间和温度根据后台传过来的数据,可能在时间窗内有多个点
+                                        var temper2 = data[data.length - 1].Temperature;
+                                        var x = (new Date()).getTime(), // current time
+                                            y = (Math.random() * (40) - temper2).toFixed(2) - 0;
+                                        temper = y;
+                                        series.addPoint([x, y], true, true);
+                                    });
                                 }, 1000);
+
                                 var series1 = this.series[1];
                                 setInterval(function () {
                                     var x = (new Date()).getTime(), // current time
-                                        y = -4;
+                                        y = 18;
                                     series1.addPoint([x, y], true, true);
                                 }, 1000);
                             }
@@ -138,15 +140,15 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                             for (i = -19; i <= 0; i++) {
                                 data.push({
                                     x: time + i * 1000,
-                                    y: Math.random() * (-20)
+                                    y: Math.random() * (40) - 20
                                 });
                             }
                             return data;
                         })()
-                    },{
-                        name:'Stable Temperature',
+                    }, {
+                        name: 'Stable Temperature',
                         color: '#FF0000',
-                        data: (function() {
+                        data: (function () {
                             // generate an array of random data
                             var data = [],
                                 time = (new Date()).getTime(),
@@ -155,7 +157,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                             for (i = -19; i <= 0; i++) {
                                 data.push({
                                     x: time + i * 1000,
-                                    y: -4
+                                    y: 18
                                 });
                             }
                             return data;
