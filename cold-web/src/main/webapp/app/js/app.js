@@ -1,4 +1,4 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox', 
                                          'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
 var user;
 
@@ -47,7 +47,7 @@ coldWeb.config(function($httpProvider) {
                     	}
                     }
                 });
-
+            	
                 return $q.reject(rejection);
             }
         };
@@ -187,6 +187,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/designStorage',
     	controller: 'designStorage',
         templateUrl: 'app/template/designStorage.html'
+    }).state('report',{
+    	url:'/report-{time}-{item}',
+    	controller: 'report',
+        templateUrl: 'app/template/report.html'
     }).state('coldStorageMap', {
         url: '/coldStorageMap/:storageID',
         controller: 'coldStorageMap',
