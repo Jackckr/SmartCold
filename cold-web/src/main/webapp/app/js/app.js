@@ -1,4 +1,4 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox', 
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
                                          'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
 var user;
 
