@@ -37,12 +37,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             ]
         };
 
-        clearInterval(timeTicket);
-        var timeTicket = setInterval(function () {
-            option.series[0].data[0].value = temper;
-            myChart.setOption(option, true);
-        }, 2000);
-
         myChart.setOption(option);
 
 
@@ -94,14 +88,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                             y = (Math.random() * (40) - 20).toFixed(2) - 0;
                                         temper = y;
                                         series.addPoint([x, y], true, true);
-                                }, 1000);
-
-                                var series1 = this.series[1];
-                                setInterval(function () {
-                                    var x = (new Date()).getTime(), // current time
-                                        y = 18;
-                                    series1.addPoint([x, y], true, true);
-                                }, 1000);
+                                }, 5000);
                             }
                         }
                     },
@@ -110,7 +97,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                     },
                     xAxis: {
                         type: 'datetime',
-                        tickPixelInterval: 150
+                        tickPixelInterval: 150,
                     },
                     yAxis: {
                         title: {
@@ -120,6 +107,11 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                             value: 0,
                             width: 1,
                             color: '#808080'
+                        }, {
+                            color:'red',           //线的颜色，定义为红色
+                            dashStyle:'solid',     //默认值，这里定义为实线
+                            value:18,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2                //标示线的宽度，2px
                         }]
                     },
                     tooltip: {
@@ -140,6 +132,11 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                     },
                     series: [{
                         name: 'Temperature',
+                        markPoint : {
+                            data : [
+                                {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                            ]
+                        },
                         data: (function () {
                             // generate an array of random data
                             var data = [],
@@ -148,25 +145,8 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
                             for (i = -19; i <= 0; i++) {
                                 data.push({
-                                    x: time + i * 1000,
+                                    x: time + i * 5000,
                                     y: Math.random() * (40) - 20
-                                });
-                            }
-                            return data;
-                        })()
-                    }, {
-                        name: 'Stable Temperature',
-                        color: '#FF0000',
-                        data: (function () {
-                            // generate an array of random data
-                            var data = [],
-                                time = (new Date()).getTime(),
-                                i;
-
-                            for (i = -19; i <= 0; i++) {
-                                data.push({
-                                    x: time + i * 1000,
-                                    y: 18
                                 });
                             }
                             return data;
@@ -176,6 +156,13 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             });
 
         });
+
+        // 控制仪表盘的图
+        clearInterval(timeTicket);
+        var timeTicket = setInterval(function () {
+            option.series[0].data[0].value = temper;
+            myChart.setOption(option, true);
+        }, 5000);
 
     }
     $scope.load();
