@@ -1,40 +1,30 @@
 package com.smartcold.zigbee.manage.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.zigbee.manage.dao.ScinfoMapper;
-import com.smartcold.zigbee.manage.service.ScDeviceService;
+import com.smartcold.zigbee.manage.service.SingleInfoService;
 
 @Controller
-@RequestMapping(value = "/scinfo")
-public class ScinfoController {
+@RequestMapping(value = "/singleInfo")
+public class InfoController {
 
 	@Autowired
-	private ScinfoMapper scinfoDao;
-	
-	@Autowired
-	private ScDeviceService scService;
+	private SingleInfoService singleInfoService;
 
 	@RequestMapping(value = "/findByKey", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findByKey(String key) {
-		return scinfoDao.findInfoByKey(key);
+		return singleInfoService.getAllInfoByKey(key);
 	}
 
-	@RequestMapping(value = "/findALLInfoByKey", method = RequestMethod.GET)
+	@RequestMapping(value = "/findBatchByKey", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findALLInfoByKey(String key) {
-		Map<String, Object> allInfos = new HashMap<String, Object>();
-		allInfos.put("temperature", scinfoDao.findInfoDeviceByKey(key));
-		allInfos.put("ananysis", scService.findScDeviceByKey(key));
-		return allInfos;
+	public Object findBatchByKey(String key) {
+		return singleInfoService.getBatchInfoByKey(key);
 	}
 
 }

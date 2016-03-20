@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.smartcold.zigbee.manage.entity.ScdeviceEntity;
+import com.smartcold.zigbee.manage.entity.ApInfoEntity;
 
-public interface ScdeviceMapper {
+public interface ApInfoMapper {
 
-	public List<ScdeviceEntity> findInfoByGroupid(@Param("groupid") int groupid);
+	public List<ApInfoEntity> findInfoByfindInfoByApid(@Param("apid") String apid);
 }

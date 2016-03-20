@@ -2,13 +2,13 @@ package com.smartcold.zigbee.manage.entity;
 
 import java.util.Date;
 
-public class ApInfoEntity {
+public class KeyDeviceMappingEntity {
 
 	private int id;
 
-	private String apid;
+	private String key;
 
-	private String location;
+	private String deviceid;
 
 	private Date addtime;
 
@@ -20,20 +20,20 @@ public class ApInfoEntity {
 		this.id = id;
 	}
 
-	public String getApid() {
-		return apid;
+	public String getKey() {
+		return key;
 	}
 
-	public void setApid(String apid) {
-		this.apid = apid;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getDeviceid() {
+		return deviceid;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
 	}
 
 	public Date getAddtime() {
