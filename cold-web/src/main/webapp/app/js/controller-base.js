@@ -1,14 +1,14 @@
 coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$location,$window, $state) {
 	$rootScope.load = function () {
-		console.log("登陆成功,开始加载页面");
-		console.log(user);
     }
 	
     
 	$rootScope.logout = function () {
     	$http.get('/i/user/logout');
     	$rootScope.user = null;
-		window.location.reload() ;
+		window.location.pathname="";
+		window.location.href = "/login.html";
+		window.event.returnValue=false;
     }
     
     $scope.load();

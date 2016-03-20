@@ -248,7 +248,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.search form -->
 
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu" ng-show="user.role == 1">
+          <ul class="sidebar-menu" ng-if="user.role == 1">
             <li class="header">导航</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="treeview">
@@ -270,12 +270,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>
             <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>设置</span></a></li>
-            <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>报表</span></a></li>
+            <li class="active"><a href="#" ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>
             <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>选型</span></a></li>
             <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>告警</span></a></li>
           </ul><!-- /.sidebar-menu -->
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu" ng-show="user.role == 2">
+          <ul class="sidebar-menu" ng-if="user.role == 2">
             <li class="header">导航</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="#" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>
