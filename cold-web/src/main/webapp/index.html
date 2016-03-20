@@ -248,24 +248,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.search form -->
 
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu">
-            <li class="header">HEADER</li>
+          <ul class="sidebar-menu" ng-show="user.role == 1">
+            <li class="header">导航</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>概览</span></a></li>
             <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>我的冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-link"></i> <span>制冷系统</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
-                  <li ng-repeat="storage in mystorages"><a href="" ng-click="toMyStorage(storage.id)">{{storage.name}}</a></li>
+                  <li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i>{{compressor.name}}</a></li>
               </ul>
             </li>
             <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>监控</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-link"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
-                  <li ng-repeat="storage in mystorages"><a href="" ng-click="toMyStorage(storage.id)">{{storage.name}}</a></li>
+                  <li ng-repeat="storage in mystorages"><a href="" ><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu" style="display: none;">
+                      <li><a href="#" ng-click="toMyStorage(0, storage.id)"><i class="fa fa-circle-o"></i> 温度</a></li>
+                      <li><a href="#" ng-click="toMyStorage(1, storage.id)"><i class="fa fa-circle-o"></i> 门开关</a></li>
+                      <li><a href="#" ng-click="toMyStorage(2, storage.id)"><i class="fa fa-circle-o"></i> 货物量流通</a></li>
+                    </ul>
+                  </li>
               </ul>
             </li>
+            <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>设置</span></a></li>
+            <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>报表</span></a></li>
             <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>选型</span></a></li>
+            <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>告警</span></a></li>
           </ul><!-- /.sidebar-menu -->
+          <!-- Sidebar Menu -->
+          <ul class="sidebar-menu" ng-show="user.role == 2">
+            <li class="header">导航</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li class="active"><a href="#" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>
+            <li class="active"><a href="#" ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>
+            <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>分析</span></a></li>
+            <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>设置</span></a></li>
+          </ul><!-- /.sidebar-menu -->
+
         </section>
         <!-- /.sidebar -->
       </aside>

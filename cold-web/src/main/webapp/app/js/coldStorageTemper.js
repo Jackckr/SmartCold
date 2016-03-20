@@ -64,7 +64,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                         events: {
                             load: function () {
 
-                                // set up the updating of the chart each second
+/*                                // set up the updating of the chart each second
                                 var series = this.series[0];
 
                                 setInterval(function () {
@@ -76,15 +76,24 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                     }).success(function (data) {
                                         console.log("data:" + data);
                                         for (var i = 0; i < data.length; i++) {
-                                            console.log("data:" + data[i].Temperature);
+                                            console.log("data:" + data[i].temperature);
                                         }
                                         //TODO 修改为时间和温度根据后台传过来的数据,可能在时间窗内有多个点
-                                        var temper2 = data[data.length - 1].Temperature;
+                                        var temper2 = data[data.length - 1].temperature;
                                         var x = (new Date()).getTime(), // current time
                                             y = (Math.random() * (40) - temper2).toFixed(2) - 0;
                                         temper = y;
                                         series.addPoint([x, y], true, true);
                                     });
+                                }, 1000);*/
+                                // set up the updating of the chart each second
+                                var series = this.series[0];
+
+                                setInterval(function () {
+                                        var x = (new Date()).getTime(), // current time
+                                            y = (Math.random() * (40) - 20).toFixed(2) - 0;
+                                        temper = y;
+                                        series.addPoint([x, y], true, true);
                                 }, 1000);
 
                                 var series1 = this.series[1];
