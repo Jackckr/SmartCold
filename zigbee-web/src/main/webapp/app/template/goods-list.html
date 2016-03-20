@@ -1,0 +1,8 @@
+<div>
+  <div style="min-height: 450px;">
+	  <ul>
+	    <li ng-repeat="bdata in batchData" ng-if="bdata.overTemperatureTimes > 0" ><a href="#/multi-query/{{bdata.key}}" class="text-danger" ng-bind="bdata.key"></a></li>
+	    <li ng-repeat="bdata in batchData" ng-if="bdata.overTemperatureTimes == 0"><a href="#/multi-query/{{bdata.key}}" class="text-info" ng-bind="bdata.key"></a></li>
+	  </ul>
+  </div>
+</div>

@@ -2,7 +2,19 @@ var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkb
                                          'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
 
 angular.element(document).ready(function($ngCookies) {
-	angular.bootstrap(document, ['ColdWeb']);
+	$.ajax({
+	      url: '/i/user/findUser',
+	      type: "GET",
+	      dataType: 'json'
+	    }).success(function(data){
+	    	user = data;
+	    	if(user.username == null){
+	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
+	    			document.location.href = "login.html";
+	    		}
+	        }
+	    	angular.bootstrap(document, ['ColdWeb']);
+	    });
 });
 coldWeb.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
@@ -118,11 +130,28 @@ coldWeb.filter('sizeformat',function(){
 });
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
+	$urlRouterProvider.otherwise("/search");
     //index
-    $stateProvider.state('info',{
+    $stateProvider.state('login',{
+    	url:'/login',
+    	controller: 'login',
+        templateUrl: 'app/template/login.html'
+    }).state('search',{
+    	url:'/search',
+    	controller: 'search',
+        templateUrl: 'app/template/search.html'
+    }).state('info',{
     	url:'/info/{id}',
     	controller: 'info',
         templateUrl: 'app/template/info.html'
+    }).state('multi-query',{
+    	url:'/multi-query/{key}',
+    	controller: 'multi-query',
+    	templateUrl: 'app/template/multi-query.html'
+    }).state('goods-list',{
+    	url:'/goods-list/{key}',
+    	controller: 'goods-list',
+    	templateUrl: 'app/template/goods-list.html'
     });
     
 });

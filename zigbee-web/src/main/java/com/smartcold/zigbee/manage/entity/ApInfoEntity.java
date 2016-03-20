@@ -2,11 +2,11 @@ package com.smartcold.zigbee.manage.entity;
 
 import java.util.Date;
 
-public class ScdeviceEntity {
+public class ApInfoEntity {
 
 	private int id;
 
-	private int groupid;
+	private String apid;
 
 	private String location;
 
@@ -20,12 +20,12 @@ public class ScdeviceEntity {
 		this.id = id;
 	}
 
-	public int getGroupid() {
-		return groupid;
+	public String getApid() {
+		return apid;
 	}
 
-	public void setGroupid(int groupid) {
-		this.groupid = groupid;
+	public void setApid(String apid) {
+		this.apid = apid;
 	}
 
 	public String getLocation() {

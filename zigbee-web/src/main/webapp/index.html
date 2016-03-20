@@ -36,23 +36,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="bower_components/angular-multi-select-master/isteven-multi-select.css">
     <link rel="stylesheet" href="bower_components/angucomplete/angucomplete.css">
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-      <div class="content-wrapper">
+  <body class="hold-transition skin-blue login-page">
+
+      <header class="main-header">
+
+        <!-- Logo -->
+        <a href="#/about" class="logo">
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>冷链货品温度追溯平台</b></span>
+        </a>
+
+      </header>
+
+      <!-- Content Wrapper. Contains page content -->
+      	<section class="content">
         <!-- Main content -->
-        <div class="main-content">
             <div  ui-view>
             </div>
-	     </div>
-      </div><!-- /.content-wrapper -->
+	    </section>
 
       <!-- Main Footer -->
-      <footer class="main-footer bg-gray">
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.</strong> 备案号：沪ICP备 16004753
-      </footer>
-
-    </div><!-- ./wrapper -->
+         <footer class="main-footer bg-gray pull-center">
+        	Copyright &copy; 2016 <a href="#">SmartCold</a>. 备案号：沪ICP备 16004753
+      	</footer>
 
     <!-- REQUIRED JS SCRIPTS -->
 
@@ -81,8 +87,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="bower_components/angular-multi-select-master/isteven-multi-select.js"></script>
 <script src="bower_components/angucomplete/angucomplete.js"></script>
 <script src="bower_components/at-table/dist/angular-table.min.js"></script>
+<!-- app js -->
 <script src="app/js/app.js"></script>
 <script src="app/js/controller-base.js"></script>
+<script src="app/js/controller-search.js"></script>
+<!-- chartjs -->
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
 <script src="assets/plugins/fastclick/fastclick.min.js"></script>
 <script src="assets/js/demo.js"></script>
