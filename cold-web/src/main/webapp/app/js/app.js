@@ -9,6 +9,7 @@ angular.element(document).ready(function($ngCookies, $location) {
 	      dataType: 'json'
 	    }).success(function(data){
 	    	user = data;
+            console.log(user);
 	    	if(user.username == null){
 	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
 	    			document.location.href = "login.html";
@@ -24,6 +25,7 @@ coldWeb.run(function(editableOptions) {
 });
 
 coldWeb.run(function(userService) {
+      userService.setUser(user);
 	  userService.setStorage('test');
 });
 
@@ -47,7 +49,7 @@ coldWeb.config(function($httpProvider) {
                     	}
                     }
                 });
-            	
+
                 return $q.reject(rejection);
             }
         };
@@ -61,24 +63,35 @@ coldWeb.factory('userService', ['$rootScope', '$state', function ($rootScope, $s
             $rootScope.user = user;
         },
         setStorage: function (user) {
-            /*$rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 0}, {'name': "上海-浦西-#2", 'id': 1}];*/
-            $rootScope.mystorages = [{'name': "冷库温度地图", 'id': 0}, {'name': "冷库实时温度", 'id': 1}, {'name': "冷库门开关",'id': 2}
-                , {'name': "冷库进出货", 'id': 3}, {'name': "压缩机组压力和温度", 'id': 4}, {'name': "风机监控", 'id': 5}];
-            $rootScope.toMyStorage = function (storageID) {
-                /*$state.go('myColdStorage', {'storageID': storageID});*/
-                if (storageID === 0) {
-                    $state.go('coldStorageMap', {'storageID': storageID});
-                } else if (storageID === 1) {
-                    $state.go('coldStorageTemper', {'storageID': storageID});
-                } else if (storageID === 2) {
-                    $state.go('coldStorageDoor', {'storageID': storageID});
-                } else if (storageID === 3) {
-                    $state.go('coldStorageInOutGoods', {'storageID': storageID});
-                } else if (storageID === 4) {
-                    $state.go('compressorPressure', {'storageID': storageID});
-                } else if (storageID === 5) {
-                    $state.go('compressorBlower', {'storageID': storageID});
+            $rootScope.compressors = [{'name': "压缩机组", 'id': 0}, {'name': "风机", 'id': 1}, {'name': "拓扑",'id': 2}];
+            $rootScope.toMyCompressor = function (compressor) {
+                if (compressor === 0) {
+                    $state.go('compressorPressure', {'compressor': compressor});
+                } else if (compressor === 1) {
+                    $state.go('compressorBlower', {'compressor': compressor});
+                } else if (compressor === 2) {
+                    $state.go('about', {'compressor': compressor});
                 }
+            };
+            $rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 0}, {'name': "上海-浦东-#2",'id': 1}, {'name': "北京-五环-#1", 'id': 2}];
+            $rootScope.toMyStorage = function (type, storageID) {
+                console.log(type);
+                console.log(storageID);
+                if (type === 0) {
+                    $state.go('coldStorageTemper', {'storageID': storageID});
+                } else if (type === 1) {
+                $state.go('coldStorageDoor', {'storageID': storageID});
+                      } else if (type === 2) {
+                $state.go('coldStorageInOutGoods', {'storageID': storageID});
+                             }
+                };
+            $rootScope.toMap = function () {
+                $state.go('coldStorageMap', {});
+            };
+            $rootScope.toReport = function () {
+                var time = 'daily';
+                var item = 'total';
+                $state.go('report', {'time':time,'item':item});
             };
         },
     };

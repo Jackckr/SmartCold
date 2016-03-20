@@ -75,6 +75,7 @@ $(function(){
     		url:"/i/user/login?userName="+userName+"&password="+password,
     				async:false}).success(function(data){
     					if(data == true){
+							console.log("data: "+data);
     						window.location.pathname="";
     						window.location.href = "#/about";
     						window.event.returnValue=false;

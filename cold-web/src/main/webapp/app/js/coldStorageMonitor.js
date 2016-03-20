@@ -11,7 +11,7 @@ coldWeb.controller('coldStorageMonitor', function ($scope, $location, $statePara
     }).success(function(data){
         console.log("data:"+data);
         for (var i=0;i<data.length;i++){
-        console.log("data:"+data[i].Temperature);
+        console.log("data:"+data[i].temperature);
         }
 
     });
