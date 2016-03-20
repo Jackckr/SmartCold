@@ -1,4 +1,4 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox', 
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
                                          'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
 var user;
 
@@ -55,18 +55,33 @@ coldWeb.config(function($httpProvider) {
 });
 
 
-coldWeb.factory('userService', ['$rootScope','$state',function ($rootScope,$state) {
-  return {
-	  setUser: function(user){
-		  $rootScope.user = user;
-	  },
-	  setStorage: function(user){
-		  $rootScope.mystorages = [{'name':"上海-浦东-#1",'id':0},{'name':"上海-浦西-#2",'id':1}];
-		  $rootScope.toMyStorage = function (storageID) {
-		      $state.go('myColdStorage', {'storageID': storageID});
-		    };
-	  },
- };
+coldWeb.factory('userService', ['$rootScope', '$state', function ($rootScope, $state) {
+    return {
+        setUser: function (user) {
+            $rootScope.user = user;
+        },
+        setStorage: function (user) {
+            /*$rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 0}, {'name': "上海-浦西-#2", 'id': 1}];*/
+            $rootScope.mystorages = [{'name': "冷库温度地图", 'id': 0}, {'name': "冷库实时温度", 'id': 1}, {'name': "冷库门开关",'id': 2}
+                , {'name': "冷库进出货", 'id': 3}, {'name': "压缩机组压力和温度", 'id': 4}, {'name': "风机监控", 'id': 5}];
+            $rootScope.toMyStorage = function (storageID) {
+                /*$state.go('myColdStorage', {'storageID': storageID});*/
+                if (storageID === 0) {
+                    $state.go('coldStorageMap', {'storageID': storageID});
+                } else if (storageID === 1) {
+                    $state.go('coldStorageTemper', {'storageID': storageID});
+                } else if (storageID === 2) {
+                    $state.go('coldStorageDoor', {'storageID': storageID});
+                } else if (storageID === 3) {
+                    $state.go('coldStorageInOutGoods', {'storageID': storageID});
+                } else if (storageID === 4) {
+                    $state.go('compressorPressure', {'storageID': storageID});
+                } else if (storageID === 5) {
+                    $state.go('compressorBlower', {'storageID': storageID});
+                }
+            };
+        },
+    };
 }]);
 
 
@@ -176,6 +191,38 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/report-{time}-{item}',
     	controller: 'report',
         templateUrl: 'app/template/report.html'
+    }).state('coldStorageMap', {
+        url: '/coldStorageMap/:storageID',
+        controller: 'coldStorageMap',
+        templateUrl: 'app/template/coldStorageMap.html'
+    }).state('coldStorageMonitor', {
+        url: '/coldStorageMonitor/:storageID',
+        controller: 'coldStorageMonitor',
+        templateUrl: 'app/template/coldStorageMonitor.html'
+    }).state('compressorMonitor', {
+        url: '/compressorMonitor/:storageID',
+        controller: 'compressorMonitor',
+        templateUrl: 'app/template/compressorMonitor.html'
+    }).state('coldStorageDoor', {
+        url: '/coldStorageDoor/:storageID',
+        controller: 'coldStorageDoor',
+        templateUrl: 'app/template/coldStorageDoor.html'
+    }).state('coldStorageInOutGoods', {
+        url: '/coldStorageInOutGoods/:storageID',
+        controller: 'coldStorageInOutGoods',
+        templateUrl: 'app/template/coldStorageInOutGoods.html'
+    }).state('coldStorageTemper', {
+        url: '/coldStorageTemper/:storageID',
+        controller: 'coldStorageTemper',
+        templateUrl: 'app/template/coldStorageTemper.html'
+    }).state('compressorPressure', {
+        url: '/compressorPressure/:storageID',
+        controller: 'compressorPressure',
+        templateUrl: 'app/template/compressorPressure.html'
+    }).state('compressorBlower', {
+        url: '/compressorBlower/:storageID',
+        controller: 'compressorBlower',
+        templateUrl: 'app/template/compressorBlower.html'
     });
-    
+
 });
