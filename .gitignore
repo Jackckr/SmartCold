@@ -72,3 +72,5 @@ bin/
 *.ipr
 *.iws
 .idea/
+#  database config
+cold-web/src/main/resources/config/spring/local/appcontext-db.xml
