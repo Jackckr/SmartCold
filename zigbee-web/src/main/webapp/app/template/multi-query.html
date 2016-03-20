@@ -7,10 +7,8 @@
 			<div class="col-xs-12 pull-right">
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-pills nav-tabs pull-right">
-						<li class="{{item == 'alarms'?'active':''}}" data-toggle="tab"
-							href="#customer"><a><strong>客户查询</strong></a></li>
 						<li class="{{item == 'fan'?'active':''}}" data-toggle="tab"
-							href="#batch"><a ng-click="batchInfo()"><strong>批号查询</strong></a></li>
+							href="#batch"><a ng-click="batchInfo()"><strong>批次信息</strong></a></li>
 						<li class="active" data-toggle="tab" href="#single"><a><strong>单件查询</strong></a></li>
 					</ul>
 					<div class="tab-content">
@@ -55,18 +53,14 @@
 											</div>
 											<!-- /.row -->
 										</div>
-										<div id="fenxi" class="tab-pane">
-											<div class="col-sm-12" style="min-height: 250px;">
-												<P>
-													<strong>分析结果:</strong>
-												</P>
-												<p>
-													该货品累计流转<a class="text-danger"><strong>{{singleInfo.ananysis.length}}</strong></a>个冷藏点，
-													冷仓存储<a class="text-danger"><strong>36</strong></a>小时，其中温度超标（>-9度）时长<a
-														class="text-danger"><strong>9</strong></a>小时，可能存在变质风险。
-												</p>
-
-											</div>
+										<div id="fenxi" class="tab-pane" style="min-height: 250px;">
+											<h5><strong class="col-sm-1">货物流转：</strong>{{singleInfo.ananysis.length}}个冷藏点</h5>
+											<h5><strong class="col-sm-1">冷藏存储：</strong>36小时</h5>
+											<h5><strong class="col-sm-1">超标时长：</strong>9小时</h5>
+											<br>
+											<p>
+												<b class="text-primary">分析结果:</b><b class="text-danger">可能存在变质风险。</b>
+											</p>
 										</div>
 									</div>
 									<br> <br>
@@ -82,21 +76,21 @@
 						<div class="tab-pane" id="batch" style="min-height: 300px;">
 							<div class="col-sm-12">
 								<div class="row">
-									<label>该批次一共有<Strong class="text-primary"
-										ng-bind="batchData.length"></Strong>箱货物，其中 <b
-										class="text-danger" ng-bind="warnings"></b>箱有在运输过程中温度超标，可能有问题，货物列表如下：
-									</label>
-									<ul>
-										<li ng-repeat="bdata in batchData"><a
-											href="#/multi-query/{{bdata.key}}"
-											class="{{bdata.overTemperatureTimes >= 1?'text-danger':''}}"
-											ng-bind="bdata.key"></a></li>
-									</ul>
+								   <h5><strong class="col-sm-1">批次数量：</strong><b ng-bind="batchData.length"></b></h5>
+								   <h5><strong class="col-sm-1">超温数量：</strong><b ng-bind="warnings"></b></h5>
+								   <h5><strong class="col-sm-1">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</strong><b ng-bind="'未知'"></b></h5>
+								   <h5><strong class="col-sm-1">生&nbsp;&nbsp;&nbsp;产&nbsp;&nbsp;商：</strong><b ng-bind="'未知'"></b></h5>
+								   <h5><strong class="col-sm-1">客户编号：</strong><a href="">3021</a></h5>
+								   <br>
 								</div>
 							</div>
+							<img src="app/img/huosun.jpg" class="img-responsive">
+						   <br>
+							<h5 class="col-sm-1">
+							   <i class="fa fa-fw fa-hand-o-right"></i>
+							   <a href="#/goods-list/{{key}}">货品列表</a>
+							</h5>
 						</div>
-						<div class="tab-pane" id="customer" style="min-height: 300px;">
-							该客户编号为</div>
 					</div>
 				</div>
 			</div>

@@ -148,6 +148,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/multi-query/{key}',
     	controller: 'multi-query',
     	templateUrl: 'app/template/multi-query.html'
+    }).state('goods-list',{
+    	url:'/goods-list/{key}',
+    	controller: 'goods-list',
+    	templateUrl: 'app/template/goods-list.html'
     });
     
 });

@@ -146,3 +146,17 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 	
 	$scope.load();
 });
+
+coldWeb.controller('goods-list', function ($rootScope, $scope, $cookies, $http ,$location,$window, $stateParams) {
+    $scope.key = $stateParams.key;
+	
+	$scope.load = function(){
+		url = "/i/singleInfo/findBatchByKey?key=" + $scope.key;
+		$scope.warnings = 0;
+		$http.get(url).success(function(data,status,config,headers){
+			$scope.batchData = data;
+		});
+	}
+	
+	$scope.load();
+});
