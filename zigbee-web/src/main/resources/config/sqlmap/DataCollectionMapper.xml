@@ -29,7 +29,7 @@
 		)
 		VALUES
 		(
-		#{deviceID},
+		#{devID},
 		#{apID},
 		#{time},
 		#{temperature},

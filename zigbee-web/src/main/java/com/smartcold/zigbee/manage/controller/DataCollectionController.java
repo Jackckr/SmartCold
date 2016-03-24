@@ -2,7 +2,6 @@ package com.smartcold.zigbee.manage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +18,7 @@ public class DataCollectionController extends BaseController {
 
 	@RequestMapping(value = "/dataCollection", method = RequestMethod.POST)
 	@ResponseBody
-	public void dataCollection(@RequestBody String data) {
+	public void dataCollection(String data) {
 		Gson gson = new Gson();
 		DataCollectionEntity dataCollectionEntity = gson.fromJson(data, DataCollectionEntity.class);
 		dataDao.add(dataCollectionEntity);
