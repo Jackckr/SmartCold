@@ -2,19 +2,7 @@ var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkb
                                          'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
 
 angular.element(document).ready(function($ngCookies) {
-	$.ajax({
-	      url: '/i/user/findUser',
-	      type: "GET",
-	      dataType: 'json'
-	    }).success(function(data){
-	    	user = data;
-	    	if(user.username == null){
-	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
-	    			document.location.href = "login.html";
-	    		}
-	        }
-	    	angular.bootstrap(document, ['ColdWeb']);
-	    });
+	angular.bootstrap(document, ['ColdWeb']);
 });
 coldWeb.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'

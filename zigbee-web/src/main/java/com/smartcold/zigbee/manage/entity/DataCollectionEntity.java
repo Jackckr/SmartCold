@@ -16,11 +16,11 @@ public class DataCollectionEntity {
 
 	private Date addtime;
 
-	public DataCollectionEntity(String devID, String apID, long time, float temperature) {
+	public DataCollectionEntity(String devID, String apID, long time, float temp) {
 		this.devID = devID;
 		this.apID = apID;
 		this.time = time;
-		this.temperature = temperature;
+		this.temperature = temp;
 	}
 
 	public long getId() {
