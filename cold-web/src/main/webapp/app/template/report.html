@@ -7,9 +7,6 @@
 	     <li class="{{time == 'daily'?'active':''}}">
 	       <a href="#/report-daily-{{item}}">日报表</a>
 	     </li>
-	     <li class="{{time == 'weekly'?'active':''}}">
-	       <a href="#/report-weekly-{{item}}">周报表</a>
-	     </li>
 	     <li class="{{time == 'monthly'?'active':''}}">
 	       <a href="#/report-monthly-{{item}}">月报表</a>
 	     </li>
@@ -24,16 +21,128 @@
          <div class="box-header with-border">
 		    <div class="box-body no-padding">
 	          <ul class="nav nav-pills nav-stacked">
-	            <li class="{{item == 'total'?'active':''}}"><a href="#/report-{{time}}-total">总体分析</a></li>
-	            <li class="{{item == 'fan'?'active':''}}"><a href="#/report-{{time}}-fan">温度分析</a></li>
-	            <li class="{{item == 'alarms'?'active':''}}"><a href="#/report-{{time}}-refrigerator">报警分析</a></li>
+	            <li class="{{item == 'energy'?'active':''}}"><a href="#/report-{{time}}-energy">能耗分析</a></li>
+	            <li class="{{item == 'total'?'active':''}}"><a href="#/report-{{time}}-total">总体情况</a></li>
+	            <li class="{{item == 'door'?'active':''}}"><a href="#/report-{{time}}-door">门耗能情况</a></li>
+	            <li class="{{item == 'light'?'active':''}}"><a href="#/report-{{time}}-light">灯耗能情况</a></li>
+	            <li class="{{item == 'group'?'active':''}}"><a href="#/report-{{time}}-group">制冷剂组情况</a></li>
+	            <li class="{{item == 'fan'?'active':''}}"><a href="#/report-{{time}}-fan">风机情况</a></li>
+	            <li class="{{item == 'goods'?'active':''}}"><a href="#/report-{{time}}-goods">货物进出情况</a></li>
 	          </ul>
 	        </div>
 	    </div>
 	   </div>
 	  </div>
 	  <div class="col-md-10">
-	  <div class="col-md-6">
+
+        <div class="col-md-12" ng-show="isEnergy">
+          <!-- MarkPoint Map CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">能耗评分</h3>
+
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <div id="energyScoreChart" style="height:300px;width: 300px;margin: 0px auto;"></div>
+                </div>
+                <div class="col-md-4">
+                  <div ng-show="checkState" style="height:300px;width: 300px;text-align:left;">
+                    <ul style="position: relative;top: 50%;left: 50%;-webkit-transform: translateX(-50%) translateY(-50%);">
+                      <h2>正在评估: 能耗评估</h2>
+                      <p>尚未发现问题,请继续等待体验完成</p>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div style="height:300px;width: 300px;text-align:left;">
+                    <button ng-show="uncheckState" class="btn-primary" ng-click="goCheck()" style="position: relative;top: 50%;left: 50%;-webkit-transform: translateX(-50%) translateY(-50%);">
+                      立即评分
+                    </button>
+                    <button ng-show="checkState" class="btn-danger" ng-click="stopCheck()" style="position: relative;top: 50%;left: 50%;-webkit-transform: translateX(-50%) translateY(-50%);">
+                      取消评分
+                    </button>
+                  </div>
+                </div>
+                <!--<div class="overlay">-->
+                <!--<i class="fa fa-refresh fa-spin"></i>-->
+                <!--</div>-->
+              </div>
+              <div class="col-md-12 row">
+                <div class="progress-group">
+                  <span class="progress-text" ng-show="checkState">评估进度:</span>
+                  <span class="progress-number" ng-show="checkState"><b>{{totalScore}}</b>/100</span>
+                  <span ng-show="!checkState"></span>
+                  <div class="progress sm">
+                    <div ng-if="checkState" class="progress-bar progress-bar-green" style="width: 80%"></div>
+                    <div ng-if="!checkState" class="progress-bar progress-bar-green" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 row" style="text-align:left;">
+                <p>
+                  <span ng-show="checkState" class="progress-text" style="font-size: 18px">能耗评估: - 共4项</span>
+                  <span ng-show="checkState">(评估是否达标)</span>
+                  <span ng-show="!checkState"></span>
+                </p>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <span class="info-box-icon bg-yellow"><i class="fa fa-life-ring bg-yellow"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">风机<span ng-show="checkState">:{{blowerScore}}分</span></span>
+                    <div class="progress" ng-show="checkState">
+                      <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+                    <span class="progress-description" ng-show="checkState">{{blowerScore / 25}}% 达标</span>
+                  </div>
+                </div><!-- ./col -->
+                <div class="col-md-3">
+                  <span class="info-box-icon bg-green"><i class="fa fa-lightbulb-o bg-green"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">电灯<span ng-show="checkState">:{{lightScore}}分</span></span>
+                    <div class="progress" ng-show="checkState">
+                      <div class="progress-bar" style="width: 10%"></div>
+                    </div>
+                    <span class="progress-description" ng-show="checkState">{{lightScore / 25}}% 达标</span>
+                  </div>
+                </div><!-- ./col -->
+                <div class="col-md-3">
+                  <span class="info-box-icon bg-red"><i class="fa fa-university bg-red"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">空调<span ng-show="checkState">:{{coldScore}}分</span></span>
+
+                    <div class="progress" ng-show="checkState">
+                      <div class="progress-bar" style="width: 40%"></div>
+                    </div>
+                    <span class="progress-description" ng-show="checkState">{{coldScore / 25}}% 达标</span>
+                  </div>
+                </div><!-- ./col -->
+                <div class="col-md-3">
+                  <span class="info-box-icon bg-blue"><i class="fa fa-columns bg-blue"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">库门<span ng-show="checkState">:{{doorScore}}分</span></span>
+                    <!--<span class="info-box-number">{{doorScore}}分</span>-->
+                    <div class="progress" ng-show="checkState">
+                      <div class="progress-bar" style="width: 70%"></div>
+                    </div>
+                    <span class="progress-description" ng-show="checkState">{{doorScore / 25}}% 达标</span>
+                  </div>
+                </div><!-- ./col -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+	  <!-- 总能耗表 -->
+	  <div class="col-md-6" ng-show="!isEnergy">
 	  <div class="box box-primary">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
@@ -46,7 +155,8 @@
         </div><!-- /.box-body-->
       </div>
       </div>
-      <div class="col-md-6">
+      <!-- 耗能占比 -->
+      <div class="col-md-6" ng-show="!isEnergy">
       <div class="box box-primary" ng-if="item == 'total'">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
@@ -56,6 +166,20 @@
         </div>
         <div class="box-body">
           <div id="donut-chart" style="height: 300px;"></div>
+        </div><!-- /.box-body-->
+      </div>
+	  </div>
+	  <!-- 温度能耗 -->
+	  <div class="col-md-6" ng-show="!isEnergy">
+      <div class="box box-primary" ng-show="!isEnergy">
+        <div class="box-header with-border">
+          <i class="fa fa-bar-chart-o"></i>
+          <h3 class="box-title">温度能耗对比</h3>
+          <div class="box-tools pull-right">
+          </div>
+        </div>
+        <div class="box-body">
+          <div id="temperature-chart" style="height: 300px;"></div>
         </div><!-- /.box-body-->
       </div>
 	  </div>

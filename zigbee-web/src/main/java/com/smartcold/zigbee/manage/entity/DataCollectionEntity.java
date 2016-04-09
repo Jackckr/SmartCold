@@ -6,7 +6,7 @@ public class DataCollectionEntity {
 
 	private long id;
 
-	private String deviceID;
+	private String devID;
 
 	private String apID;
 
@@ -16,8 +16,8 @@ public class DataCollectionEntity {
 
 	private Date addtime;
 
-	public DataCollectionEntity(String deviceID, String apID, long time, float temperature) {
-		this.deviceID = deviceID;
+	public DataCollectionEntity(String devID, String apID, long time, float temperature) {
+		this.devID = devID;
 		this.apID = apID;
 		this.time = time;
 		this.temperature = temperature;
@@ -31,19 +31,19 @@ public class DataCollectionEntity {
 		this.id = id;
 	}
 
-	public String getdeviceID() {
-		return deviceID;
+	public String getDevID() {
+		return devID;
 	}
 
-	public void setdeviceID(String deviceID) {
-		this.deviceID = deviceID;
+	public void setDevID(String devID) {
+		this.devID = devID;
 	}
 
-	public String getapID() {
+	public String getApID() {
 		return apID;
 	}
 
-	public void setapID(String apID) {
+	public void setApID(String apID) {
 		this.apID = apID;
 	}
 
