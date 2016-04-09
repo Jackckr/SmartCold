@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.DataCollectionMapper;
+import com.smartcold.zigbee.manage.dto.BaseDto;
+import com.smartcold.zigbee.manage.dto.DataCollectionBatchEntity;
+import com.smartcold.zigbee.manage.dto.DataCollectionBatchEntity.InfoEntity;
 import com.smartcold.zigbee.manage.entity.DataCollectionEntity;
 
 @Controller
@@ -18,9 +21,21 @@ public class DataCollectionController extends BaseController {
 
 	@RequestMapping(value = "/dataCollection", method = RequestMethod.POST)
 	@ResponseBody
-	public void dataCollection(String data) {
+	public Object dataCollection(String data) {
 		Gson gson = new Gson();
-		DataCollectionEntity dataCollectionEntity = gson.fromJson(data, DataCollectionEntity.class);
-		dataDao.add(dataCollectionEntity);
+
+		try {
+			DataCollectionBatchEntity dataCollectionBatchEntity = gson.fromJson(data, DataCollectionBatchEntity.class);
+			for (InfoEntity info : dataCollectionBatchEntity.getInfos()) {
+				DataCollectionEntity dataCollectionEntity = new DataCollectionEntity(info.getDevID(),
+						dataCollectionBatchEntity.getApID(), info.getTime(), info.getTemp());
+				dataDao.add(dataCollectionEntity);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new BaseDto(500);
+		}
+
+		return new BaseDto(200);
 	}
 }
