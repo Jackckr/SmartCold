@@ -8,13 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.UserMapper;
 import com.smartcold.manage.cold.entity.Role;
 import com.smartcold.manage.cold.entity.RoleUser;
 import com.smartcold.manage.cold.entity.UserEntity;
-import com.smartcold.manage.cold.service.CompanyRdcService;
-import com.smartcold.manage.cold.service.CompanyService;
-import com.smartcold.manage.cold.service.CompanyUserService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
 import com.smartcold.manage.cold.service.UserService;
@@ -24,15 +20,7 @@ import com.smartcold.manage.cold.service.UserService;
 public class UserController extends BaseController {
 
 	@Autowired
-	private UserMapper userDao;
-	@Autowired
 	private UserService userService;
-	@Autowired
-	private CompanyService companyService;
-	@Autowired
-	private CompanyUserService companyUserService;
-	@Autowired
-	private CompanyRdcService companyRdcService;
 	@Autowired
 	private RoleService roleService;
 	@Autowired
