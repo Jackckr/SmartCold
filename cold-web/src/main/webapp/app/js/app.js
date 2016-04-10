@@ -90,7 +90,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', function ($rootScope, $s
             };
             $rootScope.toReport = function () {
                 var time = 'daily';
-                var item = 'total';
+                var item = 'energy';
                 $state.go('report', {'time':time,'item':item});
             };
         },
