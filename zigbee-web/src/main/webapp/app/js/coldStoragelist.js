@@ -3,6 +3,4 @@
  */
 coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $cookies, $http ,$location) {
 
-    alert("冷库列表耶");
-
 });

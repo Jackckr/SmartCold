@@ -3,6 +3,5 @@
  */
 coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http ,$location) {
 
-    alert("冷库评论耶");
 
 });
