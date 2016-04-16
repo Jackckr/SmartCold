@@ -69,7 +69,7 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 				    tooltip : {
 				        trigger: 'axis'
 				    },
-				    calculable : true,
+				    calculable : false,
 				    legend: {
 				        data:['温度']
 				    },
@@ -99,12 +99,33 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 				            name:'温度',
 				            type:'line',
 				            data:temperature,
+				            itemStyle:{
+				            	normal:{
+					            	lineStyle: {  
+				                        color:'green'  
+				                    }
+					            }
+				            },
 				        },
 				        {
 				            name: '警戒线',
 				            type: 'line',
 				            data:[-9],
+				            itemStyle:{
+				            	normal:{
+					            	lineStyle: {  
+				                        color:'red'  
+				                    }
+					            }
+				            },
 				            markLine : {
+				            	itemStyle:{
+					            	normal:{
+						            	lineStyle: {  
+					                        color:'#ff0000'  
+					                    }
+						            }
+					            },
 				                data : [
 				                        {type : 'average', name : '警戒线'}
 				                ]

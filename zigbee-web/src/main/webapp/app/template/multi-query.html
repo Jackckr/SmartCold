@@ -109,10 +109,15 @@
 				<div class="col-lg-2">
 					<h5 class="col-lg-8">
 					   <i class="fa fa-fw fa-hand-o-right"></i>
-					   <a href="#">货品列表</a>
-					   <ul>
-					     <li ng-repeat="bdata in batchData" ng-if="bdata.overTemperatureTimes > 0" ><a href="#/multi-query/{{bdata.key}}" class="text-danger" ng-bind="bdata.key"></a></li>
-	    <li ng-repeat="bdata in batchData" ng-if="bdata.overTemperatureTimes == 0"><a href="#/multi-query/{{bdata.key}}" class="text-info" ng-bind="bdata.key"></a></li>
+					   <a href="">货品列表</a>
+					   <br>
+					   <ul class="list-group pull-left">
+					     <li class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
+					     ng-if="bdata.overTemperatureTimes > 0" >
+					     <a href="#/multi-query/{{bdata.key}}" class="text-danger" ng-bind="bdata.key"></a></li>
+	    				 <li class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
+	    				 ng-if="bdata.overTemperatureTimes == 0"><a href="#/multi-query/{{bdata.key}}" 
+	    				 class="text-info" ng-bind="bdata.key"></a></li>
 					   </ul>
 					</h5>
 				</div>
