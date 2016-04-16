@@ -96,7 +96,7 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 				    ],
 				    series : [
 				        {
-				            name:'总耗能',
+				            name:'温度',
 				            type:'line',
 				            data:$scope.temperature,
 				        },

@@ -29,7 +29,7 @@
 								<li ng-repeat="item in singleInfo.ananysis"><i
 									class="fa fa-truck bg-blue"></i>
 									<div class="timeline-badge {{item.highestTemperature>-9?'down':'up'}}">
-									<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+									<span class="icon-truck" aria-hidden="true"></span>
 									</div>
 							         <div class="timeline-panel">
 							           <div class="timeline-heading">
@@ -52,13 +52,40 @@
 		      </tab>
 		      <tab heading="分析">
 		        <div id="fenxi" class="tab-pane" style="min-height: 250px;">
-					<h5><strong class="col-sm-1">货物流转：</strong>{{singleInfo.ananysis.length}}个冷藏点</h5>
-					<h5><strong class="col-sm-1">冷藏存储：</strong>36小时</h5>
-					<h5><strong class="col-sm-1">超标时长：</strong>9小时</h5>
-					<br>
-					<p>
-						<b class="text-primary">分析结果:</b><b class="text-danger">可能存在变质风险。</b>
-					</p>
+		        <div class="row">
+		        <div class="col-lg-4 center-block">
+			        <br />
+			        <div class="col-lg-12">
+	                    <div class="col-lg-8 stats-item bg-primary">
+	                        <div class="header-item">货物流转</div>
+	                        <div class="data-item"><strong>{{singleInfo.ananysis.length}}</strong><small>个冷藏点</small></div>
+                    	</div>       
+		            </div>
+		        </div>
+		        <div class="col-lg-4 text-center">
+			        <br />
+			        <div class="col-lg-12">
+	                    <div class="col-lg-8 stats-item bg-primary">
+	                        <div class="header-item">冷藏存储</div>
+	                        <div class="data-item">36小时</div>
+                    	</div>       
+		            </div>
+		        </div>
+		        <div class="col-lg-4 text-center">
+			        <br />
+			        <div class="col-lg-12">
+	                    <div class="col-lg-8 stats-item bg-primary">
+	                        <div class="header-item">超标时长</div>
+	                        <div class="data-item">9小时</div>
+                    	</div>       
+		            </div>
+		        </div>
+				</div>
+				</div>
+		        <div>					
+		        <p>
+					<b class="text-primary">分析结果:</b><b class="text-danger">可能存在变质风险。</b>
+				</p>
 				</div>
 		      </tab>
 		    </tabset>
