@@ -4,27 +4,14 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
-        <title>
-            APICloud跨平台APP技术专家 - 中国领先移动云服务平台
-        </title>
-        <meta name="keywords" content="跨平台开发,应用号,混合应用,混合APP,Hybrid APP,HTML5,移动应用开发平台,企业移动信息化"/>
-        <meta name="description" content="中国领先的移动应用云服务平台，一站式的提供高效的APP开发与APP管理云服务。APICloud标准化移动平台，覆盖APP全生命周期，包括开发、API集成、测试、渠道打包、运营管理等。提供企业级服务支持，让企业移动信息化后顾无忧！" />
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href=""/>
-        <link rel="shortcut icon" href="img/favicon.png"/>
+        <link rel="stylesheet" href="assets/css/bootstrap.css"/>
         <link rel="stylesheet" href="assets/css/homenewlayout.css"/>
         <link rel="stylesheet" href="assets/css/font-awesome.min.css"/>
-        <!-- baidu statistics -->
+        <link rel="stylesheet" href="assets/css/timeline.css"/>
 
         <script type="text/javascript">!function(a,b){if(!b.__SV){var c,d,e,f;window.dplus=b,b._i=[],b.init=function(a,c,d){function g(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]),a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var h=b;for("undefined"!=typeof d?h=b[d]=[]:d="dplus",h.people=h.people||[],h.toString=function(a){var b="dplus";return"dplus"!==d&&(b+="."+d),a||(b+=" (stub)"),b},h.people.toString=function(){return h.toString(1)+".people (stub)"},e="disable track track_links track_forms register unregister get_property identify clear set_config get_config get_distinct_id track_pageview register_once track_with_tag time_event people.set people.unset people.delete_user".split(" "),f=0;f<e.length;f++)g(h,e[f]);b._i.push([a,c,d])},b.__SV=1.1,c=a.createElement("script"),c.type="text/javascript",c.charset="utf-8",c.async=!0,c.src="//w.cnzz.com/dplus.php?token=6f151994c54e5456a96a",d=a.getElementsByTagName("script")[0],d.parentNode.insertBefore(c,d)}}(document,window.dplus||[]),dplus.init("6f151994c54e5456a96a");</script>
         </head>
         <body class="home-layout ">
-
-<style>
-A.applink:hover {border: 2px dotted #DCE6F4;padding:2px;background-color:#ffff00;color:green;text-decoration:none}
-A.applink       {border: 2px dotted #DCE6F4;padding:2px;color:#2F5BFF;background:transparent;text-decoration:none}
-A.info          {color:#2F5BFF;background:transparent;text-decoration:none}
-A.info:hover    {color:green;background:transparent;text-decoration:underline}
-</style>
 
             <header class="dark">
                 <div class="err-top">
@@ -64,61 +51,13 @@ A.info:hover    {color:green;background:transparent;text-decoration:underline}
                     </div>
                     <ul class="nav nav-right">
                         <li>
-                            <a href="javascript:void(0)">
-                                APP开发
+                            <a href="#/home">
+                                首页
                             </a>
-                            <ul class="nav-list">
-                                <li class="nav-list-item">
-                                    <a href="superwebview.html" class="nav-link">
-                                        <div class="nav-left icon">
-                                            <span class="i_superwebview">
-                                            </span>
-                                        </div>
-                                        <div class="nav-left">
-                                            <span class="nav-title">
-                                               SuperWebView
-                                            </span>
-                                            <span class="nav-description">
-                                                帮助原生程序员快速迭代
-                                            </span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="deepengine.html" class="nav-link">
-                                        <div class="nav-left icon">
-                                            <span class="i_deepengine">
-                                            </span>
-                                        </div>
-                                        <div class="nav-left">
-                                            <span class="nav-title">
-                                                Deep Engine
-                                            </span>
-                                            <span class="nav-description">
-                                                高效的跨平台APP引擎
-                                            </span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="cloudservice.html" class="nav-link">
-                                        <div class="nav-left icon">
-                                            <span class="i_cloudservice">
-                                            </span>
-                                        </div>
-                                        <div class="nav-left">
-                                            <span class="nav-title">
-                                                数据云
-                                            </span>
-                                            <span class="nav-description">
-                                                无需编程 自动生成Server端
-                                            </span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
+                            <a href="#/search">
+                                物流追溯
                             <a href="" ng-click="toColdStorageList()">
                                 冷库列表
                             </a>
@@ -190,6 +129,8 @@ A.info:hover    {color:green;background:transparent;text-decoration:underline}
                     </ul>
                 </div>
             </header>
+            <link rel="stylesheet" href="assets/css/newindex.css">
+<link rel="stylesheet" href="assets/css/animate.css">
             <!--<link rel="stylesheet" href="assets/css/newindex.css">-->
 <!--<link rel="stylesheet" href="assets/css/animate.css">-->
 <style>
@@ -221,9 +162,9 @@ A.info:hover    {color:green;background:transparent;text-decoration:underline}
     </div>
 </div>
 <div>
-       <div  ui-view>
-       </div>
- </div>
+	<div  ui-view>
+	</div>
+</div>
             <footer>
                 <section class="">
                     <div class="">
@@ -516,16 +457,16 @@ A.info:hover    {color:green;background:transparent;text-decoration:underline}
                     </label>
                 </section>
             </footer>
-            <script type="assets/js/jquery.js"></script>
-            <script type="assets/js/handlebars.js"></script>
-            <script type="assets/js/modernizr.min.js"></script>
-            <script type="assets/js/bower_components/angular-cookies/angular-cookies.js"></script>
-            <script type="assets/js/bootstrap.min.js"></script>
-            <script type="assets/js/placeholder.js"></script>
-            <script type="assets/js/jquery.utils.js"></script>
-            <script type="assets/js/d3.v3.min.js"></script>
-            <script type="assets/js/jquery.plupload.queue.min.js"></script>
-            <script src="bower_components/pace/pace.min.js"></script>
+<script type="assets/js/jquery.js"></script>
+<script type="assets/js/handlebars.js"></script>
+<script type="assets/js/modernizr.min.js"></script>
+<script type="assets/js/bower_components/angular-cookies/angular-cookies.js"></script>
+<script type="assets/js/bootstrap.min.js"></script>
+<script type="assets/js/placeholder.js"></script>
+<script type="assets/js/jquery.utils.js"></script>
+<script type="assets/js/d3.v3.min.js"></script>
+<script type="assets/js/jquery.plupload.queue.min.js"></script>
+<script src="assets/js/echarts-all.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
@@ -541,5 +482,5 @@ A.info:hover    {color:green;background:transparent;text-decoration:underline}
 <script src="app/js/app.js"></script>
 <script src="app/js/controller-base.js"></script>
 <script src="app/js/controller-search.js"></script>
-        </body>
-    </html>
+    </body>
+</html>

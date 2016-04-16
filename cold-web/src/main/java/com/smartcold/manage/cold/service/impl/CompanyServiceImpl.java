@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.smartcold.manage.cold.dao.CompanyMapper;
 import com.smartcold.manage.cold.entity.Company;
-import com.smartcold.manage.cold.entity.Role;
 import com.smartcold.manage.cold.service.CompanyService;
 /**
  * @author yanan.xu

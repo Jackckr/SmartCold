@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.smartcold.manage.cold.dao.PrivilegeRoleMapper;
 import com.smartcold.manage.cold.entity.PrivilegeRole;
-import com.smartcold.manage.cold.entity.UserEntity;
 import com.smartcold.manage.cold.service.PrivilegeRoleService;
 
 /**
@@ -17,7 +16,7 @@ import com.smartcold.manage.cold.service.PrivilegeRoleService;
  * @ClassName PriviLegeRoleServiceImpl.java
  * @Package: com.smartcold.manage.cold.service.impl
  * @Description: TODO
- * @createDate:2016/3.19    
+ * @createDate:2016/3.19
  * @email:xuyanan03@meituan.com
  * @phone:15228355992
  * @Address:yunwei of DP
@@ -26,21 +25,21 @@ import com.smartcold.manage.cold.service.PrivilegeRoleService;
 @Service("privilegeRoleService")
 public class PriviLegeRoleServiceImpl implements PrivilegeRoleService {
 
-	
-	private PrivilegeRoleMapper privRoleDao; 
+	private PrivilegeRoleMapper privRoleDao;
+
 	public PrivilegeRoleMapper getPrivRoleDao() {
 		return privRoleDao;
 	}
+
 	@Autowired
 	public void setPrivRoleDao(PrivilegeRoleMapper privRoleDao) {
 		this.privRoleDao = privRoleDao;
 	}
-	
+
 	/**
 	 * get PrivilegeRole By RoleId
 	 * 
-	 * @see
-	 * com.smartcold.manage.cold.service.PrivilegeRoleService#getPrivRoleByRoleId(int)
+	 * @see com.smartcold.manage.cold.service.PrivilegeRoleService#getPrivRoleByRoleId(int)
 	 */
 	@SuppressWarnings("finally")
 	public List<PrivilegeRole> getPrivRoleByRoleId(int roleId) {
@@ -50,11 +49,11 @@ public class PriviLegeRoleServiceImpl implements PrivilegeRoleService {
 			privRoleList = privRoleDao.getPrivRoleList(roleId);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			return privRoleList;
 		}
 	}
-	
+
 	public PrivilegeRole getPrivRoleByPrivRoleId(int privRoleId) {
 		// TODO Auto-generated method stub
 		return null;
