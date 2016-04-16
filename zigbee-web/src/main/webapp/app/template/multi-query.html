@@ -51,14 +51,14 @@
 				</div>
 		      </tab>
 		      <tab heading="分析">
-		        <div id="fenxi" class="tab-pane" style="min-height: 250px;">
+		        <div id="fenxi" class="tab-pane" style="min-height: 150px;">
 		        <div class="row">
 		        <div class="col-lg-4 center-block">
 			        <br />
 			        <div class="col-lg-12">
 	                    <div class="col-lg-8 stats-item bg-primary">
 	                        <div class="header-item">货物流转</div>
-	                        <div class="data-item"><strong>{{singleInfo.ananysis.length}}</strong><small>个冷藏点</small></div>
+	                        <div class="data-item"><em class="text-danger">{{singleInfo.ananysis.length}}</em><small>个冷藏点</small></div>
                     	</div>       
 		            </div>
 		        </div>
@@ -67,7 +67,7 @@
 			        <div class="col-lg-12">
 	                    <div class="col-lg-8 stats-item bg-primary">
 	                        <div class="header-item">冷藏存储</div>
-	                        <div class="data-item">36小时</div>
+	                        <div class="data-item"><em class="text-danger">36</em>小时</div>
                     	</div>       
 		            </div>
 		        </div>
@@ -76,39 +76,46 @@
 			        <div class="col-lg-12">
 	                    <div class="col-lg-8 stats-item bg-primary">
 	                        <div class="header-item">超标时长</div>
-	                        <div class="data-item">9小时</div>
+	                        <div class="data-item"><a class="text-danger">9</a>小时</div>
                     	</div>       
 		            </div>
 		        </div>
 				</div>
 				</div>
-		        <div>					
-		        <p>
-					<b class="text-primary">分析结果:</b><b class="text-danger">可能存在变质风险。</b>
-				</p>
-				</div>
+		        <div class="alert alert-danger" role="alert">分析结果:<b class="text-danger">可能存在变质风险。</b></div>				
 		      </tab>
 		    </tabset>
 		</div>
 		</tab>
-		<tab heading="批次查询">
-		  <div class="tab-pane" id="batch" style="min-height: 300px;">
-				<div class="col-sm-12">
+		<tab heading="批次查询" ng-click="batchLoad()">
+		  <div class="tab-pane">
+		  <br>
+				<div class="col-lg-2">
 					<div class="row">
-					   <h5><strong class="col-sm-1">批次数量：</strong><b ng-bind="batchData.length"></b></h5>
-					   <h5><strong class="col-sm-1">超温数量：</strong><b ng-bind="warnings"></b></h5>
-					   <h5><strong class="col-sm-1">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</strong><b ng-bind="'未知'"></b></h5>
-					   <h5><strong class="col-sm-1">生&nbsp;&nbsp;&nbsp;产&nbsp;&nbsp;商：</strong><b ng-bind="'未知'"></b></h5>
-					   <h5><strong class="col-sm-1">客户编号：</strong><a href="">3021</a></h5>
+					  <ul class="list-group pull-left">
+					   <li class="list-group-item list-group-item-default">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<b ng-bind="'未知'"></b></li>
+					   <li class="list-group-item list-group-item-default">生&nbsp;&nbsp;&nbsp;产&nbsp;&nbsp;商：<b ng-bind="'未知'"></b></li>
+					   <li class="list-group-item list-group-item-default">批次数量：<b ng-bind="batchData.length"></b></li>
+					   <li class="list-group-item list-group-item-danger">超温数量：<b ng-bind="warnings"></b></li>
+					   <li class="list-group-item list-group-item-default">客户编号：<a href="">3021</a></li>
+					  </ul>
 					   <br>
 					</div>
 				</div>
-				<img src="app/img/huosun.jpg" class="img-responsive">
-			   <br>
-				<h5 class="col-sm-1">
-				   <i class="fa fa-fw fa-hand-o-right"></i>
-				   <a href="#/goods-list/{{key}}">货品列表</a>
-				</h5>
+				<div class="col-lg-8">
+				<div style="height: 300px;" id="HSChart">
+				</div>
+				</div>
+				<div class="col-lg-2">
+					<h5 class="col-lg-8">
+					   <i class="fa fa-fw fa-hand-o-right"></i>
+					   <a href="#">货品列表</a>
+					   <ul>
+					     <li ng-repeat="bdata in batchData" ng-if="bdata.overTemperatureTimes > 0" ><a href="#/multi-query/{{bdata.key}}" class="text-danger" ng-bind="bdata.key"></a></li>
+	    <li ng-repeat="bdata in batchData" ng-if="bdata.overTemperatureTimes == 0"><a href="#/multi-query/{{bdata.key}}" class="text-info" ng-bind="bdata.key"></a></li>
+					   </ul>
+					</h5>
+				</div>
 			</div>
 		</tab>
 		</tabset>

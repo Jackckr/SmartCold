@@ -52,18 +52,18 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 	$scope.singleChart = function(data){
 		var lineChart = echarts.init(document.getElementById("chart"));
 	    // This will get the first returned node in the jQuery collection.
-    	$scope.time = [];
-    	$scope.temperature = [];
-    	$scope.warning = [];
+    	var time = [];
+    	var temperature = [];
+    	var warning = [];
     	angular.forEach(data.ananysis,function(item){
     		item.startTime = $scope.dateToStr(new Date(Date.parse(item.startTime)));
     		item.endTime = $scope.dateToStr(new Date(Date.parse(item.endTime)));
     	})
     	angular.forEach(data.infos,function(item){
     		item.time = $scope.dateToStr(new Date(Date.parse(item.time)))
-    		$scope.time.push(item.time);
-    		$scope.temperature.push(item.temperature);
-    		$scope.warning.push(-9);
+    		time.push(item.time);
+    		temperature.push(item.temperature);
+    		warning.push(-9);
     	});
 	    	option = {
 				    tooltip : {
@@ -79,7 +79,7 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 				            splitLine: {
 				                show: false
 				            },
-				            data : $scope.time
+				            data : time
 				        }
 				    ],
 				    yAxis : [
@@ -98,7 +98,7 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 				        {
 				            name:'温度',
 				            type:'line',
-				            data:$scope.temperature,
+				            data:temperature,
 				        },
 				        {
 				            name: '警戒线',
@@ -115,6 +115,9 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 			lineChart.setOption(option);
 	  };
 	  
+	$scope.batchLoad = function(){
+		$scope.batchInfo();
+	}
 	$scope.batchInfo = function(){
 		url = "/i/singleInfo/findBatchByKey?key=" + $scope.key;
 		$scope.warnings = 0;
@@ -123,7 +126,65 @@ coldWeb.controller('multi-query', function ($rootScope, $scope, $cookies, $http 
 			angular.forEach($scope.batchData,function(item){
 				$scope.warnings += item.overTemperatureTimes >=1?1:0;
 			})
+			$scope.huosunChart();
 		});
+	}
+	
+	$scope.huosunChart = function(){
+		var hsChart = echarts.init(document.getElementById("HSChart"));
+		xData = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+		var temperature = [];
+		var loss = [];
+		for(i=0;i<12;i++){
+			temperature.push(Math.random() * 10);
+			loss.push(Math.random() * 100);
+		}
+		
+		option = {
+			    tooltip : {
+			        trigger: 'axis'
+			    },
+			    calculable : true,
+			    legend: {
+			        data:['温度','货损量']
+			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : xData
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            name : '温度',
+			            axisLabel : {
+			                formatter: '{value} °C'
+			            }
+			        },
+			        {
+			            type : 'value',
+			            name : '货损量',
+			            axisLabel : {
+			                formatter: '{value} kg'
+			            }
+			        }
+			    ],
+			    series : [
+			        {
+			            name:'货损量',
+			            type:'bar',
+			            yAxisIndex: 1,
+			            data:loss
+			        },
+			        {
+			            name:'温度',
+			            type:'line',
+			            data:temperature
+			        }
+			    ]
+			};
+		hsChart.setOption(option);
 	}
 	
 	$scope.load();
