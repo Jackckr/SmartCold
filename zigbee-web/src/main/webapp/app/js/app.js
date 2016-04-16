@@ -1,39 +1,52 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox', 
-                                         'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
+    'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table']);
 
-angular.element(document).ready(function($ngCookies) {
-	angular.bootstrap(document, ['ColdWeb']);
+angular.element(document).ready(function ($ngCookies) {
+    angular.bootstrap(document, ['ColdWeb']);
 });
-coldWeb.run(function(editableOptions) {
-  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+coldWeb.run(function (editableOptions, naviService) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+    naviService.setNAVI();
 });
 
-
-coldWeb.config(function($httpProvider) {
-	$httpProvider.interceptors.push(function ($q,$injector) {
+coldWeb.config(function ($httpProvider) {
+    $httpProvider.interceptors.push(function ($q, $injector) {
         return {
             'response': function (response) {
                 return response;
             },
             'responseError': function (rejection) {
-            	var modal = $injector.get('$Modal');
-            	modal.open({
-            		animation : true,
+                var modal = $injector.get('$Modal');
+                modal.open({
+                    animation: true,
                     templateUrl: 'app/template/error.html',
                     controller: 'error',
                     backdrop: true,
                     resolve: {
-                    	rejection : function() {
-                    		return rejection;
-                    	}
+                        rejection: function () {
+                            return rejection;
+                        }
                     }
                 });
-            	
+
                 return $q.reject(rejection);
             }
         };
     });
 });
+
+coldWeb.factory('naviService', ['$rootScope', '$state', function ($rootScope, $state) {
+    return {
+        setNAVI: function () {
+            $rootScope.toColdStorageList = function () {
+                $state.go('coldStoragelist', {});
+            };
+            $rootScope.toColdStorageComment = function (storageId) {
+                $state.go('coldStorageComment', {'storageId': storageId});
+            };
+        },
+    };
+}]);
 
 coldWeb.filter('objectCount', function () {
     return function (input) {
@@ -85,13 +98,13 @@ coldWeb.directive('snippet', function () {
     };
 });
 
-coldWeb.directive('activeLink', ['$location','$filter', function (location,filter) {
+coldWeb.directive('activeLink', ['$location', '$filter', function (location, filter) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs, controller) {
             var clazz = attrs.activeLink;
             var path = element.children().attr('href') + "";
-            path = filter('limitTo')(path,path.length - 1 ,1);
+            path = filter('limitTo')(path, path.length - 1, 1);
             scope.location = location;
             scope.$watch('location.path()', function (newPath) {
                 if (newPath.indexOf(path) > -1) {
@@ -104,46 +117,54 @@ coldWeb.directive('activeLink', ['$location','$filter', function (location,filte
     };
 }]);
 
-coldWeb.filter('sizeformat',function(){
-    return function(size){
-        if(size / (1024 * 1024 * 1024) > 1)
-            return (size/(1024*1024*1024)).toFixed(2)+'G';
-        else if(size / (1024*1024) > 1)
-            return (size/(1024*1024)).toFixed(2)+'M';
-        else if(size / 1024 > 1)
-            return (size/1024).toFixed(2)+'K';
+coldWeb.filter('sizeformat', function () {
+    return function (size) {
+        if (size / (1024 * 1024 * 1024) > 1)
+            return (size / (1024 * 1024 * 1024)).toFixed(2) + 'G';
+        else if (size / (1024 * 1024) > 1)
+            return (size / (1024 * 1024)).toFixed(2) + 'M';
+        else if (size / 1024 > 1)
+            return (size / 1024).toFixed(2) + 'K';
         else
-            return size+'B'
+            return size + 'B'
     }
 });
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise("/home");
     //index
-    $stateProvider.state('login',{
-    	url:'/login',
-    	controller: 'login',
+    $stateProvider.state('login', {
+        url: '/login',
+        controller: 'login',
         templateUrl: 'app/template/login.html'
-    }).state('home',{
-    	url:'/home',
-    	controller: 'home',
+    }).state('home', {
+        url: '/home',
+        controller: 'home',
         templateUrl: 'app/template/home.html'
-    }).state('search',{
-    	url:'/search',
-    	controller: 'search',
+    }).state('search', {
+        url: '/search',
+        controller: 'search',
         templateUrl: 'app/template/search.html'
-    }).state('info',{
-    	url:'/info/{id}',
-    	controller: 'info',
+    }).state('info', {
+        url: '/info/{id}',
+        controller: 'info',
         templateUrl: 'app/template/info.html'
-    }).state('multi-query',{
-    	url:'/multi-query/{key}',
-    	controller: 'multi-query',
-    	templateUrl: 'app/template/multi-query.html'
-    }).state('goods-list',{
-    	url:'/goods-list/{key}',
-    	controller: 'goods-list',
-    	templateUrl: 'app/template/goods-list.html'
+    }).state('multi-query', {
+        url: '/multi-query/{key}',
+        controller: 'multi-query',
+        templateUrl: 'app/template/multi-query.html'
+    }).state('goods-list', {
+        url: '/goods-list/{key}',
+        controller: 'goods-list',
+        templateUrl: 'app/template/goods-list.html'
+    }).state('coldStoragelist', {
+        url: '/coldStoragelist',
+        controller: 'coldStoragelist',
+        templateUrl: 'app/template/coldStoragelist.html'
+    }).state('coldStorageComment', {
+        url: '/coldStorageComment/:storageID',
+        controller: 'coldStorageComment',
+        templateUrl: 'app/template/coldStorageComment.html'
     });
-    
+
 });
