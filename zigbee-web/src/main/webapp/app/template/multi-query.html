@@ -1,98 +1,92 @@
+<div style="width:100%;height: 150px;border:1px solid #000;" class="bs-example">
+</div>
 <div>
-	<h5 class="box-title">
-		<b class="text-info" ng-bind="key"></b>查询
-	</h5>
 	<section class="content">
-		<div class="row">
-			<div class="col-xs-12 pull-right">
-				<div class="nav-tabs-custom">
-					<ul class="nav nav-pills nav-tabs pull-right">
-						<li class="{{item == 'fan'?'active':''}}" data-toggle="tab"
-							href="#batch"><a ng-click="batchInfo()"><strong>批次信息</strong></a></li>
-						<li class="active" data-toggle="tab" href="#single"><a><strong>单件查询</strong></a></li>
-					</ul>
-					<div class="tab-content">
-						<!-- 单件查询 -->
-						<div class="tab-pane active" id="single">
-							<div class="col-sm-12">
-								<div class="tabbable tabs-below">
-									<div class="tab-content">
-										<div id="wendu" class="tab-pane in active">
-											<div class="col-sm-12">
-												<div class="chart">
-													<canvas id="areaChart" style="height: 250px"></canvas>
-												</div>
-											</div>
-										</div>
-										<div id="zhuizong" class="tab-pane">
-											<div class="row">
-												<div class="col-md-12">
-													<!-- The time line -->
-													<ul class="timeline">
-														<!-- timeline time label -->
-														<li class="time-label"><span class="bg-blue">
-																物品开始运输 </span></li>
-														<!-- /.timeline-label -->
-														<!-- timeline item -->
-														<li ng-repeat="item in singleInfo.ananysis"><i
-															class="fa fa-truck bg-blue"></i>
-															<div class="timeline-item">
-																<span class="time col-sm-12"><i
-																	class="fa fa-clock-o"></i> {{item.startTime}} --
-																	{{item.endTime}}</span>
-																<div class="timeline-body">
-																	<p>{{item.location}},温度&nbsp;({{item.lowestTemperature}}°C
-																		~ {{item.highestTemperature}}°C)</p>
-																</div>
-															</div></li>
-														<!-- END timeline item -->
-														<li><i class="fa fa-clock-o bg-gray"></i></li>
-													</ul>
-												</div>
-												<!-- /.col -->
-											</div>
-											<!-- /.row -->
-										</div>
-										<div id="fenxi" class="tab-pane" style="min-height: 250px;">
-											<h5><strong class="col-sm-1">货物流转：</strong>{{singleInfo.ananysis.length}}个冷藏点</h5>
-											<h5><strong class="col-sm-1">冷藏存储：</strong>36小时</h5>
-											<h5><strong class="col-sm-1">超标时长：</strong>9小时</h5>
-											<br>
-											<p>
-												<b class="text-primary">分析结果:</b><b class="text-danger">可能存在变质风险。</b>
-											</p>
-										</div>
-									</div>
-									<br> <br>
-									<ul class="nav nav-tabs">
-										<li class="active"><a data-toggle="tab" href="#wendu">温度</a></li>
-										<li><a data-toggle="tab" href="#zhuizong">追踪</a></li>
-										<li><a data-toggle="tab" href="#fenxi">分析</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!-- 批号查询 -->
-						<div class="tab-pane" id="batch" style="min-height: 300px;">
-							<div class="col-sm-12">
-								<div class="row">
-								   <h5><strong class="col-sm-1">批次数量：</strong><b ng-bind="batchData.length"></b></h5>
-								   <h5><strong class="col-sm-1">超温数量：</strong><b ng-bind="warnings"></b></h5>
-								   <h5><strong class="col-sm-1">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</strong><b ng-bind="'未知'"></b></h5>
-								   <h5><strong class="col-sm-1">生&nbsp;&nbsp;&nbsp;产&nbsp;&nbsp;商：</strong><b ng-bind="'未知'"></b></h5>
-								   <h5><strong class="col-sm-1">客户编号：</strong><a href="">3021</a></h5>
-								   <br>
-								</div>
-							</div>
-							<img src="app/img/huosun.jpg" class="img-responsive">
-						   <br>
-							<h5 class="col-sm-1">
-							   <i class="fa fa-fw fa-hand-o-right"></i>
-							   <a href="#/goods-list/{{key}}">货品列表</a>
-							</h5>
+		<div style="width:80%;text-align:center;margin:auto;">
+		<div class="panel panel-default">
+  		<div class="panel-body">
+		<tabset>
+		<tab heading="单件查询">
+		  <div class="tab-pane active">
+		    <tabset  class="nav nav-pills nav-stacked pull-right col-lg-12">
+		      <tab heading="温度">
+		       <div id="wendu" class="tab-pane in active">
+					<div class="col-lg-12">
+						<div id="chart" style="height:250px;">
 						</div>
 					</div>
 				</div>
+		      </tab>
+		      <tab heading="追踪">
+		        <div id="zhuizong" class="tab-pane">
+					<div class="row">
+						<div class="col-lg-12">
+							<!-- The time line -->
+							<ul class="timeline">
+								<!-- timeline time label -->
+								<li class="time-label"><span class="bg-blue">
+										物品开始运输 </span></li>
+								<li ng-repeat="item in singleInfo.ananysis"><i
+									class="fa fa-truck bg-blue"></i>
+									<div class="timeline-badge {{item.highestTemperature>-9?'down':'up'}}">
+									<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+									</div>
+							         <div class="timeline-panel">
+							           <div class="timeline-heading">
+							             <h4 class="timeline-title">{{item.startTime}}</h4>
+							           </div>
+							           <div class="timeline-body"><!---Time Line Body&Content--->
+							             <p>{{item.location}},温度&nbsp;({{item.lowestTemperature}}°C
+												~ {{item.highestTemperature}}°C)</p>
+							           </div>
+							         </div>
+								</li>
+								<!-- END timeline item -->
+								<li><i class="fa fa-clock-o bg-gray"></i></li>
+							</ul>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+		      </tab>
+		      <tab heading="分析">
+		        <div id="fenxi" class="tab-pane" style="min-height: 250px;">
+					<h5><strong class="col-sm-1">货物流转：</strong>{{singleInfo.ananysis.length}}个冷藏点</h5>
+					<h5><strong class="col-sm-1">冷藏存储：</strong>36小时</h5>
+					<h5><strong class="col-sm-1">超标时长：</strong>9小时</h5>
+					<br>
+					<p>
+						<b class="text-primary">分析结果:</b><b class="text-danger">可能存在变质风险。</b>
+					</p>
+				</div>
+		      </tab>
+		    </tabset>
+		</div>
+		</tab>
+		<tab heading="批次查询">
+		  <div class="tab-pane" id="batch" style="min-height: 300px;">
+				<div class="col-sm-12">
+					<div class="row">
+					   <h5><strong class="col-sm-1">批次数量：</strong><b ng-bind="batchData.length"></b></h5>
+					   <h5><strong class="col-sm-1">超温数量：</strong><b ng-bind="warnings"></b></h5>
+					   <h5><strong class="col-sm-1">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</strong><b ng-bind="'未知'"></b></h5>
+					   <h5><strong class="col-sm-1">生&nbsp;&nbsp;&nbsp;产&nbsp;&nbsp;商：</strong><b ng-bind="'未知'"></b></h5>
+					   <h5><strong class="col-sm-1">客户编号：</strong><a href="">3021</a></h5>
+					   <br>
+					</div>
+				</div>
+				<img src="app/img/huosun.jpg" class="img-responsive">
+			   <br>
+				<h5 class="col-sm-1">
+				   <i class="fa fa-fw fa-hand-o-right"></i>
+				   <a href="#/goods-list/{{key}}">货品列表</a>
+				</h5>
 			</div>
+		</tab>
+		</tabset>
+		</div>
+		</div>
+		</div>
 	</section>
 </div>

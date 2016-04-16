@@ -118,12 +118,16 @@ coldWeb.filter('sizeformat',function(){
 });
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise("/search");
+	$urlRouterProvider.otherwise("/home");
     //index
     $stateProvider.state('login',{
     	url:'/login',
     	controller: 'login',
         templateUrl: 'app/template/login.html'
+    }).state('home',{
+    	url:'/home',
+    	controller: 'home',
+        templateUrl: 'app/template/home.html'
     }).state('search',{
     	url:'/search',
     	controller: 'search',
