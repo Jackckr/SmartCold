@@ -12,7 +12,6 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<!-- <property name="url" value="jdbc:mysql://smartcold.mysql.rds.aliyuncs.com:3306/zigbee?characterEncoding=UTF8" /> -->
 		<property name="url" value="jdbc:mysql://127.0.0.1:3306/zigbee?characterEncoding=UTF8" />
 		<property name="username" value="zigbee" />
 		<property name="password" value="zb12qwaszx" />

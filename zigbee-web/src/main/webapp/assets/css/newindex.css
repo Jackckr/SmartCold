@@ -120,7 +120,7 @@
     width: 1000px;
     height: 100%;
     margin: 0 auto;
-    padding-top: 104px;
+    padding-top: 34px;
 
     text-align: center;
 }
@@ -726,24 +726,24 @@
 
 .i_database
 {
-    background-image: url(../new/manager_01.pngg');
+    background-image: url('../img/manager_01.png');
 }
 .i_push
 {
-    background-image: url(../new/manager_02.pngg');
+    background-image: url('../img/manager_02.png');
 }
 
 .i_repair
 {
-    background-image: url(../new/manager_03.pngg');
+    background-image: url('../img/manager_03.png');
 }
 .i_update
 {
-    background-image: url(../new/manager_04.pngg');
+    background-image: url('../img/manager_04.png');
 }
 .i_bigdata
 {
-    background-image: url(../new/manager_05.pngg');
+    background-image: url('../img/manager_05.png');
 }
 
 /*video*/
