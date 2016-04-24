@@ -71,7 +71,6 @@ coldWeb.controller('coldStorageMap', function ($scope, $location, $stateParams) 
 
         //关键字搜索
         $scope.search = function () {
-            alert("Hello");
             var keyword = $("#keyword").get(0).value;
             var local = new BMap.LocalSearch(map, {
                 renderOptions: {map: map}
