@@ -1,16 +1,18 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location) {
+coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state) {
 
-    $scope.goColdStorageDetail = function () {
+    $scope.goColdStorageDetail = function (storageID) {
+        console.log(storageID);
         document.getElementById('detail').setAttribute("class", "active");
         document.getElementById('coldStorageDetail').setAttribute("class", "tab-pane active");
         document.getElementById('comment').removeAttribute("class");
         document.getElementById('coldStorageComment').removeAttribute("class");
         document.getElementById('coldStorageComment').setAttribute("class", "tab-pane");
     }
-    $scope.goColdStorageComment = function () {
+    $scope.goColdStorageComment = function (storageID) {
+        console.log(storageID);
         document.getElementById('comment').setAttribute("class", "active");
         document.getElementById('coldStorageComment').setAttribute("class", "tab-pane active");
         document.getElementById('detail').removeAttribute("class");
