@@ -17,12 +17,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Ionicons -->
     <link rel="stylesheet" href="assets/css/ionicons.min.css" >
     <!-- Theme style -->
-    <link rel="stylesheet" href="assets/css/AdminLTE.min.css" >
+    <link rel="stylesheet" href="assets/css/AdminLTE.css" >
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link rel="stylesheet" href="assets/css/skins/skin-blue.min.css" >
+    <link rel="stylesheet" href="assets/css/skins/diaodiao-skin.css" >
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,7 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-blue sidebar-mini text-white">
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -83,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="dropdown messages-menu">
                 <!-- Menu toggle button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-envelope-o"></i>
+                  <i class="fa fa-envelope-o" style="color:#fff"></i>
                   <span class="label label-success">4</span>
                 </a>
                 <ul class="dropdown-menu">
@@ -116,7 +116,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="dropdown notifications-menu">
                 <!-- Menu toggle button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-bell-o"></i>
+                  <i class="fa fa-bell-o" style="color:#fff"></i>
                   <span class="label label-warning">10</span>
                 </a>
                 <ul class="dropdown-menu">
@@ -138,7 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="dropdown tasks-menu">
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-flag-o"></i>
+                  <i class="fa fa-flag-o" style="color:#fff"></i>
                   <span class="label label-danger">9</span>
                 </a>
                 <ul class="dropdown-menu">
@@ -219,17 +219,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.search form -->
 
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu" ng-if="user.role == 1">
+          <ul class="sidebar-menu text-white" ng-if="user.role == 1">
             <li class="header">导航</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>制冷系统</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-link text-white"></i> <span>制冷系统</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
                   <li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i>{{compressor.name}}</a></li>
               </ul>
             </li>
             <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-link text-white"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
                   <li ng-repeat="storage in mystorages"><a href="#" ng-click="openColdDiv(storage.id)"><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu" style="display: none;">
@@ -260,16 +260,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <div class="content-wrapper body-color">
         <!-- Main content -->
-        <div class="main-content">
+        <div class="main-content body-color text-white">
             <div  ui-view>
             </div>
 	     </div>
       </div><!-- /.content-wrapper -->
 
       <!-- Main Footer -->
-      <footer class="main-footer">
+      <footer class="main-footer text-white">
         <!-- Default to the left -->
         <strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.</strong>. 备案号：沪ICP备 16004753
       </footer>
