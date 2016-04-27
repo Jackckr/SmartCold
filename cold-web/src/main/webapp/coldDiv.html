@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<title>multiDiv</title>
+<script type="text/javascript" src="bower_components/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="bower_components/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.js"></script>
+<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui-1.10.4.custom/css/base/jquery-ui-1.10.4.custom.css"/>
+<script type="text/javascript" language="javascript">
+$(document).ready(function(){
+	$.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+// get url params
+var storageID = $.getUrlParam('storageID');
+// init lengku array
+$.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+storageID,function(data,status){
+	console.log("imgurl: "+data+"\nstatus: "+status);
+	$("body").css("background","url("+data+")");
+});
+$.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status){
+    console.log("Data: "+JSON.stringify(data)+"\nstatus: "+status);
+    console.log("Datalength: "+data.length+" Datasid1: "+data[0].sid);
+    var lengku = {rdc:[]};
+    var divNum = 0;
+    divNum = data.length;
+    for(var i=0;i<divNum;i++)
+        { 
+    	lengku.rdc[i] = data[i];
+    	console.log("lengku11111111"+lengku.rdc[i].sid);
+        }
+    console.log("lengku"+JSON.stringify(lengku));
+    if(lengku.rdc!=null)
+    {
+    if(lengku.rdc[0].div_x=="")
+    {
+      console.log("divNum"+divNum);
+      for(var i=0;i<divNum;i++)
+    		$("body").append('<div style="border:1px solid;position:absolute;width:73px;height:74px;top:'+(80+i*90)+'px;left:0px;background-color:red;" id="'+lengku.rdc[i].sid+'"><font size="1">传感器id: '+lengku.rdc[i].sid+ '</font><br><font size="1">冷库id: '+lengku.rdc[i].rdcid+'</font><br><font size="1">温度: '+lengku.rdc[i].wd+'°C</font><br><font size="1">湿度: '+lengku.rdc[i].shd+'%RH</font></div>');
+      for(var j=0;j<divNum;j++)
+      {
+            $("#"+lengku.rdc[j].sid).draggable({
+    			start: function() {
+    				console.log("start");
+    				},
+    			drag: function() {
+    				console.log("dragging");
+    				},
+    			stop: function(event,ui) {        
+    			console.log("stop");
+    			div_x = ui.offset.top;
+    			div_y = ui.offset.left;	
+                console.log("("+div_x+","+div_y+")");			
+    			}
+    			});		
+    	}
+    }else{
+    	$("#saveBtn").hide();
+        for(var i=0;i<divNum;i++)
+        	$("body").append('<div style="border:1px solid;position:absolute;width:73px;height:74px;top:'+(80+i*90)+'px;left:0px;background-color:red;" id="'+lengku.rdc[i].sid+'"><font size="1">传感器id: '+lengku.rdc[i].sid+ '</font><br><font size="1">冷库id: '+lengku.rdc[i].rdcid+'</font><br><font size="1">温度: '+lengku.rdc[i].wd+'°C</font><br><font size="1">湿度: '+lengku.rdc[i].shd+'%RH</font></div>');
+              }
+    }else{
+    	$("#saveBtn").hide();
+    	alert("数据库中没有该冷库的传感器信息!");
+    }
+    $("#saveBtn").click(function(){
+        if(window.confirm("位置固定后不可再改变，确定请继续")){      					  
+    					  console.log("i am sure");
+    					  $("#creatDiv").attr('disabled',true);
+    					  $("#saveBtn").attr('disabled',true);
+    					  $("div").draggable("disable");
+                          var coodr = "";					  
+    					  for(var k=0;k<divNum;k++)
+    					  {
+    					      lengku.rdc[k].div_x = $("#"+lengku.rdc[k].sid).offset().top;
+    						  lengku.rdc[k].div_y = $("#"+lengku.rdc[k].sid).offset().left;
+    						  coodr = coodr+"传感器"+lengku.rdc[k].sid+"的坐标为:("+lengku.rdc[k].div_x+","+lengku.rdc[k].div_y+")";
+    						$.get("/i/rdcSensor/updateConfigBySID?sid="+lengku.rdc[k].sid+"&div_x="+lengku.rdc[k].div_x+"&div_y="+lengku.rdc[k].div_y,function(data,status){
+    							console.log("updateConfigData: "+data+"\nstatus: "+status);
+    						});
+                          }					  
+    					  }else{
+    					  console.log("i am not");
+    					  $("#creatDiv").attr('disabled',true);
+    					  $("#saveBtn").attr('disabled',false);
+    					  }
+        });
+  });
+});
+</script>
+</head>
+
+<body>
+<button id ="saveBtn">保存配置</button>
+</body>
+</html>

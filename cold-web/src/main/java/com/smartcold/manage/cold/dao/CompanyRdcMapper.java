@@ -12,6 +12,8 @@ public interface CompanyRdcMapper {
     int insertSelective(CompanyRdc record);
 
     CompanyRdc selectByPrimaryKey(Integer id);
+    
+    CompanyRdc selectByRdcId(Integer rdcid);
 
     int updateByPrimaryKeySelective(CompanyRdc record);
 

@@ -65,23 +65,28 @@ coldWeb.factory('userService', ['$rootScope', '$state', function ($rootScope, $s
         setStorage: function (user) {
             $rootScope.compressors = [{'name': "压缩机组", 'id': 0}, {'name': "风机", 'id': 1}, {'name': "拓扑",'id': 2}];
             $rootScope.toMyCompressor = function (compressor) {
-                if (compressor === 0) {
+                if (compressor === 1) {
                     $state.go('compressorPressure', {'compressor': compressor});
-                } else if (compressor === 1) {
-                    $state.go('compressorBlower', {'compressor': compressor});
                 } else if (compressor === 2) {
+                    $state.go('compressorBlower', {'compressor': compressor});
+                } else if (compressor === 3) {
                     $state.go('about', {'compressor': compressor});
                 }
             };
-            $rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 0}, {'name': "上海-浦东-#2",'id': 1}, {'name': "北京-五环-#1", 'id': 2}];
+            $rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 1}, {'name': "上海-浦东-#2",'id': 2}, {'name': "北京-五环-#1", 'id': 3}];
+//      xuyanan coldStorageDiv.html - -
+            $rootScope.openColdDiv = function (storageID){
+            	console.log("openColdDiv: "+storageID);
+            	$state.go('coldStorageDiv',{'storageID': storageID});
+            }
             $rootScope.toMyStorage = function (type, storageID) {
                 console.log(type);
                 console.log(storageID);
-                if (type === 0) {
+                if (type === 1) {
                     $state.go('coldStorageTemper', {'storageID': storageID});
-                } else if (type === 1) {
+                } else if (type === 2) {
                 $state.go('coldStorageDoor', {'storageID': storageID});
-                      } else if (type === 2) {
+                      } else if (type === 3) {
                 $state.go('coldStorageInOutGoods', {'storageID': storageID});
                              }
                 };
@@ -236,6 +241,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/compressorBlower/:storageID',
         controller: 'compressorBlower',
         templateUrl: 'app/template/compressorBlower.html'
+    }).state('coldStorageDiv', {
+        url: '/coldStorageDiv/:storageID',
+        controller: 'coldStorageDiv',
+        templateUrl: 'app/template/coldStorageDiv.html'
     });
 
 });

@@ -5,10 +5,11 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="companyid" property="companyid" jdbcType="INTEGER" />
     <result column="rdcid" property="rdcid" jdbcType="INTEGER" />
+    <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
     <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, companyid, rdcid, addtime
+    id, companyid, rdcid, imgurl, addtime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.smartcold.manage.cold.entity.CompanyRdc" >
     insert into CompanyRdc (id, companyid, rdcid, 
-      addtime)
+      imgurl, addtime)
     values (#{id,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER}, 
-      #{addtime,jdbcType=TIMESTAMP})
+      #{imgurl,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.CompanyRdc" >
     insert into CompanyRdc
@@ -37,6 +38,9 @@
       </if>
       <if test="rdcid != null" >
         rdcid,
+      </if>
+      <if test="imgurl != null" >
+        imgurl,
       </if>
       <if test="addtime != null" >
         addtime,
@@ -52,6 +56,9 @@
       <if test="rdcid != null" >
         #{rdcid,jdbcType=INTEGER},
       </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
       <if test="addtime != null" >
         #{addtime,jdbcType=TIMESTAMP},
       </if>
@@ -66,6 +73,9 @@
       <if test="rdcid != null" >
         rdcid = #{rdcid,jdbcType=INTEGER},
       </if>
+      <if test="imgurl != null" >
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
       <if test="addtime != null" >
         addtime = #{addtime,jdbcType=TIMESTAMP},
       </if>
@@ -76,17 +86,22 @@
     update CompanyRdc
     set companyid = #{companyid,jdbcType=INTEGER},
       rdcid = #{rdcid,jdbcType=INTEGER},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
       addtime = #{addtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <!--*********************************************************************************-->
-  <!--xuyanan:myself of function-->
-  <!--*********************************************************************************-->
-  <select id="findUserByName" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <!-- self -->
+  <select id="selectByCompId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from CompanyRdc
-    where companyid = #{companyid ,jdbcType=INTEGER}
+    where companyid = #{companyid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByRdcId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from CompanyRdc
+    where rdcid = #{rdcid,jdbcType=INTEGER}
   </select>
 </mapper>

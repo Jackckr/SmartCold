@@ -9,6 +9,8 @@ public class CompanyRdc {
 
     private Integer rdcid;
 
+    private String imgurl;
+    
     private Date addtime;
 
     public Integer getId() {
@@ -42,4 +44,14 @@ public class CompanyRdc {
     public void setAddtime(Date addtime) {
         this.addtime = addtime;
     }
+
+	public String getImgurl()
+	{
+		return imgurl;
+	}
+
+	public void setImgurl(String imgurl)
+	{
+		this.imgurl = imgurl;
+	}
 }

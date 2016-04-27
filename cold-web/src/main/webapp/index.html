@@ -231,7 +231,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
-                  <li ng-repeat="storage in mystorages"><a href="" ><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
+                  <li ng-repeat="storage in mystorages"><a href="#" ng-click="openColdDiv(storage.id)"><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu" style="display: none;">
                       <li><a href="#" ng-click="toMyStorage(0, storage.id)"><i class="fa fa-circle-o"></i> 温度</a></li>
                       <li><a href="#" ng-click="toMyStorage(1, storage.id)"><i class="fa fa-circle-o"></i> 门开关</a></li>
@@ -316,6 +316,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/app.js"></script>
 <script src="app/js/controller-base.js"></script>
 <script src="app/js/myColdStorage.js"></script>
+<script src="app/js/coldStorageDiv.js"></script>
 <script src="app/js/coldStorageMap.js"></script>
 <script src="app/js/coldStorageMonitor.js"></script>
 <script src="app/js/coldStorageDoor.js"></script>
