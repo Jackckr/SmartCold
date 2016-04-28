@@ -23,7 +23,8 @@ $.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+storageID,function(data,status){
 });
 $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status){
     console.log("Data: "+JSON.stringify(data)+"\nstatus: "+status);
-    console.log("Datalength: "+data.length+" Datasid1: "+data[0].sid);
+    if(data.length!=0)
+          console.log("Datalength: "+data.length+" Datasid1: "+data[0].sid);
     var lengku = {rdc:[]};
     var divNum = 0;
     divNum = data.length;
@@ -33,7 +34,7 @@ $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status
     	console.log("lengku11111111"+lengku.rdc[i].sid);
         }
     console.log("lengku"+JSON.stringify(lengku));
-    if(lengku.rdc!=null)
+    if(data.length!=0)
     {
     if(lengku.rdc[0].div_x=="")
     {
@@ -64,7 +65,7 @@ $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status
               }
     }else{
     	$("#saveBtn").hide();
-    	alert("数据库中没有该冷库的传感器信息!");
+//    	alert("数据库中没有该冷库的传感器信息!");
     }
     $("#saveBtn").click(function(){
         if(window.confirm("位置固定后不可再改变，确定请继续")){      					  
