@@ -59,7 +59,7 @@ $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status
     }else{
     	$("#saveBtn").hide();
         for(var i=0;i<divNum;i++)
-        	$("body").append('<div style="border:1px solid;position:absolute;width:73px;height:74px;top:'+(80+i*90)+'px;left:0px;background-color:red;" id="'+lengku.rdc[i].sid+'"><font size="1">传感器id: '+lengku.rdc[i].sid+ '</font><br><font size="1">冷库id: '+lengku.rdc[i].rdcid+'</font><br><font size="1">温度: '+lengku.rdc[i].wd+'°C</font><br><font size="1">湿度: '+lengku.rdc[i].shd+'%RH</font></div>');
+        	$("body").append('<div style="border:1px solid;position:absolute;width:73px;height:80px;top:'+lengku.rdc[i].div_x+'px;left:'+lengku.rdc[i].div_y+'px;background-color:red;" id="'+lengku.rdc[i].sid+'"><font size="1">传感器id: '+lengku.rdc[i].sid+ '</font><br><font size="1">冷库id: '+lengku.rdc[i].rdcid+'</font><br><font size="1">温度: '+lengku.rdc[i].wd+'°C</font><br><font size="1">湿度: '+lengku.rdc[i].shd+'%RH</font></div>');
               }
     }else{
     	$("#saveBtn").hide();
