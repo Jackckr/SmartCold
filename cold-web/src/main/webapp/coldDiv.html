@@ -39,7 +39,7 @@ $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status
     {
       console.log("divNum"+divNum);
       for(var i=0;i<divNum;i++)
-    		$("body").append('<div style="border:1px solid;position:absolute;width:73px;height:74px;top:'+(80+i*90)+'px;left:0px;background-color:red;" id="'+lengku.rdc[i].sid+'"><font size="1">传感器id: '+lengku.rdc[i].sid+ '</font><br><font size="1">冷库id: '+lengku.rdc[i].rdcid+'</font><br><font size="1">温度: '+lengku.rdc[i].wd+'°C</font><br><font size="1">湿度: '+lengku.rdc[i].shd+'%RH</font></div>');
+    		$("body").append('<div style="position:absolute;width:130px;height:50px;top:'+(80+i*90)+'px;left:0px;" id="'+lengku.rdc[i].sid+'"><table border="0"><tr><td bgcolor="2926DF"><font size="1">SID: '+lengku.rdc[i].sid+ '</font></td><td bgcolor="2926DF"><font size="1">RdcID: '+lengku.rdc[i].rdcid+'</font></td></tr><tr><td bgcolor="D2E9E9"><font size="1">温度: '+lengku.rdc[i].wd+'°C</font></td><td bgcolor="D2E9E9"><font size="1">湿度: '+lengku.rdc[i].shd+'%</font></td></tr></table></div>');
       for(var j=0;j<divNum;j++)
       {
             $("#"+lengku.rdc[j].sid).draggable({
@@ -60,7 +60,7 @@ $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status
     }else{
     	$("#saveBtn").hide();
         for(var i=0;i<divNum;i++)
-        	$("body").append('<div style="border:1px solid;position:absolute;width:73px;height:80px;top:'+lengku.rdc[i].div_x+'px;left:'+lengku.rdc[i].div_y+'px;background-color:red;" id="'+lengku.rdc[i].sid+'"><font size="1">传感器id: '+lengku.rdc[i].sid+ '</font><br><font size="1">冷库id: '+lengku.rdc[i].rdcid+'</font><br><font size="1">温度: '+lengku.rdc[i].wd+'°C</font><br><font size="1">湿度: '+lengku.rdc[i].shd+'%RH</font></div>');
+        	$("body").append('<div style="position:absolute;width:130px;height:50px;top:'+lengku.rdc[i].div_x+'px;left:'+lengku.rdc[i].div_y+'px" id="'+lengku.rdc[i].sid+'"><table border="0"><tr><td bgcolor="2926DF"><font size="1">SID: '+lengku.rdc[i].sid+ '</font></td><td bgcolor="2926DF"><font size="1">RdcID: '+lengku.rdc[i].rdcid+'</font></td></tr><tr><td bgcolor="D2E9E9"><font size="1">温度: '+lengku.rdc[i].wd+'°C</font></td><td bgcolor="D2E9E9"><font size="1">湿度: '+lengku.rdc[i].shd+'%</font></td></tr></table></div>');
               }
     }else{
     	$("#saveBtn").hide();
