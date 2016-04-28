@@ -1528,6 +1528,9 @@ a:focus {
 .box.box-primary {
   border-top-color: #3c8dbc;
 }
+.box.box-gray {
+  border-top-color: #d2d6de !important;
+}
 .box.box-info {
   border-top-color: #00c0ef;
 }
@@ -1589,10 +1592,22 @@ a:focus {
 .box.box-solid.box-primary {
   border: 1px solid #3c8dbc;
 }
+.box.box-solid.box-gray {
+  border: 1px solid #d2d6de !important;
+}
 .box.box-solid.box-primary > .box-header {
   color: #ffffff;
   background: #3c8dbc;
   background-color: #3c8dbc;
+}
+.box.box-solid.box-gray > .box-header {
+  color: #ffffff;
+  background: #d2d6de !important;
+  background-color: #d2d6de !important;
+}
+.box.box-solid.box-gray > .box-header a,
+.box.box-solid.box-gray > .box-header .btn {
+  color: #ffffff;
 }
 .box.box-solid.box-primary > .box-header a,
 .box.box-solid.box-primary > .box-header .btn {
@@ -4192,7 +4207,7 @@ table.text-center th {
   color: #fff !important;
 }
 .bg-gray {
-  color: #000;
+  color: #fff;
   background-color: #d2d6de !important;
 }
 .bg-gray-light {
