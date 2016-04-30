@@ -709,12 +709,16 @@
 .i_push,
 .i_repair,
 .i_update,
-.i_bigdata
+.i_bigdata,
+.i_ruileng,
+.i_ruilengyun,
+.i_ruiku,
+.i_lengku360
 {
     display: block;
 
-    width: 96px;
-    height: 72px;
+    width: 156px;
+    height: 122px;
     margin-bottom: 32px;
 
     background-repeat: no-repeat;
@@ -744,6 +748,22 @@
 .i_bigdata
 {
     background-image: url('../img/manager_05.png');
+}
+.i_ruileng
+{
+    background-image: url('../../app/img/ruileng.png');
+}
+.i_ruilengyun
+{
+    background-image: url('../../app/img/ruilengyun.png');
+}
+.i_ruiku
+{
+    background-image: url('../../app/img/ruiku.png');
+}
+.i_lengku360
+{
+    background-image: url('../../app/img/lengku360.png');
 }
 
 /*video*/
