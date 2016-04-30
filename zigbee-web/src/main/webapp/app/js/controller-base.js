@@ -144,7 +144,3 @@ coldWeb.controller('info', function ($scope, $location, $stateParams, $http) {
 coldWeb.controller('login', function ($scope, $location,$window) {
 	
 });
-
-coldWeb.controller('home', function ($rootScope, $scope, $cookies, $http ,$location,$window, $state) {
-	
-});

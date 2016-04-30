@@ -2,7 +2,6 @@
  * Created by sunqiunian on 16/2/26.
  */
 coldWeb.controller('coldStorageMap', function ($scope, $location, $stateParams, $http) {
-    console.log($stateParams.storageID);
 
     // 获取当前冷库的列表
     $http.get('/i/rdc/findRdcList').success(function (data) {
@@ -61,7 +60,6 @@ coldWeb.controller('coldStorageMap', function ($scope, $location, $stateParams, 
                     marker.addEventListener("click", function () {
                         this.closeInfoWindow(infowindow);
                         alert("去查看冷库详情");
-                        $scope.goColdStorageDetail($stateParams.rdcID);
                     });
                 } else {
                     //alert("您选择地址没有解析到结果!");
