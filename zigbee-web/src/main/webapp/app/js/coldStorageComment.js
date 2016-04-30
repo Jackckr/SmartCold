@@ -90,6 +90,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.rdcName = data[0].name;
             $scope.rdcAddress = data[0].address;
             var address = data[0].address;
+            var name = data[0].name;
 
             //创建Map实例
             var map = new BMap.Map("mapChart");
@@ -126,9 +127,8 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                     map.addOverlay(marker);
 
                     var content = "<table>";
-                    content = content + "<tr><td> 名称：浦东冷库</td></tr>";
-                    content = content + "<tr><td> 地点：上海市浦东新区</td></tr>";
-                    content = content + "<tr><td> 温度：-15℃</td></tr>";
+                    content = content + "<tr><td> 名称：" + name + "</td></tr>";
+                    content = content + "<tr><td> 地点：" + address + "</td></tr>";
                     content += "</table>";
                     var infowindow = new BMap.InfoWindow(content);
                     marker.addEventListener("onmouseover", function () {

@@ -34,30 +34,22 @@ coldWeb.controller('coldStorageMap', function ($scope, $location, $stateParams, 
         for (var i = 0; i < data.length; i++) {
             // 创建地址解析器实例
             var myGeo = new BMap.Geocoder();
+            var name = data[i].name;
+            var address = data[i].address;
             // 将地址解析结果显示在地图上,并调整地图视野
             myGeo.getPoint(data[i].address, function (point) {
                 if (point) {
                     //设置标注的图标
-                    var icon;
-                    if (parseInt(data[i].type) > 5) {
-                        //设置标注的图标
-                        icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
-                            anchor: new BMap.Size(9, 25),
-                            infoWindowAnchor: new BMap.Size(10, 0)
-                        });
-                    } else {
-                        //设置标注的图标
-                        icon = new BMap.Icon("../../assets/img/icon-green.jpg", new BMap.Size(100, 100), {
-                            anchor: new BMap.Size(9, 25),
-                            infoWindowAnchor: new BMap.Size(10, 0)
-                        });
-                    }
+                    icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
+                        anchor: new BMap.Size(9, 25),
+                        infoWindowAnchor: new BMap.Size(10, 0)
+                    });
                     var marker = new BMap.Marker(point, {icon: icon});
                     map.addOverlay(marker);
 
                     var content = "<table>";
-                    content = content + "<tr><td> 名称：data[i].name</td></tr>";
-                    content = content + "<tr><td> 地点：data[i].address</td></tr>";
+                    content = content + "<tr><td> 名称：" + name + "</td></tr>";
+                    content = content + "<tr><td> 地点：" + address + "</td></tr>";
                     content += "</table>";
                     var infowindow = new BMap.InfoWindow(content);
                     marker.addEventListener("onmouseover", function () {
