@@ -63,14 +63,12 @@ coldWeb.factory('userService', ['$rootScope', '$state', function ($rootScope, $s
             $rootScope.user = user;
         },
         setStorage: function (user) {
-            $rootScope.compressors = [{'name': "压缩机组", 'id': 0}, {'name': "风机", 'id': 1}, {'name': "拓扑",'id': 2}];
-            $rootScope.toMyCompressor = function (compressor) {
-                if (compressor === 1) {
-                    $state.go('compressorPressure', {'compressor': compressor});
-                } else if (compressor === 2) {
-                    $state.go('compressorBlower', {'compressor': compressor});
-                } else if (compressor === 3) {
-                    $state.go('about', {'compressor': compressor});
+            $rootScope.compressors = [{'name': "压缩机组", 'id': 0}, {'name': "风机", 'id': 1}];
+            $rootScope.toMyCompressor = function (compressorId) {
+                if (compressorId === 0) {
+                    $state.go('compressorPressure', {'compressor': compressorId});
+                } else if (compressorId === 1) {
+                    $state.go('compressorBlower', {'compressor': compressorId});
                 }
             };
             $rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 1}, {'name': "上海-浦东-#2",'id': 2}, {'name': "北京-五环-#1", 'id': 3}];

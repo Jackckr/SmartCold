@@ -9,10 +9,11 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
         // 冷库门开关监控
         $(function () {
             $(document).ready(function () {
+
                 Highcharts.setOptions({
-                    global: {
-                        useUTC: false
-                    }
+    /*                global: {
+                        //useUTC: false
+                    }*/
                 });
 
                 $('#storageDoorChart').highcharts({
@@ -32,7 +33,20 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
                                     series.addPoint([x, y], true, true);
                                 }, 1000);
                             }
-                        }
+                        },
+                        backgroundColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                            stops: [
+                                [0, 'rgb(210, 214, 222)'],
+                                [1, 'rgb(210, 214, 222)']
+                            ]
+                        },
+                        borderColor: '#d2d6de',
+                        borderWidth: 2,
+                        className: 'dark-container',
+                        plotBackgroundColor: 'rgba(210, 214, 222, .1)',
+                        plotBorderColor: '#d2d6de',
+                        plotBorderWidth: 1
                     },
                     title: {
                         text: '冷库门开关监控'

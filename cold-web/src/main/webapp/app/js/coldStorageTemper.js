@@ -90,7 +90,20 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                         series.addPoint([x, y], true, true);
                                 }, 5000);
                             }
-                        }
+                        },
+                        backgroundColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                            stops: [
+                                [0, 'rgb(210, 214, 222)'],
+                                [1, 'rgb(210, 214, 222)']
+                            ]
+                        },
+                        borderColor: '#d2d6de',
+                        borderWidth: 2,
+                        className: 'dark-container',
+                        plotBackgroundColor: 'rgba(210, 214, 222, .1)',
+                        plotBorderColor: '#d2d6de',
+                        plotBorderWidth: 1
                     },
                     title: {
                         text: '冷库温度实时监控'

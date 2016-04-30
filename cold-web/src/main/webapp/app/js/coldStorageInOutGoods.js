@@ -69,7 +69,6 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
             ]
         };
         barChart.setOption(barOption);
-
     }
     $scope.load();
 });
