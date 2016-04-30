@@ -21,8 +21,8 @@ coldWeb.controller('coldStorageMap', function ($scope, $location, $stateParams, 
         map.enableScrollWheelZoom();
 
         //添加缩略图控件
-        //map.addControl(new BMap.OverviewMapControl({isOpen:false,anchor:BMAP_ANCHOR_BOTTOM_RIGHT}));
-        map.addControl(new BMap.OverviewMapControl({isOpen: true})); //缩略地图控件，默认位于地图右下方，是一个可折叠的缩略地图
+        map.addControl(new BMap.OverviewMapControl({isOpen:false,anchor:BMAP_ANCHOR_BOTTOM_RIGHT}));
+        //map.addControl(new BMap.OverviewMapControl({isOpen: true})); //缩略地图控件，默认位于地图右下方，是一个可折叠的缩略地图
         //添加缩放平移控件
         map.addControl(new BMap.NavigationControl());
         //添加比例尺控件
@@ -32,56 +32,49 @@ coldWeb.controller('coldStorageMap', function ($scope, $location, $stateParams, 
         map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]}));     //2D图，卫星图   //左上角， 地图类型控件
 
         for (var i = 0; i < data.length; i++) {
-            var icon;
-            if (parseInt(data[i].type) > 5) {
-                //设置标注的图标
-                icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
-                    anchor: new BMap.Size(9, 25),
-                    infoWindowAnchor: new BMap.Size(10, 0)
-                });
-            } else {
-                //设置标注的图标
-                icon = new BMap.Icon("../../assets/img/icon-green.jpg", new BMap.Size(100, 100), {
-                    anchor: new BMap.Size(9, 25),
-                    infoWindowAnchor: new BMap.Size(10, 0)
-                });
-            }
+            // 创建地址解析器实例
+            var myGeo = new BMap.Geocoder();
+            // 将地址解析结果显示在地图上,并调整地图视野
+            myGeo.getPoint(data[i].address, function (point) {
+                if (point) {
+                    //设置标注的图标
+                    var icon;
+                    if (parseInt(data[i].type) > 5) {
+                        //设置标注的图标
+                        icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
+                            anchor: new BMap.Size(9, 25),
+                            infoWindowAnchor: new BMap.Size(10, 0)
+                        });
+                    } else {
+                        //设置标注的图标
+                        icon = new BMap.Icon("../../assets/img/icon-green.jpg", new BMap.Size(100, 100), {
+                            anchor: new BMap.Size(9, 25),
+                            infoWindowAnchor: new BMap.Size(10, 0)
+                        });
+                    }
+                    var marker = new BMap.Marker(point, {icon: icon});
+                    map.addOverlay(marker);
 
-            //设置标注的经纬度
-            var marker = new BMap.Marker(data[i].address, {icon: icon});
-            //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-            //把标注添加到地图上
-            map.addOverlay(marker);
-            var content = "<table>";
-            content = content + "<tr><td> 名称：浦东冷库</td></tr>";
-            content = content + "<tr><td> 地点：上海市浦东新区</td></tr>";
-            content = content + "<tr><td> 温度：-15℃</td></tr>";
-            content += "</table>";
-            var infowindow = new BMap.InfoWindow(content);
-            marker.addEventListener("onmouseover", function () {
-                this.openInfoWindow(infowindow);
-            });
-            marker.addEventListener("onmouseout", function () {
-                this.closeInfoWindow(infowindow);
-            });
-            marker.addEventListener("click", function () {
-                this.closeInfoWindow(infowindow);
-                alert("去查看冷库详情");
-            });
-        }
-
-        //点击地图，获取经纬度坐标
-        //map.addEventListener("click", function (e) {
-        //    document.getElementById("aa").innerHTML = "经度坐标：" + e.point.lng + " &nbsp;纬度坐标：" + e.point.lat;
-        //});
-
-        //关键字搜索
-        $scope.search = function () {
-            var keyword = $("#keyword").get(0).value;
-            var local = new BMap.LocalSearch(map, {
-                renderOptions: {map: map}
-            });
-            local.search(keyword);
+                    var content = "<table>";
+                    content = content + "<tr><td> 名称：data[i].name</td></tr>";
+                    content = content + "<tr><td> 地点：data[i].address</td></tr>";
+                    content += "</table>";
+                    var infowindow = new BMap.InfoWindow(content);
+                    marker.addEventListener("onmouseover", function () {
+                        this.openInfoWindow(infowindow);
+                    });
+                    marker.addEventListener("onmouseout", function () {
+                        this.closeInfoWindow(infowindow);
+                    });
+                    marker.addEventListener("click", function () {
+                        this.closeInfoWindow(infowindow);
+                        alert("去查看冷库详情");
+                        $scope.goColdStorageDetail($stateParams.rdcID);
+                    });
+                } else {
+                    //alert("您选择地址没有解析到结果!");
+                }
+            }, "");
         }
     });
 
