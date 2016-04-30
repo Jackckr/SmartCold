@@ -1,7 +1,7 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $element) {
+coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log) {
 
     function findRDCByRDCId(rdcID) {
         // 获取当前冷库的详情
@@ -13,9 +13,21 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             console.log("RdcDetail: " + data[0]);
             $scope.rdcName = data[0].name;
             $scope.rdcAddress = data[0].address;
-            $scope.score = (Math.random() + 4).toFixed(1);
-            $scope.userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
-            $scope.userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
+            if ($scope.score === undefined) {
+                $scope.score = (Math.random() + 4).toFixed(1);
+            }
+            if ($scope.userRecommendPercent === undefined) {
+                $scope.userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
+            }
+            if ($scope.userRecommendCount === undefined) {
+                $scope.userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
+            }
+            if ($scope.rdcPositionScore === undefined) {
+                $scope.rdcPositionScore = (Math.random() + 4).toFixed(1);
+                $scope.rdcFacility = (Math.random() + 4).toFixed(1);
+                $scope.rdcService = (Math.random() + 4).toFixed(1);
+                $scope.rdcHealth = (Math.random() + 4).toFixed(1);
+            }
         });
     }
 
@@ -144,4 +156,38 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         console.log("rdcID" + rdcID);
         $state.go('coldStorageComment', {"rdcID": rdcID});
     }
+
+
+    $scope.items = ['html5', 'jq', 'FE-演示平台'];
+    $scope.goComment = function (size) {  //打开模态
+        var modalInstance = $uibModal.open({
+            templateUrl: 'myModelContent.html',  //指向上面创建的视图
+            controller: 'ModalInstanceCtrl',// 初始化模态范围
+            size: size, //大小配置
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
+            }
+        })
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date())
+        })
+    }
 });
+
+coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) { //依赖于modalInstance
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+    $scope.ok = function () {
+        console.log($scope.commentContent);
+        $uibModalInstance.close($scope.commentContent); //关闭并返回当前选项
+    };
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel'); // 退出
+    }
+})

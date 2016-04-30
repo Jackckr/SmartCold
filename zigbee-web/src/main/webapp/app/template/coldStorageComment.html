@@ -29,26 +29,36 @@
                         <h6>该冷库位于{{rdcAddress}}.</h6>
                     </div>
                     <div class="col-lg-3" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;top:50px;left: 120px;" href="#">立即评价</a>
+                        <a class="btn btn-success" style="position: relative;top:50px;left: 120px;"
+                           ng-click="goComment()">立即评价</a>
                     </div>
                 </div>
                 <div class="row">
                     <!--<img src="app/img/banner.jpg" style="position:relative;left:50px;width:93%;height: 50%;">-->
                     <div class="col-lg-4">
-                        <img src="app/img/banner/pageBanner8.jpg" style="position:relative;left:40px;width:290px;height: 224px;">
+                        <img src="app/img/banner/pageBanner8.jpg"
+                             style="position:relative;left:40px;width:290px;height: 224px;">
                     </div>
                     <div class="col-lg-8">
                         <div class="row" style="position:relative;left:1px;">
-                            <img src="app/img/banner/pageBanner2.jpg" style="position:relative;left:30px;width:255px;height: 109px;">
-                            <img src="app/img/banner/pageBanner1.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner3.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner5.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner2.jpg"
+                                 style="position:relative;left:30px;width:255px;height: 109px;">
+                            <img src="app/img/banner/pageBanner1.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner3.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner5.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
                         </div>
                         <div class="row" style="position:relative;left:1px;top: 4px">
-                            <img src="app/img/banner/pageBanner7.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner6.jpg" style="position:relative;left:30px;width:255px;height: 109px;">
-                            <img src="app/img/banner/pageBanner4.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner9.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner7.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner6.jpg"
+                                 style="position:relative;left:30px;width:255px;height: 109px;">
+                            <img src="app/img/banner/pageBanner4.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner9.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
                         </div>
                     </div>
                 </div>
@@ -222,10 +232,10 @@
                                             <i class="icon-star-empty"></i>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span style="color: dodgerblue;font-size: 20px">4.6</span>/5分
+                                            <span style="color: dodgerblue;font-size: 20px">{{score}}</span>/5分
                                         </div>
                                         <div class="col-lg-3">
-                                            <span style="color: dodgerblue;font-size: 20px">98</span>%用户推荐
+                                            <span style="color: dodgerblue;font-size: 20px">{{userRecommendPercent}}</span>%用户推荐
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -235,21 +245,23 @@
                                 <div class="row">
                                     <div class="col-lg-8" style="position: relative;left: 10px;top: 15px;">
                                         <div class="col-lg-2">
-                                            <span>位置&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>位置&nbsp;<span
+                                                    style="color: #00a7d0">{{rdcPositionScore}}</span></span>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span>设施&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>设施&nbsp;<span style="color: #00a7d0">{{rdcFacility}}</span></span>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span>服务&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>服务&nbsp;<span style="color: #00a7d0">{{rdcService}}</span></span>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span>卫生&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>卫生&nbsp;<span style="color: #00a7d0">{{rdcHealth}}</span></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="input-group" style="width: 200px">
-                                            <input type="text" ng-model="query" class="form-control" placeholder="搜索点评关键字">
+                                            <input type="text" ng-model="query" class="form-control"
+                                                   placeholder="搜索点评关键字">
                                                <span class="input-group-btn">
                                                   <button class="btn btn-default" type="button"
                                                           style="background: #3498DB">
@@ -314,7 +326,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row" ng-repeat="comment in comments | filter:query" style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
+                                <div class="row" ng-repeat="comment in comments | filter:query"
+                                     style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                                     <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-lg-2">
@@ -428,7 +441,8 @@
                                     src="app/img/a_002.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                             <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a ng-click="goDetail(lookrdc.id)">{{lookrdc.name}}</a></span>
+                                <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a
+                                        ng-click="goDetail(lookrdc.id)">{{lookrdc.name}}</a></span>
 
                                 <div style="position:relative;top:5px;height: 3px">
                                     <i class="icon-star"></i>
@@ -440,12 +454,35 @@
                             </div>
                         </div>
                         <div class="col-lg-4" style="position: relative;top:5px;left: 0px;">
-                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;" ng-click="goDetail(lookrdc.id)">查看</a>
+                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;"
+                               ng-click="goDetail(lookrdc.id)">查看</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script type="text/ng-template" id="myModelContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">添写评价内容</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <textarea rows="10" ng-model="commentContent" style="width:90%" placeholder="请输入您对冷库的真实评价"></textarea>
+                <!--<li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{item}}</a> //显示当前点击的item
+                </li>
+                当前选择： <b>{{selected.item}}</b>-->
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">
+                确认
+            </button>
+            <button class="btn btn-warning" ng-click="cancel()">退出</button>
+        </div>
+    </script>
+
 </div>
 
