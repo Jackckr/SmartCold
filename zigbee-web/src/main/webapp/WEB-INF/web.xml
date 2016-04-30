@@ -16,7 +16,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-            classpath*:config/spring/common/appcontext-*.xml,
+            <!--classpath*:config/spring/common/appcontext-*.xml,-->
             classpath*:config/spring/local/appcontext-*.xml,
         </param-value>
 	</context-param>

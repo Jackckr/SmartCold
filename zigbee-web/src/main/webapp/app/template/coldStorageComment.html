@@ -1,10 +1,6 @@
 <div>
     <section>
-        <div class="row">
-            <div class="col-lg-12">
-                <img src="app/img/banner.jpg" style="width:100%;height: 350px;">
-            </div>
-        </div>
+        <div class="row" style="height: 75px;width: 100%"></div>
     </section>
     <section class="content">
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
@@ -21,7 +17,7 @@
             <div class="col-lg-9" style="position: relative;top:30px;padding-bottom: 100px;">
                 <div class="row">
                     <div class="col-lg-9" style="position: relative;left: 40px">
-                        <h3 style="color: dodgerblue">上海浦东冷库</h3>
+                        <h3 style="color: dodgerblue">{{rdcName}}</h3>
 
                         <div style="height: 10px">
                             <i class="icon-star"></i>
@@ -30,33 +26,43 @@
                             <i class="icon-star-half"></i>
                             <i class="icon-star-empty"></i>
                         </div>
-                        <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
+                        <h6>该冷库位于{{rdcAddress}}.</h6>
                     </div>
                     <div class="col-lg-3" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;top:50px;left: 120px;" href="#">立即评价</a>
+                        <a class="btn btn-success" style="position: relative;top:50px;left: 120px;"
+                           ng-click="goComment()">立即评价</a>
                     </div>
                 </div>
                 <div class="row">
                     <!--<img src="app/img/banner.jpg" style="position:relative;left:50px;width:93%;height: 50%;">-->
                     <div class="col-lg-4">
-                        <img src="app/img/banner/pageBanner8.jpg" style="position:relative;left:40px;width:290px;height: 224px;">
+                        <img src="app/img/banner/pageBanner8.jpg"
+                             style="position:relative;left:40px;width:290px;height: 224px;">
                     </div>
                     <div class="col-lg-8">
                         <div class="row" style="position:relative;left:1px;">
-                            <img src="app/img/banner/pageBanner2.jpg" style="position:relative;left:30px;width:255px;height: 109px;">
-                            <img src="app/img/banner/pageBanner1.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner3.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner5.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner2.jpg"
+                                 style="position:relative;left:30px;width:255px;height: 109px;">
+                            <img src="app/img/banner/pageBanner1.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner3.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner5.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
                         </div>
                         <div class="row" style="position:relative;left:1px;top: 4px">
-                            <img src="app/img/banner/pageBanner7.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner6.jpg" style="position:relative;left:30px;width:255px;height: 109px;">
-                            <img src="app/img/banner/pageBanner4.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img src="app/img/banner/pageBanner9.jpg" style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner7.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner6.jpg"
+                                 style="position:relative;left:30px;width:255px;height: 109px;">
+                            <img src="app/img/banner/pageBanner4.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
+                            <img src="app/img/banner/pageBanner9.jpg"
+                                 style="position:relative;left:30px;width:100px;height: 109px;">
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" ng-controller="coldStorageComment">
                     <div class="tabbable" style="position: relative;left:50px;top: 10px">
                         <ul class="nav nav-tabs" style="position:relative;left:0px;width:93%;height: 50%;">
                             <li id="detail" class="active">
@@ -72,7 +78,7 @@
                                     <h3 style="color: #00a7d0">冷库介绍</h3>
 
                                     <p>
-                                        该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.
+                                        该冷库位于{{rdcAddress}}.
                                     </p>
                                 </div>
                                 <div class="row" style="position: relative;left: 0px;top: 0px">
@@ -226,10 +232,10 @@
                                             <i class="icon-star-empty"></i>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span style="color: dodgerblue;font-size: 20px">4.6</span>/5分
+                                            <span style="color: dodgerblue;font-size: 20px">{{score}}</span>/5分
                                         </div>
                                         <div class="col-lg-3">
-                                            <span style="color: dodgerblue;font-size: 20px">98</span>%用户推荐
+                                            <span style="color: dodgerblue;font-size: 20px">{{userRecommendPercent}}</span>%用户推荐
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -239,21 +245,23 @@
                                 <div class="row">
                                     <div class="col-lg-8" style="position: relative;left: 10px;top: 15px;">
                                         <div class="col-lg-2">
-                                            <span>位置&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>位置&nbsp;<span
+                                                    style="color: #00a7d0">{{rdcPositionScore}}</span></span>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span>设施&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>设施&nbsp;<span style="color: #00a7d0">{{rdcFacility}}</span></span>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span>服务&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>服务&nbsp;<span style="color: #00a7d0">{{rdcService}}</span></span>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span>卫生&nbsp;<span style="color: #00a7d0">4.6</span></span>
+                                            <span>卫生&nbsp;<span style="color: #00a7d0">{{rdcHealth}}</span></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="input-group" style="width: 200px">
-                                            <input type="text" class="form-control" placeholder="搜索点评关键字">
+                                            <input type="text" ng-model="query" class="form-control"
+                                                   placeholder="搜索点评关键字">
                                                <span class="input-group-btn">
                                                   <button class="btn btn-default" type="button"
                                                           style="background: #3498DB">
@@ -318,7 +326,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row" style="position: relative;top: 1px;left: 0px;">
+                                <div class="row" ng-repeat="comment in comments | filter:query"
+                                     style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                                     <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-lg-2">
@@ -328,12 +337,12 @@
 
                                                 <div style="position: relative;left: 10px;top: 5px;height: 200px;">
                                                     <p style="color: dodgerblue">
-                                                        <span style="color: #00b3ee">二狗儿</span>
+                                                        <span style="color: #00b3ee">{{comment.commerName}}</span>
                                                     </p>
 
                                                     <p>
-                                                    <h6 style="color: #8aa4af">点评总数5</h6>
-                                                    <h6 style="color: #8aa4af">被点有用数6</h6>
+                                                    <h6 style="color: #8aa4af">点评总数{{comment.commentsum}}</h6>
+                                                    <h6 style="color: #8aa4af">有用个数{{comment.usefulCnt}}</h6>
                                                     </p>
                                                 </div>
                                             </div>
@@ -359,7 +368,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <p style="margin-top: 10px;width: 90%">
-                                                            家庭出行订了三间房，两个双床一个大床，到店时应我们的要求安排在了同一层，双床房因为风向问题会有些不透气，因为价格一样经协调最后都住了大床房，酒店人员服务态度不错，新酒店吧房间也干净东西也算新，电梯和房门不错，电梯是没卡上不来，房门是没关好会一直响，算是挺安全的，整体装修风格很喜欢很舒服，房间里给的水和吃的是免费的每天都会补，周围商场吃的也多，叫车也方便，离外滩等主要景点都很近，订的房间只有单早但可以协调提前吃完或每天加钱加位，早餐种类还算多7-10点刷房卡进，有些小不足的是：房间通风有些不畅，每天补东西和清垃圾会有遗漏的情况但是打电话就会立刻处理，地板有些地方凹陷会响…总体是个性价比不错的酒店，下次去上海还会去住
+                                                            {{comment.content}}
                                                         </p>
 
                                                         <div>
@@ -385,258 +394,12 @@
                                                 <div class="row">
                                                     <div class="col-lg-4" style="margin-top: 5px">
                                                         <i class="icon-mobile-phone"></i>
-                                                        <span style="color: lightgrey;margin-left: 10px;">发表于2016-04-08</span>
+                                                        <span style="color: lightgrey;margin-left: 10px;">发表于{{comment.addTime}}</span>
                                                     </div>
                                                     <div class="col-lg-8">
                                                         <div style="position: relative;left: 350px;">
                                                             <a style="display: inline-block; padding: 2px 10px;background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                                               href="#">有用(16)</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row"
-                                     style="position: relative;top: 10px;left: 0px;border-bottom:1px groove;width: 95%"></div>
-                                <div class="row" style="position: relative;top: 15px;left: 0px;">
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-2">
-                                                <a href="#" class="pull-left"
-                                                   style="position: relative;top: 5px;left: 0px"><img
-                                                        src="app/img/a_002.jpg" width="60px" height="60px"/></a>
-
-                                                <div style="position: relative;left: 10px;top: 5px;height: 200px;">
-                                                    <p style="color: dodgerblue">
-                                                        <span style="color: #00b3ee">二狗儿</span>
-                                                    </p>
-
-                                                    <p>
-                                                    <h6 style="color: #8aa4af">点评总数5</h6>
-                                                    <h6 style="color: #8aa4af">被点有用数6</h6>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-10" style="position: relative;top:5px;left: 10px">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star-half"></i>
-                                                        <i class="icon-star-empty"></i>
-                                                        <span style="color: dodgerblue;margin-left: 10px">4.6</span>分
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div style="position: relative;left: 150px;">
-                                                            <i class="icon-truck" style="margin-left: 20px"><span
-                                                                    style="margin-left: 5px">运输</span></i>
-                                                            <span style="margin-left: 20px">2016年04月浏览</span>
-                                                            <span style="color: dodgerblue;margin-left: 20px">中型冷库</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <p style="margin-top: 10px;width: 90%">
-                                                            家庭出行订了三间房，两个双床一个大床，到店时应我们的要求安排在了同一层，双床房因为风向问题会有些不透气，因为价格一样经协调最后都住了大床房，酒店人员服务态度不错，新酒店吧房间也干净东西也算新，电梯和房门不错，电梯是没卡上不来，房门是没关好会一直响，算是挺安全的，整体装修风格很喜欢很舒服，房间里给的水和吃的是免费的每天都会补，周围商场吃的也多，叫车也方便，离外滩等主要景点都很近，订的房间只有单早但可以协调提前吃完或每天加钱加位，早餐种类还算多7-10点刷房卡进，有些小不足的是：房间通风有些不畅，每天补东西和清垃圾会有遗漏的情况但是打电话就会立刻处理，地板有些地方凹陷会响…总体是个性价比不错的酒店，下次去上海还会去住
-                                                        </p>
-
-                                                        <div>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                        </div>
-                                                        <div style="margin-top: 20px">
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px;"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-4" style="margin-top: 5px">
-                                                        <i class="icon-mobile-phone"></i>
-                                                        <span style="color: lightgrey;margin-left: 10px;">发表于2016-04-08</span>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div style="position: relative;left: 350px;">
-                                                            <a style="display: inline-block; padding: 2px 10px;background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                                               href="#">有用(16)</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row"
-                                     style="position: relative;top: 30px;left: 0px;border-bottom:1px groove;width: 95%"></div>
-                                <div class="row" style="position: relative;top: 45px;left: 0px;">
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-2">
-                                                <a href="#" class="pull-left"
-                                                   style="position: relative;top: 5px;left: 0px"><img
-                                                        src="app/img/a_002.jpg" width="60px" height="60px"/></a>
-
-                                                <div style="position: relative;left: 10px;top: 5px;height: 200px;">
-                                                    <p style="color: dodgerblue">
-                                                        <span style="color: #00b3ee">二狗儿</span>
-                                                    </p>
-
-                                                    <p>
-                                                    <h6 style="color: #8aa4af">点评总数5</h6>
-                                                    <h6 style="color: #8aa4af">被点有用数6</h6>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-10" style="position: relative;top:5px;left: 10px">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star-half"></i>
-                                                        <i class="icon-star-empty"></i>
-                                                        <span style="color: dodgerblue;margin-left: 10px">4.6</span>分
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div style="position: relative;left: 150px;">
-                                                            <i class="icon-truck" style="margin-left: 20px"><span
-                                                                    style="margin-left: 5px">运输</span></i>
-                                                            <span style="margin-left: 20px">2016年04月浏览</span>
-                                                            <span style="color: dodgerblue;margin-left: 20px">中型冷库</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <p style="margin-top: 10px;width: 90%">
-                                                            家庭出行订了三间房，两个双床一个大床，到店时应我们的要求安排在了同一层，双床房因为风向问题会有些不透气，因为价格一样经协调最后都住了大床房，酒店人员服务态度不错，新酒店吧房间也干净东西也算新，电梯和房门不错，电梯是没卡上不来，房门是没关好会一直响，算是挺安全的，整体装修风格很喜欢很舒服，房间里给的水和吃的是免费的每天都会补，周围商场吃的也多，叫车也方便，离外滩等主要景点都很近，订的房间只有单早但可以协调提前吃完或每天加钱加位，早餐种类还算多7-10点刷房卡进，有些小不足的是：房间通风有些不畅，每天补东西和清垃圾会有遗漏的情况但是打电话就会立刻处理，地板有些地方凹陷会响…总体是个性价比不错的酒店，下次去上海还会去住
-                                                        </p>
-
-                                                        <div>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                        </div>
-                                                        <div style="margin-top: 20px">
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px;"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-4" style="margin-top: 5px">
-                                                        <i class="icon-mobile-phone"></i>
-                                                        <span style="color: lightgrey;margin-left: 10px;">发表于2016-04-08</span>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div style="position: relative;left: 350px;">
-                                                            <a style="display: inline-block; padding: 2px 10px;background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                                               href="#">有用(16)</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row"
-                                     style="position: relative;top: 60px;left: 0px;border-bottom:1px groove;width: 95%"></div>
-                                <div class="row" style="position: relative;top: 75px;left: 0px;margin-bottom: 100px">
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-2">
-                                                <a href="#" class="pull-left"
-                                                   style="position: relative;top: 5px;left: 0px"><img
-                                                        src="app/img/a_002.jpg" width="60px" height="60px"/></a>
-
-                                                <div style="position: relative;left: 10px;top: 5px;height: 200px;">
-                                                    <p style="color: dodgerblue">
-                                                        <span style="color: #00b3ee">二狗儿</span>
-                                                    </p>
-
-                                                    <p>
-                                                    <h6 style="color: #8aa4af">点评总数5</h6>
-                                                    <h6 style="color: #8aa4af">被点有用数6</h6>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-10" style="position: relative;top:5px;left: 10px">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star-half"></i>
-                                                        <i class="icon-star-empty"></i>
-                                                        <span style="color: dodgerblue;margin-left: 10px">4.6</span>分
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div style="position: relative;left: 150px;">
-                                                            <i class="icon-truck" style="margin-left: 20px"><span
-                                                                    style="margin-left: 5px">运输</span></i>
-                                                            <span style="margin-left: 20px">2016年04月浏览</span>
-                                                            <span style="color: dodgerblue;margin-left: 20px">中型冷库</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <p style="margin-top: 10px;width: 90%">
-                                                            家庭出行订了三间房，两个双床一个大床，到店时应我们的要求安排在了同一层，双床房因为风向问题会有些不透气，因为价格一样经协调最后都住了大床房，酒店人员服务态度不错，新酒店吧房间也干净东西也算新，电梯和房门不错，电梯是没卡上不来，房门是没关好会一直响，算是挺安全的，整体装修风格很喜欢很舒服，房间里给的水和吃的是免费的每天都会补，周围商场吃的也多，叫车也方便，离外滩等主要景点都很近，订的房间只有单早但可以协调提前吃完或每天加钱加位，早餐种类还算多7-10点刷房卡进，有些小不足的是：房间通风有些不畅，每天补东西和清垃圾会有遗漏的情况但是打电话就会立刻处理，地板有些地方凹陷会响…总体是个性价比不错的酒店，下次去上海还会去住
-                                                        </p>
-
-                                                        <div>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                        </div>
-                                                        <div style="margin-top: 20px">
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px;"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-4" style="margin-top: 5px">
-                                                        <i class="icon-mobile-phone"></i>
-                                                        <span style="color: lightgrey;margin-left: 10px;">发表于2016-04-08</span>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div style="position: relative;left: 350px;">
-                                                            <a style="display: inline-block; padding: 2px 10px;background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                                               href="#">有用(16)</a>
+                                                               ng-click="comment.usefulCnt = comment.usefulCnt + 1">有用({{comment.usefulCnt}})</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -653,9 +416,9 @@
                 <div class="row"
                      style="position:relative;top:30px;left: 0px;height: 100px;padding-right: 10px;border: 1px ridge lightgrey">
                     <div style="position:relative;top: 10px;left: 10px">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
+                        <div><span style="color: dodgerblue">{{score}}</span>/5分</div>
+                        <h6><span>{{userRecommendPercent}}</span>%用户推荐</h6>
+                        <h6 style="color: dodgerblue">源自<span>{{userRecommendCount}}</span>位用户点评</h6>
                     </div>
                 </div>
                 <div class="row"
@@ -667,17 +430,19 @@
                 </div>
                 <div class="row"
                      style="position:relative;top:60px;left: 0px;height: 400px;padding-right: 10px;border: 1px ridge lightgrey">
-                    <div style="position:relative;top: 10px;left: 10px">
+                    <div style="width: 95%;position:relative;top: 10px;left: 10px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                         <span style="font-size: 20px;">我浏览过的冷库</span>
                     </div>
-                    <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 1px;left: 5px;width: 100%"/>
-                    <div class="row" style="height: 60px;position: relative;top: 1px;left: 10px">
+
+                    <div class="row" ng-repeat="lookrdc in lookrdcs"
+                         style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                         <div class="col-lg-8">
                             <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                    src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
+                                    src="app/img/a_002.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                             <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
+                                <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a
+                                        ng-click="goDetail(lookrdc.id)">{{lookrdc.name}}</a></span>
 
                                 <div style="position:relative;top:5px;height: 3px">
                                     <i class="icon-star"></i>
@@ -689,100 +454,35 @@
                             </div>
                         </div>
                         <div class="col-lg-4" style="position: relative;top:5px;left: 0px;">
-                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;" href="#">查看</a>
-                        </div>
-                    </div>
-                    <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                    <div class="row" style="height: 60px;position: relative;top: 1px;left: 10px">
-                        <div class="col-lg-8">
-                            <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                    src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-
-                            <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-
-                                <div style="position:relative;top:5px;height: 3px">
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star-half"></i>
-                                    <i class="icon-star-empty"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4" style="position: relative;top:5px;left: 0px;">
-                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;" href="#">查看</a>
-                        </div>
-                    </div>
-                    <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                    <div class="row" style="height: 60px;position: relative;top: 1px;left: 10px">
-                        <div class="col-lg-8">
-                            <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                    src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-
-                            <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-
-                                <div style="position:relative;top:5px;height: 3px">
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star-half"></i>
-                                    <i class="icon-star-empty"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4" style="position: relative;top:5px;left: 0px;">
-                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;" href="#">查看</a>
-                        </div>
-                    </div>
-                    <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                    <div class="row" style="height: 60px;position: relative;top: 1px;left: 10px">
-                        <div class="col-lg-8">
-                            <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                    src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-
-                            <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-
-                                <div style="position:relative;top:5px;height: 3px">
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star-half"></i>
-                                    <i class="icon-star-empty"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4" style="position: relative;top:5px;left: 0px;">
-                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;" href="#">查看</a>
-                        </div>
-                    </div>
-                    <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                    <div class="row" style="height: 60px;position: relative;top: 1px;left: 10px">
-                        <div class="col-lg-8">
-                            <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                    src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-
-                            <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-
-                                <div style="position:relative;top:5px;height: 3px">
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star"></i>
-                                    <i class="icon-star-half"></i>
-                                    <i class="icon-star-empty"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4" style="position: relative;top:5px;left: 0px;">
-                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;" href="#">查看</a>
+                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;"
+                               ng-click="goDetail(lookrdc.id)">查看</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script type="text/ng-template" id="myModelContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">添写评价内容</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <textarea rows="10" ng-model="commentContent" style="width:90%" placeholder="请输入您对冷库的真实评价"></textarea>
+                <!--<li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{item}}</a> //显示当前点击的item
+                </li>
+                当前选择： <b>{{selected.item}}</b>-->
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">
+                确认
+            </button>
+            <button class="btn btn-warning" ng-click="cancel()">退出</button>
+        </div>
+    </script>
+
 </div>
 

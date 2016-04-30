@@ -1,10 +1,6 @@
 <div>
     <section>
-        <div class="row">
-            <div class="col-lg-12">
-                <img src="app/img/banner.jpg" style="width:100%;height: 350px;">
-            </div>
-        </div>
+        <div class="row" style="height: 75px;width: 100%"></div>
     </section>
     <section class="content">
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
@@ -19,14 +15,16 @@
         </div>
         <div class="row" style="width: 100%">
             <div class="col-lg-9" style="position: relative;top:30px;padding-bottom: 100px;">
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
+
+                <div class="row" ng-repeat="rdc in rdcs"
+                     style="height: 80px;width: 95%;position: relative;top: 10px;left: 40px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                     <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 30px"><img
+                        <a href="#" class="pull-left" style="position: relative;top: 10px;left: 0px"><img
                                 src="app/img/a_002.jpg" alt=''/></a>
 
-                        <div style="position: relative;left: 40px">
+                        <div style="position: relative;left: 10px">
                             <h5 style="color: dodgerblue">
-                                <a ng-click="goDetail(1)"><span style="color: red">1.</span>上海浦东冷库</a>
+                                <a ng-click="goDetail(rdc.id)">{{rdc.name}}</a>
                             </h5>
 
                             <div style="height: 10px">
@@ -36,271 +34,34 @@
                                 <i class="icon-star-half"></i>
                                 <i class="icon-star-empty"></i>
                             </div>
-                            <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
+                            <h6>该冷库位于{{rdc.address}}.</h6>
                         </div>
                     </div>
                     <div class="col-lg-3" style="position: relative;top:5px;left: 10px;">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
-                    </div>
-                </div>
-                <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 1px;left: 0px;width: 95%"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 30px"><img
-                                src="app/img/a_002.jpg" alt=''/></a>
-
-                        <div style="position: relative;left: 40px">
-                            <h5 style="color: dodgerblue">
-                                <a ng-click="goDetail(1)"><span style="color: red">2.</span>上海长宁冷库</a>
-                            </h5>
-
-                            <div style="height: 10px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                            <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 10px">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
-                    </div>
-                </div>
-                <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 1px;left: 0px;width: 95%"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 30px"><img
-                                src="app/img/a_002.jpg" alt=''/></a>
-
-                        <div style="position: relative;left: 40px">
-                            <h5 style="color: dodgerblue">
-                                <a ng-click="goDetail(1)"><span style="color: red">3.</span>吉林长春冷库</a>
-                            </h5>
-
-                            <div style="height: 10px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                            <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 10px">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
-                    </div>
-                </div>
-                <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 1px;left: 0px;width: 95%"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 30px"><img
-                                src="app/img/a_002.jpg" alt=''/></a>
-
-                        <div style="position: relative;left: 40px">
-                            <h5 style="color: dodgerblue">
-                                <a ng-click="goDetail(1)"><span style="color: red">4.</span>浙江杭州冷库</a>
-                            </h5>
-
-                            <div style="height: 10px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                            <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 10px">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
-                    </div>
-                </div>
-                <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 1px;left: 0px;width: 95%"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 30px"><img
-                                src="app/img/a_002.jpg" alt=''/></a>
-
-                        <div style="position: relative;left: 40px">
-                            <h5 style="color: dodgerblue">
-                                <a ng-click="goDetail(1)"><span style="color: red">5.</span>浙江杭州冷库</a>
-                            </h5>
-
-                            <div style="height: 10px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                            <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 10px">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
-                    </div>
-                </div>
-                <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 1px;left: 0px;width: 95%"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 30px"><img
-                                src="app/img/a_002.jpg" alt=''/></a>
-
-                        <div style="position: relative;left: 40px">
-                            <h5 style="color: dodgerblue">
-                                <a ng-click="goDetail(1)"><span style="color: red">6.</span>浙江杭州冷库</a>
-                            </h5>
-
-                            <div style="height: 10px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                            <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 10px">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
-                    </div>
-                </div>
-                <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 1px;left: 0px;width: 95%"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 30px"><img
-                                src="app/img/a_002.jpg" alt=''/></a>
-
-                        <div style="position: relative;left: 40px">
-                            <h5 style="color: dodgerblue">
-                                <a ng-click="goDetail(1)"><span style="color: red">7.</span>浙江杭州冷库</a>
-                            </h5>
-
-                            <div style="height: 10px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                            <h6>该冷库位于美丽的魔都大上海,设备先进,服务一流,制冷技术先进,保证极好的冷冻效果.</h6>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 10px">
-                        <div><span style="color: dodgerblue">4.6</span>/5分</div>
-                        <h6><span>98</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>9999</span>位用户点评</h6>
+                        <div><span style="color: dodgerblue">{{rdc.score}}</span>/5分</div>
+                        <h6><span>{{rdc.userRecommendPercent}}</span>%用户推荐</h6>
+                        <h6 style="color: dodgerblue">源自<span>{{rdc.userRecommendCount}}</span>位用户点评</h6>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3" style="position:relative;top:30px;left: 0px;height: 400px;padding-right: 10px;border: 1px ridge lightgrey">
+            <div class="col-lg-3"
+                 style="position:relative;top:30px;left: 0px;height: 500px;padding-right: 10px;border: 1px ridge lightgrey">
                 <div style="position:relative;top: 5px;">
                     <a class="btn btn-large btn-success col-lg-6" href="#">热度排行</a>
                     <a class="btn btn-large btn-default col-lg-6" href="#">评分排行</a>
                 </div>
                 <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 10px;left: 0px;width: 100%"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
+
+                <div class="row" ng-repeat="hotrdc in hotrdcs"
+                     style="height: 70px;width: 95%;position: relative;top: 10px;left: 20px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                     <div class="col-lg-9">
                         <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
+                                src="app/img/a_002.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
+
                         <div style="position: relative;left: 5px;">
-                            <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-                            <div style="position:relative;top:5px;height: 3px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;left:0px;top: 15px;" href="#">评价</a>
-                    </div>
-                </div>
-                <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-                        <div style="position: relative;left: 5px;">
-                            <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-                            <div style="position:relative;top:5px;height: 3px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;left:0px;top: 15px;" href="#">评价</a>
-                    </div>
-                </div>
-                <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-                        <div style="position: relative;left: 5px;">
-                            <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-                            <div style="position:relative;top:5px;height: 3px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;left:0px;top: 15px;" href="#">评价</a>
-                    </div>
-                </div>
-                <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-                        <div style="position: relative;left: 5px;">
-                            <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-                            <div style="position:relative;top:5px;height: 3px">
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star"></i>
-                                <i class="icon-star-half"></i>
-                                <i class="icon-star-empty"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;left:0px;top: 15px;" href="#">评价</a>
-                    </div>
-                </div>
-                <hr style="margin-bottom: 1px;margin-top: 1px"/>
-                <div class="row" style="height: 60px;position: relative;top: 1px;left: 0px">
-                    <div class="col-lg-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                src="app/img/a_002.jpg" style="width: 50px;height: 50px" alt=''/></a>
-                        <div style="position: relative;left: 5px;">
-                            <span style="color: dodgerblue;font-size: 8px;top: 1px;">上海浦东冷库</span>
-                            <div style="position:relative;top:5px;height: 3px">
+                            <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a ng-click="goDetail(hotrdc.id)">{{hotrdc.name}}</a></span>
+
+                            <div style="position:relative;height: 3px;margin-bottom: 1px">
                                 <i class="icon-star"></i>
                                 <i class="icon-star"></i>
                                 <i class="icon-star"></i>
