@@ -70,11 +70,11 @@ header a.logo
 
     display: block;
 
-    width: 147px;
+    width: 250px;
     height: 75px;
     margin-left: 60px;
 
-    background: url(../img/logo-light.png) no-repeat;
+    background: url(../img/logo.png) no-repeat;
     background-position: left center;
 }
 
