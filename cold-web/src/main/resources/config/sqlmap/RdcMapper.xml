@@ -79,4 +79,12 @@
       addtime = #{addtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findRdcList" parameterType="map" resultType="Rdc">
+    SELECT * FROM `Rdc` order by `addTime` desc
+  </select>
+
+  <select id="findRDCByRDCId" parameterType="map" resultType="Rdc">
+    SELECT * FROM `Rdc` WHERE `id` = #{rdcID}
+  </select>
 </mapper>

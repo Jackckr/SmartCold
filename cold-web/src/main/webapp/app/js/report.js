@@ -215,8 +215,6 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout) 
 			]
 		};
 
-		myChart.setOption(option);
-
 		$scope.blowerScore = (Math.random() * (25)).toFixed(0) - 0;
 		$scope.lightScore = (Math.random() * (25)).toFixed(0) - 0;
 		$scope.coldScore = (Math.random() * (25)).toFixed(0) - 0;
@@ -237,38 +235,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout) 
 	$scope.stopCheck = function () {
 		$scope.uncheckState = true;
 		$scope.checkState = false;
-
-		// 能耗评分图——仪表盘
-		var myChart = echarts.init(document.getElementById('energyScoreChart'));
-		var option = {
-			tooltip: {
-				formatter: "{a} <br/>{b} : {c}%"
-			},
-			toolbox: {
-				show: false,
-				feature: {
-					mark: {show: true},
-					restore: {show: true},
-					saveAsImage: {show: true}
-				}
-			},
-			series: [
-				{
-					name: '能耗评分',
-					type: 'gauge',
-					min: 0,
-					max: 100,
-					detail: {formatter: '{value}分'},
-					textStyle: {
-						color: 'auto',
-						fontSize: 30
-					},
-					data: [{value: 0, name: '能耗评分'}]
-				}
-			]
-		};
-
-		myChart.setOption(option);
+		$scope.load();
 	}
 
 	$scope.load = function () {
@@ -304,22 +271,6 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout) 
 		};
 
 		myChart.setOption(option);
-
-		/* $scope.blowerScore = (Math.random() * (25)).toFixed(0) - 0;
-		 $scope.lightScore = (Math.random() * (25)).toFixed(0) - 0;
-		 $scope.coldScore = (Math.random() * (25)).toFixed(0) - 0;
-		 $scope.doorScore = (Math.random() * (25)).toFixed(0) - 0;
-
-		 var score = $scope.blowerScore + $scope.lightScore + $scope.coldScore + $scope.doorScore;
-
-		 var tem = score;
-		 setInterval(function () {
-		 if (score >= 0) {
-		 option.series[0].data[0].value = tem - (score--);
-		 myChart.setOption(option, true);
-		 }
-		 }, 100);
-		 $scope.totalScore = tem;*/
 	}
 
 	$scope.load();

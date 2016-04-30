@@ -225,7 +225,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="treeview">
               <a href="#"><i class="fa fa-link text-white"></i> <span>制冷系统</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
-                  <li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i>{{compressor.name}}</a></li>
+                  <!--<li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i>{{compressor.name}}</a></li>-->
+                <li><a href="#"><i class="fa fa-circle-o"></i>压缩机组<i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu" style="display: none;">
+                    <li ng-repeat="compressor in compressors"><a href="#" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i> {{compressor.name}}</a></li>
+                  </ul>
+                </li>
+
+                <li><a href="#" ng-click="toMyBlowers()"><i class="fa fa-circle-o"></i> 风机</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -273,7 +280,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Default to the left -->
         <strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.</strong>. 备案号：沪ICP备 16004753
       </footer>
-      
+
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
