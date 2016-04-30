@@ -4,9 +4,14 @@
 
 <mapper namespace="com.smartcold.zigbee.manage.dao.UserMapper">
 
-	<select id="findUser" parameterType="map" resultType="UserEntity">
+    <select id="findUser" parameterType="map" resultType="UserEntity">
 		SELECT *
 		FROM `user` WHERE `username` = #{username} AND `password` = #{password}
+	</select>
+
+    <select id="findUserById" parameterType="map" resultType="UserEntity">
+		SELECT *
+		FROM `user` WHERE `id` = #{id}
 	</select>
 
 </mapper>
