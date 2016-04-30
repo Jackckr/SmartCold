@@ -1,7 +1,32 @@
 <div>
   <section class="content-header">
    <h1 class="text-white page-header">报表</h1>
+   <br>
    <div class="row">
+     <div class="form-group col-lg-4">
+       <form class="navbar-form navbar-left" role="search">
+         <label><strong>冷库选择：</strong>&nbsp;&nbsp;</label>
+		  <div class="form-group">
+		    <select class="form-control" id="select">
+	          <option>option 1</option>
+	          <option>option 2</option>
+	          <option>option 3</option>
+	          <option>option 4</option>
+	          <option>option 5</option>
+	        </select>
+		  </div>
+		</form>
+       <!-- <label for="select" class="col-lg-4 form-control"><strong>冷库选择</strong></label>
+       <div class="col-lg-8">
+       <select class="form-control" id="select">
+          <option>option 1</option>
+          <option>option 2</option>
+          <option>option 3</option>
+          <option>option 4</option>
+          <option>option 5</option>
+        </select>
+        </div> -->
+     </div>
      <div class="tabable">
 	   <ul class="nav nav-tabs pull-right">
 	     <li class="{{time == 'daily'?'active':''}}">
@@ -144,7 +169,7 @@
 
 	  <!-- 总能耗表 -->
 	  <div class="col-md-12" ng-show="!isEnergy">
-	  <div class="box box-primary bg-gray">
+	  <div class="box box-gray bg-gray">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
           <h3 class="box-title text-white">总耗能趋势</h3>
@@ -158,7 +183,7 @@
       </div>
       <!-- 耗能占比 -->
       <div class="col-md-12" ng-show="!isEnergy">
-      <div class="box box-primary bg-gray" ng-if="item == 'total'">
+      <div class="box box-gray bg-gray" ng-if="item == 'total'">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
           <h3 class="box-title text-white">耗能占比</h3>

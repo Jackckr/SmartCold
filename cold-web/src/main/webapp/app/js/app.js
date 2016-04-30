@@ -9,7 +9,6 @@ angular.element(document).ready(function($ngCookies, $location) {
 	      dataType: 'json'
 	    }).success(function(data){
 	    	user = data;
-            console.log(user);
 	    	if(user.username == null){
 	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
 	    			document.location.href = "login.html";
