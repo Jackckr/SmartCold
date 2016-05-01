@@ -1,11 +1,78 @@
-coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout) {
+coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$http) {
 	$scope.time = $stateParams.time;
 	$scope.item = $stateParams.item;
+	$scope.begin = new Date().toISOString().replace("T"," ").replace(/\..*/g,'');
+	$scope.end = new Date(new Date().getTime() - 7 *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
+	$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$scope.isEnergy = false;
 	if ($scope.item == 'energy'){
 		$scope.isEnergy = true;
 	} else {
 		$scope.isEnergy = false;
+	}
+	
+	$scope.search4report = function(){
+		
+	}
+	
+	$scope.chageItem = function(item,time){
+		$scope.item = item;
+		$scope.time = time;
+		if($scope.item == 'total'){
+			$timeout(function() {
+	           $scope.drawbount();
+	         }, 0)
+		}else if($scope.item == 'data'){
+			$timeout(function(){
+				$scope.drawDataLine();
+			}, 0);
+		}
+	}
+	
+	$scope.search = function(){
+		bothTime = $scope.picktime.split(" - ");
+		$scope.begin = bothTime[0];
+		$scope.end = bothTime[1];
+		$scope.drawDataLine();
+	}
+	
+	$scope.drawDataLine = function(){
+		var lineChart = echarts.init($('#data-chart')[0]);
+		xData = [1,2,3,4]
+		data = [34,35,34,21]
+		option = {
+			    tooltip : {
+			        trigger: 'axis'
+			    },
+			    calculable : true,
+			    legend: {
+			        data:['数据']
+			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : xData
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            name : '数据',
+			            axisLabel : {
+			                formatter: '{value}'
+			            }
+			        }
+			    ],
+			    series : [
+
+			        {
+			            name:'数据',
+			            type:'line',
+			            data:data
+			        }
+			    ]
+			};
+		lineChart.setOption(option);
 	}
 
 	$scope.drawline = function(){
@@ -239,6 +306,11 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout) 
 	}
 
 	$scope.load = function () {
+		$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
+		$http.get('/i/rdc/findRdcList').success(function(data,headers,config,status){
+			$scope.rdcList = data;
+			$scope.rdcModal = data[0];
+		})
 
 		// 能耗评分图——仪表盘
 		var myChart = echarts.init(document.getElementById('energyScoreChart'));

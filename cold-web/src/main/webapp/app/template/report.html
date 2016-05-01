@@ -1,18 +1,14 @@
 <div>
   <section class="content-header">
-   <h1 class="text-white page-header">报表</h1>
+   <h1 class="text-white page-header">分析</h1>
    <br>
    <div class="row">
-     <div class="form-group col-lg-4">
+     <div class="form-group col-lg-7">
        <form class="navbar-form navbar-left" role="search">
-         <label><strong>冷库选择：</strong>&nbsp;&nbsp;</label>
+         <label><strong>RDC选择：</strong>&nbsp;&nbsp;</label>
 		  <div class="form-group">
-		    <select class="form-control" id="select">
-	          <option>option 1</option>
-	          <option>option 2</option>
-	          <option>option 3</option>
-	          <option>option 4</option>
-	          <option>option 5</option>
+		    <select class="form-control" id="select" ng-options="rdc.name for rdc in rdcList | orderBy: name" 
+		    ng-model="rdcModal" ng-change="search4report()">
 	        </select>
 		  </div>
 		</form>
@@ -46,13 +42,14 @@
          <div class="box-header with-border bg-gray">
 		    <div class="box-body no-padding bg-gray">
 	          <ul class="nav nav-pills nav-stacked bg-gray">
-	            <li class="{{item == 'energy'?'active':''}}"><a href="#/report-{{time}}-energy">能耗分析</a></li>
-	            <li class="{{item == 'total'?'active':''}}"><a href="#/report-{{time}}-total">总体情况</a></li>
-	            <li class="{{item == 'door'?'active':''}}"><a href="#/report-{{time}}-door">门耗能情况</a></li>
-	            <li class="{{item == 'light'?'active':''}}"><a href="#/report-{{time}}-light">灯耗能情况</a></li>
-	            <li class="{{item == 'group'?'active':''}}"><a href="#/report-{{time}}-group">制冷剂组情况</a></li>
-	            <li class="{{item == 'fan'?'active':''}}"><a href="#/report-{{time}}-fan">风机情况</a></li>
-	            <li class="{{item == 'goods'?'active':''}}"><a href="#/report-{{time}}-goods">货物进出情况</a></li>
+	            <li class="{{item == 'data'?'active':''}}"><a href="" ng-click="chageItem('data',time)">数据查询</a></li>
+	            <li class="{{item == 'energy'?'active':''}}"><a href="" ng-click="chageItem('energy',time)">能耗分析</a></li>
+	            <li class="{{item == 'total'?'active':''}}"><a href="" ng-click="chageItem('total',time)">总体情况</a></li>
+	            <li class="{{item == 'door'?'active':''}}"><a href="" ng-click="chageItem('door',time)">门耗能情况</a></li>
+	            <li class="{{item == 'light'?'active':''}}"><a href="" ng-click="chageItem('light',time)">灯耗能情况</a></li>
+	            <li class="{{item == 'group'?'active':''}}"><a href="" ng-click="chageItem('group',time)">制冷剂组情况</a></li>
+	            <li class="{{item == 'fan'?'active':''}}"><a href="" ng-click="chageItem('fan',time)">风机情况</a></li>
+	            <li class="{{item == 'goods'?'active':''}}"><a href="" ng-click="chageItem('goods',time)">货物进出情况</a></li>
 	          </ul>
 	        </div>
 	    </div>
@@ -61,7 +58,7 @@
 
 	  <div class="col-md-10">
 
-        <div class="col-md-12" ng-show="isEnergy">
+        <div class="col-md-12" ng-show="item == 'energy'">
           <!-- MarkPoint Map CHART -->
           <div class="box box-gray">
             <div class="box-header with-border bg-gray">
@@ -167,8 +164,49 @@
           </div>
         </div>
 
+      <!-- 查询数据展示  -->
+      <div class="col-lg-12" ng-show="item == 'data'">
+        <div class="col-lg-12">
+        <div class="form-group">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <label>冷库：</label> 
+              <select type="text" class="form-control" placeholder="Search">
+                <option>冷库1号</option>
+              </select>
+            </div>&nbsp;&nbsp;
+            <div class="form-group">
+              <label>设备：</label> 
+              <select type="text" class="form-control" placeholder="Search">
+                <option>风机</option>
+                <option>压缩机</option>
+              </select>
+            </div>&nbsp;&nbsp;
+            <div class="form-group">
+              <label>时间范围：</label>
+              <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+              <input type="text" class="form-control pull-right" style="width:270px;" 
+              id="reservationtime" ng-model="picktime">
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" ng-click="search()">查询</button>
+            </div>
+          </form>
+        </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="box box-gray">
+          	<div class="bg-gray" id="data-chart" style="height: 300px;"></div>
+          </div>
+        </div>
+      </div>
+
 	  <!-- 总能耗表 -->
-	  <div class="col-md-12" ng-show="!isEnergy">
+	  <div class="col-md-12" ng-show="item != 'energy' && item != 'data'">
 	  <div class="box box-gray bg-gray">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
@@ -182,7 +220,7 @@
       </div>
       </div>
       <!-- 耗能占比 -->
-      <div class="col-md-12" ng-show="!isEnergy">
+      <div class="col-md-12" ng-show="item != 'energy'">
       <div class="box box-gray bg-gray" ng-if="item == 'total'">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
@@ -196,8 +234,8 @@
       </div>
 	  </div>
 	  <!-- 温度能耗 -->
-	  <div class="col-md-12" ng-show="!isEnergy">
-      <div class="box box-gray bg-gray" ng-show="!isEnergy">
+	  <div class="col-md-12" ng-show="item != 'energy'">
+      <div class="box box-gray bg-gray {{item}}" ng-show="item != 'energy' && item != 'data'">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
           <h3 class="box-title text-white">温度能耗对比</h3>
