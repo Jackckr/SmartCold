@@ -11,9 +11,9 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
             $(document).ready(function () {
 
                 Highcharts.setOptions({
-    /*                global: {
+                    global: {
                         //useUTC: false
-                    }*/
+                    }
                 });
 
                 $('#storageDoorChart').highcharts({

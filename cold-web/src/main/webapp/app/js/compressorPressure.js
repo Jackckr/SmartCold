@@ -5,219 +5,642 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
     console.log($stateParams.storageID);
     $scope.load = function () {
 
-        // 高压压力实时图——仪表盘
-        var highChart = echarts.init(document.getElementById('pressureChart'));
-        var highOption = {
+// 环形图表示压力监控
+        var pressureChart = echarts.init($("#pressureChart").get(0));
+
+        var dataStyle = {
+            normal: {
+                label: {show: false},
+                labelLine: {show: false}
+            }
+        };
+        var placeHolderStyle = {
+            normal: {
+                color: 'rgba(0,0,0,0)',
+                label: {show: false},
+                labelLine: {show: false}
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+        var pressureOption = {
+            title: {
+                text: '压力监控',
+                //subtext: 'From SmartCold',
+                //sublink: 'http://www.baidu.com/',
+                x: 'center',
+                y: 'center',
+                itemGap: 20,
+                textStyle: {
+                    color: 'rgba(30,144,255,0.8)',
+                    fontFamily: '微软雅黑',
+                    fontSize: 25,
+                    fontWeight: 'bolder'
+                }
+            },
             tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
+                show: true,
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: $("#pressureChart").get(0).offsetWidth / 2 + 5,
+                y: 23,
+                itemGap: 12,
+                data: ['高压压力', '低压压力']
+            },
+            toolbox: {
+                show: false,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
             },
             series: [
                 {
-                    name: '高压压力',
-                    type: 'gauge',
-                    min: -100,
-                    max: 100,
-                    detail: {formatter: '{value}Kpa'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
-                    },
-                    data: [{value: 0, name: '高压压力'}]
+                    name: '1',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [70, 90],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 68,
+                            name: '高压压力'
+                        },
+                        {
+                            value: 32,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
+                },
+                {
+                    name: '2',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [50, 70],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 29,
+                            name: '低压压力'
+                        },
+                        {
+                            value: 71,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
                 }
             ]
         };
+        pressureChart.setOption(pressureOption);
 
-        highChart.setOption(highOption);
 
+        // 环形图表示运行监控
+        var runChart = echarts.init($("#runChart").get(0));
 
-        // 低压压力实时图——仪表盘
-        var lowChart = echarts.init(document.getElementById('pressure1Chart'));
-        var lowOption = {
+        var dataStyle = {
+            normal: {
+                label: {show: false},
+                labelLine: {show: false}
+            }
+        };
+        var placeHolderStyle = {
+            normal: {
+                color: 'rgba(0,0,0,0)',
+                label: {show: false},
+                labelLine: {show: false}
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+        var runOption = {
+            title: {
+                text: '运行监控',
+                //subtext: 'From SmartCold',
+                //sublink: 'http://www.baidu.com/',
+                x: 'center',
+                y: 'center',
+                itemGap: 20,
+                textStyle: {
+                    color: 'rgba(30,144,255,0.8)',
+                    fontFamily: '微软雅黑',
+                    fontSize: 25,
+                    fontWeight: 'bolder'
+                }
+            },
             tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
+                show: true,
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: $("#runChart").get(0).offsetWidth / 2 + 5,
+                y: 1,
+                itemGap: 12,
+                data: ['负载3', '负载2', '负载1']
+            },
+            toolbox: {
+                show: false,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
             },
             series: [
                 {
-                    name: '低压压力',
-                    type: 'gauge',
-                    min: -100,
-                    max: 100,
-                    detail: {formatter: '{value}Kpa'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
-                    },
-                    data: [{value: 0, name: '低压压力'}]
+                    name: '1',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [50, 70],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 18,
+                            name: '负载1'
+                        },
+                        {
+                            value: 82,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
+                },
+                {
+                    name: '2',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [70, 90],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 29,
+                            name: '负载2'
+                        },
+                        {
+                            value: 71,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
+                },
+                {
+                    name: '3',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [90, 110],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 35,
+                            name: '负载3'
+                        },
+                        {
+                            value: 65,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
                 }
             ]
         };
+        runChart.setOption(runOption);
 
-        lowChart.setOption(lowOption);
+        // 环形图表示运行监控2
+        var runChart2 = echarts.init($("#runChart2").get(0));
 
-        // 出水压力实时图——仪表盘
-        var waterChart = echarts.init(document.getElementById('pressure2Chart'));
-        var waterOption = {
+        var dataStyle = {
+            normal: {
+                label: {show: false},
+                labelLine: {show: false}
+            }
+        };
+        var placeHolderStyle = {
+            normal: {
+                color: 'rgba(0,0,0,0)',
+                label: {show: false},
+                labelLine: {show: false}
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+        var runOption2 = {
+            title: {
+                text: '运行监控',
+                //subtext: 'From SmartCold',
+                //sublink: 'http://www.baidu.com/',
+                x: 'center',
+                y: 'center',
+                itemGap: 20,
+                textStyle: {
+                    color: 'rgba(30,144,255,0.8)',
+                    fontFamily: '微软雅黑',
+                    fontSize: 25,
+                    fontWeight: 'bolder'
+                }
+            },
             tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
+                show: true,
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: $("#runChart").get(0).offsetWidth / 2 + 5,
+                y: 1,
+                itemGap: 12,
+                data: ['负载6', '负载5', '负载4']
+            },
+            toolbox: {
+                show: false,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
             },
             series: [
                 {
-                    name: '出水压力',
-                    type: 'gauge',
-                    min: -100,
-                    max: 100,
-                    detail: {formatter: '{value}Kpa'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
-                    },
-                    data: [{value: 0, name: '出水压力'}]
-                }
-            ]
-        };
-
-        waterChart.setOption(waterOption);
-
-        // 出水温度实时图——仪表盘
-        var outWaterChart = echarts.init(document.getElementById('compressorTemperChart'));
-        var outWaterOption = {
-            tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
-            },
-            series: [
+                    name: '1',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [50, 70],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 18,
+                            name: '负载4'
+                        },
+                        {
+                            value: 82,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
+                },
                 {
-                    name: '出水温度',
-                    type: 'gauge',
-                    min: -30,
-                    max: 30,
-                    detail: {formatter: '{value}℃'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
-                    },
-                    data: [{value: 0, name: '出水温度'}]
-                }
-            ]
-        };
-
-        outWaterChart.setOption(outWaterOption);
-
-        // 吸气温度实时图——仪表盘
-        var inAirChart = echarts.init(document.getElementById('compressor1TemperChart'));
-        var inAirOption = {
-            tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
-            },
-            series: [
+                    name: '2',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [70, 90],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 29,
+                            name: '负载5'
+                        },
+                        {
+                            value: 71,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
+                },
                 {
-                    name: '吸气温度',
-                    type: 'gauge',
-                    min: -30,
-                    max: 30,
-                    detail: {formatter: '{value}℃'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
-                    },
-                    data: [{value: 0, name: '吸气温度'}]
+                    name: '3',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [90, 110],
+                    itemStyle: dataStyle,
+                    data: [
+                        {
+                            value: 35,
+                            name: '负载6'
+                        },
+                        {
+                            value: 65,
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }
+                    ]
                 }
             ]
         };
+        runChart2.setOption(runOption2);
 
-        inAirChart.setOption(inAirOption);
-
-        // 排气温度实时图——仪表盘
-        var outAirChart = echarts.init(document.getElementById('compressor2TemperChart'));
-        var outAirOption = {
-            tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
-            },
-            series: [
-                {
-                    name: '排气温度',
-                    type: 'gauge',
-                    min: -30,
-                    max: 30,
-                    detail: {formatter: '{value}℃'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
+        // 液位计
+        $(function () {
+            $('#floatPressureChart').highcharts({
+                chart: {
+                    type: 'column',
+                    margin: [ 50, 50, 50, 80],
+                    backgroundColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                        stops: [
+                            [0, 'rgb(210, 214, 222)'],
+                            [1, 'rgb(210, 214, 222)']
+                        ]
                     },
-                    data: [{value: 0, name: '排气温度'}]
+                    borderColor: '#d2d6de',
+                    borderWidth: 2,
+                    className: 'dark-container',
+                    plotBackgroundColor: 'rgba(210, 214, 222, .1)',
+                    plotBorderColor: '#d2d6de',
+                    plotBorderWidth: 1
+                },
+                title: {
+                    text: '液位',
+                    itemGap: 20,
+                    style: {
+                        color: 'rgba(30,144,255,0.8)',
+                        fontFamily: '微软雅黑',
+                        fontSize: 25,
+                        fontWeight: 'bolder'
+                    }
+                },
+                xAxis: {
+                    categories: [
+                        '液位'
+                    ]
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Level (mL)'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: 'Level is: <b>{point.y:.1f} mL</b>',
+                },
+                credits: {
+                    enabled: false // 禁用版权信息
+                },
+                series: [{
+                    name: 'Level',
+                    data: [45],
+                    dataLabels: {
+                        enabled: true,
+                        rotation: -90,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        x: 4,
+                        y: 10,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif',
+                            textShadow: '0 0 3px black'
+                        }
+                    }
+                }]
+            });
+        });
+
+        /*
+                var img;
+                function getTemperature() {
+                    var temperatureControl = document.getElementById('temp'),
+                        iTemp = 0;
+                    // Ensure the temperature value is a number
+                    if (temperatureControl !== null) {
+                        iTemp = temperatureControl.value * 1.0;
+                    }
+                    // Sanity checks
+                    if (iTemp > 50) {
+                        iTemp = 50;
+                    } else if (iTemp < -30) {
+                        iTemp = -30;
+                    }
+                    return iTemp;
                 }
-            ]
-        };
+                function getRatio(iTemp) {
+                    /!* The image is not in proportion this the gauge to pixel
+                     * ratio need slight adjustment
+                     *!/
+                    var iRatio;
+                    if (iTemp > 0) {
+                        iRatio = 7.1;
+                    } else if (iTemp <= 0) {
+                        iRatio = 6.9;
+                    } else if (iTemp < -20) {
+                        iRatio = 6.77;
+                    }
+                    return iRatio;
+                }
+                function convertTempToScreenCoord(iRatio, iTemp) {
+                    /!* Algorithm to convert the temperature to the correct x screen coord.
+                     * Odd, but works!
+                     *!/
+                    var iMAX_TEMP = 50,
+                        iSTART_Y_POS = 147;
+                    return iSTART_Y_POS + (iRatio * (iMAX_TEMP - iTemp));
+                }
+                function drawLiquid(ctx, iTempToYCoord) {
+                    /!* Draw red rectangle to represent the fluid in the glass tube
+                     * Coordinates you Y and are fixed!
+                     * TODO: Calculare Y coord base on image X,Y
+                     *!/
+                    var iX_POS = 111,
+                        iY_POS = 7,
+                        iY_OFFSET = 686,
+                        iWIDTH = 35;
+                    ctx.fillStyle = "rgb(200,0,0)";
+                    // Draw rectangle from -30 to iTempToYCoord
+                    ctx.fillRect(iX_POS, iTempToYCoord, iY_POS, iY_OFFSET - iTempToYCoord);
+                    // Draw rectangle from botton to -30
+                    ctx.fillRect(iX_POS, iY_OFFSET, iY_POS, iWIDTH);
+                    ctx.stroke();
+                }
+                function imgOnLoaded() {
+                    /!* Simply grabs a handle to the canvas element and
+                     * check the context (Canvas support).
+                     *!/
+                    var canvas = document.getElementById('thermometer'),
+                        ctx = null,
+                        iTemp = 0,
+                        iRatio  = 0,
+                        iTempToYCoord = 0;
+                    // Canvas supported?
+                    if (canvas.getContext) {
+                        ctx = canvas.getContext('2d');
+                        iTemp = getTemperature();
+                        iRatio = getRatio(iTemp);
+                        iTempToYCoord = convertTempToScreenCoord(iRatio, iTemp);
+                        // Draw the loaded image onto the canvas
+                        ctx.drawImage(img, 0, 0);
+                        // Draw the liquid level
+                        drawLiquid(ctx, iTempToYCoord);
+                    } else {
+                        alert("Canvas not supported!");
+                    }
+                }
+                $scope.drawMap = function() {
+                    /!* Main entry point got the thermometer Canvas example
+                     * Simply grabs a handle to the canvas element and
+                     * check the conect (Canvas support).
+                     *!/
+                    var canvas = document.getElementById('thermometer');
+                    // Create the image resource
+                    img = new Image();
+                    // Canvas supported?
+                    if (canvas.getContext) {
+                        // Setup the onload event
+                        img.onload = imgOnLoaded;
+                        // Load the image
+                        img.src = '../../img/thermometer-template.png';
+                    } else {
+                        alert("Canvas not supported!");
+                    }
+                }
+                $scope.setTempAndDraw = function() {
+                    /!* Function called when user clicks the draw button
+                     *!/
+                    var temp = document.getElementById('temp'),
+                        slider = document.getElementById('defaultSlider');
+                    if (temp !== null && slider !== null) {
+                        temp.value = slider.value;
+                        $scope.drawMap();
+                    }
+                }*/
 
-        outAirChart.setOption(outAirOption);
 
-        // 油分内部实时图——仪表盘
-        var oilInChart = echarts.init(document.getElementById('compressor3TemperChart'));
-        var oilInOption = {
-            tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
-            },
-            series: [
-                {
-                    name: '油分内部',
-                    type: 'gauge',
-                    min: -30,
-                    max: 30,
-                    detail: {formatter: '{value}℃'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
+        /*  温度实时图 —— 折线图  */
+        $(function () {
+            $(document).ready(function () {
+                Highcharts.setOptions({
+                    global: {
+                        useUTC: false
+                    }
+                });
+
+                var chart;
+                $('#powerChart').highcharts({
+                    chart: {
+                        type: 'spline',
+                        animation: Highcharts.svg, // don't animate in old IE
+                        marginRight: 10,
+                        events: {
+                            load: function () {
+
+                                /*                                // set up the updating of the chart each second
+                                 var series = this.series[0];
+
+                                 setInterval(function () {
+                                 $http.get('/i/coldStorage/findColdStorageById', {
+                                 params: {
+                                 "storageID": $stateParams.storageID,
+                                 "npoint": 2
+                                 }
+                                 }).success(function (data) {
+                                 console.log("data:" + data);
+                                 for (var i = 0; i < data.length; i++) {
+                                 console.log("data:" + data[i].temperature);
+                                 }
+                                 //TODO 修改为时间和温度根据后台传过来的数据,可能在时间窗内有多个点
+                                 var temper2 = data[data.length - 1].temperature;
+                                 var x = (new Date()).getTime(), // current time
+                                 y = (Math.random() * (40) - temper2).toFixed(2) - 0;
+                                 temper = y;
+                                 series.addPoint([x, y], true, true);
+                                 });
+                                 }, 1000);*/
+                                // set up the updating of the chart each second
+                                var series = this.series[0];
+
+                                setInterval(function () {
+                                    var x = (new Date()).getTime(), // current time
+                                        y = (Math.random() * (40) - 20).toFixed(2) - 0;
+                                    temper = y;
+                                    series.addPoint([x, y], true, true);
+                                }, 5000);
+                            }
+                        },
+                        backgroundColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                            stops: [
+                                [0, 'rgb(210, 214, 222)'],
+                                [1, 'rgb(210, 214, 222)']
+                            ]
+                        },
+                        borderColor: '#d2d6de',
+                        borderWidth: 2,
+                        className: 'dark-container',
+                        plotBackgroundColor: 'rgba(210, 214, 222, .1)',
+                        plotBorderColor: '#d2d6de',
+                        plotBorderWidth: 1
                     },
-                    data: [{value: 0, name: '油分内部'}]
-                }
-            ]
-        };
-
-        oilInChart.setOption(oilInOption);
-
-        // 油冷出口温度实时图——仪表盘
-        var OilColdChart = echarts.init(document.getElementById('compressor4TemperChart'));
-        var OilColdOption = {
-            tooltip: {
-                formatter: "{a} <br/>{b} : {c}%"
-            },
-            series: [
-                {
-                    name: '油冷出口温度',
-                    type: 'gauge',
-                    min: -30,
-                    max: 30,
-                    detail: {formatter: '{value}℃'},
-                    textStyle: {
-                        color: 'auto',
-                        fontSize: 30
+                    title: {
+                        text: '电量实时监控'
                     },
-                    data: [{value: 0, name: '油冷出口温度'}]
-                }
-            ]
-        };
+                    xAxis: {
+                        type: 'datetime',
+                        tickPixelInterval: 150,
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Power(kw)'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }
+             /*               , {
+                            color:'red',           //线的颜色，定义为红色
+                            dashStyle:'solid',     //默认值，这里定义为实线
+                            value:18,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width:2,
+                            label:{
+                                text:'', //标签的内容
+                                align:'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x:10                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            }//标示线的宽度，2px
+                        }*/
+                        ]
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.name + '</b><br/>' +
+                                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                Highcharts.numberFormat(this.y, 2);
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    exporting: {
+                        enabled: false
+                    },
+                    credits: {
+                        enabled: false // 禁用版权信息
+                    },
+                    series: [{
+                        name: 'Power',
+                        markPoint : {
+                            data : [
+                                {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                            ]
+                        },
+                        data: (function () {
+                            // generate an array of random data
+                            var data = [],
+                                time = (new Date()).getTime(),
+                                i;
 
-        OilColdChart.setOption(OilColdOption);
+                            for (i = -19; i <= 0; i++) {
+                                data.push({
+                                    x: time + i * 5000,
+                                    y: Math.random() * (40) - 20
+                                });
+                            }
+                            return data;
+                        })()
+                    }]
+                });
+            });
 
-        clearInterval(timeTicket);
-        var timeTicket = setInterval(function () {
-            highOption.series[0].data[0].value = (Math.random() * (100)).toFixed(2) - 0;
-            lowOption.series[0].data[0].value = (Math.random() * (100)).toFixed(2) - 0;
-            waterOption.series[0].data[0].value = (Math.random() * (100)).toFixed(2) - 0;
-            outWaterOption.series[0].data[0].value = (Math.random() * (30)).toFixed(2) - 0;
-            inAirOption.series[0].data[0].value = (Math.random() * (30)).toFixed(2) - 0;
-            outAirOption.series[0].data[0].value = (Math.random() * (30)).toFixed(2) - 0;
-            oilInOption.series[0].data[0].value = (Math.random() * (30)).toFixed(2) - 0;
-            OilColdOption.series[0].data[0].value = (Math.random() * (30)).toFixed(2) - 0;
-            highChart.setOption(highOption, true);
-            lowChart.setOption(lowOption, true);
-            waterChart.setOption(waterOption, true);
-            outWaterChart.setOption(outWaterOption, true);
-            inAirChart.setOption(inAirOption, true);
-            outAirChart.setOption(outAirOption, true);
-            oilInChart.setOption(oilInOption, true);
-            OilColdChart.setOption(OilColdOption, true);
-        }, 2000);
-
+        });
     }
     $scope.load();
 });

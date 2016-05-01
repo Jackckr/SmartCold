@@ -19,17 +19,33 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <div id="pressureChart" style="height:330px;width: 330px" class=" col-md-4"></div>
-                            <div id="pressure1Chart" style="height:330px;width: 330px" class=" col-md-4"></div>
-                            <div id="pressure2Chart" style="height:330px;width: 330px" class=" col-md-4"></div>
+                            <div id="pressureChart" style="height:220px;width: 250px" class="col-md-3"></div>
+                            <div id="runChart" style="height:220px;width: 250px" class="col-md-3"></div>
+                            <div id="runChart2" style="height:220px;width: 250px" class="col-md-3"></div>
+                            <div id="floatPressureChart" style="height:220px;width:250px;" class="col-md-3"></div>
                         </div>
                     </div>
                 </div><!-- 2 -->
 
+<!--                <div style="height:900px;width: 900px" class="box bg-gray">
+                    <div class="box-body">
+                        <canvas id="thermometer" width="600px" height="600px"></canvas>
+                        <div style="position: relative; top: 20px; left: 25px;">
+                            <form id="drawTemp">
+                                <input type="text" id="temp" name="temp" value="-30" maxlength="3"/>
+                                <br>
+                                <input id="defaultSlider" type="range" min="-30" max="50" ng-click="setTempAndDraw();" />
+                                <br>
+                                <input type="button" value="Draw" ng-click="drawMap()">
+                            </form>
+                        </div>
+                    </div>
+                </div>-->
+
                 <!-- Pressure CHART -->
                 <div class="box bg-gray">
                     <div class="box-header with-border">
-                        <h3 class="box-title">压缩机组温度监控</h3>
+                        <h3 class="box-title">压缩机组电量监控</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -37,11 +53,7 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <div id="compressorTemperChart" style="height:330px" class=" col-md-4"></div>
-                            <div id="compressor1TemperChart" style="height:330px" class=" col-md-4"></div>
-                            <div id="compressor2TemperChart" style="height:330px" class=" col-md-4"></div>
-                            <div id="compressor3TemperChart" style="height:330px" class=" col-md-4"></div>
-                            <div id="compressor4TemperChart" style="height:330px" class=" col-md-4"></div>
+                            <div id="powerChart" style="height:180px" class="col-md-12"></div>
                         </div>
                     </div>
                 </div><!-- 2 -->
