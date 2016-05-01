@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.smartcold.manage.cold.dao.AirEnthalpyMapper">
+<mapper namespace="com.smartcold.manage.cold.dao.ReportDailyMapper">
 
 	<select id="findByStorageIdDate" parameterType="map"
 		resultType="ReportDailyEntity">
@@ -15,7 +15,7 @@
 		resultType="ReportDailyEntity">
 		SELECT *
 		FROM `ReportDaily` WHERE `storageID` = #{storageid}
-		and `date` >= #{begin} and #{end} >`date`
+		and `date` >= #{begin} and #{end} >`date` order by `date`
 	</select>
 
 </mapper>

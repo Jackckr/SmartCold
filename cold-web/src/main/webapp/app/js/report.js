@@ -1,10 +1,11 @@
 coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$http) {
 	$scope.time = $stateParams.time;
 	$scope.item = $stateParams.item;
-	$scope.begin = new Date().toISOString().replace("T"," ").replace(/\..*/g,'');
-	$scope.end = new Date(new Date().getTime() - 7 *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
+	$scope.begin = $scope.getDateTimeStringBefore(0);
+	$scope.end = $scope.getDateTimeStringBefore(7);
 	$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$scope.isEnergy = false;
+	
 	if ($scope.item == 'energy'){
 		$scope.isEnergy = true;
 	} else {
@@ -15,16 +16,20 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		
 	}
 	
+	$scope.getDateTimeStringBefore = function(before){
+		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
+	}
+	
 	$scope.chageItem = function(item,time){
 		$scope.item = item;
 		$scope.time = time;
 		if($scope.item == 'total'){
 			$timeout(function() {
-	           $scope.drawbount();
+	           $scope.drawbount(donutData);
 	         }, 0)
 		}else if($scope.item == 'data'){
 			$timeout(function(){
-				$scope.drawDataLine();
+				$scope.drawDataLine(xData,data);
 			}, 0);
 		}
 	}
@@ -36,7 +41,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		$scope.drawDataLine();
 	}
 	
-	$scope.drawDataLine = function(){
+	$scope.drawDataLine = function(xData,data){
 		var lineChart = echarts.init($('#data-chart')[0]);
 		xData = [1,2,3,4]
 		data = [34,35,34,21]
@@ -75,7 +80,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		lineChart.setOption(option);
 	}
 
-	$scope.drawline = function(){
+	$scope.drawline = function(xData,totalEnergy1,totalEnergy2){
 		var lineChart = echarts.init($('#line-chart')[0]);
 		if($scope.time == 'daily'){
 			xData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,30];
@@ -145,7 +150,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 			};
 		lineChart.setOption(option);
 	};
-	$scope.drawbount = function(){
+	$scope.drawbount = function(donutData){
 		var pieChart = echarts.init($('#donut-chart')[0]);
 		
 		var donutData = [
@@ -180,7 +185,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 			};
 		pieChart.setOption(option);
 	}
-	$scope.drawTemperatureLine = function(){
+	$scope.drawTemperatureLine = function(xData,totalEngergy,temperature){
 		var lineChart = echarts.init($('#temperature-chart')[0]);
 		if($scope.time == 'daily'){
 			xData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,30];
@@ -237,13 +242,6 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 			};
 		lineChart.setOption(option);
 	}
-	$scope.drawline();
-	$scope.drawTemperatureLine();
-	if($scope.item == 'total'){
-		$timeout(function() {
-           $scope.drawbount();
-         }, 0)
-      }
 
 	$scope.uncheckState = true;
 	$scope.checkState = false;
@@ -310,6 +308,18 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		$http.get('/i/rdc/findRdcList').success(function(data,headers,config,status){
 			$scope.rdcList = data;
 			$scope.rdcModal = data[0];
+			if(time == 'day'){
+				
+			}else{
+				
+			}
+			$scope.drawline(xData,totalEnergy1,totalEnergy2);
+			$scope.drawTemperatureLine(xData,totalEngergy,temperature);
+			if($scope.item == 'total'){
+				$timeout(function() {
+		           $scope.drawbount(donutData);
+		         }, 0)
+		      }
 		})
 
 		// 能耗评分图——仪表盘

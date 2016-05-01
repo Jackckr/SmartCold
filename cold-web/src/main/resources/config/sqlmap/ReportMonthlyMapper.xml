@@ -15,7 +15,7 @@
 		resultType="ReportMonthlyEntity">
 		SELECT *
 		FROM `ReportMonthly` WHERE `storageID` = #{storageid}
-		and `date` >= #{begin} and #{end} >`date`
+		and `date` >= #{begin} and #{end} >`date` order by `date`
 	</select>
 
 </mapper>
