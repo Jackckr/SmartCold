@@ -79,4 +79,12 @@
       addtime = #{addtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from RdcUser
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+
 </mapper>

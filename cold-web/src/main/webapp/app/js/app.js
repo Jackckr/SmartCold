@@ -56,22 +56,31 @@ coldWeb.config(function($httpProvider) {
 });
 
 
-coldWeb.factory('userService', ['$rootScope', '$state', function ($rootScope, $state) {
+coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($rootScope, $state,$http) {
     return {
         setUser: function (user) {
             $rootScope.user = user;
         },
         setStorage: function (user) {
-/*            $rootScope.compressors = [{'name': "压缩机组", 'id': 0}, {'name': "风机", 'id': 1}];
-             $rootScope.toMyCompressor = function (compressorId) {
-             if (compressorId === 0) {
-             $state.go('compressorPressure', {'compressor': compressorId});
-             } else if (compressorId === 1) {
-             $state.go('compressorBlower', {'compressor': compressorId});
-             }
-             };*/
+            var compressors = [];
+            if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
+                $http.get('/i/compressorGroup/findByUserId', {
+                    params: {
+                        "userId": $rootScope.user.id
+                    }
+                }).success(function (result) {
+                    console.log("result:" + result);
+                    for (var i = 0; i < result.length; i++) {
+                        console.log("result:" + result[i].groupId + ",rdcId: " + result[i].rdcId);
+                        compressors.push({
+                            name: "压缩机组" + result[i].groupId,
+                            id: result[i].groupId
+                        });
+                    }
+                    $rootScope.compressors = compressors;
+                })
+            }
 
-            $rootScope.compressors = [{'name': "压缩机组1", 'id': 0}, {'name': "压缩机组2", 'id': 1}, {'name': "压缩机组3", 'id': 2}];
             $rootScope.toMyCompressor = function (compressorID) {
                 $state.go('compressorPressure', {'compressorID': compressorID});
             };
@@ -239,7 +248,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'coldStorageTemper',
         templateUrl: 'app/template/coldStorageTemper.html'
     }).state('compressorPressure', {
-        url: '/compressorPressure/:storageID',
+        url: '/compressorPressure/:compressorID',
         controller: 'compressorPressure',
         templateUrl: 'app/template/compressorPressure.html'
     }).state('compressorBlower', {

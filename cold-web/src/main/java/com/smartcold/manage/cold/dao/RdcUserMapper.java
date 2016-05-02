@@ -14,4 +14,6 @@ public interface RdcUserMapper {
     int updateByPrimaryKeySelective(RdcUser record);
 
     int updateByPrimaryKey(RdcUser record);
+
+    RdcUser findByUserId(Integer userid);
 }
