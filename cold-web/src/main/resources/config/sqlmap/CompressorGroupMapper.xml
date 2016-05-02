@@ -4,16 +4,16 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.CompressorGroupMapper">
 
-	<select id="findLastNPoint" parameterType="map" resultType="ColdStorageEntity">
+	<select id="findLastNPoint" parameterType="map" resultType="CompressorGroupEntity">
 		SELECT *
-		FROM `ColdStorage` WHERE `groupId` = #{groupId} 
-		order by `addTime` desc 
+		FROM `CompressorGroup` WHERE `groupId` = #{groupId}
+		order by `addTime` desc
 		limit #{npoint}
 	</select>
 	
-	<select id="findPoitByTime" parameterType="map" resultType="ColdStorageEntity">
+	<select id="findPoitByTime" parameterType="map" resultType="CompressorGroupEntity">
 		SELECT *
-		FROM `ColdStorage` WHERE `groupId` = #{groupId} AND `addTime` >= #{begin} AND #{end} >= `addTime`
+		FROM `CompressorGroup` WHERE `groupId` = #{groupId} AND `addTime` >= #{begin} AND #{end} >= `addTime`
 		order by `addTime` desc
 	</select>
 

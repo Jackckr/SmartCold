@@ -10,6 +10,10 @@ public class CompressorGroupSetEntity {
 
     private int id;
 
+    private int groupId;
+
+    private int rdcId;
+
     private float lowPress;
 
     private float pressDiff;
@@ -24,6 +28,22 @@ public class CompressorGroupSetEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    public int getRdcId() {
+        return rdcId;
+    }
+
+    public void setRdcId(int rdcId) {
+        this.rdcId = rdcId;
     }
 
     public float getLowPress() {

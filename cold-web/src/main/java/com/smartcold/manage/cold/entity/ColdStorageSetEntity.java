@@ -8,7 +8,7 @@ public class ColdStorageSetEntity {
 
     private int id;
 
-    private int storageId;
+    private int coldStorageID;
 
     private String name;
 
@@ -30,12 +30,12 @@ public class ColdStorageSetEntity {
         this.id = id;
     }
 
-    public int getStorageId() {
-        return storageId;
+    public int getColdStorageID() {
+        return coldStorageID;
     }
 
-    public void setStorageId(int storageId) {
-        this.storageId = storageId;
+    public void setColdStorageID(int coldStorageID) {
+        this.coldStorageID = coldStorageID;
     }
 
     public String getName() {
