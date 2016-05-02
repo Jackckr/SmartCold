@@ -1,7 +1,5 @@
 package com.smartcold.manage.cold.entity;
 
-import java.util.Date;
-
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-03-19 11:51)
@@ -10,13 +8,13 @@ public class ColdStorageDoorSetEntity {
 
     private int id;
 
-    private int coldStorageDoorId;
+    private int coldStorageId;
 
-    private Date startTime;
+    private int rdcId;
 
-    private int state;
+    private float length;
 
-    private Date addTime;
+    private float width;
 
     public int getId() {
         return id;
@@ -26,35 +24,35 @@ public class ColdStorageDoorSetEntity {
         this.id = id;
     }
 
-    public int getColdStorageDoorId() {
-        return coldStorageDoorId;
+    public int getColdStorageId() {
+        return coldStorageId;
     }
 
-    public void setColdStorageDoorId(int coldStorageDoorId) {
-        this.coldStorageDoorId = coldStorageDoorId;
+    public void setColdStorageId(int coldStorageId) {
+        this.coldStorageId = coldStorageId;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public int getRdcId() {
+        return rdcId;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setRdcId(int rdcId) {
+        this.rdcId = rdcId;
     }
 
-    public int getState() {
-        return state;
+    public float getLength() {
+        return length;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setLength(float length) {
+        this.length = length;
     }
 
-    public Date getAddTime() {
-        return addTime;
+    public float getWidth() {
+        return width;
     }
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
+    public void setWidth(float width) {
+        this.width = width;
     }
 }
