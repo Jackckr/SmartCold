@@ -14,9 +14,9 @@
             </ul>
         </div>
         <div class="row" style="width: 100%">
-            <div class="col-lg-9" style="position: relative;top:30px;padding-bottom: 100px;">
+            <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;top:30px;padding-bottom: 100px;">
                 <div class="row">
-                    <div class="col-lg-9" style="position: relative;left: 40px">
+                    <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;left: 40px">
                         <h3 style="color: dodgerblue">{{rdcName}}</h3>
 
                         <div style="height: 10px">
@@ -28,18 +28,22 @@
                         </div>
                         <h6>该冷库位于{{rdcAddress}}.</h6>
                     </div>
-                    <div class="col-lg-3" style="position: relative;top:5px;left: 0px;">
+                    <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 visible-lg" style="position: relative;top:5px;left: 0px;">
                         <a class="btn btn-success" style="position: relative;top:50px;left: 120px;"
+                           ng-click="goComment()">立即评价</a>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 visible-md" style="position: relative;top:5px;left: 0px;">
+                        <a class="btn btn-success" style="position: relative;top:50px;left: 60px;"
                            ng-click="goComment()">立即评价</a>
                     </div>
                 </div>
                 <div class="row">
                     <!--<img src="app/img/banner.jpg" style="position:relative;left:50px;width:93%;height: 50%;">-->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
                         <img src="app/img/banner/pageBanner1.png"
                              style="position:relative;left:40px;width:290px;height: 224px;">
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                         <div class="row" style="position:relative;left:1px;">
                             <img src="app/img/banner/pageBanner2.png"
                                  style="position:relative;left:30px;width:255px;height: 109px;">
@@ -215,42 +219,42 @@
                             </div>
                             <div class="tab-pane" id="coldStorageComment">
                                 <div class="row">
-                                    <div class="col-lg-8" style="position: relative;left: 10px;top: 10px;">
-                                        <div class="col-lg-3">
+                                    <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8" style="position: relative;left: 10px;top: 10px;">
+                                        <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
                                             <i class="icon-star"></i>
                                             <i class="icon-star"></i>
                                             <i class="icon-star"></i>
                                             <i class="icon-star-half"></i>
                                             <i class="icon-star-empty"></i>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
                                             <span style="color: dodgerblue;font-size: 20px">{{score}}</span>/5分
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
                                             <span style="color: dodgerblue;font-size: 20px">{{userRecommendPercent}}</span>%用户推荐
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
                                         <h4>点评均来自真实用户点评！ </h4>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-8" style="position: relative;left: 10px;top: 15px;">
-                                        <div class="col-lg-2">
+                                    <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8" style="position: relative;left: 10px;top: 15px;">
+                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
                                             <span>位置&nbsp;<span
                                                     style="color: #00a7d0">{{rdcPositionScore}}</span></span>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
                                             <span>设施&nbsp;<span style="color: #00a7d0">{{rdcFacility}}</span></span>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
                                             <span>服务&nbsp;<span style="color: #00a7d0">{{rdcService}}</span></span>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
                                             <span>卫生&nbsp;<span style="color: #00a7d0">{{rdcHealth}}</span></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
                                         <div class="input-group" style="width: 200px">
                                             <input type="text" ng-model="query" class="form-control"
                                                    placeholder="搜索点评关键字">
@@ -264,10 +268,10 @@
                                     </div>
                                 </div>
                                 <div class="row" style="background: gainsboro;margin-top: 20px;width: 95%">
-                                    <div class="col-lg-2" style="height: 100px">
+                                    <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2" style="height: 100px">
                                         <span style="float: left; display: inline; margin-left: 25px; margin-top: 20px; font-size: 14px; font-weight: bold; color: #666;">用户印象</span>
                                     </div>
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-10 col-sm-10 col-xs-10 col-md-10">
                                         <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
                                            href="#">冷库(116)</a>
                                         <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
@@ -291,7 +295,7 @@
                                     </div>
                                 </div>
                                 <div class="row" style="background: gainsboro;margin-top: 20px;width: 95%">
-                                    <div class="col-lg-6" style="height: 30px;margin-top: 10px;">
+                                    <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6" style="height: 30px;margin-top: 10px;">
                                         <div>
                                             <a href="#" style="margin-left: 10px;">全部(414)</a>
                                             <a href="#" style="margin-left: 10px;">值得推荐(407)</a>
@@ -299,7 +303,7 @@
                                             <a href="#" style="margin-left: 10px;">有图片(55)</a>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
                                         <select style="width: 120px;margin-top: 10px;margin-left: 15px;">
                                             <option value="1" selected>热门排序</option>
                                             <option value="2">时间排序</option>
@@ -320,9 +324,9 @@
                                 </div>
                                 <div class="row" ng-repeat="comment in comments | filter:query"
                                      style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
                                         <div class="row">
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
                                                 <a href="#" class="pull-left"
                                                    style="position: relative;top: 5px;left: 0px"><img
                                                         src="app/img/a_002.jpg" width="60px" height="60px"/></a>
@@ -338,9 +342,9 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-10" style="position: relative;top:5px;left: 10px">
+                                            <div class="col-lg-10 col-sm-10 col-xs-10 col-md-10" style="position: relative;top:5px;left: 10px">
                                                 <div class="row">
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
                                                         <i class="icon-star"></i>
                                                         <i class="icon-star"></i>
                                                         <i class="icon-star"></i>
@@ -348,7 +352,7 @@
                                                         <i class="icon-star-empty"></i>
                                                         <span style="color: dodgerblue;margin-left: 10px">4.6</span>分
                                                     </div>
-                                                    <div class="col-lg-8">
+                                                    <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                                                         <div style="position: relative;left: 150px;">
                                                             <i class="icon-truck" style="margin-left: 20px"><span
                                                                     style="margin-left: 5px">运输</span></i>
@@ -358,7 +362,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
                                                         <p style="margin-top: 10px;width: 90%">
                                                             {{comment.content}}
                                                         </p>
@@ -384,11 +388,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-4" style="margin-top: 5px">
+                                                    <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4" style="margin-top: 5px">
                                                         <i class="icon-mobile-phone"></i>
                                                         <span style="color: lightgrey;margin-left: 10px;">发表于{{comment.addTime}}</span>
                                                     </div>
-                                                    <div class="col-lg-8">
+                                                    <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                                                         <div style="position: relative;left: 350px;">
                                                             <a style="display: inline-block; padding: 2px 10px;background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
                                                                ng-click="comment.usefulCnt = comment.usefulCnt + 1">有用({{comment.usefulCnt}})</a>
@@ -404,7 +408,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
                 <div class="row"
                      style="position:relative;top:30px;left: 0px;height: 100px;padding-right: 10px;border: 1px ridge lightgrey">
                     <div style="position:relative;top: 10px;left: 10px">
@@ -417,7 +421,7 @@
                      style="position:relative;top:40px;left: 0px;height: 300px;padding-right: 10px;border: 1px ridge lightgrey">
                     <div>
                         <!--<a href="#"><img src="app/img/a_002.jpg" width="320" height="300px"/></a>-->
-                        <div class="chart" id="mapChart" style="height: 298px;width: 318px"></div>
+                        <div class="chart" id="mapChart" style="height: 298px;width: 100%"></div>
                     </div>
                 </div>
                 <div class="row"
@@ -428,7 +432,7 @@
 
                     <div class="row" ng-repeat="lookrdc in lookrdcs"
                          style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                             <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
                                     src="app/img/a_002.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
@@ -445,7 +449,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4" style="position: relative;top:5px;left: 0px;">
+                        <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4" style="position: relative;top:5px;left: 0px;">
                             <a class="btn btn-success" style="position: relative;left:10px;top: 15px;"
                                ng-click="goDetail(lookrdc.id)">查看</a>
                         </div>
