@@ -1,10 +1,29 @@
 coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$http) {
+	$scope.getDateTimeStringBefore = function(before){
+		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
+	}
+	
 	$scope.time = $stateParams.time;
 	$scope.item = $stateParams.item;
 	$scope.begin = $scope.getDateTimeStringBefore(0);
 	$scope.end = $scope.getDateTimeStringBefore(7);
 	$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$scope.isEnergy = false;
+	$scope.dataMap = {};
+	$scope.dataMap['xData'] = [];
+	$scope.dataMap['totalEnergy1'] = [];
+	$scope.dataMap['totalEnergy2'] = [];
+	$scope.dataMap['temperature'] = [];
+	$scope.dataMap['doorEnergy1'] = [];
+	$scope.dataMap['doorEnergy2'] = [];
+	$scope.dataMap['lightEnergy1'] = [];
+	$scope.dataMap['lightEnergy2'] = [];
+	$scope.dataMap['groupEnergy1'] = [];
+	$scope.dataMap['groupEnergy2'] = [];
+	$scope.dataMap['fanEnergy1'] = [];
+	$scope.dataMap['fanEnergy2'] = [];
+	$scope.dataMap['goodsEnergy1'] = [];
+	$scope.dataMap['goodsEnergy2'] = [];
 	
 	if ($scope.item == 'energy'){
 		$scope.isEnergy = true;
@@ -16,21 +35,30 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		
 	}
 	
-	$scope.getDateTimeStringBefore = function(before){
-		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
-	}
-	
 	$scope.chageItem = function(item,time){
 		$scope.item = item;
 		$scope.time = time;
 		if($scope.item == 'total'){
 			$timeout(function() {
-	           $scope.drawbount(donutData);
+				$scope.drawline($scope.dataMap['xData'],$scope.dataMap[item + 'Energy1'],$scope.dataMap[item + 'Energy2']);
+			},0)
+			$timeout(function() {
+				$scope.drawTemperatureLine($scope.dataMap['xData'],$scope.dataMap[item + 'Energy1'],$scope.dataMap['temperature']);
+			},0)
+			$timeout(function() {
+	           $scope.drawbount([]);
 	         }, 0)
 		}else if($scope.item == 'data'){
 			$timeout(function(){
-				$scope.drawDataLine(xData,data);
+				$scope.drawDataLine([],[]);
 			}, 0);
+		}else {
+			$timeout(function() {
+				$scope.drawline($scope.dataMap['xData'],$scope.dataMap[item + 'Energy1'],$scope.dataMap[item + 'Energy2']);
+			},0)
+			$timeout(function() {
+				$scope.drawTemperatureLine($scope.dataMap['xData'],$scope.dataMap[item + 'Energy1'],$scope.dataMap['temperature']);
+			},0)
 		}
 	}
 	
@@ -308,16 +336,42 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		$http.get('/i/rdc/findRdcList').success(function(data,headers,config,status){
 			$scope.rdcList = data;
 			$scope.rdcModal = data[0];
-			if(time == 'day'){
-				
+			if($scope.time == 'day'){
+				url = "/i/report/daily?storageId=" + $scope.rdcModal.id + "&begin=" 
+				+ $scope.getDateTimeStringBefore(0) + "&end=" + $scope.getDateTimeStringBefore(31);
+				$http.get(url).success(function(data,headers,config,status){
+					angular.forEach(data,function(item){
+						$scope.dataMap['xData'].push(item.date);
+						$scope.dataMap['totalEnergy1'].push(item.totalCostEnergy);
+						$scope.dataMap['temperature1'].push(item.temperature);
+						$scope.dataMap['doorEnergy1'].push(item.doorCostEnergy);
+						$scope.dataMap['lightEnergy1'].push(item.lightCostEnergy);
+						$scope.dataMap['groupEnergy1'].push(item.compressorCostEnergy);
+						$scope.dataMap['fanEnergy1'].push(fanCostEnergy);
+						$scope.dataMap['goodsEnergy1'].push(item.goodsInOutCostEnergy);
+					})
+				})
 			}else{
-				
+				url = "/i/report/monthly?storageId=" + $scope.rdcModal.id + "&begin=" 
+				+ $scope.getDateTimeStringBefore(0) + "&end=" + $scope.getDateTimeStringBefore(365);
+				$http.get(url).success(function(data,headers,config,status){
+					angular.forEach(data,function(item){
+						$scope.dataMap['xData'].push(item.date);
+						$scope.dataMap['totalEnergy1'].push(item.totalCostEnergy);
+						$scope.dataMap['temperature1'].push(item.temperature);
+						$scope.dataMap['doorEnergy1'].push(item.doorCostEnergy);
+						$scope.dataMap['lightEnergy1'].push(item.lightCostEnergy);
+						$scope.dataMap['groupEnergy1'].push(item.compressorCostEnergy);
+						$scope.dataMap['fanEnergy1'].push(fanCostEnergy);
+						$scope.dataMap['goodsEnergy1'].push(item.goodsInOutCostEnergy);
+					})
+				})
 			}
-			$scope.drawline(xData,totalEnergy1,totalEnergy2);
-			$scope.drawTemperatureLine(xData,totalEngergy,temperature);
+			$scope.drawline($scope.xData,$scope.totalEnergy1,$scope.totalEnergy2);
+			$scope.drawTemperatureLine($scope.xData,$scope.totalEnergy1,$scope.temperature);
 			if($scope.item == 'total'){
 				$timeout(function() {
-		           $scope.drawbount(donutData);
+		           $scope.drawbount([]);
 		         }, 0)
 		      }
 		})
