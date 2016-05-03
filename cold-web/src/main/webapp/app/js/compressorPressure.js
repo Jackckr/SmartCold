@@ -674,5 +674,5 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         } else {
             clearInterval(timeTicket);
         }
-    }, 5000);
+    }, 30000);
 });

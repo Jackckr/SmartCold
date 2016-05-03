@@ -43,5 +43,5 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
         } else {
             clearInterval(timeTicket);
         }
-    }, 5000);
+    }, 30000);
 });

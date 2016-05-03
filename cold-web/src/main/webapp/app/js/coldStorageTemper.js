@@ -163,6 +163,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         } else {
             clearInterval(timeTicket);
         }
-    }, 5000);
+    }, 30000);
 
 });
