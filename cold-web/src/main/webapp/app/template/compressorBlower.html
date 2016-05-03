@@ -21,17 +21,10 @@
                                 </div>
                             </div>
                             <div class="box-body">
-                                <span ng-switch="blower.state">
-                                    <span ng-switch-when="0">
-                                        <span class="info-box-icon bg-green" style="height: 85px;width: 85px;"><i class="fa fa-life-ring bg-green"></i></span>
-                                    </span>
-                                    <span ng-switch-when="1">
-                                        <span class="info-box-icon bg-yellow" style="height: 85px;width: 85px;"><i class="fa fa-life-ring bg-yellow"></i></span>
-                                    </span>
-                                    <span ng-switch-when="2">
-                                        <span class="info-box-icon bg-red" style="height: 85px;width: 85px;"><i class="fa fa-life-ring bg-red"></i></span>
-                                    </span>
-                                </span>
+
+                                    <span class="info-box-icon bg-green" ng-show="blower.isRunning === 1" style="height: 85px;width: 85px;"><i class="fa fa-life-ring bg-green"></i></span>
+                                    <span class="info-box-icon bg-yellow" ng-show="blower.isDefrosting === 1" style="height: 85px;width: 85px;"><i class="fa fa-life-ring bg-yellow"></i></span>
+                                    <span class="info-box-icon bg-red" ng-show="blower.isRunning === 0 && blower.isDefrosting === 0" style="height: 85px;width: 85px;"><i class="fa fa-life-ring bg-red"></i></span>
 
                                 <div class="info-box-content" style="padding-left: 2px">
                                     <span class="info-box-text">化霜温度:{{blower.defrostingTemperature}}℃</span>
