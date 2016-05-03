@@ -156,13 +156,13 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     }
     $scope.load();
 
-    var state = document.getElementById('temperatureNowChart');
     var timeTicket;
-    if (state != null && state!='' && state!= undefined){
-        timeTicket = setInterval(function () {
+    timeTicket = setInterval(function () {
+        if (document.getElementById('temperatureNowChart') !='' && document.getElementById('temperatureNowChart') != undefined && document.getElementById('temperatureNowChart') !=null) {
             $scope.load();
-        }, 5000);
-    } else {
-        clearInterval(timeTicket);
-    }
+        } else {
+            clearInterval(timeTicket);
+        }
+    }, 5000);
+
 });

@@ -138,8 +138,12 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
     }
     $scope.load();
 
-    clearInterval(timeTicket);
-    var timeTicket = setInterval(function () {
-        $scope.load();
+    var timeTicket;
+    timeTicket = setInterval(function () {
+        if (document.getElementById('storageDoorChart') !='' && document.getElementById('storageDoorChart') != undefined && document.getElementById('storageDoorChart') !=null) {
+            $scope.load();
+        } else {
+            clearInterval(timeTicket);
+        }
     }, 5000);
 });

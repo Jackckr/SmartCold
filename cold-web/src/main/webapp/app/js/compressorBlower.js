@@ -30,8 +30,12 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
     }
     $scope.load();
 
-    clearInterval(timeTicket);
-    var timeTicket = setInterval(function () {
-        $scope.load();
+    var timeTicket;
+    timeTicket = setInterval(function () {
+        if (document.getElementById('blowerPage') !='' && document.getElementById('blowerPage') != undefined && document.getElementById('blowerPage') !=null) {
+            $scope.load();
+        } else {
+            clearInterval(timeTicket);
+        }
     }, 5000);
 });
