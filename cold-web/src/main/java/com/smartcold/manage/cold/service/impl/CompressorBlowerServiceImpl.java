@@ -14,6 +14,7 @@ import com.smartcold.manage.cold.service.CompressorBlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -58,6 +59,27 @@ public class CompressorBlowerServiceImpl implements CompressorBlowerService {
                         blowerDTO.setState(blower.getState());
                         blowerDTO.setStartTime(blower.getStartTime());
                         blowerDTO.setColdStorageName(coldStorageSetEntity.getName());
+                        // 计算化霜累计时间/制冷累计时间
+                        List<BlowerEntity> blowerAll = blowerDao.findAllByBlowerId(blowerSetEntity.getBlowerId());
+                        int runTime = 0;
+                        int defrostTime = 0;
+                        for (BlowerEntity blowerEntity : blowerAll) {
+                            if (blowerEntity.getIsRunning() == 1) {
+                                System.out.println("runTime" + blowerEntity.getId());
+                                runTime = runTime + 30;
+                            }
+                            if (blowerEntity.getIsDefrosting() == 1) {
+                                System.out.println("defrostTime" + blowerEntity.getId());
+                                defrostTime = defrostTime + 30;
+                            }
+                        }
+
+                        BigDecimal runResult = BigDecimal.valueOf(runTime).divide(BigDecimal.valueOf(3600), 2, BigDecimal.ROUND_HALF_UP);
+                        BigDecimal refrostResult = BigDecimal.valueOf(defrostTime).divide(BigDecimal.valueOf(3600), 2, BigDecimal.ROUND_HALF_UP);
+                        blowerDTO.setRunTime(runResult);
+                        blowerDTO.setDefrostTime(refrostResult);
+                        System.out.println("runResult: " + runResult);
+                        System.out.println("refrostResult:" + refrostResult);
                         blowerList.add(blowerDTO);
                     }
                 }

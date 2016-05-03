@@ -9,4 +9,9 @@
         FROM `Blower` WHERE `blowerId` = #{blowerId} ORDER by 'addTime' DESC limit #{npoint}
     </select>
 
+    <select id="findAllByBlowerId" parameterType="map" resultType="BlowerEntity">
+        SELECT *
+        FROM `Blower` WHERE `blowerId` = #{blowerId} ORDER by 'addTime'
+    </select>
+
 </mapper>

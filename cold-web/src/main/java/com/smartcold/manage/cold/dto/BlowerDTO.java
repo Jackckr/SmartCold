@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -27,6 +28,10 @@ public class BlowerDTO {
     private int isRunning;
 
     private int isDefrosting;
+
+    private BigDecimal runTime;
+
+    private BigDecimal defrostTime;
 
     public int getBlowerId() {
         return blowerId;
@@ -106,5 +111,21 @@ public class BlowerDTO {
 
     public void setIsDefrosting(int isDefrosting) {
         this.isDefrosting = isDefrosting;
+    }
+
+    public BigDecimal getRunTime() {
+        return runTime;
+    }
+
+    public void setRunTime(BigDecimal runTime) {
+        this.runTime = runTime;
+    }
+
+    public BigDecimal getDefrostTime() {
+        return defrostTime;
+    }
+
+    public void setDefrostTime(BigDecimal defrostTime) {
+        this.defrostTime = defrostTime;
     }
 }
