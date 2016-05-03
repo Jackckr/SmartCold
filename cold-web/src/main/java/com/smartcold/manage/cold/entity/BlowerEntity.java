@@ -1,5 +1,7 @@
 package com.smartcold.manage.cold.entity;
 
+import java.util.Date;
+
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-03-19 11:53)
@@ -10,11 +12,15 @@ public class BlowerEntity {
 
     private int blowerId;
 
-    private int compressorGroupId;
+    private Date startTime;
 
-    private int coldStorageId;
+    private int state;
 
-    private float defrostingTemperature;
+    private Date addTime;
+
+    private int isRunning;
+
+    private int isDefrosting;
 
     public int getId() {
         return id;
@@ -32,27 +38,43 @@ public class BlowerEntity {
         this.blowerId = blowerId;
     }
 
-    public int getCompressorGroupId() {
-        return compressorGroupId;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setCompressorGroupId(int compressorGroupId) {
-        this.compressorGroupId = compressorGroupId;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public int getColdStorageId() {
-        return coldStorageId;
+    public int getState() {
+        return state;
     }
 
-    public void setColdStorageId(int coldStorageId) {
-        this.coldStorageId = coldStorageId;
+    public void setState(int state) {
+        this.state = state;
     }
 
-    public float getDefrostingTemperature() {
-        return defrostingTemperature;
+    public Date getAddTime() {
+        return addTime;
     }
 
-    public void setDefrostingTemperature(float defrostingTemperature) {
-        this.defrostingTemperature = defrostingTemperature;
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public int getIsRunning() {
+        return isRunning;
+    }
+
+    public void setIsRunning(int isRunning) {
+        this.isRunning = isRunning;
+    }
+
+    public int getIsDefrosting() {
+        return isDefrosting;
+    }
+
+    public void setIsDefrosting(int isDefrosting) {
+        this.isDefrosting = isDefrosting;
     }
 }

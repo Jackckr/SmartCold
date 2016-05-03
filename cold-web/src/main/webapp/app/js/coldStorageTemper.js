@@ -156,8 +156,13 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     }
     $scope.load();
 
-    clearInterval(timeTicket);
-    var timeTicket = setInterval(function () {
-        $scope.load();
-    }, 5000);
+    var timeTicket;
+    timeTicket = setInterval(function () {
+        if (document.getElementById('temperatureNowChart') !='' && document.getElementById('temperatureNowChart') != undefined && document.getElementById('temperatureNowChart') !=null) {
+            $scope.load();
+        } else {
+            clearInterval(timeTicket);
+        }
+    }, 30000);
+
 });

@@ -63,7 +63,9 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         },
         setStorage: function (user) {
             var compressors = [];
+            var mystorages = [];
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
+                // 拉取压缩机组列表
                 $http.get('/i/compressorGroup/findByUserId', {
                     params: {
                         "userId": $rootScope.user.id
@@ -79,15 +81,31 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                     }
                     $rootScope.compressors = compressors;
                 })
+                // 拉取冷库列表
+                $http.get('/i/coldStorage/findByUserId', {
+                    params: {
+                        "userId": $rootScope.user.id
+                    }
+                }).success(function (result) {
+                    console.log("result:" + result);
+                    for (var i = 0; i < result.length; i++) {
+                        console.log("result:" + result[i].coldStorageID + ",rdcId: " + result[i].rdcId);
+                        mystorages.push({
+                            name: result[i].name,
+                            id: result[i].coldStorageID
+                        });
+                    }
+                    $rootScope.mystorages = mystorages;
+                })
             }
 
             $rootScope.toMyCompressor = function (compressorID) {
                 $state.go('compressorPressure', {'compressorID': compressorID});
             };
             $rootScope.toMyBlowers = function () {
-                $state.go('compressorBlower', {'user': user});
+                $state.go('compressorBlower', {'userId': $rootScope.user.id});
             };
-            $rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 1}, {'name': "上海-浦东-#2",'id': 2}, {'name': "北京-五环-#1", 'id': 3}];
+            //$rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 1}, {'name': "上海-浦东-#2",'id': 2}, {'name': "北京-五环-#1", 'id': 3}];
 //      xuyanan coldStorageDiv.html - -
             $rootScope.openColdDiv = function (storageID){
             	console.log("openColdDiv: "+storageID);
@@ -252,7 +270,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'compressorPressure',
         templateUrl: 'app/template/compressorPressure.html'
     }).state('compressorBlower', {
-        url: '/compressorBlower/:storageID',
+        url: '/compressorBlower/:userId',
         controller: 'compressorBlower',
         templateUrl: 'app/template/compressorBlower.html'
     }).state('coldStorageDiv', {

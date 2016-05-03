@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.ColdStorageMapper;
 import com.smartcold.manage.cold.dao.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.RdcUserMapper;
 import com.smartcold.manage.cold.dto.ColdStorageTemperDTO;
 import com.smartcold.manage.cold.entity.ColdStorageEntity;
 import com.smartcold.manage.cold.entity.ColdStorageSetEntity;
+import com.smartcold.manage.cold.entity.RdcUser;
 import com.smartcold.manage.cold.service.ColdStorageService;
 
 /**
@@ -24,6 +26,9 @@ public class ColdStorageServiceImpl implements ColdStorageService {
 
 	@Autowired
 	private ColdStorageSetMapper coldStorageSetDao;
+
+	@Autowired
+	private RdcUserMapper rdcUserDao;
 
 	@Override
 	public List<ColdStorageTemperDTO> getTemperInfoById(int storageID, int npoint) {
@@ -41,5 +46,11 @@ public class ColdStorageServiceImpl implements ColdStorageService {
 			result.add(coldStorageTemperDTO);
 		}
 		return result;
+	}
+
+	@Override
+	public List<ColdStorageSetEntity> findByUserId(int userId) {
+		RdcUser rdcUser = rdcUserDao.findByUserId(Integer.valueOf(userId));
+		return coldStorageSetDao.findByRdcId(rdcUser.getRdcid());
 	}
 }

@@ -667,8 +667,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
     }
     $scope.load();
 
-    clearInterval(timeTicket);
-    var timeTicket = setInterval(function () {
-        $scope.load();
-    }, 5000);
+    var timeTicket;
+    timeTicket = setInterval(function () {
+        if (document.getElementById('pressureChart') !='' && document.getElementById('pressureChart') != undefined && document.getElementById('pressureChart') !=null) {
+            $scope.load();
+        } else {
+            clearInterval(timeTicket);
+        }
+    }, 30000);
 });

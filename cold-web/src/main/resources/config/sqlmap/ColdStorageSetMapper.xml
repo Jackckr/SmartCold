@@ -9,4 +9,10 @@
         FROM `ColdStorageSet` WHERE `coldStorageID` = #{storageID} limit #{npoint}
     </select>
 
+    <select id="findByRdcId" parameterType="map" resultType="ColdStorageSetEntity">
+        SELECT *
+        FROM `ColdStorageSet` WHERE `rdcId` = #{rdcId}
+    </select>
+
+
 </mapper>

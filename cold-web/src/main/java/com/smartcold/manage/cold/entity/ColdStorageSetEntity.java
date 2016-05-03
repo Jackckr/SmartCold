@@ -10,6 +10,8 @@ public class ColdStorageSetEntity {
 
     private int coldStorageID;
 
+    private int rdcId;
+
     private String name;
 
     private float startTemperature;
@@ -36,6 +38,14 @@ public class ColdStorageSetEntity {
 
     public void setColdStorageID(int coldStorageID) {
         this.coldStorageID = coldStorageID;
+    }
+
+    public int getRdcId() {
+        return rdcId;
+    }
+
+    public void setRdcId(int rdcId) {
+        this.rdcId = rdcId;
     }
 
     public String getName() {
