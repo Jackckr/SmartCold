@@ -2,6 +2,9 @@ package com.smartcold.manage.cold.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.smartcold.manage.cold.dto.BlowerDTO;
+import com.smartcold.manage.cold.entity.BlowerEntity;
+import com.smartcold.manage.cold.entity.BlowerSetEntity;
 import com.smartcold.manage.cold.entity.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.entity.SingleTypeEntity;
 import org.junit.Test;
@@ -28,6 +31,8 @@ public class GoodsServiceTest {
     @Autowired
     private CompressorGroupService compressorGroupService;
 
+    @Autowired
+    private CompressorBlowerService compressorBlowerService;
 
     @Test
     @Rollback(true)
@@ -43,7 +48,14 @@ public class GoodsServiceTest {
 
     @Test
     @Rollback(true)
-    public void test() {
+    public void compressorGroup_test() {
         List<CompressorGroupSetEntity> list = compressorGroupService.findByUserId(5);
+    }
+
+    @Test
+    @Rollback(true)
+    public void compressorBlower_test() {
+        List<BlowerDTO> list = compressorBlowerService.findByUserId(5);
+        System.out.println(list.size());
     }
 }

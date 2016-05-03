@@ -35,4 +35,10 @@ public class ColdStorageController {
     public Object getTemperInfoById(@RequestParam int storageID, @RequestParam int npoint) {
         return coldStorageService.getTemperInfoById(storageID, npoint);
     }
+
+    @RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findByUserId(@RequestParam int userId) {
+        return coldStorageService.findByUserId(userId);
+    }
 }

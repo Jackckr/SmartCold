@@ -1,5 +1,10 @@
 package com.smartcold.manage.cold.dao;
 
-public interface BlowerMapper {
+import com.smartcold.manage.cold.entity.BlowerEntity;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+public interface BlowerMapper {
+    List<BlowerEntity> findLastNPoint(@Param("blowerId") int blowerId, @Param("npoint") int npoint);
 }

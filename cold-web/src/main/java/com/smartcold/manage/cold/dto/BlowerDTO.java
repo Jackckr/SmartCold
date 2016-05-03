@@ -1,16 +1,22 @@
-package com.smartcold.manage.cold.entity;
+package com.smartcold.manage.cold.dto;
 
 import java.util.Date;
 
 /**
  * Author: qiunian.sun
- * Date: qiunian.sun(2016-03-19 11:53)
+ * Date: qiunian.sun(2016-05-03 00:16)
  */
-public class BlowerEntity {
-
-    private int id;
+public class BlowerDTO {
 
     private int blowerId;
+
+    private int compressorGroupId;
+
+    private int coldStorageId;
+
+    private float defrostingTemperature;
+
+    private String coldStorageName;
 
     private Date startTime;
 
@@ -22,20 +28,44 @@ public class BlowerEntity {
 
     private int isDefrosting;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getBlowerId() {
         return blowerId;
     }
 
     public void setBlowerId(int blowerId) {
         this.blowerId = blowerId;
+    }
+
+    public int getCompressorGroupId() {
+        return compressorGroupId;
+    }
+
+    public void setCompressorGroupId(int compressorGroupId) {
+        this.compressorGroupId = compressorGroupId;
+    }
+
+    public int getColdStorageId() {
+        return coldStorageId;
+    }
+
+    public void setColdStorageId(int coldStorageId) {
+        this.coldStorageId = coldStorageId;
+    }
+
+    public float getDefrostingTemperature() {
+        return defrostingTemperature;
+    }
+
+    public void setDefrostingTemperature(float defrostingTemperature) {
+        this.defrostingTemperature = defrostingTemperature;
+    }
+
+    public String getColdStorageName() {
+        return coldStorageName;
+    }
+
+    public void setColdStorageName(String coldStorageName) {
+        this.coldStorageName = coldStorageName;
     }
 
     public Date getStartTime() {

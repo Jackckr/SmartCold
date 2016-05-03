@@ -12,4 +12,6 @@ import java.util.List;
 public interface ColdStorageSetMapper {
 
     List<ColdStorageSetEntity> findLastNPoint(@Param("storageID") int storageID, @Param("npoint") int npoint);
+
+    List<ColdStorageSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 }

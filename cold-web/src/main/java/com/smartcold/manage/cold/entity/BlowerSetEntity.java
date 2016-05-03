@@ -10,11 +10,13 @@ public class BlowerSetEntity {
 
     private int id;
 
-    private Date startTime;
+    private int blowerId;
 
-    private int state;
+    private int compressorGroupId;
 
-    private Date addTime;
+    private int coldStorageId;
+
+    private float defrostingTemperature;
 
     public int getId() {
         return id;
@@ -24,27 +26,35 @@ public class BlowerSetEntity {
         this.id = id;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public int getBlowerId() {
+        return blowerId;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setBlowerId(int blowerId) {
+        this.blowerId = blowerId;
     }
 
-    public int getState() {
-        return state;
+    public int getCompressorGroupId() {
+        return compressorGroupId;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setCompressorGroupId(int compressorGroupId) {
+        this.compressorGroupId = compressorGroupId;
     }
 
-    public Date getAddTime() {
-        return addTime;
+    public int getColdStorageId() {
+        return coldStorageId;
     }
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
+    public void setColdStorageId(int coldStorageId) {
+        this.coldStorageId = coldStorageId;
+    }
+
+    public float getDefrostingTemperature() {
+        return defrostingTemperature;
+    }
+
+    public void setDefrostingTemperature(float defrostingTemperature) {
+        this.defrostingTemperature = defrostingTemperature;
     }
 }
