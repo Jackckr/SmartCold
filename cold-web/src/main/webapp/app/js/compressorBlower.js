@@ -14,18 +14,24 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
         }).success(function (result) {
             console.log("result:" + result);
             $scope.blowers = result;
+            var coldCnt =0;
+            var defrostCnt = 0;
+            var freeCnt = 0;
             for (var i = 0; i < result.length; i++) {
                 console.log("result:" + result[i].coldStorageId + ",blowerId: " + result[i].blowerId + ",coldStorageName: " + result[i].coldStorageName );
                 if (parseInt(result[i].state) === 0){
-                    $scope.coldCnt = $scope.coldCnt + 1;
+                    coldCnt = coldCnt + 1;
                 }
                 if (parseInt(result[i].state) === 1){
-                    $scope.defrostCnt = $scope.defrostCnt + 1;
+                    defrostCnt = defrostCnt + 1;
                 }
                 if (parseInt(result[i].state) === 2){
-                    $scope.freeCnt = $scope.freeCnt + 1;
+                    freeCnt = freeCnt + 1;
                 }
             }
+            $scope.coldCnt = coldCnt;
+            $scope.defrostCnt = defrostCnt;
+            $scope.freeCnt = freeCnt;
         })
     }
     $scope.load();
