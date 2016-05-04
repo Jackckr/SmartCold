@@ -19,7 +19,7 @@ var storageID = $.getUrlParam('storageID');
 // init lengku array
 $.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+storageID,function(data,status){
 	console.log("imgurl: "+data+"\nstatus: "+status);
-	$("body").css("background","url("+data+")");
+	$("body").css("background","url("+data+")").css("background-size","1050px 590px");
 });
 $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status){
     console.log("Data: "+JSON.stringify(data)+"\nstatus: "+status);

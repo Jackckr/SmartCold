@@ -21,7 +21,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     y: result[i].powerConsume
                 });
             }
-            console.log("data.length:"+data.length)
+            console.log("data.length:" + data.length)
             var group = result[0];
 
             // 环形图表示压力监控
@@ -60,14 +60,15 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 },
                 tooltip: {
                     show: true,
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    //formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{b} ({d}%)"
                 },
                 legend: {
                     orient: 'horizontal',
                     x: 30,
                     y: 200,
                     itemGap: 12,
-                    data: ['高压压力', '低压压力']
+                    data: ['高压' + parseFloat(group.highPress), '低压' + parseFloat(group.lowPress)]
                 },
                 toolbox: {
                     show: false,
@@ -80,37 +81,37 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 },
                 series: [
                     {
-                        name: '1',
+                        name: '高压压力',
                         type: 'pie',
                         clockWise: false,
                         radius: [70, 90],
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.highPress),
-                                name: '高压压力'
+                                value: parseInt(group.highPress / 20),
+                                name: '高压' + parseFloat(group.highPress)
                             },
                             {
-                                value: 100 - parseInt(group.highPress),
-                                name: 'invisible',
+                                value: 100 - parseInt(group.highPress / 20),
+                                name: '高压可用:' + (2000 - parseInt(group.highPress)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
                     },
                     {
-                        name: '2',
+                        name: '低压压力',
                         type: 'pie',
                         clockWise: false,
                         radius: [50, 70],
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.lowPress),
-                                name: '低压压力'
+                                value: parseInt(group.lowPress / 20),
+                                name: '低压' + parseFloat(group.lowPress)
                             },
                             {
-                                value: 100 - parseInt(group.lowPress),
-                                name: 'invisible',
+                                value: 100 - parseInt(group.lowPress / 20),
+                                name: '高压可用:' + (2000 - parseInt(group.lowPress)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -156,14 +157,15 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 },
                 tooltip: {
                     show: true,
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    //formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{b} ({d}%)"
                 },
                 legend: {
                     orient: 'horizontal',
                     x: 0,
                     y: 200,
                     itemGap: 12,
-                    data: ['负载1', '负载2', '负载3']
+                    data: ['1号' + (parseInt(group.Compressor1) === -1 ? 0 : parseInt(group.Compressor1)), '2号' + (parseInt(group.Compressor2) === -1 ? 0 : parseInt(group.Compressor2)), '3号' + (parseInt(group.Compressor3) === -1 ? 0 : parseInt(group.Compressor3))]
                 },
                 toolbox: {
                     show: false,
@@ -183,12 +185,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.Compressor1) === -1 ? 0 : parseInt(group.Compressor1),
-                                name: '负载1'
+                                value: parseInt(group.Compressor1) === -1 ? 0 : parseInt(group.Compressor1) * 5,
+                                name: '1号' + (parseInt(group.Compressor1) === -1 ? 0 : parseInt(group.Compressor1))
                             },
                             {
-                                value: parseInt(group.Compressor1) === -1 ? 100 : 100 - parseInt(group.Compressor1),
-                                name: 'invisible',
+                                value: parseInt(group.Compressor1) === -1 ? 100 : 100 - parseInt(group.Compressor1) * 5,
+                                name: '1号可用' + (parseInt(group.Compressor1) === -1 ? 20 : 20 - parseInt(group.Compressor1)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -201,12 +203,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.Compressor2) === -1 ? 0 : parseInt(group.Compressor2),
-                                name: '负载2'
+                                value: parseInt(group.Compressor2) === -1 ? 0 : parseInt(group.Compressor2)* 5,
+                                name: '2号' + (parseInt(group.Compressor2) === -1 ? 0 : parseInt(group.Compressor2))
                             },
                             {
-                                value: parseInt(group.Compressor2) === -1 ? 100 : 100 - parseInt(group.Compressor2),
-                                name: 'invisible',
+                                value: parseInt(group.Compressor2) === -1 ? 100 : 100 - parseInt(group.Compressor2)* 5,
+                                name: '2号可用' + (parseInt(group.Compressor2) === -1 ? 20 : 20 - parseInt(group.Compressor2)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -219,12 +221,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.Compressor3) === -1 ? 0 : parseInt(group.Compressor3),
-                                name: '负载3'
+                                value: parseInt(group.Compressor3) === -1 ? 0 : parseInt(group.Compressor3)* 5,
+                                name: '3号' + (parseInt(group.Compressor3) === -1 ? 0 : parseInt(group.Compressor3))
                             },
                             {
-                                value: parseInt(group.Compressor3) === -1 ? 100 : 100 - parseInt(group.Compressor3),
-                                name: 'invisible',
+                                value: parseInt(group.Compressor3) === -1 ? 100 : 100 - parseInt(group.Compressor3)* 5,
+                                name: '3号可用' + (parseInt(group.Compressor3) === -1 ? 20 : 20 - parseInt(group.Compressor3)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -269,14 +271,15 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 },
                 tooltip: {
                     show: true,
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    //formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{b} ({d}%)"
                 },
                 legend: {
                     orient: 'horizontal',
                     x: 0,
                     y: 200,
                     itemGap: 12,
-                    data: ['负载4', '负载5', '负载6']
+                    data: ['4号' + (parseInt(group.Compressor4) === -1 ? 0 : parseInt(group.Compressor4)), '5号' + (parseInt(group.Compressor5) === -1 ? 0 : parseInt(group.Compressor5)), '6号' + (parseInt(group.Compressor6) === -1 ? 0 : parseInt(group.Compressor6))]
                 },
                 toolbox: {
                     show: false,
@@ -296,12 +299,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.Compressor4) === -1 ? 0 : parseInt(group.Compressor4),
-                                name: '负载4'
+                                value: parseInt(group.Compressor4) === -1 ? 0 : parseInt(group.Compressor4)* 5,
+                                name: '4号' + (parseInt(group.Compressor4) === -1 ? 0 : parseInt(group.Compressor4))
                             },
                             {
-                                value: parseInt(group.Compressor4) === -1 ? 100 : 100 - parseInt(group.Compressor4),
-                                name: 'invisible',
+                                value: parseInt(group.Compressor4) === -1 ? 100 : 100 - parseInt(group.Compressor4)* 5,
+                                name: '4号可用' + (parseInt(group.Compressor4) === -1 ? 20 : 20 - parseInt(group.Compressor4)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -314,12 +317,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.Compressor5) === -1 ? 0 : parseInt(group.Compressor5),
-                                name: '负载5'
+                                value: parseInt(group.Compressor5) === -1 ? 0 : parseInt(group.Compressor5)* 5,
+                                name: '5号' + (parseInt(group.Compressor5) === -1 ? 0 : parseInt(group.Compressor5))
                             },
                             {
-                                value: parseInt(group.Compressor5) === -1 ? 100 : 100 - parseInt(group.Compressor5),
-                                name: 'invisible',
+                                value: parseInt(group.Compressor5) === -1 ? 100 : 100 - parseInt(group.Compressor5)* 5,
+                                name: '5号可用' + (parseInt(group.Compressor5) === -1 ? 20 : 20 - parseInt(group.Compressor5)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -332,12 +335,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         itemStyle: dataStyle,
                         data: [
                             {
-                                value: parseInt(group.Compressor6) === -1 ? 0 : parseInt(group.Compressor6),
-                                name: '负载6'
+                                value: parseInt(group.Compressor6) === -1 ? 0 : parseInt(group.Compressor6)* 5,
+                                name: '6号' + (parseInt(group.Compressor6) === -1 ? 0 : parseInt(group.Compressor6))
                             },
                             {
-                                value: parseInt(group.Compressor6) === -1 ? 100 : 100 - parseInt(group.Compressor6),
-                                name: 'invisible',
+                                value: parseInt(group.Compressor6) === -1 ? 100 : 100 - parseInt(group.Compressor6)* 5,
+                                name: '6号可用' + (parseInt(group.Compressor6) === -1 ? 20 : 20 - parseInt(group.Compressor6)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -432,42 +435,42 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                             type: 'spline',
                             animation: Highcharts.svg, // don't animate in old IE
                             marginRight: 10,
-              /*              events: {
-                                load: function () {
+                            /*              events: {
+                             load: function () {
 
-                                    /!*                                // set up the updating of the chart each second
-                                     var series = this.series[0];
+                             /!*                                // set up the updating of the chart each second
+                             var series = this.series[0];
 
-                                     setInterval(function () {
-                                     $http.get('/i/coldStorage/findColdStorageById', {
-                                     params: {
-                                     "storageID": $stateParams.storageID,
-                                     "npoint": 2
-                                     }
-                                     }).success(function (data) {
-                                     console.log("data:" + data);
-                                     for (var i = 0; i < data.length; i++) {
-                                     console.log("data:" + data[i].temperature);
-                                     }
-                                     //TODO 修改为时间和温度根据后台传过来的数据,可能在时间窗内有多个点
-                                     var temper2 = data[data.length - 1].temperature;
-                                     var x = (new Date()).getTime(), // current time
-                                     y = (Math.random() * (40) - temper2).toFixed(2) - 0;
-                                     temper = y;
-                                     series.addPoint([x, y], true, true);
-                                     });
-                                     }, 1000);*!/
-                                    // set up the updating of the chart each second
-                                    var series = this.series[0];
+                             setInterval(function () {
+                             $http.get('/i/coldStorage/findColdStorageById', {
+                             params: {
+                             "storageID": $stateParams.storageID,
+                             "npoint": 2
+                             }
+                             }).success(function (data) {
+                             console.log("data:" + data);
+                             for (var i = 0; i < data.length; i++) {
+                             console.log("data:" + data[i].temperature);
+                             }
+                             //TODO 修改为时间和温度根据后台传过来的数据,可能在时间窗内有多个点
+                             var temper2 = data[data.length - 1].temperature;
+                             var x = (new Date()).getTime(), // current time
+                             y = (Math.random() * (40) - temper2).toFixed(2) - 0;
+                             temper = y;
+                             series.addPoint([x, y], true, true);
+                             });
+                             }, 1000);*!/
+                             // set up the updating of the chart each second
+                             var series = this.series[0];
 
-                                    setInterval(function () {
-                                        var x = (new Date()).getTime(), // current time
-                                            y = (Math.random() * (40) - 20).toFixed(2) - 0;
-                                        temper = y;
-                                        series.addPoint([x, y], true, true);
-                                    }, 5000);
-                                }
-                            },*/
+                             setInterval(function () {
+                             var x = (new Date()).getTime(), // current time
+                             y = (Math.random() * (40) - 20).toFixed(2) - 0;
+                             temper = y;
+                             series.addPoint([x, y], true, true);
+                             }, 5000);
+                             }
+                             },*/
                             backgroundColor: {
                                 linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
                                 stops: [
@@ -536,16 +539,16 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                             },
                             data: (function () {
                                 /*// generate an array of random data
-                                var data = [],
-                                    time = (new Date()).getTime(),
-                                    i;
+                                 var data = [],
+                                 time = (new Date()).getTime(),
+                                 i;
 
-                                for (i = -19; i <= 0; i++) {
-                                    data.push({
-                                        x: time + i * 5000,
-                                        y: Math.random() * (40) - 20
-                                    });
-                                }*/
+                                 for (i = -19; i <= 0; i++) {
+                                 data.push({
+                                 x: time + i * 5000,
+                                 y: Math.random() * (40) - 20
+                                 });
+                                 }*/
                                 return data;
                             })()
                         }]
@@ -669,7 +672,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
 
     var timeTicket;
     timeTicket = setInterval(function () {
-        if (document.getElementById('pressureChart') !='' && document.getElementById('pressureChart') != undefined && document.getElementById('pressureChart') !=null) {
+        if (document.getElementById('pressureChart') != '' && document.getElementById('pressureChart') != undefined && document.getElementById('pressureChart') != null) {
             $scope.load();
         } else {
             clearInterval(timeTicket);

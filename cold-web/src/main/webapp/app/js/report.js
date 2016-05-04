@@ -280,61 +280,69 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 
 	$scope.uncheckState = true;
 	$scope.checkState = false;
+	$scope.curScore =0;
+	$scope.blowerScore = 0;
+	$scope.lightScore = 0;
+	$scope.coldScore = 0;
+	$scope.doorScore = 0;
+	var timeTicket;
 
 	$scope.goCheck = function () {
 		$scope.uncheckState = false;
 		$scope.checkState = true;
 
-		// 能耗评分图——仪表盘
-		var myChart = echarts.init(document.getElementById('energyScoreChart'));
-		var option = {
-			tooltip: {
-				formatter: "{a} <br/>{b} : {c}%"
-			},
-			toolbox: {
-				show: false,
-				feature: {
-					mark: {show: true},
-					restore: {show: true},
-					saveAsImage: {show: true}
-				}
-			},
-			series: [
-				{
-					name: '能耗评分',
-					type: 'gauge',
-					min: 0,
-					max: 100,
-					detail: {formatter: '{value}分'},
-					textStyle: {
-						color: 'auto',
-						fontSize: 30
-					},
-					data: [{value: 0, name: '能耗评分'}]
-				}
-			]
-		};
-
-		$scope.blowerScore = (Math.random() * (25)).toFixed(0) - 0;
+/*		$scope.blowerScore = (Math.random() * (25)).toFixed(0) - 0;
 		$scope.lightScore = (Math.random() * (25)).toFixed(0) - 0;
 		$scope.coldScore = (Math.random() * (25)).toFixed(0) - 0;
 		$scope.doorScore = (Math.random() * (25)).toFixed(0) - 0;
 
-		var score = $scope.blowerScore + $scope.lightScore + $scope.coldScore + $scope.doorScore;
+		var score = $scope.blowerScore + $scope.lightScore + $scope.coldScore + $scope.doorScore;*/
+		var blowerScore = (Math.random() * (25)).toFixed(0) - 0;
+		var lightScore = (Math.random() * (25)).toFixed(0) - 0;
+		var coldScore = (Math.random() * (25)).toFixed(0) - 0;
+		var doorScore = (Math.random() * (25)).toFixed(0) - 0;
+
+		var score = blowerScore + lightScore + coldScore + doorScore;
 
 		var tem = score;
-		setInterval(function () {
+		var blowerScoretem = blowerScore;
+		var lightScoretem = lightScore;
+		var coldScoretem = coldScore;
+		var doorScoretem = doorScore;
+		$scope.totalScore = tem;
+		timeTicket = setInterval(function () {
+			if (blowerScore >= 0) {
+				$scope.blowerScore = blowerScoretem - (blowerScore-- );
+			}
+			if (blowerScore < 0 && lightScore >= 0) {
+				$scope.lightScore = lightScoretem - (lightScore-- );
+			}
+			if (blowerScore < 0 && lightScore < 0 && coldScore >= 0) {
+				$scope.coldScore = coldScoretem - (coldScore-- );
+			}
+			if (blowerScore < 0 && lightScore < 0 && coldScore < 0 && doorScore >= 0) {
+				$scope.doorScore = doorScoretem - (doorScore-- );
+			}
 			if (score >= 0) {
-				option.series[0].data[0].value = tem - (score--);
-				myChart.setOption(option, true);
+				$scope.$apply(function () {
+					$scope.curScore = tem - (score--);
+				});
+			} else {
+				clearInterval(timeTicket);
 			}
 		}, 100);
-		$scope.totalScore = tem;
+
 	}
 
 	$scope.stopCheck = function () {
 		$scope.uncheckState = true;
 		$scope.checkState = false;
+		clearInterval(timeTicket);
+		$scope.curScore = 0;
+		$scope.blowerScore = 0;
+		$scope.lightScore = 0;
+		$scope.coldScore = 0;
+		$scope.doorScore = 0;
 		$scope.load();
 	}
 
@@ -383,37 +391,6 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		      }
 		})
 
-		// 能耗评分图——仪表盘
-		var myChart = echarts.init(document.getElementById('energyScoreChart'));
-		var option = {
-			tooltip: {
-				formatter: "{a} <br/>{b} : {c}%"
-			},
-			toolbox: {
-				show: false,
-				feature: {
-					mark: {show: true},
-					restore: {show: true},
-					saveAsImage: {show: true}
-				}
-			},
-			series: [
-				{
-					name: '能耗评分',
-					type: 'gauge',
-					min: 0,
-					max: 100,
-					detail: {formatter: '{value}分'},
-					textStyle: {
-						color: 'auto',
-						fontSize: 30
-					},
-					data: [{value: 0, name: '能耗评分'}]
-				}
-			]
-		};
-
-		myChart.setOption(option);
 	}
 
 	$scope.load();
