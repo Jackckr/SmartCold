@@ -23,7 +23,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             }
 
             // 温度实时图——仪表盘
-            var temper = parseFloat(result[0].temperature);
+/*            var temper = parseFloat(result[0].temperature);
             var myChart = echarts.init(document.getElementById('temperatureNowChart'));
             var option = {
                 tooltip: {
@@ -52,7 +52,87 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                     }
                 ]
             };
-            myChart.setOption(option);
+            myChart.setOption(option);*/
+
+
+            //温度实时图——环形图
+            var temper = parseFloat(result[0].temperature);
+            $scope.curtemper = temper;
+/*            var pressureChart = echarts.init($("#temperatureNowChart").get(0));
+
+            var dataStyle = {
+                normal: {
+                    label: {show: false},
+                    labelLine: {show: false}
+                }
+            };
+            var placeHolderStyle = {
+                normal: {
+                    color: 'rgba(0,0,0,0)',
+                    label: {show: false},
+                    labelLine: {show: false}
+                },
+                emphasis: {
+                    color: 'rgba(0,0,0,0)'
+                }
+            };
+            var pressureOption = {
+                title: {
+                    text: '实时温度' + temper,
+                    //subtext: 'From SmartCold',
+                    //sublink: 'http://www.baidu.com/',
+                    x: 'center',
+                    y: 'center',
+                    itemGap: 20,
+                    textStyle: {
+                        color: 'rgba(30,144,255,0.8)',
+                        fontFamily: '微软雅黑',
+                        fontSize: 25,
+                        fontWeight: 'bolder'
+                    }
+                },
+                tooltip: {
+                    show: true,
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+    /!*            legend: {
+                    orient: 'horizontal',
+                    x: 30,
+                    y: 200,
+                    itemGap: 12,
+                    data: ['实时温度']
+                },*!/
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                series: [
+                    {
+                        name: '实时温度',
+                        type: 'pie',
+                        clockWise: false,
+                        radius: [70, 90],
+                        itemStyle: dataStyle,
+                        data: [
+                            {
+                                value: parseInt(temper),
+                                name: '实时温度'
+                            },
+                            {
+                                value: 100 - parseInt(temper),
+                                name: '温度可用',
+                                itemStyle: placeHolderStyle
+                            }
+                        ]
+                    }
+                ]
+            };
+            pressureChart.setOption(pressureOption);*/
 
             // 折线图
             var startTemperature = parseFloat(result[0].startTemperature);
@@ -158,7 +238,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
     var timeTicket;
     timeTicket = setInterval(function () {
-        if (document.getElementById('temperatureNowChart') !='' && document.getElementById('temperatureNowChart') != undefined && document.getElementById('temperatureNowChart') !=null) {
+        if (document.getElementById('temperatureChart') !='' && document.getElementById('temperatureChart') != undefined && document.getElementById('temperatureChart') !=null) {
             $scope.load();
         } else {
             clearInterval(timeTicket);
