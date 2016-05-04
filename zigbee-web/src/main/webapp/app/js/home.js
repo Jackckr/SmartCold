@@ -2,6 +2,10 @@
  * Created by sunqiunian on 16/2/26.
  */
 coldWeb.controller('home', function ($scope, $location, $stateParams, $http) {
+	
+	$('.carousel').carousel({
+		wrap: true
+	});
 
     // 获取当前冷库的列表
     $http.get('/i/rdc/findRdcList').success(function (data) {
