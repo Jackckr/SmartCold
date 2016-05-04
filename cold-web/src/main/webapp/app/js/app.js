@@ -95,7 +95,9 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                             id: result[i].coldStorageID
                         });
                     }
+
                     $rootScope.mystorages = mystorages;
+                    $rootScope.rdcId = result[0].rdcId;
                 })
             }
 
@@ -107,10 +109,18 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             };
             //$rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 1}, {'name': "上海-浦东-#2",'id': 2}, {'name': "北京-五环-#1", 'id': 3}];
 //      xuyanan coldStorageDiv.html - -
-            $rootScope.openColdDiv = function (storageID){
+ /*           $rootScope.openColdDiv = function (storageID){
             	console.log("openColdDiv: "+storageID);
             	$state.go('coldStorageDiv',{'storageID': storageID});
+            }*/
+            $rootScope.openColdDiv = function (){
+                console.log("openColdDiv: "+$rootScope.rdcId);
+                $state.go('coldStorageDiv',{'storageID': $rootScope.rdcId});
             }
+            $rootScope.toRdcPower = function () {
+                console.log($rootScope.rdcId);
+                $state.go('rdcPower', {'rdcId': $rootScope.rdcId});
+            };
             $rootScope.toMyStorage = function (type, storageID) {
                 console.log(type);
                 console.log(storageID);
@@ -277,6 +287,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageDiv/:storageID',
         controller: 'coldStorageDiv',
         templateUrl: 'app/template/coldStorageDiv.html'
+    }).state('rdcPower', {
+        url: '/rdcPower/:rdcId',
+        controller: 'rdcPower',
+        templateUrl: 'app/template/rdcPower.html'
     });
 
 });

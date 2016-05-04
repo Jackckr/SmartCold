@@ -233,13 +233,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </ul>
                 </li>
 
-                <li><a href="#" ng-click="toMyBlowers()"><i class="fa fa-circle-o"></i> 风机</a></li>
+                <li><a href="#" ng-click="toMyBlowers()"><i class="fa fa-circle-o"></i>风机</a></li>
               </ul>
             </li>
             <li class="treeview">
-              <a href="#"><i class="fa fa-link text-white"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#" ng-click="toRdcPower()"><i class="fa fa-link text-white"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
-                  <li ng-repeat="storage in mystorages"><a href="#" ng-click="openColdDiv(storage.id)"><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
+                  <li><a href="#" ng-click="openColdDiv()"><i class="fa fa-circle-o"></i>拓扑</a></li>
+                  <li ng-repeat="storage in mystorages"><a href="#"><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu" style="display: none;">
                       <li><a href="#" ng-click="toMyStorage(1, storage.id)"><i class="fa fa-circle-o"></i> 温度</a></li>
                       <li><a href="#" ng-click="toMyStorage(2, storage.id)"><i class="fa fa-circle-o"></i> 门开关</a></li>
@@ -335,6 +336,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/compressorBlower.js"></script>
 <script src="app/js/designStorage.js"></script>
 <script src="app/js/report.js"></script>
+<script src="app/js/rdcPower.js"></script>
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
 <script src="assets/plugins/fastclick/fastclick.min.js"></script>
 <script src="assets/js/demo.js"></script>

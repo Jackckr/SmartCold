@@ -3,8 +3,6 @@ package com.smartcold.manage.cold.service;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dto.BlowerDTO;
-import com.smartcold.manage.cold.entity.BlowerEntity;
-import com.smartcold.manage.cold.entity.BlowerSetEntity;
 import com.smartcold.manage.cold.entity.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.entity.SingleTypeEntity;
 import org.junit.Test;
