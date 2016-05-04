@@ -171,15 +171,14 @@
           <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
               <label>冷库：</label> 
-              <select type="text" class="form-control" placeholder="Search">
-                <option>冷库1号</option>
+              <select type="text" class="form-control" placeholder="Search" 
+              ng-options="storage.name for storage in storages" ng-model="storageModal">
               </select>
             </div>&nbsp;&nbsp;
             <div class="form-group">
               <label>设备：</label> 
-              <select type="text" class="form-control" placeholder="Search">
-                <option>风机</option>
-                <option>压缩机</option>
+              <select type="text" class="form-control" placeholder="Search" 
+              ng-options="option.name for option in searchOptions" ng-model="choseOption">
               </select>
             </div>&nbsp;&nbsp;
             <div class="form-group">

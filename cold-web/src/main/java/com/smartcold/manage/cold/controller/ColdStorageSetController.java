@@ -9,19 +9,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-05-01 23:23)
+ * Author: qiunian.sun Date: qiunian.sun(2016-05-01 23:23)
  */
 @Controller
 @RequestMapping(value = "/coldStorageSet")
 public class ColdStorageSetController {
 
-    @Autowired
-    private ColdStorageSetMapper coldStorageSetDao;
+	@Autowired
+	private ColdStorageSetMapper coldStorageSetDao;
 
-    @RequestMapping(value = "/findSetByStorageId", method = RequestMethod.GET)
-    @ResponseBody
-    public Object findSetByStorageId(@RequestParam int storageID, @RequestParam int npoint) {
-        return coldStorageSetDao.findLastNPoint(storageID, npoint);
-    }
+	@RequestMapping(value = "/findSetByStorageId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findSetByStorageId(@RequestParam int storageID, @RequestParam int npoint) {
+		return coldStorageSetDao.findLastNPoint(storageID, npoint);
+	}
+
+	@RequestMapping(value = "/findStorageSetByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findStorageSetByRdcId(int rdcID) {
+		return coldStorageSetDao.findByRdcId(rdcID);
+	}
 }
