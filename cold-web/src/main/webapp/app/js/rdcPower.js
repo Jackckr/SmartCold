@@ -8,7 +8,7 @@ coldWeb.controller('rdcPower', function ($scope, $location, $stateParams, $http)
         $http.get('/i/rdcPower/findByRdcId', {
             params: {
                 "rdcID": $stateParams.rdcId,
-                "npoint": 10
+                "npoint": 480
             }
         }).success(function (result) {
             console.log("result:" + result);

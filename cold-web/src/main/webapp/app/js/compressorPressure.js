@@ -8,7 +8,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         $http.get('/i/compressorGroup/findByGroupId', {
             params: {
                 "compressorID": $stateParams.compressorID,
-                "npoint": 10
+                "npoint": 480
             }
         }).success(function (result) {
             console.log("result:" + result);
@@ -20,6 +20,10 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     x: newDate,
                     y: result[i].powerConsume
                 });
+
+                if(i == 0){
+                    result[0].liquidLevel = parseFloat(result[0].liquidLevel).toFixed(1);
+                }
             }
             console.log("data.length:" + data.length)
             var group = result[0];
@@ -68,7 +72,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     x: 30,
                     y: 200,
                     itemGap: 12,
-                    data: ['高压' + parseFloat(group.highPress), '低压' + parseFloat(group.lowPress)]
+                    data: ['高压' + parseFloat(group.highPress).toFixed(0), '低压' + parseFloat(group.lowPress).toFixed(0)]
                 },
                 toolbox: {
                     show: false,
@@ -89,7 +93,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         data: [
                             {
                                 value: parseInt(group.highPress / 20),
-                                name: '高压' + parseFloat(group.highPress)
+                                name: '高压' + parseFloat(group.highPress).toFixed(0)
                             },
                             {
                                 value: 100 - parseInt(group.highPress / 20),
@@ -107,11 +111,11 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                         data: [
                             {
                                 value: parseInt(group.lowPress / 20),
-                                name: '低压' + parseFloat(group.lowPress)
+                                name: '低压' + parseFloat(group.lowPress).toFixed(0)
                             },
                             {
                                 value: 100 - parseInt(group.lowPress / 20),
-                                name: '高压可用:' + (2000 - parseInt(group.lowPress)),
+                                name: '高压可用:' + (2000 - parseInt(group.lowPress).toFixed(0)),
                                 itemStyle: placeHolderStyle
                             }
                         ]
@@ -349,6 +353,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
             };
             runChart2.setOption(runOption2);
 
+            var liquid = parseFloat(group.liquidLevel);
             // 液位计
             $(function () {
                 $('#floatPressureChart').highcharts({
@@ -401,7 +406,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     },
                     series: [{
                         name: 'Level',
-                        data: [parseFloat(group.liquidLevel)],
+                        data: [liquid],
                         dataLabels: {
                             enabled: true,
                             rotation: -90,

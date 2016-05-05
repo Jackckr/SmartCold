@@ -12,7 +12,7 @@
     RSID, SID, RdcID, Sx, Sy
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from RdcSensor
     where RSID = #{rsid,jdbcType=INTEGER}
@@ -22,10 +22,10 @@
     where RSID = #{rsid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.smartcold.manage.cold.entity.RdcSensor">
-    insert into RdcSensor (RSID, SID, RdcID, 
-      Sx, Sy)
-    values (#{rsid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER}, 
-      #{sx,jdbcType=INTEGER}, #{sy,jdbcType=INTEGER})
+    insert into RdcSensor (RSID, SID, RdcID,
+    Sx, Sy, ColdStorageID)
+    values (#{rsid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER},
+    #{sx,jdbcType=INTEGER}, #{sy,jdbcType=INTEGER}, #{coldstorageid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.RdcSensor">
     insert into RdcSensor
@@ -85,21 +85,21 @@
   <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.RdcSensor">
     update RdcSensor
     set SID = #{sid,jdbcType=INTEGER},
-      RdcID = #{rdcid,jdbcType=INTEGER},
-      Sx = #{sx,jdbcType=INTEGER},
-      Sy = #{sy,jdbcType=INTEGER}
+    RdcID = #{rdcid,jdbcType=INTEGER},
+    Sx = #{sx,jdbcType=INTEGER},
+    Sy = #{sy,jdbcType=INTEGER}
     where RSID = #{rsid,jdbcType=INTEGER}
   </update>
-  
+
   <!-- self-->
   <select id="selectByRdcId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from RdcSensor
     where RdcID = #{rdcid,jdbcType=INTEGER}
   </select>
-    <select id="selectBySID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+  <select id="selectBySID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from RdcSensor
     where SID = #{sid,jdbcType=INTEGER}
