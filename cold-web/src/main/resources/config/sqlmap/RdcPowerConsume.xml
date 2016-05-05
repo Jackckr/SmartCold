@@ -7,5 +7,13 @@
     <select id="findLastNPoint" parameterType="map" resultType="RdcPowerConsumeEntity">
         SELECT * FROM `RdcPowerCosume` WHERE `rdcID` = #{rdcID} ORDER by 'addTime' DESC limit #{npoint}
     </select>
+    
+    <select id="findInfoByRdcid" parameterType="map" resultType="RdcPowerConsumeEntity">
+        SELECT * FROM `RdcPowerCosume` WHERE 
+        `rdcID` = #{rdcID} 
+        AND `addTime` >= #{startTime} 
+        AND `addTime`<![CDATA[ < ]]> #{endTime}
+        ORDER by `addTime`
+    </select>
 
 </mapper>

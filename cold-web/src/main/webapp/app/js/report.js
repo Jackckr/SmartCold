@@ -8,8 +8,8 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	$scope.choseOption = $scope.searchOptions[0];
 	$scope.time = $stateParams.time;
 	$scope.item = $stateParams.item;
-	$scope.begin = $scope.getDateTimeStringBefore(0);
-	$scope.end = $scope.getDateTimeStringBefore(7);
+	$scope.begin = $scope.getDateTimeStringBefore(3);
+	$scope.end = $scope.getDateTimeStringBefore(0);
 	$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$scope.isEnergy = false;
 	$scope.dataMap = {};
@@ -73,7 +73,49 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		bothTime = $scope.picktime.split(" - ");
 		$scope.begin = bothTime[0];
 		$scope.end = bothTime[1];
-		$scope.drawDataLine([],[]);
+		$scope.searchxData = [];
+		$scope.searchData = [];
+		if($scope.choseOption.key == 'electric'){
+			url = "/i/rdcPower/findInfoByRdcIdTime?rdcId=" + $scope.rdcModal.id + 
+			"&startTime=" + $scope.begin + "&endTime=" + $scope.end;
+			$http.get(url).success(function(data,headers,status,config){
+				angular.forEach(data,function(item){
+					$scope.searchxData.push(item.addTime);
+					$scope.searchData.push(item.powerCosume);
+				});
+				$scope.drawDataLine($scope.searchxData,$scope.searchData);
+			})
+		}else if ($scope.choseOption.key == 'doorTime'){
+			url = "/i/coldStorageDoor/findOpenTimeByStorageIdTime?storageId=" + $scope.storageModal.coldStorageID + 
+			"&startTime=" + $scope.begin + "&endTime=" + $scope.end;
+			$http.get(url).success(function(data,headers,config,status){
+				angular.forEach(data,function(item){
+					$scope.searchxData.push(item.addTime);
+					$scope.searchData.push(item.state);
+				});
+				$scope.drawDataLine($scope.searchxData,$scope.searchData);
+			})
+		}else if ($scope.choseOption.key == 'doorTimes'){
+			url = "/i/coldStorageDoor/findOpenTimesByStorageIdTime?storageId=" + $scope.storageModal.coldStorageID + 
+			"&startTime=" + $scope.begin + "&endTime=" + $scope.end;
+			$http.get(url).success(function(data,headers,config,status){
+				angular.forEach(data,function(item){
+					$scope.searchxData.push(item.addTime);
+					$scope.searchData.push(item.state);
+				});
+				$scope.drawDataLine($scope.searchxData,$scope.searchData);
+			})
+		}else if ($scope.choseOption.key == 'temperature'){
+			url = "/i/coldStorage/findInfoByIdTime?storageId=" + $scope.storageModal.coldStorageID + 
+			"&startTime=" + $scope.begin + "&endTime=" + $scope.end;
+			$http.get(url).success(function(data,headers,config,status){
+				angular.forEach(data,function(item){
+					$scope.searchxData.push(item.addTime);
+					$scope.searchData.push(item.temperature);
+				});
+				$scope.drawDataLine($scope.searchxData,$scope.searchData);
+			})
+		}
 	}
 	
 	$scope.drawDataLine = function(xData,data){
@@ -87,6 +129,12 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 			    calculable : true,
 			    legend: {
 			        data:['数据']
+			    },
+			    toolbox: {
+			        show : true,
+			        feature : {
+			            dataView : {show: true, readOnly: true},
+			        }
 			    },
 			    xAxis : [
 			        {

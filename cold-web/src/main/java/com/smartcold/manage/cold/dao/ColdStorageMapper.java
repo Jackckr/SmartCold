@@ -13,4 +13,5 @@ public interface ColdStorageMapper {
 
 	public List<ColdStorageEntity> findPoitByTime(@Param("storageID") int storageID, @Param("begin") Date begin,
 			@Param("end") Date end);
+
 }

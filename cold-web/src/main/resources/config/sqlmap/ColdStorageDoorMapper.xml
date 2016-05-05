@@ -10,5 +10,17 @@
         order by `addTime` desc
         limit #{npoint}
     </select>
+    
+    <select id="findInfoByIdTime" parameterType="map" resultType="ColdStorageDoorEntity">
+        SELECT *
+        FROM `ColdStorageDoor` WHERE 
+        `coldStorageDoorId` IN 
+        <foreach item="item" index="index" collection="coldStorageDoorIds"
+             open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+        AND `addTime` >= #{startTime} AND `addTime` <![CDATA[ < ]]> #{endTime}
+        order by `addTime` desc
+    </select>
 
 </mapper>
