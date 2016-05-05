@@ -9,7 +9,7 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
         $http.get('/i/coldStorageDoor/findByStorageId', {
             params: {
                 "storageID": $stateParams.storageID,
-                "npoint": 10
+                "npoint": 480
             }
         }).success(function (result) {
             console.log("result:" + result);

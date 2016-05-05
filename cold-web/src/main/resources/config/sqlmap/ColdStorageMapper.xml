@@ -17,4 +17,9 @@
 	order by `addTime` desc
 </select>
 
+	<select id="findNewInsertColdStorages" parameterType="map" resultType="ColdStorageEntity">
+		SELECT *
+		FROM `ColdStorage` order by `id` desc limit 5;
+	</select>
+
 </mapper>

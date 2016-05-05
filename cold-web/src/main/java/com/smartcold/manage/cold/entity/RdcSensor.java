@@ -1,7 +1,5 @@
 package com.smartcold.manage.cold.entity;
 
-import java.util.Date;
-
 public class RdcSensor {
     private Integer rsid;
 
@@ -13,7 +11,7 @@ public class RdcSensor {
 
     private Integer sy;
 
-    private Date addtime;
+    private Integer coldstorageid;
 
     public Integer getRsid() {
         return rsid;
@@ -55,11 +53,11 @@ public class RdcSensor {
         this.sy = sy;
     }
 
-    public Date getAddtime() {
-        return addtime;
+    public void setColdstorageid(Integer coldstorageid) {
+        this.coldstorageid = coldstorageid;
     }
 
-    public void setAddtime(Date addtime) {
-        this.addtime = addtime;
+    public Integer getColdstorageid() {
+        return coldstorageid;
     }
 }

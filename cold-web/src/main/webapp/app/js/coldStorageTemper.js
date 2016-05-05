@@ -8,7 +8,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         $http.get('/i/coldStorage/getTemperInfoById', {
             params: {
                 "storageID": $stateParams.storageID,
-                "npoint": 10
+                "npoint": 480
             }
         }).success(function (result) {
             console.log("result:" + result);
@@ -56,7 +56,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
 
             //温度实时图——环形图
-            var temper = parseFloat(result[0].temperature);
+            var temper = parseFloat(result[0].temperature).toFixed(1);
             $scope.curtemper = temper;
 /*            var pressureChart = echarts.init($("#temperatureNowChart").get(0));
 
