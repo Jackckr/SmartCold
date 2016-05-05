@@ -43,6 +43,10 @@
                         <h6 style="color: dodgerblue">源自<span>{{rdc.userRecommendCount}}</span>位用户点评</h6>
                     </div>
                 </div>
+                <!--分页-->
+                <div class="row">
+                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
             </div>
             <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3"
                  style="position:relative;top:30px;left: 0px;height: 500px;padding-right: 10px;border: 1px ridge lightgrey">
