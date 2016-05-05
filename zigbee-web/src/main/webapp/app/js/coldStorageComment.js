@@ -42,7 +42,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         }
     });
 
-    $scope.goColdStorageDetail = function (storageID) {
+    $rootScope.goColdStorageDetail = function (storageID) {
         findRDCByRDCId(storageID);
         angular.element(document.getElementById('detail')).addClass('active');
         angular.element(document.getElementById('coldStorageDetail')).addClass('active');

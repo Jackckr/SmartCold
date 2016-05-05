@@ -1,8 +1,7 @@
 /**
  * Created by sunqiunian on 16/2/26.
  */
-coldWeb.controller('home', function ($scope, $location, $stateParams, $http) {
-	
+coldWeb.controller('home', function ($scope, $location, $stateParams, $http, $state) {
 	$('.carousel').carousel({
 		wrap: true
 	});
@@ -37,6 +36,7 @@ coldWeb.controller('home', function ($scope, $location, $stateParams, $http) {
         for (var i = 0; i < data.length; i++) {
             // 创建地址解析器实例
             var myGeo = new BMap.Geocoder();
+            var rdcId = data[i].id;
             var name = data[i].name;
             var address = data[i].address;
             // 将地址解析结果显示在地图上,并调整地图视野
@@ -63,8 +63,7 @@ coldWeb.controller('home', function ($scope, $location, $stateParams, $http) {
                     });
                     marker.addEventListener("click", function () {
                         this.closeInfoWindow(infowindow);
-                        alert("去查看冷库详情");
-                        $scope.goColdStorageDetail($stateParams.rdcID);
+                        $state.go('coldStorageComment', {"rdcID": rdcId});
                     });
                 } else {
                     //alert("您选择地址没有解析到结果!");
