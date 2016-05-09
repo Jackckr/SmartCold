@@ -117,12 +117,8 @@ coldWeb.controller('rdcPower', function ($scope, $location, $stateParams, $http)
     }
     $scope.load();
 
-    var timeTicket;
-    timeTicket = setInterval(function () {
-        if (document.getElementById('rdcPowerChart') !='' && document.getElementById('rdcPowerChart') != undefined && document.getElementById('rdcPowerChart') !=null) {
-            $scope.load();
-        } else {
-            clearInterval(timeTicket);
-        }
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        $scope.load();
     }, 30000);
 });

@@ -4,14 +4,14 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.ColdStorageMapper">
 
-<select id="findLastNPoint" parameterType="map" resultType="ColdStorageEntity">
+	<select id="findLastNPoint" parameterType="map" resultType="ColdStorageEntity">
 	SELECT *
 	FROM `ColdStorage` WHERE `storageID` = #{storageID}
 	order by `addTime` desc
 	limit #{npoint}
 </select>
 
-<select id="findPoitByTime" parameterType="map" resultType="ColdStorageEntity">
+	<select id="findPoitByTime" parameterType="map" resultType="ColdStorageEntity">
 	SELECT *
 	FROM `ColdStorage` WHERE `storageID` = #{storageID} AND `addTime` >= #{begin} AND #{end} >= `addTime`
 	order by `addTime` desc
@@ -19,7 +19,6 @@
 
 	<select id="findNewInsertColdStorages" parameterType="map" resultType="ColdStorageEntity">
 		SELECT *
-		FROM `ColdStorage` order by `id` desc limit 5;
+		FROM `ColdStorage` order by `id` desc limit 6;
 	</select>
-
 </mapper>

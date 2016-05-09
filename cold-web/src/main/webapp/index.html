@@ -224,33 +224,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="header">导航</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="treeview">
-              <a href="#"><i class="fa fa-link text-white"></i> <span>制冷系统</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a><i class="fa fa-link text-white"></i> <span>制冷系统</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
                   <!--<li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i>{{compressor.name}}</a></li>-->
-                <li><a href="#"><i class="fa fa-circle-o"></i>压缩机组<i class="fa fa-angle-left pull-right"></i></a>
+                <li><a><i class="fa fa-circle-o"></i>压缩机组<i class="fa fa-angle-left pull-right"></i></a>
                   <ul class="treeview-menu" style="display: none;">
-                    <li ng-repeat="compressor in compressors"><a href="#" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i> {{compressor.name}}</a></li>
+                    <li ng-repeat="compressor in compressors"><a ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i> {{compressor.name}}</a></li>
                   </ul>
                 </li>
 
-                <li><a href="#" ng-click="toMyBlowers()"><i class="fa fa-circle-o"></i>风机</a></li>
+                <li><a ng-click="toMyBlowers()"><i class="fa fa-circle-o"></i>风机</a></li>
               </ul>
             </li>
             <li class="treeview">
-              <a href="#" ng-click="toRdcPower()"><i class="fa fa-link text-white"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a ng-click="toRdcPower()"><i class="fa fa-link text-white"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" >
-                  <li><a href="#" ng-click="openColdDiv()"><i class="fa fa-circle-o"></i>拓扑</a></li>
-                  <li ng-repeat="storage in mystorages"><a href="#"><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
+                  <li><a ng-click="openColdDiv()"><i class="fa fa-circle-o"></i>拓扑</a></li>
+                  <li ng-repeat="storage in mystorages"><a><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu" style="display: none;">
-                      <li><a href="#" ng-click="toMyStorage(1, storage.id)"><i class="fa fa-circle-o"></i> 温度</a></li>
-                      <li><a href="#" ng-click="toMyStorage(2, storage.id)"><i class="fa fa-circle-o"></i> 门开关</a></li>
-                      <li><a href="#" ng-click="toMyStorage(3, storage.id)"><i class="fa fa-circle-o"></i> 货物量流通</a></li>
+                      <li><a ng-click="toMyStorageTemper(storage.id)"><i class="fa fa-circle-o"></i> 温度</a></li>
+                      <li><a ng-click="toMyStorageDoor(storage.id)"><i class="fa fa-circle-o"></i> 门开关</a></li>
+                      <li><a ng-click="toMyStorageGoods(storage.id)"><i class="fa fa-circle-o"></i> 货物量流通</a></li>
                     </ul>
                   </li>
               </ul>
             </li>
             <li class="active"><a href="#about"><i class="fa fa-link"></i> <span>设置</span></a></li>
-            <li class="active"><a href="#" ng-click="toReport()"><i class="fa fa-link"></i> <span>分析</span></a></li>
+            <li class="active"><a ng-click="toReport()"><i class="fa fa-link"></i> <span>分析</span></a></li>
             <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>选型</span></a></li>
             <li class="active"><a href="#about"><i class="fa fa-link"></i> <span>告警</span></a></li>
           </ul><!-- /.sidebar-menu -->
@@ -258,10 +258,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <ul class="sidebar-menu" ng-if="user.role == 2">
             <li class="header">导航</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>
-            <li class="active"><a href="#" ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>分析</span></a></li>
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>设置</span></a></li>
+            <li class="active"><a ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>
+            <li class="active"><a ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>
+            <li class="active"><a><i class="fa fa-link"></i> <span>分析</span></a></li>
+            <li class="active"><a><i class="fa fa-link"></i> <span>设置</span></a></li>
           </ul><!-- /.sidebar-menu -->
 
         </section>

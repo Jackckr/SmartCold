@@ -1,7 +1,7 @@
 /**
  * Created by sunqiunian on 16/3/3.
  */
-coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams, $http) {
+coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams, $http,$rootScope) {
     console.log($stateParams.storageID);
 
     $scope.load = function () {
@@ -138,12 +138,9 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
     }
     $scope.load();
 
-    var timeTicket;
-    timeTicket = setInterval(function () {
-        if (document.getElementById('storageDoorChart') !='' && document.getElementById('storageDoorChart') != undefined && document.getElementById('storageDoorChart') !=null) {
-            $scope.load();
-        } else {
-            clearInterval(timeTicket);
-        }
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        $scope.load();
     }, 30000);
+
 });
