@@ -73,6 +73,16 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
                             tickPixelInterval:  200,
                         },
                         yAxis: {
+                            allowDecimals: false,
+                            labels: {
+                                formatter:function(){
+                                    if(this.value===0) {
+                                        return "关";
+                                    }else if(this.value===1) {
+                                        return "开";
+                                    }
+                                }
+                            },
                             title: {
                                 text: 'DoorState(0关1开)'
                             },
@@ -80,7 +90,9 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
                                 value: 0,
                                 width: 1,
                                 color: '#808080'
-                            }]
+                            }],
+                            max:1,
+                            min:0,
                         },
                         tooltip: {
                             formatter: function () {
