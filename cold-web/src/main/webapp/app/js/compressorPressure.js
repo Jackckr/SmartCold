@@ -1,7 +1,7 @@
 /**
  * Created by sunqiunian on 16/3/3.
  */
-coldWeb.controller('compressorPressure', function ($scope, $location, $stateParams, $http) {
+coldWeb.controller('compressorPressure', function ($scope, $location, $stateParams, $http,$rootScope) {
     console.log($stateParams.compressorID);
     $scope.load = function () {
         var data = [];
@@ -675,12 +675,9 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
     }
     $scope.load();
 
-    var timeTicket;
-    timeTicket = setInterval(function () {
-        if (document.getElementById('pressureChart') != '' && document.getElementById('pressureChart') != undefined && document.getElementById('pressureChart') != null) {
-            $scope.load();
-        } else {
-            clearInterval(timeTicket);
-        }
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        $scope.load();
     }, 30000);
+
 });

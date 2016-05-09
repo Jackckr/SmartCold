@@ -1,7 +1,7 @@
 /**
  * Created by sunqiunian on 16/3/3.
  */
-coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParams, $http) {
+coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParams, $http,$rootScope) {
     console.log($stateParams.storageID);
     $scope.load = function () {
         var data = [];
@@ -13,7 +13,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         }).success(function (result) {
             console.log("result:" + result);
             for (var i = 0; i < result.length; i++) {
-                console.log("result:" + result[i].temperature + ",Time: " + result[i].time);
+                console.log("result:" + result[i].storageID + result[i].temperature + ",Time: " + result[i].time);
                 var val = Date.parse(result[i].time);
                 var newDate = new Date(val).getTime();
                 data.push({
@@ -234,15 +234,12 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             });
         });
     }
+
     $scope.load();
 
-    var timeTicket;
-    timeTicket = setInterval(function () {
-        if (document.getElementById('temperatureChart') !='' && document.getElementById('temperatureChart') != undefined && document.getElementById('temperatureChart') !=null) {
-            $scope.load();
-        } else {
-            clearInterval(timeTicket);
-        }
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        $scope.load();
     }, 30000);
 
 });

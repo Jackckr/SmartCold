@@ -25,7 +25,7 @@ coldWeb.run(function(editableOptions) {
 
 coldWeb.run(function(userService) {
       userService.setUser(user);
-	  userService.setStorage('test');
+	  userService.setStorage();
 });
 
 
@@ -61,7 +61,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         setUser: function (user) {
             $rootScope.user = user;
         },
-        setStorage: function (user) {
+        setStorage: function () {
             var compressors = [];
             var mystorages = [];
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
@@ -73,7 +73,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                 }).success(function (result) {
                     console.log("result:" + result);
                     for (var i = 0; i < result.length; i++) {
-                        console.log("result:" + result[i].groupId + ",rdcId: " + result[i].rdcId);
+                        console.log("compressors:" + result[i].groupId + ",rdcId: " + result[i].rdcId);
                         compressors.push({
                             name: "压缩机组" + result[i].groupId,
                             id: result[i].groupId
@@ -89,7 +89,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                 }).success(function (result) {
                     console.log("result:" + result);
                     for (var i = 0; i < result.length; i++) {
-                        console.log("result:" + result[i].coldStorageID + ",rdcId: " + result[i].rdcId);
+                        console.log("mystorages:" + result[i].coldStorageID + ",rdcId: " + result[i].rdcId);
                         mystorages.push({
                             name: result[i].name,
                             id: result[i].coldStorageID
@@ -121,17 +121,18 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                 console.log($rootScope.rdcId);
                 $state.go('rdcPower', {'rdcId': $rootScope.rdcId});
             };
-            $rootScope.toMyStorage = function (type, storageID) {
-                console.log(type);
+            $rootScope.toMyStorageTemper = function (storageID) {
                 console.log(storageID);
-                if (type === 1) {
-                    $state.go('coldStorageTemper', {'storageID': storageID});
-                } else if (type === 2) {
+                $state.go('coldStorageTemper', {'storageID': storageID});
+            };
+            $rootScope.toMyStorageDoor = function (storageID) {
+                console.log(storageID);
                 $state.go('coldStorageDoor', {'storageID': storageID});
-                      } else if (type === 3) {
+            };
+            $rootScope.toMyStorageGoods = function (storageID) {
+                console.log(storageID);
                 $state.go('coldStorageInOutGoods', {'storageID': storageID});
-                             }
-                };
+            };
             $rootScope.toMap = function () {
                 $state.go('coldStorageMap', {});
             };

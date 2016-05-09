@@ -1,7 +1,7 @@
 /**
  * Created by sunqiunian on 16/3/3.
  */
-coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams,$http) {
+coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams,$http,$rootScope) {
     console.log($stateParams.userId);
     $scope.coldCnt = 0;
     $scope.defrostCnt = 0;
@@ -36,12 +36,9 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
     }
     $scope.load();
 
-    var timeTicket;
-    timeTicket = setInterval(function () {
-        if (document.getElementById('blowerPage') !='' && document.getElementById('blowerPage') != undefined && document.getElementById('blowerPage') !=null) {
-            $scope.load();
-        } else {
-            clearInterval(timeTicket);
-        }
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        $scope.load();
     }, 30000);
+
 });
