@@ -1,7 +1,7 @@
 /**
  * Created by sunqiunian on 16/3/3.
  */
-coldWeb.controller('rdcPower', function ($scope, $location, $stateParams, $http) {
+coldWeb.controller('rdcPower', function ($scope, $location, $stateParams, $http,$rootScope) {
     console.log($stateParams.rdcId);
     $scope.load = function () {
         var data = [];
