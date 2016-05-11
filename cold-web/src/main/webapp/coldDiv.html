@@ -16,12 +16,16 @@
 			}
 // get url params
 			var rdcID = $.getUrlParam('storageID');
+			var cityID = 110;
 //background img
 			$.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+rdcID,function(data,status){
 				console.log("imgurl: "+data+"\nstatus: "+status);
 				$("body").css("background","url("+data+")").css("background-size","1050px 590px");
 			});
 //init lengku array
+			$.get("/i/city/findTempByCityID?cityID="+cityID,function(data,status){
+				$("#cityTemp").text(data+"°C");
+			});
 			$.get("/i/coldStorage/findAllNewColdStorage?rdcId="+rdcID,function(data,status){
 				//console.log("Data: "+JSON.stringify(data)+"\nstatus: "+status);
 				var lengku = {rdc:[]};
@@ -36,7 +40,7 @@
 					if(lengku.rdc[0].div_x=="")
 					{
 						for(var i=0;i<divNum;i++)
-							$("body").append('<div style="position:absolute;width:130px;height:50px;top:'+(80+i*90)+'px;left:0px;" id="'+lengku.rdc[i].storageID+'"><table border="0"><tr><td bgcolor="2926DF">SID: '+lengku.rdc[i].storageID+ '</td></tr><tr><td id="wd'+lengku.rdc[i].storageID+'" bgcolor="D2E9E9">温度: '+lengku.rdc[i].temperature+'°C</td></tr></table></div>');
+							$("body").append('<div style="position:absolute;width:130px;height:50px;top:'+(80+i*90)+'px;left:20px;" id="'+lengku.rdc[i].storageID+'"><table border="0"><tr><td bgcolor="2926DF">SID: '+lengku.rdc[i].storageID+ '</td></tr><tr><td id="wd'+lengku.rdc[i].storageID+'" bgcolor="D2E9E9">温度: '+lengku.rdc[i].temperature+'°C</td></tr></table></div>');
 						for(var i=0;i<divNum;i++)
 							$("#"+lengku.rdc[i].storageID).draggable({
 								start: function() {
@@ -61,7 +65,9 @@
 			});
 // fresh
 			setInterval(function(){
-				console.log("xxxxxx");
+				$.get("/i/city/findTempByCityID?cityID="+cityID,function(data,status){
+					$("#cityTemp").text(data+"°C");
+				});
 				$.get("/i/coldStorage/findAllNewColdStorage?rdcId="+rdcID,function(data,status){
 					//console.log("Data: "+JSON.stringify(data)+"\nstatus: "+status);
 					var lengku = {rdc:[]};
@@ -99,7 +105,7 @@
 						window.clearInterval(int);
 					});
 				});
-			},32000);
+			},30000);
 			/*
 			 $.get("/i/rdcSensor/findSensorInfoByRdcId?rdcId="+storageID,function(data,status){
 			 console.log("Data: "+JSON.stringify(data)+"\nstatus: "+status);
@@ -175,6 +181,8 @@
 </head>
 
 <body>
-<button id ="saveBtn" >保存配置</button>
+<button id ="saveBtn">保存配置</button>
+<p align="right" style="color:#823F3F;font-size:20px;">库外温度</p>
+<p id="cityTemp" align="right" style="color:#823F3F;font-size:20px;"></p>
 </body>
 </html>
