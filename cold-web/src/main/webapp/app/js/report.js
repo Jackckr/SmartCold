@@ -1,4 +1,4 @@
-coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$http) {
+coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$http,$rootScope) {
 	$scope.getDateTimeStringBefore = function(before){
 		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
 	}
@@ -35,8 +35,11 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	}
 	
 	$scope.search4report = function(){
-		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + $scope.rdcModal.id).
-		success(function(data,headers,status,config){
+		$http.get('/i/coldStorage/findByUserId', {
+            params: {
+                "userId": $rootScope.user.id
+            }
+		}).success(function(data,headers,status,config){
 			$scope.storages = data;
 			$scope.storageModal = data.length >0 ? data[0] : '';
 		})
@@ -56,8 +59,9 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	           $scope.drawbount([]);
 	         }, 0)
 		}else if($scope.item == 'data'){
+			$scope.search4report();
 			$timeout(function(){
-				$scope.drawDataLine([],[]);
+				$scope.search();
 			}, 0);
 		}else {
 			$timeout(function() {
@@ -399,7 +403,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		$http.get('/i/rdc/findRdcList').success(function(data,headers,config,status){
 			$scope.rdcList = data;
 			$scope.rdcModal = data[0];
-			if($scope.time == 'day'){
+			if($scope.time == 'daily'){
 				url = "/i/report/daily?storageId=" + $scope.rdcModal.id + "&begin=" 
 				+ $scope.getDateTimeStringBefore(0) + "&end=" + $scope.getDateTimeStringBefore(31);
 				$http.get(url).success(function(data,headers,config,status){
@@ -430,8 +434,18 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 					})
 				})
 			}
-			$scope.drawline($scope.dataMap['xData'],$scope.dataMap['totalEnergy1'],$scope.dataMap['totalEnergy2']);
-			$scope.drawTemperatureLine($scope.dataMap['xData'],$scope.dataMap['totalEnergy1'],$scope.dataMap['temperature']);
+			$timeout(function() {
+			    $scope.drawline($scope.dataMap['xData'],$scope.dataMap['totalEnergy1'],$scope.dataMap['totalEnergy2']);
+			},0)
+			$timeout(function() {
+			    $scope.drawTemperatureLine($scope.dataMap['xData'],$scope.dataMap['totalEnergy1'],$scope.dataMap['temperature']);
+			},0)
+			if($scope.item == 'data'){
+				$scope.search4report();
+				$timeout(function() {
+				    $scope.search();
+				},0)	
+			}
 			if($scope.item == 'total'){
 				$timeout(function() {
 		           $scope.drawbount([]);
