@@ -5,7 +5,9 @@
 <mapper namespace="com.smartcold.manage.cold.dao.RdcPowerConsumeMapper">
 
     <select id="findLastNPoint" parameterType="map" resultType="RdcPowerConsumeEntity">
-        SELECT * FROM `RdcPowerCosume` WHERE `rdcID` = #{rdcID} ORDER by 'addTime' DESC limit #{npoint}
+        SELECT * FROM `RdcPowerCosume` WHERE `rdcID` = #{rdcID}
+        order by `addTime` desc
+        limit #{npoint}
     </select>
     
     <select id="findInfoByRdcid" parameterType="map" resultType="RdcPowerConsumeEntity">

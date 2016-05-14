@@ -3,6 +3,8 @@
  */
 coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log) {
 
+    $scope.rdcId;
+
     function findRDCByRDCId(rdcID) {
         // 获取当前冷库的详情
         $http.get('/i/rdc/findRDCByRDCId', {
@@ -28,7 +30,23 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 $scope.rdcService = (Math.random() + 4).toFixed(1);
                 $scope.rdcHealth = (Math.random() + 4).toFixed(1);
             }
+
+            //$scope.temper();
         });
+    }
+
+    $scope.temper = function () {
+            // 冷库实时温度,后续在做
+            $http.get('/i/rdcPower/findByRdcId', {
+                params: {
+                    "rdcID": $scope.rdcId,
+                    "npoint": 2
+                }
+            }).success(function (result) {
+                console.log("powerCosume:" + result[0].powerCosume);
+                var temper = parseFloat(result[0].powerCosume).toFixed(1);
+                $scope.curtemper = temper;
+            });
     }
 
     // 获取当前热度冷库的列表
@@ -43,6 +61,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     });
 
     $rootScope.goColdStorageDetail = function (storageID) {
+        $scope.rdcId = storageID;
         findRDCByRDCId(storageID);
         angular.element(document.getElementById('detail')).addClass('active');
         angular.element(document.getElementById('coldStorageDetail')).addClass('active');
@@ -176,6 +195,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $log.info('Modal dismissed at: ' + new Date())
         })
     }
+
+/*    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        $scope.temper();
+    }, 30000);*/
 });
 
 coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) { //依赖于modalInstance
