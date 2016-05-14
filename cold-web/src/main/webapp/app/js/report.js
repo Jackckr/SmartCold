@@ -80,7 +80,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		$scope.searchxData = [];
 		$scope.searchData = [];
 		if($scope.choseOption.key == 'electric'){
-			url = "/i/rdcPower/findInfoByRdcIdTime?rdcId=" + $scope.rdcModal.id + 
+			url = "/i/rdcPower/findInfoByRdcIdTime?rdcId=" + $scope.storageModal.rdcId + 
 			"&startTime=" + $scope.begin + "&endTime=" + $scope.end;
 			$http.get(url).success(function(data,headers,status,config){
 				angular.forEach(data,function(item){
