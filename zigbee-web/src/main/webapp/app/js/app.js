@@ -1,5 +1,5 @@
 var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
-    'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table']);
+    'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload']);
 
 angular.element(document).ready(function ($ngCookies) {
     angular.bootstrap(document, ['ColdWeb']);
@@ -79,6 +79,7 @@ coldWeb.filter('toArray', function () {
         });
     };
 });
+
 
 coldWeb.directive('snippet', function () {
     return {
@@ -165,6 +166,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageComment/:rdcID',
         controller: 'coldStorageComment',
         templateUrl: 'app/template/coldStorageComment.html'
+    }).state('review', {
+        url: '/coldStorage/{rdcID}/review',
+        controller: 'review',
+        templateUrl: 'app/template/review.html'
     });
 
 });
