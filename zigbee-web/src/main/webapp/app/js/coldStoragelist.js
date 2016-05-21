@@ -92,7 +92,7 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             var point = new BMap.Point(104.114129, 34.550339);
             map.centerAndZoom(point, 5);
             //添加鼠标滚动缩放
-            //map.enableScrollWheelZoom();
+            map.enableScrollWheelZoom();
 
             //添加缩略图控件
             map.addControl(new BMap.OverviewMapControl({isOpen: true})); //缩略地图控件，默认位于地图右下方，是一个可折叠的缩略地图
@@ -126,11 +126,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
                     if (point) {
                         var address = new BMap.Point(point.lng, point.lat);
                         //设置标注的图标
-                        icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
-                            anchor: new BMap.Size(9, 25),
-                            infoWindowAnchor: new BMap.Size(10, 0)
-                        });
-                        var marker = new BMap.Marker(address, {icon: icon});
+             /*           icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
+                         anchor: new BMap.Size(9, 25),
+                         infoWindowAnchor: new BMap.Size(10, 0)
+                         });
+                         var marker = new BMap.Marker(address, {icon: icon});*/
+                        var marker = new BMap.Marker(address, "");
                         map.addOverlay(marker);
 
                         var content = "<table>";
