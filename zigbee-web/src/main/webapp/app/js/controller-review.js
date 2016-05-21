@@ -124,10 +124,10 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		
 		Upload.upload({
             url: '/i/review/add',
-            headers: {'Content-Type': undefined},
             data: data
         }).then(function (resp) {
-            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            alert("评价成功");
+            $location.path("/coldStorageComment/" + $scope.rdcid);
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {

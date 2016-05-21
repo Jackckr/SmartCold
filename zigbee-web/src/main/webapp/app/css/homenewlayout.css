@@ -602,6 +602,7 @@ footer dt
 footer dd
 {
     margin: 5px 0;
+    color: gray;
 }
 footer dd a
 {
