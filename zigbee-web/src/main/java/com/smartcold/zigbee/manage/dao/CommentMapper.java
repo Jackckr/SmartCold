@@ -6,11 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-04-28 20:25)
+ * Author: qiunian.sun Date: qiunian.sun(2016-04-28 20:25)
  */
 public interface CommentMapper {
 
-    List<CommentEntity> findLastNComment(@Param("rdcID") int rdcID, @Param("npoint") int npoint);
+	List<CommentEntity> findLastNComment(@Param("rdcID") int rdcID, @Param("npoint") int npoint);
+
+	public void insertComment(CommentEntity comment);
 
 }

@@ -11,4 +11,34 @@
 	limit #{npoint}
 </select>
 
+<insert id="insertComment" parameterType="CommentEntity" 
+  useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO `ColdStorageComment` (
+	`rdcid`, 
+	`commerid`, 
+	`content`, 
+	`grade`, 
+	`locationGrade`, 
+	`facilityGrade`, 
+	`serviceGrade`, 
+	`sanitaryGrade`, 
+	`piclocation`, 
+	`addTime`
+	)
+	VALUES
+	(
+	#{rdcID}, 
+	#{commerID},
+	#{content},
+	#{grade},
+	#{locationGrade},
+	#{facilityGrade},
+	#{serviceGrade},
+	#{sanitaryGrade},
+	#{piclocation},
+	now()
+	);
+
+</insert>
+
 </mapper>

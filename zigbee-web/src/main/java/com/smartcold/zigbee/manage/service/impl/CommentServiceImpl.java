@@ -15,39 +15,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-04-28 20:35)
+ * Author: qiunian.sun Date: qiunian.sun(2016-04-28 20:35)
  */
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
-    private CommentMapper commentDao;
+	@Autowired
+	private CommentMapper commentDao;
 
-    @Autowired
-    private UserMapper userDao;
+	@Autowired
+	private UserMapper userDao;
 
-    @Override
-    public List<CommentEntity> findLastNComment(@RequestParam int rdcID, @RequestParam int npoint) {
-        return commentDao.findLastNComment(rdcID, npoint);
-    }
+	@Override
+	public List<CommentEntity> findLastNComment(@RequestParam int rdcID, @RequestParam int npoint) {
+		return commentDao.findLastNComment(rdcID, npoint);
+	}
 
-    @Override
-    public List<CommentDTO> findCommentsRdcID(@RequestParam int rdcID, @RequestParam int npoint) {
-        List<CommentEntity> commentDTOList = commentDao.findLastNComment(rdcID, npoint);
-        List<CommentDTO> results = Lists.newArrayList();
-        for (CommentEntity commentEntity : commentDTOList) {
-            CommentDTO commentDTO = new CommentDTO();
-            commentDTO.setId(commentEntity.getId());
-            commentDTO.setRdcID(commentEntity.getRdcID());
-            commentDTO.setContent(commentEntity.getContent());
-            commentDTO.setAddTime(TimeUtil.dateToString(commentEntity.getAddTime(), ""));
+	@Override
+	public List<CommentDTO> findCommentsRdcID(@RequestParam int rdcID, @RequestParam int npoint) {
+		List<CommentEntity> commentDTOList = commentDao.findLastNComment(rdcID, npoint);
+		List<CommentDTO> results = Lists.newArrayList();
+		for (CommentEntity commentEntity : commentDTOList) {
+			CommentDTO commentDTO = new CommentDTO();
+			commentDTO.setId(commentEntity.getId());
+			commentDTO.setRdcID(commentEntity.getRdcID());
+			commentDTO.setContent(commentEntity.getContent());
+			commentDTO.setAddTime(TimeUtil.dateToString(commentEntity.getAddTime(), ""));
 
-            commentDTO.setCommerID(commentEntity.getCommerID());
-            UserEntity userEntity = userDao.findUserById(commentEntity.getCommerID());
-            commentDTO.setCommerName(userEntity.getUsername());
-            results.add(commentDTO);
-        }
-        return results;
-    }
+			commentDTO.setCommerID(commentEntity.getCommerID());
+			UserEntity userEntity = userDao.findUserById(commentEntity.getCommerID());
+			commentDTO.setCommerName(userEntity.getUsername());
+			results.add(commentDTO);
+		}
+		return results;
+	}
+
+	@Override
+	public void insertComment(CommentEntity comment) {
+		commentDao.insertComment(comment);
+	}
 }

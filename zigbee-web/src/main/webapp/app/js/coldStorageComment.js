@@ -179,21 +179,22 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
 
     $scope.items = ['html5', 'jq', 'FE-演示平台'];
     $scope.goComment = function (size) {  //打开模态
-        var modalInstance = $uibModal.open({
-            templateUrl: 'myModelContent.html',  //指向上面创建的视图
-            controller: 'ModalInstanceCtrl',// 初始化模态范围
-            size: size, //大小配置
-            resolve: {
-                items: function () {
-                    return $scope.items;
-                }
-            }
-        })
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date())
-        })
+    	$location.path("/coldStorage/" + $stateParams.rdcID + "/review");
+//        var modalInstance = $uibModal.open({
+//            templateUrl: 'myModelContent.html',  //指向上面创建的视图
+//            controller: 'ModalInstanceCtrl',// 初始化模态范围
+//            size: size, //大小配置
+//            resolve: {
+//                items: function () {
+//                    return $scope.items;
+//                }
+//            }
+//        })
+//        modalInstance.result.then(function (selectedItem) {
+//            $scope.selected = selectedItem;
+//        }, function () {
+//            $log.info('Modal dismissed at: ' + new Date())
+//        })
     }
 
 /*    clearInterval($rootScope.timeTicket);

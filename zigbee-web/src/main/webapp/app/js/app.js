@@ -131,6 +131,7 @@ coldWeb.filter('sizeformat', function () {
     }
 });
 
+
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/home");
     //index

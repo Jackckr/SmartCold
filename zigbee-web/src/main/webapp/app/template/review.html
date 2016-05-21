@@ -10,7 +10,7 @@
           <div class="row">
             <ul class="breadcrumb" style="padding-left: 45px">
                 <li>
-                    <a href="#">冷库名字</a>
+                    <a href="#">{{rdc.name}}</a>
                 </li>
             </ul>
           </div>
@@ -21,11 +21,12 @@
 		      <label>评分：</label>
               <span rating-value="ratingVal[0]">
                 <ul class="rating" ng-mouseleave="leave(0)">
-                <li ng-repeat="star in stars[0]" ng-class="star" ng-click="click(0,$index + 1)" ng-mouseover="over(0,$index + 1)">
+                <li ng-repeat="star in stars[0]" ng-class="star" ng-click="click(0,$index + 1)">
                 {{'\u2605'}}
                 </li>
                 </ul>
                </span>
+               {{ratingVal[0]}} 分
 		    </div>
 		  </form>
         </div>
@@ -33,13 +34,14 @@
           <form class="navbar-form navbar-left">
 		    <div class="form-group">
 		      <label>位置：</label>
-              <span rating-value="ratingVal[1]">
+              <span rating-value="ratingVal[1]" >
                 <ul class="rating" ng-mouseleave="leave(1)">
-                <li ng-repeat="star in stars[1]" ng-class="star" ng-click="click(1,$index + 1)" ng-mouseover="over(1,$index + 1)">
+                <li ng-repeat="star in stars[1]" ng-class="star" ng-click="click(1,$index + 1)">
                 {{'\u2605'}}
                 </li>
                 </ul>
                </span>
+               {{ratingVal[1]}} 分
 		    </div>
 		  </form>
         </div>
@@ -49,11 +51,12 @@
 		      <label>设施：</label>
               <span rating-value="ratingVal[2]">
                 <ul class="rating" ng-mouseleave="leave(2)">
-                <li ng-repeat="star in stars[2]" ng-class="star" ng-click="click(2,$index + 1)" ng-mouseover="over(2,$index + 1)">
+                <li ng-repeat="star in stars[2]" ng-class="star" ng-click="click(2,$index + 1)">
                 {{'\u2605'}}
                 </li>
                 </ul>
                </span>
+               {{ratingVal[2]}} 分
 		    </div>
 		  </form>
         </div>
@@ -63,11 +66,12 @@
 		      <label>服务：</label>
               <span rating-value="ratingVal[3]">
                 <ul class="rating" ng-mouseleave="leave(3)">
-                <li ng-repeat="star in stars[3]" ng-class="star" ng-click="click(3,$index + 1)" ng-mouseover="over(3,$index + 1)">
+                <li ng-repeat="star in stars[3]" ng-class="star" ng-click="click(3,$index + 1)">
                 {{'\u2605'}}
                 </li>
                 </ul>
                </span>
+               {{ratingVal[3]}} 分
 		    </div>
 		  </form>
         </div>
@@ -76,13 +80,13 @@
 		    <div class="form-group">
 		      <label>卫生：</label>
               <span>
-                <ul class="rating" ng-mouseleave="leave(4)">
-                <li ng-repeat="star in stars[4]" ng-class="star" ng-click="click(4,$index + 1)" ng-mouseover="over(4,$index + 1)">
+                <ul class="rating">
+                <li ng-repeat="star in stars[4]" ng-class="star" ng-click="click(4,$index + 1)">
                 {{'\u2605'}}
                 </li>
                 </ul>
                </span>
-              <span><small>评价卫生</small></span>
+               {{ratingVal[4]}} 分
 		    </div>
 		  </form>
         </div>
@@ -90,7 +94,7 @@
           <form class="navbar-form navbar-left">
 		      <label style="">点评：</label>
 		    <div class="form-group">
-              <textarea style="height:50px;width:500px;">
+              <textarea style="height:50px;width:500px;" ng-model="content">
               </textarea>
 		    </div>
 		  </form>
@@ -100,11 +104,15 @@
 		    <label style="">上传图片：</label>
 		    <div class="form-group">
 		    <form ng-app="fileUpload" name="form">
-		       <button class="btn btn-success" ngf-select="uploadFiles($files)" ng-model="files" ngf-multiple="true">上传图片</button>
-               <!-- <label class="btn-link" ng-click="uploadfile(this)">上传<input type="file" class="hidden"></label> -->
+		       <button class="btn btn-success" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true">上传图片</button>
             </form>  
 		    </div>
 		  </form>
+        </div>
+        <div class="col-lg-12 col-lg-offset-2">
+          <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
+           <i class="icon-remove-sign danger" style="margin-right:10px;color:red;" ng-click="drop(file)"></i>
+           </label>
         </div>
          <div class="col-lg-8 col-lg-offset-6">
           <form class="navbar-form navbar-left">
@@ -116,7 +124,7 @@
           <div class="panel panel-default" style="margin-top:100px;border-style: dotted;border-width: 1px;">
 	         <div class="panel-body">
 	          <div style="border-bottom-style: dotted;border-bottom-width: 1px;">
-	            <h3>冷库名字</h3>
+	            <h3>{{rdc.name}}</h3>
 	            <p>评分：
 	              <i class="icon-star"></i>
 	              <i class="icon-star"></i>

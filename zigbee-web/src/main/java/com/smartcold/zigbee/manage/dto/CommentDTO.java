@@ -1,70 +1,131 @@
 package com.smartcold.zigbee.manage.dto;
 
-import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-04-29 16:22)
+ * Author: qiunian.sun Date: qiunian.sun(2016-04-29 16:22)
  */
 public class CommentDTO {
 
-    private int id;
+	private int id;
 
-    private int rdcID;
+	private int rdcID;
 
-    private int commerID;
+	private int commerID;
 
-    private String content;
+	private String content;
 
-    private String addTime;
+	private String addTime;
 
-    private String commerName;
+	private String commerName;
 
-    public int getId() {
-        return id;
-    }
+	private float grade;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	private float locationGrade;
 
-    public int getRdcID() {
-        return rdcID;
-    }
+	private float facilityGrade;
 
-    public void setRdcID(int rdcID) {
-        this.rdcID = rdcID;
-    }
+	private float serviceGrade;
 
-    public int getCommerID() {
-        return commerID;
-    }
+	private float sanitaryGrade;
 
-    public void setCommerID(int commerID) {
-        this.commerID = commerID;
-    }
+//	private List<MultipartFile> files;
 
-    public String getContent() {
-        return content;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getAddTime() {
-        return addTime;
-    }
+	public int getRdcID() {
+		return rdcID;
+	}
 
-    public void setAddTime(String addTime) {
-        this.addTime = addTime;
-    }
+	public void setRdcID(int rdcID) {
+		this.rdcID = rdcID;
+	}
 
-    public String getCommerName() {
-        return commerName;
-    }
+	public int getCommerID() {
+		return commerID;
+	}
 
-    public void setCommerName(String commerName) {
-        this.commerName = commerName;
-    }
+	public void setCommerID(int commerID) {
+		this.commerID = commerID;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(String addTime) {
+		this.addTime = addTime;
+	}
+
+	public String getCommerName() {
+		return commerName;
+	}
+
+	public void setCommerName(String commerName) {
+		this.commerName = commerName;
+	}
+
+	public float getGrade() {
+		return grade;
+	}
+
+	public void setGrade(float grade) {
+		this.grade = grade;
+	}
+
+	public float getLocationGrade() {
+		return locationGrade;
+	}
+
+	public void setLocationGrade(float locationGrade) {
+		this.locationGrade = locationGrade;
+	}
+
+	public float getFacilityGrade() {
+		return facilityGrade;
+	}
+
+	public void setFacilityGrade(float facilityGrade) {
+		this.facilityGrade = facilityGrade;
+	}
+
+	public float getServiceGrade() {
+		return serviceGrade;
+	}
+
+	public void setServiceGrade(float serviceGrade) {
+		this.serviceGrade = serviceGrade;
+	}
+
+	public float getSanitaryGrade() {
+		return sanitaryGrade;
+	}
+
+	public void setSanitaryGrade(float sanitaryGrade) {
+		this.sanitaryGrade = sanitaryGrade;
+	}
+
+//	public List<MultipartFile> getFiles() {
+//		return files;
+//	}
+//
+//	public void setFiles(List<MultipartFile> files) {
+//		this.files = files;
+//	}
 }
