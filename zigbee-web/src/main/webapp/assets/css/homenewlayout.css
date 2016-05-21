@@ -72,9 +72,9 @@ header a.logo
 
     width: 250px;
     height: 75px;
-    margin-left: 60px;
+    margin-left: 10px;
 
-    background: url(../img/logo.png) no-repeat;
+    background: url(../img/logo_index.png) no-repeat;
     background-position: left center;
 }
 
