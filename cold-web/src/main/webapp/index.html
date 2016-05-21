@@ -252,7 +252,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="active"><a href="#about"><i class="fa fa-link"></i> <span>设置</span></a></li>
             <li class="active"><a href="" ng-click="toReport()"><i class="fa fa-link"></i> <span>分析</span></a></li>
             <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>选型</span></a></li>
-            <li class="active"><a href="#about"><i class="fa fa-link"></i> <span>告警</span></a></li>
+            <li class="active"><a href="#" ng-click="openWarn()><i class="fa fa-link"></i> <span>告警</span></a></li>
           </ul><!-- /.sidebar-menu -->
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu" ng-if="user.role == 2">
@@ -338,6 +338,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/designStorage.js"></script>
 <script src="app/js/report.js"></script>
 <script src="app/js/rdcPower.js"></script>
+<script src="app/js/warn.js"></script>
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
 <script src="assets/plugins/fastclick/fastclick.min.js"></script>
 <script src="assets/js/demo.js"></script>
