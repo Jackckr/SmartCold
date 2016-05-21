@@ -1,4 +1,4 @@
-coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $http,Upload,$stateParams) {
+coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $http,Upload,$stateParams,$location) {
 	$scope.load = function(){
 		$scope.rdcid = $stateParams.rdcID;
 		$http.get('/i/rdc/findRDCByRDCId?rdcID=' + $stateParams.rdcID).success(function(data,status,config,headers){
@@ -124,6 +124,7 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		
 		Upload.upload({
             url: '/i/review/add',
+            headers :{ 'Content-Transfer-Encoding': 'utf-8' },
             data: data
         }).then(function (resp) {
             alert("评价成功");
@@ -132,7 +133,7 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
             console.log('Error status: ' + resp.status);
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            console.log('progress: ' + progressPercentage + '% ' + evt.name);
         });
 	}
 	$scope.load();
