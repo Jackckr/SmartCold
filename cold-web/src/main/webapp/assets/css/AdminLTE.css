@@ -2068,7 +2068,7 @@ a:focus {
   text-overflow: ellipsis;
 }
 .info-box-text {
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 .info-box-more {
   display: block;
