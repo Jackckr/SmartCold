@@ -4,6 +4,9 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		$http.get('/i/rdc/findRDCByRDCId?rdcID=' + $stateParams.rdcID).success(function(data,status,config,headers){
 			$scope.rdc = data[0];
 		})
+		$http.get('/i/comment/findCommentsByRDCId?rdcID=' + $scope.rdcid + "&npoint=1").success(function(data,status,config,headers){
+			$scope.lastComment = data.length == 1? data[0] : {};
+		})
 		$scope.files;
 		
 		$scope.max = 5;
@@ -63,23 +66,6 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		})
 	}
 	
-	$scope.uploadFiles = function(){
-		if ($scope.files && $scope.files.length) {
-	        for (var i = 0; i < files.length; i++) {
-	          Upload.upload({
-	              url: '/i/review/add',
-	              data: {file: files[i],coldStorageId:1}
-	          }).then(function (resp) {
-	              console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-	          }, function (resp) {
-	              console.log('Error status: ' + resp.status);
-	          }, function (evt) {
-	              var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	              console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-	          });
-	        }
-	      }
-	}
 	
 	$scope.submit = function(){
 		data = {
@@ -89,14 +75,14 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 				file3: null,
 				file4: null,
 				rdcID : $scope.rdcid,
-				content : $scope.content,
+				content : encodeURI($scope.content,"UTF-8"),
 				grade : $scope.ratingVal[0],
 				locationGrade : $scope.ratingVal[1],
 				facilityGrade : $scope.ratingVal[2],
 				serviceGrade : $scope.ratingVal[3],
 				sanitaryGrade : $scope.ratingVal[4],
 		}
-		for(i = 0; i < $scope.files.length; i++){
+		for(i = 0; i < $scope.totalfiles.length; i++){
 			data["file" + i] = $scope.files[i];
 		}
 		

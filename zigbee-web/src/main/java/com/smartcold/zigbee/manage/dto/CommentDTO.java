@@ -1,9 +1,5 @@
 package com.smartcold.zigbee.manage.dto;
 
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 16:22)
  */
@@ -30,8 +26,6 @@ public class CommentDTO {
 	private float serviceGrade;
 
 	private float sanitaryGrade;
-
-//	private List<MultipartFile> files;
 
 	public int getId() {
 		return id;
@@ -121,11 +115,4 @@ public class CommentDTO {
 		this.sanitaryGrade = sanitaryGrade;
 	}
 
-//	public List<MultipartFile> getFiles() {
-//		return files;
-//	}
-//
-//	public void setFiles(List<MultipartFile> files) {
-//		this.files = files;
-//	}
 }

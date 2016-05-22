@@ -94,7 +94,7 @@
           <form class="navbar-form navbar-left">
 		      <label style="">点评：</label>
 		    <div class="form-group">
-              <textarea style="height:50px;width:500px;" ng-model="content">
+              <textarea style="height:150px;width:500px;" ng-model="content">
               </textarea>
 		    </div>
 		  </form>
@@ -105,6 +105,7 @@
 		    <div class="form-group">
 		    <form ng-app="fileUpload" name="form">
 		       <button class="btn btn-success" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true">上传图片</button>
+		       <small class="text-warning" style="margin-left:30px;">*最多五张</small>
             </form>  
 		    </div>
 		  </form>
@@ -114,7 +115,7 @@
            <i class="icon-remove-sign danger" style="margin-right:10px;color:red;" ng-click="drop(file)"></i>
            </label>
         </div>
-         <div class="col-lg-8 col-lg-offset-6">
+         <div class="col-lg-8 col-lg-offset-4">
           <form class="navbar-form navbar-left">
 		    <button class="btn btn-primary" ng-click="submit()">提交点评</button>
 		  </form>
@@ -138,8 +139,8 @@
 	          </div>
 	          <div>
 	            <h4>最新点评</h4>
-	            <p><a>用户1</a> 总体评价:4星</p>
-	            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+	            <p><a>{{lastComment.commerName}}</a> 总体评价:{{lastComment.grade}}星</p>
+	            <p>{{lastComment.content}}</p>
 	          </div>
 	         </div>
           </div>

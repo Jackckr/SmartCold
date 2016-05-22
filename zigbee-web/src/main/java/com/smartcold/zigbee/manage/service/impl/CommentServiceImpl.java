@@ -40,6 +40,11 @@ public class CommentServiceImpl implements CommentService {
 			commentDTO.setId(commentEntity.getId());
 			commentDTO.setRdcID(commentEntity.getRdcID());
 			commentDTO.setContent(commentEntity.getContent());
+			commentDTO.setFacilityGrade(commentEntity.getFacilityGrade());
+			commentDTO.setGrade(commentEntity.getGrade());
+			commentDTO.setLocationGrade(commentEntity.getLocationGrade());
+			commentDTO.setSanitaryGrade(commentEntity.getSanitaryGrade());
+			commentDTO.setServiceGrade(commentEntity.getServiceGrade());
 			commentDTO.setAddTime(TimeUtil.dateToString(commentEntity.getAddTime(), ""));
 
 			commentDTO.setCommerID(commentEntity.getCommerID());

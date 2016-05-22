@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.controller;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ReviewController {
 		Gson gson = new Gson();
 
 		commentEntity.setCommerID(user.getId());
-		commentEntity.setContent(commentDto.getContent());
+		commentEntity.setContent(URLDecoder.decode(commentDto.getContent(), "UTF-8"));
 		commentEntity.setGrade(commentDto.getGrade());
 		commentEntity.setFacilityGrade(commentDto.getFacilityGrade());
 		commentEntity.setLocationGrade(commentDto.getLocationGrade());
