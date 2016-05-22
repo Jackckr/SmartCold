@@ -1,12 +1,21 @@
 var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
     'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload']);
 
-angular.element(document).ready(function ($ngCookies) {
-    angular.bootstrap(document, ['ColdWeb']);
+angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
+	$.ajax({
+	      url: '/i/user/findUser',
+	      type: "GET",
+	      dataType: 'json'
+	    }).success(function(data){
+	    	user = data;
+	    	angular.bootstrap(document, ['ColdWeb']);
+	    })
 });
-coldWeb.run(function (editableOptions, naviService) {
+coldWeb.run(function (editableOptions, naviService,userService) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     naviService.setNAVI();
+    userService.setUser(user);
+    
 });
 
 coldWeb.config(function ($httpProvider) {
@@ -34,6 +43,14 @@ coldWeb.config(function ($httpProvider) {
         };
     });
 });
+
+coldWeb.factory('userService',['$rootScope', function($rootScope){
+	return {
+		setUser: function(user){
+	    	$rootScope.user = user;
+	    },
+	}
+}])
 
 coldWeb.factory('naviService', ['$rootScope', '$state', function ($rootScope, $state) {
     return {

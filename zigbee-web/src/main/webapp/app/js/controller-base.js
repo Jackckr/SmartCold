@@ -1,5 +1,5 @@
 coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$location,$window, $state) {
-	$rootScope.load = function () {
+	$scope.load = function () {
     }
 	
     
@@ -141,6 +141,6 @@ coldWeb.controller('info', function ($scope, $location, $stateParams, $http) {
     $scope.load();
 });
 
-coldWeb.controller('login', function ($scope, $location,$window) {
+coldWeb.controller('login', function ($rootScope,$scope, $location,$window) {
 	
 });

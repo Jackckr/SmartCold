@@ -1,5 +1,10 @@
 coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $http,Upload,$stateParams,$location) {
 	$scope.load = function(){
+		if($rootScope.user == null || $rootScope.user.id == 0){
+			url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
+			window.location.href = url;
+			alert("请先登录后再点评");
+		}
 		$scope.rdcid = $stateParams.rdcID;
 		$http.get('/i/rdc/findRDCByRDCId?rdcID=' + $stateParams.rdcID).success(function(data,status,config,headers){
 			$scope.rdc = data[0];

@@ -75,8 +75,9 @@ $(function(){
     		url:"/i/user/login?userName="+userName+"&password="+password,
     				async:false}).success(function(data){
     					if(data == true){
-    						window.location.pathname="";
-    						window.location.href = "#/about";
+    						/* window.location.pathname="";
+    						window.location.href = "#/about"; */
+    						window.history.back();
     						window.event.returnValue=false;
     					}else{
     						$('#mention')[0].hidden=false;
