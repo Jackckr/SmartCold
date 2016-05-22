@@ -19,14 +19,7 @@
           <form class="navbar-form navbar-left">
 		    <div class="form-group">
 		      <label>评分：</label>
-              <span rating-value="ratingVal[0]">
-                <ul class="rating" ng-mouseleave="leave(0)">
-                <li ng-repeat="star in stars[0]" ng-class="star" ng-click="click(0,$index + 1)">
-                {{'\u2605'}}
-                </li>
-                </ul>
-               </span>
-               {{ratingVal[0]}} 分
+              <span star rating-value="ratingVal[0]" max="max" order="0" on-click="onClick" readonly="{{readonly}}"></span>
 		    </div>
 		  </form>
         </div>
@@ -34,14 +27,7 @@
           <form class="navbar-form navbar-left">
 		    <div class="form-group">
 		      <label>位置：</label>
-              <span rating-value="ratingVal[1]" >
-                <ul class="rating" ng-mouseleave="leave(1)">
-                <li ng-repeat="star in stars[1]" ng-class="star" ng-click="click(1,$index + 1)">
-                {{'\u2605'}}
-                </li>
-                </ul>
-               </span>
-               {{ratingVal[1]}} 分
+              <span star rating-value="ratingVal[0]" max="max" order="1" on-click="onClick" readonly="{{readonly}}"></span>
 		    </div>
 		  </form>
         </div>
@@ -49,14 +35,7 @@
           <form class="navbar-form navbar-left">
 		    <div class="form-group">
 		      <label>设施：</label>
-              <span rating-value="ratingVal[2]">
-                <ul class="rating" ng-mouseleave="leave(2)">
-                <li ng-repeat="star in stars[2]" ng-class="star" ng-click="click(2,$index + 1)">
-                {{'\u2605'}}
-                </li>
-                </ul>
-               </span>
-               {{ratingVal[2]}} 分
+              <span star rating-value="ratingVal[0]" max="max" order="2" on-click="onClick" readonly="{{readonly}}"></span>
 		    </div>
 		  </form>
         </div>
@@ -64,14 +43,7 @@
           <form class="navbar-form navbar-left">
 		    <div class="form-group">
 		      <label>服务：</label>
-              <span rating-value="ratingVal[3]">
-                <ul class="rating" ng-mouseleave="leave(3)">
-                <li ng-repeat="star in stars[3]" ng-class="star" ng-click="click(3,$index + 1)">
-                {{'\u2605'}}
-                </li>
-                </ul>
-               </span>
-               {{ratingVal[3]}} 分
+              <span star rating-value="ratingVal[0]" max="max" order="3" on-click="onClick" readonly="{{readonly}}"></span>
 		    </div>
 		  </form>
         </div>
@@ -79,14 +51,7 @@
           <form class="navbar-form navbar-left">
 		    <div class="form-group">
 		      <label>卫生：</label>
-              <span>
-                <ul class="rating">
-                <li ng-repeat="star in stars[4]" ng-class="star" ng-click="click(4,$index + 1)">
-                {{'\u2605'}}
-                </li>
-                </ul>
-               </span>
-               {{ratingVal[4]}} 分
+              <span star rating-value="ratingVal[0]" max="max" order="4" on-click="onClick" readonly="{{readonly}}"></span>
 		    </div>
 		  </form>
         </div>
@@ -115,9 +80,9 @@
            <i class="icon-remove-sign danger" style="margin-right:10px;color:red;" ng-click="drop(file)"></i>
            </label>
         </div>
-         <div class="col-lg-8 col-lg-offset-4">
+         <div class="col-lg-8 col-lg-offset-2">
           <form class="navbar-form navbar-left">
-		    <button class="btn btn-primary" ng-click="submit()">提交点评</button>
+		    <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;">提交点评</button>
 		  </form>
         </div>
         </div>

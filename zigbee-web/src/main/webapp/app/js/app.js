@@ -116,6 +116,59 @@ coldWeb.directive('snippet', function () {
     };
 });
 
+
+coldWeb.directive('star', function () {
+  return {
+    template: '<ul class="rating" ng-mouseleave="leave(order)">' +
+        '<li ng-repeat="star in stars" ng-class="star" ng-click="click(order,$index + 1)" ng-mouseover="over(order,$index + 1)">' +
+        '\u2605' +
+        '</li>' +
+        '</ul>{{overVal?overVal:ratingVal}} 分',
+    scope: {
+      ratingValue: '=',
+      max: '=',
+      order: '=',
+      readonly: '@',
+      onClick: '='
+    },
+    controller: function($scope){
+      $scope.ratingValue = $scope.ratingValue || 0;
+      $scope.max = $scope.max || 5;
+	  $scope.ratingVal = 0;
+	  $scope.overVal = null;
+	  $scope.stars = [];
+	  for(var i=0; i< $scope.max;i++){
+		  $scope.stars.push({
+              filled: i < $scope.ratingVal
+            });
+	  }
+	  var updateStars = function (val) {
+          for (var i = 0; i < $scope.max; i++) {
+            $scope.stars[i].filled = i < val;
+          }
+        };
+      $scope.click = function(i,val){
+        $scope.ratingVal = val;
+    	updateStars(val);
+        $scope.onClick(i,val);
+      };
+      $scope.over = function(i,val){
+    	$scope.overVal = val;
+    	updateStars(val);
+      };
+      $scope.leave = function(i){
+    	  $scope.overVal = null;
+    	updateStars($scope.ratingVal);
+      }
+      updateStars(0);
+    },
+    link: function (scope, elem, attrs) {
+      elem.css("text-align", "center");
+ 
+    }
+  };
+});
+
 coldWeb.directive('activeLink', ['$location', '$filter', function (location, filter) {
     return {
         restrict: 'A',

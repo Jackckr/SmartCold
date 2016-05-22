@@ -1,13 +1,16 @@
 coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $http,Upload,$stateParams,$location) {
 	$scope.load = function(){
-		if($rootScope.user == null || $rootScope.user.id == 0){
-			url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
-			window.location.href = url;
-			alert("请先登录后再点评");
-		}
 		$scope.rdcid = $stateParams.rdcID;
 		$http.get('/i/rdc/findRDCByRDCId?rdcID=' + $stateParams.rdcID).success(function(data,status,config,headers){
 			$scope.rdc = data[0];
+			$http.get('/i/user/findUser').success(function(data,status,config,headers){
+				$rootScope.user = data;
+				if($rootScope.user == null || $rootScope.user.id == 0){
+					url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
+					window.location.href = url;
+					alert("请先登录后再点评");
+				}
+			})
 		})
 		$http.get('/i/comment/findCommentsByRDCId?rdcID=' + $scope.rdcid + "&npoint=1").success(function(data,status,config,headers){
 			$scope.lastComment = data.length == 1? data[0] : {};
@@ -16,43 +19,11 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		
 		$scope.max = 5;
 		$scope.starsNum = 5;
-		$scope.stars = [];
 		$scope.ratingVal = [];
 		$scope.totalfiles = [];
-		for(i=0;i<$scope.starsNum;i++){
-			$scope.stars[i] = [];
-			$scope.ratingVal[i] = 0;
-		}
-		for(j=0;j<$scope.starsNum;j++){
-			for(i=0;i<$scope.max;i++){
-				$scope.stars[j].push({filled:false});
-			}
-		}
 	}
-	$scope.click = function(i,val){
+	$scope.onClick = function(i,val){
 		$scope.ratingVal[i] = val;
-		$scope.stars[i] = [];
-		for (var j = 0; j < $scope.max; j++) {
-	      $scope.stars[i].push({
-	        filled: j < $scope.ratingVal[i]
-          });
-        }
-	};
-	$scope.over = function(i,val){
-	  $scope.stars[i] = [];
-	    for (var j = 0; j < $scope.max; j++) {
-	      $scope.stars[i].push({
-	        filled: j < val
-	      });
-	    }
-	};
-	$scope.leave = function(i){
-	  $scope.stars[i] = [];
-	    for (var j = 0; j < $scope.max; j++) {
-          $scope.stars[i].push({
-            filled: j < $scope.ratingVal[i]
-          });
-        }
 	};
 	
 	$scope.addFiles = function (files) {
