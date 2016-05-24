@@ -92,6 +92,9 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 data[i].commentsum = parseInt((Math.random() * 5 + 5).toFixed(0));
                 data[i].usefulCnt = parseInt((Math.random() * 10 + 5).toFixed(0));
             }
+            angular.forEach(data,function(item){
+            	item.piclocation = JSON.parse(item.piclocation);
+            })
             $scope.comments = data;
         });
     }

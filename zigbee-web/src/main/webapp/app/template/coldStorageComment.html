@@ -371,24 +371,8 @@
                                                         <p style="margin-top: 10px;width: 90%">
                                                             {{comment.content}}
                                                         </p>
-
-                                                        <div>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px"/>
-                                                        </div>
                                                         <div style="margin-top: 20px">
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"/>
-                                                            <img src="app/img/a_002.jpg" width="80px" height="80px"
-                                                                 style="margin-left: 20px;"/>
+                                                            <img ng-repeat="location in piclocation" ng-src="location" width="80px" height="80px"/>
                                                         </div>
                                                     </div>
                                                 </div>

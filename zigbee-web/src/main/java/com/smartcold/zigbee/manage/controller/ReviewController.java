@@ -27,7 +27,9 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 @RequestMapping(value = "/review")
 public class ReviewController {
 
-	private static String dir = "/data/picture";
+	private static String baseDir = "/data";
+
+	private static String dir = "/picture";
 
 	@Autowired
 	private CommentMapper commentDao;
@@ -59,7 +61,7 @@ public class ReviewController {
 			}
 			String fileName = String.format("storage%s_%s.%s", commentDto.getRdcID(), new Date().getTime(), "jpg");
 
-			File targetFile = new File(dir, fileName);
+			File targetFile = new File(baseDir + dir, fileName);
 			try {
 				file.transferTo(targetFile);
 				picLocations.add(dir + "/" + fileName);
