@@ -75,10 +75,12 @@ $(function(){
     		url:"/i/user/login?userName="+userName+"&password="+password,
     				async:false}).success(function(data){
     					if(data == true){
-    						/* window.location.pathname="";*/
-    						/* window.location.href = document.referrer; */ 
-    						window.history.go(-1);
-    						window.location.reload();
+    						if(window.location.hash != ""){
+    							backUrl = window.location.hash;
+    						}else{
+    							backUrl = "#/home"
+    						}
+    						window.location.href = "http://" + window.location.host + "/" + backUrl;
     						window.event.returnValue=false;
     					}else{
     						$('#mention')[0].hidden=false;

@@ -6,9 +6,8 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 			$http.get('/i/user/findUser').success(function(data,status,config,headers){
 				$rootScope.user = data;
 				if($rootScope.user == null || $rootScope.user.id == 0){
-					url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
+					url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorage/" + $scope.rdcid + "/review";
 					window.location.href = url;
-					alert("请先登录后再点评");
 				}
 			})
 		})
