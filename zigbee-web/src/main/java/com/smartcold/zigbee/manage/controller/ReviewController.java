@@ -27,7 +27,7 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 @RequestMapping(value = "/review")
 public class ReviewController {
 
-	private static String dir = "/data/";
+	private static String dir = "/data/picture";
 
 	@Autowired
 	private CommentMapper commentDao;

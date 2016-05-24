@@ -3,7 +3,7 @@
  */
 coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log) {
 
-    $scope.rdcId;
+    $scope.rdcId = $stateParams.rdcID;
 
     function findRDCByRDCId(rdcID) {
         // 获取当前冷库的详情
