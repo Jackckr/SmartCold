@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.controller;
 
 import com.smartcold.zigbee.manage.dao.RdcMapper;
+import com.smartcold.zigbee.manage.service.RdcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,9 @@ public class RdcController {
     @Autowired
     private RdcMapper rdcMapper;
 
+    @Autowired
+    private RdcService rdcService;
+
     @RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
     @ResponseBody
     public Object findRdcList() {
@@ -29,5 +33,11 @@ public class RdcController {
     @ResponseBody
     public Object findRDCByRDCId(@RequestParam int rdcID) {
         return rdcMapper.findRDCByRDCId(rdcID);
+    }
+
+    @RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findAllRdcDtos() {
+        return rdcService.findAllRdcDtos();
     }
 }

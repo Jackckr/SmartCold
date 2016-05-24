@@ -126,7 +126,7 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
                     if (point) {
                         var address = new BMap.Point(point.lng, point.lat);
                         //设置标注的图标
-             /*           icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
+                        /*           icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
                          anchor: new BMap.Size(9, 25),
                          infoWindowAnchor: new BMap.Size(10, 0)
                          });
@@ -660,50 +660,76 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
 
+
+    $scope.RdcDtos;
+    $http.get('/i/rdc/findAllRdcDtos').success(function (data) {
+        $scope.RdcDtos = data;
+    });
+
     $scope.searchFuc = function (searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck) {
         //alert(searchProvince + "," + searchManageType.length + "," + searchGoodStore.length + "," + searchStorageTemper.length + "," + searchTotalArea.length + "," + searchTruck.length);
-        if (searchProvince !== undefined) {
+        var data = $scope.RdcDtos;
+        var result = [];
+        var size = data.length;
 
+        for (var i = 0; i < size; i++) {
+            if (searchProvince !== undefined) {
+                if (data[i].provinceId !== parseInt(searchProvince)) {
+                    continue;
+                }
+            }
+            if (searchManageType !== undefined && searchManageType.length !== 0 && searchManageType.length !== 6) {
+                if (data[i].companykind.indexOf(searchManageType) === -1) {
+                    continue;
+                }
+            }
+            if (searchGoodStore !== undefined && searchGoodStore.length !== 0 && searchGoodStore.length !== 2) {
+                if (data[i].storagetype.indexOf(searchGoodStore) === -1) {
+                    continue;
+                }
+            }
+            if (searchStorageTemper !== undefined && searchStorageTemper.length !== 0 && searchStorageTemper.length !== 5) {
+                if (data[i].storagetempertype.indexOf(searchStorageTemper) === -1) {
+                    continue;
+                }
+            }
+            if (searchTotalArea !== undefined && searchTotalArea.length !== 0 && searchTotalArea.length !== 6) {
+                var sqm = parseInt(data[i].sqm.toFixed(0));
+                var totalArea = "";
+                if (sqm >= parseInt(0) && sqm <= parseInt(1000)) {
+                    totalArea = "1000平方以下";
+                } else if (sqm >= parseInt(1000) && sqm <= parseInt(3000)) {
+                    totalArea = "1000-3000平方";
+                } else if (sqm >= parseInt(3000) && sqm <= parseInt(6000)) {
+                    totalArea = "3000-6000平方";
+                } else if (sqm >= parseInt(6000) && sqm <= parseInt(12000)) {
+                    totalArea = "6000-12000平方";
+                } else if (sqm >= parseInt(12000) && sqm <= parseInt(20000)) {
+                    totalArea = "12000-20000平方";
+                } else if (sqm >= parseInt(20000)) {
+                    totalArea = "20000平方以上";
+                } else {
+                    console.error("面积不能小于0平方");
+                }
+                if (searchTotalArea.indexOf(totalArea) === -1) {
+                    continue;
+                }
+            }
+            if (searchTruck !== undefined && searchTruck.length !== 0 && searchTruck.length !== 2) {
+                if (data[i].storagetruck.indexOf(searchTruck) === -1) {
+                    continue;
+                }
+            }
+            result.push(addScore(data[i].rdcEntity));
         }
+        console.log("result: " + result.length)
+        $scope.rdcs = result;
+    }
 
-        if (searchManageType.length != 0) {
-            // 获取当前冷库的列表
-            /*            $http.get('/i/rdc/findRdcList').success(function (data) {
-             var result = [];
-             var size = data.length;
-             if (size >= 0) {
-             for (var i = 0; i < size; i++) {
-             if ((data[i].name).indexOf(content) > -1) {
-             result.push(data[i]);
-             }
-             }
-             }
-             $scope.Allrdcs = result;
-             $scope.bigTotalItems = size;
-             var firstData = [];
-             var minSize = Math.min(result.length, 10);
-             for (var i = 0; i < minSize; i++) {
-             console.log("result:" + result[i].name + result[i].addtime);
-             result[i].score = (Math.random() + 4).toFixed(1);
-             result[i].userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
-             result[i].userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
-             console.log(result[i].score);
-             firstData.push(result[i]);
-             }
-             $scope.rdcs = firstData;
-             });*/
-        }
-        if (searchGoodStore.length != 0) {
-
-        }
-        if (searchStorageTemper.length != 0) {
-
-        }
-        if (searchTotalArea.length != 0) {
-
-        }
-        if (searchTruck.length != 0) {
-
-        }
+    function addScore(rdc) {
+        rdc.score = (Math.random() + 4).toFixed(1);
+        rdc.userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
+        rdc.userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
+        return rdc;
     }
 });

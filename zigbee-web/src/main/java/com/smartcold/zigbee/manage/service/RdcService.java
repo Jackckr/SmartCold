@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.service;
 
+import com.smartcold.zigbee.manage.dto.RdcDTO;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 
 import java.util.List;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface RdcService {
 
     List<RdcEntity> findRdcList();
+
+    List<RdcDTO> findAllRdcDtos();
 
 }
