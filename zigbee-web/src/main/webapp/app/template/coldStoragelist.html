@@ -29,7 +29,7 @@
                             <span style="position: relative;padding-left: 30px;color: #999;">区域:</span>
                             <span style="position: relative;padding-left: 30px;color: #333;">
                                 <select ng-model="provinceSelected" ng-change="provinceChange(provinceSelected)" style="width: 100px;">
-                                    <option ng-repeat="x in provinces" value="{{x.provinceName}}">{{x.provinceName}}</option>
+                                    <option ng-repeat="x in provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
                                 </select>
                                 <!--<select ng-model="provinceSelected" ng-options="province.provinceName for province in provinces"></select>-->
                             </span>
