@@ -8,6 +8,12 @@
 		SELECT *
 		FROM `user` WHERE `username` = #{username} AND `password` = #{password}
 	</select>
+	
+	
+	<select id="findUserByName" parameterType="map" resultType="UserEntity">
+		SELECT *
+		FROM `user` WHERE `username` = #{username}
+	</select>
 
     <select id="findUserById" parameterType="map" resultType="UserEntity">
 		SELECT *

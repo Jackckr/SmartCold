@@ -40,7 +40,14 @@
                     </a>
                 </div>
                 <div class="nav-right mw-8">
-                    <div class="nav-right">
+                    <div class="nav-right" ng-show="user != null && user.id != 0">
+                      <div class="unauthenticated">
+	                      <strong class="text-primary" ng-bind="user.username"></strong>
+	                      <span></span>
+	                      <b><a ng-click="logout()" href="" ng-bind="'退出'" ></a></b>
+                      </div>
+                    </div>
+                    <div class="nav-right" ng-show="user == null ||user.id == 0">
                         
                         <div class="unauthenticated">
                             <a href="login.html">
