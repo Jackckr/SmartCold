@@ -1,7 +1,7 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $cookies, $http) {
+coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 
     // 显示最大页数
     $scope.maxSize = 7;
@@ -731,5 +731,9 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         rdc.userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
         rdc.userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
         return rdc;
+    }
+
+    $scope.goAddRdc = function () {
+        $location.path("/coldStorageAdd");
     }
 });
