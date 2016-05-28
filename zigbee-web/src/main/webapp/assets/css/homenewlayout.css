@@ -98,7 +98,7 @@ header .nav > li
 
     display: inline-block;
 
-    width: 108px;
+    width: 68px;
     height: 75px;
 
     text-align: center;
@@ -109,7 +109,7 @@ header .nav > li > a
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    width: 100%;
+    width: 60%;
     height: 44px;
     margin-top: 15px;
     padding:0;
