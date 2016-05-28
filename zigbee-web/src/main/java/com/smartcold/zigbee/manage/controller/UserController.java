@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.zigbee.manage.dao.UserMapper;
+import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
@@ -71,6 +72,21 @@ public class UserController extends BaseController {
 		user = new UserEntity();
 
 		return user;
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@ResponseBody
+	public Object signup(String username, String password, String email) {
+		if (username == null || password == null) {
+			return new ResultDto(-1, "用户名和密码不能为空");
+		}
+		UserEntity userEntity = new UserEntity();
+		userEntity.setUsername(username);
+		userEntity.setPassword(password);
+		userEntity.setEmail(email);
+
+		userDao.insertUser(userEntity);
+		return new ResultDto(0, "注册成功");
 	}
 
 }

@@ -10,4 +10,6 @@ public interface UserMapper {
 	UserEntity findUserByName(@Param("username") String username);
 
 	UserEntity findUserById(@Param("id") int id);
+
+	void insertUser(UserEntity userEntity);
 }
