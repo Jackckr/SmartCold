@@ -127,11 +127,9 @@
     and password =#{password,jdbcType=VARCHAR}
   </select>
   <!-- 通过用户名查找用户 -->
-  <select id="findUserByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from User
-    where username = #{username ,jdbcType=VARCHAR}
+  <select id="findUserByName" parameterType="map" resultType="UserEntity">
+		SELECT *
+		FROM `user` WHERE `username` = #{username}
   </select>
    <!-- 查找所有用户  -->
 	<select id="findAllUsers" resultMap="BaseResultMap" >

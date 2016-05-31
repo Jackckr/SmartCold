@@ -3,6 +3,7 @@ var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkb
 var user;
 
 angular.element(document).ready(function($ngCookies, $location) {
+	document.cookie="token=" + document.location.hash.substr(2,document.location.hash.length);
 	$.ajax({
 	      url: '/i/user/findUser',
 	      type: "GET",

@@ -63,6 +63,7 @@ public class UserController extends BaseController {
 				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
 				if (effectiveCookie != null) {
 					user = userDao.findUserByName(effectiveCookie.getUsername());
+					user.setPassword("******");
 					request.getSession().setAttribute("user", user);
 
 					return user;

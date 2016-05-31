@@ -26,7 +26,7 @@ public interface UserMapper {
     
     List<UserEntity> findUserByNAndP(UserEntity user);
     
-	List<UserEntity> findUserByName(UserEntity user);
+    UserEntity findUserByName(@Param("username") String username);
 	
 	List<UserEntity> findAllUsers();
 }
