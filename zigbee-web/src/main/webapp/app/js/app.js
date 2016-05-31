@@ -58,7 +58,7 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	        	angular.forEach(cookies,function(item){
 	        		item = item.trim();
 	        		if(item.startsWith("token=")){	        			
-	        			url = url + "/#/" + item.split("=")[1];
+	        			url = url + "/#/" + item;
 	        		}
 	        	})
 	        	window.open(url);
