@@ -3,19 +3,21 @@ package com.smartcold.zigbee.manage.entity;
 import java.util.Date;
 
 public class UserEntity {
-			  
+
 	private int id;
-			  
+
 	private String username;
-			  
+
 	private String password;
-			  
+
 	private String telephone;
-			  
+
 	private String email;
-			  
+
+	private Date addTime;
+
 	private int role;
-			  
+
 	private Date UpdateTime;
 
 	public int getId() {
@@ -56,6 +58,14 @@ public class UserEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Date getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
 	}
 
 	public int getRole() {

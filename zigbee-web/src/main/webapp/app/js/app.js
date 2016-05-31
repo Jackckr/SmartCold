@@ -44,10 +44,14 @@ coldWeb.config(function ($httpProvider) {
     });
 });
 
-coldWeb.factory('userService',['$rootScope', function($rootScope){
+coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	return {
 		setUser: function(user){
 	    	$rootScope.user = user;
+	    	$rootScope.logout = function () {
+	        	$http.get('/i/user/logout');
+	        	$rootScope.user = null;
+	        }
 	    },
 	}
 }])
@@ -241,6 +245,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorage/{rdcID}/review',
         controller: 'review',
         templateUrl: 'app/template/review.html'
+    }).state('coldStorageAdd', {
+        url: '/coldStorageAdd',
+        controller: 'coldStorageAdd',
+        templateUrl: 'app/template/coldStorageAdd.html'
     });
 
 });

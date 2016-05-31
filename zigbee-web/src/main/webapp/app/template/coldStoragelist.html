@@ -11,6 +11,7 @@
                 <li>
                     <a ng-click="goRdcMap()">冷库地图</a>
                 </li>
+                <a style="position:relative;margin-left: 80%" ng-click="goAddRdc()">添加冷库</a>
             </ul>
             <ul class="breadcrumb" style="padding-left: 45px" ng-switch-when="map">
                 <li class="active">
@@ -19,6 +20,7 @@
                 <li class="active">
                     冷库地图
                 </li>
+                <a style="position:relative;margin-left: 80%" ng-click="goAddRdc()">添加冷库</a>
             </ul>
         </div>
         <div class="row" style="height: 200px;width: 100%;position: relative;top: 30px;background-color: #f5f5f5">
@@ -55,7 +57,7 @@
                     <span ng-style="searchManageType_orginPlace_style"><a href="" ng-click="searchManageType_orginPlace()">产地型</a></span>
                     <span ng-style="searchManageType_market_style"><a href="" ng-click="searchManageType_market()">市场型</a></span>
                     <span ng-style="searchManageType_storage_style"><a href="" ng-click="searchManageType_storage()">仓储型</a></span>
-                    <span ng-style="searchManageType_homeDelivery_style"><a href="" ng-click="searchManageType_homeDelivery()">宅配型</a></span>
+                    <span ng-style="searchManageType_homeDelivery_style"><a href="" ng-click="searchManageType_homeDelivery()">城配型</a></span>
                     <span ng-style="searchManageType_product_style"><a href="" ng-click="searchManageType_product()">生产型</a></span>
                     <span ng-style="searchManageType_centerKitchen_style"><a href="" ng-click="searchManageType_centerKitchen()">中央厨房</a></span>
                 </div>

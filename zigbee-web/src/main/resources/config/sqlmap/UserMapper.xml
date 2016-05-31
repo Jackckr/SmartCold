@@ -4,9 +4,33 @@
 
 <mapper namespace="com.smartcold.zigbee.manage.dao.UserMapper">
 
+    <insert id="insertUser" parameterType="UserEntity">
+        INSERT INTO `user`(
+		`username`,
+		`password`,
+		`telephone`,
+		`email`,
+		`addTime`
+		)
+		VALUE 
+		(
+		#{username},
+		#{password},
+		#{telephone},
+		#{email},
+		now()
+		)
+    </insert>
+
     <select id="findUser" parameterType="map" resultType="UserEntity">
 		SELECT *
 		FROM `user` WHERE `username` = #{username} AND `password` = #{password}
+	</select>
+	
+	
+	<select id="findUserByName" parameterType="map" resultType="UserEntity">
+		SELECT *
+		FROM `user` WHERE `username` = #{username}
 	</select>
 
     <select id="findUserById" parameterType="map" resultType="UserEntity">

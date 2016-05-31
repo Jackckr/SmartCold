@@ -74,7 +74,7 @@ header a.logo
     height: 75px;
     margin-left: 10px;
 
-    background: url(../img/logo_index.png) no-repeat;
+    background: url(../img/logo_index7.png) no-repeat;
     background-position: left center;
 }
 
@@ -98,7 +98,7 @@ header .nav > li
 
     display: inline-block;
 
-    width: 108px;
+    width: 60px;
     height: 75px;
 
     text-align: center;
@@ -109,7 +109,7 @@ header .nav > li > a
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    width: 100%;
+    width: 60%;
     height: 44px;
     margin-top: 15px;
     padding:0;

@@ -5,7 +5,11 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
 
-    UserEntity findUser(@Param("username") String username, @Param("password") String password);
+	UserEntity findUser(@Param("username") String username, @Param("password") String password);
 
-    UserEntity findUserById(@Param("id") int id);
+	UserEntity findUserByName(@Param("username") String username);
+
+	UserEntity findUserById(@Param("id") int id);
+
+	void insertUser(UserEntity userEntity);
 }
