@@ -8,7 +8,7 @@ public class RdcExtEntity {
 
     private int id;
 
-    private int rdcId;
+    private int RDCID;
 
     private byte companydevice;
 
@@ -30,7 +30,7 @@ public class RdcExtEntity {
 
     private byte storagelihuocontrol;
 
-    private byte storagelihuoarea;
+    private int storagelihuoarea;
 
     private byte storagerefreg;
 
@@ -42,6 +42,14 @@ public class RdcExtEntity {
 
     private byte storagetempertype;
 
+    private String facility;
+
+    private String honorpiclocation;
+
+    private String arrangepiclocation;
+
+    private String storagepiclocation;
+
     public int getId() {
         return id;
     }
@@ -50,12 +58,12 @@ public class RdcExtEntity {
         this.id = id;
     }
 
-    public int getRdcId() {
-        return rdcId;
+    public int getRDCID() {
+        return RDCID;
     }
 
-    public void setRdcId(int rdcId) {
-        this.rdcId = rdcId;
+    public void setRDCID(int RDCID) {
+        this.RDCID = RDCID;
     }
 
     public byte getCompanydevice() {
@@ -138,11 +146,11 @@ public class RdcExtEntity {
         this.storagelihuocontrol = storagelihuocontrol;
     }
 
-    public byte getStoragelihuoarea() {
+    public int getStoragelihuoarea() {
         return storagelihuoarea;
     }
 
-    public void setStoragelihuoarea(byte storagelihuoarea) {
+    public void setStoragelihuoarea(int storagelihuoarea) {
         this.storagelihuoarea = storagelihuoarea;
     }
 
@@ -184,5 +192,37 @@ public class RdcExtEntity {
 
     public void setStoragetempertype(byte storagetempertype) {
         this.storagetempertype = storagetempertype;
+    }
+
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
+
+    public String getHonorpiclocation() {
+        return honorpiclocation;
+    }
+
+    public void setHonorpiclocation(String honorpiclocation) {
+        this.honorpiclocation = honorpiclocation;
+    }
+
+    public String getArrangepiclocation() {
+        return arrangepiclocation;
+    }
+
+    public void setArrangepiclocation(String arrangepiclocation) {
+        this.arrangepiclocation = arrangepiclocation;
+    }
+
+    public String getStoragepiclocation() {
+        return storagepiclocation;
+    }
+
+    public void setStoragepiclocation(String storagepiclocation) {
+        this.storagepiclocation = storagepiclocation;
     }
 }

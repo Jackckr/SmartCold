@@ -12,4 +12,7 @@ public interface RdcExtMapper {
 
     List<RdcExtEntity> findRDCExtByRDCId(@Param("rdcID") int rdcID);
 
+    int insertRdcExt(RdcExtEntity rdcExt);
+
+    void updateRdcExt(RdcExtEntity rdcExtEntity);
 }
