@@ -1,7 +1,0 @@
-.main-footer{
-  background: rgb(15,28,35);
-  background: -moz-linear-gradient(45deg,  rgba(15,28,35,1) 34%, rgba(36,126,140,1) 77%, rgba(29,87,111,1) 95%, rgba(29,87,111,1) 95%);
-  background: -webkit-linear-gradient(45deg,  rgba(15,28,35,1) 34%,rgba(36,126,140,1) 77%,rgba(29,87,111,1) 95%,rgba(29,87,111,1) 95%);
-  background: linear-gradient(45deg,  rgba(15,28,35,1) 34%,rgba(36,126,140,1) 77%,rgba(29,87,111,1) 95%,rgba(29,87,111,1) 95%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0f1c23', endColorstr='#1d576f',GradientType=1 );
-}

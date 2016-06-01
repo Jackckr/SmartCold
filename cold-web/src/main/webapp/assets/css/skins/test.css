@@ -1,7 +1,0 @@
-.body-color{
-background: rgb(15,28,35); /* Old browsers */
-background: -moz-linear-gradient(45deg,  rgba(15,28,35,1) 0%, rgba(36,126,140,1) 81%, rgba(29,87,111,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(45deg,  rgba(15,28,35,1) 0%,rgba(36,126,140,1) 81%,rgba(29,87,111,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(45deg,  rgba(15,28,35,1) 0%,rgba(36,126,140,1) 81%,rgba(29,87,111,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0f1c23', endColorstr='#1d576f',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
