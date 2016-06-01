@@ -51,6 +51,17 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	    	$rootScope.logout = function () {
 	        	$http.get('/i/user/logout');
 	        	$rootScope.user = null;
+	        };
+	        $rootScope.gotoSmartCold = function(){
+	        	cookies = document.cookie.split(";")
+	        	url = "http://www.smartcold.net";
+	        	angular.forEach(cookies,function(item){
+	        		item = item.trim();
+	        		if(item.startsWith("token=")){	        			
+	        			url = url + "/#/" + item.split("=")[1];
+	        		}
+	        	})
+	        	window.open(url);
 	        }
 	    },
 	}
