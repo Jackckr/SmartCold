@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.smartcold.manage.cold.dao.UserMapper;
+import com.smartcold.manage.cold.entity.CookieEntity;
 import com.smartcold.manage.cold.entity.Role;
 import com.smartcold.manage.cold.entity.RoleUser;
 import com.smartcold.manage.cold.entity.UserEntity;
+import com.smartcold.manage.cold.service.CookieService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
 import com.smartcold.manage.cold.service.UserService;
@@ -25,6 +29,12 @@ public class UserController extends BaseController {
 	private RoleService roleService;
 	@Autowired
 	private RoleUserService roleUserService;
+
+	@Autowired
+	private UserMapper userDao;
+
+	@Autowired
+	private CookieService cookieService;
 
 	/**
 	 * @param @param
@@ -111,10 +121,25 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
-		if (user == null) {
-			user = new UserEntity();
+		UserEntity user;
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("token")) {
+				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
+				if (effectiveCookie != null) {
+					user = userDao.findUserByName(effectiveCookie.getUsername());
+					RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
+					Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
+					user.setPassword("******");
+					user.setRole(role.getId());
+					request.getSession().setAttribute("user", user);
+
+					return user;
+				}
+			}
 		}
+		user = new UserEntity();
+
 		return user;
 	}
 }
