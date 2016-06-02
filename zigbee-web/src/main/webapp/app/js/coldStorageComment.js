@@ -179,6 +179,10 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         $state.go('coldStorageComment', {"rdcID": rdcID});
     }
 
+    $scope.goEditRdc = function (rdcID) {
+        $state.go('coldStorageEdit', {"rdcID": rdcID});
+    }
+
 
     $scope.items = ['html5', 'jq', 'FE-演示平台'];
     $scope.goComment = function (size) {  //打开模态
@@ -218,4 +222,5 @@ coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, ite
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel'); // 退出
     }
+
 })

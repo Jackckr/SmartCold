@@ -5,12 +5,13 @@
     <section class="content">
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
             <ul class="breadcrumb" style="padding-left: 45px">
-                <li>
+                <li class="active">
                     <a href="" ng-click="toColdStorageList()">冷库</a>
                 </li>
                 <li class="active">
-                    上海浦东冷库
+                    {{rdcName}}
                 </li>
+                <a style="position:relative;margin-left: 58%;" ng-click="goEditRdc(rdcId)">修改冷库</a>
             </ul>
         </div>
         <div class="row" style="width: 100%">
@@ -397,7 +398,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
+            <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:30px;">
                 <div class="row"
                      style="position:relative;top:30px;left: 0px;height: 100px;padding-right: 10px;border: 1px ridge lightgrey">
                     <div style="position:relative;top: 10px;left: 10px">

@@ -20,13 +20,13 @@ public class RdcEntity {
 
     private String struct;
 
-    private String storageType;
+    private String storagetype;
 
-    private String coldType;
+    private String coldtype;
 
-    private int provinceId;
+    private int provinceid;
 
-    private int cityId;
+    private int cityid;
 
     private String contact;
 
@@ -37,6 +37,8 @@ public class RdcEntity {
     private String phone;
 
     private String commit;
+
+    private float powerConsume;
 
     public String getName() {
         return name;
@@ -102,36 +104,36 @@ public class RdcEntity {
         this.struct = struct;
     }
 
-    public String getStorageType() {
-        return storageType;
+    public String getStoragetype() {
+        return storagetype;
     }
 
-    public void setStorageType(String storageType) {
-        this.storageType = storageType;
+    public void setStoragetype(String storagetype) {
+        this.storagetype = storagetype;
     }
 
-    public String getColdType() {
-        return coldType;
+    public String getColdtype() {
+        return coldtype;
     }
 
-    public void setColdType(String coldType) {
-        this.coldType = coldType;
+    public void setColdtype(String coldtype) {
+        this.coldtype = coldtype;
     }
 
-    public int getProvinceId() {
-        return provinceId;
+    public int getProvinceid() {
+        return provinceid;
     }
 
-    public void setProvinceId(int provinceId) {
-        this.provinceId = provinceId;
+    public void setProvinceid(int provinceid) {
+        this.provinceid = provinceid;
     }
 
-    public int getCityId() {
-        return cityId;
+    public int getCityid() {
+        return cityid;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCityid(int cityid) {
+        this.cityid = cityid;
     }
 
     public String getContact() {
@@ -172,5 +174,13 @@ public class RdcEntity {
 
     public void setCommit(String commit) {
         this.commit = commit;
+    }
+
+    public float getPowerConsume() {
+        return powerConsume;
+    }
+
+    public void setPowerConsume(float powerConsume) {
+        this.powerConsume = powerConsume;
     }
 }

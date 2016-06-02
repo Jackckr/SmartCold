@@ -227,8 +227,24 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("产地") === -1) {
             searchManageType.push("产地");
+        } else {
+            searchManageType = removeItem(searchManageType, "产地");
+            $scope.searchManageType_orginPlace_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
+    }
+
+    function removeItem(arys,item){
+        var newArray = [];
+        for(var i=0;i < arys.length;i++) {
+            if(item !== arys[i]) {
+                newArray.push(arys[i]);
+            }
+        }
+        return newArray;
     }
 
     $scope.searchManageType_market = function () {
@@ -241,6 +257,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("市场") === -1) {
             searchManageType.push("市场");
+        } else {
+            searchManageType = removeItem(searchManageType, "市场");
+            $scope.searchManageType_market_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -254,6 +276,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("仓储") === -1) {
             searchManageType.push("仓储");
+        } else {
+            searchManageType = removeItem(searchManageType, "仓储");
+            $scope.searchManageType_storage_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -267,6 +295,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("宅配") === -1) {
             searchManageType.push("宅配");
+        } else {
+            searchManageType = removeItem(searchManageType, "宅配");
+            $scope.searchManageType_homeDelivery_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -280,6 +314,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("生产") === -1) {
             searchManageType.push("生产");
+        } else {
+            searchManageType = removeItem(searchManageType, "生产");
+            $scope.searchManageType_product_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -293,6 +333,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("中央厨房") === -1) {
             searchManageType.push("中央厨房");
+        } else {
+            searchManageType = removeItem(searchManageType, "中央厨房");
+            $scope.searchManageType_centerKitchen_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -328,6 +374,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchGoodStore.indexOf("货架存放") === -1) {
             searchGoodStore.push("货架存放");
+        } else {
+            searchGoodStore = removeItem(searchGoodStore, "货架存放");
+            $scope.searchGoodStore_Rack_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchGoodStore === undefined || searchGoodStore.length ===0){
+                $scope.searchGoodStore_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -342,6 +394,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchGoodStore.indexOf("非货架存放") === -1) {
             searchGoodStore.push("非货架存放");
+        } else {
+            searchGoodStore = removeItem(searchGoodStore, "非货架存放");
+            $scope.searchGoodStore_NotRack_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchGoodStore === undefined || searchGoodStore.length ===0){
+                $scope.searchGoodStore_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -392,6 +450,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("冷藏") === -1) {
             searchStorageTemper.push("冷藏");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "冷藏");
+            $scope.searchStorageTemper_refrigeration_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -406,6 +470,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("冷冻") === -1) {
             searchStorageTemper.push("冷冻");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "冷冻");
+            $scope.searchStorageTemper_frozen_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -420,6 +490,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("超低温") === -1) {
             searchStorageTemper.push("超低温");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "超低温");
+            $scope.searchStorageTemper_lowestTemper_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -434,6 +510,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("恒温") === -1) {
             searchStorageTemper.push("恒温");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "恒温");
+            $scope.searchStorageTemper_constantTemper_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -448,6 +530,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("多温区") === -1) {
             searchStorageTemper.push("多温区");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "多温区");
+            $scope.searchStorageTemper_multiTemper_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -512,6 +600,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("1000平方以下") === -1) {
             searchTotalArea.push("1000平方以下");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "1000平方以下");
+            $scope.searchTotalArea_below1k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -526,6 +620,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("1000-3000平方") === -1) {
             searchTotalArea.push("1000-3000平方");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "1000-3000平方");
+            $scope.searchTotalArea_below3k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -540,6 +640,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("3000-6000平方") === -1) {
             searchTotalArea.push("3000-6000平方");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "3000-6000平方");
+            $scope.searchTotalArea_below6k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -554,6 +660,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("6000-12000平方") === -1) {
             searchTotalArea.push("6000-12000平方");
+        }  else {
+            searchTotalArea = removeItem(searchTotalArea, "6000-12000平方");
+            $scope.searchTotalArea_below12k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -568,6 +680,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("12000-20000平方") === -1) {
             searchTotalArea.push("12000-20000平方");
+        }  else {
+            searchTotalArea = removeItem(searchTotalArea, "12000-20000平方");
+            $scope.searchTotalArea_below20k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -582,6 +700,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("20000平方以上") === -1) {
             searchTotalArea.push("20000平方以上");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "20000平方以上");
+            $scope.searchTotalArea_over20k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -623,7 +747,18 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             "color": "#333",
             "background-color": "#5cb85c"
         };
-        if (searchTruck.indexOf("有") === -1) {
+
+        if (searchTruck !== undefined && searchTruck.length !==0){
+            if (searchTruck.indexOf("有") === -1) {
+                searchTruck.push("有");
+            } else {
+                searchTruck = removeItem(searchTruck, "有");
+                $scope.searchTruck_have_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+                if (searchTruck === undefined || searchTruck.length ===0){
+                    $scope.searchTruck_Default();
+                }
+            }
+        } else {
             searchTruck.push("有");
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
@@ -639,6 +774,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTruck.indexOf("无") === -1) {
             searchTruck.push("无");
+        } else {
+            searchTruck = removeItem(searchTruck, "无");
+            $scope.searchTruck_no_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTruck === undefined || searchTruck.length ===0){
+                $scope.searchTruck_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
