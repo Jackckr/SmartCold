@@ -14,7 +14,7 @@ angular.element(document).ready(function($ngCookies, $location) {
 	    	user = data;
 	    	if(user.username == null){
 	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
-	    			document.location.href = "http://www.smartcold.cn/login.html";
+	    			document.location.href = "http://www.smartcold.cn/login.html#/http://" + window.location.host;
 	    		}
 	        }
 	    	angular.bootstrap(document, ['ColdWeb']);
