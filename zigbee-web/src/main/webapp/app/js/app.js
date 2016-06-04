@@ -264,6 +264,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageEdit/:rdcID',
         controller: 'coldStorageEdit',
         templateUrl: 'app/template/coldStorageInfo.html'
+    }).state('coldStorageMap', {
+        url: '/coldStorageMap',
+        controller: 'coldStorageMap',
+        templateUrl: 'app/template/coldStorageMap.html'
     });
 
 });

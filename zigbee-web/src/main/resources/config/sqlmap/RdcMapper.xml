@@ -60,7 +60,7 @@
                 address = #{address,jdbcType=VARCHAR},
             </if>
             <if test="sqm != null" >
-                address = #{address,jdbcType=FLOAT},
+                sqm = #{sqm,jdbcType=FLOAT},
             </if>
             <if test="struct != null" >
                 struct = #{struct,jdbcType=VARCHAR},

@@ -34,7 +34,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.citySelected = function () {
-        alert($scope.cityId);
+        //alert($scope.cityId);
     }
 
     // 获取冷库经营类型
@@ -45,7 +45,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     });
 
     $scope.ManageTypeSelected = function () {
-        alert($scope.manageType);
+        //alert($scope.manageType);
     }
 
     // 获取商品存放类型
@@ -56,7 +56,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     });
 
     $scope.TemperTypeSelected = function () {
-        alert($scope.temperType);
+        //alert($scope.temperType);
     }
 
     // 获取冷库温度类型
@@ -67,7 +67,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     });
 
     $scope.StorageTypeSelected = function () {
-        alert($scope.storageType);
+        //alert($scope.storageType);
     }
 
     $scope.moreInfos = true;
@@ -84,7 +84,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     });
 
     $scope.CompanyDeviceSelected = function () {
-        alert($scope.companyDevice);
+        //alert($scope.companyDevice);
     }
 
     // 制冷剂类型
@@ -95,7 +95,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     });
 
     $scope.StorageRefregSelected = function () {
-        alert($scope.storageRefreg);
+        //alert($scope.storageRefreg);
     }
 
     $scope.ChangLihuoState = function () {
@@ -239,6 +239,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.submit = function(){
+        alert($scope.area);
         if (checkInput()){
             data = {
                 file0: null,
