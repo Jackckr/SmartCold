@@ -68,6 +68,12 @@ public class RdcController {
         return rdcMapper.findRdcList();
     }
 
+    @RequestMapping(value = "/findRdcDTOList", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findRdcDTOList() {
+        return rdcService.findRdcDTOList();
+    }
+
     @RequestMapping(value = "/findRDCByRDCId", method = RequestMethod.GET)
     @ResponseBody
     public Object findRDCByRDCId(@RequestParam int rdcID) {
