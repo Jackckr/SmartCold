@@ -41,4 +41,10 @@
 
 </insert>
 
+	<select id="findCommentsByRdcId" parameterType="map" resultType="CommentEntity">
+		SELECT *
+		FROM `ColdStorageComment` WHERE `rdcID` = #{rdcID}
+		order by `addTime` desc
+	</select>
+
 </mapper>
