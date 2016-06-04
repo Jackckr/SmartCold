@@ -36,6 +36,9 @@ public class RdcServiceImpl implements RdcService {
     @Autowired
     private StorageTypeMapper storageTypeDao;
 
+    @Autowired
+    private CommentMapper commentDao;
+
     @Override
     public List<RdcEntity> findRdcList() {
         return rdcDao.findRdcList();
@@ -165,6 +168,29 @@ public class RdcServiceImpl implements RdcService {
             }
             result.add(rdcAddDTO);
         }
+
+        float score = 0.0f;
+        int userCommentCnt = 0;
+        int userRecommendPercent = 0;
+        // 计算RDC的评分/用户推荐数/评论数
+        List<CommentEntity> commentsByRdcId = commentDao.findCommentsByRdcId(rdcID);
+        if (!CollectionUtils.isEmpty(commentsByRdcId)) {
+            userCommentCnt = commentsByRdcId.size();
+            float totalScore = 0;
+            int recommendCnt = 0;
+            for (CommentEntity commentEntity : commentsByRdcId) {
+                totalScore += commentEntity.getGrade();
+                if (commentEntity.getGrade() >= 4) {
+                    recommendCnt++;
+                }
+            }
+            score = (float) (Math.round(totalScore / userCommentCnt * 10)) / 10;
+            userRecommendPercent = (recommendCnt * 100) / userCommentCnt;
+        }
+        rdcAddDTO.setScore(score);
+        rdcAddDTO.setUserCommentCount(userCommentCnt);
+        rdcAddDTO.setUserRecommendPercent(userRecommendPercent);
+
         result.add(rdcAddDTO);
 
         return result;

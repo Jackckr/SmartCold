@@ -61,6 +61,12 @@ public class RdcAddDTO {
 
     private String facility;
 
+    private float score;
+
+    private int userRecommendPercent;
+
+    private int userCommentCount;
+
     public int getRdcId() {
         return rdcId;
     }
@@ -309,4 +315,27 @@ public class RdcAddDTO {
         this.facility = facility;
     }
 
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public int getUserRecommendPercent() {
+        return userRecommendPercent;
+    }
+
+    public void setUserRecommendPercent(int userRecommendPercent) {
+        this.userRecommendPercent = userRecommendPercent;
+    }
+
+    public int getUserCommentCount() {
+        return userCommentCount;
+    }
+
+    public void setUserCommentCount(int userCommentCount) {
+        this.userCommentCount = userCommentCount;
+    }
 }
