@@ -161,11 +161,13 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                     });
                     marker.addEventListener("click", function () {
                         this.closeInfoWindow(infowindow);
-                        alert("去查看冷库详情");
+                        //alert("去查看冷库详情");
+                        console.log("去查看冷库" + name + "详情");
                         $scope.goColdStorageDetail($stateParams.rdcID);
                     });
                 } else {
-                    alert("您选择地址没有解析到结果!");
+                    //alert("您选择地址没有解析到结果!");
+                    console.log("地址" + address + "没有解析到结果!");
                 }
             }, "");
 

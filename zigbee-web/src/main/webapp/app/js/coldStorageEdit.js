@@ -111,7 +111,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             "rdcID": $stateParams.rdcID
         }
     }).success(function (data) {
-        console.log("RdcDTODetail: " + data);
+        console.log("RdcDTODetail: " + data[0]);
         $scope.name = data[0].name;
         $scope.address = data[0].address;
         $scope.provinceId = data[0].provinceId;
@@ -239,6 +239,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.submit = function(){
+        alert($scope.area);
         if (checkInput()){
             data = {
                 file0: null,
