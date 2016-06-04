@@ -67,3 +67,25 @@ ul.rating {
 .rating .filled {
   color: #ffee33;
 }
+.main-color{
+	color: #9bc200;
+}
+.home-ul{
+	list-style:none
+}
+.home-ul >li{
+  margin-bottom:20px;
+}
+.home-ul >li>h3> i{
+	margin-right:20px;
+}
+.line {
+    width: 40%;
+    height: 1px;
+    display: block;
+    background: #ccc;
+}
+.titleCom {
+    text-align: center;
+    color: #535353;
+}
