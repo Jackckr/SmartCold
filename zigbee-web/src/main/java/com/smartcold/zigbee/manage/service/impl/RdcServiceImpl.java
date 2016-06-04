@@ -10,7 +10,6 @@ import com.smartcold.zigbee.manage.service.RdcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -107,30 +106,33 @@ public class RdcServiceImpl implements RdcService {
         List<RdcEntity> rdcByRDCId = rdcDao.findRDCByRDCId(rdcID);
         List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcID);
         List<RdcAddDTO> result = Lists.newArrayList();
-        if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0 && !CollectionUtils.isEmpty(rdcExtByRDCId) && rdcExtByRDCId.size() > 0) {
+        RdcAddDTO rdcAddDTO = new RdcAddDTO();
+        if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0) {
             RdcEntity rdcEntity = rdcByRDCId.get(0);
-            RdcExtEntity rdcExtEntity = rdcExtByRDCId.get(0);
-            RdcAddDTO rdcAddDTO = new RdcAddDTO();
             rdcAddDTO.setAddress(rdcEntity.getAddress());
             rdcAddDTO.setArea(rdcEntity.getSqm());
             rdcAddDTO.setCityId(rdcEntity.getCityid());
+            rdcAddDTO.setName(rdcEntity.getName());
+            rdcAddDTO.setPhoneNum(rdcEntity.getCellphone());
+            rdcAddDTO.setProvinceId(rdcEntity.getProvinceid());
+            rdcAddDTO.setRemark(rdcEntity.getCommit());
+            rdcAddDTO.setStructure(rdcEntity.getStruct());
+            rdcAddDTO.setTelphoneNum(rdcEntity.getPhone());
+            rdcAddDTO.setTonnage(rdcEntity.getCapacity());
+        }
+
+        if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0 && !CollectionUtils.isEmpty(rdcExtByRDCId) && rdcExtByRDCId.size() > 0) {
+            RdcExtEntity rdcExtEntity = rdcExtByRDCId.get(0);
             rdcAddDTO.setCompanyDevice(rdcExtEntity.getCompanydevice());
             rdcAddDTO.setFacility(rdcExtEntity.getFacility());
             rdcAddDTO.setLihuoArea(rdcExtEntity.getStoragelihuoarea());
             rdcAddDTO.setLihuoRoom(rdcExtEntity.getStorageislihuo());
             rdcAddDTO.setLihuoTemperCtr(rdcExtEntity.getStoragelihuocontrol());
             rdcAddDTO.setManageType(rdcExtEntity.getCompanykind());
-            rdcAddDTO.setName(rdcEntity.getName());
-            rdcAddDTO.setPhoneNum(rdcEntity.getCellphone());
             rdcAddDTO.setPlatform(rdcExtEntity.getStorageplatform());
-            rdcAddDTO.setProvinceId(rdcEntity.getProvinceid());
-            rdcAddDTO.setRemark(rdcEntity.getCommit());
             rdcAddDTO.setStorageRefreg(rdcExtEntity.getStoragerefreg());
             rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
-            rdcAddDTO.setStructure(rdcEntity.getStruct());
-            rdcAddDTO.setTelphoneNum(rdcEntity.getPhone());
             rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
-            rdcAddDTO.setTonnage(rdcEntity.getCapacity());
             rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
 
             String[] truck = rdcExtEntity.getStoragetruck().split(",");//1:2,2:2,3:2,4:1,5:1
@@ -163,6 +165,7 @@ public class RdcServiceImpl implements RdcService {
             }
             result.add(rdcAddDTO);
         }
+        result.add(rdcAddDTO);
 
         return result;
     }
