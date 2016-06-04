@@ -5,8 +5,10 @@ import com.google.common.collect.Lists;
 import com.smartcold.zigbee.manage.dao.*;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
+import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.entity.*;
 import com.smartcold.zigbee.manage.service.RdcService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -193,6 +195,41 @@ public class RdcServiceImpl implements RdcService {
 
         result.add(rdcAddDTO);
 
+        return result;
+    }
+
+    @Override
+    public List<RdcEntityDTO> findRdcDTOList() {
+        List<RdcEntity> rdcList = rdcDao.findRdcList();
+        List<RdcEntityDTO> result = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(rdcList)) {
+            for (RdcEntity rdcEntity : rdcList) {
+                RdcEntityDTO dto = new RdcEntityDTO();
+                BeanUtils.copyProperties(rdcEntity, dto);
+                float score = 0.0f;
+                int userCommentCnt = 0;
+                int userRecommendPercent = 0;
+                // 计算RDC的评分/用户推荐数/评论数
+                List<CommentEntity> commentsByRdcId = commentDao.findCommentsByRdcId(rdcEntity.getId());
+                if (!CollectionUtils.isEmpty(commentsByRdcId)) {
+                    userCommentCnt = commentsByRdcId.size();
+                    float totalScore = 0;
+                    int recommendCnt = 0;
+                    for (CommentEntity commentEntity : commentsByRdcId) {
+                        totalScore += commentEntity.getGrade();
+                        if (commentEntity.getGrade() >= 4) {
+                            recommendCnt++;
+                        }
+                    }
+                    score = (float) (Math.round(totalScore / userCommentCnt * 10)) / 10;
+                    userRecommendPercent = (recommendCnt * 100) / userCommentCnt;
+                }
+                dto.setScore(score);
+                dto.setUserCommentCount(userCommentCnt);
+                dto.setUserRecommendPercent(userRecommendPercent);
+                result.add(dto);
+            }
+        }
         return result;
     }
 
