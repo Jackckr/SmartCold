@@ -32,7 +32,7 @@
          </div>
      </div>
      <div class="nav-left">
-         <a href="" class="logo" title='睿冷云-冷链行业最权威的信息平台'>
+         <a href="http://www.smartcold.cn/#/home" class="logo" title='睿冷云-冷链行业最权威的信息平台'>
          </a>
      </div>
      <div class="nav-right mw-8">
@@ -44,7 +44,7 @@
              </li>
              <li>
                  <a href="http://www.smartcold.cn/#/coldStoragelist">
-                     评价
+                     找库
                  </a>
              </li>
              <li>
@@ -130,6 +130,23 @@
 </div>
 <script>
 $(function(){
+	$(document).ready(function(){
+		$.ajax({
+			url: "/i/user/findUser",async:false}).success(function(data){
+				if(data.id != 0){
+					if(window.location.hash.startsWith("#/http://")){
+						cookies = document.cookie.split(";");
+			        	$.each(cookies,function(i,item){
+			        		item = item.trim();
+			        		if(item.startsWith("token=")){	        			
+			        			url = window.location.hash.substr(2,window.location.hash.length) + "/#/" + item;
+			        		}
+			        	})
+			        	window.open(url);
+					}
+				}
+			})
+		})
 	$('#submit').click(function(){
 		userName = $("#username")[0].value;
 		password = $('#password')[0].value;

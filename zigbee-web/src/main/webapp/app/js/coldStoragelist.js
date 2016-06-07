@@ -41,7 +41,7 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
     $scope.Allrdcs = "";
 
     // 获取当前冷库的列表
-    $http.get('/i/rdc/findRdcList').success(function (data) {
+    $http.get('/i/rdc/findRdcDTOList').success(function (data) {
         var size = data.length;
         $scope.Allrdcs = data;
         $scope.bigTotalItems = size;
@@ -49,16 +49,16 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         //firstData.splice(10, size);
         for (var i = 0; i < 10; i++) {
             console.log("data:" + data[i].name + data[i].addtime);
-            data[i].score = (Math.random() + 4).toFixed(1);
+/*            data[i].score = (Math.random() + 4).toFixed(1);
             data[i].userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
-            data[i].userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
+            data[i].userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);*/
             console.log(data[i].score);
             firstData.push(data[i]);
         }
+        console.log(data[0].score);
         $scope.rdcs = firstData;
     });
 
-    // 获取当前冷库的列表
     $http.get('/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
     });
@@ -79,85 +79,8 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         $state.go('coldStorageComment', {"rdcID": rdcID});
     }
 
-
-    $scope.rdcListForm = "list";
     $scope.goRdcMap = function () {
-        $scope.rdcListForm = "map";
-        $http.get('/i/rdc/findRdcList').success(function (data) {
-            var size = data.length;
-            console.log("size: " + size);
-
-            // 百度地图API功能
-            var map = new BMap.Map("rdcMapChart");
-            var point = new BMap.Point(104.114129, 34.550339);
-            map.centerAndZoom(point, 5);
-            //添加鼠标滚动缩放
-            map.enableScrollWheelZoom();
-
-            //添加缩略图控件
-            map.addControl(new BMap.OverviewMapControl({isOpen: true})); //缩略地图控件，默认位于地图右下方，是一个可折叠的缩略地图
-            //添加缩放平移控件
-            map.addControl(new BMap.NavigationControl());
-            //添加比例尺控件
-            map.addControl(new BMap.ScaleControl());
-            //添加地图类型控件
-            map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]}));     //2D图，卫星图   //左上角， 地图类型控件
-
-            var index = 0;
-            var myGeo = new BMap.Geocoder();
-            var adds = [];
-            for (var i = 0; i < data.length; i++) {
-                adds.push({
-                    id: data[i].id,
-                    name: data[i].name,
-                    address: data[i].address
-                });
-                bdGEO();
-            }
-
-            function bdGEO() {
-                var add = adds[index];
-                geocodeSearch(add);
-                index++;
-            }
-
-            function geocodeSearch(add) {
-                myGeo.getPoint(add.address, function (point) {
-                    if (point) {
-                        var address = new BMap.Point(point.lng, point.lat);
-                        //设置标注的图标
-                        /*           icon = new BMap.Icon("../../assets/img/icon-orange.jpg", new BMap.Size(100, 100), {
-                         anchor: new BMap.Size(9, 25),
-                         infoWindowAnchor: new BMap.Size(10, 0)
-                         });
-                         var marker = new BMap.Marker(address, {icon: icon});*/
-                        var marker = new BMap.Marker(address, "");
-                        map.addOverlay(marker);
-
-                        var content = "<table>";
-                        content = content + "<tr><td> 名称：" + add.name + "</td></tr>";
-                        content = content + "<tr><td> 地点：" + add.address + "</td></tr>";
-                        content += "</table>";
-                        var infowindow = new BMap.InfoWindow(content);
-                        marker.addEventListener("onmouseover", function () {
-                            this.openInfoWindow(infowindow);
-                        });
-                        marker.addEventListener("onmouseout", function () {
-                            this.closeInfoWindow(infowindow);
-                        });
-                        marker.addEventListener("click", function () {
-                            this.closeInfoWindow(infowindow);
-                            $state.go('coldStorageComment', {"rdcID": add.id});
-                        });
-                    }
-                }, "");
-            }
-        });
-    }
-
-
-    $scope.goRdcList = function () {
-        $scope.rdcListForm = "list";
+        $state.go('coldStorageMap', {});
     }
 
     $scope.goSearch = function () {
@@ -227,8 +150,24 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("产地") === -1) {
             searchManageType.push("产地");
+        } else {
+            searchManageType = removeItem(searchManageType, "产地");
+            $scope.searchManageType_orginPlace_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
+    }
+
+    function removeItem(arys,item){
+        var newArray = [];
+        for(var i=0;i < arys.length;i++) {
+            if(item !== arys[i]) {
+                newArray.push(arys[i]);
+            }
+        }
+        return newArray;
     }
 
     $scope.searchManageType_market = function () {
@@ -241,6 +180,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("市场") === -1) {
             searchManageType.push("市场");
+        } else {
+            searchManageType = removeItem(searchManageType, "市场");
+            $scope.searchManageType_market_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -254,6 +199,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("仓储") === -1) {
             searchManageType.push("仓储");
+        } else {
+            searchManageType = removeItem(searchManageType, "仓储");
+            $scope.searchManageType_storage_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -267,6 +218,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("宅配") === -1) {
             searchManageType.push("宅配");
+        } else {
+            searchManageType = removeItem(searchManageType, "宅配");
+            $scope.searchManageType_homeDelivery_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -280,6 +237,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("生产") === -1) {
             searchManageType.push("生产");
+        } else {
+            searchManageType = removeItem(searchManageType, "生产");
+            $scope.searchManageType_product_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -293,6 +256,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchManageType.indexOf("中央厨房") === -1) {
             searchManageType.push("中央厨房");
+        } else {
+            searchManageType = removeItem(searchManageType, "中央厨房");
+            $scope.searchManageType_centerKitchen_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchManageType === undefined || searchManageType.length ===0){
+                $scope.searchManageType_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -328,6 +297,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchGoodStore.indexOf("货架存放") === -1) {
             searchGoodStore.push("货架存放");
+        } else {
+            searchGoodStore = removeItem(searchGoodStore, "货架存放");
+            $scope.searchGoodStore_Rack_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchGoodStore === undefined || searchGoodStore.length ===0){
+                $scope.searchGoodStore_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -342,6 +317,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchGoodStore.indexOf("非货架存放") === -1) {
             searchGoodStore.push("非货架存放");
+        } else {
+            searchGoodStore = removeItem(searchGoodStore, "非货架存放");
+            $scope.searchGoodStore_NotRack_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchGoodStore === undefined || searchGoodStore.length ===0){
+                $scope.searchGoodStore_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -392,6 +373,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("冷藏") === -1) {
             searchStorageTemper.push("冷藏");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "冷藏");
+            $scope.searchStorageTemper_refrigeration_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -406,6 +393,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("冷冻") === -1) {
             searchStorageTemper.push("冷冻");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "冷冻");
+            $scope.searchStorageTemper_frozen_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -420,6 +413,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("超低温") === -1) {
             searchStorageTemper.push("超低温");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "超低温");
+            $scope.searchStorageTemper_lowestTemper_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -434,6 +433,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("恒温") === -1) {
             searchStorageTemper.push("恒温");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "恒温");
+            $scope.searchStorageTemper_constantTemper_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -448,6 +453,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchStorageTemper.indexOf("多温区") === -1) {
             searchStorageTemper.push("多温区");
+        } else {
+            searchStorageTemper = removeItem(searchStorageTemper, "多温区");
+            $scope.searchStorageTemper_multiTemper_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchStorageTemper === undefined || searchStorageTemper.length ===0){
+                $scope.searchStorageTemper_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -512,6 +523,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("1000平方以下") === -1) {
             searchTotalArea.push("1000平方以下");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "1000平方以下");
+            $scope.searchTotalArea_below1k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -526,6 +543,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("1000-3000平方") === -1) {
             searchTotalArea.push("1000-3000平方");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "1000-3000平方");
+            $scope.searchTotalArea_below3k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -540,6 +563,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("3000-6000平方") === -1) {
             searchTotalArea.push("3000-6000平方");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "3000-6000平方");
+            $scope.searchTotalArea_below6k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -554,6 +583,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("6000-12000平方") === -1) {
             searchTotalArea.push("6000-12000平方");
+        }  else {
+            searchTotalArea = removeItem(searchTotalArea, "6000-12000平方");
+            $scope.searchTotalArea_below12k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -568,6 +603,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("12000-20000平方") === -1) {
             searchTotalArea.push("12000-20000平方");
+        }  else {
+            searchTotalArea = removeItem(searchTotalArea, "12000-20000平方");
+            $scope.searchTotalArea_below20k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -582,6 +623,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTotalArea.indexOf("20000平方以上") === -1) {
             searchTotalArea.push("20000平方以上");
+        } else {
+            searchTotalArea = removeItem(searchTotalArea, "20000平方以上");
+            $scope.searchTotalArea_over20k_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTotalArea === undefined || searchTotalArea.length ===0){
+                $scope.searchTotalArea_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }
@@ -623,7 +670,18 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             "color": "#333",
             "background-color": "#5cb85c"
         };
-        if (searchTruck.indexOf("有") === -1) {
+
+        if (searchTruck !== undefined && searchTruck.length !==0){
+            if (searchTruck.indexOf("有") === -1) {
+                searchTruck.push("有");
+            } else {
+                searchTruck = removeItem(searchTruck, "有");
+                $scope.searchTruck_have_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+                if (searchTruck === undefined || searchTruck.length ===0){
+                    $scope.searchTruck_Default();
+                }
+            }
+        } else {
             searchTruck.push("有");
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
@@ -639,6 +697,12 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         };
         if (searchTruck.indexOf("无") === -1) {
             searchTruck.push("无");
+        } else {
+            searchTruck = removeItem(searchTruck, "无");
+            $scope.searchTruck_no_style = {"position": "relative", "margin-left": "30px", "color": "#333"};
+            if (searchTruck === undefined || searchTruck.length ===0){
+                $scope.searchTruck_Default();
+            }
         }
         $scope.searchFuc(searchProvince, searchManageType, searchGoodStore, searchStorageTemper, searchTotalArea, searchTruck);
     }

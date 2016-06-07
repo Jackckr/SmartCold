@@ -58,7 +58,7 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	        	angular.forEach(cookies,function(item){
 	        		item = item.trim();
 	        		if(item.startsWith("token=")){	        			
-	        			url = url + "/#/" + item.split("=")[1];
+	        			url = url + "/#/" + item;
 	        		}
 	        	})
 	        	window.open(url);
@@ -259,7 +259,15 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('coldStorageAdd', {
         url: '/coldStorageAdd',
         controller: 'coldStorageAdd',
-        templateUrl: 'app/template/coldStorageAdd.html'
+        templateUrl: 'app/template/coldStorageInfo.html'
+    }).state('coldStorageEdit', {
+        url: '/coldStorageEdit/:rdcID',
+        controller: 'coldStorageEdit',
+        templateUrl: 'app/template/coldStorageInfo.html'
+    }).state('coldStorageMap', {
+        url: '/coldStorageMap',
+        controller: 'coldStorageMap',
+        templateUrl: 'app/template/coldStorageMap.html'
     });
 
 });

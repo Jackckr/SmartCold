@@ -12,4 +12,7 @@ public interface RdcMapper {
 
     List<RdcEntity> findRDCByRDCId(@Param("rdcID") int rdcID);
 
+    int insertRdc(RdcEntity rdc);
+
+    void updateRdc(RdcEntity rdcEntity);
 }

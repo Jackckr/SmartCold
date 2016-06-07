@@ -10,8 +10,10 @@ import java.util.List;
  */
 public interface CommentMapper {
 
-	List<CommentEntity> findLastNComment(@Param("rdcID") int rdcID, @Param("npoint") int npoint);
+    List<CommentEntity> findLastNComment(@Param("rdcID") int rdcID, @Param("npoint") int npoint);
 
-	public void insertComment(CommentEntity comment);
+    public void insertComment(CommentEntity comment);
+
+    List<CommentEntity> findCommentsByRdcId(@Param("rdcID") int rdcID);
 
 }

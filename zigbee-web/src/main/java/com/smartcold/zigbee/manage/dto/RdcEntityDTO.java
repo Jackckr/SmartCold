@@ -1,8 +1,8 @@
-package com.smartcold.zigbee.manage.entity;
+package com.smartcold.zigbee.manage.dto;
 
 import java.util.Date;
 
-public class RdcEntity {
+public class RdcEntityDTO {
 
     private int id;
 
@@ -39,6 +39,12 @@ public class RdcEntity {
     private String commit;
 
     private float powerConsume;
+
+    private float score;
+
+    private int userRecommendPercent;
+
+    private int userCommentCount;
 
     public String getName() {
         return name;
@@ -182,5 +188,29 @@ public class RdcEntity {
 
     public void setPowerConsume(float powerConsume) {
         this.powerConsume = powerConsume;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public int getUserRecommendPercent() {
+        return userRecommendPercent;
+    }
+
+    public void setUserRecommendPercent(int userRecommendPercent) {
+        this.userRecommendPercent = userRecommendPercent;
+    }
+
+    public int getUserCommentCount() {
+        return userCommentCount;
+    }
+
+    public void setUserCommentCount(int userCommentCount) {
+        this.userCommentCount = userCommentCount;
     }
 }

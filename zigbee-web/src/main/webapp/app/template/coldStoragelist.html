@@ -3,24 +3,15 @@
         <div class="row" style="height: 75px;width: 100%"></div>
     </section>
     <section class="content">
-        <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;" ng-switch="rdcListForm">
-            <ul class="breadcrumb" style="padding-left: 45px" ng-switch-when="list">
+        <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
+            <ul class="breadcrumb" style="padding-left: 45px">
                 <li class="active">
                     冷库列表
                 </li>
                 <li>
                     <a ng-click="goRdcMap()">冷库地图</a>
                 </li>
-                <a style="position:relative;margin-left: 80%" ng-click="goAddRdc()">添加冷库</a>
-            </ul>
-            <ul class="breadcrumb" style="padding-left: 45px" ng-switch-when="map">
-                <li class="active">
-                    <a ng-click="goRdcList()">冷库列表</a>
-                </li>
-                <li class="active">
-                    冷库地图
-                </li>
-                <a style="position:relative;margin-left: 80%" ng-click="goAddRdc()">添加冷库</a>
+                <a class="pull-right" ng-click="goAddRdc()">添加冷库</a>
             </ul>
         </div>
         <div class="row" style="height: 200px;width: 100%;position: relative;top: 30px;background-color: #f5f5f5">
@@ -89,32 +80,31 @@
                 <div class="row" style="padding-top: 10px">
                     <span style="padding-left: 45px;color: #999">配备冷藏车辆情况:</span>
                     <span ng-style="searchTruck_all"><a href="" ng-click="searchTruck_All()">不限</a></span>
-                    <span ng-style="searchTruck_have_style"><a href="" ng-click="searchTruck_have()">有</a></span>
-                    <span ng-style="searchTruck_no_style"><a href="" ng-click="searchTruck_no()">无</a></span>
+                    <span ng-style="searchTruck_have_style"><a href="" type="radio" name="truck" ng-click="searchTruck_have()">有</a></span>
+                    <span ng-style="searchTruck_no_style"><a href="" type="radio" name="truck" ng-click="searchTruck_no()">无</a></span>
                 </div>
             </div>
         </div>
         <div class="row" style="position:relative;top: 20px;width: 100%">
-            <div ng-switch="rdcListForm" class="col-lg-9 col-sm-9 col-xs-9 col-md-9"
+            <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9"
                  style="position: relative;top:30px;padding-bottom: 100px;">
-                <div ng-switch-when="list">
-                    <div class="row" ng-repeat="rdc in rdcs"
+                 <div class="row" ng-repeat="rdc in rdcs"
                          style="height: 80px;width: 95%;position: relative;top: 10px;left: 40px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                         <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9">
                             <a href="#" class="pull-left" style="position: relative;top: 10px;left: 0px"><img
                                     src="app/img/a_002.jpg" alt=''/></a>
 
                             <div style="position: relative;left: 10px">
-                                <h5 style="color: dodgerblue">
+                                <h5 style="color: dodgerblue;position: relative;top: 5px">
                                     <a href="" ng-click="goDetail(rdc.id)">{{rdc.name}}</a>
                                 </h5>
 
                                 <div style="height: 10px">
-                                    <i class="icon-star"></i>
+                             <!--       <i class="icon-star"></i>
                                     <i class="icon-star"></i>
                                     <i class="icon-star"></i>
                                     <i class="icon-star-half"></i>
-                                    <i class="icon-star-empty"></i>
+                                    <i class="icon-star-empty"></i>-->
                                 </div>
                                 <h6>该冷库位于{{rdc.address}}.</h6>
                             </div>
@@ -122,7 +112,7 @@
                         <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:5px;left: 10px;">
                             <div><span style="color: dodgerblue">{{rdc.score}}</span>/5分</div>
                             <h6><span>{{rdc.userRecommendPercent}}</span>%用户推荐</h6>
-                            <h6 style="color: dodgerblue">源自<span>{{rdc.userRecommendCount}}</span>位用户点评</h6>
+                            <h6 style="color: dodgerblue">源自<span>{{rdc.userCommentCount}}</span>位用户点评</h6>
                         </div>
                     </div>
                     <!--分页-->
@@ -131,15 +121,8 @@
                                                ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
                                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
                                </div>-->
-                </div>
-                <div ng-switch-when="map">
-                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="margin-top:0px;margin-bottom: 0px">
-                        <div class="chart" id="rdcMapChart"
-                             style="height:480px;width: 98%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%;"></div>
-                    </div>
-                </div>
                 <!--分页-->
-                <div class="row" ng-show="rdcListForm === 'list'">
+                <div class="row">
                     <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
                                 ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
                                 boundary-links="true" rotate="false" num-pages="numPages"></pagination>

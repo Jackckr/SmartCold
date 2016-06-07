@@ -74,7 +74,7 @@ header a.logo
     height: 75px;
     margin-left: 10px;
 
-    background: url(../img/logo_index7.png) no-repeat;
+    background: url(../img/logo.png) no-repeat;
     background-position: left center;
 }
 
@@ -613,7 +613,7 @@ footer dd a
 }
 footer section
 {
-    width: 900px;
+    width: 65%;
     margin: 0 auto;
 }
 footer .footer-right
