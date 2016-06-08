@@ -272,7 +272,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },
                 data: data
             }).then(function (resp) {
-                alert("评价成功");
+                alert("添加成功");
                 $state.go('coldStoragelist', {});
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
