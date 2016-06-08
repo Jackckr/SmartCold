@@ -4,12 +4,14 @@ import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.*;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.CommentDTO;
+import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.entity.CommentEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.RdcService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.File;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -277,5 +280,20 @@ public class RdcController {
 
         return new BaseDto(0);
     }
-
+    
+    @ResponseBody
+    @RequestMapping(value="/checkName", method=RequestMethod.GET)
+    public Object checkName(@RequestParam("value") String name){
+    	NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
+    	ngRemoteValidateDTO.setValid(!rdcMapper.checkName(name));
+    	return ngRemoteValidateDTO;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="/checkCellphone", method=RequestMethod.GET)
+    public Object checkCellphone(@RequestParam("value") String cellphone){
+    	NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
+    	ngRemoteValidateDTO.setValid(!rdcMapper.checkCellphone(cellphone));
+    	return ngRemoteValidateDTO;
+    }
 }
