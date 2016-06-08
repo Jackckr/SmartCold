@@ -212,7 +212,7 @@ public class RdcController {
 
         int rdcId = rdcAddDTO.getRdcId();
         RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
-        RdcExtEntity rdcExtEntity = rdcExtDao.findRDCExtByRDCId(rdcId).get(0);
+        
 
 //        rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
         rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
@@ -234,6 +234,7 @@ public class RdcController {
 
         rdcMapper.updateRdc(rdcEntity);
 
+        RdcExtEntity rdcExtEntity = rdcExtDao.findRDCExtByRDCId(rdcId).get(0);
         // 插入rdc表,返回对应的ID
 //        rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
         rdcExtEntity.setCompanykind((byte) rdcAddDTO.getManageType());

@@ -26,6 +26,8 @@ public class CommentDTO {
 	private float serviceGrade;
 
 	private float sanitaryGrade;
+	
+	private String picLocation;
 
 	public int getId() {
 		return id;
@@ -115,4 +117,13 @@ public class CommentDTO {
 		this.sanitaryGrade = sanitaryGrade;
 	}
 
+	public String getPicLocation() {
+		return picLocation;
+	}
+
+	public void setPicLocation(String picLocation) {
+		this.picLocation = picLocation;
+	}
+
+	
 }

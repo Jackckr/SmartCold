@@ -251,16 +251,17 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         }).success(function (data) {
             var size = data.length;
             data.splice(5, size);
-            console.log("data:" + data);
             for (var i = 0; i < data.length; i++) {
                 console.log("data:" + data[i].content + data[i].commerID + data[i].addTime + data[i].commerName);
                 data[i].commentsum = parseInt((Math.random() * 5 + 5).toFixed(0));
                 data[i].usefulCnt = parseInt((Math.random() * 10 + 5).toFixed(0));
             }
             angular.forEach(data, function (item) {
-                item.piclocation = JSON.parse(item.piclocation);
+            	console.log(item);
+                item.piclocation = JSON.parse(item.picLocation);
             })
             $scope.comments = data;
+            console.log(data);
         });
     }
 

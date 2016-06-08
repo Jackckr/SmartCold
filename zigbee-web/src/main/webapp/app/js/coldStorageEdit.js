@@ -239,7 +239,6 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.submit = function(){
-        alert($scope.area);
         if (checkInput()){
             data = {
                 file0: null,

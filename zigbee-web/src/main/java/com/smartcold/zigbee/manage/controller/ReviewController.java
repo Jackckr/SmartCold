@@ -1,10 +1,6 @@
 package com.smartcold.zigbee.manage.controller;
 
-import java.io.File;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,8 +39,8 @@ public class ReviewController {
 		MultipartFile[] files = { file0, file1, file2, file3, file4 };
 		CommentEntity commentEntity = new CommentEntity();
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
-		List<String> picLocations = new ArrayList<String>();
-		Gson gson = new Gson();
+		
+		
 
 		commentEntity.setCommerID(user.getId());
 		commentEntity.setContent(URLDecoder.decode(commentDto.getContent(), "UTF-8"));
@@ -55,22 +51,6 @@ public class ReviewController {
 		commentEntity.setServiceGrade(commentDto.getServiceGrade());
 		commentEntity.setRdcID(commentDto.getRdcID());
 
-		for (MultipartFile file : files) {
-			if (file == null) {
-				break;
-			}
-			String fileName = String.format("storage%s_%s.%s", commentDto.getRdcID(), new Date().getTime(), "jpg");
-
-			File targetFile = new File(baseDir + dir, fileName);
-			try {
-				file.transferTo(targetFile);
-				picLocations.add(dir + "/" + fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		commentEntity.setPiclocation(gson.toJson(picLocations));
 		commentDao.insertComment(commentEntity);
 
 		return new BaseDto(0);

@@ -46,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
 			commentDTO.setSanitaryGrade(commentEntity.getSanitaryGrade());
 			commentDTO.setServiceGrade(commentEntity.getServiceGrade());
 			commentDTO.setAddTime(TimeUtil.dateToString(commentEntity.getAddTime(), ""));
-
+			commentDTO.setPicLocation(commentEntity.getPiclocation());
 			commentDTO.setCommerID(commentEntity.getCommerID());
 			UserEntity userEntity = userDao.findUserById(commentEntity.getCommerID());
 			commentDTO.setCommerName(userEntity.getUsername());
