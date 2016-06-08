@@ -1,4 +1,7 @@
 package com.smartcold.zigbee.manage.dto;
+
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @author jiangkaiqiang
  * @date 2016-6-7 下午8:10:02  
@@ -6,31 +9,42 @@ package com.smartcold.zigbee.manage.dto;
  */
 public class UploadFileEntity {
 	private String name;//file name-->FTP client
-	private String qualifiedName;//file path + file name--->local
-	private String path; //file path-->FTP client
-	public UploadFileEntity(String name, String qualifiedName, String path) {
-		super();
-		this.name = name;
-		this.qualifiedName = qualifiedName;
-		this.path = path;
-	}
+	private MultipartFile multipartFile;//multipartFile-->user upload file
+	private String remoteDir; //file path-->FTP client
+	private String remoteNewDir;
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPath() {
-		return path;
+	public MultipartFile getMultipartFile() {
+		return multipartFile;
 	}
-	public void setPath(String path) {
-		this.path = path;
+	public void setMultipartFile(MultipartFile multipartFile) {
+		this.multipartFile = multipartFile;
 	}
-	public String getQualifiedName() {
-		return qualifiedName;
+	public String getRemoteDir() {
+		return remoteDir;
 	}
-	public void setQualifiedName(String qualifiedName) {
-		this.qualifiedName = qualifiedName;
+	public void setRemoteDir(String remoteDir) {
+		this.remoteDir = remoteDir;
 	}
+	public String getRemoteNewDir() {
+		return remoteNewDir;
+	}
+	public void setRemoteNewDir(String remoteNewDir) {
+		this.remoteNewDir = remoteNewDir;
+	}
+	public UploadFileEntity(String name, MultipartFile multipartFile,
+			String remoteDir, String remoteNewDir) {
+		super();
+		this.name = name;
+		this.multipartFile = multipartFile;
+		this.remoteDir = remoteDir;
+		this.remoteNewDir = remoteNewDir;
+	}
+	
+	
 
 }

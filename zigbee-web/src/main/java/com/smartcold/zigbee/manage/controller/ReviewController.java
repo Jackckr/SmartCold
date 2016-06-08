@@ -20,19 +20,23 @@ import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.CommentMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.CommentDTO;
+import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.CommentEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
+import com.smartcold.zigbee.manage.service.FtpService;
 
 @Controller
 @RequestMapping(value = "/review")
 public class ReviewController {
 
-	private static String baseDir = "/data";
+	private static String baseDir = "data";
 
-	private static String dir = "/picture";
+	private static String dir = "picture";
 
 	@Autowired
 	private CommentMapper commentDao;
+	@Autowired
+	private FtpService ftpService;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
@@ -60,10 +64,12 @@ public class ReviewController {
 				break;
 			}
 			String fileName = String.format("storage%s_%s.%s", commentDto.getRdcID(), new Date().getTime(), "jpg");
-
-			File targetFile = new File(baseDir + dir, fileName);
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file,  baseDir,dir);
+			ftpService.uploadFile("139.196.167.165", 21, "pwftp", "!@QWaszx", uploadFileEntity);
+			System.out.println("tet");
+			//File targetFile = new File(baseDir + dir, fileName);
 			try {
-				file.transferTo(targetFile);
+				//file.transferTo(targetFile);
 				picLocations.add(dir + "/" + fileName);
 			} catch (Exception e) {
 				e.printStackTrace();
