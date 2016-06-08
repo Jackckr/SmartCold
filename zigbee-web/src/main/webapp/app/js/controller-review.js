@@ -58,7 +58,7 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 				sanitaryGrade : $scope.ratingVal[4],
 		}
 		for(i = 0; i < $scope.totalfiles.length; i++){
-			data["file" + i] = $scope.files[i];
+			data["file" + i] = $scope.totalfiles[i];
 		}
 		
 //		$http({

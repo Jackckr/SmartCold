@@ -1,6 +1,9 @@
 package com.smartcold.zigbee.manage.controller;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,19 +19,23 @@ import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.CommentMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.CommentDTO;
+import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.CommentEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
+import com.smartcold.zigbee.manage.service.FtpService;
 
 @Controller
 @RequestMapping(value = "/review")
 public class ReviewController {
 
-	private static String baseDir = "/data";
+	private static String baseDir = "data";
 
-	private static String dir = "/picture";
+	private static String dir = "picture";
 
 	@Autowired
 	private CommentMapper commentDao;
+	@Autowired
+	private FtpService ftpService;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
@@ -50,6 +57,19 @@ public class ReviewController {
 		commentEntity.setSanitaryGrade(commentDto.getSanitaryGrade());
 		commentEntity.setServiceGrade(commentDto.getServiceGrade());
 		commentEntity.setRdcID(commentDto.getRdcID());
+		Gson gson = new Gson();
+		List<String> picLocations = new ArrayList<String>();
+		for (MultipartFile file : files) {
+			if (file == null) {
+				break;
+			}
+			String fileName = String.format("storage%s_%s.%s", commentDto.getRdcID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file,  baseDir,dir);
+			ftpService.uploadFile(uploadFileEntity);
+			picLocations.add(dir + "/" + fileName);
+		}
+
+		commentEntity.setPiclocation(gson.toJson(picLocations));
 
 		commentDao.insertComment(commentEntity);
 

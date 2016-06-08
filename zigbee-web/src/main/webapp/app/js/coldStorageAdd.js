@@ -129,9 +129,9 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     $scope.addArrangePic = function (arrangePic) {
         //$scope.arrangePic = $scope.totalfiles.concat(arrangePic);
     }
-    $scope.addHonorPic = function (honorPic) {
+/*    $scope.addHonorPic = function (honorPic) {
         //$scope.honorPic = $scope.totalfiles.concat(honorPic);
-    }
+    }*/
 
     $scope.drop = function(file){
         angular.forEach($scope.totalfiles,function(item){
@@ -207,10 +207,10 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
                 telphoneNum : $scope.telphoneNum,
-                remark : encodeURI($scope.remark,"UTF-8"),
+                remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
                 tonnage : $scope.tonnage,
-                structure : encodeURI($scope.structure,"UTF-8"),
+                structure: $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
                 companyDevice : $scope.companyDevice,
                 platform : $scope.platform,
                 lihuoRoom : $scope.lihuoRoom,
@@ -223,8 +223,8 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 capacity3 : $scope.capacity3,
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
-                facility : encodeURI($scope.facility,"UTF-8"),
-                honorPic : $scope.honorPic,
+                facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
+                //honorPic : $scope.honorPic,
                 arrangePic : $scope.arrangePic,
             }
             for(i = 0; i < $scope.totalfiles.length; i++){
@@ -262,7 +262,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             console.log("capacity4: " + data.capacity4);
             console.log("capacity5: " + data.capacity5);
             console.log("facility: " + data.facility);
-            console.log("honorPic: " + data.honorPic);
+            //console.log("honorPic: " + data.honorPic);
             console.log("arrangePic: " + data.arrangePic);
             console.log("file0: " + data.file0);
             console.log("file1: " + data.file1);
