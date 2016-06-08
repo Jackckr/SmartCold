@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="cold-web"
+  id="myeclipse.1465024786490"
+  context-root="/cold-web"
+  j2ee-spec="6.0"
+  archive="cold-web.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+
