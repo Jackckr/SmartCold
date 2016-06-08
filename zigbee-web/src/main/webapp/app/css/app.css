@@ -80,12 +80,29 @@ ul.rating {
 	margin-right:20px;
 }
 .line {
-    width: 40%;
     height: 1px;
     display: block;
     background: #ccc;
+    width: 41%;
+    margin-top:3%;
 }
 .titleCom {
     text-align: center;
     color: #535353;
+}
+.titleMid {
+    width: 18%;
+    text-align: center;
+}
+.fl {
+    float: left;
+}
+.fix {
+    zoom: 1;
+}
+.fr {
+    float: right;
+}
+.text-gray{
+	color:gray;
 }

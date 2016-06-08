@@ -2,6 +2,7 @@ package com.smartcold.zigbee.manage.service;
 
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
+import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,5 +20,7 @@ public interface RdcService {
     List<RdcDTO> findAllRdcDtos();
 
     List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID);
+
+    List<RdcEntityDTO> findRdcDTOList();
 
 }
