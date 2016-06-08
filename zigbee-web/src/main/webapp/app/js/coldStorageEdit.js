@@ -260,10 +260,10 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
                 telphoneNum : $scope.telphoneNum,
-                remark : encodeURI($scope.remark,"UTF-8"),
+                remark : $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
                 tonnage : $scope.tonnage,
-                structure : encodeURI($scope.structure,"UTF-8"),
+                structure : $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
                 companyDevice : $scope.companyDevice,
                 platform : $scope.platform,
                 lihuoRoom : $scope.lihuoRoom,
@@ -276,8 +276,8 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 capacity3 : $scope.capacity3,
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
-                facility : encodeURI($scope.facility,"UTF-8"),
-                honorPic : $scope.honorPic,
+                facility : $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
+                //honorPic : $scope.honorPic,
                 arrangePic : $scope.arrangePic,
                 rdcId: $stateParams.rdcID
             }
