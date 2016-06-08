@@ -130,9 +130,9 @@ public class RdcController {
     public Object add(@RequestParam(required = false) MultipartFile file0,
                       @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
                       @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-                      @RequestParam(required = false) MultipartFile honorPic, @RequestParam(required = false) MultipartFile arrangePic,
+                      @RequestParam(required = false) MultipartFile arrangePic,
                       RdcAddDTO rdcAddDTO) throws Exception {
-        MultipartFile[] files = {file0, file1, file2, file3, file4, honorPic, arrangePic};
+        MultipartFile[] files = {file0, file1, file2, file3, file4, arrangePic};
 
         RdcEntity rdcEntity = new RdcEntity();
         rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
@@ -205,10 +205,9 @@ public class RdcController {
     @ResponseBody
     public Object update(@RequestParam(required = false) MultipartFile file0,
                       @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
-                      @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-                      @RequestParam(required = false) MultipartFile honorPic, @RequestParam(required = false) MultipartFile arrangePic,
+                      @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4, @RequestParam(required = false) MultipartFile arrangePic,
                       RdcAddDTO rdcAddDTO) throws Exception {
-        MultipartFile[] files = {file0, file1, file2, file3, file4, honorPic, arrangePic};
+        MultipartFile[] files = {file0, file1, file2, file3, file4, arrangePic};
 
         int rdcId = rdcAddDTO.getRdcId();
         RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
