@@ -14,7 +14,7 @@ public class RdcExtEntity {
 
     private byte companystaff;
 
-    private byte companykind;
+    private byte managetype;
 
     private byte storagetype;
 
@@ -82,13 +82,6 @@ public class RdcExtEntity {
         this.companystaff = companystaff;
     }
 
-    public byte getCompanykind() {
-        return companykind;
-    }
-
-    public void setCompanykind(byte companykind) {
-        this.companykind = companykind;
-    }
 
     public byte getStoragetype() {
         return storagetype;
@@ -138,7 +131,15 @@ public class RdcExtEntity {
         this.storageislihuo = storageislihuo;
     }
 
-    public byte getStoragelihuocontrol() {
+    public byte getManagetype() {
+		return managetype;
+	}
+
+	public void setManagetype(byte managetype) {
+		this.managetype = managetype;
+	}
+
+	public byte getStoragelihuocontrol() {
         return storagelihuocontrol;
     }
 

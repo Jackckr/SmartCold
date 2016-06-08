@@ -66,7 +66,7 @@ public class ReviewController {
 			String fileName = String.format("storage%s_%s.%s", commentDto.getRdcID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file,  baseDir,dir);
 			ftpService.uploadFile(uploadFileEntity);
-			picLocations.add(dir + "/" + fileName);
+			picLocations.add(baseDir+"/"+dir + "/" + fileName);
 		}
 
 		commentEntity.setPiclocation(gson.toJson(picLocations));

@@ -158,7 +158,7 @@ public class RdcController {
         // 插入rdc表,返回对应的ID
         RdcExtEntity rdcExtEntity = new RdcExtEntity();
         rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
-        rdcExtEntity.setCompanykind((byte) rdcAddDTO.getManageType());
+        rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
         rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
         rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
         rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
@@ -223,7 +223,6 @@ public class RdcController {
         rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
         rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
         rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
-
 /*        rdcEntity.setType(0);
         rdcEntity.setStoragetype("");
         rdcEntity.setColdtype("");
@@ -232,11 +231,18 @@ public class RdcController {
         rdcEntity.setPowerConsume(0);*/
 
         rdcMapper.updateRdc(rdcEntity);
-
-        RdcExtEntity rdcExtEntity = rdcExtDao.findRDCExtByRDCId(rdcId).get(0);
+        RdcExtEntity rdcExtEntity = null;
+        boolean haveRdcExt = false;
+        if (rdcExtDao.findRDCExtByRDCId(rdcId).isEmpty()) {
+			rdcExtEntity = new RdcExtEntity();
+			rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
+		}else {
+			haveRdcExt = true;
+			rdcExtEntity  = rdcExtDao.findRDCExtByRDCId(rdcId).get(0);
+		}
+        
         // 插入rdc表,返回对应的ID
-//        rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
-        rdcExtEntity.setCompanykind((byte) rdcAddDTO.getManageType());
+        rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
         rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
         rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
         rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
@@ -275,8 +281,10 @@ public class RdcController {
             }
             rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
         }
-
-        rdcExtDao.updateRdcExt(rdcExtEntity);
+        if(haveRdcExt)
+        	rdcExtDao.updateRdcExt(rdcExtEntity);
+        else
+        	rdcExtDao.insertRdcExt(rdcExtEntity);
 
         return new BaseDto(0);
     }

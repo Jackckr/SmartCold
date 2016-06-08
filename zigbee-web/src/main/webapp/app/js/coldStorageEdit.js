@@ -224,9 +224,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             flag = false;
         }
 
-        if ($scope.coldTruck1 === 0 && $scope.coldTruck2 === 0 &&$scope.coldTruck3 === 0 &&$scope.coldTruck4 === 0) {
-            flag = false;
-        }
+//        if ($scope.coldTruck1 === 0 && $scope.coldTruck2 === 0 &&$scope.coldTruck3 === 0 &&$scope.coldTruck4 === 0) {
+//            flag = false;
+//        }
 
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;
@@ -285,7 +285,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 data["file" + i] = $scope.files[i];
             }
 
-            console.log("name: " + data.name);
+ /*           console.log("name: " + data.name);
             console.log("provinceId: " + data.provinceId);
             console.log("cityId: " + data.cityId);
             console.log("address: " + data.address);
@@ -319,7 +319,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             console.log("honorPic: " + data.honorPic);
             console.log("arrangePic: " + data.arrangePic);
             console.log("file0: " + data.file0);
-            console.log("file1: " + data.file1);
+            console.log("file1: " + data.file1);*/
 
             Upload.upload({
                 url: '/i/rdc/updateRdc',

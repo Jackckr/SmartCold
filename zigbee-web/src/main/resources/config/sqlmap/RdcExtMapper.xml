@@ -17,7 +17,7 @@
         `RDCID`,
         `companydevice`,
         `companystaff`,
-        `companykind`,
+        `managetype`,
         `storagetype`,
         `storageheight`,
         `storagestruct`,
@@ -41,7 +41,7 @@
         #{RDCID},
         #{companydevice},
         #{companystaff},
-        #{companykind},
+        #{managetype},
         #{storagetype},
         #{storageheight},
         #{storagestruct},
@@ -68,8 +68,8 @@
             <if test="companydevice != null" >
                 companydevice = #{companydevice,jdbcType=TINYINT},
             </if>
-            <if test="companykind != null" >
-                companykind = #{companykind,jdbcType=TINYINT},
+            <if test="managetype != null" >
+                managetype = #{managetype,jdbcType=TINYINT},
             </if>
             <if test="storagetype != null" >
                 storagetype = #{storagetype,jdbcType=TINYINT},

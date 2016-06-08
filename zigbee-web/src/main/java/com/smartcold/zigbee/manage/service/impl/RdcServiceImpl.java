@@ -70,21 +70,21 @@ public class RdcServiceImpl implements RdcService {
                         if (rdcExtEntity.getRDCID() == rdcEntity.getId()) {
                             if (!CollectionUtils.isEmpty(manageTypes)) {
                                 for (StorageManageTypeEntity storageManageTypeEntity : manageTypes) {
-                                    if (rdcExtEntity.getCompanykind() == storageManageTypeEntity.getId()) {
+                                    if (rdcExtEntity.getManagetype() == storageManageTypeEntity.getId()) {
                                         manageType = storageManageTypeEntity.getType();
                                     }
                                 }
                             }
                             if (!CollectionUtils.isEmpty(temperTypes)) {
                                 for (StorageTemperTypeEntity storageTemperTypeEntity : temperTypes) {
-                                    if (rdcExtEntity.getCompanykind() == storageTemperTypeEntity.getId()) {
+                                    if (rdcExtEntity.getManagetype() == storageTemperTypeEntity.getId()) {
                                         temperType = storageTemperTypeEntity.getType();
                                     }
                                 }
                             }
                             if (!CollectionUtils.isEmpty(storageTypes)) {
                                 for (StorageTypeEntity storageTypeEntity : storageTypes) {
-                                    if (rdcExtEntity.getCompanykind() == storageTypeEntity.getId()) {
+                                    if (rdcExtEntity.getManagetype() == storageTypeEntity.getId()) {
                                         storageType = storageTypeEntity.getType();
                                     }
                                 }
@@ -133,7 +133,7 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setLihuoArea(rdcExtEntity.getStoragelihuoarea());
             rdcAddDTO.setLihuoRoom(rdcExtEntity.getStorageislihuo());
             rdcAddDTO.setLihuoTemperCtr(rdcExtEntity.getStoragelihuocontrol());
-            rdcAddDTO.setManageType(rdcExtEntity.getCompanykind());
+            rdcAddDTO.setManageType(rdcExtEntity.getManagetype());
             rdcAddDTO.setPlatform(rdcExtEntity.getStorageplatform());
             rdcAddDTO.setStorageRefreg(rdcExtEntity.getStoragerefreg());
             rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
