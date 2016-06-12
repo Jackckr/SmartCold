@@ -18,11 +18,15 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		
 		$scope.max = 5;
 		$scope.starsNum = 5;
-		$scope.ratingVal = [];
+		$scope.ratingVal = [0,0,0,0,0];
+		$scope.ratingMention = [false,false,false,false,false];
 		$scope.totalfiles = [];
 	}
 	$scope.onClick = function(i,val){
 		$scope.ratingVal[i] = val;
+		if(val != 0){
+			$scope.ratingMention[i] = false;
+		}
 	};
 	
 	$scope.addFiles = function (files) {
@@ -41,8 +45,31 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		})
 	}
 	
+	$scope.blur = function(content){
+		if(typeof(content)  == "undefined" || content.trim() == ""){
+			$scope.reviewMention = "* 点评不能为空";
+			return false;
+		}else{
+			$scope.reviewMention = "";
+			return true;
+		}
+	}
+	
 	
 	$scope.submit = function(){
+		readySubmit = true;
+		angular.forEach($scope.ratingVal,function(item,i){
+			if(item == 0){
+				$scope.ratingMention[i] = true;
+				readySubmit = false;
+			}
+		})
+		if(!$scope.blur($scope.content)){
+			readySubmit = false;
+		}
+		if(!readySubmit){
+			return;
+		}
 		data = {
 				file0: null,
 				file1: null,
