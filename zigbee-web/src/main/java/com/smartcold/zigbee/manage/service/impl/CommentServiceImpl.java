@@ -57,8 +57,8 @@ public class CommentServiceImpl implements CommentService {
 					new TypeToken<List<String>>() {
 					}.getType());
 			for (int i = 0; i < locationList.size(); i++) {
-				locationList.set(i, String.format("http://%s:%s/%s/%s", FtpService.URL, FtpService.READPORT,
-						FtpService.BASEDIR, locationList.get(i)));
+				locationList.set(i,
+						String.format("http://%s:%s/%s", FtpService.PUBURL, FtpService.READPORT, locationList.get(i)));
 			}
 			commentDTO.setPicLocation(gson.toJson(locationList));
 			commentDTO.setCommerID(commentEntity.getCommerID());

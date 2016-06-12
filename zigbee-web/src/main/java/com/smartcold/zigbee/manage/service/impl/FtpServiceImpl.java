@@ -40,6 +40,7 @@ public class FtpServiceImpl implements FtpService {
 		try {
 			for (UploadFileEntity uploadFile : uploadFileList) {
 				int reply;
+				String dir = uploadFile.getRemoteNewDir();
 				ftp.connect(URL, PORT);// 连接FTP服务器
 				// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
 				ftp.login(USER_NAME, PASSWORD);// 登录
@@ -49,15 +50,19 @@ public class FtpServiceImpl implements FtpService {
 					return success;
 				}
 
-				if (!ftp.changeWorkingDirectory(BASEDIR)) {
-					ftp.makeDirectory(BASEDIR);
-				}
-				ftp.changeWorkingDirectory(BASEDIR);
+				ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
 
-				if (!ftp.changeWorkingDirectory(uploadFile.getRemoteNewDir())) {
-					ftp.makeDirectory(uploadFile.getRemoteNewDir());
+				if (!ftp.changeWorkingDirectory(BASEDIR)) {
+					throw new IOException("change base working dir error!");
 				}
-				ftp.changeWorkingDirectory(uploadFile.getRemoteNewDir());
+
+				String[] dirs = dir.split("/");
+				for (String nextDir : dirs) {
+					if (!ftp.changeWorkingDirectory(nextDir)) {
+						ftp.makeDirectory(nextDir);
+					}
+					ftp.changeWorkingDirectory(nextDir);
+				}
 
 				ftp.storeFile(uploadFile.getName(), uploadFile.getMultipartFile().getInputStream());
 			}
@@ -81,7 +86,7 @@ public class FtpServiceImpl implements FtpService {
 		boolean success = false;
 		ftp = new FTPClient();
 		try {
-
+			String dir = uploadFile.getRemoteNewDir();
 			int reply;
 			ftp.connect(URL, PORT);// 连接FTP服务器
 			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
@@ -91,17 +96,23 @@ public class FtpServiceImpl implements FtpService {
 				ftp.disconnect();
 				return success;
 			}
+			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
 
 			if (!ftp.changeWorkingDirectory(BASEDIR)) {
-				ftp.makeDirectory(BASEDIR);
+				throw new IOException("change base working dir error!");
 			}
-			ftp.changeWorkingDirectory(BASEDIR);
-			if (!ftp.changeWorkingDirectory(uploadFile.getRemoteNewDir())) {
-				ftp.makeDirectory(uploadFile.getRemoteNewDir());
-			}
-			ftp.changeWorkingDirectory(uploadFile.getRemoteNewDir());
 
-			ftp.storeFile(uploadFile.getName(), uploadFile.getMultipartFile().getInputStream());
+			String[] dirs = dir.split("/");
+			for (String nextDir : dirs) {
+				if (!ftp.changeWorkingDirectory(nextDir)) {
+					if (!ftp.makeDirectory(nextDir)) {
+						throw new IOException(String.format("can't make dir<%s>", nextDir));
+					}
+				}
+				ftp.changeWorkingDirectory(nextDir);
+			}
+
+			boolean storeFile = ftp.storeFile(uploadFile.getName(), uploadFile.getMultipartFile().getInputStream());
 
 			ftp.logout();
 			success = true;
