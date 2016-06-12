@@ -27,7 +27,7 @@ import com.smartcold.zigbee.manage.service.FtpService;
 @Controller
 @RequestMapping(value = "/review")
 public class ReviewController {
-	private static String dir = "picture";
+	private static String basedir = "picture";
 
 	@Autowired
 	private CommentMapper commentDao;
@@ -44,6 +44,7 @@ public class ReviewController {
 		MultipartFile[] files = { file0, file1, file2, file3, file4 };
 		CommentEntity commentEntity = new CommentEntity();
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+		String dir = String.format("%s/review%s", basedir, commentDto.getRdcID());
 
 		commentEntity.setCommerID(user.getId());
 		commentEntity.setContent(URLDecoder.decode(commentDto.getContent(), "UTF-8"));
