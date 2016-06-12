@@ -17,13 +17,6 @@ import com.smartcold.zigbee.manage.service.FtpService;
  */
 @Service
 public class FtpServiceImpl implements FtpService {
-
-	final static String URL = "10.25.192.102";
-	final static String USER_NAME = "pwftp";
-	final static String PASSWORD = "!@QWaszx";
-	final static int PORT = 21;
-	final static String BASEDIR = "/data";
-
 	private FTPClient ftp;
 
 	@Override
