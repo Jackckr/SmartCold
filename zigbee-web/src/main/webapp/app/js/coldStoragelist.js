@@ -798,6 +798,14 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.goAddRdc = function () {
-        $location.path("/coldStorageAdd");
+        $http.get('/i/user/findUser').success(function(data){
+            $rootScope.user = data;
+            if($rootScope.user == null || $rootScope.user.id == 0){
+                url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd";
+                window.location.href = url;
+            } else {
+                $location.path("/coldStorageAdd");
+            }
+        })
     }
 });
