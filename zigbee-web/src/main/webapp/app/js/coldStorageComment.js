@@ -55,12 +55,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
              if ($scope.userCommentCount === undefined) {
              $scope.userCommentCount = (Math.random() * 1000 + 9000).toFixed(0);
              }*/
-            if ($scope.rdcPositionScore === undefined) {
-                $scope.rdcPositionScore = (Math.random() + 4).toFixed(1);
-                $scope.rdcFacility = (Math.random() + 4).toFixed(1);
-                $scope.rdcService = (Math.random() + 4).toFixed(1);
-                $scope.rdcHealth = (Math.random() + 4).toFixed(1);
-            }
+            $scope.recommentCount = data[0].recommentCount;
+            $scope.rdcPositionScore = data[0].rdcPositionScore;
+            $scope.rdcFacility = data[0].rdcFacilityScore;
+            $scope.rdcService = data[0].rdcServiceScore;
+            $scope.rdcHealth = data[0].rdcHealthScore;
             $scope.name = data[0].name;
             $scope.address = data[0].address;
             $scope.provinceId = data[0].provinceId;
@@ -246,11 +245,10 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         $http.get('/i/comment/findCommentsByRDCId', {
             params: {
                 "rdcID": storageID,
-                "npoint": 5
+                "npoint": 100
             }
         }).success(function (data) {
             var size = data.length;
-            data.splice(5, size);
             for (var i = 0; i < data.length; i++) {
                 console.log("data:" + data[i].content + data[i].commerID + data[i].addTime + data[i].commerName);
                 data[i].commentsum = parseInt((Math.random() * 5 + 5).toFixed(0));

@@ -27,13 +27,11 @@ import com.smartcold.zigbee.manage.service.FtpService;
 @Controller
 @RequestMapping(value = "/review")
 public class ReviewController {
-
-	private static String baseDir = "data";
-
-	private static String dir = "picture";
+	private static String basedir = "picture";
 
 	@Autowired
 	private CommentMapper commentDao;
+
 	@Autowired
 	private FtpService ftpService;
 
@@ -46,8 +44,7 @@ public class ReviewController {
 		MultipartFile[] files = { file0, file1, file2, file3, file4 };
 		CommentEntity commentEntity = new CommentEntity();
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
-		
-		
+		String dir = String.format("%s/review%s", basedir, commentDto.getRdcID());
 
 		commentEntity.setCommerID(user.getId());
 		commentEntity.setContent(URLDecoder.decode(commentDto.getContent(), "UTF-8"));
@@ -64,9 +61,9 @@ public class ReviewController {
 				break;
 			}
 			String fileName = String.format("storage%s_%s.%s", commentDto.getRdcID(), new Date().getTime(), "jpg");
-			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file,  baseDir,dir);
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			ftpService.uploadFile(uploadFileEntity);
-			picLocations.add(baseDir+"/"+dir + "/" + fileName);
+			picLocations.add(dir + "/" + fileName);
 		}
 
 		commentEntity.setPiclocation(gson.toJson(picLocations));
