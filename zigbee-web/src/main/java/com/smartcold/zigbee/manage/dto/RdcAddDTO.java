@@ -1,5 +1,7 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.List;
+
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-06-01 11:22)
  */
@@ -75,6 +77,8 @@ public class RdcAddDTO {
 	private float rdcServiceScore;
 
 	private float rdcHealthScore;
+
+	private List<String> storagePicLocation;
 
 	public int getRdcId() {
 		return rdcId;
@@ -386,5 +390,13 @@ public class RdcAddDTO {
 
 	public void setRdcHealthScore(float rdcHealthScore) {
 		this.rdcHealthScore = rdcHealthScore;
+	}
+
+	public List<String> getStoragePicLocation() {
+		return storagePicLocation;
+	}
+
+	public void setStoragePicLocation(List<String> storagePicLocation) {
+		this.storagePicLocation = storagePicLocation;
 	}
 }

@@ -2,11 +2,13 @@ package com.smartcold.zigbee.manage.service.impl;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.gson.reflect.TypeToken;
 import com.smartcold.zigbee.manage.dao.*;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.entity.*;
+import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -139,6 +142,14 @@ public class RdcServiceImpl implements RdcService {
 			rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
 			rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
 			rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
+			ArrayList<String> locationList = gson.fromJson(rdcExtEntity.getStoragepiclocation(),
+					new TypeToken<List<String>>() {
+					}.getType());
+			for (int i = 0; i < locationList.size(); i++) {
+				locationList.set(i,
+						String.format("http://%s:%s/%s", FtpService.PUBURL, FtpService.READPORT, locationList.get(i)));
+			}
+			rdcAddDTO.setStoragePicLocation(locationList);
 
 			String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
 			for (int i = 0; i < truck.length; i++) {
