@@ -133,7 +133,6 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
 		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
-		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
 
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
@@ -158,6 +157,7 @@ public class RdcController {
 
 		// 插入rdc表,返回对应的ID
 		RdcExtEntity rdcExtEntity = new RdcExtEntity();
+		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
 		rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
