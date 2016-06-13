@@ -11,6 +11,17 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 				}
 			})
 		})
+		$http.get('/i/rdc/findRDCDTOByRDCId', {
+            params: {
+                "rdcID": $scope.rdcid
+            }
+        }).success(function (data) {
+            $scope.score = data[0].score;
+            $scope.rdcPositionScore = data[0].rdcPositionScore;
+            $scope.rdcFacility = data[0].rdcFacilityScore;
+            $scope.rdcService = data[0].rdcServiceScore;
+            $scope.rdcHealth = data[0].rdcHealthScore;
+        });
 		$http.get('/i/comment/findCommentsByRDCId?rdcID=' + $scope.rdcid + "&npoint=1").success(function(data,status,config,headers){
 			$scope.lastComment = data.length == 1? data[0] : {};
 		})

@@ -99,14 +99,14 @@
 	          <div style="border-bottom-style: dotted;border-bottom-width: 1px;">
 	            <h3>{{rdc.name}}</h3>
 	            <p>评分：
-	              <i class="icon-star"></i>
-	              <i class="icon-star"></i>
-	              <i class="icon-star"></i>
-	              <i class="icon-star-half"></i>
-	              <i class="icon-star-empty"></i>
+	              <i class="{{score < 0.5? 'icon-star-empty': score >= 0.5 && score < 1? 'icon-star-half' :'icon-star'}}"></i>
+                  <i class="{{score < 1.5? 'icon-star-empty': score >= 1.5 && score < 2? 'icon-star-half' :'icon-star'}}"></i>
+                  <i class="{{score < 2.5? 'icon-star-empty': score >= 2.5 && score < 3? 'icon-star-half' :'icon-star'}}"></i>
+                  <i class="{{score < 3.5? 'icon-star-empty': score >= 3.5 && score < 4? 'icon-star-half' :'icon-star'}}"></i>
+                  <i class="{{score < 4.5? 'icon-star-empty': score >= 4.5 && score < 5? 'icon-star-half' :'icon-star'}}"></i>
 	            </p>
 	            <p>
-	              位置:9.0 设施:9.5 服务:9.0 卫生:9.0
+	              温度:{{rdcPositionScore}} 设施:{{rdcFacility}} 服务:{{rdcService}} 卫生:{{rdcHealth}}
 	            </p>
 	          </div>
 	          <div>
