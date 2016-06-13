@@ -324,7 +324,7 @@
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">功能平面布置图：</label>
                             <div class="col-sm-8">
-                                <form ng-controller="coldStorageAdd" name="arrangeform">
+                                <form name="arrangeform">
                                     <input type="file" ng-model="arrangePic" name="arrangePic" ngf-select="addArrangePic($arrangePic)" ngf-multiple="true">
                                 </form>
                             </div>
@@ -352,7 +352,7 @@
                             <div class="col-sm-8">
                                 <div class="row">
                                     <div class="col-sm-6 divCSS">
-                                        <form ng-controller="coldStorageAdd" name="form">
+                                        <form name="form">
                                             <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
                                             <!--<input ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true">-->
                                         </form>
