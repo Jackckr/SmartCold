@@ -9,4 +9,9 @@
         FROM `citylist` WHERE `ProvinceID` = #{provinceID}
     </select>
 
+    <select id="findCityById" parameterType="map" resultType="CityListEntity">
+        SELECT *
+        FROM `citylist` WHERE `CityID` = #{CityID}
+    </select>
+
 </mapper>
