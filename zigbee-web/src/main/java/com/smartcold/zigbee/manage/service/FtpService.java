@@ -12,7 +12,7 @@ public interface FtpService {
 
 	public final static String USER_NAME = "pwftp";
 
-	public final static String PASSWORD = "!@QWaszx";
+	public final static String PASSWORD = "!@QWaszx0o";
 
 	public final static int PORT = 2021;
 
