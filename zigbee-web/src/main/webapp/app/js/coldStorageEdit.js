@@ -121,7 +121,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.storageType = data[0].storageType;
         $scope.temperType = data[0].temperType;
         $scope.phoneNum = data[0].phoneNum;
-        $scope.telphoneNum = data[0].telphoneNum;
+        //$scope.telphoneNum = data[0].telphoneNum;
         $scope.remark = data[0].remark;
         $scope.tonnage = data[0].tonnage;
         $scope.structure = data[0].structure;
@@ -232,9 +232,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             flag = false;
         }
 
-        if ($scope.telphoneNum == undefined || $scope.telphoneNum == '') {
+/*        if ($scope.telphoneNum == undefined || $scope.telphoneNum == '') {
             flag = false;
-        }
+        }*/
         return flag;
     }
 
@@ -259,7 +259,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 coldTruck3 : $scope.coldTruck3,
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
-                telphoneNum : $scope.telphoneNum,
+                //telphoneNum : $scope.telphoneNum,
                 remark : $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
                 tonnage : $scope.tonnage,

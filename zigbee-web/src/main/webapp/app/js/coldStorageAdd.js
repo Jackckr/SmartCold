@@ -179,9 +179,9 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             flag = false;
         }
 
-        if ($scope.telphoneNum == undefined || $scope.telphoneNum == '') {
+/*        if ($scope.telphoneNum == undefined || $scope.telphoneNum == '') {
             flag = false;
-        }
+        }*/
         return flag;
     }
 
@@ -206,7 +206,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 coldTruck3 : $scope.coldTruck3,
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
-                telphoneNum : $scope.telphoneNum,
+                //telphoneNum : $scope.telphoneNum,
                 remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
                 tonnage : $scope.tonnage,
@@ -244,7 +244,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             console.log("coldTruck3: " + data.coldTruck3);
             console.log("coldTruck4: " + data.coldTruck4);
             console.log("phoneNum: " + data.phoneNum);
-            console.log("telphoneNum: " + data.telphoneNum);
+            //console.log("telphoneNum: " + data.telphoneNum);
             console.log("remark: " + data.remark);
 
             console.log("tonnage: " + data.tonnage);

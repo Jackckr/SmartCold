@@ -144,7 +144,7 @@ public class RdcController {
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
-		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
+		//rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 
 		rdcEntity.setType(0);
@@ -223,7 +223,7 @@ public class RdcController {
 		// rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		// rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
-		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
+		//rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		/*
 		 * rdcEntity.setType(0); rdcEntity.setStoragetype("");

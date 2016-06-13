@@ -113,7 +113,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 }
             }
             $scope.phoneNum = data[0].phoneNum;
-            $scope.telphoneNum = data[0].telphoneNum;
+            //$scope.telphoneNum = data[0].telphoneNum;
             $scope.remark = data[0].remark;
             $scope.tonnage = data[0].tonnage;
             $scope.structure = data[0].structure;
@@ -182,7 +182,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             console.log("coldTruck3: " + data[0].coldTruck3);
             console.log("coldTruck4: " + data[0].coldTruck4);
             console.log("phoneNum: " + data[0].phoneNum);
-            console.log("telphoneNum: " + data[0].telphoneNum);
+            //console.log("telphoneNum: " + data[0].telphoneNum);
             console.log("remark: " + data[0].remark);
 
             console.log("tonnage: " + data[0].tonnage);
