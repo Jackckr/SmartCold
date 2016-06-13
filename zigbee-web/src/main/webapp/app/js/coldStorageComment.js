@@ -63,8 +63,8 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.name = data[0].name;
             $scope.address = data[0].address;
             $scope.provinceId = data[0].provinceId;
-            $scope.storagePicLocation = data[0].storagePicLocation;
-            for(var j=0;j < 5 - storagePicLocation.length;j++){
+            $scope.storagePicLocation = JSON.parse(data[0].storagePicLocation);
+            for(var j=0, len = $scope.storagePicLocation.length;j < 5 - len;j++){
             	$scope.storagePicLocation.push("app/img/rdc.png");
             }
             for (var i = 0, len = $scope.provinces.length; i < len; i++) {
