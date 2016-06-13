@@ -49,9 +49,6 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         //firstData.splice(10, size);
         for (var i = 0; i < 10; i++) {
             console.log("data:" + data[i].name + data[i].addtime);
-/*            data[i].score = (Math.random() + 4).toFixed(1);
-            data[i].userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
-            data[i].userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);*/
             console.log(data[i].score);
             firstData.push(data[i]);
         }
@@ -787,7 +784,16 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             result.push(addScore(data[i].rdcEntity));
         }
         console.log("result: " + result.length)
-        $scope.rdcs = result;
+        //$scope.rdcs = result;
+
+        var size = result.length;
+        $scope.Allrdcs = result;
+        $scope.bigTotalItems = size;
+        var firstData = [];
+        for (var i = 0; i < 10; i++) {
+            firstData.push(result[i]);
+        }
+        $scope.rdcs = firstData;
     }
 
     function addScore(rdc) {
