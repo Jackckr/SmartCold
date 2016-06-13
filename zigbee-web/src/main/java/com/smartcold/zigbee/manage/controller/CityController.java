@@ -34,4 +34,10 @@ public class CityController {
     public Object findCitysByProvinceId(@RequestParam int provinceID) {
         return cityListDao.findCitysByProvinceId(provinceID);
     }
+
+    @RequestMapping(value = "/findCityById", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findCityById(@RequestParam int CityID) {
+        return cityListDao.findCityById(CityID);
+    }
 }
