@@ -44,7 +44,7 @@ public class ReviewController {
 		MultipartFile[] files = { file0, file1, file2, file3, file4 };
 		CommentEntity commentEntity = new CommentEntity();
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
-		String dir = String.format("%s/review%s", basedir, commentDto.getRdcID());
+		String dir = String.format("%s/review/%s", basedir, commentDto.getRdcID());
 
 		commentEntity.setCommerID(user.getId());
 		commentEntity.setContent(URLDecoder.decode(commentDto.getContent(), "UTF-8"));
