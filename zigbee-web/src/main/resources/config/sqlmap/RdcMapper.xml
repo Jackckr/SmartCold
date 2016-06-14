@@ -11,7 +11,7 @@
         SELECT * FROM `Rdc` WHERE `id` = #{rdcID}
     </select>
 	
-	<select id="checkName" parameterType="String" resultType="boolean">
+	<select id="checkName" parameterType="String" resultType="int">
 		SELECT count(name) FROM `Rdc` WHERE `name` = #{name}
 	</select>
 	

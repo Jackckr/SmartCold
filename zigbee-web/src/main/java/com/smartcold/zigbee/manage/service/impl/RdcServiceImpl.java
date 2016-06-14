@@ -10,6 +10,7 @@ import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.entity.*;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -256,6 +257,12 @@ public class RdcServiceImpl implements RdcService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public boolean checkName(String name) {
+		int count = rdcDao.checkName(name);
+		return count==0;
 	}
 
 }

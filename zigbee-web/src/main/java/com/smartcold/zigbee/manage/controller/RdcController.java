@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -296,8 +297,9 @@ public class RdcController {
 	@ResponseBody
 	@RequestMapping(value = "/checkName", method = RequestMethod.GET)
 	public Object checkName(@RequestParam("value") String name) {
+		name = StringUtils.trimAllWhitespace(name);
 		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
-		ngRemoteValidateDTO.setValid(!rdcMapper.checkName(name));
+		ngRemoteValidateDTO.setValid(rdcService.checkName(name));
 		return ngRemoteValidateDTO;
 	}
 

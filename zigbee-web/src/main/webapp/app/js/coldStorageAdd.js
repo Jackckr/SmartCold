@@ -171,9 +171,9 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             flag = false;
         }
 
-        if ($scope.coldTruck1 === 0 && $scope.coldTruck2 === 0 &&$scope.coldTruck3 === 0 &&$scope.coldTruck4 === 0) {
-            flag = false;
-        }
+//        if ($scope.coldTruck1 === 0 && $scope.coldTruck2 === 0 &&$scope.coldTruck3 === 0 &&$scope.coldTruck4 === 0) {
+//            flag = false;
+//        }
 
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;

@@ -77,8 +77,8 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
-	public Object signup(String username, String password, String email) {
-		if (username == null || password == null) {
+	public Object signup(String username, String password,String password1, String email) {
+		if (username == null || password == null || !password.equals(password1)) {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
 		UserEntity userEntity = new UserEntity();

@@ -16,7 +16,7 @@ public interface RdcMapper {
 
     void updateRdc(RdcEntity rdcEntity);
     
-    boolean checkName(String name);
+    int checkName(String name);
     
     boolean checkCellphone(String cellphone);
 }
