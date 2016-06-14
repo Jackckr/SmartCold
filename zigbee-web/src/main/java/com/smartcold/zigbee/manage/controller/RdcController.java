@@ -184,20 +184,17 @@ public class RdcController {
 		rdcExtEntity.setStoragestruct((byte) 0);
 
 		List<String> storagepicLocations = new ArrayList<String>();
+		List<UploadFileEntity> uploadFileEntities = new ArrayList<UploadFileEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
 				break;
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-
-			try {
-				ftpService.uploadFile(uploadFileEntity);
-				storagepicLocations.add(dir + "/" + fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			uploadFileEntities.add(uploadFileEntity);
+			storagepicLocations.add(dir + "/" + fileName);
 		}
+		ftpService.uploadFileList(uploadFileEntities);
 		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
 		rdcExtDao.insertRdcExt(rdcExtEntity);
 

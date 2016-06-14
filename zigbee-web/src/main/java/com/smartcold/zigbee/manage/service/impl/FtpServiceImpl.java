@@ -20,19 +20,6 @@ public class FtpServiceImpl implements FtpService {
 	private FTPClient ftp;
 
 	@Override
-	/**
-	 * @param url
-	 *            FTP服务器hostname
-	 * @param port
-	 *            FTP服务器端口
-	 * @param username
-	 *            FTP登录账号
-	 * @param password
-	 *            FTP登录密码
-	 * @param uploadFileList
-	 *            文件上传实体类列表
-	 * @return 成功返回true，否则返回false
-	 */
 	// 多文件上传
 	public boolean uploadFileList(List<UploadFileEntity> uploadFileList) {
 		boolean success = false;
