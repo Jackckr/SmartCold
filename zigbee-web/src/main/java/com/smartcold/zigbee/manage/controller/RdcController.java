@@ -144,7 +144,7 @@ public class RdcController {
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
-		//rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
+		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 
 		rdcEntity.setType(0);
@@ -184,17 +184,19 @@ public class RdcController {
 		rdcExtEntity.setStoragestruct((byte) 0);
 
 		List<String> storagepicLocations = new ArrayList<String>();
-		List<UploadFileEntity> uploadFileEntities = new ArrayList<UploadFileEntity>();
+		// List<UploadFileEntity> uploadFileEntities = new
+		// ArrayList<UploadFileEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
 				break;
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			uploadFileEntities.add(uploadFileEntity);
+			// uploadFileEntities.add(uploadFileEntity);
+			ftpService.uploadFile(uploadFileEntity);
 			storagepicLocations.add(dir + "/" + fileName);
 		}
-		ftpService.uploadFileList(uploadFileEntities);
+		// ftpService.uploadFileList(uploadFileEntities);
 		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
 		rdcExtDao.insertRdcExt(rdcExtEntity);
 
@@ -221,7 +223,7 @@ public class RdcController {
 		// rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		// rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
-		//rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
+		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		/*
 		 * rdcEntity.setType(0); rdcEntity.setStoragetype("");

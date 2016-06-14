@@ -85,6 +85,7 @@ public class FtpServiceImpl implements FtpService {
 				return success;
 			}
 			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
+			ftp.enterLocalPassiveMode();
 
 			if (!ftp.changeWorkingDirectory(BASEDIR)) {
 				throw new IOException("change base working dir error!");
