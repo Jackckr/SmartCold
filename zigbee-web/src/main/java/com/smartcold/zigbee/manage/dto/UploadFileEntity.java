@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadFileEntity {
 	private String name;// file name-->FTP client
 	private MultipartFile multipartFile;// multipartFile-->user upload file
+	//相对地址，不加 /
 	private String remoteNewDir;
 
 	public String getName() {
