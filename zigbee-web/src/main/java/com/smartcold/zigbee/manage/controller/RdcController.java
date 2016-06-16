@@ -326,4 +326,11 @@ public class RdcController {
 		ngRemoteValidateDTO.setValid(!rdcMapper.checkCellphone(cellphone));
 		return ngRemoteValidateDTO;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteStoragePic", method=RequestMethod.POST)
+	public Object deleteStoragePic(String url){
+		boolean deleted = ftpService.deleteFile(url);
+		return new BaseDto(deleted?0:-1);
+	}
 }

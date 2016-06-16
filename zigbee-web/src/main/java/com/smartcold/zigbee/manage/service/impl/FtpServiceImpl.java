@@ -55,28 +55,35 @@ public class FtpServiceImpl implements FtpService {
 		}
 		return result;
 	}
+	
+	private void connectFtp() throws IOException{
+		ftp = new FTPClient();
+		ftp.connect(PUB_HOST, PORT);// 连接FTP服务器
+		// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
+		ftp.login(USER_NAME, PASSWORD);// 登录
+		if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+			log.error("login ftp error, "+ftp.getReplyString());
+			ftp.disconnect();
+		}
+		ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
+		ftp.enterLocalPassiveMode();
+	}
+	
+	private void closeFtp() throws IOException{
+		ftp.logout();
+	}
 
 	@Override
 	// 多文件上传
 	public boolean uploadFileList(List<UploadFileEntity> uploadFileList) {
 		boolean result = false;
-		ftp = new FTPClient();
+		
 		try {
-			ftp.connect(PUBURL, PORT);// 连接FTP服务器
-			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
-			ftp.login(USER_NAME, PASSWORD);// 登录
-			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
-				log.error("login ftp error, "+ftp.getReplyString());
-				ftp.disconnect();
-				return false;
-			}
-			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-			ftp.enterLocalPassiveMode();
-			
+			connectFtp();
 			for (UploadFileEntity uploadFile : uploadFileList) {
 				upload(uploadFile);
 			}
-			ftp.logout();
+			closeFtp();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -93,21 +100,11 @@ public class FtpServiceImpl implements FtpService {
 	// 单个文件上传
 	public boolean uploadFile(UploadFileEntity uploadFileEntity) {
 		boolean result = false;
-		ftp = new FTPClient();
-		ftp.enterLocalPassiveMode();
+		
 		try {
-			ftp.connect(PUBURL, PORT);// 连接FTP服务器
-			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
-			ftp.login(USER_NAME, PASSWORD);// 登录
-			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
-				log.error("login ftp error, "+ftp.getReplyString());
-				ftp.disconnect();
-				return false;
-			}
-			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-			ftp.enterLocalPassiveMode();
+			connectFtp();
 			result = upload(uploadFileEntity);
-			ftp.logout();
+			closeFtp();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -121,5 +118,27 @@ public class FtpServiceImpl implements FtpService {
 		}
 		return result;
 	}
-
+	
+	public boolean deleteFile(String url){
+		String hostUrl = PUB_HOST+":"+READPORT;
+		int index = url.indexOf(hostUrl);
+		String pathname = url.substring(index+hostUrl.length());
+		System.out.println(pathname);
+		boolean deleted = false;
+		try {
+			connectFtp();
+			
+			deleted = ftp.deleteFile(BASEDIR+pathname);
+			
+			if (!deleted) {
+				log.error("delete file failed, pathname:"+BASEDIR+pathname +
+						","+ftp.getReplyString());
+			}
+			closeFtp();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return deleted;
+	}
 }
