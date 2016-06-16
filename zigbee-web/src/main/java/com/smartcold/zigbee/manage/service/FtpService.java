@@ -6,9 +6,9 @@ import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 
 public interface FtpService {
 
-	public final static String URL = "10.25.192.102";
+	public final static String HOST = "10.25.192.102";
 
-	public final static String PUBURL = "139.196.189.93";
+	public final static String PUB_HOST = "139.196.189.93";
 
 	public final static String USER_NAME = "pwftp";
 
@@ -25,4 +25,6 @@ public interface FtpService {
 	boolean uploadFile(UploadFileEntity uploadFile);
 
 	boolean uploadFileList(List<UploadFileEntity> uploadFileList);
+	
+	boolean deleteFile(String url);
 }

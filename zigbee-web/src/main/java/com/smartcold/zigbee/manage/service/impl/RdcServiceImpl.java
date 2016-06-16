@@ -149,7 +149,7 @@ public class RdcServiceImpl implements RdcService {
 					}.getType());
 			for (int i = 0; i < locationList.size(); i++) {
 				locationList.set(i,
-						String.format("http://%s:%s/%s", FtpService.PUBURL, FtpService.READPORT, locationList.get(i)));
+						String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, locationList.get(i)));
 			}
 			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
 
