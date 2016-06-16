@@ -21,6 +21,40 @@ import com.smartcold.zigbee.manage.service.FtpService;
 public class FtpServiceImpl implements FtpService {
 	private static final Logger log = LoggerFactory.getLogger(FtpServiceImpl.class);
 	private FTPClient ftp;
+	
+	/**
+	 * ftp 已经连接登录
+	 * @param uploadFileEntity
+	 * @return
+	 * @throws IOException
+	 */
+	private boolean upload(UploadFileEntity uploadFileEntity) throws IOException{
+		boolean result = false;
+		if (!ftp.changeWorkingDirectory(BASEDIR)) {
+			throw new IOException("change base working dir error!");
+		}
+		
+		//创建目录
+		String[] dirs = uploadFileEntity.getRemoteNewDir().split("/");
+		for (String dir : dirs) {
+			boolean isExist =  ftp.changeWorkingDirectory(dir);
+			if (!isExist) {
+				if (!ftp.makeDirectory(dir)) {
+					log.error("ftp current working directory:"+ftp.printWorkingDirectory()+
+							" ftp create "+dir+" directory failed, reply code:"+ftp.getReplyCode());
+				}
+				ftp.changeWorkingDirectory(dir);
+			}
+		}
+		
+		result = ftp.storeFile(uploadFileEntity.getName(), uploadFileEntity.getMultipartFile().getInputStream());
+		if (!result) {
+			log.error("File upload failed, upload dir:"+uploadFileEntity.getRemoteNewDir()+
+					", file name:"+uploadFileEntity.getName()+
+					", reply code "+ftp.getReplyCode()+" "+ftp.getReplyString());
+		}
+		return result;
+	}
 
 	@Override
 	// 多文件上传
@@ -28,43 +62,19 @@ public class FtpServiceImpl implements FtpService {
 		boolean result = false;
 		ftp = new FTPClient();
 		try {
+			ftp.connect(PUBURL, PORT);// 连接FTP服务器
+			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
+			ftp.login(USER_NAME, PASSWORD);// 登录
+			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+				log.error("login ftp error, "+ftp.getReplyString());
+				ftp.disconnect();
+				return false;
+			}
+			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
+			ftp.enterLocalPassiveMode();
+			
 			for (UploadFileEntity uploadFile : uploadFileList) {
-				int reply;
-				ftp.connect(PUBURL, PORT);// 连接FTP服务器
-				// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
-				ftp.login(USER_NAME, PASSWORD);// 登录
-				reply = ftp.getReplyCode();
-				if (!FTPReply.isPositiveCompletion(reply)) {
-					ftp.disconnect();
-					return false;
-				}
-
-				ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-				ftp.enterLocalPassiveMode();
-
-				if (!ftp.changeWorkingDirectory(BASEDIR)) {
-					throw new IOException("change base working dir error!");
-				}
-
-				//创建目录
-				String[] dirs = uploadFile.getRemoteNewDir().split("/");
-				for (String dir : dirs) {
-					boolean isExist =  ftp.changeWorkingDirectory(dir);
-					if (!isExist) {
-						if (!ftp.makeDirectory(dir)) {
-							log.error("ftp current working directory:"+ftp.printWorkingDirectory()+
-									" ftp create "+dir+" directory failed, reply code:"+ftp.getReplyCode());
-						}
-						ftp.changeWorkingDirectory(dir);
-					}
-				}
-
-				result = ftp.storeFile(uploadFile.getName(), uploadFile.getMultipartFile().getInputStream());
-				if (!result) {
-					log.error("File upload failed, upload dir:"+uploadFile.getRemoteNewDir()+
-							", file name:"+uploadFile.getName()+
-							", reply code"+ftp.getReplyCode());
-				}
+				upload(uploadFile);
 			}
 			ftp.logout();
 		} catch (IOException e) {
@@ -81,46 +91,22 @@ public class FtpServiceImpl implements FtpService {
 	}
 
 	// 单个文件上传
-	public boolean uploadFile(UploadFileEntity uploadFile) {
+	public boolean uploadFile(UploadFileEntity uploadFileEntity) {
 		boolean result = false;
 		ftp = new FTPClient();
 		ftp.enterLocalPassiveMode();
 		try {
-			int reply;
 			ftp.connect(PUBURL, PORT);// 连接FTP服务器
 			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
 			ftp.login(USER_NAME, PASSWORD);// 登录
-			reply = ftp.getReplyCode();
-			if (!FTPReply.isPositiveCompletion(reply)) {
+			if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+				log.error("login ftp error, "+ftp.getReplyString());
 				ftp.disconnect();
 				return false;
 			}
 			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
 			ftp.enterLocalPassiveMode();
-
-			if (!ftp.changeWorkingDirectory(BASEDIR)) {
-				throw new IOException("change base working dir error!");
-			}
-			
-			//创建目录
-			String[] dirs = uploadFile.getRemoteNewDir().split("/");
-			for (String dir : dirs) {
-				boolean isExist =  ftp.changeWorkingDirectory(dir);
-				if (!isExist) {
-					if (!ftp.makeDirectory(dir)) {
-						log.error("ftp current working directory:"+ftp.printWorkingDirectory()+
-								" ftp create "+dir+" directory failed, reply code:"+ftp.getReplyCode());
-					}
-					ftp.changeWorkingDirectory(dir);
-				}
-			}
-			
-			result = ftp.storeFile(uploadFile.getName(), uploadFile.getMultipartFile().getInputStream());
-			if (!result) {
-				log.error("File upload failed, upload dir:"+uploadFile.getRemoteNewDir()+
-						", file name:"+uploadFile.getName()+
-						", reply code "+ftp.getReplyCode()+" "+ftp.getReplyString());
-			}
+			result = upload(uploadFileEntity);
 			ftp.logout();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -129,6 +115,7 @@ public class FtpServiceImpl implements FtpService {
 				try {
 					ftp.disconnect();
 				} catch (IOException ioe) {
+					ioe.printStackTrace();
 				}
 			}
 		}

@@ -45,8 +45,18 @@ public class RdcEntityDTO {
     private int userRecommendPercent;
 
     private int userCommentCount;
+    
+    private String arrangePic;
 
-    public String getName() {
+    public String getArrangePic() {
+		return arrangePic;
+	}
+
+	public void setArrangePic(String arrangePic) {
+		this.arrangePic = arrangePic;
+	}
+
+	public String getName() {
         return name;
     }
 

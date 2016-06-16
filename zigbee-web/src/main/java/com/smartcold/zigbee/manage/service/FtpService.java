@@ -19,6 +19,8 @@ public interface FtpService {
 	public final static String BASEDIR = "/data";
 
 	public final static int READPORT = 8089;
+	
+	public final static String READ_URL = "http://139.196.189.93:8089/";
 
 	boolean uploadFile(UploadFileEntity uploadFile);
 

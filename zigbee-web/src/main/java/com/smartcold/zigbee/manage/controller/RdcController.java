@@ -133,8 +133,8 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
-		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
-
+//		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
+		MultipartFile[] files = { file4, file3, file2, file1, file0 };
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
@@ -188,7 +188,7 @@ public class RdcController {
 		// ArrayList<UploadFileEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
-				break;
+				continue;
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
@@ -198,6 +198,16 @@ public class RdcController {
 		}
 		// ftpService.uploadFileList(uploadFileEntities);
 		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+		
+		// save arrangePic
+		if (arrangePic != null) {
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
+			// uploadFileEntities.add(uploadFileEntity);
+			ftpService.uploadFile(uploadFileEntity);
+			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+		}
+		
 		rdcExtDao.insertRdcExt(rdcExtEntity);
 
 		return new BaseDto(0);
@@ -209,7 +219,8 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
-		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
+//		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
+		MultipartFile[] files = { file4, file3, file2, file1, file0 };
 		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
 
 		int rdcId = rdcAddDTO.getRdcId();
@@ -268,22 +279,28 @@ public class RdcController {
 		 * rdcExtEntity.setStoragestruct((byte)0);
 		 */
 
-		if (files[0] != null) {
-			List<String> storagepicLocations = new ArrayList<String>();
-			for (MultipartFile file : files) {
-				if (file == null) {
-					break;
-				}
-				String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
-				UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-				try {
-					ftpService.uploadFile(uploadFileEntity);
-					storagepicLocations.add(dir + "/" + fileName);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		List<String> storagepicLocations = new ArrayList<String>();
+		for (MultipartFile file : files) {
+			if (file == null) {
+				continue;
 			}
-			rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+			try {
+				ftpService.uploadFile(uploadFileEntity);
+				storagepicLocations.add(dir + "/" + fileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+		// save arrangePic
+		if (arrangePic != null) {
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
+			// uploadFileEntities.add(uploadFileEntity);
+			ftpService.uploadFile(uploadFileEntity);
+			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
 		}
 		if (haveRdcExt)
 			rdcExtDao.updateRdcExt(rdcExtEntity);

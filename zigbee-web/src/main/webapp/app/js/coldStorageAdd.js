@@ -134,9 +134,10 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     }*/
 
     $scope.drop = function(file){
-        angular.forEach($scope.totalfiles,function(item){
+        angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
-                $scope.totalfiles.pop(item);
+            	console.log("key:"+key);
+                $scope.totalfiles.splice(key,1);
             }
         })
     }
@@ -228,7 +229,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 arrangePic : $scope.arrangePic,
             }
             for(i = 0; i < $scope.totalfiles.length; i++){
-                data["file" + i] = $scope.files[i];
+                data["file" + i] = $scope.totalfiles[i];
             }
 
             console.log("name: " + data.name);

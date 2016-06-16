@@ -128,6 +128,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.companyDevice = data[0].companyDevice;
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
+        $scope.arrangePic = data[0].arrangepiclocation;
         if($scope.lihuoRoom === 0){
             $scope.hasLihuoRoom = true;
         } else {
@@ -236,6 +237,14 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             flag = false;
         }*/
         return flag;
+    }
+    
+    $scope.addFiles = function (files) {
+        if($scope.totalfiles.length + files.length > 5){
+            alert("最多上传五张图片");
+            return;
+        }
+        $scope.totalfiles = $scope.totalfiles.concat(files);
     }
 
     $scope.submit = function(){

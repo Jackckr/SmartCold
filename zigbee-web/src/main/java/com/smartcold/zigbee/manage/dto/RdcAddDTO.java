@@ -75,8 +75,19 @@ public class RdcAddDTO {
 	private float rdcServiceScore;
 
 	private float rdcHealthScore;
+	
+	private String arrangepiclocation;
 
 	private String storagePicLocation;
+
+	public String getArrangepiclocation() {
+		return arrangepiclocation;
+	}
+
+	public void setArrangepiclocation(String arrangepiclocation) {
+		this.arrangepiclocation = arrangepiclocation;
+	}
+
 
 	public int getRdcId() {
 		return rdcId;

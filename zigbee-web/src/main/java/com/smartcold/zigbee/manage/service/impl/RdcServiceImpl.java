@@ -143,6 +143,7 @@ public class RdcServiceImpl implements RdcService {
 			rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
 			rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
 			rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
+			rdcAddDTO.setArrangepiclocation(rdcExtEntity.getArrangepiclocation());
 			ArrayList<String> locationList = gson.fromJson(rdcExtEntity.getStoragepiclocation(),
 					new TypeToken<List<String>>() {
 					}.getType());
@@ -180,7 +181,7 @@ public class RdcServiceImpl implements RdcService {
 					rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
 				}
 			}
-			result.add(rdcAddDTO);
+//			result.add(rdcAddDTO);
 		}
 
 		float score = 0.0f;
@@ -253,6 +254,14 @@ public class RdcServiceImpl implements RdcService {
 				dto.setScore(score);
 				dto.setUserCommentCount(userCommentCnt);
 				dto.setUserRecommendPercent(userRecommendPercent);
+				
+				//取出仓库平面图
+				List<RdcExtEntity> rdcExtEntities  = rdcExtDao.findRDCExtByRDCId(rdcEntity.getId());
+				if (!rdcExtEntities.isEmpty() && rdcExtEntities.get(0).getArrangepiclocation() != null) {
+					dto.setArrangePic( FtpService.READ_URL + rdcExtEntities.get(0).getArrangepiclocation() );
+				}else {
+					dto.setArrangePic("app/img/rdcHeader.jpg");
+				}
 				result.add(dto);
 			}
 		}
