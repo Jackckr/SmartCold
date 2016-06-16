@@ -32,7 +32,7 @@ import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
-
+import com.smartcold.zigbee.manage.util.VerifyUtil;
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
  */
@@ -316,6 +316,8 @@ public class RdcController {
 		return new BaseDto(0);
 	}
 
+
+	
 	@ResponseBody
 	@RequestMapping(value = "/checkName", method = RequestMethod.GET)
 	public Object checkName(@RequestParam("value") String name) {
@@ -324,12 +326,36 @@ public class RdcController {
 		ngRemoteValidateDTO.setValid(rdcService.checkName(name));
 		return ngRemoteValidateDTO;
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value = "/checkArea", method = RequestMethod.GET)
+	public Object checkArea(@RequestParam("value") String area) {
+		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
+		ngRemoteValidateDTO.setValid(VerifyUtil.isNumeric(area));
+		return ngRemoteValidateDTO;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/checkCellphoneFormat", method = RequestMethod.GET)
+	public Object checkCellphoneFormat(@RequestParam("value") String phoneNum) {
+		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
+		ngRemoteValidateDTO.setValid(VerifyUtil.checkCellphone(phoneNum));
+		return ngRemoteValidateDTO;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/checkRemark", method = RequestMethod.GET)
+	public Object checkRemark(@RequestParam("value") String remark) {
+		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
+		ngRemoteValidateDTO.setValid(VerifyUtil.checkRemark(remark));
+		return ngRemoteValidateDTO;
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/checkCellphone", method = RequestMethod.GET)
-	public Object checkCellphone(@RequestParam("value") String cellphone) {
+	public Object checkCellphone(@RequestParam("value") String phoneNum) {
 		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
-		ngRemoteValidateDTO.setValid(!rdcMapper.checkCellphone(cellphone));
+		ngRemoteValidateDTO.setValid(!rdcMapper.checkCellphone(phoneNum));
 		return ngRemoteValidateDTO;
 	}
 	
