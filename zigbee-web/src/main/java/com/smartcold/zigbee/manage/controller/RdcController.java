@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.net.nntp.NewGroupsOrNewsQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -25,6 +26,7 @@ import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
+import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
@@ -219,6 +221,10 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
+		//System.out.println(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8").length());
+		/*if (URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8").length()>125) {
+			 return new BaseDto(-1);
+		}*/	
 //		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
 		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());

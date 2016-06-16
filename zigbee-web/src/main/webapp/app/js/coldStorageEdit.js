@@ -193,6 +193,13 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         console.log("facility: " + data[0].facility);*/
 
     });
+    
+    function checkCommit(){
+    	if($scope.remark.length>250)
+    		return false;
+    	else
+    		return true;
+    }
 
     function checkInput(){
         var flag = true;
@@ -248,6 +255,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.submit = function(){
+    if(checkCommit()){
         if (checkInput()){
             data = {
                 file0: null,
@@ -347,4 +355,8 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             alert("请填写标记*的必选项在提交!");
         }
     }
+    else{
+    	alert("备注长度不得250字符!");
+    }
+   }
 });
