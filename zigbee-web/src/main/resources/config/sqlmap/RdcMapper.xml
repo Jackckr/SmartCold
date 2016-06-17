@@ -38,7 +38,8 @@
         `cellphone`,
         `phone`,
         `commit`,
-        `powerConsume`
+        `powerConsume`,
+        `userid`
         )
         VALUES
         (
@@ -58,7 +59,8 @@
         #{cellphone},
         #{phone},
         #{commit},
-        #{powerConsume}
+        #{powerConsume},
+        #{userid}
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >

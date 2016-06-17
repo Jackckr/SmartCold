@@ -12,4 +12,6 @@ public interface UserMapper {
 	UserEntity findUserById(@Param("id") int id);
 
 	void insertUser(UserEntity userEntity);
+	
+	
 }

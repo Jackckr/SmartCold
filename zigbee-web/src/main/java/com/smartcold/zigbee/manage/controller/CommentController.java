@@ -35,4 +35,5 @@ public class CommentController {
     public Object findCommentsByRDCId(@RequestParam int rdcID, @RequestParam int npoint) {
         return commentService.findCommentsRdcID(rdcID, npoint);
     }
+    
 }

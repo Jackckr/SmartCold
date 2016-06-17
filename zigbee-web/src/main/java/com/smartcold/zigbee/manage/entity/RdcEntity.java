@@ -39,6 +39,16 @@ public class RdcEntity {
     private String commit;
 
     private float powerConsume;
+    
+    private int userid;//关联用户id
+	
+	public int getUserId() {
+		return userid;
+	}
+
+	public void setUserId(int userId) {
+		this.userid = userId;
+	}
 
     public String getName() {
         return name;

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.net.nntp.NewGroupsOrNewsQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
+import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.VerifyUtil;
@@ -87,6 +90,7 @@ public class RdcController {
 		return rdcMapper.findRDCByRDCId(rdcID);
 	}
 
+	
 	@RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRDCDTOByRDCId(@RequestParam int rdcID) {
@@ -128,10 +132,12 @@ public class RdcController {
 	public Object findAllCompanyDevice() {
 		return companyDeviceDao.findAll();
 	}
+	
 
+	
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object add(@RequestParam(required = false) MultipartFile file0,
+	public Object add(HttpServletRequest request,@RequestParam(required = false) MultipartFile file0,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
@@ -148,7 +154,8 @@ public class RdcController {
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
-
+		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
+		rdcEntity.setUserId(user.getId());
 		rdcEntity.setType(0);
 		rdcEntity.setStoragetype("");
 		rdcEntity.setColdtype("");
@@ -316,7 +323,7 @@ public class RdcController {
 		return new BaseDto(0);
 	}
 
-
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/checkName", method = RequestMethod.GET)

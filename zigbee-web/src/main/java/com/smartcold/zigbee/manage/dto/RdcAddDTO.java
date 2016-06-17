@@ -22,6 +22,8 @@ public class RdcAddDTO {
 	private String name;
 
 	private String address;
+	
+	
 
 	private int coldTruck1;
 	private int coldTruck2;
@@ -79,6 +81,16 @@ public class RdcAddDTO {
 	private String arrangepiclocation;
 
 	private String storagePicLocation;
+	
+	private int userid;//关联用户id
+	
+	public int getUserId() {
+		return userid;
+	}
+
+	public void setUserId(int userId) {
+		this.userid = userId;
+	}
 
 	public String getArrangepiclocation() {
 		return arrangepiclocation;

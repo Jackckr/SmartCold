@@ -70,11 +70,28 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             console.log("data:" + data[i].name + data[i].addtime);
         }
     });
-
+    
     $scope.goDetail = function (rdcID) {
+    	/*  $http.get('/i/user/findUser').success(function(data){
+            $rootScope.user = data;
+             if($rootScope.user == null || $rootScope.user.id == 0){
+                 url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStoragelist";
+                 window.location.href = url;
+             } else {*/
+            	 console.log("rdcID" + rdcID);
+                 $state.go('coldStorageComment', {"rdcID": rdcID});
+            /* }
+         });*/
+     }
+    	
+    	
+    /*	if(user.username!=undefined && user.username!=''){
         console.log("rdcID" + rdcID);
         $state.go('coldStorageComment', {"rdcID": rdcID});
-    }
+    	}
+    	else{
+    		alert("请先登录");
+    	}*/
 
     $scope.goRdcMap = function () {
         $state.go('coldStorageMap', {});
