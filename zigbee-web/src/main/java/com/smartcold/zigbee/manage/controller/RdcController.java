@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.CompanyDeviceMapper;
+import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.RdcExtMapper;
 import com.smartcold.zigbee.manage.dao.RdcMapper;
 import com.smartcold.zigbee.manage.dao.StorageManageTypeMapper;
@@ -66,6 +68,9 @@ public class RdcController {
 
 	@Autowired
 	private FtpService ftpService;
+	
+	@Autowired
+	private FileDataMapper fileDataDao;
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -278,8 +283,10 @@ public class RdcController {
 		 * rdcExtEntity.setStorageheight((byte)0);
 		 * rdcExtEntity.setStoragestruct((byte)0);
 		 */
-
-		List<String> storagepicLocations = new ArrayList<String>();
+		Gson gson = new Gson();
+		List<String> storagepicLocations = gson.fromJson(rdcExtEntity.getStoragepiclocation(), 
+				new TypeToken<List<String>>() {
+				}.getType());
 		for (MultipartFile file : files) {
 			if (file == null) {
 				continue;
@@ -293,7 +300,7 @@ public class RdcController {
 				e.printStackTrace();
 			}
 		}
-		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+		rdcExtEntity.setStoragepiclocation(gson.toJson(storagepicLocations));
 		// save arrangePic
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
