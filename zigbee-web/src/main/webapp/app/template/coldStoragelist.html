@@ -92,7 +92,7 @@
                          style="height: 80px;width: 95%;position: relative;top: 10px;left: 40px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                         <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9">
                             <a href="#" class="pull-left" style="position: relative;top: 10px;left: 0px;height:64px;">
-                            	<img style="width:66px;" src="{{rdc.arrangePic}}" alt=''/></a>
+                            	<img style="width:66px;" src="{{rdc.arrangePic.location || 'app/img/rdcHeader.jpg'}}" alt=''/></a>
 
                             <div style="position: relative;left: 10px">
                                 <h5 style="color: dodgerblue;position: relative;top: 5px">
@@ -139,11 +139,11 @@
                 <div class="row" ng-repeat="hotrdc in hotrdcs"
                      style="height: 70px;width: 95%;position: relative;top: 10px;left: 20px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                     <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
-                        <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
+                        <a href="" ng-click="goDetail(hotrdc.id)" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
                                 src="app/img/rdcHeader.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                         <div style="position: relative;left: 5px;">
-                            <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a ng-click="goDetail(hotrdc.id)">{{hotrdc.name}}</a></span>
+                            <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a href="" ng-click="goDetail(hotrdc.id)">{{hotrdc.name}}</a></span>
 
                             <div style="position:relative;height: 3px;margin-bottom: 1px">
                                 <i class="icon-star"></i>

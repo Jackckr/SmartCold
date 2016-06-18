@@ -72,4 +72,7 @@ bin/
 *.ipr
 *.iws
 .idea/
-#  database config
+
+# database config ignore
+cold-web/src/main/resources/config/spring/local/appcontext-db.xml
+zigbee-web/src/main/resources/config/spring/local/appcontext-db.xml

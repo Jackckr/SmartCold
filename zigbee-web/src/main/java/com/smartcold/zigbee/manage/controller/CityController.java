@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-05-21 16:41)
- */
 @Controller
 @RequestMapping(value = "/city")
 public class CityController {

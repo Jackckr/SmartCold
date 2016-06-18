@@ -43,6 +43,9 @@ public class RdcServiceImpl implements RdcService {
 
 	@Autowired
 	private CommentMapper commentDao;
+	
+	@Autowired
+	private FileDataMapper fileDataDao;
 
 	@Override
 	public List<RdcEntity> findRdcList() {
@@ -143,15 +146,19 @@ public class RdcServiceImpl implements RdcService {
 			rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
 			rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
 			rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
-			rdcAddDTO.setArrangepiclocation(rdcExtEntity.getArrangepiclocation());
-			ArrayList<String> locationList = gson.fromJson(rdcExtEntity.getStoragepiclocation(),
-					new TypeToken<List<String>>() {
-					}.getType());
-			for (int i = 0; i < locationList.size(); i++) {
-				locationList.set(i,
-						String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, locationList.get(i)));
+			List<FileDataEntity> arrangeFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+			if (!arrangeFiles.isEmpty()) {
+				FileDataEntity arrangeFile = arrangeFiles.get(0);
+				arrangeFile.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, arrangeFile.getLocation()));
+				rdcAddDTO.setArrangePic(arrangeFile);
 			}
-			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
+			
+			List<FileDataEntity> storageFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+			for (FileDataEntity item:storageFiles) {
+				item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+			}
+			rdcAddDTO.setStoragePics(storageFiles);
+//			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
 
 			String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
 			for (int i = 0; i < truck.length; i++) {
@@ -256,11 +263,11 @@ public class RdcServiceImpl implements RdcService {
 				dto.setUserRecommendPercent(userRecommendPercent);
 				
 				//取出仓库平面图
-				List<RdcExtEntity> rdcExtEntities  = rdcExtDao.findRDCExtByRDCId(rdcEntity.getId());
-				if (!rdcExtEntities.isEmpty() && rdcExtEntities.get(0).getArrangepiclocation() != null) {
-					dto.setArrangePic( FtpService.READ_URL + rdcExtEntities.get(0).getArrangepiclocation() );
-				}else {
-					dto.setArrangePic("app/img/rdcHeader.jpg");
+				List<FileDataEntity> arrangePics = fileDataDao.findByBelongIdAndCategory(rdcEntity.getId(), FileDataMapper.CATEGORY_ARRANGE_PIC);
+				if (!arrangePics.isEmpty()) {
+					FileDataEntity arrangePic = arrangePics.get(0);
+					arrangePic.setLocation(FtpService.READ_URL + arrangePics.get(0).getLocation());
+					dto.setArrangePic(arrangePic);
 				}
 				result.add(dto);
 			}

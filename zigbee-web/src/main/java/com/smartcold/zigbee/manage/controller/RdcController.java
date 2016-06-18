@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.net.nntp.NewGroupsOrNewsQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -17,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.CompanyDeviceMapper;
+import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.RdcExtMapper;
 import com.smartcold.zigbee.manage.dao.RdcMapper;
 import com.smartcold.zigbee.manage.dao.StorageManageTypeMapper;
@@ -28,17 +29,15 @@ import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
-import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.VerifyUtil;
-/**
- * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
- */
+
 @Controller
 @RequestMapping(value = "/rdc")
 public class RdcController {
@@ -71,7 +70,10 @@ public class RdcController {
 
 	@Autowired
 	private FtpService ftpService;
-
+	
+	@Autowired
+	private FileDataMapper fileDataDao;
+	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
@@ -90,7 +92,6 @@ public class RdcController {
 		return rdcMapper.findRDCByRDCId(rdcID);
 	}
 
-	
 	@RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRDCDTOByRDCId(@RequestParam int rdcID) {
@@ -132,16 +133,15 @@ public class RdcController {
 	public Object findAllCompanyDevice() {
 		return companyDeviceDao.findAll();
 	}
-	
 
-	
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object add(HttpServletRequest request,@RequestParam(required = false) MultipartFile file0,
+	public Object add(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
-//		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
+		// MultipartFile[] files = { file0, file1, file2, file3, file4,
+		// arrangePic };
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
@@ -154,7 +154,7 @@ public class RdcController {
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
-		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
+		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
 		rdcEntity.setUserId(user.getId());
 		rdcEntity.setType(0);
 		rdcEntity.setStoragetype("");
@@ -167,7 +167,6 @@ public class RdcController {
 
 		// 插入rdc表,返回对应的ID
 		RdcExtEntity rdcExtEntity = new RdcExtEntity();
-		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
 		rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
@@ -192,7 +191,9 @@ public class RdcController {
 		rdcExtEntity.setStorageheight((byte) 0);
 		rdcExtEntity.setStoragestruct((byte) 0);
 
-		List<String> storagepicLocations = new ArrayList<String>();
+		// 图片上传
+		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
+		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
 		// List<UploadFileEntity> uploadFileEntities = new
 		// ArrayList<UploadFileEntity>();
 		for (MultipartFile file : files) {
@@ -203,20 +204,29 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			storagepicLocations.add(dir + "/" + fileName);
+			FileDataEntity fileDataEntity = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName, 
+						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			storageFiles.add(fileDataEntity);
+		}
+		if (!storageFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(storageFiles);
 		}
 		// ftpService.uploadFileList(uploadFileEntities);
-		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+//		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
 		
+
 		// save arrangePic
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+//			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+			FileDataEntity arrangeFile = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName,
+					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
+			fileDataDao.saveFileData(arrangeFile);
 		}
-		
+
 		rdcExtDao.insertRdcExt(rdcExtEntity);
 
 		return new BaseDto(0);
@@ -228,13 +238,16 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
-		//System.out.println(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8").length());
-		/*if (URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8").length()>125) {
-			 return new BaseDto(-1);
-		}*/	
-//		MultipartFile[] files = { file0, file1, file2, file3, file4, arrangePic };
+		// System.out.println(URLDecoder.decode(rdcAddDTO.getRemark(),
+		// "UTF-8").length());
+		/*
+		 * if (URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8").length()>125) {
+		 * return new BaseDto(-1); }
+		 */
+		// MultipartFile[] files = { file0, file1, file2, file3, file4,
+		// arrangePic };
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
-		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
+		
 
 		int rdcId = rdcAddDTO.getRdcId();
 		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
@@ -291,29 +304,32 @@ public class RdcController {
 		 * rdcExtEntity.setStorageheight((byte)0);
 		 * rdcExtEntity.setStoragestruct((byte)0);
 		 */
-
-		List<String> storagepicLocations = new ArrayList<String>();
+		
+		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
+		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
 				continue;
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			try {
-				ftpService.uploadFile(uploadFileEntity);
-				storagepicLocations.add(dir + "/" + fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			// uploadFileEntities.add(uploadFileEntity);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName, 
+						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			storageFiles.add(fileDataEntity);
 		}
-		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+		if (!storageFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(storageFiles);
+		}
 		// save arrangePic
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
-			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+			FileDataEntity arrangeFile = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName,
+					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
+			fileDataDao.saveFileData(arrangeFile);
 		}
 		if (haveRdcExt)
 			rdcExtDao.updateRdcExt(rdcExtEntity);
@@ -323,8 +339,6 @@ public class RdcController {
 		return new BaseDto(0);
 	}
 
-	
-	
 	@ResponseBody
 	@RequestMapping(value = "/checkName", method = RequestMethod.GET)
 	public Object checkName(@RequestParam("value") String name) {
@@ -333,7 +347,7 @@ public class RdcController {
 		ngRemoteValidateDTO.setValid(rdcService.checkName(name));
 		return ngRemoteValidateDTO;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/checkArea", method = RequestMethod.GET)
 	public Object checkArea(@RequestParam("value") String area) {
@@ -341,7 +355,7 @@ public class RdcController {
 		ngRemoteValidateDTO.setValid(VerifyUtil.isNumeric(area));
 		return ngRemoteValidateDTO;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/checkCellphoneFormat", method = RequestMethod.GET)
 	public Object checkCellphoneFormat(@RequestParam("value") String phoneNum) {
@@ -349,7 +363,7 @@ public class RdcController {
 		ngRemoteValidateDTO.setValid(VerifyUtil.checkCellphone(phoneNum));
 		return ngRemoteValidateDTO;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/checkRemark", method = RequestMethod.GET)
 	public Object checkRemark(@RequestParam("value") String remark) {
@@ -357,7 +371,7 @@ public class RdcController {
 		ngRemoteValidateDTO.setValid(VerifyUtil.checkRemark(remark));
 		return ngRemoteValidateDTO;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/checkCellphone", method = RequestMethod.GET)
 	public Object checkCellphone(@RequestParam("value") String phoneNum) {
@@ -365,11 +379,11 @@ public class RdcController {
 		ngRemoteValidateDTO.setValid(!rdcMapper.checkCellphone(phoneNum));
 		return ngRemoteValidateDTO;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/deleteStoragePic", method=RequestMethod.POST)
-	public Object deleteStoragePic(String url){
+	@RequestMapping(value = "/deleteStoragePic", method = RequestMethod.POST)
+	public Object deleteStoragePic(String url) {
 		boolean deleted = ftpService.deleteFile(url);
-		return new BaseDto(deleted?0:-1);
+		return new BaseDto(deleted ? 0 : -1);
 	}
 }
