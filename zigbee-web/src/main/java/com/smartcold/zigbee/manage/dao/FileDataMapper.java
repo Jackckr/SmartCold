@@ -17,11 +17,11 @@ public interface FileDataMapper {
 	
 	// category
 	//冷库图片
-	static final String PIC_STORAGE = "storagePic";
+	static final String CATEGORY_STORAGE_PIC = "storagePic";
 	//功能平面布置图
-	static final String PIC_ARRANGE= "arrangePic";
+	static final String CATEGORY_ARRANGE_PIC= "arrangePic";
 	//评论的图片
-	static final String PIC_COMMENT = "commentPic";
+	static final String CATEGORY_COMMENT_PIC = "commentPic";
 	
 	List<FileDataEntity> findByBelongIdAndCategory(@Param("belongid")int belongid, @Param("category")String category);
 	

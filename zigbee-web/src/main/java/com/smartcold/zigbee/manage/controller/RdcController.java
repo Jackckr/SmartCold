@@ -30,6 +30,7 @@ import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
@@ -75,7 +76,7 @@ public class RdcController {
 	
 	@Autowired
 	private FileDataMapper fileDataDao;
-
+	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
@@ -169,7 +170,6 @@ public class RdcController {
 
 		// 插入rdc表,返回对应的ID
 		RdcExtEntity rdcExtEntity = new RdcExtEntity();
-		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
 		rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
@@ -194,7 +194,9 @@ public class RdcController {
 		rdcExtEntity.setStorageheight((byte) 0);
 		rdcExtEntity.setStoragestruct((byte) 0);
 
-		List<String> storagepicLocations = new ArrayList<String>();
+		// 图片上传
+		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
+		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
 		// List<UploadFileEntity> uploadFileEntities = new
 		// ArrayList<UploadFileEntity>();
 		for (MultipartFile file : files) {
@@ -205,10 +207,14 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			storagepicLocations.add(dir + "/" + fileName);
+			FileDataEntity fileDataEntity = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName, 
+						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			storageFiles.add(fileDataEntity);
 		}
+		fileDataDao.saveFileDatas(storageFiles);
 		// ftpService.uploadFileList(uploadFileEntities);
-		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+//		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
+		
 
 		// save arrangePic
 		if (arrangePic != null) {
@@ -216,7 +222,10 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+//			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+			FileDataEntity arrangeFile = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName,
+					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
+			fileDataDao.saveFileData(arrangeFile);
 		}
 
 		rdcExtDao.insertRdcExt(rdcExtEntity);

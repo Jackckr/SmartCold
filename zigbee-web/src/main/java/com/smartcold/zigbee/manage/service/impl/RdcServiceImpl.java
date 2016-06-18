@@ -43,6 +43,9 @@ public class RdcServiceImpl implements RdcService {
 
 	@Autowired
 	private CommentMapper commentDao;
+	
+	@Autowired
+	private FileDataMapper fileDataDao;
 
 	@Override
 	public List<RdcEntity> findRdcList() {
@@ -143,15 +146,16 @@ public class RdcServiceImpl implements RdcService {
 			rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
 			rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
 			rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
-			rdcAddDTO.setArrangepiclocation(rdcExtEntity.getArrangepiclocation());
-			ArrayList<String> locationList = gson.fromJson(rdcExtEntity.getStoragepiclocation(),
-					new TypeToken<List<String>>() {
-					}.getType());
-			for (int i = 0; i < locationList.size(); i++) {
-				locationList.set(i,
-						String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, locationList.get(i)));
+			FileDataEntity arrangeFile = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC).get(0);
+			arrangeFile.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, arrangeFile.getLocation()));
+			rdcAddDTO.setArrangePic(arrangeFile);
+			
+			List<FileDataEntity> storageFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+			for (FileDataEntity item:storageFiles) {
+				item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
 			}
-			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
+			rdcAddDTO.setStoragePics(storageFiles);
+//			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
 
 			String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
 			for (int i = 0; i < truck.length; i++) {

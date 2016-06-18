@@ -11,6 +11,22 @@ public class FileDataEntity {
 	private int belongid;
 	private String name;
 	private String description;
+	
+	public FileDataEntity() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public FileDataEntity(String type, String location, String category,
+			int belongid, String name) {
+		super();
+		this.type = type;
+		this.location = location;
+		this.category = category;
+		this.belongid = belongid;
+		this.name = name;
+	}
+
+
 	public int getId() {
 		return id;
 	}
