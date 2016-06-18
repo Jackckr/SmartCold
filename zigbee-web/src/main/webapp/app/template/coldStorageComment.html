@@ -40,20 +40,20 @@
                 <div class="row">
                     <!--<img src="app/img/banner.jpg" style="position:relative;left:50px;width:93%;height: 50%;">-->
                     <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
-                        <img ng-src="{{storagePicLocation[0]}}"
+                        <img ng-src="{{storagePics[0].location}}"
                              style="position:relative;left:40px;width:100%;height: 224px;">
                     </div>
                     <div class="col-lg-5 col-sm-5 col-xs-5 col-md-5">
                         <div class="row" style="position:relative;left:1px;">
-                            <img ng-src="{{storagePicLocation[1]}}"
+                            <img ng-src="{{storagePics[1].location}}"
                                  style="position:relative;left:30px;width:255px;height: 109px;">
-                            <img ng-src="{{storagePicLocation[2]}}"
+                            <img ng-src="{{storagePics[2].location}}"
                                  style="position:relative;left:30px;width:100px;height: 109px;">
                         </div>
                         <div class="row" style="position:relative;left:1px;top: 4px">
-                            <img ng-src="{{storagePicLocation[3]}}"
+                            <img ng-src="{{storagePics[3].location}}"
                                  style="position:relative;left:30px;width:100px;height: 109px;">
-                            <img ng-src="{{storagePicLocation[4]}}"
+                            <img ng-src="{{storagePics[4].location}}"
                                  style="position:relative;left:30px;width:255px;height: 109px;">
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         </div>-->
                     </div>
                 </div>
-                <div class="row" ng-controller="coldStorageComment">
+                <div class="row">
                     <div class="tabbable" style="position: relative;left:50px;top: 10px">
                         <ul class="nav nav-tabs" style="position:relative;left:0px;width:93%;height: 50%;">
                             <li id="detail" class="active">
@@ -290,151 +290,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-            <!--                    <div class="row">
-                                    <h3 style="color: #00a7d0">冷库介绍</h3>
-                                    <p>
-                                        该冷库位于{{rdcAddress}}.
-                                    </p>
-                                </div>
-                                <div class="row" style="position: relative;left: 0px;top: 0px">
-                                    <h3 style="color: #00a7d0">冷库设施</h3>
-                                    <table style="width: 92%">
-                                        <tbody>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">通用设施</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-lightbulb"></i><span style="padding-left: 10px">电灯</span>
-                                                    </li>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-inbox"></i><span
-                                                            style="padding-left: 10px">空调</span></li>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-truck"></i><span
-                                                            style="padding-left: 10px">汽车</span></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">服务项目</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-home"></i><span
-                                                            style="padding-left: 10px">冷藏</span></li>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-ambulance"></i><span style="padding-left: 10px">保鲜</span>
-                                                    </li>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-plane"></i><span
-                                                            style="padding-left: 10px">运输</span></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">冷库设施</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-spinner"></i><span
-                                                            style="padding-left: 10px">风机</span></li>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-lock"></i><span
-                                                            style="padding-left: 10px">库门</span></li>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        <i class="icon-map-marker"></i><span style="padding-left: 10px">传感器</span>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row" style="position: relative;left: 0px;top: 10px">
-                                    <h3 style="color: #00a7d0">冷库规章</h3>
-                                    <table style="width: 92%">
-                                        <tbody>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">参观时间</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        进库时间：10:00以后&nbsp;&nbsp;&nbsp;离库时间：16:00以前
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">膳食安排</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        中餐早餐,自助早餐
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">宠物</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        不可携带宠物。
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row" style="position: relative;left: 0px;top: 10px">
-                                    <h3 style="color: #00a7d0">周边设施</h3>
-                                    <table style="width: 92%">
-                                        <tbody>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">餐饮</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        u.b.c(上海四川北路店)&nbsp;西域刀狼烧烤&nbsp;速美黄焖鸡米饭(四川北路店)&nbsp;中国电信食堂(横浜食堂)&nbsp;中国电信食堂
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">购物</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        东京银座ginza&nbsp;嘉杰国际广场总台&nbsp;四川北路商业广场&nbsp;萨班尼荷&nbsp;新世界百货上海巴黎春天虹口店
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">地铁</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        东宝兴路站&nbsp;东宝兴路&nbsp;西藏北路&nbsp;西藏北路站&nbsp;宝山路站
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 8%">景点</td>
-                                            <td>
-                                                <ul>
-                                                    <li style="float: left; padding:2px 0 2px 30px; margin-right: 10px; width: 90%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                        上海多伦现代美术馆&nbsp;虹口足球场&nbsp;上海外国语大学
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>-->
                             </div>
                             <div class="tab-pane" id="coldStorageComment">
                                 <div class="row">
@@ -486,33 +341,6 @@
                                         </div><!-- /input-group -->
                                     </div>
                                 </div>
-<!--                                <div class="row" style="background: gainsboro;margin-top: 20px;width: 95%">
-                                    <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2" style="height: 100px">
-                                        <span style="float: left; display: inline; margin-left: 25px; margin-top: 20px; font-size: 14px; font-weight: bold; color: #666;">用户印象</span>
-                                    </div>
-                                    <div class="col-lg-10 col-sm-10 col-xs-10 col-md-10">
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">冷库(116)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">早餐(82)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">干净(69)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">服务(68)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">性价比(63)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">交通(61)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">位置(59)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">环境(46)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">设施(44)</a>
-                                        <a style="display: inline-block; padding: 2px 10px; margin-top: 10px; background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;"
-                                           href="#">免费(41)</a>
-                                    </div>
-                                </div>-->
                                 <div class="row" style="background: gainsboro;margin-top: 20px;width: 95%">
                                     <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6" style="height: 30px;margin-top: 10px;">
                                         <div>

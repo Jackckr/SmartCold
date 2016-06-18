@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.zigbee.manage.service.CommentService;
 
-/**
- * Description: ColdStorageController
- * Author: qiunian.sun
- * Update: qiunian.sun(2016-03-15 23:38)
- */
 @Controller
 @RequestMapping(value = "/comment")
 public class CommentController {

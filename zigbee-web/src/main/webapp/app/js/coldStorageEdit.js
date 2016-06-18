@@ -1,6 +1,3 @@
-/**
- * Created by qiunian.sun on 16/4/9.
- */
 coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams) {
 
     $scope.editable = true;
@@ -129,6 +126,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
         $scope.arrangePic = data[0].arrangepiclocation;
+        $scope.storagePic = angular.fromJson( data[0].storagePicLocation);
         if($scope.lihuoRoom === 0){
             $scope.hasLihuoRoom = true;
         } else {
