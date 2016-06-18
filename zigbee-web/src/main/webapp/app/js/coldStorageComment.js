@@ -249,7 +249,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             }
             angular.forEach(data, function (item) {
             	console.log(item);
-                item.piclocation = JSON.parse(item.picLocation);
+                item.reviewPics = item.reviewPics;
             })
             $scope.comments = data;
             console.log(data);

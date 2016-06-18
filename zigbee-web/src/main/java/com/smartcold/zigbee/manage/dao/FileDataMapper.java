@@ -12,9 +12,6 @@ import com.smartcold.zigbee.manage.entity.FileDataEntity;
  */
 public interface FileDataMapper {
 	
-	//文件类型
-	static final String TYPE_IMAGE = "image";
-	
 	// category
 	//冷库图片
 	static final String CATEGORY_STORAGE_PIC = "storagePic";

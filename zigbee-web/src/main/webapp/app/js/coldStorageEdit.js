@@ -192,6 +192,14 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
 
     });
     
+    $scope.drop = function(file){
+        angular.forEach($scope.totalfiles,function(item, key){
+            if(item == file){
+                $scope.totalfiles.splice(key,1);
+            }
+        })
+    }
+    
     function checkCommit(){
     	if($scope.remark.length>250)
     		return false;
@@ -293,7 +301,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 capacity5 : $scope.capacity5,
                 facility : $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 //honorPic : $scope.honorPic,
-                arrangePic : $scope.arrangePic,
+                arrangePics : $scope.arrangePic,
                 rdcId: $stateParams.rdcID
             }
             for(i = 0; i < $scope.totalfiles.length; i++){

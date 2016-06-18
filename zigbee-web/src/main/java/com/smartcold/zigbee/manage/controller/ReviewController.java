@@ -17,10 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.CommentMapper;
+import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.CommentDTO;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.CommentEntity;
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 
@@ -34,6 +36,9 @@ public class ReviewController {
 
 	@Autowired
 	private FtpService ftpService;
+	
+	@Autowired
+	private FileDataMapper fileDataDao;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
@@ -54,21 +59,24 @@ public class ReviewController {
 		commentEntity.setSanitaryGrade(commentDto.getSanitaryGrade());
 		commentEntity.setServiceGrade(commentDto.getServiceGrade());
 		commentEntity.setRdcID(commentDto.getRdcID());
-		Gson gson = new Gson();
-		List<String> picLocations = new ArrayList<String>();
+
+		commentDao.insertComment(commentEntity);
+		
+		List<FileDataEntity> reviewPics = new ArrayList<FileDataEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
-				break;
+				continue;
 			}
 			String fileName = String.format("storage%s_%s.%s", commentDto.getRdcID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			ftpService.uploadFile(uploadFileEntity);
-			picLocations.add(dir + "/" + fileName);
+			FileDataEntity reviewPic = new FileDataEntity(file.getContentType(), dir + "/" + fileName, 
+					FileDataMapper.CATEGORY_COMMENT_PIC, commentEntity.getId(), fileName);
+			reviewPics.add(reviewPic);
 		}
-
-		commentEntity.setPiclocation(gson.toJson(picLocations));
-
-		commentDao.insertComment(commentEntity);
+		if (!reviewPics.isEmpty()) {
+			fileDataDao.saveFileDatas(reviewPics);
+		}
 
 		return new BaseDto(0);
 	}
