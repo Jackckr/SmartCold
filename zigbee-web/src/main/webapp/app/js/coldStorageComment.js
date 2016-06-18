@@ -281,6 +281,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.rdcName = data[0].name;
             $scope.rdcAddress = data[0].address;
             $scope.rdcCityId = data[0].cityid;
+            $scope.rdcUserId = data[0].userid;
             //alert($scope.rdcCityId); // 根据cityId进行查询cityName
             var cityName = '';
             $http.get('/i/city/findCityById', {
@@ -360,11 +361,32 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         console.log("rdcID" + rdcID);
         $state.go('coldStorageComment', {"rdcID": rdcID});
     }
-
-    $scope.goEditRdc = function (rdcID) {
-        $state.go('coldStorageEdit', {"rdcID": rdcID});
+    
+    $http.get('/i/user/findUser').success(function(data){
+        $rootScope.user = data;
+	 });
+    
+    function checkRdcidAndUserid(){
+    	if($scope.rdcUserId==$rootScope.user.id){
+    		return true;
+    	}
+    	return false;
     }
-
+    
+    $scope.goEditRdc = function (rdcID) {
+         if($rootScope.user == null || $rootScope.user.id == 0){
+                  url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageComment/"+rdcID;
+                  window.location.href = url;
+          } else {
+        	     if(checkRdcidAndUserid()){
+                   $state.go('coldStorageEdit', {"rdcID": rdcID});
+        	     }
+        	     else{
+        	    	 alert("没有修改该冷库的权限");
+        	     }
+           }
+    }
+    
 
     $scope.items = ['html5', 'jq', 'FE-演示平台'];
     $scope.goComment = function (size) {  //打开模态

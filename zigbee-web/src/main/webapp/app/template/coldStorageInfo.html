@@ -52,7 +52,12 @@
             
 		    <div class="form-group rdc">
 		      <label class="col-sm-4 control-label">面积：<em>*</em></label>
-              <div class="col-sm-8"><input class="form-control" type="text" ng-model="area"></div>
+              <div class="col-sm-8">
+                   <input class="form-control" placeholder="冷库面积（平方米）" type="text" name="area" ng-model="area"
+                        ng-remote-validate="/i/rdc/checkArea"
+                		ng-remote-method="GET">
+                	<em ng-show="rdcForm.area.$error.ngRemoteValidate">请输入数字，单位为（平方米）</em>
+              </div>
 		    </div>
 		  
                     <div class="form-group rdc">
@@ -130,14 +135,24 @@
                         <label class="col-sm-4 control-label">座机号：<em>*</em></label>
                         <div class="col-sm-8"><input class="form-control" type="text" ng-model="telphoneNum"></div>
                     </div>-->
+                    
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">联系电话：<em>*</em></label>
-                        <div class="col-sm-8"><input class="form-control" type="text" name="phoneNum" ng-model="phoneNum"></div>
+                        <div class="col-sm-8"><input class="form-control" type="text" name="phoneNum" ng-model="phoneNum"
+                         ng-remote-validate="/i/rdc/checkCellphoneFormat"
+                		 ng-remote-method="GET">
+                	     <em ng-show="rdcForm.phoneNum.$error.ngRemoteValidate">手机格式不正确</em>
+                        </div>
                     </div>
                 
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">备注：</label>
-                        <div class="col-sm-8"><textarea class="form-control" type="text" ng-model="remark"></textarea></div>
+                        <div class="col-sm-8">
+                        <textarea class="form-control" type="text" ng-model="remark" name="remark"
+                         ng-remote-validate="/i/rdc/checkRemark"
+                		 ng-remote-method="GET">
+                        </textarea><em ng-show="rdcForm.remark.$error.ngRemoteValidate">备注不能超过250个字符</em>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -346,11 +361,7 @@
                         </div>
                     </form>
                 </div>-->
-<!-- 	               <div class="col-sm-4 ">
-	               		<div class="pull-left" ng-repeat="imageSrc in storagePic">
-	               			<img style="width:64px;" src="{{imageSrc}}" alt="" />
-	               		</div>
-	               </div> -->
+               
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">冷库图片：</label>
                             <div class="col-sm-8">
@@ -382,8 +393,6 @@
                     </label>
                 </div>
             </div>
-
-
          <div class="col-lg-8 col-lg-offset-2" style="padding-left: 30%;padding-right: 30%;padding-bottom: 10px">
 		    <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;">提交</button>
         </div>

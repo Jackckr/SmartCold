@@ -15,7 +15,6 @@ coldWeb.run(function (editableOptions, naviService,userService) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     naviService.setNAVI();
     userService.setUser(user);
-    
 });
 
 coldWeb.config(function ($httpProvider) {

@@ -278,12 +278,13 @@
                                         </tr>
                                         <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="remark === undefined || remark === '' || remark === null">
                                             <td style="width: 12%">备注</td>
-                                            <td>
-                                                <ul>
+                                            <td style="word-break : break-all; float: left; padding:2px 0 2px 60px; margin-right: 10px; width: 88%;overflow:hidden;text-overflow:ellipsis;">
+                                             {{remark}}
+                                               <!--  <ul>
                                                     <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
                                                         {{remark}}
                                                     </li>
-                                                </ul>
+                                                </ul>  -->
                                             </td>
                                         </tr>
                                         </tbody>
