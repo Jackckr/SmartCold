@@ -9,9 +9,10 @@
                     <a href="" ng-click="toColdStorageList()">冷库</a>
                 </li>
                 <li class="active">
-                    {{rdcName}}
+          
                 </li>
-                <button class="btn btn-primary btn-xs pull-right" type="button" ng-click="goEditRdc(rdcId)">修改冷库</button>
+                <button class="btn btn-primary btn-xs pull-right" type="button" ng-if="undefined!=user && user.id==rdcUserId" 
+                 ng-click="goEditRdc(rdcId)">修改冷库</button>
             </ul>
         </div>
         <div class="row" style="width: 100%">
