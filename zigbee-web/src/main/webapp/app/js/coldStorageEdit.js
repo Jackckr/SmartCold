@@ -1,11 +1,19 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams) {
-
+coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
+	$scope.load = function(){
+			$http.get('/i/user/findUser').success(function(data,status,config,headers){
+				$rootScope.user = data;
+				if($rootScope.user == undefined || $rootScope.user.id == 0){
+					url = "http://" + $location.host() + ":" + $location.port();
+					window.location.href = url;
+				}
+		})
+	}
+	$scope.load();
     $scope.editable = true;
     $scope.totalfiles = [];
-
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
         id: 0,

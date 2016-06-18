@@ -269,8 +269,8 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
 
 
     $scope.load = function () {
+    	
         $scope.goColdStorageDetail($stateParams.rdcID);
-
         // 获取当前冷库的详情
         $http.get('/i/rdc/findRDCByRDCId', {
             params: {
@@ -362,10 +362,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         $state.go('coldStorageComment', {"rdcID": rdcID});
     }
     
-    $http.get('/i/user/findUser').success(function(data){
+      
+   $http.get('/i/user/findUser').success(function(data){
         $rootScope.user = data;
 	 });
-    
+
     function checkRdcidAndUserid(){
     	if($scope.rdcUserId==$rootScope.user.id){
     		return true;
