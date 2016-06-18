@@ -211,7 +211,9 @@ public class RdcController {
 						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
 		}
-		fileDataDao.saveFileDatas(storageFiles);
+		if (!storageFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(storageFiles);
+		}
 		// ftpService.uploadFileList(uploadFileEntities);
 //		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
 		
@@ -248,7 +250,7 @@ public class RdcController {
 		// MultipartFile[] files = { file0, file1, file2, file3, file4,
 		// arrangePic };
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
-		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
+		
 
 		int rdcId = rdcAddDTO.getRdcId();
 		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
@@ -305,31 +307,32 @@ public class RdcController {
 		 * rdcExtEntity.setStorageheight((byte)0);
 		 * rdcExtEntity.setStoragestruct((byte)0);
 		 */
-		Gson gson = new Gson();
-		List<String> storagepicLocations = gson.fromJson(rdcExtEntity.getStoragepiclocation(), 
-				new TypeToken<List<String>>() {
-				}.getType());
+		
+		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
+		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
 				continue;
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			try {
-				ftpService.uploadFile(uploadFileEntity);
-				storagepicLocations.add(dir + "/" + fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			// uploadFileEntities.add(uploadFileEntity);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName, 
+						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			storageFiles.add(fileDataEntity);
 		}
-		rdcExtEntity.setStoragepiclocation(gson.toJson(storagepicLocations));
+		if (!storageFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(storageFiles);
+		}
 		// save arrangePic
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
-			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+			FileDataEntity arrangeFile = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName,
+					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
+			fileDataDao.saveFileData(arrangeFile);
 		}
 		if (haveRdcExt)
 			rdcExtDao.updateRdcExt(rdcExtEntity);

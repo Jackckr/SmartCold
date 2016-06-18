@@ -169,7 +169,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.coldTruck3 = data[0].coldTruck3;
             $scope.coldTruck4 = data[0].coldTruck4;
             $scope.facility = data[0].facility;
-            console.log("name: " + data[0].name);
+            /*console.log("name: " + data[0].name);
             console.log("provinceId: " + data[0].provinceId);
             console.log("cityId: " + data[0].cityId);
             console.log("address: " + data[0].address);
@@ -199,7 +199,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             console.log("capacity3: " + data[0].capacity3);
             console.log("capacity4: " + data[0].capacity4);
             console.log("capacity5: " + data[0].capacity5);
-            console.log("facility: " + data[0].facility);
+            console.log("facility: " + data[0].facility);*/
         });
     }
 
@@ -228,7 +228,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         }
     });
 
-    $rootScope.goColdStorageDetail = function (storageID) {
+    $scope.goColdStorageDetail = function (storageID) {
         $scope.rdcId = storageID;
         findRDCByRDCId(storageID);
         angular.element(document.getElementById('detail')).addClass('active');
