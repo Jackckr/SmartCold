@@ -9,9 +9,10 @@
                     <a href="" ng-click="toColdStorageList()">冷库</a>
                 </li>
                 <li class="active">
-                    {{rdcName}}
+          
                 </li>
-                <button class="btn btn-primary btn-xs pull-right" type="button" ng-click="goEditRdc(rdcId)">修改冷库</button>
+                <button class="btn btn-primary btn-xs pull-right" type="button" ng-if="undefined!=user && user.id==rdcUserId" 
+                 ng-click="goEditRdc(rdcId)">修改冷库</button>
             </ul>
         </div>
         <div class="row" style="width: 100%">
@@ -414,7 +415,7 @@
                                                             {{comment.content}}
                                                         </p>
                                                         <div style="margin-top: 20px">
-                                                            <img ng-repeat="location in comment.piclocation" ng-src="{{location}}" width="80px" height="80px"/>
+                                                            <img ng-repeat="reviewPic in comment.reviewPics" ng-src="{{reviewPic.location}}" width="80px" height="80px"/>
                                                         </div>
                                                     </div>
                                                 </div>

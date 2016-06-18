@@ -9,6 +9,7 @@
     <select id="findByBelongIdAndCategory" resultType="FileDataEntity">
 		SELECT *
 		FROM `filedata` WHERE `belongid` = #{belongid} AND `category` = #{category}
+		ORDER BY id DESC
 	</select>
 	
 	<insert id="saveFileData" parameterType="FileDataEntity">

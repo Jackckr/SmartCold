@@ -1,5 +1,9 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.List;
+
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
+
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 16:22)
  */
@@ -27,7 +31,7 @@ public class CommentDTO {
 
 	private float sanitaryGrade;
 	
-	private String picLocation;
+	private List<FileDataEntity> reviewPics;
 
 	public int getId() {
 		return id;
@@ -35,6 +39,14 @@ public class CommentDTO {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public List<FileDataEntity> getReviewPics() {
+		return reviewPics;
+	}
+
+	public void setReviewPics(List<FileDataEntity> reviewPics) {
+		this.reviewPics = reviewPics;
 	}
 
 	public int getRdcID() {
@@ -117,13 +129,6 @@ public class CommentDTO {
 		this.sanitaryGrade = sanitaryGrade;
 	}
 
-	public String getPicLocation() {
-		return picLocation;
-	}
-
-	public void setPicLocation(String picLocation) {
-		this.picLocation = picLocation;
-	}
 
 	
 }

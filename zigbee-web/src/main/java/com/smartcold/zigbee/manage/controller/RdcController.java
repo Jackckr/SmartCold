@@ -139,10 +139,11 @@ public class RdcController {
 	public Object add(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
+			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
 		// MultipartFile[] files = { file0, file1, file2, file3, file4,
 		// arrangePic };
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
+		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
@@ -204,7 +205,7 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity fileDataEntity = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName, 
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName, 
 						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
 		}
@@ -222,7 +223,7 @@ public class RdcController {
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
 //			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
-			FileDataEntity arrangeFile = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName,
+			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(arrangeFile);
 		}
@@ -237,7 +238,7 @@ public class RdcController {
 	public Object update(@RequestParam(required = false) MultipartFile file0,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile arrangePic, RdcAddDTO rdcAddDTO) throws Exception {
+			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
 		// System.out.println(URLDecoder.decode(rdcAddDTO.getRemark(),
 		// "UTF-8").length());
 		/*
@@ -247,7 +248,7 @@ public class RdcController {
 		// MultipartFile[] files = { file0, file1, file2, file3, file4,
 		// arrangePic };
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
-		
+		MultipartFile arrangePic = arrangePics;
 
 		int rdcId = rdcAddDTO.getRdcId();
 		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
@@ -315,7 +316,7 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity fileDataEntity = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName, 
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName, 
 						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
 		}
@@ -327,7 +328,7 @@ public class RdcController {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
 			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity arrangeFile = new FileDataEntity(FileDataMapper.TYPE_IMAGE, dir + "/" + fileName,
+			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(arrangeFile);
 		}

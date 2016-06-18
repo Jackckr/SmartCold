@@ -1,5 +1,17 @@
-coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cookies, $http, Upload) {
-
+/**
+ * Created by qiunian.sun on 16/4/9.
+ */
+coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cookies, $http, Upload,$location) {
+	$scope.load = function(){
+		$http.get('/i/user/findUser').success(function(data,status,config,headers){
+			$rootScope.user = data;
+			if($rootScope.user == undefined || $rootScope.user.id == 0){
+				url = "http://" + $location.host() + ":" + $location.port();
+				window.location.href = url;
+			}
+	    })
+    }
+    $scope.load();
     $scope.editable = false;
 
     $scope.haveOrNots = [];
@@ -133,7 +145,6 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     $scope.drop = function(file){
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
-            	console.log("key:"+key);
                 $scope.totalfiles.splice(key,1);
             }
         })
@@ -223,7 +234,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 capacity5 : $scope.capacity5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 //honorPic : $scope.honorPic,
-                arrangePic : $scope.arrangePic,
+                arrangePics : $scope.arrangePic,
             }
             for(i = 0; i < $scope.totalfiles.length; i++){
                 data["file" + i] = $scope.totalfiles[i];

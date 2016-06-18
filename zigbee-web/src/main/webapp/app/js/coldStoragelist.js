@@ -96,7 +96,7 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             var size = data.length;
             if (size >= 0) {
                 for (var i = 0; i < size; i++) {
-                    if ((data[i].name).indexOf(content) > -1) {
+                    if ((data[i].name).indexOf(content) > -1 || (data[i].address).indexOf(content) > -1) {
                         result.push(data[i]);
                     }
                 }
@@ -796,8 +796,17 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         $scope.Allrdcs = result;
         $scope.bigTotalItems = size;
         var firstData = [];
-        for (var i = 0; i < 10; i++) {
-            firstData.push(result[i]);
+        if (result.length !== 0){
+            if (result.length > 10){
+                for (var i = 0; i < 10; i++) {
+                    firstData.push(result[i]);
+                }
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    firstData.push(result[i]);
+                }
+            }
+
         }
         $scope.rdcs = firstData;
     }
