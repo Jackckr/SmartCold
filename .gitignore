@@ -1,5 +1,9 @@
 /ws/*
 
+# database config ignore
+cold-web/src/main/resources/config/spring/local/appcontext-db.xml
+zigbee-web/src/main/resources/config/spring/local/appcontext-db.xml
+
 # should not ignored #
 !*.java
 !*.gitignore
@@ -72,4 +76,3 @@ bin/
 *.ipr
 *.iws
 .idea/
-#  database config
