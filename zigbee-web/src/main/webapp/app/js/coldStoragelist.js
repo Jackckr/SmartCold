@@ -96,7 +96,7 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             var size = data.length;
             if (size >= 0) {
                 for (var i = 0; i < size; i++) {
-                    if ((data[i].name).indexOf(content) > -1) {
+                    if ((data[i].name).indexOf(content) > -1 || (data[i].address).indexOf(content) > -1) {
                         result.push(data[i]);
                     }
                 }
