@@ -1,6 +1,3 @@
-/**
- * Created by qiunian.sun on 16/4/9.
- */
 coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cookies, $http, Upload) {
 
     $scope.editable = false;
@@ -232,7 +229,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 data["file" + i] = $scope.totalfiles[i];
             }
 
-            console.log("name: " + data.name);
+/*            console.log("name: " + data.name);
             console.log("provinceId: " + data.provinceId);
             console.log("cityId: " + data.cityId);
             console.log("address: " + data.address);
@@ -266,7 +263,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             //console.log("honorPic: " + data.honorPic);
             console.log("arrangePic: " + data.arrangePic);
             console.log("file0: " + data.file0);
-            console.log("file1: " + data.file1);
+            console.log("file1: " + data.file1);*/
 
             Upload.upload({
                 url: '/i/rdc/addRdc',

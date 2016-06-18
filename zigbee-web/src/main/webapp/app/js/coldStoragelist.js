@@ -1,6 +1,3 @@
-/**
- * Created by qiunian.sun on 16/4/9.
- */
 coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 
     // 显示最大页数

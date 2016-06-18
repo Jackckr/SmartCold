@@ -38,9 +38,6 @@ import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.VerifyUtil;
 
-/**
- * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
- */
 @Controller
 @RequestMapping(value = "/rdc")
 public class RdcController {
