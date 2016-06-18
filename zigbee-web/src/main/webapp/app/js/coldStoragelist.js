@@ -796,8 +796,17 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         $scope.Allrdcs = result;
         $scope.bigTotalItems = size;
         var firstData = [];
-        for (var i = 0; i < 10; i++) {
-            firstData.push(result[i]);
+        if (result.length !== 0){
+            if (result.length > 10){
+                for (var i = 0; i < 10; i++) {
+                    firstData.push(result[i]);
+                }
+            } else {
+                for (var i = 0; i < result.length; i++) {
+                    firstData.push(result[i]);
+                }
+            }
+
         }
         $scope.rdcs = firstData;
     }
