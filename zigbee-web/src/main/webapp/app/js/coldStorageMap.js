@@ -1,6 +1,3 @@
-/**
- * Created by qiunian.sun on 16/4/9.
- */
 coldWeb.controller('coldStorageMap', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 
     $scope.Allrdcs = "";
