@@ -96,13 +96,18 @@
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control password" name="password" placeholder='密码'>
+                    <div class="err-popover-out">
+                        <div class="">
+                            <div class="text-danger" id="password_error"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control password" name="password1" placeholder='重复密码'>
                     <!-- 错误信息 popover -->
                     <div class="err-popover-out">
                         <div class="">
-                            <div class="text-danger" id="password_error"></div>
+                            <div class="text-danger" id="password_error1"></div>
                         </div>
                     </div>
                     <!-- 错误信息 popover end -->
@@ -133,7 +138,7 @@ $(function(){
 	});
 	$('#email').blur(function(){
 		if($("#email")[0].value == ""){
-		    $("#email_error")[0].innerText = "用户名不能为空";
+		    $("#email_error")[0].innerText = "邮箱不能为空";
 		}else{
 			$("#email_error")[0].innerText = "";
 		}
@@ -166,12 +171,13 @@ $(function(){
 function checkPassword(){
 	var password = $('input[name=password]').val();
 	var password1 = $('input[name=password1]').val();
-	if(password == '' || password1 == ''){
+	if(password == ''){
 		$("#password_error")[0].innerText = "密码不能为空";
 	}else if(password != password1)
-		$("#password_error")[0].innerText = "两次密码不一样";
+		$("#password_error1")[0].innerText = "两次密码不一样";
 	else{
 		$("#password_error")[0].innerText = "";
+		$("#password_error1")[0].innerText = "";
 		return false;	
 	}
 	return true;
