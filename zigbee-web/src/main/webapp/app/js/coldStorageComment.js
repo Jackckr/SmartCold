@@ -43,15 +43,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.score = data[0].score;
             $scope.userRecommendPercent = data[0].userRecommendPercent;
             $scope.userCommentCount = data[0].userCommentCount;
-            /*if ($scope.score === undefined) {
-             $scope.score = (Math.random() + 4).toFixed(1);
-             }
-             if ($scope.userRecommendPercent === undefined) {
-             $scope.userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
-             }
-             if ($scope.userCommentCount === undefined) {
-             $scope.userCommentCount = (Math.random() * 1000 + 9000).toFixed(0);
-             }*/
             $scope.recommentCount = data[0].recommentCount;
             $scope.rdcPositionScore = data[0].rdcPositionScore;
             $scope.rdcFacility = data[0].rdcFacilityScore;
@@ -166,7 +157,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.coldTruck3 = data[0].coldTruck3;
             $scope.coldTruck4 = data[0].coldTruck4;
             $scope.facility = data[0].facility;
-            console.log("name: " + data[0].name);
+/*            console.log("name: " + data[0].name);
             console.log("provinceId: " + data[0].provinceId);
             console.log("cityId: " + data[0].cityId);
             console.log("address: " + data[0].address);
@@ -196,7 +187,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             console.log("capacity3: " + data[0].capacity3);
             console.log("capacity4: " + data[0].capacity4);
             console.log("capacity5: " + data[0].capacity5);
-            console.log("facility: " + data[0].facility);
+            console.log("facility: " + data[0].facility);*/
         });
     }
 
