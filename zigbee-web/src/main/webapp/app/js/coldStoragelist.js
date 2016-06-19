@@ -21,9 +21,6 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         }
         var curtData = [];
         for (var i = startItem; i <= endItem; i++) {
-            data[i].score = (Math.random() + 4).toFixed(1);
-            data[i].userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
-            data[i].userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
             curtData.push(data[i]);
         }
         setTimeout(function () {
@@ -90,6 +87,8 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
 
     $scope.goSearch = function () {
         var content = $scope.query;
+        var provinceIdSelected = $scope.provinceSelected;
+
         // 获取当前冷库的列表
         $http.get('/i/rdc/findRdcList').success(function (data) {
             var result = [];
@@ -97,7 +96,13 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             if (size >= 0) {
                 for (var i = 0; i < size; i++) {
                     if ((data[i].name).indexOf(content) > -1 || (data[i].address).indexOf(content) > -1) {
-                        result.push(data[i]);
+                        if (provinceIdSelected == undefined || provinceIdSelected == ''){
+                            result.push(data[i]);
+                        } else {
+                            if (data[i].provinceid == parseInt(provinceIdSelected)){
+                                result.push(data[i]);
+                            }
+                        }
                     }
                 }
             }
