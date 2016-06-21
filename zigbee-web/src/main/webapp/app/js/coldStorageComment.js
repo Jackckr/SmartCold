@@ -402,6 +402,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
      $rootScope.timeTicket = setInterval(function () {
      $scope.temper();
      }, 30000);*/
+    
 });
 
 coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) { //依赖于modalInstance

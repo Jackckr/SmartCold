@@ -48,15 +48,15 @@ public class RdcEntityDTO {
 
     private int userCommentCount;
     
-    private FileDataEntity arrangePic;
+    private FileDataEntity storagePic;
 
-    
-	public FileDataEntity getArrangePic() {
-		return arrangePic;
+
+	public FileDataEntity getStoragePic() {
+		return storagePic;
 	}
 
-	public void setArrangePic(FileDataEntity arrangePic) {
-		this.arrangePic = arrangePic;
+	public void setStoragePic(FileDataEntity storagePic) {
+		this.storagePic = storagePic;
 	}
 
 	public String getName() {

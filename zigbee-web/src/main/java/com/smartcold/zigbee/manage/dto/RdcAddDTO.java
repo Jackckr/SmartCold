@@ -87,7 +87,17 @@ public class RdcAddDTO {
 	private List<FileDataEntity> storagePics;
 	
 	private int userid;//关联用户id
+	//浏览量
+	private int pageview;
 	
+	public int getPageview() {
+		return pageview;
+	}
+
+	public void setPageview(int pageview) {
+		this.pageview = pageview;
+	}
+
 	public int getUserId() {
 		return userid;
 	}

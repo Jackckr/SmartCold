@@ -49,8 +49,20 @@ public class RdcExtEntity {
     private String arrangepiclocation;
 
     private String storagepiclocation;
+    
+    private int pageview;
+    
+    
 
-    public int getId() {
+    public int getPageview() {
+		return pageview;
+	}
+
+	public void setPageview(int pageview) {
+		this.pageview = pageview;
+	}
+
+	public int getId() {
         return id;
     }
 

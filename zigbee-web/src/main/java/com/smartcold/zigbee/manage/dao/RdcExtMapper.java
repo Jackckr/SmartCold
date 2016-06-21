@@ -15,4 +15,6 @@ public interface RdcExtMapper {
     int insertRdcExt(RdcExtEntity rdcExt);
 
     void updateRdcExt(RdcExtEntity rdcExtEntity);
+    
+    void increasePageView(int rdcID);
 }

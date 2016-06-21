@@ -146,6 +146,8 @@ public class RdcServiceImpl implements RdcService {
 			rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
 			rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
 			rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
+			rdcAddDTO.setPageview(rdcExtEntity.getPageview()+1);
+			rdcExtDao.increasePageView(rdcID);
 			List<FileDataEntity> arrangeFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
 			if (!arrangeFiles.isEmpty()) {
 				FileDataEntity arrangeFile = arrangeFiles.get(0);
@@ -262,12 +264,11 @@ public class RdcServiceImpl implements RdcService {
 				dto.setUserCommentCount(userCommentCnt);
 				dto.setUserRecommendPercent(userRecommendPercent);
 				
-				//取出仓库平面图
-				List<FileDataEntity> arrangePics = fileDataDao.findByBelongIdAndCategory(rdcEntity.getId(), FileDataMapper.CATEGORY_ARRANGE_PIC);
-				if (!arrangePics.isEmpty()) {
-					FileDataEntity arrangePic = arrangePics.get(0);
-					arrangePic.setLocation(FtpService.READ_URL + arrangePics.get(0).getLocation());
-					dto.setArrangePic(arrangePic);
+				List<FileDataEntity> storagePics = fileDataDao.findByBelongIdAndCategory(rdcEntity.getId(), FileDataMapper.CATEGORY_STORAGE_PIC);
+				if (!storagePics.isEmpty()) {
+					FileDataEntity storagePic = storagePics.get(0);
+					storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
+					dto.setStoragePic(storagePic);
 				}
 				result.add(dto);
 			}
