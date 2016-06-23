@@ -1,0 +1,94 @@
+.rdc {
+}
+
+.rdc label {
+    text-align: right;
+    position: relative;
+    top:2px;
+    font: 14px/1.5 Arial,sans-serif;
+}
+
+.rdc em {
+    position: relative;
+    top: 3px;
+    margin: 0 1px;
+    color: #C00;
+}
+
+.rdc input {
+    width: 400px;
+}
+
+.rdc textarea {
+    max-height: 200px;
+    width: 400px;
+}
+
+.rdc select {
+    width: 400px;
+}
+
+.rdcRadio {
+
+}
+
+.rdcRadio .labelText {
+    text-align: right;
+    position: relative;
+    top:2px;
+    font: 14px/1.5 Arial,sans-serif;
+}
+
+.rdc .labelButton {
+    position: relative;
+    top: 3px;
+    margin: 0 1px;
+}
+
+.rdcRadio em {
+    position: relative;
+    top: 3px;
+    margin: 0 1px;
+    color: #C00;
+}
+
+.addMore {
+    text-align: right;
+}
+
+.rdcRadio label {
+    text-align: right;
+    position: relative;
+    top:2px;
+    font: 14px/1.5 Arial,sans-serif;
+}
+
+.rdcRadio input{
+
+}
+
+.minInput label {
+    text-align: right;
+    position: relative;
+    top:2px;
+    font: 14px/1.5 Arial,sans-serif;
+}
+
+.minInput input{
+    text-align: right;
+    position: relative;
+    margin: 0 0px;
+    width: 30px;
+}
+
+.minInput .divCSS {
+    text-align: right;
+}
+
+
+.minInput em {
+    position: relative;
+    top: 3px;
+    margin: 0 1px;
+    color: #C00;
+}

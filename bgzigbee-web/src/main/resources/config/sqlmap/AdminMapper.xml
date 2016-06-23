@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.zigbee.manage.dao.AdminMapper">
+
+    <insert id="insertAdmin" parameterType="AdminEntity">
+        INSERT INTO `user`(
+		`adminname`,
+		`adminpwd`,
+		`telephone`,
+		`email`,
+		`addTime`
+		)
+		VALUE 
+		(
+		#{adminname},
+		#{adminpwd},
+		#{telephone},
+		#{email},
+		now()
+    </insert>
+
+    <select id="findAdmin" parameterType="map" resultType="AdminEntity">
+		SELECT *
+		FROM `admin` WHERE `adminname` = #{adminname} AND `adminpwd` = #{adminpwd}
+	</select>
+	
+	<select id="findAllAdmin" parameterType="map" resultType="AdminEntity">
+	   SELECT * FROM `admin` order by `id` ASC
+	</select>
+	
+	<select id="findAdminByName" parameterType="map" resultType="AdminEntity">
+		SELECT *
+		FROM `admin` WHERE `adminname` = #{adminname}
+	</select>
+
+    <select id="findAdminById" parameterType="map" resultType="AdminEntity">
+		SELECT *
+		FROM `admin` WHERE `id` = #{id}
+	</select>
+
+</mapper>
