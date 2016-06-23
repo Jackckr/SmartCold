@@ -6,10 +6,10 @@
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
             <ul class="breadcrumb" style="padding-left: 45px">
                 <li class="active">
-                    <a href="" ng-click="toColdStorageList()">冷库</a>
+                    <a href="" ng-click="toColdStorageList()">冷库列表</a>
                 </li>
                 <li class="active">
-          
+                    {{rdcName}}
                 </li>
                 <button class="btn btn-primary btn-xs pull-right" type="button" ng-if="undefined!=user && user.id==rdcUserId" 
                  ng-click="goEditRdc(rdcId)">修改冷库</button>

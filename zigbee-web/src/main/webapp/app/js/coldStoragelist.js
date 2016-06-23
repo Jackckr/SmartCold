@@ -67,7 +67,10 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             /* }
          });*/
      }
-    	
+
+    $scope.goComment = function (rdcID) {
+        $location.path("/coldStorage/" +rdcID + "/review");
+    }
     	
     /*	if(user.username!=undefined && user.username!=''){
         console.log("rdcID" + rdcID);
