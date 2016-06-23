@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.smartcold.zigbee.manage.dao.RdcExtMapper">
+
+    <select id="findRdcExtList" parameterType="map" resultType="RdcExtEntity">
+         SELECT * FROM `RdcExt`
+    </select>
+
+    <select id="findRDCExtByRDCId" parameterType="map" resultType="RdcExtEntity">
+        SELECT * FROM `RdcExt` WHERE `rdcId` = #{rdcID}
+    </select>
+
+    <insert id="insertRdcExt" parameterType="RdcExtEntity"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `RdcExt` (
+        `RDCID`,
+        `companydevice`,
+        `companystaff`,
+        `managetype`,
+        `storagetype`,
+        `storageheight`,
+        `storagestruct`,
+        `storageplatform`,
+        `storageplatformtype`,
+        `storageislihuo`,
+        `storagelihuocontrol`,
+        `storagelihuoarea`,
+        `storagerefreg`,
+        `storagetempmonitor`,
+        `storagecapacity`,
+        `storagetruck`,
+        `storagetempertype`,
+        `facility`,
+        `honorpiclocation`,
+        `arrangepiclocation`,
+        `storagepiclocation`
+        )
+        VALUES
+        (
+        #{RDCID},
+        #{companydevice},
+        #{companystaff},
+        #{managetype},
+        #{storagetype},
+        #{storageheight},
+        #{storagestruct},
+        #{storageplatform},
+        #{storageplatformtype},
+        #{storageislihuo},
+        #{storagelihuocontrol},
+        #{storagelihuoarea},
+        #{storagerefreg},
+        #{storagetempmonitor},
+        #{storagecapacity},
+        #{storagetruck},
+        #{storagetempertype},
+        #{facility},
+        #{honorpiclocation},
+        #{arrangepiclocation},
+        #{storagepiclocation}
+        );
+    </insert>
+
+    <update id="updateRdcExt" parameterType="com.smartcold.zigbee.manage.entity.RdcExtEntity" >
+        update RdcExt
+        <set >
+            <if test="companydevice != null" >
+                companydevice = #{companydevice,jdbcType=TINYINT},
+            </if>
+            <if test="managetype != null" >
+                managetype = #{managetype,jdbcType=TINYINT},
+            </if>
+            <if test="storagetype != null" >
+                storagetype = #{storagetype,jdbcType=TINYINT},
+            </if>
+            <if test="storageplatform != null" >
+                storageplatform = #{storageplatform,jdbcType=TINYINT},
+            </if>
+            <if test="storageislihuo != null" >
+                storageislihuo = #{storageislihuo,jdbcType=TINYINT},
+            </if>
+            <if test="storagelihuocontrol != null" >
+                storagelihuocontrol = #{storagelihuocontrol,jdbcType=TINYINT},
+            </if>
+            <if test="storagelihuoarea != null" >
+                storagelihuoarea = #{storagelihuoarea,jdbcType=INTEGER},
+            </if>
+            <if test="storagerefreg != null" >
+                storagerefreg = #{storagerefreg,jdbcType=TINYINT},
+            </if>
+            <if test="storagetempmonitor != null" >
+                storagetempmonitor = #{storagetempmonitor,jdbcType=TINYINT},
+            </if>
+            <if test="storagecapacity != null" >
+                storagecapacity = #{storagecapacity,jdbcType=VARCHAR},
+            </if>
+            <if test="storagetruck != null" >
+                storagetruck = #{storagetruck,jdbcType=VARCHAR},
+            </if>
+            <if test="storagetempertype != null" >
+                storagetempertype = #{storagetempertype,jdbcType=TINYINT},
+            </if>
+            <if test="facility != null" >
+                facility = #{facility,jdbcType=VARCHAR},
+            </if>
+            <if test="honorpiclocation != null" >
+                honorpiclocation = #{honorpiclocation,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="arrangepiclocation != null" >
+                arrangepiclocation = #{arrangepiclocation,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="storagepiclocation != null" >
+                storagepiclocation = #{storagepiclocation,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

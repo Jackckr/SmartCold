@@ -1,0 +1,75 @@
+<section class="content">
+   <div class="row">
+     <div class="col-md-12">
+       <!-- AREA CHART -->
+       <div class="box box-primary">
+         <div class="box-header with-border">
+           <h3 class="box-title">{{name}}信息</h3>
+           <div class="box-tools pull-right">
+             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+           </div>
+         </div>
+         <div class="box-body">
+         <div class="col-sm-12">
+           <div class="tabbable tabs-below">
+           <div class="tab-content">
+				<div id="wendu" class="tab-pane in active">
+				  <div class="col-sm-12">
+					<div class="chart">
+	                 <canvas id="areaChart" style="height:250px"></canvas>
+	                </div>
+	              </div>
+				</div>
+				<div id="zhuizong" class="tab-pane">
+				<div class="row">
+	            <div class="col-md-12">
+	              <!-- The time line -->
+	              <ul class="timeline">
+	                <!-- timeline time label -->
+	                <li class="time-label">
+	                  <span class="bg-blue">
+	                    物品开始运输
+	                  </span>
+	                </li>
+	                <!-- /.timeline-label -->
+	                <!-- timeline item -->
+	                <li ng-repeat="item in data.ananysis">
+	                  <i class="fa fa-truck bg-blue"></i>
+	                  <div class="timeline-item">
+	                    <span class="time col-sm-12"><i class="fa fa-clock-o"></i> {{item.startTime}} -- {{item.endTime}}</span>
+	                    <div class="timeline-body">
+	                        <p>{{item.location}},温度&nbsp;({{item.lowestTemperature}}°C ~ {{item.highestTemperature}}°C)</p>
+	                    </div>
+	                  </div>
+	                </li>
+	                <!-- END timeline item -->
+	                <li>
+	                  <i class="fa fa-clock-o bg-gray"></i>
+	                </li>
+	              </ul>
+	            </div><!-- /.col -->
+          		</div><!-- /.row -->
+				</div>
+				<div id="fenxi" class="tab-pane">
+				  <div class=""col-sm-12>
+					<P><strong>分析结果:</strong></P>
+					<p>该货品累计流转<a class="text-danger"><strong>{{data.ananysis.length}}</strong></a>个冷藏点，
+					冷仓存储<a class="text-danger"><strong>36</strong></a>小时，其中温度超标（>-9度）时长<a class="text-danger"><strong>9</strong></a>小时，可能存在变质风险。</p>
+					
+	              </div>
+	             </div>
+			</div>
+			<br>
+			<br>
+	           <ul class="nav nav-tabs">
+	               <li class="active"><a data-toggle="tab" href="#wendu">温度</a></li>
+	               <li><a data-toggle="tab" href="#zhuizong">追踪</a></li>
+	               <li><a data-toggle="tab" href="#fenxi">分析</a></li>
+	           </ul>
+	        </div>
+	      </div>
+         </div><!-- /.box-body -->
+       </div><!-- /.box -->
+     </div>
+   </div>
+</section>

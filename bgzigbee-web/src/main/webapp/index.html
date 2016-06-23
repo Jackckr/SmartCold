@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+   <head>
+        <title>链库后台管理系统</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<script type="text/javascript" src="assets/js/jquery-1.12.0.min.js"></script>
+		<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/index.js"></script>
+		<script type="text/javascript" src="assets/js/smartpaginator.js"></script>
+    </head>
+    <body>
+    	<!-- head部分结构开始 -->
+			<div class="head">
+				<div class="logoArea pull-left" onclick="location.href='index.html'">
+					<h1 class="logo  pull-left"></h1>
+					<h3 class="manage  pull-left">睿冷后台管理系统</h3>
+					<div class="home  pull-left">
+						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					</div>
+				</div>
+				<div class="userArea pull-right" ng-controller="adminlist">
+					<div class="admin  pull-left h3">
+						<span class="hi">您好，</span>
+						<span class="user" ng-model="admin">{{admin.adminname}}</span>
+					</div>
+					<div class="smartColdManage  pull-left h3">睿冷后台管理</div>
+					<div class="back  pull-left">
+						<span class="glyphicon glyphicon-log-out" aria-hidden="true" ng-click="logout()"></span>
+					</div>
+				</div>
+			</div>
+    	<!-- head部分结构结束 -->
+		
+		<!-- 主体区域结构开始 -->
+    		<div class="content clearfix">
+    			<!-- 侧栏区域结构开始 -->
+    				<div class="sidebar pull-left">
+    					<div class="functionColumn">
+    						<span class="glyphicon glyphicon-th-large"></span>
+    						<span>功能栏目</span>
+    					</div>
+    					<ul class="list">
+    						<li value="app/template/adminManage.html" >
+    							<span class="glyphicon glyphicon-user"></span>
+    							<a>管理员管理</a>
+    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+    							<ul class="liSon">
+    								<li>children</li>
+    								<li>children</li>
+    								<li>children</li>
+    							</ul>
+    						</li>
+    						<li value="app/template/userManage.html">
+    							<span class="glyphicon glyphicon-user"></span>
+    							<a>用户管理</a>
+    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+    							<ul class="liSon">
+    								<li>children</li>
+    								<li>children</li>
+    								<li>children</li>
+    							</ul>
+    						</li>
+    						<li>
+    							<span class="glyphicon glyphicon-cog"></span>
+    							<a>冷库管理</a>
+    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+    							<ul class="liSon">
+    								<li>children</li>
+    								<li>children</li>
+    								<li>children</li>
+    							</ul>
+    						</li>
+    						<li>
+    							<span class="glyphicon glyphicon-th-list"></span>
+    							<a>冷库配置信息</a>
+    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+    							<ul class="liSon">
+    								<li>children</li>
+    								<li>children</li>
+    								<li>children</li>
+    							</ul>
+    						</li>
+    						<li>
+    							<span class="glyphicon glyphicon-pencil"></span>
+    							<a>评价管理</a>
+    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+    							<ul class="liSon">
+    								<li>children</li>
+    								<li>children</li>
+    								<li>children</li>
+    							</ul>
+    						</li>
+    						<li>
+    							<span class="glyphicon glyphicon-calendar"></span>
+    							<a>操作日志</a>
+    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+    							<ul class="liSon">
+    								<li>children</li>
+    								<li>children</li>
+    								<li>children</li>
+    							</ul>
+    						</li>
+    					</ul>
+    				</div>
+				<!-- 侧栏区域结构结束-->
+
+				<!-- 内容区域结构开始-->
+    				<div class="main" id="main">
+    					
+    				</div>
+    			<!-- 内容区域结构结束-->
+    		</div>
+    	<!-- 主体区域结构结束-->
+    </body>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/angular/ng-file-upload.min.js"></script>
+<script src="bower_components/angular/ng-file-upload-shim.min.js"></script>
+<script src="bower_components/highlightjs/highlight.pack.js"></script>
+<script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+<script src="bower_components/angular-multi-select-master/isteven-multi-select.js"></script>
+<script src="bower_components/angucomplete/angucomplete.js"></script>
+<script src="bower_components/at-table/dist/angular-table.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/js/carousel.js"></script>
+<script src="bower_components/angular/ngRemoteValidate.0.6.1.min.js"></script>
+<!-- app js -->
+<script src="app/js/app.js"></script>
+<script src="app/js/controller-base.js"></script>
+<script src="app/js/controller-search.js"></script>
+<script src="app/js/controller-review.js"></script>
+<script src="app/js/coldStoragelist.js"></script>
+<script src="app/js/coldStorageComment.js"></script>
+<script src="app/js/home.js"></script>
+<script src="app/js/coldStorageAdd.js"></script>
+<script src="app/js/coldStorageEdit.js"></script>
+<script src="app/js/coldStorageMap.js"></script>
+<!-- <script src="app/js/adminList.js"></script>
+<script src="app/js/userList.js"></script> -->
+</html>
