@@ -247,7 +247,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('coldStoragelist', {
         url: '/coldStoragelist',
         controller: 'coldStoragelist',
-        templateUrl: 'app/template/coldStoragelist.html'
+        templateUrl: 'app/template/storageManage.html'
     }).state('coldStorageComment', {
         url: '/coldStorageComment/:rdcID',
         controller: 'coldStorageComment',
@@ -263,11 +263,15 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('coldStorageEdit', {
         url: '/coldStorageEdit/:rdcID',
         controller: 'coldStorageEdit',
-        templateUrl: 'app/template/coldStorageInfo.html'
+        templateUrl: 'app/template/editStorage.html'
     }).state('coldStorageMap', {
         url: '/coldStorageMap',
         controller: 'coldStorageMap',
         templateUrl: 'app/template/coldStorageMap.html'
+    }).state('adminlist', {
+        url: '/adminlist',
+        controller: 'adminlist',
+        templateUrl: 'app/template/adminManage.html'
     });
 
 });

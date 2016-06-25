@@ -78,7 +78,6 @@ public class AdminController extends BaseController {
 								.getUsername());
 						admin.setAdminpwd("******");
 						request.getSession().setAttribute("admin", admin);
-
 						return admin;
 					}
 				}
