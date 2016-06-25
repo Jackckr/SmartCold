@@ -831,4 +831,13 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             }
         })
     }
+
+    $scope.goHotBoard = function () {
+        //alert("goHotBoard");
+    }
+
+    $scope.goScoreBoard = function () {
+        //alert("goScoreBoard");
+    }
+
 });
