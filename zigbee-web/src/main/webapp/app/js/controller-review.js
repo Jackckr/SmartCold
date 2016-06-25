@@ -127,7 +127,7 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
             data: data
         }).then(function (resp) {
             alert("评价成功");
-            $location.path("/coldStorageComment/" + $scope.rdcid);
+            $location.path("/coldStorageComment/" + $scope.rdcid).search("referrer","review");
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
