@@ -55,6 +55,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             for(var j=0, len = $scope.storagePics.length;j < 5 - len;j++){
             	$scope.storagePics.push({location:"app/img/rdc.png"});
             }
+            $scope.storageGallery = new Array();
+            $scope.thumbClass = "ng-storage-image";
+            for(j=0; j<$scope.storagePics.length; j++){
+            	$scope.storageGallery.push({thumb:$scope.storagePics[j].location ,img:$scope.storagePics[j].location})
+            }
             for (var i = 0, len = $scope.provinces.length; i < len; i++) {
                 if ($scope.provinces[i].provinceId === $scope.provinceId) {
                     $scope.provinceName = $scope.provinces[i].provinceName;
@@ -193,7 +198,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         angular.element(document.getElementById('coldStorageDetail')).addClass('active');
         angular.element(document.getElementById('comment')).removeClass('active');
         angular.element(document.getElementById('coldStorageComment')).removeClass('active');
-        console.log(storageID);
     }
 
     $scope.goColdStorageComment = function (storageID) {

@@ -39,6 +39,7 @@
                     </div>
                 </div>
                 <div class="row">
+                	<ng-gallery images="storageGallery" thumbs-num="5" ng-if="storageGallery.length"></ng-gallery>
                     <!--<img src="app/img/banner.jpg" style="position:relative;left:50px;width:93%;height: 50%;">-->
                     <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
                         <img ng-src="{{storagePics[0].location}}"
