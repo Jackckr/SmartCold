@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.controller;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,16 +57,18 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
-	public Object login(HttpServletRequest request, String userName, String password) {
+	public Object login(HttpServletRequest request, HttpServletResponse response, String userName, String password) {
 		// UserEntity user = userDao.findByPassword(userName, password);
 		UserEntity user = userService.getUserByNAndP(userName, password);
 		if (user.getId() != 0) {
+			String cookie = cookieService.insertCookie(userName);
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
 			Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
 			user.setPassword("******");
 			user.setRole(role.getId());
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("cookie", user);
+			response.addCookie(new Cookie("token", cookie));
 			return true;
 		}
 		return false;
@@ -123,18 +126,20 @@ public class UserController extends BaseController {
 	public Object findUser(HttpServletRequest request) {
 		UserEntity user;
 		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("token")) {
-				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
-				if (effectiveCookie != null) {
-					user = userDao.findUserByName(effectiveCookie.getUsername());
-					RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
-					Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
-					user.setPassword("******");
-					user.setRole(role.getId());
-					request.getSession().setAttribute("user", user);
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
+					if (effectiveCookie != null) {
+						user = userDao.findUserByName(effectiveCookie.getUsername());
+						RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
+						Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
+						user.setPassword("******");
+						user.setRole(role.getId());
+						request.getSession().setAttribute("user", user);
 
-					return user;
+						return user;
+					}
 				}
 			}
 		}
