@@ -1,9 +1,8 @@
 $(function() {
 	//  侧栏下拉菜单暂时隐藏
-
 	$(".list li").click(function(ev){
-		addShowIFrame($(this).attr("value"));
-		$(this).addClass('highlight').siblings().removeClass('highlight')
+		$(this).addClass('highlight').siblings().removeClass('highlight');
+		window.location.href=$(this).attr("value");
 		/*$(this).addClass("highlight")			//为当前元素增加highlight类
 			.children(".liSon").slideDown().end()			//将子节点的ul元素显示出来并重新定位到上次操作的元素
 		.siblings().removeClass("highlight")		//获取元素的兄弟元素，并去掉他们的highlight类
@@ -36,11 +35,6 @@ function showFixed(idValue , url){
 	clearMenuActive();	
 	$("#"+idValue).addClass("active");
 	addShowIFrame(url);
-}
-function addShowIFrame(url){
-    /*var iframe = '<iframe id="fill" name="fill" width=100% height=100% scrolling=auto frameborder="no" border="0" src="'+url+'"></iframe>';*/
-   /* $("#main").html(iframe);*/
-	$("#main").load(url);
 }
 
 /*var del;
