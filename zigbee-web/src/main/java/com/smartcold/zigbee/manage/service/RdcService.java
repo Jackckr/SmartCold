@@ -24,6 +24,8 @@ public interface RdcService {
 	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID);
 
 	List<RdcEntityDTO> findRdcDTOList();
+
+	List<RdcEntityDTO> findHotRdcDTOList();
 	
 	boolean checkName(String name);
 

@@ -50,13 +50,10 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
 
 
     // 获取当前热度冷库的列表
-    $http.get('/i/rdc/findRdcList').success(function (data) {
+    $http.get('/i/rdc/findHotRdcDTOList').success(function (data) {
         var size = data.length;
         data.splice(6, size);
         $scope.hotrdcs = data;
-        for (var i = 0; i < data.length; i++) {
-            console.log("data:" + data[i].name + data[i].addtime);
-        }
     });
     
     $scope.goDetail = function (rdcID) {
@@ -834,4 +831,13 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             }
         })
     }
+
+    $scope.goHotBoard = function () {
+        //alert("goHotBoard");
+    }
+
+    $scope.goScoreBoard = function () {
+        //alert("goScoreBoard");
+    }
+
 });

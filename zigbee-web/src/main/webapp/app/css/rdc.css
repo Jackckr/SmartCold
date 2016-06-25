@@ -92,3 +92,7 @@
     margin: 0 1px;
     color: #C00;
 }
+
+.ng-storage-image{
+	height:224px;
+}
