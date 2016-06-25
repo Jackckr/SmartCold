@@ -50,6 +50,7 @@ public class RdcEntityDTO {
     
     private FileDataEntity storagePic;
 
+    private int pageview;
 
 	public FileDataEntity getStoragePic() {
 		return storagePic;
@@ -225,5 +226,13 @@ public class RdcEntityDTO {
 
     public void setUserCommentCount(int userCommentCount) {
         this.userCommentCount = userCommentCount;
+    }
+
+    public int getPageview() {
+        return pageview;
+    }
+
+    public void setPageview(int pageview) {
+        this.pageview = pageview;
     }
 }

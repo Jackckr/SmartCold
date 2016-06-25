@@ -1,7 +1,10 @@
 package com.smartcold.zigbee.manage.service.impl;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
+import com.google.common.primitives.Ints;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.zigbee.manage.dao.*;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
@@ -18,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -237,6 +241,7 @@ public class RdcServiceImpl implements RdcService {
 	@Override
 	public List<RdcEntityDTO> findRdcDTOList() {
 		List<RdcEntity> rdcList = rdcDao.findRdcList();
+		List<RdcExtEntity> rdcExtList = rdcExtDao.findRdcExtList();
 		List<RdcEntityDTO> result = Lists.newArrayList();
 		if (!CollectionUtils.isEmpty(rdcList)) {
 			for (RdcEntity rdcEntity : rdcList) {
@@ -270,10 +275,29 @@ public class RdcServiceImpl implements RdcService {
 					storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
 					dto.setStoragePic(storagePic);
 				}
+
+				if (!CollectionUtils.isEmpty(rdcExtList)){
+					for (RdcExtEntity rdcExt: rdcExtList) {
+						if (rdcExt.getRDCID() == rdcEntity.getId()){
+							dto.setPageview(rdcExt.getPageview());
+						}
+					}
+				}
 				result.add(dto);
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public List<RdcEntityDTO> findHotRdcDTOList() {
+		List<RdcEntityDTO> rdcEntityDTOList = findRdcDTOList();
+		Ordering<RdcEntityDTO> byPageviewOrdering = new Ordering<RdcEntityDTO>() {
+			public int compare(RdcEntityDTO left, RdcEntityDTO right) {
+				return Ints.compare(right.getPageview(), left.getPageview());
+			}
+		};
+		return  byPageviewOrdering.immutableSortedCopy(rdcEntityDTOList);
 	}
 
 	@Override
