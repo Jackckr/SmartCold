@@ -21,7 +21,7 @@
 						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					</div>
 				</div>
-				<div class="userArea pull-right" ng-controller="adminlist">
+				<div class="userArea pull-right">
 					<div class="admin  pull-left h3">
 						<span class="hi">您好，</span>
 						<span class="user" ng-model="admin">{{admin.adminname}}</span>
@@ -43,17 +43,8 @@
     						<span>功能栏目</span>
     					</div>
     					<ul class="list">
-    						<li value="app/template/adminManage.html" >
-    							<span class="glyphicon glyphicon-user"></span>
-    							<a>管理员管理</a>
-    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
-    						</li>
-    						<li value="app/template/userManage.html">
+    					
+    						<li value="#/home">
     							<span class="glyphicon glyphicon-user"></span>
     							<a>用户管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -63,7 +54,19 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li>
+    						
+    						<li value="#/adminlist">
+    							<span class="glyphicon glyphicon-user"></span>
+    							<a>管理员管理</a>
+    							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+    							<ul class="liSon">
+    								<li>children</li>
+    								<li>children</li>
+    								<li>children</li>
+    							</ul>
+    						</li>
+    					
+    						<li value="#/coldStoragelist">
     							<span class="glyphicon glyphicon-cog"></span>
     							<a>冷库管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -108,9 +111,8 @@
 				<!-- 侧栏区域结构结束-->
 
 				<!-- 内容区域结构开始-->
-    				<div class="main" id="main">
-    					
-    				</div>
+    			<div  ui-view style="overflow: hidden">
+	                 </div>
     			<!-- 内容区域结构结束-->
     		</div>
     	<!-- 主体区域结构结束-->
@@ -142,6 +144,6 @@
 <script src="app/js/coldStorageAdd.js"></script>
 <script src="app/js/coldStorageEdit.js"></script>
 <script src="app/js/coldStorageMap.js"></script>
-<!-- <script src="app/js/adminList.js"></script>
-<script src="app/js/userList.js"></script> -->
+<script src="app/js/adminList.js"></script>
+<script src="app/js/home.js"></script> 
 </html>

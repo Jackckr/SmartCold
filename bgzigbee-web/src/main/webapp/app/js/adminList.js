@@ -1,6 +1,6 @@
 coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 	$scope.load = function(){
-			$http.get('/i/admin/findAdmin').success(function(data,status,config,headers){
+			$http.get('/i/admin/findAdmin').success(function(data){
 				$rootScope.admin = data;
 				if($rootScope.admin == null || $rootScope.admin.id == 0){
 					url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
@@ -18,10 +18,4 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
     $http.get('/i/admin/findAdmin').success(function(data){
     	$scope.admin = data;
     });
-    $scope.logout = function () {
-    	$http.get('/i/admin/logout');
-    	$scope.admin = null;
-    	url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
-		window.location.href = url;
-    };
 });
