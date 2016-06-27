@@ -8,15 +8,18 @@ import com.smartcold.zigbee.manage.dao.*;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
+import com.smartcold.zigbee.manage.dto.RdcScoreDTO;
 import com.smartcold.zigbee.manage.entity.*;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class RdcServiceImpl implements RdcService {
+
+    private static final int goodCommentGrade = 4;
 
     @Autowired
     private RdcMapper rdcDao;
@@ -285,20 +290,92 @@ public class RdcServiceImpl implements RdcService {
     }
 
     @Override
-    public List<RdcEntityDTO> findHotRdcDTOList() {
-        List<RdcEntityDTO> rdcEntityDTOList = findRdcDTOList();
-        Ordering<RdcEntityDTO> byPageviewOrdering = new Ordering<RdcEntityDTO>() {
-            public int compare(RdcEntityDTO left, RdcEntityDTO right) {
-                return Ints.compare(right.getPageview(), left.getPageview());
+    public List<RdcScoreDTO> findHotRdcDTOList(@RequestParam int npoint) {
+        List<RdcExtEntity> rdcExtEntityList = rdcExtDao.findHotRdcDTOList(npoint);
+        return getRdcScoreDTO(rdcExtEntityList);
+    }
+
+    private List<RdcScoreDTO> getRdcScoreDTO(List<RdcExtEntity> rdcExtEntityList) {
+        List<RdcScoreDTO> list = Lists.newArrayList();
+        for (RdcExtEntity rdcExtEntity : rdcExtEntityList) {
+            RdcScoreDTO rdcScoreDTO = new RdcScoreDTO();
+            rdcScoreDTO.setId(rdcExtEntity.getRDCID());
+            rdcScoreDTO.setRdccommentcnt(rdcExtEntity.getRdccommentcnt());
+            rdcScoreDTO.setRdcscore(rdcExtEntity.getRdcscore());
+            rdcScoreDTO.setRdcrecommendpercent(rdcExtEntity.getRdcrecommendpercent());
+
+            List<RdcEntity> rdcEntityList = rdcDao.findRDCByRDCId(rdcExtEntity.getRDCID());
+            RdcEntity rdcEntity = rdcEntityList.get(0);
+            rdcScoreDTO.setName(rdcEntity.getName());
+            List<FileDataEntity> storagePics = fileDataDao.findByBelongIdAndCategory(rdcExtEntity.getRDCID(), FileDataMapper.CATEGORY_STORAGE_PIC);
+            if (!storagePics.isEmpty()) {
+                FileDataEntity storagePic = storagePics.get(0);
+                storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
+                rdcScoreDTO.setStoragePic(storagePic);
             }
-        };
-        return byPageviewOrdering.immutableSortedCopy(rdcEntityDTOList);
+            list.add(rdcScoreDTO);
+        }
+        return list;
+    }
+
+    @Override
+    public List<RdcScoreDTO> findScoreRdcDTOList(@RequestParam int npoint) {
+        List<RdcExtEntity> rdcExtEntityList = rdcExtDao.findScoreRdcDTOList(npoint);
+        return getRdcScoreDTO(rdcExtEntityList);
     }
 
     @Override
     public boolean checkName(String name) {
         int count = rdcDao.checkName(name);
         return count == 0;
+    }
+
+    @Scheduled(cron = "0 */5 * * * ?")
+    @Override
+    public void sumRdcsScore() {
+        List<RdcEntity> rdcList = rdcDao.findRdcList();
+        if (!CollectionUtils.isEmpty(rdcList)) {
+            for (RdcEntity rdcEntity : rdcList) {
+                List<CommentEntity> commentsByRdcId = commentDao.findCommentsByRdcId(rdcEntity.getId());
+                if (!CollectionUtils.isEmpty(commentsByRdcId)) {
+                    int userCommentCnt = commentsByRdcId.size();
+                    float totalScore = 0;
+                    int recommendCnt = 0;
+                    for (CommentEntity commentEntity : commentsByRdcId) {
+                        totalScore += commentEntity.getGrade();
+                        if (commentEntity.getGrade() >= goodCommentGrade) {
+                            recommendCnt++;
+                        }
+                    }
+                    float score = (float) (Math.round(totalScore / userCommentCnt * 10)) / 10;
+                    int userRecommendPercent = (recommendCnt * 100) / userCommentCnt;
+
+                    List<RdcExtEntity> rdcExtList = rdcExtDao.findRDCExtByRDCId(rdcEntity.getId());
+                    if (!CollectionUtils.isEmpty(rdcExtList)) {
+                        RdcExtEntity rdcExt = rdcExtList.get(0);
+                        int flag = 0;
+                        if (rdcExt.getRdcscore() != score){
+                            rdcExt.setRdcscore(score);
+                            flag ++;
+                        }
+                        if (rdcExt.getRdccommentcnt() != userCommentCnt){
+                            rdcExt.setRdccommentcnt(userCommentCnt);
+                            flag ++;
+                        }
+                        if (rdcExt.getRdcrecommendpercent() != userRecommendPercent){
+                            rdcExt.setRdcrecommendpercent(userRecommendPercent);
+                            flag ++;
+                        }
+                        if (flag != 0){
+                            rdcExtDao.updateRdcExt(rdcExt);
+                            System.out.println(new Date() + ",分数变化,更新RDC: " + rdcExt.getRDCID());
+                        } else {
+                            System.out.println(new Date() + ",不更新未发生变化的RDC: " + rdcExt.getRDCID());
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

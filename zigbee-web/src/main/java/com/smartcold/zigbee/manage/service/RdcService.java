@@ -2,6 +2,8 @@ package com.smartcold.zigbee.manage.service;
 
 import java.util.List;
 
+import com.smartcold.zigbee.manage.dto.RdcScoreDTO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
@@ -25,8 +27,12 @@ public interface RdcService {
 
 	List<RdcEntityDTO> findRdcDTOList();
 
-	List<RdcEntityDTO> findHotRdcDTOList();
-	
+	List<RdcScoreDTO> findHotRdcDTOList(@RequestParam int npoint);
+
+	List<RdcScoreDTO> findScoreRdcDTOList(@RequestParam int npoint);
+
 	boolean checkName(String name);
+
+	void sumRdcsScore();
 
 }
