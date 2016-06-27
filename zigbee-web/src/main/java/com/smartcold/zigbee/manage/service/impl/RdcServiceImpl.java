@@ -330,7 +330,7 @@ public class RdcServiceImpl implements RdcService {
         return count == 0;
     }
 
-    @Scheduled(cron = "0 */5 * * * ?")
+    @Scheduled(cron = "0 */10 * * * ?")
     @Override
     public void sumRdcsScore() {
         List<RdcEntity> rdcList = rdcDao.findRdcList();
