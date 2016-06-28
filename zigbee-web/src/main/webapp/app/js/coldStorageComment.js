@@ -181,11 +181,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     }
 
     // 获取当前热度冷库的列表
-    $http.get('/i/rdc/findRdcList').success(function (data) {
+/*    $http.get('/i/rdc/findRdcList').success(function (data) {
         var size = data.length;
         data.splice(5, size);
         $scope.lookrdcs = data;
-    });
+    });*/
 
     $scope.goColdStorageDetail = function (storageID) {
         $scope.rdcId = storageID;

@@ -2,7 +2,7 @@
     <section>
         <div class="row" style="height: 75px;width: 100%"></div>
     </section>
-    <section class="content">
+    <section class="content" style="width:80%;margin:0 auto;">
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
             <ul class="breadcrumb" style="padding-left: 45px">
                 <li class="active">
@@ -350,7 +350,7 @@
                                     </div>
                                 </div>
                                 <div class="row" ng-repeat="comment in comments"
-                                     style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
+                                     style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px solid #d3d3d3;">
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
                                         <div class="row">
                                             <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
@@ -421,7 +421,7 @@
             </div>
             <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:30px;">
                 <div class="row"
-                     style="position:relative;top:30px;left: 0px;height: 100px;padding-right: 10px;border: 1px ridge lightgrey;background-color: #f5f5f5">
+                     style="position:relative;top:30px;left: 0px;height: 100px;padding-right: 10px;border: 1px solid #d3d3d3;background-color: #f5f5f5">
                     <div style="position:relative;top: 10px;left: 10px;">
                         <div><span style="color: dodgerblue">{{score}}</span>/5分</div>
                         <h6><span>{{userRecommendPercent}}</span>%用户推荐</h6>
@@ -429,26 +429,28 @@
                     </div>
                 </div>
                 <div class="row"
-                     style="position:relative;top:40px;left: 0px;height: 300px;padding-right: 10px;border: 1px ridge lightgrey">
+                     style="position:relative;top:40px;left: 0px;height: 300px;padding-right: 10px;border: 1px solid #d3d3d3">
                     <div>
                         <!--<a href="#"><img src="app/img/a_002.jpg" width="320" height="300px"/></a>-->
                         <div class="chart" id="mapChart" style="height: 298px;width: 100%"></div>
                     </div>
                 </div>
-                <div class="row"
+
+                <!--<div class="row"
                      style="position:relative;top:60px;left: 0px;height: 400px;padding-right: 10px;border: 1px ridge lightgrey">
                     <div style="width: 95%;position:relative;top: 10px;left: 10px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
+
                         <span style="font-size: 20px;">我浏览过的冷库</span>
                     </div>
 
                     <div class="row" ng-repeat="lookrdc in lookrdcs"
-                         style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
+                         style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px solid #d3d3d3;">
                         <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                             <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
                                     src="{{lookrdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                             <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a
+                                <span style="color: dodgerblue;font-size: 12px;top: 1px;"><a style="cursor: pointer;" 
                                         ng-click="goDetail(lookrdc.id)">{{lookrdc.name}}</a></span>
                             </div>
                         </div>
@@ -456,7 +458,7 @@
                             <a class="btn btn-success" style="position: relative;left:10px;top: 15px;"
                                ng-click="goDetail(lookrdc.id)">查看</a>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

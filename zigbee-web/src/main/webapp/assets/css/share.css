@@ -2,7 +2,7 @@
 * @Author: Administrator
 * @Date:   2016-06-27 10:12:44
 * @Last Modified by:   Administrator
-* @Last Modified time: 2016-06-27 13:38:50
+* @Last Modified time: 2016-06-28 16:13:20
 */
 .shareMain{
     width: 100%;
@@ -68,14 +68,21 @@ li.current a{
     width: 20%;
     min-width: 200px;  
     height: 26px;
+    font-size: 14px;
+}
+.select span{
+
 }
 .select select{
     min-width: 100px;
     line-height: 20px;
     margin-left: 10px;
+    height: 26px;
 }
 .select select option{
     text-align: center;
+    height: 26px;
+    font-size: 14px;
 }
 #search{
     width: 30%;

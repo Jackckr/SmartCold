@@ -2,10 +2,11 @@
 * @Author: Administrator
 * @Date:   2016-06-27 10:12:44
 * @Last Modified by:   Administrator
-* @Last Modified time: 2016-06-27 13:38:50
+* @Last Modified time: 2016-06-28 16:01:43
 */
 .shareMain{
     width: 100%;
+    margin-top: 90px;
 }
 .tab,.filter,.tableInfo,nav{
     width: 80%;
@@ -27,7 +28,7 @@
     display: block;
     width: 100%;
     height: 100%;
-    color: #B0B0B0;
+    color: #636262;
     font-size: 18px;
     border: 1px solid #ccc;
     text-decoration: none;
@@ -68,14 +69,18 @@ li.current a{
     width: 20%;
     min-width: 200px;  
     height: 26px;
+    line-height:26px;
+    font-size: 14px;
 }
 .select select{
     min-width: 100px;
-    line-height: 20px;
+    line-height: 26px;
     margin-left: 10px;
+    height: 26px;
 }
 .select select option{
     text-align: center;
+    font-size:14px;
 }
 #search{
     width: 30%;
