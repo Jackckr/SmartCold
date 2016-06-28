@@ -2,8 +2,9 @@ package com.zigbee.manage.cold.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.smartcold.zigbee.manage.entity.RdcEntity;
-import com.smartcold.zigbee.manage.service.RdcService;
+import com.smartcold.bgzigbee.manage.entity.RdcEntity;
+import com.smartcold.bgzigbee.manage.service.RdcService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
