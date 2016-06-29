@@ -2,7 +2,7 @@
     <section>
         <div class="row" style="height: 75px;width: 100%"></div>
     </section>
-    <section class="content">
+    <section class="content" style="width:80%;margin:0 auto;">
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
             <ul class="breadcrumb" style="padding-left: 45px">
                 <li class="active">
@@ -19,7 +19,7 @@
             <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;top:30px;padding-bottom: 100px;">
                 <div class="row">
                     <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;left: 40px">
-                        <h3 style="color: dodgerblue">{{rdcName}}</h3>
+                        <h3 style="color: #428bca">{{rdcName}}</h3>
 
          <!--               <div style="height: 10px">
                             <i class="icon-star"></i>
@@ -282,10 +282,10 @@
                                             <i class="{{score < 4.5? 'icon-star-empty': score >= 4.5 && score < 5? 'icon-star-half' :'icon-star'}}"></i>
                                         </div>
                                         <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span style="color: dodgerblue;font-size: 20px">{{score}}</span>/5分
+                                            <span style="color: #428bca;font-size: 20px">{{score}}</span>/5分
                                         </div>
                                         <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
-                                            <span style="color: dodgerblue;font-size: 20px">{{userRecommendPercent}}</span>%用户推荐
+                                            <span style="color: #428bca;font-size: 20px">{{userRecommendPercent}}</span>%用户推荐
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
@@ -296,16 +296,16 @@
                                     <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8" style="position: relative;left: 10px;top: 15px;">
                                         <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
                                             <span>温度&nbsp;<span
-                                                    style="color: #00a7d0">{{rdcPositionScore}}</span></span>
+                                                    style="color: #428bca">{{rdcPositionScore}}</span></span>
                                         </div>
                                         <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span>设施&nbsp;<span style="color: #00a7d0">{{rdcFacility}}</span></span>
+                                            <span>设施&nbsp;<span style="color: #428bca">{{rdcFacility}}</span></span>
                                         </div>
                                         <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span>服务&nbsp;<span style="color: #00a7d0">{{rdcService}}</span></span>
+                                            <span>服务&nbsp;<span style="color: #428bca">{{rdcService}}</span></span>
                                         </div>
                                         <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span>卫生&nbsp;<span style="color: #00a7d0">{{rdcHealth}}</span></span>
+                                            <span>卫生&nbsp;<span style="color: #428bca">{{rdcHealth}}</span></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
@@ -350,7 +350,7 @@
                                     </div>
                                 </div>
                                 <div class="row" ng-repeat="comment in comments"
-                                     style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
+                                     style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px  solid #d3d3d3;">
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
                                         <div class="row">
                                             <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
@@ -359,7 +359,7 @@
                                                         src="app/img/default.jpg" width="60px" height="60px"/></a>
 
                                                 <div style="position: relative;left: 10px;top: 5px;height: 200px;">
-                                                    <p style="color: dodgerblue">
+                                                    <p style="color: #428bca">
                                                         <span style="color: #00b3ee">{{comment.commerName}}</span>
                                                     </p>
 
@@ -377,14 +377,14 @@
                                                         <i class="{{ comment.grade >= 3?'icon-star':'icon-star-empty'}}"></i>
                                                         <i class="{{ comment.grade >= 4?'icon-star':'icon-star-empty'}}"></i>
                                                         <i class="{{ comment.grade >= 5?'icon-star':'icon-star-empty'}}"></i>
-                                                        <span style="color: dodgerblue;margin-left: 10px">{{comment.grade}}</span>分
+                                                        <span style="color: #428bca;margin-left: 10px">{{comment.grade}}</span>分
                                                     </div>
                                                     <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                                                         <div style="position: relative;left: 150px;">
                                                             <i class="icon-truck" style="margin-left: 20px"><span
                                                                     style="margin-left: 5px">运输</span></i>
                                                             <span style="margin-left: 20px">2016年04月浏览</span>
-                                                            <span style="color: dodgerblue;margin-left: 20px">中型冷库</span>
+                                                            <span style="color: #428bca;margin-left: 20px">中型冷库</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -421,11 +421,11 @@
             </div>
             <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:30px;">
                 <div class="row"
-                     style="position:relative;top:30px;left: 0px;height: 100px;padding-right: 10px;border: 1px ridge lightgrey;background-color: #f5f5f5">
+                     style="position:relative;top:30px;left: 0px;height: 100px;padding-right: 10px;border: 1px  solid #d3d3d3;background-color: #f5f5f5">
                     <div style="position:relative;top: 10px;left: 10px;">
-                        <div><span style="color: dodgerblue">{{score}}</span>/5分</div>
+                        <div><span style="color: #428bca">{{score}}</span>/5分</div>
                         <h6><span>{{userRecommendPercent}}</span>%用户推荐</h6>
-                        <h6 style="color: dodgerblue">源自<span>{{userCommentCount}}</span>位用户点评</h6>
+                        <h6 style="color: #428bca">源自<span>{{userCommentCount}}</span>位用户点评</h6>
                     </div>
                 </div>
                 <div class="row"
@@ -437,18 +437,18 @@
                 </div>
                 <div class="row"
                      style="position:relative;top:60px;left: 0px;height: 400px;padding-right: 10px;border: 1px ridge lightgrey">
-                    <div style="width: 95%;position:relative;top: 10px;left: 10px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
+                    <div style="width: 95%;position:relative;top: 10px;left: 10px;border-style: none none solid none;border-bottom:1px  solid #d3d3d3;">
                         <span style="font-size: 20px;">我浏览过的冷库</span>
                     </div>
 
                     <div class="row" ng-repeat="lookrdc in lookrdcs"
-                         style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
+                         style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px  solid #d3d3d3;">
                         <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                             <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
                                     src="app/img/rdcHeader.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                             <div style="position: relative;left: 5px;">
-                                <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a
+                                <span style="color: #428bca;font-size: 12px;top: 1px;"><a
                                         ng-click="goDetail(lookrdc.id)">{{lookrdc.name}}</a></span>
 
                                 <div style="position:relative;top:5px;height: 3px">
