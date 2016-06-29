@@ -51,12 +51,8 @@ public class RdcExtEntity {
     private String storagepiclocation;
     
     private int pageview;
-
-    private float rdcscore;
-
-    private int rdccommentcnt;
-
-    private int rdcrecommendpercent;
+    
+    
 
     public int getPageview() {
 		return pageview;
@@ -241,29 +237,5 @@ public class RdcExtEntity {
 
     public void setStoragepiclocation(String storagepiclocation) {
         this.storagepiclocation = storagepiclocation;
-    }
-
-    public float getRdcscore() {
-        return rdcscore;
-    }
-
-    public void setRdcscore(float rdcscore) {
-        this.rdcscore = rdcscore;
-    }
-
-    public int getRdccommentcnt() {
-        return rdccommentcnt;
-    }
-
-    public void setRdccommentcnt(int rdccommentcnt) {
-        this.rdccommentcnt = rdccommentcnt;
-    }
-
-    public int getRdcrecommendpercent() {
-        return rdcrecommendpercent;
-    }
-
-    public void setRdcrecommendpercent(int rdcrecommendpercent) {
-        this.rdcrecommendpercent = rdcrecommendpercent;
     }
 }

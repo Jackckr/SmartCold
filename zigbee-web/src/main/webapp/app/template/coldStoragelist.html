@@ -92,12 +92,20 @@
                          style="height: 80px;width: 95%;position: relative;top: 10px;left: 40px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                         <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9">
                             <a href="#" class="pull-left" style="position: relative;top: 10px;left: 0px;height:64px;">
-                                <img style="width:66px;height: 66px;" src="{{rdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" alt=''/></a>
+                            	<img style="width:66px;" src="{{rdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" alt=''/></a>
 
                             <div style="position: relative;left: 10px">
                                 <h5 style="color: dodgerblue;position: relative;top: 5px">
                                     <a href="" ng-click="goDetail(rdc.id)">{{rdc.name}}</a>
                                 </h5>
+
+                                <div style="height: 10px">
+                             <!--       <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-half"></i>
+                                    <i class="icon-star-empty"></i>-->
+                                </div>
                                 <h6>该冷库位于{{rdc.address}}.</h6>
                             </div>
                         </div>
@@ -123,8 +131,8 @@
             <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3"
                  style="position:relative;top:30px;left: 0px;height: 500px;padding-right: 10px;border: 1px ridge lightgrey">
                 <div style="position:relative;top: 5px;">
-                    <a class="btn btn-large btn-success col-lg-6 col-sm-6 col-xs-6 col-md-6" id="hotBoard" ng-click="goHotBoard()">热度排行</a>
-                    <a class="btn btn-large btn-default col-lg-6 col-sm-6 col-xs-6 col-md-6" id="scoreBoard" ng-click="goScoreBoard()">评分排行</a>
+                    <a class="btn btn-large btn-success col-lg-6 col-sm-6 col-xs-6 col-md-6" href="#" ng-click="goHotBoard()">热度排行</a>
+                    <a class="btn btn-large btn-default col-lg-6 col-sm-6 col-xs-6 col-md-6" href="#" ng-click="goScoreBoard()">评分排行</a>
                 </div>
                 <hr style="height:1px;border:none;border-top:1px ridge lightgrey;position: relative;top: 10px;left: 0px;width: 100%"/>
 
@@ -132,14 +140,22 @@
                      style="height: 70px;width: 95%;position: relative;top: 10px;left: 20px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                     <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
                         <a href="" ng-click="goDetail(hotrdc.id)" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                src="{{hotrdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" style="width: 60px;height: 60px" alt="冷库图片"/></a>
+                                src="app/img/rdcHeader.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                         <div style="position: relative;left: 5px;">
                             <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a href="" ng-click="goDetail(hotrdc.id)">{{hotrdc.name}}</a></span>
+
+                            <div style="position:relative;height: 3px;margin-bottom: 1px">
+                                <i class="icon-star"></i>
+                                <i class="icon-star"></i>
+                                <i class="icon-star"></i>
+                                <i class="icon-star-half"></i>
+                                <i class="icon-star-empty"></i>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;left:0px;top: 15px;" ng-click="goComment(hotrdc.id)">评价</a>
+                        <a class="btn btn-success" style="position: relative;left:0px;top: 15px;" href="#">评价</a>
                     </div>
                 </div>
             </div>

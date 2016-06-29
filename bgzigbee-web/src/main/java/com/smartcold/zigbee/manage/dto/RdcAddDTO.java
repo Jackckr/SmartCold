@@ -1,5 +1,9 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.List;
+
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
+
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-06-01 11:22)
  */
@@ -22,6 +26,8 @@ public class RdcAddDTO {
 	private String name;
 
 	private String address;
+	
+	
 
 	private int coldTruck1;
 	private int coldTruck2;
@@ -76,18 +82,45 @@ public class RdcAddDTO {
 
 	private float rdcHealthScore;
 	
-	private String arrangepiclocation;
+	private FileDataEntity arrangePic;
 
-	private String storagePicLocation;
-
-	public String getArrangepiclocation() {
-		return arrangepiclocation;
+	private List<FileDataEntity> storagePics;
+	
+	private int userid;//关联用户id
+	//浏览量
+	private int pageview;
+	
+	public int getPageview() {
+		return pageview;
 	}
 
-	public void setArrangepiclocation(String arrangepiclocation) {
-		this.arrangepiclocation = arrangepiclocation;
+	public void setPageview(int pageview) {
+		this.pageview = pageview;
 	}
 
+	public int getUserId() {
+		return userid;
+	}
+
+	public void setUserId(int userId) {
+		this.userid = userId;
+	}
+
+	public FileDataEntity getArrangePic() {
+		return arrangePic;
+	}
+
+	public void setArrangePic(FileDataEntity arrangePic) {
+		this.arrangePic = arrangePic;
+	}
+
+	public List<FileDataEntity> getStoragePics() {
+		return storagePics;
+	}
+
+	public void setStoragePics(List<FileDataEntity> storagePics) {
+		this.storagePics = storagePics;
+	}
 
 	public int getRdcId() {
 		return rdcId;
@@ -401,11 +434,4 @@ public class RdcAddDTO {
 		this.rdcHealthScore = rdcHealthScore;
 	}
 
-	public String getStoragePicLocation() {
-		return storagePicLocation;
-	}
-
-	public void setStoragePicLocation(String storagePicLocation) {
-		this.storagePicLocation = storagePicLocation;
-	}
 }

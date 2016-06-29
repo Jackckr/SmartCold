@@ -22,3 +22,4 @@ public class UserController extends BaseController {
 		return userDao.findAllUser();
 	}
 }
+

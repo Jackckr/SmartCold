@@ -2,6 +2,8 @@ package com.smartcold.zigbee.manage.dto;
 
 import java.util.Date;
 
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
+
 public class RdcEntityDTO {
 
     private int id;
@@ -46,14 +48,15 @@ public class RdcEntityDTO {
 
     private int userCommentCount;
     
-    private String arrangePic;
+    private FileDataEntity storagePic;
 
-    public String getArrangePic() {
-		return arrangePic;
+
+	public FileDataEntity getStoragePic() {
+		return storagePic;
 	}
 
-	public void setArrangePic(String arrangePic) {
-		this.arrangePic = arrangePic;
+	public void setStoragePic(FileDataEntity storagePic) {
+		this.storagePic = storagePic;
 	}
 
 	public String getName() {

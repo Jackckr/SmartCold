@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.net.nntp.NewGroupsOrNewsQuery;
+import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.zigbee.manage.dao.RdcExtMapper;
@@ -26,12 +32,14 @@ import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
+import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
+import com.smartcold.zigbee.manage.util.ResponseData;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -40,6 +48,9 @@ import com.smartcold.zigbee.manage.service.RdcService;
 @RequestMapping(value = "/rdc")
 public class RdcController {
 
+	private int pageNum=1;
+	private int pageSize=7;
+	 
 	private static String baseDir = "picture";
 
 	@Autowired
@@ -71,14 +82,21 @@ public class RdcController {
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findRdcList() {
-		return rdcMapper.findRdcList();
+	public ResponseData<RdcEntity> findRdcList(HttpServletRequest request) {
+	int pageNum=Integer.parseInt(request.getParameter("pageNum")!=null?request.getParameter("pageNum")+"":"1");
+	int pageSize=Integer.parseInt(request.getParameter("pageSize")!=null?request.getParameter("pageSize")+"":"7");
+        PageHelper.startPage(pageNum, pageSize); 		
+         Page<RdcEntity> data = (Page<RdcEntity>) rdcMapper.findRdcList();
+         return ResponseData.newSuccess(data);
 	}
 
-	@RequestMapping(value = "/findRdcDTOList", method = RequestMethod.GET)
+	@RequestMapping(value = "/findRdcDTOList")
 	@ResponseBody
-	public Object findRdcDTOList() {
-		return rdcService.findRdcDTOList();
+	public ResponseData<RdcEntityDTO> findRdcDTOList(HttpServletRequest request) {
+		int pageNum=Integer.parseInt(request.getParameter("pageNum")!=null?request.getParameter("pageNum")+"":"1");
+		int pageSize=Integer.parseInt(request.getParameter("pageSize")!=null?request.getParameter("pageSize")+"":"7");
+		PageInfo<RdcEntityDTO> data = rdcService.findRdcDTOList(pageNum,pageSize);
+		return ResponseData.newSuccess(data);
 	}
 
 	@RequestMapping(value = "/findRDCByRDCId", method = RequestMethod.GET)

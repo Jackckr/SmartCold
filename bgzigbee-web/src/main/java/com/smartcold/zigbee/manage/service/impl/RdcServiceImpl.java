@@ -1,5 +1,8 @@
 package com.smartcold.zigbee.manage.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
@@ -43,6 +46,9 @@ public class RdcServiceImpl implements RdcService {
 
 	@Autowired
 	private CommentMapper commentDao;
+	
+	@Autowired
+	private FileDataMapper fileDataDao;
 
 	@Override
 	public List<RdcEntity> findRdcList() {
@@ -143,15 +149,21 @@ public class RdcServiceImpl implements RdcService {
 			rdcAddDTO.setStorageType(rdcExtEntity.getStoragetype());
 			rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
 			rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
-			rdcAddDTO.setArrangepiclocation(rdcExtEntity.getArrangepiclocation());
-			ArrayList<String> locationList = gson.fromJson(rdcExtEntity.getStoragepiclocation(),
-					new TypeToken<List<String>>() {
-					}.getType());
-			for (int i = 0; i < locationList.size(); i++) {
-				locationList.set(i,
-						String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, locationList.get(i)));
+			rdcAddDTO.setPageview(rdcExtEntity.getPageview()+1);
+			rdcExtDao.increasePageView(rdcID);
+			List<FileDataEntity> arrangeFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+			if (!arrangeFiles.isEmpty()) {
+				FileDataEntity arrangeFile = arrangeFiles.get(0);
+				arrangeFile.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, arrangeFile.getLocation()));
+				rdcAddDTO.setArrangePic(arrangeFile);
 			}
-			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
+			
+			List<FileDataEntity> storageFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+			for (FileDataEntity item:storageFiles) {
+				item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+			}
+			rdcAddDTO.setStoragePics(storageFiles);
+//			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
 
 			String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
 			for (int i = 0; i < truck.length; i++) {
@@ -226,9 +238,12 @@ public class RdcServiceImpl implements RdcService {
 	}
 
 	@Override
-	public List<RdcEntityDTO> findRdcDTOList() {
-		List<RdcEntity> rdcList = rdcDao.findRdcList();
-		List<RdcEntityDTO> result = Lists.newArrayList();
+	public PageInfo<RdcEntityDTO> findRdcDTOList(int pageNum,int pageSize) {
+		 PageHelper.startPage(pageNum, pageSize); 	
+		 Page<RdcEntity> rdcList =(Page<RdcEntity>) rdcDao.findRdcList();
+		 List<RdcEntityDTO> result = new ArrayList<RdcEntityDTO>();
+		 PageInfo<RdcEntityDTO> pageresult = new PageInfo<RdcEntityDTO>();
+		 pageresult.setTotal(rdcList.getTotal());
 		if (!CollectionUtils.isEmpty(rdcList)) {
 			for (RdcEntity rdcEntity : rdcList) {
 				RdcEntityDTO dto = new RdcEntityDTO();
@@ -255,17 +270,17 @@ public class RdcServiceImpl implements RdcService {
 				dto.setUserCommentCount(userCommentCnt);
 				dto.setUserRecommendPercent(userRecommendPercent);
 				
-				//取出仓库平面图
-				List<RdcExtEntity> rdcExtEntities  = rdcExtDao.findRDCExtByRDCId(rdcEntity.getId());
-				if (!rdcExtEntities.isEmpty() && rdcExtEntities.get(0).getArrangepiclocation() != null) {
-					dto.setArrangePic( FtpService.READ_URL + rdcExtEntities.get(0).getArrangepiclocation() );
-				}else {
-					dto.setArrangePic("app/img/rdcHeader.jpg");
+				List<FileDataEntity> storagePics = fileDataDao.findByBelongIdAndCategory(rdcEntity.getId(), FileDataMapper.CATEGORY_STORAGE_PIC);
+				if (!storagePics.isEmpty()) {
+					FileDataEntity storagePic = storagePics.get(0);
+					storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
+					dto.setStoragePic(storagePic);
 				}
 				result.add(dto);
 			}
 		}
-		return result;
+		pageresult.setList(result);
+		return pageresult;
 	}
 
 	@Override

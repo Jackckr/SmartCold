@@ -116,5 +116,9 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    
+    <update id="increasePageView" parameterType="int">
+    	UPDATE rdcext set pageview = pageview+1 where rdcid=#{rdcID};
+    </update>
 
 </mapper>

@@ -6,10 +6,10 @@
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
             <ul class="breadcrumb" style="padding-left: 45px">
                 <li class="active">
-                    <a href="" ng-click="toColdStorageList()">冷库列表</a>
+                    <a href="" ng-click="toColdStorageList()">冷库</a>
                 </li>
                 <li class="active">
-                    {{rdcName}}
+          
                 </li>
                 <button class="btn btn-primary btn-xs pull-right" type="button" ng-if="undefined!=user && user.id==rdcUserId" 
                  ng-click="goEditRdc(rdcId)">修改冷库</button>
@@ -445,11 +445,19 @@
                          style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px ridge lightgrey;">
                         <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                             <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                    src="{{lookrdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" style="width: 60px;height: 60px" alt="冷库图片"/></a>
+                                    src="app/img/rdcHeader.jpg" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                             <div style="position: relative;left: 5px;">
                                 <span style="color: dodgerblue;font-size: 8px;top: 1px;"><a
                                         ng-click="goDetail(lookrdc.id)">{{lookrdc.name}}</a></span>
+
+                                <div style="position:relative;top:5px;height: 3px">
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-half"></i>
+                                    <i class="icon-star-empty"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4" style="position: relative;top:5px;left: 0px;">

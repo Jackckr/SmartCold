@@ -17,8 +17,4 @@ public interface RdcExtMapper {
     void updateRdcExt(RdcExtEntity rdcExtEntity);
     
     void increasePageView(int rdcID);
-
-    List<RdcExtEntity> findScoreRdcDTOList(@Param("npoint") int npoint);
-
-    List<RdcExtEntity> findHotRdcDTOList(@Param("npoint") int npoint);
 }
