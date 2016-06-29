@@ -50,19 +50,11 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
 
 
     // 获取当前热度冷库的列表
-    findHotRdcDTOList();
-
-    function findHotRdcDTOList(){
-        $http.get('/i/rdc/findHotRdcDTOList', {
-            params: {
-                "npoint":6
-            }
-        }).success(function (data) {
-            var size = data.length;
-            data.splice(6, size);
-            $scope.hotrdcs = data;
-        });
-    }
+    $http.get('/i/rdc/findHotRdcDTOList').success(function (data) {
+        var size = data.length;
+        data.splice(6, size);
+        $scope.hotrdcs = data;
+    });
     
     $scope.goDetail = function (rdcID) {
     	/*  $http.get('/i/user/findUser').success(function(data){
@@ -76,10 +68,6 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
             /* }
          });*/
      }
-
-    $scope.goComment = function (rdcID) {
-        $location.path("/coldStorage/" + rdcID + "/review");
-    }
     	
     	
     /*	if(user.username!=undefined && user.username!=''){
@@ -845,25 +833,11 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.goHotBoard = function () {
-        angular.element(document.getElementById('hotBoard')).removeClass('btn-default');
-        angular.element(document.getElementById('hotBoard')).addClass('btn-success');
-        angular.element(document.getElementById('scoreBoard')).removeClass('btn-success');
-        angular.element(document.getElementById('scoreBoard')).addClass('btn-default');
-        findHotRdcDTOList();
+        //alert("goHotBoard");
     }
 
     $scope.goScoreBoard = function () {
-        angular.element(document.getElementById('scoreBoard')).removeClass('btn-default');
-        angular.element(document.getElementById('scoreBoard')).addClass('btn-success');
-        angular.element(document.getElementById('hotBoard')).removeClass('btn-success');
-        angular.element(document.getElementById('hotBoard')).addClass('btn-default');
-        $http.get('/i/rdc/findScoreRdcDTOList', {
-            params: {
-                "npoint":6
-            }
-        }).success(function (data) {
-            $scope.hotrdcs = data;
-        });
+        //alert("goScoreBoard");
     }
 
 });

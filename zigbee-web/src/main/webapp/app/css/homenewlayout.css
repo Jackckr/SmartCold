@@ -889,6 +889,6 @@ header .err-top .err-content{
     /*display: none;*/
 }
 section.content{
-     width:80%;
-     margin:0 auto;
+	margin:0 auto;
+	width:80%;
 }
