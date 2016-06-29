@@ -12,6 +12,7 @@
        <property name="dataSource" ref="dataSource" />  
        <property name="mapperLocations" value="classpath*:config/sqlmap/*.xml"/>  
        <property name="typeAliasesPackage" value="com.smartcold.zigbee.manage.entity" />  
+       <property name="configLocation"  value="classpath:config/mybatis/mybatis-config.xml" />
     </bean>  
    
 </beans>

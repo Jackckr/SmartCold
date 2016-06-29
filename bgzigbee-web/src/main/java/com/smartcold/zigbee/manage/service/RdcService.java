@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
@@ -23,7 +25,7 @@ public interface RdcService {
 
 	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID);
 
-	List<RdcEntityDTO> findRdcDTOList();
+	PageInfo<RdcEntityDTO> findRdcDTOList(int pageNum,int pageSize);
 	
 	boolean checkName(String name);
 
