@@ -3,7 +3,7 @@
  */
 coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams) {
 
-    $scope.editDisable = false;
+    $scope.editable = true;
     $scope.totalfiles = [];
 
     $scope.haveOrNots = [];
@@ -159,6 +159,38 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             $scope.citys = data;
             $scope.cityId = data[0].cityID;
         });
+
+        /*console.log("name: " + data[0].name);
+        console.log("provinceId: " + data[0].provinceId);
+        console.log("cityId: " + data[0].cityId);
+        console.log("address: " + data[0].address);
+        console.log("area: " + data[0].area);
+        console.log("manageType: " + data[0].manageType);
+        console.log("storageType: " + data[0].storageType);
+        console.log("temperType: " + data[0].temperType);
+        console.log("coldTruck1: " + data[0].coldTruck1);
+        console.log("coldTruck2: " + data[0].coldTruck2);
+        console.log("coldTruck3: " + data[0].coldTruck3);
+        console.log("coldTruck4: " + data[0].coldTruck4);
+        console.log("phoneNum: " + data[0].phoneNum);
+        console.log("telphoneNum: " + data[0].telphoneNum);
+        console.log("remark: " + data[0].remark);
+
+        console.log("tonnage: " + data[0].tonnage);
+        console.log("structure: " + data[0].structure);
+        console.log("companyDevice: " + data[0].companyDevice);
+        console.log("platform: " + data[0].platform);
+        console.log("lihuoRoom: " + data[0].lihuoRoom);
+        console.log("lihuoArea: " + data[0].lihuoArea);
+        console.log("lihuoTemperCtr: " + data[0].lihuoTemperCtr);
+        console.log("storageRefreg: " + data[0].storageRefreg);
+        console.log("temperRecord: " + data[0].temperRecord);
+        console.log("capacity1: " + data[0].capacity1);
+        console.log("capacity2: " + data[0].capacity2);
+        console.log("capacity3: " + data[0].capacity3);
+        console.log("capacity4: " + data[0].capacity4);
+        console.log("capacity5: " + data[0].capacity5);
+        console.log("facility: " + data[0].facility);*/
 
     });
     

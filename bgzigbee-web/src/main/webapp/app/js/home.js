@@ -20,8 +20,4 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
     	url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
 		window.location.href = url;
     };
-    $scope.goDeleteUser = function (userID) {
-    	
-        $state.go('home');
-    }
 });

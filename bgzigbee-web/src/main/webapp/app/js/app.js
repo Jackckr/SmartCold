@@ -272,6 +272,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/adminlist',
         controller: 'adminlist',
         templateUrl: 'app/template/adminManage.html'
+    }).state('coldStorageConfig', {
+        url: '/coldStorageConfig',
+        controller: 'coldStorageConfig',
+        templateUrl: 'app/template/coldStorageConfig.html'
     });
 
 });

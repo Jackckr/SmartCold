@@ -24,12 +24,12 @@
 			<!-- 按钮操作区域结束 -->
 			<!-- 表格操作区域开始 -->
 			<div class="tableArea" >
-				<table class="table table-striped table-bordered" id="tableArea" ng-model="rdcs">
+				<table class="table table-striped table-bordered" id="tableArea" ng-model="Allrdcs">
 				   <thead>
 				      <tr>
 				         <th>
-				         	<div>
-				         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox" >
+				         	<div id="allSec" onclick="allSec(this)">
+				         		<input type="checkbox" name="" id="allSecSon" class="checkBox" >
 				         		<label for="allSecSon" >全选</label>
 				         	</div>
 				         </th>
@@ -41,17 +41,16 @@
 				      </tr>
 				   </thead>
 				   <tbody>
-				      <tr ng-repeat="rdc in rdcs">
+				      <tr ng-repeat="rdc in Allrdcs">
 				         <td>
-							<input type="checkbox" ng-checked="exists(rdc, selected)"
-                       				ng-click="toggle(rdc, selected)"/>
+							<input type="checkbox" name="" id="" class="checkBox">
 				         </td>
 				         <td>{{rdc.name}}</td>
 				         <td>{{rdc.address}}</td>
 				         <td>{{rdc.cellphone}}</td>
 				         <td>{{rdc.addtime}}</td>
 				         <td>
-				         	<span class="edit"  ng-click="goEditRdc(rdc.id)"></span>
+				         	<span class="edit"></span>
 				         	<span class="delete"></span>
 				         </td>
 				      </tr>
@@ -59,13 +58,8 @@
 				</table>
 				<div class="page">
 					<!-- 翻页功能 -->
-<!-- 			        <div id="green" class="myGreen"></div> -->
+			        <div id="green" class="myGreen"></div>
 			        <!-- 翻页功能 -->
-			         <div class="row">
-                       <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
-                                ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
-                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-                   </div>
 				</div>
 			</div>
 			<!-- 表格操作区域结束 -->
