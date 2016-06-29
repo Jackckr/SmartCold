@@ -37,7 +37,7 @@
 				</div>				
 				<div id="search" class=" pull-right">					
 					<input type="text" placeholder="请输入关键词" id="myText"  />
-					<div id="searchImg"><span class="glyphicon glyphicon-search" onclick="serdc.getData();"></span></div>
+					<div id="searchImg"><span class="glyphicon glyphicon-search" onclick="serdc.$scope.pageChanged();"></span></div>
 				</div>					
 			</div>
 			<div id="mtfl_div" class="list clearfix">
@@ -79,67 +79,23 @@
 		      </tr>
 		   </thead>
 		   <tbody>
-		      <tr>
-		         <td>
-		         	<div class="image"><img src="app/img/rdcHeader.jpg"></div>
+		      <tr   ng-repeat="rdc in rdcs">
+		         <td width="5%">
+		         	<div class="image"><img src="{{rdc.logo}}"></div>
 		         </td>
 		         <td>
-		         	<div class="company">莱芜嘉禾冷链物流有限公司
-		         		<b class="rent">【出租】</b>
-		         	</div>
+		         	<div class="company">{{rdc.name}}<b class="rent">【{{rdc.typeText}}】</b></div>
 		         	<div class="position">
 		         		<span class="glyphicon glyphicon-map-marker"></span>
-		         		<span class="textInfo">上海-长宁区-中山公园</span>
+		         		<span class="textInfo">{{rdc.address}}</span>
 		         	</div>
 		         </td>
-		         <td>5元/天·吨</td>
-		         <td>2000平米</td>
-		         <td>冷藏库</td>
-		         <td>2016-6-22 10：24：33至<br/>2017-6-24 00：00：00</td>
+		         <td>{{rdc.unitPrice}}元/天·吨</td>
+		         <td>{{rdc.sqm}}平米</td>
+		         <td>{{rdc.coldtype}}</td>
+		         <td>{{rdc.validStartTime}}至<br/>{{rdc.validEndTime}}</td>
 		         <td>
-		         	<button class="btn btn-primary">立即抢单</button>
-		         </td>
-		      </tr>
-		      <tr>
-		         <td>
-		         	<div class="image"><img src="app/img/rdcHeader.jpg"></div>
-		         </td>
-		         <td>
-		         	<div class="company">莱芜嘉禾冷链物流有限公司
-		         		<b class="rent">【出租】</b>
-		         	</div>
-		         	<div class="position">
-		         		<span class="glyphicon glyphicon-map-marker"></span>
-		         		<span class="textInfo">上海-长宁区-中山公园</span>
-		         	</div>
-		         </td>
-		         <td>5元/天·吨</td>
-		         <td>2000平米</td>
-		         <td>冷藏库</td>
-		         <td>2016-6-22 10：24：33至<br/>2017-6-24 00：00：00</td>
-		         <td>
-		         	<button class="btn btn-primary">立即抢单</button>
-		         </td>
-		      </tr>
-		      <tr>
-		         <td>
-		         	<div class="image"><img src="app/img/rdcHeader.jpg"></div>
-		         </td>
-		         <td>
-		         	<div class="company">莱芜嘉禾冷链物流有限公司
-		         		<b class="rent">【出租】</b>
-		         	</div>
-		         	<div class="position">
-		         		<span class="glyphicon glyphicon-map-marker"></span>
-		         		<span class="textInfo">上海-长宁区-中山公园</span>
-		         	</div>
-		         </td>
-		         <td>5元/天·吨</td>
-		         <td>2000平米</td>
-		         <td>冷藏库</td>
-		         <td>2016-6-22 10：24：33至<br/>2017-6-24 00：00：00</td>
-		         <td>
-		         	<button class="btn btn-primary">立即抢单</button>
+		         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
 		         </td>
 		      </tr>
 		   </tbody>
@@ -147,20 +103,11 @@
 
 	<!-- 仓储信息区域end -->
 	<!-- 分页start -->
-		<nav>
-		  <ul class="pagination">
-		    <li><a href="#">First</a></li>
-    		<li><a href="#">Previous</a></li>
-		    <li class="active"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">…</a></li>
-    		<li><a href="#">Next</a></li>
-    		<li><a href="#">Last</a></li>
-		  </ul>
-		</nav>
+              <div class="row" style="text-align: center;">
+                    <pagination  total-items="bigTotalItems"  ng-change="pageChanged()" 
+                                ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+               </div>
 	<!-- 分页end -->
 	</div>
     <!-- 页面主体区域结束 -->

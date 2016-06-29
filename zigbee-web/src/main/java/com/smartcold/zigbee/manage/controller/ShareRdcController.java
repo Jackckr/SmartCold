@@ -1,6 +1,5 @@
 package com.smartcold.zigbee.manage.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,17 +11,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
+import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.service.CommonService;
+import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.CacheTool;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
 public class ShareRdcController  {
-
+	
+	private int pageNum;//当前页数
+	private int pageSize;//每页数量
+	
 	@Resource(name="commonService")
 	private CommonService commonService;
+	
+	@Resource(name="rdcShareService")
+	private RdcShareService rdcShareService;
+	
+	
 
+	/**
+	 * @author MaQiang
+	 * @date 2016年6月28日16:00:58
+	 */
+	private void getPageInfo(HttpServletRequest request) {
+		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
+		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "7" : request.getParameter("pageSize")); // 每页数据量
+	}
 	
 	/**
 	 * 查询下拉框数据  Description: ui_getSeleectData
@@ -79,7 +98,7 @@ public class ShareRdcController  {
 			data.put("mt", this.commonService.getBaseData("storagemanagetype", "id", "type"));// 经营类型
 			data.put("st", this.commonService.getBaseData("storagetempertype", "id", "type"));// 温度类型
 			result.setEntity(data);
-			CacheTool.setData(key, data);
+			CacheTool.setData(key, data);  
 		}
 		return result;
 	}
@@ -87,25 +106,49 @@ public class ShareRdcController  {
 	/**
 	 * 获得睿库列表
 	 * @param request
-	 * @param keyword 支持关键字搜索-> rcd r
-	 * @param provinceid 区域 -> rcd r
-	 * @param type->  null：不限  1：出租2：求租
-	 * @param sqm 面积-> rcd r
-	 * @param managetype 经营类型  -> rdcext t
-	 * @param storagetype 存放类型 -> rdcext t
-	 * @param storagetempertype 温度类型 -> rdcext t
-	 * @param storagetruck 有无车辆  -> rdcext t
 	 * @param orderBy 排序
+	 * @param sqm 面积-> rcd r
+	 * @param provinceid 区域 -> rcd r
+	 * @param keyword 支持关键字搜索-> rcd r
+	 * @param type->  null：不限  1：出租2：求租
+	 * @param managetype 经营类型  -> rdcext t
+	 * @param storagetempertype 温度类型 -> rdcext t
 	 * @return
 	 */
 	@RequestMapping(value = "/getSERDCList")
 	@ResponseBody
-	public ResponseData<HashMap<String, Object>> getSERDCList(HttpServletRequest request, String keyword,String provinceid, String type,String managetype,String storagetype,String storagetempertype,String sqm,String storagetruck,String orderBy) {
-		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-		
-		return result;
+	public ResponseData<RdcShareDTO> getSERDCList(HttpServletRequest request, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,String orderBy) {
+		this.getPageInfo(request);
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("sstauts", 1);//必须
+		filter.put("type", type);
+		filter.put("sqm", getSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
+		filter.put("keyword", keyword);
+		filter.put("provinceid", provinceid);
+		filter.put("managetype", managetype);
+		filter.put("storagetempertype", storagetempertype);
+		filter.put("orderBy", orderBy);
+		PageInfo<RdcShareDTO> data = this.rdcShareService.getSERDCList(this.pageNum, this.pageSize, filter);
+		return ResponseData.newSuccess(data);
 	}
 	
+	private static String getSqmFilter(String sqm)
+	{  
+		StringBuffer sqlfilter=new StringBuffer("(");
+		if(StringUtil.isnotNull(sqm)){
+			String filter[]=sqm.split(",");
+			for (String betdata : filter) {
+			  String betsmdata[]=	betdata.split("~");
+			    if(betsmdata.length==2){
+			    	sqlfilter.append(" s.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
+			    }else{
+			    	sqlfilter.append(" s.sqm  "+betsmdata[0]+" or");
+			    }
+			}
+			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
+	   }
+		return "";
+	}
 	
 	
 

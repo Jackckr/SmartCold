@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.smartcold.zigbee.manage.dao.RdcShareMapper">
+    <!-- 睿库共享查询   -->
+    <select id="getSERDCList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+		   SELECT
+				s.id,
+				s.rdcID,
+				s.releaseID,
+				s.title,
+				s.typeCode,
+				s.typeText,
+				s.unitPrice,
+				s.unit,
+				s.sqm,
+				date_format(s.validStartTime,'%Y-%m-%d %H:%i:%s') validStartTime,
+				date_format(s.validEndTime,'%Y-%m-%d %H:%i:%s') validEndTime,
+				s.applyID,
+				s.bookings,
+				s.stauts,
+				date_format(s.addtime,'%Y-%m-%d %H:%i:%s') addtime,
+				date_format(s.updatetime,'%Y-%m-%d %H:%i:%s') updatetime,
+				r.address,
+				r.name,
+			  (SELECT location FROM filedata f WHERE f.belongid = r.id 	AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1 ) as logo
+<!-- 			 , t.managetype, -->
+<!-- 			 , t.storagetempertype -->
+			FROM
+				rdc_shared s
+			LEFT JOIN rdc r ON s.rdcID = r.id
+			LEFT JOIN rdcext t on s.rdcID=t.RDCID
+			WHERE
+				s.stauts = 1
+			AND CURRENT_TIMESTAMP () BETWEEN s.validStartTime
+			AND s.validEndTime
+			<if test="sqm !=null and  sqm != ''"> and  #{sqm} </if>
+			<if test="keyword !=null and  keyword != ''"> and r.name like '%#{keyword}%' </if>  <!-- 关键字 -->
+			<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!-- 区域 -->
+			<if test="managetype !=null and  managetype != ''"> and t.managetype = #{managetype}</if>
+			<if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype = #{storagetempertype}</if>
+			<if test="storagetruck !=null"> ${storagetruck}ISNULL(t.storagetruck) </if>
+				GROUP BY           
+					s.id
+				ORDER BY
+					s.updatetime DESC 
+    </select>
+</mapper>
