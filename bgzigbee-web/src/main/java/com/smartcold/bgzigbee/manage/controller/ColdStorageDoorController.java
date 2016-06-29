@@ -11,7 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.bgzigbee.manage.dao.ColdStorageDoorSetMapper;
+import com.smartcold.bgzigbee.manage.dao.SpiderItemConfigMapper;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.enums.SpiderItemType;
 
 @Controller
 @RequestMapping(value = "/coldStorageDoor")
@@ -21,6 +23,9 @@ public class ColdStorageDoorController {
 
 	@Autowired
 	private ColdStorageDoorSetMapper coldStorageDoorSetDao;
+
+	@Autowired
+	private SpiderItemConfigMapper spiderItemConfigDao;
 
 	@RequestMapping(value = "/getcoldStorageDoorByStorageId")
 	@ResponseBody
@@ -41,5 +46,11 @@ public class ColdStorageDoorController {
 		coldStorageDoorSetDao.updateMappingById(id, mapping);
 
 		return new ResultDto(0, "修改成功");
+	}
+
+	@RequestMapping(value = "/findItem")
+	@ResponseBody
+	public Object findItem() {
+		return spiderItemConfigDao.findItemByType(SpiderItemType.COLDSTORAGE.getType());
 	}
 }
