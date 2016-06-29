@@ -12,10 +12,9 @@
 				<tr>
 					<td>省：<em>*</em></td>
 					<td>
-						<select ng-model="provinceId" ng-change="provinceSelected(provinceId)">
-                            <option value="">-- 请选择 --</option>
-                            <option ng-repeat="x in provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
-                        </select>
+						<select class="form-control" ng-model="provinceId" 
+							ng-disabled="editable" ng-change="provinceSelected(provinceId)" 
+							ng-options="x.provinceId as x.provinceName for x in provinces"></select>
 					</td>
 				</tr>
 				<tr>

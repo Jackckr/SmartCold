@@ -28,8 +28,8 @@
 				   <thead>
 				      <tr>
 				         <th>
-				         	<div id="allSec" onclick="allSec(this)">
-				         		<input type="checkbox" name="" id="allSecSon" class="checkBox" >
+				         	<div>
+				         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox" >
 				         		<label for="allSecSon" >全选</label>
 				         	</div>
 				         </th>
@@ -43,7 +43,8 @@
 				   <tbody>
 				      <tr ng-repeat="rdc in rdcs">
 				         <td>
-							<input type="checkbox" name="" id="" class="checkBox">
+							<input type="checkbox" ng-checked="exists(rdc, selected)"
+                       				ng-click="toggle(rdc, selected)"/>
 				         </td>
 				         <td>{{rdc.name}}</td>
 				         <td>{{rdc.address}}</td>
