@@ -7,13 +7,13 @@
 			<table class="table">
 				<tr>
 					<td>名称：<em>*</em></td>
-					<td><input type="text" ng-model="name" ng-disabled="editable"></td>
+					<td><input type="text" ng-model="name" ng-disabled="editDisable"></td>
 				</tr>
 				<tr>
 					<td>省：<em>*</em></td>
 					<td>
 						<select class="form-control" ng-model="provinceId" 
-							ng-disabled="editable" ng-change="provinceSelected(provinceId)" 
+							ng-disabled="editDisable" ng-change="provinceSelected(provinceId)" 
 							ng-options="x.provinceId as x.provinceName for x in provinces"></select>
 					</td>
 				</tr>
@@ -26,13 +26,13 @@
 				<tr>
 					<td>地理位置：<em>*</em></td>
 					<td>
-						 <input type="text" ng-model="address" ng-disabled="editable">
+						 <input type="text" ng-model="address" ng-disabled="editDisable">
 					</td>
 				</tr>
 				<tr>
 					<td>面积：<em>*</em></td>
 					<td>
-						  <input type="text" placeholder="冷库面积（平方米）"  ng-model="area" ng-disabled="editable">
+						  <input type="text" placeholder="冷库面积（平方米）"  ng-model="area" ng-disabled="editDisable">
 					</td>
 				</tr>
 				<tr>
@@ -77,13 +77,13 @@
 				<tr>
 					<td>手机号：<em>*</em></td>
 					<td>
-						<input type="text" ng-model="phoneNum" ng-disabled="editable">
+						<input type="text" ng-model="phoneNum" ng-disabled="editDisable">
 					</td>
 				</tr>
 				<tr>
 					<td>备注：</td>
 					<td>
-						<textarea type="text" ng-model="remark" ng-disabled="editable"></textarea>
+						<textarea type="text" ng-model="remark" ng-disabled="editDisable"></textarea>
 						<div class="addMore">
 		                    <a onclick="addMore(this)">添加更多...</a>
 		                </div>
@@ -91,11 +91,11 @@
 				</tr>
 				<tr>
 					<td>吨位：</td>
-					<td><input type="text" ng-model="tonnage" ng-disabled="editable"></td>
+					<td><input type="text" ng-model="tonnage" ng-disabled="editDisable"></td>
 				</tr>
 				<tr>
 					<td>结构：</td>
-					<td><input type="text" ng-model="structure" ng-disabled="editable"></td>
+					<td><input type="text" ng-model="structure" ng-disabled="editDisable"></td>
 				</tr>
 				<tr>
 					<td>冷链设施类型：</td>
@@ -123,7 +123,7 @@
 				</tr>
 				<tr>
 					<td>理货区面积：</td>
-					<td><input type="text" ng-model="lihuoArea" ng-disabled="editable"></td>
+					<td><input type="text" ng-model="lihuoArea" ng-disabled="editDisable"></td>
 				</tr>
 				<tr>
 					<td>理货区有无温控：</td>
@@ -178,7 +178,7 @@
 				<tr>
 					<td>周边设施：</td>
 					<td>
-						<textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.." ng-disabled="editable"></textarea>
+						<textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.." ng-disabled="editDisable"></textarea>
 					</td>
 				</tr>
 				<tr>

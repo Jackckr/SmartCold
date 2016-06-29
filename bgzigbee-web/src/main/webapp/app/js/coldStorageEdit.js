@@ -3,7 +3,7 @@
  */
 coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams) {
 
-    $scope.editable = true;
+    $scope.editDisable = false;
     $scope.totalfiles = [];
 
     $scope.haveOrNots = [];
