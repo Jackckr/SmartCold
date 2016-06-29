@@ -24,6 +24,7 @@
 				date_format(s.updatetime,'%Y-%m-%d %H:%i:%s') updatetime,
 				r.address,
 				r.name,
+				r.coldtype,
 			  (SELECT location FROM filedata f WHERE f.belongid = r.id 	AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1 ) as logo
 <!-- 			 , t.managetype, -->
 <!-- 			 , t.storagetempertype -->
@@ -35,11 +36,11 @@
 				s.stauts = 1
 			AND CURRENT_TIMESTAMP () BETWEEN s.validStartTime
 			AND s.validEndTime
-			<if test="sqm !=null and  sqm != ''"> and  #{sqm} </if>
-			<if test="keyword !=null and  keyword != ''"> and r.name like '%#{keyword}%' </if>  <!-- 关键字 -->
-			<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!-- 区域 -->
-			<if test="managetype !=null and  managetype != ''"> and t.managetype = #{managetype}</if>
-			<if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype = #{storagetempertype}</if>
+			<if test="sqm !=null and  sqm != ''"> and  ${sqm} </if>
+			<if test="keyword !=null and  keyword != ''"> and r.name like '%${keyword}%' </if>  <!-- 关键字 -->
+			<if test="provinceid !=null and  provinceid != ''"> and r.provinceid in (#{provinceid}) </if> <!-- 区域 -->
+			<if test="managetype !=null and  managetype != ''"> and t.managetype in (#{managetype})</if>
+			<if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype in (#{storagetempertype})</if>
 			<if test="storagetruck !=null"> ${storagetruck}ISNULL(t.storagetruck) </if>
 				GROUP BY           
 					s.id
