@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcMapper;
+import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageManageTypeMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageRefregMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageTemperTypeMapper;
@@ -32,6 +34,7 @@ import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
+import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
 
@@ -72,6 +75,9 @@ public class RdcController {
 
 	@Autowired
 	private FtpService ftpService;
+
+	@Autowired
+	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -361,5 +367,23 @@ public class RdcController {
 		rdcMapper.updateMappingById(rdcId, mapping);
 
 		return new ResultDto(0, "修改成功");
+	}
+
+	@RequestMapping(value = "/findSpiderConfig", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findSpiderConfig(int rdcId) {
+		return spiderCollectionConfigDao.findConfigByRdcid(rdcId);
+	}
+
+	@RequestMapping(value = "/updateSpiderConfig", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateSpiderConfig(@RequestBody SpiderCollectionConfigEntity entity) {
+		if (spiderCollectionConfigDao.findConfigByRdcid(entity.getRdcid()) != null) {
+			spiderCollectionConfigDao.updateConfig(entity);
+			return new ResultDto(0, "添加成功");
+		} else {
+			spiderCollectionConfigDao.addConfig(entity);
+			return new ResultDto(0, "修改成功");
+		}
 	}
 }

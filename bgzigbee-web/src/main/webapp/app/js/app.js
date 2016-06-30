@@ -276,6 +276,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageConfig',
         controller: 'coldStorageConfig',
         templateUrl: 'app/template/coldStorageConfig.html'
+    }).state('spiderConfig', {
+        url: '/spiderConfig',
+        controller: 'spiderConfig',
+        templateUrl: 'app/template/spiderConfig.html'
     });
 
 });

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper">
+
+    <insert id="addConfig" parameterType="SpiderCollectionConfigEntity">
+        INSERT INTO `spidercollectionconfig`(
+		`username`,
+		`password`,
+		`rdcid`,
+		`addTime`
+		)
+		VALUE 
+		(
+		#{username},
+		#{password},
+		#{rdcid},
+		now()
+    </insert>
+    
+    <update id="updateConfig" parameterType="SpiderCollectionConfigEntity">
+        UPDATE `spidercollectionconfig`
+        SET
+        `username` = #{username},
+        `password` = #{password}
+        WHERE rdcid = #{rdcid}
+    </update>
+
+    <select id="findConfigByRdcid" parameterType="map" resultType="SpiderCollectionConfigEntity">
+		SELECT *
+		FROM `spidercollectionconfig` WHERE `rdcid` = #{rdcid}
+	</select>
+
+</mapper>
