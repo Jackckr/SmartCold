@@ -18,4 +18,13 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
     $http.get('/i/admin/findAdmin').success(function(data){
     	$scope.admin = data;
     });
+    $scope.goDeleteAdmin = function (adminID) {
+    	$http.get('/i/admin/deleteAdmin', {
+            params: {
+                "adminID": adminID
+            }
+        }).success(function (data) {
+        });
+    	$state.reload();
+    }
 });

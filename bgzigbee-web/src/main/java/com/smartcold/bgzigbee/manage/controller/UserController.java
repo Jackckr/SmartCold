@@ -22,4 +22,11 @@ public class UserController extends BaseController {
 	public Object findUserList() {
 		return userDao.findAllUser();
 	}
+	
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+	@ResponseBody
+	public Object deleteUser(int userID) {
+		 userDao.deleteUser(userID);
+		 return true;
+	}
 }

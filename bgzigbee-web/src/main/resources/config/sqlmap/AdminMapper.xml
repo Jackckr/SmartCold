@@ -39,5 +39,7 @@
 		SELECT *
 		FROM `admin` WHERE `id` = #{id}
 	</select>
-
+	<select id="deleteAdmin" parameterType="map">
+	    DELETE FROM admin WHERE `id` = #{id}
+	</select>
 </mapper>

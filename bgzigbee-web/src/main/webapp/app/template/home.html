@@ -29,7 +29,7 @@
 				      <tr>
 				         <th>
 				         	<div id="allSec" onclick="allSec(this)">
-				         		<input type="checkbox" name="" id="allSecSon" class="checkBox" >
+				         		<input type="checkbox" name="" id="allSecSon" class="checkBox" checked>
 				         		<label for="allSecSon" >全选</label>
 				         	</div>
 				         </th>
@@ -43,7 +43,7 @@
 				   <tbody>
 				      <tr ng-repeat="user in Allusers">
 				         <td>
-							<input type="checkbox" name="" id="" class="checkBox">
+						 <input type="checkbox" name="" id="" class="checkBox">
 				         </td>
 				         <td>{{user.username}}</td>
 				         <td>{{user.email}}</td>
@@ -51,7 +51,7 @@
 				         <td>{{user.addTime}}</td>
 				         <td>
 				         	<span class="edit"></span>
-				         	<span class="delete"></span>
+				         	<button class="delete" ng-click="goDeleteUser(user.id)"></button>
 				         </td>
 				      </tr>
 				   </tbody>
@@ -66,7 +66,6 @@
 			<div class="three">
 				<div class="btn-group" role="group">
 				  <button type="button" class="btn btn-default">审核</button>
-				  <button type="button" class="btn btn-default">合并</button>
 				  <button type="button" class="btn btn-default">删除</button>
 				</div>
 			</div>

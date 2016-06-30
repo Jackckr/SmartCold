@@ -37,7 +37,6 @@
 				         <th>邮箱</th>
 				         <th>手机号</th>
 				         <th>添加时间</th>
-				         <th style="width:120px;">冷库详情</th>
 				         <th>操作</th>
 				      </tr>
 				   </thead>
@@ -50,10 +49,9 @@
 				         <td>{{admin.email}}</td>
 				         <td>{{admin.telephone}}</td>
 				         <td>{{admin.addtime}}</td>
-				         <td><a href="">详情</a></td>
 				         <td>
 				         	<span class="edit"></span>
-				         	<span class="delete"></span>
+				         	<button class="delete" ng-click="goDeleteAdmin(admin.id)"></button>
 				         </td>
 				      </tr>
 				   </tbody>

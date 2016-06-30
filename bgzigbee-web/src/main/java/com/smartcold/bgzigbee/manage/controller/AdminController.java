@@ -63,6 +63,13 @@ public class AdminController extends BaseController {
 		return adminDao.findAllAdmin();
 	}
 	
+	@RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)
+	@ResponseBody
+	public Object deleteAdmin(int adminID) {
+		 adminDao.deleteAdmin(adminID);
+		 return true;
+	}
+	
 	@RequestMapping(value = "/findAdmin", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAdmin(HttpServletRequest request) {
@@ -103,5 +110,7 @@ public class AdminController extends BaseController {
 		adminDao.insertAdmin(adminEntity);
 		return new ResultDto(0, "注册成功");
 	}
+	
+	
 
 }
