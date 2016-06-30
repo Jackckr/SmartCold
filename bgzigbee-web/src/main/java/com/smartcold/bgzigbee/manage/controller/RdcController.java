@@ -2,10 +2,15 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -20,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.mysql.jdbc.log.Log;
 import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
+import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcMapper;
 import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
@@ -33,6 +40,8 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
+import com.smartcold.bgzigbee.manage.entity.AdminEntity;
+import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
 import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
@@ -45,13 +54,13 @@ import com.smartcold.bgzigbee.manage.service.RdcService;
 @Controller
 @RequestMapping(value = "/rdc")
 public class RdcController {
-
+	private static final Logger log = LoggerFactory.getLogger(RdcController.class);
 	private static String baseDir = "picture";
 
 	private Gson gson = new Gson();
 
 	@Autowired
-	private RdcMapper rdcMapper;
+	private RdcMapper rdcDao;
 
 	@Autowired
 	private RdcExtMapper rdcExtDao;
@@ -78,12 +87,15 @@ public class RdcController {
 	private FtpService ftpService;
 
 	@Autowired
+	private FileDataMapper fileDataDao;
+	
+	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
-		return rdcMapper.findRdcList();
+		return rdcDao.findRdcList();
 	}
 
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
@@ -98,7 +110,7 @@ public class RdcController {
 	@RequestMapping(value = "/findRDCByRDCId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRDCByRDCId(@RequestParam int rdcID) {
-		return rdcMapper.findRDCByRDCId(rdcID);
+		return rdcDao.findRDCByRDCId(rdcID);
 	}
 
 	@RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
@@ -171,7 +183,7 @@ public class RdcController {
 		rdcEntity.setPosition("");
 		rdcEntity.setPowerConsume(0);
 
-		rdcMapper.insertRdc(rdcEntity);
+		rdcDao.insertRdc(rdcEntity);
 
 		// 插入rdc表,返回对应的ID
 		RdcExtEntity rdcExtEntity = new RdcExtEntity();
@@ -248,7 +260,7 @@ public class RdcController {
 		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
 
 		int rdcId = rdcAddDTO.getRdcId();
-		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
+		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
 
 		// rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
@@ -266,7 +278,7 @@ public class RdcController {
 		 * rdcEntity.setPosition(""); rdcEntity.setPowerConsume(0);
 		 */
 
-		rdcMapper.updateRdc(rdcEntity);
+		rdcDao.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
 		boolean haveRdcExt = false;
 		if (rdcExtDao.findRDCExtByRDCId(rdcId).isEmpty()) {
@@ -347,7 +359,7 @@ public class RdcController {
 	@RequestMapping(value = "/checkCellphone", method = RequestMethod.GET)
 	public Object checkCellphone(@RequestParam("value") String cellphone) {
 		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
-		ngRemoteValidateDTO.setValid(!rdcMapper.checkCellphone(cellphone));
+		ngRemoteValidateDTO.setValid(!rdcDao.checkCellphone(cellphone));
 		return ngRemoteValidateDTO;
 	}
 
@@ -368,7 +380,7 @@ public class RdcController {
 			return new ResultDto(-1, "参数不是合法的json map");
 		}
 
-		rdcMapper.updateMappingById(rdcId, mapping);
+		rdcDao.updateMappingById(rdcId, mapping);
 
 		return new ResultDto(0, "修改成功");
 	}
@@ -377,6 +389,26 @@ public class RdcController {
 	@ResponseBody
 	public Object findSpiderConfig(int rdcId) {
 		return spiderCollectionConfigDao.findConfigByRdcid(rdcId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteByRdcID", method=RequestMethod.DELETE)
+	public Object deleteByRdcID(Integer rdcID){
+		if (rdcID<=0) {
+			return new BaseDto(-1);
+		}
+		rdcService.deleteByRdcId(rdcID);
+		return new BaseDto(0);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteByRdcIDs", method=RequestMethod.DELETE)
+	public Object deleteByRdcIDs(Integer[] rdcIDs){
+		log.info("delete rdcID in:"+Arrays.toString(rdcIDs));
+		for(Integer rdcID:rdcIDs){
+			rdcService.deleteByRdcId(rdcID);
+		}
+		return new BaseDto(0);
 	}
 
 	@RequestMapping(value = "/updateSpiderConfig", method = RequestMethod.POST)
@@ -390,4 +422,5 @@ public class RdcController {
 			return new ResultDto(0, "修改成功");
 		}
 	}
+	
 }

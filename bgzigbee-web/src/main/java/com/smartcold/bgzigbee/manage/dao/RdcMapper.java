@@ -22,4 +22,6 @@ public interface RdcMapper {
 	boolean checkCellphone(String cellphone);
 
 	void updateMappingById(@Param("rdcId") int rdcId, @Param("mapping") String mapping);
+	
+	int deleteByRdcID(int rdcID);
 }

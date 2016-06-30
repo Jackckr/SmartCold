@@ -26,6 +26,8 @@ public interface RdcService {
 
 	PageInfo<RdcEntityDTO> findRdcDTOByPage(int pageNum, int pageSize);
 	
+	boolean deleteByRdcId(int rdcID);
+	
 	boolean checkName(String name);
 
 }
