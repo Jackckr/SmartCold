@@ -13,10 +13,24 @@ import com.smartcold.zigbee.manage.dto.RdcShareDTO;
  */
 public interface RdcShareMapper {
 	
-	/**
-	 * 获得共享信息
+   /**
+    * 获得商品共享信息
+    * @param filter
+    * @return
+    */
+   public Page<RdcShareDTO> getSEGDList(Map<String, Object> parameters);
+   /**
+    * 获得配送共享信息
+    * @param filter
+    * @return
+    */
+   public Page<RdcShareDTO> getSEPSList(Map<String, Object> parameters);
+   
+   /**
+	 * 获得睿库共享信息
 	 * @param filter
 	 * @return
 	 */
-   public Page<RdcShareDTO> getSERDCList(Map<String, Object> parameters);
+  public Page<RdcShareDTO> getSERDCList(Map<String, Object> parameters);
+  
 }

@@ -15,7 +15,13 @@ public class RdcShareDTO {
 	private int typeCode; // rental_type:出租类型:1:出租 2:求租
 	private String typeText; //
 	private String unitPrice; // +出租单价
-	private String unit; // 单位:元/天
+	private String unit1; // 单位:元/天 ->出发地
+	private String unit2; // 单位:元/天 ->目的地
+	private String codeLave1; // 
+	private String codeLave2; // 
+	private String codeLave3; //
+	private String codeLave4; // 
+	private String note; // 备注->拓展字段
 	private String sqm; // 出租/求租->面积
 	private String validStartTime; // +开始有效期
 	private String validEndTime; // 结束有效期
@@ -86,12 +92,28 @@ public class RdcShareDTO {
 		this.unitPrice = unitPrice;
 	}
 
-	public String getUnit() {
-		return unit;
+	public String getUnit1() {
+		return unit1;
 	}
 
-	public void setUnit(String unit) {
-		this.unit = unit;
+	public void setUnit1(String unit1) {
+		this.unit1 = unit1;
+	}
+
+	public String getUnit2() {
+		return unit2;
+	}
+
+	public void setUnit2(String unit2) {
+		this.unit2 = unit2;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public String getSqm() {
@@ -188,6 +210,38 @@ public class RdcShareDTO {
 
 	public void setColdtype(String coldtype) {
 		this.coldtype = coldtype;
+	}
+
+	public String getCodeLave1() {
+		return codeLave1;
+	}
+
+	public void setCodeLave1(String codeLave1) {
+		this.codeLave1 = codeLave1;
+	}
+
+	public String getCodeLave2() {
+		return codeLave2;
+	}
+
+	public void setCodeLave2(String codeLave2) {
+		this.codeLave2 = codeLave2;
+	}
+
+	public String getCodeLave3() {
+		return codeLave3;
+	}
+
+	public void setCodeLave3(String codeLave3) {
+		this.codeLave3 = codeLave3;
+	}
+
+	public String getCodeLave4() {
+		return codeLave4;
+	}
+
+	public void setCodeLave4(String codeLave4) {
+		this.codeLave4 = codeLave4;
 	}
 
 	

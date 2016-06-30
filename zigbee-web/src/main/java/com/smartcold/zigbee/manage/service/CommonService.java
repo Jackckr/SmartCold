@@ -8,6 +8,9 @@ import java.util.Map;
  * Create on MaQiang 2016-6-27 09:28:36
  */
 public interface CommonService {
+	
+	 List<Map<String, Object>> getCommData(String codetype);
 
 	 List<Map<String, Object>> getBaseData(String table,String code,String value);
+	 
 }

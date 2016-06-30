@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.service.impl;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,36 @@ public class RdcShareServiceImpl implements RdcShareService {
 	private RdcShareMapper rdcShareMapper;
 	
 	/**
-	 * 获得共享信息
+	 * 获得货品共享信息
+	 * @param pageNum
+	 * @param pageSize
+	 * @param filter
+	 * @return
+	 */
+	@Override
+	public PageInfo<RdcShareDTO> getSEGDList(int pageNum, int pageSize,Map<String, Object> parameters) {
+		PageHelper.startPage(pageNum, pageSize);
+		Page<RdcShareDTO> serdcList = this.rdcShareMapper.getSEGDList(parameters);
+		return new PageInfo<RdcShareDTO>(serdcList);
+	}
+
+	/**
+	 * 获得配送共享信息
+	 * @param pageNum
+	 * @param pageSize
+	 * @param filter
+	 * @return
+	 */
+	@Override
+	public PageInfo<RdcShareDTO> getSEPSList(int pageNum, int pageSize,Map<String, Object> parameters) {
+		PageHelper.startPage(pageNum, pageSize);
+		Page<RdcShareDTO> serdcList = this.rdcShareMapper.getSEPSList(parameters);
+		return new PageInfo<RdcShareDTO>(serdcList);
+	}
+
+	
+	/**
+	 * 获得仓库共享信息
 	 * @param pageNum
 	 * @param pageSize
 	 * @param filter
@@ -33,9 +63,10 @@ public class RdcShareServiceImpl implements RdcShareService {
 	@Override
 	public PageInfo<RdcShareDTO> getSERDCList(int pageNum, int pageSize,HashMap<String, Object> parameters) {
 		PageHelper.startPage(pageNum, pageSize);
-		Page<RdcShareDTO> serdcList = rdcShareMapper.getSERDCList(parameters);
+		Page<RdcShareDTO> serdcList = this.rdcShareMapper.getSERDCList(parameters);
 		return new PageInfo<RdcShareDTO>(serdcList);
 	}
 
+	
     
 }

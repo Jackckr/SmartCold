@@ -3,8 +3,6 @@ package com.smartcold.zigbee.manage.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +20,16 @@ public class CommonServiceImpl implements CommonService {
 	private CommonMapper commonMapper;
 	
 	@Override
+	public List<Map<String, Object>> getCommData(String codetype) {
+		return this.commonMapper.getCommData(codetype);
+	}
+	
+	@Override
 	public List<Map<String, Object>> getBaseData(String table, String code,String value) {
 		return this.commonMapper.getBaseData(table, code, value);
 	}
+
+
 
 	
 

@@ -12,5 +12,12 @@ import org.apache.ibatis.annotations.Param;
  *
  */
 public interface CommonMapper {
+	
+	List<Map<String, Object>> getCommData(@Param("codetype")String codetype);
+	
     List<Map<String, Object>> getBaseData(@Param("table")String table,@Param("code")String code,@Param("value")String value);
+    
+    
+    
+    
 }
