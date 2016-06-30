@@ -2,7 +2,7 @@
     	<!-- 按钮操作区域开始 -->
 			<div class="operation">
 				<button type="button" class="btn btn-default pull-left" id="plusCold">
-					<span class="glyphicon glyphicon-plus"></span>添加冷库
+					<span class="glyphicon glyphicon-plus"></span>添加用户
 				</button>
 				<div class="btn-group pull-left" id="status">
 				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,7 +29,7 @@
 				      <tr>
 				         <th>
 				         	<div id="allSec" onclick="allSec(this)">
-				         		<input type="checkbox" name="" id="allSecSon" class="checkBox" checked>
+				         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox" >
 				         		<label for="allSecSon" >全选</label>
 				         	</div>
 				         </th>
@@ -43,7 +43,8 @@
 				   <tbody>
 				      <tr ng-repeat="user in Allusers">
 				         <td>
-						 <input type="checkbox" name="" id="" class="checkBox">
+						 <input type="checkbox" ng-checked="exists(user, selected)"
+                    				ng-click="toggle(user, selected)"/>
 				         </td>
 				         <td>{{user.username}}</td>
 				         <td>{{user.email}}</td>
@@ -66,7 +67,7 @@
 			<div class="three">
 				<div class="btn-group" role="group">
 				  <button type="button" class="btn btn-default">审核</button>
-				  <button type="button" class="btn btn-default">删除</button>
+				   <button type="button" class="btn btn-default" ng-click="deleteUsers()">删除</button>
 				</div>
 			</div>
     </div>  
