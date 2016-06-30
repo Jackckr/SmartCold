@@ -1,0 +1,270 @@
+<!-- 页面主体区域开始 -->
+	<link rel="stylesheet" type="text/css" href="app/css/coldsharerdc.css?i=212121">
+	<link rel="stylesheet" type="text/css" href="app/css/common.css">
+	<style>
+     .select_2{margin-right: 20px;}
+     .select_2 select{width: 150px;}
+     ._sh_orang{color: #f40;}
+    </style>
+	<div class="shareMain">
+	<!--   货品、配送、仓库区域 start-->
+		<div id="tool_div" class="tab clearfix">
+			<ul class="tabSon">
+				<li value="1" onclick="rdcconfig.changMode(this);" class="current" ><a href="#">货品</a></li>
+				<li value="2" onclick="rdcconfig.changMode(this);"><a href="#">配送</a></li>
+				<li value="3" onclick="rdcconfig.changMode(this);"><a href="#">仓库</a></li>
+				<li ><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>免费发布信息</a></li>
+			</ul>
+		</div>
+	<!--   货品、配送、仓库区域 end-->
+	<div id="_sh_conner_div">
+		<div id="table1" >
+			  <div id="filter_div1" class="filter">
+				<div class="filterSon clearfix">
+					<div class="select pull-left">
+						<span>冷库区域:</span>
+						<select id="sl_provinceid1" name="provinceid" >
+							<option value="">不限</option>
+							<option ng-repeat="x in gd_provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
+						</select>
+					</div>
+					<div class="select pull-left">
+						<span>出售/求货:</span>
+						<select id="sl_lktype1" name="" >
+							<option value="">不限</option>
+							<option value="1">出售</option>
+							<option value="2">求货</option>
+						</select>
+					</div>				
+					<div id="search" class=" pull-right">					
+						<input type="text" placeholder="请输入关键词" id="myText1" class="myText" />
+						<div  class="searchImg"><span class="glyphicon glyphicon-search" onclick="$scope.pageChanged1();"></span></div>
+					</div>					
+				</div>
+				<div id="good_type_div" class="list clearfix">
+					<span class="type">品类:</span>
+						<span  class="type active _nonefilter">不限</span>
+					   <ul class="clearfix"></ul>
+				</div>
+			</div>
+			<table class="table tableInfo">
+			   <thead>
+			      <tr >
+			         <th style="width:30%" colspan="2">货品信息</th>
+			         <th style="width:10%">单价</th>
+			         <th style="width:10%">数量</th>
+			         <th style="width:30%">信息有效期</th>
+			         <th style="width:10%"></th>
+			      </tr>
+			   </thead>
+			   <tbody>
+			      <tr  ng-repeat="rdc in goods">
+			         <td width="5%">
+			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         </td>
+			         <td>
+			         	<div class="company">{{rdc.title}}<b class="rent">【{{rdc.typeText}}】</b></div>
+			         	<div class="position">
+			         		<span class="glyphicon glyphicon-map-marker"></span>
+			         		<span class="textInfo">{{rdc.address}}</span>
+			         	</div>
+			         </td>
+			         <td>{{rdc.unitPrice}}元/公斤</td>
+			         <td>{{rdc.sqm}}吨</td>
+			         <td>{{rdc.validStartTime}}至<br/>{{rdc.validEndTime}}</td>
+			         <td>
+			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
+			         </td>
+			      </tr>
+			   </tbody>
+			</table>
+			<div class="row" style="text-align: center;">
+                    <pagination  total-items="bigTotalItems1"  ng-change="pageChanged1()" 
+                                ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm"
+                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+            </div>
+	    </div>
+		<div id="table2" class="hide" >
+			  <div id="filter_div1" class="filter">
+				<div class="filterSon clearfix">
+					<div class="select_2 pull-left">
+						<span>出租/求车</span>
+						<select id="sl_lktype2" >
+							<option value="">不限</option>
+							<option value="1">出租</option>
+							<option value="2">求车</option>
+						</select>
+					</div>
+					<div class="select_2 pull-left">
+						<span>始发地：</span>
+						<select id="sl_origin" >
+							<option value="">不限</option>
+						</select>
+					</div>
+					<div class="select_2 pull-left">
+						<span>目的地：</span>
+						<select id="sl_destination" >
+							<option value="">不限</option>
+						</select>
+					</div>
+					<div class="select_2 pull-left">
+						<span>发货时间：</span>
+						<select id="sl_deliverytime" >
+							<option value="">不限</option>
+						</select>
+					</div>
+					<div id="search" class=" pull-right">					
+						<input type="text" placeholder="请输入关键词" id="myText2" class="myText" />
+						<div class="searchImg"><span class="glyphicon glyphicon-search" onclick="$scope.pageChanged1();"></span></div>
+					</div>					
+				</div>
+				<div id="business_type_div" class="list clearfix">
+					<span class="type">业务类型:</span>
+					<span  class="type active _nonefilter">不限</span>
+					<ul class="clearfix">
+					</ul>
+				</div>
+				<div id="cool_type_div" class="list clearfix">
+					<span class="type">温度类型:</span>
+					<span  class="type active _nonefilter">不限</span>
+					<ul class="clearfix">
+					</ul>
+				</div>
+				<div id="car_type_div" class="list clearfix">
+					<span class="type">车型:</span>
+					<span  class="type active _nonefilter">不限</span>
+					<ul class="clearfix">
+					</ul>
+				</div>
+			</div>
+			<table class="table tableInfo">
+			   <thead>
+			      <tr >
+			         <th style="width:30%" colspan="2">车辆信息</th>
+			         <th style="width:20%">线路</th>
+			         <th style="width:10%">要求</th>
+			         <th style="width:30%">信息有效期</th>
+			         <th style="width:10%"></th>
+			      </tr>
+			   </thead>
+			   <tbody>
+			      <tr  ng-repeat="rdc in pslist">
+			         <td width="5%">
+			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         </td>
+			         <td>
+			         	<div class="company">{{rdc.title}}<b class="rent">【{{rdc.typeText}}】</b></div>
+			         	<div class="position">{{rdc.note}}</div>
+			         </td>
+		            <td> <!-- 	 线路 -->
+			         	<div class="company"><span class="_sh_orang">出发地：</span>{{rdc.unit1}}</div>
+			         	<div class="position"><span>目的地：</span>{{rdc.unit2}}</div>
+			         </td>
+			         <td>{{rdc.codeLave1}}</td>
+			         <td>{{rdc.validStartTime}}至<br/>{{rdc.validEndTime}}</td>
+			         <td>
+			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
+			         </td>
+			      </tr>
+			   </tbody>
+			</table>
+			<div class="row" style="text-align: center;">
+                    <pagination  total-items="bigTotalItems1"  ng-change="pageChanged1()" 
+                                ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm"
+                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+            </div>
+	    </div>
+		<div id="table3" class="hide">
+			<div id="filter_div3" class="filter">
+				<div class="filterSon clearfix">
+					<div class="select pull-left">
+						<span>冷库区域:</span>
+						<select id="sl_provinceid3" name="provinceid" >
+							<option value="">不限</option>
+							<option ng-repeat="x in provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
+						</select>
+					</div>
+					<div class="select pull-left">
+						<span>出租/求租:</span>
+						<select id="sl_lktype3" name="" >
+							<option value="">不限</option>
+							<option value="1">出租</option>
+							<option value="2">求租</option>
+						</select>
+					</div>				
+					<div id="search" class=" pull-right">					
+						<input type="text" placeholder="请输入关键词" id="myText3"  class="myText" />
+						<div class="searchImg"><span class="glyphicon glyphicon-search" onclick="$scope.pageChanged3();"></span></div>
+					</div>					
+				</div>
+				<div id="mtfl_div" class="list clearfix">
+					<span class="type">经营类型:</span>
+					<span  class="type active _nonefilter">不限</span>
+					<ul class="clearfix">
+					</ul>
+				</div>
+				<div id="stfl_div" class="list clearfix">
+					<span class="type">冷库温度类型:</span>
+					<span  class="type active _nonefilter">不限</span>
+					<ul class="clearfix">
+					</ul>
+				</div>
+				<div id="sqm_div" class="list clearfix">
+					<span class="type">所需面积:</span>
+					<span  class="type active _nonefilter">不限</span>
+					<ul class="clearfix">
+						<li value="<1000">1000㎡以下</li>
+						<li value="1000~3000" >1000~3000㎡</li>
+						<li value="3000~6000">3000~6000㎡</li>
+						<li value="6000~12000">6000~12000㎡</li>
+						<li value="12000~20000">12000~20000㎡</li>
+						<li value=">20000">20000㎡以上</li>
+					</ul>
+				</div>
+			</div>
+			<table class="table tableInfo">
+			   <thead>
+			      <tr >
+			         <th style="width:30%" colspan="2">仓库信息</th>
+			         <th style="width:10%">单价</th>
+			         <th style="width:10%">数量</th>
+			         <th style="width:10%">类型</th>
+			         <th style="width:20%">信息有效期</th>
+			         <th style="width:10%"></th>
+			      </tr>
+			   </thead>
+			   <tbody>
+			      <tr  ng-repeat="rdc in rdcs">
+			         <td width="5%">
+			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         </td>
+			         <td>
+			         	<div class="company">{{rdc.name}}<b class="rent">【{{rdc.typeText}}】</b></div>
+			         	<div class="position">
+			         		<span class="glyphicon glyphicon-map-marker"></span>
+			         		<span class="textInfo">{{rdc.address}}</span>
+			         	</div>
+			         </td>
+			         <td>{{rdc.unitPrice}}元/天·吨</td>
+			         <td>{{rdc.sqm}}平米</td>
+			         <td>{{rdc.coldtype}}</td>
+			         <td>{{rdc.validStartTime}}至<br/>{{rdc.validEndTime}}</td>
+			         <td>
+			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
+			         </td>
+			      </tr>
+			   </tbody>
+			</table>
+			<div class="row" style="text-align: center;">
+                    <pagination  total-items="bigTotalItems3"  ng-change="pageChanged3()" 
+                                ng-model="bigCurrentPage3" max-size="maxSize" class="pagination-sm"
+                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+            </div>
+	    </div>
+    </div>
+	<!-- 仓储信息区域end -->
+	<!-- 分页start -->
+              
+	<!-- 分页end -->
+	</div>
+    <!-- 页面主体区域结束 -->
