@@ -51,18 +51,15 @@
 				         <td>{{user.addTime}}</td>
 				         <td>
 				         	<span class="edit"></span>
-				         	<span class="delete" ng-click="goDeleteUser(user.id)"></span>
+				         	<span class="delete"></span>
 				         </td>
 				      </tr>
 				   </tbody>
 				</table>
 				<div class="page">
 					<!-- 翻页功能 -->
-			         <div class="row">
-                       <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
-                                ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
-                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-                   </div>
+			        <div id="green" class="myGreen"></div>
+			        <!-- 翻页功能 -->
 				</div>
 			</div>
 			<!-- 表格操作区域结束 -->

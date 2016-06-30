@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.smartcold.zigbee.manage.dao.RdcExtMapper">
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcExtMapper">
 
     <select id="findRdcExtList" parameterType="map" resultType="RdcExtEntity">
          SELECT * FROM `RdcExt`
@@ -62,7 +62,7 @@
         );
     </insert>
 
-    <update id="updateRdcExt" parameterType="com.smartcold.zigbee.manage.entity.RdcExtEntity" >
+    <update id="updateRdcExt" parameterType="com.smartcold.bgzigbee.manage.entity.RdcExtEntity" >
         update RdcExt
         <set >
             <if test="companydevice != null" >
@@ -115,10 +115,6 @@
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
-    </update>
-    
-    <update id="increasePageView" parameterType="int">
-    	UPDATE rdcext set pageview = pageview+1 where rdcid=#{rdcID};
     </update>
 
 </mapper>

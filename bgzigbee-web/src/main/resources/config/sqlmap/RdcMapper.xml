@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.smartcold.zigbee.manage.dao.RdcMapper">
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcMapper">
 
     <select id="findRdcList" parameterType="map" resultType="RdcEntity">
          SELECT * FROM `Rdc` order by `addTime` desc
@@ -61,7 +61,7 @@
         #{powerConsume}
         );
     </insert>
-    <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >
+    <update id="updateRdc" parameterType="com.smartcold.bgzigbee.manage.entity.RdcEntity" >
         update Rdc
         <set >
             <if test="address != null" >
@@ -88,4 +88,9 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    
+    <update id="updateMappingById" parameterType="map">
+	    UPDATE `Rdc` SET mapping=#{mapping}
+	    WHERE `rdcId` = #{rdcId}
+	</update>
 </mapper>

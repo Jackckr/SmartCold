@@ -37,9 +37,6 @@ function showFixed(idValue , url){
 	addShowIFrame(url);
 }
 
-function addMore(ops){
-  $(ops).parent().parent().parent('tr').nextAll('tr').toggle()
-}
 /*var del;
 $('.edu_bcsp').click(function() {
 	del=$(this).parent('.td260').parent('.bannerAll')

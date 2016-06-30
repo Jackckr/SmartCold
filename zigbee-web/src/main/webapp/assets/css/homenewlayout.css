@@ -893,3 +893,7 @@ header .err-top .err-content{
     /*margin-top:10px;*/
     /*display: none;*/
 }
+section.content{
+	margin:0 auto;
+	width:80%;
+}

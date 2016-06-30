@@ -1,0 +1,74 @@
+<div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
+  <section>
+    <form class="navbar-form">
+	  <div class="form-group">
+	    <label>RDC:&nbsp;&nbsp;</label>
+	    <select class="form-control" ng-options="rdc.name for rdc in rdclist" 
+	    ng-model="choseRdc" ng-change="changeRdc()">
+	    </select>
+	  </div>
+	</form>
+  </section>
+  <section>
+    <div style="height:500px;">
+      <uib-tabset>
+        <uib-tab>
+          <uib-tab-heading>
+		      <i class="fa fa-table"></i>账号配置
+		  </uib-tab-heading>
+		  <div class="col-lg-7 col-lg-offset-3" style="margin-top:50px;">
+		    <form class="navbar-form">
+		      <div class="form-group">
+		        <label>用户名:&nbsp;&nbsp;</label>
+		        <input style="width:250px;"/>
+		      </div>
+		    </form>
+		    <form class="navbar-form">
+		      <div class="form-group">
+		        <label>密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;</label>
+		        <input style="width:250px;"/>
+		      </div>
+		    </form>
+		    <form class="navbar-form">
+		      <div class="navbar-form">
+		        <a class="btn btn-sm btn-primary" type='submit'>修改</a>
+		      </div>
+		    </form>
+		  </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading>
+		      <i class="fa fa-table"></i>冷库配置
+		  </uib-tab-heading>
+		  <div  ng-repeat="storage in storages">
+		    <table class="table">
+		      <label>{{storage.name}}</label>
+		      <thead>
+		        <tr>
+			      <th>采集数据描述名</th>
+			      <th>采集数据存储名</th>
+		        </tr>		        
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="(key,value) in storage.mapping">
+		          <td>{{key}}</td>
+		          <td>{{value}}</td>
+		        </tr>
+		      </tbody>
+		    </table>
+		  </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading>
+		      <i class="fa fa-table"></i>压缩机组配置
+		  </uib-tab-heading>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading>
+		      <i class="fa fa-table"></i>告警配置
+		  </uib-tab-heading>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </section>
+</div>

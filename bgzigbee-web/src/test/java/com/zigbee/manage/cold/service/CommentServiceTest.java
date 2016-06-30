@@ -2,8 +2,9 @@ package com.zigbee.manage.cold.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.smartcold.zigbee.manage.entity.CommentEntity;
-import com.smartcold.zigbee.manage.service.CommentService;
+import com.smartcold.bgzigbee.manage.entity.CommentEntity;
+import com.smartcold.bgzigbee.manage.service.CommentService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
