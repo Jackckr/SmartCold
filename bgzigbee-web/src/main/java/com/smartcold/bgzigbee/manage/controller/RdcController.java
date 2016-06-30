@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,10 +86,13 @@ public class RdcController {
 		return rdcMapper.findRdcList();
 	}
 
-	@RequestMapping(value = "/findRdcDTOList", method = RequestMethod.GET)
+	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
-	public Object findRdcDTOList() {
-		return rdcService.findRdcDTOList();
+	public Object findRdcDTOByPage(@RequestParam(value="pageNum",required=false) Integer pageNum,
+			@RequestParam(value="pageSize") Integer pageSize) {
+		pageNum = pageNum == null? 1:pageNum;
+		pageSize = pageSize==null? 12:pageSize;
+		return rdcService.findRdcDTOByPage(pageNum, pageSize);
 	}
 
 	@RequestMapping(value = "/findRDCByRDCId", method = RequestMethod.GET)
