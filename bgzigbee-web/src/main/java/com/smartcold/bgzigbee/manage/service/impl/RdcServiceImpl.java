@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
+import com.smartcold.bgzigbee.manage.controller.RdcController;
 import com.smartcold.bgzigbee.manage.dao.*;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcDTO;
@@ -14,6 +15,8 @@ import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +31,7 @@ import java.util.List;
  */
 @Service
 public class RdcServiceImpl implements RdcService {
-
+	private final static Logger log = LoggerFactory.getLogger(RdcServiceImpl.class);
 	@Autowired
 	private RdcMapper rdcDao;
 
@@ -46,6 +49,12 @@ public class RdcServiceImpl implements RdcService {
 
 	@Autowired
 	private CommentMapper commentDao;
+	
+	@Autowired
+	private FtpService ftpService;
+
+	@Autowired
+	private FileDataMapper fileDataDao;
 
 	@Override
 	public List<RdcEntity> findRdcList() {
@@ -278,6 +287,28 @@ public class RdcServiceImpl implements RdcService {
 	public boolean checkName(String name) {
 		int count = rdcDao.checkName(name);
 		return count==0;
+	}
+
+	@Override
+	public boolean deleteByRdcId(int rdcID) {
+		//删除rdcext表中的数据
+		int nums = rdcExtDao.deleteByRdcID(rdcID);
+		log.info("delete "+nums+" rows rdcExt by rdcID:"+rdcID);
+		nums = rdcDao.deleteByRdcID(rdcID);
+		log.info("delete "+nums+" rows rdc by rdcID:"+rdcID);
+		//删除图片
+		List<FileDataEntity> fileDataEntities = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+		List<FileDataEntity> arrangePic = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+		if (!CollectionUtils.isEmpty(arrangePic)) {
+			fileDataEntities.addAll(arrangePic);
+		}
+		for(FileDataEntity item: fileDataEntities){
+			ftpService.deleteByLocation(item.getLocation());
+		}
+		nums = fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+		nums += fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+		log.info("delete "+nums+" rows FileData by rdcID:"+rdcID);
+		return true;
 	}
 
 }

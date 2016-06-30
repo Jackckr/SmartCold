@@ -117,4 +117,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+	<delete id="deleteByRdcID">
+		delete from RdcExt where rdcid=#{rdcID}
+	</delete>
 </mapper>

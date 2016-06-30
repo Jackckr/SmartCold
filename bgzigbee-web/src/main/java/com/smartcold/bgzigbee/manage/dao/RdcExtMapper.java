@@ -16,4 +16,6 @@ public interface RdcExtMapper {
     int insertRdcExt(RdcExtEntity rdcExt);
 
     void updateRdcExt(RdcExtEntity rdcExtEntity);
+    
+    int deleteByRdcID(int rdcID);
 }
