@@ -245,8 +245,8 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'goods-list',
         templateUrl: 'app/template/goods-list.html'
     }).state('coldStoragelist', {
-        url: '/coldStoragelist',
-        controller: 'coldStoragelist',
+        url: '/storageManage',
+        controller: 'storageManage',
         templateUrl: 'app/template/storageManage.html'
     }).state('coldStorageComment', {
         url: '/coldStorageComment/:rdcID',

@@ -1,5 +1,8 @@
 package com.smartcold.bgzigbee.manage.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
@@ -226,9 +229,12 @@ public class RdcServiceImpl implements RdcService {
 	}
 
 	@Override
-	public List<RdcEntityDTO> findRdcDTOList() {
-		List<RdcEntity> rdcList = rdcDao.findRdcList();
-		List<RdcEntityDTO> result = Lists.newArrayList();
+	public PageInfo<RdcEntityDTO> findRdcDTOByPage(int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		Page<RdcEntity> rdcList = rdcDao.findRdcList();
+		Page<RdcEntityDTO> result = new Page<RdcEntityDTO> ();
+		BeanUtils.copyProperties(rdcList,result);
+//		result.setTotal(rdcList.getTotal());
 		if (!CollectionUtils.isEmpty(rdcList)) {
 			for (RdcEntity rdcEntity : rdcList) {
 				RdcEntityDTO dto = new RdcEntityDTO();
@@ -265,7 +271,7 @@ public class RdcServiceImpl implements RdcService {
 				result.add(dto);
 			}
 		}
-		return result;
+		return new PageInfo<RdcEntityDTO>(result);
 	}
 
 	@Override

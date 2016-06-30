@@ -75,6 +75,9 @@ coldWeb.factory('naviService', ['$rootScope', '$state', function ($rootScope, $s
             $rootScope.toColdStorageComment = function (storageId) {
                 $state.go('coldStorageComment', {'storageId': storageId});
             };
+            $rootScope.toColdShareComment = function (storageId) {
+            	$state.go('coldShareComment',{});
+            };
         },
     };
 }]);
@@ -251,6 +254,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageComment/:rdcID',
         controller: 'coldStorageComment',
         templateUrl: 'app/template/coldStorageComment.html'
+    }).state('coldShareComment', {  //共享257
+        url: '/coldShareComment',
+        controller: 'coldShareComment',
+        templateUrl: 'app/template/coldsharerdc.html'
     }).state('review', {
         url: '/coldStorage/{rdcID}/review',
         controller: 'review',

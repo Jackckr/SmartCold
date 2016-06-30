@@ -12,6 +12,17 @@
        <property name="dataSource" ref="dataSource" />  
        <property name="mapperLocations" value="classpath*:config/sqlmap/*.xml"/>  
        <property name="typeAliasesPackage" value="com.smartcold.zigbee.manage.entity" />  
+       <property name="plugins">
+		    <array>
+		      <bean class="com.github.pagehelper.PageHelper">
+		        <property name="properties">
+		          <value>
+		            dialect=mysql
+		          </value>
+		        </property>
+		      </bean>
+		    </array>
+        </property>
     </bean>  
    
 </beans>

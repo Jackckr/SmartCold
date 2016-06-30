@@ -1,0 +1,192 @@
+/*
+* @Author: Administrator
+* @Date:   2016-06-27 10:12:44
+* @Last Modified by:   Administrator
+* @Last Modified time: 2016-06-27 13:38:50
+*/
+.shareMain{
+	margin-top:90px;
+    width: 100%;
+}
+.tab,.filter,.tableInfo,nav{
+    width: 80%;
+    margin: 20px auto;
+}
+.tabSon li{
+    float: left;
+    min-width:10%;
+    height: 36px;
+    text-align: center;
+    line-height: 36px;
+    margin-right: 20px;
+}
+.tabSon li:last-child{
+    float: right;
+    margin-right: 0;   
+}
+.tabSon li a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #B0B0B0;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    padding:0 8px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.tabSon li a:hover{
+    text-decoration: none;
+
+}
+.tabSon li:last-child a{
+     background-color: #F5FAFF;
+     color: #7E807F;
+     border: 1px solid #448BCB;
+}
+li.current a{
+    background-color: #448BCB;
+    color: #fff;
+}
+.filter{
+    border: 1px solid #CCCCCC;
+}
+.filterSon{
+    border-bottom: 1px solid #E3E3E3;
+    background-color: #F7F7F7;
+    padding: 10px 20px;
+    width:100%;
+    font-size: 16px;
+    font-weight: 600;
+    color: #717171;
+}
+.select{
+    width: 20%;
+    min-width: 200px;  
+    height: 26px;
+}
+.select select{
+    min-width: 150px;
+    line-height: 20px;
+    margin-left: 10px;
+}
+.select select option{
+    text-align: center;
+}
+#search{
+    width: 30%;
+    position: relative;
+    font-size: 16px;
+}
+.myText{
+    width: 100%;
+    height: 26px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    line-height: 26px;
+    padding-left: 10px;
+    color: #666;
+    outline: none;
+    font-weight: 400;
+}
+.searchImg{
+    position: absolute;
+    top: 0;
+    right: 20px;
+    line-height: 32px;
+}
+.searchImg span{
+    cursor: pointer;
+    color: #448BCB;
+}
+.list .type{
+    float: left;
+    width: 8%;
+    margin-top: 3px;
+    text-align: right;
+    color: #757575;
+    font-size: 16px;
+    padding-right: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.list .type:nth-child(2){
+    width: 5%;
+    display: inline-block;
+    padding:1px 10px;
+    cursor: pointer;
+}
+.list ul{
+    width: 85%;
+    float: left;
+    margin-bottom: 0;
+}
+.list li{
+    float: left;
+    padding:1px 10px;
+    margin: 3px 10px;
+    color: #757575;
+    font-size: 16px;
+    cursor: pointer;
+}
+.active{
+    background-color: #448BC9;
+    color: #fff;
+    border-radius: 2px;
+    text-align: center!important;
+    color: #fff!important;
+}
+.tableInfo thead th{
+    background-color: #F7F7F7;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    border: 0!important;
+}
+.tableInfo tbody tr{
+    text-align: center;
+    color: #707070;
+    border-bottom: 8px solid #F9F9F9;
+}
+.tableInfo tbody tr td{
+    padding-top:20px;
+    border-top: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.tableInfo tbody tr td:first-child{
+     padding-top:8px;
+}
+.image{
+    width: 80px;
+    height: 70px;
+    background-color: pink;
+    position: relative;
+}
+.image img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.position span:first-child{
+    color: #f40;
+}
+.company,.position{
+    text-align: left;
+    line-height: 24px;
+}
+nav{
+    text-align: center;
+}
