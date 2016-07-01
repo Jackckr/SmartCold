@@ -7,13 +7,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.mysql.jdbc.log.Log;
 import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
@@ -91,20 +87,24 @@ public class RdcController {
 	
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
-
+	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
-		return rdcDao.findRdcList();
+		return rdcDao.findRdcList(null);
 	}
 
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findRdcDTOByPage(@RequestParam(value="pageNum",required=false) Integer pageNum,
-			@RequestParam(value="pageSize") Integer pageSize) {
+			@RequestParam(value="pageSize") Integer pageSize, 
+			@RequestParam(value="audit", required=false) Integer audit) {
+		if( !(audit == -1 || audit == 1 || audit == 0) ){
+			audit = null;
+		}
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 12:pageSize;
-		return rdcService.findRdcDTOByPage(pageNum, pageSize);
+		return rdcService.findRdcDTOByPage(pageNum, pageSize, audit);
 	}
 
 	@RequestMapping(value = "/findRDCByRDCId", method = RequestMethod.GET)
@@ -408,6 +408,21 @@ public class RdcController {
 		for(Integer rdcID:rdcIDs){
 			rdcService.deleteByRdcId(rdcID);
 		}
+		return new BaseDto(0);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeAudit", method=RequestMethod.POST)
+	public Object changeAudit(int rdcID, int audit){
+		rdcDao.changeAudit(rdcID, audit);
+		return new BaseDto(0);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeAudits", method=RequestMethod.POST)
+	public Object changeAudits(int[] rdcIDs, int audit){
+		for(int rdcID:rdcIDs)
+			rdcDao.changeAudit(rdcID, audit);
 		return new BaseDto(0);
 	}
 

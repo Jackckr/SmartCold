@@ -41,6 +41,9 @@
 	border-radius: 3px;
 	color: #909090;
 }
+.userArea .h4{
+	margin-top:25px;
+}
 .hi,.user{	
 	color: #4B4B4B;
 }
@@ -55,6 +58,10 @@
 }
 .sidebar{
 	width: 220px;
+}
+.sidebar+div{
+	min-height:850px;
+	background-color:#F1F1F1;
 }
 .main{
 	margin-left: 220px;	height: 100%;

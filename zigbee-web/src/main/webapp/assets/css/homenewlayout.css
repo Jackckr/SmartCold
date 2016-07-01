@@ -577,7 +577,7 @@ header.dark .authenticated:hover .profile
 /*footer*/
 footer
 {
-    min-height: 284px;
+    /* min-height: 284px; */
 
     text-align: center;
 

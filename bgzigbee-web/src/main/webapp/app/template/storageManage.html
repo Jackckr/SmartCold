@@ -5,14 +5,12 @@
 			<span class="glyphicon glyphicon-plus"></span>添加冷库
 		</button>
 		<div class="btn-group pull-left" id="status">
-		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    未审核 <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu">
-		    <li><a>已审核</a></li>
-		    <li><a>故障</a></li>
-		    <li><a>已完结</a></li>
-		  </ul>
+		  <select ng-model="optAudit" ng-change="auditChanged(optAudit)">
+		  	<option value="8">所有</option>
+		  	<option value="0">待审核</option>
+		  	<option value="1">已审核</option>
+		  	<option value="-1">未通过</option>
+		  </select>
 		</div>
 		<div id="search">								
 			<input type="text" placeholder="请输入关键词" id="myText" />
@@ -37,6 +35,7 @@
 	         <th>冷库地址</th>
 	         <th>联系方式</th>
 	         <th>添加时间</th>
+	         <th>状态</th>
 	         <th>操作</th>
 	      </tr>
 	   </thead>
@@ -50,9 +49,11 @@
 	         <td>{{rdc.address}}</td>
 	         <td>{{rdc.cellphone}}</td>
 	         <td>{{rdc.addtime}}</td>
+	         <td ng-bind="getAudit(rdc.audit)"></td>
 	         <td>
 	         	<span class="edit"  ng-click="goEditRdc(rdc.id)"></span>
 	         	<span class="delete" ng-click="deleteRdc(rdc.id)"></span>
+	         	<button class="btn btn-sm" ng-click="changeAudit(rdc)">审核</button>
 	         </td>
 	      </tr>
 	   </tbody>
@@ -71,7 +72,7 @@
 <!-- 表格操作区域结束 -->
 <div class="three">
 	<div class="btn-group" role="group">
-	  <button type="button" class="btn btn-default">审核</button>
+	  <button type="button" class="btn btn-default" ng-click="changeAudits()">审核</button>
 	  <button type="button" class="btn btn-default">合并</button>
 	  <button type="button" class="btn btn-default" ng-click="deleteRdcs()">删除</button>
 	</div>

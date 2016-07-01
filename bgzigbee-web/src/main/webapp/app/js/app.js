@@ -248,10 +248,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/storageManage',
         controller: 'storageManage',
         templateUrl: 'app/template/storageManage.html'
-    }).state('coldStorageComment', {
-        url: '/coldStorageComment/:rdcID',
-        controller: 'coldStorageComment',
-        templateUrl: 'app/template/coldStorageComment.html'
+    }).state('commentManage', {
+        url: '/commentManage',
+        controller: 'commentManage',
+        templateUrl: 'app/template/commentManage.html'
     }).state('review', {
         url: '/coldStorage/{rdcID}/review',
         controller: 'review',
@@ -280,6 +280,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/spiderConfig',
         controller: 'spiderConfig',
         templateUrl: 'app/template/spiderConfig.html'
+    }).state('storageConfig', {
+        url: '/storageConfig',
+        controller: 'storageConfig',
+        templateUrl: 'app/template/storageConfig.html'
     });
 
 });

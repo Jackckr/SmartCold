@@ -47,8 +47,18 @@ public class RdcEntityDTO {
     private int userCommentCount;
     
     private String arrangePic;
+    
+    private Integer audit;
 
-    public String getArrangePic() {
+	public Integer getAudit() {
+		return audit;
+	}
+
+	public void setAudit(Integer audit) {
+		this.audit = audit;
+	}
+
+	public String getArrangePic() {
 		return arrangePic;
 	}
 

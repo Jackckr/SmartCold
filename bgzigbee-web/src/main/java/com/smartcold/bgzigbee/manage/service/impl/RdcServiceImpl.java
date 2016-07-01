@@ -58,14 +58,14 @@ public class RdcServiceImpl implements RdcService {
 
 	@Override
 	public List<RdcEntity> findRdcList() {
-		return rdcDao.findRdcList();
+		return rdcDao.findRdcList(null);
 	}
 
 	@Override
 	public List<RdcDTO> findAllRdcDtos() {
 		List<RdcDTO> rdcDTOs = Lists.newArrayList();
 
-		List<RdcEntity> rdcList = rdcDao.findRdcList();
+		List<RdcEntity> rdcList = rdcDao.findRdcList(null);
 		List<RdcExtEntity> rdcExtList = rdcExtDao.findRdcExtList();
 		List<StorageManageTypeEntity> manageTypes = storageManageTypeDao.findAll();
 		List<StorageTemperTypeEntity> temperTypes = storageTemperTypeDao.findAll();
@@ -238,12 +238,11 @@ public class RdcServiceImpl implements RdcService {
 	}
 
 	@Override
-	public PageInfo<RdcEntityDTO> findRdcDTOByPage(int pageNum, int pageSize) {
+	public PageInfo<RdcEntityDTO> findRdcDTOByPage(int pageNum, int pageSize, Integer audit) {
 		PageHelper.startPage(pageNum, pageSize);
-		Page<RdcEntity> rdcList = rdcDao.findRdcList();
+		Page<RdcEntity> rdcList = rdcDao.findRdcList(audit);
 		Page<RdcEntityDTO> result = new Page<RdcEntityDTO> ();
 		BeanUtils.copyProperties(rdcList,result);
-//		result.setTotal(rdcList.getTotal());
 		if (!CollectionUtils.isEmpty(rdcList)) {
 			for (RdcEntity rdcEntity : rdcList) {
 				RdcEntityDTO dto = new RdcEntityDTO();

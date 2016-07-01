@@ -3,8 +3,12 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcMapper">
 
-    <select id="findRdcList" parameterType="map" resultType="RdcEntity">
-         SELECT * FROM `Rdc` order by `addTime` desc
+    <select id="findRdcList" parameterType="int" resultType="RdcEntity">
+         SELECT * FROM `Rdc`
+         <if test="audit != null">
+		     where audit=#{audit}
+		  </if>
+         order by `addTime` desc
     </select>
 
     <select id="findRDCByRDCId" parameterType="map" resultType="RdcEntity">
@@ -97,4 +101,9 @@
 	<delete id="deleteByRdcID">
 		delete from rdc where id = #{rdcID}
 	</delete>
+	
+	<update id="changeAudit">
+		update rdc set audit=#{audit}
+		where id=#{rdcID}
+	</update>
 </mapper>

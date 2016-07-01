@@ -5,7 +5,7 @@
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.AdminMapper">
 
     <insert id="insertAdmin" parameterType="AdminEntity">
-        INSERT INTO `user`(
+        INSERT INTO `admin`(
 		`adminname`,
 		`adminpwd`,
 		`telephone`,
@@ -19,6 +19,7 @@
 		#{telephone},
 		#{email},
 		now()
+		)
     </insert>
 
     <select id="findAdmin" parameterType="map" resultType="AdminEntity">

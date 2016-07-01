@@ -9,7 +9,7 @@ import com.smartcold.bgzigbee.manage.entity.RdcEntity;
 
 public interface RdcMapper {
 
-	Page<RdcEntity> findRdcList();
+	Page<RdcEntity> findRdcList(@Param("audit")Integer audit);
 
 	List<RdcEntity> findRDCByRDCId(@Param("rdcID") int rdcID);
 
@@ -24,4 +24,6 @@ public interface RdcMapper {
 	void updateMappingById(@Param("rdcId") int rdcId, @Param("mapping") String mapping);
 	
 	int deleteByRdcID(int rdcID);
+	
+	int changeAudit(@Param("rdcID") int rdcID,@Param("audit") int audit);
 }
