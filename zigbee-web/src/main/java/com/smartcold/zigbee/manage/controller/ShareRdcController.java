@@ -125,6 +125,7 @@ public class ShareRdcController  {
 		}
 		return result;
 	}
+	
 	/**
 	 * 获得配送过滤信息
 	 * 
