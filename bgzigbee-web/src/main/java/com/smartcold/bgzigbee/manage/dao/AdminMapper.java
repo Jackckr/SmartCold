@@ -22,4 +22,6 @@ public interface AdminMapper {
 	List<AdminEntity> findAllAdmin();
 
 	void insertAdmin(AdminEntity adminEntity);
+	
+	void deleteAdmin(@Param("id") int id);
 }

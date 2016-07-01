@@ -40,5 +40,7 @@
 		SELECT *
 		FROM `user` WHERE `id` = #{id}
 	</select>
-
+    <select id="deleteUser" parameterType="map">
+	    DELETE FROM user WHERE `id` = #{id}
+	</select>
 </mapper>

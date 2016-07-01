@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.bgzigbee.manage.dao.AdminMapper;
+import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.CookieEntity;
@@ -63,6 +64,22 @@ public class AdminController extends BaseController {
 		return adminDao.findAllAdmin();
 	}
 	
+	@RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)
+	@ResponseBody
+	public Object deleteAdmin(int adminID) {
+		 adminDao.deleteAdmin(adminID);
+		 return new BaseDto(0);
+	}
+	
+	@RequestMapping(value = "/deleteByAdminIDs", method=RequestMethod.DELETE)
+	@ResponseBody
+	public Object deleteByAdminIDs(Integer[] adminIDs) {
+		for(Integer adminID:adminIDs){
+			adminDao.deleteAdmin(adminID);
+		}
+		return new BaseDto(0);
+	}
+	
 	@RequestMapping(value = "/findAdmin", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAdmin(HttpServletRequest request) {
@@ -103,5 +120,4 @@ public class AdminController extends BaseController {
 		adminDao.insertAdmin(adminEntity);
 		return new ResultDto(0, "注册成功");
 	}
-
 }

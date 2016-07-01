@@ -22,4 +22,6 @@ public interface UserMapper {
 	List<UserEntity> findAllUser();
 
 	void insertUser(UserEntity userEntity);
+	
+	void deleteUser(@Param("id") int id);
 }
