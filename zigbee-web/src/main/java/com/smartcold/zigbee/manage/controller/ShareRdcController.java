@@ -42,6 +42,7 @@ public class ShareRdcController  {
 		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
 		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "7" : request.getParameter("pageSize")); // 每页数据量
 	}
+	
 	//-----------------------------------------------------------------------------辅助查询条件------------------------------------------------------------
 	/**
 	 * 查询下拉框数据  Description: ui_getSeleectData
