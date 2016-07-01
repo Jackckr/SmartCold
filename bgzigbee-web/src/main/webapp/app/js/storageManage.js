@@ -91,6 +91,39 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
         $state.go('coldStorageEdit', {"rdcID": rdcID});
     }
     
+    $scope.deleteRdc = function(rdcID){
+    	$http({
+    		method:'DELETE',
+    		url:'/i/rdc/deleteByRdcID',
+    		params:{
+    			'rdcID':rdcID
+    		}
+    	}).success(resDelRdc);
+    }
+    
+    $scope.deleteRdcs = function(){
+    	var rdcIDs = [];
+    	for(i in $scope.selected){
+    		rdcIDs.push($scope.selected[i].id);
+    	}
+    	if(rdcIDs.length >0 ){
+    		$http({
+    			method:'DELETE',
+    			url:'/i/rdc/deleteByRdcIDs',
+    			params:{
+    				'rdcIDs': rdcIDs
+    			}
+    		}).success(resDelRdc);
+    	}
+    }
+    
+    function resDelRdc(data){
+    	if(data.status == 0){
+			alert("删除成功");
+			location.reload();
+		}
+    }
+    
     $scope.goAddRdc = function () {
         $http.get('/i/user/findUser').success(function(data){
             $rootScope.user = data;

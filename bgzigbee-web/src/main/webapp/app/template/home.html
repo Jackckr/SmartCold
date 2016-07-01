@@ -1,8 +1,8 @@
     <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
     	<!-- 按钮操作区域开始 -->
 			<div class="operation">
-				<button type="button" class="btn btn-default pull-left" id="plusCold">
-					<span class="glyphicon glyphicon-plus"></span>添加冷库
+				<button type="button" class="btn btn-default pull-left" id="plusCold" data-toggle="modal" data-target="#addUser">
+					<span class="glyphicon glyphicon-plus"></span>添加用户
 				</button>
 				<div class="btn-group pull-left" id="status">
 				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,7 +29,7 @@
 				      <tr>
 				         <th>
 				         	<div id="allSec" onclick="allSec(this)">
-				         		<input type="checkbox" name="" id="allSecSon" class="checkBox" >
+				         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox" >
 				         		<label for="allSecSon" >全选</label>
 				         	</div>
 				         </th>
@@ -43,7 +43,8 @@
 				   <tbody>
 				      <tr ng-repeat="user in Allusers">
 				         <td>
-							<input type="checkbox" name="" id="" class="checkBox">
+						 <input type="checkbox" ng-checked="exists(user, selected)"
+                    				ng-click="toggle(user, selected)"/>
 				         </td>
 				         <td>{{user.username}}</td>
 				         <td>{{user.email}}</td>
@@ -51,7 +52,7 @@
 				         <td>{{user.addTime}}</td>
 				         <td>
 				         	<span class="edit"></span>
-				         	<span class="delete"></span>
+				         	<button class="delete" ng-click="goDeleteUser(user.id)"></button>
 				         </td>
 				      </tr>
 				   </tbody>
@@ -66,8 +67,66 @@
 			<div class="three">
 				<div class="btn-group" role="group">
 				  <button type="button" class="btn btn-default">审核</button>
-				  <button type="button" class="btn btn-default">合并</button>
-				  <button type="button" class="btn btn-default">删除</button>
+				   <button type="button" class="btn btn-default" ng-click="deleteUsers()">删除</button>
 				</div>
 			</div>
     </div>  
+   	<!--  添加用户模态框 -->
+   	<div class="modal fade" id="addUser" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" 
+	               data-dismiss="modal" aria-hidden="true">
+	                  &times;
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	               添加用户
+	            </h4>
+	         </div>
+	         <div class="modal-body">
+	            	<form class="form-horizontal" name="userForm">
+					   <div class="form-group">
+					      <label for="firstname" class="col-sm-2 control-label">账户</label>
+					      <div class="col-sm-10">
+					         <input type="text" class="form-control" ng-model="username" name="username"
+					            placeholder="请输入名字" ng-remote-validate="/i/user/checkUserName"
+                		        ng-remote-method="GET">
+                	           <em ng-show="userForm.username.$error.ngRemoteValidate"><font color="red">该用户已存在</font></em>
+					      </div>
+					   </div>
+					   <div class="form-group">
+					      <label for="password" class="col-sm-2 control-label">密码</label>
+					      <div class="col-sm-10">
+					         <input type="password" class="form-control" id="password" ng-model="password"
+					            placeholder="请输入密码">
+					      </div>
+					   </div>
+					   <div class="form-group">
+					      <label for="userEmail" class="col-sm-2 control-label">邮箱</label>
+					      <div class="col-sm-10">
+					         <input type="email" class="form-control" id="userEmail" name="user_email" ng-model="email"
+					            placeholder="请输入邮箱地址">
+					      </div>
+					   </div>
+					   <div class="form-group">
+					      <label for="phoneNum" class="col-sm-2 control-label">手机号</label>
+					      <div class="col-sm-10">
+					         <input type="number" class="form-control" id="phoneNum" name="phoneNum" ng-model="telephone"
+					            placeholder="请输入手机号">
+					      </div>
+					   </div>
+	            	</form>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-default" 
+	               data-dismiss="modal">取消
+	            </button>
+	            <button type="button" ng-click="submit()" class="btn btn-primary" data-dismiss="modal">
+	                                                       提交
+	            </button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+	</div>
+	<!--  添加用户模态框 end -->

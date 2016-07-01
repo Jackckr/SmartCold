@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-05-21 22:18)
+ * 商品存放形式
  */
 public class StorageTypeEntity {
 

@@ -52,7 +52,7 @@
 	         <td>{{rdc.addtime}}</td>
 	         <td>
 	         	<span class="edit"  ng-click="goEditRdc(rdc.id)"></span>
-	         	<span class="delete"></span>
+	         	<span class="delete" ng-click="deleteRdc(rdc.id)"></span>
 	         </td>
 	      </tr>
 	   </tbody>
@@ -73,7 +73,7 @@
 	<div class="btn-group" role="group">
 	  <button type="button" class="btn btn-default">审核</button>
 	  <button type="button" class="btn btn-default">合并</button>
-	  <button type="button" class="btn btn-default">删除</button>
+	  <button type="button" class="btn btn-default" ng-click="deleteRdcs()">删除</button>
 	</div>
 </div>
  </div>  

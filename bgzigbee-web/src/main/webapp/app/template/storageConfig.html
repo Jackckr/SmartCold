@@ -1,0 +1,69 @@
+    <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
+    	<!-- 按钮操作区域开始 -->
+			<div class="operation">
+				<div class="btn-group pull-left" id="status">
+				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    配置选择<span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu">
+				    <li><a>经营类型</a></li>
+				    <li><a>商品存放形式</a></li>
+				    <li><a>冷库温度类型</a></li>
+				  </ul>
+				</div>
+				<div id="search">								
+					<input type="text" placeholder="请输入关键词" id="myText" />
+					<div id="searchImg">
+						<span class="glyphicon glyphicon-search"></span>
+					</div>
+				</div>							
+			</div>
+			<!-- 按钮操作区域结束 -->
+			<!-- 表格操作区域开始 -->
+			<div class="tableArea">
+				<table class="table table-striped table-bordered" id="tableArea" ng-model="Alladmins">
+				   <thead>
+				      <tr>
+				         <th>
+				         	<div id="allSec" onclick="allSec(this)">
+				         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox" >
+				         		<label for="allSecSon" >全选</label>
+				         	</div>
+				         </th>
+				         <th>管理员账号</th>
+				         <th>邮箱</th>
+				         <th>手机号</th>
+				         <th>添加时间</th>
+				         <th>操作</th>
+				      </tr>
+				   </thead>
+				   <tbody>
+				      <tr ng-repeat="admin in Alladmins">
+				         <td>
+							<input type="checkbox" ng-checked="exists(admin, selected)"
+                    				ng-click="toggle(admin, selected)"/>
+				         </td>
+				         <td>{{admin.adminname}}</td>
+				         <td>{{admin.email}}</td>
+				         <td>{{admin.telephone}}</td>
+				         <td>{{admin.addtime}}</td>
+				         <td>
+				         	<span class="edit"></span>
+				         	<button class="delete" ng-click="goDeleteAdmin(admin.id)"></button>
+				         </td>
+				      </tr>
+				   </tbody>
+				</table>
+				<div class="page">
+					<!-- 翻页功能 -->
+			        <div id="green" class="myGreen"></div>
+			        <!-- 翻页功能 -->
+				</div>
+			</div>
+			<!-- 表格操作区域结束 -->
+			<div class="three">
+				<div class="btn-group" role="group">
+				   <button type="button" class="btn btn-default" ng-click="deleteAdmins()">删除</button>
+				</div>
+			</div>
+    </div>  

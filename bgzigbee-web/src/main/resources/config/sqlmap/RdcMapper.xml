@@ -93,4 +93,8 @@
 	    UPDATE `Rdc` SET mapping=#{mapping}
 	    WHERE `rdcId` = #{rdcId}
 	</update>
+	
+	<delete id="deleteByRdcID">
+		delete from rdc where id = #{rdcID}
+	</delete>
 </mapper>

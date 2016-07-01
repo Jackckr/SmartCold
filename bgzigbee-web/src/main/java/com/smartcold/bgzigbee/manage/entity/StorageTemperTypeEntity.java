@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-05-21 22:18)
+ * 冷库温度类型
  */
 public class StorageTemperTypeEntity {
 
