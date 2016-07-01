@@ -69,4 +69,44 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
         	$scope.selected = $scope.Alladmins.slice(0);
         }
     };
+    
+    function checkInput(){
+        var flag = true;
+        // 检查必须填写项
+        if ($scope.adminname == undefined || $scope.adminname == '') {
+            flag = false;
+        }
+        if ($scope.adminpwd == undefined || $scope.adminpwd == '') {
+            flag = false;
+        }
+        return flag;
+    }
+
+    
+    
+    $scope.submit = function(){
+        if (checkInput()){
+            $http({
+            	method : 'GET', 
+    			url:'/i/admin/addAdmin',
+    			params:{
+    				'adminname':  $scope.adminname,
+    				'adminpwd': $scope.adminpwd,
+    				'email' : $scope.email,
+    				'telephone' : $scope.telephone
+    			}
+    		}).then(function (resp) {
+                alert("添加成功");
+                window.location.reload(); 
+            }, function (resp) {
+                console.log('Error status: ' + resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.name);
+            });
+        } else {
+            alert("请填写用户名或密码!");
+        }
+    }
+    
 });

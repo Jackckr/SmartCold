@@ -5,15 +5,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.bgzigbee.manage.dao.AdminMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
+import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.CookieEntity;
+import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.CookieService;
 /**
  * 
@@ -106,18 +110,23 @@ public class AdminController extends BaseController {
 		return admin;
 	}
 
-	@RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
+	@RequestMapping(value = "/addAdmin", method = RequestMethod.GET)
 	@ResponseBody
-	public Object addAdmin(String adminname, String adminpwd,String adminpwd1, String email, String telephone) {
-		if (adminname == null || adminpwd == null || !adminpwd.equals(adminpwd1)) {
+	public Object addAdmin(AdminEntity admin) {
+		if (admin.getAdminname() == null || admin.getAdminpwd() == null) {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
-		AdminEntity adminEntity = new AdminEntity();
-		adminEntity.setAdminname(adminname);
-		adminEntity.setAdminpwd(adminpwd);
-		adminEntity.setEmail(email);
-		adminEntity.setTelephone(telephone);
-		adminDao.insertAdmin(adminEntity);
-		return new ResultDto(0, "注册成功");
+		adminDao.insertAdmin(admin);
+		return new BaseDto(0);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/checkAdminName", method = RequestMethod.GET)
+	public Object checkAdminName(@RequestParam("value") String adminname) {
+		adminname = StringUtils.trimAllWhitespace(adminname);
+		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
+		ngRemoteValidateDTO.setValid(adminDao.findAdminByName(adminname)==null? true:false);
+		return ngRemoteValidateDTO;
+	}
+	
 }
