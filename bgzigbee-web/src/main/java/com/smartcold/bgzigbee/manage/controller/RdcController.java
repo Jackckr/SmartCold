@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +87,12 @@ public class RdcController {
 	
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
-
+	
+	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findRdcList() {
+		return rdcDao.findRdcList(null);
+	}
 
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
