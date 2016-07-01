@@ -124,6 +124,31 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 		}
     }
     
+    $scope.getAudit = function(i){
+    	if(i==0)
+    		return '待审核';
+    	else if(i>0){
+    		return '通过';
+    	}else{
+    		return '未通过';
+    	}
+    }
+    
+    $scope.changeAudit = function(rdcID){
+    	var r=confirm("通过审核？");
+    	var audit = 0;
+    	if(r){
+    		audit = 1;
+    	}else{
+    		audit = -1;
+    	}
+    	$http.post('/i/rdc/changeAudit',{
+    		params:{
+    			'audit':audit
+    		}
+    	})
+    }
+    
     $scope.goAddRdc = function () {
         $http.get('/i/user/findUser').success(function(data){
             $rootScope.user = data;
