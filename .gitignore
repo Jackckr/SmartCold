@@ -76,3 +76,4 @@ bin/
 # database config ignore
 cold-web/src/main/resources/config/spring/local/appcontext-db.xml
 zigbee-web/src/main/resources/config/spring/local/appcontext-db.xml
+bgzigbee-web/src/main/resources/config/spring/local/appcontext-db.xml

@@ -17,6 +17,7 @@
 		#{password},
 		#{rdcid},
 		now()
+		)
     </insert>
     
     <update id="updateConfig" parameterType="SpiderCollectionConfigEntity">

@@ -416,10 +416,10 @@ public class RdcController {
 	public Object updateSpiderConfig(@RequestBody SpiderCollectionConfigEntity entity) {
 		if (spiderCollectionConfigDao.findConfigByRdcid(entity.getRdcid()) != null) {
 			spiderCollectionConfigDao.updateConfig(entity);
-			return new ResultDto(0, "添加成功");
+			return new ResultDto(0, "修改成功");
 		} else {
 			spiderCollectionConfigDao.addConfig(entity);
-			return new ResultDto(0, "修改成功");
+			return new ResultDto(0, "添加成功");
 		}
 	}
 	
