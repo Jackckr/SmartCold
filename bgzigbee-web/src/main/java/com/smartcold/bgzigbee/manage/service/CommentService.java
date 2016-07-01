@@ -2,6 +2,7 @@ package com.smartcold.bgzigbee.manage.service;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dto.CommentDTO;
 import com.smartcold.bgzigbee.manage.entity.CommentEntity;
 
@@ -17,4 +18,6 @@ public interface CommentService {
 	List<CommentDTO> findCommentsRdcID(@RequestParam int rdcID, @RequestParam int npoint);
 
 	public void insertComment(CommentEntity comment);
+	
+	public PageInfo<CommentEntity> findByPage(Integer pageNum, Integer pageSize);
 }

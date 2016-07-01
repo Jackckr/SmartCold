@@ -46,5 +46,13 @@
 		FROM `ColdStorageComment` WHERE `rdcID` = #{rdcID}
 		order by `addTime` desc
 	</select>
-
+	<select id="findByPage" resultType="CommentEntity">
+		SELECT *
+		FROM `ColdStorageComment`
+		order by `addTime` desc
+	</select>
+	<delete id="deleteCommentByID" parameterType="map">
+		DELETE FROM `ColdStorageComment`
+		where id=#{id}
+	</delete>
 </mapper>

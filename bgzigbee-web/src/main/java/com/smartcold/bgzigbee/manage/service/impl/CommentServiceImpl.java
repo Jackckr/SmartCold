@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -72,5 +74,10 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public void insertComment(CommentEntity comment) {
 		commentDao.insertComment(comment);
+	}
+	
+	public PageInfo<CommentEntity> findByPage(Integer pageNum, Integer pageSize){
+		PageHelper.startPage(pageNum, pageSize);
+		return new PageInfo<CommentEntity>(commentDao.findByPage());
 	}
 }

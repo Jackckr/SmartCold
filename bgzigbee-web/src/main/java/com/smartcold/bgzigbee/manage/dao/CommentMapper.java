@@ -2,6 +2,7 @@ package com.smartcold.bgzigbee.manage.dao;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.github.pagehelper.Page;
 import com.smartcold.bgzigbee.manage.entity.CommentEntity;
 
 import java.util.List;
@@ -16,5 +17,9 @@ public interface CommentMapper {
     public void insertComment(CommentEntity comment);
 
     List<CommentEntity> findCommentsByRdcId(@Param("rdcID") int rdcID);
+    
+    Page<CommentEntity> findByPage();
+    
+    int deleteCommentByID(int id);
 
 }

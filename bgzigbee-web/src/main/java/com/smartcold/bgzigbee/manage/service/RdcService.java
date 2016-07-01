@@ -24,7 +24,7 @@ public interface RdcService {
 
 	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID);
 
-	PageInfo<RdcEntityDTO> findRdcDTOByPage(int pageNum, int pageSize);
+	PageInfo<RdcEntityDTO> findRdcDTOByPage(int pageNum, int pageSize, Integer audit);
 	
 	boolean deleteByRdcId(int rdcID);
 	

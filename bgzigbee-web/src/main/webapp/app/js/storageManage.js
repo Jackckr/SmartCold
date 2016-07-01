@@ -2,15 +2,16 @@
  * Created by qiunian.sun on 16/4/9.
  */
 coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cookies, $http, $location) {
+	$scope.optAudit = '8';
 	$scope.rdcs = [];
 	$scope.initTable = function(pageNum,pageSize){
-		    $http({method:'POST',url:'/i/rdc/findRdcDTOByPage',params:{pageNum : pageNum,pageSize : pageSize}}).success(function (data) {
+		    $http({method:'POST',url:'/i/rdc/findRdcDTOByPage',params:{pageNum : pageNum,pageSize : pageSize, audit:$scope.optAudit}}).success(function (data) {
 		    	 $scope.bigTotalItems = data.total;
 			      $scope.rdcs = data.list;
 		    });
 	}
     // 显示最大页数
-    $scope.maxSize = 12;
+    $scope.maxSize = 8;
     // 总条目数(默认每页十条)
     $scope.bigTotalItems = 12;
     // 当前页
@@ -20,7 +21,9 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     }
     $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
     // 获取当前冷库的列表
-   
+    $scope.auditChanged = function(optAudiet){
+    	$scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    }
 
     $http.get('/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
@@ -102,10 +105,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     }
     
     $scope.deleteRdcs = function(){
-    	var rdcIDs = [];
-    	for(i in $scope.selected){
-    		rdcIDs.push($scope.selected[i].id);
-    	}
+    	var rdcIDs = $scope.getrdcIDsFromSelected();
     	if(rdcIDs.length >0 ){
     		$http({
     			method:'DELETE',
@@ -115,6 +115,16 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     			}
     		}).success(resDelRdc);
     	}
+    }
+    
+    $scope.getrdcIDsFromSelected = function(audit){
+    	var rdcIDs = [];
+    	for(i in $scope.selected){
+    		if(audit != undefined)
+    			$scope.selected[i].audit = audit;
+    		rdcIDs.push($scope.selected[i].id);
+    	}
+    	return rdcIDs;
     }
     
     function resDelRdc(data){
@@ -134,19 +144,32 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     	}
     }
     
-    $scope.changeAudit = function(rdcID){
+    $scope.changeAudit = function(rdc){
     	var r=confirm("通过审核？");
-    	var audit = 0;
-    	if(r){
-    		audit = 1;
-    	}else{
-    		audit = -1;
-    	}
-    	$http.post('/i/rdc/changeAudit',{
-    		params:{
-    			'audit':audit
+    	rdc.audit = r?1:-1;
+    	$http({
+    		'method':'POST',	
+    		'url':'/i/rdc/changeAudit',
+    		'params':{
+    			'rdcID':rdc.id,
+    			'audit':rdc.audit
     		}
     	})
+    }
+    $scope.changeAudits = function(){
+    	var r=confirm("通过审核？");
+    	var audit = r?1:-1
+    	var rdcIDs = $scope.getrdcIDsFromSelected(audit);
+    	if(rdcIDs.length >0 ){
+    		$http({
+    			method:'POST',
+    			url:'/i/rdc/changeAudits',
+    			params:{
+    				'rdcIDs': rdcIDs,
+    				'audit':audit
+    			}
+    		});
+    	}
     }
     
     $scope.goAddRdc = function () {

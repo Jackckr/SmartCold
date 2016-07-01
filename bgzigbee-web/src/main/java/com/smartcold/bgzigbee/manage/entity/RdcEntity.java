@@ -41,6 +41,17 @@ public class RdcEntity {
 	private float powerConsume;
 
 	private String mapping;
+	
+	private Integer audit;
+	
+
+	public Integer getAudit() {
+		return audit;
+	}
+
+	public void setAudit(Integer audit) {
+		this.audit = audit;
+	}
 
 	public String getName() {
 		return name;
