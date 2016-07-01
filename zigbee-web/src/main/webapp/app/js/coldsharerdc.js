@@ -1,19 +1,19 @@
-//当前页面配置信息
+//当前页面配置信息o()
 var rdcconfig={
 	$scope:null,//上下文环境变量
 	_cuttid:1,//当前选择类型	
 	changMode:function(em){
-		if(em.value){
 			$("#tool_div li").removeClass("current");
 			$(em).addClass("current");
 			rdcconfig._cuttid=em.value;
 			$("#table1,#table2,#table3").addClass("hide");
 			$("#table"+em.value).removeClass("hide");
 			rdcconfig.$scope.initApp();//初始化App
-		}else{//免费发布的信息
-			
-		}
-	},addfilter:function(id,em){
+	},freeMaeeinfo:function(){//免费发布的信息
+		alert("还在建设中，敬请期待！");
+		
+	}
+    ,addfilter:function(id,em){
 		 $($(id).parent()).prev().removeClass("active");
 	      if(em.hasClass("active")){em.removeClass("active"); }else{ em.addClass("active");}
 	      if( $(id+".active").length==0){//||$(id+".active").length==($(id).length-1)
@@ -33,8 +33,9 @@ var good={
 			 $.each(_gdty, function(i, vo){gdlist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"</li>"); });
 			 $("#good_type_div ul").append(gdlist.join("")) ; 
 			 $("#good_type_div li").click(function(event) {rdcconfig.addfilter("#good_type_div li",$(this));});//
-			 $('#sl_lktype1').change(function(){rdcconfig.$scope.pageChanged1();});
-			 $('#sl_provinceid1').change(function(){rdcconfig.$scope.pageChanged1();});
+			 $('#sl_lktype1').change(function(){rdcconfig.$scope.changDataMode();});
+			 $('#sl_provinceid1').change(function(){rdcconfig.$scope.changDataMode();});
+			
 		  }});
 	}
 	,getFilter:function(pageNum,pageSize){
@@ -61,8 +62,8 @@ var psaction={
 			  $.post("/i/ShareRdcController/getPSFilterData",function(data) {if(data.success){
 				  var fmlist=[],cllist=[],sklist=[];
 					 var _fmty=data.entity.fm, _clty=data.entity.cl, _skty=data.entity.sk;//业务类型,温度类型,车型
-					 $.each(_fmty, function(i, vo){fmlist.push("<li value='"+vo.tyoe_code+"' >"+vo.type_name+"</li>"); });
-					 $.each(_clty, function(i, vo){cllist.push("<li value='"+vo.tyoe_code+"' >"+vo.type_name+"</li>"); });  
+					 $.each(_fmty, function(i, vo){fmlist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"</li>"); });
+					 $.each(_clty, function(i, vo){cllist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"</li>"); });  
 					 $.each(_skty, function(i, vo){ sklist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });  
 					 $("#car_type_div ul").append(sklist.join("")) ; 
 					 $("#cool_type_div ul").append(cllist.join("")) ; 
@@ -70,12 +71,16 @@ var psaction={
 					 $("#car_type_div li").click(function(event) {rdcconfig.addfilter("#car_type_div li",$(this));});//车型
 					 $("#cool_type_div li").click(function(event) {rdcconfig.addfilter("#cool_type_div li",$(this));});//温度类型
 				     $("#business_type_div li" ).click(function(event) {rdcconfig.addfilter("#business_type_div li",$(this));});//业务类型
+					 $('#sl_lktype2').change(function(){ rdcconfig.$scope.changDataMode();});
+					 $('#sl_origin').change(function(){rdcconfig.$scope.changDataMode();});
+					 $('#sl_destination').change(function(){rdcconfig.$scope.changDataMode();});
+					 $('#sl_deliverytime').change(function(){rdcconfig.$scope.changDataMode();});
 			   }});
 		}
 		,getFilter:function(pageNum,pageSize){
 		    	  var ctlist= ($("#car_type_div li.active").length==$("#car_type_div li").length||$("#car_type_div li.active").length==0)?null:$("#car_type_div li.active");
-			      var clist=($("#cool_type_div li.active").length==$("#cool_type_div li").length-1||$("#cool_type_div li.active").length==0)?null:$("#cool_type_div li.active");
-				  var bslist=($("#business_type_div li.active").length==$("#business_type_div li").length-1||$("#business_type_div li.active").length==0)?null:$("#business_type_div li.active");
+			      var clist=($("#cool_type_div li.active").length==$("#cool_type_div li").length||$("#cool_type_div li.active").length==0)?null:$("#cool_type_div li.active");
+				  var bslist=($("#business_type_div li.active").length==$("#business_type_div li").length||$("#business_type_div li.active").length==0)?null:$("#business_type_div li.active");
 			      var bsty=null,clty=null,ctty=null;
 			      if(bslist){bsty=[];  $.each(bslist, function(i, vo){bsty.push(vo.value);});bsty=bsty.join(","); }
 			      if(clist){clty=[];  $.each(clist, function(i, vo){clty.push(vo.value);});clty=clty.join(","); }
@@ -91,7 +96,8 @@ var psaction={
 		   			destination:$("#sl_destination").val(),//目的地
 		   			deliverytime:$("#sl_deliverytime").val(),//发货时间
 				  };
-				   var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
+				   var _filter={pageNum : pageNum,pageSize : pageSize};
+				   jQuery.extend(_filter, _options);
 				   return _filter;
 				}
 };
@@ -109,12 +115,14 @@ var serdc = {
 			     $("#sqm_div li" ).click(function(event) {rdcconfig.addfilter("#sqm_div li",$(this));});//面积
 			     $("#mtfl_div li").click(function(event) {rdcconfig.addfilter("#mtfl_div li",$(this));});//经营类型
 			     $("#stfl_div li").click(function(event) {rdcconfig.addfilter("#stfl_div li",$(this));});//温度类型
+			     $('#sl_lktype3').change(function(){rdcconfig.$scope.changDataMode();});
+				 $('#sl_provinceid3').change(function(){rdcconfig.$scope.changDataMode();});
 			   }});
 		},
 		getFilter:function(pageNum,pageSize){
-		  var sqmlist= ($("#sqm_div li.active").length==$("#sqm_div li").length-1||$("#sqm_div li.active").length==0)?null:$("#sqm_div li.active");
-	      var setyList=($("#stfl_div li.active").length==$("#stfl_div li").length-1||$("#stfl_div li.active").length==0)?null:$("#stfl_div li.active");
-		  var smtyList=($("#mtfl_div li.active").length==$("#mtfl_div li").length-1||$("#mtfl_div li.active").length==0)?null:$("#mtfl_div li.active");
+		  var sqmlist= ($("#sqm_div li.active").length==$("#sqm_div li").length||$("#sqm_div li.active").length==0)?null:$("#sqm_div li.active");
+	      var setyList=($("#stfl_div li.active").length==$("#stfl_div li").length||$("#stfl_div li.active").length==0)?null:$("#stfl_div li.active");
+		  var smtyList=($("#mtfl_div li.active").length==$("#mtfl_div li").length||$("#mtfl_div li.active").length==0)?null:$("#mtfl_div li.active");
 	      var smty=null,sety=null,sqm=null;
 	      if(smtyList){smty=[];  $.each(smtyList, function(i, vo){smty.push(vo.value);});smty=smty.join(","); }
 	      if(setyList){sety=[];  $.each(setyList, function(i, vo){sety.push(vo.value);});sety=sety.join(","); }
@@ -151,7 +159,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 		    });
 	   };
 	  $scope.pageChanged2 = function () {
-	   var _filter=  serdc.getFilter($scope.bigCurrentPage,$scope.maxSize);
+	   var _filter=  psaction.getFilter($scope.bigCurrentPage,$scope.maxSize);
 	   $http({method:'POST',url:'/i/ShareRdcController/getSEPSList',params:_filter}).success(function (data) {
 		   $scope.pslist = data.data;//
 		   $scope.bigTotalItems2 = data.total;

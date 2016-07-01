@@ -17,6 +17,7 @@ public class RdcShareDTO {
 	private String unitPrice; // +出租单价
 	private String unit1; // 单位:元/天 ->出发地
 	private String unit2; // 单位:元/天 ->目的地
+	private String attrvalue;//附加值
 	private String codeLave1; // 
 	private String codeLave2; // 
 	private String codeLave3; //
@@ -30,219 +31,174 @@ public class RdcShareDTO {
 	private int stauts; // 当前消息是否有效 0：无效 1：有效
 	private String addtime; // 添加时间
 	private String updatetime; // 最后更新时间
-	
+	//rdc
 	private String name;
 	private String address;
 	private String coldtype;
 	private String logo="app/img/rdcHeader.jpg";
-
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public int getRdcID() {
 		return rdcID;
 	}
-
 	public void setRdcID(int rdcID) {
 		this.rdcID = rdcID;
 	}
-
 	public int getReleaseID() {
 		return releaseID;
 	}
-
 	public void setReleaseID(int releaseID) {
 		this.releaseID = releaseID;
 	}
-
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 	public int getTypeCode() {
 		return typeCode;
 	}
-
 	public void setTypeCode(int typeCode) {
 		this.typeCode = typeCode;
 	}
-
 	public String getTypeText() {
 		return typeText;
 	}
-
 	public void setTypeText(String typeText) {
 		this.typeText = typeText;
 	}
-
 	public String getUnitPrice() {
 		return unitPrice;
 	}
-
 	public void setUnitPrice(String unitPrice) {
 		this.unitPrice = unitPrice;
 	}
-
 	public String getUnit1() {
 		return unit1;
 	}
-
 	public void setUnit1(String unit1) {
 		this.unit1 = unit1;
 	}
-
 	public String getUnit2() {
 		return unit2;
 	}
-
 	public void setUnit2(String unit2) {
 		this.unit2 = unit2;
 	}
-
+	public String getAttrvalue() {
+		return attrvalue;
+	}
+	public void setAttrvalue(String attrvalue) {
+		this.attrvalue = attrvalue;
+	}
+	public String getCodeLave1() {
+		return codeLave1;
+	}
+	public void setCodeLave1(String codeLave1) {
+		this.codeLave1 = codeLave1;
+	}
+	public String getCodeLave2() {
+		return codeLave2;
+	}
+	public void setCodeLave2(String codeLave2) {
+		this.codeLave2 = codeLave2;
+	}
+	public String getCodeLave3() {
+		return codeLave3;
+	}
+	public void setCodeLave3(String codeLave3) {
+		this.codeLave3 = codeLave3;
+	}
+	public String getCodeLave4() {
+		return codeLave4;
+	}
+	public void setCodeLave4(String codeLave4) {
+		this.codeLave4 = codeLave4;
+	}
 	public String getNote() {
 		return note;
 	}
-
 	public void setNote(String note) {
 		this.note = note;
 	}
-
 	public String getSqm() {
 		return sqm;
 	}
-
 	public void setSqm(String sqm) {
 		this.sqm = sqm;
 	}
-
 	public String getValidStartTime() {
 		return validStartTime;
 	}
-
 	public void setValidStartTime(String validStartTime) {
 		this.validStartTime = validStartTime;
 	}
-
 	public String getValidEndTime() {
 		return validEndTime;
 	}
-
 	public void setValidEndTime(String validEndTime) {
 		this.validEndTime = validEndTime;
 	}
-
 	public int getApplyID() {
 		return applyID;
 	}
-
 	public void setApplyID(int applyID) {
 		this.applyID = applyID;
 	}
-
 	public int getBookings() {
 		return bookings;
 	}
-
 	public void setBookings(int bookings) {
 		this.bookings = bookings;
 	}
-
 	public int getStauts() {
 		return stauts;
 	}
-
 	public void setStauts(int stauts) {
 		this.stauts = stauts;
 	}
-
 	public String getAddtime() {
 		return addtime;
 	}
-
 	public void setAddtime(String addtime) {
 		this.addtime = addtime;
 	}
-
 	public String getUpdatetime() {
 		return updatetime;
 	}
-
 	public void setUpdatetime(String updatetime) {
 		this.updatetime = updatetime;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getColdtype() {
+		return coldtype;
+	}
+	public void setColdtype(String coldtype) {
+		this.coldtype = coldtype;
+	}
 	public String getLogo() {
 		return logo;
 	}
-
 	public void setLogo(String logo) {
 		this.logo = FtpService.READ_URL+ logo;
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getColdtype() {
-		return coldtype;
-	}
-
-	public void setColdtype(String coldtype) {
-		this.coldtype = coldtype;
-	}
-
-	public String getCodeLave1() {
-		return codeLave1;
-	}
-
-	public void setCodeLave1(String codeLave1) {
-		this.codeLave1 = codeLave1;
-	}
-
-	public String getCodeLave2() {
-		return codeLave2;
-	}
-
-	public void setCodeLave2(String codeLave2) {
-		this.codeLave2 = codeLave2;
-	}
-
-	public String getCodeLave3() {
-		return codeLave3;
-	}
-
-	public void setCodeLave3(String codeLave3) {
-		this.codeLave3 = codeLave3;
-	}
-
-	public String getCodeLave4() {
-		return codeLave4;
-	}
-
-	public void setCodeLave4(String codeLave4) {
-		this.codeLave4 = codeLave4;
-	}
-
+	
 	
 }

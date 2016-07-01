@@ -73,4 +73,44 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
         	$scope.selected = $scope.Allusers.slice(0);
         }
     };
+    
+    
+    function checkInput(){
+        var flag = true;
+        // 检查必须填写项
+        if ($scope.username == undefined || $scope.username == '') {
+            flag = false;
+        }
+        if ($scope.password == undefined || $scope.password == '') {
+            flag = false;
+        }
+        return flag;
+    }
+
+    
+    
+    $scope.submit = function(){
+        if (checkInput()){
+            $http({
+            	method : 'GET', 
+    			url:'/i/user/addUser',
+    			params:{
+    				'username':  $scope.username,
+    				'password': $scope.password,
+    				'email' : $scope.email,
+    				'telephone' : $scope.telephone
+    			}
+    		}).then(function (resp) {
+                alert("添加成功");
+                window.location.reload(); 
+            }, function (resp) {
+                console.log('Error status: ' + resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.name);
+            });
+        } else {
+            alert("请填写用户名或密码!");
+        }
+    }
 });
