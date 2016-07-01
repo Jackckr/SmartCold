@@ -12,7 +12,7 @@
 
 	<update id="updateMappingById" parameterType="map">
 		UPDATE `ColdStorageDoorSet` SET mapping=#{mapping}
-		WHERE `coldStorageDoorId` = #{coldStorageDoorId}
+		WHERE `id` = #{coldStorageDoorId}
 	</update>
 
 </mapper>
