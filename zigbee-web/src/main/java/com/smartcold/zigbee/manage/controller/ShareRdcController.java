@@ -42,7 +42,7 @@ public class ShareRdcController  {
 		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
 		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "7" : request.getParameter("pageSize")); // 每页数据量
 	}
-	
+	//-----------------------------------------------------------------------------辅助查询条件------------------------------------------------------------
 	/**
 	 * 查询下拉框数据  Description: ui_getSeleectData
 	 * Description: ui_getSeleectData
@@ -148,8 +148,29 @@ public class ShareRdcController  {
 			}
 		return result;
 	}
-	
-	//-------------------------------------------------1：货品 2：配送  3：仓库具有公共属性,可重用方法，但为了后期维护和程序健壮性----采用3个公共方法,方便分库分表---------------------------------------------------
+	/**
+	 * 提供筛选条件
+	 * @param sqm
+	 * @return
+	 */
+	private static String getSqmFilter(String sqm)
+	{  
+		StringBuffer sqlfilter=new StringBuffer("(");
+		if(StringUtil.isnotNull(sqm)){
+			String filter[]=sqm.split(",");
+			for (String betdata : filter) {
+			  String betsmdata[]=	betdata.split("~");
+			    if(betsmdata.length==2){
+			    	sqlfilter.append(" s.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
+			    }else{
+			    	sqlfilter.append(" s.sqm  "+betsmdata[0]+" or");
+			    }
+			}
+			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
+	   }
+		return "";
+	}
+	//-------------------------------------------------2->数据展示 1：货品 2：配送  3：仓库具有公共属性,可重用方法，但为了后期维护和程序健壮性----采用3个公共方法,方便分库分表---------------------------------------------------
     /**
      * 获得货品信息
      * @param request
@@ -244,22 +265,30 @@ public class ShareRdcController  {
 		return ResponseData.newSuccess(data);
 	}
 	
-	private static String getSqmFilter(String sqm)
-	{  
-		StringBuffer sqlfilter=new StringBuffer("(");
-		if(StringUtil.isnotNull(sqm)){
-			String filter[]=sqm.split(",");
-			for (String betdata : filter) {
-			  String betsmdata[]=	betdata.split("~");
-			    if(betsmdata.length==2){
-			    	sqlfilter.append(" s.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
-			    }else{
-			    	sqlfilter.append(" s.sqm  "+betsmdata[0]+" or");
-			    }
-			}
-			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
-	   }
-		return "";
+	//------------------------------------------------------------------------------------3:抢单操作-------------------------------------------------------
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="shareApplyObj")
+	@ResponseBody
+	public ResponseData<Object> shareApplyObj(HttpServletRequest request,String datatype,String dataid){
+		
+		return null;
+	}
+	//------------------------------------------------------------------------------------4:免费发布消息-------------------------------------------------------
+	/**
+	 * 免费发布消息
+	 * @param request
+	 * @param datatype
+	 * @param dataid
+	 * @return
+	 */
+	@RequestMapping(value="shareFreeRelease")
+	@ResponseBody
+	public ResponseData<Object> shareFreeRelease(HttpServletRequest request,String datatype,String dataid){
+		
+		return null;
 	}
 	
 	
