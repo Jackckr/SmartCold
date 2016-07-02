@@ -31,10 +31,12 @@
         $templateCache.put(template_url,
             '<div class="{{ baseClass }}">' +
             '  <div >' +
-            '    <img ng-src="{{ images[0].thumb }}" class="{{ thumbClass }}" ng-click="openGallery(0)" alt="Image {{ 0 + 1 }}" />' +
+                '<a class="arrow prev" href="" ng-click="showPrev()"></a>' +
+            '    <img ng-src="{{ images[index].thumb }}" class="{{ thumbClass }}" ng-click="openGallery(index)" alt="Image {{ index + 1 }}" />' +
             '  </div>' +
             '  <div >' +
-            '    <img ng-src="{{ images[1].thumb }}" class="{{ thumbClass }}" ng-click="openGallery(1)" alt="Image {{ 1 + 1 }}" />' +
+            '    <img ng-src="{{ images[index + 1].thumb }}" class="{{ thumbClass }}" ng-click="openGallery(index + 1)" alt="Image {{ index + 1 + 1 }}" />' +
+                '<a class="arrow next" href="" ng-click="showNext()"></a>' +
             '  </div>' +
             '</div>' +
             '<div class="ng-overlay" ng-show="opened">' +
@@ -225,6 +227,13 @@
                     }, 100);
                 };
 
+                scope.showNext = function () {
+                    scope.index = (scope.index < scope.images.length - 2) ? ++scope.index : 0;
+                };
+
+                scope.showPrev = function () {
+                    scope.index = (scope.index > 0) ? --scope.index : scope.images.length - 2;
+                };
             }
         };
     }
