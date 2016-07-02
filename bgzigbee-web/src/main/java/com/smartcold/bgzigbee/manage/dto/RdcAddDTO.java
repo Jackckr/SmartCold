@@ -1,5 +1,9 @@
 package com.smartcold.bgzigbee.manage.dto;
 
+import java.util.List;
+
+import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
+
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-06-01 11:22)
  */
@@ -79,6 +83,26 @@ public class RdcAddDTO {
 	private String arrangepiclocation;
 
 	private String storagePicLocation;
+	
+	private FileDataEntity arrangePic;
+
+	private List<FileDataEntity> storagePics;
+
+	public FileDataEntity getArrangePic() {
+		return arrangePic;
+	}
+
+	public void setArrangePic(FileDataEntity arrangePic) {
+		this.arrangePic = arrangePic;
+	}
+
+	public List<FileDataEntity> getStoragePics() {
+		return storagePics;
+	}
+
+	public void setStoragePics(List<FileDataEntity> storagePics) {
+		this.storagePics = storagePics;
+	}
 
 	public String getArrangepiclocation() {
 		return arrangepiclocation;

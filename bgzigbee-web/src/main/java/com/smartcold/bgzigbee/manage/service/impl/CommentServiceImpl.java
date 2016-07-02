@@ -76,8 +76,8 @@ public class CommentServiceImpl implements CommentService {
 		commentDao.insertComment(comment);
 	}
 	
-	public PageInfo<CommentEntity> findByPage(Integer pageNum, Integer pageSize){
+	public PageInfo<CommentDTO> findByPage(Integer pageNum, Integer pageSize){
 		PageHelper.startPage(pageNum, pageSize);
-		return new PageInfo<CommentEntity>(commentDao.findByPage());
+		return new PageInfo<CommentDTO>(commentDao.findByPage());
 	}
 }

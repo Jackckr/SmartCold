@@ -128,7 +128,8 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.companyDevice = data[0].companyDevice;
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
-        $scope.arrangePic = data[0].arrangepiclocation;
+        $scope.arrangePicShow = data[0].arrangePic;
+        $scope.storagePicShow = data[0].storagePics;
         if($scope.lihuoRoom === 0){
             $scope.hasLihuoRoom = true;
         } else {
@@ -263,48 +264,13 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 capacity5 : $scope.capacity5,
                 facility : $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 //honorPic : $scope.honorPic,
-                arrangePic : $scope.arrangePic,
+                arrangePics : $scope.arrangePic,
                 rdcId: $stateParams.rdcID
             }
             for(i = 0; i < $scope.totalfiles.length; i++){
                 data["file" + i] = $scope.files[i];
             }
 
- /*           console.log("name: " + data.name);
-            console.log("provinceId: " + data.provinceId);
-            console.log("cityId: " + data.cityId);
-            console.log("address: " + data.address);
-            console.log("area: " + data.area);
-            console.log("manageType: " + data.manageType);
-            console.log("storageType: " + data.storageType);
-            console.log("temperType: " + data.temperType);
-            console.log("coldTruck1: " + data.coldTruck1);
-            console.log("coldTruck2: " + data.coldTruck2);
-            console.log("coldTruck3: " + data.coldTruck3);
-            console.log("coldTruck4: " + data.coldTruck4);
-            console.log("phoneNum: " + data.phoneNum);
-            console.log("telphoneNum: " + data.telphoneNum);
-            console.log("remark: " + data.remark);
-
-            console.log("tonnage: " + data.tonnage);
-            console.log("structure: " + data.structure);
-            console.log("companyDevice: " + data.companyDevice);
-            console.log("platform: " + data.platform);
-            console.log("lihuoRoom: " + data.lihuoRoom);
-            console.log("lihuoArea: " + data.lihuoArea);
-            console.log("lihuoTemperCtr: " + data.lihuoTemperCtr);
-            console.log("storageRefreg: " + data.storageRefreg);
-            console.log("temperRecord: " + data.temperRecord);
-            console.log("capacity1: " + data.capacity1);
-            console.log("capacity2: " + data.capacity2);
-            console.log("capacity3: " + data.capacity3);
-            console.log("capacity4: " + data.capacity4);
-            console.log("capacity5: " + data.capacity5);
-            console.log("facility: " + data.facility);
-            console.log("honorPic: " + data.honorPic);
-            console.log("arrangePic: " + data.arrangePic);
-            console.log("file0: " + data.file0);
-            console.log("file1: " + data.file1);*/
 
             Upload.upload({
                 url: '/i/rdc/updateRdc',
