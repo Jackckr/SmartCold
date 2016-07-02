@@ -50,11 +50,19 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
 
 
     // 获取当前热度冷库的列表
-    $http.get('/i/rdc/findHotRdcDTOList').success(function (data) {
-        var size = data.length;
-        data.splice(6, size);
-        $scope.hotrdcs = data;
-    });
+    findHotRdcDTOList();
+
+    function findHotRdcDTOList(){
+        $http.get('/i/rdc/findHotRdcDTOList', {
+            params: {
+                "npoint":6
+            }
+        }).success(function (data) {
+            var size = data.length;
+            data.splice(6, size);
+            $scope.hotrdcs = data;
+        });
+    }
     
     $scope.goDetail = function (rdcID) {
     	/*  $http.get('/i/user/findUser').success(function(data){
@@ -832,12 +840,30 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
         })
     }
 
+    $scope.goComment = function (rdcID) {
+        $location.path("/coldStorage/" + rdcID + "/review");
+    }
+
     $scope.goHotBoard = function () {
-        //alert("goHotBoard");
+        angular.element(document.getElementById('hotBoard')).removeClass('btn-default');
+        angular.element(document.getElementById('hotBoard')).addClass('btn-success');
+        angular.element(document.getElementById('scoreBoard')).removeClass('btn-success');
+        angular.element(document.getElementById('scoreBoard')).addClass('btn-default');
+        findHotRdcDTOList();
     }
 
     $scope.goScoreBoard = function () {
-        //alert("goScoreBoard");
+        angular.element(document.getElementById('scoreBoard')).removeClass('btn-default');
+        angular.element(document.getElementById('scoreBoard')).addClass('btn-success');
+        angular.element(document.getElementById('hotBoard')).removeClass('btn-success');
+        angular.element(document.getElementById('hotBoard')).addClass('btn-default');
+        $http.get('/i/rdc/findScoreRdcDTOList', {
+            params: {
+                "npoint":6
+            }
+        }).success(function (data) {
+            $scope.hotrdcs = data;
+        });
     }
 
 });

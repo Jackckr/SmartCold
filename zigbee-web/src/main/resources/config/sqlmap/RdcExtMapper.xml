@@ -113,6 +113,15 @@
             <if test="storagepiclocation != null" >
                 storagepiclocation = #{storagepiclocation,jdbcType=LONGVARCHAR},
             </if>
+            <if test="rdcscore != null" >
+                rdcscore = #{rdcscore,jdbcType=FLOAT},
+            </if>
+            <if test="rdccommentcnt != null" >
+                 rdccommentcnt = #{rdccommentcnt,jdbcType=INTEGER},
+            </if>
+            <if test="rdcrecommendpercent != null" >
+                  rdcrecommendpercent = #{rdcrecommendpercent,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -120,5 +129,13 @@
     <update id="increasePageView" parameterType="int">
     	UPDATE rdcext set pageview = pageview+1 where rdcid=#{rdcID};
     </update>
+
+    <select id="findScoreRdcDTOList" parameterType="map" resultType="RdcExtEntity">
+        SELECT * FROM `RdcExt` order by `rdcscore` desc limit #{npoint};
+    </select>
+
+    <select id="findHotRdcDTOList" parameterType="map" resultType="RdcExtEntity">
+        SELECT * FROM `RdcExt` order by `pageview` desc limit #{npoint};
+    </select>
 
 </mapper>
