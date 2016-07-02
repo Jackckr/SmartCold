@@ -288,9 +288,23 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="shareFreeRelease")
 	@ResponseBody
-	public ResponseData<Object> shareFreeRelease(HttpServletRequest request,String datatype,String dataid){
+	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,RdcShareDTO  data){
 		
 		return null;
+	}
+	/**
+	 * 免费发布消息
+	 * @param request
+	 * @param datatype
+	 * @param dataid
+	 * @return
+	 */
+	@RequestMapping(value="sharetest")
+	@ResponseBody
+	public Object sharetest(HttpServletRequest request){
+		int insert = this.rdcShareService.insert("22");
+		System.err.println(insert);
+		return insert;
 	}
 	
 	
