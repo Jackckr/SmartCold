@@ -191,12 +191,14 @@ input[type='checkbox']{
 tbody tr td{
 	text-align: center;
 	position: relative;
+	vertical-align:middle!important;
 }
 .edit,.delete{
 	display: inline-block;
 	width: 25px;
 	height:25px;
-	margin-left: 20px;
+	vertical-align:middle;
+	margin-right: 10px;
 	background: url(../img/edit.png) center center no-repeat;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
