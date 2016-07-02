@@ -9,64 +9,60 @@ coldWeb.controller('storageConfig', function ($rootScope, $scope, $state, $cooki
 		})
 	}
 	$scope.load();
-    $scope.Alladmins = [];
-    $scope.admin = "";
-    // 获取当前冷库的列表
-    $http.get('/i/admin/findAdminList').success(function (data) {
-        $scope.Alladmins = data;
-    });
-    $http.get('/i/admin/findAdmin').success(function(data){
-    	$scope.admin = data;
-    });
-    $scope.goDeleteAdmin = function (adminID) {
-    	$http.get('/i/admin/deleteAdmin', {
-            params: {
-                "adminID": adminID
-            }
-        }).success(function (data) {
+	$scope.optAudit = '0';
+	$scope.configs = [];
+	$scope.initTable = function(){
+	    $http({method:'POST',url:'/i/rdc/findRdcConfig',params:{audit:$scope.optAudit}}).success(function (data) {
+	          $scope.configs = data;
         });
-    	$state.reload();
+	}
+	$scope.initTable();
+	$scope.auditChanged = function(optAudiet){
+		$scope.initTable();
     }
-    
-    $scope.deleteAdmins = function(){
-    	var adminIDs = [];
-    	for(i in $scope.selected){
-    		adminIDs.push($scope.selected[i].id);
-    	}
-    	if(adminIDs.length >0 ){
-    		$http({
-    			method:'DELETE',
-    			url:'/i/admin/deleteByAdminIDs',
-    			params:{
-    				'adminIDs': adminIDs
-    			}
-    		}).success(function (data) {
-            });
-    	}
-    	window.location.reload(); 
+	
+	$scope.deleteConfig = function (configID) {
+    	$http.get('/i/rdc/deleteConfig', {
+            params: {
+                "configID": configID,
+                'audit': $scope.optAudit,
+            }
+        }).success(function (data) {  
+        	for(var i=0;i<$scope.configs.length;i++)  
+        	{  
+        	    if($scope.configs[i].id==configID)  
+        	    {  
+        	    	$scope.configs.splice(i,2);  
+        	    }  
+        	}  
+        });
+    	
     }
-    
-    $scope.selected = [];
-    $scope.toggle = function (admin, list) {
-		  var idx = list.indexOf(admin);
-		  if (idx > -1) {
-		    list.splice(idx, 1);
-		  }
-		  else {
-		    list.push(admin);
-		  }
-    };
-    $scope.exists = function (admin, list) {
-    	return list.indexOf(admin) > -1;
-    };
-    $scope.isChecked = function() {
-        return $scope.selected.length === $scope.Alladmins.length;
-    };
-    $scope.toggleAll = function() {
-        if ($scope.selected.length === $scope.Alladmins.length) {
-        	$scope.selected = [];
-        } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
-        	$scope.selected = $scope.Alladmins.slice(0);
+	
+	function checkInput(){
+        var flag = true;
+        // 检查必须填写项
+        if ($scope.config == undefined || $scope.config == '') {
+            flag = false;
         }
-    };
+        return flag;
+    }
+	
+	$scope.submit = function(){
+	        if (checkInput()){
+	            $http({
+	            	method : 'GET', 
+	    			url:'/i/rdc/addConfig',
+	    			params:{
+	    				'config': encodeURI($scope.config,"UTF-8"),
+	    				'audit': $scope.optAudit,
+	    			}
+	    		}).success(function (data) {  
+	                alert("添加成功");
+	                $scope.configs.push({id: data,type: $scope.config, addTime: new Date()});
+	            });
+	        } else {
+	            alert("请填写需要添加的类型!");
+	        }
+	    }
 });

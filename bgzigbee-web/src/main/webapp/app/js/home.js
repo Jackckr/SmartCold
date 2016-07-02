@@ -10,10 +10,28 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 }
 	$scope.load();
 	$scope.Allusers = [];
-    // 获取当前冷库的列表
-    $http.get('/i/user/findUserList').success(function (data) {
-        $scope.Allusers = data;
-    });
+	$scope.optAudit = '8';
+	 // 获取当前冷库的列表
+	$scope.initTable = function(pageNum,pageSize){
+	    $http({method:'GET',url:'/i/user/findUserList',params:{pageNum : pageNum,pageSize : pageSize, audit:$scope.optAudit}}).success(function (data) {
+	    	$scope.Allusers = data;
+	    });
+    }
+    // 显示最大页数
+    $scope.maxSize = 8;
+    // 总条目数(默认每页十条)
+    $scope.bigTotalItems = 12;
+    // 当前页
+    $scope.bigCurrentPage = 1;
+    $scope.pageChanged = function () {
+    	 $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    }
+    $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    
+    $scope.auditChanged = function(optAudiet){
+    	$scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    }
+    
     $scope.logout = function () {
     	$http.get('/i/admin/logout').success(function (data) {
         });

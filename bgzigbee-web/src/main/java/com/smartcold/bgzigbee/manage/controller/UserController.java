@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
 import com.smartcold.bgzigbee.manage.dao.UserMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
@@ -25,8 +26,16 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/findUserList", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findUserList() {
-		return userDao.findAllUser();
+	public Object findUserList(@RequestParam(value="pageNum",required=false) Integer pageNum,
+			@RequestParam(value="pageSize") Integer pageSize, 
+			@RequestParam(value="audit", required=false) Integer audit) {
+		if( !(audit == -1 || audit == 1 || audit == 0) ){
+			audit = null;
+		}
+		pageNum = pageNum == null? 1:pageNum;
+		pageSize = pageSize==null? 12:pageSize;
+		PageHelper.startPage(pageNum, pageSize);
+		return userDao.findAllUser(audit);
 	}
 	
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)

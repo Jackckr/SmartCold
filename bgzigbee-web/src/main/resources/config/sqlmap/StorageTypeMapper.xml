@@ -8,5 +8,20 @@
 		SELECT *
 		FROM `storagetype` order by `id` ASC
 	</select>
-
+    <insert id="addStorageType" parameterType="StorageTypeEntity"
+     useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `storagetype`(
+		`type`,
+		`addTime`
+		)
+		VALUE 
+		(
+		#{type},
+		now()
+		)
+		 
+    </insert>
+     <delete id="deleteStorageType" parameterType="map">
+	    DELETE FROM storagetype WHERE `id` = #{id}
+	</delete>
 </mapper>
