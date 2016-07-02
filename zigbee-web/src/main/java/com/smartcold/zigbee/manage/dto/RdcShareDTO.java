@@ -11,19 +11,22 @@ public class RdcShareDTO {
 	private int id; //
 	private int rdcID; // 睿库的ID
 	private int releaseID; // 发布者id
+	private int dataType; // 数据类型
 	private String title; // share_title->name发布标题 :关联显示发布时的标题
 	private int typeCode; // rental_type:出租类型:1:出租 2:求租
 	private String typeText; //
 	private String unitPrice; // +出租单价
-	private String unit1; // 单位:元/天 ->出发地
-	private String unit2; // 单位:元/天 ->目的地
-	private String attrvalue;//附加值
-	private String codeLave1; // 
-	private String codeLave2; // 
+	private String unit; // 单位: 
+	private String unit1; // 单位1 ->出发地
+	private String unit2; // 单位1 ->目的地
+	private String attrvalue;// 附加值
+	private String codeLave1; //
+	private String codeLave2; //
 	private String codeLave3; //
-	private String codeLave4; // 
+	private String codeLave4; //
 	private String note; // 备注->拓展字段
 	private String sqm; // 出租/求租->面积
+	private String telephone;//联系电话
 	private String validStartTime; // +开始有效期
 	private String validEndTime; // 结束有效期
 	private int applyID; // 申请者ID
@@ -31,11 +34,19 @@ public class RdcShareDTO {
 	private int stauts; // 当前消息是否有效 0：无效 1：有效
 	private String addtime; // 添加时间
 	private String updatetime; // 最后更新时间
-	//rdc
+	//
+	private int stprovinceID;
+	private int stcityID;
+	private int staddress;
+	private int toprovinceID;
+	private int tocityID;
+	private int toaddress;
+ 
+	// rdc
 	private String name;
 	private String address;
 	private String coldtype;
-	private String logo="app/img/rdcHeader.jpg";
+	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
 		return id;
 	}
@@ -53,6 +64,19 @@ public class RdcShareDTO {
 	}
 	public void setReleaseID(int releaseID) {
 		this.releaseID = releaseID;
+	}
+	
+	public int getDataType() {
+		return dataType;
+	}
+	public void setDataType(int dataType) {
+		this.dataType = dataType;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 	public String getTitle() {
 		return title;
@@ -77,6 +101,12 @@ public class RdcShareDTO {
 	}
 	public void setUnitPrice(String unitPrice) {
 		this.unitPrice = unitPrice;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	public String getUnit1() {
 		return unit1;
@@ -174,6 +204,42 @@ public class RdcShareDTO {
 	public void setUpdatetime(String updatetime) {
 		this.updatetime = updatetime;
 	}
+	public int getStprovinceID() {
+		return stprovinceID;
+	}
+	public void setStprovinceID(int stprovinceID) {
+		this.stprovinceID = stprovinceID;
+	}
+	public int getStcityID() {
+		return stcityID;
+	}
+	public void setStcityID(int stcityID) {
+		this.stcityID = stcityID;
+	}
+	public int getStaddress() {
+		return staddress;
+	}
+	public void setStaddress(int staddress) {
+		this.staddress = staddress;
+	}
+	public int getToprovinceID() {
+		return toprovinceID;
+	}
+	public void setToprovinceID(int toprovinceID) {
+		this.toprovinceID = toprovinceID;
+	}
+	public int getTocityID() {
+		return tocityID;
+	}
+	public void setTocityID(int tocityID) {
+		this.tocityID = tocityID;
+	}
+	public int getToaddress() {
+		return toaddress;
+	}
+	public void setToaddress(int toaddress) {
+		this.toaddress = toaddress;
+	}
 	public String getName() {
 		return name;
 	}
@@ -196,9 +262,10 @@ public class RdcShareDTO {
 		return logo;
 	}
 	public void setLogo(String logo) {
-		this.logo = FtpService.READ_URL+ logo;
+		this.logo = FtpService.READ_URL+logo;
 	}
+	
+	
+	
 
-	
-	
 }

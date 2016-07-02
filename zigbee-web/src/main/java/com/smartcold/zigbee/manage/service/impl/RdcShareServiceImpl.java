@@ -67,6 +67,11 @@ public class RdcShareServiceImpl implements RdcShareService {
 		return new PageInfo<RdcShareDTO>(serdcList);
 	}
 
+	@Override
+	public int insert(String key) {
+		return this.rdcShareMapper.insert(key);
+	}
+
 	
     
 }
