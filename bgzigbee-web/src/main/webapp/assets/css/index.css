@@ -1,3 +1,6 @@
+body{
+	background-color: #303A44;
+}
 .head{
 	width: 100%;
 	height: 60px;
@@ -52,15 +55,15 @@
 	margin-left: 20px;
 }
 .content{
-	background-color: #303A44;
-	height: 100%;
+	/* background-color: #303A44; */
+	/* height: 100%; */
 	width: 100%;
 }
 .sidebar{
 	width: 220px;
 }
 .sidebar+div{
-	min-height:850px;
+	min-height:810px;
 	background-color:#F1F1F1;
 }
 .main{
@@ -130,6 +133,15 @@
 }
 #status .btn{
 	width: 100px;
+}
+#status select{
+	width:100px;
+	height:32px;
+	line-height:32px;
+	outline:none;
+	border-radius:3px;
+	text-align:center;
+	padding-left:1.5em;
 }
 #search{
 	margin-left: 350px;
@@ -386,4 +398,13 @@ tbody tr td{
 	height: 100%;
 	background-color: pink;
 	margin:0 auto;
+}
+footer{
+	margin-top:10px;
+}
+.copyRight{
+	color:#fff;
+	text-align:center;
+	height:30px;	
+	line-height:30px;
 }
