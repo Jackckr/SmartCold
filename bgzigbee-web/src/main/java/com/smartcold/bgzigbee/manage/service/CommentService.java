@@ -19,5 +19,5 @@ public interface CommentService {
 
 	public void insertComment(CommentEntity comment);
 	
-	public PageInfo<CommentEntity> findByPage(Integer pageNum, Integer pageSize);
+	public PageInfo<CommentDTO> findByPage(Integer pageNum, Integer pageSize);
 }

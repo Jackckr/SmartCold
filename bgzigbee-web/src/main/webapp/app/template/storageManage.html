@@ -1,9 +1,9 @@
  <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
  	<!-- 按钮操作区域开始 -->
 	<div class="operation">
-		<button type="button" class="btn btn-default pull-left" id="plusCold">
+		<a  href="#/coldStorageAdd" class="btn btn-default pull-left" id="plusCold">
 			<span class="glyphicon glyphicon-plus"></span>添加冷库
-		</button>
+		</a>
 		<div class="btn-group pull-left" id="status">
 		  <select ng-model="optAudit" ng-change="auditChanged(optAudit)">
 		  	<option value="8">所有</option>
@@ -50,10 +50,10 @@
 	         <td>{{rdc.cellphone}}</td>
 	         <td>{{rdc.addtime}}</td>
 	         <td ng-bind="getAudit(rdc.audit)"></td>
-	         <td>
+	         <td style="width:12%;min-width:142px;">
 	         	<span class="edit"  ng-click="goEditRdc(rdc.id)"></span>
 	         	<span class="delete" ng-click="deleteRdc(rdc.id)"></span>
-	         	<button class="btn btn-sm" ng-click="changeAudit(rdc)">审核</button>
+	         	<button class="btn btn-primary btn-sm" ng-click="changeAudit(rdc)">审核</button>
 	         </td>
 	      </tr>
 	   </tbody>

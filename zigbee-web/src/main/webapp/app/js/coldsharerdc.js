@@ -1,7 +1,7 @@
 //当前页面配置信息o()
 var rdcconfig={
 	$scope:null,//上下文环境变量
-	_cuttid:1,//当前选择类型	
+	_cuttid:2,//当前选择类型	
 	changMode:function(em){
 			$("#tool_div li").removeClass("current");
 			$(em).addClass("current");
@@ -23,7 +23,6 @@ var rdcconfig={
 	      rdcconfig.$scope.changDataMode();   //通知组件刷新数据
 	   }
 };
-
 //商品信息
 var good={
 	_isLoad:false,	
@@ -76,6 +75,13 @@ var psaction={
 					 $('#sl_destination').change(function(){rdcconfig.$scope.changDataMode();});
 					 $('#sl_deliverytime').change(function(){rdcconfig.$scope.changDataMode();});
 			   }});
+//			  $('#reservationtime').daterangepicker({
+//			      timePicker: true,
+//			      timePickerIncrement: 30,
+//			      format: 'MM/DD/YYYY h:mm A'
+//			    }, function(start, end, label) {
+//			      console.log(start.toISOString(), end.toISOString(), label);
+//			    });
 		}
 		,getFilter:function(pageNum,pageSize){
 		    	  var ctlist= ($("#car_type_div li.active").length==$("#car_type_div li").length||$("#car_type_div li.active").length==0)?null:$("#car_type_div li.active");
@@ -141,10 +147,12 @@ var serdc = {
 		}
  };	
 var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, $scope, $state, $cookies, $http, $location) {
-	 rdcconfig.$scope=$scope;
+	rdcconfig.$scope=$scope;
+	 rdcconfig._cuttid=1;
      $scope.maxSize = 5;	// 显示最大页数
      $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
      $scope.bigCurrentPage = 1;  // 当前页
+     good._isLoad=psaction._isLoad=serdc._isLoad=false;
      $http.get('/i/city/findProvinceList').success(function (data) { $scope.gd_provinces = data; });//加载区域数据
      $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
      $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");$scope.changDataMode();});//业务类型
@@ -194,11 +202,8 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 		 }
 	 };
 	 $scope.initApp();
+	
 });
-
-
-
-
-
-
-
+//$(document).ready(function() {
+//   
+// });

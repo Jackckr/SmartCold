@@ -331,24 +331,9 @@
                                 </form>
                             </div>
                         </div>
-                   
-<!--                <div class="col-lg-8 col-lg-offset-2">
-                    <form class="navbar-form navbar-left">
-                        <div class="form-group rdc">
-                            <label class="col-sm-4 control-label">上传冷库图片：</label>
-                            <div class="col-sm-8">
-                                <form ng-app="fileUpload" name="form">
-                                    <input type="file" id="rdcPic1" name="files">
-                                    <input type="file" ng-hide="isHide2" id="rdcPic2" name="files">
-                                    <input type="file" ng-hide="isHide3" id="rdcPic3" name="files">
-                                    <input type="file" ng-hide="isHide4" id="rdcPic4" name="files">
-                                    <input type="file" ng-hide="isHide5" id="rdcPic5" name="files">
-                                </form>
-                            </div>
-                        </div>
-                    </form>
-                </div>-->
-               
+        <!--        			<dic class="form-group" ng-if="arrangePicShow != null">
+                   			<img style="width: 86px;" ng-src="{{arrangePicShow.location}}" alt="" />
+                   		</dic> -->
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">冷库图片：</label>
                             <div class="col-sm-8">
@@ -365,14 +350,10 @@
                                 </div>
                             </div>
                         </div>
-
-                       <!-- <label style="">上传图片：</label>
-                        <div class="form-group">
-                            <form ng-app="fileUpload" name="form">
-                                <button class="btn btn-success" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true">上传图片</button>
-                                <small class="text-warning" style="margin-left:30px;">*最多五张</small>
-                            </form>
-                        </div>-->
+                        
+<!--                         <dic class="form-group" ng-if="storagePicShow.length>0">
+                   			<img ng-repeat="item in storagePicShow" style="width: 86px;" ng-src="{{item.location}}" alt="" />
+                   		</dic> -->
                 </div>
                 <div class="col-lg-12 col-lg-offset-2">
                     <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>

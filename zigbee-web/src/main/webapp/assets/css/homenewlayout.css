@@ -25,6 +25,119 @@ h6
 {
     box-sizing: border-box;
 }
+/* jhy response */
+/*banner*/
+.carousel-indicators li{
+	width:60px;
+	height:10px;
+	background-color:#000;
+	border-color:#000;
+	border-radius:2px;
+	opacity:0.5;
+}
+.carousel-indicators .active{
+	background-color:#f50;
+	width:60px;
+	height:10px;
+	border-color:transparent;
+	opacity:1;
+}
+ul,li,ol{
+    list-style: none;
+}
+@media screen and (max-width: 850px) {
+    .black-850{
+        display: none;
+    }
+    .show-850{
+        display: block;
+    }
+    .navPo{
+        position: absolute;
+        top: 0;
+        left: -48px;
+    }
+    .light>.nav-right{
+        position: relative;
+    }
+    .navShow{
+        height:30px;
+        padding-left:0!important;
+        background-color:#4B4B4C;  
+        margin-top:22px; 
+        border-radius: 4px;        
+    }  
+    .navShow ol{
+    	padding-left:0!important;
+    }  
+    .navShow li{        
+        float:left;
+        width:75px;
+        height:30px;            
+    }
+    .navShow li>span{
+        color: #fff;
+        font-size: 16px;
+        line-height:30px;
+        top:0;
+    }
+    .navShow li a{        
+        display:block;
+        width:100%;
+        height:100%;
+        text-align:center;
+        line-height:30px;
+        color:#333; 
+        font-size:14px;
+        
+    }
+    .navShow li a:hover{        
+        background-color:#448BCB;
+        color:#fff;  
+        text-decoration: none;      
+    }
+    .oneNav{
+        position:relative;  
+        text-align:center;
+        line-height:30px;
+    }    
+    .twoNav{
+        position:absolute;
+        left:0;
+        top:30px;
+        background-color:#fff;  
+        display:none;
+        box-shadow: 0 2px 5px #333;
+    }
+    
+}
+@media screen and (min-width: 851px) {
+    .black-850{
+       display: block;
+    }
+    .show-850{
+         display: none;
+        
+    }
+}
+.ulWrap{
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.ulWrap ul{
+    width: 25%;
+    float: left;
+}
+.ulWrap ul li{
+    font-size: 14px;
+    line-height: 1.75;
+    color: #808080;
+}
+.ulWrap ul li:nth-child(1){
+    color: #fff;
+}
+/*jhy end*/
 /*header*/
 header
 {
@@ -54,7 +167,7 @@ header
 }
 header .mw-8
 {
-    min-width: 800px;
+   /*  min-width: 800px; */
 }
 header .nav-left
 {
@@ -310,128 +423,7 @@ header .nav-list > .nav-list-item .nav-description
 
     display: inline-block;
 }
-/*header .i_superwebview*/
-/*{*/
-    /*display: inline-block;*/
 
-    /*width: 30px;*/
-    /*height: 30px;*/
-
-    /*background-image: url(../new/subment-icon.pngg');*/
-    /*background-position: 0 -30px;*/
-/*}*/
-/*header .i_deepengine*/
-/*{*/
-    /*display: inline-block;*/
-
-    /*width: 30px;*/
-    /*height: 30px;*/
-
-    /*background-image: url(../new/subment-icon.pngg');*/
-    /*background-position: -30px -30px;*/
-/*}*/
-/*header .i_cloudservice*/
-/*{*/
-    /*display: inline-block;*/
-
-    /*width: 30px;*/
-    /*height: 30px;*/
-
-    /*background-image: url(../new/subment-icon.pngg');*/
-    /*background-position: -60px -30px;*/
-/*}*/
-/*header .authenticated*/
-/*{*/
-    /*width:164px;*/
-    /*position: relative;*/
-
-    /*display: -webkit-box;*/
-
-    /*display: -webkit-flex;*/
-
-    /*display: -ms-flexbox;*/
-
-    /*display: flex;*/
-    /*-webkit-box-orient: vertical;*/
-    /*-webkit-box-direction: normal;*/
-    /*-webkit-flex-direction: column;*/
-        /*-ms-flex-direction: column;*/
-            /*flex-direction: column;*/
-    /*margin-top: 15px;*/
-    /*height: 75px;*/
-    /*margin: 0 40px 0 30px;*/
-
-    /*cursor: pointer;*/
-
-    /*-webkit-box-pack: center;*/
-
-    /*-webkit-justify-content: center;*/
-
-        /*-ms-flex-pack: center;*/
-
-            /*justify-content: center;*/
-/*}*/
-/*header .authenticated .profile*/
-/*{*/
-    /*line-height: 30px;*/
-
-    /*display: -webkit-box;*/
-
-    /*display: -webkit-flex;*/
-
-    /*display: -ms-flexbox;*/
-
-    /*display: flex;*/
-
-    /*padding: 0 10px;*/
-    /*padding-left: 20px;*/
-    /*color: white;*/
-
-    /*-webkit-box-align: center;*/
-
-    /*-webkit-align-items: center;*/
-
-        /*-ms-flex-align: center;*/
-
-            /*align-items: center;*/
-    /*height: 44px;*/
-    /*margin-bottom: 1px;*/
-    /*font-size: 14px;*/
-/*}*/
-/*header .authenticated .profile img*/
-/*{*/
-    /*width: 30px;*/
-    /*height: 30px;*/
-    /*margin-right: 3px;*/
-    /*border-radius: 15px;*/
-/*}*/
-/*header .authenticated .profile .name{*/
-    /*width:80px;*/
-    /*display: inline-block;*/
-    /*overflow: hidden;*/
-    /*white-space: nowrap;*/
-    /*text-overflow:ellipsis;*/
-    /*font-size: 14px;*/
-/*}*/
-/*header .authenticated  .arr-b*/
-/*{*/
-    /*display: inline-block;*/
-
-    /*width: 19px;*/
-    /*height: 18px;*/
-    /*margin-left: 10px;*/
-
-    /*vertical-align: middle;*/
-
-    /*background: rgba(0, 0, 0, 0) url(../img/arr_b.pngg') no-repeat scroll 0 0;*/
-/*}*/
-/*header .authenticated:hover .profile*/
-/*{*/
-    /*-webkit-transition: all .2s ease 0s;*/
-    /*transition: all .2s ease 0s;*/
-
-    /*background-color: rgba(0,0,0,.5);*/
-/*}*/
 header .authenticated:hover .nav-list
 {
     left: 0;
@@ -486,20 +478,7 @@ header.light a
 {
     color: #666;
 }
-/*header.light a.logo
-{
-    background: url(../img/logo-dark.png) no-repeat left center;
-}
-header.light .i_superwebview{
-    background-position: 0 0;
-}
-header.light .i_deepengine{
-    background-position: -30px 0;
-}
-header.light .i_cloudservice
-{
-    background-position: -60px 0;
-}*/
+
 header.light .link-group .links
 {
     color: #ababab;
@@ -577,8 +556,8 @@ header.dark .authenticated:hover .profile
 /*footer*/
 footer
 {
-    /* min-height: 284px; */
-
+    padding-top:20px;
+	width:100%;
     text-align: center;
 
     background-color: #000;
@@ -678,13 +657,13 @@ footer .footer-right .qrcode
 footer .copyright
 {
     font-size: 14px;
-    line-height: 71px;
+    line-height: 50px;
 
     clear: both;
 
     width: 100%;
-    height: 72px;
-    margin-top: 40px;
+    height: 50px;
+    margin-top: 20px;
 
     text-align: center;
 
@@ -895,5 +874,5 @@ header .err-top .err-content{
 }
 section.content{
 	margin:0 auto;
-	width:80%;
+	width:90%!important;
 }

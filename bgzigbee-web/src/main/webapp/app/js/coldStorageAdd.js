@@ -226,7 +226,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 capacity5 : $scope.capacity5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 //honorPic : $scope.honorPic,
-                arrangePic : $scope.arrangePic,
+                arrangePics : $scope.arrangePic,
             }
             for(i = 0; i < $scope.totalfiles.length; i++){
                 data["file" + i] = $scope.totalfiles[i];

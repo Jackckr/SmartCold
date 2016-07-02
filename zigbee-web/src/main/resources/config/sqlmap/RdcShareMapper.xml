@@ -3,6 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.smartcold.zigbee.manage.dao.RdcShareMapper">
+
+   <insert id="insert" parameterType="map" keyProperty="id" >
+         INSERT INTO test (type)VALUES (#{key});
+           <selectKey resultType="int" keyProperty="id" order="AFTER">
+              SELECT LAST_INSERT_ID()
+          </selectKey>
+  </insert>
+
+
         <!-- 商品共享查询   -->
     <select id="getSEGDList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		   SELECT
@@ -116,4 +125,11 @@
 				ORDER BY
 					s.updatetime DESC 
     </select>
+    <insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO" >
+       INSERT INTO share_info (rdcID releaseID codeLave1 codeLave2 codeLave3 codeLave4 title dataType typeCode typeText unitPrice sqm unit unit1 unit2 validStartTime validEndTime applyID bookings attrvalue telephone note stauts stprovinceID stcityID staddress toprovinceID tocityID toaddress addtime updatetime)value(#{ id } #{dcID } #{eleaseID } #{odeLave1 } #{odeLave2 } #{odeLave3 } #{odeLave4 } #{itle } #{ataType } #{ypeCode } #{ypeText } #{nitPrice } #{qm } #{nit } #{nit1 } #{nit2 } #{alidStartTime } #{alidEndTime } #{pplyID } #{ookings } #{ttrvalue } #{elephone } #{ote } #{tauts } #{tprovinceID } #{tcityID } #{taddress } #{oprovinceID } #{ocityID } #{oaddress } #{ddtime } #{pdatetime })
+    </insert>
+    
+    
+    
+    
 </mapper>
