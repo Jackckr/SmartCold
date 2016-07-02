@@ -24,22 +24,6 @@
         <body class="home-layout">
 			
             <header class="light">
-                <!-- <div class="err-top">
-                    <i class="err-close">
-                        <i class="icon-remove">
-                        </i>
-                    </i>
-                    <div class="err-out">
-                        <div class="err-switch">
-                            <i class="err-switch-i icon-smile">
-                            </i>
-                            <i class="err-switch-i icon-frown">
-                            </i>
-                            <span class="err-content">
-                            </span>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="nav-left">
                     <a href="#/home" class="logo" title='睿冷云-冷链行业最权威的信息平台'>
                     </a>
@@ -51,7 +35,7 @@
 	                      <span></span>
 	                      <b><a ng-click="logout()" href="" ng-bind="'退出'" ></a></b>
                       </div>
-                    </div>
+                    </div><!-- visible-xs -->
                     <div class="nav-right" ng-show="user == null ||user.id == 0">
                         
                         <div class="unauthenticated">
@@ -66,7 +50,7 @@
                         </div>
                         
                     </div>
-                    <ul class="nav nav-right">
+                    <ul class="nav nav-right black-850">
                         <li>
                             <a href="#/home">
                                 首页
@@ -91,6 +75,42 @@
                             <a href="" ng-click="gotoSmartCold()" target="view_frame">
                                 睿库
                             </a>
+                        </li>
+                    </ul>
+
+
+
+
+                    <ul class="navShow navPo show-850">        
+                        <li class="oneNav">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                            <ol class="twoNav">
+                                <li>
+		                            <a href="#/home">
+		                                首页
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="" ng-click="toColdStorageList()">
+		                                找库
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="" ng-click="toColdShareComment()">
+		                                共享
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="#/search">
+		                                追溯
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="" ng-click="gotoSmartCold()" target="view_frame">
+		                                睿库
+		                            </a>
+		                        </li>
+                            </ol>
                         </li>
                     </ul>
                 </div>
@@ -129,66 +149,33 @@
 	</div>
 </div>
             <footer>
-                <section class="" style="margin-left:23%">
-                    <div class="">
-                        <dl>
-                            <dt>
-                                找库
-                            </dt>
-                            <dd>
-                                冷库详情
-                            </dd>
-                            <dd>
-                                冷库点评
-                            </dd>
-                            <dd>
-                                冷库地图
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                共享
-                            </dt>
-                            <dd>
-                                配货信息
-                            </dd>
-                            <dd>
-                                订仓信息
-                            </dd>
-                            <dd>
-                                商品信息
-                            </dd>
-                        </dl>
-                        <dl>
-                          <dt>
-                            追溯
-                          </dt>
-                          <dd>
-                             批次查询
-                          </dd>
-                          <dd>
-                             物流追踪
-                          </dd>
-                          <dd>
-                             温度分析
-                          </dd>
-                        </dl>
-                        <dl>
-                          <dt>
-                            睿库
-                          </dt>
-                          <dd>
-                             在线评估
-                          </dd>
-                          <dd>
-                             能耗分析
-                          </dd>
-                          <dd>
-                             动态管理
-                          </dd>
-                        </dl>
-                    </div>
-                </section>
+                <div class="ulWrap">
+                    <ul>
+                        <li>找库</li>
+                        <li>冷库详情</li>
+                        <li>冷库点评</li>
+                        <li>冷库地图</li>
+                    </ul>
+                    <ul>
+                        <li>共享</li>
+                        <li>配货信息</li>
+                        <li>订仓信息</li>
+                        <li>商品信息</li>
+                    </ul>
+                    <ul>
+                        <li>追溯</li>
+                        <li>批次查询</li>
+                        <li>物流追踪</li>
+                        <li>温度分析</li>
+                    </ul>
+                    <ul>
+                        <li>睿库</li>
+                        <li>在线评估</li>
+                        <li>能耗分析</li>
+                        <li>动态管理</li>
+                    </ul>
+                </div>
+                
                 <section class="copyright">
                     <label>
                         &copy;2016&nbsp;Smartcold&nbsp;&nbsp;&nbsp;&nbsp;沪ICP备　16004753
@@ -238,5 +225,14 @@
 <script src="app/js/coldStorageAdd.js"></script>
 <script src="app/js/coldStorageEdit.js"></script>
 <script src="app/js/coldStorageMap.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('.navShow>li').hover(function() {
+            
+            $(this).children('ol').stop().toggle();
+
+        });
+    });
+</script>
     </body>
 </html>
