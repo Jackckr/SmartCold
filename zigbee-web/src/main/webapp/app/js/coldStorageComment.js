@@ -180,16 +180,12 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         });
     }
 
-    // 获取当前热度冷库的列表
-    $http.get('/i/rdc/findRdcList').success(function (data) {
+    // 获取当前浏览冷库的列表
+/*    $http.get('/i/rdc/findRdcList').success(function (data) {
         var size = data.length;
         data.splice(5, size);
-        console.log("data:" + data);
         $scope.lookrdcs = data;
-        for (var i = 0; i < data.length; i++) {
-            console.log("data:" + data[i].name + data[i].addtime);
-        }
-    });
+    });*/
 
     $scope.goColdStorageDetail = function (storageID) {
         $scope.rdcId = storageID;
