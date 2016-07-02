@@ -1,7 +1,7 @@
 //当前页面配置信息o()
 var rdcconfig={
 	$scope:null,//上下文环境变量
-	_cuttid:2,//当前选择类型	
+	_cuttid:1,//当前选择类型	
 	changMode:function(em){
 			$("#tool_div li").removeClass("current");
 			$(em).addClass("current");
