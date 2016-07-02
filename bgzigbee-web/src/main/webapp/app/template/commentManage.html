@@ -10,6 +10,7 @@
 		         		<label for="allSecSon" >全选</label>
 		         	</div>
 		         </th>
+		         <th>冷库名</th>
 		         <th>评论者</th>
 		         <th>评分</th>
 		         <th>温度</th>
@@ -26,6 +27,7 @@
 					<input type="checkbox" ng-checked="exists(item, selected)"
 	                    				ng-click="toggle(item, selected)"/>
 		         </td>
+		         <td>{{item.rdcName}}</td>
 		         <td>{{item.commerName}}</td>
 		         <td>{{item.grade}}</td>
 		         <td>{{item.locationGrade}}</td>

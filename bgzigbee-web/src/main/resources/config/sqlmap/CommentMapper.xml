@@ -47,10 +47,10 @@
 		order by `addTime` desc
 	</select>
 	<select id="findByPage" resultType="com.smartcold.bgzigbee.manage.dto.CommentDTO">
-		SELECT c.*, u.username as commerName
-		FROM `ColdStorageComment` as c,`user` as u
-        where c.commerid=u.id
-		order by `addTime` desc
+		SELECT c.*, u.username as commerName, r.name as rdcName
+		FROM `ColdStorageComment` as c,`user` as u, `rdc` as r
+        where c.commerid=u.id and c.rdcid=r.id
+		order by c.`addTime` desc
 	</select>
 	<delete id="deleteCommentByID" parameterType="map">
 		DELETE FROM `ColdStorageComment`
