@@ -28,6 +28,8 @@ public class CommentEntity {
 
 	private Date addTime;
 
+	private int usefulcnt;
+
 	public int getId() {
 		return id;
 	}
@@ -114,5 +116,13 @@ public class CommentEntity {
 
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
+	}
+
+	public int getUsefulcnt() {
+		return usefulcnt;
+	}
+
+	public void setUsefulcnt(int usefulcnt) {
+		this.usefulcnt = usefulcnt;
 	}
 }
