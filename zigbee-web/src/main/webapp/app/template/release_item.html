@@ -1,0 +1,103 @@
+
+        <link rel="stylesheet" type="text/css" href="app/css/common.css">
+        <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
+        <script type="text/javascript">
+        $(function() {
+        	$(".city").hide();
+        	$(".goods").children().eq(0).click(function(){
+        		$(this).addClass('outCur').siblings().removeClass('offerCur');
+        		$(".outSon").show();
+        		$(".city").hide();
+        	})
+        	$(".goods").children().eq(1).click(function(){
+        		$(this).addClass('offerCur').siblings().removeClass('outCur');
+        		$(".city").show();
+        		$(".outSon").hide();
+        	})
+        });
+        </script>
+    	<div class="shareMain">
+			<!-- 出货和求货 -->
+			<div class="goods">
+				<span class="outCur">出货</span>
+				<span class="">求货</span>
+			</div>
+			<!-- 出货和求货 end -->
+			<form action="" class="formInfo">
+				<div class="outSon">
+					<div class="company">莱芜嘉禾冷链物流有限公司</div><div class="position">
+						<span class="glyphicon glyphicon-map-marker"></span>
+						<span class="textInfo">上海-长宁区-中山公园</span>
+					</div>
+				</div>
+				<div class="outSon clearfix">
+					<div class="img">
+						<img src="app/img/shareitem/demo1.png" height="184" width="319" alt="">
+					</div>
+					<div class="img">					
+						<img src="app/img/shareitem/demo2.png" height="184" width="319" alt="">
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left"><em>*</em>描述:</div>
+					<div class="pull-left">
+						<input type="text" placeholder="">
+					</div>
+				</div>
+				<div class="infoList clearfix city">
+					<div class="pull-left"><em>*</em>省:</div>
+					<div class="pull-left">
+						<select name="" id="">
+							<option value="安徽省">安徽省</option>
+						</select>
+					</div>
+				</div>
+				<div class="infoList clearfix city">
+					<div class="pull-left"><em>*</em>市:</div>
+					<div class="pull-left">
+						<select name="" id="">
+							<option value="宿州市">宿州市</option>
+						</select>
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left"><em>*</em>品类:</div>
+					<div class="pull-left">
+						<select name="" id="">
+							<option value="蔬菜">蔬菜</option>
+						</select>
+					</div>
+				</div>
+				<div class="infoList clearfix infoDate ">
+					<div class="pull-left"><em>*</em>数量:</div>
+					<div class="pull-left">
+						<input type="text" placeholder=""><span class="count">吨</span>
+					</div>
+				</div>
+				<div class="infoList clearfix infoDate ">
+					<div class="pull-left"><em>*</em>单价:</div>
+					<div class="pull-left">
+						<input type="text" placeholder=""><span class="count">元/吨</span>
+					</div>
+				</div>
+				<div class="infoList clearfix infoDate">
+					<div class="pull-left"><em>*</em>信息有效期:</div>
+					<div class="pull-left">
+						<input type="date" ><span class="count">至</span><input type="date" >
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left"><em>*</em>联系电话:</div>
+					<div class="pull-left">
+						<input type="text" placeholder="">
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left">备注:</div>
+					<div class="pull-left">
+						<textarea name="" placehoder="可填"></textarea>
+					</div>
+				</div>
+				<button class="btn btn-primary">提交</button>
+			</form>
+    	</div>
