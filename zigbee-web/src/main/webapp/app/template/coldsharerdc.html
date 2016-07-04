@@ -109,17 +109,17 @@
 							<option value="">不限</option>
 						</select>
 					</div>
-					<div class="select_2 pull-left">
-						<span>发货时间：</span>
-						<select id="sl_deliverytime" >
+					<div class="select_2 pull-left row">
+						<span class="col-md-2 col-xs-2" style="padding:0;">发货时间：</span>
+						<select id="sl_deliverytime"  class="col-md-1">
 							<option value="">不限</option>
 						</select>
-						<div class="control-group">
-		                    <label class="control-label" for="reservationtime">Choose your check-in and check-out times:</label>
-		                    <div class="controls">
+						<div class="control-group col-md-5">
+		                   <!--  <label class="control-label" for="reservationtime">请选择起止时间</label> -->
+		                    <div class="controls" style="width:340px;">
 		                     <div class="input-prepend input-group">
 		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-		                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control"   class="span4"/>
+		                       <input type="text" style="width: 300px" name="reservation" id="reservationtime" class="form-control" placeholder="请选择起止时间" class="span4"/>
 		                     </div>
 		                    </div>
 		                 </div>
