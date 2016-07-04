@@ -261,7 +261,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('releaseItem', {  //免费发布商品-货品-车
         url: '/releaseItem',
         controller: 'releaseItem',
-        params:{_cuttid:null,dataid:null},
+        params:{data:null,dataid:null,_cuttid:null},
         templateUrl: 'app/template/release_item.html'
     }).
     state('review', {

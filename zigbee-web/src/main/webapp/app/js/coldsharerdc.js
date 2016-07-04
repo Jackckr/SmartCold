@@ -187,7 +187,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	    });
 	  };
 	  $scope.goRelease=function(){
-		  $state.go('releaseItem',{_cuttid:rdcconfig._cuttid});
+		  $state.go('releaseItem',{_cuttid:rdcconfig._cuttid,dataid:1111});
 	  };
 	 $scope.initApp=function(){
 		 if(rdcconfig._cuttid==1){//getGDFilterData
