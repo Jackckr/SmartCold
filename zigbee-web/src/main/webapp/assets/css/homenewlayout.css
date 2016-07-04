@@ -26,6 +26,22 @@ h6
     box-sizing: border-box;
 }
 /* jhy response */
+/*banner*/
+.carousel-indicators li{
+	width:60px;
+	height:10px;
+	background-color:#000;
+	border-color:#000;
+	border-radius:2px;
+	opacity:0.5;
+}
+.carousel-indicators .active{
+	background-color:#f50;
+	width:60px;
+	height:10px;
+	border-color:transparent;
+	opacity:1;
+}
 ul,li,ol{
     list-style: none;
 }
@@ -858,5 +874,5 @@ header .err-top .err-content{
 }
 section.content{
 	margin:0 auto;
-	width:80%;
+	width:90%!important;
 }

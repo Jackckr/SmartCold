@@ -4,17 +4,15 @@
 				<button type="button" class="btn btn-default pull-left" id="plusCold" data-toggle="modal" data-target="#addUser">
 					<span class="glyphicon glyphicon-plus"></span>添加用户
 				</button>
-				<div class="btn-group pull-left" id="status">
-				  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    未审核 <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				    <li><a>已审核</a></li>
-				    <li><a>故障</a></li>
-				    <li><a>已完结</a></li>
-				  </ul>
-				</div>
-				<div id="search">								
+		<div class="btn-group pull-left" id="status">
+			<select ng-model="optAudit" ng-change="auditChanged(optAudit)">
+				<option value="8">所有</option>
+				<option value="0">待审核</option>
+				<option value="1">已审核</option>
+				<option value="-1">未通过</option>
+			</select>
+		</div>
+		<div id="search">								
 					<input type="text" placeholder="请输入关键词" id="myText" />
 					<div id="searchImg">
 						<span class="glyphicon glyphicon-search"></span>
@@ -58,10 +56,13 @@
 				   </tbody>
 				</table>
 				<div class="page">
-					<!-- 翻页功能 -->
-			        <div id="green" class="myGreen"></div>
-			        <!-- 翻页功能 -->
-				</div>
+               <!-- 翻页功能 -->
+               <div class="row">
+                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
+	</div>
 			</div>
 			<!-- 表格操作区域结束 -->
 			<div class="three">

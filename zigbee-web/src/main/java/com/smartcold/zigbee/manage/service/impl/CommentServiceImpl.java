@@ -58,6 +58,7 @@ public class CommentServiceImpl implements CommentService {
 			commentDTO.setSanitaryGrade(commentEntity.getSanitaryGrade());
 			commentDTO.setServiceGrade(commentEntity.getServiceGrade());
 			commentDTO.setAddTime(TimeUtil.dateToString(commentEntity.getAddTime(), ""));
+			commentDTO.setUsefulcnt(commentEntity.getUsefulcnt());
 			
 			//查出评论图片
 			List<FileDataEntity> reviewPics = fileDataDao.findByBelongIdAndCategory(commentEntity.getId(), FileDataMapper.CATEGORY_COMMENT_PIC);

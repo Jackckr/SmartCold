@@ -1,4 +1,4 @@
-coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log) {
+coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log, $cookieStore) {
 	
 	$scope.rdcId = $stateParams.rdcID;
 
@@ -365,7 +365,67 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         });
         $scope.query = "";
     }
-    
+
+
+    //设置cookie
+    function setCookie(key, value) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 30 * 60 * 1000);//过期时间 30分钟
+        document.cookie = ('commentid' + key) + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    //获取cookie的值
+    function getCookie(key) {
+        if (document.cookie.length) {
+            var cookies = ' ' + document.cookie;
+            var start = cookies.indexOf(' ' + ('commentid' + key) + '=');
+            if (start == -1) {
+                return null;
+            }
+            var end = cookies.indexOf(";", start);
+            if (end == -1) {
+                end = cookies.length;
+            }
+            end -= start;
+            var cookie = cookies.substr(start, end);
+            return unescape(cookie.substr(cookie.indexOf('=') + 1, cookie.length - cookie.indexOf('=') + 1));
+        }
+        else {
+            return null;
+        }
+    }
+
+    $scope.addSupport = function (id) {
+        if (getCookie(id) == null) {
+            $http({
+                url: '/i/comment/addUsefulCnt',
+                method: "POST",
+                data: 'id=' + id,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (data) {
+                $http.jsonp('http://ipinfo.io/?callback=JSON_CALLBACK')
+                    .success(function (data) {
+                        setCookie(id, data.ip);
+                    });
+                angular.forEach($scope.comments, function (comment) {
+                    if (comment.id == id) {
+                        comment.usefulcnt += 1;
+                    }
+                })
+                console.log("支持成功");
+            }).error(function (data) {
+                console.log("支持失败");
+            });
+        } else {
+            $http.jsonp('http://ipinfo.io/?callback=JSON_CALLBACK')
+                .success(function (data) {
+                    if (getCookie(id) == data.ip) {
+                        console.log("您已经支持过了");
+                        return;
+                    }
+                });
+        }
+    }
 
     $scope.items = ['html5', 'jq', 'FE-演示平台'];
     $scope.goComment = function (size) {  //打开模态

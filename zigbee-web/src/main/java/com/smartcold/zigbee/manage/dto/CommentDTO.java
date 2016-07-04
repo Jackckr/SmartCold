@@ -33,6 +33,8 @@ public class CommentDTO {
 	
 	private List<FileDataEntity> reviewPics;
 
+	private int usefulcnt;
+
 	public int getId() {
 		return id;
 	}
@@ -129,6 +131,11 @@ public class CommentDTO {
 		this.sanitaryGrade = sanitaryGrade;
 	}
 
+	public int getUsefulcnt() {
+		return usefulcnt;
+	}
 
-	
+	public void setUsefulcnt(int usefulcnt) {
+		this.usefulcnt = usefulcnt;
+	}
 }

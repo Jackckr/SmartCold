@@ -8,5 +8,19 @@
 		SELECT *
 		FROM `storagetempertype` order by `id` ASC
 	</select>
-
+   <insert id="addStorageTemperType" parameterType="StorageTemperTypeEntity"
+    useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `storagetempertype`(
+		`type`,
+		`addTime`
+		)
+		VALUE 
+		(
+		#{type},
+		now()
+		)
+    </insert>
+    <delete id="deleteStorageTemperType" parameterType="map">
+	    DELETE FROM storagetempertype WHERE `id` = #{id}
+	</delete>
 </mapper>

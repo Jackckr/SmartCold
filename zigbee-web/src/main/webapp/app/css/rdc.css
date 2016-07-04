@@ -126,3 +126,5 @@
 .arrow.next:hover{
     opacity:1;
 }
+
+#usefulcnt{display: inline-block; padding: 2px 10px;background-color: #fff; border: 1px solid #78d1ff; border-radius: 2px;}
