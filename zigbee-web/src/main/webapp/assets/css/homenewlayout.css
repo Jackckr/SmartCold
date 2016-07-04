@@ -876,3 +876,28 @@ section.content{
 	margin:0 auto;
 	width:90%!important;
 }
+
+/*coldStorageList.html页面样式调整*/
+.headArea{
+    background-color: #F7F7F7;
+    vertical-align: middle;
+    padding:8px 0;
+    border-bottom: 1px solid #e3e3e3;
+}
+.spanGroup .row>span:nth-child(1){
+	width:150px;
+	display:inline-block;
+	text-align:right;
+	color:#757575;
+}
+.spanGroup .row>span:nth-child(1)~span{
+	display:inline-block;
+	padding:1px 10px;
+	margin: 7px 10px;
+    color: #757575;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+/*coldStorageList.html页面样式调整 end*/
