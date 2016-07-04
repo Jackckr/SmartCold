@@ -129,6 +129,7 @@ div.select_2 select{
     display: inline-block;
     padding:1px 10px;
     cursor: pointer;
+    text-align: center;
 }
 .list ul{
     width: 85%;
@@ -154,7 +155,6 @@ div.select_2 select{
 }
 .active{
     background-color: #448BC9;
-    color: #fff;
     border-radius: 2px;
     text-align: center!important;
     color: #fff!important;
