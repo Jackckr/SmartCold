@@ -263,6 +263,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'releaseItem',
         params:{data:null,dataid:null,_cuttid:null},
         templateUrl: 'app/template/release_item.html'
+    }).state('releaseItemList', {  //免费发布商品-货品-车-list
+        url: '/releaseItemList',
+        controller: 'releaseItemList',
+        params:{data:null,dataid:null,_cuttid:null},
+        templateUrl: 'app/template/release_item_list.html'
     }).
     state('review', {
         url: '/coldStorage/{rdcID}/review',

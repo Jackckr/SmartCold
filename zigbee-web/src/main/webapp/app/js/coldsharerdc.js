@@ -187,7 +187,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	    });
 	  };
 	  $scope.goRelease=function(){
-		  $state.go('releaseItem',{_cuttid:rdcconfig._cuttid,dataid:1111});
+		  $state.go('releaseItem',{data:{name:'湖北寿康冷链物流有限公司',address:'湖北省-十堰市-郧阳区',logo:'app/img/rdcHeader.jpg' },dataid:1111,  _cuttid:rdcconfig._cuttid});
 	  };
 	 $scope.initApp=function(){
 		 if(rdcconfig._cuttid==1){//getGDFilterData

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>出货</title>
+        <link rel="stylesheet" type="text/css" href="app/css/common.css">
+        <link rel="stylesheet" type="text/css" href="app/css/release_item_list.css">
+        <script type="text/javascript">
+        $(function() {
+        	$(".city").hide();
+        	$(".goods").children().eq(0).click(function(){
+        		$(this).addClass('outCur').siblings().removeClass('offerCur');
+        		$(".outSon").show();
+        		$(".city").hide();
+        	});
+        	$(".goods").children().eq(1).click(function(){
+        		$(this).addClass('offerCur').siblings().removeClass('outCur');
+        		$(".city").show();
+        		$(".outSon").hide();
+        	});
+        });
+        </script>
+    </head>
+    <body>
+    	<div class="shareMain">
+			<!-- 出货和求货 -->
+			<div class="goods">
+				<span class="outCur">出货</span>
+				<span class="">求货</span>
+			</div>
+			<!-- 出货和求货 end -->
+			<!-- 仓储信息区域start -->
+			<table class="table tableInfo" style="width:80%;">
+			   <tbody>
+			      <tr>
+			         <td>
+			         	<div class="image"><img src="../img/food.jpg"></div>
+			         </td>
+			         <td>
+			         	<div class="company">莱芜嘉禾冷链物流有限公司
+			         	</div>
+			         	
+			         </td>
+			         <td>
+						<div class="position">
+			         		<span class="glyphicon glyphicon-map-marker"></span>
+			         		<span class="textInfo">上海-长宁区-中山公园</span>
+			         	</div>
+			         </td>
+			         <td>
+			         	<button class="btn btn-primary">发布货品</button>
+			         </td>
+			      </tr>			      
+			   </tbody>
+			</table>
+			<p class="sorry">抱歉！</p>
+			<p class="sorry">抱歉！ 本地未找到您所需库的信息，请添加冷库信息！</p>
+			<p class="sorry"><button class="btn btn-primary">添加</button></p>
+    	</div>
+    </body>
+</html>
