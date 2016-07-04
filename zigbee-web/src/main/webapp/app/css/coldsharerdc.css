@@ -153,6 +153,13 @@ div.select_2 select{
     text-align: center!important;
     color: #fff!important;
 }
+._nonefilter:hover{
+	background-color: #448BC9;
+    color: #fff;
+    border-radius: 2px;
+    text-align: center!important;
+    color: #fff!important;
+}
 .active{
     background-color: #448BC9;
     border-radius: 2px;
