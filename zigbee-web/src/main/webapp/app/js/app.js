@@ -258,7 +258,12 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldShareComment',
         controller: 'coldShareComment',
         templateUrl: 'app/template/coldsharerdc.html'
-    }).state('review', {
+    }).state('releaseItem', {  //免费发布商品-货品-车
+        url: '/releaseItem',
+        controller: 'releaseItem',
+        templateUrl: 'app/template/release_item.html'
+    }).
+    state('review', {
         url: '/coldStorage/{rdcID}/review',
         controller: 'review',
         templateUrl: 'app/template/review.html'

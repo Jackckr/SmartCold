@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
+import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.CacheTool;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 
 @Controller
@@ -288,8 +290,10 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="shareFreeRelease")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,RdcShareDTO  data){
-		
+	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,RdcShareDTO  rdcShareDTO){
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
+		rdcShareDTO.setReleaseID(user.getId());//设置发布消id
+		this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
 		return null;
 	}
 	/**

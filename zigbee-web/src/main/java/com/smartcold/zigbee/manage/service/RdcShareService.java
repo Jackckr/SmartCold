@@ -14,6 +14,12 @@ public interface RdcShareService {
 	
  	 public int  insert(String key);
 	
+ 	/**
+ 	 * 发布消息
+ 	 * @param rdcShareDTO
+ 	 * @return
+ 	 */ 
+ 	  public int addShareMsg(RdcShareDTO rdcShareDTO);
 	  /**
 	    * 获得商品共享信息
 	    * @param filter

@@ -24,6 +24,13 @@ public class RdcShareServiceImpl implements RdcShareService {
 	@Autowired
 	private RdcShareMapper rdcShareMapper;
 	
+    /**
+     * 
+     */
+	@Override
+	public int addShareMsg(RdcShareDTO rdcShareDTO) {
+		return rdcShareMapper.addShareMsg(rdcShareDTO);
+	}
 	/**
 	 * 获得货品共享信息
 	 * @param pageNum
@@ -71,6 +78,8 @@ public class RdcShareServiceImpl implements RdcShareService {
 	public int insert(String key) {
 		return this.rdcShareMapper.insert(key);
 	}
+
+	
 
 	
     

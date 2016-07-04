@@ -10,8 +10,14 @@ var rdcconfig={
 			$("#table"+em.value).removeClass("hide");
 			rdcconfig.$scope.initApp();//初始化App
 	},freeMaeeinfo:function(){//免费发布的信息
-		alert("还在建设中，敬请期待！");
-		
+		 if(rdcconfig._cuttid==1){//getGDFilterData
+			
+		 }else if(rdcconfig._cuttid==2){
+			 
+		 }else if(rdcconfig._cuttid==3){
+			 
+		 }
+	    	$(".ng-scope").load("");
 	}
     ,addfilter:function(id,em){
 		 $($(id).parent()).prev().removeClass("active");
@@ -75,13 +81,13 @@ var psaction={
 					 $('#sl_destination').change(function(){rdcconfig.$scope.changDataMode();});
 					 $('#sl_deliverytime').change(function(){rdcconfig.$scope.changDataMode();});
 			   }});
-//			  $('#reservationtime').daterangepicker({
-//			      timePicker: true,
-//			      timePickerIncrement: 30,
-//			      format: 'MM/DD/YYYY h:mm A'
-//			    }, function(start, end, label) {
-//			      console.log(start.toISOString(), end.toISOString(), label);
-//			    });
+			  $('#reservationtime').daterangepicker({
+			      timePicker: true,
+			      timePickerIncrement: 30,
+			      format: 'YYYY/DD/MM H:mm'
+			    }, function(start, end, label) {
+			      //console.log(start.toISOString(), end.toISOString(), label);
+			    });
 		}
 		,getFilter:function(pageNum,pageSize){
 		    	  var ctlist= ($("#car_type_div li.active").length==$("#car_type_div li").length||$("#car_type_div li.active").length==0)?null:$("#car_type_div li.active");
@@ -180,6 +186,9 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	        $scope.bigTotalItems3 = data.total;
 	    });
 	  };
+	  $scope.goRelease=function(){
+		  $state.go('releaseItem',{_cuttid:rdcconfig._cuttid});
+	  };
 	 $scope.initApp=function(){
 		 if(rdcconfig._cuttid==1){//getGDFilterData
 			 if(!good._isLoad){
@@ -204,6 +213,3 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	 $scope.initApp();
 	
 });
-//$(document).ready(function() {
-//   
-// });
