@@ -9,17 +9,7 @@ var rdcconfig={
 			$("#table1,#table2,#table3").addClass("hide");
 			$("#table"+em.value).removeClass("hide");
 			rdcconfig.$scope.initApp();//初始化App
-	},freeMaeeinfo:function(){//免费发布的信息
-		 if(rdcconfig._cuttid==1){//getGDFilterData
-			
-		 }else if(rdcconfig._cuttid==2){
-			 
-		 }else if(rdcconfig._cuttid==3){
-			 
-		 }
-	    	$(".ng-scope").load("");
-	}
-    ,addfilter:function(id,em){
+	},addfilter:function(id,em){
 		 $($(id).parent()).prev().removeClass("active");
 	      if(em.hasClass("active")){em.removeClass("active"); }else{ em.addClass("active");}
 	      if( $(id+".active").length==0){//||$(id+".active").length==($(id).length-1)
@@ -187,7 +177,13 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	    });
 	  };
 	  $scope.goRelease=function(){
-		  $state.go('releaseItem',{data:{name:'湖北寿康冷链物流有限公司',address:'湖北省-十堰市-郧阳区',logo:'app/img/rdcHeader.jpg' },dataid:1111,  _cuttid:rdcconfig._cuttid});
+		  if(user.id&&user.id!=0){
+			  $state.go('releaseItemList',{_cuttid:rdcconfig._cuttid});
+		  }else{
+			  //跳转到登录页面
+			  $state.go('login',{_cuttid:rdcconfig._cuttid});
+		  }
+//		  $state.go('releaseItem',{data:{name:'湖北寿康冷链物流有限公司',address:'湖北省-十堰市-郧阳区',logo:'app/img/rdcHeader.jpg' },dataid:1111,  _cuttid:rdcconfig._cuttid});
 	  };
 	 $scope.initApp=function(){
 		 if(rdcconfig._cuttid==1){//getGDFilterData

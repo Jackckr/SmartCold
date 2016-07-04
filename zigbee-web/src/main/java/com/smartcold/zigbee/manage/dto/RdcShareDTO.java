@@ -1,5 +1,8 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.List;
+
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 
 /*
@@ -46,6 +49,7 @@ public class RdcShareDTO {
 	private String name;
 	private String address;
 	private String coldtype;
+	private  List<FileDataEntity> files;
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
 		return id;
@@ -263,6 +267,12 @@ public class RdcShareDTO {
 	}
 	public void setLogo(String logo) {
 		this.logo = FtpService.READ_URL+logo;
+	}
+	public List<FileDataEntity> getFiles() {
+		return files;
+	}
+	public void setFiles(List<FileDataEntity> files) {
+		this.files = files;
 	}
 	
 	

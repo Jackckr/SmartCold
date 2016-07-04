@@ -20,6 +20,12 @@ public interface RdcShareService {
  	 * @return
  	 */ 
  	  public int addShareMsg(RdcShareDTO rdcShareDTO);
+ 	  /**
+ 	   * 获得睿库信息
+ 	   * @param filter
+ 	   * @return
+ 	   */
+ 	  public PageInfo<RdcShareDTO> getRdcList(int pageNum,int pageSize,Map<String, Object> parameters);
 	  /**
 	    * 获得商品共享信息
 	    * @param filter

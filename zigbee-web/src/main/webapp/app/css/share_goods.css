@@ -233,23 +233,23 @@ nav{
     width: 19px;
     height: 16px;
     color: #333;
-    background: url(..//img/shareitem/out-offer.fw.png) no-repeat 0 0;
+    background: url(../img/shareitem/out-offer.fw.png) no-repeat 0 0;
 }
 .goods>span:nth-child(2):before{
-    background: url(..//img/shareitem/out-offer.fw.png) no-repeat 0 -16px;
+    background: url(../img/shareitem/out-offer.fw.png) no-repeat 0 -16px;
 }
 .goods>span.outCur{
     color: #438BCB;
 }
 .goods>span.outCur:before{
-    background: url(..//img/shareitem/out-offer.fw.png) no-repeat -19px 0;
+    background: url(../img/shareitem/out-offer.fw.png) no-repeat -19px 0;
 }
 
 .goods>span.offerCur{
      color: #438BCB;
 }
 .goods>span.offerCur:before{
-    background: url(..//img/shareitem/out-offer.fw.png) no-repeat -19px -16px;
+    background: url(../img/shareitem/out-offer.fw.png) no-repeat -19px -16px;
 }
 em{
     color: red;

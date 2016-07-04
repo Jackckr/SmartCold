@@ -288,6 +288,25 @@ public class ShareRdcController  {
 	 * @param dataid
 	 * @return
 	 */
+	@RequestMapping(value="getRdcByUid")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request){
+		this.getPageInfo(request);//
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		HashMap<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("uid", user.getId());
+		this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
+	    return null;
+	}
+	
+	
+	/**
+	 * 免费发布消息
+	 * @param request
+	 * @param datatype
+	 * @param dataid
+	 * @return
+	 */
 	@RequestMapping(value="shareFreeRelease")
 	@ResponseBody
 	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,RdcShareDTO  rdcShareDTO){

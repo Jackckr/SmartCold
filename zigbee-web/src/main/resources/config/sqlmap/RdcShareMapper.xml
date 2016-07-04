@@ -10,11 +10,13 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-
+    <!--     获得睿库信息 -->
+	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+	      select  r.id, r.name,r.address from rdc r where 1=1 <if test="userid !=null and  userid != ''"> and r.userid=#{userid}; </if> GROUP BY r.id ORDER BY r.addtime 
+	</select>
 
 	<!-- 商品共享查询 -->
-	<select id="getSEGDList" parameterType="map"
-		resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+	<select id="getSEGDList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		SELECT
 		s.id,
 		s.rdcID,

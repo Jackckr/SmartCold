@@ -17,5 +17,5 @@ var coldSharePage= coldWeb.controller('releaseItemList', function ($rootScope, $
 //	}
 	
 	
-	
+	alert("22");
 });
