@@ -18,19 +18,35 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 	$scope.Allusers = [];
 	$scope.optAudit = '8';
 	 // 获取当前冷库的列表
-	$scope.initTable = function(pageNum,pageSize){
-	    $http({method:'GET',url:'/i/user/findUserList',params:{pageNum : pageNum,pageSize : pageSize, audit:$scope.optAudit}}).success(function (data) {
-	    	$scope.bigTotalItems = data.total;
-		      $scope.Allusers = data.list;
-	    });
-    }
-    $scope.pageChanged = function () {
-    	 $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
-    }
-    $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+
+	  
+    $scope.getUsers = function() {
+		$http({
+			method : 'POST',
+			url : '/i/user/findUserList',
+			params : {
+				pageNum : $scope.bigCurrentPage,
+				pageSize : $scope.maxSize,
+				audit : $scope.optAudit,
+				keyword : $scope.keyword
+			}
+		}).success(function(data) {
+			$scope.bigTotalItems = data.total;
+			$scope.Allusers = data.list;
+		});
+	}
+
+	$scope.pageChanged = function() {
+		$scope.getUsers();
+	}
+	$scope.getUsers();
+	// 获取当前冷库的列表
+	$scope.auditChanged = function(optAudiet) {
+		$scope.getUsers();
+	}
     
-    $scope.auditChanged = function(optAudiet){
-    	$scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+	$scope.goSearch = function () {
+		$scope.getUsers();
     }
     
     $scope.logout = function () {
