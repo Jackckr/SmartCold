@@ -19,7 +19,7 @@ public interface RdcShareMapper {
 	 * @param rdcShareDTO
 	 * @return
 	 */
-	public int addShareMsg(RdcShareDTO rdcShareDTO);
+	public int addshareInfo(RdcShareDTO rdcShareDTO);
    /**
     * 获得睿库信息
      * @param filter

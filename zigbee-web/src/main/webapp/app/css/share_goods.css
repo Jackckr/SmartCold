@@ -5,9 +5,10 @@
 * @Last Modified time: 2016-07-03 15:52:40
 */
 .shareMain{
-	margin-top:90px;
+	margin:90px 0px;
     width: 100%;
     min-height:560px;
+    
 }
 .tab,.filter,.tableInfo,nav{
     width: 90%;

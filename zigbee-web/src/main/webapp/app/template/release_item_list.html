@@ -5,47 +5,59 @@
         <title>出货</title>
         <link rel="stylesheet" type="text/css" href="app/css/common.css">
         <link rel="stylesheet" type="text/css" href="app/css/release_item_list.css">
-        <script type="text/javascript">
-        $(function() {
-        	
-        });
-        </script>
+        <style type="text/css">
+        #nodata_div{
+/*         margin: 15% auto; */
+        margin-top: 10%;
+        }
+        </style>
     </head>
     <body>
     	<div class="shareMain">
+    	  <div id="dataList_div">
 			<!-- 出货和求货 -->
 			<div class="goods">
-				<span class="outCur">出货</span>
-				<span class="">求货</span>
+				<span id="tobal_1" class="outCur">出货</span>
+				<span id="tobal_2" class="">求货</span>
 			</div>
 			<!-- 出货和求货 end -->
 			<!-- 仓储信息区域start -->
+		
 			<table class="table tableInfo" style="width:80%;">
 			   <tbody>
-			      <tr>
-			         <td>
-			         	<div class="image"><img src="app/img/rdcHeader.jpg"></div>
+			      <tr  ng-repeat="rdc in rdclist" >
+			         <td width="50">
+			         	<div class="image"><img src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
-			         	<div class="company">莱芜嘉禾冷链物流有限公司
-			         	</div>
-			         	
+			         	<div class="company">{{rdc.name}}</div>
 			         </td>
 			         <td>
 						<div class="position">
 			         		<span class="glyphicon glyphicon-map-marker"></span>
-			         		<span class="textInfo">上海-长宁区-中山公园</span>
+			         		<span class="textInfo">{{rdc.address}}</span>
 			         	</div>
 			         </td>
 			         <td>
-			         	<button class="btn btn-primary">发布货品</button>
+			         	<button class="btn btn-primary" ng-click="releaseitem(rdc);" >发布货品</button>
 			         </td>
 			      </tr>			      
 			   </tbody>
 			</table>
+			<div class="row" style="text-align: center;">
+			   <pagination  total-items="bigTotalItems"  ng-change="pageChanged()" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+			 </div>
+	     </div>
+		<div id="nodata_div" class="hide">
 			<p class="sorry">抱歉！</p>
 			<p class="sorry">抱歉！ 本地未找到您所需库的信息，请添加冷库信息！</p>
-			<p class="sorry"><button class="btn btn-primary">添加</button></p>
+			<p class="sorry" ><button class="btn btn-primary" ng-click="goaddrdcpag();">添加</button></p>
+		</div>	 
+		<div id="nologin_div" class="hide">
+			<p class="sorry">抱歉！</p>
+			<p class="sorry">抱歉！ 您还没有登录，请登录后执行该操作！</p>
+			<p class="sorry" ><button class="btn btn-primary" ng-click="goLogin();">添加</button></p>
+		</div>	 
     	</div>
     </body>
 </html>

@@ -8,6 +8,6 @@
         select ${code},${value} from ${table} ;
     </select>
     <select id="getCommData" parameterType="map" resultType="map">
-        select type_code,type_name from comm_mata_data where source_type=#{codetype};
+        select type_code,type_name,type_desc from comm_mata_data where source_type=#{codetype};
     </select>
 </mapper>

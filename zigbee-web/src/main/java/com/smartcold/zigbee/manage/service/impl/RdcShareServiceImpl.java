@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.RdcShareMapper;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.SetUtil;
 
@@ -36,7 +38,7 @@ public class RdcShareServiceImpl implements RdcShareService {
      */
 	@Override
 	public int addShareMsg(RdcShareDTO rdcShareDTO) {
-		return rdcShareMapper.addShareMsg(rdcShareDTO);
+		return rdcShareMapper.addshareInfo(rdcShareDTO);
 	}
     /**
      * 获得睿库信息
@@ -49,7 +51,11 @@ public class RdcShareServiceImpl implements RdcShareService {
   		for (RdcShareDTO rdcShareDTO : serdcList) {
   			 List<FileDataEntity> files = fileDataDao.findByBelongIdAndCategory(rdcShareDTO.getRdcID(), FileDataMapper.CATEGORY_STORAGE_PIC);
   			if(SetUtil.isnotNullList(files)){
-  				rdcShareDTO.setFiles(files);
+  				List<String> filelist =new ArrayList<String>();
+  				for (FileDataEntity file : files) {
+  					filelist.add(FtpService.READ_URL+file.getLocation());
+				}
+  				rdcShareDTO.setFiles(filelist);
   				rdcShareDTO.setLogo(files.get(files.size()-1).getLocation());
   			}
 		}

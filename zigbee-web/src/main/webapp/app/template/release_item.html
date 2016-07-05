@@ -1,103 +1,110 @@
-
         <link rel="stylesheet" type="text/css" href="app/css/common.css">
         <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
-        <script type="text/javascript">
-        $(function() {
-        	$(".city").hide();
-        	$(".goods").children().eq(0).click(function(){
-        		$(this).addClass('outCur').siblings().removeClass('offerCur');
-        		$(".outSon").show();
-        		$(".city").hide();
-        	})
-        	$(".goods").children().eq(1).click(function(){
-        		$(this).addClass('offerCur').siblings().removeClass('outCur');
-        		$(".city").show();
-        		$(".outSon").hide();
-        	})
-        });
-        </script>
+        <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
+        <style>
+           .control-label{line-height: 32px;}
+           .form-control{display: inline-block;}
+           .input-group-addon{display: block;height: 34px;float: left;width: 49px;}
+           .form-control:FOCUS{box-shadow: 0 0 2px #00A6FF !important; border-color: #00A6FF !important;}
+           /*错误提示样式*/
+           label.success{display: none; } 
+ 	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
+	       input.error:FOCUS{  box-shadow: 0 0 5px #00A6FF !important; border-color: #00A6FF !important;} 
+	       input.error:FOCUS+label.error{ border-color: #00A6FF;color:#00A6FF; box-shadow: 0 0 5px #00A6FF !important;}
+	       input.error:FOCUS+label.error::before{ border-color: #00A6FF;}
+		   label.error::before{content:"";padding:0px;margin:0px;width:10px;height:10px;position:absolute;border-left:1px solid red;border-bottom:1px solid red;background-color:white;left:-6px;top:10px;transform:rotate(45deg);}
+		   label.error{float:left;position:absolute;color:red;border:1px solid red;border-radius:5px;padding:5px 20px;text-align:left;margin-left:10px;background-color:white;box-shadow:0 0 5px #d74f5a !important;}
+      </style>
+    
     	<div class="shareMain">
 			<!-- 出货和求货 -->
-			<div class="goods">
-				<span class="outCur">出货</span>
-				<span class="">求货</span>
+			<div id="item_type_div" class="goods">
+				<span class="outCur"  value="{{appmode[dataType].tool[0][0]}}" onclick="releaseItem.changtype(this)">{{appmode[dataType].tool[0][1]}}</span>
+				<span value="{{appmode[dataType].tool[1][0]}}" onclick="releaseItem.changtype(this)">{{appmode[dataType].tool[1][1]}}</span>
 			</div>
 			<!-- 出货和求货 end -->
-			<form action="" class="formInfo">
-				<div class="outSon">
-					<div class="company">莱芜嘉禾冷链物流有限公司</div><div class="position">
-						<span class="glyphicon glyphicon-map-marker"></span>
-						<span class="textInfo">上海-长宁区-中山公园</span>
+			<form id="release_item_from" name="itemform"  class="formInfo" >
+			    <div >
+			      <input type="hidden" name="dataType" value="{{dataType}}" >
+			      <input type="hidden" name="typeCode" value="{{typeCode}}" >
+			      <input type="hidden" name="typeText" value="{{typeText}}">
+			    </div>
+			    <div id="recinfo_div">
+			       <input type="hidden" name="rdcID" ng-model="rdcID">
+					<div class="outSon">
+						<div class="company">{{rdcinfo.name}}</div><div class="position">
+							<span class="glyphicon glyphicon-map-marker"></span>
+							<span class="textInfo">{{rdcinfo.address}}</span>
+						</div>
 					</div>
-				</div>
-				<div class="outSon clearfix">
-					<div class="img">
-						<img src="app/img/shareitem/demo1.png" height="184" width="319" alt="">
-					</div>
-					<div class="img">					
-						<img src="app/img/shareitem/demo2.png" height="184" width="319" alt="">
-					</div>
-				</div>
-				<div class="infoList clearfix">
-					<div class="pull-left"><em>*</em>描述:</div>
-					<div class="pull-left">
-						<input type="text" placeholder="">
-					</div>
-				</div>
-				<div class="infoList clearfix city">
-					<div class="pull-left"><em>*</em>省:</div>
-					<div class="pull-left">
-						<select name="" id="">
-							<option value="安徽省">安徽省</option>
-						</select>
-					</div>
-				</div>
-				<div class="infoList clearfix city">
-					<div class="pull-left"><em>*</em>市:</div>
-					<div class="pull-left">
-						<select name="" id="">
-							<option value="宿州市">宿州市</option>
-						</select>
+					<div class="outSon clearfix">
+						<div class="img"  ng-repeat="img in rdcimgs" >
+							<img src="{{img}}" height="184" width="319" alt="">
+						</div>
 					</div>
 				</div>
 				<div class="infoList clearfix">
-					<div class="pull-left"><em>*</em>品类:</div>
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>描述:</div>
 					<div class="pull-left">
-						<select name="" id="">
-							<option value="蔬菜">蔬菜</option>
+						<input type="text" class="form-control" placeholder="" name="title" value="货品出租啦！">
+					</div>
+				</div>
+				<div class="infoList clearfix city">
+					<div class="pull-left col-sm-4  control-label "  ><em>*</em>省:</div>
+					<div class="pull-left">
+						 <select name="provinceId" class="form-control" ng-model="provinceId" ng-disabled="editable" ng-change="changcity()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+						<input  name="provinceId"  type="hidden" value="{{provinceId}}">
+					</div>
+				</div>
+				<div class="infoList clearfix city"  >
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>市:</div>
+					<div class="pull-left">
+						<select id="sl_id" name="cityid"   class="form-control">
+							<option ng-repeat="x in city" value="{{x.cityID}}">{{x.cityName}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4 control-label "><em>*</em>品类:</div>
+					<div class="pull-left">
+						<select  id="good_type" name="codeLave1" class="form-control" >
+							<option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
 						</select>
 					</div>
 				</div>
 				<div class="infoList clearfix infoDate ">
-					<div class="pull-left"><em>*</em>数量:</div>
+					<div class="pull-left col-sm-4 control-label "><em>*</em>数量:</div>
 					<div class="pull-left">
-						<input type="text" placeholder=""><span class="count">吨</span>
+						<input type="text" placeholder="" class="form-control" name="sqm" value="1000"><span class="count" >吨</span>
 					</div>
 				</div>
 				<div class="infoList clearfix infoDate ">
-					<div class="pull-left"><em>*</em>单价:</div>
+					<div class="pull-left col-sm-4 control-label "><em>*</em>单价:</div>
 					<div class="pull-left">
-						<input type="text" placeholder=""><span class="count">元/吨</span>
+						<input type="text" placeholder="" class="form-control" name="unitPrice" value="800"><span class="count">元/吨</span>
 					</div>
 				</div>
 				<div class="infoList clearfix infoDate">
-					<div class="pull-left"><em>*</em>信息有效期:</div>
+					<div class="pull-left col-sm-4 control-label "><em>*</em>信息有效期:</div>
 					<div class="pull-left">
-						<input type="date" ><span class="count">至</span><input type="date" >
+		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+		                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control"   class="span4"/>
+		                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
+		                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
 					</div>
 				</div>
 				<div class="infoList clearfix">
-					<div class="pull-left"><em>*</em>联系电话:</div>
+					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>
 					<div class="pull-left">
-						<input type="text" placeholder="">
+						<input type="text" placeholder="" class="form-control" name="telephone" value="15801721195">
 					</div>
 				</div>
 				<div class="infoList clearfix">
 					<div class="pull-left">备注:</div>
 					<div class="pull-left">
-						<textarea name="" placehoder="可填"></textarea>
+						<textarea name="note" placehoder="可填" class="form-control">这是测试信息</textarea>
 					</div>
 				</div>
-				<button class="btn btn-primary">提交</button>
+				<button class="btn btn-primary" onclick="releaseItem.savedata();">提交</button>
 			</form>
     	</div>
