@@ -178,7 +178,11 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	  };
 	  $scope.goRelease=function(){
 		  if(user!==null&&user.id!=0){
-			  $state.go('releaseItemList',{_cuttid:rdcconfig._cuttid});
+			  if(rdcconfig._cuttid==2){
+				  $state.go('releaseCarInfo',{_cuttid:rdcconfig._cuttid});
+			  }else{
+				  $state.go('releaseItemList',{_cuttid:rdcconfig._cuttid});
+			  }
 		  }else{
 			  alert("你还没有登录！请登录后操作！");
               window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList?_cuttid="+rdcconfig._cuttid;

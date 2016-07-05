@@ -6,19 +6,15 @@
         <link rel="stylesheet" type="text/css" href="app/css/common.css">
         <link rel="stylesheet" type="text/css" href="app/css/release_item_list.css">
         <style type="text/css">
-        #nodata_div{
-/*         margin: 15% auto; */
-        margin-top: 10%;
-        }
+            #nodata_div{ margin-top: 10%; }
         </style>
     </head>
     <body>
     	<div class="shareMain">
     	  <div id="dataList_div">
-			<!-- 出货和求货 -->
-			<div class="goods">
-				<span id="tobal_1" class="outCur">出货</span>
-				<span id="tobal_2" class="">求货</span>
+			<div id="item_type_div" class="goods">
+				<span id="tobal_1" class="outCur"  value="{{appmode[dataType].tool[0][0]}}" onclick="releaseItem.changtype(this)">{{appmode[dataType].tool[0][1]}}</span>
+				<span id="tobal_2" value="{{appmode[dataType].tool[1][0]}}" onclick="releaseItem.changtype(this)">{{appmode[dataType].tool[1][1]}}</span>
 			</div>
 			<!-- 出货和求货 end -->
 			<!-- 仓储信息区域start -->
@@ -39,7 +35,7 @@
 			         	</div>
 			         </td>
 			         <td>
-			         	<button class="btn btn-primary" ng-click="releaseitem(rdc);" >发布货品</button>
+			         	<button class="btn btn-primary" ng-click="releaseitem(rdc);" >{{appmode[dataType].btn}}</button>
 			         </td>
 			      </tr>			      
 			   </tbody>

@@ -56,7 +56,7 @@ var releaseItem = {
         }
 };
 
-coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
+coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
 	releaseItem.$scope=$scope;
 	$scope.appmode=[{},{tit:"货品-测试",tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-测试",tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-测试",tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
 	$scope.gocoldShareComment=function(){
