@@ -45,7 +45,7 @@ h6
 ul,li,ol{
     list-style: none;
 }
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 950px) {
     .black-850{
         display: none;
     }
@@ -92,7 +92,7 @@ ul,li,ol{
         
     }
     .navShow li a:hover{        
-        background-color:#448BCB;
+        background-color:#4B4B4C;
         color:#fff;  
         text-decoration: none;      
     }
@@ -111,7 +111,7 @@ ul,li,ol{
     }
     
 }
-@media screen and (min-width: 851px) {
+@media screen and (min-width: 951px) {
     .black-850{
        display: block;
     }

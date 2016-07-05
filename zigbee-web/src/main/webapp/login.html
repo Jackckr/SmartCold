@@ -36,7 +36,7 @@
          </a>
      </div>
      <div class="nav-right mw-8" style="margin-right:40px;">
-         <ul class="nav nav-right">
+         <ul class="nav nav-right black-850">
              <li>
                  <a href="http://www.smartcold.cn/#/home">
                      首页
@@ -63,6 +63,38 @@
                  </a>
              </li>
          </ul>
+         <ul class="navShow navPo show-850">        
+                        <li class="oneNav">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                            <ol class="twoNav">
+                                <li>
+		                            <a href="#/home">
+		                                首页
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="" ng-click="toColdStorageList()">
+		                                找库
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="" ng-click="toColdShareComment()">
+		                                共享
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="#/search">
+		                                追溯
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="" ng-click="gotoSmartCold()" target="view_frame">
+                                        冷库360
+		                            </a>
+		                        </li>
+                            </ol>
+                        </li>
+                    </ul>
      </div>
  </header>
 
@@ -173,6 +205,13 @@ $(function(){
     				})
     });
 })
+ $(function() {
+        $('.navShow>li').hover(function() {
+            
+            $(this).children('ol').stop().toggle();
+
+        });
+    });
 </script>
     </body>
 </html>
