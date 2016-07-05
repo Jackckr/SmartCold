@@ -2,6 +2,8 @@ package com.smartcold.bgzigbee.manage.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.smartcold.bgzigbee.manage.entity.StorageTypeEntity;
 
 /**
@@ -11,5 +13,6 @@ import com.smartcold.bgzigbee.manage.entity.StorageTypeEntity;
 public interface StorageTypeMapper {
 
     List<StorageTypeEntity> findAll();
-    
+    int addStorageType(StorageTypeEntity storageType);
+    void deleteStorageType(@Param("id") int id);
 }

@@ -47,4 +47,10 @@
 		order by `addTime` desc
 	</select>
 
+	<update id="addUsefulCnt" parameterType="int" >
+		update ColdStorageComment
+		set usefulcnt = usefulcnt+1
+		where id=#{id};
+	</update>
+
 </mapper>

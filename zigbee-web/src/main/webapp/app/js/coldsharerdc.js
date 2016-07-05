@@ -1,60 +1,3 @@
-var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, $scope, $state, $cookies, $http, $location) {
-	 rdcconfig.$scope=$scope;
-	 rdcconfig._cuttid=1;
-     $scope.maxSize = 5;	// 显示最大页数
-     $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
-     $scope.bigCurrentPage = 1;  // 当前页
-     good._isLoad=psaction._isLoad=serdc._isLoad=false;
-     $http.get('/i/city/findProvinceList').success(function (data) { $scope.gd_provinces = data; });//加载区域数据
-     $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
-     $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");$scope.changDataMode();});//业务类型
-     $scope.changDataMode=function(){
-    	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
-     };
-     $scope.pageChanged1 = function () {
-		   var _filter=  good.getFilter($scope.bigCurrentPage,$scope.maxSize);
-		   $http({method:'POST',url:'/i/ShareRdcController/getSEGDList',params:_filter}).success(function (data) {
-				$scope.goods = data.data;//
-		        $scope.bigTotalItems1 = data.total;
-		    });
-	   };
-	  $scope.pageChanged2 = function () {
-	   var _filter=  psaction.getFilter($scope.bigCurrentPage,$scope.maxSize);
-	   $http({method:'POST',url:'/i/ShareRdcController/getSEPSList',params:_filter}).success(function (data) {
-		   $scope.pslist = data.data;//
-		   $scope.bigTotalItems2 = data.total;
-	   });
-	  };
-	  $scope.pageChanged3 = function () {
-	   var _filter=  serdc.getFilter($scope.bigCurrentPage,$scope.maxSize);
-	   $http({method:'POST',url:'/i/ShareRdcController/getSERDCList',params:_filter}).success(function (data) {
-			$scope.rdcs = data.data;//
-	        $scope.bigTotalItems3 = data.total;
-	    });
-	  };
-	 $scope.initApp=function(){
-		 if(rdcconfig._cuttid==1){//getGDFilterData
-			 if(!good._isLoad){
-			   good._isLoad=true;
-			   good.initFilter();//初始化过滤
-			   $scope.pageChanged1();
-			 }
-		 }else if(rdcconfig._cuttid==2){
-			 if(!psaction._isLoad){
-				 psaction._isLoad=true;
-				 psaction.initFilter();//初始化过滤
-				 $scope.pageChanged2();
-				 }
-		 }else if(rdcconfig._cuttid==3){
-			  if(!serdc._isLoad){
-				 serdc._isLoad=true;
-			     serdc.initFilter();//初始化过滤
-				 $scope.pageChanged3();
-			  }
-		 }
-	 };
-	 $scope.initApp();
-});
 //当前页面配置信息o()
 var rdcconfig={
 	$scope:null,//上下文环境变量
@@ -67,8 +10,14 @@ var rdcconfig={
 			$("#table"+em.value).removeClass("hide");
 			rdcconfig.$scope.initApp();//初始化App
 	},freeMaeeinfo:function(){//免费发布的信息
-		alert("还在建设中，敬请期待！");
-		
+		 if(rdcconfig._cuttid==1){//getGDFilterData
+			
+		 }else if(rdcconfig._cuttid==2){
+			 
+		 }else if(rdcconfig._cuttid==3){
+			 
+		 }
+	    	$(".ng-scope").load("");
 	}
     ,addfilter:function(id,em){
 		 $($(id).parent()).prev().removeClass("active");
@@ -132,6 +81,13 @@ var psaction={
 					 $('#sl_destination').change(function(){rdcconfig.$scope.changDataMode();});
 					 $('#sl_deliverytime').change(function(){rdcconfig.$scope.changDataMode();});
 			   }});
+			  $('#reservationtime').daterangepicker({
+			      timePicker: true,
+			      timePickerIncrement: 30,
+			      format: 'YYYY/DD/MM H:mm'
+			    }, function(start, end, label) {
+			      //console.log(start.toISOString(), end.toISOString(), label);
+			    });
 		}
 		,getFilter:function(pageNum,pageSize){
 		    	  var ctlist= ($("#car_type_div li.active").length==$("#car_type_div li").length||$("#car_type_div li.active").length==0)?null:$("#car_type_div li.active");
@@ -196,3 +152,64 @@ var serdc = {
 		   return _filter;
 		}
  };	
+var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, $scope, $state, $cookies, $http, $location) {
+	rdcconfig.$scope=$scope;
+	 rdcconfig._cuttid=1;
+     $scope.maxSize = 5;	// 显示最大页数
+     $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
+     $scope.bigCurrentPage = 1;  // 当前页
+     good._isLoad=psaction._isLoad=serdc._isLoad=false;
+     $http.get('/i/city/findProvinceList').success(function (data) { $scope.gd_provinces = data; });//加载区域数据
+     $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
+     $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");$scope.changDataMode();});//业务类型
+     $scope.changDataMode=function(){
+    	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
+     };
+     $scope.pageChanged1 = function () {
+		   var _filter=  good.getFilter($scope.bigCurrentPage,$scope.maxSize);
+		   $http({method:'POST',url:'/i/ShareRdcController/getSEGDList',params:_filter}).success(function (data) {
+				$scope.goods = data.data;//
+		        $scope.bigTotalItems1 = data.total;
+		    });
+	   };
+	  $scope.pageChanged2 = function () {
+	   var _filter=  psaction.getFilter($scope.bigCurrentPage,$scope.maxSize);
+	   $http({method:'POST',url:'/i/ShareRdcController/getSEPSList',params:_filter}).success(function (data) {
+		   $scope.pslist = data.data;//
+		   $scope.bigTotalItems2 = data.total;
+	   });
+	  };
+	  $scope.pageChanged3 = function () {
+	   var _filter=  serdc.getFilter($scope.bigCurrentPage,$scope.maxSize);
+	   $http({method:'POST',url:'/i/ShareRdcController/getSERDCList',params:_filter}).success(function (data) {
+			$scope.rdcs = data.data;//
+	        $scope.bigTotalItems3 = data.total;
+	    });
+	  };
+	  $scope.goRelease=function(){
+		  $state.go('releaseItem',{data:{name:'湖北寿康冷链物流有限公司',address:'湖北省-十堰市-郧阳区',logo:'app/img/rdcHeader.jpg' },dataid:1111,  _cuttid:rdcconfig._cuttid});
+	  };
+	 $scope.initApp=function(){
+		 if(rdcconfig._cuttid==1){//getGDFilterData
+			 if(!good._isLoad){
+			   good._isLoad=true;
+			   good.initFilter();//初始化过滤
+			   $scope.pageChanged1();
+			 }
+		 }else if(rdcconfig._cuttid==2){
+			 if(!psaction._isLoad){
+				 psaction._isLoad=true;
+				 psaction.initFilter();//初始化过滤
+				 $scope.pageChanged2();
+				 }
+		 }else if(rdcconfig._cuttid==3){
+			  if(!serdc._isLoad){
+				 serdc._isLoad=true;
+			     serdc.initFilter();//初始化过滤
+				 $scope.pageChanged3();
+			  }
+		 }
+	 };
+	 $scope.initApp();
+	
+});

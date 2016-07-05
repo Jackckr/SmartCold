@@ -16,4 +16,6 @@ public interface CommentMapper {
 
     List<CommentEntity> findCommentsByRdcId(@Param("rdcID") int rdcID);
 
+    void addUsefulCnt(int id);
+
 }

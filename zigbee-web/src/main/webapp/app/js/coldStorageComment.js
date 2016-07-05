@@ -1,4 +1,4 @@
-coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log) {
+coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log, $cookieStore) {
 	
 	$scope.rdcId = $stateParams.rdcID;
 
@@ -39,7 +39,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 "rdcID": rdcID
             }
         }).success(function (data) {
-            console.log("RdcDetail: " + data[0]);
             $scope.score = data[0].score;
             $scope.userRecommendPercent = data[0].userRecommendPercent;
             $scope.userCommentCount = data[0].userCommentCount;
@@ -174,7 +173,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 "npoint": 2
             }
         }).success(function (result) {
-            console.log("powerCosume:" + result[0].powerCosume);
             var temper = parseFloat(result[0].powerCosume).toFixed(1);
             $scope.curtemper = temper;
         });
@@ -202,7 +200,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         angular.element(document.getElementById('detail')).removeClass('active');
         angular.element(document.getElementById('coldStorageDetail')).removeClass('active');
 
-        console.log(storageID);
         // 获取当前冷库的评论列表
         $http.get('/i/comment/findCommentsByRDCId', {
             params: {
@@ -212,16 +209,13 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         }).success(function (data) {
             var size = data.length;
             for (var i = 0; i < data.length; i++) {
-                console.log("data:" + data[i].content + data[i].commerID + data[i].addTime + data[i].commerName);
                 data[i].commentsum = parseInt((Math.random() * 5 + 5).toFixed(0));
                 data[i].usefulCnt = parseInt((Math.random() * 10 + 5).toFixed(0));
             }
             angular.forEach(data, function (item) {
-            	console.log(item);
                 item.reviewPics = item.reviewPics;
             })
             $scope.comments = data;
-            console.log(data);
         });
     }
 
@@ -235,7 +229,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 "rdcID": $stateParams.rdcID
             }
         }).success(function (data) {
-            console.log("RdcDetail: " + data[0]);
             $scope.rdcName = data[0].name;
             $scope.rdcAddress = data[0].address;
             $scope.rdcCityId = data[0].cityid;
@@ -315,13 +308,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     }
     $scope.load();
     
-    console.log($location.search());
 	if($location.search().referrer == "review"){
 		$scope.goColdStorageComment($scope.rdcId);
 	}		
 
     $scope.goDetail = function (rdcID) {
-        console.log("rdcID" + rdcID);
         $state.go('coldStorageComment', {"rdcID": rdcID});
     }
     
@@ -350,9 +341,91 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         	     }
            }
     }
-    
-    
-    
+
+    $scope.goSearch = function () {
+        var content = $scope.query;
+
+        // 获取当前冷库的评论列表
+        $http.get('/i/comment/findCommentsByRDCId', {
+            params: {
+                "rdcID": $scope.rdcId,
+                "npoint": 100
+            }
+        }).success(function (data) {
+            var size = data.length;
+            var result = [];
+            if (size > 0){
+                angular.forEach(data, function (item) {
+                    if ((item.content).indexOf(content) > -1) {
+                       result.push(item);
+                    }
+                })
+            }
+            $scope.comments = result;
+        });
+        $scope.query = "";
+    }
+
+
+    //设置cookie
+    function setCookie(key, value) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 30 * 60 * 1000);//过期时间 30分钟
+        document.cookie = ('commentid' + key) + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    //获取cookie的值
+    function getCookie(key) {
+        if (document.cookie.length) {
+            var cookies = ' ' + document.cookie;
+            var start = cookies.indexOf(' ' + ('commentid' + key) + '=');
+            if (start == -1) {
+                return null;
+            }
+            var end = cookies.indexOf(";", start);
+            if (end == -1) {
+                end = cookies.length;
+            }
+            end -= start;
+            var cookie = cookies.substr(start, end);
+            return unescape(cookie.substr(cookie.indexOf('=') + 1, cookie.length - cookie.indexOf('=') + 1));
+        }
+        else {
+            return null;
+        }
+    }
+
+    $scope.addSupport = function (id) {
+        if (getCookie(id) == null) {
+            $http({
+                url: '/i/comment/addUsefulCnt',
+                method: "POST",
+                data: 'id=' + id,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (data) {
+                $http.jsonp('http://ipinfo.io/?callback=JSON_CALLBACK')
+                    .success(function (data) {
+                        setCookie(id, data.ip);
+                    });
+                angular.forEach($scope.comments, function (comment) {
+                    if (comment.id == id) {
+                        comment.usefulcnt += 1;
+                    }
+                })
+                console.log("支持成功");
+            }).error(function (data) {
+                console.log("支持失败");
+            });
+        } else {
+            $http.jsonp('http://ipinfo.io/?callback=JSON_CALLBACK')
+                .success(function (data) {
+                    if (getCookie(id) == data.ip) {
+                        console.log("您已经支持过了");
+                        return;
+                    }
+                });
+        }
+    }
 
     $scope.items = ['html5', 'jq', 'FE-演示平台'];
     $scope.goComment = function (size) {  //打开模态
@@ -387,7 +460,6 @@ coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, ite
         item: $scope.items[0]
     };
     $scope.ok = function () {
-        console.log($scope.commentContent);
         $uibModalInstance.close($scope.commentContent); //关闭并返回当前选项
     };
     $scope.cancel = function () {

@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
+import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.CacheTool;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 
 @Controller
@@ -288,9 +290,25 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="shareFreeRelease")
 	@ResponseBody
-	public ResponseData<Object> shareFreeRelease(HttpServletRequest request,String datatype,String dataid){
-		
+	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,RdcShareDTO  rdcShareDTO){
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
+		rdcShareDTO.setReleaseID(user.getId());//设置发布消id
+		this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
 		return null;
+	}
+	/**
+	 * 免费发布消息
+	 * @param request
+	 * @param datatype
+	 * @param dataid
+	 * @return
+	 */
+	@RequestMapping(value="sharetest")
+	@ResponseBody
+	public Object sharetest(HttpServletRequest request){
+		int insert = this.rdcShareService.insert("22");
+		System.err.println(insert);
+		return insert;
 	}
 	
 	

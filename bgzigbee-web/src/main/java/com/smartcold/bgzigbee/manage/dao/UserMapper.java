@@ -19,7 +19,7 @@ public interface UserMapper {
 
 	UserEntity findUserById(@Param("id") int id);
 	
-	List<UserEntity> findAllUser();
+	List<UserEntity> findAllUser(@Param("audit")Integer audit);
 
 	void insertUser(UserEntity userEntity);
 	
