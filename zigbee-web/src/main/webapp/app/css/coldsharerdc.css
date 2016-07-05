@@ -85,7 +85,7 @@ div.select_2 select{
 	font-size:12px;
 }
 #search{
-    width: 20%;
+    width: 15%;
     position: relative;
     font-size: 12px;
 }
@@ -129,6 +129,7 @@ div.select_2 select{
     display: inline-block;
     padding:1px 10px;
     cursor: pointer;
+    text-align: center;
 }
 .list ul{
     width: 85%;
@@ -152,9 +153,15 @@ div.select_2 select{
     text-align: center!important;
     color: #fff!important;
 }
+._nonefilter:hover{
+	background-color: #448BC9;
+    color: #fff;
+    border-radius: 2px;
+    text-align: center!important;
+    color: #fff!important;
+}
 .active{
     background-color: #448BC9;
-    color: #fff;
     border-radius: 2px;
     text-align: center!important;
     color: #fff!important;

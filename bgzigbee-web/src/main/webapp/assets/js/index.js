@@ -8,6 +8,7 @@ $(function() {
 		.siblings().removeClass("highlight")		//获取元素的兄弟元素，并去掉他们的highlight类
 			.children(".liSon").slideUp();	*/			//将兄弟元素下的ul元素隐藏
 	});
+
 	$('span.edit').click(function(event) {
 		$(this).addClass('editCur');
 	});

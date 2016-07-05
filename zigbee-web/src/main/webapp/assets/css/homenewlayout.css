@@ -211,7 +211,7 @@ header .nav > li
 
     display: inline-block;
 
-    width: 60px;
+    width: 80px;
     height: 75px;
 
     text-align: center;
@@ -559,7 +559,7 @@ footer
     padding-top:20px;
 	width:100%;
     text-align: center;
-
+	margin-top:30px;
     background-color: #000;
 }
 footer dl
@@ -623,22 +623,6 @@ footer .footer-right .share-links
     width: 30px;
     height: 30px;
     margin-left: 12px;
-}
-.weixinImg
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -326px -285px;
-}
-.weiboImg
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -404px -285px;
-}
-.facebook
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -366px -285px;
-}
-.twitter
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -285px -285px;
 }
 footer .footer-right .copyright
 {
@@ -900,4 +884,27 @@ section.content{
     border: 1px solid #ddd;
     border-radius: 3px;
 }
+.spanGroup .row>span:nth-child(1)~span:hover{
+	background-color: #448BC9;
+    border-radius: 2px;
+    text-align: center;
+    color: #fff!important;
+}
 /*coldStorageList.html页面样式调整 end*/
+
+.weixinImg
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -326px -285px;
+}
+.weiboImg
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -404px -285px;
+}
+.facebook
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -366px -285px;
+}
+.twitter
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -285px -285px;
+}

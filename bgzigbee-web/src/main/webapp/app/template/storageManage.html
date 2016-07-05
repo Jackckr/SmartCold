@@ -13,8 +13,8 @@
 		  </select>
 		</div>
 		<div id="search">								
-			<input type="text" placeholder="请输入关键词" id="myText" />
-			<div id="searchImg">
+			<input type="text" ng-model="keyword" placeholder="请输入关键词" id="myText" />
+			<div id="searchImg" ng-click="goSearch()" >
 				<span class="glyphicon glyphicon-search"></span>
 			</div>
 		</div>							

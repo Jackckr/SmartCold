@@ -19,7 +19,7 @@ public interface CommentMapper {
 
     List<CommentEntity> findCommentsByRdcId(@Param("rdcID") int rdcID);
     
-    Page<CommentDTO> findByPage();
+    Page<CommentDTO> findByPage(@Param("keyword")String keyword);
     
     int deleteCommentByID(int id);
 
