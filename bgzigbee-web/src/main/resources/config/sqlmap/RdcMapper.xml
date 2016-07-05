@@ -5,9 +5,14 @@
 
     <select id="findRdcList" parameterType="int" resultType="RdcEntity">
          SELECT * FROM `Rdc`
-         <if test="audit != null">
-		     where audit=#{audit}
-		  </if>
+		 <where> 
+			<if test="audit != null">
+			    audit=#{audit}
+			</if>
+		    <if test="keyword != null">
+		        AND name like "%"#{keyword}"%"
+		    </if>
+		 </where>
          order by `addTime` desc
     </select>
 

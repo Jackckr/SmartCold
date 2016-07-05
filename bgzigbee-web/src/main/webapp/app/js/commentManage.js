@@ -1,26 +1,31 @@
 coldWeb.controller('commentManage', function ($scope, $state, $cookies, $http, $location) {
 	$scope.optAudit = '8';
-	$scope.comments = [];
-	$scope.initTable = function(pageNum,pageSize){
-		    $http({method:'POST',url:'/i/comment/findByPage',params:{pageNum : pageNum,pageSize : pageSize}}).success(function (data) {
-		    	 $scope.bigTotalItems = data.total;
-			      $scope.comments = data.list;
-		    });
-	}
-    // 显示最大页数
+	// 显示最大页数
     $scope.maxSize = 10;
     // 总条目数(默认每页十条)
     $scope.bigTotalItems = 12;
     // 当前页
     $scope.bigCurrentPage = 1;
+	$scope.comments = [];
+	$scope.getComments = function(){
+		    $http({
+		    	method:'POST',
+		    	url:'/i/comment/findByPage',
+		    	params:{
+		    		pageNum : $scope.bigCurrentPage,
+		    		pageSize : $scope.maxSize,
+		    		keyword:$scope.keyword
+		    	}}).success(function (data) {
+		    	 $scope.bigTotalItems = data.total;
+			     $scope.comments = data.list;
+		    });
+	}
+    
     $scope.pageChanged = function () {
-    	 $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    	 $scope.getComments();
     }
-    $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
-    // 获取当前冷库的列表
-    $scope.auditChanged = function(optAudiet){
-    	$scope.initTable($scope.bigCurrentPage, $scope.maxSize);
-    }
+    $scope.getComments();
+
 
     $http.get('/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
@@ -100,15 +105,7 @@ coldWeb.controller('commentManage', function ($scope, $state, $cookies, $http, $
 		}
     }
     
-    $scope.goAddRdc = function () {
-        $http.get('/i/user/findUser').success(function(data){
-            $rootScope.user = data;
-            if($rootScope.user == null || $rootScope.user.id == 0){
-                url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd";
-                window.location.href = url;
-            } else {
-                $location.path("/coldStorageAdd");
-            }
-        })
+    $scope.goSearch = function(){
+    	$scope.getComments();
     }
 });
