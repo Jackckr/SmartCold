@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dao.UserMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
@@ -35,7 +37,8 @@ public class UserController extends BaseController {
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 12:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
-		return userDao.findAllUser(audit);
+		return new PageInfo<UserEntity>(userDao.findAllUser(audit));
+		
 	}
 	
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
@@ -51,6 +54,21 @@ public class UserController extends BaseController {
 		for(Integer userID:userIDs){
 			userDao.deleteUser(userID);
 		}
+		return new BaseDto(0);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeAudit", method=RequestMethod.POST)
+	public Object changeAudit(int userID, int audit){
+		userDao.changeAudit(userID, audit);
+		return new BaseDto(0);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeAudits", method=RequestMethod.POST)
+	public Object changeAudits(int[] userIDs, int audit){
+		for(int userID:userIDs)
+			userDao.changeAudit(userID, audit);
 		return new BaseDto(0);
 	}
 	

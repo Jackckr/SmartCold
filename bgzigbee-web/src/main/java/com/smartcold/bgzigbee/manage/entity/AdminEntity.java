@@ -15,6 +15,7 @@ public class AdminEntity {
 	private String telephone;
 	private String email;
 	private Date addtime;
+	private Integer role;
 	public int getId() {
 		return id;
 	}
@@ -50,6 +51,12 @@ public class AdminEntity {
 	}
 	public void setAddtime(Date addtime) {
 		this.addtime = addtime;
+	}
+	public Integer getRole() {
+		return role;
+	}
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 	
 }

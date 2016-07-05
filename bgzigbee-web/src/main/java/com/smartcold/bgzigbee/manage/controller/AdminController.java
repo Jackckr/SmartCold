@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dao.AdminMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
@@ -37,8 +39,8 @@ public class AdminController extends BaseController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
-	public Object login(HttpServletRequest request, String adminName, String adminPwd) {
-		AdminEntity admin = adminDao.findAdmin(adminName, adminPwd);
+	public Object login(HttpServletRequest request, String adminName, String adminPwd, Integer adminRole) {
+		AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
 		if (admin != null) {
 			String cookie = cookieService.insertCookie(adminName);
 			admin.setAdminpwd("******");
@@ -64,8 +66,12 @@ public class AdminController extends BaseController {
 
 	@RequestMapping(value = "/findAdminList", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findAdminList() {
-		return adminDao.findAllAdmin();
+	public Object findAdminList(@RequestParam(value="pageNum",required=false) Integer pageNum,
+			@RequestParam(value="pageSize") Integer pageSize) {
+		    pageNum = pageNum == null? 1:pageNum;
+		    pageSize = pageSize==null? 12:pageSize;
+		    PageHelper.startPage(pageNum, pageSize);
+		    return new PageInfo<AdminEntity>(adminDao.findAllAdmin());
 	}
 	
 	@RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)

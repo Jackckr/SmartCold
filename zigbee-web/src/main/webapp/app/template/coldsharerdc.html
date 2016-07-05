@@ -8,7 +8,10 @@
      .select_2 select{min-width: 80px;font-size:16px;}
      ._sh_orang{color: #f40;}
      ._sh_fl_span{position: absolute;margin: 10px;}
-     .daterangepicker{font-size: 11px;}
+     #reservationtime{height: 25px;}
+     .daterangepicker{font-size: 9px;}
+     .time_control{height: 25px;}
+     .time_control *{font-size: 10px;}
     </style>
 	<div class="shareMain">
 	<!--   货品、配送、仓库区域 start-->
@@ -105,24 +108,22 @@
 					</div>
 					<div class="select_2 pull-left">
 						<span>目的地：</span>
-						<select id="sl_destination" >
+						<select id="sl_destination"  >
 							<option value="">不限</option>
 						</select>
 					</div>
-					<div class="select_2 pull-left row">
-						<span class="col-md-2 col-xs-2" style="padding:0;">发货时间：</span>
-						<select id="sl_deliverytime"  class="col-md-1">
-							<option value="">不限</option>
-						</select>
-<!-- 						<div class="control-group col-md-5"> -->
-		                   <!--  <label class="control-label" for="reservationtime">请选择起止时间</label> -->
-<!-- 		                    <div class="controls" style="width:340px;"> -->
-<!-- 		                     <div class="input-prepend input-group"> -->
-<!-- 		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span> -->
-<!-- 		                       <input type="text" style="width: 300px" name="reservation" id="reservationtime" class="form-control" placeholder="请选择起止时间" class="span4"/> -->
-<!-- 		                     </div> -->
-<!-- 		                    </div> -->
-<!-- 		                 </div> -->
+					<div class="select_2 pull-left row" style="width: 365px;">
+						<span class="col-md-2 col-xs-2" style="padding:0;width: 80px;">发货时间：</span>
+<!-- 						<select id="sl_deliverytime"  class="col-md-1"> -->
+<!-- 							<option value="">不限</option> -->
+<!-- 						</select> -->
+		                    <div class="controls time_control" >
+		                     <div class="input-prepend input-group">
+		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+		                       <input type="text" name="reservation" id="reservationtime" class="form-control" placeholder="请选择起止时间" class="span4"/>
+		                     </div>
+		                    </div>
+
 					</div>
 					<div id="search" class=" pull-right">					
 						<input type="text" placeholder="请输入关键词" id="myText2" class="myText" />

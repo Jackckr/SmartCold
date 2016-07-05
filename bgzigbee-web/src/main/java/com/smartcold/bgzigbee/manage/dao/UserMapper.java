@@ -1,9 +1,8 @@
 package com.smartcold.bgzigbee.manage.dao;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
+import com.github.pagehelper.Page;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 /**
  * 
@@ -19,8 +18,10 @@ public interface UserMapper {
 
 	UserEntity findUserById(@Param("id") int id);
 	
-	List<UserEntity> findAllUser(@Param("audit")Integer audit);
+	Page<UserEntity> findAllUser(@Param("audit")Integer audit);
 
+	int changeAudit(@Param("userID") int userID,@Param("audit") int audit);
+	
 	void insertUser(UserEntity userEntity);
 	
 	void deleteUser(@Param("id") int id);
