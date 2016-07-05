@@ -11,10 +11,26 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
 	$scope.load();
     $scope.Alladmins = [];
     $scope.admin = "";
-    // 获取当前冷库的列表
-    $http.get('/i/admin/findAdminList').success(function (data) {
-        $scope.Alladmins = data;
-    });
+    // 显示最大页数
+    $scope.maxSize = 8;
+    // 总条目数(默认每页十条)
+    $scope.bigTotalItems = 12;
+    // 当前页
+    $scope.bigCurrentPage = 1;
+    $scope.initTable = function(pageNum,pageSize){
+	    $http({method:'GET',url:'/i/admin/findAdminList',params:{pageNum : pageNum,pageSize : pageSize}}).success(function (data) {
+	    	$scope.bigTotalItems = data.total;
+	    	$scope.Alladmins = data.list;
+	    });
+    }
+    $scope.pageChanged = function () {
+    	 $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    }
+    $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    
+    
+    
+    
     $http.get('/i/admin/findAdmin').success(function(data){
     	$scope.admin = data;
     });
