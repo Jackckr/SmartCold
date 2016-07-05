@@ -6,14 +6,15 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
      $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
      $scope.bigCurrentPage = 1;  // 当前页
      $scope._cuttid=$stateParams._cuttid;
-	
-	  $scope.releaseitem=function(data){
+     $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:1;//当前数据类型
+     $scope.appmode=[{url1:""},{tool:[[1,"出货"],[2,"求货"]],btn:"发布货品"},{tool:[[1,"有车"],[2,"求车"]],btn:"发布货品"},{tool:[[1,"出租"],[2,"求租"]],btn:"发布仓库"}];
+	 $scope.releaseitem=function(data){
 		  $state.go('releaseItem',{data:data,dataid:data.rdcID,_cuttid:$scope._cuttid});
-	  };
-      $scope.goLogin=function(){
+	 };
+     $scope.goLogin=function(){
     	  window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
-	  };
-	  $scope.goaddrdcpag=function(){
+	 };
+	 $scope.goaddrdcpag=function(){
 		  if(user!==null&&user.id!=0){
 			  $location.path("/coldStorageAdd");
 		  }else{
@@ -29,7 +30,7 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 					   $("#dataList_div").addClass("hide");
 				   }
 			  });
-	 };
+	  };
 	  $scope.initdata=function(){
 		  if(user!==null&&user.id!=0){
 			  $scope.pageChanged();
