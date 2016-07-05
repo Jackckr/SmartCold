@@ -144,6 +144,7 @@ body{
 	padding-left:1.5em;
 }
 #search{
+	width: 30%!important;
 	margin-left: 350px;
 	position: relative;
 }
@@ -171,7 +172,8 @@ body{
 }
 .tableArea thead th{
 	background-color: #E4E4E4;
-	font-size: 20px;
+	font-size: 16px;
+	padding:4px 0!important;
 	font-weight: 400;
 }
 .tableArea thead th:first-child,.tableArea thead th:last-child{
@@ -198,10 +200,12 @@ input[type='checkbox']{
 	cursor: pointer;
 }
 #allSec label{
-	font-weight: 400;
+	font-weight: 400!important;
+	font-size:16px!important;
 }
 tbody tr td{
 	text-align: center;
+	padding:4px 0!important;
 	position: relative;
 	vertical-align:middle!important;
 }
