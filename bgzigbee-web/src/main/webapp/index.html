@@ -36,14 +36,14 @@
 		<!-- 主体区域结构开始 -->
     		<div class="content clearfix">
     			<!-- 侧栏区域结构开始 -->
-    				<div class="sidebar pull-left">
+    				<div class="sidebar pull-left" >
     					<div class="functionColumn">
     						<span class="glyphicon glyphicon-th-large"></span>
     						<span>功能栏目</span>
     					</div>
-    					<ul class="list">
+    					<ul class="list" ng-controller="index">
     					
-    						<li value="">
+    						<li ng-click="goMenu('usermanage','#/home')" id ="usermanage">
     							<span class="glyphicon glyphicon-user"></span>
     							<a>用户管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -54,8 +54,7 @@
     							</ul>
     						</li>
     					
-    						<li value="" ng-if="admin.role==1">
-
+    						<li  ng-click="goMenu('usermanage','#/adminlist')" ng-if="admin.role==1" >
     							<span class="glyphicon glyphicon-user"></span>
     							<a>管理员管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -66,7 +65,7 @@
     							</ul>
     						</li>
     					
-    						<li value="">
+    						<li ng-click="goMenu('usermanage','#/storageManage')">
     							<span class="glyphicon glyphicon-cog"></span>
     							<a>冷库管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -76,7 +75,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li value="">
+    						<li ng-click="goMenu('usermanage','#/storageConfig')">
     							<span class="glyphicon glyphicon-th-list"></span>
     							<a>冷库配置信息</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -86,7 +85,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li value="">
+    						<li ng-click="goMenu('usermanage','#/spiderConfig')">
     							<span class="glyphicon glyphicon-th"></span>
     							<a>信息采集配置</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -96,7 +95,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li value="">
+    						<li ng-click="goMenu('usermanage','#/commentManage')">
     							<span class="glyphicon glyphicon-pencil"></span>
     							<a>评价管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -128,7 +127,7 @@
     	<!-- 主体区域结构结束-->
     	<footer>
     		<p class="copyRight"> &copy;2016&nbsp;Smartcold&nbsp;&nbsp;&nbsp;&nbsp;沪ICP备　16004753</p>
-    	</footer>ter
+    	</footer>
     </body>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
