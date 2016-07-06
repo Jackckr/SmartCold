@@ -179,8 +179,8 @@ div.select_2 select{
     border-bottom: 8px solid #F9F9F9;
 }
 .tableInfo tbody tr td{
-    padding-top:20px;
     border-top: 0;
+    vertical-align:middle!important;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
