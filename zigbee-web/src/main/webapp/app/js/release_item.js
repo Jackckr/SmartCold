@@ -58,7 +58,7 @@ var releaseItem = {
 
 coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
 	releaseItem.$scope=$scope;
-	$scope.appmode=[{},{tit:"货品-测试",tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-测试",tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-测试",tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
+	$scope.appmode=[{},{tit:"货品-测试",tolimg:["goods","outCur","offOurCur"],tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-测试",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-测试",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
 	$scope.gocoldShareComment=function(){
 		  $state.go('coldShareComment');
 	};
@@ -69,9 +69,10 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+parseInt(Math.random()*100)+"!");
     };
     $scope.changtype=function(_em){
-  	      var em=$(_em); $("#item_type_div span").removeClass("outCur");
-	       em.addClass("outCur");
+    	   var em=$(_em); 
+  	       $("#item_type_div span").removeClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]); 
 	       $scope.typeCode=em.attr("value");
+	       em.addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
 	       $scope.typeText=em.text();
 	       $scope.initMode();
     };

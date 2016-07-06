@@ -65,8 +65,10 @@ var releaseCarInfo = {
 
 coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
 	$scope.gl_rdc=1;
+	$scope.dataType = 2;//当前数据类型
 	releaseCarInfo.$scope=$scope;
-	$scope.appmode=[{},{tit:"货品-测试",tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-测试",tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-测试",tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
+	$scope.appmode=[{},{tit:"货品-测试",tolimg:["goods","outCur","noOutCur"],tool:[[1,"出货"],[2,"求货"]]},{tit:"配送-测试",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]]},{tit:"仓库-测试",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]]}];
+//	$scope.appmode=[{},{tit:"货品-测试",tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-测试",tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-测试",tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
 	$scope.gocoldShareComment=function(){ $state.go('coldShareComment');};
     $scope.initMode=function(){
     	$(".mode_hide").addClass("hide");
@@ -75,8 +77,11 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
     	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+parseInt(Math.random()*100)+"!");
     };
     $scope.changtype=function(_em){
-  	      var em=$(_em); $("#item_type_div span").removeClass("outCur"); em.addClass("outCur");
-	       $scope.typeCode=em.attr("value");$scope.typeText=em.text();
+  	       var em=$(_em); 
+  	       $("#item_type_div span").removeClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]); 
+	       $scope.typeCode=em.attr("value");
+	       em.addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
+	       $scope.typeText=em.text();
 	       $scope.initMode();
     };
     $scope.pageChanged = function () {
@@ -93,9 +98,9 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
     	$http.get('/i/city/findCitysByProvinceId', { params: {"provinceID": $scope.toprovinceID}  }).success(function(data) {$scope.city2 = data;}); 
     };
     $scope.initdata = function() {
-        $scope.dataType = 2;//当前数据类型
         $scope.typeCode=$scope.appmode[$scope.dataType].tool[0][0];
         $scope.typeText=$scope.appmode[$scope.dataType].tool[0][1];
+//        alert($scope.appmode[dataType].tolimg[0]);
         $scope.initMode();
         releaseCarInfo.initvalidate();
         //初始化数据
@@ -105,9 +110,9 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
         $http.get('/i/city/findProvinceList').success(function(data) {
         	$scope.provinces = data; 
         	$scope.stprovinceID = data[0].provinceId; 
-//        	$scope.toprovinceID = data[0].provinceId; 
+        	$scope.toprovinceID = data[0].provinceId; 
         	$scope.changcity1();
-//        	$scope.changcity2();
+        	$scope.changcity2();
         }); //加载区域数据
     };
     $scope.initdata();
