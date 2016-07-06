@@ -32,5 +32,9 @@
 		SELECT *
 		FROM `spidercollectionconfig` WHERE `rdcid` = #{rdcid}
 	</select>
+	
+	<delete id="deleteConfig" parameterType="map">
+	    DELETE from `spidercollectionconfig` where rdcid = #{rdcid}
+	</delete>
 
 </mapper>

@@ -39,14 +39,13 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
-import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
 import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
+import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
-import com.smartcold.bgzigbee.manage.entity.UserEntity;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -88,12 +87,12 @@ public class RdcController {
 
 	@Autowired
 	private FileDataMapper fileDataDao;
-	
+
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
-	
+
 	private OperationLogMapper operationLogDao;
-	
+
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
@@ -102,18 +101,18 @@ public class RdcController {
 
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
-	public Object findRdcDTOByPage(@RequestParam(value="pageNum",required=false) Integer pageNum,
-			@RequestParam(value="pageSize") Integer pageSize, 
-			@RequestParam(value="audit", required=false) Integer audit,
-			@RequestParam(value="keyword", required=false) String keyword) {
-		if( !(audit == -1 || audit == 1 || audit == 0) ){
+	public Object findRdcDTOByPage(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+			@RequestParam(value = "pageSize") Integer pageSize,
+			@RequestParam(value = "audit", required = false) Integer audit,
+			@RequestParam(value = "keyword", required = false) String keyword) {
+		if (!(audit == -1 || audit == 1 || audit == 0)) {
 			audit = null;
 		}
-		pageNum = pageNum == null? 1:pageNum;
-		pageSize = pageSize==null? 12:pageSize;
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 12 : pageSize;
 		return rdcService.findRdcDTOByPage(pageNum, pageSize, audit, keyword);
 	}
-	
+
 	@RequestMapping(value = "/findRDCByRDCId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRDCByRDCId(@RequestParam int rdcID) {
@@ -235,16 +234,16 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName, 
-						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
 		}
 		if (!storageFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(storageFiles);
 		}
 		// ftpService.uploadFileList(uploadFileEntities);
-//		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
-		
+		// rdcExtEntity.setStoragepiclocation(new
+		// Gson().toJson(storagepicLocations));
 
 		// save arrangePic
 		if (arrangePic != null) {
@@ -252,7 +251,7 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-//			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
+			// rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
 			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(arrangeFile);
@@ -330,7 +329,7 @@ public class RdcController {
 		 * rdcExtEntity.setStorageheight((byte)0);
 		 * rdcExtEntity.setStoragestruct((byte)0);
 		 */
-		
+
 		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
 		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
 		for (MultipartFile file : files) {
@@ -341,8 +340,8 @@ public class RdcController {
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
 			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName, 
-						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
 		}
 		if (!storageFiles.isEmpty()) {
@@ -364,7 +363,6 @@ public class RdcController {
 
 		return new BaseDto(0);
 	}
-
 
 	@ResponseBody
 	@RequestMapping(value = "/checkName", method = RequestMethod.GET)
@@ -413,38 +411,38 @@ public class RdcController {
 	public Object findSpiderConfig(int rdcId) {
 		return spiderCollectionConfigDao.findConfigByRdcid(rdcId);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/deleteByRdcID", method=RequestMethod.DELETE)
-	public Object deleteByRdcID(Integer rdcID){
-		if (rdcID<=0) {
+	@RequestMapping(value = "/deleteByRdcID", method = RequestMethod.DELETE)
+	public Object deleteByRdcID(Integer rdcID) {
+		if (rdcID <= 0) {
 			return new BaseDto(-1);
 		}
 		rdcService.deleteByRdcId(rdcID);
 		return new BaseDto(0);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/deleteByRdcIDs", method=RequestMethod.DELETE)
-	public Object deleteByRdcIDs(Integer[] rdcIDs){
-		log.info("delete rdcID in:"+Arrays.toString(rdcIDs));
-		for(Integer rdcID:rdcIDs){
+	@RequestMapping(value = "/deleteByRdcIDs", method = RequestMethod.DELETE)
+	public Object deleteByRdcIDs(Integer[] rdcIDs) {
+		log.info("delete rdcID in:" + Arrays.toString(rdcIDs));
+		for (Integer rdcID : rdcIDs) {
 			rdcService.deleteByRdcId(rdcID);
 		}
 		return new BaseDto(0);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/changeAudit", method=RequestMethod.POST)
-	public Object changeAudit(int rdcID, int audit){
+	@RequestMapping(value = "/changeAudit", method = RequestMethod.POST)
+	public Object changeAudit(int rdcID, int audit) {
 		rdcDao.changeAudit(rdcID, audit);
 		return new BaseDto(0);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/changeAudits", method=RequestMethod.POST)
-	public Object changeAudits(int[] rdcIDs, int audit){
-		for(int rdcID:rdcIDs)
+	@RequestMapping(value = "/changeAudits", method = RequestMethod.POST)
+	public Object changeAudits(int[] rdcIDs, int audit) {
+		for (int rdcID : rdcIDs)
 			rdcDao.changeAudit(rdcID, audit);
 		return new BaseDto(0);
 	}
@@ -460,5 +458,13 @@ public class RdcController {
 			return new ResultDto(0, "添加成功");
 		}
 	}
-	
+
+	@RequestMapping(value = "/deleteSpiderConfig", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteSpiderConfig(int rdcid) {
+		spiderCollectionConfigDao.deleteConfig(rdcid);
+
+		return new ResultDto(0, "删除成功");
+	}
+
 }
