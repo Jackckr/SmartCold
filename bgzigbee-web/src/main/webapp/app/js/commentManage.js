@@ -8,17 +8,18 @@ coldWeb.controller('commentManage', function ($scope, $state, $cookies, $http, $
     $scope.bigCurrentPage = 1;
 	$scope.comments = [];
 	$scope.getComments = function(){
-		    $http({
-		    	method:'POST',
-		    	url:'/i/comment/findByPage',
-		    	params:{
-		    		pageNum : $scope.bigCurrentPage,
-		    		pageSize : $scope.maxSize,
-		    		keyword:$scope.keyword
-		    	}}).success(function (data) {
-		    	 $scope.bigTotalItems = data.total;
-			     $scope.comments = data.list;
-		    });
+		$scope.selected = [];
+	    $http({
+	    	method:'POST',
+	    	url:'/i/comment/findByPage',
+	    	params:{
+	    		pageNum : $scope.bigCurrentPage,
+	    		pageSize : $scope.maxSize,
+	    		keyword:$scope.keyword
+	    	}}).success(function (data) {
+	    	 $scope.bigTotalItems = data.total;
+		     $scope.comments = data.list;
+	    });
 	}
     
     $scope.pageChanged = function () {
@@ -56,37 +57,32 @@ coldWeb.controller('commentManage', function ($scope, $state, $cookies, $http, $
         }
     };
 
-
-    $scope.goRdcMap = function () {
-        $state.go('coldStorageMap', {});
-    }
-
-    
-
-    $scope.goEditRdc = function (rdcID) {
-        $state.go('coldStorageEdit', {"rdcID": rdcID});
-    }
-    
     $scope.deleteComment = function(id){
-    	$http({
-    		method:'DELETE',
-    		url:'/i/comment/deleteCommentByID',
-    		params:{
-    			'id':id
-    		}
-    	}).success(resDelRdc);
+    	var r=confirm("删除评论？");
+    	if(r){
+	    	$http({
+	    		method:'DELETE',
+	    		url:'/i/comment/deleteCommentByID',
+	    		params:{
+	    			'id':id
+	    		}
+	    	}).success(resDelRdc);
+    	}
     }
     
     $scope.deleteComments = function(){
-    	var ids = $scope.getIDsFromSelected();
-    	if(ids.length >0 ){
-    		$http({
-    			method:'DELETE',
-    			url:'/i/comment/deleteByIds',
-    			params:{
-    				'ids': ids
-    			}
-    		}).success(resDelRdc);
+    	var r=confirm("批量删除评论？");
+    	if(r){
+	    	var ids = $scope.getIDsFromSelected();
+	    	if(ids.length >0 ){
+	    		$http({
+	    			method:'DELETE',
+	    			url:'/i/comment/deleteByIds',
+	    			params:{
+	    				'ids': ids
+	    			}
+	    		}).success(resDelRdc);
+	    	}
     	}
     }
     

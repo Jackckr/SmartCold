@@ -72,9 +72,6 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
 
     $scope.moreInfos = true;
 
-    $scope.addMore = function () {
-        $scope.moreInfos = !$scope.moreInfos;
-    }
 
     // 获取冷链设施类型
     $http.get('/i/rdc/findAllCompanyDevice').success(function (data) {
@@ -222,6 +219,32 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
+    
+    $scope.drop = function(file){
+        angular.forEach($scope.totalfiles,function(item, key){
+            if(item == file){
+                $scope.totalfiles.splice(key,1);
+            }
+        })
+    }
+    
+    $scope.deletePic = function(filedata){
+    	var r = confirm("删除图片?");
+    	if(r){
+    		$http({
+    			method:'DELETE',
+    			url:'i/rdc/deleteStoragePic',
+    			params:filedata
+    		}).success(function(){
+    			var index = $scope.storagePicShow.indexOf(filedata);
+    			if(index>0)
+    				$scope.storagePicShow.splice(index,1);
+    			else{
+    				$scope.arrangePicShow = null;
+    			}
+    		})
+    	}
+    }
 
     $scope.submit = function(){
     if(checkCommit()){
@@ -278,7 +301,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 data: data
             }).then(function (resp) {
                 alert("修改成功");
-                $state.go('coldStoragelist', {});
+                window.location.reload();
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
