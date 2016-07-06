@@ -4,7 +4,7 @@ $(function() {
 	$(".list li").click(function(event){
 		$(".list li").attr('value','');
 		var i = $(this).index();
-		var urlArry = ['#/home','#/adminlist','#/storageManage','#/storageConfig','#/spiderConfig','#/commentManage'];
+		var urlArry = ['#/home','#/adminlist','#/storageManage','#/storageConfig','#/spiderConfig','#/commentManage','#/'];
 		$(this).attr('value', urlArry[i]);
 
 		$(this).addClass('highlight').siblings().removeClass('highlight');

@@ -26,18 +26,19 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserMapper userDao;
 
-	@RequestMapping(value = "/findUserList", method = RequestMethod.GET)
+	@RequestMapping(value = "/findUserList", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findUserList(@RequestParam(value="pageNum",required=false) Integer pageNum,
 			@RequestParam(value="pageSize") Integer pageSize, 
-			@RequestParam(value="audit", required=false) Integer audit) {
+			@RequestParam(value="audit", required=false) Integer audit,
+			@RequestParam(value="keyword", required=false) String keyword) {
 		if( !(audit == -1 || audit == 1 || audit == 0) ){
 			audit = null;
 		}
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 12:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
-		return new PageInfo<UserEntity>(userDao.findAllUser(audit));
+		return new PageInfo<UserEntity>(userDao.findAllUser(audit,keyword));
 		
 	}
 	
