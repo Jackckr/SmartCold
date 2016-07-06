@@ -257,6 +257,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('coldShareComment', {  //共享257
         url: '/coldShareComment',
         controller: 'coldShareComment',
+        params:{_cuttid:null,showData:null,codeCode:null},//
         templateUrl: 'app/template/coldsharerdc.html'
     }).state('releaseItem', {  //免费发布商品-货品-车
         url: '/releaseItem',

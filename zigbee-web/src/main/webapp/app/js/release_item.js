@@ -58,7 +58,7 @@ var releaseItem = {
 
 coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
 	releaseItem.$scope=$scope;
-	$scope.appmode=[{},{tit:"货品-测试",tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-测试",tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-测试",tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
+	$scope.appmode=[{},{tit:"货品-",tolimg:["goods","outCur","offerCur"],tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
 	$scope.gocoldShareComment=function(){
 		  $state.go('coldShareComment');
 	};
@@ -66,12 +66,13 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	$(".mode_hide").hide();
     	$(".mode_"+$scope.dataType).show();
     	$(".mode_"+$scope.dataType+"_"+ $scope.typeCode).show();
-    	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+parseInt(Math.random()*100)+"!");
+    	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+"-测试");
     };
     $scope.changtype=function(_em){
-  	      var em=$(_em); $("#item_type_div span").removeClass("outCur");
-	       em.addClass("outCur");
+    	   var em=$(_em); 
+  	       $("#item_type_div span").removeClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]); 
 	       $scope.typeCode=em.attr("value");
+	       em.addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
 	       $scope.typeText=em.text();
 	       $scope.initMode();
     };
@@ -92,7 +93,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         }
         $scope.initMode();
         $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-DD-MM HH:mm'});
+        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
         $http.get('/i/city/findProvinceList').success(function(data) {
         	$scope.provinces = data; 
         	$scope.provinceId = data[0].provinceId; 

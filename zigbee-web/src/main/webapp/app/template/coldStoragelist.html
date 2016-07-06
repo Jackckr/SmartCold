@@ -121,7 +121,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3"
-                 style="position:relative;top:30px;left: 0px;height: 500px;padding-right: 10px;border: 1px solid #D3D3D3">
+                 style="position:relative;top:30px;left: 0px;height: 500px;padding: 0;border: 1px solid #D3D3D3">
                 <div style="position:relative;top: 5px;">
                     <a class="btn btn-large btn-success col-lg-6 col-sm-6 col-xs-6 col-md-6" id="hotBoard" ng-click="goHotBoard()">热度排行</a>
                     <a class="btn btn-large btn-default col-lg-6 col-sm-6 col-xs-6 col-md-6" id="scoreBoard" ng-click="goScoreBoard()">评分排行</a>
@@ -130,7 +130,7 @@
 
                 <div class="row" ng-repeat="hotrdc in hotrdcs"
                      style="height: 70px;width: 95%;position: relative;top: 10px;left: 20px;border-style: none none solid none;border-bottom:1px solid #D3D3D3;">
-                    <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
+                    <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9" style="padding:0;">
                         <a href="" ng-click="goDetail(hotrdc.id)" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
                                 src="{{hotrdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
@@ -138,7 +138,7 @@
                             <span style="color: #428bca;font-size: 12px;top: 1px;"><a href="" ng-click="goDetail(hotrdc.id)">{{hotrdc.name}}</a></span>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:5px;left: 0px;">
+                    <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:5px;left: 0px;padding:0;">
                         <a class="btn btn-success" style="position: relative;left:0px;top: 15px;" ng-click="goComment(hotrdc.id)">评价</a>
                     </div>
                 </div>
