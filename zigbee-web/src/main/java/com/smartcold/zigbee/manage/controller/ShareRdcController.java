@@ -316,7 +316,7 @@ public class ShareRdcController  {
 	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request){
 		this.getPageInfo(request);//
 		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user!=null&&user.getId()!=0 &&user!=null&&user.getId()!=0){
+		if(user!=null&&user.getId()!=0 ){
 			HashMap<String, Object> parameters=new HashMap<String, Object>();
 			parameters.put("userid",user.getId());// 
 			PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
