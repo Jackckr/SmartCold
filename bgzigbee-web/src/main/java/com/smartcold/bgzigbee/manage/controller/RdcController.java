@@ -283,21 +283,16 @@ public class RdcController {
 		int rdcId = rdcAddDTO.getRdcId();
 		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
 
-		// rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
+		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
-		// rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
-		// rdcEntity.setCityid(rdcAddDTO.getCityId());
+		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
+		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
-		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
+		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
-		/*
-		 * rdcEntity.setType(0); rdcEntity.setStoragetype("");
-		 * rdcEntity.setColdtype(""); rdcEntity.setContact("");
-		 * rdcEntity.setPosition(""); rdcEntity.setPowerConsume(0);
-		 */
 
 		rdcDao.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
