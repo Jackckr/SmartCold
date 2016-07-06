@@ -10,7 +10,7 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 }
 	$scope.load();
 	// 显示最大页数
-    $scope.maxSize = 8;
+    $scope.maxSize = 12;
     // 总条目数(默认每页十条)
     $scope.bigTotalItems = 12;
     // 当前页
@@ -49,13 +49,6 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 		$scope.getUsers();
     }
     
-    $scope.logout = function () {
-    	$http.get('/i/admin/logout').success(function (data) {
-    		$scope.admin = null;
-        	alert("注销成功");
-        	window.location.reload(); 
-        });
-    };
     $scope.goDeleteUser = function (userID) {
     	$http.get('/i/user/deleteUser', {
             params: {
@@ -177,7 +170,7 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
             	method : 'GET', 
     			url:'/i/user/addUser',
     			params:{
-    				'username':  $scope.username,
+    				'username': encodeURI($scope.username,"UTF-8"),
     				'password': $scope.password,
     				'email' : $scope.email,
     				'telephone' : $scope.telephone
