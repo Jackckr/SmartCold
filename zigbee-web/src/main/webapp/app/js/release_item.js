@@ -48,9 +48,9 @@ var releaseItem = {
             success: function(data) {
             	if(data.success){
             		 alert("发布成功！");
-//            		 releaseItem.$scope.gocoldShareComment();
+            		 releaseItem.$scope.gocoldShareComment();
             	}else{
-            		alert("发布失败！！");
+            		alert("发布失败！！请稍后重试！");
             	}
             }});
         }
