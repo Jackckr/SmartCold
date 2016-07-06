@@ -5,7 +5,6 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 	 $scope.maxSize = 5;	// 显示最大页数
      $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
      $scope.bigCurrentPage = 1;  // 当前页
-     debugger;
      $scope._cuttid=$stateParams._cuttid;//系统传参
      var datatype= $location.search()._cuttid;//外部传参
      if(!datatype){ datatype=1; }

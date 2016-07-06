@@ -48,7 +48,7 @@ var releaseItem = {
             success: function(data) {
             	if(data.success){
             		 alert("发布成功！");
-            		 releaseItem.$scope.gocoldShareComment();
+//            		 releaseItem.$scope.gocoldShareComment();
             	}else{
             		alert("发布失败！！请稍后重试！");
             	}
@@ -66,6 +66,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	$(".mode_hide").hide();
     	$(".mode_"+$scope.dataType).show();
     	$(".mode_"+$scope.dataType+"_"+ $scope.typeCode).show();
+    	$("#txt_rdcID").attr("disabled",$scope.typeCode==2?true:false); 
     	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+"-测试");
     };
     $scope.changtype=function(_em){
@@ -88,8 +89,8 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         } else{
         	$scope.typeCode=$scope.appmode[$scope.dataType].tool[1][0];
             $scope.typeText=$scope.appmode[$scope.dataType].tool[1][1];
-            $("#item_type_div span:last").addClass("outCur");
-            $("#item_type_div span:first").removeClass("outCur");
+            $("#item_type_div span:last").addClass($scope.appmode[$scope.dataType].tolimg[2]);
+            $("#item_type_div span:first").removeClass($scope.appmode[$scope.dataType].tolimg[1]);
         }
         $scope.initMode();
         $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
