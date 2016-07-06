@@ -342,14 +342,15 @@ public class ShareRdcController  {
 				RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
 				rdcShareDTO.setReleaseID(user.getId());//设置发布消id//user.getId()
 				rdcShareDTO.setStauts(1);
-				System.err.println(rdcShareDTO);
 	            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
-	            return ResponseData.newSuccess();
+	            return ResponseData.newSuccess("发布成功！");
+			}else{
+				return ResponseData.newFailure("当前用户没有执行登录操作！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseData.newFailure();
+		return ResponseData.newFailure("发布失败!请稍后重试！");
 	}
 	/**
 	 * 免费发布消息
