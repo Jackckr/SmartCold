@@ -52,8 +52,10 @@ coldWeb.factory('adminService',['$rootScope','$http', function($rootScope,$http)
 		setAdmin: function(admin){
 	    	$rootScope.admin = admin;
 	    	$rootScope.logout = function () {
-	        	$http.get('/i/admin/logout');
-	        	$rootScope.admin = null;
+	        	$http.get('/i/admin/logout').success(function(data){
+	        		$rootScope.admin = null;
+	            });
+	        	window.location.reload();
 	        };
 	        $rootScope.gotoSmartCold = function(){
 	        	cookies = document.cookie.split(";")
@@ -115,6 +117,24 @@ coldWeb.filter('toArray', function () {
     };
 });
 
+
+coldWeb.directive('toggleClass', function() {
+	    return {
+	        restrict: 'A',
+	        link: function(scope, element, attrs) {
+	            element.bind('click', function() {
+	                if(element.attr("class") == "empty") {
+	                    element.removeClass("empty");
+	                    element.addClass(attrs.toggleClass);
+	                    window.location.href=attrs.url;
+	                } else {
+	                    element.removeClass("highlight");
+	                    element.addClass("empty");
+	                }
+	            });
+	        }
+	    };
+	});
 
 coldWeb.directive('snippet', function () {
     return {

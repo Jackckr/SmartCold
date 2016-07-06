@@ -26,7 +26,7 @@
 				   <thead>
 				      <tr>
 				         <th>
-				         	<div id="allSec" onclick="allSec(this)">
+				         	<div>
 				         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox" >
 				         		<label for="allSecSon" >全选</label>
 				         	</div>
@@ -51,7 +51,6 @@
 				         <td>{{user.addTime}}</td>
 				         <td ng-bind="getAudit(user.audit)"></td>
 				         <td>
-				         	<span class="edit"></span>
 				         	<button class="delete" ng-click="goDeleteUser(user.id)"></button>
 				            <button class="btn btn-primary btn-sm" ng-click="changeAudit(user)">审核</button>
 				         </td>

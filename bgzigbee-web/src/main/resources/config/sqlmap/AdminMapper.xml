@@ -27,9 +27,18 @@
 		FROM `admin` WHERE `adminname` = #{adminname} AND `adminpwd` = #{adminpwd} AND `role` = #{adminRole}
 	</select>
 	
-	<select id="findAllAdmin" parameterType="map" resultType="AdminEntity">
-	   SELECT * FROM `admin` WHERE `role` = '0' order by `id` ASC
-	</select>
+	
+	<select id="findAllAdmin" parameterType="int" resultType="AdminEntity">
+         SELECT * FROM `admin`
+		 <where> 
+		    `role` = '0'
+		    <if test="keyword != null">
+		        AND adminname like "%"#{keyword}"%"
+		    </if>
+		 </where>
+         order by `addTime` desc
+    </select>
+	
 	
 	<select id="findAdminByName" parameterType="map" resultType="AdminEntity">
 		SELECT *

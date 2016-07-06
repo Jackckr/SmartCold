@@ -1,5 +1,8 @@
 package com.smartcold.bgzigbee.manage.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -7,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dao.UserMapper;
@@ -25,7 +26,6 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserMapper userDao;
-
 	@RequestMapping(value = "/findUserList", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findUserList(@RequestParam(value="pageNum",required=false) Integer pageNum,
@@ -75,10 +75,11 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	@ResponseBody
-	public Object addUser(UserEntity user) {
+	public Object addUser(UserEntity user) throws UnsupportedEncodingException {
 		if (user.getUsername() == null || user.getPassword() == null) {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
+		user.setUsername(URLDecoder.decode(user.getUsername(), "UTF-8"));
 		userDao.insertUser(user);
 		return new BaseDto(0);
 	}
