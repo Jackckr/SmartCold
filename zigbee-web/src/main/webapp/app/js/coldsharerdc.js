@@ -143,9 +143,9 @@ var serdc = {
 		}
  };	
 var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, $scope, $state, $cookies, $http, $location) {
-	rdcconfig.$scope=$scope;
-	 rdcconfig._cuttid=1;
      $scope.maxSize = 5;	// 显示最大页数
+     rdcconfig._cuttid=3;
+     rdcconfig.$scope=$scope;
      $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
      $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
      good._isLoad=psaction._isLoad=serdc._isLoad=false;
@@ -189,24 +189,35 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
               window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html"+callurl;
 		  }
 	  };
+	  $scope.initMode=function(){
+//		    debugger;
+//		     $scope._cuttid=$stateParams._cuttid;//系统传参
+//		     var datatype= $location.search()._cuttid;//外部传参
+//		     if(!datatype){ datatype=1; }
+//		     $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:datatype;//当前数据类型
+	  };
 	 $scope.initApp=function(){
+//		 debugger;
 		 if(rdcconfig._cuttid==1){//getGDFilterData
 			 if(!good._isLoad){
 			   good._isLoad=true;
 			   good.initFilter();//初始化过滤
 			   $scope.pageChanged1();
+			   $("#table"+rdcconfig._cuttid).removeClass("hide");
 			 }
 		 }else if(rdcconfig._cuttid==2){
 			 if(!psaction._isLoad){
 				 psaction._isLoad=true;
 				 psaction.initFilter();//初始化过滤
 				 $scope.pageChanged2();
-				 }
+				 $("#table"+rdcconfig._cuttid).removeClass("hide");
+				}
 		 }else if(rdcconfig._cuttid==3){
 			  if(!serdc._isLoad){
 				 serdc._isLoad=true;
 			     serdc.initFilter();//初始化过滤
 				 $scope.pageChanged3();
+				 $("#table"+rdcconfig._cuttid).removeClass("hide");
 			  }
 		 }
 	 };

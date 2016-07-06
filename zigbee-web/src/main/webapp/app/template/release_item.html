@@ -21,8 +21,8 @@
     
     	<div class="shareMain">
 			<!-- 出货和求货 -->
-			<div id="item_type_div" class="goods">
-				<span id="tool1" class="outCur"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
+			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
+				<span id="tool1" class="{{appmode[dataType].tolimg[1]}}"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
 				<span id="tool2"  value="{{appmode[dataType].tool[1][0]}}" ng-click="changtype('#tool2')">{{appmode[dataType].tool[1][1]}}</span>
 			</div>
 			<!-- 出货和求货 end -->
