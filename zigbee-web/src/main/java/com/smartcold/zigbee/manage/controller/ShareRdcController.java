@@ -11,14 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
-import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.CacheTool;
 import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 
 @Controller
@@ -288,13 +287,46 @@ public class ShareRdcController  {
 	 * @param dataid
 	 * @return
 	 */
+	@RequestMapping(value="getRdcByUid")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request){
+		this.getPageInfo(request);//
+//		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+//		if(user!=null&&user.getId()!=0 ){
+			HashMap<String, Object> parameters=new HashMap<String, Object>();
+			parameters.put("userid",24);// user.getId()
+			PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
+			return ResponseData.newSuccess(rdcList);
+//		}
+//	    return ResponseData.newFailure();
+	}
+	
+	
+	/**
+	 * 免费发布消息
+	 * @param request
+	 * @param datatype
+	 * @param dataid
+	 * @return
+	 */
 	@RequestMapping(value="shareFreeRelease")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,RdcShareDTO  rdcShareDTO){
-		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
-		rdcShareDTO.setReleaseID(user.getId());//设置发布消id
-		this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
-		return null;
+	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data){
+		try {
+			System.err.println(data);
+//			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
+			if(StringUtil.isnotNull(data)){//&&user!=null&&user.getId()!=0
+				RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+				rdcShareDTO.setReleaseID(24);//设置发布消id//user.getId()
+				rdcShareDTO.setStauts(1);
+				System.err.println(rdcShareDTO);
+//	            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
+	            return ResponseData.newSuccess();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseData.newFailure();
 	}
 	/**
 	 * 免费发布消息
@@ -310,7 +342,5 @@ public class ShareRdcController  {
 		System.err.println(insert);
 		return insert;
 	}
-	
-	
 
 }

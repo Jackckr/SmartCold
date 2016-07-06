@@ -9,17 +9,7 @@ var rdcconfig={
 			$("#table1,#table2,#table3").addClass("hide");
 			$("#table"+em.value).removeClass("hide");
 			rdcconfig.$scope.initApp();//初始化App
-	},freeMaeeinfo:function(){//免费发布的信息
-		 if(rdcconfig._cuttid==1){//getGDFilterData
-			
-		 }else if(rdcconfig._cuttid==2){
-			 
-		 }else if(rdcconfig._cuttid==3){
-			 
-		 }
-	    	$(".ng-scope").load("");
-	}
-    ,addfilter:function(id,em){
+	},addfilter:function(id,em){
 		 $($(id).parent()).prev().removeClass("active");
 	      if(em.hasClass("active")){em.removeClass("active"); }else{ em.addClass("active");}
 	      if( $(id+".active").length==0){//||$(id+".active").length==($(id).length-1)
@@ -35,7 +25,7 @@ var good={
 	initFilter:function(){
 		   $.post("/i/ShareRdcController/getGDFilterData",function(data) {if(data.success){
 			 var gdlist=[], _gdty=data.entity.gt;//经营类型,温度类型
-			 $.each(_gdty, function(i, vo){gdlist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"</li>"); });
+			 $.each(_gdty, function(i, vo){gdlist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"/"+vo.type_desc+"</li>"); });
 			 $("#good_type_div ul").append(gdlist.join("")) ; 
 			 $("#good_type_div li").click(function(event) {rdcconfig.addfilter("#good_type_div li",$(this));});//
 			 $('#sl_lktype1').change(function(){rdcconfig.$scope.changDataMode();});
@@ -156,8 +146,8 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	rdcconfig.$scope=$scope;
 	 rdcconfig._cuttid=1;
      $scope.maxSize = 5;	// 显示最大页数
-     $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
-     $scope.bigCurrentPage = 1;  // 当前页
+     $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
+     $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
      good._isLoad=psaction._isLoad=serdc._isLoad=false;
      $http.get('/i/city/findProvinceList').success(function (data) { $scope.gd_provinces = data; });//加载区域数据
      $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
@@ -166,28 +156,37 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
     	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
      };
      $scope.pageChanged1 = function () {
-		   var _filter=  good.getFilter($scope.bigCurrentPage,$scope.maxSize);
+		   var _filter=  good.getFilter($scope.bigCurrentPage1,$scope.maxSize);
 		   $http({method:'POST',url:'/i/ShareRdcController/getSEGDList',params:_filter}).success(function (data) {
 				$scope.goods = data.data;//
 		        $scope.bigTotalItems1 = data.total;
 		    });
 	   };
 	  $scope.pageChanged2 = function () {
-	   var _filter=  psaction.getFilter($scope.bigCurrentPage,$scope.maxSize);
+	   var _filter=  psaction.getFilter($scope.bigCurrentPage2,$scope.maxSize);
 	   $http({method:'POST',url:'/i/ShareRdcController/getSEPSList',params:_filter}).success(function (data) {
 		   $scope.pslist = data.data;//
 		   $scope.bigTotalItems2 = data.total;
 	   });
 	  };
 	  $scope.pageChanged3 = function () {
-	   var _filter=  serdc.getFilter($scope.bigCurrentPage,$scope.maxSize);
+	   var _filter=  serdc.getFilter($scope.bigCurrentPage3,$scope.maxSize);
 	   $http({method:'POST',url:'/i/ShareRdcController/getSERDCList',params:_filter}).success(function (data) {
 			$scope.rdcs = data.data;//
 	        $scope.bigTotalItems3 = data.total;
 	    });
 	  };
 	  $scope.goRelease=function(){
-		  $state.go('releaseItem',{data:{name:'湖北寿康冷链物流有限公司',address:'湖北省-十堰市-郧阳区',logo:'app/img/rdcHeader.jpg' },dataid:1111,  _cuttid:rdcconfig._cuttid});
+		  if(user!==null&&user.id!=0){
+			  if(rdcconfig._cuttid==2){
+				  $state.go('releaseCarInfo',{_cuttid:rdcconfig._cuttid});
+			  }else{
+				  $state.go('releaseItemList',{_cuttid:rdcconfig._cuttid});
+			  }
+		  }else{
+			  alert("你还没有登录！请登录后操作！");
+              window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList?_cuttid="+rdcconfig._cuttid;
+		  }
 	  };
 	 $scope.initApp=function(){
 		 if(rdcconfig._cuttid==1){//getGDFilterData

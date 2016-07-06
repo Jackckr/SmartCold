@@ -24,11 +24,11 @@
 
     <select id="findAdmin" parameterType="map" resultType="AdminEntity">
 		SELECT *
-		FROM `admin` WHERE `adminname` = #{adminname} AND `adminpwd` = #{adminpwd}
+		FROM `admin` WHERE `adminname` = #{adminname} AND `adminpwd` = #{adminpwd} AND `role` = #{adminRole}
 	</select>
 	
 	<select id="findAllAdmin" parameterType="map" resultType="AdminEntity">
-	   SELECT * FROM `admin` order by `id` ASC
+	   SELECT * FROM `admin` WHERE `role` = '0' order by `id` ASC
 	</select>
 	
 	<select id="findAdminByName" parameterType="map" resultType="AdminEntity">

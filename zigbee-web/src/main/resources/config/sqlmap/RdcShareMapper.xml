@@ -10,11 +10,13 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-
+    <!--     获得睿库信息 -->
+	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+	      select  r.id rdcID, r.name,r.address from rdc r where 1=1 <if test="userid !=null and  userid != ''"> and r.userid=#{userid} </if> GROUP BY r.id ORDER BY r.addtime 
+	</select>
 
 	<!-- 商品共享查询 -->
-	<select id="getSEGDList" parameterType="map"
-		resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+	<select id="getSEGDList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		SELECT
 		s.id,
 		s.rdcID,
@@ -41,7 +43,7 @@
 		<!-- LEFT JOIN comm_mata_data c ON s.codeLave = c.type_code -->
 		WHERE
 		s.stauts = #{sstauts} and s.dataType=#{datatype}
-		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime )
+<!-- 		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime ) -->
 		<if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
 		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!-- 区域 -->
@@ -91,8 +93,8 @@
 		shared_info s
 		LEFT JOIN rdc r ON s.rdcID = r.id
 		WHERE
-		s.stauts = #{sstauts} and s.dataType=#{datatype} AND (CURRENT_TIMESTAMP ()
-		BETWEEN s.validStartTime AND s.validEndTime )
+		s.stauts = #{sstauts} and s.dataType=#{datatype} 
+<!-- 		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime ) -->
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
 		<if test="carType !=null and  carType != ''"> and s.codeLave3 in (${carType}) </if>  <!-- codeLave3:车型 -->
 		<if test="businessType !=null and  businessType != ''"> and s.codeLave1 in (${businessType}) </if>  <!-- codeLave1:业务类型 -->
@@ -133,7 +135,7 @@
 		LEFT JOIN rdcext t on s.rdcID=t.RDCID
 		WHERE
 		s.stauts = #{sstauts} and s.dataType=#{datatype}
-		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime)
+<!-- 		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime) -->
 		<if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
 		<if test="keyword !=null and  keyword != ''"> and r.name like '%${keyword}%' </if>  <!-- 关键字 -->
@@ -147,15 +149,56 @@
 		s.updatetime DESC
 	</select>
 	<insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+		INSERT INTO shared_info   
+		 <set > 
+					                        
+								<if test="    rdcID      !=0">                                       rdcID                =#{rdcID            }  ,           </if>
+								<if test="    releaseID      !=0">	                                 releaseID            =#{releaseID        }  ,                      </if>
+								<if test="    codeLave1      !=null and codeLave1      !=''">	      codeLave1            =#{codeLave1        } ,                       </if>
+								<if test="    codeLave2      !=null and codeLave1      !=''">	     codeLave2            =#{codeLave2        }  ,                      </if>
+								<if test="    codeLave3      !=null and codeLave2      !=''">	     codeLave3            =#{codeLave3        }  ,                      </if>
+								<if test="    codeLave4      !=null and codeLave3      !=''">	     codeLave4            =#{codeLave4        }  ,                      </if>
+								<if test="    title         !=null and codeLave4      !=''">	     title                =#{title            }  ,          </if>
+							
+								<if test="    typeCode      !=0">                                    typeCode             =#{typeCode         }  ,                   </if>
+								<if test="    typeText      !=null and typeText       !=''">	     typeText             =#{typeText         }  ,                    </if>
+								<if test="    unitPrice      !=0 ">	                                 unitPrice            =#{unitPrice        }  ,                       </if>
+								<if test="    sqm      !=0 ">                                        sqm                  =#{sqm              }  ,       </if>
+								<if test="    unit      !=null and unit           !=''">	         unit                 =#{unit             }  ,       </if>
+								<if test="    unit1      !=null and unit1          !=''">	         unit1                =#{unit1            }  ,      </if>
+								<if test="    unit2      !=null and unit2          !=''">	         unit2                =#{unit2            }  ,      </if>
+								<if test="    validStartTime      !=null and validStartTime   !=''"> validStartTime       =#{validStartTime   }  ,                                     </if>
+								<if test="    validEndTime      !=null and validEndTime    !=''">	 validEndTime         =#{validEndTime     }  ,                                        </if>
+								<if test="    applyID      !=0">	                                 applyID              =#{applyID          }  ,                     </if>
+								<if test="    bookings      !=0">	                                 bookings             =#{bookings         }  ,                   </if>
+								<if test="    attrvalue      !=null and attrvalue       !=''">	     attrvalue            =#{attrvalue        }  ,                      </if>
+								<if test="    telephone      !=null and telephone      !=''">	     telephone            =#{telephone        }  ,                      </if>
+								<if test="    note      !=null and note           !=''">	         note                 =#{note             }  ,       </if>
+								<if test="    stauts      !=0">	                                     stauts               =#{stauts           }  ,        </if>
+								<if test="    stprovinceID      !=0">	                             stprovinceID         =#{stprovinceID     }  ,                                 </if>
+								<if test="    stcityID      !=0">	                                 stcityID             =#{stcityID         }  ,                       </if>
+								<if test="    staddress      !=0">	                                 staddress            =#{staddress        }  ,                      </if>
+								<if test="    toprovinceID      !=0">	                             toprovinceID         =#{toprovinceID     }  ,                                    </if>
+								<if test="    tocityID      !=0">	                                 tocityID             =#{tocityID         }  ,                       </if>
+								<if test="    toaddress      !=0">	                                 toaddress            =#{toaddress        }  ,                      </if>
+								<if test="    provinceid    !=0">	                                 provinceid          =#{provinceid       }   ,        </if>
+								<if test="    cityid        !=0">	                                 cityid               =#{cityid           }  ,  </if>
+								<if test="    address       !=null and address     !=''">	        address              =#{address          }  ,  </if>
+								
+								<if test="    dataType      !=0">	                                 dataType             =#{dataType         }                    </if>
+		</set>                                                                                                                         
+	</insert>
+	
+	<insert id="addshareInfo1" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		INSERT INTO share_info (
-		rdcID ,
 		releaseID ,
+		dataType ,
+		rdcID ,
 		codeLave1 ,
 		codeLave2 ,
 		codeLave3 ,
 		codeLave4 ,
 		title ,
-		dataType ,
 		typeCode ,
 		typeText ,
 		unitPrice ,
@@ -180,37 +223,37 @@
 		addtime ,
 		updatetime ,
 		)value(
-		,#{ rdcID }
-		,#{ releaseID }
-		,#{ codeLave1 }
-		,#{ codeLave2 }
-		,#{ codeLave3 }
-		,#{ codeLave4 }
-		,#{ title }
-		,#{ dataType }
-		,#{ typeCode }
-		,#{ typeText }
-		,#{ unitPrice }
-		,#{ sqm }
-		,#{ unit }
-		,#{ unit1 }
-		,#{ unit2 }
-		,#{ validStartTime }
-		,#{ validEndTime }
-		,#{ applyID }
-		,#{ bookings }
-		,#{ attrvalue }
-		,#{ telephone }
-		,#{ note }
-		,#{ stauts }
-		,#{ stprovinceID }
-		,#{ stcityID }
-		,#{ staddress }
-		,#{ toprovinceID }
-		,#{ tocityID }
-		,#{ toaddress }
-		,#{ addtime }
-		,#{ updatetime }
+			<if test="  releaseID       !=0">    #{ releaseID }                                        </if>
+			<if test=" dataType         !=0">	,#{ dataType }                                         </if>
+			<if test=" rdcID            !=0">	,#{   rdcID  }                                         </if>
+			<if test=" codeLave1        !=null and codeLave1      !=''">		,#{ codeLave1 }        </if>
+			<if test=" codeLave2        !=null and codeLave2      !=''">		,#{ codeLave2 }        </if>
+			<if test=" codeLave3        !=null and codeLave3      !=''">		,#{ codeLave3 }        </if>
+			<if test=" codeLave4        !=null and codeLave4      !=''">		,#{ codeLave4 }        </if>
+			<if test=" title            !=null and title          !=''">		,#{ title }            </if>
+			<if test="  typeCode        !=0">    ,#{ typeCode }                                        </if>
+			<if test=" typeText         !=null and typeText       !=''">		,#{ typeText }         </if>
+			<if test=" unitPrice        !=0 ">	 ,#{ unitPrice }                                       </if>
+			<if test=" sqm              !=0 ">   ,#{   sqm     }                                       </if>
+			<if test=" unit             !=null and unit           !=''">		,#{ unit }             </if>
+			<if test=" unit1            !=null and unit1          !=''">		,#{ unit1 }            </if>
+			<if test=" unit2            !=null and unit2          !=''">		,#{ unit2 }            </if>
+			<if test=" validStartTime   !=null and validStartTime   !=''">		,#{ validStartTime }   </if>
+			<if test=" validEndTime     !=null and validEndTime    !=''">		,#{ validEndTime }     </if>
+			<if test=" applyID          !=0">	,#{ applyID }                                          </if>
+			<if test=" bookings         !=0">	,#{ bookings }                                         </if>
+			<if test=" attrvalue        !=null and attrvalue       !=''">		,#{ attrvalue }        </if>
+			<if test=" telephone        !=null and telephone      !=''">		,#{ telephone }        </if>
+			<if test=" note             !=null and note           !=''">		,#{ note }             </if>
+			<if test=" stauts           !=0">	,#{ stauts }                                           </if>
+			<if test=" stprovinceID     !=0">	,#{ stprovinceID }                                     </if>
+			<if test=" stcityID         !=0">	,#{ stcityID }                                         </if>
+			<if test=" staddress        !=0">	,#{ staddress }                                        </if>
+			<if test=" toprovinceID     !=0">	,#{ toprovinceID }                                     </if>
+			<if test=" tocityID         !=0">	,#{ tocityID }                                         </if>
+			<if test=" toaddress        !=0">	,#{ toaddress }                                        </if>
+			<if test=" addtime          !=null and addtime      !=''">		    ,#{ addtime }          </if>
+			<if test=" updatetime       !=null and updatetime     !=''">		,#{ updatetime }       </if>
     );
 	</insert>
 </mapper>

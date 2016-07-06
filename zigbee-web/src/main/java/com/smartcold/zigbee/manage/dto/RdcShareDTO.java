@@ -1,5 +1,7 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.List;
+
 import com.smartcold.zigbee.manage.service.FtpService;
 
 /*
@@ -41,11 +43,13 @@ public class RdcShareDTO {
 	private int toprovinceID;
 	private int tocityID;
 	private int toaddress;
- 
 	// rdc
 	private String name;
+    private int provinceid;//s所在省
+    private int cityid;//s所在城市
 	private String address;
 	private String coldtype;
+	private  List<String> files;
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
 		return id;
@@ -66,6 +70,18 @@ public class RdcShareDTO {
 		this.releaseID = releaseID;
 	}
 	
+	public int getProvinceid() {
+		return provinceid;
+	}
+	public void setProvinceid(int provinceid) {
+		this.provinceid = provinceid;
+	}
+	public int getCityid() {
+		return cityid;
+	}
+	public void setCityid(int cityid) {
+		this.cityid = cityid;
+	}
 	public int getDataType() {
 		return dataType;
 	}
@@ -264,6 +280,13 @@ public class RdcShareDTO {
 	public void setLogo(String logo) {
 		this.logo = FtpService.READ_URL+logo;
 	}
+	public List<String> getFiles() {
+		return files;
+	}
+	public void setFiles(List<String> files) {
+		this.files = files;
+	}
+	
 	
 	
 	

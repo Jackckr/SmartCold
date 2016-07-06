@@ -41,17 +41,19 @@
 				         <td>{{admin.telephone}}</td>
 				         <td>{{admin.addtime}}</td>
 				         <td>
-				         	<span class="edit"></span>
 				         	<button class="delete" ng-click="goDeleteAdmin(admin.id)"></button>
 				         </td>
 				      </tr>
 				   </tbody>
 				</table>
-				<div class="page">
-					<!-- 翻页功能 -->
-			        <div id="green" class="myGreen"></div>
-			        <!-- 翻页功能 -->
-				</div>
+			<div class="page">
+               <!-- 翻页功能 -->
+               <div class="row">
+                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
+	     </div>
 			</div>
 			<!-- 表格操作区域结束 -->
 			<div class="three">

@@ -57,10 +57,10 @@
                         </div>
                         <div class="form-group">
                             <label class="checkbox-inline">
-                                <input type="radio" name="admin" id="admin" value="option1" checked> 管理员
+                                <input type="radio" name="adminrole" id="adminrole" value="0" checked   > 管理员
                             </label>
                             <label class="checkbox-inline">
-                                <input type="radio" name="admin" id="supadmin" value="option2"> 超级管理员
+                                <input type="radio" name="adminrole" id="adminrole" value="1" > 超级管理员
                             </label>                                   
                         </div>
                         <button type="submit" id="submit" class="btn btn-form-common form-control"><span>登录</span></button><!-- 
@@ -97,26 +97,43 @@ $(function(){
 			})
 		})
 	$('#submit').click(function(){
-		adminName = $("#adminname")[0].value;
-		adminPwd = $('#adminpwd')[0].value;
-    	$.ajax({
-    		url:"/i/admin/login?adminName="+adminName+"&adminPwd="+adminPwd,
-    				async:false}).success(function(data){
-    					if(data != false){
-    						document.cookie = data;
-    						if(window.location.hash != ""){
-    							backUrl = window.location.hash;
-    						}else{
-    							backUrl = "#/home"
-    						}
-    						window.location.href = "http://" + window.location.host + "/" + backUrl;
-    						window.event.returnValue=false;
-    					}else{
-    						$('#mention')[0].hidden=false;
-    					}
-    				})
-    });
-})
+	         var rds = document.getElementsByName("adminrole");
+					var adminRole="";
+					for ( var i = 0; i < rds.length; i++) {
+						if (rds.item(i).checked) {
+							adminRole = rds.item(i).getAttribute("value");
+							break;
+						} else {
+							continue;
+						}
+					}
+					adminName = $("#adminname")[0].value;
+					adminPwd = $("#adminpwd")[0].value;
+					$.ajax(
+							{
+								url : "/i/admin/login?adminName=" + adminName
+										+ "&adminPwd=" + adminPwd
+										+ "&adminRole=" + adminRole,
+								async : false
+							}).success(
+							function(data) {
+								if (data != false) {
+									document.cookie = data;
+									if (window.location.hash != "") {
+										backUrl = window.location.hash;
+									} else {
+										backUrl = "#/home"
+									}
+									window.location.href = "http://"
+											+ window.location.host + "/"
+											+ backUrl;
+									window.event.returnValue = false;
+								} else {
+									$('#mention')[0].hidden = false;
+								}
+							})
+				});
+	})
 </script>
     	<!-- 主体区域结构结束-->
     </body>

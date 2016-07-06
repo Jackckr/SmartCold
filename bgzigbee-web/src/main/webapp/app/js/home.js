@@ -9,36 +9,52 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 	})
 }
 	$scope.load();
-	$scope.Allusers = [];
-	$scope.optAudit = '8';
-	 // 获取当前冷库的列表
-	$scope.initTable = function(pageNum,pageSize){
-	    $http({method:'GET',url:'/i/user/findUserList',params:{pageNum : pageNum,pageSize : pageSize, audit:$scope.optAudit}}).success(function (data) {
-	    	$scope.Allusers = data;
-	    });
-    }
-    // 显示最大页数
+	// 显示最大页数
     $scope.maxSize = 8;
     // 总条目数(默认每页十条)
     $scope.bigTotalItems = 12;
     // 当前页
     $scope.bigCurrentPage = 1;
-    $scope.pageChanged = function () {
-    	 $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
-    }
-    $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+	$scope.Allusers = [];
+	$scope.optAudit = '8';
+	 // 获取当前冷库的列表
+
+	  
+    $scope.getUsers = function() {
+		$http({
+			method : 'POST',
+			url : '/i/user/findUserList',
+			params : {
+				pageNum : $scope.bigCurrentPage,
+				pageSize : $scope.maxSize,
+				audit : $scope.optAudit,
+				keyword : $scope.keyword
+			}
+		}).success(function(data) {
+			$scope.bigTotalItems = data.total;
+			$scope.Allusers = data.list;
+		});
+	}
+
+	$scope.pageChanged = function() {
+		$scope.getUsers();
+	}
+	$scope.getUsers();
+	// 获取当前冷库的列表
+	$scope.auditChanged = function(optAudiet) {
+		$scope.getUsers();
+	}
     
-    $scope.auditChanged = function(optAudiet){
-    	$scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+	$scope.goSearch = function () {
+		$scope.getUsers();
     }
     
     $scope.logout = function () {
     	$http.get('/i/admin/logout').success(function (data) {
+    		$scope.admin = null;
+        	alert("注销成功");
+        	window.location.reload(); 
         });
-    	$scope.admin = null;
-    	alert("注销成功");
-    	url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
-		window.location.href = url;
     };
     $scope.goDeleteUser = function (userID) {
     	$http.get('/i/user/deleteUser', {
@@ -91,6 +107,54 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
         	$scope.selected = $scope.Allusers.slice(0);
         }
     };
+    
+    $scope.getUserIDsFromSelected = function(audit){
+    	var userIDs = [];
+    	for(i in $scope.selected){
+    		if(audit != undefined)
+    			$scope.selected[i].audit = audit;
+    		userIDs.push($scope.selected[i].id);
+    	}
+    	return userIDs;
+    }
+    
+    $scope.getAudit = function(i){
+    	if(i==0)
+    		return '待审核';
+    	else if(i>0){
+    		return '通过';
+    	}else{
+    		return '未通过';
+    	}
+    }
+    
+    $scope.changeAudit = function(user){
+    	var r=confirm("通过审核？");
+    	user.audit = r?1:-1;
+    	$http({
+    		'method':'POST',	
+    		'url':'/i/user/changeAudit',
+    		'params':{
+    			'userID':user.id,
+    			'audit':user.audit
+    		}
+    	})
+    }
+    $scope.changeAudits = function(){
+    	var r=confirm("通过审核？");
+    	var audit = r?1:-1
+    	var userIDs = $scope.getUserIDsFromSelected(audit);
+    	if(userIDs.length >0 ){
+    		$http({
+    			method:'POST',
+    			url:'/i/user/changeAudits',
+    			params:{
+    				'userIDs': userIDs,
+    				'audit':audit
+    			}
+    		});
+    	}
+    }
     
     
     function checkInput(){
