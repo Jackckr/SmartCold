@@ -18,7 +18,7 @@ public interface AdminMapper {
 
 	AdminEntity findAdminById(@Param("id") int id);
 	
-	Page<AdminEntity> findAllAdmin();
+	Page<AdminEntity> findAllAdmin(@Param("keyword")String keyword);
 
 	void insertAdmin(AdminEntity adminEntity);
 	

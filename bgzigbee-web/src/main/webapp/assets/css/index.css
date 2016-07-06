@@ -83,6 +83,7 @@ body{
 	cursor: pointer;
 	padding-left: 32px;
 }
+.current { background:#f00} 
 .list li,.list li a{
 	font-size: 18px;
 	color: #949494;
@@ -90,6 +91,9 @@ body{
 .list li a:hover{
 	color: #fff;
 	text-decoration: none;
+}
+.list li a:focus{
+  color : #642100;
 }
 .highlight{
 	color : #fff!important;

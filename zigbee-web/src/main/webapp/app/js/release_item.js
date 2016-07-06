@@ -48,9 +48,9 @@ var releaseItem = {
             success: function(data) {
             	if(data.success){
             		 alert("发布成功！");
-//            		 releaseItem.$scope.gocoldShareComment();
+            		 releaseItem.$scope.gocoldShareComment();
             	}else{
-            		alert("发布失败！！");
+            		alert("发布失败！！请稍后重试！");
             	}
             }});
         }
@@ -73,11 +73,6 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	       em.addClass("outCur");
 	       $scope.typeCode=em.attr("value");
 	       $scope.typeText=em.text();
-	       if(releaseItem.$scope.typeCode==2){ 
-	    	   $("#recinfo_div").addClass("hide"); 
-	    	 }else{ 
-	    		 $("#recinfo_div").removeClass("hide");
-	    	}
 	       $scope.initMode();
     };
     $scope.initdata = function() {
@@ -90,7 +85,6 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
             $scope.typeCode=$scope.appmode[$scope.dataType].tool[0][0];
             $scope.typeText=$scope.appmode[$scope.dataType].tool[0][1];
         } else{
-        	$("#recinfo_div").addClass("hide"); 
         	$scope.typeCode=$scope.appmode[$scope.dataType].tool[1][0];
             $scope.typeText=$scope.appmode[$scope.dataType].tool[1][1];
             $("#item_type_div span:last").addClass("outCur");

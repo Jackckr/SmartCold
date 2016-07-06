@@ -5,11 +5,13 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 	 $scope.maxSize = 5;	// 显示最大页数
      $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
      $scope.bigCurrentPage = 1;  // 当前页
-     $scope._cuttid=$stateParams._cuttid;
-     $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:1;//当前数据类型
+     $scope._cuttid=$stateParams._cuttid;//系统传参
+     var datatype= $location.search()._cuttid;//外部传参
+     if(!datatype){ datatype=1; }
+     $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:datatype;//当前数据类型
      $scope.appmode=[{url1:""},{tool:[[1,"出货"],[2,"求货"]],btn:"发布货品"},{tool:[[1,"有车"],[2,"求车"]],btn:"发布货品"},{tool:[[1,"出租"],[2,"求租"]],btn:"发布仓库"}];
 	 $scope.releaseitem=function(data){
-		  $state.go('releaseItem',{data:data,dataid:data.rdcID,_cuttid:$scope._cuttid});
+		  $state.go('releaseItem',{data:data,dataid:data.rdcID,_cuttid: $scope.dataType});
 	 };
      $scope.goLogin=function(){
     	  window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
@@ -38,7 +40,7 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 			   alert("请登录后执行该操作！");
 			   $("#dataList_div").addClass("hide");
 			   $("#nologin_div").removeClass("hide");
-			  window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd#/releaseItemList";
+			   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd#/releaseItemList";
 		  } 
 	   };
 	  $scope.initdata();
