@@ -90,13 +90,9 @@ public class RdcController {
 
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
-<<<<<<< HEAD
 
-=======
-	
 	private OperationLogMapper operationLogDao;
-	
->>>>>>> ee4d5355eb8db21c451435cddd416d178627483e
+
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
@@ -105,15 +101,15 @@ public class RdcController {
 
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
-	public Object findRdcDTOByPage(@RequestParam(value="pageNum",required=false) Integer pageNum,
-			@RequestParam(value="pageSize") Integer pageSize, 
-			@RequestParam(value="audit", required=false) Integer audit,
-			@RequestParam(value="keyword", required=false) String keyword) {
-		if( !(audit == -1 || audit == 1 || audit == 0) ){
+	public Object findRdcDTOByPage(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+			@RequestParam(value = "pageSize") Integer pageSize,
+			@RequestParam(value = "audit", required = false) Integer audit,
+			@RequestParam(value = "keyword", required = false) String keyword) {
+		if (!(audit == -1 || audit == 1 || audit == 0)) {
 			audit = null;
 		}
-		pageNum = pageNum == null? 1:pageNum;
-		pageSize = pageSize==null? 12:pageSize;
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 12 : pageSize;
 		return rdcService.findRdcDTOByPage(pageNum, pageSize, audit, keyword);
 	}
 
