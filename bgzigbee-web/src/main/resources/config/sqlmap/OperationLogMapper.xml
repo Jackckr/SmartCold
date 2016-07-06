@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.corly.dao.OperationLogMapper">
+  <resultMap id="BaseResultMap" type="com.smartcold.bgzigbee.manage.entity.OperationLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smartcold.bgzigbee.manage.entity.OperationLog">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, admin_id, addtime, result, request_url
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from operation_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from operation_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.entity.OperationLog">
+    insert into operation_log (id, name, admin_id, 
+      addtime, result, request_url, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{result,jdbcType=VARCHAR}, #{requestUrl,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.bgzigbee.manage.entity.OperationLog">
+    update operation_log
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null">
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smartcold.bgzigbee.manage.entity.OperationLog">
+    update operation_log
+    set name = #{name,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=VARCHAR},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smartcold.bgzigbee.manage.entity.OperationLog">
+    update operation_log
+    set name = #{name,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=VARCHAR},
+      request_url = #{requestUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
