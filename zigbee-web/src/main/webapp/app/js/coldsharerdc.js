@@ -1,7 +1,7 @@
 //当前页面配置信息o()
 var rdcconfig={
 	$scope:null,//上下文环境变量
-	_cuttid:2,//当前选择类型	
+	_cuttid:3,//当前选择类型	
 	changMode:function(em){
 			$("#tool_div li").removeClass("current");
 			$(em).addClass("current");
@@ -9,11 +9,7 @@ var rdcconfig={
 			$("#table1,#table2,#table3").addClass("hide");
 			$("#table"+em.value).removeClass("hide");
 			rdcconfig.$scope.initApp();//初始化App
-	},freeMaeeinfo:function(){//免费发布的信息
-		alert("还在建设中，敬请期待！");
-		
-	}
-    ,addfilter:function(id,em){
+	},addfilter:function(id,em){
 		 $($(id).parent()).prev().removeClass("active");
 	      if(em.hasClass("active")){em.removeClass("active"); }else{ em.addClass("active");}
 	      if( $(id+".active").length==0){//||$(id+".active").length==($(id).length-1)
@@ -29,7 +25,7 @@ var good={
 	initFilter:function(){
 		   $.post("/i/ShareRdcController/getGDFilterData",function(data) {if(data.success){
 			 var gdlist=[], _gdty=data.entity.gt;//经营类型,温度类型
-			 $.each(_gdty, function(i, vo){gdlist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"</li>"); });
+			 $.each(_gdty, function(i, vo){gdlist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"/"+vo.type_desc+"</li>"); });
 			 $("#good_type_div ul").append(gdlist.join("")) ; 
 			 $("#good_type_div li").click(function(event) {rdcconfig.addfilter("#good_type_div li",$(this));});//
 			 $('#sl_lktype1').change(function(){rdcconfig.$scope.changDataMode();});
@@ -75,13 +71,13 @@ var psaction={
 					 $('#sl_destination').change(function(){rdcconfig.$scope.changDataMode();});
 					 $('#sl_deliverytime').change(function(){rdcconfig.$scope.changDataMode();});
 			   }});
-//			  $('#reservationtime').daterangepicker({
-//			      timePicker: true,
-//			      timePickerIncrement: 30,
-//			      format: 'MM/DD/YYYY h:mm A'
-//			    }, function(start, end, label) {
-//			      console.log(start.toISOString(), end.toISOString(), label);
-//			    });
+			  $('#reservationtime').daterangepicker({
+			      timePicker: true,
+			      timePickerIncrement: 30,
+			      format: 'YYYY/DD/MM H:mm'
+			    }, function(start, end, label) {
+			      //console.log(start.toISOString(), end.toISOString(), label);
+			    });
 		}
 		,getFilter:function(pageNum,pageSize){
 		    	  var ctlist= ($("#car_type_div li.active").length==$("#car_type_div li").length||$("#car_type_div li.active").length==0)?null:$("#car_type_div li.active");
@@ -147,11 +143,11 @@ var serdc = {
 		}
  };	
 var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, $scope, $state, $cookies, $http, $location) {
-	rdcconfig.$scope=$scope;
-	 rdcconfig._cuttid=1;
      $scope.maxSize = 5;	// 显示最大页数
-     $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
-     $scope.bigCurrentPage = 1;  // 当前页
+     rdcconfig._cuttid=3;
+     rdcconfig.$scope=$scope;
+     $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
+     $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
      good._isLoad=psaction._isLoad=serdc._isLoad=false;
      $http.get('/i/city/findProvinceList').success(function (data) { $scope.gd_provinces = data; });//加载区域数据
      $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
@@ -160,50 +156,71 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
     	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
      };
      $scope.pageChanged1 = function () {
-		   var _filter=  good.getFilter($scope.bigCurrentPage,$scope.maxSize);
+		   var _filter=  good.getFilter($scope.bigCurrentPage1,$scope.maxSize);
 		   $http({method:'POST',url:'/i/ShareRdcController/getSEGDList',params:_filter}).success(function (data) {
 				$scope.goods = data.data;//
 		        $scope.bigTotalItems1 = data.total;
 		    });
 	   };
 	  $scope.pageChanged2 = function () {
-	   var _filter=  psaction.getFilter($scope.bigCurrentPage,$scope.maxSize);
+	   var _filter=  psaction.getFilter($scope.bigCurrentPage2,$scope.maxSize);
 	   $http({method:'POST',url:'/i/ShareRdcController/getSEPSList',params:_filter}).success(function (data) {
 		   $scope.pslist = data.data;//
 		   $scope.bigTotalItems2 = data.total;
 	   });
 	  };
 	  $scope.pageChanged3 = function () {
-	   var _filter=  serdc.getFilter($scope.bigCurrentPage,$scope.maxSize);
+	   var _filter=  serdc.getFilter($scope.bigCurrentPage3,$scope.maxSize);
 	   $http({method:'POST',url:'/i/ShareRdcController/getSERDCList',params:_filter}).success(function (data) {
 			$scope.rdcs = data.data;//
 	        $scope.bigTotalItems3 = data.total;
 	    });
 	  };
+	  $scope.goRelease=function(){
+		  if(user!==null&&user.id!=0){
+			  if(rdcconfig._cuttid==2){ 
+				  $state.go('releaseCarInfo',{_cuttid:rdcconfig._cuttid});
+			  }else{
+				  $state.go('releaseItemList',{_cuttid:rdcconfig._cuttid});
+			  }
+		  }else{
+			  alert("你还没有登录！请登录后操作！");
+			  var callurl=rdcconfig._cuttid==2?"#/releaseCarInfo?_cuttid="+rdcconfig._cuttid:"#/releaseItemList?_cuttid="+rdcconfig._cuttid;
+              window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html"+callurl;
+		  }
+	  };
+	  $scope.initMode=function(){
+//		    debugger;
+//		     $scope._cuttid=$stateParams._cuttid;//系统传参
+//		     var datatype= $location.search()._cuttid;//外部传参
+//		     if(!datatype){ datatype=1; }
+//		     $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:datatype;//当前数据类型
+	  };
 	 $scope.initApp=function(){
+//		 debugger;
 		 if(rdcconfig._cuttid==1){//getGDFilterData
 			 if(!good._isLoad){
 			   good._isLoad=true;
 			   good.initFilter();//初始化过滤
 			   $scope.pageChanged1();
+			   $("#table"+rdcconfig._cuttid).removeClass("hide");
 			 }
 		 }else if(rdcconfig._cuttid==2){
 			 if(!psaction._isLoad){
 				 psaction._isLoad=true;
 				 psaction.initFilter();//初始化过滤
 				 $scope.pageChanged2();
-				 }
+				 $("#table"+rdcconfig._cuttid).removeClass("hide");
+				}
 		 }else if(rdcconfig._cuttid==3){
 			  if(!serdc._isLoad){
 				 serdc._isLoad=true;
 			     serdc.initFilter();//初始化过滤
 				 $scope.pageChanged3();
+				 $("#table"+rdcconfig._cuttid).removeClass("hide");
 			  }
 		 }
 	 };
 	 $scope.initApp();
 	
 });
-//$(document).ready(function() {
-//   
-// });

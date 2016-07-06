@@ -1,5 +1,8 @@
 package com.smartcold.bgzigbee.manage.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dao.AdminMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
@@ -19,6 +24,7 @@ import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.CookieEntity;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.CookieService;
+import com.smartcold.bgzigbee.manage.util.EncodeUtil;
 /**
  * 
  *@author Kaiqiang Jiang
@@ -37,8 +43,9 @@ public class AdminController extends BaseController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
-	public Object login(HttpServletRequest request, String adminName, String adminPwd) {
-		AdminEntity admin = adminDao.findAdmin(adminName, adminPwd);
+	public Object login(HttpServletRequest request, String adminName, String adminPwd, Integer adminRole) {
+		adminPwd = EncodeUtil.encodeByMD5(adminPwd);
+		AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
 		if (admin != null) {
 			String cookie = cookieService.insertCookie(adminName);
 			admin.setAdminpwd("******");
@@ -62,10 +69,15 @@ public class AdminController extends BaseController {
 	}
 
 
-	@RequestMapping(value = "/findAdminList", method = RequestMethod.GET)
+	@RequestMapping(value = "/findAdminList", method = RequestMethod.POST)
 	@ResponseBody
-	public Object findAdminList() {
-		return adminDao.findAllAdmin();
+	public Object findAdminList(@RequestParam(value="pageNum",required=false) Integer pageNum,
+			@RequestParam(value="pageSize") Integer pageSize,
+			@RequestParam(value="keyword", required=false) String keyword) {
+		    pageNum = pageNum == null? 1:pageNum;
+		    pageSize = pageSize==null? 12:pageSize;
+		    PageHelper.startPage(pageNum, pageSize);
+		    return new PageInfo<AdminEntity>(adminDao.findAllAdmin(keyword));
 	}
 	
 	@RequestMapping(value = "/deleteAdmin", method = RequestMethod.GET)
@@ -112,10 +124,12 @@ public class AdminController extends BaseController {
 
 	@RequestMapping(value = "/addAdmin", method = RequestMethod.GET)
 	@ResponseBody
-	public Object addAdmin(AdminEntity admin) {
+	public Object addAdmin(AdminEntity admin) throws UnsupportedEncodingException {
 		if (admin.getAdminname() == null || admin.getAdminpwd() == null) {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
+		admin.setAdminname(URLDecoder.decode(admin.getAdminname(), "UTF-8"));
+		admin.setAdminpwd(EncodeUtil.encodeByMD5(admin.getAdminpwd()));
 		adminDao.insertAdmin(admin);
 		return new BaseDto(0);
 	}

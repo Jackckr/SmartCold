@@ -8,6 +8,8 @@ public class CommentDTO {
 	private int id;
 
 	private int rdcID;
+	
+	private String rdcName;
 
 	private int commerID;
 
@@ -123,6 +125,14 @@ public class CommentDTO {
 
 	public void setPicLocation(String picLocation) {
 		this.picLocation = picLocation;
+	}
+
+	public String getRdcName() {
+		return rdcName;
+	}
+
+	public void setRdcName(String rdcName) {
+		this.rdcName = rdcName;
 	}
 
 	

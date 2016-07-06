@@ -3,26 +3,37 @@
  */
 coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 	$scope.optAudit = '8';
-	$scope.rdcs = [];
-	$scope.initTable = function(pageNum,pageSize){
-		    $http({method:'POST',url:'/i/rdc/findRdcDTOByPage',params:{pageNum : pageNum,pageSize : pageSize, audit:$scope.optAudit}}).success(function (data) {
-		    	 $scope.bigTotalItems = data.total;
-			      $scope.rdcs = data.list;
-		    });
-	}
-    // 显示最大页数
-    $scope.maxSize = 8;
+	// 显示最大页数
+    $scope.maxSize = 10;
     // 总条目数(默认每页十条)
     $scope.bigTotalItems = 12;
     // 当前页
     $scope.bigCurrentPage = 1;
+	$scope.rdcs = [];
+	$scope.getRdcs = function(){
+		$scope.selected = [];
+		    $http({
+		    	method:'POST',
+		    	url:'/i/rdc/findRdcDTOByPage',
+		    	params:{
+		    		pageNum : $scope.bigCurrentPage,
+		    		pageSize : $scope.maxSize, 
+		    		audit:$scope.optAudit,
+		    		keyword:$scope.keyword
+		    	}
+		    }).success(function (data) {
+		    	 $scope.bigTotalItems = data.total;
+			     $scope.rdcs = data.list;
+		    });
+	}
+    
     $scope.pageChanged = function () {
-    	 $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    	 $scope.getRdcs();
     }
-    $scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    $scope.getRdcs();
     // 获取当前冷库的列表
     $scope.auditChanged = function(optAudiet){
-    	$scope.initTable($scope.bigCurrentPage, $scope.maxSize);
+    	$scope.getRdcs();
     }
 
     $http.get('/i/city/findProvinceList').success(function (data) {
@@ -60,33 +71,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     }
 
     $scope.goSearch = function () {
-        var content = $scope.query;
-        // 获取当前冷库的列表
-        $http.get('/i/rdc/findRdcList').success(function (data) {
-            var result = [];
-            var size = data.length;
-            if (size >= 0) {
-                for (var i = 0; i < size; i++) {
-                    if ((data[i].name).indexOf(content) > -1) {
-                        result.push(data[i]);
-                    }
-                }
-            }
-            $scope.Allrdcs = result;
-            $scope.bigTotalItems = result.length;
-            var firstData = [];
-            var minSize = Math.min(result.length, 10);
-            for (var i = 0; i < minSize; i++) {
-                console.log("result:" + result[i].name + result[i].addtime);
-                result[i].score = (Math.random() + 4).toFixed(1);
-                result[i].userRecommendPercent = (Math.random() * 5 + 95).toFixed(0);
-                result[i].userRecommendCount = (Math.random() * 1000 + 9000).toFixed(0);
-                console.log(result[i].score);
-                firstData.push(result[i]);
-            }
-            $scope.rdcs = firstData;
-        });
-        $scope.query = "";
+        $scope.getRdcs();
     }
 
 
@@ -95,25 +80,31 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     }
     
     $scope.deleteRdc = function(rdcID){
-    	$http({
-    		method:'DELETE',
-    		url:'/i/rdc/deleteByRdcID',
-    		params:{
-    			'rdcID':rdcID
-    		}
-    	}).success(resDelRdc);
+    	var r=confirm("删除冷库？");
+    	if(r){
+    		$http({
+    			method:'DELETE',
+    			url:'/i/rdc/deleteByRdcID',
+    			params:{
+    				'rdcID':rdcID
+    			}
+    		}).success(resDelRdc);
+    	}
     }
     
     $scope.deleteRdcs = function(){
-    	var rdcIDs = $scope.getrdcIDsFromSelected();
-    	if(rdcIDs.length >0 ){
-    		$http({
-    			method:'DELETE',
-    			url:'/i/rdc/deleteByRdcIDs',
-    			params:{
-    				'rdcIDs': rdcIDs
-    			}
-    		}).success(resDelRdc);
+    	var r=confirm("批量删除冷库？");
+    	if(r){
+	    	var rdcIDs = $scope.getrdcIDsFromSelected();
+	    	if(rdcIDs.length >0 ){
+	    		$http({
+	    			method:'DELETE',
+	    			url:'/i/rdc/deleteByRdcIDs',
+	    			params:{
+	    				'rdcIDs': rdcIDs
+	    			}
+	    		}).success(resDelRdc);
+	    	}
     	}
     }
     

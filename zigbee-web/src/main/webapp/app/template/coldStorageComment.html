@@ -265,42 +265,40 @@
                             </div>
                             <div class="tab-pane" id="coldStorageComment">
                                 <div class="row">
-                                    <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8" style="position: relative;left: 10px;top: 10px;">
-                                        <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
+                                    <div class="col-lg-7 col-sm-7 col-xs-7 col-md-7" style="position: relative;left: 10px;top: 10px;">
+                                        <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
                                             <i class="{{score < 0.5? 'icon-star-empty': score >= 0.5 && score < 1? 'icon-star-half' :'icon-star'}}"></i>
                                             <i class="{{score < 1.5? 'icon-star-empty': score >= 1.5 && score < 2? 'icon-star-half' :'icon-star'}}"></i>
                                             <i class="{{score < 2.5? 'icon-star-empty': score >= 2.5 && score < 3? 'icon-star-half' :'icon-star'}}"></i>
                                             <i class="{{score < 3.5? 'icon-star-empty': score >= 3.5 && score < 4? 'icon-star-half' :'icon-star'}}"></i>
                                             <i class="{{score < 4.5? 'icon-star-empty': score >= 4.5 && score < 5? 'icon-star-half' :'icon-star'}}"></i>
                                         </div>
-                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                        <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
                                             <span style="color: #428bca;font-size: 20px">{{score}}</span>/5分
                                         </div>
-                                        <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
+                                        <div class="col-lg-5 col-sm-5 col-xs-5 col-md-5">
                                             <span style="color: #428bca;font-size: 20px">{{userRecommendPercent}}</span>%用户推荐
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
+                                    <div class="col-lg-5 col-sm-5 col-xs-5 col-md-5">
                                         <h4>点评均来自真实用户点评！ </h4>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8" style="position: relative;left: 10px;top: 15px;">
-                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span>温度&nbsp;<span
-                                                    style="color: #428bca">{{rdcPositionScore}}</span></span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span>设施&nbsp;<span style="color: #428bca">{{rdcFacility}}</span></span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span>服务&nbsp;<span style="color: #428bca">{{rdcService}}</span></span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                            <span>卫生&nbsp;<span style="color: #428bca">{{rdcHealth}}</span></span>
-                                        </div>
+                                <div class="row"><!-- class="col-lg-8 col-sm-8 col-xs-8 col-md-8"-->
+                                    <div class="pull-left" style="position: relative;left: 10px;top: 15px;width:60%;">
+                                        
+                                            <span style="display:inline-block;width:20%;">温度&nbsp;<span style="color: #428bca">{{rdcPositionScore}}</span></span>
+                                       
+                                        
+                                            <span style="display:inline-block;width:20%;">设施&nbsp;<span style="color: #428bca">{{rdcFacility}}</span></span>
+                                        
+                                        
+                                            <span style="display:inline-block;width:20%;">服务&nbsp;<span style="color: #428bca">{{rdcService}}</span></span>
+                                        
+                                            <span style="display:inline-block;width:20%;">卫生&nbsp;<span style="color: #428bca">{{rdcHealth}}</span></span>
+                                        
                                     </div>
-                                    <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
+                                    <div class="pull-left" style="width:40%;">
                                         <div class="input-group" style="width: 200px">
                                             <input type="text" ng-model="query" class="form-control"
                                                    placeholder="搜索点评关键字">

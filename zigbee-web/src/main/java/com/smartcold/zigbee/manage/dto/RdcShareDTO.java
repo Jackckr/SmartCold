@@ -1,5 +1,7 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.List;
+
 import com.smartcold.zigbee.manage.service.FtpService;
 
 /*
@@ -37,15 +39,17 @@ public class RdcShareDTO {
 	//
 	private int stprovinceID;
 	private int stcityID;
-	private int staddress;
+	private String staddress;
 	private int toprovinceID;
 	private int tocityID;
-	private int toaddress;
- 
+	private String toaddress;
 	// rdc
 	private String name;
+    private int provinceid;//s所在省
+    private int cityid;//s所在城市
 	private String address;
 	private String coldtype;
+	private  List<String> files;
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
 		return id;
@@ -65,18 +69,11 @@ public class RdcShareDTO {
 	public void setReleaseID(int releaseID) {
 		this.releaseID = releaseID;
 	}
-	
 	public int getDataType() {
 		return dataType;
 	}
 	public void setDataType(int dataType) {
 		this.dataType = dataType;
-	}
-	public String getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
 	}
 	public String getTitle() {
 		return title;
@@ -162,6 +159,12 @@ public class RdcShareDTO {
 	public void setSqm(String sqm) {
 		this.sqm = sqm;
 	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 	public String getValidStartTime() {
 		return validStartTime;
 	}
@@ -216,10 +219,10 @@ public class RdcShareDTO {
 	public void setStcityID(int stcityID) {
 		this.stcityID = stcityID;
 	}
-	public int getStaddress() {
+	public String getStaddress() {
 		return staddress;
 	}
-	public void setStaddress(int staddress) {
+	public void setStaddress(String staddress) {
 		this.staddress = staddress;
 	}
 	public int getToprovinceID() {
@@ -234,10 +237,10 @@ public class RdcShareDTO {
 	public void setTocityID(int tocityID) {
 		this.tocityID = tocityID;
 	}
-	public int getToaddress() {
+	public String getToaddress() {
 		return toaddress;
 	}
-	public void setToaddress(int toaddress) {
+	public void setToaddress(String toaddress) {
 		this.toaddress = toaddress;
 	}
 	public String getName() {
@@ -245,6 +248,18 @@ public class RdcShareDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getProvinceid() {
+		return provinceid;
+	}
+	public void setProvinceid(int provinceid) {
+		this.provinceid = provinceid;
+	}
+	public int getCityid() {
+		return cityid;
+	}
+	public void setCityid(int cityid) {
+		this.cityid = cityid;
 	}
 	public String getAddress() {
 		return address;
@@ -258,12 +273,20 @@ public class RdcShareDTO {
 	public void setColdtype(String coldtype) {
 		this.coldtype = coldtype;
 	}
+	public List<String> getFiles() {
+		return files;
+	}
+	public void setFiles(List<String> files) {
+		this.files = files;
+	}
 	public String getLogo() {
 		return logo;
 	}
 	public void setLogo(String logo) {
-		this.logo = FtpService.READ_URL+logo;
+		this.logo = FtpService.READ_URL+ logo;
 	}
+	
+	
 	
 	
 	

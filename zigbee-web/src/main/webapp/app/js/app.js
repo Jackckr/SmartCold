@@ -257,8 +257,24 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('coldShareComment', {  //共享257
         url: '/coldShareComment',
         controller: 'coldShareComment',
+        params:{_cuttid:null,showData:null,codeCode:null},//
         templateUrl: 'app/template/coldsharerdc.html'
-    }).state('review', {
+    }).state('releaseItem', {  //免费发布商品-货品-车
+        url: '/releaseItem',
+        controller: 'releaseItem',
+        params:{data:null,dataid:null,_cuttid:null},
+        templateUrl: 'app/template/release_item.html'
+    }).state('releaseItemList', {  //免费发布商品-货品-车-list
+        url: '/releaseItemList',
+        controller: 'releaseItemList',
+        params:{data:null,dataid:null,_cuttid:null},
+        templateUrl: 'app/template/release_item_list.html'
+    }).state('releaseCarInfo', {  //免费发布车信息
+		url: '/releaseCarInfo',
+		controller: 'releaseCarInfo',
+		params:{data:null,dataid:null,_cuttid:null},
+		templateUrl: 'app/template/release_carinfo.html'
+    }). state('review', {
         url: '/coldStorage/{rdcID}/review',
         controller: 'review',
         templateUrl: 'app/template/review.html'

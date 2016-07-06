@@ -1,6 +1,8 @@
 package com.smartcold.zigbee.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,13 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.RdcShareMapper;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
+import com.smartcold.zigbee.manage.util.SetUtil;
 
 /*
  * Copyright (C) DCIS 版权所有
@@ -24,6 +30,37 @@ public class RdcShareServiceImpl implements RdcShareService {
 	@Autowired
 	private RdcShareMapper rdcShareMapper;
 	
+	
+    @Autowired
+	private FileDataMapper fileDataDao;
+    /**
+     * 
+     */
+	@Override
+	public int addShareMsg(RdcShareDTO rdcShareDTO) {
+		return rdcShareMapper.addshareInfo(rdcShareDTO);
+	}
+    /**
+     * 获得睿库信息
+     * @param filter
+     * @return
+     */
+    public PageInfo<RdcShareDTO> getRdcList(int pageNum,int pageSize,Map<String, Object> parameters){
+  	    PageHelper.startPage(pageNum, pageSize);
+  		Page<RdcShareDTO> serdcList = this.rdcShareMapper.getRdcList(parameters);
+  		for (RdcShareDTO rdcShareDTO : serdcList) {
+  			 List<FileDataEntity> files = fileDataDao.findByBelongIdAndCategory(rdcShareDTO.getRdcID(), FileDataMapper.CATEGORY_STORAGE_PIC);
+  			if(SetUtil.isnotNullList(files)){
+  				List<String> filelist =new ArrayList<String>();
+  				for (FileDataEntity file : files) {
+  					filelist.add(FtpService.READ_URL+file.getLocation());
+				}
+  				rdcShareDTO.setFiles(filelist);
+  				rdcShareDTO.setLogo(files.get(files.size()-1).getLocation());
+  			}
+		}
+  		return new PageInfo<RdcShareDTO>(serdcList);
+    }
 	/**
 	 * 获得货品共享信息
 	 * @param pageNum
@@ -71,6 +108,8 @@ public class RdcShareServiceImpl implements RdcShareService {
 	public int insert(String key) {
 		return this.rdcShareMapper.insert(key);
 	}
+
+	
 
 	
     

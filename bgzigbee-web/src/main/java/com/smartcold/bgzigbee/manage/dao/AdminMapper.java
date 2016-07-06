@@ -1,9 +1,8 @@
 package com.smartcold.bgzigbee.manage.dao;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
+import com.github.pagehelper.Page;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 /**
  * 
@@ -13,13 +12,13 @@ import com.smartcold.bgzigbee.manage.entity.AdminEntity;
  */
 public interface AdminMapper {
 
-	AdminEntity findAdmin(@Param("adminname") String adminname, @Param("adminpwd") String adminpwd);
+	AdminEntity findAdmin(@Param("adminname") String adminname, @Param("adminpwd") String adminpwd, @Param("adminRole") Integer adminRole);
 
 	AdminEntity findAdminByName(@Param("adminname") String adminname);
 
 	AdminEntity findAdminById(@Param("id") int id);
 	
-	List<AdminEntity> findAllAdmin();
+	Page<AdminEntity> findAllAdmin(@Param("keyword")String keyword);
 
 	void insertAdmin(AdminEntity adminEntity);
 	

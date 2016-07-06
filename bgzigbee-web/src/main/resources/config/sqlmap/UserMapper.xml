@@ -27,9 +27,18 @@
 		FROM `user` WHERE `username` = #{username} AND `password` = #{password}
 	</select>
 	
-	<select id="findAllUser" parameterType="map" resultType="UserEntity">
-	   SELECT * FROM `user` order by `id` ASC
-	</select>
+	 <select id="findAllUser" parameterType="int" resultType="UserEntity">
+         SELECT * FROM `user`
+		 <where> 
+			<if test="audit != null">
+			    audit=#{audit}
+			</if>
+		    <if test="keyword != null">
+		        AND username like "%"#{keyword}"%"
+		    </if>
+		 </where>
+         order by `addTime` desc
+    </select>
 	
 	<select id="findUserByName" parameterType="map" resultType="UserEntity">
 		SELECT *
@@ -43,4 +52,9 @@
     <select id="deleteUser" parameterType="map">
 	    DELETE FROM user WHERE `id` = #{id}
 	</select>
+	
+	<update id="changeAudit">
+		update user set audit=#{audit}
+		where id=#{userID}
+	</update>
 </mapper>

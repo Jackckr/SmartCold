@@ -2,20 +2,23 @@ var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkb
     'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation']);
 
 angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
-	$.ajax({
-	      url: '/i/admin/findAdmin',
-	      type: "GET",
-	      dataType: 'json'
-	    }).success(function(data){
-	    	admin = data;
-	    	angular.bootstrap(document, ['ColdWeb']);
-	    })
+	angular.bootstrap(document, ['ColdWeb']);
 });
-coldWeb.run(function (editableOptions, naviService,adminService) {
+coldWeb.run(function (editableOptions, naviService,adminService, $location) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     naviService.setNAVI();
-    adminService.setAdmin(admin);
-    
+    $.ajax({
+        url: '/i/admin/findAdmin',
+        type: "GET",
+        dataType: 'json'
+      }).success(function(data){
+      	admin = data;
+      	if(admin == null || admin.id == 0){
+  			url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
+  			window.location.href = url;
+  		}
+  		adminService.setAdmin(admin);
+      })
 });
 
 coldWeb.config(function ($httpProvider) {
@@ -49,8 +52,10 @@ coldWeb.factory('adminService',['$rootScope','$http', function($rootScope,$http)
 		setAdmin: function(admin){
 	    	$rootScope.admin = admin;
 	    	$rootScope.logout = function () {
-	        	$http.get('/i/admin/logout');
-	        	$rootScope.admin = null;
+	        	$http.get('/i/admin/logout').success(function(data){
+	        		$rootScope.admin = null;
+	            });
+	        	window.location.reload();
 	        };
 	        $rootScope.gotoSmartCold = function(){
 	        	cookies = document.cookie.split(";")
@@ -112,6 +117,24 @@ coldWeb.filter('toArray', function () {
     };
 });
 
+
+coldWeb.directive('toggleClass', function() {
+	    return {
+	        restrict: 'A',
+	        link: function(scope, element, attrs) {
+	            element.bind('click', function() {
+	                if(element.attr("class") == "empty") {
+	                    element.removeClass("empty");
+	                    element.addClass(attrs.toggleClass);
+	                    window.location.href=attrs.url;
+	                } else {
+	                    element.removeClass("highlight");
+	                    element.addClass("empty");
+	                }
+	            });
+	        }
+	    };
+	});
 
 coldWeb.directive('snippet', function () {
     return {

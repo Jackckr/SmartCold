@@ -20,6 +20,8 @@ public class UserEntity {
 
 	private Date UpdateTime;
 
+	private Integer audit;
+	
 	public int getId() {
 		return id;
 	}
@@ -83,5 +85,14 @@ public class UserEntity {
 	public void setUpdateTime(Date updateTime) {
 		UpdateTime = updateTime;
 	}
+
+	public Integer getAudit() {
+		return audit;
+	}
+
+	public void setAudit(Integer audit) {
+		this.audit = audit;
+	}
+	
 
 }

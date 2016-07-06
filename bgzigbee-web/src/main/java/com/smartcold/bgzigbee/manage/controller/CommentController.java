@@ -43,10 +43,11 @@ public class CommentController {
     
     @RequestMapping(value="/findByPage", method=RequestMethod.POST)
     public Object findByPage(@RequestParam(value="pageNum",required=false) Integer pageNum,
-			@RequestParam(value="pageSize", required=false) Integer pageSize){
+			@RequestParam(value="pageSize", required=false) Integer pageSize,
+			@RequestParam(value="keyword", required=false) String keyword){
     	pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 10:pageSize;
-		return commentService.findByPage(pageNum, pageSize);
+		return commentService.findByPage(pageNum, pageSize, keyword);
     }
     
     @RequestMapping(value="/deleteCommentByID", method=RequestMethod.DELETE)

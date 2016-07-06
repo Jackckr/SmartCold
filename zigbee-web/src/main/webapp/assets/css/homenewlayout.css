@@ -45,73 +45,16 @@ h6
 ul,li,ol{
     list-style: none;
 }
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 950px) {
     .black-850{
         display: none;
     }
     .show-850{
         display: block;
     }
-    .navPo{
-        position: absolute;
-        top: 0;
-        left: -48px;
-    }
-    .light>.nav-right{
-        position: relative;
-    }
-    .navShow{
-        height:30px;
-        padding-left:0!important;
-        background-color:#4B4B4C;  
-        margin-top:22px; 
-        border-radius: 4px;        
-    }  
-    .navShow ol{
-    	padding-left:0!important;
-    }  
-    .navShow li{        
-        float:left;
-        width:75px;
-        height:30px;            
-    }
-    .navShow li>span{
-        color: #fff;
-        font-size: 16px;
-        line-height:30px;
-        top:0;
-    }
-    .navShow li a{        
-        display:block;
-        width:100%;
-        height:100%;
-        text-align:center;
-        line-height:30px;
-        color:#333; 
-        font-size:14px;
-        
-    }
-    .navShow li a:hover{        
-        background-color:#448BCB;
-        color:#fff;  
-        text-decoration: none;      
-    }
-    .oneNav{
-        position:relative;  
-        text-align:center;
-        line-height:30px;
-    }    
-    .twoNav{
-        position:absolute;
-        left:0;
-        top:30px;
-        background-color:#fff;  
-        display:none;
-        box-shadow: 0 2px 5px #333;
-    }
     
 }
-@media screen and (min-width: 851px) {
+@media screen and (min-width: 951px) {
     .black-850{
        display: block;
     }
@@ -119,6 +62,64 @@ ul,li,ol{
          display: none;
         
     }
+}
+
+.navPo{
+    position: absolute;
+    top: 0;
+    left: -48px;
+}
+.light>.nav-right{
+    position: relative;
+}
+.navShow{
+    height:30px;
+    padding-left:0!important;
+    background-color:#4B4B4C;  
+    margin-top:22px; 
+    border-radius: 4px;        
+}  
+.navShow ol{
+	padding-left:0!important;
+}  
+.navShow li{        
+    float:left;
+    width:75px;
+    height:30px;            
+}
+.navShow li>span{
+    color: #fff;
+    font-size: 16px;
+    line-height:30px;
+    top:0;
+}
+.navShow li a{        
+    display:block;
+    width:100%;
+    height:100%;
+    text-align:center;
+    line-height:30px;
+    color:#333; 
+    font-size:14px;
+    
+}
+.navShow li a:hover{        
+    background-color:#4B4B4C;
+    color:#fff;  
+    text-decoration: none;      
+}
+.oneNav{
+    position:relative;  
+    text-align:center;
+    line-height:30px;
+}    
+.twoNav{
+    position:absolute;
+    left:0;
+    top:30px;
+    background-color:#fff;  
+    display:none;
+    box-shadow: 0 2px 5px #333;
 }
 .ulWrap{
     width: 80%;
@@ -211,7 +212,7 @@ header .nav > li
 
     display: inline-block;
 
-    width: 60px;
+    width: 80px;
     height: 75px;
 
     text-align: center;
@@ -559,7 +560,7 @@ footer
     padding-top:20px;
 	width:100%;
     text-align: center;
-
+	margin-top:30px;
     background-color: #000;
 }
 footer dl
@@ -623,22 +624,6 @@ footer .footer-right .share-links
     width: 30px;
     height: 30px;
     margin-left: 12px;
-}
-.weixinImg
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -326px -285px;
-}
-.weiboImg
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -404px -285px;
-}
-.facebook
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -366px -285px;
-}
-.twitter
-{
-    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.pngg') no-repeat scroll -285px -285px;
 }
 footer .footer-right .copyright
 {
@@ -875,4 +860,52 @@ header .err-top .err-content{
 section.content{
 	margin:0 auto;
 	width:90%!important;
+}
+
+/*coldStorageList.html页面样式调整*/
+.headArea{
+    background-color: #F7F7F7;
+    vertical-align: middle;
+    padding:8px 0;
+    border-bottom: 1px solid #e3e3e3;
+}
+.spanGroup .row>span:nth-child(1){
+	width:150px;
+	display:inline-block;
+	text-align:right;
+	color:#757575;
+}
+.spanGroup .row>span:nth-child(1)~span{
+	display:inline-block;
+	padding:1px 7px;
+	margin: 7px 5px;
+    color: #757575;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+.spanGroup .row>span:nth-child(1)~span:hover{
+	background-color: #448BC9;
+    border-radius: 2px;
+    text-align: center;
+    color: #fff!important;
+}
+/*coldStorageList.html页面样式调整 end*/
+
+.weixinImg
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -326px -285px;
+}
+.weiboImg
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -404px -285px;
+}
+.facebook
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -366px -285px;
+}
+.twitter
+{
+    background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png') no-repeat scroll -285px -285px;
 }

@@ -14,6 +14,18 @@ import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 public interface RdcShareMapper {
 	public int insert(String key);
 	
+	/**
+	 * 发布消息
+	 * @param rdcShareDTO
+	 * @return
+	 */
+	public int addshareInfo(RdcShareDTO rdcShareDTO);
+   /**
+    * 获得睿库信息
+     * @param filter
+    * @return
+    */
+	public Page<RdcShareDTO> getRdcList(Map<String, Object> parameters);
    /**
     * 获得商品共享信息
     * @param filter
@@ -33,5 +45,10 @@ public interface RdcShareMapper {
 	 * @return
 	 */
   public Page<RdcShareDTO> getSERDCList(Map<String, Object> parameters);
+  
+  
+  
+  
+  
   
 }
