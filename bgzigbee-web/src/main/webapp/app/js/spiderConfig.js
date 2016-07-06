@@ -112,6 +112,14 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			})
 	}
 	
+	$scope.deleteAccount = function(){
+		$http.post('/i/rdc/deleteSpiderConfig?rdcid=' + $scope.vm.choseRdc.id).success(function(data,status,config,headers){
+			alert(data.message);
+			$scope.vm.username = "";
+			$scope.vm.password = "";
+		})
+	}
+	
 	$scope.load();
 	
 });
