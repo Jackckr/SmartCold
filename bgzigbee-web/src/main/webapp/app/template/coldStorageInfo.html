@@ -92,7 +92,7 @@
                         <label class="col-sm-4 control-label">冷藏车数量：</label>
                         <div class="col-sm-8">
                             <div>
-                                <div class="col-sm-8 input-group">
+                                <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">＜1.8T</span>
                                     <input class="form-control" type="text" ng-model="coldTruck1">
                                     <span class="input-group-addon">辆</span>
@@ -103,7 +103,7 @@
                             </div>
                             <br />
                             <div>
-                                <div class="col-sm-6 input-group">
+                                <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">6～14T</span>
                                     <input class="form-control" type="text" ng-model="coldTruck3">
 									<span class="input-group-addon">辆</span>
@@ -265,7 +265,7 @@
                         <div class="form-group minInput">
                             <label class="col-sm-4 control-label">冷库容量：</label>
                             <div class="col-sm-8">
-                                <div class="col-sm-6 input-group">
+                                <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">12度至25度</span>
                                     <input class="form-control" type="text" ng-model="capacity1">
 									<span class="input-group-addon">吨</span>
@@ -274,7 +274,7 @@
                                     <input class="form-control" type="text" ng-model="capacity2">
 									<span class="input-group-addon">吨</span>
                                 </div>
-                                <div class="col-sm-6 input-group">
+                                <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">-18度至-22度</span>
                                     <input class="form-control" type="text" ng-model="capacity3">
 									<span class="input-group-addon">吨</span>
@@ -283,29 +283,14 @@
                                     <input class="form-control" type="text" ng-model="capacity4">
 									<span class="input-group-addon">吨</span>
                                 </div>
-                                <div class="col-sm-3 input-group">
+                                <div class="col-sm-6 input-group">
                                 	<span class="input-group-addon">-30度以下</span>
                                     <input class="form-control" type="text" ng-model="capacity5">
 									<span class="input-group-addon">吨</span>
                                 </div>
                                 <div style="width: 400px"></div>
                             </div>
-            <!--                <div class="col-sm-4">
-                                12度至25度 <input type="text" ng-disabled="editable">吨
-                                12度至-2度 <input type="text" ng-disabled="editable">吨
-                                -18度至-22度 <input type="text" ng-disabled="editable">吨
-                               </div>
-                            <div class="col-sm-4">
-                                -22至-30度 <input type="text" ng-disabled="editable">吨
-                                -30度以下<input type="text" ng-disabled="editable">吨
-                            </div>-->
-            <!--                <div class="col-sm-8">
-                                12度至25度 <input type="text" ng-disabled="editable">吨，
-                                12度至-2度 <input type="text" ng-disabled="editable">吨，
-                                -18度至-22度 <input type="text" ng-disabled="editable">吨，
-                                -22至-30度 <input type="text" ng-disabled="editable">吨，
-                                -30度以下（）吨
-                            </div>-->
+
                             <!--12度至25度（）吨，12度至-2度（）吨，-18度至-22度（）吨，-22至-30度（）吨，-30度以下（）吨-->
                         </div>
                     
@@ -359,14 +344,14 @@
                 </div>
                 <div class="col-lg-12 col-lg-offset-2">
                     <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
-                        <i class="icon-remove-sign danger" style="margin-right:10px;color:red;" ng-click="drop(file)"></i>
+                         <i class="fa fa-times danger"  aria-hidden="true" style="margin-right:10px;color:red;" ng-click="drop(file)"></i>
                     </label>
                 </div>
             </div>
 
 
          <div class="col-lg-8 col-lg-offset-2" style="padding-left: 30%;padding-right: 30%;padding-bottom: 10px">
-		    <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;">提交</button>
+		    <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;" ng-disabled="submitButtonDisable">提交</button>
         </div>
         </div>
       </div>

@@ -26,6 +26,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
+import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcMapper;
 import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
@@ -90,6 +91,8 @@ public class RdcController {
 	
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
+	
+	private OperationLogMapper operationLogDao;
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -171,6 +174,9 @@ public class RdcController {
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
+		if (!rdcService.isNameUnique(rdcEntity.getName())) {
+			return null;
+		}
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
@@ -370,7 +376,7 @@ public class RdcController {
 	public Object checkName(@RequestParam("value") String name) {
 		name = StringUtils.trimAllWhitespace(name);
 		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
-		ngRemoteValidateDTO.setValid(rdcService.checkName(name));
+		ngRemoteValidateDTO.setValid(rdcService.isNameUnique(name));
 		return ngRemoteValidateDTO;
 	}
 
@@ -383,9 +389,12 @@ public class RdcController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteStoragePic", method = RequestMethod.POST)
-	public Object deleteStoragePic(String url) {
-		boolean deleted = ftpService.deleteFile(url);
+	@RequestMapping(value = "/deleteStoragePic", method = RequestMethod.DELETE)
+	public Object deleteStoragePic(FileDataEntity filedata) {
+		boolean deleted = ftpService.deleteFile(filedata.getLocation());
+		if (deleted) {
+			fileDataDao.deleteById(filedata.getId());
+		}
 		return new BaseDto(deleted ? 0 : -1);
 	}
 

@@ -11,6 +11,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     $scope.bigCurrentPage = 1;
 	$scope.rdcs = [];
 	$scope.getRdcs = function(){
+		$scope.selected = [];
 		    $http({
 		    	method:'POST',
 		    	url:'/i/rdc/findRdcDTOByPage',
@@ -79,25 +80,31 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     }
     
     $scope.deleteRdc = function(rdcID){
-    	$http({
-    		method:'DELETE',
-    		url:'/i/rdc/deleteByRdcID',
-    		params:{
-    			'rdcID':rdcID
-    		}
-    	}).success(resDelRdc);
+    	var r=confirm("删除冷库？");
+    	if(r){
+    		$http({
+    			method:'DELETE',
+    			url:'/i/rdc/deleteByRdcID',
+    			params:{
+    				'rdcID':rdcID
+    			}
+    		}).success(resDelRdc);
+    	}
     }
     
     $scope.deleteRdcs = function(){
-    	var rdcIDs = $scope.getrdcIDsFromSelected();
-    	if(rdcIDs.length >0 ){
-    		$http({
-    			method:'DELETE',
-    			url:'/i/rdc/deleteByRdcIDs',
-    			params:{
-    				'rdcIDs': rdcIDs
-    			}
-    		}).success(resDelRdc);
+    	var r=confirm("批量删除冷库？");
+    	if(r){
+	    	var rdcIDs = $scope.getrdcIDsFromSelected();
+	    	if(rdcIDs.length >0 ){
+	    		$http({
+	    			method:'DELETE',
+	    			url:'/i/rdc/deleteByRdcIDs',
+	    			params:{
+	    				'rdcIDs': rdcIDs
+	    			}
+	    		}).success(resDelRdc);
+	    	}
     	}
     }
     
