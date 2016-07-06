@@ -69,11 +69,11 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+parseInt(Math.random()*100)+"!");
     };
     $scope.changtype=function(_em){
-  	      var em=$(_em); $("#item_type_div span").removeClass("outCur");
-	       em.addClass("outCur");
-	       $scope.typeCode=em.attr("value");
-	       $scope.typeText=em.text();
-	       $scope.initMode();
+  	    var em=$(_em); $("#item_type_div span").removeClass("outCur");
+	    em.addClass("outCur");
+	    $scope.typeCode=em.attr("value");
+	    $scope.typeText=em.text();
+	    $scope.initMode();
     };
     $scope.initdata = function() {
         releaseItem.initvalidate();
