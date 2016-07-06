@@ -18,5 +18,5 @@
 	<context:annotation-config />
 	<!-- 默认的注解映射的支持 -->  
 	<mvc:annotation-driven />
-	
+
 </beans>

@@ -26,6 +26,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
+import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcMapper;
 import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
@@ -90,6 +91,8 @@ public class RdcController {
 	
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
+	
+	private OperationLogMapper operationLogDao;
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody

@@ -6,8 +6,8 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 				url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
 				window.location.href = url;
 			}
-	})
-}
+		})
+	}
 	$scope.load();
 	// 显示最大页数
     $scope.maxSize = 8;
