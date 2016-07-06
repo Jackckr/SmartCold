@@ -284,7 +284,7 @@ public class RdcServiceImpl implements RdcService {
 	}
 
 	@Override
-	public boolean checkName(String name) {
+	public boolean isNameUnique(String name) {
 		int count = rdcDao.checkName(name);
 		return count==0;
 	}

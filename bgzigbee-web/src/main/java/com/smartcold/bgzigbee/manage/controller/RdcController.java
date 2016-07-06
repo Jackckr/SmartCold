@@ -174,6 +174,9 @@ public class RdcController {
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
+		if (!rdcService.isNameUnique(rdcEntity.getName())) {
+			return null;
+		}
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
@@ -373,7 +376,7 @@ public class RdcController {
 	public Object checkName(@RequestParam("value") String name) {
 		name = StringUtils.trimAllWhitespace(name);
 		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
-		ngRemoteValidateDTO.setValid(rdcService.checkName(name));
+		ngRemoteValidateDTO.setValid(rdcService.isNameUnique(name));
 		return ngRemoteValidateDTO;
 	}
 

@@ -152,7 +152,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     function checkInput(){
         var flag = true;
         // 检查必须填写项
-        if ($scope.name == undefined || $scope.name == '') {
+        if ($scope.name == undefined || $scope.name == '' || $scope.rdcForm.name.$error.ngRemoteValidate) {
             flag = false;
         }
         if ($scope.provinceId == undefined || $scope.provinceId == '') {
