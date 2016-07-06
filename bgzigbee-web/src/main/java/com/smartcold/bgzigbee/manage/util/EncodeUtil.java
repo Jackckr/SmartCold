@@ -53,7 +53,6 @@ public class EncodeUtil {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 
 	/**

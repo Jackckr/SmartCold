@@ -24,6 +24,7 @@ import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.CookieEntity;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.CookieService;
+import com.smartcold.bgzigbee.manage.util.EncodeUtil;
 /**
  * 
  *@author Kaiqiang Jiang
@@ -43,6 +44,7 @@ public class AdminController extends BaseController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
 	public Object login(HttpServletRequest request, String adminName, String adminPwd, Integer adminRole) {
+		adminPwd = EncodeUtil.encodeByMD5(adminPwd);
 		AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
 		if (admin != null) {
 			String cookie = cookieService.insertCookie(adminName);
@@ -127,6 +129,7 @@ public class AdminController extends BaseController {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
 		admin.setAdminname(URLDecoder.decode(admin.getAdminname(), "UTF-8"));
+		admin.setAdminpwd(EncodeUtil.encodeByMD5(admin.getAdminpwd()));
 		adminDao.insertAdmin(admin);
 		return new BaseDto(0);
 	}

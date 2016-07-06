@@ -21,7 +21,15 @@ coldWeb.controller('storageConfig', function ($rootScope, $scope, $state, $cooki
 		$scope.initTable();
     }
 	
+	
+	function delcfm() {
+        if (!confirm("确认要删除？")) {
+            return false;
+        }
+        return true;
+    }
 	$scope.deleteConfig = function (configID) {
+		if(delcfm()){
     	$http.get('/i/rdc/deleteConfig', {
             params: {
                 "configID": configID,
@@ -36,7 +44,7 @@ coldWeb.controller('storageConfig', function ($rootScope, $scope, $state, $cooki
         	    }  
         	}  
         });
-    	
+	  }
     }
 	
 	function checkInput(){
