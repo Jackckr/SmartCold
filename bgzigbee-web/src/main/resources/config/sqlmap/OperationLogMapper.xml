@@ -18,6 +18,11 @@
   <sql id="Blob_Column_List">
     content
   </sql>
+  <select id="findByPage" resultType="com.smartcold.bgzigbee.manage.dto.OperationLogDTO">
+  	select o.*,a.adminname as adminName
+  	from operation_log as o,admin as a
+  	where o.admin_id = a.id
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

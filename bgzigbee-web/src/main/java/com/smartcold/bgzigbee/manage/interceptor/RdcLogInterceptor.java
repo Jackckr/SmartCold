@@ -14,7 +14,7 @@ import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.OperationLog;
 
-public class LogInterceptor implements HandlerInterceptor{
+public class RdcLogInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	private OperationLogMapper operationLogDao;

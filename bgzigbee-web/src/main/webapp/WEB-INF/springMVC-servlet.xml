@@ -21,7 +21,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/rdc/*"/>
-			<bean class="com.smartcold.bgzigbee.manage.interceptor.LogInterceptor"/>
+			<bean class="com.smartcold.bgzigbee.manage.interceptor.RdcLogInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>
