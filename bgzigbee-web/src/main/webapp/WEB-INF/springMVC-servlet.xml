@@ -18,5 +18,10 @@
 	<context:annotation-config />
 	<!-- 默认的注解映射的支持 -->  
 	<mvc:annotation-driven />
-
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/rdc/*"/>
+			<bean class="com.smartcold.bgzigbee.manage.interceptor.LogInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>

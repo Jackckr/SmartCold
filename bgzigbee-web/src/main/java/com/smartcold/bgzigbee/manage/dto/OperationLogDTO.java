@@ -1,13 +1,15 @@
-package com.smartcold.bgzigbee.manage.entity;
+package com.smartcold.bgzigbee.manage.dto;
 
 import java.util.Date;
 
-public class OperationLog {
+public class OperationLogDTO {
     private Integer id;
 
     private String name;
 
     private Integer adminId;
+    
+    private String adminName;
 
     private Date addtime;
 
@@ -17,10 +19,10 @@ public class OperationLog {
 
     private String content;
     
-    public OperationLog() {
+    public OperationLogDTO() {
 	}
 
-	public OperationLog(String name, Integer adminId, Date addtime, String requestUrl, String content) {
+	public OperationLogDTO(String name, Integer adminId, Date addtime, String requestUrl, String content) {
 		super();
 		this.result = "成功";
 		this.name = name;

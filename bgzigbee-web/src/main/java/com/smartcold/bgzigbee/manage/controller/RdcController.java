@@ -39,7 +39,9 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
+import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
+import com.smartcold.bgzigbee.manage.entity.OperationLog;
 import com.smartcold.bgzigbee.manage.entity.RdcEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
 import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
@@ -91,7 +93,6 @@ public class RdcController {
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
 
-	private OperationLogMapper operationLogDao;
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -258,16 +259,16 @@ public class RdcController {
 		}
 
 		rdcExtDao.insertRdcExt(rdcExtEntity);
-
+		
 		return new BaseDto(0);
 	}
 
 	@RequestMapping(value = "/updateRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object update(@RequestParam(required = false) MultipartFile file0,
+	public Object update(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
+			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO	) throws Exception {
 		// System.out.println(URLDecoder.decode(rdcAddDTO.getRemark(),
 		// "UTF-8").length());
 		/*
