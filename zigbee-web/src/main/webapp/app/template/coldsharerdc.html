@@ -106,30 +106,30 @@
 					</div>
 					<div class="select_2 pull-left">
 						<span>始发地：</span>
-                      <select id="sl_provinceId1"  class="arrdes" style="width: 100px;"  ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()">
+                      <select id="sl_provinceId1"  class="arrdes" style="width: 60px;"  ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()">
                         <option value="">--不限--</option>
                         <option ng-repeat="x in gd_provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
                       </select>
 						 <input class=""  name="stprovinceID"  type="hidden" value="{{stprovinceID}}">
-						 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 100px;"  >
+						 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 60px;"  >
 						    <option value="">--不限--</option>
 							<option ng-repeat="x in city1" value="{{x.cityID}}">{{x.cityName}}</option>
 						 </select>
 					</div>
 					<div class="select_2 pull-left">
 						<span>目的地：</span>
-						<select id="sl_provinceId2"   class="arrdes" style="width: 100px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" >
+						<select id="sl_provinceId2"   class="arrdes" style="width: 60px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" >
 							<option value="">--不限--</option>
 	                        <option ng-repeat="x in gd_provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
 						</select>
 						 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}">
-						 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 100px;" >
+						 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 60px;" >
 						    <option value="">--不限--</option>
 							<option ng-repeat="x in city2" value="{{x.cityID}}">{{x.cityName}}</option>
 						 </select>
 					</div>
 					<div class="select_2 pull-left row" style="width: 365px;">
-						<span class="col-md-2 col-xs-2" style="padding:0;width: 80px;">发货时间：</span>
+						<span class="col-md-2 col-xs-2" style="padding:0;width: 72px;">发货时间：</span>
 		                    <div class="controls time_control" >
 		                     <div class="input-prepend input-group">
 		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
@@ -138,7 +138,7 @@
 		                    </div>
 
 					</div>
-					<div id="search" class=" pull-right">					
+					<div id="search" class=" pull-right" style="width:13%">					
 						<input type="text" placeholder="请输入关键词" id="myText2" class="myText" />
 						<div class="searchImg"><span class="glyphicon glyphicon-search" onclick="$scope.pageChanged1();"></span></div>
 					</div>					

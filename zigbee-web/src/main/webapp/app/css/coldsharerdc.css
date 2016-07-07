@@ -7,7 +7,6 @@
 .shareMain{
 	margin-top:90px;
     width: 100%;
-    min-height:560px;
 }
 .tab,.filter,.tableInfo,nav{
     width: 90%;
@@ -67,6 +66,7 @@ li.current a{
     font-size: 12px;
     font-weight: 600;
     color: #717171;
+    vertical-align:middle;
 }
 .select{
     min-width: 200px;  
@@ -74,15 +74,25 @@ li.current a{
 }
 .select select{
     min-width: 80px;
-    line-height: 20px;
     margin-left: 10px;
     font-size:12px;
+}
+.select select,.select_2 select{
+    border: 1px solid #ccc;
+	border-radius: 3px;
+	height:26px;
+	line-height:26px;
 }
 .select select option{
     text-align: center;
 }
 div.select_2 select{
 	font-size:12px;
+}
+.select_2,.select{
+	height:26px;
+	line-height:26px;
+	vertical-align:middle;
 }
 #search{
     width: 15%;
