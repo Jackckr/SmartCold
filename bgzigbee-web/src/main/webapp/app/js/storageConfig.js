@@ -12,7 +12,7 @@ coldWeb.controller('storageConfig', function ($rootScope, $scope, $state, $cooki
 	$scope.optAudit = '0';
 	$scope.configs = [];
 	$scope.initTable = function(){
-	    $http({method:'POST',url:'/i/rdc/findRdcConfig',params:{audit:$scope.optAudit}}).success(function (data) {
+	    $http({method:'POST',url:'/i/storage/findRdcConfig',params:{audit:$scope.optAudit}}).success(function (data) {
 	          $scope.configs = data;
         });
 	}
@@ -30,7 +30,7 @@ coldWeb.controller('storageConfig', function ($rootScope, $scope, $state, $cooki
     }
 	$scope.deleteConfig = function (configID) {
 		if(delcfm()){
-    	$http.get('/i/rdc/deleteConfig', {
+    	$http.get('/i/storage/deleteConfig', {
             params: {
                 "configID": configID,
                 'audit': $scope.optAudit,
@@ -60,7 +60,7 @@ coldWeb.controller('storageConfig', function ($rootScope, $scope, $state, $cooki
 	        if (checkInput()){
 	            $http({
 	            	method : 'GET', 
-	    			url:'/i/rdc/addConfig',
+	    			url:'/i/storage/addConfig',
 	    			params:{
 	    				'config': encodeURI($scope.config,"UTF-8"),
 	    				'audit': $scope.optAudit,
