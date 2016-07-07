@@ -19,7 +19,7 @@
 		   label.error{float:left;position:absolute;color:red;border:1px solid red;border-radius:5px;padding:5px 20px;text-align:left;margin-left:10px;background-color:white;box-shadow:0 0 5px #d74f5a !important;}
       </style>
     
-    	<div class="shareMain">
+    	<div id="release_main" class="shareMain shar_none">
 			<!-- 出货和求货 -->
 			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
 				<span id="tool1" class="{{appmode[dataType].tolimg[1]}}"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
@@ -27,17 +27,18 @@
 			</div>
 			<!-- 出货和求货 end -->
 			<form id="release_item_from" name="itemform"  class="formInfo" >
-			    <div >
+			    <div id="hide_div">
 			      <input type="hidden" name="dataType" value="{{dataType}}">
 			      <input type="hidden" name="typeCode" value="{{typeCode}}">
 			      <input type="hidden" name="typeText" value="{{typeText}}">
+			      <input type="hidden" name="detlAddress" value="">
 			    </div>
 			    <div id="recinfo_div" class="shar_none mode_hide mode_1_1 mode_3_1">
 			       <input id="txt_rdcID" type="hidden" name="rdcID" value="{{rdcID}}">
 					<div class="outSon">
 						<div class="company">{{rdcinfo.name}}</div><div class="position">
 							<span class="glyphicon glyphicon-map-marker"></span>
-							<span class="textInfo">{{rdcinfo.address}}</span>
+							<span id="rdc_address" class="textInfo">{{rdcinfo.address}}</span>
 						</div>
 					</div>
 					<div class="outSon clearfix">
@@ -56,20 +57,20 @@
 					<div class="infoList clearfix city">
 						<div class="pull-left col-sm-4  control-label "  ><em>*</em>省:</div>
 						<div class="pull-left">
-							 <select name="provinceId" class="form-control" ng-model="provinceId" ng-disabled="editable" ng-change="changcity()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-							<input  name="provinceId"  type="hidden" value="{{provinceId}}">
+							 <select id="sl_provinceId" class="form-control" ng-model="provinceId" ng-disabled="editable" ng-change="changcity()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+							 <input  name="provinceId"  type="hidden" value="{{provinceId}}">
 						</div>
 					</div>
 					<div class="infoList clearfix city"  >
 						<div class="pull-left col-sm-4  control-label " ><em>*</em>市:</div>
 						<div class="pull-left">
-							<select id="sl_id" name="cityid"   class="form-control">
+							<select id="sl_cityid" name="cityid"  class="form-control">
 								<option ng-repeat="x in city" value="{{x.cityID}}">{{x.cityName}}</option>
 							</select>
 						</div>
 					</div>
 				</div>
-				<div class="mode_1 shar_none infoList clearfix">
+				<div class="mode_1 shar_none mode_hide infoList clearfix">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>品类:</div>
 					<div class="pull-left">
 						<select  id="good_type" name="codeLave1" class="form-control" >

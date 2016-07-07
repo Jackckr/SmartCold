@@ -46,7 +46,15 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
     $http.get('/i/admin/findAdmin').success(function(data){
     	$scope.admin = data;
     });
+    
+	function delcfm() {
+        if (!confirm("确认要删除？")) {
+            return false;
+        }
+        return true;
+    }
     $scope.goDeleteAdmin = function (adminID) {
+    	if(delcfm()){
     	$http.get('/i/admin/deleteAdmin', {
             params: {
                 "adminID": adminID
@@ -54,9 +62,11 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
         }).success(function (data) {
         });
     	$state.reload();
+    	}
     }
     
     $scope.deleteAdmins = function(){
+    	if(delcfm()){
     	var adminIDs = [];
     	for(i in $scope.selected){
     		adminIDs.push($scope.selected[i].id);
@@ -72,6 +82,7 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
             });
     	}
     	window.location.reload(); 
+    	}
     }
     
     $scope.selected = [];
@@ -110,30 +121,39 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
         return flag;
     }
 
-    
-    $scope.submit = function(){
-        if (checkInput()){
-            $http({
-            	method : 'GET', 
-    			url:'/i/admin/addAdmin',
-    			params:{
-    				'adminname': encodeURI($scope.adminname, "UTF-8"),
-    				'adminpwd': $scope.adminpwd,
-    				'email' : $scope.email,
-    				'telephone' : $scope.telephone
-    			}
-    		}).then(function (resp) {
-                alert("添加成功");
-                window.location.reload(); 
-            }, function (resp) {
-                console.log('Error status: ' + resp.status);
-            }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.name);
-            });
-        } else {
-            alert("请填写用户名或密码!");
-        }
-    }
+	    
+    $scope.submit = function() {
+		if (checkInput()) {
+			if ($scope.adminpwd == $scope.password1) {
+				$http({
+					method : 'GET',
+					url : '/i/admin/addAdmin',
+					params : {
+						'adminname' : encodeURI($scope.adminname, "UTF-8"),
+						'adminpwd' : $scope.adminpwd,
+						'email' : $scope.email,
+						'telephone' : $scope.telephone
+					}
+				}).then(
+						function(resp) {
+							alert("添加成功");
+							window.location.reload();
+						},
+						function(resp) {
+							console.log('Error status: ' + resp.status);
+						},
+						function(evt) {
+							var progressPercentage = parseInt(100.0
+									* evt.loaded / evt.total);
+							console.log('progress: ' + progressPercentage
+									+ '% ' + evt.name);
+						});
+			} else {
+				alert("两次密码不一致!");
+			}
+		} else {
+			alert("请填写用户名或密码!");
+		}
+	}
     
 });

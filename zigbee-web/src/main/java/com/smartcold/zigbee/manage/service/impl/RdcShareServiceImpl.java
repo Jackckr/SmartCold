@@ -61,6 +61,8 @@ public class RdcShareServiceImpl implements RdcShareService {
 		}
   		return new PageInfo<RdcShareDTO>(serdcList);
     }
+    
+    
 	/**
 	 * 获得货品共享信息
 	 * @param pageNum
@@ -104,6 +106,18 @@ public class RdcShareServiceImpl implements RdcShareService {
 		return new PageInfo<RdcShareDTO>(serdcList);
 	}
 
+	/**
+	   * 获得关联库全部信息
+	   * @param filter
+	   * @return
+	   */
+     @Override
+	 public PageInfo<RdcShareDTO> getSEListByRdcID(int pageNum,int pageSize,Map<String, Object> parameters){
+  	     PageHelper.startPage(pageNum, pageSize);
+		 Page<RdcShareDTO> serdcList = this.rdcShareMapper.getSEListByRdcID(parameters);
+		 return new PageInfo<RdcShareDTO>(serdcList);
+	 }
+	
 	@Override
 	public int insert(String key) {
 		return this.rdcShareMapper.insert(key);

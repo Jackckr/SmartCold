@@ -48,8 +48,16 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 	$scope.goSearch = function () {
 		$scope.getUsers();
     }
-    
+	
+	function delcfm() {
+	        if (!confirm("确认要删除？")) {
+	            return false;
+	        }
+	        return true;
+	}
+	
     $scope.goDeleteUser = function (userID) {
+    	if(delcfm()){
     	$http.get('/i/user/deleteUser', {
             params: {
                 "userID": userID
@@ -57,8 +65,10 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
         }).success(function (data) {
         });
     	$state.reload();
+    	}
     }
     $scope.deleteUsers = function(){
+    	if(delcfm()){
     	var userIDs = [];
     	for(i in $scope.selected){
     		userIDs.push($scope.selected[i].id);
@@ -74,6 +84,7 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
             });
     	}
     	window.location.reload(); 
+    	}
     }
    
     
@@ -166,6 +177,7 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
     
     $scope.submit = function(){
         if (checkInput()){
+          if($scope.password==$scope.password1){
             $http({
             	method : 'GET', 
     			url:'/i/user/addUser',
@@ -184,7 +196,11 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 console.log('progress: ' + progressPercentage + '% ' + evt.name);
             });
-        } else {
+           }
+          else{
+        	  alert("两次密码不一致!");
+           }
+          } else {
             alert("请填写用户名或密码!");
         }
     }

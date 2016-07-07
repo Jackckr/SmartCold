@@ -247,6 +247,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.submit = function(){
+    	$scope.submitButtonDisable = true;
     if(checkCommit()){
         if (checkInput()){
             data = {

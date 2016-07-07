@@ -20,7 +20,7 @@
 		   label.error{float:left;position:absolute;color:red;border:1px solid red;border-radius:5px;padding:5px 20px;text-align:left;margin-left:10px;background-color:white;box-shadow:0 0 5px #d74f5a !important;}
       </style>
     
-    	<div class="shareMain">
+    	<div id="" class="shareMain">
 			<!-- 出货和求货 -->
 			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
 				<span id="tool1" class="{{appmode[dataType].tolimg[1]}}"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
@@ -28,10 +28,13 @@
 			</div>
 			<!-- 出货和求货 end -->
 			<form id="release_item_from" name="itemform"  class="formInfo" >
-			    <div >
+			    <div id="hide_div">
 			      <input type="hidden" name="dataType" value="{{dataType}}">
 			      <input type="hidden" name="typeCode" value="{{typeCode}}">
 			      <input type="hidden" name="typeText" value="{{typeText}}">
+<!-- 			      <input type="hidden" name="attrvalue"> -->
+			      <input type="hidden" name="unit1" >
+			      <input type="hidden" name="unit2" >
 			    </div>
 			    <div  class="hide mode_hide mode_2_1 infoList clearfix" style="width: 600px;margin-left: 150px;">
 			       <input type="hidden" name="rdcID" ng-model="rdcID">
@@ -69,9 +72,26 @@
 					</div>
 				</div>
 				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>业务类型:</div>
+					<div class="pull-left">
+                       <select  id="tx_attrvalue" name="codeLave1" class="form-control" >
+							<option ng-repeat="x in  codeLave1" value="{{x.type_code}}">{{x.type_name}}</option>
+						</select>
+
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>温度类型:</div>
+					<div class="pull-left">
+                       <select  id="tx_attrvalue" name="codeLave2" class="form-control" >
+							<option ng-repeat="x in  codeLave2" value="{{x.type_code}}">{{x.type_name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4  control-label " ><em>*</em>车型:</div>
 					<div class="pull-left">
-                       <select  id="tx_attrvalue" name="attrvalue" class="form-control" >
+                       <select  id="tx_attrvalue" name="codeLave3" class="form-control" >
 							<option ng-repeat="x in  ps_cr_type" value="{{x.id}}">{{x.type}}</option>
 						</select>
 
@@ -83,18 +103,18 @@
 						<div  class="pull-left" >
 						    <div style="width: 600px;"> 
 						             <span class="">出发地</span>
-									 <select name="provinceId1" class="arrdes" style="width: 100px;"   ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-									 <input class=""  name="provinceId1"  type="hidden" value="{{stprovinceID}}">
-									 <select id="sl_id" name="stcityID" class="arrdes" style="width: 100px;"  >
+									 <select id="sl_provinceId1" name="provinceId1" class="arrdes" style="width: 100px;"   ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+									 <input class=""  name="stprovinceID"  type="hidden" value="{{stprovinceID}}">
+									 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 100px;"  >
 										<option ng-repeat="x in city1" value="{{x.cityID}}">{{x.cityName}}</option>
 									 </select>
-									 <input type="text"   name="staddress" class="arrdes" style="width:200px" ch>
+									 <input type="text"   name="staddress" class="arrdes" style="width:200px" >
 							 </div>
 							 <div style="width: 600px;">
 							         <span class="">目的地</span>
-									 <select name="provinceId2"  class="arrdes" style="width: 100px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-									 <input  name="provinceId2"  type="hidden" value="{{toprovinceID}}">
-									 <select id="sl_id" name="tocityID"  class="arrdes" style="width: 100px;" >
+									 <select id="sl_provinceId2" name="provinceId2"  class="arrdes" style="width: 100px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+									 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}">
+									 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 100px;" >
 										<option ng-repeat="x in city2" value="{{x.cityID}}">{{x.cityName}}</option>
 									 </select>
 									 <input type="text"  name="toaddress" class="arrdes" style="width:200px;" ><span>（选填）</span>
@@ -123,6 +143,6 @@
 						<textarea name="note" placehoder="可填" class="form-control">这是测试信息</textarea>
 					</div>
 				</div>
-				<button class="btn btn-primary" onclick="releaseItem.savedata();">提交</button>
+				<button class="btn btn-primary" onclick="releaseCarInfo.savedata();">提交</button>
 			</form>
     	</div>

@@ -28,6 +28,6 @@ public interface RdcService {
 	
 	boolean deleteByRdcId(int rdcID);
 	
-	boolean checkName(String name);
+	boolean isNameUnique(String name);
 
 }

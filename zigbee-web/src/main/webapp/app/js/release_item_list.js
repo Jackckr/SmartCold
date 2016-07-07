@@ -38,9 +38,9 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 			  $scope.pageChanged();
 		  }else{
 			   alert("请登录后执行该操作！");
-			   $("#dataList_div").addClass("hide");
-			   $("#nologin_div").removeClass("hide");
-			   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd#/releaseItemList";
+//			   $("#dataList_div").addClass("hide");
+//			   $("#nologin_div").removeClass("hide");
+			   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
 		  } 
 	   };
 	  $scope.initdata();

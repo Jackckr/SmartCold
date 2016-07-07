@@ -21,6 +21,12 @@ public interface RdcShareService {
  	 */ 
  	  public int addShareMsg(RdcShareDTO rdcShareDTO);
  	  /**
+ 	   * 获得关联库全部信息
+ 	   * @param filter
+ 	   * @return
+ 	   */
+ 	  public PageInfo<RdcShareDTO> getSEListByRdcID(int pageNum,int pageSize,Map<String, Object> parameters);
+ 	  /**
  	   * 获得睿库信息
  	   * @param filter
  	   * @return

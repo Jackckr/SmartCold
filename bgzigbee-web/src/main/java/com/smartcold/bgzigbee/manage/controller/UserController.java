@@ -17,6 +17,7 @@ import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
+import com.smartcold.bgzigbee.manage.util.EncodeUtil;
 
 
 
@@ -80,6 +81,7 @@ public class UserController extends BaseController {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
 		user.setUsername(URLDecoder.decode(user.getUsername(), "UTF-8"));
+		user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 		userDao.insertUser(user);
 		return new BaseDto(0);
 	}

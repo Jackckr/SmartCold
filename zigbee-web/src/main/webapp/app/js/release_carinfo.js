@@ -9,7 +9,7 @@ var releaseCarInfo = {
             rules: {
                 title: { required: true},provinceId: { required: true},city: { required: true },
                 codeLave1: { required: true },
-                staddress: { required: true },
+//                staddress: { required: true },
                 sqm: { required: true,number:true    },
                 unitPrice: { required: true, number:true   },
                 reservation: { required: true }, telephone: { required: true,isMobile: true }
@@ -17,7 +17,7 @@ var releaseCarInfo = {
             messages: {
                 title: { required: "请输入描述!"}, provinceId: { required: "请选择省份!"},
                 city: { required: "请选择城市！" }, codeLave1: { required: "请选择品类！" },
-                staddress: { required: "请输入出发地信息！" },
+//                staddress: { required: "请输入出发地信息！" },
                 sqm: { required: "请输入数量！" ,number:"请正确输入数量信息！！"}, unitPrice: { required: "请输入单价",number:"请正确输入单价信息！" },
                 reservation: { required: "请设置信息有效期！" }, telephone: { required: '请输入联系人电话信息！', pattern: '请正确输入联系方式！'
                 }
@@ -42,6 +42,11 @@ var releaseCarInfo = {
         if(releaseCarInfo.$scope.gl_rdc=1){
         	$("[name=rdcID]").val($("[name=rdcID_list]:checked").val());//仅支持一个
         }
+        var unit1=$("#sl_provinceId1 option:selected").text()+"-"+$("#sl_cityid1 option:selected").text();
+        var unit2=$("#sl_provinceId2 option:selected").text()+"-"+$("#sl_cityid2 option:selected").text();
+        $("#hide_div [name=unit1]").val(unit1);
+        $("#hide_div [name=unit2]").val(unit2);
+//        $("#hide_div [name=attrvalue]").val($("#tx_attrvalue option:selected").text());
         var data = $("#release_item_from").serializeArray();
         $.each(data, function(index, item) { vo[item.name] = item.value; });
         var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
@@ -68,7 +73,7 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
 	$scope.dataType = 2;//当前数据类型
 	releaseCarInfo.$scope=$scope;
 	$scope.appmode=[{},{tit:"货品-测试",tolimg:["goods","outCur","offerCur"],tool:[[1,"出货"],[2,"求货"]]},{tit:"配送-测试",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]]},{tit:"仓库-测试",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]]}];
-	$scope.gocoldShareComment=function(){ $state.go('coldShareComment');};
+	$scope.gocoldShareComment=function(){ $state.go('coldShareComment',{_cuttid: 2});};
     $scope.initMode=function(){
     	$(".mode_hide").addClass("hide");
     	$(".mode_"+$scope.dataType).removeClass("hide");
@@ -99,13 +104,16 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
     $scope.initdata = function() {
         $scope.typeCode=$scope.appmode[$scope.dataType].tool[0][0];
         $scope.typeText=$scope.appmode[$scope.dataType].tool[0][1];
-//        alert($scope.appmode[dataType].tolimg[0]);
         $scope.initMode();
         releaseCarInfo.initvalidate();
         //初始化数据
         $scope.pageChanged();
         $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-DD-MM HH:mm'});
-        $http.get('/i/ShareRdcController/getCarType').success(function(data) {$scope.ps_cr_type = data.entity.ct;}); //加载区域数据
+        $http.get('/i/ShareRdcController/getPSFilterData').success(function(data) {
+        	$scope.codeLave1 = data.entity.fm;
+        	$scope.codeLave2 = data.entity.cl;
+        	$scope.ps_cr_type = data.entity.sk;
+        }); //
         $http.get('/i/city/findProvinceList').success(function(data) {
         	$scope.provinces = data; 
         	$scope.stprovinceID = data[0].provinceId; 

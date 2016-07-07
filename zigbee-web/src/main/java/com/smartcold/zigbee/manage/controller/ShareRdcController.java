@@ -153,28 +153,28 @@ public class ShareRdcController  {
 			}
 		return result;
 	}
-	/**
-	 * 获得配送过滤信息
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/getCarType")
-	@ResponseBody
-	public ResponseData<HashMap<String, Object>> getCarType(HttpServletRequest request) {
-		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-		String key="getCarType";
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		if(CacheTool.hasCache(key)){
-			data= (HashMap<String, Object>) CacheTool.getdate(key);
-			result.setEntity(data);
-		}else{
-			data.put("ct", this.commonService.getBaseData("storagetruck", "id", "type"));// 车型//
-			result.setEntity(data);
-			CacheTool.setData(key, data);  
-		}
-		return result;
-	}
+//	/**
+//	 * 获得配送过滤信息
+//	 * 
+//	 * @return
+//	 */
+//	@SuppressWarnings("unchecked")
+//	@RequestMapping(value = "/getCarType")
+//	@ResponseBody
+//	public ResponseData<HashMap<String, Object>> getCarType(HttpServletRequest request) {
+//		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
+//		String key="getCarType";
+//		HashMap<String, Object> data = new HashMap<String, Object>();
+//		if(CacheTool.hasCache(key)){
+//			data= (HashMap<String, Object>) CacheTool.getdate(key);
+//			result.setEntity(data);
+//		}else{
+//			data.put("ct", this.commonService.getBaseData("storagetruck", "id", "type"));// 车型//
+//			result.setEntity(data);
+//			CacheTool.setData(key, data);  
+//		}
+//		return result;
+//	}
 	/**
 	 * 提供筛选条件
 	 * @param sqm
@@ -198,6 +198,33 @@ public class ShareRdcController  {
 		return "";
 	}
 	//-------------------------------------------------2->数据展示 1：货品 2：配送  3：仓库具有公共属性,可重用方法，但为了后期维护和程序健壮性----采用3个公共方法,方便分库分表---------------------------------------------------
+	/**
+	 * 获得货品信息
+	 * @param request
+	 * @param type  出售求货
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param goodtype 过滤条件
+	 * @param keyword  关键字
+	 * @param provinceid 地域
+	 * @param orderBy 排序
+	 * @return
+	 */
+	@RequestMapping(value = "/getSEListByRdcID")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getSEListByRdcID(HttpServletRequest request,String rdcID,String type,String datatype, String keyword,String orderBy) {
+		this.getPageInfo(request);
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("sstauts", 1);//必须
+		filter.put("type", type);
+		filter.put("rdcID", rdcID);
+		filter.put("keyword", keyword);
+		filter.put("datatype", datatype);
+		filter.put("orderBy", orderBy);
+		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEListByRdcID(this.pageNum, this.pageSize, filter);
+		ResponseData<RdcShareDTO> resout = ResponseData.newSuccess(data);
+		resout.setSuccess(true);
+		return resout;
+	}
     /**
      * 获得货品信息
      * @param request
@@ -241,8 +268,7 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value = "/getSEPSList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String type,String datatype, String keyword,String origintion,
-			String destination,String deliverytime,String storagetempertype,String businessType,String carType,String orderBy) {
+	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String type,String datatype, String keyword,String origintion,String destination,String deliverytime,String storagetempertype,String businessType,String carType,String orderBy) {
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);

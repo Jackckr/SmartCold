@@ -25,16 +25,25 @@ var releaseItem = {
     },
    
     savedata: function() {
-        if ($("#release_item_from").valid()) {
-            this.addvo();
-        } else {
-            $($("#release_item_from input.error")[0]).focus();
-        }
+    	if(user!==null&&user.id!=0){
+    	     if ($("#release_item_from").valid()) {
+    	            this.addvo();
+    	        } else {
+    	            $($("#release_item_from input.error")[0]).focus();
+    	        }
+		  }else{
+			   alert("请登录后执行该操作！");
+			   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd#/releaseItemList";
+			   return;
+		  } 
     },
     addvo: function() {
     	var vo = {}; 
         $("#hl_validEndTime").val( $("[name=daterangepicker_end]").val());
         $("#hl_validStartTime").val($("[name=daterangepicker_start]").val());
+        var detlAddress=releaseItem.$scope.typeCode==1?$("#rdc_address").text():$("#sl_provinceId option:selected").text()+"-"+$("#sl_cityid option:selected").text();
+        $("#hide_div [name=detlAddress]").val(detlAddress);
+        $("#release_main div.mode_hide:hidden").find("input,select").attr("disabled",true); 
         var data = $("#release_item_from").serializeArray();
         $.each(data, function(index, item) { vo[item.name] = item.value; });
         var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
@@ -48,7 +57,7 @@ var releaseItem = {
             success: function(data) {
             	if(data.success){
             		 alert("发布成功！");
-//            		 releaseItem.$scope.gocoldShareComment();
+            		 releaseItem.$scope.gocoldShareComment();
             	}else{
             		alert("发布失败！！请稍后重试！");
             	}
@@ -57,10 +66,17 @@ var releaseItem = {
 };
 
 coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
+	if(user==null||(user!=null&&user.id==0)){
+		   alert("请登录后执行该操作！");
+		   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd#/releaseItemList";
+		   return;
+	 }else{
+		 $("#release_main").show();
+	 }
 	releaseItem.$scope=$scope;
 	$scope.appmode=[{},{tit:"货品-",tolimg:["goods","outCur","offerCur"],tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
-	$scope.gocoldShareComment=function(){
-		  $state.go('coldShareComment');
+	$scope.gocoldShareComment=function(){ 
+		$state.go('coldShareComment',{_cuttid: $scope.dataType});
 	};
     $scope.initMode=function(){
     	$(".mode_hide").hide();
@@ -98,6 +114,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         $http.get('/i/city/findProvinceList').success(function(data) {
         	$scope.provinces = data; 
         	$scope.provinceId = data[0].provinceId; 
+        	$scope.provinceName = data[0].provinceName; 
         	$scope.changcity();
         }); //加载区域数据
         $scope.changcity = function(id) {
