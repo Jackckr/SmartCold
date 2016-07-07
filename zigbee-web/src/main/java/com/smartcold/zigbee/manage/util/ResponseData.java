@@ -189,7 +189,7 @@ public class ResponseData<T> {
 
 	//---------------------------------------------------------
 	//请求信息
-	private boolean success;
+	private boolean success=true;
 	private String message;
 	private Exception exp;
 	//数据对象
