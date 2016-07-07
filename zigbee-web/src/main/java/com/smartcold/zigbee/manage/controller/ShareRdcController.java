@@ -222,8 +222,6 @@ public class ShareRdcController  {
 		filter.put("orderBy", orderBy);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEListByRdcID(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
-//		resout.setSuccess(true);
-//		return resout;
 	}
     /**
      * 获得货品信息

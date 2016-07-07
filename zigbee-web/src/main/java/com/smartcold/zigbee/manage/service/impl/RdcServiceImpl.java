@@ -1,5 +1,8 @@
 package com.smartcold.zigbee.manage.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -9,6 +12,7 @@ import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.RdcScoreDTO;
+import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.entity.*;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
@@ -20,7 +24,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:14)
@@ -377,5 +383,14 @@ public class RdcServiceImpl implements RdcService {
             }
         }
     }
+
+	@Override
+	public PageInfo<RdcEntityDTO> getRDCList(int pageNum, int pageSize,HashMap<String, Object> filter) {
+		PageHelper.startPage(pageNum, pageSize);
+		Page<RdcEntityDTO> serdcList = this.rdcDao.getRDCList(filter);
+		return new PageInfo<RdcEntityDTO>(serdcList);
+	}
+
+	
 
 }
