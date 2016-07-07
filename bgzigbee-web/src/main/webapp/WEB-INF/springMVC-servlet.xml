@@ -21,6 +21,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/rdc/*"/>
+			<mvc:mapping path="/comment/*"/>
 			<bean class="com.smartcold.bgzigbee.manage.interceptor.RdcLogInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
