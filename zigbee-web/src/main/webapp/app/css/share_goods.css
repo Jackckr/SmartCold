@@ -173,8 +173,8 @@ div.select_2 select{
     border-bottom: 8px solid #F9F9F9;
 }
 .tableInfo tbody tr td{
-    padding-top:20px;
     border-top: 0;
+    vertical-align:middle;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -339,7 +339,7 @@ em{
      color: #438BCB;
 }
 .car>span.noCarCur:before{
-    background: url(../img/shareitem/car.fw.png) no-repeat -26px -16px;
+    background: url(../img/shareitem/car.png) no-repeat center center;
 }	
 	
 /* icon切换 */

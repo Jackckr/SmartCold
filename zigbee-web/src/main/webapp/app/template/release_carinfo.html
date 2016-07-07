@@ -7,7 +7,7 @@
            .form-control{display: inline-block;}
            .input-group-addon{display: block;height: 34px;float: left;width: 49px;}
            .form-control:FOCUS{box-shadow: 0 0 2px #00A6FF !important; border-color: #00A6FF !important;}
-           .sp_radio{margin-right: 10px;}
+           .sp_radio{margin-right: 60px;}
            .sp_radio input{width: 20px !important;}
             .arrdes{padding: 6px 12px;font-size: 12px;color: #555;background-color: #fff;background-image: none;border-radius: 4px; }
            /*错误提示样式*/
@@ -36,10 +36,10 @@
 			      <input type="hidden" name="unit1" >
 			      <input type="hidden" name="unit2" >
 			    </div>
-			    <div  class="hide mode_hide mode_2_1 infoList clearfix" style="width: 600px;margin-left: 150px;">
+			    <div  class="hide mode_hide mode_2_1 infoList clearfix" style="width: 600px;">
 			       <input type="hidden" name="rdcID" ng-model="rdcID">
 				    <div style="width: 100%;">
-				      <div><span class="sp_radio"><input type="radio" name="ro_rdc" ng-model="gl_rdc" value="1" checked="checked">关联库</span><span class="sp_radio"><input type="radio"  name="ro_rdc" value="0" ng-model="gl_rdc">不关联库</span></div>
+				      <div style="text-indent: 8em;"><span class="sp_radio"><input type="radio" name="ro_rdc" ng-model="gl_rdc" value="1" checked="checked">关联库</span><span class="sp_radio"><input type="radio"  name="ro_rdc" value="0" ng-model="gl_rdc">不关联库</span></div>
 				      <div id="rdclist_info" ng-show="gl_rdc==1">
 					         <table class="table tableInfo" >
 							   <tbody>
