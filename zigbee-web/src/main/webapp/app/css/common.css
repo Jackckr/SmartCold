@@ -1,7 +1,7 @@
 body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td { margin: 0; padding: 0; border: 0;}
 html { color: #000; }
 html,body { height: 100%; }
-body,button,input,select,textarea{ font-size: 12px; font-family: 'Microsoft Yahei','微软雅黑', \5FAE\8F6F\96C5\9ED1,'宋体',\5b8b\4f53,arial,'Hiragino Sans GB',Tahoma,Arial,Helvetica!important; }
+body,button,input,select,textarea{ font-size: 14px; font-family: 'Microsoft Yahei','微软雅黑', \5FAE\8F6F\96C5\9ED1,'宋体',\5b8b\4f53,arial,'Hiragino Sans GB',Tahoma,Arial,Helvetica!important; }
 ul,ol,li,dl,dd,dt{list-style: none;}
 em { font-style: normal; }
 a { text-decoration: none; }

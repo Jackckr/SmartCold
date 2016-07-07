@@ -909,3 +909,16 @@ section.content{
 {
     background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png) no-repeat scroll -285px -285px;
 }
+/*coldComment*/
+.commentinfo tr{
+    border-bottom:1px dashed #e0e2e4;
+    height:30px;
+    line-height:30px;
+}
+.commentinfo tr>td:first-child{
+  width: 150px;
+  table-layout:fixed;
+}
+.commentinfo td ul{
+	margin-bottom:0;
+}
