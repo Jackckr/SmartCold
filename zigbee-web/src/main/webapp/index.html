@@ -237,6 +237,14 @@
 
         });
     });
+    //解决移动端点击下拉列表之后下拉框不消失bug
+    var $menu = $('.navShow').find('ol').children('li').children('a');
+	$(document).click(function(e) {
+		if(!(e.target == $menu[0])) {
+			$menu.find('ol').hide();
+		}
+	})
+
 </script>
     </body>
 </html>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.corly.dao.OperationLogMapper">
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.OperationLogMapper">
   <resultMap id="BaseResultMap" type="com.smartcold.bgzigbee.manage.entity.OperationLog">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -18,6 +18,12 @@
   <sql id="Blob_Column_List">
     content
   </sql>
+  <select id="findByPage" resultType="com.smartcold.bgzigbee.manage.dto.OperationLogDTO">
+  	select o.*,a.adminname as adminName
+  	from operation_log as o,admin as a
+  	where o.admin_id = a.id
+  	order by id DESC
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -31,10 +37,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.entity.OperationLog">
-    insert into operation_log (id, name, admin_id, 
+    insert into operation_log (name, admin_id, 
       addtime, result, request_url, 
       content)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER}, 
+    values (#{name,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER}, 
       #{addtime,jdbcType=TIMESTAMP}, #{result,jdbcType=VARCHAR}, #{requestUrl,jdbcType=VARCHAR}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>

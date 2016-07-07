@@ -73,27 +73,57 @@
     <update id="updateRdc" parameterType="com.smartcold.bgzigbee.manage.entity.RdcEntity" >
         update Rdc
         <set >
-            <if test="address != null" >
-                address = #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="sqm != null" >
-                sqm = #{sqm,jdbcType=FLOAT},
-            </if>
-            <if test="struct != null" >
-                struct = #{struct,jdbcType=VARCHAR},
-            </if>
-            <if test="capacity != null" >
-                capacity = #{capacity,jdbcType=FLOAT},
-            </if>
-            <if test="cellphone != null" >
-                cellphone = #{cellphone,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null" >
-                phone = #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="commit != null" >
-                commit = #{commit,jdbcType=VARCHAR},
-            </if>
+            <if test="name != null">
+        		name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+			  address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+			  addtime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="type != null">
+			  type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="capacity != null">
+			  capacity = #{capacity,jdbcType=REAL},
+			</if>
+			<if test="sqm != null">
+			  sqm = #{sqm,jdbcType=REAL},
+			</if>
+			<if test="struct != null">
+			  struct = #{struct,jdbcType=VARCHAR},
+			</if>
+			<if test="storagetype != null">
+			  storagetype = #{storagetype,jdbcType=VARCHAR},
+			</if>
+			<if test="coldtype != null">
+			  coldtype = #{coldtype,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceid != null">
+			  provinceid = #{provinceid,jdbcType=INTEGER},
+			</if>
+			<if test="cityid != null">
+			  cityid = #{cityid,jdbcType=INTEGER},
+			</if>
+			<if test="contact != null">
+			  contact = #{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null">
+			  position = #{position,jdbcType=VARCHAR},
+			</if>
+			<if test="cellphone != null">
+			  cellphone = #{cellphone,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+			  phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="powerConsume != null">
+			  powerConsume = #{powerConsume,jdbcType=REAL},
+			</if>
+			<if test="commit != null">
+			  commit = #{commit,jdbcType=LONGVARCHAR},
+			</if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>

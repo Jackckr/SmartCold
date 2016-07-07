@@ -18,7 +18,7 @@ import com.smartcold.bgzigbee.manage.entity.StorageManageTypeEntity;
 import com.smartcold.bgzigbee.manage.entity.StorageTemperTypeEntity;
 import com.smartcold.bgzigbee.manage.entity.StorageTypeEntity;
 @Controller
-@RequestMapping(value = "/rdc")
+@RequestMapping(value = "/storage")
 public class StorageConfigController {
 	@Autowired
 	private StorageManageTypeMapper manageTypeDao;

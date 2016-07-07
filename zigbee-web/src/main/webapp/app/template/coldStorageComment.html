@@ -17,26 +17,26 @@
         </div>
         <div class="row" style="width: 100%">
             <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;top:30px;padding-bottom: 100px;">
-                <div class="row">
+                <div class="row" style="vertical-align:middle">
                     <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;left: 40px">
                         <h3 style="color: #428bca">{{rdcName}}</h3>
                     </div>
                     <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 visible-lg" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative; left: 120px;"
+                        <a class="btn btn-success" style="position: absolute; right:12px; top:24px;"
                            ng-click="goComment()">立即评价</a>
                     </div>
                     <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 visible-md" style="position: relative;top:5px;left: 0px;">
-                        <a class="btn btn-success" style="position: relative;left: 60px;"
+                        <a class="btn btn-success" style="position: absolute; right:12px; top:24px;"
                            ng-click="goComment()">立即评价</a>
                     </div>
                 </div>
                 <div class="row">
-                	<div class="col-lg-12" style="left:38px;">
+                	<div class="col-lg-12">
 	                	<ng-gallery images="storageGallery" thumbs-num="5" ng-if="storageGallery.length"></ng-gallery>
                 	</div>
                 </div>
                 <div class="row">
-                    <div class="tabbable" style="position: relative;left:50px;top: 10px">
+                    <div class="tabbable" style="position: relative;top: 10px">
                         <ul class="nav nav-tabs" style="position:relative;left:0px;width:93%;height: 50%;">
                             <li id="detail" class="active">
                                 <a href="" ng-click="goColdStorageDetail(rdcId)" data-toggle="tab">冷库详情</a>
@@ -47,85 +47,85 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="coldStorageDetail">
-                                <div class="row" style="position: relative;left: 0px;top: 10px">
+                                <div class="row" style="position: relative;left: 0px;top: 10px;margin:0">
                                     <h3 style="color: #00a7d0">基本信息</h3>
-                                    <table style="width: 92%">
+                                    <table class="commentinfo">
                                         <tbody>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">地理位置</td>
+                                        <tr>
+                                            <td>地理位置</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         该冷库位于{{provinceName}}省,{{cityName}}市,{{rdcAddress}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">冷库总面积</td>
+                                        <tr>
+                                            <td>冷库总面积</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{area}} 平方米
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">冷库经营类型</td>
+                                        <tr>
+                                            <td>冷库经营类型</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{manageType}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">商品存放类型</td>
+                                        <tr>
+                                            <td>商品存放类型</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{storageType}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">冷库温度类型</td>
+                                        <tr>
+                                            <td>冷库温度类型</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{temperType}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">冷藏车数量</td>
+                                        <tr>
+                                            <td>冷藏车数量</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         ●＜1.8T:{{coldTruck1}}辆&nbsp;&nbsp;&nbsp;●1.8～6T:{{coldTruck2}}辆&nbsp;&nbsp;&nbsp;●6～14T:{{coldTruck3}}辆&nbsp;&nbsp;&nbsp;●＞14T:{{coldTruck4}}辆
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">联系电话</td>
+                                        <tr>
+                                            <td>联系电话</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{phoneNum}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <!--<tr style="border-bottom:1px dashed #e0e2e4; height:30px;">
-                                            <td style="width: 12%">座机号</td>
+                                        <!--<tr>
+                                            <td>座机号</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{telphoneNum}}
                                                     </li>
                                                 </ul>
@@ -134,126 +134,126 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="row" style="position: relative;left: 0px;top: 10px">
+                                <div class="row" style="position: relative;left: 0px;top: 10px;margin:0">
                                     <h3 style="color: #00a7d0">其他信息</h3>
-                                    <table style="width: 92%">
+                                    <table class="commentinfo">
                                         <tbody>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="tonnage === undefined || tonnage === 0">
-                                            <td style="width: 12%">冷库吨位</td>
+                                        <tr ng-hide="tonnage === undefined || tonnage === 0">
+                                            <td>冷库吨位</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{tonnage}} 吨
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="structure === undefined || structure === '' || structure === null">
-                                            <td style="width: 12%">冷库结构</td>
+                                        <tr ng-hide="structure === undefined || structure === '' || structure === null">
+                                            <td>冷库结构</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{structure}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="companyDevice === undefined || companyDevice === 0">
-                                            <td style="width: 12%">冷链设施类型</td>
+                                        <tr ng-hide="companyDevice === undefined || companyDevice === 0">
+                                            <td>冷链设施类型</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{companyDevice}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="platform === undefined">
-                                            <td style="width: 12%">是否有月台</td>
+                                        <tr ng-hide="platform === undefined">
+                                            <td>是否有月台</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{platform}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="lihuoRoom === undefined">
-                                            <td style="width: 12%">是否有理货间</td>
+                                        <tr ng-hide="lihuoRoom === undefined">
+                                            <td>是否有理货间</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{lihuoRoom}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="hasLihuoRoom || lihuoArea === undefined || lihuoArea === 0">
-                                            <td style="width: 12%">理货区面积</td>
+                                        <tr ng-hide="hasLihuoRoom || lihuoArea === undefined || lihuoArea === 0">
+                                            <td>理货区面积</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{lihuoArea}} 平方米
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="hasLihuoRoom || lihuoTemperCtr === undefined">
-                                            <td style="width: 12%">理货区有无温控</td>
+                                        <tr ng-hide="hasLihuoRoom || lihuoTemperCtr === undefined">
+                                            <td>理货区有无温控</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{lihuoTemperCtr}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="storageRefreg === undefined || storageRefreg === 0">
-                                            <td style="width: 12%">制冷剂类型</td>
+                                        <tr ng-hide="storageRefreg === undefined || storageRefreg === 0">
+                                            <td>制冷剂类型</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{storageRefreg}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="temperRecord === undefined">
-                                            <td style="width: 12%">有无温度记录</td>
+                                        <tr ng-hide="temperRecord === undefined">
+                                            <td>有无温度记录</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{temperRecord}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="capacity1 === undefined || capacity2 === undefined || capacity3 === undefined || capacity4 === undefined || capacity5 === undefined || (capacity1 === 0 && capacity2 === 0 && capacity3 === 0 && capacity4 === 0 && capacity5 === 0)">
-                                            <td style="width: 12%">冷库容量</td>
+                                        <tr ng-hide="capacity1 === undefined || capacity2 === undefined || capacity3 === undefined || capacity4 === undefined || capacity5 === undefined || (capacity1 === 0 && capacity2 === 0 && capacity3 === 0 && capacity4 === 0 && capacity5 === 0)">
+                                            <td>冷库容量</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         12度至25度:{{capacity1}}吨&nbsp;&nbsp;&nbsp;12度至-2度:{{capacity2}}吨&nbsp;&nbsp;&nbsp;-18度至-22度:{{capacity3}}吨&nbsp;&nbsp;&nbsp;-22至-30度:{{capacity4}}吨&nbsp;&nbsp;&nbsp;-30度以下:{{capacity5}}吨
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="facility === undefined || facility === '' || facility === null">
-                                            <td style="width: 12%">周边设施</td>
+                                        <tr ng-hide="facility === undefined || facility === '' || facility === null">
+                                            <td>周边设施</td>
                                             <td>
                                                 <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{facility}}
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr style="border-bottom:1px dashed #e0e2e4; height:30px;" ng-hide="remark === undefined || remark === '' || remark === null">
-                                            <td style="width: 12%">备注</td>
+                                        <tr ng-hide="remark === undefined || remark === '' || remark === null">
+                                            <td>备注</td>
                                             <td style="word-break : break-all; float: left; padding:2px 0 2px 60px; margin-right: 10px; width: 88%;overflow:hidden;text-overflow:ellipsis;">
                                              {{remark}}
                                                <!--  <ul>
-                                                    <li style="float: left; padding:2px 0 2px 20px; margin-right: 10px; width: 88%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    <li>
                                                         {{remark}}
                                                     </li>
                                                 </ul>  -->

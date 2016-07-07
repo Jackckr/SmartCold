@@ -303,6 +303,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/storageConfig',
         controller: 'storageConfig',
         templateUrl: 'app/template/storageConfig.html'
+    }).state('operatinLog',{
+    	url: '/operationLog',
+    	controller: 'operationLog',
+    	templateUrl: 'app/template/operationLog.html'
     });
-
 });
