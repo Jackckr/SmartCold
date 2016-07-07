@@ -7,11 +7,11 @@
         <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
         <link rel="stylesheet" type="text/css" href="app/css/release_item_list.css">
         <style type="text/css">
-            #nodata_div{ position:fixed;left:35%;top:25%;margin-left:width/2;margin-top:height/2; }
+            #nodata_div{ position:fixed;left:43%;top:25%;margin-left:width/2;margin-top:height/2; }
         </style>
     </head>
     <body>
-    	<div class="shareMain">
+    	<div id="shareMain_list" class="shareMain hide">
     	  <div id="dataList_div">
 			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
 				<span id="tobal_1" class="{{appmode[dataType].tolimg[1]}}"  value="{{appmode[dataType].tool[0][0]}}" onclick="releaseItem.changtype(this)">{{appmode[dataType].tool[0][1]}}</span>

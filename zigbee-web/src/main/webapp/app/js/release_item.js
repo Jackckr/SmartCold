@@ -74,7 +74,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 		 $("#release_main").show();
 	 }
 	releaseItem.$scope=$scope;
-	$scope.appmode=[{},{tit:"货品-",tolimg:["goods","outCur","offerCur"],tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
+	$scope.appmode=[{},{tit:"货品-",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
 	$scope.gocoldShareComment=function(){ 
 		$state.go('coldShareComment',{_cuttid: $scope.dataType});
 	};
