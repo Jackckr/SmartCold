@@ -140,6 +140,8 @@ div.select_2 select{
     padding:1px 10px;
     cursor: pointer;
     text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 3px;
 }
 .list ul{
     width: 85%;
