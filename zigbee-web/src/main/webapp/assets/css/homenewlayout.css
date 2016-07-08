@@ -953,5 +953,8 @@ section.content{
 	border:0px
 }
 p.text-left.h5{
-	text-indent:1em;
+	text-indent:10px
+}
+.glyphicon.glyphicon-map-marker{
+	color:#FF6D3B!important
 }
