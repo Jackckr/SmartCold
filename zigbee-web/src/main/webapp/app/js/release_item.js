@@ -74,7 +74,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 		 $("#release_main").show();
 	 }
 	releaseItem.$scope=$scope;
-	$scope.appmode=[{},{tit:"货品-",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送-",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库-",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
+	$scope.appmode=[{},{tit:"货品",tolimg:["goods","outCur","offerCur"],tool:[[1,"出货"],[2,"求货"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价","元/平方米"]]}];
 	$scope.gocoldShareComment=function(){ 
 		$state.go('coldShareComment',{_cuttid: $scope.dataType});
 	};
@@ -83,13 +83,19 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	$(".mode_"+$scope.dataType).show();
     	$(".mode_"+$scope.dataType+"_"+ $scope.typeCode).show();
     	$("#txt_rdcID").attr("disabled",$scope.typeCode==2?true:false); 
-    	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+"-测试");
+    	$("#tx_title").val($("#rdc_address").val()+ $scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]);
+    	$("#tool"+$scope.typeCode).addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
     };
     $scope.changtype=function(_em){
     	   var em=$(_em); 
+    	   if(em.attr("value")==1&&$scope.rdcID==null){
+    		   alert("请去去发布页面选择冷库信息！然后才能发布出租信息！");
+    		   $state.go('releaseItemList',{data:null,dataid:null,_cuttid: $scope.dataType});
+    		   return;
+    	   }
   	       $("#item_type_div span").removeClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]); 
 	       $scope.typeCode=em.attr("value");
-	       em.addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
+	    //   em.addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
 	       $scope.typeText=em.text();
 	       $scope.initMode();
     };
@@ -105,8 +111,8 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         } else{
         	$scope.typeCode=$scope.appmode[$scope.dataType].tool[1][0];
             $scope.typeText=$scope.appmode[$scope.dataType].tool[1][1];
-            $("#item_type_div span:last").addClass($scope.appmode[$scope.dataType].tolimg[2]);
-            $("#item_type_div span:first").removeClass($scope.appmode[$scope.dataType].tolimg[1]);
+//            $("#item_type_div span:last").addClass($scope.appmode[$scope.dataType].tolimg[2]);
+//            $("#item_type_div span:first").removeClass($scope.appmode[$scope.dataType].tolimg[1]);
         }
         $scope.initMode();
         $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
