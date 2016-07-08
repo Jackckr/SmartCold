@@ -1,162 +1,146 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
-        <title>
-            注册
-        </title>
-        <link rel="stylesheet" href="assets/css/bootstrap.css"/>
-        <link rel="stylesheet" href="assets/css/signin.css">
-        <link rel="stylesheet" href="assets/css/homenewlayout.css"/>
-        </head>
-        <body class="home-layout ">
-<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+    <title>
+        注册
+    </title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/signin.css">
+    <link rel="stylesheet" href="assets/css/homenewlayout.css"/>>
+	<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+</head>
+<body class="home-layout "
 <body class="home-layout ">
-<header class="light">
-     <div class="err-top">
-         <i class="err-close">
-             <i class="icon-remove">
-             </i>
-         </i>
-         <div class="err-out">
-             <div class="err-switch">
-                 <i class="err-switch-i icon-smile">
-                 </i>
-                 <i class="err-switch-i icon-frown">
-                 </i>
-                 <span class="err-content">
-                 </span>
-             </div>
-         </div>
-     </div>
-     <div class="nav-left">
-     <h1 style="text-indent:-9999em;font-size:0;margin:0;'">睿冷云-冷链行业最权威的信息平台
-         <a href="http://www.smartcold.cn/#/home" class="logo" title='睿冷云-冷链行业最权威的信息平台'>
-         </a>
-     </h1>
-     </div>
-     <div class="nav-right mw-8" style="margin-right:40px;">
-         <ul class="nav nav-right  black-850">
-             <li>
-                 <a href="http://www.smartcold.cn/#/home">
-                     首页
-                 </a>
-             </li>
-             <li>
-                 <a href="http://www.smartcold.cn/#/coldStoragelist">
-                     找库
-                 </a>
-             </li>
-             <li>
-                 <a href="" >
-                     共享
-                 </a>
-             </li>
-             <li>
-                 <a href="http://www.smartcold.cn/#/search">
-                     追溯
-                 </a>
-             </li>
-             <li>
-                 <a href="" ng-click="gotoSmartCold()" target="view_frame">
-                     冷库360
-                 </a>
-             </li>
-         </ul>
-         <ul class="navShow navPo show-850">        
-                        <li class="oneNav">
-                            <span class="glyphicon glyphicon-align-justify"></span>
-                            <ol class="twoNav">
-                                <li>
-		                            <a href="#/home">
-		                                首页
-		                            </a>
-		                        </li>
-		                        <li>
-		                            <a href="" ng-click="toColdStorageList()">
-		                                找库
-		                            </a>
-		                        </li>
-		                        <li>
-		                            <a href="" ng-click="toColdShareComment()">
-		                                共享
-		                            </a>
-		                        </li>
-		                        <li>
-		                            <a href="#/search">
-		                                追溯
-		                            </a>
-		                        </li>
-		                        <li>
-		                            <a href="" ng-click="gotoSmartCold()" target="view_frame">
-                                        冷库360
-		                            </a>
-		                        </li>
-                            </ol>
-                        </li>
-                    </ul>
-     </div>
- </header>
-<div class="wrapper">
-<div class="wrapper user-common-wrapper">
-    <div class="main-center">
-        <h1 class="user-common-title" style="color: #428bca" >
-            注册
-        </h1>
-        <div class="main-form-container">
-            <form id="loginFrm" class="user-common-form" role="form" method="post" onsubmit="return false;">
-                <h4 class="user-common-h4">注册</h4>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="username" id="username" placeholder='用户名'>
-                    <!-- 错误信息 popover -->
-                    <div class="err-popover-out">
-                        <div class="">
-                            <div class="text-danger" id="username_error"></div>
-                        </div>
-                    </div>
-                    <!-- 错误信息 popover end -->
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="email" id="email" placeholder='电子邮箱/手机号'>
-                    <!-- 错误信息 popover -->
-                    <div class="err-popover-out">
-                        <div class="">
-                            <div class="text-danger" id="email_error"></div>
-                        </div>
-                    </div>
-                    <!-- 错误信息 popover end -->
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control password" name="password" placeholder='密码'>
-                    <div class="err-popover-out">
-                        <div class="">
-                            <div class="text-danger" id="password_error"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control password" name="password1" placeholder='重复密码'>
-                    <!-- 错误信息 popover -->
-                    <div class="err-popover-out">
-                        <div class="">
-                            <div class="text-danger" id="password_error1"></div>
-                        </div>
-                    </div>
-                    <!-- 错误信息 popover end -->
-                </div>
-                <button type="submit" id="submit" class="btn btn-form-common form-control"><span>注册</span></button>
-                <div class="checkbox no-padding">
-                    <a href="login.html" class="a pull-right">已经注册</a>
-                </div>
-            </form>
-            
-        </div>
-    </div>
-
-</div>
-</div>
+	<header class="light">
+	     <div class="nav-left">
+	     <h1 style="text-indent:-9999em;font-size:0;margin:0;'">睿冷云-冷链行业最权威的信息平台
+	         <a href="http://www.smartcold.cn/#/home" class="logo" title='睿冷云-冷链行业最权威的信息平台'>
+	         </a>
+	     </h1>
+	     </div>
+	     <div class="nav-right mw-8" style="margin-right:40px;">
+	         <ul class="nav nav-right  black-850">
+	             <li>
+	                 <a href="http://www.smartcold.cn/#/home">
+	                     首页
+	                 </a>
+	             </li>
+	             <li>
+	                 <a href="http://www.smartcold.cn/#/coldStoragelist">
+	                     找库
+	                 </a>
+	             </li>
+	             <li>
+	                 <a href="" >
+	                     共享
+	                 </a>
+	             </li>
+	             <li>
+	                 <a href="http://www.smartcold.cn/#/search">
+	                     追溯
+	                 </a>
+	             </li>
+	             <li>
+	                 <a href="" ng-click="gotoSmartCold()" target="view_frame">
+	                     冷库360
+	                 </a>
+	             </li>
+	         </ul>
+	         <ul class="navShow navPo show-850">        
+	                        <li class="oneNav">
+	                            <span class="glyphicon glyphicon-align-justify"></span>
+	                            <ol class="twoNav">
+	                                <li>
+			                            <a href="#/home">
+			                                首页
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a href="" ng-click="toColdStorageList()">
+			                                找库
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a href="" ng-click="toColdShareComment()">
+			                                共享
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a href="#/search">
+			                                追溯
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a href="" ng-click="gotoSmartCold()" target="view_frame">
+	                                        冷库360
+			                            </a>
+			                        </li>
+	                            </ol>
+	                        </li>
+	                    </ul>
+	      </div>
+	</header>
+	<div class="wrapper">
+	 <div class="wrapper user-common-wrapper">
+	    <div class="main-center">
+	        <h1 class="user-common-title" style="color: #428bca" >
+	            注册
+	        </h1>
+	        <div class="main-form-container">
+	            <form id="loginFrm" class="user-common-form" role="form" method="post" onsubmit="return false;">
+	                <h4 class="user-common-h4">注册</h4>
+	                <div class="form-group">
+	                    <input type="text" class="form-control" name="username" id="username" placeholder='用户名'>
+	                    <!-- 错误信息 popover -->
+	                    <div class="err-popover-out">
+	                        <div class="">
+	                            <div class="text-danger" id="username_error"></div>
+	                        </div>
+	                    </div>
+	                    <!-- 错误信息 popover end -->
+	                </div>
+	                <div class="form-group">
+	                    <input type="text" class="form-control" name="email" id="email" placeholder='电子邮箱/手机号'>
+	                    <!-- 错误信息 popover -->
+	                    <div class="err-popover-out">
+	                        <div class="">
+	                            <div class="text-danger" id="email_error"></div>
+	                        </div>
+	                    </div>
+	                    <!-- 错误信息 popover end -->
+	                </div>
+	                <div class="form-group">
+	                    <input type="password" class="form-control password" name="password" placeholder='密码'>
+	                    <div class="err-popover-out">
+	                        <div class="">
+	                            <div class="text-danger" id="password_error"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <input type="password" class="form-control password" name="password1" placeholder='重复密码'>
+	                    <!-- 错误信息 popover -->
+	                    <div class="err-popover-out">
+	                        <div class="">
+	                            <div class="text-danger" id="password_error1"></div>
+	                        </div>
+	                    </div>
+	                    <!-- 错误信息 popover end -->
+	                </div>
+	                <button type="submit" id="submit" class="btn btn-form-common form-control"><span>注册</span></button>
+	                <div class="checkbox no-padding">
+	                    <a href="login.html" class="a pull-right">已经注册</a>
+	                </div>
+	            </form>
+	            
+	        </div>
+	    </div>
+	
+	 </div>
+	</div>
 </body>
 <script>
 $(function(){

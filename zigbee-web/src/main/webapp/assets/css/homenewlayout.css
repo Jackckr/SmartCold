@@ -25,6 +25,9 @@ h6
 {
     box-sizing: border-box;
 }
+a:hover{
+	text-decoration:none;
+}
 /* jhy response */
 /*banner*/
 .carousel-indicators li{
@@ -921,4 +924,34 @@ section.content{
 }
 .commentinfo td ul{
 	margin-bottom:0;
+}
+/*home*/
+#cnt1 {            
+     width:90%;
+     margin-bottom:40px;
+ }  
+ .feature{
+    padding: 20px 0;
+    text-align: center;
+ }
+.feature > div{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin:0 10px;
+    padding:0;
+    
+ }
+ .ahover:hover{
+      box-shadow: 0 1px 20px #666;
+}
+ .ahover>div{
+ 	padding:20px 10px;
+ }
+.ahover>div>img{
+ 	border-radius:3px;
+ 	padding:0px;
+	border:0px
+}
+p.text-left.h5{
+	text-indent:1em;
 }
