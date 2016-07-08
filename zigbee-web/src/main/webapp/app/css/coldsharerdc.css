@@ -112,8 +112,8 @@ div.select_2 select{
 }
 .searchImg{
     position: absolute;
-    top: 0;
-    right: 20px;
+    top: -2px;
+    right: 10px;
     line-height: 32px;
 }
 .searchImg span{
