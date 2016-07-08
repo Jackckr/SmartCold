@@ -83,7 +83,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	$(".mode_"+$scope.dataType).show();
     	$(".mode_"+$scope.dataType+"_"+ $scope.typeCode).show();
     	$("#txt_rdcID").attr("disabled",$scope.typeCode==2?true:false); 
-    	$("#tx_title").val($("#rdc_address").val()+ $scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]);
+    	$("#tx_title").val( $scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]);
     	$("#tool"+$scope.typeCode).addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
     };
     $scope.changtype=function(_em){
