@@ -52,11 +52,12 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.provinceId = data[0].provinceId;
             $scope.storagePics = data[0].storagePics;
             $scope.storageGallery = new Array();
+            //小于两张图片添加默认
+            for(var j=0, len = $scope.storagePics.length;j < 2 - len;j++){
+            	$scope.storagePics.push({location:"app/img/rdc.png"});
+            }
             for(j=0; j<$scope.storagePics.length; j++){
             	$scope.storageGallery.push({thumb:$scope.storagePics[j].location ,img:$scope.storagePics[j].location})
-            }
-            for(var j=0, len = $scope.storagePics.length;j < 5 - len;j++){
-            	$scope.storagePics.push({location:"app/img/rdc.png"});
             }
             
             for (var i = 0, len = $scope.provinces.length; i < len; i++) {
