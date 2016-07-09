@@ -490,7 +490,6 @@ public class RdcController {
 		filter.put("storageType", storageType);//存放类型
 		filter.put("managementType", managementType);//经营类型
 		filter.put("storagetempertype", storagetempertype);//温度类型
-		System.err.println(filter);
 		PageInfo<RdcEntityDTO> data = this.rdcService.getRDCList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
