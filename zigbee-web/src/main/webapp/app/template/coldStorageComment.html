@@ -18,7 +18,7 @@
         <div class="row" style="width: 100%">
             <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;top:30px;padding-bottom: 100px;">
                 <div class="row" style="vertical-align:middle">
-                    <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;left: 40px">
+                    <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;padding:0">
                         <h3 style="color: #428bca">{{rdcName}}</h3>
                     </div>
                     <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 visible-lg" style="position: relative;top:5px;left: 0px;">
@@ -31,13 +31,13 @@
                     </div>
                 </div>
                 <div class="row">
-                	<div class="col-lg-12">
+                	<div class="col-lg-12" style="padding-left:0">
 	                	<ng-gallery images="storageGallery" thumbs-num="5" ng-if="storageGallery.length"></ng-gallery>
                 	</div>
                 </div>
                 <div class="row">
                     <div class="tabbable" style="position: relative;top: 10px">
-                        <ul class="nav nav-tabs" style="position:relative;left:0px;width:93%;height: 50%;">
+                        <ul class="nav nav-tabs" style="position:relative;left:0px;width:98%;height: 50%;">
                             <li id="detail" class="active">
                                 <a href="" ng-click="goColdStorageDetail(rdcId)" data-toggle="tab">冷库详情</a>
                             </li>

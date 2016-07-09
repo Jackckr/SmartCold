@@ -12,7 +12,7 @@
     
     <update id="updateMappingById" parameterType="map">
 		UPDATE `CompressorGroupSet` SET mapping=#{mapping}
-		WHERE `groupId` = #{compressorGroupId}
+		WHERE `id` = #{id}
 	</update>
 
 </mapper>

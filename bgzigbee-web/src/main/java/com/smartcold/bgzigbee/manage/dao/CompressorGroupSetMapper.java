@@ -13,5 +13,5 @@ public interface CompressorGroupSetMapper {
 
 	List<CompressorGroupSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 
-	void updateMappingById(@Param("compressorGroupId") int compressorGroupId, @Param("mapping") String mapping);
+	void updateMappingById(@Param("id") int id, @Param("mapping") String mapping);
 }
