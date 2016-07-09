@@ -237,7 +237,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     			params:filedata
     		}).success(function(){
     			var index = $scope.storagePicShow.indexOf(filedata);
-    			if(index>0)
+    			if(index>=0)
     				$scope.storagePicShow.splice(index,1);
     			else{
     				$scope.arrangePicShow = null;
