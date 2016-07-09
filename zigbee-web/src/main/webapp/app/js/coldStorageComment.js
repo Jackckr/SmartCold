@@ -233,7 +233,8 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             params: {
                 "rdcID": storageID,
                 "pageNum" : $scope.bigCurrentPage,
-                "pageSize" : $scope.maxSize
+                "pageSize" : $scope.maxSize,
+                "datatype": "3,1"
             }
         }).success(function (data) {
             $scope.pslist = data.data;
@@ -453,43 +454,20 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         }
     }
 
-    $scope.items = ['html5', 'jq', 'FE-演示平台'];
-    $scope.goComment = function (size) {  //打开模态
+    $scope.goComment = function () {
         $location.path("/coldStorage/" + $stateParams.rdcID + "/review");
-//        var modalInstance = $uibModal.open({
-//            templateUrl: 'myModelContent.html',  //指向上面创建的视图
-//            controller: 'ModalInstanceCtrl',// 初始化模态范围
-//            size: size, //大小配置
-//            resolve: {
-//                items: function () {
-//                    return $scope.items;
-//                }
-//            }
-//        })
-//        modalInstance.result.then(function (selectedItem) {
-//            $scope.selected = selectedItem;
-//        }, function () {
-//            $log.info('Modal dismissed at: ' + new Date())
-//        })
     }
 
-    /*    clearInterval($rootScope.timeTicket);
-     $rootScope.timeTicket = setInterval(function () {
-     $scope.temper();
-     }, 30000);*/
-    
+    $scope.pubSerdc = function () {
+        $state.go('releaseItem',{dataid:$scope.rdcId, _cuttid: 3});
+    }
+
+    $scope.pubGoods = function () {
+        $state.go('releaseItem',{dataid:$scope.rdcId, _cuttid: 1});
+    }
+
+    $scope.pubPsaction = function () {
+        $state.go('releaseItem',{dataid:$scope.rdcId, _cuttid: 2});
+    }
+
 });
-
-coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) { //依赖于modalInstance
-    $scope.items = items;
-    $scope.selected = {
-        item: $scope.items[0]
-    };
-    $scope.ok = function () {
-        $uibModalInstance.close($scope.commentContent); //关闭并返回当前选项
-    };
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel'); // 退出
-    }
-
-})
