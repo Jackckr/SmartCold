@@ -396,7 +396,7 @@ public class RdcController {
 	@ResponseBody
 	public Object updateMapping(int rdcId, String mapping) {
 		try {
-			gson.fromJson(mapping, new TypeToken<Map<String, String>>() {
+			gson.fromJson(mapping, new TypeToken<Map<String, Object>>() {
 			}.getType());
 		} catch (JsonParseException e) {
 			return new ResultDto(-1, "参数不是合法的json map");

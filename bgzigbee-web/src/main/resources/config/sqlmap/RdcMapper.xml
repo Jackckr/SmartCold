@@ -130,7 +130,7 @@
     
     <update id="updateMappingById" parameterType="map">
 	    UPDATE `Rdc` SET mapping=#{mapping}
-	    WHERE `rdcId` = #{rdcId}
+	    WHERE `id` = #{rdcId}
 	</update>
 	
 	<delete id="deleteByRdcID">
