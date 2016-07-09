@@ -20,6 +20,7 @@
 		SELECT
 		s.id,
 		s.rdcID,
+		s.dataType,
 		s.releaseID,
 		s.title,
 		s.unitPrice,
