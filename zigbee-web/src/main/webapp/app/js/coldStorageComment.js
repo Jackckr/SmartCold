@@ -179,27 +179,28 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         });
     }
 
-    // 获取当前浏览冷库的列表
-/*    $http.get('/i/rdc/findRdcList').success(function (data) {
-        var size = data.length;
-        data.splice(5, size);
-        $scope.lookrdcs = data;
-    });*/
+    $scope.tabs = ['detail', 'comment', 'publish'];
+
+    $scope.changeTab = function (selectedTab) {
+        angular.forEach($scope.tabs, function (tab) {
+            if (tab == selectedTab) {
+                angular.element(document.getElementById(tab)).addClass('active');
+                angular.element(document.getElementById('coldStorage' + tab)).addClass('active');
+            } else {
+                angular.element(document.getElementById(tab)).removeClass('active');
+                angular.element(document.getElementById('coldStorage' + tab)).removeClass('active');
+            }
+        })
+    }
 
     $scope.goColdStorageDetail = function (storageID) {
         $scope.rdcId = storageID;
         findRDCByRDCId(storageID);
-        angular.element(document.getElementById('detail')).addClass('active');
-        angular.element(document.getElementById('coldStorageDetail')).addClass('active');
-        angular.element(document.getElementById('comment')).removeClass('active');
-        angular.element(document.getElementById('coldStorageComment')).removeClass('active');
+        $scope.changeTab($scope.tabs[0]);
     }
 
     $scope.goColdStorageComment = function (storageID) {
-        angular.element(document.getElementById('comment')).addClass('active');
-        angular.element(document.getElementById('coldStorageComment')).addClass('active');
-        angular.element(document.getElementById('detail')).removeClass('active');
-        angular.element(document.getElementById('coldStorageDetail')).removeClass('active');
+        $scope.changeTab($scope.tabs[1]);
 
         // 获取当前冷库的评论列表
         $http.get('/i/comment/findCommentsByRDCId', {
@@ -208,7 +209,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 "npoint": 100
             }
         }).success(function (data) {
-            var size = data.length;
             for (var i = 0; i < data.length; i++) {
                 data[i].commentsum = parseInt((Math.random() * 5 + 5).toFixed(0));
                 data[i].usefulCnt = parseInt((Math.random() * 10 + 5).toFixed(0));
@@ -219,6 +219,31 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.comments = data;
         });
     }
+
+    $scope.maxSize = 10;	// 显示最大页数
+    $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
+    $scope.bigCurrentPage = 1;  // 当前页
+    $scope.goColdStoragePublish = function (storageID) {
+        $scope.changeTab($scope.tabs[2]);
+        $scope.getPSlist(storageID);
+    }
+
+    $scope.getPSlist = function(storageID) {
+        $http.get('/i/ShareRdcController/getSEListByRdcID', {
+            params: {
+                "rdcID": storageID,
+                "pageNum" : $scope.bigCurrentPage,
+                "pageSize" : $scope.maxSize
+            }
+        }).success(function (data) {
+            $scope.pslist = data.data;
+            $scope.bigTotalItems = data.total;
+        });
+    }
+
+    $scope.pageChanged = function () {
+        $scope.getPSlist($scope.rdcId);
+    };
 
 
     $scope.load = function () {
