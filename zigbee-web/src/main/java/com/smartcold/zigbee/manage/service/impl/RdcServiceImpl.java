@@ -309,23 +309,27 @@ public class RdcServiceImpl implements RdcService {
 
     private List<RdcScoreDTO> getRdcScoreDTO(List<RdcExtEntity> rdcExtEntityList) {
         List<RdcScoreDTO> list = Lists.newArrayList();
-        for (RdcExtEntity rdcExtEntity : rdcExtEntityList) {
-            RdcScoreDTO rdcScoreDTO = new RdcScoreDTO();
-            rdcScoreDTO.setId(rdcExtEntity.getRDCID());
-            rdcScoreDTO.setRdccommentcnt(rdcExtEntity.getRdccommentcnt());
-            rdcScoreDTO.setRdcscore(rdcExtEntity.getRdcscore());
-            rdcScoreDTO.setRdcrecommendpercent(rdcExtEntity.getRdcrecommendpercent());
+        if (!CollectionUtils.isEmpty(rdcExtEntityList)){
+            for (RdcExtEntity rdcExtEntity : rdcExtEntityList) {
+                RdcScoreDTO rdcScoreDTO = new RdcScoreDTO();
+                rdcScoreDTO.setId(rdcExtEntity.getRDCID());
+                rdcScoreDTO.setRdccommentcnt(rdcExtEntity.getRdccommentcnt());
+                rdcScoreDTO.setRdcscore(rdcExtEntity.getRdcscore());
+                rdcScoreDTO.setRdcrecommendpercent(rdcExtEntity.getRdcrecommendpercent());
 
-            List<RdcEntity> rdcEntityList = rdcDao.findRDCByRDCId(rdcExtEntity.getRDCID());
-            RdcEntity rdcEntity = rdcEntityList.get(0);
-            rdcScoreDTO.setName(rdcEntity.getName());
-            List<FileDataEntity> storagePics = fileDataDao.findByBelongIdAndCategory(rdcExtEntity.getRDCID(), FileDataMapper.CATEGORY_STORAGE_PIC);
-            if (!storagePics.isEmpty()) {
-                FileDataEntity storagePic = storagePics.get(0);
-                storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
-                rdcScoreDTO.setStoragePic(storagePic);
+                List<RdcEntity> rdcEntityList = rdcDao.findRDCByRDCId(rdcExtEntity.getRDCID());
+                if (!CollectionUtils.isEmpty(rdcEntityList)){
+                    RdcEntity rdcEntity = rdcEntityList.get(0);
+                    rdcScoreDTO.setName(rdcEntity.getName());
+                    List<FileDataEntity> storagePics = fileDataDao.findByBelongIdAndCategory(rdcExtEntity.getRDCID(), FileDataMapper.CATEGORY_STORAGE_PIC);
+                    if (!storagePics.isEmpty()) {
+                        FileDataEntity storagePic = storagePics.get(0);
+                        storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
+                        rdcScoreDTO.setStoragePic(storagePic);
+                    }
+                    list.add(rdcScoreDTO);
+                }
             }
-            list.add(rdcScoreDTO);
         }
         return list;
     }
