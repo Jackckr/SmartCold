@@ -467,7 +467,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     }
 
     $scope.pubPsaction = function () {
-        $state.go('releaseItem',{dataid:$scope.rdcId, _cuttid: 2});
+        $state.go('releaseCarInfo',{dataid:$scope.rdcId, _cuttid: 2});
     }
 
 });
