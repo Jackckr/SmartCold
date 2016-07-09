@@ -19,6 +19,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 	    		audit:$scope.optAudit,
 	    		keyword:$scope.keyword
 	    	};
+		var serData = $.param(data);
 	    $http({
 	    	method:'POST',
 	    	url:'/i/rdc/findRdcDTOByPage',
