@@ -27,17 +27,17 @@
 		s.unit1,
 		s.typeText,
 		s.sqm,
-		date_format(s.validStartTime,'%Y-%m-%d %H:%i:%s') validStartTime,
-		date_format(s.validEndTime,'%Y-%m-%d %H:%i:%s') validEndTime,
+		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
+		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
 		s.applyID,
 		s.bookings,
 		s.stauts,s.detlAddress,
 		<!-- date_format(s.addtime, '%Y-%m-%d %H:%i:%s') addtime, -->
 		<!-- date_format(s.updatetime,'%Y-%m-%d %H:%i:%s') updatetime, -->
-		r.address,
 		r. NAME,
-		(SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category =
-		'storagePic' ORDER BY id DESC LIMIT 1 ) AS logo
+		r.address,
+		r.coldtype,
+		(SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1 ) AS logo
 		FROM
 		shared_info s
 		LEFT JOIN rdc r ON s.rdcID = r.id
@@ -63,8 +63,8 @@
 		s.unit1,
 		s.typeText,
 		s.sqm,
-		date_format(s.validStartTime,'%Y-%m-%d %H:%i:%s') validStartTime,
-		date_format(s.validEndTime,'%Y-%m-%d %H:%i:%s') validEndTime,
+		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
+		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
 		s.applyID,
 		s.bookings,
 		s.stauts,s.detlAddress,
@@ -114,8 +114,8 @@
 		s.unit2,
 		s.typeText,
 <!-- 		s.attrvalue, -->
-		date_format(s.validStartTime,'%Y-%m-%d %H:%i:%s') validStartTime,
-		date_format(s.validEndTime,'%Y-%m-%d %H:%i:%s') validEndTime,
+		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
+		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
 		s.applyID,
 		s.bookings,
 		s.stauts,
@@ -153,8 +153,8 @@
 		s.unitPrice,
 		s.unit,
 		s.sqm,
-		date_format(s.validStartTime,'%Y-%m-%d %H:%i:%s') validStartTime,
-		date_format(s.validEndTime,'%Y-%m-%d %H:%i:%s') validEndTime,
+		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
+		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
 <!-- 		s.applyID, -->
 <!-- 		s.bookings, -->
 <!-- 		s.stauts, -->
