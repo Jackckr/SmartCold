@@ -15,6 +15,7 @@ public class CacheTool {
 		return CacheTool.cache.containsKey(key);
 	}
 	public static Object getdate(String key){
+		System.err.println("获得缓存数据："+key);
 		return CacheTool.cache.get(key);
 	}
 	public static Object remove(String key){
