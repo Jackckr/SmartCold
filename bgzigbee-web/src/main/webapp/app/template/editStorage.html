@@ -313,9 +313,9 @@
                         </div>
                         <div class="form-group rdc" ng-if="arrangePicShow != null">
                             <label class="col-sm-4 control-label"></label>
-                            <div class="col-sm-8">
+                            <div class="" style="padding:5px;position:relative;display:inline-block">
                                 <img style="width: 86px;" ng-src="{{arrangePicShow.location}}" alt="" />
-                                <i class="fa fa-times danger"  aria-hidden="true" style="margin-right:10px;color:red;cursor: pointer;" ng-click="deletePic(arrangePicShow)"></i>
+                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
                             </div>
                         </div>
         <!--        			<dic class="form-group" ng-if="arrangePicShow != null">
@@ -339,9 +339,9 @@
                         </div>
                         
                         <dic class="form-group" ng-if="storagePicShow.length>0">
-                        	<div class="pull-left" ng-repeat="item in storagePicShow" >
-	                   			<img ng-src="{{item.location}}" style="width: 86px;" alt="" />
-                        		<i class="fa fa-times danger"  aria-hidden="true" style="margin-right:10px;color:red;cursor: pointer;" ng-click="deletePic(item)"></i>
+                        	<div class="pull-left" ng-repeat="item in storagePicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+	                   			<img ng-src="{{item.location}}" style="width:100%;height:100%" alt="" />
+                        		<i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(item)"></i>
                         	</div>
                    		</dic>
                 </div>
