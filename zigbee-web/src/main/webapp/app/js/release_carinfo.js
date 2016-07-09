@@ -69,6 +69,10 @@ var releaseCarInfo = {
 };
 
 coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
+	 if(user==null||(user!=null&&user.id==0)){
+		 alert("请登录后执行该操作！");
+		 window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseCarInfo";return;
+	  }
 	$scope.gl_rdc=1;
 	$scope.dataType = 2;//当前数据类型
 	releaseCarInfo.$scope=$scope;
