@@ -36,20 +36,21 @@ public class RdcShareDTO {
 	private int stauts; // 当前消息是否有效 0：无效 1：有效
 	private String addtime; // 添加时间
 	private String updatetime; // 最后更新时间
-	//
+	//->拓展字段  ->车
 	private int stprovinceID;
 	private int stcityID;
 	private String staddress;
 	private int toprovinceID;
 	private int tocityID;
 	private String toaddress;
-	// rdc
+	// rdc->关联rdc信息
 	private String name;
     private int provinceid;//s所在省
     private int cityid;//s所在城市
-	private String address;
+	private String address;//地址
+	private String detlAddress;//详细地址
 	private String coldtype;
-	private  List<String> files;
+	private  List<String> files;//图片组
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
 		return id;
@@ -285,10 +286,10 @@ public class RdcShareDTO {
 	public void setLogo(String logo) {
 		this.logo = FtpService.READ_URL+ logo;
 	}
-	
-	
-	
-	
-	
-
+	public String getDetlAddress() {
+		return detlAddress;
+	}
+	public void setDetlAddress(String detlAddress) {
+		this.detlAddress = detlAddress;
+	}
 }

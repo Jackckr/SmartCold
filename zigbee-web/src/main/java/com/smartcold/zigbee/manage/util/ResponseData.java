@@ -1,12 +1,13 @@
 package com.smartcold.zigbee.manage.util;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 
-/*
- * Copyright (C) DCIS 版权所有
- * 功能描述: Utils 工具类, JSON格式返回数据载体
- * Create on MaQiang 2016-6-25 09:28:36
+/**
+ * JSON格式返回数据载体
+ * @author Half.Lee
  */
 public class ResponseData<T> {
 	@SuppressWarnings("rawtypes")
@@ -188,7 +189,7 @@ public class ResponseData<T> {
 
 	//---------------------------------------------------------
 	//请求信息
-	private boolean success;
+	private boolean success=true;
 	private String message;
 	private Exception exp;
 	//数据对象
@@ -247,7 +248,6 @@ public class ResponseData<T> {
 
 	public void setEntity(T entity) {
 		this.entity = entity;
-		this.success=entity!=null;
 	}
 
 	public List<T> getData() {

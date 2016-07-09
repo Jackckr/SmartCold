@@ -90,4 +90,22 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    
+    
+	<select id="getRDCList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
+			SELECT
+				r.*, count(c.id) userCommentCnt,
+				sum(IF(c.grade > 4, c.grade, 0)) / count(c.id) AS userRecommendPercent,
+				sum(c.grade) / count(c.id) AS score,
+				f.location AS logo
+			FROM
+				Rdc r
+			LEFT JOIN ColdStorageComment c ON r.id = c.rdcID
+			LEFT JOIN filedata f ON f.belongid = r.id
+			AND f.category = 'storagePic'
+			GROUP BY
+				r.id
+			ORDER BY
+				r.addTime DESC
+	</select>
 </mapper>

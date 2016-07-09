@@ -3,8 +3,10 @@ package com.smartcold.zigbee.manage.controller;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
+import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.RdcExtMapper;
@@ -29,13 +30,18 @@ import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
+import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
+import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
+import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
+import com.smartcold.zigbee.manage.util.CacheTool;
+import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.VerifyUtil;
 
 @Controller
@@ -43,6 +49,10 @@ import com.smartcold.zigbee.manage.util.VerifyUtil;
 public class RdcController {
 
 	private static String baseDir = "picture";
+
+	private int pageNum;
+
+	private int pageSize;
 
 	@Autowired
 	private RdcMapper rdcMapper;
@@ -53,6 +63,8 @@ public class RdcController {
 	@Autowired
 	private RdcService rdcService;
 
+	@Resource(name="commonService")
+	private CommonService commonService;
 	@Autowired
 	private StorageManageTypeMapper storageManageTypeDao;
 
@@ -73,6 +85,7 @@ public class RdcController {
 	
 	@Autowired
 	private FileDataMapper fileDataDao;
+
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -399,4 +412,58 @@ public class RdcController {
 		boolean deleted = ftpService.deleteFile(url);
 		return new BaseDto(deleted ? 0 : -1);
 	}
+	
+	
+	
+	/**
+	 * 获得RDC过滤信息
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getRDCFilterData")
+	@ResponseBody
+	public ResponseData<HashMap<String, Object>> getRDCFilterData(HttpServletRequest request) {
+		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
+			String key="getRDCFilterData";
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			if(CacheTool.hasCache(key)){
+				data= (HashMap<String, Object>) CacheTool.getdate(key);
+				result.setEntity(data);
+			}else{
+				//
+				result.setEntity(data);
+				CacheTool.setData(key, data);  
+			}
+		return result;
+	}
+	
+	
+	/**
+	 * 获得配送信息
+	 * @param request
+	 * @param type  出售求货
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param keyword  关键字
+	 * @param origintion:出发地
+	 * @param destination:目的地
+	 * @param deliverytime:发货时间
+	 * @param carType 车型
+	 * @param businessType 业务类型
+	 * @param storagetempertype 温度类型
+	 * @param orderBy 排序
+	 * @return
+	 */
+	@RequestMapping(value = "/getSEPSList")
+	@ResponseBody
+	public ResponseData<RdcEntityDTO> getSEPSList(HttpServletRequest request,String type,String datatype, String keyword,String origintion,String destination,String deliverytime,String storagetempertype,String businessType,String carType,String orderBy) {
+		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
+		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "10" : request.getParameter("pageSize")); // 每页数据量
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+	
+		filter.put("orderBy", orderBy);
+		PageInfo<RdcEntityDTO> data = this.rdcService.getRDCList(this.pageNum, this.pageSize, filter);
+		return ResponseData.newSuccess(data);
+	}
+	
 }

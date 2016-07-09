@@ -98,7 +98,7 @@
                                 <h5 style="color: #428bca;;position: relative;top: 5px">
                                     <a href="" ng-click="goDetail(rdc.id)">{{rdc.name}}</a>
                                 </h5>
-                                <h6>该冷库位于{{rdc.address}}.</h6>
+                                <h6 style="margin-top:20px;"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</h6>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3" style="position: relative;top:5px;left: 10px;">
@@ -120,13 +120,13 @@
                                 boundary-links="true" rotate="false" num-pages="numPages"></pagination>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3"
-                 style="position:relative;left: 0px;height: 500px;padding: 0;border: 1px solid #D3D3D3">
+            <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3"  style="position:relative;left: 0px;height: 500px;padding: 0;border: 1px solid #D3D3D3">
+
                 <div style="position:relative;top: 5px;">
                     <a class="btn btn-large btn-success col-lg-6 col-sm-6 col-xs-6 col-md-6" id="hotBoard" ng-click="goHotBoard()">热度排行</a>
                     <a class="btn btn-large btn-default col-lg-6 col-sm-6 col-xs-6 col-md-6" id="scoreBoard" ng-click="goScoreBoard()">评分排行</a>
                 </div>
-                <hr style="height:1px;border:none;border-top:1px solid #D3D3D3;position: relative;top: 10px;left: 0px;width: 100%;margin:0;"/>
+                <hr style="height:1px;border:none;border-top:1px solid #D3D3D3;position: relative;top: 10px;left: 0px;width: 100%;"/>
 
                 <div class="row" ng-repeat="hotrdc in hotrdcs"
                      style="height: 70px;width: 95%;position: relative;top: 10px;left: 20px;border-style: none none solid none;border-bottom:1px solid #D3D3D3;">

@@ -12,42 +12,51 @@ import com.smartcold.zigbee.manage.dto.RdcShareDTO;
  * Create on MaQiang 2016-6-27 09:28:36
  */
 public interface RdcShareMapper {
-	public int insert(String key);
 	
-	/**
-	 * 发布消息
-	 * @param rdcShareDTO
-	 * @return
-	 */
-	public int addshareInfo(RdcShareDTO rdcShareDTO);
+   public int insert(String key);
+   
+   /**
+    * 发布消息
+    * @param rdcShareDTO
+    * @return
+    */
+   public int addshareInfo(RdcShareDTO rdcShareDTO);
+    
    /**
     * 获得睿库信息
      * @param filter
     * @return
     */
 	public Page<RdcShareDTO> getRdcList(Map<String, Object> parameters);
-   /**
+	
+    /**
     * 获得商品共享信息
     * @param filter
     * @return
     */
-   public Page<RdcShareDTO> getSEGDList(Map<String, Object> parameters);
-   /**
-    * 获得配送共享信息
-    * @param filter
-    * @return
-    */
-   public Page<RdcShareDTO> getSEPSList(Map<String, Object> parameters);
-   
-   /**
-	 * 获得睿库共享信息
-	 * @param filter
-	 * @return
-	 */
-  public Page<RdcShareDTO> getSERDCList(Map<String, Object> parameters);
-  
-  
-  
+    public Page<RdcShareDTO> getSEGDList(Map<String, Object> parameters);
+
+    /**
+     * 获得配送共享信息
+     * @param filter
+     * @return
+     */
+    public Page<RdcShareDTO> getSEPSList(Map<String, Object> parameters);
+    
+    /**
+	   * 获得睿库共享信息
+	   * @param filter
+	   * @return
+	   */
+    public Page<RdcShareDTO> getSERDCList(Map<String, Object> parameters);
+    
+	 /**
+	  * 获得关联库全部共享信息
+	  * @param filter
+	  * @return
+	  */
+	 public Page<RdcShareDTO> getSEListByRdcID(Map<String, Object> parameters);
+    
   
   
   

@@ -12,12 +12,13 @@
      .daterangepicker{font-size: 9px;}
      .time_control{height: 25px;}
      .time_control *{font-size: 10px;}
+     .sorry{text-align: center;font-size: 18px;margin: 120px auto;}
     </style>
 	<div class="shareMain">
 	<!--   货品、配送、仓库区域 start-->
 		<div id="tool_div" class="tab clearfix">
 			<ul class="tabSon">
-				<li value="3" onclick="rdcconfig.changMode(this);" class="current" ><a href="javascript:;">仓库</a></li>
+				<li value="3" onclick="rdcconfig.changMode(this);"><a href="javascript:;">仓库</a></li>
 				<li value="1" onclick="rdcconfig.changMode(this);"><a href="javascript:;">货品</a></li>
 				<li value="2" onclick="rdcconfig.changMode(this);"><a href="javascript:;">配送</a></li>
 				<li ng-click='goRelease();'><a href="javascript:" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>免费发布信息</a></li>
@@ -73,16 +74,19 @@
 			         	<div class="company">{{rdc.title}}<b class="rent">【{{rdc.typeText}}】</b></div>
 			         	<div class="position">
 			         		<span class="glyphicon glyphicon-map-marker"></span>
-			         		<span class="textInfo">{{rdc.address}}</span>
+			         		<span class="textInfo">{{rdc.detlAddress}}</span>
 			         	</div>
 			         </td>
-			         <td>{{rdc.unitPrice}}元/公斤</td>
+			         <td>{{rdc.unitPrice}}元/吨</td>
 			         <td>{{rdc.sqm}}吨</td>
 			         <td>{{rdc.validStartTime}}  <span class="_sh_fl_span">至</span><br/>{{rdc.validEndTime}}</td>
 			         <td>
 			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
 			         </td>
 			      </tr>
+<!-- 			      <tr ng-show="{{goods==null||goods.length==0}}"> -->
+<!-- 			         <td colspan="5"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
+<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
@@ -90,7 +94,7 @@
             </div>
 	    </div>
 		<div id="table2" class="hide" >
-			  <div id="filter_div1" class="filter">
+			  <div id="filter_div2" class="filter">
 				<div class="filterSon clearfix">
 					<div class="select_2 pull-left">
 						<span>出租/求车</span>
@@ -102,21 +106,30 @@
 					</div>
 					<div class="select_2 pull-left">
 						<span>始发地：</span>
-						<select id="sl_origin" >
-							<option value="">不限</option>
-						</select>
+                      <select id="sl_provinceId1"  class="arrdes" style="width: 60px;"  ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()">
+                        <option value="">--不限--</option>
+                        <option ng-repeat="x in gd_provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
+                      </select>
+						 <input class=""  name="stprovinceID"  type="hidden" value="{{stprovinceID}}">
+						 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 60px;"  >
+						    <option value="">--不限--</option>
+							<option ng-repeat="x in city1" value="{{x.cityID}}">{{x.cityName}}</option>
+						 </select>
 					</div>
 					<div class="select_2 pull-left">
 						<span>目的地：</span>
-						<select id="sl_destination"  >
-							<option value="">不限</option>
+						<select id="sl_provinceId2"   class="arrdes" style="width: 60px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" >
+							<option value="">--不限--</option>
+	                        <option ng-repeat="x in gd_provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
 						</select>
+						 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}">
+						 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 60px;" >
+						    <option value="">--不限--</option>
+							<option ng-repeat="x in city2" value="{{x.cityID}}">{{x.cityName}}</option>
+						 </select>
 					</div>
 					<div class="select_2 pull-left row" style="width: 365px;">
-						<span class="col-md-2 col-xs-2" style="padding:0;width: 80px;">发货时间：</span>
-<!-- 						<select id="sl_deliverytime"  class="col-md-1"> -->
-<!-- 							<option value="">不限</option> -->
-<!-- 						</select> -->
+						<span class="col-md-2 col-xs-2" style="padding:0;width: 72px;">发货时间：</span>
 		                    <div class="controls time_control" >
 		                     <div class="input-prepend input-group">
 		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
@@ -125,7 +138,7 @@
 		                    </div>
 
 					</div>
-					<div id="search" class=" pull-right">					
+					<div id="search" class=" pull-right" style="width:13%">					
 						<input type="text" placeholder="请输入关键词" id="myText2" class="myText" />
 						<div class="searchImg"><span class="glyphicon glyphicon-search" onclick="$scope.pageChanged1();"></span></div>
 					</div>					
@@ -166,7 +179,7 @@
 			         </td>
 			         <td>
 			         	<div class="company">{{rdc.title}}<b class="rent">【{{rdc.typeText}}】</b></div>
-			         	<div class="position">{{rdc.attrvalue}}</div>
+			         	<div class="position">车型：{{rdc.codeLave3}}</div>
 			         </td>
 		            <td> <!-- 	 线路 -->
 			         	<div class="company"><span class="_sh_orang">出发地：</span>{{rdc.unit1}}</div>
@@ -178,6 +191,9 @@
 			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
 			         </td>
 			      </tr>
+<!-- 			       <tr ng-show="{{pslist==null||pslist.length==0}}"> -->
+<!-- 			         <td colspan="5"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
+<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
@@ -251,13 +267,13 @@
 			         	<div class="image"><img src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
-			         	<div class="company">{{rdc.name}}<b class="rent">【{{rdc.typeText}}】</b></div>
+			         	<div class="company">{{rdc.title}}<b class="rent">【{{rdc.typeText}}】</b></div>
 			         	<div class="position">
 			         		<span class="glyphicon glyphicon-map-marker"></span>
-			         		<span class="textInfo">{{rdc.address}}</span>
+			         		<span class="textInfo">{{rdc.detlAddress}}</span>
 			         	</div>
 			         </td>
-			         <td>{{rdc.unitPrice}}元/天·吨</td>
+			         <td>{{rdc.unitPrice}}元/天·平方米</td>
 			         <td>{{rdc.sqm}}平米</td>
 			         <td>{{rdc.coldtype}}</td>
 			         <td>{{rdc.validStartTime}}<span class="_sh_fl_span">至</span><br/>{{rdc.validEndTime}}</td>
@@ -265,6 +281,9 @@
 			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
 			         </td>
 			      </tr>
+<!-- 			       <tr ng-show="{{rdcs==null||rdcs.length==0}}"> -->
+<!-- 			         <td colspan="7"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
+<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
@@ -274,4 +293,5 @@
             </div>
 	    </div>
     </div>
+  
 </div>
