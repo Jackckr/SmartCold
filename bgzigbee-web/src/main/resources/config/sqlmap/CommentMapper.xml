@@ -48,10 +48,11 @@
 	</select>
 	<select id="findByPage" resultType="com.smartcold.bgzigbee.manage.dto.CommentDTO">
 		SELECT c.*, u.username as commerName, r.name as rdcName
-		FROM `ColdStorageComment` as c,`user` as u, `rdc` as r
-        where c.commerid=u.id and c.rdcid=r.id
+		FROM 
+			`ColdStorageComment` as c LEFT JOIN `user` as u on c.commerid=u.id
+			LEFT JOIN `rdc` as r on c.rdcid=r.id
         <if test="keyword != null">
-        	and (r.name like "%"#{keyword}"%" or u.username like "%"#{keyword}"%")
+        	where (r.name like "%"#{keyword}"%" or u.username like "%"#{keyword}"%")
         </if>
 		order by c.`addTime` desc
 	</select>

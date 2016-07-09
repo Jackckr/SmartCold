@@ -33,6 +33,7 @@
 	         </th>
 	         <th>冷库名称</th>
 	         <th>冷库地址</th>
+	         <th>添加人</th>
 	         <th style="width:120px;">联系方式</th>
 	         <th style="width:190px;">添加时间</th>
 	         <th style="width:66px;">状态</th>
@@ -47,6 +48,7 @@
 	         </td>
 	         <td>{{rdc.name}}</td>
 	         <td>{{rdc.address}}</td>
+	         <td>{{rdc.username || '管理员'}}</td>
 	         <td>{{rdc.cellphone}}</td>
 	         <td>{{rdc.addtime}}</td>
 	         <td ng-bind="getAudit(rdc.audit)"></td>
