@@ -35,7 +35,7 @@ public class CompressorGroupSetController {
 
 	@RequestMapping(value = "/updateMapping")
 	@ResponseBody
-	public Object updateMapping(int groupdId, String mapping) {
+	public Object updateMapping(int id, String mapping) {
 		try {
 			gson.fromJson(mapping, new TypeToken<Map<String, String>>() {
 			}.getType());
@@ -43,7 +43,7 @@ public class CompressorGroupSetController {
 			return new ResultDto(-1, "参数不是合法的json map");
 		}
 
-		compressorGroupSetDao.updateMappingById(groupdId, mapping);
+		compressorGroupSetDao.updateMappingById(id, mapping);
 
 		return new ResultDto(0, "修改成功");
 	}

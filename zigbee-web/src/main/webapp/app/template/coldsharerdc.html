@@ -6,7 +6,6 @@
 	<style>
      .select_2{margin-right: 20px;}
      .select_2 select{min-width: 80px;font-size:16px;}
-     ._sh_orang{color: #f40;}
      ._sh_fl_span{position: absolute;margin: 10px;}
      #reservationtime{height: 25px;}
      .daterangepicker{font-size: 9px;}
@@ -183,7 +182,7 @@
 			         </td>
 		            <td> <!-- 	 线路 -->
 			         	<div class="company"><span class="_sh_orang">出发地：</span>{{rdc.unit1}}</div>
-			         	<div class="position"><span>目的地：</span>{{rdc.unit2}}</div>
+			         	<div class="position"><span style="color:#707070">目的地：</span>{{rdc.unit2}}</div>
 			         </td>
 			         <td>{{rdc.codeLave1}}</td>
 			         <td>{{rdc.validStartTime}}<span class="_sh_fl_span">至</span><br/>{{rdc.validEndTime}}</td>
@@ -274,7 +273,7 @@
 			         	</div>
 			         </td>
 			         <td>{{rdc.unitPrice}}元/天·平方米</td>
-			         <td>{{rdc.sqm}}平米</td>
+			         <td>{{rdc.sqm}}平方米</td>
 			         <td>{{rdc.coldtype}}</td>
 			         <td>{{rdc.validStartTime}}<span class="_sh_fl_span">至</span><br/>{{rdc.validEndTime}}</td>
 			         <td>
@@ -289,7 +288,7 @@
 			<div class="row" style="text-align: center;">
                     <pagination  total-items="bigTotalItems3"  ng-change="pageChanged3()" 
                                 ng-model="bigCurrentPage3" max-size="maxSize" class="pagination-sm"
-                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                                boundary-links="true" rotate="false" num-pages="numPages"   previous-text="上一页" next-text="下一页"></pagination>
             </div>
 	    </div>
     </div>

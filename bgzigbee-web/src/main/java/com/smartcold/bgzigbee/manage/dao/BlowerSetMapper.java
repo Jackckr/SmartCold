@@ -12,5 +12,5 @@ import com.smartcold.bgzigbee.manage.entity.BlowerSetEntity;
 public interface BlowerSetMapper {
 	List<BlowerSetEntity> findByStorageId(int coldStorageId);
 
-	void updateMappingById(@Param("blowerId") int blowerId, @Param("mapping") String mapping);
+	void updateMappingById(@Param("id") int id, @Param("mapping") String mapping);
 }

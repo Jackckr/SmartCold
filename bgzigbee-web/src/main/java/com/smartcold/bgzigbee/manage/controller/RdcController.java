@@ -103,7 +103,7 @@ public class RdcController {
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findRdcDTOByPage(@RequestParam(value = "pageNum", required = false) Integer pageNum,
-			@RequestParam(value = "pageSize") Integer pageSize,
+			@RequestParam(value = "pageSize", required=false) Integer pageSize,
 			@RequestParam(value = "audit", required = false) Integer audit,
 			@RequestParam(value = "keyword", required = false) String keyword) {
 		if (!(audit == -1 || audit == 1 || audit == 0)) {
@@ -111,7 +111,7 @@ public class RdcController {
 		}
 //		System.out.println(keyword);
 		pageNum = pageNum == null ? 1 : pageNum;
-		pageSize = pageSize == null ? 12 : pageSize;
+		pageSize = pageSize == null ? 10 : pageSize;
 		return rdcService.findRdcDTOByPage(pageNum, pageSize, audit, keyword);
 	}
 
@@ -397,7 +397,7 @@ public class RdcController {
 	@ResponseBody
 	public Object updateMapping(int rdcId, String mapping) {
 		try {
-			gson.fromJson(mapping, new TypeToken<Map<String, String>>() {
+			gson.fromJson(mapping, new TypeToken<Map<String, Object>>() {
 			}.getType());
 		} catch (JsonParseException e) {
 			return new ResultDto(-1, "参数不是合法的json map");

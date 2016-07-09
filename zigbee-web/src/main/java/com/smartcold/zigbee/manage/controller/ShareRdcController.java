@@ -17,7 +17,6 @@ import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
-import com.smartcold.zigbee.manage.util.CacheTool;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
@@ -43,7 +42,7 @@ public class ShareRdcController  {
 	 */
 	private void getPageInfo(HttpServletRequest request) {
 		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
-		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "7" : request.getParameter("pageSize")); // 每页数据量
+		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "10" : request.getParameter("pageSize")); // 每页数据量
 	}
 	
 	//-----------------------------------------------------------------------------辅助查询条件------------------------------------------------------------
@@ -59,28 +58,27 @@ public class ShareRdcController  {
 	 * @param cs  对应实体类 ：默认- com.farmen.core.entities.CommMataData
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/ui_getSeleectData")
 	@ResponseBody
 	public ResponseData<Map<String, Object>> ui_getSeleectData(String data,String value,String text,String cs,String parentCode,String filter) {
-		    String key= data+"_"+ value+"_"+ text+"_"+ cs+"_"+ parentCode+"_"+filter;
-			if(CacheTool.hasCache(key)){
-				 List<Map<String, Object>> objdata = (List<Map<String, Object>>) CacheTool.getdate(key);
-				return ResponseData.newSuccess(objdata);
-			}else{
+//		    String key= data+"_"+ value+"_"+ text+"_"+ cs+"_"+ parentCode+"_"+filter;
+//			if(CacheTool.hasCache(key)){
+//				 List<Map<String, Object>> objdata = (List<Map<String, Object>>) CacheTool.getdate(key);
+//				return ResponseData.newSuccess(objdata);
+//			}else{
 				if(data==null||"".equals(data)){
 					return ResponseData.newFailure("请设置完整信息");
 				}else{
 					 try {
 						 List<Map<String, Object>> objdata = this.commonService.getBaseData(data+filter, value, text);
-						 CacheTool.setData(key, objdata);
+//						 CacheTool.setData(key, objdata);
 						 return ResponseData.newSuccess(objdata);
 					} catch (Exception e) {
 							e.printStackTrace();
 							return ResponseData.newFailure("网络异常！稍后重试！");
 					}
 				}
-			}
+//			}
 	}
 	
 	/**
@@ -88,22 +86,21 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getSEFilterData")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getSEFilterData(HttpServletRequest request) {
-		String key="getSEFilterData";
+//		String key="getSEFilterData";
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-		if(CacheTool.hasCache(key)){
-			data= (HashMap<String, Object>) CacheTool.getdate(key);
-		    result.setEntity(data);
-		}else{
+//		if(CacheTool.hasCache(key)){
+//			data= (HashMap<String, Object>) CacheTool.getdate(key);
+//		    result.setEntity(data);
+//		}else{
 			data.put("mt", this.commonService.getBaseData("storagemanagetype", "id", "type"));// 经营类型
 			data.put("st", this.commonService.getBaseData("storagetempertype", "id", "type"));// 温度类型
 			result.setEntity(data);
-			CacheTool.setData(key, data);  
-		}
+//			CacheTool.setData(key, data);  
+//		}
 		return result;
 	}
 	/**
@@ -111,21 +108,21 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+
 	@RequestMapping(value = "/getGDFilterData")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getGDFilterData(HttpServletRequest request) {
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-		String key="getGDFilterData";
+//		String key="getGDFilterData";
 		HashMap<String, Object> data = new HashMap<String, Object>();
-		if(CacheTool.hasCache(key)){
-			data= (HashMap<String, Object>) CacheTool.getdate(key);
-		    result.setEntity(data);
-		}else{
+//		if(CacheTool.hasCache(key)){
+//			data= (HashMap<String, Object>) CacheTool.getdate(key);
+//		    result.setEntity(data);
+//		}else{
 			data.put("gt", this.commonService.getCommData("good_type"));// 经营类型
 			result.setEntity(data);
-			CacheTool.setData(key, data);  
-		}
+//			CacheTool.setData(key, data);  
+//		}
 		return result;
 	}
 	
@@ -134,23 +131,22 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getPSFilterData")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getPSFilterData(HttpServletRequest request) {
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-			String key="getPSFilterData";
+//			String key="getPSFilterData";
 			HashMap<String, Object> data = new HashMap<String, Object>();
-			if(CacheTool.hasCache(key)){
-				data= (HashMap<String, Object>) CacheTool.getdate(key);
-				result.setEntity(data);
-			}else{
+//			if(CacheTool.hasCache(key)){
+//				data= (HashMap<String, Object>) CacheTool.getdate(key);
+//				result.setEntity(data);
+//			}else{
 				data.put("fm", this.commonService.getCommData("ps_fm_type"));//业务类型
 				data.put("cl", this.commonService.getCommData("ps_cl_type"));//温度类型
 				data.put("sk", this.commonService.getBaseData("storagetruck", "id", "type"));// 车型//
 				result.setEntity(data);
-				CacheTool.setData(key, data);  
-			}
+//				CacheTool.setData(key, data);  
+//			}
 		return result;
 	}
 //	/**

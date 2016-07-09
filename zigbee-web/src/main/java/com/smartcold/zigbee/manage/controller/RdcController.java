@@ -31,7 +31,6 @@ import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
-import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
@@ -40,8 +39,8 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
-import com.smartcold.zigbee.manage.util.CacheTool;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.VerifyUtil;
 
 @Controller
@@ -412,58 +411,86 @@ public class RdcController {
 		boolean deleted = ftpService.deleteFile(url);
 		return new BaseDto(deleted ? 0 : -1);
 	}
-	
-	
-	
+
+	/**
+	 * 提供筛选条件
+	 * @param sqm
+	 * @return
+	 */
+	private static String getSqmFilter(String sqm)
+	{  
+		StringBuffer sqlfilter=new StringBuffer("(");
+		if(StringUtil.isnotNull(sqm)){
+			String filter[]=sqm.split(",");
+			for (String betdata : filter) {
+			  String betsmdata[]=	betdata.split("~");
+			    if(betsmdata.length==2){
+			    	sqlfilter.append(" r.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
+			    }else{
+			    	sqlfilter.append(" r.sqm  "+betsmdata[0]+" or");
+			    }
+			}
+			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
+	   }
+		return "";
+	}
 	/**
 	 * 获得RDC过滤信息
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getRDCFilterData")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getRDCFilterData(HttpServletRequest request) {
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-			String key="getRDCFilterData";
+//			String key="getRDCFilterData";
 			HashMap<String, Object> data = new HashMap<String, Object>();
-			if(CacheTool.hasCache(key)){
-				data= (HashMap<String, Object>) CacheTool.getdate(key);
+//			if(CacheTool.hasCache(key)){
+//				data= (HashMap<String, Object>) CacheTool.getdate(key);
+//				result.setEntity(data);
+//			}else{
+				data.put("mt", this.commonService.getBaseData("storagemanagetype", "id", "type"));// 经营类型
+				data.put("dt", this.commonService.getBaseData("storagetype", "id", "type"));// 商品存放形式
+				data.put("te", this.commonService.getBaseData("storagetempertype", "id", "type"));// 温度类型
 				result.setEntity(data);
-			}else{
-				//
-				result.setEntity(data);
-				CacheTool.setData(key, data);  
-			}
+//				CacheTool.setData(key, data);  
+//			}
 		return result;
 	}
 	
 	
 	/**
+	 * findRdcDTOList
 	 * 获得配送信息
 	 * @param request
-	 * @param type  出售求货
-	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param isKey 主动搜索
 	 * @param keyword  关键字
-	 * @param origintion:出发地
-	 * @param destination:目的地
-	 * @param deliverytime:发货时间
-	 * @param carType 车型
-	 * @param businessType 业务类型
+	 * @param managementType  经营类型
+	 * @param storageType 存放类型
 	 * @param storagetempertype 温度类型
+	 * @param sqm 面积
+	 * @param hasCar 有无车辆
 	 * @param orderBy 排序
 	 * @return
 	 */
-	@RequestMapping(value = "/getSEPSList")
+	@RequestMapping(value = "/getRDCList")
 	@ResponseBody
-	public ResponseData<RdcEntityDTO> getSEPSList(HttpServletRequest request,String type,String datatype, String keyword,String origintion,String destination,String deliverytime,String storagetempertype,String businessType,String carType,String orderBy) {
+	public ResponseData<RdcEntityDTO> getRDCList(HttpServletRequest request,String isKey, String keyword,String provinceid,String managementType,String storageType,String storagetempertype,String sqm,String hasCar,String orderBy) {
 		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
 		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "10" : request.getParameter("pageSize")); // 每页数据量
 		HashMap<String, Object> filter=new HashMap<String, Object>();
-	
+		if(StringUtil.isnotNull(isKey)){
+			managementType=storageType= storagetempertype=sqm=hasCar=null; 
+		}
+		filter.put("hasCar", hasCar);
 		filter.put("orderBy", orderBy);
+		filter.put("keyword", keyword);
+		filter.put("provinceid", provinceid);
+		filter.put("sqm", getSqmFilter(sqm));
+		filter.put("storageType", storageType);//存放类型
+		filter.put("managementType", managementType);//经营类型
+		filter.put("storagetempertype", storagetempertype);//温度类型
 		PageInfo<RdcEntityDTO> data = this.rdcService.getRDCList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
-	
 }

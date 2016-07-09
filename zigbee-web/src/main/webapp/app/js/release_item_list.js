@@ -25,7 +25,7 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 		  if(user!==null&&user.id!=0){
 			  $location.path("/coldStorageAdd");
 		  }else{
-              window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd#/releaseItemList";
+              window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
 		  }
 	  };
 	  $scope.pageChanged = function () {

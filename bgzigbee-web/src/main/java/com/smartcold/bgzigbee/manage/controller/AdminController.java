@@ -48,7 +48,7 @@ public class AdminController extends BaseController {
 		AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
 		if (admin != null) {
 			String cookie = cookieService.insertCookie(adminName);
-		admin.setAdminpwd("******");
+		    admin.setAdminpwd("******");
 			request.getSession().setAttribute("admin", admin);
 			return String.format("token=%s", cookie);
 		}
