@@ -24,6 +24,7 @@
 		         <th>服务</th>
 		         <th>卫生</th>
 		         <th>点评</th>
+		         <th>时间</th>
 		         <th>操作</th>
 		      </tr>
 		   </thead>
@@ -41,6 +42,7 @@
 		         <td>{{item.serviceGrade}}</td>
 		         <td>{{item.sanitaryGrade}}</td>
 		         <td>{{item.content | limitTo:50}}{{item.content.length > 50 ? '...' : ''}}</td>
+		         <td>{{item.addTime}}</td>
 		         <td>
 		         	<span class="delete" ng-click="deleteComment(item.id)"></span>
 		         </td>
