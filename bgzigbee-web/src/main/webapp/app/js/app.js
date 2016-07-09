@@ -22,6 +22,7 @@ coldWeb.run(function (editableOptions, naviService,adminService, $location) {
 });
 
 coldWeb.config(function ($httpProvider) {
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.interceptors.push(function ($q, $injector) {
         return {
             'response': function (response) {

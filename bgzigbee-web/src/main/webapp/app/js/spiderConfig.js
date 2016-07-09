@@ -10,12 +10,15 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.changeRdc = function(){
+		$scope.vm.choseRdc.mapping = JSON.parse($scope.vm.choseRdc.mapping);
 		$http.get('/i/coldStorage/getColdStorageByRdcId?rdcId=' + $scope.vm.choseRdc.id).success(function(data,status,config,headers){
 			angular.forEach(data,function(item,index){
 				data[index].mapping = JSON.parse(data[index].mapping)
 			})
 			$scope.storages = data;
 			$scope.vm.choseStorage = data[0];
+			$scope.vm.warnings = $scope.vm.choseRdc.mapping.hasOwnProperty("warnings")?$scope.vm.choseRdc.warnings:[];
+			$scope.vm.warning = "";
 			$scope.changeStorage();
 		})
 		$http.get('/i/rdc/findSpiderConfig?rdcId=' + $scope.vm.choseRdc.id
@@ -96,7 +99,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.realSaveCompressGroup = function(){
-		url = '/i/compressorGroup/updateMapping?groupdId=' + $scope.vm.choseCompressGroup.groupId 
+		url = '/i/compressorGroup/updateMapping?id=' + $scope.vm.choseCompressGroup.id 
 		+ '&mapping=' + JSON.stringify($scope.vm.choseCompressGroup.mapping);
 		$http.post(url).success(function(data,status,config,headers){
 			alert(data.message);
@@ -117,6 +120,29 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			alert(data.message);
 			$scope.vm.username = "";
 			$scope.vm.password = "";
+		})
+	}
+	
+	$scope.addWaringValue = function(){
+		if($scope.vm.warning.trim() && $scope.vm.warnings.indexOf($scope.vm.warning) == -1){
+			$scope.vm.warnings.push($scope.vm.warning);
+		}
+		$scope.vm.warning = "";
+		$scope.vm.addWarning=false;
+	}
+	
+	$scope.deleteWarning = function(warning){
+		if($scope.vm.warnings.indexOf(warning) > -1){
+			$scope.vm.warnings.splice($scope.vm.warnings.indexOf(warning),1);
+		}
+	}
+	
+	$scope.realSaveWarning = function(){
+		$scope.vm.choseRdc.mapping.warnings = $scope.vm.warnings;
+		url = '/i/rdc/updateMapping?rdcId=' + $scope.vm.choseRdc.id 
+		+ '&mapping=' + JSON.stringify($scope.vm.choseRdc.mapping);
+		$http.post(url).success(function(data,status,config,headers){
+			alert(data.message);
 		})
 	}
 	
