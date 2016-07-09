@@ -17,7 +17,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			})
 			$scope.storages = data;
 			$scope.vm.choseStorage = data[0];
-			$scope.vm.warnings = $scope.vm.choseRdc.mapping.hasOwnProperty("warnings")?$scope.vm.choseRdc.warnings:[];
+			$scope.vm.warnings = $scope.vm.choseRdc.mapping.hasOwnProperty("warnings")?$scope.vm.choseRdc.mapping.warnings:[];
 			$scope.vm.warning = "";
 			$scope.changeStorage();
 		})
@@ -53,6 +53,18 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 					$scope.doors = data;
 					$scope.vm.choseDoor = data.length>0?data[0]:[];
 				})
+		$http.get('/i/blower/getBlowerByColdStorageId?coldStorageId=' + $scope.vm.choseStorage.id
+				).success(function(data,status,config,headers){
+					angular.forEach(data,function(item,index){
+						data[index].mapping = JSON.parse(data[index].mapping)
+					})
+					$scope.blowers = data;
+					$scope.vm.choseBlower = data.length>0?data[0]:[];
+				})
+		$http.get('/i/blower/findItem').success(function(data,status,config,headers){
+			$scope.blowerItem = data;
+			$scope.vm.choseBlowerItem = data[0];
+		})
 	}
 	
 	$scope.deleteKey = function(key){
@@ -61,6 +73,10 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.deleteDoorKey = function(key){
 		delete $scope.vm.choseDoor.mapping[key];
+	}
+	
+	$scope.deleteBlowerKey = function(key){
+		delete $scope.vm.choseBlower.mapping[key];
 	}
 	
 	$scope.deleteCompressGroupKey = function(key){
@@ -75,6 +91,11 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.addDoorKey = function(){
 		$scope.vm.choseDoor.mapping[$scope.vm.choseItem.columnkey]=$scope.vm.choseItem.columnvalue;
 		$scope.vm.addDoorItem=false;
+	}
+	
+	$scope.addBlowerKey = function(){
+		$scope.vm.choseBlower.mapping[$scope.vm.choseBlowerItem.columnkey]=$scope.vm.choseBlowerItem.columnvalue;
+		$scope.vm.addBlowerItem=false;
 	}
 	
 	$scope.addCompressGroupKey = function(){
@@ -93,6 +114,14 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.realSaveDoor = function(){
 		url = '/i/coldStorageDoor/updateMapping?id=' + $scope.vm.choseDoor.id 
 		+ '&mapping=' + JSON.stringify($scope.vm.choseDoor.mapping);
+		$http.post(url).success(function(data,status,config,headers){
+			alert(data.message);
+		})
+	}
+	
+	$scope.realSaveBlower = function(){
+		url = '/i/blower/updateMapping?id=' + $scope.vm.choseBlower.id 
+		+ '&mapping=' + JSON.stringify($scope.vm.choseBlower.mapping);
 		$http.post(url).success(function(data,status,config,headers){
 			alert(data.message);
 		})

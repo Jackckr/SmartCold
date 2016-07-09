@@ -1,60 +1,67 @@
 package com.smartcold.bgzigbee.manage.entity;
 
-import java.util.Date;
-
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-03-19 11:53)
+ * Author: qiunian.sun Date: qiunian.sun(2016-03-19 11:53)
  */
 public class BlowerSetEntity {
 
-    private int id;
+	private int id;
 
-    private int blowerId;
+	private int blowerId;
 
-    private int compressorGroupId;
+	private int compressorGroupId;
 
-    private int coldStorageId;
+	private int coldStorageId;
 
-    private float defrostingTemperature;
+	private float defrostingTemperature;
 
-    public int getId() {
-        return id;
-    }
+	private String mapping;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public int getBlowerId() {
-        return blowerId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setBlowerId(int blowerId) {
-        this.blowerId = blowerId;
-    }
+	public int getBlowerId() {
+		return blowerId;
+	}
 
-    public int getCompressorGroupId() {
-        return compressorGroupId;
-    }
+	public void setBlowerId(int blowerId) {
+		this.blowerId = blowerId;
+	}
 
-    public void setCompressorGroupId(int compressorGroupId) {
-        this.compressorGroupId = compressorGroupId;
-    }
+	public int getCompressorGroupId() {
+		return compressorGroupId;
+	}
 
-    public int getColdStorageId() {
-        return coldStorageId;
-    }
+	public void setCompressorGroupId(int compressorGroupId) {
+		this.compressorGroupId = compressorGroupId;
+	}
 
-    public void setColdStorageId(int coldStorageId) {
-        this.coldStorageId = coldStorageId;
-    }
+	public int getColdStorageId() {
+		return coldStorageId;
+	}
 
-    public float getDefrostingTemperature() {
-        return defrostingTemperature;
-    }
+	public void setColdStorageId(int coldStorageId) {
+		this.coldStorageId = coldStorageId;
+	}
 
-    public void setDefrostingTemperature(float defrostingTemperature) {
-        this.defrostingTemperature = defrostingTemperature;
-    }
+	public float getDefrostingTemperature() {
+		return defrostingTemperature;
+	}
+
+	public void setDefrostingTemperature(float defrostingTemperature) {
+		this.defrostingTemperature = defrostingTemperature;
+	}
+
+	public String getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(String mapping) {
+		this.mapping = mapping;
+	}
 }

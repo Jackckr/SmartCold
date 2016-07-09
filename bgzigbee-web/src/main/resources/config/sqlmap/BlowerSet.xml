@@ -11,7 +11,7 @@
 	
 	<update id="updateMappingById" parameterType="map">
 	    UPDATE `BlowerSet` SET mapping=#{mapping}
-	    WHERE `blowerId` = #{blowerId}
+	    WHERE `id` = #{id}
 	</update>
 
 </mapper>
