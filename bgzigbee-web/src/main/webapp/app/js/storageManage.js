@@ -2,6 +2,7 @@
  * Created by qiunian.sun on 16/4/9.
  */
 coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cookies, $http, $location) {
+	$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	$scope.optAudit = '8';
 	// 显示最大页数
     $scope.maxSize = 10;
@@ -12,19 +13,20 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 	$scope.rdcs = [];
 	$scope.getRdcs = function(){
 		$scope.selected = [];
-		    $http({
-		    	method:'POST',
-		    	url:'/i/rdc/findRdcDTOByPage',
-		    	params:{
-		    		pageNum : $scope.bigCurrentPage,
-		    		pageSize : $scope.maxSize, 
-		    		audit:$scope.optAudit,
-		    		keyword:$scope.keyword
-		    	}
-		    }).success(function (data) {
-		    	 $scope.bigTotalItems = data.total;
-			     $scope.rdcs = data.list;
-		    });
+		 var data = {
+		          pageNum : $scope.bigCurrentPage,
+		          pageSize : $scope.maxSize, 
+		          audit:$scope.optAudit,
+		          keyword:$scope.keyword
+		        };
+		      $http({
+		        method:'POST',
+		        url:'/i/rdc/findRdcDTOByPage',
+		        data:$.param(data)
+		      }).success(function (data) {
+		         $scope.bigTotalItems = data.total;
+		         $scope.rdcs = data.list;
+		      });
 	}
     
     $scope.pageChanged = function () {

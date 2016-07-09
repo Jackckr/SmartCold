@@ -22,6 +22,7 @@ coldWeb.run(function (editableOptions, naviService,adminService, $location) {
 });
 
 coldWeb.config(function ($httpProvider) {
+	
     $httpProvider.interceptors.push(function ($q, $injector) {
         return {
             'response': function (response) {

@@ -28,7 +28,7 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 				pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize,
 				audit : $scope.optAudit,
-				keyword : $scope.keyword
+				keyword : encodeURI($scope.keyword,"UTF-8"),
 			}
 		}).success(function(data) {
 			$scope.bigTotalItems = data.total;

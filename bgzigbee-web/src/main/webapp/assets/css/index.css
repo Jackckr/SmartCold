@@ -75,7 +75,7 @@ body{
 	height: 70px;
 	line-height: 70px;
 	color: #fff;
-	font-size: 22px;
+	font-size: 20px;
 	padding-left: 32px;
 }
 .list li{
@@ -85,7 +85,7 @@ body{
 }
 .current { background:#f00} 
 .list li,.list li a{
-	font-size: 18px;
+	font-size: 16px;
 	color: #949494;
 }
 .list li a:hover{
@@ -176,9 +176,9 @@ body{
 }
 .tableArea thead th{
 	background-color: #E4E4E4;
-	font-size: 16px;
+	font-size: 14px;
 	padding:4px 0!important;
-	font-weight: 400;
+	font-weight: 800;
 }
 .tableArea thead th:first-child,.tableArea thead th:last-child{
 	width:150px;
@@ -192,8 +192,8 @@ body{
 	line-height: 50px;
 }
 input[type='checkbox']{
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 }
 #allSec{
 	width: 100%;
@@ -303,7 +303,7 @@ tbody tr td{
 	height: 40px;
 }
 .checkbox-inline{
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .rdc {

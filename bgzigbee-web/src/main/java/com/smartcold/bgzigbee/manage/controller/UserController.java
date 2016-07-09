@@ -32,13 +32,18 @@ public class UserController extends BaseController {
 	public Object findUserList(@RequestParam(value="pageNum",required=false) Integer pageNum,
 			@RequestParam(value="pageSize") Integer pageSize, 
 			@RequestParam(value="audit", required=false) Integer audit,
-			@RequestParam(value="keyword", required=false) String keyword) {
+			@RequestParam(value="keyword", required=false) String keyword) throws UnsupportedEncodingException {
 		if( !(audit == -1 || audit == 1 || audit == 0) ){
 			audit = null;
 		}
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 12:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
+		if(keyword.equals("undefined"))
+			keyword = null;
+		else{
+		keyword = URLDecoder.decode(keyword, "UTF-8");
+		}
 		return new PageInfo<UserEntity>(userDao.findAllUser(audit,keyword));
 		
 	}
