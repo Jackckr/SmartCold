@@ -4,7 +4,8 @@
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcMapper">
 
     <select id="findRdcList" parameterType="int" resultType="RdcEntity">
-         SELECT * FROM `Rdc`
+         SELECT r.*,u.username as username
+         FROM `Rdc` as r LEFT JOIN user u on r.userid=u.id
 		 <where> 
 			<if test="audit != null">
 			    audit=#{audit}

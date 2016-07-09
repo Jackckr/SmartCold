@@ -44,9 +44,12 @@
                             <li id="comment">
                                 <a href="" ng-click="goColdStorageComment(rdcId)" data-toggle="tab">冷库评论</a>
                             </li>
+                            <li id="publish">
+                                <a href="" ng-click="goColdStoragePublish(rdcId)" data-toggle="tab">发布信息</a>
+                            </li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="coldStorageDetail">
+                            <div class="tab-pane active" id="coldStoragedetail">
                                 <div class="row" style="position: relative;left: 0px;top: 10px;margin:0">
                                     <h3 style="color: #00a7d0">基本信息</h3>
                                     <table class="commentinfo">
@@ -263,7 +266,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="coldStorageComment">
+                            <div class="tab-pane" id="coldStoragecomment">
                                 <div class="row">
                                     <div class="col-lg-7 col-sm-7 col-xs-7 col-md-7" style="position: relative;left: 10px;top: 10px;">
                                         <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
@@ -405,6 +408,43 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane" id="coldStoragepublish">
+                                <div class="row" style="margin-top: 10px;margin-bottom: 2px">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                                        <button class="btn btn-success" ng-click="pubSerdc()">发布仓库</button>
+                                        <button class="btn btn-success" ng-click="pubGoods()">发布货品</button>
+                                        <button class="btn btn-success" ng-click="pubPsaction()">发布配送</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;margin-bottom: 2px">
+                                    <table class="table tableInfo">
+                                        <thead>
+                                        <tr style="background-color: #F7F7F7">
+                                            <th width="40%" colspan="2">信息</th>
+                                            <th width="10%">类型</th>
+                                            <th width="50%">信息有效期</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="pub in pslist">
+                                            <td width="5%">
+                                                <div class="image"><img src="{{pub.logo}}"></div>
+                                            </td>
+                                            <td style="vertical-align: middle">
+                                                <div class="company">{{pub.title}}</div>
+                                            </td>
+                                            <td style="vertical-align: middle">【{{pub.typeText}}】</td>
+                                            <td style="vertical-align: middle">{{pub.validStartTime}}<span class="_sh_fl_span">至</span>{{pub.validEndTime}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row" style="text-align: center;">
+                                    <pagination  total-items="bigTotalItems"  ng-change="pageChanged()"
+                                                 ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                                                 boundary-links="true" rotate="false" num-pages="numPages" itemsPerPage="2"></pagination>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -421,33 +461,9 @@
                 <div class="row"
                      style="position:relative;top:40px;left: 0px;height: 300px;padding-right: 10px;border: 1px ridge lightgrey">
                     <div>
-                        <!--<a href="#"><img src="app/img/a_002.jpg" width="320" height="300px"/></a>-->
                         <div class="chart" id="mapChart" style="height: 298px;width: 100%"></div>
                     </div>
                 </div>
-               <!-- <div class="row"
-                     style="position:relative;top:60px;left: 0px;height: 400px;padding-right: 10px;border: 1px ridge lightgrey">
-                    <div style="width: 95%;position:relative;top: 10px;left: 10px;border-style: none none solid none;border-bottom:1px  solid #d3d3d3;">
-                        <span style="font-size: 20px;">我浏览过的冷库</span>
-                    </div>
-
-                    <div class="row" ng-repeat="lookrdc in lookrdcs"
-                         style="height: 70px;width: 95%;position: relative;top: 20px;left: 30px;border-style: none none solid none;border-bottom:1px  solid #d3d3d3;">
-                        <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
-                            <a href="#" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                    src="{{lookrdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" style="width: 60px;height: 60px" alt="冷库图片"/></a>
-
-                            <div style="position: relative;left: 5px;">
-                                <span style="color: #428bca;font-size: 12px;top: 1px;"><a
-                                        ng-click="goDetail(lookrdc.id)">{{lookrdc.name}}</a></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4" style="position: relative;top:5px;left: 0px;">
-                            <a class="btn btn-success" style="position: relative;left:10px;top: 15px;"
-                               ng-click="goDetail(lookrdc.id)">查看</a>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </section>

@@ -103,14 +103,14 @@ public class RdcController {
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findRdcDTOByPage(@RequestParam(value = "pageNum", required = false) Integer pageNum,
-			@RequestParam(value = "pageSize") Integer pageSize,
+			@RequestParam(value = "pageSize", required=false) Integer pageSize,
 			@RequestParam(value = "audit", required = false) Integer audit,
 			@RequestParam(value = "keyword", required = false) String keyword) {
 		if (!(audit == -1 || audit == 1 || audit == 0)) {
 			audit = null;
 		}
 		pageNum = pageNum == null ? 1 : pageNum;
-		pageSize = pageSize == null ? 12 : pageSize;
+		pageSize = pageSize == null ? 10 : pageSize;
 		return rdcService.findRdcDTOByPage(pageNum, pageSize, audit, keyword);
 	}
 
