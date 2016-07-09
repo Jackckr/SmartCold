@@ -914,6 +914,9 @@ section.content{
     background: rgba(0, 0, 0, 0) url(../img/media/appoverview.png) no-repeat scroll -285px -285px;
 }
 /*coldComment*/
+.commentinfo{
+	width:100%;
+}
 .commentinfo tr{
     border-bottom:1px dashed #e0e2e4;
     height:30px;
