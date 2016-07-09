@@ -43,7 +43,7 @@ public class RdcLogInterceptor implements HandlerInterceptor{
 		}else if (methodName.equals("update")) {
 			operationLog = new OperationLog("修改冷库", adminEntity.getId(),
 					new Date(), request.getRequestURL().toString(),
-					String.format("修改的冷库名：%s，冷库id：%s", request.getParameter("name"), request.getParameter("rdcId")));
+					String.format("修改的冷库：%s，冷库id：%s", request.getParameter("name"), request.getParameter("rdcId")));
 		}else if (methodName.equals("deleteByRdcID")) {
 			operationLog = new OperationLog("删除冷库", adminEntity.getId(), request.getRequestURL().toString(),
 					String.format("删除的冷库id：%s", request.getParameter("rdcID")));
