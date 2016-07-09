@@ -3,6 +3,7 @@ package com.smartcold.zigbee.manage.dto;
 import java.util.Date;
 
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.service.FtpService;
 
 public class RdcEntityDTO {
 
@@ -51,7 +52,9 @@ public class RdcEntityDTO {
     private FileDataEntity storagePic;
 
     private int pageview;
-
+    
+    private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
+    
 	public FileDataEntity getStoragePic() {
 		return storagePic;
 	}
@@ -235,4 +238,10 @@ public class RdcEntityDTO {
     public void setPageview(int pageview) {
         this.pageview = pageview;
     }
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = FtpService.READ_URL+ logo;
+	}
 }

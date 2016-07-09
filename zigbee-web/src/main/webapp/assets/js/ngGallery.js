@@ -30,14 +30,15 @@
         // Set the default template
         $templateCache.put(template_url,
             '<div class="{{ baseClass }}">' +
+           
+            '  <div style="width:25%;float:left;position:relative;overflow:hidden;">' +               
             '<a class="arrow prev" href="" ng-click="showPrev()"><span class="glyphicon glyphicon-chevron-left"></span></a>' +
-            '  <div >' +               
             '    <img ng-src="{{ images[index].thumb }}" class="{{ thumbClass }}" ng-click="openGallery(index)" alt="Image {{ index + 1 }}" />' +
             '  </div>' +
-            '  <div >' +
+            '  <div  style="width:25%;float:left;position:relative;overflow:hidden;">' +
             '    <img ng-src="{{ images[index + 1].thumb }}" class="{{ thumbClass }}" ng-click="openGallery(index + 1)" alt="Image {{ index + 1 + 1 }}" />' +
-            '  </div>' +
             '<a class="arrow next" href="" ng-click="showNext()"><span class="glyphicon glyphicon-chevron-right"></span></a>' +
+            '  </div>' +
             '</div>' +
             '<div class="ng-overlay" ng-show="opened">' +
             '</div>' +
