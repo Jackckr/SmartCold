@@ -19,6 +19,16 @@ public class OperationLog {
     
     public OperationLog() {
 	}
+    
+    public OperationLog(String name, Integer adminId, String requestUrl, String content) {
+		super();
+		this.result = "成功";
+		this.name = name;
+		this.adminId = adminId;
+		this.addtime = new Date();
+		this.requestUrl = requestUrl;
+		this.content = content;
+	}
 
 	public OperationLog(String name, Integer adminId, Date addtime, String requestUrl, String content) {
 		super();

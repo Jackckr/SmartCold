@@ -21,11 +21,16 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/rdc/*"/>
-			<bean class="com.smartcold.bgzigbee.manage.interceptor.LogInterceptor"/>
+			<mvc:mapping path="/comment/*"/>
+			<bean class="com.smartcold.bgzigbee.manage.interceptor.RdcLogInterceptor"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/*"/>
 			<bean class="com.smartcold.bgzigbee.manage.interceptor.userLogInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/storage/*"/>
+			<bean class="com.smartcold.bgzigbee.manage.interceptor.storageConfigLogInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>

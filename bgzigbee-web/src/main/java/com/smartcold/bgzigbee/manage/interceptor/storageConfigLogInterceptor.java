@@ -1,6 +1,5 @@
 package com.smartcold.bgzigbee.manage.interceptor;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.OperationLog;
 
-public class userLogInterceptor implements HandlerInterceptor{
+public class storageConfigLogInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	private OperationLogMapper operationLogDao;
@@ -36,31 +35,27 @@ public class userLogInterceptor implements HandlerInterceptor{
 		HandlerMethod handlerMethod = (HandlerMethod)handler;
 		String methodName = handlerMethod.getMethod().getName();
 		OperationLog operationLog = null;
-		if (methodName.equals("addUser")) {
-			operationLog = new OperationLog("添加用户", adminEntity.getId(),
-					new Date(), request.getRequestURL().toString(),
-					String.format("用户账号：%s", request.getParameter("username")));
-		}else if (methodName.equals("deleteUser")) {
-			operationLog = new OperationLog("删除用户", adminEntity.getId(),
-					new Date(), request.getRequestURL().toString(),
-					String.format("用户id：%s", request.getParameter("userID")));
+		String auditname = null;
+		if(request.getParameter("audit").equals("0")){
+			auditname = "经营类型";
 		}
-		else if (methodName.equals("deleteByUserIDs")) {
-			String[] userIDs = request.getParameterValues("userIDs");
-			operationLog = new OperationLog("批量删除用户", adminEntity.getId(),
-					new Date(), request.getRequestURL().toString(),
-					String.format("删除的用户id：%s",Arrays.toString(userIDs) ));
+		else if(request.getParameter("audit").equals("1")){
+			auditname = "商品存放类型";
 		}
-		else if (methodName.equals("changeAudit")) {
-			operationLog = new OperationLog("审核用户", adminEntity.getId(),
-					new Date(), request.getRequestURL().toString(),
-					String.format("用户id：%s", request.getParameter("userID")));
+		else if(request.getParameter("audit").equals("-1")){
+			auditname = "温度类型";
 		}
-		else if (methodName.equals("changeAudits")) {
-			String[] userIDs = request.getParameterValues("userIDs");
-			operationLog = new OperationLog("批量审核用户", adminEntity.getId(),
+		else{
+			auditname = "";
+		}
+		if (methodName.equals("deleteConfig")) {
+			operationLog = new OperationLog("删除冷库配置信息", adminEntity.getId(),
 					new Date(), request.getRequestURL().toString(),
-					String.format("审核的用户id：%s", Arrays.toString(userIDs)));
+					String.format("删除%s，id:%s", auditname, request.getParameter("configID")));
+		}else if (methodName.equals("addConfig")) {
+			operationLog = new OperationLog("添加冷库配置信息", adminEntity.getId(),
+					new Date(), request.getRequestURL().toString(),
+					String.format("添加%s，类型为:%s",auditname, request.getParameter("config")));
 		}
 		if (operationLog != null) {
 			operationLogDao.insert(operationLog);

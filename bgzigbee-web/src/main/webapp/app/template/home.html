@@ -31,6 +31,7 @@
 				         		<label for="allSecSon" >全选</label>
 				         	</div>
 				         </th>
+				         <th>id</th>
 				         <th>用户账号</th>
 				         <th>邮箱</th>
 				         <th>手机号</th>
@@ -45,6 +46,7 @@
 						 <input type="checkbox" ng-checked="exists(user, selected)"
                     				ng-click="toggle(user, selected)"/>
 				         </td>
+				         <td>{{user.id}}</td>
 				         <td>{{user.username}}</td>
 				         <td>{{user.email}}</td>
 				         <td>{{user.telephone}}</td>

@@ -2,6 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
 "http://mybatis.org/dtd/mybatis-3-config.dtd">  
 <configuration>    
+<settings>  
+     <setting name="mapUnderscoreToCamelCase" value="true" />  
+</settings>  
 <!-- 
     plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:
     properties?, settings?, 

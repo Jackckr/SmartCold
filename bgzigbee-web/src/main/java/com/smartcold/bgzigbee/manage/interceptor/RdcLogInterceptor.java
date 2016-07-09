@@ -1,5 +1,6 @@
 package com.smartcold.bgzigbee.manage.interceptor;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.OperationLog;
 
-public class LogInterceptor implements HandlerInterceptor{
+public class RdcLogInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	private OperationLogMapper operationLogDao;
@@ -37,19 +38,31 @@ public class LogInterceptor implements HandlerInterceptor{
 		OperationLog operationLog = null;
 		if (methodName.equals("add")) {
 			operationLog = new OperationLog("添加冷库", adminEntity.getId(),
-					new Date(), request.getRequestURL().toString(),
-					String.format("冷库名：%s", request.getParameter("name")));
+					request.getRequestURL().toString(),
+					String.format("添加的冷库名称：%s", request.getParameter("name")));
 		}else if (methodName.equals("update")) {
 			operationLog = new OperationLog("修改冷库", adminEntity.getId(),
 					new Date(), request.getRequestURL().toString(),
-					String.format("冷库名：%s", request.getParameter("name")));
-		}
+					String.format("修改的冷库名：%s，冷库id：%s", request.getParameter("name"), request.getParameter("rdcId")));
+		}else if (methodName.equals("deleteByRdcID")) {
+			operationLog = new OperationLog("删除冷库", adminEntity.getId(), request.getRequestURL().toString(),
+					String.format("删除的冷库id：%s", request.getParameter("rdcID")));
+		}else if (methodName.equals("deleteByRdcIDs")) {
+			String[] rdcIDs = request.getParameterValues("rdcIDs");
+			operationLog = new OperationLog("批量删除冷库", adminEntity.getId(), request.getRequestURL().toString(),
+					String.format("删除的冷库id：%s", Arrays.toString(rdcIDs)));
+		} else if (methodName.equals("deleteCommentByID")) {
+			operationLog = new OperationLog("删除评论", adminEntity.getId(), request.getRequestURL().toString(),
+					String.format("删除的评论id：%s", request.getParameter("id")));
+		}else if (methodName.equals("deleteByIds")) {
+			String[] ids = request.getParameterValues("ids");
+			operationLog = new OperationLog("批量删除评论", adminEntity.getId(), request.getRequestURL().toString(),
+					String.format("删除的评论id：%s", Arrays.toString(ids)));
+		} 
 		if (operationLog != null) {
 			operationLogDao.insert(operationLog);
 		}
-		System.out.println(request.getRequestURI());
-		System.out.println(methodName);
-		
+	
 	}
 
 	@Override
