@@ -37,6 +37,7 @@ a:hover{
 	border-color:#000;
 	border-radius:2px;
 	opacity:0.5;
+	margin:0;
 }
 .carousel-indicators .active{
 	background-color:#f50;
