@@ -68,7 +68,7 @@ var releaseItem = {
 coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
 	if(user==null||(user!=null&&user.id==0)){
 		   alert("请登录后执行该操作！");
-		   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd#/releaseItemList";
+		   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
 		   return;
 	 }else{
 		 $("#release_main").show();
