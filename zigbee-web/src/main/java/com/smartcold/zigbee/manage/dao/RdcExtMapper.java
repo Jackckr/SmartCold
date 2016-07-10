@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.dao;
 
 
+import com.smartcold.zigbee.manage.dto.RdcScoreDTO;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +19,7 @@ public interface RdcExtMapper {
     
     void increasePageView(int rdcID);
 
-    List<RdcExtEntity> findScoreRdcDTOList(@Param("npoint") int npoint);
+    List<RdcScoreDTO> findScoreRdcDTOList(@Param("npoint") int npoint);
 
-    List<RdcExtEntity> findHotRdcDTOList(@Param("npoint") int npoint);
+    List<RdcScoreDTO> findHotRdcDTOList(@Param("npoint") int npoint);
 }

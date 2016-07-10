@@ -130,12 +130,12 @@
     	UPDATE rdcext set pageview = pageview+1 where rdcid=#{rdcID};
     </update>
 
-    <select id="findScoreRdcDTOList" parameterType="map" resultType="RdcExtEntity">
-        SELECT * FROM `RdcExt` order by `rdcscore` desc limit #{npoint};
+    <select id="findScoreRdcDTOList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcScoreDTO">
+        select rdc.id as id,rdc.name as name,ext.rdcscore as rdcscore,ext.rdccommentcnt as rdccommentcnt,ext.rdcrecommendpercent as rdcrecommendpercent from (select id,name from `Rdc`) as rdc left join (select RDCID,rdcscore,rdccommentcnt,rdcrecommendpercent from `RdcExt`) ext on rdc.id = ext.RDCID order by ext.rdcscore desc limit #{npoint};
     </select>
 
-    <select id="findHotRdcDTOList" parameterType="map" resultType="RdcExtEntity">
-        SELECT * FROM `RdcExt` order by `pageview` desc limit #{npoint};
+    <select id="findHotRdcDTOList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcScoreDTO">
+        select rdc.id as id,rdc.name as name,ext.rdcscore as rdcscore,ext.rdccommentcnt as rdccommentcnt,ext.rdcrecommendpercent as rdcrecommendpercent from (select id,name from `Rdc`) as rdc left join (select RDCID,pageview,rdcscore,rdccommentcnt,rdcrecommendpercent from `RdcExt`) ext on rdc.id = ext.RDCID order by ext.pageview desc limit #{npoint};
     </select>
 
 </mapper>

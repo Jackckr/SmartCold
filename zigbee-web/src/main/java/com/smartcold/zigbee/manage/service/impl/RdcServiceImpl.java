@@ -303,41 +303,28 @@ public class RdcServiceImpl implements RdcService {
 
     @Override
     public List<RdcScoreDTO> findHotRdcDTOList(@RequestParam int npoint) {
-        List<RdcExtEntity> rdcExtEntityList = rdcExtDao.findHotRdcDTOList(npoint);
-        return getRdcScoreDTO(rdcExtEntityList);
+        List<RdcScoreDTO> rdcScoreDTOs = rdcExtDao.findHotRdcDTOList(npoint);
+        return addFileData(rdcScoreDTOs);
     }
 
-    private List<RdcScoreDTO> getRdcScoreDTO(List<RdcExtEntity> rdcExtEntityList) {
-        List<RdcScoreDTO> list = Lists.newArrayList();
-        if (!CollectionUtils.isEmpty(rdcExtEntityList)){
-            for (RdcExtEntity rdcExtEntity : rdcExtEntityList) {
-                RdcScoreDTO rdcScoreDTO = new RdcScoreDTO();
-                rdcScoreDTO.setId(rdcExtEntity.getRDCID());
-                rdcScoreDTO.setRdccommentcnt(rdcExtEntity.getRdccommentcnt());
-                rdcScoreDTO.setRdcscore(rdcExtEntity.getRdcscore());
-                rdcScoreDTO.setRdcrecommendpercent(rdcExtEntity.getRdcrecommendpercent());
-
-                List<RdcEntity> rdcEntityList = rdcDao.findRDCByRDCId(rdcExtEntity.getRDCID());
-                if (!CollectionUtils.isEmpty(rdcEntityList)){
-                    RdcEntity rdcEntity = rdcEntityList.get(0);
-                    rdcScoreDTO.setName(rdcEntity.getName());
-                    List<FileDataEntity> storagePics = fileDataDao.findByBelongIdAndCategory(rdcExtEntity.getRDCID(), FileDataMapper.CATEGORY_STORAGE_PIC);
-                    if (!storagePics.isEmpty()) {
-                        FileDataEntity storagePic = storagePics.get(0);
-                        storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
-                        rdcScoreDTO.setStoragePic(storagePic);
-                    }
-                    list.add(rdcScoreDTO);
+    private List<RdcScoreDTO> addFileData(List<RdcScoreDTO> rdcScoreDTOs) {
+        if (!CollectionUtils.isEmpty(rdcScoreDTOs)) {
+            for (RdcScoreDTO rdcScoreDTO : rdcScoreDTOs) {
+                List<FileDataEntity> storagePics = fileDataDao.findByBelongIdAndCategory(rdcScoreDTO.getId(), FileDataMapper.CATEGORY_STORAGE_PIC);
+                if (!storagePics.isEmpty()) {
+                    FileDataEntity storagePic = storagePics.get(0);
+                    storagePic.setLocation(FtpService.READ_URL + storagePics.get(0).getLocation());
+                    rdcScoreDTO.setStoragePic(storagePic);
                 }
             }
         }
-        return list;
+        return rdcScoreDTOs;
     }
 
     @Override
     public List<RdcScoreDTO> findScoreRdcDTOList(@RequestParam int npoint) {
-        List<RdcExtEntity> rdcExtEntityList = rdcExtDao.findScoreRdcDTOList(npoint);
-        return getRdcScoreDTO(rdcExtEntityList);
+        List<RdcScoreDTO> rdcScoreDTOs = rdcExtDao.findScoreRdcDTOList(npoint);
+        return addFileData(rdcScoreDTOs);
     }
 
     @Scheduled(cron = "0 */10 * * * ?")
