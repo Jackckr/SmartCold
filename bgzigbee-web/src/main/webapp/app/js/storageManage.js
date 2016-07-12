@@ -2,6 +2,7 @@
  * Created by qiunian.sun on 16/4/9.
  */
 coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cookies, $http, $location) {
+	$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	$scope.optAudit = '8';
 	// 显示最大页数
     $scope.maxSize = 10;
