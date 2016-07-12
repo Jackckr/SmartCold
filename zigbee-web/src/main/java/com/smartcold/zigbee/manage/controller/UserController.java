@@ -77,7 +77,7 @@ public class UserController extends BaseController {
 	}
 
 	
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody
 	public Object telephoneVerify(HttpServletRequest request, String telephone) throws ApiException {
 		if(telephone!=null&&!telephone.equals("")){
