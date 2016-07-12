@@ -106,7 +106,7 @@ public class RdcController {
 			@RequestParam(value = "pageSize", required=false) Integer pageSize,
 			@RequestParam(value = "audit", required = false) Integer audit,
 			@RequestParam(value = "keyword", required = false) String keyword) {
-		if (!(audit == -1 || audit == 1 || audit == 0)) {
+		if (audit !=null && !(audit == -1 || audit == 1 || audit == 0)) {
 			audit = null;
 		}
 //		System.out.println(keyword);

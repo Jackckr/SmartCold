@@ -1,5 +1,6 @@
 package com.smartcold.bgzigbee.manage.interceptor;
 
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -39,11 +40,11 @@ public class RdcLogInterceptor implements HandlerInterceptor{
 		if (methodName.equals("add")) {
 			operationLog = new OperationLog("添加冷库", adminEntity.getId(),
 					request.getRequestURL().toString(),
-					String.format("添加的冷库名称：%s", request.getParameter("name")));
+					String.format("添加的冷库名称：%s", URLDecoder.decode(request.getParameter("name"), "UTF-8")));
 		}else if (methodName.equals("update")) {
 			operationLog = new OperationLog("修改冷库", adminEntity.getId(),
 					new Date(), request.getRequestURL().toString(),
-					String.format("修改的冷库：%s，冷库id：%s", request.getParameter("name"), request.getParameter("rdcId")));
+					String.format("冷库id：%s", request.getParameter("rdcId")));
 		}else if (methodName.equals("deleteByRdcID")) {
 			operationLog = new OperationLog("删除冷库", adminEntity.getId(), request.getRequestURL().toString(),
 					String.format("删除的冷库id：%s", request.getParameter("rdcID")));
