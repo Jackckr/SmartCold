@@ -8,7 +8,7 @@
          FROM `Rdc` as r LEFT JOIN user u on r.userid=u.id
 		 <where> 
 			<if test="audit != null">
-			    audit=#{audit}
+			    r.audit=#{audit}
 			</if>
 		    <if test="keyword != null">
 		        AND name like "%"#{keyword}"%" or username like "%"#{keyword}"%"

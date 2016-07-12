@@ -31,6 +31,7 @@
 	         		<label style="font-weight:400;" for="allSecSon" >全选</label>
 	         	</div>
 	         </th>
+	         <th>id</th>
 	         <th>冷库名称</th>
 	         <th>冷库地址</th>
 	         <th>添加人</th>
@@ -46,6 +47,7 @@
 				<input type="checkbox" ng-checked="exists(rdc, selected)"
                     				ng-click="toggle(rdc, selected)"/>
 	         </td>
+	         <td>{{rdc.id}}</td>
 	         <td>{{rdc.name}}</td>
 	         <td>{{rdc.address}}</td>
 	         <td>{{rdc.username || '管理员'}}</td>
