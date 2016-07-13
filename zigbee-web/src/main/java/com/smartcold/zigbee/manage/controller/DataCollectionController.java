@@ -19,6 +19,7 @@ import com.smartcold.zigbee.manage.dao.StorageDataCollectionMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.DataCollectionBatchEntity;
 import com.smartcold.zigbee.manage.dto.DataCollectionBatchEntity.InfoEntity;
+import com.smartcold.zigbee.manage.dto.DataResultDto;
 import com.smartcold.zigbee.manage.entity.DataCollectionEntity;
 import com.smartcold.zigbee.manage.entity.StorageDataCollectionEntity;
 
@@ -71,9 +72,9 @@ public class DataCollectionController extends BaseController {
 			storageDataCollectionDao.batchInsert(arrayList);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new BaseDto(500);
+			return new DataResultDto(500);
 		}
 
-		return new BaseDto(200);
+		return new DataResultDto(200);
 	}
 }
