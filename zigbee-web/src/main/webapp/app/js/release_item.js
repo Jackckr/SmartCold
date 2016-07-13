@@ -39,8 +39,14 @@ var releaseItem = {
     },
     addvo: function() {
     	var vo = {}; 
-        $("#hl_validEndTime").val( $("[name=daterangepicker_end]").val());
-        $("#hl_validStartTime").val($("[name=daterangepicker_start]").val());
+        var stentime=$("#reservationtime").val().split(" - ");
+    	if(stentime.length==2){
+    		 $("#hl_validEndTime").val(stentime[1]); 
+    		 $("#hl_validStartTime").val(stentime[0]);
+    	}else{
+    		 $("#hl_validEndTime").val(null); 
+    		 $("#hl_validStartTime").val(null);
+    	}
         var detlAddress=releaseItem.$scope.typeCode==1?$("#rdc_address").text():$("#sl_provinceId option:selected").text()+"-"+$("#sl_cityid option:selected").text();
         $("#hide_div [name=detlAddress]").val(detlAddress);
         $("#release_main div.mode_hide:hidden").find("input,select").attr("disabled",true); 

@@ -248,12 +248,12 @@ public class ShareRdcController  {
 	/**
 	 * 获得配送信息
 	 * @param request
-	 * @param type  出售求货
-	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param type 出租、求车？1:2
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库->3
 	 * @param keyword  关键字
-	 * @param origintion:出发地
-	 * @param destination:目的地
-	 * @param deliverytime:发货时间
+	 * @param stprovinceID->stcityID:出发地
+	 * @param toprovinceID->tocityID:目的地
+	 * @param validStartTime->validEndTime:发货时间 
 	 * @param carType 车型
 	 * @param businessType 业务类型
 	 * @param storagetempertype 温度类型
@@ -262,20 +262,24 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value = "/getSEPSList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String type,String datatype, String keyword,String origintion,String destination,String deliverytime,String storagetempertype,String businessType,String carType,String orderBy) {
+	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String orderBy) {
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
-		filter.put("type", type);
+		filter.put("type", type);//OK
 		filter.put("sstauts", 1);//必须
-		filter.put("datatype", datatype);//必须
-		filter.put("keyword", keyword);
-		filter.put("origintion", origintion);
-		filter.put("destination", destination);
-		filter.put("deliverytime", deliverytime);
-		filter.put("carType", carType);
-		filter.put("businessType", businessType);
-		filter.put("storagetempertype", storagetempertype);
-		filter.put("orderBy", orderBy);
+		filter.put("datatype", datatype);//必须 OK
+		filter.put("keyword", keyword);//OK
+		filter.put("stprovinceID", stprovinceID);//
+		filter.put("stcityID", stcityID);//
+		filter.put("toprovinceID", toprovinceID);//
+		filter.put("tocityID", tocityID);//
+		filter.put("validStartTime", validStartTime);//
+		filter.put("validEndTime", validEndTime);//
+		filter.put("carType", carType);//车型->ok
+		filter.put("businessType", businessType);//业务类型->OK
+		filter.put("storagetempertype", storagetempertype);//storagetempertype->OK
+		filter.put("orderBy", orderBy);//
+		System.err.println(filter);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEPSList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}

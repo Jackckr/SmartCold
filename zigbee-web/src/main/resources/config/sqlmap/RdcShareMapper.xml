@@ -80,7 +80,7 @@
 		<!-- LEFT JOIN comm_mata_data c ON s.codeLave = c.type_code -->
 		WHERE
 		s.stauts = #{sstauts} and s.dataType=#{datatype}
-<!-- 		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime ) -->
+<!--     	AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime )  -->
 		<if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
 		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!-- 区域 -->
@@ -130,15 +130,19 @@
 		LEFT JOIN rdc r ON s.rdcID = r.id
 		WHERE
 		s.stauts = #{sstauts} and s.dataType=#{datatype} 
-<!-- 		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime ) -->
+<!-- 	   AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime )   -->
+        <if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
 		<if test="carType !=null and  carType != ''"> and s.codeLave3 in (${carType}) </if>  <!-- codeLave3:车型 -->
 		<if test="businessType !=null and  businessType != ''"> and s.codeLave1 in (${businessType}) </if>  <!-- codeLave1:业务类型 -->
 		<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in(${storagetempertype}) </if>  <!-- codeLave2:温度类型 -->
-		GROUP BY
-		s.id
-		ORDER BY
-		s.updatetime DESC
+		<if test="stprovinceID !=null and  stprovinceID != ''"> and s.stprovinceID in(${stprovinceID}) </if>  <!-- codeLave2:温度类型 -->
+		<if test="stcityID !=null and  stcityID != ''"> and s.stcityID in(${stcityID}) </if>  <!-- codeLave2:温度类型 -->
+		<if test="toprovinceID !=null and  toprovinceID != ''"> and s.toprovinceID in(${toprovinceID}) </if>  <!-- codeLave2:温度类型 -->
+		<if test="tocityID !=null and  tocityID != ''"> and s.tocityID in(${tocityID}) </if>  <!-- codeLave2:温度类型 -->
+		<if test="validStartTime !=null and  validStartTime != ''"> and ( s.validStartTime &lt;=#{validStartTime} AND s.validEndTime &gt;=#{validEndTime} ) </if>  <!-- 时间范围 -->
+		GROUP BY s.id
+		ORDER BY s.updatetime DESC
 	</select>
 	<!-- 睿库共享查询 -->
 	<select id="getSERDCList" parameterType="map"
@@ -171,15 +175,15 @@
 		LEFT JOIN rdc r ON s.rdcID = r.id
 		LEFT JOIN rdcext t on s.rdcID=t.RDCID
 		WHERE
-		s.stauts = #{sstauts} and s.dataType=#{datatype}
+		s.stauts = #{sstauts} and s.dataType=#{datatype} 
 <!-- 		AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime) -->
+		<if test="managetype !=null and  managetype != ''"> and t.managetype in (${managetype})</if> <!-- 经营类型 -->
 		<if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
 		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!-- 区域 -->
 		<if test="managetype !=null and  managetype != ''"> and t.managetype in (${managetype})</if> <!-- 经营类型 -->
-		<if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype in (${storagetempertype})</if><!-- 
-			温度类型 -->
+		<if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype in (${storagetempertype})</if><!--  温度类型 -->
 		GROUP BY
 		s.id
 		ORDER BY
