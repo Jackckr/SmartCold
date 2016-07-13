@@ -14,6 +14,8 @@ import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
+import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
+import com.taobao.api.ApiException;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -65,7 +67,6 @@ public class UserController extends BaseController {
 					user = userDao.findUserByName(effectiveCookie.getUsername());
 					user.setPassword("******");
 					request.getSession().setAttribute("user", user);
-
 					return user;
 				}
 			}
@@ -75,12 +76,27 @@ public class UserController extends BaseController {
 		return user;
 	}
 
+	
+	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
+	@ResponseBody
+	public Object telephoneVerify(HttpServletRequest request, String telephone) throws ApiException {
+		if(telephone!=null&&!telephone.equals("")){
+			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
+			String signUpCode = teleVerify.signUpVerify(telephone);
+			request.getSession().setAttribute("signUpCode", signUpCode);
+			return new ResultDto(0, "验证码已发送");
+		}
+		return new ResultDto(-1, "请填写手机号");
+	}
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
-	public Object signup(String username, String password,String password1, String email) {
+	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode) throws ApiException {
 		if (username == null || password == null || !password.equals(password1)) {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
+		if(signUpCode==null||!signUpCode.equals(request.getSession().getAttribute("signUpCode")))
+			return new ResultDto(-1, "验证码输入错误");
 		UserEntity userEntity = new UserEntity();
 		userEntity.setUsername(username);
 		userEntity.setPassword(password);

@@ -112,6 +112,7 @@ public class RdcController {
 //		System.out.println(keyword);
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
+		keyword = keyword.equals("")? null:keyword ;
 		return rdcService.findRdcDTOByPage(pageNum, pageSize, audit, keyword);
 	}
 

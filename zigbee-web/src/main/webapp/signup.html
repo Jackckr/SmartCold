@@ -102,7 +102,7 @@
 	                    <!-- 错误信息 popover end -->
 	                </div>
 	                <div class="form-group">
-	                    <input type="text" class="form-control" name="email" id="email" placeholder='电子邮箱/手机号'>
+	                    <input type="text" class="form-control" name="email" id="email" placeholder='电子邮箱'>
 	                    <!-- 错误信息 popover -->
 	                    <div class="err-popover-out">
 	                        <div class="">
@@ -121,6 +121,31 @@
 	                </div>
 	                <div class="form-group">
 	                    <input type="password" class="form-control password" name="password1" placeholder='重复密码'>
+	                    <!-- 错误信息 popover -->
+	                    <div class="err-popover-out">
+	                        <div class="">
+	                            <div class="text-danger" id="password_error1"></div>
+	                        </div>
+	                    </div>
+	                    <!-- 错误信息 popover end -->
+	                </div>
+	                <div class="form-group">
+	                    <input type="text" class="form-control" name="telephone" placeholder='手机号'>
+	                    <!-- 错误信息 popover -->
+	                    <div class="err-popover-out">
+	                        <div class="">
+	                            <div class="text-danger" id="password_error1"></div>
+	                        </div>
+	                    </div>
+	                    <!-- 错误信息 popover end -->
+	                </div>
+	                <div class="form-group">
+	                	<div class="row">
+		                	<div class="col-lg-6">
+		                    	<input type="text" class="form-control" name="signUpCode" placeholder='验证码'>
+		                    </div>
+		                    <button id="authcode" class="btn btn-primary">获取验证码</button>
+	                	</div>
 	                    <!-- 错误信息 popover -->
 	                    <div class="err-popover-out">
 	                        <div class="">
@@ -160,6 +185,14 @@ $(function(){
 			$("#email_error")[0].innerText = "";
 		}
 	});
+	$('#authcode').click(function(){
+		$(this).attr('disabled','disabled');
+		$.post('/i/user/telephoneVerify',{
+			telephone:$('input[name=telephone]').val()
+		}, function(){
+			
+		});
+	})
 	$('#submit').click(function(){
 		userName = $("#username")[0].value;
 		var password = $('input[name=password]').val();
@@ -170,7 +203,12 @@ $(function(){
 		}else{
 	    	$.ajax({
 	    		type:"POST",
-	    		data:{username:userName,password:password,password1:password1,email:email},
+	    		data:{username:userName,
+	    				password:password,
+	    				password1:password1,
+	    				email:email,
+	    				signUpCode:$('input[name=signUpCode]').val()
+	    		},
 	    		url:"/i/user/signup?",
 	    				async:false}).success(function(data){
 	    					alert(data.message);
