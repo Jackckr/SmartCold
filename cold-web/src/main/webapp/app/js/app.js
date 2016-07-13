@@ -3,9 +3,6 @@ var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkb
 var user;
 
 angular.element(document).ready(function($ngCookies, $location) {
-	if(document.location.hash.startsWith("#/token=")){		
-		document.cookie="token=" + document.location.hash.substr(8,document.location.hash.length) + ";domain=smartcold.net";
-	}
 	$.ajax({
 	      url: '/i/user/findUser',
 	      type: "GET",
@@ -18,9 +15,7 @@ angular.element(document).ready(function($ngCookies, $location) {
 	    		}
 	        }
 	    	angular.bootstrap(document, ['ColdWeb']);
-	    }).error(function(){
-	    	document.location.href = "/login.html";
-	    });
+	    })
 });
 
 
