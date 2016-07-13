@@ -933,31 +933,30 @@ section.content{
 #cnt1 {            
      width:90%;
      margin-bottom:40px;
- }  
- .feature{
+}
+  
+.feature{
     padding: 20px 0;
     text-align: center;
  }
-.feature > div{
-    border: 1px solid #ddd;
+ .feature > div > div{
+    padding: 0px;
+    border: 1px solid transparent;
     border-radius: 4px;
-    margin:0 10px;
-    padding:0;
-    
+    background: #dddddd;
+    transition: 0.2s;
  }
+ /*若需悬浮，解注下面代码即可*/
+/*.feature > div:hover > div{
+    margin-top: -10px;
+   border: 1px solid rgb(155, 194, 0);
+    background: #2d3d50; 
+   transition: 0.3s;
+    width:105%;
+   color: #ffffff;
+} */
  .ahover:hover{
       box-shadow: 0 1px 20px #666;
-}
- .ahover>div{
- 	padding:20px 10px;
- }
-.ahover>div>img{
- 	border-radius:3px;
- 	padding:0px;
-	border:0px
-}
-p.text-left.h5{
-	text-indent:10px
 }
 .glyphicon.glyphicon-map-marker{
 	color:#FF6D3B!important
