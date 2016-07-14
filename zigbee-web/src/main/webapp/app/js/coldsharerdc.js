@@ -66,20 +66,21 @@ var psaction={
 					 $("#car_type_div li").click(function(event) {rdcconfig.addfilter("#car_type_div li",$(this));});//车型
 					 $("#cool_type_div li").click(function(event) {rdcconfig.addfilter("#cool_type_div li",$(this));});//温度类型
 				     $("#business_type_div li" ).click(function(event) {rdcconfig.addfilter("#business_type_div li",$(this));});//业务类型
-					 $('#sl_lktype2').change(function(){ rdcconfig.$scope.changDataMode();});
-					 $('#sl_origin').change(function(){rdcconfig.$scope.changDataMode();});
-					 $('#sl_destination').change(function(){rdcconfig.$scope.changDataMode();});
-					 $('#sl_deliverytime').change(function(){rdcconfig.$scope.changDataMode();});
+				     
+					 $('#sl_lktype2').change(function(){ rdcconfig.$scope.changDataMode();});//出车、求车
+					 $('#sl_provinceId2').change(function(){rdcconfig.$scope.changDataMode();});
+					 $('#sl_cityid2').change(function(){rdcconfig.$scope.changDataMode();});
+					 $('#sl_provinceId2_1').change(function(){rdcconfig.$scope.changDataMode();});
+					 $('#sl_cityid2_2').change(function(){rdcconfig.$scope.changDataMode();});
+			
 			   }});
-			  $('#reservationtime').daterangepicker({
-			      timePicker: true,
-			      timePickerIncrement: 30,
-			      format: 'YYYY/DD/MM H:mm'
-			    }, function(start, end, label) {
-			      //console.log(start.toISOString(), end.toISOString(), label);
-			    });
+			   $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'YYYY-MM-DD HH:mm'}, function(start, end, label) {
+				  rdcconfig.$scope.changDataMode();
+			   });
 		}
 		,getFilter:function(pageNum,pageSize){
+				  var stentime=$("#reservationtime").val().split(" - ");
+			      if(stentime.length!=2){ stentime=[null,null]; }
 		    	  var ctlist= ($("#car_type_div li.active").length==$("#car_type_div li").length||$("#car_type_div li.active").length==0)?null:$("#car_type_div li.active");
 			      var clist=($("#cool_type_div li.active").length==$("#cool_type_div li").length||$("#cool_type_div li.active").length==0)?null:$("#cool_type_div li.active");
 				  var bslist=($("#business_type_div li.active").length==$("#business_type_div li").length||$("#business_type_div li.active").length==0)?null:$("#business_type_div li.active");
@@ -94,9 +95,12 @@ var psaction={
 					datatype:rdcconfig._cuttid,//请求数据类型
 		       		type:$("#sl_lktype2").val(),//类型
 		   			keyword:$("#myText2").val(),//支持关键字搜索-
-		   			origintion:$("#sl_origintion").val(),//出发地
-		   			destination:$("#sl_destination").val(),//目的地
-		   			deliverytime:$("#sl_deliverytime").val(),//发货时间
+		   			stprovinceID:$("#sl_provinceId2").val(),//出发地1
+		   			stcityID:$("#sl_cityid2").val(),//出发地2
+		   			toprovinceID:$("#sl_provinceId2_1").val(),//目的地1
+		   			tocityID:$("#sl_cityid2_2").val(),//目的地2
+		   			validStartTime:stentime[0],//发货时间1
+		   			validEndTime:stentime[1]//发货时间2
 				  };
 				   var _filter={pageNum : pageNum,pageSize : pageSize};
 				   jQuery.extend(_filter, _options);

@@ -37,16 +37,20 @@ var releaseCarInfo = {
     },
     addvo: function() {
     	var vo = {}; 
-        $("#hl_validEndTime").val( $("[name=daterangepicker_end]").val());
-        $("#hl_validStartTime").val($("[name=daterangepicker_start]").val());
-        if(releaseCarInfo.$scope.gl_rdc=1){
-        	$("[name=rdcID]").val($("[name=rdcID_list]:checked").val());//仅支持一个
-        }
+    	var stentime=$("#reservationtime").val().split(" - ");
+    	if(releaseCarInfo.$scope.gl_rdc=1){
+    		$("[name=rdcID]").val($("[name=rdcID_list]:checked").val());//仅支持一个
+    	}
+    	if(stentime.length==2){
+    		 $("#hl_validEndTime").val(stentime[1]); 
+    		 $("#hl_validStartTime").val(stentime[0]);
+    	}else{
+    		 $("#hl_validEndTime").val( ""); $("#hl_validStartTime").val("");
+    	}
         var unit1=$("#sl_provinceId1 option:selected").text()+"-"+$("#sl_cityid1 option:selected").text();
         var unit2=$("#sl_provinceId2 option:selected").text()+"-"+$("#sl_cityid2 option:selected").text();
         $("#hide_div [name=unit1]").val(unit1);
         $("#hide_div [name=unit2]").val(unit2);
-//        $("#hide_div [name=attrvalue]").val($("#tx_attrvalue option:selected").text());
         var data = $("#release_item_from").serializeArray();
         $.each(data, function(index, item) { vo[item.name] = item.value; });
         var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
@@ -112,7 +116,7 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
         releaseCarInfo.initvalidate();
         //初始化数据
         $scope.pageChanged();
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-DD-MM HH:mm'});
+        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm:ss'});
         $http.get('/i/ShareRdcController/getPSFilterData').success(function(data) {
         	$scope.codeLave1 = data.entity.fm;
         	$scope.codeLave2 = data.entity.cl;

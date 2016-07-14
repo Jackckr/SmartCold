@@ -2,7 +2,8 @@
 
 .list .type{
     float: left;
-    width: 8%;
+    max-width: 14%;
+    width:128px;
     margin-top: 8px;
     text-align: right;
     color: #757575;
@@ -15,22 +16,25 @@
     box-sizing: border-box;
 }
 .list .type:nth-child(2){
-    width: 5%;
+    max-width: 6%;
+    width:56px;
+    float: left;
     display: inline-block;
-    padding:1px 10px;
+    padding:1px 8px;
     cursor: pointer;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 3px;
 }
 .list ul{
-    width: 85%;
+    width: 80%;
     float: left;
+    padding-left:0;
     margin-bottom: 0;
 }
 .list li{
     float: left;
-    padding:1px 10px;
+    padding:1px 8px;
     margin: 7px 10px;
     color: #757575;
     font-size: 12px;
@@ -51,6 +55,10 @@
     text-align: center!important;
     color: #fff!important;
 }
+#rdc_filter_div{
+	padding-left:0;
+	padding-right:0;
+}
 </style>
 <div>
     <section>
@@ -58,8 +66,8 @@
     </section>
     <section class="content" style="width:80%;margin:0 auto;">
         <div class="row" style="width: 100%;margin:10px 0 0">
-            <ul class="breadcrumb" style="padding-left: 45px">
-                <li class="active">
+            <ul class="breadcrumb" style="">
+                <li class="active" style="cursor:pointer;">
                     冷库列表
                 </li>
                 <li>
@@ -73,8 +81,8 @@
                 <div class="row headArea">
                     <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8">
                         <div style="position: relative;">
-                            <span style="position: relative;padding-left: 30px;color: #999;height:34px;line-height:34px;">区域:</span>
-                            <span style="position: relative;padding-left: 30px;color: #333;">
+                            <span style="position: relative;color: #999;height:34px;line-height:34px;">区域:</span>
+                            <span style="position: relative;color: #333;">
                                 <select id="sl_provincesl" ng-model="provinceSelected"  style="width: 100px;">
                                     <option ng-repeat="x in provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
                                 </select>

@@ -1,4 +1,4 @@
-package com.smartcold.zigbee.manage.controller;
+package com.smartcold.manage.cold.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,43 +14,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.smartcold.zigbee.manage.dao.DataCollectionMapper;
-import com.smartcold.zigbee.manage.dao.StorageDataCollectionMapper;
-import com.smartcold.zigbee.manage.dto.BaseDto;
-import com.smartcold.zigbee.manage.dto.DataCollectionBatchEntity;
-import com.smartcold.zigbee.manage.dto.DataCollectionBatchEntity.InfoEntity;
-import com.smartcold.zigbee.manage.dto.DataResultDto;
-import com.smartcold.zigbee.manage.entity.DataCollectionEntity;
-import com.smartcold.zigbee.manage.entity.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.dao.StorageDataCollectionMapper;
+import com.smartcold.manage.cold.dto.DataResultDto;
+import com.smartcold.manage.cold.entity.StorageDataCollectionEntity;
 
 @Controller
 public class DataCollectionController extends BaseController {
 
 	@Autowired
-	private DataCollectionMapper dataDao;
-
-	@Autowired
 	private StorageDataCollectionMapper storageDataCollectionDao;
 
 	private Gson gson = new Gson();
-
-	@RequestMapping(value = "/dataCollection_old", method = RequestMethod.POST)
-	@ResponseBody
-	public Object dataCollection(String data) {
-		try {
-			DataCollectionBatchEntity dataCollectionBatchEntity = gson.fromJson(data, DataCollectionBatchEntity.class);
-			for (InfoEntity info : dataCollectionBatchEntity.getInfos()) {
-				DataCollectionEntity dataCollectionEntity = new DataCollectionEntity(info.getDevID(),
-						dataCollectionBatchEntity.getApID(), info.getTime(), info.getTemp());
-				dataDao.add(dataCollectionEntity);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new BaseDto(500);
-		}
-
-		return new BaseDto(200);
-	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/dataCollection", method = RequestMethod.POST)
