@@ -12,8 +12,6 @@ import com.smartcold.zigbee.manage.dto.RdcShareDTO;
  */
 public interface RdcShareService {
 	
- 	 public int  insert(String key);
-	
  	/**
  	 * 发布消息
  	 * @param rdcShareDTO

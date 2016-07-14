@@ -4,12 +4,6 @@
 
 <mapper namespace="com.smartcold.zigbee.manage.dao.RdcShareMapper">
 
-	<insert id="insert" parameterType="map" keyProperty="id">
-		INSERT INTO test (type)VALUES (#{key});
-		<selectKey resultType="int" keyProperty="id" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
     <!--     获得睿库信息 -->
 	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 	      select    r.id rdcID, r.name,r.provinceid,r.cityid, r.address from rdc r where 1=1 <if test="userid !=null and  userid != ''"> and r.userid=#{userid} </if> GROUP BY r.id ORDER BY r.addtime 
@@ -226,74 +220,5 @@
 								<if test=" detlAddress   !=null and detlAddress!=''">	detlAddress     =#{detlAddress      }  ,</if>
 								<if test=" dataType      !=0">	                        dataType        =#{dataType         }   </if>
 		</set>                                                                                                                       
-	</insert>
-	
-	<insert id="addshareInfo1" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
-		INSERT INTO share_info (
-		releaseID ,
-		dataType ,
-		rdcID ,
-		codeLave1 ,
-		codeLave2 ,
-		codeLave3 ,
-		codeLave4 ,
-		title ,
-		typeCode ,
-		typeText ,
-		unitPrice ,
-		sqm ,
-		unit ,
-		unit1 ,
-		unit2 ,
-		validStartTime ,
-		validEndTime ,
-		applyID ,
-		bookings ,
-		attrvalue ,
-		telephone ,
-		note ,
-		stauts ,
-		stprovinceID ,
-		stcityID ,
-		staddress ,
-		toprovinceID ,
-		tocityID ,
-		toaddress ,
-		addtime ,
-		updatetime ,
-		)value(
-			<if test="  releaseID       !=0">    #{ releaseID }                                        </if>
-			<if test=" dataType         !=0">	,#{ dataType }                                         </if>
-			<if test=" rdcID            !=0">	,#{   rdcID  }                                         </if>
-			<if test=" codeLave1        !=null and codeLave1      !=''">		,#{ codeLave1 }        </if>
-			<if test=" codeLave2        !=null and codeLave2      !=''">		,#{ codeLave2 }        </if>
-			<if test=" codeLave3        !=null and codeLave3      !=''">		,#{ codeLave3 }        </if>
-			<if test=" codeLave4        !=null and codeLave4      !=''">		,#{ codeLave4 }        </if>
-			<if test=" title            !=null and title          !=''">		,#{ title }            </if>
-			<if test="  typeCode        !=0">    ,#{ typeCode }                                        </if>
-			<if test=" typeText         !=null and typeText       !=''">		,#{ typeText }         </if>
-			<if test=" unitPrice        !=0 ">	 ,#{ unitPrice }                                       </if>
-			<if test=" sqm              !=0 ">   ,#{   sqm     }                                       </if>
-			<if test=" unit             !=null and unit           !=''">		,#{ unit }             </if>
-			<if test=" unit1            !=null and unit1          !=''">		,#{ unit1 }            </if>
-			<if test=" unit2            !=null and unit2          !=''">		,#{ unit2 }            </if>
-			<if test=" validStartTime   !=null and validStartTime   !=''">		,#{ validStartTime }   </if>
-			<if test=" validEndTime     !=null and validEndTime    !=''">		,#{ validEndTime }     </if>
-			<if test=" applyID          !=0">	,#{ applyID }                                          </if>
-			<if test=" bookings         !=0">	,#{ bookings }                                         </if>
-			<if test=" attrvalue        !=null and attrvalue       !=''">		,#{ attrvalue }        </if>
-			<if test=" telephone        !=null and telephone      !=''">		,#{ telephone }        </if>
-			<if test=" note             !=null and note           !=''">		,#{ note }             </if>
-			<if test=" stauts           !=0">	,#{ stauts }                                           </if>
-			<if test=" stprovinceID     !=0">	,#{ stprovinceID }                                     </if>
-			<if test=" stcityID         !=0">	,#{ stcityID }                                         </if>
-			<if test=" staddress        !=0">	,#{ staddress }                                        </if>
-			<if test=" toprovinceID     !=0">	,#{ toprovinceID }                                     </if>
-			<if test=" tocityID         !=0">	,#{ tocityID }                                         </if>
-			<if test=" toaddress        !=0">	,#{ toaddress }                                        </if>
-			<if test=" detlAddress      !=null and detlAddress   !=''">		    ,#{ detlAddress }          </if>
-			<if test=" addtime          !=null and addtime      !=''">		    ,#{ addtime }          </if>
-			<if test=" updatetime       !=null and updatetime     !=''">		,#{ updatetime }       </if>
-    );
 	</insert>
 </mapper>
