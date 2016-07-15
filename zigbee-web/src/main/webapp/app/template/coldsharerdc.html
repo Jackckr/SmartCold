@@ -57,9 +57,10 @@
 			   <thead>
 			      <tr >
 			         <th style="width:30%" colspan="2">货品信息</th>
+			         <th style="width:10%" >品类</th>
 			         <th style="width:10%">单价</th>
 			         <th style="width:10%">数量</th>
-			         <th style="width:30%">信息有效期</th>
+			         <th style="width:20%">信息有效期</th>
 			         <th style="width:10%"></th>
 			      </tr>
 			   </thead>
@@ -75,16 +76,14 @@
 			         		<span class="textInfo">{{rdc.detlAddress}}</span>
 			         	</div>
 			         </td>
+			         <td>{{rdc.codeLave1}}</td> <!--  品类 -->
 			         <td>{{rdc.unitPrice}}元/吨</td>
 			         <td>{{rdc.sqm}}吨</td>
 			         <td>{{rdc.validStartTime}}  至 {{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
+			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>详情</button>
 			         </td>
 			      </tr>
-<!-- 			      <tr ng-show="{{goods==null||goods.length==0}}"> -->
-<!-- 			         <td colspan="5"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
-<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
@@ -185,18 +184,13 @@
 			         <td>{{rdc.codeLave1}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
+			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>详情</button>
 			         </td>
 			      </tr>
-<!-- 			       <tr ng-show="{{pslist==null||pslist.length==0}}"> -->
-<!-- 			         <td colspan="5"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
-<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
-                    <pagination  total-items="bigTotalItems1"  ng-change="pageChanged1()" 
-                                ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm"
-                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                    <pagination  total-items="bigTotalItems1"  ng-change="pageChanged1()"  ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
             </div>
 	    </div>
 		<div id="table3" class="hide">
@@ -275,7 +269,7 @@
 			         <td>{{rdc.coldtype}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
+			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>详情</button>
 			         </td>
 			      </tr>
 <!-- 			       <tr ng-show="{{rdcs==null||rdcs.length==0}}"> -->

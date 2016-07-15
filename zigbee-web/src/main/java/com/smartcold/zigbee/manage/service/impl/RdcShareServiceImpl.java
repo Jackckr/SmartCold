@@ -34,6 +34,14 @@ public class RdcShareServiceImpl implements RdcShareService {
     @Autowired
 	private FileDataMapper fileDataDao;
     /**
+	 * 获得共享详情
+	 * @param id
+	 * @return
+	 */
+	public RdcShareDTO getSEByID(String id){
+		return this.rdcShareMapper.getSEByID(id);
+	}
+    /**
      * 
      */
 	@Override

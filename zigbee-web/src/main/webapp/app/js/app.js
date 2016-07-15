@@ -274,6 +274,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 		controller: 'releaseCarInfo',
 		params:{data:null,dataid:null,_cuttid:null},
 		templateUrl: 'app/template/release_carinfo.html'
+    }).state('shareriteminfo', {  //共享详情
+		url: '/shareriteminfo',
+		controller: 'shareriteminfo',
+		params:{dataid:null},
+		templateUrl: 'app/template/release_item_info.html'
     }). state('review', {
         url: '/coldStorage/{rdcID}/review',
         controller: 'review',
