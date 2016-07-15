@@ -84,7 +84,7 @@ li.current a{
 	line-height:26px;
 }
 .select select option{
-    text-align: center;
+    text-align: left;
 }
 div.select_2 select{
 	font-size:12px;
