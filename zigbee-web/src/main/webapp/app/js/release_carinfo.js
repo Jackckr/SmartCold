@@ -80,7 +80,7 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
 	$scope.gl_rdc=1;
 	$scope.dataType = 2;//当前数据类型
 	releaseCarInfo.$scope=$scope;
-	$scope.appmode=[{},{tit:"货品-测试",tolimg:["goods","outCur","offerCur"],tool:[[1,"出货"],[2,"求货"]]},{tit:"配送-测试",tolimg:["car","carCur","noCarCur"],tool:[[1,"有车"],[2,"求车"]]},{tit:"仓库-测试",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]]}];
+	$scope.appmode=[{},{tit:"货品-测试",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]]},{tit:"配送-测试",tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]]},{tit:"仓库-测试",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]]}];
 	$scope.gocoldShareComment=function(){ $state.go('coldShareComment',{_cuttid: 2});};
     $scope.initMode=function(){
     	$(".mode_hide").addClass("hide");
