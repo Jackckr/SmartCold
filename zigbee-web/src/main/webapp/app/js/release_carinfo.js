@@ -11,14 +11,14 @@ var releaseCarInfo = {
                 codeLave1: { required: true },
 //                staddress: { required: true },
                 sqm: { required: true,number:true    },
-                unitPrice: { required: true, number:true   },
+                unitPrice: {  number:true   },
                 reservation: { required: true }, telephone: { required: true,isMobile: true }
             },
             messages: {
                 title: { required: "请输入描述!"}, provinceId: { required: "请选择省份!"},
                 city: { required: "请选择城市！" }, codeLave1: { required: "请选择品类！" },
 //                staddress: { required: "请输入出发地信息！" },
-                sqm: { required: "请输入数量！" ,number:"请正确输入数量信息！！"}, unitPrice: { required: "请输入单价",number:"请正确输入单价信息！" },
+                sqm: { required: "请输入数量！" ,number:"请正确输入数量信息！！"}, unitPrice: {number:"请正确输入单价信息！" },
                 reservation: { required: "请设置信息有效期！" }, telephone: { required: '请输入联系人电话信息！', pattern: '请正确输入联系方式！'
                 }
             },
@@ -86,7 +86,7 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
     	$(".mode_hide").addClass("hide");
     	$(".mode_"+$scope.dataType).removeClass("hide");
     	$(".mode_"+$scope.dataType+"_"+ $scope.typeCode).removeClass("hide");
-    	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+parseInt(Math.random()*100)+"!");
+//    	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+parseInt(Math.random()*100)+"!");
     };
     $scope.changtype=function(_em){
   	       var em=$(_em); 

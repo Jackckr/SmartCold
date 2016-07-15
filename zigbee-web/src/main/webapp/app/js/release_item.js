@@ -9,12 +9,13 @@ var releaseItem = {
             rules: {
                 title: { required: true},provinceId: { required: true},city: { required: true },codeLave1: { required: true },
                 sqm: { required: true,number:true    },
-                unitPrice: { required: true, number:true   },
+                unitPrice: { number:true   },
                 reservation: { required: true }, telephone: { required: true,isMobile: true }
             },
             messages: {
                 title: { required: "请输入描述!"}, provinceId: { required: "请选择省份!"},
-                city: { required: "请选择城市！" }, codeLave1: { required: "请选择品类！" },sqm: { required: "请输入数量！" ,number:"请正确输入数量信息！！"}, unitPrice: { required: "请输入单价",number:"请正确输入单价信息！" },
+                city: { required: "请选择城市！" }, codeLave1: { required: "请选择品类！" },sqm: { required: "请输入数量！" ,number:"请正确输入数量信息！！"}, 
+                unitPrice: {number:"请正确输入单价信息！" },
                 reservation: { required: "请设置信息有效期！" }, telephone: { required: '请输入联系人电话信息！', pattern: '请正确输入联系方式！'
                 }
             },
@@ -89,7 +90,6 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	$(".mode_"+$scope.dataType).show();
     	$(".mode_"+$scope.dataType+"_"+ $scope.typeCode).show();
     	$("#txt_rdcID").attr("disabled",$scope.typeCode==2?true:false); 
-    	$("#tx_title").val( $scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]);
     	$("#tool"+$scope.typeCode).addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
     };
     $scope.changtype=function(_em){

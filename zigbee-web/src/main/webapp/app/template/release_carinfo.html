@@ -69,7 +69,7 @@
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4  control-label " ><em>*</em>描述:</div>
 					<div class="pull-left">
-						<input id="tx_title" type="text" class="form-control" placeholder="" name="title" >
+						<input id="tx_title" type="text" class="form-control"  name="title" >
 					</div>
 				</div>
 				<div class="infoList clearfix">
@@ -96,6 +96,12 @@
 							<option ng-repeat="x in  ps_cr_type" value="{{x.id}}">{{x.type}}</option>
 						</select>
 
+					</div>
+				</div>
+			   <div class="infoList clearfix  ">
+					<div class="pull-left col-sm-4 control-label ">单价:</div>
+					<div class="pull-left">
+						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{appmode[dataType].lab[1][1]}}</span>
 					</div>
 				</div>
 				<div id="" >
@@ -135,13 +141,13 @@
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>
 					<div class="pull-left">
-						<input type="text" placeholder="" class="form-control" name="telephone" value="15801721195">
+						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone}}">
 					</div>
 				</div>
 				<div class="infoList clearfix">
 					<div class="pull-left">备注:</div>
 					<div class="pull-left">
-						<textarea name="note" placehoder="可填" class="form-control">这是测试信息</textarea>
+						<textarea name="note" placehoder="可填" class="form-control"></textarea>
 					</div>
 				</div>
 				<button class="btn btn-primary" onclick="releaseCarInfo.savedata();">提交</button>
