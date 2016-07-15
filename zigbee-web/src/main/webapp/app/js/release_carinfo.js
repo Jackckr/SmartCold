@@ -86,7 +86,6 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $
     	$(".mode_hide").addClass("hide");
     	$(".mode_"+$scope.dataType).removeClass("hide");
     	$(".mode_"+$scope.dataType+"_"+ $scope.typeCode).removeClass("hide");
-//    	$("#tx_title").val($scope.appmode[$scope.dataType].tit+$scope.appmode[$scope.dataType].tool[$scope.typeCode-1][1]+parseInt(Math.random()*100)+"!");
     };
     $scope.changtype=function(_em){
   	       var em=$(_em); 
