@@ -53,26 +53,54 @@ var releaseItem = {
         $("#release_main div.mode_hide:hidden").find("input,select").attr("disabled",true); 
         var data = $("#release_item_from").serializeArray();
         $.each(data, function(index, item) { vo[item.name] = item.value; });
-        var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
-        $.ajax({
-            url: "/i/ShareRdcController/shareFreeRelease",
-            data: formdata,
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            dataType:"json",
-            success: function(data) {
-            	if(data.success){
-            		 alert("发布成功！");
-            		 releaseItem.$scope.gocoldShareComment();
-            	}else{
-            		alert("发布失败！！请稍后重试！");
-            	}
-            }});
+        return JSON.stringify(vo);
+//        var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
+//        formdata.append("files", releaseItem.$scope.totalfiles);
+//        $.ajax({
+//            url: "/i/ShareRdcController/shareFreeRelease",
+//            data: formdata,
+//            processData: false,
+//            contentType: false,
+//            type: 'POST',
+//            dataType:"json",
+//            success: function(data) {
+//            	if(data.success){
+//            		 alert("发布成功！");
+//            		 releaseItem.$scope.gocoldShareComment();
+//            	}else{
+//            		alert("发布失败！！请稍后重试！");
+//            	}
+//            }});
         }
 };
 
-coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
+coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, Upload, $cookies, $http, $location) {
+	$scope.files;
+	$scope.totalfiles = [];
+	$scope.addFiles = function (files) {
+        $scope.totalfiles = $scope.totalfiles.concat(files);
+    }
+	$scope.drop = function(file){
+        var index = $scope.totalfiles.indexOf(file);
+        $scope.totalfiles.splice(index,1);
+    }
+	$scope.submit = function(){
+		var data = {data:releaseItem.addvo(), "files":$scope.totalfiles};
+		Upload.upload({
+            url: "/i/ShareRdcController/shareFreeRelease",
+            headers :{ 'Content-Transfer-Encoding': 'utf-8' },
+            data: data
+        }).then(function (resp) {
+        	alert("发布成功！");
+        	$scope.gocoldShareComment();
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.name);
+        });
+	}
+	
 	if(user==null||(user!=null&&user.id==0)){
 		   alert("请登录后执行该操作！");
 		   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
