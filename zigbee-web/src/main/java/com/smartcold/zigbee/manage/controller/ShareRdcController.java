@@ -152,7 +152,7 @@ public class ShareRdcController  {
 	/**
 	 * 获得货品信息
 	 * @param request
-	 * @param type  出售求货
+	 * @param type  出售求购
 	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
 	 * @param goodtype 过滤条件
 	 * @param keyword  关键字
@@ -177,7 +177,7 @@ public class ShareRdcController  {
     /**
      * 获得货品信息
      * @param request
-     * @param type  出售求货
+     * @param type  出售求购
      * @param datatype 数据类型  1：货品 2：配送  3：仓库
      * @param goodtype 过滤条件
      * @param keyword  关键字
