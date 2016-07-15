@@ -150,6 +150,19 @@
 						<textarea name="note" placehoder="可填" class="form-control"></textarea>
 					</div>
 				</div>
-				<button class="btn btn-primary" onclick="releaseCarInfo.savedata();">提交</button>
+				<div class="infoList clearfix">
+					<div class="pull-left">图片:</div>
+					<div class="pull-left">
+						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"
+                                                   ngf-multiple="true" name="files">
+					</div>
+				</div>
+				<div class="infoList clearfix">
+                    <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
+                        <i class="fa fa-times danger" style="margin-right:10px;color:red;"
+                           ng-click="drop(file)"></i>
+                    </label>
+                </div>
+				<button class="btn btn-primary" ng-click="submit()">提交</button>
 			</form>
     	</div>
