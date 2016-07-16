@@ -19,16 +19,16 @@
 					</tr>
 					<tr>
 						<th>单价:</th>
-						<td>{{vo.unitPrice }}</td>
+						<td>{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</td>
 					</tr>
 					<tr>
 						<th>地理位置:</th>
 						<td>{{vo.detlAddress}}</td>
 					</tr>
-					<tr>
-						<th>冷库温度类型:</th>
-						<td>{{vo.coldtype}}</td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<th>冷库温度类型:</th> -->
+<!-- 						<td>{{vo.codeLave2}}</td> -->
+<!-- 					</tr> -->
 					<tr>
 						<th>信息有效期:</th>
 						<td>{{vo.validStartTime}}至{{vo.validEndTime}}</td>

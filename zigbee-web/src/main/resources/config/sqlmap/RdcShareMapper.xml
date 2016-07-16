@@ -95,8 +95,7 @@
 		s.stauts,s.detlAddress,
 		r.address,
 		r. NAME,
-		(SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category =
-		'storagePic' ORDER BY id DESC LIMIT 1 ) AS logo
+		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) AS logo
 		FROM
 		shared_info s
 		LEFT JOIN rdc r ON s.rdcID = r.id
@@ -148,7 +147,7 @@
 		<!-- r.name, -->
 		(SELECT type_name FROM comm_mata_data f WHERE f.source_type='ps_fm_type' and f.type_code=s.codeLave1 LIMIT 1 )codeLave1,
 	    (select type from storagetruck k where k.id=s.codeLave3 LIMIT 1 ) codeLave3,
-		(SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category ='storagePic' ORDER BY id DESC LIMIT 1 ) logo
+		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) logo
 		FROM
 		shared_info s 
 		LEFT JOIN rdc r ON s.rdcID = r.id
@@ -188,8 +187,7 @@
 		r.address,
 		r.name,
 		r.coldtype,
-		(SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category =
-		'storagePic' ORDER BY id DESC LIMIT 1 ) as logo
+		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) as logo
 		FROM
 		shared_info s
 		LEFT JOIN rdc r ON s.rdcID = r.id
