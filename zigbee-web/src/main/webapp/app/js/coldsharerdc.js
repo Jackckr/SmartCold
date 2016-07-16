@@ -176,6 +176,9 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	 };
      $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
      $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");$scope.changDataMode();});//业务类型
+     $scope.gosharedile=function(sharid){
+		 $state.go('shareriteminfo',{dataid:sharid});
+	 };
      $scope.changDataMode=function(){
     	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
      };
@@ -219,6 +222,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
               window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html"+callurl;
 		  }
 	 };
+	 
 	 $scope.initApp=function(){
 		 if(rdcconfig._cuttid==1){//getGDFilterData
 			 if(!good._isLoad){

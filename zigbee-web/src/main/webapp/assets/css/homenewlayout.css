@@ -946,6 +946,11 @@ section.content{
     background: #dddddd;
     transition: 0.2s;
  }
+ .feature .img-thumbnail{
+ 	padding:0px;
+ 	border-radius:0px;
+ 	border:0px;
+ }
  /*若需悬浮，解注下面代码即可*/
 /*.feature > div:hover > div{
     margin-top: -10px;

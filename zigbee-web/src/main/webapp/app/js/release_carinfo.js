@@ -53,30 +53,58 @@ var releaseCarInfo = {
         $("#hide_div [name=unit2]").val(unit2);
         var data = $("#release_item_from").serializeArray();
         $.each(data, function(index, item) { vo[item.name] = item.value; });
-        var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
-        $.ajax({
-            url: "/i/ShareRdcController/shareFreeRelease",
-            data: formdata,
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            dataType:"json",
-            success: function(data) {
-            	if(data.success){
-            		 alert("发布成功！");
-            		 releaseCarInfo.$scope.gocoldShareComment();
-            	}else{
-            		alert("发布失败！！");
-            	}
-            }});
+        return JSON.stringify(vo);
+//        var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
+//        $.ajax({
+//            url: "/i/ShareRdcController/shareFreeRelease",
+//            data: formdata,
+//            processData: false,
+//            contentType: false,
+//            type: 'POST',
+//            dataType:"json",
+//            success: function(data) {
+//            	if(data.success){
+//            		 alert("发布成功！");
+//            		 releaseCarInfo.$scope.gocoldShareComment();
+//            	}else{
+//            		alert("发布失败！！");
+//            	}
+//            }});
         }
 };
 
-coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
-	 if(user==null||(user!=null&&user.id==0)){
+coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, Upload, $state, $cookies, $http, $location) {
+	 
+	if(user==null||(user!=null&&user.id==0)){
 		 alert("请登录后执行该操作！");
 		 window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseCarInfo";return;
 	  }
+	$scope.files;
+	$scope.totalfiles = [];
+	$scope.addFiles = function (files) {
+        $scope.totalfiles = $scope.totalfiles.concat(files);
+    }
+	$scope.drop = function(file){
+        var index = $scope.totalfiles.indexOf(file);
+        $scope.totalfiles.splice(index,1);
+    }
+	$scope.submit = function(){
+		var data = {data:releaseCarInfo.addvo(), "files":$scope.totalfiles};
+		Upload.upload({
+            url: "/i/ShareRdcController/shareFreeRelease",
+            headers :{ 'Content-Transfer-Encoding': 'utf-8' },
+            data: data
+        }).then(function (resp) {
+        	alert("发布成功！");
+        	$scope.gocoldShareComment();
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.name);
+        });
+	}
+	
 	$scope.gl_rdc=1;
 	$scope.dataType = 2;//当前数据类型
 	releaseCarInfo.$scope=$scope;
