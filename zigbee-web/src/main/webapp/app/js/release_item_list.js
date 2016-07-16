@@ -14,7 +14,7 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
      var datatype= $location.search()._cuttid;//外部传参
      if(!datatype){ datatype=1; }
      $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:datatype;//当前数据类型
-     $scope.appmode=[{url1:""},{tolimg:["goods","outCur","offerCur"],tool:[[1,"出货"],[2,"求货"]],btn:"发布货品"},{tolimg:["car","carCur","noCaRcur"],tool:[[1,"有车"],[2,"求车"]],btn:"发布货品"},{tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],btn:"发布仓库"}];
+     $scope.appmode=[{url1:""},{tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],btn:"发布货品"},{tolimg:["car","carCur","noCaRcur"],tool:[[1,"找货"],[2,"找车"]],btn:"发布货品"},{tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],btn:"发布仓库"}];
 	 $scope.releaseitem=function(data){
 		  $state.go('releaseItem',{data:data,dataid:data.rdcID,_cuttid: $scope.dataType});
 	 };
@@ -29,14 +29,14 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 		  }
 	  };
 	  $scope.pageChanged = function () {
-			 $http({method:'POST',url:'/i/ShareRdcController/getRdcByUid'}).success(function (data) {
-				   $scope.rdclist = data.data;//
-				   $scope.bigTotalItems = data.total;
-				   if(data.total==0){
-					   $("#nodata_div").removeClass("hide");
-					   $("#dataList_div").addClass("hide");
-				   }
-			  });
+			  $.post("/i/ShareRdcController/getRdcByUid",   {pageNum : $scope.bigCurrentPage,pageSize : $scope.maxSize}, function(data) { $scope.$apply(function () {
+		        	   $scope.rdclist = data.data;//
+					   $scope.bigTotalItems = data.total;
+					   if(data.total==0){
+						   $("#nodata_div").removeClass("hide");
+						   $("#dataList_div").addClass("hide");
+					   }
+		        });});
 	  };
 	  $scope.changtype=function(_em){
 		  var em=$(_em); 

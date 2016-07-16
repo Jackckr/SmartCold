@@ -10,6 +10,7 @@
            .sp_radio{margin-right: 60px;}
            .sp_radio input{width: 20px !important;}
             .arrdes{padding: 6px 12px;font-size: 12px;color: #555;background-color: #fff;background-image: none;border-radius: 4px; }
+            #rdclist_info{height: 200px;overflow-y: scroll;}
            /*错误提示样式*/
            label.success{display: none; } 
  	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
@@ -21,12 +22,12 @@
       </style>
     
     	<div id="" class="shareMain">
-			<!-- 出货和求货 -->
+			<!-- 出售和求购 -->
 			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
 				<span id="tool1" class="{{appmode[dataType].tolimg[1]}}"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
 				<span id="tool2"  value="{{appmode[dataType].tool[1][0]}}" ng-click="changtype('#tool2')">{{appmode[dataType].tool[1][1]}}</span>
 			</div>
-			<!-- 出货和求货 end -->
+			<!-- 出售和求购 end -->
 			<form id="release_item_from" name="itemform"  class="formInfo" >
 			    <div id="hide_div">
 			      <input type="hidden" name="dataType" value="{{dataType}}">
@@ -68,7 +69,7 @@
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4  control-label " ><em>*</em>描述:</div>
 					<div class="pull-left">
-						<input id="tx_title" type="text" class="form-control" placeholder="" name="title" >
+						<input id="tx_title" type="text" class="form-control"  name="title" >
 					</div>
 				</div>
 				<div class="infoList clearfix">
@@ -95,6 +96,12 @@
 							<option ng-repeat="x in  ps_cr_type" value="{{x.id}}">{{x.type}}</option>
 						</select>
 
+					</div>
+				</div>
+			   <div class="infoList clearfix  ">
+					<div class="pull-left col-sm-4 control-label ">单价:</div>
+					<div class="pull-left">
+						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{appmode[dataType].lab[1][1]}}</span>
 					</div>
 				</div>
 				<div id="" >
@@ -134,15 +141,28 @@
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>
 					<div class="pull-left">
-						<input type="text" placeholder="" class="form-control" name="telephone" value="15801721195">
+						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone}}">
 					</div>
 				</div>
 				<div class="infoList clearfix">
 					<div class="pull-left">备注:</div>
 					<div class="pull-left">
-						<textarea name="note" placehoder="可填" class="form-control">这是测试信息</textarea>
+						<textarea name="note" placehoder="可填" class="form-control"></textarea>
 					</div>
 				</div>
-				<button class="btn btn-primary" onclick="releaseCarInfo.savedata();">提交</button>
+				<div class="infoList clearfix">
+					<div class="pull-left">图片:</div>
+					<div class="pull-left">
+						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"
+                                                   ngf-multiple="true" name="files">
+					</div>
+				</div>
+				<div class="infoList clearfix">
+                    <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
+                        <i class="fa fa-times danger" style="margin-right:10px;color:red;"
+                           ng-click="drop(file)"></i>
+                    </label>
+                </div>
+				<button class="btn btn-primary" ng-click="submit()">提交</button>
 			</form>
     	</div>

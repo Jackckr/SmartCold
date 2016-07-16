@@ -34,6 +34,26 @@ public class RdcShareServiceImpl implements RdcShareService {
     @Autowired
 	private FileDataMapper fileDataDao;
     /**
+	 * 获得共享详情
+	 * @param id
+	 * @return
+	 */
+	public RdcShareDTO getSEByID(String id){
+		 RdcShareDTO vo = this.rdcShareMapper.getSEByID(id);
+		 if(vo!=null){
+			 List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(vo.getId(), FileDataMapper.CATEGORY_SHARE_PIC);
+			 if(SetUtil.isnotNullList(files)){
+					List<String> filelist =new ArrayList<String>();
+					for (FileDataEntity file : files) {
+						filelist.add(FtpService.READ_URL+file.getLocation());
+					}
+					vo.setFiles(filelist);
+					vo.setLogo(files.get(files.size()-1).getLocation());
+				} 
+		 }
+		 return vo;
+	}
+    /**
      * 
      */
 	@Override
@@ -117,14 +137,5 @@ public class RdcShareServiceImpl implements RdcShareService {
 		 Page<RdcShareDTO> serdcList = this.rdcShareMapper.getSEListByRdcID(parameters);
 		 return new PageInfo<RdcShareDTO>(serdcList);
 	 }
-	
-	@Override
-	public int insert(String key) {
-		return this.rdcShareMapper.insert(key);
-	}
-
-	
-
-	
     
 }

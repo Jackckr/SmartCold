@@ -35,11 +35,11 @@
 						</select>
 					</div>
 					<div class="select pull-left">
-						<span>出售/求货:</span>
+						<span>出售/求购:</span>
 						<select id="sl_lktype1" name="" >
 							<option value="">不限</option>
 							<option value="1">出售</option>
-							<option value="2">求货</option>
+							<option value="2">求购</option>
 						</select>
 					</div>				
 					<div id="search" class=" pull-right">					
@@ -57,9 +57,10 @@
 			   <thead>
 			      <tr >
 			         <th style="width:30%" colspan="2">货品信息</th>
+			         <th style="width:10%" >品类</th>
 			         <th style="width:10%">单价</th>
 			         <th style="width:10%">数量</th>
-			         <th style="width:30%">信息有效期</th>
+			         <th style="width:20%">信息有效期</th>
 			         <th style="width:10%"></th>
 			      </tr>
 			   </thead>
@@ -75,16 +76,14 @@
 			         		<span class="textInfo">{{rdc.detlAddress}}</span>
 			         	</div>
 			         </td>
+			         <td>{{rdc.codeLave1}}</td> <!--  品类 -->
 			         <td>{{rdc.unitPrice}}元/吨</td>
 			         <td>{{rdc.sqm}}吨</td>
 			         <td>{{rdc.validStartTime}}  至 {{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>立即抢单</button>
+			         	<button class="btn btn-primary"  ng-click="gosharedile(rdc.id);">详情</button>
 			         </td>
 			      </tr>
-<!-- 			      <tr ng-show="{{goods==null||goods.length==0}}"> -->
-<!-- 			         <td colspan="5"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
-<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
@@ -95,33 +94,33 @@
 			  <div id="filter_div2" class="filter">
 				<div class="filterSon clearfix">
 					<div class="select_2 pull-left">
-						<span>出租/求车</span>
+						<span>找货/找车</span>
 						<select id="sl_lktype2" >
 							<option value="">不限</option>
-							<option value="1">出租</option>
-							<option value="2">求车</option>
+							<option value="1">找货</option>
+							<option value="2">找车</option>
 						</select>
 					</div>
 					<div class="select_2 pull-left">
 						<span>始发地：</span>
-                      <select id="sl_provinceId1"  class="arrdes" style="width: 60px;"  ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()">
+                      <select id="sl_provinceId2"  class="arrdes" style="width: 60px;"  ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()">
                         <option value="">--不限--</option>
                         <option ng-repeat="x in gd_provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
                       </select>
-						 <input class=""  name="stprovinceID"  type="hidden" value="{{stprovinceID}}">
-						 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 60px;"  >
+<!-- 						 <input class=""  name="stprovinceID"  type="hidden" value="{{stprovinceID}}"> -->
+						 <select id="sl_cityid2" name="stcityID" class="arrdes" style="width: 60px;"  >
 						    <option value="">--不限--</option>
 							<option ng-repeat="x in city1" value="{{x.cityID}}">{{x.cityName}}</option>
 						 </select>
 					</div>
 					<div class="select_2 pull-left">
 						<span>目的地：</span>
-						<select id="sl_provinceId2"   class="arrdes" style="width: 60px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" >
+						<select id="sl_provinceId2_1"   class="arrdes" style="width: 60px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" >
 							<option value="">--不限--</option>
 	                        <option ng-repeat="x in gd_provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
 						</select>
-						 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}">
-						 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 60px;" >
+<!-- 						 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}"> -->
+						 <select id="sl_cityid2_2" name="tocityID"  class="arrdes" style="width: 60px;" >
 						    <option value="">--不限--</option>
 							<option ng-repeat="x in city2" value="{{x.cityID}}">{{x.cityName}}</option>
 						 </select>
@@ -131,10 +130,9 @@
 		                    <div class="controls time_control" >
 		                     <div class="input-prepend input-group">
 		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-		                       <input type="text" name="reservation" id="reservationtime" class="form-control" placeholder="请选择起止时间" class="span4"/>
+		                       <input id="reservationtime"   type="text" name="reservation" class="form-control" placeholder="请选择起止时间" class="span4"/>
 		                     </div>
 		                    </div>
-
 					</div>
 					<div id="search" class=" pull-right" style="width:13%">					
 						<input type="text" placeholder="请输入关键词" id="myText2" class="myText" />
@@ -186,18 +184,13 @@
 			         <td>{{rdc.codeLave1}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}} >立即抢单</button>
+			         	<button class="btn btn-primary" ng-click="gosharedile(rdc.id);">详情</button>
 			         </td>
 			      </tr>
-<!-- 			       <tr ng-show="{{pslist==null||pslist.length==0}}"> -->
-<!-- 			         <td colspan="5"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
-<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
-                    <pagination  total-items="bigTotalItems1"  ng-change="pageChanged1()" 
-                                ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm"
-                                boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                    <pagination  total-items="bigTotalItems1"  ng-change="pageChanged1()"  ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
             </div>
 	    </div>
 		<div id="table3" class="hide">
@@ -276,7 +269,7 @@
 			         <td>{{rdc.coldtype}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}} >立即抢单</button>
+			         	<button class="btn btn-primary" ng-click="gosharedile(rdc.id);">详情</button>
 			         </td>
 			      </tr>
 <!-- 			       <tr ng-show="{{rdcs==null||rdcs.length==0}}"> -->

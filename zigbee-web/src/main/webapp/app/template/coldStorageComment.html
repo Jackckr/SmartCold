@@ -4,7 +4,7 @@
     </section>
     <section class="content" style="width:80%;margin:0 auto;">
         <div class="row" style="height: 20px;width: 100%;position: relative;top: 10px;">
-            <ul class="breadcrumb" style="padding-left: 45px">
+            <ul class="breadcrumb">
                 <li class="active">
                     <a href="" ng-click="toColdStorageList()">冷库列表</a>
                 </li>
@@ -45,7 +45,7 @@
                                 <a href="" ng-click="goColdStorageComment(rdcId)" data-toggle="tab">冷库评论</a>
                             </li>
                             <li id="publish">
-                                <a href="" ng-click="goColdStoragePublish(rdcId)" data-toggle="tab">发布信息</a>
+                                <a href="" ng-click="goColdStoragePublish(rdcId)" data-toggle="tab">信息发布</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -408,9 +408,8 @@
                             <div class="tab-pane" id="coldStoragepublish">
                                 <div class="row" style="margin-top: 10px;margin-bottom: 2px">
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
-                                        <button class="btn btn-success" ng-click="pubSerdc()">发布仓库</button>
+                                        <button class="btn btn-success" ng-click="pubSerdc()">发布冷库</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <button class="btn btn-success" ng-click="pubGoods()">发布货品</button>
-                                        <button class="btn btn-success" ng-click="pubPsaction()">发布配送</button>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;margin-bottom: 2px">
