@@ -54,7 +54,7 @@ public class DataCollectionController extends BaseController {
 
 	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findLastNDataByApid(String apid, int n) {
-		return storageDataCollectionDao.findLastNPoint(apid, n);
+	public Object findLastNDataByApid(String apid, String key, int n) {
+		return storageDataCollectionDao.findLastNPoint(apid, key, n);
 	}
 }
