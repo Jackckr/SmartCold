@@ -6,7 +6,7 @@ coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $
 	 $scope.vercodeval="";
 	var InterValObj=null; //timer变量，控制时间  
 	var count =curCount=60;//当前剩余秒数  
-	$scope._dataid =83;// $stateParams.dataid;//当前数据类型
+	$scope._dataid = $stateParams.dataid;//当前数据类型
     $scope.initdata = function() {
         	$http.get('/i/ShareRdcController/getSEByID', { params: {"id": $scope._dataid}  }).success(function(data) {
         		 $scope.vo=data.entity;
