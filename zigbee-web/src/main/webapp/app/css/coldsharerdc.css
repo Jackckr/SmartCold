@@ -225,3 +225,14 @@ div.select_2 select{
 nav{
     text-align: center;
 }
+
+@media screen and (max-width: 1025px) {
+    .select_2.pull-left.row{
+        margin-left: 2px;
+    	margin-top: 6px;
+    }
+    .select_2.pull-left.row+#search{
+    	top:-25px;
+    }
+    
+}
