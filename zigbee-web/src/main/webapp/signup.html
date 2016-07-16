@@ -169,9 +169,17 @@
 <script>
 $(function(){
 	$('#username').blur(function(){
+	    var flag;
+	    $.post('/i/user/userNameVerify',{
+			username:$('input[name=username]').val()
+		}, function(data){
+			if(!data)
+			  $("#username_error")[0].innerText = "用户名已存在";
+		});
 		if($("#username")[0].value == ""){
 		    $("#username_error")[0].innerText = "用户名不能为空";
-		}else{
+		    }
+		else{
 			$("#username_error")[0].innerText = "";
 		}
 	});
@@ -198,6 +206,12 @@ $(function(){
 		var password = $('input[name=password]').val();
 		var password1 = $('input[name=password1]').val();
 		email = $('#email')[0].value;
+		$.post('/i/user/userNameVerify',{
+			username:$('input[name=username]').val()
+		}, function(data){
+			if(!data)
+			 alert("用户名已存在");
+		});
 		if(userName == "" || checkPassword() || email == ""){
 			alert("用户名、密码、邮箱不能为空");
 		}else{
