@@ -311,7 +311,7 @@ public class ShareRdcController  {
 		try {
 			if(StringUtil.isnotNull(telephone)){
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-				String signUpCode = teleVerify.signUpVerify(telephone);
+				String signUpCode = teleVerify.identityVerify(telephone);
 				request.getSession().setAttribute("shear_order_id", dataid);
 				request.getSession().setAttribute("shear_order_yzm", signUpCode);
 				request.getSession().setAttribute("shear_order_telephone", telephone);

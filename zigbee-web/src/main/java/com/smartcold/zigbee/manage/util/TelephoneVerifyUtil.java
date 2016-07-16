@@ -44,6 +44,22 @@ public class TelephoneVerifyUtil {
 			return code;
 		}
 		
+		public String identityVerify(String telephone) throws ApiException {
+			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+			req.setExtend("123456");
+			req.setSmsType("normal");
+			req.setSmsFreeSignName("链库网");
+			String code = generateCode();
+			// System.out.println("{\"code\":\"123\"}");
+			// System.out.println("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
+			req.setSmsParamString("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
+			req.setRecNum(telephone);
+			req.setSmsTemplateCode("SMS_12145753"); //【链库网】验证码3GZ9，您正在进行链库身份验证，打死不要告诉别人哦！
+			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+			System.out.println(rsp.getBody());
+			return code;
+		}
+		
 		public String signUpVerify(String telephone) throws ApiException {
 			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 			req.setExtend("123456");
