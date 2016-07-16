@@ -142,7 +142,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             };
             $rootScope.toReport = function () {
                 var time = 'daily';
-                var item = 'energy';
+                var item = 'data';
                 $state.go('report', {'time':time,'item':item});
             };
         },
