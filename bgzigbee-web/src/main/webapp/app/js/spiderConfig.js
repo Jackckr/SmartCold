@@ -2,6 +2,12 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.load = function(){
 		$scope.vm = {}
+		$scope.storageEntity = {}
+		$scope.doorEntity = {}
+		$scope.blowerEntity = {}
+		$scope.compressGroupEntity = {}
+		$scope.devices = [{id:0,name:"添加冷库"},{id:1,name:"添加冷库门"},{id:2,name:"添加风机"},{id:3,name:"添加压缩机组"}]
+		$scope.choseDevice = $scope.devices[0];
 		$http.get('/i/rdc/findRdcList').success(function(data,status,config,headers){
 			$scope.rdclist = data;
 			$scope.vm.choseRdc = data[1036];
@@ -10,7 +16,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.changeRdc = function(){
-		$scope.vm.choseRdc.mapping = JSON.parse($scope.vm.choseRdc.mapping);
+		$scope.vm.choseRdc.mapping = typeof($scope.vm.choseRdc.mapping) == "string"?
+				JSON.parse($scope.vm.choseRdc.mapping):
+					$scope.vm.choseRdc.mapping;
 		$http.get('/i/coldStorage/getColdStorageByRdcId?rdcId=' + $scope.vm.choseRdc.id).success(function(data,status,config,headers){
 			angular.forEach(data,function(item,index){
 				data[index].mapping = JSON.parse(data[index].mapping)
@@ -172,6 +180,43 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		+ '&mapping=' + JSON.stringify($scope.vm.choseRdc.mapping);
 		$http.post(url).success(function(data,status,config,headers){
 			alert(data.message);
+		})
+	}
+	
+	$scope.addStorage = function(){
+		$scope.storageEntity.rdcId = $scope.vm.choseRdc.id;
+		$http.post("/i/coldStorage/insertStorage",$scope.storageEntity).success(function(data,status,config,headers){
+			alert(data.message);
+			$scope.storageEntity = {};
+			$scope.changeRdc();
+		})
+	}
+	
+	$scope.addDoor = function(){
+		$scope.doorEntity.rdcId = $scope.vm.choseRdc.id;
+		$scope.doorEntity.coldStorageId = $scope.vm.choseStorage.id;
+		$http.post("/i/coldStorageDoor/insertDoor",$scope.doorEntity).success(function(data,status,config,headers){
+			alert(data.message);
+			$scope.doorEntity = {};
+			$scope.changeStorage();
+		})
+	}
+	
+	$scope.addBlower = function(){
+		$scope.blowerEntity.coldStorageId = $scope.vm.choseStorage.id;
+		$http.post("/i/blower/insertBlower",$scope.blowerEntity).success(function(data,status,config,headers){
+			alert(data.message);
+			$scope.blowerEntity = {};
+			$scope.changeStorage()
+		})
+	}
+	
+	$scope.addCompress = function(){
+		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
+		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
+			alert(data.message);
+			$scope.compressGroupEntity = {};
+			$scope.changeRdc();
 		})
 	}
 	

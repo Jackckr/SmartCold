@@ -13,4 +13,6 @@ public interface BlowerSetMapper {
 	List<BlowerSetEntity> findByStorageId(int coldStorageId);
 
 	void updateMappingById(@Param("id") int id, @Param("mapping") String mapping);
+
+	void insertBlower(BlowerSetEntity entity);
 }

@@ -18,7 +18,28 @@
 		UPDATE `ColdStorageSet` SET mapping=#{mapping}
 		WHERE `coldStorageId` = #{coldStorageId}
 	</update>
-
-
+	
+	<insert id="insertColdStorage" parameterType="ColdStorageSetEntity">
+	    INSERT INTO `coldstorageset` 
+	    (
+	    `RDCID`, 
+	    `name`, 
+	    `startTemperature`, 
+	    `energyCost`, 
+	    `longitude`, 
+	    `latitude`, 
+	    `location`
+	    )
+	    VALUES
+	    (
+	    #{rdcId},
+	    #{name},
+	    #{startTemperature},
+	    #{energyCost},
+	    #{longitude},
+	    #{latitude},
+	    #{location}
+	    )
+	</insert>
 
 </mapper>

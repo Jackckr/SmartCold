@@ -13,4 +13,6 @@ public interface ColdStorageDoorSetMapper {
 	List<ColdStorageDoorSetEntity> findDoorByStorageId(@Param("coldStorageId") int storageID);
 
 	void updateMappingById(@Param("coldStorageDoorId") int coldStorageDoorId, @Param("mapping") String mapping);
+	
+	void insertDoor(ColdStorageDoorSetEntity entity);
 }

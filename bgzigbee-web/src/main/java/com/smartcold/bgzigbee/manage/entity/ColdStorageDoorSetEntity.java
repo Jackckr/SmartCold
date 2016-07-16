@@ -1,61 +1,70 @@
 package com.smartcold.bgzigbee.manage.entity;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-03-19 11:51)
+ * Author: qiunian.sun Date: qiunian.sun(2016-03-19 11:51)
  */
 public class ColdStorageDoorSetEntity {
 
-    private int id;
+	private int id;
 
-    private int coldStorageId;
+	private String name;
 
-    private int rdcId;
+	private int coldStorageId;
 
-    private float length;
+	private int rdcId;
 
-    private float width;
-    
-    private String mapping;
+	private float length;
 
-    public int getId() {
-        return id;
-    }
+	private float width;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	private String mapping;
 
-    public int getColdStorageId() {
-        return coldStorageId;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setColdStorageId(int coldStorageId) {
-        this.coldStorageId = coldStorageId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getRdcId() {
-        return rdcId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setRdcId(int rdcId) {
-        this.rdcId = rdcId;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public float getLength() {
-        return length;
-    }
+	public int getColdStorageId() {
+		return coldStorageId;
+	}
 
-    public void setLength(float length) {
-        this.length = length;
-    }
+	public void setColdStorageId(int coldStorageId) {
+		this.coldStorageId = coldStorageId;
+	}
 
-    public float getWidth() {
-        return width;
-    }
+	public int getRdcId() {
+		return rdcId;
+	}
 
-    public void setWidth(float width) {
-        this.width = width;
+	public void setRdcId(int rdcId) {
+		this.rdcId = rdcId;
+	}
+
+	public float getLength() {
+		return length;
+	}
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
 	}
 
 	public String getMapping() {

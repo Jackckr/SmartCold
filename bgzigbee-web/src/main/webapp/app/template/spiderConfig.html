@@ -14,19 +14,162 @@
       <uib-tabset>
         <uib-tab>
           <uib-tab-heading>
+		      <i class="fa fa-table"></i>添加监控设备
+		  </uib-tab-heading>
+		  <div class="col-lg-12">
+		  <form class="navbar-form">
+		    <div class="col-lg-4 form-group" style="margin-top:20px;">
+		      <label>操作：</label>
+		      <select ng-options="device.name for device in devices" class="form-control"
+		       ng-model="choseDevice"></select>
+		    </div>
+		   </form>
+		   <form class="navbar-form">
+		    <div class="col-lg-4 form-group" style="margin-top:20px;" 
+		    ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加风机'">
+		      <label>冷库：</label>
+		      <select ng-options="storage.name for storage in storages" class="form-control"
+		       ng-model="vm.choseStorage"></select>
+		    </div>
+		    </form>
+		    <!--  -->
+		    <form id="addStorage" ng-show="choseDevice.name == '添加冷库'" class="col-lg-12 form-horizontal">
+		    <div style="margin-top:30px;">
+		      <div class="form-group">
+		        <label class="control-label col-lg-4"><em style="color:red">*</em>冷库名:</label>
+		        <div class="col-lg-8">
+		        <input style="width:250px;" ng-model="storageEntity.name" class="form-control"/>
+		        </div>
+		      </div>
+		      <div class="form-group">
+		        <label class="control-label col-lg-4">理论能耗(KJ/h):</label>
+		        <div class="col-lg-8">
+		        <input style="width:250px;" ng-model="storageEntity.energyCost" class="form-control"/>
+		        </div>
+		      </div>
+		      <div class="form-group">
+		        <label class="control-label col-lg-4">冷库经度(°):</label>
+		        <div class="col-lg-8">
+		        <input style="width:250px;" ng-model="storageEntity.longitude" class="form-control"/>
+		        </div>
+		      </div>
+		      <div class="form-group">
+		        <label class="control-label col-lg-4">冷库维度(°):</label>
+		        <div class="col-lg-8">
+		        <input style="width:250px;" ng-model="storageEntity.latitude" class="form-control"/>
+		        </div>
+		     </div>
+		      <div class="form-group">
+		        <label class="control-label col-lg-4">冷库位置:&nbsp;&nbsp;</label>
+		        <div class="col-lg-8">
+		        <input style="width:250px;" ng-model="storageEntity.location" class="form-control"/>
+		        </div>
+		      </div>
+		      <div class="form-group col-lg-8">
+		      	<a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addStorage()" 
+		      	ng-disabled="!storageEntity.name">添加</a>
+		      </div>
+		      </div>
+		    </form>
+		    <!--  -->
+		    <form id="addDoor" ng-show="choseDevice.name == '添加冷库门'"  class="col-lg-12 form-horizontal">
+		     <div style="margin-top:30px;">
+		      <div class="form-group">
+		        <label class="control-label col-lg-4"><em style="color:red">*</em>门名字:</label>
+		        <div class="col-lg-8">
+		        <input style="width:250px;" ng-model="doorEntity.name" class="form-control"/>
+		        </div>
+		      </div>
+		      <div class="form-group">
+		        <label class="control-label col-lg-4">门长度(M):</label>
+		        <div class="col-lg-8">
+		        <input style="width:250px;" ng-model="doorEntity.length" class="form-control"/>
+		        </div>
+		      </div>
+		      <div class="form-group">
+		        <label class="control-label col-lg-4">门宽度(M):</label>
+		        <div class="col-lg-4">
+		        <input style="width:250px;" ng-model="doorEntity.width" class="form-control"/>
+		        </div>
+		      </div>
+		      <div class="form-group col-lg-8">
+		      	<a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addDoor()"
+		      	ng-disabled="!doorEntity.name">添加</a>
+		      </div>
+		     </div>
+		    </form>
+		    <!--  -->
+		    <form id="addBlower" ng-show="choseDevice.name == '添加风机'" class="col-lg-12 form-horizontal">
+		      <div style="margin-top:30px;">
+		        <div class="form-group">
+		         <label class="control-label col-lg-4"><em style="color:red">*</em>风机名字:</label>
+		         <div class="col-lg-8">
+		         <input style="width:250px;" ng-model="blowerEntity.name" class="form-control"/>
+		         </div>
+		        </div>
+		        <div class="form-group">
+		         <label class="control-label col-lg-4">化霜温度(°C):</label>
+		         <div class="col-lg-8">
+		         <input style="width:250px;" ng-model="blowerEntity.defrostingTemperature" class="form-control"/>
+		         </div>
+		        </div>
+		       <div class="form-group col-lg-8">
+		      	<a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addBlower()"
+		      	ng-disabled="!blowerEntity.name">添加</a>
+		       </div>
+		     </div>
+		    </form>
+		    <!--  -->
+		    <form id="addCompressGroup" ng-show="choseDevice.name == '添加压缩机组'" class="col-lg-12 form-horizontal">
+		      <div style="margin-top:30px;">
+		        <div class="form-group">
+		         <label class="control-label col-lg-4"><em style="color:red">*</em>机组名字:</label>
+		         <div class="col-lg-8">
+		         <input style="width:250px;" ng-model="compressGroupEntity.name" class="form-control"/>
+		         </div>
+		        </div>
+		        <div class="form-group">
+		         <label class="control-label col-lg-4">设定低压(Kpa):</label>
+		         <div class="col-lg-8">
+		         <input style="width:250px;" ng-model="compressGroupEntity.lowPress" class="form-control"/>
+		         </div>
+		        </div>
+		        <div class="form-group">
+		         <label class="control-label col-lg-4">设定压差(Kpa):</label>
+		         <div class="col-lg-8">
+		         <input style="width:250px;" ng-model="compressGroupEntity.pressDiff" class="form-control"/>
+		         </div>
+		        </div>
+		        <div class="form-group">
+		         <label class="control-label col-lg-4">化霜温度(°C):</label>
+		         <div class="col-lg-8">
+		         <input style="width:250px;" ng-model="compressGroupEntity.meltFrostTemperature" class="form-control"/>
+		         </div>
+		        </div>
+		       <div class="form-group col-lg-8">
+		      	<a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompress()"
+		      	ng-disabled="!compressGroupEntity.name">添加</a>
+		       </div>
+		     </div>
+		    </form>
+		  </div>
+        </uib-tab>
+        <!--  -->
+        <uib-tab>
+          <uib-tab-heading>
 		      <i class="fa fa-table"></i>账号配置
 		  </uib-tab-heading>
 		  <div class="col-lg-5 col-lg-offset-3" style="margin-top:50px;">
 		    <form class="navbar-form">
 		      <div class="form-group">
 		        <label>用户名:&nbsp;&nbsp;</label>
-		        <input style="width:250px;" ng-model="vm.username"/>
+		        <input style="width:250px;" ng-model="vm.username" class="form-control"/>
 		      </div>
 		    </form>
 		    <form class="navbar-form">
 		      <div class="form-group">
 		        <label>密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;</label>
-		        <input style="width:250px;" ng-model="vm.password"/>
+		        <input style="width:250px;" ng-model="vm.password" class="form-control"/>
 		      </div>
 		    </form>
 		    <form class="navbar-form">
@@ -89,8 +232,8 @@
 		    <div class="col-lg-6">
 		    <form class="navbar-form">
 	  		  <div class="form-group">
-			  <label>冷库门ID：</label>
-			  <select ng-options="door.id for door in doors" class="form-control"
+			  <label>冷库门：</label>
+			  <select ng-options="door.name for door in doors" class="form-control"
 			   ng-model="vm.choseDoor"></select>
 			   </div>
 		     </form>
@@ -133,8 +276,8 @@
 			   <div class="col-lg-6">
 			   <form class="navbar-form">
 	  		  <div class="form-group">
-			  <label>风机ID：</label>
-			  <select ng-options="blower.blowerId for blower in blowers" class="form-control"
+			  <label>风机：</label>
+			  <select ng-options="blower.name for blower in blowers" class="form-control"
 			   ng-model="vm.choseBlower"></select>
 			   </div>
 		     </form>
@@ -183,8 +326,8 @@
 		  <div class="col-lg-7">
 		    <form class="navbar-form">
 	  		  <div class="form-group">
-			  <label>压缩机组ID：</label>
-			  <select ng-options="compressGroup.groupId for compressGroup in compressGroups" class="form-control"
+			  <label>压缩机组：</label>
+			  <select ng-options="compressGroup.name for compressGroup in compressGroups" class="form-control"
 			   ng-model="vm.choseCompressGroup"></select>
 			   </div>
 		     </form>

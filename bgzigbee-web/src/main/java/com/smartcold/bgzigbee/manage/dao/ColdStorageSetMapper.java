@@ -16,4 +16,6 @@ public interface ColdStorageSetMapper {
 	List<ColdStorageSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 
 	void updateMappingById(@Param("coldStorageId") int coldStorageId, @Param("mapping") String mapping);
+
+	void insertColdStorage(ColdStorageSetEntity entity);
 }
