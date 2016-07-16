@@ -5,14 +5,14 @@ coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $
 	 $scope.my_tel=user.telephone;
 	 $scope.vercodeval="";
 	var InterValObj=null; //timer变量，控制时间  
-	var count =curCount=60;//当前剩余秒数  
-	$scope._dataid =83;// $stateParams.dataid;//当前数据类型
+	//var count =curCount=60;//当前剩余秒数  
+	$scope._dataid = $stateParams.dataid;//当前数据类型
     $scope.initdata = function() {
         	$http.get('/i/ShareRdcController/getSEByID', { params: {"id": $scope._dataid}  }).success(function(data) {
         		 $scope.vo=data.entity;
         	}); 
     };
-    $scope.sendMessage=function () {  
+    /*$scope.sendMessage=function () {  
         curCount = count;  
         var phone=$("#user_tel").val();//手机号码  
         if(phone != ""){  
@@ -24,11 +24,20 @@ coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $
         }else{  
             alert("手机号码不能为空！");  
         }  
-    } ; 
+    } ; */
     
     $scope.getOrder=function () {  
-        
-    } ; 
+    	if(user!="undefined"){
+    	  $.ajax({ url: "/i/ShareRdcController/generateOrder", data: {user:user , vo: $scope.vo}, type: 'POST',dataType:"json", success: function(data) {
+    		  alert(data.message);
+    		  
+    	   }
+    	  }); 
+    	}
+    	else{
+    		alert("登陆之后才可以抢单");
+    	}
+    	} ; 
     //timer处理函数  
     $scope.SetRemainTime= function() {  
         if (curCount == 0) { window.clearInterval(InterValObj);  $("#gt_yzm_but").removeAttr("disabled"); $("#gt_yzm_but").text("重新获取");   }  else {  curCount--;   $("#gt_yzm_but").text(curCount + "重新发送");  }  

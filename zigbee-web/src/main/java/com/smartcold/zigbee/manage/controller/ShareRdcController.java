@@ -294,7 +294,7 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value="sharvistPhone")
+	/*@RequestMapping(value="sharvistPhone")
 	@ResponseBody
 	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone,String yzm){
 		try {
@@ -310,6 +310,14 @@ public class ShareRdcController  {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return ResponseData.newFailure("未知异常！");
+	}*/
+	
+	@RequestMapping(value="generateOrder")
+	@ResponseBody
+	public ResponseData<String> sharvistPhone(HttpServletRequest request,UserEntity user,RdcShareDTO vo){
+		
+		//return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
 		return ResponseData.newFailure("未知异常！");
 	}
 	/**

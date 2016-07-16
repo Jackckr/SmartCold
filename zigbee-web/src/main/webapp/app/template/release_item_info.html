@@ -46,16 +46,16 @@
 			</table>
 			
 <div class="input">
-      <div class="tel">
-<!--         <i class="iconfont">&#xe606;</i> -->
+     <!--  <div class="tel">
+        <i class="iconfont">&#xe606;</i>
         <input id="user_tel" type="tel" placeholder="请输入您的手机号"  ng-model="my_tel" />
         <button id="gt_yzm_but" class="btn btn-primary" ng-show="my_tel" ng-click="sendMessage()">获取验证码</button>
       </div>
       <div class="tel">
-<!--         <i class="iconfont ">&#xe639;</i> -->
+        <i class="iconfont ">&#xe639;</i>
         <input id="user_yzm" type="text" placeholder="请输入手机验证码"  ng-model="vercodeval"  ng-change="vercode()"  maxlength="6" />
-      </div>
+      </div> -->
     </div>
-    <button id="shar_excut_ord" class="btn btn-primary " disabled="disabled">确认抢单</button>  
+    <button id="shar_excut_ord" class="btn btn-primary " ng-click="getOrder()">确认抢单</button>  
 		</div>
 </div>
