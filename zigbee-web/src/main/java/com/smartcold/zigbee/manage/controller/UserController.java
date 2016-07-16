@@ -76,6 +76,14 @@ public class UserController extends BaseController {
 		return user;
 	}
 
+	@RequestMapping(value = "/userNameVerify", method = RequestMethod.POST)
+	@ResponseBody
+	public Object userNameVerify(HttpServletRequest request, String username) throws ApiException {
+		if(userDao.findUserByName(username)==null)
+			return true;
+		return false;
+	}
+	
 	
 	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody
@@ -101,7 +109,6 @@ public class UserController extends BaseController {
 		userEntity.setUsername(username);
 		userEntity.setPassword(password);
 		userEntity.setEmail(email);
-
 		userDao.insertUser(userEntity);
 		return new ResultDto(0, "注册成功");
 	}
