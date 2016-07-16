@@ -77,7 +77,8 @@
 			         	</div>
 			         </td>
 			         <td>{{rdc.codeLave1}}</td> <!--  品类 -->
-			         <td>{{rdc.unitPrice}}元/吨</td>
+<!-- 			         <td>{{rdc.unitPrice}}</td> -->
+			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+'元/吨'}}</td>
 			         <td>{{rdc.sqm}}吨</td>
 			         <td>{{rdc.validStartTime}}  至 {{rdc.validEndTime}}</td>
 			         <td>
