@@ -10,9 +10,6 @@ coldWeb.controller('home', function ($scope, $location, $stateParams, $http, $st
     $http.get('/i/rdc/findRdcList').success(function (data) {
         var size = data.length;
         data.splice(100, size);
-        for (var i = 0; i < data.length; i++) {
-            console.log("data:" + data[i].id + data[i].name + "_" + data[i].address);
-        }
         $scope.rdcs = data;
 
         // 百度地图API功能
