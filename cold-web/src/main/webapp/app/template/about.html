@@ -1,3 +1,17 @@
 <div>
-About
+<div class="col-md-12">
+      <div class="box box-gray bg-gray {{item}}">
+		<button ng-click="load()" class="text-black">重新加载</button>
+        <div class="box-header with-border">
+          <i class="fa fa-bar-chart-o"></i>
+          <h3 class="box-title">测试数据</h3>
+          <div class="box-tools pull-right">
+          </div>
+        </div>
+        <div class="box-body">
+          <div id="temperature-chart" style="height: 300px;"></div>
+        </div><!-- /.box-body-->
+      </div>
+	  </div>
 </div>
+<script src="../../assets/js/echarts.min.js"></script>

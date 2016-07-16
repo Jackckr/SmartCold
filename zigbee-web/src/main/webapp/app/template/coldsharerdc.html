@@ -77,7 +77,8 @@
 			         	</div>
 			         </td>
 			         <td>{{rdc.codeLave1}}</td> <!--  品类 -->
-			         <td>{{rdc.unitPrice}}元/吨</td>
+<!-- 			         <td>{{rdc.unitPrice}}</td> -->
+			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+'元/吨'}}</td>
 			         <td>{{rdc.sqm}}吨</td>
 			         <td>{{rdc.validStartTime}}  至 {{rdc.validEndTime}}</td>
 			         <td>
@@ -264,9 +265,9 @@
 			         		<span class="textInfo">{{rdc.detlAddress}}</span>
 			         	</div>
 			         </td>
-			         <td>{{rdc.unitPrice}}元/天·平方米</td>
+			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+'元/天·平方米'}}</td>
 			         <td>{{rdc.sqm}}平方米</td>
-			         <td>{{rdc.coldtype}}</td>
+			         <td>{{rdc.codeLave2}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
 			         	<button class="btn btn-primary" ng-click="gosharedile(rdc.id);">详情</button>

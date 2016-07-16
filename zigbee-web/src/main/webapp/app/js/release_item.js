@@ -143,7 +143,6 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	   }
   	       $("#item_type_div span").removeClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]); 
 	       $scope.typeCode=em.attr("value");
-	    //   em.addClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]);
 	       $scope.typeText=em.text();
 	       $scope.initMode();
     };
@@ -159,8 +158,6 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         } else{
         	$scope.typeCode=$scope.appmode[$scope.dataType].tool[1][0];
             $scope.typeText=$scope.appmode[$scope.dataType].tool[1][1];
-//            $("#item_type_div span:last").addClass($scope.appmode[$scope.dataType].tolimg[2]);
-//            $("#item_type_div span:first").removeClass($scope.appmode[$scope.dataType].tolimg[1]);
         }
         $scope.initMode();
         $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
@@ -171,6 +168,9 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         	$scope.provinceName = data[0].provinceName; 
         	$scope.changcity();
         }); //加载区域数据
+        $http.get('/i/ShareRdcController/getSEFilterData').success(function(data) {
+        	$scope.codeLave2 = data.entity.st;
+        }); //
         $scope.changcity = function(id) {
         	$http.get('/i/city/findCitysByProvinceId', { params: {"provinceID": $scope.provinceId}  }).success(function(data) {$scope.city = data;}); 
         };

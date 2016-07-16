@@ -89,6 +89,16 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
         $scope.totalfiles.splice(index,1);
     }
 	$scope.submit = function(){
+		if(user!==null&&user.id!=0){
+	   	     if (!$("#release_item_from").valid()) {
+	   	    	   $($("#release_item_from input.error")[0]).focus();
+	   	           return;
+	   	        } 
+		 }else{
+				   alert("请登录后执行该操作！");
+				   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
+				   return;
+		 }
 		var data = {data:releaseCarInfo.addvo(), "files":$scope.totalfiles};
 		Upload.upload({
             url: "/i/ShareRdcController/shareFreeRelease",

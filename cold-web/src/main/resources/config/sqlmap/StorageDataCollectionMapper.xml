@@ -27,5 +27,15 @@
         )
     </foreach>
 	</insert>
+	
+	<select id="findLastNPoint" parameterType="map" resultType="StorageDataCollectionEntity">
+	    SELECT * FROM storagedatacollection
+	    <if test="apid != null">
+		    WHERE apid = #{apid} 
+	    </if> 
+	    ORDER BY addtime DESC 
+	    LIMIT #{limit} 
+	
+	</select>
 
 </mapper>
