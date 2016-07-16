@@ -53,6 +53,14 @@
 						<input id="tx_title" type="text" class="form-control" placeholder="" name="title" >
 					</div>
 				</div>
+				<div class="mode_3 shar_none mode_hide infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>温度类型:</div>
+					<div class="pull-left">
+                       <select  id="tx_attrvalue" name="codeLave2" class="form-control" >
+							<option ng-repeat="x in  codeLave2" value="{{x.id}}">{{x.type}}</option>
+						</select>
+					</div>
+				</div>
 				<div id="" class="mode_1_2 mode_3_2 mode_hide shar_none">
 					<div class="infoList clearfix city">
 						<div class="pull-left col-sm-4  control-label "  ><em>*</em>省:</div>
@@ -91,26 +99,19 @@
 					<div class="pull-left">
 						<input type="text" placeholder="" class="form-control" name="sqm" ><span class="count" >{{appmode[dataType].lab[0][1]}} </span>
                         <span class="mode_3 shar_none">
-                             <span class="sp_radio"><input name="unit" type="radio" value="吨" checked="checked" >吨</span>
-                             <span class="sp_radio"><input  name="unit" type="radio" value="平方米">平方米</span>
-                             <span class="sp_radio"><input  name="unit" type="radio" value="其他"> 其他</span>
+                             <span class="sp_radio"><input name="unit" type="radio" value="元/吨"  checked="checked"  ng-model="unit" >吨</span>
+                             <span class="sp_radio"><input  name="unit" type="radio" value="元/平方米"  ng-model="unit" >平方米</span>
+                             <span class="sp_radio"><input  name="unit" type="radio" value="元/其他" ng-model="unit" > 其他</span>
                         </span>
 					</div>
 				</div>
 				<div class="infoList clearfix infoDate ">
 					<div class="pull-left col-sm-4 control-label ">{{appmode[dataType].lab[1][0]}}:</div>
 					<div class="pull-left">
-						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{appmode[dataType].lab[1][1]}}</span>
+						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{unit}}</span>
 					</div>
 				</div>
-				<div class="mode_3 shar_none mode_hide infoList clearfix">
-					<div class="pull-left col-sm-4  control-label " ><em>*</em>温度类型:</div>
-					<div class="pull-left">
-                       <select  id="tx_attrvalue" name="codeLave2" class="form-control" >
-							<option ng-repeat="x in  codeLave2" value="{{x.id}}">{{x.type}}</option>
-						</select>
-					</div>
-				</div>
+			
 				<div class="infoList clearfix infoDate">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>信息有效期:</div>
 					<div class="pull-left">

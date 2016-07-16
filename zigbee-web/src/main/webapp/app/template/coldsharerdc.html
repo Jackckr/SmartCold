@@ -265,8 +265,8 @@
 			         		<span class="textInfo">{{rdc.detlAddress}}</span>
 			         	</div>
 			         </td>
-			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+'元/天·平方米'}}</td>
-			         <td>{{rdc.sqm}}平方米</td>
+			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+rdc.unit}}</td>
+			         <td>{{rdc.sqm+rdc.unit}}</td>
 			         <td>{{rdc.codeLave2}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
