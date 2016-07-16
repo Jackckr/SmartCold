@@ -1,6 +1,61 @@
-    	<div id="release_main" class="shareMain shar_none">
-		
-		
-		
-		
-    	</div>
+<link rel="stylesheet" type="text/css" href="app/css/common.css">
+<link rel="stylesheet" type="text/css" href="app/css/share_item_info.css">
+    
+<div id="release_main" class="shareMain shar_none">
+	<div class="main">
+			<p class="h4">{{vo.title}}</p>
+			<div class="lists ">
+				<ul id="sh_img_ul"><li ng-repeat="fl in vo.files"><img src="{{fl}}" /></li></ul>
+				<i class=" bg fl"><span class="glyphicon glyphicon-chevron-left"></span></i>
+				<i class="bg fr"><span class="glyphicon glyphicon-chevron-right"></span></i>
+			</div>
+			<p class="h4">冷库详情</p>
+			<table class="info">
+				<caption>基本信息</caption>
+				<tbody>
+					<tr>
+						<th>面积:</th>
+						<td>{{vo.sqm}}</td>
+					</tr>
+					<tr>
+						<th>单价:</th>
+						<td>{{vo.unitPrice }}</td>
+					</tr>
+					<tr>
+						<th>地理位置:</th>
+						<td>{{vo.detlAddress}}</td>
+					</tr>
+					<tr>
+						<th>冷库温度类型:</th>
+						<td>{{vo.coldtype}}</td>
+					</tr>
+					<tr>
+						<th>信息有效期:</th>
+						<td>{{vo.validStartTime}}至{{vo.validEndTime}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="info otherinfo">		
+				<caption>其他信息</caption>
+				<tbody>
+					<tr>
+						<th>备注:</th>
+						<td>{{vo.note}}</td>
+					</tr>
+				</tbody>
+			</table>
+			
+<div class="input">
+      <div class="tel">
+<!--         <i class="iconfont">&#xe606;</i> -->
+        <input id="user_tel" type="tel" placeholder="请输入您的手机号"  ng-model="my_tel" />
+        <button id="gt_yzm_but" class="btn btn-primary" ng-show="my_tel" ng-click="sendMessage()">获取验证码</button>
+      </div>
+      <div class="tel">
+<!--         <i class="iconfont ">&#xe639;</i> -->
+        <input id="user_yzm" type="text" placeholder="请输入手机验证码"  ng-model="vercodeval"  ng-change="vercode()"  maxlength="6" />
+      </div>
+    </div>
+    <button id="shar_excut_ord" class="btn btn-primary " disabled="disabled">确认抢单</button>  
+		</div>
+</div>

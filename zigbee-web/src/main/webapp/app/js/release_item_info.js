@@ -2,43 +2,47 @@
  * 共享详情
  */
 coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
-	$scope._dataid = $stateParams.dataid;//当前数据类型
+	 $scope.my_tel=user.telephone;
+	 $scope.vercodeval="";
+	var InterValObj=null; //timer变量，控制时间  
+	var count =curCount=60;//当前剩余秒数  
+	$scope._dataid =83;// $stateParams.dataid;//当前数据类型
     $scope.initdata = function() {
-        
-    	
-    	
-    	
-        $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:1;//当前数据类型
-        if ($stateParams.data) {
-        	$scope.rdcinfo = $stateParams.data;//选择冷库、货品、车的信息
-        	$scope.rdcID = $stateParams.data.rdcID;
-            $scope.rdcimgs = $stateParams.data.files;
-            $scope.typeCode=$scope.appmode[$scope.dataType].tool[0][0];
-            $scope.typeText=$scope.appmode[$scope.dataType].tool[0][1];
-        } else{
-        	$scope.typeCode=$scope.appmode[$scope.dataType].tool[1][0];
-            $scope.typeText=$scope.appmode[$scope.dataType].tool[1][1];
-//            $("#item_type_div span:last").addClass($scope.appmode[$scope.dataType].tolimg[2]);
-//            $("#item_type_div span:first").removeClass($scope.appmode[$scope.dataType].tolimg[1]);
-        }
-        $scope.initMode();
-        $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
-        $http.get('/i/city/findProvinceList').success(function(data) {
-        	$scope.provinces = data; 
-        	$scope.provinceId = data[0].provinceId; 
-        	$scope.provinceName = data[0].provinceName; 
-        	$scope.changcity();
-        }); //加载区域数据
-        $scope.changcity = function(id) {
-        	$http.get('/i/city/findCitysByProvinceId', { params: {"provinceID": $scope.provinceId}  }).success(function(data) {$scope.city = data;}); 
-        };
+        	$http.get('/i/ShareRdcController/getSEByID', { params: {"id": $scope._dataid}  }).success(function(data) {
+        		 $scope.vo=data.entity;
+        	}); 
     };
-
+    $scope.sendMessage=function () {  
+        curCount = count;  
+        var phone=$("#user_tel").val();//手机号码  
+        if(phone != ""){  
+            $("#gt_yzm_but").attr("disabled", "true");  
+            $("#gt_yzm_but").text(curCount + "重新发送");  
+            InterValObj = window.setInterval($scope.SetRemainTime, 1000); //启动计时器，1秒执行一次  
+             //向后台发送处理数据  
+            $.ajax({ url: "/i/ShareRdcController/sharvistPhone", data: {telephone:phone , dataid: $scope.vo.id}, type: 'POST',dataType:"json", success: function(data) {alert(data.message);}}); 
+        }else{  
+            alert("手机号码不能为空！");  
+        }  
+    } ; 
+    //timer处理函数  
+    $scope.SetRemainTime= function() {  
+        if (curCount == 0) { window.clearInterval(InterValObj);  $("#gt_yzm_but").removeAttr("disabled"); $("#gt_yzm_but").text("重新获取");   }  else {  curCount--;   $("#gt_yzm_but").text(curCount + "重新发送");  }  
+    } ;
+    $scope.vercode=function(){
+	    var vercode=$("#user_yzm").val();
+	    if(vercode.length>=4){
+	    	 $.ajax({ url: "/i/ShareRdcController/sharvistCode", data: {yzm:vercode}, type: 'POST',dataType:"json", success: function(data) {
+	    		 $("#shar_excut_ord").attr("disabled", !data);
+	    	}}); 
+	     }else{
+	    	 $("#shar_excut_ord").attr("disabled", true);
+	     }
+    };
+    $scope.shareApplyObj=function(){//点击抢单操作
+    		$.ajax({ url: "/i/ShareRdcController/shareApplyObj", type: 'POST',dataType:"json", success: function(data) {
+    			
+    		}}); 
+    };
     $scope.initdata();
-	
-	
-	
-	
-	
 });

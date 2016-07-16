@@ -21,6 +21,8 @@
 		s.unit1,
 		s.typeText,
 		s.sqm,
+		s.telephone,
+		s.note,
 		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
 		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
 		s.applyID,
@@ -33,7 +35,7 @@
 		FROM
 		shared_info s
 		LEFT JOIN rdc r ON s.rdcID = r.id
-		WHERE s.id in =#{id}
+		WHERE s.id  =#{id}
 		GROUP BY s.id ORDER BY s.updatetime DESC
 	</select>
 	<!-- 根据rdcid查询下面全部信息 -->
@@ -212,8 +214,11 @@
 		s.updatetime DESC
 	</select>
 	<insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
-		INSERT INTO shared_info   
-		 <set > 
+	     <selectKey resultType="java.lang.Short" order="AFTER" keyProperty="id">
+           SELECT LAST_INSERT_ID() AS id
+          </selectKey>
+		  INSERT INTO shared_info   
+		  <set > 
 								<if test=" rdcID         !=0">                          rdcID           =#{rdcID            }  ,</if>
 								<if test=" releaseID     !=0">	                        releaseID       =#{releaseID        }  ,</if>
 								<if test=" codeLave1     !=null and codeLave1  !=''">	codeLave1       =#{codeLave1        }  ,</if>
@@ -247,6 +252,7 @@
 								<if test=" address       !=null and address    !=''">	address         =#{address          }  ,</if>
 								<if test=" detlAddress   !=null and detlAddress!=''">	detlAddress     =#{detlAddress      }  ,</if>
 								<if test=" dataType      !=0">	                        dataType        =#{dataType         }   </if>
-		</set>                                                                                                                       
+		</set>    
+		                                                                                                                   
 	</insert>
 </mapper>

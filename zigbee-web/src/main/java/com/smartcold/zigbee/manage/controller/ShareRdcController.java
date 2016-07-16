@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,13 +19,19 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.smartcold.zigbee.manage.dao.FileDataMapper;
+import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
+import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
+import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
+import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
+import com.taobao.api.ApiException;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
@@ -38,7 +46,11 @@ public class ShareRdcController  {
 	@Resource(name="rdcShareService")
 	private RdcShareService rdcShareService;
 	
+	@Resource(name="docLibraryService")
+	private DocLibraryService docLibraryService;
 	
+	@Autowired
+	private UserMapper userDao;
 
 	/**
 	 * @author MaQiang
@@ -293,9 +305,44 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
+	@RequestMapping(value="sharvistPhone")
+	@ResponseBody
+	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone,String yzm){
+		try {
+			if(StringUtil.isnotNull(telephone)){
+				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
+				String signUpCode = teleVerify.signUpVerify(telephone);
+				request.getSession().setAttribute("shear_order_id", dataid);
+				request.getSession().setAttribute("shear_order_yzm", signUpCode);
+				request.getSession().setAttribute("shear_order_telephone", telephone);
+				return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
+			}
+			return  ResponseData.newFailure("请输入有效手机号码！！");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseData.newFailure("未知异常！");
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="sharvistCode")
+	@ResponseBody
+	public boolean sharvistCode(HttpServletRequest request,String dataid,String telephone,String yzm){
+	  if(StringUtil.isnotNull(yzm)){
+		  String sysyzm=	(String) request.getSession().getAttribute("shear_order_yzm");
+		  return yzm.equalsIgnoreCase(sysyzm); 
+	  }
+	  return false;
+	}
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value="shareApplyObj")
 	@ResponseBody
-	public ResponseData<Object> shareApplyObj(HttpServletRequest request,String datatype,String dataid){
+	public ResponseData<Object> shareApplyObj(HttpServletRequest request,String dataid,String phone){
 		
 		return null;
 	}
@@ -327,20 +374,12 @@ public class ShareRdcController  {
 	 * @param request
 	 * @param datatype
 	 * @param dataid
+	 * @RequestParam("files") CommonsMultipartFile[] files
 	 * @return
 	 */
 	@RequestMapping(value="shareFreeRelease")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data, 
-			@RequestParam(value="files[]",required=false) MultipartFile[] files){
-		 MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;  
-         Iterator<String> iter = multiRequest.getFileNames();  
-         while(iter.hasNext()){  
-           String para = iter.next();
-           
-             MultipartFile file = multiRequest.getFile(para); 
-             System.out.println(file);
-         }
+	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data){
 		try {
 			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
 			if(StringUtil.isnotNull(data)&&user!=null&&user.getId()!=0){//
@@ -348,6 +387,7 @@ public class ShareRdcController  {
 				rdcShareDTO.setReleaseID(user.getId());//设置发布消id//user.getId()
 				rdcShareDTO.setStauts(1);
 	            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
+	            this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, user, request);
 	            return ResponseData.newSuccess("发布成功！");
 			}else{
 				return ResponseData.newFailure("当前用户没有执行登录操作！");

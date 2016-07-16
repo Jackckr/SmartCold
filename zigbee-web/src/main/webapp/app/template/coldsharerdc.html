@@ -81,7 +81,7 @@
 			         <td>{{rdc.sqm}}吨</td>
 			         <td>{{rdc.validStartTime}}  至 {{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>详情</button>
+			         	<button class="btn btn-primary"  ng-click="gosharedile(rdc.id);">详情</button>
 			         </td>
 			      </tr>
 			   </tbody>
@@ -184,7 +184,7 @@
 			         <td>{{rdc.codeLave1}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>详情</button>
+			         	<button class="btn btn-primary" ng-click="gosharedile(rdc.id);">详情</button>
 			         </td>
 			      </tr>
 			   </tbody>
@@ -269,7 +269,7 @@
 			         <td>{{rdc.coldtype}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" value={{rdc}} toolid={{rdc.id}}>详情</button>
+			         	<button class="btn btn-primary" ng-click="gosharedile(rdc.id);">详情</button>
 			         </td>
 			      </tr>
 <!-- 			       <tr ng-show="{{rdcs==null||rdcs.length==0}}"> -->
