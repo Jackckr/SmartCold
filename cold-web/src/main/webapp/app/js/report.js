@@ -93,11 +93,13 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 			url = "/i/coldStorageDoor/findOpenTimeByStorageIdTime?storageId=" + $scope.storageModal.coldStorageID + 
 			"&startTime=" + $scope.begin + "&endTime=" + $scope.end;
 			$http.get(url).success(function(data,headers,config,status){
+				
+
 				angular.forEach(data,function(item){
-					$scope.searchxData.push(item.addTime);
-					$scope.searchData.push(item.state);
+						$scope.searchxData.push(item.addTime);
+						$scope.searchData.push(item.state);
 				});
-				$scope.drawDataLine($scope.searchxData,$scope.searchData);
+				$scope.drawDataLine($scope.searchxData,$scope.searchData,true);
 			})
 		}else if ($scope.choseOption.key == 'doorTimes'){
 			url = "/i/coldStorageDoor/findOpenTimesByStorageIdTime?storageId=" + $scope.storageModal.coldStorageID + 
@@ -107,7 +109,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 					$scope.searchxData.push(item.addTime);
 					$scope.searchData.push(item.state);
 				});
-				$scope.drawDataLine($scope.searchxData,$scope.searchData);
+				$scope.drawDataLine($scope.searchxData,$scope.searchData,true);
 			})
 		}else if ($scope.choseOption.key == 'temperature'){
 			url = "/i/coldStorage/findInfoByIdTime?storageId=" + $scope.storageModal.coldStorageID + 
@@ -122,10 +124,37 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		}
 	}
 	
-	$scope.drawDataLine = function(xData,data){
+	$scope.drawDataLine = function(xData,data,optContent=false){
 		var lineChart = echarts.init($('#data-chart')[0]);
 		xData = xData.length > 0? xData : [1,2,3,4];
 		data = data.length > 0 ? data : [34,35,34,21];
+		var dataView = {
+				show: true, readOnly: true,
+				textareaColor:'#fff',
+				optionToContent: function(opt) {
+				    var axisData = opt.xAxis[0].data;
+				    var series = opt.series;
+				    var table = '<table style="width:100%;color:rgb(0, 0, 0);height: 100%;display: inline-block;overflow:auto;border: 1px solid black;">'
+//				    			  +'<tr>'
+//				                 + '<td>时间</td>'
+//				                 + '<td> </td>'
+//				                 + '</tr>';
+				    		+'<tbody>'
+				    var preState = -1;
+				    for (var i = 1, l = axisData.length; i < l; i++) {
+				    	if(preState != series[0].data[i]){
+				    		table += '<tr>'
+				                 + '<td>' + axisData[i] + '</td>'
+				                 + '<td>' + series[0].data[i] + '</td>'
+				                 + '</tr>';
+				    		preState = series[0].data[i];
+				    	}
+				        
+				    }
+				    table += '</tbody></table>';
+				    return table;
+				}
+		}
 		option = {
 			    tooltip : {
 			        trigger: 'axis'
@@ -137,7 +166,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 			    toolbox: {
 			        show : true,
 			        feature : {
-			            dataView : {show: true, readOnly: true},
+			            dataView : optContent?dataView:{show: true, readOnly: true},
 			        }
 			    },
 			    xAxis : [
@@ -456,4 +485,14 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	}
 
 	$scope.load();
+});
+
+coldWeb.directive('aDisabled', function() {
+	function link(scope, element, attrs){
+		element.addClass("disabled");
+		element.on("click", function(){
+			e.preventDefault();
+		})
+	}
+    return link;
 });
