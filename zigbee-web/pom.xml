@@ -168,6 +168,14 @@
 			<artifactId>guava</artifactId>
 			<version>18.0</version>
 		</dependency>
+		<!-- 支持短信验证  -->
+	    <dependency>
+	      <groupId>org.taobao.sdk</groupId>
+	      <artifactId>taobo-jar</artifactId>
+	      <version>1.0</version>
+	      <scope>system</scope>
+	      <systemPath>${project.basedir}/lib/taobao-sdk-java-auto_1455552377940-20160607.jar</systemPath>
+	    </dependency>
 	</dependencies>
 
 	<build>
