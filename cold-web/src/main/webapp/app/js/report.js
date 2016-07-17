@@ -87,19 +87,17 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 					$scope.searchxData.push(item.addTime);
 					$scope.searchData.push(item.powerCosume);
 				});
-				$scope.drawDataLine($scope.searchxData,$scope.searchData);
+				$scope.drawDataLine($scope.searchxData,$scope.searchData, 'electric');
 			})
 		}else if ($scope.choseOption.key == 'doorTime'){
 			url = "/i/coldStorageDoor/findOpenTimeByStorageIdTime?storageId=" + $scope.storageModal.coldStorageID + 
 			"&startTime=" + $scope.begin + "&endTime=" + $scope.end;
 			$http.get(url).success(function(data,headers,config,status){
-				
-
 				angular.forEach(data,function(item){
 						$scope.searchxData.push(item.addTime);
 						$scope.searchData.push(item.state);
 				});
-				$scope.drawDataLine($scope.searchxData,$scope.searchData,true);
+				$scope.drawDataLine($scope.searchxData,$scope.searchData,'door');
 			})
 		}else if ($scope.choseOption.key == 'doorTimes'){
 			url = "/i/coldStorageDoor/findOpenTimesByStorageIdTime?storageId=" + $scope.storageModal.coldStorageID + 
@@ -109,7 +107,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 					$scope.searchxData.push(item.addTime);
 					$scope.searchData.push(item.state);
 				});
-				$scope.drawDataLine($scope.searchxData,$scope.searchData,true);
+				$scope.drawDataLine($scope.searchxData,$scope.searchData,'door');
 			})
 		}else if ($scope.choseOption.key == 'temperature'){
 			url = "/i/coldStorage/findInfoByIdTime?storageId=" + $scope.storageModal.coldStorageID + 
@@ -124,37 +122,59 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 		}
 	}
 	
-	$scope.drawDataLine = function(xData,data,optContent=false){
+	$scope.drawDataLine = function(xData,data,dataViewOpt){
 		var lineChart = echarts.init($('#data-chart')[0]);
 		xData = xData.length > 0? xData : [1,2,3,4];
 		data = data.length > 0 ? data : [34,35,34,21];
-		var dataView = {
-				show: true, readOnly: true,
-				textareaColor:'#fff',
-				optionToContent: function(opt) {
-				    var axisData = opt.xAxis[0].data;
-				    var series = opt.series;
-				    var table = '<table style="width:100%;color:rgb(0, 0, 0);height: 100%;display: inline-block;overflow:auto;border: 1px solid black;">'
-//				    			  +'<tr>'
-//				                 + '<td>时间</td>'
-//				                 + '<td> </td>'
-//				                 + '</tr>';
-				    		+'<tbody>'
-				    var preState = -1;
-				    for (var i = 1, l = axisData.length; i < l; i++) {
-				    	if(preState != series[0].data[i]){
-				    		table += '<tr>'
-				                 + '<td>' + axisData[i] + '</td>'
-				                 + '<td>' + series[0].data[i] + '</td>'
-				                 + '</tr>';
-				    		preState = series[0].data[i];
-				    	}
-				        
-				    }
-				    table += '</tbody></table>';
-				    return table;
-				}
-		}
+		var dataView = {show: true, readOnly: true, textareaColor:'#fff'};
+		if(dataViewOpt=='door'){
+			dataView.optionToContent=function(opt) {
+			    var axisData = opt.xAxis[0].data;
+			    var series = opt.series;
+			    var table = '<table class="table" style="width:100%;color:rgb(0, 0, 0);height: 100%;display: inline-block;overflow:auto;border: 1px solid black;">'
+			    			  +'<tr>'
+			                 + '<th>开始时间</th>'
+			                 + '<th>结束时间</th>'
+			                 + '<th>状态</th>'
+			                 + '</tr>';
+			    		+'<tbody>'
+			    var preState = series[0].data[0];
+			    var preAddTime = axisData[0];
+			    for (var i = 1, l = axisData.length; i < l; i++) {
+			    	if(preState != series[0].data[i]){
+			    		table += '<tr>'
+			    			 + '<td>' + preAddTime + '</td>'
+			                 + '<td>' + axisData[i-1] + '</td>'
+			                 + '<td>' + (series[0].data[i]>0?'开':'关') + '</td>'
+			                 + '</tr>';
+			    		preState = series[0].data[i];
+			    		preAddTime = axisData[i]
+			    	}
+			        
+			    }
+			    table += '</tbody></table>';
+			    return table;
+			}
+		}else if(dataViewOpt=='electric'){
+			dataView.optionToContent = function(opt) {
+			    var axisData = opt.xAxis[0].data;
+			    var seriesData = opt.series[0].data;
+			    var table = '<table class="table" style="width:100%;color:rgb(0, 0, 0);height: 100%;display: inline-block;overflow:auto;border: 1px solid black;">'
+			    			  +'<tr>'
+			                 + '<th>开始时间</th>'
+			                 + '<th>结束时间</th>'
+			                 + '<th>电量差值</th>'
+			                 + '</tr>'
+			    		+'<tbody>'
+			    		+ '<tr>'
+			    			 + '<td>' + axisData[0] + '</td>'
+			                 + '<td>' + axisData[axisData.length-1] + '</td>'
+			                 + '<td>' + (seriesData[seriesData.length-1]-seriesData[0]) + '</td>'
+			            + '</tr>'
+			     + '</tbody></table>';
+			    return table;
+			}
+		};
 		option = {
 			    tooltip : {
 			        trigger: 'axis'
@@ -166,7 +186,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 			    toolbox: {
 			        show : true,
 			        feature : {
-			            dataView : optContent?dataView:{show: true, readOnly: true},
+			            dataView : dataView,
 			        }
 			    },
 			    xAxis : [
@@ -473,7 +493,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 				$scope.search4report();
 				$timeout(function() {
 				    $scope.search();
-				},0)	
+				},100)	
 			}
 			if($scope.item == 'total'){
 				$timeout(function() {
