@@ -2,6 +2,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.load = function(){
 		$scope.vm = {}
+		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."}
 		$scope.storageEntity = {}
 		$scope.doorEntity = {}
 		$scope.blowerEntity = {}
@@ -14,6 +15,15 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$scope.changeRdc();
 		});
 	}
+	
+	function getDistinctColumnKey(data){
+		keys = [];
+		angular.forEach(data,function(item){
+			keys.indexOf(item.columnkey) == -1? keys.push(item.columnkey):'';
+		})
+		return keys;
+	}
+	
 	
 	$scope.changeRdc = function(){
 		$scope.vm.choseRdc.mapping = typeof($scope.vm.choseRdc.mapping) == "string"?
@@ -37,6 +47,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$http.get('/i/coldStorage/findItem').success(function(data,status,config,headers){
 			$scope.storageItem = data;
 			$scope.vm.choseItem = data[0];
+			$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
+			$scope.vm.choseItemKey = $scope.storageItemKeys[0];
+			$scope.storageItem.push($scope.handItem);
 		})
 		$http.get('/i/compressorGroup/getCompressGroupByRdcId?rdcId=' + $scope.vm.choseRdc.id
 				).success(function(data,status,config,headers){
@@ -49,6 +62,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$http.get('/i/compressorGroup/findItem').success(function(data,status,config,headers){
 			$scope.compressGroupItem = data;
 			$scope.vm.choseCompressGroupItem = data[0];
+			$scope.compressGroupItemKeys = getDistinctColumnKey($scope.compressGroupItem);
+			$scope.vm.choseCompressGroupItemKey = $scope.compressGroupItemKeys[0];
+			$scope.compressGroupItem.push($scope.handItem);
 		})
 	}
 	
@@ -72,6 +88,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$http.get('/i/blower/findItem').success(function(data,status,config,headers){
 			$scope.blowerItem = data;
 			$scope.vm.choseBlowerItem = data[0];
+			$scope.blowerItemKeys = getDistinctColumnKey($scope.blowerItem);
+			$scope.vm.choseBlowerItemKey = $scope.blowerItemKeys[0];
+			$scope.blowerItem.push($scope.handItem);
 		})
 	}
 	
@@ -92,22 +111,50 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.addKey = function(){
-		$scope.vm.choseStorage.mapping[$scope.vm.choseItem.columnkey]=$scope.vm.choseItem.columnvalue;
+		if($scope.vm.choseItem == $scope.handItem){
+			if(!$scope.vm.itemInput) return;
+			$scope.vm.choseStorage.mapping[$scope.vm.choseItemKey] = $scope.vm.itemInput;
+			$scope.vm.itemInput = "";
+			$scope.vm.choseItem = $scope.storageItem[0];
+		}else {			
+			$scope.vm.choseStorage.mapping[$scope.vm.choseItem.columnkey]=$scope.vm.choseItem.columnvalue;
+		}
 		$scope.vm.addStorageItem=false;
 	}
 	
 	$scope.addDoorKey = function(){
-		$scope.vm.choseDoor.mapping[$scope.vm.choseItem.columnkey]=$scope.vm.choseItem.columnvalue;
+		if($scope.vm.choseItem == $scope.handItem){
+			if(!$scope.vm.itemInput) return;
+			$scope.vm.choseDoor.mapping[$scope.vm.choseItemKey] = $scope.vm.itemInput;
+			$scope.vm.itemInput = "";
+			$scope.vm.choseItem = $scope.storageItem[0];
+		}else{			
+			$scope.vm.choseDoor.mapping[$scope.vm.choseItem.columnkey]=$scope.vm.choseItem.columnvalue;
+		}
 		$scope.vm.addDoorItem=false;
 	}
 	
 	$scope.addBlowerKey = function(){
-		$scope.vm.choseBlower.mapping[$scope.vm.choseBlowerItem.columnkey]=$scope.vm.choseBlowerItem.columnvalue;
+		if($scope.vm.choseBlowerItem == $scope.handItem){
+			if(!$scope.vm.itemInput) return;
+			$scope.vm.choseBlower.mapping[$scope.vm.choseBlowerItemKey] = $scope.vm.itemInput;
+			$scope.vm.itemInput = "";
+			$scope.vm.choseBlowerItem = $scope.blowerItem[0];
+		}else{			
+			$scope.vm.choseBlower.mapping[$scope.vm.choseBlowerItem.columnkey]=$scope.vm.choseBlowerItem.columnvalue;
+		}
 		$scope.vm.addBlowerItem=false;
 	}
 	
 	$scope.addCompressGroupKey = function(){
-		$scope.vm.choseCompressGroup.mapping[$scope.vm.choseCompressGroupItem.columnkey]=$scope.vm.choseCompressGroupItem.columnvalue;
+		if($scope.vm.choseCompressGroupItem == $scope.handItem){
+			if(!$scope.vm.itemInput) return;
+			$scope.vm.choseCompressGroup.mapping[$scope.vm.choseCompressGroupItemKey] = $scope.vm.itemInput;
+			$scope.vm.itemInput = "";
+			$scope.vm.choseCompressGroupItem = $scope.compressGroupItem[0];
+		}else{			
+			$scope.vm.choseCompressGroup.mapping[$scope.vm.choseCompressGroupItem.columnkey]=$scope.vm.choseCompressGroupItem.columnvalue;
+		}
 		$scope.vm.addCompressGroupItem=false;
 	}
 	

@@ -213,11 +213,21 @@
 			          <a class="btn btn-success btn-xs" ng-click="vm.addStorageItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addStorageItem">
+			        <tr ng-if="vm.addStorageItem && vm.choseItem.columnkey != 'handWrite'">
 			          <td><select ng-options="item.columnvalue for item in storageItem" ng-model="vm.choseItem" class="form-control"></select></td>
 			          <td>{{vm.choseItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
+			          ng-click="addKey()">
+			          <span class="glyphicon glyphicon-check"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="vm.addStorageItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          </td>
+			        </tr>
+			        <tr ng-if="vm.addStorageItem && vm.choseItem.columnkey == 'handWrite'">
+			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
+			          <td><select ng-options="item for item in storageItemKeys" ng-model="vm.choseItemKey" class="form-control"></select></td>
+			          <td>
+			          <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput"
 			          ng-click="addKey()">
 			          <span class="glyphicon glyphicon-check"></span></a>
 			          <a class="btn btn-danger btn-xs" ng-click="vm.addStorageItem=false"><span class="glyphicon glyphicon-minus"></span></a>
@@ -258,11 +268,21 @@
 			          <a class="btn btn-success btn-xs" ng-click="vm.addDoorItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addDoorItem">
+			        <tr ng-if="vm.addDoorItem && vm.choseItem.columnkey != 'handWrite'">
 			          <td><select ng-options="item.columnvalue for item in storageItem" ng-model="vm.choseItem" class="form-control"></select></td>
 			          <td>{{vm.choseItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
+			          ng-click="addDoorKey()">
+			          <span class="glyphicon glyphicon-check"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="vm.addDoorItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          </td>
+			        </tr>
+			        <tr ng-if="vm.addDoorItem && vm.choseItem.columnkey == 'handWrite'">
+			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
+			          <td><select ng-options="item for item in storageItemKeys" ng-model="vm.choseItemKey" class="form-control"></select></td>
+			          <td>
+			          <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput"
 			          ng-click="addDoorKey()">
 			          <span class="glyphicon glyphicon-check"></span></a>
 			          <a class="btn btn-danger btn-xs" ng-click="vm.addDoorItem=false"><span class="glyphicon glyphicon-minus"></span></a>
@@ -302,11 +322,21 @@
 			          <a class="btn btn-success btn-xs" ng-click="vm.addBlowerItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addBlowerItem">
+			        <tr ng-if="vm.addBlowerItem && vm.choseBlowerItem.columnkey != 'handWrite'">
 			          <td><select ng-options="item.columnvalue for item in blowerItem" ng-model="vm.choseBlowerItem" class="form-control"></select></td>
 			          <td>{{vm.choseBlowerItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
+			          ng-click="addBlowerKey()">
+			          <span class="glyphicon glyphicon-check"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="vm.addBlowerItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          </td>
+			        </tr>
+			        <tr ng-if="vm.addBlowerItem && vm.choseBlowerItem.columnkey == 'handWrite'">
+			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
+			          <td><select ng-options="item for item in blowerItemKeys" ng-model="vm.choseBlowerItemKey" class="form-control"></select></td>
+			          <td>
+			          <a class="btn btn-primary btn-xs"  ng-disabled="!vm.itemInput"
 			          ng-click="addBlowerKey()">
 			          <span class="glyphicon glyphicon-check"></span></a>
 			          <a class="btn btn-danger btn-xs" ng-click="vm.addBlowerItem=false"><span class="glyphicon glyphicon-minus"></span></a>
@@ -352,11 +382,21 @@
 			          <a class="btn btn-success btn-xs" ng-click="vm.addCompressGroupItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addCompressGroupItem">
+			        <tr ng-if="vm.addCompressGroupItem && vm.choseCompressGroupItem.columnkey != 'handWrite'">
 			          <td><select ng-options="item.columnvalue for item in compressGroupItem" ng-model="vm.choseCompressGroupItem" class="form-control"></select></td>
 			          <td>{{vm.choseCompressGroupItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
+			          ng-click="addCompressGroupKey()">
+			          <span class="glyphicon glyphicon-check"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="vm.addCompressGroupItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          </td>
+			        </tr>
+			        <tr ng-if="vm.addCompressGroupItem && vm.choseCompressGroupItem.columnkey == 'handWrite'">
+			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
+			          <td><select ng-options="item for item in compressGroupItemKeys" ng-model="vm.choseCompressGroupItemKey" class="form-control"></select></td>
+			          <td>
+			          <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput"
 			          ng-click="addCompressGroupKey()">
 			          <span class="glyphicon glyphicon-check"></span></a>
 			          <a class="btn btn-danger btn-xs" ng-click="vm.addCompressGroupItem=false"><span class="glyphicon glyphicon-minus"></span></a>
