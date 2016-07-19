@@ -37,7 +37,15 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "/generateOrder")
 	@ResponseBody
 	public ResponseData<String> sharvistPhone(HttpServletRequest request,
-			int userid,String username,String telephone,int rsdid, int dataType, int typeText ,int releaseID,String title) {
+			int userid,
+			String username,
+			String telephone,
+			int rsdid, 
+			int dataType, 
+			String typeText,
+			int releaseID,
+			String title
+			) {
 		OrdersEntity order = new OrdersEntity();
 		Calendar calendar = Calendar.getInstance();
 		order.setOrderid(""+calendar.getTime().getTime());
@@ -52,16 +60,11 @@ public class OrdersController extends BaseController {
 			ordername = ordername + "[仓库]";
 		}
 		ordername = ordername+title;
-		if (typeText==1) {
-			ordername = ordername+"[出租]";
-		}
-		else if (typeText==2) {
-			ordername = ordername+"[求租]";
-		}
+	    ordername = ordername+typeText;
 		order.setOrdername(ordername);
 		order.setOwnerid(releaseID);
 		UserEntity owner = userDao.findUserById(releaseID);
-		order.setOrdername(owner.getUsername());
+		order.setOwnername(owner.getUsername());
 		order.setOwnertele(owner.getTelephone());
 		order.setUserid(userid);
 		order.setUsername(username);
@@ -69,7 +72,7 @@ public class OrdersController extends BaseController {
 		order.setShareinfoid(rsdid);
 		orderDao.insertOrder(order);
 		// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
-		return ResponseData.newFailure("下单成功！");
+		return ResponseData.newSuccess("下单成功！");
 	}
 
 }
