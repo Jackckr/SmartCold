@@ -22,7 +22,6 @@ import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
@@ -294,13 +293,13 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value="sharvistPhone")
+	/*@RequestMapping(value="sharvistPhone")
 	@ResponseBody
 	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone,String yzm){
 		try {
 			if(StringUtil.isnotNull(telephone)){
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-				String signUpCode = teleVerify.signUpVerify(telephone);
+				String signUpCode = teleVerify.identityVerify(telephone);
 				request.getSession().setAttribute("shear_order_id", dataid);
 				request.getSession().setAttribute("shear_order_yzm", signUpCode);
 				request.getSession().setAttribute("shear_order_telephone", telephone);
@@ -311,7 +310,9 @@ public class ShareRdcController  {
 			e.printStackTrace();
 		}
 		return ResponseData.newFailure("未知异常！");
-	}
+	}*/
+	
+	
 	/**
 	 * 
 	 * @return
@@ -386,5 +387,5 @@ public class ShareRdcController  {
 		}
 		return ResponseData.newFailure("发布失败!请稍后重试！");
 	}
-
+	
 }

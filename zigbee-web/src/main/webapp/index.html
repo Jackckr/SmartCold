@@ -42,6 +42,14 @@
 .banner>.filter {
 	background-color: transparent;
 }
+/* 个人信息下拉菜单 */
+.dropdown-menu{
+	padding:0;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus{
+	color: #fff;
+    background-color: #000;
+}
 </style>
 </head>
 <body class="home-layout">
@@ -55,9 +63,25 @@
 		</div>
 		<div class="nav-right mw-8">
 			<div class="nav-right" ng-show="user != null && user.id != 0">
-				<div class="unauthenticated">
-					<strong class="text-primary" ng-bind="user.username"></strong> <span></span>
-					<b><a ng-click="logout()" href="" ng-bind="'退出'"></a>
+				<div class="unauthenticated dropdown">
+					<strong class="text-primary dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" ng-bind="user.username"></strong><span class="caret"></span><span></span>
+					<!-- 个人信息下拉菜单 start-->
+				   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="left:-80%">
+				      <li role="presentation">
+				         <a role="menuitem" tabindex="-1" href="#">个人信息</a>
+				      </li>
+				      <li role="presentation">
+				         <a role="menuitem" tabindex="-1" href="#">我的发布</a>
+				      </li>
+				      <li role="presentation">
+				         <a role="menuitem" tabindex="-1" href="#">
+				            我的冷库
+				         </a>
+				      </li>
+				   </ul>
+					<!-- 个人信息下拉菜单 end-->
+					<b><a ng-click="logout()" href="" ng-bind="'退出'">
+					</a>
 					</b>
 				</div>
 			</div>
@@ -137,7 +161,8 @@
 				&copy;2016&nbsp;Smartcold&nbsp;&nbsp;&nbsp;&nbsp;沪ICP备 16004753 </label>
 		</section>
 	</footer>
-	<script type="text/javascript" src="assets/js/jquery.js"></script>
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+<!-- 	<script type="text/javascript" src="assets/js/jquery.js"></script> -->
 	<!-- <script type="text/javascript" src="assets/js/handlebars.js"></script>
 	<script src="assets/js/modernizr.min.js"></script>
 	<script type="text/javascript"
@@ -169,7 +194,7 @@
 		src="bower_components/angular-multi-select-master/isteven-multi-select.js"></script>
 	<script src="bower_components/angucomplete/angucomplete.js"></script>
 	<script src="bower_components/at-table/dist/angular-table.min.js"></script>
-	<script src="bower_components/jquery/dist/jquery.js"></script>
+
 	<script src="bower_components/bootstrap/js/carousel.js"></script>
 	<script src="assets/js/ngGallery.js"></script>
 	<script src="bower_components/angular/ngRemoteValidate.0.6.1.min.js"></script>

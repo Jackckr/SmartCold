@@ -1,6 +1,7 @@
 <!-- 页面主体区域开始 -->
 	<link rel="stylesheet" type="text/css" href="app/css/coldsharerdc.css">
 	<link rel="stylesheet" type="text/css" href="app/css/common.css">
+     <link rel="stylesheet" type="text/css" href="app/css/share_item_info.css">
     <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
 	<style>
      .select_2{margin-right: 20px;}
@@ -12,7 +13,7 @@
      .time_control *{font-size: 10px;}
      .sorry{text-align: center;font-size: 18px;margin: 120px auto;}
     </style>
-	<div class="shareMain">
+<div class="shareMain">
 	<!--   货品、配送、仓库区域 start-->
 		<div id="tool_div" class="tab clearfix">
 			<ul class="tabSon">
@@ -265,17 +266,14 @@
 			         		<span class="textInfo">{{rdc.detlAddress}}</span>
 			         	</div>
 			         </td>
-			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+rdc.unit}}</td>
-			         <td>{{rdc.sqm+rdc.unit}}</td>
+			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+rdc.unit}} </td>
+			         <td>{{rdc.sqm+rdc.unit.substr(4)}}</td>
 			         <td>{{rdc.codeLave2}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" ng-click="gosharedile(rdc.id);">详情</button>
+			         	<button class="btn btn-primary"  data-toggle="modal" value="{{rdc.id}}" ng-click="gosharedile(rdc.id)">详情</button>
 			         </td>
 			      </tr>
-<!-- 			       <tr ng-show="{{rdcs==null||rdcs.length==0}}"> -->
-<!-- 			         <td colspan="7"><div id="nodata_div" ><p class="sorry">暂无该分类数据！</p></div></td> -->
-<!-- 			       </tr>  -->
 			   </tbody>
 			</table>
 			<div class="row" style="text-align: center;">
@@ -285,5 +283,83 @@
             </div>
 	    </div>
     </div>
+    
+    
+    
+    <!-- 模态框（Modal） -->
+<div id="shaerdailModal"  class="modal fade" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width: 720px;">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close"  data-dismiss="modal" aria-hidden="true"> &times; </button>
+            <h4 class="modal-title" id="myModalLabel">{{"【"+vo.typeText+"】"+vo.title}} </h4>
+         </div>
+         <div class="modal-body">   
+             <!-- 主体开始 -->
+             <div id="release_main" class="shareMain shar_none">
+					<div class="main">
+							<div ng-if="vo.typeCode==1" class="lists" style="width: 630px;">
+								<ul id="sh_img_ul"><li ng-repeat="fl in vo.files"><img src="{{fl}}" /></li></ul>
+								<i class=" bg fl"><span class="glyphicon glyphicon-chevron-left" ></span></i>
+								<i class="bg fr"><span class="glyphicon glyphicon-chevron-right"></span></i>
+							</div>
+							<p class="h4">冷库详情</p>
+							<table class="info">
+								<caption>基本信息</caption>
+								<tbody>
+									
+									<tr ng-if="datatype==2"> 
+				 				         <th>冷库温度类型:</th> 
+				 				        <td>{{vo.codeLave2}}</td> 
+								    </tr>  
+							        <tr ng-if="datatype==2">
+										<th>始发地:</th>
+										<td>{{vo.unit1}}</td>
+									</tr>
+									<tr ng-if="datatype==2">
+				 						<th>目的地:</th>
+				 					   <td>{{vo.unit2}}</td>
+				  					</tr>
+				  					<tr ng-if="datatype!=2">
+										<th>{{appmode[datatype].lab[0][0]}}:</th>
+										<td>{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</td>
+									</tr>
+									<tr>
+				 						 <th>{{appmode[datatype].lab[1][0]}}:</th>
+				  					      <td>{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}
+				  					      <span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span>
+				  					   </td>
+				  					</tr>
+				  					<tr>
+				  						<th>地理位置:</th>
+				 						<td>{{vo.detlAddress}}</td>
+				 					</tr>
+									<tr>
+										<th>信息有效期:</th>
+										<td>{{vo.validStartTime}}至{{vo.validEndTime}}</td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="info otherinfo">		
+								<caption>其他信息</caption>
+								<tbody>
+									<tr>
+										<th>备注:</th>
+										<td>{{vo.note}}</td>
+									</tr>
+								</tbody>
+							</table>
+				    <button id="shar_excut_ord" class="btn btn-primary " ng-click="getOrder()">确认抢单</button>  
+					</div>
+				</div>
+				<!-- 结束 -->
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"  data-dismiss="modal">关闭 </button>
+<!--             <button type="button" class="btn btn-primary">      提交更改 </button> -->
+         </div>
+      </div><!-- /.modal-content -->
+ </div><!-- /.modal -->
+</div>
 </div>
 
