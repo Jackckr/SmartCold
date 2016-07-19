@@ -267,7 +267,7 @@
 			         	</div>
 			         </td>
 			         <td>{{rdc.unitPrice == 0.00 ?"面议":rdc.unitPrice+rdc.unit}} </td>
-			         <td>{{rdc.sqm+rdc.unit.substr(2)}}</td>
+			         <td>{{rdc.sqm+rdc.unit.substr(4)}}</td>
 			         <td>{{rdc.codeLave2}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
@@ -322,7 +322,7 @@
 				  					</tr>
 				  					<tr ng-if="datatype!=2">
 										<th>{{appmode[datatype].lab[0][0]}}:</th>
-										<td>{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(2):appmode[datatype].lab[0][1] }}</td>
+										<td>{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</td>
 									</tr>
 									<tr>
 				 						 <th>{{appmode[datatype].lab[1][0]}}:</th>

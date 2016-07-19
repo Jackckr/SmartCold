@@ -188,6 +188,26 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
         		 $("#shaerdailModal").modal('show');
         	}); 
 	 };
+	 $scope.getOrder=function () {  
+	    	if(user!="undefined"&&user.id!=0){
+	    	  $.ajax({ url: "/i/orders/generateOrder", data: {
+	    		  userid:user.id,
+	    		  username:user.username,
+	    		  telephone:user.telephone,
+	    		  rsdid: $scope.vo.id,
+	    		  dataType:$scope.vo.dataType,
+	    		  typeText:$scope.vo.typeText,
+	    		  releaseID:$scope.vo.releaseID,
+	    		  title:$scope.vo.title
+	    		  }, type: 'POST',dataType:"json", success: function(data) {
+	    		  alert(data.message);
+	    	   }
+	    	  }); 
+	    	}
+	    	else{
+	    		alert("登陆之后才可以抢单");
+	    	}
+       } ; 
      $scope.changDataMode=function(){
     	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
      };
