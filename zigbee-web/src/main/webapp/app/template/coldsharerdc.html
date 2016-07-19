@@ -271,7 +271,7 @@
 			         <td>{{rdc.codeLave2}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary"  data-toggle="modal" value="{{rdc.id}}" ng-click="gosharedile(rdc)">详情</button>
+			         	<button class="btn btn-primary"  data-toggle="modal" value="{{rdc.id}}" ng-click="gosharedile(rdc.id)">详情</button>
 			         </td>
 			      </tr>
 			   </tbody>
@@ -298,7 +298,7 @@
              <!-- 主体开始 -->
              <div id="release_main" class="shareMain shar_none">
 					<div class="main">
-							<div class="lists " style="width: 630px;">
+							<div ng-if="vo.typeCode==1" class="lists" style="width: 630px;">
 								<ul id="sh_img_ul"><li ng-repeat="fl in vo.files"><img src="{{fl}}" /></li></ul>
 								<i class=" bg fl"><span class="glyphicon glyphicon-chevron-left" ></span></i>
 								<i class="bg fr"><span class="glyphicon glyphicon-chevron-right"></span></i>
@@ -307,10 +307,7 @@
 							<table class="info">
 								<caption>基本信息</caption>
 								<tbody>
-									<tr ng-if="datatype!=2">
-										<th>{{appmode[datatype].lab[0][0]}}:</th>
-										<td>{{vo.sqm}}{{vo.unit!=null?vo.unit:appmode[datatype].lab[0][1] }}</td>
-									</tr>
+									
 									<tr ng-if="datatype==2"> 
 				 				         <th>冷库温度类型:</th> 
 				 				        <td>{{vo.codeLave2}}</td> 
@@ -323,10 +320,14 @@
 				 						<th>目的地:</th>
 				 					   <td>{{vo.unit2}}</td>
 				  					</tr>
+				  					<tr ng-if="datatype!=2">
+										<th>{{appmode[datatype].lab[0][0]}}:</th>
+										<td>{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(2):appmode[datatype].lab[0][1] }}</td>
+									</tr>
 									<tr>
 				 						 <th>{{appmode[datatype].lab[1][0]}}:</th>
 				  					      <td>{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}
-				  					      <span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit.substr(2):appmode[datatype].lab[1][1] }}</span>
+				  					      <span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span>
 				  					   </td>
 				  					</tr>
 				  					<tr>

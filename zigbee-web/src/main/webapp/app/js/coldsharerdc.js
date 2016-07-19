@@ -178,7 +178,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
      $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");$scope.changDataMode();});//业务类型
      $scope.gosharedile=function(sharid){
     		$scope.datatype=1;
-    		$scope._dataid =sharid.id;//当前数据类型
+    		$scope._dataid =sharid;//当前数据类型
     		$($scope._dataid?"#release_main":"#nodata_div").removeClass("hide");
     		if(!$scope._dataid){return;}
     		
