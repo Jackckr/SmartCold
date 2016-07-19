@@ -29,4 +29,10 @@ public class ColdStorageSetController {
 	public Object findStorageSetByRdcId(int rdcID) {
 		return coldStorageSetDao.findByRdcId(rdcID);
 	}
+
+	@RequestMapping(value = "/findAllColdStorage", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findAllColdStorage() {
+		return coldStorageSetDao.findAllColdStorage();
+	}
 }

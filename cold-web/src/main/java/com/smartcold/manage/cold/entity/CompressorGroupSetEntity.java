@@ -3,78 +3,87 @@ package com.smartcold.manage.cold.entity;
 import java.util.Date;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-03-19 16:28)
+ * Author: qiunian.sun Date: qiunian.sun(2016-03-19 16:28)
  */
 public class CompressorGroupSetEntity {
 
-    private int id;
+	private int id;
 
-    private int groupId;
+	private String name;
 
-    private int rdcId;
+	private int groupId;
 
-    private float lowPress;
+	private int rdcId;
 
-    private float pressDiff;
+	private float lowPress;
 
-    private float meltFrostTemperature;
+	private float pressDiff;
 
-    private Date addTime;
+	private float meltFrostTemperature;
 
-    public int getId() {
-        return id;
-    }
+	private Date addTime;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public int getGroupId() {
-        return groupId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public int getRdcId() {
-        return rdcId;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setRdcId(int rdcId) {
-        this.rdcId = rdcId;
-    }
+	public int getGroupId() {
+		return groupId;
+	}
 
-    public float getLowPress() {
-        return lowPress;
-    }
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
 
-    public void setLowPress(float lowPress) {
-        this.lowPress = lowPress;
-    }
+	public int getRdcId() {
+		return rdcId;
+	}
 
-    public float getPressDiff() {
-        return pressDiff;
-    }
+	public void setRdcId(int rdcId) {
+		this.rdcId = rdcId;
+	}
 
-    public void setPressDiff(float pressDiff) {
-        this.pressDiff = pressDiff;
-    }
+	public float getLowPress() {
+		return lowPress;
+	}
 
-    public float getMeltFrostTemperature() {
-        return meltFrostTemperature;
-    }
+	public void setLowPress(float lowPress) {
+		this.lowPress = lowPress;
+	}
 
-    public void setMeltFrostTemperature(float meltFrostTemperature) {
-        this.meltFrostTemperature = meltFrostTemperature;
-    }
+	public float getPressDiff() {
+		return pressDiff;
+	}
 
-    public Date getAddTime() {
-        return addTime;
-    }
+	public void setPressDiff(float pressDiff) {
+		this.pressDiff = pressDiff;
+	}
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
+	public float getMeltFrostTemperature() {
+		return meltFrostTemperature;
+	}
+
+	public void setMeltFrostTemperature(float meltFrostTemperature) {
+		this.meltFrostTemperature = meltFrostTemperature;
+	}
+
+	public Date getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
+	}
 }

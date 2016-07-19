@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -12,4 +13,7 @@ public interface StorageDataCollectionMapper {
 
 	List<StorageDataCollectionEntity> findLastNPoint(@Param("apid") String apid, @Param("key") String key,
 			@Param("limit") int limit);
+
+	List<StorageDataCollectionEntity> findByTime(@Param("apid") String apid, @Param("key") String key,
+			@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }
