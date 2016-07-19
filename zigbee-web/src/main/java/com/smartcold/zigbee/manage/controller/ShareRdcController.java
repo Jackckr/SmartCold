@@ -313,13 +313,7 @@ public class ShareRdcController  {
 		return ResponseData.newFailure("未知异常！");
 	}*/
 	
-	@RequestMapping(value="generateOrder")
-	@ResponseBody
-	public ResponseData<String> sharvistPhone(HttpServletRequest request,UserEntity user,RdcShareDTO vo){
-		
-		//return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
-		return ResponseData.newFailure("未知异常！");
-	}
+	
 	/**
 	 * 
 	 * @return

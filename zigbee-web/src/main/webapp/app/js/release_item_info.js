@@ -27,10 +27,18 @@ coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $
     } ; */
     
     $scope.getOrder=function () {  
-    	if(user!="undefined"){
-    	  $.ajax({ url: "/i/ShareRdcController/generateOrder", data: {user:user , vo: $scope.vo}, type: 'POST',dataType:"json", success: function(data) {
+    	if(user!="undefined"&&user.id!=0){
+    	  $.ajax({ url: "/i/orders/generateOrder", data: {
+    		  userid:user.id,
+    		  username:user.username,
+    		  telephone:user.telephone,
+    		  rsdid: $scope.vo.id,
+    		  dataType:$scope.vo.dataType,
+    		  typeText:$scope.vo.typeText,
+    		  releaseID:$scope.vo.releaseID,
+    		  title:$scope.vo.title
+    		  }, type: 'POST',dataType:"json", success: function(data) {
     		  alert(data.message);
-    		  
     	   }
     	  }); 
     	}
