@@ -30,7 +30,6 @@ var good={
 			 $("#good_type_div li").click(function(event) {rdcconfig.addfilter("#good_type_div li",$(this));});//
 			 $('#sl_lktype1').change(function(){rdcconfig.$scope.changDataMode();});
 			 $('#sl_provinceid1').change(function(){rdcconfig.$scope.changDataMode();});
-			
 		  }});
 	}
 	,getFilter:function(pageNum,pageSize){
@@ -153,6 +152,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
       $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
       $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
       good._isLoad=psaction._isLoad=serdc._isLoad=false;
+      $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}];
       $http.get('/i/city/findProvinceList').success(function (data) {
      	    $scope.gd_provinces = data;
      		$scope.stprovinceID =""; 
@@ -177,7 +177,16 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
      $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
      $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");$scope.changDataMode();});//业务类型
      $scope.gosharedile=function(sharid){
-		 $state.go('shareriteminfo',{dataid:sharid});
+    		$scope.datatype=1;
+    		$scope._dataid =sharid.id;//当前数据类型
+    		$($scope._dataid?"#release_main":"#nodata_div").removeClass("hide");
+    		if(!$scope._dataid){return;}
+    		
+        	$http.get('/i/ShareRdcController/getSEByID', { params: {"id": $scope._dataid}  }).success(function(data) {
+        		 $scope.vo=data.entity;
+        		 $scope.datatype=data.entity.dataType;
+        		 $("#shaerdailModal").modal('show');
+        	}); 
 	 };
      $scope.changDataMode=function(){
     	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
@@ -222,7 +231,6 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
               window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html"+callurl;
 		  }
 	 };
-	 
 	 $scope.initApp=function(){
 		 if(rdcconfig._cuttid==1){//getGDFilterData
 			 if(!good._isLoad){

@@ -81,7 +81,7 @@ var releaseItem = {
 coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, Upload, $cookies, $http, $location) {
 	$scope.files;
 	$scope.totalfiles = [];
-	$scope.unit = "元/吨";
+	$scope.unit = "元/平方米";
 	$scope.addFiles = function (files) {
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }

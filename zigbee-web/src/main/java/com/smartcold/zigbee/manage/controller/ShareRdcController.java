@@ -22,7 +22,6 @@ import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
@@ -388,5 +387,5 @@ public class ShareRdcController  {
 		}
 		return ResponseData.newFailure("发布失败!请稍后重试！");
 	}
-
+	
 }
