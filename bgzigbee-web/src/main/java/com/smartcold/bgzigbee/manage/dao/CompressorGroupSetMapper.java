@@ -14,4 +14,6 @@ public interface CompressorGroupSetMapper {
 	List<CompressorGroupSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 
 	void updateMappingById(@Param("id") int id, @Param("mapping") String mapping);
+	
+	void insertCompressorGroup(CompressorGroupSetEntity entity);
 }

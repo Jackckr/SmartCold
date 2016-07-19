@@ -30,8 +30,12 @@
 	
 	<select id="findLastNPoint" parameterType="map" resultType="StorageDataCollectionEntity">
 	    SELECT * FROM storagedatacollection
+	    WHERE 1 =1
 	    <if test="apid != null">
-		    WHERE apid = #{apid} 
+		    AND `apid` = #{apid} 
+	    </if>
+	    <if test="key != null">
+		    AND `key` = #{key} 
 	    </if> 
 	    ORDER BY addtime DESC 
 	    LIMIT #{limit} 

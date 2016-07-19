@@ -14,5 +14,27 @@
 		UPDATE `CompressorGroupSet` SET mapping=#{mapping}
 		WHERE `id` = #{id}
 	</update>
+	
+	<insert id="insertCompressorGroup" parameterType="CompressorGroupSetEntity">
+	  INSERT INTO `compressorgroupset` 
+	  (
+	  `name`,
+	  `rdcid`, 
+	  `lowPress`, 
+	  `pressDiff`, 
+	  `meltFrostTemperature`, 
+	  `addTime`
+	  )
+	  VALUES
+	  (
+	  #{name},
+	  #{rdcId}, 
+	  #{lowPress}, 
+	  #{pressDiff}, 
+	  #{meltFrostTemperature}, 
+	  now()
+	  );
+	  
+	</insert>
 
 </mapper>

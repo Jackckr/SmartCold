@@ -4,7 +4,7 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 	
 	$scope.load = function(){		
 		var lineChart = echarts.init($('#temperature-chart')[0]);
-		$http.get("/i/findLastNDataByApid?n=10").success(function(data,status,config,headers){
+		$http.get("/i/findLastNDataByApid?key=Temp&n=10").success(function(data,status,config,headers){
 			$scope.data = data;
 			xData = [];
 			temperature = [];

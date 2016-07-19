@@ -43,13 +43,13 @@
 		    <div class="box-body no-padding bg-gray">
 	          <ul class="nav nav-pills nav-stacked bg-gray">
 	            <li class="{{item == 'data'?'active':''}}"><a href="" ng-click="chageItem('data',time)">数据查询</a></li>
-	            <li class="{{item == 'energy'?'active':''}}"><a href="" ng-click="chageItem('energy',time)">能耗分析</a></li>
-	            <li class="{{item == 'total'?'active':''}}"><a href="" ng-click="chageItem('total',time)">总体情况</a></li>
-	            <li class="{{item == 'door'?'active':''}}"><a href="" ng-click="chageItem('door',time)">门耗能情况</a></li>
-	            <li class="{{item == 'light'?'active':''}}"><a href="" ng-click="chageItem('light',time)">灯耗能情况</a></li>
-	            <li class="{{item == 'group'?'active':''}}"><a href="" ng-click="chageItem('group',time)">制冷机组情况</a></li>
-	            <li class="{{item == 'fan'?'active':''}}"><a href="" ng-click="chageItem('fan',time)">风机情况</a></li>
-	            <li class="{{item == 'goods'?'active':''}}"><a href="" ng-click="chageItem('goods',time)">货物进出情况</a></li>
+	            <li class="{{item == 'energy'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('energy',time)">能耗分析</a></li>
+	            <li class="{{item == 'total'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('total',time)">总体情况</a></li>
+	            <li class="{{item == 'door'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('door',time)">门耗能情况</a></li>
+	            <li class="{{item == 'light'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('light',time)">灯耗能情况</a></li>
+	            <li class="{{item == 'group'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('group',time)">制冷机组情况</a></li>
+	            <li class="{{item == 'fan'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('fan',time)">风机情况</a></li>
+	            <li class="{{item == 'goods'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('goods',time)">货物进出情况</a></li>
 	          </ul>
 	        </div>
 	    </div>
@@ -171,15 +171,15 @@
         <div class="form-group">
           <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
-              <label>冷库：</label> 
-              <select type="text" class="form-control" placeholder="Search" 
-              ng-options="storage.name for storage in storages" ng-model="storageModal">
-              </select>
-            </div>&nbsp;&nbsp;
-            <div class="form-group">
               <label>设备：</label> 
               <select type="text" class="form-control" placeholder="Search" 
               ng-options="option.name for option in searchOptions" ng-model="choseOption">
+              </select>
+            </div>&nbsp;&nbsp;
+            <div class="form-group" ng-hide="choseOption.key=='electric'">
+              <label>冷库：</label> 
+              <select type="text" class="form-control" placeholder="Search" 
+              ng-options="storage.name for storage in storages" ng-model="storageModal">
               </select>
             </div>&nbsp;&nbsp;
             <div class="form-group">

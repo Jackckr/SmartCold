@@ -3,81 +3,90 @@ package com.smartcold.bgzigbee.manage.entity;
 import java.util.Date;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-03-19 16:28)
+ * Author: qiunian.sun Date: qiunian.sun(2016-03-19 16:28)
  */
 public class CompressorGroupSetEntity {
 
-    private int id;
+	private int id;
 
-    private int groupId;
+	private String name;
 
-    private int rdcId;
+	private int groupId;
 
-    private float lowPress;
+	private int rdcId;
 
-    private float pressDiff;
+	private float lowPress;
 
-    private float meltFrostTemperature;
+	private float pressDiff;
 
-    private Date addTime;
-    
-    private String mapping;
+	private float meltFrostTemperature;
 
-    public int getId() {
-        return id;
-    }
+	private Date addTime;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	private String mapping;
 
-    public int getGroupId() {
-        return groupId;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getRdcId() {
-        return rdcId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setRdcId(int rdcId) {
-        this.rdcId = rdcId;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public float getLowPress() {
-        return lowPress;
-    }
+	public int getGroupId() {
+		return groupId;
+	}
 
-    public void setLowPress(float lowPress) {
-        this.lowPress = lowPress;
-    }
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
 
-    public float getPressDiff() {
-        return pressDiff;
-    }
+	public int getRdcId() {
+		return rdcId;
+	}
 
-    public void setPressDiff(float pressDiff) {
-        this.pressDiff = pressDiff;
-    }
+	public void setRdcId(int rdcId) {
+		this.rdcId = rdcId;
+	}
 
-    public float getMeltFrostTemperature() {
-        return meltFrostTemperature;
-    }
+	public float getLowPress() {
+		return lowPress;
+	}
 
-    public void setMeltFrostTemperature(float meltFrostTemperature) {
-        this.meltFrostTemperature = meltFrostTemperature;
-    }
+	public void setLowPress(float lowPress) {
+		this.lowPress = lowPress;
+	}
 
-    public Date getAddTime() {
-        return addTime;
-    }
+	public float getPressDiff() {
+		return pressDiff;
+	}
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
+	public void setPressDiff(float pressDiff) {
+		this.pressDiff = pressDiff;
+	}
+
+	public float getMeltFrostTemperature() {
+		return meltFrostTemperature;
+	}
+
+	public void setMeltFrostTemperature(float meltFrostTemperature) {
+		this.meltFrostTemperature = meltFrostTemperature;
+	}
+
+	public Date getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
 	}
 
 	public String getMapping() {

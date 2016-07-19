@@ -4,7 +4,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -13,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import com.smartcold.bgzigbee.manage.dao.ColdStorageDoorSetMapper;
 import com.smartcold.bgzigbee.manage.dao.SpiderItemConfigMapper;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.entity.ColdStorageDoorSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SpiderItemType;
 
 @Controller
@@ -52,5 +55,13 @@ public class ColdStorageDoorController {
 	@ResponseBody
 	public Object findItem() {
 		return spiderItemConfigDao.findItemByType(SpiderItemType.COLDSTORAGE.getType());
+	}
+
+	@RequestMapping(value = "/insertDoor", method = RequestMethod.POST)
+	@ResponseBody
+	public Object insertDoor(@RequestBody ColdStorageDoorSetEntity entity) {
+		coldStorageDoorSetDao.insertDoor(entity);
+
+		return new ResultDto(0, "添加成功");
 	}
 }

@@ -13,5 +13,25 @@
 	    UPDATE `BlowerSet` SET mapping=#{mapping}
 	    WHERE `id` = #{id}
 	</update>
+	
+	<insert id="insertBlower">
+	    INSERT INTO `blowerset` 
+	    (
+	    `name`, 
+	    `blowerId`, 
+	    `compressorGroupId`, 
+	    `coldStorageId`, 
+	    `defrostingTemperature`
+	    )
+	    VALUES
+	    (
+	    #{name},
+	    #{blowerId}, 
+	    #{compressorGroupId}, 
+	    #{coldStorageId},
+	    #{defrostingTemperature}
+	    )
+	    
+	</insert>
 
 </mapper>
