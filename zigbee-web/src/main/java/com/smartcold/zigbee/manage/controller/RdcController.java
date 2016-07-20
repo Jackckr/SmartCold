@@ -1,14 +1,12 @@
 package com.smartcold.zigbee.manage.controller;
 
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.util.BaiduMapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -92,6 +90,12 @@ public class RdcController {
 		return rdcMapper.findRdcList();
 	}
 
+	@RequestMapping(value = "/findRdcAddressList", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findRdcAddressList() {
+		return rdcService.findAllRdcAddressDtos();
+	}
+
 	@RequestMapping(value = "/findRdcDTOList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcDTOList() {
@@ -170,7 +174,8 @@ public class RdcController {
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
-		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
+		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
+		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
@@ -187,6 +192,9 @@ public class RdcController {
 		rdcEntity.setContact("");
 		rdcEntity.setPosition("");
 		rdcEntity.setPowerConsume(0);
+		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
+		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
 
 		rdcMapper.insertRdc(rdcEntity);
 
@@ -278,7 +286,8 @@ public class RdcController {
 		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
 
 		// rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
-		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
+		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
+		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
@@ -287,6 +296,9 @@ public class RdcController {
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
+		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
+		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
 		/*
 		 * rdcEntity.setType(0); rdcEntity.setStoragetype("");
 		 * rdcEntity.setColdtype(""); rdcEntity.setContact("");
