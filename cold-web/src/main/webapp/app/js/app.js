@@ -62,6 +62,17 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             $rootScope.user = user;
         },
         setStorage: function () {
+        	$rootScope.changeRdc = function(){
+        		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + $rootScope.vm.choserdc.id).success(
+        				function(data,status,headers,config){
+        					$rootScope.mystorages = data;
+        					$rootScope.rdcId = $rootScope.vm.choserdc.id;
+        				});
+        		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + $rootScope.vm.choserdc.id).success(
+        				function(data,status,headers,config){
+        					$rootScope.compressors = data;
+        				})
+        	}
             var compressors = [];
             var mystorages = [];
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
@@ -98,6 +109,14 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
 
                     $rootScope.mystorages = mystorages;
                     $rootScope.rdcId = result[0].rdcId;
+                    $http.get('/i/rdc/findRdcList').success(function(data,status,headers,config){
+                		$rootScope.rdcs = data;
+                		angular.forEach(data,function(item){
+                			if(item.id == $rootScope.rdcId){
+                				$rootScope.vm = {choserdc : item};
+                			}
+                		})
+                	})
                 })
             }
 

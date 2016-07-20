@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,4 +58,13 @@ public class DataCollectionController extends BaseController {
 	public Object findLastNDataByApid(String apid, String key, int n) {
 		return storageDataCollectionDao.findLastNPoint(apid, key, n);
 	}
+
+	@RequestMapping(value = "/findByTime", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findByTime(String apid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+
+		return storageDataCollectionDao.findByTime(apid, key, startTime, endTime);
+	}
+
 }
