@@ -505,4 +505,10 @@ public class RdcController {
 		PageInfo<RdcEntityDTO> data = this.rdcService.getRDCList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
+
+	@RequestMapping(value = "/runLngLat", method = RequestMethod.GET)
+	@ResponseBody
+	public void runLngLat() {
+		rdcService.calculateLngLat();
+	}
 }

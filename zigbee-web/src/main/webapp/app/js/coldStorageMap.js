@@ -57,7 +57,6 @@ coldWeb.controller('coldStorageMap', function ($rootScope, $scope, $state, $cook
                 console.log("markers: " + markers.length);
                 var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
                 markerClusterer.setMinClusterSize(5);
-                markerClusterer.setStyles()
             }
         }
 

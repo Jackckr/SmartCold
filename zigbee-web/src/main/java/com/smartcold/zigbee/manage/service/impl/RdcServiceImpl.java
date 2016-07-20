@@ -403,7 +403,7 @@ public class RdcServiceImpl implements RdcService {
     }
 
     // 上线后更新一遍数据库,后续可关闭此Job
-    @Scheduled(cron = "0 */10 * * * ?")
+    //@Scheduled(cron = "0 */10 * * * ?")
     @Override
     public void calculateLngLat() {
         List<RdcEntity> rdcList = rdcDao.findRdcList();
