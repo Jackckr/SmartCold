@@ -83,11 +83,23 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
 	$scope.totalfiles = [];
 	$scope.addFiles = function (files) {
         $scope.totalfiles = $scope.totalfiles.concat(files);
-    }
+        var files = $scope.totalfiles ; // FileList object
+	    for (var i = 0, f; f = files[i]; i++) {
+	      if (!f.type.match('image.*')) { continue;}
+	      var reader = new FileReader();
+	      reader.onload = (function(theFile) {
+	        return function(e) {
+	        var innerHTML = ['<span><img class="thumb" src="', e.target.result,  '" title="', escape(theFile.name), '"/></span>'].join('');
+	          $("#img_list").append(innerHTML);
+	        };
+	      })(f);
+	       reader.readAsDataURL(f);
+	    }
+    };
 	$scope.drop = function(file){
         var index = $scope.totalfiles.indexOf(file);
         $scope.totalfiles.splice(index,1);
-    }
+    };
 	$scope.submit = function(){
 		if(user!==null&&user.id!=0){
 	   	     if (!$("#release_item_from").valid()) {
@@ -113,7 +125,7 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progress: ' + progressPercentage + '% ' + evt.name);
         });
-	}
+	};
 	
 	$scope.gl_rdc=1;
 	$scope.dataType = 2;//当前数据类型

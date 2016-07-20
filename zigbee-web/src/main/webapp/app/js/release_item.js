@@ -61,11 +61,26 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	if(user==null||(user!=null&&user.id==0)){ alert("请登录后执行该操作！"); window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";return; }else{ $("#release_main").show(); }
 	$scope.files;
 	$scope.totalfiles = [];
-	$scope.addFiles = function (files) {$scope.totalfiles = $scope.totalfiles.concat(files);}
+	$scope.addFiles = function (files) {
+		$scope.totalfiles = $scope.totalfiles.concat(files);
+		$("#img_list").empty();
+		var files = $scope.totalfiles ; // FileList object
+	    for (var i = 0, f; f = files[i]; i++) {
+	      if (!f.type.match('image.*')) { continue;}
+	      var reader = new FileReader();
+	      reader.onload = (function(theFile) {
+	        return function(e) {
+	        var innerHTML = ['<span><img class="thumb" src="', e.target.result,  '" title="', escape(theFile.name), '"/></span>'].join('');
+	          $("#img_list").append(innerHTML);
+	        };
+	      })(f);
+	       reader.readAsDataURL(f);
+	     }
+	};
 	$scope.drop = function(file){
         var index = $scope.totalfiles.indexOf(file);
         $scope.totalfiles.splice(index,1);
-    }
+    };
 	$scope.submit = function(){
 			if(user!==null&&user.id!=0){
 	   	     if (!$("#release_item_from").valid()) {
