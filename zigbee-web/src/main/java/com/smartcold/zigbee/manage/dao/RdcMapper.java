@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.github.pagehelper.Page;
-import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 
@@ -24,8 +23,7 @@ public interface RdcMapper {
     int checkName(String name);
     
     boolean checkCellphone(String cellphone);
-    
-    //List<RdcAddDTO> findRDCByUserId(@Param("userID") int userID);
+   
     /**
      * 获得睿库分页信息
      * @param parameters
