@@ -23,7 +23,7 @@ public interface RdcMapper {
     int checkName(String name);
     
     boolean checkCellphone(String cellphone);
-    
+   
     /**
      * 获得睿库分页信息
      * @param parameters

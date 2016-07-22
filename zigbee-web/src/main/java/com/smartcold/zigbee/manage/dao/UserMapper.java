@@ -13,5 +13,5 @@ public interface UserMapper {
 
 	void insertUser(UserEntity userEntity);
 	
-	
+	void updateUser(UserEntity userEntity);
 }

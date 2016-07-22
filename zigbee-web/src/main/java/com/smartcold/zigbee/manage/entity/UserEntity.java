@@ -13,6 +13,8 @@ public class UserEntity {
 	private String telephone;
 
 	private String email;
+	
+	private String realname;
 
 	private Date addTime;
 
@@ -82,6 +84,14 @@ public class UserEntity {
 
 	public void setUpdateTime(Date updateTime) {
 		UpdateTime = updateTime;
+	}
+
+	public String getRealname() {
+		return realname;
+	}
+
+	public void setRealname(String realname) {
+		this.realname = realname;
 	}
 
 }

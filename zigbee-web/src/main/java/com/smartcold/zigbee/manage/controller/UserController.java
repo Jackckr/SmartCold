@@ -51,7 +51,6 @@ public class UserController extends BaseController {
 				cookieService.deleteCookie(cookie.getValue());
 			}
 		}
-
 		return true;
 	}
 
@@ -85,7 +84,7 @@ public class UserController extends BaseController {
 			return true;
 		return false;
 	}
-	
+
 	
 	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody
