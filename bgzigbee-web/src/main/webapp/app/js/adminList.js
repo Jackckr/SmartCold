@@ -1,13 +1,13 @@
 coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 	$scope.load = function(){
-			$http.get('/i/admin/findAdmin').success(function(data){
-				$rootScope.admin = data;
+		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
+				$rootScope.admin = data.entity;
 				if($rootScope.admin == null || $rootScope.admin.id == 0){
 					url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
 					window.location.href = url;
 				}
-		})
-	}
+		});
+	};
 	$scope.load();
     $scope.Alladmins = [];
     $scope.admin = "";
@@ -43,8 +43,8 @@ coldWeb.controller('adminlist', function ($rootScope, $scope, $state, $cookies, 
 		$scope.getAdmins();
     }
 	
-    $http.get('/i/admin/findAdmin').success(function(data){
-    	$scope.admin = data;
+	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
+    	$scope.admin = data.entity;
     });
     
 	function delcfm() {

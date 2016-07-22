@@ -1,7 +1,7 @@
 coldWeb.controller('storageConfig', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 	$scope.load = function(){
-			$http.get('/i/admin/findAdmin').success(function(data){
-				$rootScope.admin = data;
+		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
+				$rootScope.admin = data.entity;
 				if($rootScope.admin == null || $rootScope.admin.id == 0){
 					url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
 					window.location.href = url;
