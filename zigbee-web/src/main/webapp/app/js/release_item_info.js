@@ -2,7 +2,7 @@
  * 共享详情
  */
 coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $state, $cookies, $http, $location) {
-	var InterValObj=null; //timer变量，控制时间  
+//	var InterValObj=null; //timer变量，控制时间  
 	$scope.my_tel=user.telephone;
 	$scope.vercodeval="";
 	$scope.datatype=1;
@@ -50,23 +50,23 @@ coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $
     		alert("登陆之后才可以抢单");
     	}
     	} ; 
-    $scope.SetRemainTime= function() {   //timer处理函数  
-        if (curCount == 0) { window.clearInterval(InterValObj);  $("#gt_yzm_but").removeAttr("disabled"); $("#gt_yzm_but").text("重新获取");   }  else {  curCount--;   $("#gt_yzm_but").text(curCount + "重新发送");  }  
-    } ;
-    $scope.vercode=function(){//验证验证码是否正确
-	    var vercode=$("#user_yzm").val();
-	    if(vercode.length>=4){
-	    	 $.ajax({ url: "/i/ShareRdcController/sharvistCode", data: {yzm:vercode}, type: 'POST',dataType:"json", success: function(data) {
-	    		 $("#shar_excut_ord").attr("disabled", !data);
-	    	}}); 
-	     }else{
-	    	 $("#shar_excut_ord").attr("disabled", true);
-	     }
-    };
-    $scope.shareApplyObj=function(){//点击抢单操作
-    		$.ajax({ url: "/i/ShareRdcController/shareApplyObj", type: 'POST',dataType:"json", success: function(data) {
-    			
-    		}}); 
-    };
+//    $scope.SetRemainTime= function() {   //timer处理函数  
+//        if (curCount == 0) { window.clearInterval(InterValObj);  $("#gt_yzm_but").removeAttr("disabled"); $("#gt_yzm_but").text("重新获取");   }  else {  curCount--;   $("#gt_yzm_but").text(curCount + "重新发送");  }  
+//    } ;
+//    $scope.vercode=function(){//验证验证码是否正确
+//	    var vercode=$("#user_yzm").val();
+//	    if(vercode.length>=4){
+//	    	 $.ajax({ url: "/i/ShareRdcController/sharvistCode", data: {yzm:vercode}, type: 'POST',dataType:"json", success: function(data) {
+//	    		 $("#shar_excut_ord").attr("disabled", !data);
+//	    	}}); 
+//	     }else{
+//	    	 $("#shar_excut_ord").attr("disabled", true);
+//	     }
+//    };
+//    $scope.shareApplyObj=function(){//点击抢单操作
+//    		$.ajax({ url: "/i/ShareRdcController/shareApplyObj", type: 'POST',dataType:"json", success: function(data) {
+//    			
+//    		}}); 
+//    };
     $scope.initdata();
 });

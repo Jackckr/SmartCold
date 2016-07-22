@@ -5,22 +5,21 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.primitives.Ints;
 import com.smartcold.zigbee.manage.dao.*;
-import com.smartcold.zigbee.manage.dto.RdcAddDTO;
-import com.smartcold.zigbee.manage.dto.RdcDTO;
-import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
-import com.smartcold.zigbee.manage.dto.RdcScoreDTO;
-import com.smartcold.zigbee.manage.dto.RdcShareDTO;
+import com.smartcold.zigbee.manage.dto.*;
 import com.smartcold.zigbee.manage.entity.*;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
+import com.smartcold.zigbee.manage.util.BaiduMapUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
@@ -56,6 +55,9 @@ public class RdcServiceImpl implements RdcService {
 
     @Autowired
     private FileDataMapper fileDataDao;
+
+    @Autowired
+    private CityListMapper cityListDao;
 
     @Override
     public List<RdcEntity> findRdcList() {
@@ -382,6 +384,78 @@ public class RdcServiceImpl implements RdcService {
 		return new PageInfo<RdcEntityDTO>(serdcList);
 	}
 
-	
+    @Override
+    public List<RdcAddressDTO> findAllRdcAddressDtos() {
+        List<RdcEntity> rdcList = rdcDao.findRdcList();
+        List<RdcAddressDTO> result = Lists.newArrayList();
+        RdcAddressDTO dto;
+        for (RdcEntity rdc : rdcList) {
+            dto = new RdcAddressDTO();
+            BeanUtils.copyProperties(rdc, dto);
+            //Map<String, String> geocoderLatitude = new BaiduMapUtil().getGeocoderLatitude(rdc.getAddress());
+            //dto.setLng(geocoderLatitude.get("lng"));
+            //dto.setLat(geocoderLatitude.get("lat"));
+//            dto.setLng(String.valueOf(Math.random() * 120));
+//            dto.setLat(String.valueOf(Math.random() * 120));
+            result.add(dto);
+        }
+        return result;
+    }
+
+    // 上线后更新一遍数据库,后续可关闭此Job
+    //@Scheduled(cron = "0 */10 * * * ?")
+    @Override
+    public void calculateLngLat() {
+        List<RdcEntity> rdcList = rdcDao.findRdcList();
+        if (!CollectionUtils.isEmpty(rdcList)) {
+            for (RdcEntity rdc : rdcList) {
+                if (rdc.getLatitude() == 0.0 && rdc.getLongitude() == 0.0) {
+                    Map<String, String> lngLatMap = geocoderLatitude(rdc);
+                    if (!CollectionUtils.isEmpty(lngLatMap)) {
+                        String lng = lngLatMap.get("lng");
+                        String lat = lngLatMap.get("lat");
+                        if (!StringUtils.isEmpty(lng) && !StringUtils.isEmpty(lat)){
+                            rdc.setLongitude(Double.parseDouble(lng));
+                            rdc.setLatitude(Double.parseDouble(lat));
+                            rdcDao.updateRdc(rdc);
+                            System.out.println("calculateLngLat: " + rdc.getId() + "," + rdc.getName());
+                        }
+                    } else {
+                        System.out.println("calculateLngLat dislocate: " + rdc.getId() + "," + rdc.getName());
+                    }
+                } else {
+                    System.out.println("NotcalculateLngLat: " + rdc.getId());
+                }
+            }
+        }
+    }
+
+    @Override
+    public Map<String, String> geocoderLatitude(RdcEntity rdc) {
+        Map<String, String> result = Maps.newHashMap();
+        if (!StringUtils.isEmpty(rdc.getAddress())) {
+            String cityName = "";
+            if (rdc.getCityid() > 0) {
+                CityListEntity cityInfo = cityListDao.findCityById(rdc.getCityid());
+                if (cityInfo != null) {
+                    cityName = cityInfo.getCityName();
+                }
+            }
+            Map<String, String> geocoderLatitude = new BaiduMapUtil().getGeocoderLatitude(cityName + rdc.getAddress());
+            String lng = geocoderLatitude.get("lng");
+            String lat = geocoderLatitude.get("lat");
+            if (!StringUtils.isEmpty(lng) && !StringUtils.isEmpty(lat)) {
+                result.put("lng", lng);
+                result.put("lat", lat);
+                System.out.println("地址解析成功: " + rdc.getId() + "," + rdc.getName());
+                return result;
+            } else {
+                System.out.println("地址解析失败,无法定位: " + rdc.getId() + "," + rdc.getName());
+            }
+        } else {
+            System.out.println("详细地址Address为空,无法解析: " + rdc.getId() + "," + rdc.getName());
+        }
+        return null;
+    }
 
 }

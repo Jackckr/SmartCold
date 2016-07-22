@@ -10,7 +10,10 @@
            .sp_radio{margin-right: 60px;}
            .sp_radio input{width: 20px !important;}
             .arrdes{padding: 6px 12px;font-size: 12px;color: #555;background-color: #fff;background-image: none;border-radius: 4px; }
-            #rdclist_info{height: 200px;overflow-y: scroll;}
+/*             #rdclist_info{height: 200px;overflow-y: scroll;} */
+            #files{width: 65px;border: medium none;margin-top: -10px;}
+           #img_list { width: 1000px; overflow: hidden;}
+           #img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
            /*错误提示样式*/
            label.success{display: none; } 
  	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
@@ -153,16 +156,10 @@
 				<div class="infoList clearfix">
 					<div class="pull-left">图片:</div>
 					<div class="pull-left">
-						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"
-                                                   ngf-multiple="true" name="files">
+					    <output id="img_list"></output>
+						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files">
 					</div>
 				</div>
-				<div class="infoList clearfix">
-                    <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
-                        <i class="fa fa-times danger" style="margin-right:10px;color:red;"
-                           ng-click="drop(file)"></i>
-                    </label>
-                </div>
 				<button class="btn btn-primary" ng-click="submit()">提交</button>
 			</form>
     	</div>

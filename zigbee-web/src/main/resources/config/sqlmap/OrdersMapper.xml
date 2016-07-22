@@ -5,6 +5,9 @@
 <mapper namespace="com.smartcold.zigbee.manage.dao.OrdersMapper">
 
     <insert id="insertOrder" parameterType="OrdersEntity">
+      <selectKey resultType="java.lang.Short" order="AFTER" keyProperty="id">
+           SELECT LAST_INSERT_ID() AS id
+          </selectKey>
         INSERT INTO `orders`(
 		`orderid`,
 		`ordername`,

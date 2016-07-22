@@ -22,6 +22,7 @@
 		s.unit,
 		s.unit1,
 		s.unit2,
+		s.typeCode,
 		s.typeText,
 		s.sqm,
 		s.telephone,

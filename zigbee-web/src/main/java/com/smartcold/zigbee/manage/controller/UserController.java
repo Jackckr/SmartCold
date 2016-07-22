@@ -59,14 +59,16 @@ public class UserController extends BaseController {
 	public Object findUser(HttpServletRequest request) {
 		UserEntity user;
 		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("token")) {
-				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
-				if (effectiveCookie != null) {
-					user = userDao.findUserByName(effectiveCookie.getUsername());
-					user.setPassword("******");
-					request.getSession().setAttribute("user", user);
-					return user;
+		if(cookies!=null&&cookies.length>0){
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
+					if (effectiveCookie != null) {
+						user = userDao.findUserByName(effectiveCookie.getUsername());
+						user.setPassword("******");
+						request.getSession().setAttribute("user", user);
+						return user;
+					}
 				}
 			}
 		}

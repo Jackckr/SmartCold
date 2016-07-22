@@ -9,6 +9,9 @@
            .form-control:FOCUS{box-shadow: 0 0 2px #00A6FF !important; border-color: #00A6FF !important;}
            .sp_radio{margin-right: 10px;}
            .sp_radio input{width: 20px !important;}
+           #files{width: 65px;border: medium none;margin-top: -10px;}
+           #img_list { width: 1000px; overflow: hidden;}
+           #img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
            /*错误提示样式*/
            label.success{display: none; } 
  	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
@@ -99,16 +102,16 @@
 					<div class="pull-left">
 						<input type="text" placeholder="" class="form-control" name="sqm" ><span class="count" >{{appmode[dataType].lab[0][1]}} </span>
                         <span class="mode_3 shar_none">
-                             <span class="sp_radio"><input name="unit" type="radio" value="元/吨"  checked="checked"  ng-model="unit" >吨</span>
-                             <span class="sp_radio"><input  name="unit" type="radio" value="元/平方米"  ng-model="unit" >平方米</span>
-                             <span class="sp_radio"><input  name="unit" type="radio" value="元/其他" ng-model="unit" > 其他</span>
+                             <span class="sp_radio"><input  name="unit" type="radio" value="元/天·平方米" checked="checked"  ng-model="unit" >平方米</span>
+                             <span class="sp_radio"><input name="unit" type="radio" value="元/天·吨"    ng-model="unit" >吨</span>
+                             <span class="sp_radio"><input  name="unit" type="radio" value="元/天·其他" ng-model="unit" > 其他</span>
                         </span>
 					</div>
 				</div>
 				<div class="infoList clearfix infoDate ">
 					<div class="pull-left col-sm-4 control-label ">{{appmode[dataType].lab[1][0]}}:</div>
 					<div class="pull-left">
-						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{unit}}</span>
+						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{unit}}</span><!-- {{appmode[dataType].lab[1][1]}} -->
 					</div>
 				</div>
 			
@@ -116,7 +119,7 @@
 					<div class="pull-left col-sm-4 control-label "><em>*</em>信息有效期:</div>
 					<div class="pull-left">
 		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-		                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control"   class="span4"/>
+		                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control "   class="span4"/>
 		                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
 		                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
 					</div>
@@ -136,15 +139,10 @@
 				<div class="infoList clearfix">
 					<div class="pull-left">图片:</div>
 					<div class="pull-left">
-						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files">
+					    <output id="img_list"></output>
+						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" >
 					</div>
 				</div>
-				<div class="infoList clearfix">
-                    <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
-                        <i class="fa fa-times danger" style="margin-right:10px;color:red;"
-                           ng-click="drop(file)"></i>
-                    </label>
-                </div>
 				<button class="btn btn-primary" ng-click="submit()">提交</button>
 			</form>
     	</div>

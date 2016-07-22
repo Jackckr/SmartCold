@@ -54,41 +54,33 @@ var releaseItem = {
         var data = $("#release_item_from").serializeArray();
         $.each(data, function(index, item) { vo[item.name] = item.value; });
         return JSON.stringify(vo);
-//        var input = $("input[type='file']");
-//        $.each(input,function(index,item){
-//            formdata.append('fileData['+index+']',item.files[0]);
-//        });
-//        var formdata = new FormData();formdata.append("data", JSON.stringify(vo));
-//        formdata.append("files", releaseItem.$scope.totalfiles);
-//        $.ajax({
-//            url: "/i/ShareRdcController/shareFreeRelease",
-//            data: formdata,
-//            processData: false,
-//            contentType: false,
-//            type: 'POST',
-//            dataType:"json",
-//            success: function(data) {
-//            	if(data.success){
-//            		 alert("发布成功！");
-//            		 releaseItem.$scope.gocoldShareComment();
-//            	}else{
-//            		alert("发布失败！！请稍后重试！");
-//            	}
-//            }});
         }
 };
 
 coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $state, Upload, $cookies, $http, $location) {
+	if(user==null||(user!=null&&user.id==0)){ alert("请登录后执行该操作！"); window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";return; }else{ $("#release_main").show(); }
 	$scope.files;
 	$scope.totalfiles = [];
-	$scope.unit = "元/吨";
 	$scope.addFiles = function (files) {
-        $scope.totalfiles = $scope.totalfiles.concat(files);
-    }
+		$scope.totalfiles = $scope.totalfiles.concat(files);
+		$("#img_list").empty();
+		var files = $scope.totalfiles ; // FileList object
+	    for (var i = 0, f; f = files[i]; i++) {
+	      if (!f.type.match('image.*')) { continue;}
+	      var reader = new FileReader();
+	      reader.onload = (function(theFile) {
+	        return function(e) {
+	        var innerHTML = ['<span><img class="thumb" src="', e.target.result,  '" title="', escape(theFile.name), '"/></span>'].join('');
+	          $("#img_list").append(innerHTML);
+	        };
+	      })(f);
+	       reader.readAsDataURL(f);
+	     }
+	};
 	$scope.drop = function(file){
         var index = $scope.totalfiles.indexOf(file);
         $scope.totalfiles.splice(index,1);
-    }
+    };
 	$scope.submit = function(){
 			if(user!==null&&user.id!=0){
 	   	     if (!$("#release_item_from").valid()) {
@@ -115,16 +107,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 		        console.log('progress: ' + progressPercentage + '% ' + evt.name);
 		    });
 	};
-	
-	if(user==null||(user!=null&&user.id==0)){
-		   alert("请登录后执行该操作！");
-		   window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";
-		   return;
-	 }else{
-		 $("#release_main").show();
-	 }
 	releaseItem.$scope=$scope;
-	$scope.appmode=[{},{tit:"货品",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送",tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价",$scope.unit]]}];
 	$scope.gocoldShareComment=function(){ 
 		$state.go('coldShareComment',{_cuttid: $scope.dataType});
 	};
@@ -147,13 +130,11 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	       $scope.typeText=em.text();
 	       $scope.initMode();
     };
-    $scope.unitchang=function(em){
-    	debugger;
-//    	$scope.unit
-    };
     $scope.initdata = function() {
         releaseItem.initvalidate();
         $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:1;//当前数据类型
+        $scope.unit = $scope.dataType==3?"元/天·平方米":"元/吨";
+    	$scope.appmode=[{},{tit:"货品",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送",tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价",$scope.unit]]}];
         if ($stateParams.data) {
         	$scope.rdcinfo = $stateParams.data;//选择冷库、货品、车的信息
         	$scope.rdcID = $stateParams.data.rdcID;
