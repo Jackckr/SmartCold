@@ -58,7 +58,8 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-		UserEntity user;
+		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
+		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
 		if(cookies!=null&&cookies.length>0){
 			for (Cookie cookie : cookies) {
@@ -74,7 +75,6 @@ public class UserController extends BaseController {
 			}
 		}
 		user = new UserEntity();
-
 		return user;
 	}
 

@@ -91,7 +91,7 @@ public class ResponseData<T> {
 		rd.setSuccess(true);
 		rd.setMessage(message);
 		rd.setExp(null);
-
+        rd.setData(null);
 		rd.setEntity(data);
 
 		return rd;
