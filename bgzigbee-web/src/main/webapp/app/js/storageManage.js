@@ -170,7 +170,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
         $http.get('/i/user/findUser').success(function(data){
             $rootScope.user = data;
             if($rootScope.user == null || $rootScope.user.id == 0){
-                url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd";
+                url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd?8";
                 window.location.href = url;
             } else {
                 $location.path("/coldStorageAdd");

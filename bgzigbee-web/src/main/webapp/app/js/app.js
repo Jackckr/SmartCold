@@ -7,18 +7,14 @@ angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
 coldWeb.run(function (editableOptions, naviService,adminService, $location) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     naviService.setNAVI();
-    $.ajax({
-        url: '/i/admin/findAdmin',
-        type: "GET",
-        dataType: 'json'
-      }).success(function(data){
-      	admin = data;
+    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
+      	admin = data.entity;
       	if(admin == null || admin.id == 0){
   			url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
   			window.location.href = url;
   		}
   		adminService.setAdmin(admin);
-      })
+      });
 });
 
 coldWeb.config(function ($httpProvider) {
@@ -247,7 +243,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state('login', {
         url: '/login',
         controller: 'login',
-        templateUrl: 'app/template/login.html'
+        templateUrl: 'app/template/login.html?4'
     }).state('home', {
         url: '/home',
         controller: 'home',
