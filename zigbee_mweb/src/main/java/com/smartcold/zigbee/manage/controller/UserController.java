@@ -51,14 +51,14 @@ public class UserController extends BaseController {
 				cookieService.deleteCookie(cookie.getValue());
 			}
 		}
+
 		return true;
 	}
 
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
-		if(user!=null){return user;}
+		UserEntity user;
 		Cookie[] cookies = request.getCookies();
 		if(cookies!=null&&cookies.length>0){
 			for (Cookie cookie : cookies) {
@@ -74,6 +74,7 @@ public class UserController extends BaseController {
 			}
 		}
 		user = new UserEntity();
+
 		return user;
 	}
 
@@ -84,7 +85,7 @@ public class UserController extends BaseController {
 			return true;
 		return false;
 	}
-
+	
 	
 	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody
