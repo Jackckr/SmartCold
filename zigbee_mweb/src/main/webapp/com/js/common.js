@@ -1,11 +1,12 @@
 'use strict';
+/**
+ * 获得url参数
+ * @param name
+ * @returns
+ */
+function getUrlParam( name){var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  var r = window.location.search.substr(1).match(reg);  if (r!=null) return unescape(r[2]); return null; } 
+
 var oHtml = document.documentElement;
-getFont();
-// 当窗口发生改变的时候去改变根目录的font-size的值
-$(window).resize(function(event) {
-	getFont();
-});
-//自动改变页面根目录字体大小
 function getFont(){
 	var screenWidth = oHtml.clientWidth;
 	if (screenWidth >= 1024) {
@@ -16,12 +17,13 @@ function getFont(){
 		 oHtml.style.fontSize = screenWidth/(750/40)+'px';
 	}
 }
-
+http://localhost:8080/zigbee%5Fmweb/
+getFont();
+// 当窗口发生改变的时候去改变根目录的font-size的值
+$(window).resize(function(event) {getFont();});
+//自动改变页面根目录字体大小
 //返回上一级
-function goback(){
-	window.history.back();
-}
-
+function goback(){window.history.back();}
 $(function() {
 	//双箭头js
 	$('.next').click(function(){
@@ -32,8 +34,7 @@ $(function() {
 			$(this).prev().addClass('black');
 			$(this).children().html('&#xe68b;');
 		}
-	})
-	
+	});
 	//右方向箭头切换下方向箭头
 	$(".mySelect select").bind({
     	'click':function(event){

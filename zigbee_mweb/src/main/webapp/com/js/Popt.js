@@ -1,6 +1,6 @@
 ﻿Array.prototype.unique = function () {//去数组重复
     return this.sort().join(",,").replace(/(,|^)([^,]+)(,,\2)+(,|$)/g, "$1$2$4").replace(/,,+/g, ",").replace(/,$/, "").split(",");
-}
+};
 var Iput = {
     confg: {
         hand: "0", //0对像位置1鼠标位置divID滚动位置
