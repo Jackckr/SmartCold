@@ -1,9 +1,12 @@
-package com.smartcold.zigbee.manage.entity;
+package com.smartcold.zigbee.manage.dto;
 
 import java.util.Date;
 
-public class RdcEntity {
-
+/**
+ * Author: qiunian.sun
+ * Date: qiunian.sun(2016-07-02 10:18)
+ */
+public class RdcAddressDTO {
     private int id;
 
     private String name;
@@ -39,27 +42,27 @@ public class RdcEntity {
     private String commit;
 
     private float powerConsume;
-    
+
     private int userid;//关联用户id
 
-    private double longitude;
+    private String lng;
 
-    private double latitude;
-	
-	public int getUserId() {
-		return userid;
-	}
+    private String lat;
 
-	public void setUserId(int userId) {
-		this.userid = userId;
-	}
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public String getAddress() {
@@ -67,7 +70,7 @@ public class RdcEntity {
     }
 
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = address;
     }
 
     public Date getAddtime() {
@@ -76,14 +79,6 @@ public class RdcEntity {
 
     public void setAddtime(Date addtime) {
         this.addtime = addtime;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getType() {
@@ -206,19 +201,19 @@ public class RdcEntity {
         this.userid = userid;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getLng() {
+        return lng;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getLat() {
+        return lat;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLat(String lat) {
+        this.lat = lat;
     }
 }
