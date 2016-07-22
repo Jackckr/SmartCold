@@ -8,7 +8,10 @@
     <title>发布货品</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+    <script type="text/javascript" src="../com/js/data.js" ></script>
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
+    <script type="text/javascript" src="../com/js/prettify.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script>
     	$(function() {
@@ -39,8 +42,8 @@
         </header>
     <!-- header end-->
     <section class="toggle clearfix">
-    	<div class="rent current fl"><i class="iconfont">&#xe64e;</i>出货</div>
-    	<div class="offer fl"><i class="iconfont">&#xe64f;</i>求货</div>
+    	<div class="rent current fl"><i class="iconfont">&#xe64e;</i>出售</div>
+    	<div class="offer fl"><i class="iconfont">&#xe64f;</i>求购</div>
     </section>
     <!--coldlist-->
     <div class="coldlist" style="margin-bottom: 3rem;">
@@ -133,25 +136,38 @@
             <ul class="houseinfo">
                 <li>
                     <label for="name">描述</label>
-                    <input type="text"  id="name" placeholder="货品出货"/>
+                    <input type="text"  id="name" placeholder="货品出售"/>
                 </li>
                 <li>
                     <label for="boss">供应商</label>
                     <input type="text"  id="boss"/>
                 </li>
                  <li class="offershow">
-                     <label for="province">省</label>
-                     <input type="text" id="province" />
+                    <label for="province">省</label>
+                    <div class="mySelect">
+                    	<select id="province">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+                    </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
                  <li class="offershow">
-                     <label for="city">市</label>
-                     <input type="text" id="city" />
+                    <label for="city">市</label>
+                    <div class="mySelect">
+	                    <select id="city">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+	                </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
                 <li>
                     <label for="category">品类</label>
-                    <input type="text" id="category" />
+                    <div class="mySelect">
+	                    <select id="category">
+	                        <option>不限</option>
+	                        <option>鲜肉/-2~4℃</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
@@ -174,6 +190,11 @@
                 <li>
                     <label for="note">备注</label>
                     <input type="text"  id="note" placeholder="（选填）"/>
+                </li>
+                <li>
+                    <label for="myfile">上传图片</label>                    
+                    <input type="file"  id="myfile" placeholder="请选择文件"
+                    	 style="appearance: none;-webkit-appearance: none;background: transparent;border: 0;"/>
                 </li>
             </ul>
         </form>
@@ -205,5 +226,16 @@
             </a>
         </li>
     </ul>
+    <script type="text/javascript">
+		$(function(){
+			$('#province, #city').citylist({
+	            data: data,
+	            id: 'id',
+	            children: 'cities',
+	            name: 'name',
+	            metaTag: 'name'
+	        });
+		})
+	</script>
 </body>
 </html>

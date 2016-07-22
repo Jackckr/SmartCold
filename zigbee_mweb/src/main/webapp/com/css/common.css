@@ -112,7 +112,18 @@ img {
 .black{
 	display: none;
 }
-.timer{
+.backDrop{
+	position: absolute;
+	top: 3rem;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: 0.5;
+	z-index: 2;
+	display: none;
+}
+/*.timer{
     width: 100%;
     height: 1rem;
     background: url(../img/timer.gif) no-repeat center;
@@ -126,12 +137,14 @@ header{
     height: 3.2rem!important;
     top: 0!important;
     padding-top: 1.3rem!important;
-}
+}*/
 /*点击图片放大*/
 .imglist>li>a{
 	display: block;
 	width: 100%;
 	height: 100%;
+	position: relative;
+	z-index: 1;
 }
 .imglist>li>a>img{
 	width: 100%;

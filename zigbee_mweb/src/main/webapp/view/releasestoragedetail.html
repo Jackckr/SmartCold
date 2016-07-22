@@ -8,7 +8,10 @@
     <title>发布仓位</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+    <script type="text/javascript" src="../com/js/data.js" ></script>
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
+    <script type="text/javascript" src="../com/js/prettify.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript">
     	$(function() {
@@ -24,8 +27,20 @@
 					$(".offershow").hide();
 					$('.coldlist').show();
 				}
-			})
+			});
+			
+			$('#province, #city').citylist({
+	            data: data,
+	            id: 'id',
+	            children: 'cities',
+	            name: 'name',
+	            metaTag: 'name'
+	        });
 		});
+		function radioFn(ops){
+			$('input[type="radio"]').removeClass('blue');					
+			$(ops).addClass("blue");
+		};
     </script>
 </head>
 <body>
@@ -76,31 +91,54 @@
                     <input type="text"  id="name" placeholder="仓位出租"/>
                 </li>
                  <li class="offershow">
-                     <label for="province">省</label>
-                     <input type="text" id="province" />
+                    <label for="province">省</label>
+                    <div class="mySelect">
+                    	<select id="province">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+                    </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
                  <li class="offershow">
-                     <label for="city">市</label>
-                     <input type="text" id="city" />
+                    <label for="city">市</label>
+                    <div class="mySelect">
+	                    <select id="city">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+	                </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
-                <li>
-                    <label for="temperatureType">温度类型</label>
-                    <input type="text" id="temperatureType" />
+                <li>                    
+                    <label for="temperatureType">冷库温度类型</label>                    
+                    <div class="mySelect">
+	                    <select id="temperatureType">
+	                        <option>不限</option>
+	                        <option>冷藏库</option>
+	                        <option>冷冻库</option>
+	                        <option>超低温库</option>
+	                        <option>恒温库</option>
+	                        <option>多温区库</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="storageType">存放形式</label>
-                    <input type="text" id="storageType" />
+                    <label for="storageType">商品存放类型</label>                    
+                    <div class="mySelect">
+	                    <select id="storageType">
+	                        <option>不限</option>
+	                        <option>货架存放</option>
+	                        <option>非货架存放</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
                     <label>数/质/量</label>
-                    <input type="radio" name="quality" value="吨"/>吨
-                    <input type="radio" name="quality"  value="平方米" checked/>平方米
-                    <input type="radio" name="quality"  value="其他"/>其他
-                </li>
+                    <input type="radio" name="quality" onclick="radioFn(this)" value="吨"/>吨
+                    <input type="radio" name="quality"  onclick="radioFn(this)"  class="blue" value="平方米" checked/>平方米
+                    <input type="radio" name="quality"  onclick="radioFn(this)" value="其他"/>其他
+                </li> 
                 <li>
                     <label for="price">单价</label>
                     <input type="text"  id="price" placeholder="元/天·平方米"/>
@@ -117,6 +155,11 @@
                 <li>
                     <label for="note">备注</label>
                     <input type="text"  id="note" placeholder="（选填）"/>
+                </li>
+                <li>
+                    <label for="myfile">上传图片</label>                    
+                    <input type="file"  id="myfile" placeholder="请选择文件"
+                    	 style="appearance: none;-webkit-appearance: none;background: transparent;border: 0;"/>
                 </li>
             </ul>
         </form>

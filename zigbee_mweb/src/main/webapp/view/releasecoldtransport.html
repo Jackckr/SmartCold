@@ -26,10 +26,14 @@
 			})
 			
 			$('.relate').click(function(event){
+				$('input[type="radio"]').removeClass('blue');					
+				$(this).children('input').addClass("blue")
 				$('.coldlist').show();
 				$('.main').hide();
 			});
 			$('.norelate').click(function(event){
+				$('input[type="radio"]').removeClass('blue');					
+				$(this).children('input').addClass("blue")
 				$('.coldlist').hide();
 				$('.main').show()
 			});
@@ -50,12 +54,12 @@
         </header>
     <!-- header end-->
     <section class="toggle clearfix">
-    	<div class="rent current fl"><i class="iconfont">&#xe658;</i>有车</div>
-    	<div class="offer fl"><i class="iconfont">&#xe656;</i>求车</div>
+    	<div class="rent current fl"><i class="iconfont">&#xe658;</i>找货</div>
+    	<div class="offer fl"><i class="iconfont">&#xe656;</i>找车</div>
     </section>
     <div class="radiocar">
     	<div class="relate">
-    		<input type="radio" name="car" id="car" checked />
+    		<input type="radio" name="car" class="blue" id="car" checked />
     		<label for="car">关联库</label>
     	</div>
     	<div class="norelate">
@@ -137,17 +141,37 @@
                 </li>
                 <li>
                     <label for="businessType">业务类型</label>
-                    <input type="text" id="businessType" />
+                    <div class="mySelect">
+	                    <select id="businessType">
+	                        <option>不限</option>
+	                        <option>零租</option>
+	                        <option>整车</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="temperatureType">温度类型</label>
-                    <input type="text" id="temperatureType" />
+                    <label for="temperatureType">温度类型</label>                                      
+                    <div class="mySelect">
+	                    <select id="temperatureType">
+	                        <option>不限</option>
+	                        <option>冷藏</option>
+	                        <option>冷冻</option>
+	                        <option>超低温</option>
+	                        <option>恒温</option>
+	                        <option>多温区</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="carType">车型</label>
-                    <input type="text" id="carType" />
+                    <label for="carType">车型</label>                                      
+                    <div class="mySelect">
+	                    <select id="carType">
+	                        <option>不限</option>
+	                        <option><1.8T</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>

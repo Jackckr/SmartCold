@@ -25,8 +25,7 @@ header>div>a>.iconfont{
 	line-height: 1.6rem;
 }
 .input{
-	/*margin: 2.6rem 0 0.5rem;*/
-	margin: 3.6rem 0 0.5rem;
+	margin: 2.6rem 0 0.5rem;
 	background-color: #fff;
 	display: table;
 	table-layout: fixed;

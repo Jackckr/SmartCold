@@ -9,7 +9,10 @@
     <title>发布库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+    <script type="text/javascript" src="../com/js/data.js" ></script>
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
+    <script type="text/javascript" src="../com/js/prettify.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
 </head>
 <body>
@@ -33,13 +36,21 @@
                 </li>
                 <li>
                     <label for="province">省</label>
-                    <input type="text" id="province" />
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <div class="mySelect">
+                    	<select id="province">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>                    
                 </li>
                 <li>
                     <label for="city">市</label>
-                    <input type="text" id="city" />
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <div class="mySelect">
+	                    <select id="city">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+	                </div>
+	                <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
                     <label for="geographic">地理位置</label>
@@ -50,18 +61,43 @@
                     <input type="text"  id="area" placeholder="冷库面积(㎡)" />
                 </li>
                 <li>
-                    <label for="operateType">冷库经营类型</label>
-                    <input type="text" id="operateType" />
+                    <label for="operateType">冷库经营类型</label>                    
+                    <div class="mySelect">
+	                    <select id="operateType">
+	                        <option>不限</option>
+	                        <option>产地型</option>
+	                        <option>市场型</option>
+	                        <option>仓储型</option>
+	                        <option>配送型</option>
+	                        <option>生产型</option>
+	                        <option>中央厨房</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="storageType">商品存放类型</label>
-                    <input type="text" id="storageType" />
+                    <label for="storageType">商品存放类型</label>                    
+                    <div class="mySelect">
+	                    <select id="storageType">
+	                        <option>不限</option>
+	                        <option>货架存放</option>
+	                        <option>非货架存放</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="temperatureType">冷库温度类型</label>
-                    <input type="text" id="temperatureType" />
+                    <label for="temperatureType">冷库温度类型</label>                    
+                    <div class="mySelect">
+	                    <select id="temperatureType">
+	                        <option>不限</option>
+	                        <option>冷藏库</option>
+	                        <option>冷冻库</option>
+	                        <option>超低温库</option>
+	                        <option>恒温库</option>
+	                        <option>多温区库</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li class="number">
@@ -82,23 +118,39 @@
                     <input type="text"  id="note"/>
                 </li>
                 <li>
-                    <label for="kg">吨位</label>
-                    <input type="text" id="kg" placeholder="(选填)"/>
+                    <label for="kg">吨位</label>                    
+                    <div class="mySelect">
+	                    <select id="kg">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="structure">结构</label>
-                    <input type="text" id="structure" placeholder="(选填)"/>
+                    <label for="structure">结构</label>                    
+                    <div class="mySelect">
+	                    <select id="structure">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="deviceType">冷链设施类型</label>
-                    <input type="text" id="deviceType" placeholder="(选填)"/>
+                    <label for="deviceType">冷链设施类型</label>                    
+                    <div class="mySelect">
+	                    <select id="deviceType">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="moon">是否有月台</label>
-                    <input type="text" id="moon" placeholder="(选填)"/>
+                    <label for="moon">是否有月台</label>                    
+                    <div class="mySelect">
+	                    <select id="moon">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
@@ -106,24 +158,45 @@
                     <input type="text" id="cleanroom" placeholder="(选填)"/>
                 </li>
                 <li>
-                    <label for="cleanarea">理货区面积</label>
-                    <input type="text" id="cleanarea" placeholder="(选填)"/>
+                    <label for="cleanarea">理货区面积</label>                    
+                    <div class="mySelect">
+	                    <select id="cleanarea">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="temperatureTypeCtr">理货区有无温控</label>
-                    <input type="text" id="temperatureTypeCtr" placeholder="(选填)"/>
+                    <label for="temperatureTypeCtr">有无温控</label>                    
+                    <div class="mySelect">
+	                    <select id="temperatureTypeCtr">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="Cryogen">制冷剂类型</label>
-                    <input type="text" id="Cryogen" placeholder="(选填)"/>
+                    <label for="cryogen">制冷剂类型</label>                    
+                    <div class="mySelect">
+	                    <select id="cryogen">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="temperatureRecord">有无温度记录</label>
-                    <input type="text" id="temperatureRecord" placeholder="(选填)"/>
+                    <label for="temperatureRecord">有无温度记录</label>                    
+                    <div class="mySelect">
+	                    <select id="temperatureRecord">
+	                        <option>(选填)</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="myfile">上传图片</label>                    
+                    <input type="file"  id="myfile" placeholder="请选择文件"
+                    	 style="appearance: none;-webkit-appearance: none;background: transparent;border: 0;"/>
                 </li>
             </ul>
             <ul class="houseinfo black">
@@ -131,16 +204,23 @@
                      <label for="name">名称</label>
                      <input type="text"  id="name" placeholder="睿冷科技"/>
                  </li>
-                 <li>
-                     <label for="province">省</label>
-                     <input type="text" id="province" />
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
-                 </li>
-                 <li>
-                     <label for="city">市</label>
-                     <input type="text" id="city" />
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
-                 </li>
+                <li>
+                    <label for="Cryogen">制冷剂类型</label>                    
+                    <div class="mySelect">
+	                    <select id="Cryogen">
+	                    </select>
+	                </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="TemperatureRecord">有无温度记录</label>                    
+                    <div class="mySelect">
+	                    <select id="TemperatureRecord">
+	                        <option>不限</option>
+	                    </select>
+	                </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
              </ul>
             <!--双箭头下拉-->
             <div class="next"><i class="iconfont">&#xe649;</i></div>
@@ -174,5 +254,20 @@
             </a>
         </li>
     </ul>
+<script type="text/javascript">
+	$(function(){
+		$('#province, #city').citylist({
+            data: data,
+            id: 'id',
+            children: 'cities',
+            name: 'name',
+            metaTag: 'name'
+        });
+        /*$(".mySelect").click(function(){
+        	$(this).siblings('i').html('&#xe607;')
+        })*/
+        
+	})
+</script>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <title>发布冷运-求车</title>
+    <title>发布冷运-找车</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
@@ -24,8 +24,8 @@
         </header>
     <!-- header end-->
     <section class="toggle clearfix">
-    	<div class="rent fl" onclick="location.href='releasehavecar.html'"><i class="iconfont">&#xe658;</i>有车</div>
-    	<div class="offer current fl" onclick="location.href='releasenocar.html'"><i class="iconfont">&#xe656;</i>求车</div>
+    	<div class="rent fl" onclick="location.href='releasehavecar.html'"><i class="iconfont">&#xe658;</i>找货</div>
+    	<div class="offer current fl" onclick="location.href='releasenocar.html'"><i class="iconfont">&#xe656;</i>找车</div>
     </section>
 
     <section class="main maindetail">
@@ -33,21 +33,41 @@
             <ul class="houseinfo">
                 <li>
                     <label for="name">描述</label>
-                    <input type="text"  id="name" placeholder="冷藏车出租"/>
+                    <input type="text"  id="name" placeholder="发布冷运"/>
                 </li>
                 <li>
                     <label for="businessType">业务类型</label>
-                    <input type="text" id="businessType" />
+                    <div class="mySelect">
+	                    <select id="businessType">
+	                        <option>不限</option>
+	                        <option>零租</option>
+	                        <option>整车</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="temperatureType">温度类型</label>
-                    <input type="text" id="temperatureType" />
+                    <label for="temperatureType">温度类型</label>                                      
+                    <div class="mySelect">
+	                    <select id="temperatureType">
+	                        <option>不限</option>
+	                        <option>冷藏</option>
+	                        <option>冷冻</option>
+	                        <option>超低温</option>
+	                        <option>恒温</option>
+	                        <option>多温区</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="carType">车型</label>
-                    <input type="text" id="carType" />
+                    <label for="carType">车型</label>                                      
+                    <div class="mySelect">
+	                    <select id="carType">
+	                        <option>不限</option>
+	                        <option><1.8T</option>
+	                    </select>
+	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
@@ -86,6 +106,11 @@
                 <li>
                     <label for="note">备注</label>
                     <input type="text"  id="note" placeholder="（选填）"/>
+                </li>
+                <li>
+                    <label for="myfile">上传图片</label>                    
+                    <input type="file"  id="myfile" placeholder="请选择文件"
+                    	 style="appearance: none;-webkit-appearance: none;background: transparent;border: 0;"/>
                 </li>
             </ul>
         </form>
