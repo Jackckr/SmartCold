@@ -295,6 +295,14 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageMap',
         controller: 'coldStorageMap',
         templateUrl: 'app/template/coldStorageMap.html'
+    }).state('personalRdc', {
+        url: '/personalRdc',
+        controller: 'personalRdc',
+        templateUrl: 'app/template/personalRdc.html'
+    }).state('personalOrder', {
+        url: '/personalOrder',
+        controller: 'personalOrder',
+        templateUrl: 'app/template/personalOrder.html'
     });
 
 });

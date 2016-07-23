@@ -47,4 +47,6 @@ public interface RdcService {
 	void calculateLngLat();
 
 	Map<String, String> geocoderLatitude(RdcEntity rdcEntity);
+
+	PageInfo<RdcEntityDTO> findRDCDTOByUserId(int userID,int pageNum,int pageSize);
 }
