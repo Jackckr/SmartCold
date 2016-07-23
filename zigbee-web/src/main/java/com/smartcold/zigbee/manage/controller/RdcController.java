@@ -126,6 +126,7 @@ public class RdcController {
 		return rdcService.findRDCDTOByRDCId(rdcID);
 	}
 
+	
 	@RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllRdcDtos() {
@@ -470,6 +471,14 @@ public class RdcController {
 		return result;
 	}
 	
+	
+	
+	@RequestMapping(value = "/findRDCDTOByUserId")
+	@ResponseBody
+	public Object findRDCDTOByUserId(@RequestParam int userID,@RequestParam int pageNum,@RequestParam int pageSize) {
+		PageInfo<RdcEntityDTO> data = rdcService.findRDCDTOByUserId(userID,pageNum,pageSize);
+		return ResponseData.newSuccess(data);
+	}
 	
 	/**
 	 * findRdcDTOList
