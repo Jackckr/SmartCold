@@ -48,7 +48,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	$scope.chageItem = function(item,time){
 		$scope.item = item;
 		$scope.time = time;
-		if($scope.item == 'total'){
+		if($scope.item == 'energy'){
 			$timeout(function() {
 				$scope.drawline($scope.dataMap['xData'],$scope.dataMap[item + 'Energy1'],$scope.dataMap[item + 'Energy2']);
 			},0)
@@ -495,7 +495,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 				    $scope.search();
 				},100)	
 			}
-			if($scope.item == 'total'){
+			if($scope.item == 'energy'){
 				$timeout(function() {
 		           $scope.drawbount([]);
 		         }, 0)
