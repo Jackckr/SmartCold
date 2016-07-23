@@ -6,7 +6,6 @@ import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.smartcold.zigbee.manage.util.BaiduMapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -79,11 +78,11 @@ public class RdcController {
 
 	@Autowired
 	private FtpService ftpService;
-	
+
 	@Autowired
 	private FileDataMapper fileDataDao;
 
-	
+
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
@@ -126,7 +125,6 @@ public class RdcController {
 		return rdcService.findRDCDTOByRDCId(rdcID);
 	}
 
-	
 	@RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllRdcDtos() {
@@ -165,13 +163,17 @@ public class RdcController {
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object add(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
-			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
-			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
-		// MultipartFile[] files = { file0, file1, file2, file3, file4,
-		// arrangePic };
-		MultipartFile[] files = { file4, file3, file2, file1, file0 };
+	public Object add(HttpServletRequest request,
+					  @RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
+					  @RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
+					  @RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
+					  @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7,
+					  @RequestParam(required = false) MultipartFile file0,
+					  @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
+					  @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
+					  @RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
+		MultipartFile[] files = {file4, file3, file2, file1, file0};
+		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
@@ -183,7 +185,6 @@ public class RdcController {
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
-		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
 		rdcEntity.setUserId(user.getId());
@@ -228,34 +229,42 @@ public class RdcController {
 		// 图片上传
 		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
 		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
-		// List<UploadFileEntity> uploadFileEntities = new
-		// ArrayList<UploadFileEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
 				continue;
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName, 
-						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
 		}
 		if (!storageFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(storageFiles);
 		}
-		// ftpService.uploadFileList(uploadFileEntities);
-//		rdcExtEntity.setStoragepiclocation(new Gson().toJson(storagepicLocations));
-		
+		// save honorPic
+		List<FileDataEntity> honorFiles = new ArrayList<FileDataEntity>();
+		for (MultipartFile file : honorfiles) {
+			if (file == null) {
+				continue;
+			}
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
+			honorFiles.add(fileDataEntity);
+		}
+		if (!honorFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(honorFiles);
+		}
 
 		// save arrangePic
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
-			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-//			rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
 			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(arrangeFile);
@@ -268,43 +277,33 @@ public class RdcController {
 
 	@RequestMapping(value = "/updateRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object update(@RequestParam(required = false) MultipartFile file0,
+	public Object update(
+			@RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
+			@RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
+			@RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
+			@RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7,
+			@RequestParam(required = false) MultipartFile file0,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
-		// System.out.println(URLDecoder.decode(rdcAddDTO.getRemark(),
-		// "UTF-8").length());
-		/*
-		 * if (URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8").length()>125) {
-		 * return new BaseDto(-1); }
-		 */
-		// MultipartFile[] files = { file0, file1, file2, file3, file4,
-		// arrangePic };
+
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
+		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
 		MultipartFile arrangePic = arrangePics;
 
 		int rdcId = rdcAddDTO.getRdcId();
 		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
 
-		// rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
 		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
-		// rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
-		// rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
-		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
 		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
 		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
-		/*
-		 * rdcEntity.setType(0); rdcEntity.setStoragetype("");
-		 * rdcEntity.setColdtype(""); rdcEntity.setContact("");
-		 * rdcEntity.setPosition(""); rdcEntity.setPowerConsume(0);
-		 */
 
 		rdcMapper.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
@@ -337,12 +336,6 @@ public class RdcController {
 		rdcExtEntity.setFacility(URLDecoder.decode(rdcAddDTO.getFacility(), "UTF-8"));
 		rdcExtEntity.setCompanydevice((byte) rdcAddDTO.getCompanyDevice());
 
-		/*
-		 * rdcExtEntity.setCompanystaff((byte)0);
-		 * rdcExtEntity.setStorageheight((byte)0);
-		 * rdcExtEntity.setStoragestruct((byte)0);
-		 */
-		
 		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
 		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
 		for (MultipartFile file : files) {
@@ -351,14 +344,29 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName, 
-						FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
 		}
 		if (!storageFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(storageFiles);
+		}
+		// save honorPic
+		List<FileDataEntity> honorFiles = new ArrayList<FileDataEntity>();
+		for (MultipartFile file : honorfiles) {
+			if (file == null) {
+				continue;
+			}
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
+			honorFiles.add(fileDataEntity);
+		}
+		if (!honorFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(honorFiles);
 		}
 		// save arrangePic
 		if (arrangePic != null) {
@@ -431,55 +439,47 @@ public class RdcController {
 	 * @return
 	 */
 	private static String getSqmFilter(String sqm)
-	{  
+	{
 		StringBuffer sqlfilter=new StringBuffer("(");
 		if(StringUtil.isnotNull(sqm)){
 			String filter[]=sqm.split(",");
 			for (String betdata : filter) {
-			  String betsmdata[]=	betdata.split("~");
-			    if(betsmdata.length==2){
-			    	sqlfilter.append(" r.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
-			    }else{
-			    	sqlfilter.append(" r.sqm  "+betsmdata[0]+" or");
-			    }
+				String betsmdata[]=  betdata.split("~");
+				if(betsmdata.length==2){
+					sqlfilter.append(" r.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
+				}else{
+					sqlfilter.append(" r.sqm  "+betsmdata[0]+" or");
+				}
 			}
 			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
-	   }
+		}
 		return "";
 	}
 	/**
 	 * 获得RDC过滤信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(value = "/getRDCFilterData")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getRDCFilterData(HttpServletRequest request) {
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-//			String key="getRDCFilterData";
-			HashMap<String, Object> data = new HashMap<String, Object>();
-//			if(CacheTool.hasCache(key)){
-//				data= (HashMap<String, Object>) CacheTool.getdate(key);
-//				result.setEntity(data);
-//			}else{
-				data.put("mt", this.commonService.getBaseData("storagemanagetype", "id", "type"));// 经营类型
-				data.put("dt", this.commonService.getBaseData("storagetype", "id", "type"));// 商品存放形式
-				data.put("te", this.commonService.getBaseData("storagetempertype", "id", "type"));// 温度类型
-				result.setEntity(data);
-//				CacheTool.setData(key, data);  
-//			}
+//       String key="getRDCFilterData";
+		HashMap<String, Object> data = new HashMap<String, Object>();
+//       if(CacheTool.hasCache(key)){
+//          data= (HashMap<String, Object>) CacheTool.getdate(key);
+//          result.setEntity(data);
+//       }else{
+		data.put("mt", this.commonService.getBaseData("storagemanagetype", "id", "type"));// 经营类型
+		data.put("dt", this.commonService.getBaseData("storagetype", "id", "type"));// 商品存放形式
+		data.put("te", this.commonService.getBaseData("storagetempertype", "id", "type"));// 温度类型
+		result.setEntity(data);
+//          CacheTool.setData(key, data);
+//       }
 		return result;
 	}
-	
-	
-	
-	@RequestMapping(value = "/findRDCDTOByUserId")
-	@ResponseBody
-	public Object findRDCDTOByUserId(@RequestParam int userID,@RequestParam int pageNum,@RequestParam int pageSize) {
-		PageInfo<RdcEntityDTO> data = rdcService.findRDCDTOByUserId(userID,pageNum,pageSize);
-		return ResponseData.newSuccess(data);
-	}
-	
+
+
 	/**
 	 * findRdcDTOList
 	 * 获得配送信息
@@ -501,7 +501,7 @@ public class RdcController {
 		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "10" : request.getParameter("pageSize")); // 每页数据量
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		if(StringUtil.isnotNull(isKey)){
-			managementType=storageType= storagetempertype=sqm=hasCar=null; 
+			managementType=storageType= storagetempertype=sqm=hasCar=null;
 		}
 		filter.put("hasCar", hasCar);
 		filter.put("orderBy", orderBy);

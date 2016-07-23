@@ -255,6 +255,27 @@
                         </div>
 
                         <div class="form-group rdc">
+                            <label class="col-sm-4 control-label">资质荣誉图：</label>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-6 divCSS">
+                                            <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
+                                                   ngf-multiple="true" name="honorfiles">
+                                    </div>
+                                    <div class="col-sm-6 divCSS">
+                                        <small class="text-warning" style="width: 100px">*最多八张</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-lg-offset-2">
+                            <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
+                                <i class="fa fa-times danger" style="margin-right:10px;color:red;"
+                                   ng-click="drophonor(honorfile)"></i>
+                            </label>
+                        </div>
+
+                        <div class="form-group rdc">
                             <label class="col-sm-4 control-label">功能平面布置图：</label>
                             <div class="col-sm-8">
                                 <form name="arrangeform">
@@ -269,10 +290,8 @@
                             <div class="col-sm-8">
                                 <div class="row">
                                     <div class="col-sm-6 divCSS">
-                                        <form name="form">
-                                            <input type="file" ngf-select="addFiles($files)" ng-model="files"
+                                        <input type="file" ngf-select="addFiles($files)" ng-model="files"
                                                    ngf-multiple="true" name="files">
-                                        </form>
                                     </div>
                                     <div class="col-sm-6 divCSS">
                                         <small class="text-warning" style="width: 100px">*最多五张</small>
@@ -280,18 +299,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-12 col-lg-offset-2">
+                            <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
+                                <i class="fa fa-times danger" style="margin-right:1px;color:red;"
+                                   ng-click="drop(file)"></i>
+                            </label>
+                        </div>
                     </form>
-                </div>
-                <div class="col-lg-12 col-lg-offset-2">
-                    <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
-                        <i class="icon-remove-sign danger" style="margin-right:10px;color:red;"
-                           ng-click="drop(file)"></i>
-                    </label>
                 </div>
             </div>
 
             <div class="col-lg-8 col-lg-offset-2" style="padding-left: 30%;padding-right: 30%;padding-bottom: 10px">
-                <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;">提交</button>
+                <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;" ng-disabled="isDisabled">提交</button>
             </div>
         </div>
     </section>
