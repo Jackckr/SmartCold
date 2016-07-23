@@ -408,17 +408,19 @@ public class RdcServiceImpl implements RdcService {
     public void calculateLngLat() {
         List<RdcEntity> rdcList = rdcDao.findRdcList();
         if (!CollectionUtils.isEmpty(rdcList)) {
+            int successCnt = 0;
             for (RdcEntity rdc : rdcList) {
                 if (rdc.getLatitude() == 0.0 && rdc.getLongitude() == 0.0) {
                     Map<String, String> lngLatMap = geocoderLatitude(rdc);
                     if (!CollectionUtils.isEmpty(lngLatMap)) {
                         String lng = lngLatMap.get("lng");
                         String lat = lngLatMap.get("lat");
-                        if (!StringUtils.isEmpty(lng) && !StringUtils.isEmpty(lat)){
+                        if (!StringUtils.isEmpty(lng) && !StringUtils.isEmpty(lat)) {
                             rdc.setLongitude(Double.parseDouble(lng));
                             rdc.setLatitude(Double.parseDouble(lat));
                             rdcDao.updateRdc(rdc);
                             System.out.println("calculateLngLat: " + rdc.getId() + "," + rdc.getName());
+                            successCnt++;
                         }
                     } else {
                         System.out.println("calculateLngLat dislocate: " + rdc.getId() + "," + rdc.getName());
@@ -427,6 +429,7 @@ public class RdcServiceImpl implements RdcService {
                     System.out.println("NotcalculateLngLat: " + rdc.getId());
                 }
             }
+            System.out.println("解析经纬度结束,成功个数: " + successCnt);
         }
     }
 
