@@ -17,16 +17,16 @@
     		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
     	</div>
     	<div class="txt">
-    		我的
+    		评价
     	</div>
     </header>
     <section class="clearfix">
     	<div class="img fl">
     		<img src="../com/img/women.png"/>
     	</div>
-    	<div class="rightArrow fr">
+    	<!--<div class="rightArrow fr">
     		<a href=""><i class="iconfont">&#xe60d;</i></a>
-    	</div>
+    	</div>-->
     	<div class="name" onclick="location.href='personal.html'">
     		<p class="nameinfo">木棉先森</p>
     		<p class="position">
@@ -35,83 +35,22 @@
     		</p>
     	</div>
     </section>
-    <ul class="list list_icon">
+    <ul class="commentList">
     	<li class="clearfix">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6b6;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的冷库</p>
-	    	</div>
+    		<div class="img fl"><img src="../com/img/list_03.png"/></div>
+    		<p class="company">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
+    		<p class="btnGroup">
+    			<button>删除订单</button>
+    			<button>立即评价</button>
+    		</p>
     	</li>
     	<li class="clearfix">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe666;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的发布</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6a4;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的订单</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" onclick="location.href='comment.html'">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6b4;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">待评价</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6b8;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">最近浏览</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6a6;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">联系客服</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6a5;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">设置</p>
-	    	</div>
+    		<div class="img fl"><img src="../com/img/list_03.png"/></div>
+    		<p class="company">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
+    		<p class="btnGroup">
+    			<button>删除订单</button>
+    			<button>立即评价</button>
+    		</p>
     	</li>
     </ul>
     <ul class="footer">
@@ -140,5 +79,12 @@
             </a>
         </li>
     </ul>
+    <script>
+    	$(function(){
+    		$(".btnGroup").children().click(function(){
+    			$(this).addClass('current').siblings().removeClass('current')
+    		})
+    	})
+    </script>
 </body>
 </html>
