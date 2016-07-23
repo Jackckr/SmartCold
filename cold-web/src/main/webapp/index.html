@@ -14,6 +14,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" >
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/css/font-awesome.min.css" >
+    <link rel="stylesheet" href="assets/fonts/iconfont.css" >
     <!-- Ionicons -->
     <link rel="stylesheet" href="assets/css/ionicons.min.css" >
     <!-- Theme style -->
@@ -43,6 +44,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		    pointer-events: none;
 		    text-decoration: none;
 		}
+		.menu-title{
+			margin-left:10px;
+		}
+		.iconfont{
+	    font-family:"iconfont" !important;
+	    font-size:16px;font-style:normal;
+	    -webkit-font-smoothing: antialiased;
+	    -webkit-text-stroke-width: 0.2px;
+	    -moz-osx-font-smoothing: grayscale;
+	    }
     </style>
   </head>
   <!--
@@ -228,42 +239,109 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.search form -->
 
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu text-white" ng-if="user.role == 1">
-            <li class="header">导航</li>
-            <select ng-options="rdc.name for rdc in rdcs" class="form-control" 
-            ng-change="changeRdc()" ng-model="vm.choserdc" ng-if="user.role == 1"></select>
+          <div isteven-multi-select selection-mode="single" input-model="rdcs" output-model="vm.choserdcs"
+               button-label="name" item-label="name" tick-property="isOn" helper-elements="filter" 
+               max-height="200" on-item-click="changeRdc()" ng-if="user.role == 1"></div>
+          <ul class="sidebar-menu text-white">
+            <li class="treeview">
+            <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
+            <span class="menu-title text-white" style="font-size: large">监控</span></a>
             <!-- Optionally, you can add icons to the links -->
+            <ul class="treeview-menu">
             <li class="treeview">
-              <a href=""><i class="fa fa-link text-white"></i> <span>制冷系统</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu" >
-                  <!--<li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i>{{compressor.name}}</a></li>-->
-                <li><a href=""><i class="fa fa-circle-o"></i>压缩机组<i class="fa fa-angle-left pull-right"></i></a>
-                  <ul class="treeview-menu" style="display: none;">
-                    <li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)"><i class="fa fa-circle-o"></i> {{compressor.name}}</a></li>
+              <a href="#/about"><i class="icon iconfont">&#xe678;</i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+               <li ng-repeat="storage in mystorages"><a ng-click="toMyStorageTemper(storage.id)">
+                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
+               </li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#/about"><i class="icon iconfont">&#xe689;</i><span class="menu-title">能耗</span><i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+               <li><a><i class="fa fa-circle-o"></i>耗电量</a></li>
+               <li><a><i class="fa fa-circle-o"></i>耗水量</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#/about"><i class="icon iconfont">&#xe676;</i><span class="menu-title">库内设施</span><i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+               <li>
+                 <a><i class="fa fa-circle-o"></i>冷库门<i class="fa fa-angle-left pull-right"></i></a>
+                 <ul class="treeview-menu">
+	               <li ng-repeat="storage in mystorages"><a ng-click="toMyStorageDoor(storage.id)">
+	                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
+	               </li>
+	              </ul>
+               </li>
+               <li>
+                 <a><i class="fa fa-circle-o"></i>月台门<i class="fa fa-angle-left pull-right"></i></a>
+                 <ul class="treeview-menu">
+	               <li ng-repeat="storage in mystorages"><a ng-click="">
+	                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
+	               </li>
+	              </ul>
+               </li>
+               <li><a><i class="#/about"><span>其他设施</span></i></a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#/about"><i class="icon iconfont">&#xe6b9;</i><span class="menu-title">货物流通</span><i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+               <li><a><i class="fa fa-circle-o"></i>货物流通量</a></li>
+               <li><a><i class="fa fa-circle-o"></i>进货温度</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#/about"><i class="icon iconfont">&#xe669;</i><span class="menu-title">制冷系统</span><i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+               <li>
+                 <a><i class="fa fa-circle-o"></i>制冷机组<i class="fa fa-angle-left pull-right"></i></a>
+                 <ul class="treeview-menu" style="display: none;">
+                    <li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)">
+                    <i class="fa fa-circle-o"></i> {{compressor.name}}</a></li>
                   </ul>
-                </li>
-
-                <li><a href="" ng-click="toMyBlowers()"><i class="fa fa-circle-o"></i>风机</a></li>
+               </li>
+               <li><a><i class="fa fa-circle-o"></i>冷凝系统</a></li>
+               <li><a><i class="fa fa-circle-o"></i>蒸发系统(风机)</a></li>
               </ul>
             </li>
+            </ul>
+            </li>
+            </ul>
+            <ul class="sidebar-menu text-white">
             <li class="treeview">
-              <a href="" ng-click="toRdcPower()"><i class="fa fa-link text-white"></i> <span>冷库</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu" >
-                  <li><a href="" ng-click="openColdDiv()"><i class="fa fa-circle-o"></i>拓扑</a></li>
-                  <li ng-repeat="storage in mystorages"><a><i class="fa fa-circle-o"></i>{{storage.name}}<i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu" style="display: none;">
-                      <li><a href="" ng-click="toMyStorageTemper(storage.id)"><i class="fa fa-circle-o"></i> 温度</a></li>
-                      <li><a href="" ng-click="toMyStorageDoor(storage.id)"><i class="fa fa-circle-o"></i> 门开关</a></li>
-                      <li><a href="" ng-click="toMyStorageGoods(storage.id)"><i class="fa fa-circle-o"></i> 货物量流通</a></li>
-                    </ul>
-                  </li>
+              <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe682;</i>
+              <span class="menu-title text-white" style="font-size: large">分析及报告</span></a>
+              <ul class="treeview-menu">
+               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>温度分析</a></li>
+               <li><a href="#/report-daily-energy"><i class="fa fa-circle-o"></i>能耗分析</a></li>
+               <li><a href="#/report-daily-goods"><i class="fa fa-circle-o"></i>物流设施分析</a></li>
+               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>制冷系统分析</a></li>
+               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>分析报告</a></li>
+               <li><a href="#/report-daily-data"><i class="fa fa-circle-o"></i>历史数据查询</a></li>
               </ul>
             </li>
-            <li class="active"><a href="#about"><i class="fa fa-link"></i> <span>设置</span></a></li>
-            <li class="active"><a href="" ng-click="toReport()"><i class="fa fa-link"></i> <span>分析</span></a></li>
-            <li class="active"><a href="#designStorage"><i class="fa fa-link"></i> <span>选型</span></a></li>
-            <li class="active"><a href="#" ng-click="openWarn()"><i class="fa fa-link"></i> <span>告警</span></a></li>
-          </ul><!-- /.sidebar-menu -->
+            </ul>
+            <ul class="sidebar-menu text-white">
+            <li class="treeview"><a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe680;</i>
+            <span class="menu-title text-white" style="font-size: large">报警</span></a></li>
+            </ul>
+            <ul class="sidebar-menu text-white">
+            <li class="treeview">
+              <a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe6bb;</i>
+              <span class="menu-title text-white" style="font-size: large">维护管理</span></a>
+              <ul class="treeview-menu">
+               <li><a href="#/about"><i class="fa fa-circle-o"></i>定期保养维护提醒</a></li>
+               <li><a href="#/about"><i class="fa fa-circle-o"></i>故障维修记录</a></li>
+               <li><a href="#/about"><i class="fa fa-circle-o"></i>维修服务评价</a></li>
+              </ul>
+            </li>
+            </ul>
+            <ul class="sidebar-menu text-white">
+            <li class="treeview"><a href="#designStorage"><i class="icon iconfont" style="color:#ffffff">&#xe6ba;</i>
+            <span class="menu-title text-white" style="font-size: large">选型</span></a></li>
+            </ul>
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu" ng-if="user.role == 2">
             <li class="header">导航</li>

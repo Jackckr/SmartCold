@@ -3,8 +3,9 @@
     <form class="navbar-form">
 	  <div class="form-group">
 	    <label>RDC:&nbsp;&nbsp;</label>
-	    <select class="form-control" ng-options="rdc.name for rdc in rdclist" 
-	    ng-model="vm.choseRdc" ng-change="changeRdc()">
+	    <div isteven-multi-select selection-mode="single" input-model="rdclist" output-model="vm.choserdcs"
+               button-label="name" item-label="name" tick-property="isOn" helper-elements="filter" 
+               max-height="200" on-item-click="changeRdc()"></div>
 	    </select>
 	  </div>
 	</form>

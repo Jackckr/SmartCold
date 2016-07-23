@@ -63,6 +63,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         },
         setStorage: function () {
         	$rootScope.changeRdc = function(){
+        		$rootScope.vm.choserdc = $rootScope.vm.choserdcs[0];
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + $rootScope.vm.choserdc.id).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
@@ -113,7 +114,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                 		$rootScope.rdcs = data;
                 		angular.forEach(data,function(item){
                 			if(item.id == $rootScope.rdcId){
+                				item.isOn = true;
                 				$rootScope.vm = {choserdc : item};
+                			}else{
+                				item.isOn = false;
                 			}
                 		})
                 	})

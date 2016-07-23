@@ -26,6 +26,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	
 	$scope.changeRdc = function(){
+		$scope.vm.choseRdc = $scope.vm.choseRdcs?$scope.vm.choseRdcs[0]:$scope.vm.choseRdc;
 		$scope.vm.choseRdc.mapping = typeof($scope.vm.choseRdc.mapping) == "string"?
 				JSON.parse($scope.vm.choseRdc.mapping):
 					$scope.vm.choseRdc.mapping;
