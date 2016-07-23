@@ -16,7 +16,7 @@
     
     <update id="updateMappingById" parameterType="map">
 		UPDATE `ColdStorageSet` SET mapping=#{mapping}
-		WHERE `coldStorageId` = #{coldStorageId}
+		WHERE `id` = #{coldStorageId}
 	</update>
 	
 	<insert id="insertColdStorage" parameterType="ColdStorageSetEntity">
