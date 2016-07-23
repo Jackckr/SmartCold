@@ -39,7 +39,9 @@
         `phone`,
         `commit`,
         `powerConsume`,
-        `userid`
+        `userid`,
+        `longitude`,
+        `latitude`
         )
         VALUES
         (
@@ -60,7 +62,9 @@
         #{phone},
         #{commit},
         #{powerConsume},
-        #{userid}
+        #{userid},
+        #{longitude},
+        #{latitude}
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >
@@ -87,9 +91,34 @@
             <if test="commit != null" >
                 commit = #{commit,jdbcType=VARCHAR},
             </if>
+            <if test="longitude != null" >
+                longitude = #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null" >
+                latitude = #{latitude,jdbcType=DOUBLE},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    
+    
+	<select id="findRDCByUserId" parameterType="Integer" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
+			 SELECT
+			r.id,
+			r.name,
+			r.address,
+			t.rdcscore score,
+			t.rdccommentcnt userCommentCount,
+			t.rdcrecommendpercent userRecommendPercent,
+			t.pageview,
+			( SELECT location 	FROM 	filedata f WHERE f.belongid = r.id AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1) AS logo
+		FROM
+			Rdc r
+		LEFT JOIN rdcext t ON t.RDCID = r.id
+		WHERE 1=1
+	        <if test="userID !=0"> and r.userid = ${userID} </if> <!--  关键字 -->
+       ORDER BY r.addTime DESC
+	</select>
     
     
 	<select id="getRDCList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >

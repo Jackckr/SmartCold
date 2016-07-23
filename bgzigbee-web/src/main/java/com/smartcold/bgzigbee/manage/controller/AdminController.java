@@ -25,6 +25,7 @@ import com.smartcold.bgzigbee.manage.entity.CookieEntity;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.CookieService;
 import com.smartcold.bgzigbee.manage.util.EncodeUtil;
+import com.smartcold.bgzigbee.manage.util.ResponseData;
 /**
  * 
  *@author Kaiqiang Jiang
@@ -41,7 +42,7 @@ public class AdminController extends BaseController {
 	@Autowired
 	private CookieService cookieService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Object login(HttpServletRequest request, String adminName, String adminPwd, Integer adminRole) {
 		adminPwd = EncodeUtil.encodeByMD5(adminPwd);
@@ -50,9 +51,9 @@ public class AdminController extends BaseController {
 			String cookie = cookieService.insertCookie(adminName);
 		    admin.setAdminpwd("******");
 			request.getSession().setAttribute("admin", admin);
-			return String.format("token=%s", cookie);
+	    	return	ResponseData.newSuccess(String.format("token=%s", cookie));
 		}
-		return false;
+	  	return ResponseData.newFailure();
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -96,10 +97,11 @@ public class AdminController extends BaseController {
 		return new BaseDto(0);
 	}
 	
-	@RequestMapping(value = "/findAdmin", method = RequestMethod.GET)
+	@RequestMapping(value = "/findAdmin")
 	@ResponseBody
 	public Object findAdmin(HttpServletRequest request) {
-		AdminEntity admin;
+		AdminEntity admin = (AdminEntity)request.getSession().getAttribute("admin");
+		if(admin!=null&&admin.getId()!=0){return ResponseData.newSuccess(admin);}
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
@@ -111,15 +113,13 @@ public class AdminController extends BaseController {
 								.getUsername());
 						admin.setAdminpwd("******");
 						request.getSession().setAttribute("admin", admin);
-						return admin;
+						return ResponseData.newSuccess(admin);
 					}
 				}
 			}
-
 		}
-		admin = new AdminEntity();
-
-		return admin;
+		admin=new AdminEntity();
+		return ResponseData.newSuccess(admin);
 	}
 
 	@RequestMapping(value = "/addAdmin", method = RequestMethod.GET)

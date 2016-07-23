@@ -1,0 +1,48 @@
+	<link rel="stylesheet" type="text/css" href="app/css/personalinfo.css">
+	<div class="shareMain clearfix">
+	<!-- sidebar -->
+		<div class="sidebar pull-left">
+			<ul class="infoList">
+				<li>个人信息</li>
+				<li>我的冷库</li>
+				<li>我的发布</li>
+				<li><font color="#418ACA">我的订单</font></li>
+				<li>我的评价</li>
+				<li>最近浏览</li>
+				<li>联系客服</li>
+			</ul>
+		</div>
+	<!-- sidebar end -->
+	<!-- content -->
+		<div class="content">
+		   <form class="bs-example bs-example-form" role="form">
+		      <div class="input-group">
+		         <input type="text" class="form-control" placeholder="输入订单号">
+		         <span class="input-group-addon">订单搜索</span>
+		      </div>
+		   </form>
+		<!-- 图文列表区域 -->
+			<ul class="imgList" ng-model="orders">
+				<li ng-repeat="order in orders">
+					<div class="img pull-left"><img src={{rdc.logo}}></div>
+					<p class="company">{{rdc.name}}</p>
+					<p class="area"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
+					<p class="area">
+						{{rdc.addtime}}
+						<span class="edit">修改</span>
+						<span class="delete">删除</span>
+					</p>
+				</li>
+			</ul>
+			<div class="page">
+               <!-- 翻页功能 -->
+               <div class="row">
+                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
+	     </div>
+		<!-- 图文列表区域 end-->
+		</div>
+	<!-- content end-->
+	</div>

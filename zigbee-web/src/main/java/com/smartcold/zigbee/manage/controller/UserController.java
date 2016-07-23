@@ -51,28 +51,29 @@ public class UserController extends BaseController {
 				cookieService.deleteCookie(cookie.getValue());
 			}
 		}
-
 		return true;
 	}
 
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-		UserEntity user;
+		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
+		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("token")) {
-				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
-				if (effectiveCookie != null) {
-					user = userDao.findUserByName(effectiveCookie.getUsername());
-					user.setPassword("******");
-					request.getSession().setAttribute("user", user);
-					return user;
+		if(cookies!=null&&cookies.length>0){
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
+					if (effectiveCookie != null) {
+						user = userDao.findUserByName(effectiveCookie.getUsername());
+						user.setPassword("******");
+						request.getSession().setAttribute("user", user);
+						return user;
+					}
 				}
 			}
 		}
 		user = new UserEntity();
-
 		return user;
 	}
 
@@ -83,7 +84,7 @@ public class UserController extends BaseController {
 			return true;
 		return false;
 	}
-	
+
 	
 	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody

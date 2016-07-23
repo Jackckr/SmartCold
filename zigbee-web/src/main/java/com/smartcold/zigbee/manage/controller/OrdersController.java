@@ -7,13 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dao.OrdersMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
-
-import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 
 import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
@@ -27,6 +29,17 @@ public class OrdersController extends BaseController {
 	private OrdersMapper orderDao;
 	@Autowired
 	private UserMapper userDao;
+	
+	@RequestMapping(value = "/findOrdersByUserId")
+	@ResponseBody
+	public Object findOrdersByUserId(@RequestParam int userID,@RequestParam int pageNum,@RequestParam int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		Page<OrdersEntity> ordersList = orderDao.findOrdersByPersonId(userID);
+		PageInfo<OrdersEntity> data = new PageInfo<OrdersEntity>(ordersList);
+		return  ResponseData.newSuccess(data);	
+	}
+
+	
 	/**
 	 * 
 	 * @param request
@@ -36,7 +49,7 @@ public class OrdersController extends BaseController {
 	 */
 	@RequestMapping(value = "/generateOrder")
 	@ResponseBody
-	public ResponseData<String> sharvistPhone(HttpServletRequest request,
+	public ResponseData<String> generateOrder(HttpServletRequest request,
 			int userid,
 			String username,
 			String telephone,

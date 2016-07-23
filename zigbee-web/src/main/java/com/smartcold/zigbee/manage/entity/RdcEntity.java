@@ -41,6 +41,10 @@ public class RdcEntity {
     private float powerConsume;
     
     private int userid;//关联用户id
+
+    private double longitude;
+
+    private double latitude;
 	
 	public int getUserId() {
 		return userid;
@@ -192,5 +196,29 @@ public class RdcEntity {
 
     public void setPowerConsume(float powerConsume) {
         this.powerConsume = powerConsume;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

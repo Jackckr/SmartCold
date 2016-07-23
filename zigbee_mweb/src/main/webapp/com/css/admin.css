@@ -1,0 +1,184 @@
+header{
+	width: 100%;
+	height: 2.2rem;
+	background-color: #438BCB;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	padding:0.3rem 0.9rem;
+	box-sizing:border-box;
+	text-align: center;
+	color: #fff;
+	line-height: 1.6rem;
+}
+header>div>a{
+	display: block;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	line-height: 1.6rem;
+	font-size: 1rem;
+}
+header>div>a>.iconfont{
+	font-size: 1rem;
+}
+.txt{
+	height: 100%;
+	margin:0 1rem;
+}
+.footer{
+	width: 100%;
+	height: 2.45rem;
+	background: rgba(255,255,255,.9);
+	font-size: 0.5rem;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 9999;
+	border-top: 1px solid #ccc;
+}
+.footer>li{
+	float: left;
+	width: 25%;
+	height: 100%;
+	text-align: center;http://127.0.0.1:8020/lianku-mweb/img/banner3.jpg
+	vertical-align: middle;
+}
+.footer>li>a{
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: #898989;
+	padding: 0.15rem 0 0.4rem;
+	box-sizing: border-box;
+}
+.footer>.active>a{
+	color: #428BCA;
+}
+.footer i{
+	font-size: 1.2rem;
+}
+.info{
+	font-size: 0.6rem;
+}
+section,.list{
+	margin: 2.5rem 0 0.5rem;
+	background-color: #fff;
+	width:100%;
+	padding: 0.5rem 0.9rem;
+	box-sizing: border-box;
+}
+.img{
+	width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    text-align: center;
+    background-size: cover;
+    margin-right: 0.5rem;
+}
+.name{
+	margin-left: 0.5rem;
+	padding-left: 2.6rem;
+}
+.nameinfo{
+	margin-bottom: 0.2rem;
+	color: #333;
+	font-size: 0.8rem;
+	text-indent: -0.05rem;
+}
+.position{
+	color: #999;
+	font-size: 0.6rem;
+}
+.rightArrow{
+    height: 2.5rem;
+}
+.rightArrow a{	
+	line-height: 2.5rem;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+}
+.rightArrow i{	
+	font-size: 1rem;
+}
+.list{
+	margin-top:0;
+	padding: 0.2rem 0.9rem;
+	height: 25rem;
+}
+.list li{
+	border-bottom: 1px solid #ddd;
+}
+.myicon,.list .rightArrow{
+	width: 3rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+}
+.myicon span{
+	font-size: 0.8rem;
+}
+.list .rightArrow{
+	text-align: right;
+}
+.list .name{
+	padding-left: 3rem;
+	margin: 0;
+	height: 2.5rem;
+}
+.list_icon .myicon{
+	width: 2rem;
+}
+.list_icon .name{
+	padding-left: 2rem;
+}
+.myicon i{
+	font-size: 1.2rem;
+	color: #919191;
+}
+.list_name{
+	color: #333;
+	font-size: 0.8rem;
+	line-height: 2.5rem;
+}
+.commentList{	
+	margin-top:0;
+	margin-bottom: 3rem;
+}
+.commentList li{
+	background-color: #fff;
+	padding: 0.5rem 0.9rem;
+	border-bottom: 0.5rem solid #F6F5FA;
+}
+.commentList .img{
+	width: 3rem;
+	height: 3rem;
+	border-radius: 0;
+}
+.company{
+	font-size: 0.7rem;
+	color: #333;
+} 
+.company span{
+	font-size: 0.6rem;
+}
+.btnGroup{
+	text-align: right;
+	margin-top: 0.5rem;
+}
+.btnGroup button{
+	background-color: #fff;
+	padding: 0.3rem 1rem;
+	border: 1px solid #ccc;
+	font-size: 0.65rem;
+	color: #555;
+	margin-left: 0.5rem;
+}
+.btnGroup .current{
+	background-color: #438BCB;
+	color: #fff;
+}

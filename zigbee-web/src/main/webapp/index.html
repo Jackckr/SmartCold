@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="assets/css/ionicons.min.css"/>
     <link rel="stylesheet" href="app/css/app.css"/>
     <link rel="stylesheet" href="app/css/rdc.css"/>
+    <link rel="stylesheet" type="text/css" href="app/css/coldsharerdc.css">
+	<link rel="stylesheet" type="text/css" href="app/css/common.css">
+     <link rel="stylesheet" type="text/css" href="app/css/share_item_info.css">
     <!-- <link rel="stylesheet" href="assets/css/reponstive.css"/> -->
 <script type="text/javascript">!function(a,b){if(!b.__SV){var c,d,e,f;window.dplus=b,b._i=[],b.init=function(a,c,d){function g(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]),a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var h=b;for("undefined"!=typeof d?h=b[d]=[]:d="dplus",h.people=h.people||[],h.toString=function(a){var b="dplus";return"dplus"!==d&&(b+="."+d),a||(b+=" (stub)"),b},h.people.toString=function(){return h.toString(1)+".people (stub)"},e="disable track track_links track_forms register unregister get_property identify clear set_config get_config get_distinct_id track_pageview register_once track_with_tag time_event people.set people.unset people.delete_user".split(" "),f=0;f<e.length;f++)g(h,e[f]);b._i.push([a,c,d])},b.__SV=1.1,c=a.createElement("script"),c.type="text/javascript",c.charset="utf-8",c.async=!0,c.src="//w.cnzz.com/dplus.php?token=6f151994c54e5456a96a",d=a.getElementsByTagName("script")[0],d.parentNode.insertBefore(c,d)}}(document,window.dplus||[]),dplus.init("6f151994c54e5456a96a");</script>
 <style>
@@ -64,22 +67,39 @@
 		<div class="nav-right mw-8">
 			<div class="nav-right" ng-show="user != null && user.id != 0">
 				<div class="unauthenticated dropdown">
-					<strong class="text-primary dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" ng-bind="user.username"></strong><span class="caret"></span><span></span>
-					<!-- 个人信息下拉菜单 start-->
+					<!-- <strong class="text-primary dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" ng-bind="user.username"></strong><span class="caret"></span><span></span>
+					个人信息下拉菜单 start
 				   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="left:-80%">
 				      <li role="presentation">
-				         <a role="menuitem" tabindex="-1" href="#">个人信息</a>
+				         <a role="menuitem" tabindex="-1" href="#/personalInfo">个人信息</a>
 				      </li>
 				      <li role="presentation">
-				         <a role="menuitem" tabindex="-1" href="#">我的发布</a>
+				         <a role="menuitem" tabindex="-1" href="#/personalInfo">我的发布</a>
 				      </li>
 				      <li role="presentation">
 				         <a role="menuitem" tabindex="-1" href="#">
-				            我的冷库
+				                                                                       我的冷库
 				         </a>
 				      </li>
 				   </ul>
-					<!-- 个人信息下拉菜单 end-->
+					个人信息下拉菜单 end -->
+					<div class="btn-group">
+				 <button class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+				<ul class="dropdown-menu hide">
+					<li>
+						<a href="#/personalRdc">个人信息</a>
+					</li>
+					<li>
+						<a href="#/personalRdc">我的发布</a>
+					</li>
+					<li>
+						<a href="#/personalOrder">我的订单</a>
+					</li>
+					<li>
+						<a href="#/personalRdc">我的冷库</a>
+					</li>
+				</ul>
+			</div>
 					<b><a ng-click="logout()" href="" ng-bind="'退出'">
 					</a>
 					</b>
@@ -102,9 +122,6 @@
 				<li><a href="" ng-click="gotoSmartCold()" target="view_frame">
 						冷库360 </a></li>
 			</ul>
-
-
-
 
 			<ul class="navShow navPo show-850">
 				<li class="oneNav"><span
@@ -222,6 +239,8 @@
 	<script src="app/js/coldStorageAdd.js"></script>
 	<script src="app/js/coldStorageEdit.js"></script>
 	<script src="app/js/coldStorageMap.js"></script>
+	<script src="app/js/personalRdc.js"></script>
+	<script src="app/js/personalOrder.js"></script>
 	<script type="text/javascript">
 	   $(function() {
 	       $('.navShow>li').hover(function() {

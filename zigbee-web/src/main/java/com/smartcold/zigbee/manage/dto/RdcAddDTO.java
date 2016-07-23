@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.io.File;
 import java.util.List;
 
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
@@ -89,6 +90,8 @@ public class RdcAddDTO {
 	private int userid;//关联用户id
 	//浏览量
 	private int pageview;
+
+	private File honorfile0;
 	
 	public int getPageview() {
 		return pageview;
@@ -434,4 +437,11 @@ public class RdcAddDTO {
 		this.rdcHealthScore = rdcHealthScore;
 	}
 
+	public File getHonorfile0() {
+		return honorfile0;
+	}
+
+	public void setHonorfile0(File honorfile0) {
+		this.honorfile0 = honorfile0;
+	}
 }

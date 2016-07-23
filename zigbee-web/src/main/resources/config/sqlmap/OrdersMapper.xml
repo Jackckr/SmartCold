@@ -39,6 +39,10 @@
 		)
     </insert>
 
+    <select id="findOrdersByPersonId" parameterType="map" resultType="OrdersEntity">
+		SELECT * FROM `orders` WHERE `userid` = #{userid} OR `ownerid` = #{userid}
+	</select>
+
     <select id="findOrdersByUserId" parameterType="map" resultType="OrdersEntity">
 		SELECT * FROM `orders` WHERE `userid` = #{userid}
 	</select>
