@@ -11,7 +11,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$scope.choseDevice = $scope.devices[0];
 		$http.get('/i/rdc/findRdcList').success(function(data,status,config,headers){
 			$scope.rdclist = data;
-			$scope.vm.choseRdc = data[1036];
+			$scope.vm.choseRdc = data[0];
+			$scope.rdclist[0].isOn = true;
 			$scope.changeRdc();
 		});
 	}
@@ -38,7 +39,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$scope.vm.choseStorage = data[0];
 			$scope.vm.warnings = $scope.vm.choseRdc.mapping.hasOwnProperty("warnings")?$scope.vm.choseRdc.mapping.warnings:[];
 			$scope.vm.warning = "";
-			$scope.changeStorage();
+			$scope.vm.choseStorage?$scope.changeStorage():"";
 		})
 		$http.get('/i/rdc/findSpiderConfig?rdcId=' + $scope.vm.choseRdc.id
 				).success(function(data,status,config,headers){
@@ -266,6 +267,46 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$scope.compressGroupEntity = {};
 			$scope.changeRdc();
 		})
+	}
+	
+	$scope.deleteStorage = function(id){
+		if(confirm("确定删除?")){
+			url = '/i/coldStorage/deleteStorage?id=' + id;
+			$http.post(url).success(function(data,status,headers,config){
+				alert(data.message);
+				$scope.changeRdc();
+			});
+		}
+	}
+	
+	$scope.deleteBlower = function(id){
+		if(confirm("确定删除?")){
+			url = '/i/blower/deleteBlower?id=' + id;
+			$http.post(url).success(function(data,status,headers,config){
+				alert(data.message);
+				$scope.changeStorage();
+			});
+		}
+	}
+	
+	$scope.deleteDoor = function(id){
+		if(confirm("确定删除?")){
+			url = '/i/coldStorageDoor/deleteDoor?id=' + id;
+			$http.post(url).success(function(data,status,headers,config){
+				alert(data.message);
+				$scope.changeStorage();
+			});
+		}		
+	}
+	
+	$scope.deleteCompressGroup = function(id){
+		if(confirm("确定删除?")){
+			url = '/i/compressorGroup/deleteCompressGroup?id=' + id;
+			$http.post(url).success(function(data,status,headers,config){
+				alert(data.message);
+				$scope.changeRdc();
+			});
+		}		
 	}
 	
 	$scope.load();

@@ -18,4 +18,6 @@ public interface ColdStorageSetMapper {
 	void updateMappingById(@Param("coldStorageId") int coldStorageId, @Param("mapping") String mapping);
 
 	void insertColdStorage(ColdStorageSetEntity entity);
+
+	void deleteColdStorage(@Param("id") int id);
 }

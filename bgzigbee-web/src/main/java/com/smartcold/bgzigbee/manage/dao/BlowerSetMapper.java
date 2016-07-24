@@ -15,4 +15,6 @@ public interface BlowerSetMapper {
 	void updateMappingById(@Param("id") int id, @Param("mapping") String mapping);
 
 	void insertBlower(BlowerSetEntity entity);
+
+	void deleteBlower(@Param("id") int id);
 }

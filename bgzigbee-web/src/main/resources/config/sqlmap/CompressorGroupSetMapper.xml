@@ -36,5 +36,10 @@
 	  );
 	  
 	</insert>
+	
+	<delete id="deleteCompressorGroup" parameterType="map">
+	  DELETE FROM `compressorgroupset`
+	  WHERE `id` = #{id}
+	</delete>
 
 </mapper>

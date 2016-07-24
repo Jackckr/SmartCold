@@ -41,5 +41,10 @@
 	    #{location}
 	    )
 	</insert>
+	
+	<delete id="deleteColdStorage" parameterType="map">
+	    DELETE FROM `coldstorageset`
+	    WHERE `id` = #{id}
+	</delete>
 
 </mapper>

@@ -64,4 +64,12 @@ public class CompressorGroupSetController {
 
 		return new ResultDto(0, "添加成功");
 	}
+
+	@RequestMapping(value = "/deleteCompressGroup", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteCompressGroup(int id) {
+		compressorGroupSetDao.deleteCompressorGroup(id);
+
+		return new ResultDto(0, "删除成功");
+	}
 }

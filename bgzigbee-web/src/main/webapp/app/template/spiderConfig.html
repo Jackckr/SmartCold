@@ -29,12 +29,12 @@
 		    ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加风机'">
 		      <label>冷库：</label>
 		      <select ng-options="storage.name for storage in storages" class="form-control"
-		       ng-model="vm.choseStorage"></select>
+		       ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
 		    </div>
 		    </form>
 		    <!--  -->
 		    <form id="addStorage" ng-show="choseDevice.name == '添加冷库'" class="col-lg-12 form-horizontal">
-		    <div style="margin-top:30px;">
+		    <div style="margin-top:30px;" class="col-lg-6">
 		      <div class="form-group">
 		        <label class="control-label col-lg-4"><em style="color:red">*</em>冷库名:</label>
 		        <div class="col-lg-8">
@@ -70,10 +70,27 @@
 		      	ng-disabled="!storageEntity.name">添加</a>
 		      </div>
 		      </div>
+		      <div class="col-lg-6">
+		        <label>已有冷库：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>冷库名</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="storage in storages">
+		           <td>{{storage.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteStorage(storage.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		    <!--  -->
 		    <form id="addDoor" ng-show="choseDevice.name == '添加冷库门'"  class="col-lg-12 form-horizontal">
-		     <div style="margin-top:30px;">
+		     <div style="margin-top:30px;" class="col-lg-6">
 		      <div class="form-group">
 		        <label class="control-label col-lg-4"><em style="color:red">*</em>门名字:</label>
 		        <div class="col-lg-8">
@@ -97,10 +114,27 @@
 		      	ng-disabled="!doorEntity.name">添加</a>
 		      </div>
 		     </div>
+		     <div class="col-lg-6">
+		        <label>已有门：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>门名字</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="door in doors">
+		           <td>{{door.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteDoor(door.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		    <!--  -->
 		    <form id="addBlower" ng-show="choseDevice.name == '添加风机'" class="col-lg-12 form-horizontal">
-		      <div style="margin-top:30px;">
+		      <div style="margin-top:30px;" class="col-lg-6">
 		        <div class="form-group">
 		         <label class="control-label col-lg-4"><em style="color:red">*</em>风机名字:</label>
 		         <div class="col-lg-8">
@@ -118,10 +152,27 @@
 		      	ng-disabled="!blowerEntity.name">添加</a>
 		       </div>
 		     </div>
+		     <div class="col-lg-6">
+		        <label>已有风机：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>风机名字</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="blower in blowers">
+		           <td>{{blower.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteBlower(blower.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		    <!--  -->
 		    <form id="addCompressGroup" ng-show="choseDevice.name == '添加压缩机组'" class="col-lg-12 form-horizontal">
-		      <div style="margin-top:30px;">
+		      <div style="margin-top:30px;" class="col-lg-6">
 		        <div class="form-group">
 		         <label class="control-label col-lg-4"><em style="color:red">*</em>机组名字:</label>
 		         <div class="col-lg-8">
@@ -151,6 +202,23 @@
 		      	ng-disabled="!compressGroupEntity.name">添加</a>
 		       </div>
 		     </div>
+		     <div class="col-lg-6">
+		        <label>已有压缩机组：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>机组名字</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="compressGroup in compressGroups">
+		           <td>{{compressGroup.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteCompressGroup(compressGroup.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		  </div>
         </uib-tab>
