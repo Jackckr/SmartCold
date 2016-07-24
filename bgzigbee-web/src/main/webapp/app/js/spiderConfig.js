@@ -43,7 +43,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$scope.vm.choseStorage = data[0];
 			$scope.vm.warnings = $scope.vm.choseRdc.mapping.hasOwnProperty("warnings")?$scope.vm.choseRdc.mapping.warnings:[];
 			$scope.vm.warning = "";
-			$scope.vm.choseStorage?$scope.changeStorage():"";
+			$scope.vm.choseStorage?$scope.changeStorage():$scope.blowers=[],$scope.doors=[];
 		})
 		$http.get('/i/rdc/findSpiderConfig?rdcId=' + $scope.vm.choseRdc.id
 				).success(function(data,status,config,headers){
