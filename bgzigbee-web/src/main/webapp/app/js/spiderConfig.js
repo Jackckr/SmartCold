@@ -17,6 +17,10 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		});
 	}
 	
+	$scope.objectLength = function(obj){
+		return Object.keys(obj).length;
+	}
+	
 	function getDistinctColumnKey(data){
 		keys = [];
 		angular.forEach(data,function(item){
@@ -96,68 +100,19 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		})
 	}
 	
-	$scope.deleteKey = function(key){
-		delete $scope.vm.choseStorage.mapping[key];
+	$scope.deleteKey = function(object,key){
+		delete object[key];
 	}
 	
-	$scope.deleteDoorKey = function(key){
-		delete $scope.vm.choseDoor.mapping[key];
+	
+	$scope.addKey = function(object,key,value){
+		object[key] = value;
 	}
 	
-	$scope.deleteBlowerKey = function(key){
-		delete $scope.vm.choseBlower.mapping[key];
-	}
-	
-	$scope.deleteCompressGroupKey = function(key){
-		delete $scope.vm.choseCompressGroup.mapping[key];
-	}
-	
-	$scope.addKey = function(){
-		if($scope.vm.choseItem == $scope.handItem){
-			if(!$scope.vm.itemInput) return;
-			$scope.vm.choseStorage.mapping[$scope.vm.choseItemKey] = $scope.vm.itemInput;
-			$scope.vm.itemInput = "";
-			$scope.vm.choseItem = $scope.storageItem[0];
-		}else {			
-			$scope.vm.choseStorage.mapping[$scope.vm.choseItem.columnkey]=$scope.vm.choseItem.columnvalue;
-		}
-		$scope.vm.addStorageItem=false;
-	}
-	
-	$scope.addDoorKey = function(){
-		if($scope.vm.choseItem == $scope.handItem){
-			if(!$scope.vm.itemInput) return;
-			$scope.vm.choseDoor.mapping[$scope.vm.choseItemKey] = $scope.vm.itemInput;
-			$scope.vm.itemInput = "";
-			$scope.vm.choseItem = $scope.storageItem[0];
-		}else{			
-			$scope.vm.choseDoor.mapping[$scope.vm.choseItem.columnkey]=$scope.vm.choseItem.columnvalue;
-		}
-		$scope.vm.addDoorItem=false;
-	}
-	
-	$scope.addBlowerKey = function(){
-		if($scope.vm.choseBlowerItem == $scope.handItem){
-			if(!$scope.vm.itemInput) return;
-			$scope.vm.choseBlower.mapping[$scope.vm.choseBlowerItemKey] = $scope.vm.itemInput;
-			$scope.vm.itemInput = "";
-			$scope.vm.choseBlowerItem = $scope.blowerItem[0];
-		}else{			
-			$scope.vm.choseBlower.mapping[$scope.vm.choseBlowerItem.columnkey]=$scope.vm.choseBlowerItem.columnvalue;
-		}
-		$scope.vm.addBlowerItem=false;
-	}
-	
-	$scope.addCompressGroupKey = function(){
-		if($scope.vm.choseCompressGroupItem == $scope.handItem){
-			if(!$scope.vm.itemInput) return;
-			$scope.vm.choseCompressGroup.mapping[$scope.vm.choseCompressGroupItemKey] = $scope.vm.itemInput;
-			$scope.vm.itemInput = "";
-			$scope.vm.choseCompressGroupItem = $scope.compressGroupItem[0];
-		}else{			
-			$scope.vm.choseCompressGroup.mapping[$scope.vm.choseCompressGroupItem.columnkey]=$scope.vm.choseCompressGroupItem.columnvalue;
-		}
-		$scope.vm.addCompressGroupItem=false;
+	$scope.resetItem = function(items,item,obj){
+		$scope.vm[item] = items[0];
+		$scope.vm.itemInput = "";
+		obj.addItem = false;
 	}
 	
 	$scope.realSaveStorage = function(){
@@ -166,21 +121,25 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$http.post(url).success(function(data,status,config,headers){
 			alert(data.message);
 		})
-	}
-	
-	$scope.realSaveDoor = function(){
-		url = '/i/coldStorageDoor/updateMapping?id=' + $scope.vm.choseDoor.id 
-		+ '&mapping=' + JSON.stringify($scope.vm.choseDoor.mapping);
-		$http.post(url).success(function(data,status,config,headers){
-			alert(data.message);
+		angular.forEach($scope.doors,function(item){
+			$scope.realSaveDoor(item);
+		})
+		angular.forEach($scope.blowers,function(item){
+			$scope.realSaveBlower(item);
 		})
 	}
 	
-	$scope.realSaveBlower = function(){
-		url = '/i/blower/updateMapping?id=' + $scope.vm.choseBlower.id 
-		+ '&mapping=' + JSON.stringify($scope.vm.choseBlower.mapping);
+	$scope.realSaveDoor = function(door){
+		url = '/i/coldStorageDoor/updateMapping?id=' + door.id 
+		+ '&mapping=' + JSON.stringify(door.mapping);
 		$http.post(url).success(function(data,status,config,headers){
-			alert(data.message);
+		})
+	}
+	
+	$scope.realSaveBlower = function(blower){
+		url = '/i/blower/updateMapping?id=' + blower.id 
+		+ '&mapping=' + JSON.stringify(blower.mapping);
+		$http.post(url).success(function(data,status,config,headers){
 		})
 	}
 	
