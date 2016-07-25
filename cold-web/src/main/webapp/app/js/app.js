@@ -110,6 +110,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
 
                     $rootScope.mystorages = mystorages;
                     $rootScope.rdcId = result[0].rdcId;
+                    if($rootScope.user.role == 1){
                     $http.get('/i/rdc/findRdcList').success(function(data,status,headers,config){
                 		$rootScope.rdcs = data;
                 		angular.forEach(data,function(item){
@@ -121,6 +122,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                 			}
                 		})
                 	})
+                    }
                 })
             }
 

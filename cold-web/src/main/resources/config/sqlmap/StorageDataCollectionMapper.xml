@@ -48,6 +48,9 @@
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>
+	    <if test="deviceid != null">
+		    AND `deviceid` = #{deviceid} 
+	    </if>
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
