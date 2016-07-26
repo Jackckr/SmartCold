@@ -70,9 +70,9 @@ public class UserController extends BaseController {
 			user.setRole(role.getId());
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
-			return new ResultDto(1, String.format("token=%s", cookie));
+			return new ResultDto(0, String.format("token=%s", cookie));
 		}
-		return new ResultDto(0, "用户名或密码错误！");
+		return new ResultDto(1, "用户名或密码错误！");
 	}
 	/*
 	 * @SuppressWarnings({ "finally", "rawtypes", "unchecked" })
