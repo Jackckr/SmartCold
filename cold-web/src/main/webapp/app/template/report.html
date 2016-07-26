@@ -24,7 +24,7 @@
         </div>
      </div> -->
      <div class="tabable">
-	   <ul class="nav nav-tabs pull-right">
+	   <ul class="nav nav-tabs pull-right" ng-show="item != 'data'">
 	     <li class="{{time == 'daily'?'active':''}}">
 	       <a href="#/report-daily-{{item}}">日报表</a>
 	     </li>
@@ -37,26 +37,7 @@
   </section>
   <section class="content">
     <div class="row">
-	  <div class="col-xs-2">
-       <div class="box box-solid">
-         <div class="box-header with-border bg-gray">
-		    <div class="box-body no-padding bg-gray">
-	          <ul class="nav nav-pills nav-stacked bg-gray">
-	            <li class="{{item == 'data'?'active':''}}"><a href="" ng-click="chageItem('data',time)">数据查询</a></li>
-	            <li class="{{item == 'energy'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('energy',time)">能耗分析</a></li>
-	            <li class="{{item == 'total'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('total',time)">总体情况</a></li>
-	            <li class="{{item == 'door'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('door',time)">门耗能情况</a></li>
-	            <li class="{{item == 'light'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('light',time)">灯耗能情况</a></li>
-	            <li class="{{item == 'group'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('group',time)">制冷机组情况</a></li>
-	            <li class="{{item == 'fan'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('fan',time)">风机情况</a></li>
-	            <li class="{{item == 'goods'?'active':''}}"><a a-disabled="" href="" ng-click="chageItem('goods',time)">货物进出情况</a></li>
-	          </ul>
-	        </div>
-	    </div>
-	   </div>
-	  </div>
-
-	  <div class="col-md-10">
+	  <div class="col-md-12">
 
         <div class="col-md-12" ng-show="item == 'energy'">
           <!-- MarkPoint Map CHART -->
@@ -220,8 +201,8 @@
       </div>
       </div>
       <!-- 耗能占比 -->
-      <div class="col-md-12" ng-show="item != 'energy'">
-      <div class="box box-gray bg-gray" ng-if="item == 'total'">
+      <div class="col-md-12" ng-show="item != 'total'">
+      <div class="box box-gray bg-gray" ng-if="item == 'energy'">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>
           <h3 class="box-title">耗能占比</h3>
@@ -234,7 +215,7 @@
       </div>
 	  </div>
 	  <!-- 温度能耗 -->
-	  <div class="col-md-12" ng-show="item != 'energy'">
+	  <div class="col-md-12" ng-show="item != 'total'">
       <div class="box box-gray bg-gray {{item}}" ng-show="item != 'energy' && item != 'data'">
         <div class="box-header with-border">
           <i class="fa fa-bar-chart-o"></i>

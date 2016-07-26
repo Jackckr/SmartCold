@@ -64,4 +64,12 @@ public class ColdStorageController {
 
 		return new ResultDto(0, "添加成功");
 	}
+
+	@RequestMapping(value = "/deleteStorage", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteStorage(int id) {
+		coldStorageSetDao.deleteColdStorage(id);
+
+		return new ResultDto(0, "删除成功");
+	}
 }

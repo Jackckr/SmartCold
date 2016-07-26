@@ -35,4 +35,8 @@
 	  
 	</insert>
 
+    <delete id="deleteDoor" parameterType="map">
+      DELETE FROM `coldstoragedoorset`
+      WHERE `id` = #{id}
+    </delete>
 </mapper>

@@ -64,4 +64,12 @@ public class ColdStorageDoorController {
 
 		return new ResultDto(0, "添加成功");
 	}
+
+	@RequestMapping(value = "/deleteDoor", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteDoor(int id) {
+		coldStorageDoorSetDao.deleteDoor(id);
+
+		return new ResultDto(0, "删除成功");
+	}
 }
