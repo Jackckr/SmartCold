@@ -257,5 +257,37 @@ section,.list{
 	font-size: 1rem;
 	color: #555;
 }
-p{color:#333!important;}
+/*修改昵称*/
+.editarea{
+	line-height: 2rem;
+	height: 2rem;
+	font-size: 0.75rem;
+	position: relative;
+}
+.editarea .input{
+	padding-left: 2rem;
+	height: 2rem;
+	box-sizing: border-box;
+}
+.editarea .input>input{
+	width: 100%;
+	height: 100%;
+	font-size: 0.75rem;
+}
+.deleteEdit{
+	position: absolute;
+	width: 0.8rem;
+	height: 0.8rem;
+	background-color: #c0c0c0;
+	font-size: 0.7rem;
+	color: #fff;
+	border-radius: 50%;
+	cursor: pointer;
+	text-align: center;
+	line-height: 0.8rem;
+	top: 50%;
+	right: 0.9rem;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
 
