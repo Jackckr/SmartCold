@@ -26,6 +26,7 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
     @Override
     public List<CompressorGroupSetEntity> findByUserId(int userid) {
         RdcUser rdcUser = rdcUserDao.findByUserId(Integer.valueOf(userid));
+        if(rdcUser==null) return null;
         return compressGroupSetDao.findLastNPoint(rdcUser.getRdcid());
     }
 }

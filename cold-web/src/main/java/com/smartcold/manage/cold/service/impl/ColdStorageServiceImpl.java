@@ -51,6 +51,7 @@ public class ColdStorageServiceImpl implements ColdStorageService {
 	@Override
 	public List<ColdStorageSetEntity> findByUserId(int userId) {
 		RdcUser rdcUser = rdcUserDao.findByUserId(Integer.valueOf(userId));
+		if(rdcUser==null)return null;
 		return coldStorageSetDao.findByRdcId(rdcUser.getRdcid());
 	}
 }
