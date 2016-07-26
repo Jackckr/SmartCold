@@ -1,14 +1,14 @@
 var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation', 'jkuri.gallery']);
-
+if (typeof String.prototype.startsWith != 'function') {  //支持startsWith
+    String.prototype.startsWith = function (prefix){  
+     return this.slice(0, prefix.length) === prefix;  
+    };  
+ }
 angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
-	$.ajax({
-	      url: '/i/user/findUser',
-	      type: "GET",
-	      dataType: 'json'
-	    }).success(function(data){
+	    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data){
 	    	user = data;
 	    	angular.bootstrap(document, ['ColdWeb']);
-	    })
+	    });
 });
 coldWeb.run(function (editableOptions, naviService,userService) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
@@ -47,18 +47,19 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 		setUser: function(user){
 	    	$rootScope.user = user;
 	    	$rootScope.logout = function () {
-	        	$http.get('/i/user/logout');
+	        	$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
 	        	$rootScope.user = null;
+	        	user=null;//清除系统user;
 	        };
 	        $rootScope.gotoSmartCold = function(){
-	        	cookies = document.cookie.split(";")
+	        	cookies = document.cookie.split(";");
 	        	url = "http://www.smartcold.net";
 	        	angular.forEach(cookies,function(item){
 	        		item = item.trim();
 	        		if(item.startsWith("token=")){	        			
 	        			url = url + "/#/" + item;
 	        		}
-	        	})
+	        	});
 	        	window.open(url);
 	        }
 	    },

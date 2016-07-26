@@ -14,6 +14,7 @@ import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
+import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 import com.taobao.api.ApiException;
 
@@ -27,18 +28,17 @@ public class UserController extends BaseController {
 	@Autowired
 	private CookieService cookieService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	@ResponseBody
-	public Object login(HttpServletRequest request, String userName, String password) {
+	public ResponseData<String> login(HttpServletRequest request, String userName, String password) {
 		UserEntity user = userDao.findUser(userName, password);
 		if (user != null) {
 			String cookie = cookieService.insertCookie(userName);
 			user.setPassword("******");
 			request.getSession().setAttribute("user", user);
-
-			return String.format("token=%s", cookie);
+            return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		}
-		return false;
+		return ResponseData.newFailure("用户名或者密码不正确！");
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -54,7 +54,7 @@ public class UserController extends BaseController {
 		return true;
 	}
 
-	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/findUser")
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");

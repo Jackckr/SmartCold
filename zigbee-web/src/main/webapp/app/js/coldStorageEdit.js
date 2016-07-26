@@ -3,7 +3,7 @@
  */
 coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
 	$scope.load = function(){
-			$http.get('/i/user/findUser').success(function(data,status,config,headers){
+		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
 				$rootScope.user = data;
 				if($rootScope.user == undefined || $rootScope.user.id == 0){
 					url = "http://" + $location.host() + ":" + $location.port();
