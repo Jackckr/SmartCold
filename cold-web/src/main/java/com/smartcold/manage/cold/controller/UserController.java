@@ -56,7 +56,7 @@ public class UserController extends BaseController {
 	 *             login UserController
 	 * @Description: 用户登录
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Object login(HttpServletRequest request, String userName, String password, HttpServletResponse response) {
 		// UserEntity user = userDao.findByPassword(userName, password);
@@ -64,14 +64,15 @@ public class UserController extends BaseController {
 		if (user.getId() != 0) {
 			String cookie = cookieService.insertCookie(userName);
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
+			if(roleUser==null)return new ResultDto(0, "您没有权限登录该系统！若有疑问请联系管理员！");
 			Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
 			user.setPassword("******");
 			user.setRole(role.getId());
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
-			return new ResultDto(0, String.format("token=%s", cookie));
+			return new ResultDto(1, String.format("token=%s", cookie));
 		}
-		return new ResultDto(0, "username or password error");
+		return new ResultDto(0, "用户名或密码错误！");
 	}
 	/*
 	 * @SuppressWarnings({ "finally", "rawtypes", "unchecked" })
@@ -130,7 +131,8 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-		UserEntity user;
+		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
+		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null) {
 			return new UserEntity();
