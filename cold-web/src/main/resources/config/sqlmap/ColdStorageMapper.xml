@@ -14,7 +14,6 @@
 	<select id="findPoitByTime" parameterType="map" resultType="ColdStorageEntity">
 	SELECT *
 	FROM `ColdStorage` WHERE `storageID` = #{storageID} AND `addTime` >= #{begin} AND #{end} >= `addTime`
-	order by `addTime` desc
 </select>
 
 	<select id="findNewInsertColdStorages" parameterType="map" resultType="ColdStorageEntity">

@@ -6,7 +6,8 @@ angular.element(document).ready(function($ngCookies, $location) {
 	$.ajax({
 	      url: '/i/user/findUser',
 	      type: "GET",
-	      dataType: 'json'
+	      dataType: 'json',
+	      cache: false
 	    }).success(function(data){
 	    	user = data;
 	    	if(user.username == null){
