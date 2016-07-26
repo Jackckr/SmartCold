@@ -112,11 +112,14 @@ section{
 	font-size: 1.5rem;
 	color:#438BCA
 }
-.grid_kid:nth-child(2) i,.grid_kid:nth-child(4) i{
+.grid_kid:nth-child(2) i{
 	color:#F1594B;
 }
-.grid_kid:nth-child(3) i,.grid_kid:nth-child(5) i{
+.grid_kid:nth-child(3) i{
 	color:#F39826;
+}
+.grid_kid.share_cold i{
+	color:#438BCA;
 }
 /*发布库*/
 .main{
@@ -446,4 +449,10 @@ form+.mybtn{
 .relate,.norelate{
 	display: table-cell;
 	font-size: 0.8rem;
+}
+/*map*/
+#main{
+	width: 90%;
+	min-height: 15rem;
+	margin: 0 auto;
 }
