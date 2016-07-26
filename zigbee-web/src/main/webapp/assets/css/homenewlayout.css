@@ -262,6 +262,7 @@ header .unauthenticated
         -ms-flex-align: center;
 
             align-items: center;
+    *padding-top:20px;
 }
 header .unauthenticated > a
 {
