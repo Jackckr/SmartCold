@@ -74,7 +74,8 @@ $(function(){
     	$.ajax({
     		url:"/i/user/login?userName="+userName+"&password="+password,
     				async:false}).success(function(data){
-    					if(data == true){
+    					if(data.status == 0){
+    						document.cookie = data.message;
     						window.location.pathname="";
     						window.location.href = "http://"+window.location.host;
     						window.event.returnValue=false;

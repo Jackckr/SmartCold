@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.UserMapper;
+import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.entity.CookieEntity;
 import com.smartcold.manage.cold.entity.Role;
 import com.smartcold.manage.cold.entity.RoleUser;
@@ -68,9 +69,9 @@ public class UserController extends BaseController {
 			user.setRole(role.getId());
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
-			return true;
+			return new ResultDto(0, String.format("token=%s", cookie));
 		}
-		return false;
+		return new ResultDto(0, "username or password error");
 	}
 	/*
 	 * @SuppressWarnings({ "finally", "rawtypes", "unchecked" })
