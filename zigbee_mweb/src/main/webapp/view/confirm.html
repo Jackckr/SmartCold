@@ -27,7 +27,7 @@
 			<div class="tel">
 				<i class="iconfont">&#xe608;</i>
 				<input type="tel" placeholder="请输入您的手机号"/>
-				<button class="mybtn fr">获取验证码</button>
+				<button class="mybtn fr" onclick="setTime(this)">获取验证码</button>
 			</div>
 			<div class="tel">
 				<i class="iconfont ">&#xe639;</i>
@@ -35,5 +35,25 @@
 			</div>
 		</div>
 		<button class="mybtn" onclick="location.href='success.html'">确认抢单</button>		
+		<script>
+			var countdown=60; 
+			function setTime(obj) { 
+			    if (countdown == 0) { 
+			        obj.removeAttribute("disabled");    
+			        obj.style.background='#438BCB';
+			        obj.innerHTML="获取验证码"; 
+			        countdown = 60; 
+			        return;
+			    } else { 
+			        obj.setAttribute("disabled", true); 
+			        obj.style.background='#ccc';
+			        obj.innerHTML="重新发送(" + countdown + ")"; 
+			        countdown--; 
+			    } 
+			setTimeout(function() { 
+			    setTime(obj) }
+			    ,1000) 
+			}
+		</script>
 	</body>
 </html>

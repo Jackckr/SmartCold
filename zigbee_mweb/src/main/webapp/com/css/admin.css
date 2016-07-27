@@ -109,7 +109,7 @@ section,.list{
 .list{
 	margin-top:0;
 	padding: 0.2rem 0.9rem;
-	height: 25rem;
+	/*height: 25rem;*/
 }
 .list li{
 	border-bottom: 1px solid #ddd;
@@ -124,6 +124,7 @@ section,.list{
 }
 .list .rightArrow{
 	text-align: right;
+	width: 2rem;
 }
 .list .name{
 	padding-left: 3rem;
@@ -276,6 +277,7 @@ section,.list{
 .editarea .input>input{
 	width: 100%;
 	height: 100%;
+	line-height: 2rem;
 	font-size: 0.75rem;
 }
 .deleteEdit{
@@ -308,7 +310,7 @@ section,.list{
 	font-size:0.8rem;
 	color: #333;
 	background:none;
-	padding-right:3rem;
+	padding-right:2rem;
 	box-sizing:border-box;
 	direction: rtl;
 }
