@@ -25,7 +25,7 @@ header>div>a>.iconfont{
 }
 .txt{
 	height: 100%;
-	margin:0 1rem;
+	margin:0 2rem;
 }
 .footer{
 	width: 100%;
@@ -42,7 +42,7 @@ header>div>a>.iconfont{
 	float: left;
 	width: 25%;
 	height: 100%;
-	text-align: center;
+	text-align: center;http://127.0.0.1:8020/lianku-mweb/img/banner3.jpg
 	vertical-align: middle;
 }
 .footer>li>a{
@@ -70,7 +70,6 @@ section,.list{
 	padding: 0.5rem 0.9rem;
 	box-sizing: border-box;
 }
-
 .img{
 	width: 2.5rem;
     height: 2.5rem;
@@ -110,7 +109,7 @@ section,.list{
 .list{
 	margin-top:0;
 	padding: 0.2rem 0.9rem;
-	height: 25rem;
+	/*height: 25rem;*/
 }
 .list li{
 	border-bottom: 1px solid #ddd;
@@ -125,6 +124,7 @@ section,.list{
 }
 .list .rightArrow{
 	text-align: right;
+	width: 2rem;
 }
 .list .name{
 	padding-left: 3rem;
@@ -144,7 +144,12 @@ section,.list{
 .list_name{
 	color: #333;
 	font-size: 0.8rem;
+	height:100%;
 	line-height: 2.5rem;
+	position:relative;
+}
+.adminInfo .list_name{
+	text-align: right;	
 }
 .commentList{	
 	margin-top:0;
@@ -258,20 +263,26 @@ section,.list{
 	color: #555;
 }
 /*修改昵称*/
+.nopad{
+	padding: 0 0.9rem;
+}
 .editarea{
 	line-height: 2rem;
-	height: 2rem;
 	font-size: 0.75rem;
 	position: relative;
 }
 .editarea .input{
-	padding-left: 2rem;
+	padding-left: 3.5rem;
 	height: 2rem;
 	box-sizing: border-box;
+}
+.bd{
+	border-bottom: 1px solid #eee;	
 }
 .editarea .input>input{
 	width: 100%;
 	height: 100%;
+	line-height: 2rem;
 	font-size: 0.75rem;
 }
 .deleteEdit{
@@ -290,4 +301,66 @@ section,.list{
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
+.set{
+	color: #438BCB;
+}
+.sex_set{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	appearance: none;
+	-webkit-appearance: none;
+	font-size:0.8rem;
+	color: #333;
+	background:none;
+	padding-right:2rem;
+	box-sizing:border-box;
+	direction: rtl;
+}
+.inputs{
+	padding: 0 0.9rem;
+	margin: 2.5rem 0 0.5rem;
+	background-color: #fff;
+	width:100%;
+	box-sizing: border-box;
+}
+.idcode{
+	padding: 0.5rem 0.8rem;
+	background-color: #438BCB;
+	font-size: 0.7rem;
+	color: #fff;
+	text-align: center;
+	border-radius: 4px;
+	outline: none;
+}
+.tel{
+	box-sizing: border-box;
+	border-bottom: 2px solid #F6F5FA;
+}
+.tel i{
+	font-size: 1rem;
+	color: #B4B4B4;
+	vertical-align: middle;
+}
+.tel input{
+	height: 2rem;
+	font-size: 0.8rem;
+	line-height: 2rem;
+	color: #333;
+}
+.mybtn{
+	font-size: 0.8rem;
+	width: 90%;
+	margin: 0.5rem 5%;
+	box-sizing: border-box;
+}
+input:disabled{
+	background-color: #fff;
+}
+.show1,.show2{
+	display: none;
+}
+/*抢单成功页面*/
 

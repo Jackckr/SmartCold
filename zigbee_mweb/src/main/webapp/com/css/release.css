@@ -192,12 +192,7 @@ section{
 	text-indent: 10px;
 	display: inline-block;
 	min-width: 60%;
-	/*height: 1.8rem;*/
 	font-size: 0.75rem;
-	/*-webkit-appearance:none;
-	appearance:none;
-	border:none;
-	background-color: #FFFFFF;*/
 	color: #555;
 }
 .houseinfo>li .bg{
