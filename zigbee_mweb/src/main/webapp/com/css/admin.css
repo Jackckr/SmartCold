@@ -263,9 +263,11 @@ section,.list{
 	color: #555;
 }
 /*修改昵称*/
+.nopad{
+	padding: 0 0.9rem;
+}
 .editarea{
 	line-height: 2rem;
-	height: 2rem;
 	font-size: 0.75rem;
 	position: relative;
 }
@@ -273,6 +275,9 @@ section,.list{
 	padding-left: 3.5rem;
 	height: 2rem;
 	box-sizing: border-box;
+}
+.bd{
+	border-bottom: 1px solid #eee;	
 }
 .editarea .input>input{
 	width: 100%;
