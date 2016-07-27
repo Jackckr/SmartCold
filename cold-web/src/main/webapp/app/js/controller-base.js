@@ -97,7 +97,7 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 					$scope.coldstorageTmp = data[0]?data[0].temperature:null;
 				})
 		$scope.currentData = [{id:1,key:"Temp"},{id:2,key:"Temp"},{id:3,key:"Temp"},{id:5,key:"Temp"},
-		                      {id:7,key:"Temp"},{id:8,key:"Temp"},{id:5,key:"PWC"},{id:8,key:"swicth"}]
+		                      {id:7,key:"Temp"},{id:8,key:"Temp"},{id:5,key:"PWC"},{id:8,key:"switch"}]
 		angular.forEach($scope.currentData,function(item,index){
 			$http.get("/i/findLastNDataByApid?deviceid=" + item.id + "&key=" + item.key + "&n=1").success(
 					function(data,status,headers,config){
