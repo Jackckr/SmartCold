@@ -24,6 +24,24 @@ $(window).resize(function(event) {getFont();});
 //自动改变页面根目录字体大小
 //返回上一级
 function goback(){window.history.back();}
+/*倒计时获取验证码*/
+var countdown=60; 
+function setTime(obj) { 
+    if (countdown == 0) { 
+        obj.removeAttribute("disabled");    
+        obj.style.background='#438BCB';
+        obj.innerHTML="获取验证码"; 
+        countdown = 60; 
+        return;
+    } else { 
+        obj.setAttribute("disabled", true); 
+        obj.style.background='#ccc';
+        obj.innerHTML="重新发送(" + countdown + ")"; 
+        countdown--; 
+    } 
+
+	setTimeout(function() {setTime(obj)},1000) 
+}
 $(function() {
 	//双箭头js
 	$('.next').click(function(){
