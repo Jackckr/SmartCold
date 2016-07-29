@@ -35,12 +35,13 @@
     <div class="inputs show1">
 		<div class="tel">
 			<i class="iconfont">&#xe608;</i>
-			<input type="tel" value="15655972560" disabled=""/>
+			<!--<input type="tel" value="15655972560" disabled=""/>-->
+			<p>15655972560</p>
 			<button class="idcode fr" onclick="setTime(this)">获取验证码</button>
 		</div>
 		<div class="tel">
 			<i class="iconfont ">&#xe639;</i>
-			<input type="tel" placeholder="请输入手机验证码"/>
+			<input type="tel" id="code1" placeholder="请输入手机验证码"/>
 		</div>
 	</div>
 	<button class="mybtn edit2 show1">验证</button>	
@@ -49,15 +50,15 @@
     <div class="inputs show2">
 		<div class="tel">
 			<i class="iconfont">&#xe608;</i>
-			<input type="tel" placeholder="请输入新手机号"/>
+			<input type="tel" id="telNum" placeholder="请输入新手机号"/>
 			<button class="idcode fr" onclick="setTime(this)">获取验证码</button>
 		</div>
 		<div class="tel">
 			<i class="iconfont ">&#xe639;</i>
-			<input type="tel" placeholder="请输入手机验证码"/>
+			<input type="tel" id="code2" placeholder="请输入手机验证码"/>
 		</div>
 	</div>
-	<button class="mybtn edit3 show2" onclick="location.href='personal.html'">提交</button>	
+	<button class="mybtn edit3 show2">提交</button>	
    <script>
    	$(function(){
    		$('.edit1').click(function(){
@@ -65,10 +66,25 @@
    			$(".show1").show();
    		});
    		$('.edit2').click(function(){
-   			$(".show1").hide();
-   			$(".show2").show();
+   			if ($("#code1").val().length != 0) {   				
+	   			$(".show1").hide();
+	   			$(".show2").show();
+   			} else{
+   				alert('验证码不能为空,请输入验证码！')
+   			}
    		});
-   		
+   		$('.edit3').click(function(){
+   			if ($("#code2").val().length != 0) {   				
+	   			window.location.href='personal.html'
+   			} else{
+   				if ($("#telNum").val().length == 0) {
+   					alert('请输入手机号！')
+   				} else{
+   					alert('验证码不能为空,请输入验证码！')
+   				}
+   				
+   			}
+   		});
    	})
    </script>
 </body>
