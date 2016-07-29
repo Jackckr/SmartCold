@@ -362,12 +362,6 @@ section.show{
 	margin: 0.5rem 5%;
 	box-sizing: border-box;
 }
-.inputs.show1 .tel p{
-	display: inline-block;
-	line-height: 2rem;
-	font-size: .8rem;
-	color: #333;
-}
 .show1,.show2{
 	display: none;
 }
