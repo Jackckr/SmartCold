@@ -5,112 +5,113 @@
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <title>我的</title>
+    <meta content="telephone=no" name="format-detection" />
+     <title>我的</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
+   <script type="text/javascript" src="../com/js/common.js"></script>
+
 </head>
 <body>
     <header>
+    	<div class="area fl">
+    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+    	</div>
     	<div class="txt">
     		我的
     	</div>
     </header>
-    <section class="clearfix">
+    <section class="clearfix" onclick="">
     	<div class="img fl">
     		<img src="../com/img/women.png"/>
     	</div>
     	<div class="rightArrow fr">
     		<a href=""><i class="iconfont">&#xe60d;</i></a>
     	</div>
-    	<div class="name" onclick="location.href='personal.html'">
+    	<!--<div class="name" >
     		<p class="nameinfo">木棉先森</p>
     		<p class="position">
     			<i class="iconfont">&#xe66e;</i>
 				上海-长宁区-中山公园
     		</p>
-    	</div>
+    	</div>-->
     </section>
-    <ul class="list list_icon">
-    	<li class="clearfix" onclick="location.href='admin-mycold.html'">
+    <ul class="list adminInfo">
+    	<li class="clearfix" onclick="location.href='editname.html'">
     		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6b6;</i>
+	    		<span class="fl">昵称</span>
 	    	</div>
 	    	<div class="rightArrow fr">
 	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
 	    	</div>
 	    	<div class="name">
-	    		<p class="list_name">我的冷库</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" onclick="location.href='admin-myrelease.html'">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe666;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的发布</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" onclick="location.href='admin-myorder.html'">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6a4;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的订单</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" onclick="location.href='comment.html'">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6b4;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的点评</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" onclick="location.href='recenscan.html'">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6b8;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">最近浏览</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" onclick="location.href='customer.html'">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6a6;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">联系客服</p>
+	    		<p class="list_name">木棉先森</p>
 	    	</div>
     	</li>
     	<li class="clearfix">
     		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6a5;</i>
+	    		<span>性别</span>
 	    	</div>
 	    	<div class="rightArrow fr">
 	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
 	    	</div>
 	    	<div class="name">
-	    		<p class="list_name">设置</p>
+	    		<p class="list_name set">
+	    			<select class="sex_set">
+		    			<option value="男">男</option>
+		    			<option value="女">女</option>
+		    			<option value="保密">保密</option>
+		    		</select>
+	    		</p>	    		
+	    	</div>
+    	</li>
+    	<li class="clearfix">
+    		<div class="myicon fl">
+	    		<span>家乡</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name">北京</p>
+	    	</div>
+    	</li>
+    	<li class="clearfix">
+    		<div class="myicon fl">
+	    		<span>常居地</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name">上海</p>
+	    	</div>
+    	</li>
+    	<li class="clearfix" onclick="location.href='editphone.html'">
+    		<div class="myicon fl">
+	    		<span>手机号</span> 
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name">15655972560</p>
+	    	</div>
+    	</li>
+    	<li class="clearfix" onclick="location.href='password.html'">
+    		<div class="myicon fl">
+	    		<span>密码</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name set">修改</p>
 	    	</div>
     	</li>
     </ul>
+    <button class="mybtn" onclick="location.href='login.html'">退出登录</button>
     <ul class="footer">
         <li>           
             <a href="../index.html">
@@ -137,5 +138,6 @@
             </a>
         </li>
     </ul>
+
 </body>
 </html>

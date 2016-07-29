@@ -5,17 +5,17 @@
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <title>冷库360首页</title>
+    <title>链库网</title>
     <link rel="stylesheet" type="text/css" href="com/css/common.css">
     <link rel="stylesheet" type="text/css" href="com/css/index.css">
     <script type="text/javascript" src="com/js/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="com/js/TouchSlide.1.1.source.js"></script>
     <script type="text/javascript" src="com/js/angular.min.js"></script>
     <script type="text/javascript" src="com/js/common.js"></script>
-<!--     <script type="text/javascript" src="app/js/home.js"></script> -->
+    <script type="text/javascript" src="app/js/home.js"></script>
 </head>
 <body >
-  <div ng-app="mapp"  ng-controller="homecl">
+  <div ng-app="app"  ng-controller="homecontroller">
 <!-- header -->
     <div class="header">    	
     	<div class="area fl">
@@ -40,9 +40,11 @@
 				</div>
 				<div class="bd">
 					<ul>
-						<li><img _src="com/img/banner3.jpg" src="com/img/blank.png" /></li>
-						<li><img _src="com/img/banner2.jpg" src="com/img/blank.png"/></li>
+						<li><img _src="com/img/banner0.jpg" src="com/img/blank.png"/></li>
 						<li><img _src="com/img/banner1.jpg" src="com/img/blank.png"/></li>
+						<li><img _src="com/img/banner2.jpg" src="com/img/blank.png"/></li>
+						<li><img _src="com/img/banner3.jpg" src="com/img/blank.png"/></li>
+						<li><img _src="com/img/banner4.jpg" src="com/img/blank.png"/></li>
 					</ul>
 				</div>
 			</div>
@@ -74,12 +76,18 @@
 				</a>
 			</div>
 			<div class="grid_kid">
-				<a href="#">
+				<a href="view/map.html">
 					<i class="iconfont">&#xe660;</i>
 					<p class="info">地图</p>					
 				</a>
 			</div>
 			<div class="grid_kid">
+				<a href="view/cold360.html">
+					<i class="iconfont">&#xe66c;</i>
+					<p class="info">冷库360</p>					
+				</a>
+			</div>
+			<!--<div class="grid_kid">
 				<a href="view/storehouse.html">					
 					<i class="iconfont">&#xe661;</i>
 					<p class="info">仓位</p>					
@@ -96,11 +104,11 @@
 					<i class="iconfont">&#xe66b;</i>
 					<p class="info">冷运 </p>				
 				</a>
-			</div>
+			</div>-->
 		</section>
 	<!--grid-->
 	<!--coldlist-->
-        <div class="coldlist">
+        <!--<div class="coldlist">
 	        <ul class="imgTable"   >
 	        	<li class="imgCell"  ng-repeat=" rdc in shrdcList ">
 					<a href="view/colddetail.html">
@@ -117,7 +125,7 @@
 				</li>
 	        </ul>
         </div>
-    </div>
+    </div>-->
 <!-- session end-->
 <!-- footer -->
     <ul class="footer">
@@ -134,9 +142,9 @@
             </a>
         </li>
         <li>          
-            <a href="view/cold360.html">
-                <i class="iconfont">&#xe66c;</i>
-                <p class="info">冷库360</p>
+            <a href="view/share.html">
+                <i class="iconfont">&#xe6bc;</i>
+                <p class="info">共享</p>
             </a>
         </li>
         <li>            

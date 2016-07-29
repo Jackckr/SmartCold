@@ -148,7 +148,7 @@ section{
 /*黄色星星*/
 .imgCell{
 	border-bottom: 4px solid #F5F5F9;
-	padding:0.2rem 0!important; 
+	padding:0.2rem 0.9rem; 
 	position: relative;
 }
 .imgCell:last-child{
@@ -181,7 +181,7 @@ section{
 	color: #fff;
 	background-color: #428BCA;
 	border-radius: 3px;
-	margin-right: 0.5rem;
+	margin-right: 0.9rem;
 	position: absolute;
 	bottom: 0.5rem;
 	right: 0;

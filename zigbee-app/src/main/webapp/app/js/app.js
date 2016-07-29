@@ -1,5 +1,6 @@
-var ER={root:"http://liankur.com/"};
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox', 'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation', 'jkuri.gallery']);
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
+    'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation', 'jkuri.gallery']);
+
 angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
 	$.ajax({
 	      url: '/i/user/findUser',
@@ -8,7 +9,7 @@ angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
 	    }).success(function(data){
 	    	user = data;
 	    	angular.bootstrap(document, ['ColdWeb']);
-	    });
+	    })
 });
 coldWeb.run(function (editableOptions, naviService,userService) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
