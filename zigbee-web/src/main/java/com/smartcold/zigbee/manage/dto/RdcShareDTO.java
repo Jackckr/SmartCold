@@ -22,6 +22,8 @@ public class RdcShareDTO {
 	private String unit1; // 单位1 ->出发地
 	private String unit2; // 单位1 ->目的地
 	private String attrvalue;// 附加值
+	private String attrvalue1;
+	private String attrvalue2;
 	private String codeLave1; //
 	private String codeLave2; //
 	private String codeLave3; //
@@ -123,6 +125,18 @@ public class RdcShareDTO {
 	}
 	public void setAttrvalue(String attrvalue) {
 		this.attrvalue = attrvalue;
+	}
+	public String getAttrvalue1() {
+		return attrvalue1;
+	}
+	public void setAttrvalue1(String attrvalue1) {
+		this.attrvalue1 = attrvalue1;
+	}
+	public String getAttrvalue2() {
+		return attrvalue2;
+	}
+	public void setAttrvalue2(String attrvalue2) {
+		this.attrvalue2 = attrvalue2;
 	}
 	public String getCodeLave1() {
 		return codeLave1;

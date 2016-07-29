@@ -110,7 +110,7 @@
 <!--     	AND (CURRENT_TIMESTAMP () BETWEEN s.validStartTime AND s.validEndTime )  -->
 		<if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
-		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!-- 区域 -->
+		<if test="provinceid !=null and  provinceid != ''"> and s.provinceid = #{provinceid} </if> <!-- 区域 -->
 		<if test="goodtype !=null and  goodtype != ''"> and s.codeLave1 in (${goodtype})</if> <!-- 品类类型 -->
 		GROUP BY
 		s.id
@@ -118,20 +118,7 @@
 		s.updatetime DESC
 	</select>
 	<!-- 配送查询 -->
-	<select id="getSEPSList" parameterType="map"
-		resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
-		<!-- SELECT type_name FROM comm_mata_data f WHERE f.source_type='ps_fm_type' 
-			and f.type_code=1 LIMIT 1; SELECT s.id, s.rdcID, s.releaseID, s.title, s.note, 
-			s.unit1, s.unit2, s.typeText, date_format(s.validStartTime,'%Y-%m-%d %H:%i:%s') 
-			validStartTime, date_format(s.validEndTime,'%Y-%m-%d %H:%i:%s') validEndTime, 
-			s.applyID, s.bookings, s.stauts, r.address, r.name, f.type_name codeLave1,f1.type_name 
-			codeLave2, (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category 
-			= 'storagePic' ORDER BY id DESC LIMIT 1) logo FROM shared_info s LEFT JOIN 
-			rdc r ON s.rdcID = r.id left join comm_mata_data f on f.type_code=s.codeLave1 
-			and f.source_type='ps_fm_type' left join comm_mata_data f1 on f1.type_code=s.codeLave2 
-			and f.source_type='ps_cl_type' WHERE s.stauts = 1 and s.dataType=2 AND (CURRENT_TIMESTAMP 
-			() BETWEEN s.validStartTime AND s.validEndTime) GROUP BY s.id ORDER BY s.updatetime 
-			DESC -->
+	<select id="getSEPSList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		SELECT
 		s.id,
 		s.rdcID,
@@ -140,20 +127,17 @@
 		s.unit1,
 		s.unit2,
 		s.typeText,
-<!-- 		s.attrvalue, -->
-		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
-		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
 		s.applyID,
 		s.bookings,
 		s.stauts,
 		s.detlAddress,
-		<!-- r.address, -->
-		<!-- r.name, -->
+		IFNULL(	date_format(s.validStartTime,'%Y-%m-%d'),s.validStartTime)validStartTime,
+		IFNULL(	date_format(s.validEndTime, '%Y-%m-%d' ),s.validEndTime) validEndTime,
 		(SELECT type_name FROM comm_mata_data f WHERE f.source_type='ps_fm_type' and f.type_code=s.codeLave1 LIMIT 1 )codeLave1,
 	    (select type from storagetruck k where k.id=s.codeLave3 LIMIT 1 ) codeLave3,
 		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) logo
 		FROM
-		shared_info s 
+		   shared_info s 
 		LEFT JOIN rdc r ON s.rdcID = r.id
 		WHERE
 		s.stauts = #{sstauts} and s.dataType=#{datatype} 
@@ -204,7 +188,7 @@
 		<if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
-		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!-- 区域 -->
+		<if test="provinceid !=null and  provinceid != ''"> and s.provinceid = #{provinceid} </if> <!-- 区域 -->
 		<if test="managetype !=null and  managetype != ''"> and t.managetype in (${managetype})</if> <!-- 经营类型 -->
 <!-- 		<if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype in (${storagetempertype})</if> 温度类型 -->
 		<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in (${storagetempertype})</if> <!-- 温度类型 -->
@@ -238,6 +222,8 @@
 								<if test=" applyID       !=0">	                        applyID         =#{applyID          }  ,</if>
 								<if test=" bookings      !=0">	                        bookings        =#{bookings         }  ,</if>
 								<if test=" attrvalue     !=null and attrvalue  !=''">	attrvalue       =#{attrvalue        }  ,</if>
+								<if test=" attrvalue1     !=null and attrvalue1  !=''">	attrvalue1      =#{attrvalue1        }  ,</if>
+								<if test=" attrvalue2     !=null and attrvalue2  !=''">	attrvalue2      =#{attrvalue2        }  ,</if>
 								<if test=" telephone     !=null and telephone  !=''">	telephone       =#{telephone        }  ,</if>
 								<if test=" note          !=null and note       !=''">	note            =#{note             }  ,</if>
 								<if test=" stauts        !=0">	                        stauts          =#{stauts           }  ,</if>

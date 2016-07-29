@@ -210,10 +210,9 @@ nav{
 /* ========================================== */
 /*货品区域*/
 .goods,.car,.rent{
-    width: 90%;
+    width: 80%;
     height: 40px;
     margin:10px auto;
-    padding-left: 100px;
 }
 .goods>span,.car>span,.rent>span{
     position: relative;
