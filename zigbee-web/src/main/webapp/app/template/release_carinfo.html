@@ -2,6 +2,8 @@
         <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
         <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
         <style>
+        	.btn.btn-default{background-color:#eee;}
+        	.btn.btn-default.active{background-color:#428BCA;color:#fff;}
            .shar_none{display: none;}
            .control-label{line-height: 32px;}
            .form-control{display: inline-block;}
@@ -120,27 +122,27 @@
 				<div class="infoList clearfix infoDate">
 					<div class="pull-left col-sm-4 control-label ">发车时间:</div>
 					<div class="pull-left">
-					   <div id="st_sttime" style="width: 600px;display: -moz-box;"> 
-		                     <select id="sl_attrvalue1"  name="attrvalue1"   class="form-control " style="width:110px;" onchange="releaseCarInfo.changtimemode(this);">
+					   <div id="st_sttime" class="clearfix" style="width: 600px;display: -moz-box;"> 
+		                     <select id="sl_attrvalue1"  name="attrvalue1"   class="form-control pull-left" style="width:80px;margin-right:5px;" onchange="releaseCarInfo.changtimemode(this);">
 		                         <option value="1">每天</option>
 		                         <option value="2">每周</option>
 		                         <option value="3">单次</option>
 		                     </select>
-							  <div  class="btn-group shar_none obj_hide time_mod2" data-toggle="buttons">
-								   <label class="btn btn-primary"><input type="checkbox" class="wk_erw" value="-">一</label>
-								   <label class="btn btn-primary"><input type="checkbox" class="wk_erw" value="二">二 </label>
-								   <label class="btn btn-primary"><input type="checkbox" class="wk_erw" value="三">三</label>
-								   <label class="btn btn-primary"><input type="checkbox" class="wk_erw" value="四">四</label>
-								   <label class="btn btn-primary"><input type="checkbox" class="wk_erw" value="五">五</label>
-								   <label class="btn btn-primary"><input type="checkbox" class="wk_erw" value="六">六</label>
-								   <label class="btn btn-primary"><input type="checkbox" class="wk_erw" value="日">日</label>
+							  <div  class="btn-group shar_none obj_hide time_mod2 pull-left clearfix" data-toggle="buttons" style="margin-right:5px;">
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="-">一</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="二">二 </label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="三">三</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="四">四</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="五">五</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="六">六</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="日">日</label>
 								</div>
-							  <div id="sattim_div">	
-		                       <input id="txt_sattim"  type="text" value="09:00" class="form-control  obj_hide time_mod1 time_mod2" style="width:110px;">
+							  <div id="sattim_div" class="pull-left">	
+		                       <input id="txt_sattim"  type="text" value="09:00" class="form-control  obj_hide time_mod1 time_mod2" style="width:85px;">
 		                       </div>
-		                       <div  class="shar_none obj_hide time_mod3" style="width: 375px">
+		                       <div  class="shar_none obj_hide time_mod3 pull-left" style="width: 375px;">
 		                          <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-		                          <input id="reservationtime" type="text" style="width: 325px" name="reservation"  class="form-control"   class="span4" onfocus="releaseCarInfo.checktime(this);"/>
+		                          <input id="reservationtime" type="text" style="width: 320px;padding-right:0;" name="reservation"  class="form-control"   class="span4" onfocus="releaseCarInfo.checktime(this);"/>
 		                       </div>
 		                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
 		                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
@@ -151,11 +153,11 @@
 					<div class="pull-left col-sm-4 control-label ">到达时间:</div>
 					<div class="pull-left">
 		                 <div style="width: 600px;"> 
-		                     <select id="sl_attrvalue2"  name="attrvalue2" class="form-control" style="width:110px;" >
+		                     <select id="sl_attrvalue2"  name="attrvalue2" class="form-control" style="width:80px;" >
 		                         <option value="1">当天</option>
 		                         <option value="2">次日</option>
 		                     </select>
-		                     <input id="txt_endtim" type="text" value="09:00" class="form-control shar_none time_mod1 time_mod2" style="width:110px;" onfocus="releaseCarInfo.checktime(this);">
+		                     <input id="txt_endtim" type="text" value="09:00" class="form-control shar_none time_mod1 time_mod2" style="width:85px;" onfocus="releaseCarInfo.checktime(this);">
 		                 </div>
 		              </div>
 				</div>
