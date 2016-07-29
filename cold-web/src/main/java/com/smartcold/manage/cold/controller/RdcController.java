@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.controller;
 
 
 import com.smartcold.manage.cold.dao.RdcMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,9 @@ public class RdcController {
 
     @RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
     @ResponseBody
-    public Object findRdcList() {
+    public Object findRdcList(@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+    		@RequestParam(value="pageSize", defaultValue="20") int pageSize ) {
+//    	PageHelper.startPage(pageNum, pageSize);
         return rdcMapper.findRdcList();
     }
 

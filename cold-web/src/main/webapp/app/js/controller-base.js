@@ -92,6 +92,18 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 		$scope.init_table('#temperature-chart8',8,"Temp",$scope.startTime,$scope.endTime);
 		$scope.init_table('#temperature-chart9',5,"PWC",$scope.startTime,$scope.endTime);
 		$scope.init_table('#temperature-chart10',8,"switch",$scope.startTime,$scope.endTime);
+		$http.get("/i/coldStorage/getTemperInfoById?storageID=" + $scope.choseStorage.id + "&npoint=1").success(
+				function(data,status,headers,config){
+					$scope.coldstorageTmp = data[0]?data[0].temperature:null;
+				})
+		$scope.currentData = [{id:1,key:"Temp"},{id:2,key:"Temp"},{id:3,key:"Temp"},{id:5,key:"Temp"},
+		                      {id:7,key:"Temp"},{id:8,key:"Temp"},{id:5,key:"PWC"},{id:8,key:"switch"}]
+		angular.forEach($scope.currentData,function(item,index){
+			$http.get("/i/findLastNDataByApid?deviceid=" + item.id + "&key=" + item.key + "&n=1").success(
+					function(data,status,headers,config){
+						$scope.currentData[index].value = data[0]?data[0].value:null;
+					})
+		})
 	}
     
 	$rootScope.logout = function () {

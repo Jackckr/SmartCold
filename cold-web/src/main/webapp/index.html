@@ -4,59 +4,70 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SmartCold</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" >
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css" >
-    <link rel="stylesheet" href="assets/fonts/iconfont.css" >
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="assets/css/ionicons.min.css" >
-    <!-- Theme style -->
-    <link rel="stylesheet" href="assets/css/AdminLTE.css" >
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>SmartCold</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/fonts/iconfont.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="assets/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="assets/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link rel="stylesheet" href="assets/css/skins/diaodiao-skin.css" >
+<link rel="stylesheet" href="assets/css/skins/diaodiao-skin.css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" href="bower_components/highlightjs/styles/default.css" />
-    <link rel="stylesheet" href="bower_components/pace/themes/white/pace-theme-flash.css" />
-    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css">
-    <link rel="stylesheet" href="bower_components/angular-multi-select-master/isteven-multi-select.css">
-    <link rel="stylesheet" href="bower_components/angucomplete/angucomplete.css">
-    <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker-bs3.css">
-    <style type="text/css">
-    	a.disabled {
-		    color: #AAAAAA !important;
-   	 		cursor: not-allowed;
-		    pointer-events: none;
-		    text-decoration: none;
-		}
-		.menu-title{
-			margin-left:10px;
-		}
-		.iconfont{
-	    font-family:"iconfont" !important;
-	    font-size:16px;font-style:normal;
-	    -webkit-font-smoothing: antialiased;
-	    -webkit-text-stroke-width: 0.2px;
-	    -moz-osx-font-smoothing: grayscale;
-	    }
-    </style>
-  </head>
-  <!--
+<link rel="stylesheet"
+	href="bower_components/highlightjs/styles/default.css" />
+<link rel="stylesheet"
+	href="bower_components/pace/themes/white/pace-theme-flash.css" />
+<link rel="stylesheet"
+	href="bower_components/angular-xeditable/dist/css/xeditable.css">
+<link rel="stylesheet"
+	href="bower_components/angular-multi-select-master/isteven-multi-select.css">
+<link rel="stylesheet"
+	href="bower_components/angucomplete/angucomplete.css">
+<link rel="stylesheet"
+	href="assets/plugins/daterangepicker/daterangepicker-bs3.css">
+<style type="text/css">
+a.disabled {
+	color: #AAAAAA !important;
+	cursor: not-allowed;
+	pointer-events: none;
+	text-decoration: none;
+}
+
+.menu-title {
+	margin-left: 10px;
+}
+
+.iconfont {
+	font-family: "iconfont" !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
+}
+</style>
+</head>
+<!--
   BODY TAG OPTIONS:
   =================
   Apply one or more of the following classes to get the
@@ -76,331 +87,341 @@ scratch. This page gets rid of all links and provides the needed markup only.
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-  <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
 
-      <!-- Main Header -->
-      <header class="main-header">
+		<!-- Main Header -->
+		<header class="main-header">
 
-        <!-- Logo -->
-        <a href="#/about" class="logo">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>SC</b></span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>SMART</b>COLD</span>
-        </a>
+			<!-- Logo -->
+			<a href="#/about" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+				<span class="logo-mini"><b>SC</b></span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg"><b>SMART</b>COLD</span>
+			</a>
 
-        <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation">
-          <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-          </a>
-          <!-- Navbar Right Menu -->
-          <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-              <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu">
-                <!-- Menu toggle button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-envelope-o" style="color:#fff"></i>
-                  <span class="label label-success">4</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 4 messages</li>
-                  <li>
-                    <!-- inner menu: contains the messages -->
-                    <ul class="menu">
-                      <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <!-- User Image -->
-                            <img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <!-- Message title and timestamp -->
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <!-- The message -->
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                    </ul><!-- /.menu -->
-                  </li>
-                  <li class="footer"><a href="#">See All Messages</a></li>
-                </ul>
-              </li><!-- /.messages-menu -->
+			<!-- Header Navbar -->
+			<nav class="navbar navbar-static-top" role="navigation">
+				<!-- Sidebar toggle button-->
+				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+					role="button"> <span class="sr-only">Toggle navigation</span>
+				</a>
+				<!-- Navbar Right Menu -->
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<!-- Messages: style can be found in dropdown.less-->
+						<li class="dropdown messages-menu">
+							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> <i class="fa fa-envelope-o"
+								style="color: #fff"></i> <span class="label label-success">4</span>
+						</a>
+							<ul class="dropdown-menu">
+								<li class="header">You have 4 messages</li>
+								<li>
+									<!-- inner menu: contains the messages -->
+									<ul class="menu">
+										<li>
+											<!-- start message --> <a href="#">
+												<div class="pull-left">
+													<!-- User Image -->
+													<img src="assets/img/user2-160x160.jpg" class="img-circle"
+														alt="User Image">
+												</div> <!-- Message title and timestamp -->
+												<h4>
+													Support Team <small><i class="fa fa-clock-o"></i> 5
+														mins</small>
+												</h4> <!-- The message -->
+												<p>Why not buy a new awesome theme?</p>
+										</a>
+										</li>
+										<!-- end message -->
+									</ul> <!-- /.menu -->
+								</li>
+								<li class="footer"><a href="#">See All Messages</a></li>
+							</ul>
+						</li>
+						<!-- /.messages-menu -->
 
-              <!-- Notifications Menu -->
-              <li class="dropdown notifications-menu">
-                <!-- Menu toggle button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-bell-o" style="color:#fff"></i>
-                  <span class="label label-warning">10</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 10 notifications</li>
-                  <li>
-                    <!-- Inner Menu: contains the notifications -->
-                    <ul class="menu">
-                      <li><!-- start notification -->
-                        <a href="#">
-                          <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                        </a>
-                      </li><!-- end notification -->
-                    </ul>
-                  </li>
-                  <li class="footer"><a href="#">View all</a></li>
-                </ul>
-              </li>
-              <!-- Tasks Menu -->
-              <li class="dropdown tasks-menu">
-                <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-flag-o" style="color:#fff"></i>
-                  <span class="label label-danger">9</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 9 tasks</li>
-                  <li>
-                    <!-- Inner menu: contains the tasks -->
-                    <ul class="menu">
-                      <li><!-- Task item -->
-                        <a href="#">
-                          <!-- Task title and progress text -->
-                          <h3>
-                            Design some buttons
-                            <small class="pull-right">20%</small>
-                          </h3>
-                          <!-- The progress bar -->
-                          <div class="progress xs">
-                            <!-- Change the css width attribute to simulate progress -->
-                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                              <span class="sr-only">20% Complete</span>
-                            </div>
-                          </div>
-                        </a>
-                      </li><!-- end task item -->
-                    </ul>
-                  </li>
-                  <li class="footer">
-                    <a href="#">View all tasks</a>
-                  </li>
-                </ul>
-              </li>
-              <!-- User Account Menu -->
-              <li class="dropdown user user-menu">
-                <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs text-white" ng-bind="user.username"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- The user image in the menu -->
-                  <li class="user-header">
-                    <img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
-                    </p>
-                  </li>
-                  <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">详细</a>
-                    </div>
-                    <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat" ng-click="logout()">退出</a>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-      <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+						<!-- Notifications Menu -->
+						<li class="dropdown notifications-menu">
+							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> <i class="fa fa-bell-o"
+								style="color: #fff"></i> <span class="label label-warning">10</span>
+						</a>
+							<ul class="dropdown-menu">
+								<li class="header">You have 10 notifications</li>
+								<li>
+									<!-- Inner Menu: contains the notifications -->
+									<ul class="menu">
+										<li>
+											<!-- start notification --> <a href="#"> <i
+												class="fa fa-users text-aqua"></i> 5 new members joined
+												today
+										</a>
+										</li>
+										<!-- end notification -->
+									</ul>
+								</li>
+								<li class="footer"><a href="#">View all</a></li>
+							</ul>
+						</li>
+						<!-- Tasks Menu -->
+						<li class="dropdown tasks-menu">
+							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> <i class="fa fa-flag-o"
+								style="color: #fff"></i> <span class="label label-danger">9</span>
+						</a>
+							<ul class="dropdown-menu">
+								<li class="header">You have 9 tasks</li>
+								<li>
+									<!-- Inner menu: contains the tasks -->
+									<ul class="menu">
+										<li>
+											<!-- Task item --> <a href="#"> <!-- Task title and progress text -->
+												<h3>
+													Design some buttons <small class="pull-right">20%</small>
+												</h3> <!-- The progress bar -->
+												<div class="progress xs">
+													<!-- Change the css width attribute to simulate progress -->
+													<div class="progress-bar progress-bar-aqua"
+														style="width: 20%" role="progressbar" aria-valuenow="20"
+														aria-valuemin="0" aria-valuemax="100">
+														<span class="sr-only">20% Complete</span>
+													</div>
+												</div>
+										</a>
+										</li>
+										<!-- end task item -->
+									</ul>
+								</li>
+								<li class="footer"><a href="#">View all tasks</a></li>
+							</ul>
+						</li>
+						<!-- User Account Menu -->
+						<li class="dropdown user user-menu">
+							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> <span class="hidden-xs text-white"
+								ng-bind="user.username"></span>
+						</a>
+							<ul class="dropdown-menu">
+								<!-- The user image in the menu -->
+								<li class="user-header"><img
+									src="assets/img/user2-160x160.jpg" class="img-circle"
+									alt="User Image">
+									<p>
+										Alexander Pierce - Web Developer <small>Member since
+											Nov. 2012</small>
+									</p></li>
+								<!-- Menu Body -->
+								<li class="user-body">
+									<div class="col-xs-4 text-center">
+										<a href="#">Followers</a>
+									</div>
+									<div class="col-xs-4 text-center">
+										<a href="#">Sales</a>
+									</div>
+									<div class="col-xs-4 text-center">
+										<a href="#">Friends</a>
+									</div>
+								</li>
+								<!-- Menu Footer-->
+								<li class="user-footer">
+									<div class="pull-left">
+										<a href="#" class="btn btn-default btn-flat">详细</a>
+									</div>
+									<div class="pull-right">
+										<a href="#" class="btn btn-default btn-flat"
+											ng-click="logout()">退出</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="main-sidebar">
 
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-          <!-- /.search form -->
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				<!-- /.search form -->
 
-          <!-- Sidebar Menu -->
-          <div isteven-multi-select selection-mode="single" input-model="rdcs" output-model="vm.choserdcs"
-               button-label="name" item-label="name" tick-property="isOn" helper-elements="filter" 
-               max-height="200px" on-item-click="changeRdc()" ng-if="user.role == 1"></div>
-          <ul class="sidebar-menu text-white">
-            <li class="treeview">
-            <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
-            <span class="menu-title text-white" style="font-size: large">监控</span></a>
-            <!-- Optionally, you can add icons to the links -->
-            <ul class="treeview-menu">
-            <li class="treeview">
-              <a href="#/about"><i class="icon iconfont">&#xe678;</i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-               <li ng-repeat="storage in mystorages"><a ng-click="toMyStorageTemper(storage.id)">
-                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
-               </li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#/about"><i class="icon iconfont">&#xe689;</i><span class="menu-title">能耗</span><i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-               <li><a><i class="fa fa-circle-o"></i>耗电量</a></li>
-               <li><a><i class="fa fa-circle-o"></i>耗水量</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#/about"><i class="icon iconfont">&#xe676;</i><span class="menu-title">库内设施</span><i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-               <li>
-                 <a><i class="fa fa-circle-o"></i>冷库门<i class="fa fa-angle-left pull-right"></i></a>
-                 <ul class="treeview-menu">
-	               <li ng-repeat="storage in mystorages"><a ng-click="toMyStorageDoor(storage.id)">
-	                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
-	               </li>
-	              </ul>
-               </li>
-               <li>
-                 <a><i class="fa fa-circle-o"></i>月台门<i class="fa fa-angle-left pull-right"></i></a>
-                 <ul class="treeview-menu">
-	               <li ng-repeat="storage in mystorages"><a ng-click="">
-	                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
-	               </li>
-	              </ul>
-               </li>
-               <li><a><i class="#/about"><span>其他设施</span></i></a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#/about"><i class="icon iconfont">&#xe6b9;</i><span class="menu-title">货物流通</span><i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-               <li><a><i class="fa fa-circle-o"></i>货物流通量</a></li>
-               <li><a><i class="fa fa-circle-o"></i>进货温度</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#/about"><i class="icon iconfont">&#xe669;</i><span class="menu-title">制冷系统</span><i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-               <li>
-                 <a><i class="fa fa-circle-o"></i>制冷机组<i class="fa fa-angle-left pull-right"></i></a>
-                 <ul class="treeview-menu" style="display: none;">
-                    <li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)">
-                    <i class="fa fa-circle-o"></i> {{compressor.name}}</a></li>
-                  </ul>
-               </li>
-               <li><a><i class="fa fa-circle-o"></i>冷凝系统</a></li>
-               <li><a><i class="fa fa-circle-o"></i>蒸发系统(风机)</a></li>
-              </ul>
-            </li>
-            </ul>
-            </li>
-            </ul>
-            <ul class="sidebar-menu text-white">
-            <li class="treeview">
-              <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe682;</i>
-              <span class="menu-title text-white" style="font-size: large">分析及报告</span></a>
-              <ul class="treeview-menu">
-               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>温度分析</a></li>
-               <li><a href="#/report-daily-energy"><i class="fa fa-circle-o"></i>能耗分析</a></li>
-               <li><a href="#/report-daily-goods"><i class="fa fa-circle-o"></i>物流设施分析</a></li>
-               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>制冷系统分析</a></li>
-               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>分析报告</a></li>
-               <li><a href="#/report-daily-data"><i class="fa fa-circle-o"></i>历史数据查询</a></li>
-              </ul>
-            </li>
-            </ul>
-            <ul class="sidebar-menu text-white">
-            <li class="treeview"><a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe680;</i>
-            <span class="menu-title text-white" style="font-size: large">报警</span></a></li>
-            </ul>
-            <ul class="sidebar-menu text-white">
-            <li class="treeview">
-              <a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe6bb;</i>
-              <span class="menu-title text-white" style="font-size: large">维护管理</span></a>
-              <ul class="treeview-menu">
-               <li><a href="#/about"><i class="fa fa-circle-o"></i>定期保养维护提醒</a></li>
-               <li><a href="#/about"><i class="fa fa-circle-o"></i>故障维修记录</a></li>
-               <li><a href="#/about"><i class="fa fa-circle-o"></i>维修服务评价</a></li>
-              </ul>
-            </li>
-            </ul>
-            <ul class="sidebar-menu text-white">
-            <li class="treeview"><a href="#designStorage"><i class="icon iconfont" style="color:#ffffff">&#xe6ba;</i>
-            <span class="menu-title text-white" style="font-size: large">选型</span></a></li>
-            </ul>
-          <!-- Sidebar Menu -->
-          <ul class="sidebar-menu" ng-if="user.role == 2">
-            <li class="header">导航</li>
-            <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>
-            <li class="active"><a href="" ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>
-            <li class="active"><a href=""><i class="fa fa-link"></i> <span>分析</span></a></li>
-            <li class="active"><a href=""><i class="fa fa-link"></i> <span>设置</span></a></li>
-          </ul><!-- /.sidebar-menu -->
+				<!-- Sidebar Menu -->
+				<div isteven-multi-select selection-mode="single" input-model="rdcs"
+					output-model="vm.choserdcs" button-label="name" item-label="name"
+					tick-property="isOn" helper-elements="filter" max-height="200px"
+					on-item-click="changeRdc()" ng-if="user.role == 1"></div>
+				<ul class="sidebar-menu text-white">
+					<li class="treeview"><a href=""><i class="icon iconfont"
+							style="color: #ffffff">&#xe68f;</i> <span
+							class="menu-title text-white" style="font-size: large">监控</span></a>
+						<!-- Optionally, you can add icons to the links -->
+						<ul class="treeview-menu">
+							<li class="treeview"><a href="#/about"><i
+									class="icon iconfont">&#xe678;</i><span class="menu-title">温度</span><i
+									class="fa fa-angle-left pull-right"></i></a>
+								<ul class="treeview-menu">
+									<li ng-repeat="storage in mystorages"><a
+										ng-click="toMyStorageTemper(storage.id)"> <i
+											class="fa fa-circle-o"></i>{{storage.name}}
+									</a></li>
+								</ul></li>
+							<li class="treeview"><a href="#/about"><i
+									class="icon iconfont">&#xe689;</i><span class="menu-title">能耗</span><i
+									class="fa fa-angle-left pull-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a><i class="fa fa-circle-o"></i>耗电量</a></li>
+									<li><a><i class="fa fa-circle-o"></i>耗水量</a></li>
+								</ul></li>
+							<li class="treeview"><a href="#/about"><i
+									class="icon iconfont">&#xe676;</i><span class="menu-title">库内设施</span><i
+									class="fa fa-angle-left pull-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a><i class="fa fa-circle-o"></i>冷库门<i
+											class="fa fa-angle-left pull-right"></i></a>
+										<ul class="treeview-menu">
+											<li ng-repeat="storage in mystorages"><a
+												ng-click="toMyStorageDoor(storage.id)"> <i
+													class="fa fa-circle-o"></i>{{storage.name}}
+											</a></li>
+										</ul></li>
+									<li><a><i class="fa fa-circle-o"></i>月台门<i
+											class="fa fa-angle-left pull-right"></i></a>
+										<ul class="treeview-menu">
+											<li ng-repeat="storage in mystorages"><a ng-click="">
+													<i class="fa fa-circle-o"></i>{{storage.name}}
+											</a></li>
+										</ul></li>
+									<li><a><i class="#/about"><span>其他设施</span></i></a></li>
+								</ul></li>
+							<li class="treeview"><a href="#/about"><i
+									class="icon iconfont">&#xe6b9;</i><span class="menu-title">货物流通</span><i
+									class="fa fa-angle-left pull-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a><i class="fa fa-circle-o"></i>货物流通量</a></li>
+									<li><a><i class="fa fa-circle-o"></i>进货温度</a></li>
+								</ul></li>
+							<li class="treeview"><a href="#/about"><i
+									class="icon iconfont">&#xe669;</i><span class="menu-title">制冷系统</span><i
+									class="fa fa-angle-left pull-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a><i class="fa fa-circle-o"></i>制冷机组<i
+											class="fa fa-angle-left pull-right"></i></a>
+										<ul class="treeview-menu" style="display: none;">
+											<li ng-repeat="compressor in compressors"><a href=""
+												ng-click="toMyCompressor(compressor.id)"> <i
+													class="fa fa-circle-o"></i> {{compressor.name}}
+											</a></li>
+										</ul></li>
+									<li><a><i class="fa fa-circle-o"></i>冷凝系统</a></li>
+									<li><a><i class="fa fa-circle-o"></i>蒸发系统(风机)</a></li>
+								</ul></li>
+						</ul></li>
+				</ul>
+				<ul class="sidebar-menu text-white">
+					<li class="treeview"><a href=""><i class="icon iconfont"
+							style="color: #ffffff">&#xe682;</i> <span
+							class="menu-title text-white" style="font-size: large">分析及报告</span></a>
+						<ul class="treeview-menu">
+							<li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>温度分析</a></li>
+							<li><a href="#/report-daily-energy"><i
+									class="fa fa-circle-o"></i>能耗分析</a></li>
+							<li><a href="#/report-daily-goods"><i
+									class="fa fa-circle-o"></i>物流设施分析</a></li>
+							<li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>制冷系统分析</a></li>
+							<li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>分析报告</a></li>
+							<li><a href="#/report-daily-data"><i
+									class="fa fa-circle-o"></i>历史数据查询</a></li>
+						</ul></li>
+				</ul>
+				<ul class="sidebar-menu text-white">
+					<li class="treeview"><a href="#/about"><i
+							class="icon iconfont" style="color: #ffffff">&#xe680;</i> <span
+							class="menu-title text-white" style="font-size: large">报警</span></a></li>
+				</ul>
+				<ul class="sidebar-menu text-white">
+					<li class="treeview"><a href="#/about"><i
+							class="icon iconfont" style="color: #ffffff">&#xe6bb;</i> <span
+							class="menu-title text-white" style="font-size: large">维护管理</span></a>
+						<ul class="treeview-menu">
+							<li><a href="#/about"><i class="fa fa-circle-o"></i>定期保养维护提醒</a></li>
+							<li><a href="#/about"><i class="fa fa-circle-o"></i>故障维修记录</a></li>
+							<li><a href="#/about"><i class="fa fa-circle-o"></i>维修服务评价</a></li>
+						</ul></li>
+				</ul>
+				<ul class="sidebar-menu text-white">
+					<li class="treeview"><a href="#designStorage"><i
+							class="icon iconfont" style="color: #ffffff">&#xe6ba;</i> <span
+							class="menu-title text-white" style="font-size: large">选型</span></a></li>
+				</ul>
+				<!-- Sidebar Menu -->
+				<ul class="sidebar-menu" ng-if="user.role == 2">
+					<li class="header">导航</li>
+					<!-- Optionally, you can add icons to the links -->
+					<li class="active"><a href="" ng-click="toMap()"><i
+							class="fa fa-link"></i> <span>地图模式</span></a></li>
+					<li class="active"><a href="" ng-click="toReport()"><i
+							class="fa fa-link"></i> <span>报表</span></a></li>
+					<li class="active"><a href=""><i class="fa fa-link"></i> <span>分析</span></a></li>
+					<li class="active"><a href=""><i class="fa fa-link"></i> <span>设置</span></a></li>
+				</ul>
+				<!-- /.sidebar-menu -->
 
-        </section>
-        <!-- /.sidebar -->
-      </aside>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper body-color">
-        <!-- Main content -->
-        <div class="main-content body-color text-white">
-            <div  ui-view>
-            </div>
-	     </div>
-      </div><!-- /.content-wrapper -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper body-color">
+			<!-- Main content -->
+			<div class="main-content body-color text-white">
+				<div ui-view></div>
+			</div>
+		</div>
+		<!-- /.content-wrapper -->
 
-      <!-- Main Footer -->
-      <footer class="main-footer text-white">
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.</strong>. 备案号：沪ICP备 16004753
-      </footer>
+		<!-- Main Footer -->
+		<footer class="main-footer text-white">
+			<!-- Default to the left -->
+			<strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.
+			</strong>. 备案号：沪ICP备 16004753
+		</footer>
 
-      <!-- Add the sidebar's background. This div must be placed
+		<!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
-    </div><!-- ./wrapper -->
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<!-- ./wrapper -->
 
-    <!-- REQUIRED JS SCRIPTS -->
+	<!-- REQUIRED JS SCRIPTS -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="assets/js/app.min.js"></script>
+	<!-- jQuery 2.1.4 -->
+	<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="assets/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="assets/js/app.min.js"></script>
 
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+	<!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the
          fixed layout. -->
-  </body>
+</body>
 
 <script src="bower_components/pace/pace.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script
+	src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script
+	src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="bower_components/highlightjs/highlight.pack.js"></script>
-<script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+<script
+	src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
-<script src="bower_components/angular-multi-select-master/isteven-multi-select.js"></script>
+<script
+	src="bower_components/angular-multi-select-master/isteven-multi-select.js"></script>
 <script src="bower_components/angucomplete/angucomplete.js"></script>
 <script src="bower_components/at-table/dist/angular-table.min.js"></script>
 <script src="assets/js/three.min.js"></script>
@@ -409,7 +430,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- <script src="assets/js/echarts-all.js"></script> -->
 <!--<script src="assets/js/echarts.min.js"></script>-->
 <script src="assets/js/highcharts.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1b7XOzUYmHvOTXlchvZuDzns"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=1b7XOzUYmHvOTXlchvZuDzns"></script>
 <script src="app/js/threeTemplate.js"></script>
 <script src="app/js/app.js"></script>
 <script src="app/js/controller-base.js"></script>

@@ -450,8 +450,8 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	$scope.load = function () {
 		$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
 		$http.get('/i/rdc/findRdcList').success(function(data,headers,config,status){
-			$scope.rdcList = data;
-			$scope.rdcModal = data[0];
+			$scope.rdcList = data.list;
+			$scope.rdcModal = data.list[0];
 			if($scope.time == 'daily'){
 				url = "/i/report/daily?storageId=" + $scope.rdcModal.id + "&begin=" 
 				+ $scope.getDateTimeStringBefore(0) + "&end=" + $scope.getDateTimeStringBefore(31);

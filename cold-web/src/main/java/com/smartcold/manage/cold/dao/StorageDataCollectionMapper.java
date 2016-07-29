@@ -11,8 +11,8 @@ public interface StorageDataCollectionMapper {
 
 	void batchInsert(List<StorageDataCollectionEntity> batchEntity);
 
-	List<StorageDataCollectionEntity> findLastNPoint(@Param("apid") String apid, @Param("key") String key,
-			@Param("limit") int limit);
+	List<StorageDataCollectionEntity> findLastNPoint(@Param("apid") String apid, @Param("deviceid") String deviceid,
+			@Param("key") String key, @Param("limit") int limit);
 
 	List<StorageDataCollectionEntity> findByTime(@Param("apid") String apid, @Param("deviceid") String deviceid,
 			@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime);

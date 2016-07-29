@@ -75,6 +75,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         					$rootScope.compressors = data;
         				})
         	}
+
             var compressors = [];
             var mystorages = [];
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
@@ -112,17 +113,17 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                     $rootScope.mystorages = mystorages;
                     $rootScope.rdcId = result[0].rdcId;
                     if($rootScope.user.role == 1){
-                    $http.get('/i/rdc/findRdcList').success(function(data,status,headers,config){
-                		$rootScope.rdcs = data;
-                		angular.forEach(data,function(item){
-                			if(item.id == $rootScope.rdcId){
-                				item.isOn = true;
-                				$rootScope.vm = {choserdc : item};
-                			}else{
-                				item.isOn = false;
-                			}
-                		})
-                	})
+	                    $http.get('/i/rdc/findRdcList').success(function(data,status,headers,config){
+	                		$rootScope.rdcs = data;
+	                		angular.forEach(data,function(item){
+	                			if(item.id == $rootScope.rdcId){
+	                				item.isOn = true;
+	                				$rootScope.vm = {choserdc : item};
+	                			}else{
+	                				item.isOn = false;
+	                			}
+	                		})
+	                	})
                     }
                 })
             }
