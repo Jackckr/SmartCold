@@ -218,7 +218,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         pressureChart.setOption(pressureOption);
     }
     
-    $scope.runMonitor = function(){
+    $scope.runMonitor = function(data){
     	// 环形图表示运行监控
         var runChart = echarts.init($("#runChart").get(0));
 

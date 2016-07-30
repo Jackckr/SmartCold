@@ -102,7 +102,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                         "userId": $rootScope.user.id
                     }
                 }).success(function (result) {
-                    $rootScope.mystorages = mystorages;
+                    $rootScope.mystorages = result;
                     $rootScope.storageModal = $rootScope.mystorages[0];
                     $rootScope.rdcId = result[0].rdcId;
                     if($rootScope.user.role == 1){

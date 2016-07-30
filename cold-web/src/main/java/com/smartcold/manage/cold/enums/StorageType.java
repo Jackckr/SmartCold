@@ -12,7 +12,9 @@ public enum StorageType {
 	
 	COMPRESSOR_PRESS_L(5, "newcompressor", "压缩机低压"),
 	
-	COMPRESSOR_PRESS_H(6, "newcompressor", "压缩机高压");
+	COMPRESSOR_PRESS_H(6, "newcompressor", "压缩机高压"),
+	
+	COMPRESSOR_LIQUID(7, "newcompressor", "压缩机液位状态");
 	
 	private int type;
 	private String table;
