@@ -261,9 +261,19 @@ section.show{
     color: #438BCB;
     font-size: 0.75rem;
 }
-.tel p{
-	font-size: 1rem;
+.tel .contact{
+	font-size: 0.8rem;
+	color: #438BCB;
+}
+.tel .contact+p{
+	font-size: 0.8rem;
 	color: #555;
+	line-height: 2rem;
+	margin-bottom: 1rem;
+}
+.tel .contact+p a{
+	color: #f60;
+	text-decoration: underline;
 }
 /*修改昵称*/
 .nopad{
