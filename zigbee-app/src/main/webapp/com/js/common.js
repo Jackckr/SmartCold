@@ -36,7 +36,7 @@ function setTime(obj) {
         return;        
     } else { 
     	if ($(obj).siblings('input').val().length==0) {
-    		alert('手机号不能为空！');
+    		alert('输入不能为空！');
     		return false;
     	} else{    		
 	        obj.setAttribute("disabled", true); 

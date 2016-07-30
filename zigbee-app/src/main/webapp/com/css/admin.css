@@ -69,6 +69,7 @@ section,.list{
 	width:100%;
 	padding: 0.5rem 0.9rem;
 	box-sizing: border-box;
+	position: relative;
 }
 section.show{
 	padding: 0 0.9rem;
@@ -261,6 +262,15 @@ section.show{
     color: #438BCB;
     font-size: 0.75rem;
 }
+.logo{
+	width: 7rem;
+	height: 2.63rem;
+	margin: 1rem auto;
+}
+.logo img{
+	max-width: 100%;
+	height: auto;
+}
 .tel .contact{
 	font-size: 0.8rem;
 	color: #438BCB;
@@ -271,9 +281,18 @@ section.show{
 	line-height: 2rem;
 	margin-bottom: 1rem;
 }
-.tel .contact+p a{
+.tel .contact+p>a{
+	display: block;
 	color: #f60;
 	text-decoration: underline;
+}
+#headImg{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity:0;
 }
 /*修改昵称*/
 .nopad{
@@ -340,7 +359,11 @@ section.show{
 	box-sizing: border-box;
 }
 .idcode{
-	padding: 0.5rem 0.8rem;
+	padding: 0 0.8rem;
+	height: 1.6rem;
+	box-sizing: border-box;
+	line-height: 1.6rem;
+	margin-top: 0.2rem;
 	background-color: #438BCB;
 	font-size: 0.7rem;
 	color: #fff;
@@ -349,8 +372,13 @@ section.show{
 	outline: none;
 }
 .tel{
+	padding: 0.2rem 0;
 	box-sizing: border-box;
 	border-bottom: 2px solid #F6F5FA;
+	margin-bottom: 0.5rem;
+}
+.tel:first-child{
+	margin-bottom: 0;
 }
 .inputs .tel:last-child{
 	border-bottom: 0;
@@ -376,4 +404,6 @@ section.show{
 	display: none;
 }
 /*抢单成功页面*/
-
+.rel {
+	padding: 0.5rem 0.9rem 0;
+}
