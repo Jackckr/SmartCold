@@ -6,19 +6,21 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface RdcMapper {
-    int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(Rdc record);
+	int insert(Rdc record);
 
-    int insertSelective(Rdc record);
+	int insertSelective(Rdc record);
 
-    Rdc selectByPrimaryKey(Integer id);
+	Rdc selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Rdc record);
+	int updateByPrimaryKeySelective(Rdc record);
 
-    int updateByPrimaryKey(Rdc record);
+	int updateByPrimaryKey(Rdc record);
 
-    List<Rdc> findRdcList();
+	List<Rdc> findRdcList();
 
-    List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);
+	List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);
+
+	List<Rdc> searchRdc(@Param("filter") String filter);
 }

@@ -1,12 +1,13 @@
 var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
-                                         'ngCookies', 'xeditable', 'isteven-multi-select','angucomplete','angular-table']);
+                                         'ngCookies', 'xeditable','angucomplete-alt','angular-table']);
 var user;
 
 angular.element(document).ready(function($ngCookies, $location) {
 	$.ajax({
 	      url: '/i/user/findUser',
 	      type: "GET",
-	      dataType: 'json'
+	      dataType: 'json',
+	      cache: false
 	    }).success(function(data){
 	    	user = data;
 	    	if(user.username == null){
@@ -62,20 +63,33 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             $rootScope.user = user;
         },
         setStorage: function () {
-        	$rootScope.changeRdc = function(){
+        	$rootScope.changeRdc = function(value){
+        		if(value){
+        			if(value.originalObject == $rootScope.vm.choserdc){
+        				return
+        			}
+            		$rootScope.vm.choserdc = value.originalObject
+        		}
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + $rootScope.vm.choserdc.id).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
         					$rootScope.rdcId = $rootScope.vm.choserdc.id;
+        					$rootScope.storageModal = data[0];
         				});
         		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + $rootScope.vm.choserdc.id).success(
         				function(data,status,headers,config){
         					$rootScope.compressors = data;
         				})
         	}
+
             var compressors = [];
             var mystorages = [];
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
+            	$http.get('/i/rdc/findRDCByUserid?userid=' + $rootScope.user.id).success(
+            			function(data,status,headers,config){
+            				$rootScope.vm = {choserdc:data[0]}
+            			})
+            	
                 // 拉取压缩机组列表
                 $http.get('/i/compressorGroup/findByUserId', {
                     params: {
@@ -93,30 +107,14 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                     $rootScope.compressors = compressors;
                 })
                 // 拉取冷库列表
-                $http.get('/i/coldStorage/findByUserId', {
+                $http.get('/i/newStorage/findByUserId', {
                     params: {
                         "userId": $rootScope.user.id
                     }
                 }).success(function (result) {
-                    console.log("result:" + result);
-                    for (var i = 0; i < result.length; i++) {
-                        console.log("mystorages:" + result[i].coldStorageID + ",rdcId: " + result[i].rdcId);
-                        mystorages.push({
-                            name: result[i].name,
-                            id: result[i].coldStorageID
-                        });
-                    }
-
-                    $rootScope.mystorages = mystorages;
+                    $rootScope.mystorages = result;
+                    $rootScope.storageModal = $rootScope.mystorages[0];
                     $rootScope.rdcId = result[0].rdcId;
-                    $http.get('/i/rdc/findRdcList').success(function(data,status,headers,config){
-                		$rootScope.rdcs = data;
-                		angular.forEach(data,function(item){
-                			if(item.id == $rootScope.rdcId){
-                				$rootScope.vm = {choserdc : item};
-                			}
-                		})
-                	})
                 })
             }
 

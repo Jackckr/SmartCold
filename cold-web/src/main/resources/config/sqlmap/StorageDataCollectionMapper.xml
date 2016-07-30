@@ -34,6 +34,9 @@
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>
+	    <if test="deviceid != null">
+		    AND `deviceid` = #{deviceid} 
+	    </if>
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if> 
@@ -48,11 +51,13 @@
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>
+	    <if test="deviceid != null">
+		    AND `deviceid` = #{deviceid} 
+	    </if>
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
 	    AND addtime > #{startTime} AND addtime &lt; #{endTime} 
-	    ORDER BY addtime DESC 
 	
 	</select>
 

@@ -210,10 +210,9 @@ nav{
 /* ========================================== */
 /*货品区域*/
 .goods{
-    width: 90%;
+    width: 80%;
     height: 40px;
     margin:10px auto;
-    padding-left: 100px;
 }
 .goods>span{
     position: relative;
@@ -324,7 +323,7 @@ em{
     margin-top: 20px;
 }
 .btn{
-    width: 100px;
+    /* width: 100px;
     height: 30px;
-    font-size: 12px!important;
+    font-size: 12px!important; */
 }

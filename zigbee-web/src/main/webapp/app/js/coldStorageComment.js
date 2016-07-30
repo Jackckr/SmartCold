@@ -344,7 +344,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     }
     
       
-   $http.get('/i/user/findUser').success(function(data){
+    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data){
         $rootScope.user = data;
 	 });
 

@@ -236,6 +236,12 @@ coldWeb.filter('sizeformat', function () {
     }
 });
 
+coldWeb.filter('objectLength',function(){
+    return function(obj,len){
+        return Object.keys(obj).length + (len?len:0);
+    }
+});
+
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/home");

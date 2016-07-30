@@ -263,6 +263,10 @@ header .unauthenticated
 
             align-items: center;
 }
+.unauthenticated.dropdown{
+	height:55px;
+    padding-top:20px;	
+}
 header .unauthenticated > a
 {
     font-size: 14px;

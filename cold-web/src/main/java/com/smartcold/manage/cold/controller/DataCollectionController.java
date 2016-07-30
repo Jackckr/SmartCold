@@ -55,16 +55,17 @@ public class DataCollectionController extends BaseController {
 
 	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findLastNDataByApid(String apid, String key, int n) {
-		return storageDataCollectionDao.findLastNPoint(apid, key, n);
+	public Object findLastNDataByApid(String apid, String deviceid, String key, int n) {
+		return storageDataCollectionDao.findLastNPoint(apid, deviceid, key, n);
 	}
 
 	@RequestMapping(value = "/findByTime", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findByTime(String apid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+	public Object findByTime(String apid, String deviceid, String key,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 
-		return storageDataCollectionDao.findByTime(apid, key, startTime, endTime);
+		return storageDataCollectionDao.findByTime(apid, deviceid, key, startTime, endTime);
 	}
 
 }

@@ -52,13 +52,10 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 		};
 	}
 	
-	$scope.loadData = function(){
-		var lineChart = echarts.init($('#temperature-chart')[0]);
-		var lineChart2 = echarts.init($('#temperature-chart2')[0]);
-		bothTime = $scope.picktime.split(" - ");
-		$scope.startTime = bothTime[0];
-		$scope.endTime = bothTime[1];
-		$http.get("/i/findByTime?key=Temp&startTime=" + $scope.startTime + "&endTime=" + $scope.endTime).success(
+	$scope.init_table = function(tableName,deviceid,key,startTime,endTime){
+		var lineChart = echarts.init($(tableName)[0]);
+		$http.get("/i/findByTime?deviceid=" + deviceid+ "&key=" + key + 
+				"&startTime=" + $scope.startTime + "&endTime=" + $scope.endTime).success(
 				function(data,status,config,headers){
 			xData = [];
 			temperature = [];
@@ -69,6 +66,13 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 			option = getOption(xData,temperature);
 			lineChart.setOption(option);
 		})
+	}
+	
+	$scope.loadData = function(){
+		var lineChart = echarts.init($('#temperature-chart')[0]);
+		bothTime = $scope.picktime.split(" - ");
+		$scope.startTime = bothTime[0];
+		$scope.endTime = bothTime[1];
 		$http.get("/i/coldStorage/findInfoByIdTime?storageId=" + $scope.choseStorage.id + "&startTime=" + $scope.startTime + "&endTime=" + $scope.endTime).success(
 				function(data,status,config,headers){
 			xData2 = [];
@@ -78,7 +82,27 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 				temperature2.push(item.temperature);
 			})
 			option = getOption(xData2,temperature2);
-			lineChart2.setOption(option);
+			lineChart.setOption(option);
+		})
+		$scope.init_table('#temperature-chart1',1,"Temp",$scope.startTime,$scope.endTime);
+		$scope.init_table('#temperature-chart2',2,"Temp",$scope.startTime,$scope.endTime);
+		$scope.init_table('#temperature-chart3',3,"Temp",$scope.startTime,$scope.endTime);
+		$scope.init_table('#temperature-chart5',5,"Temp",$scope.startTime,$scope.endTime);
+		$scope.init_table('#temperature-chart7',7,"Temp",$scope.startTime,$scope.endTime);
+		$scope.init_table('#temperature-chart8',8,"Temp",$scope.startTime,$scope.endTime);
+		$scope.init_table('#temperature-chart9',5,"PWC",$scope.startTime,$scope.endTime);
+		$scope.init_table('#temperature-chart10',8,"switch",$scope.startTime,$scope.endTime);
+		$http.get("/i/newStorage/getTempByNums?oid=" + $scope.choseStorage.id + "&nums=1").success(
+				function(data,status,headers,config){
+					$scope.coldstorageTmp = data.temperature?data.temperature:null;
+				})
+		$scope.currentData = [{id:1,key:"Temp"},{id:2,key:"Temp"},{id:3,key:"Temp"},{id:5,key:"Temp"},
+		                      {id:7,key:"Temp"},{id:8,key:"Temp"},{id:5,key:"PWC"},{id:8,key:"switch"}]
+		angular.forEach($scope.currentData,function(item,index){
+			$http.get("/i/findLastNDataByApid?deviceid=" + item.id + "&key=" + item.key + "&n=1").success(
+					function(data,status,headers,config){
+						$scope.currentData[index].value = data[0]?data[0].value:null;
+					})
 		})
 	}
     
