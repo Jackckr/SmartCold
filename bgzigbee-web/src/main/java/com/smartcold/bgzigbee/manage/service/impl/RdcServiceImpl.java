@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.smartcold.bgzigbee.manage.dao.*;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcDTO;
@@ -13,16 +14,19 @@ import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
 
+import com.smartcold.bgzigbee.manage.util.BaiduMapUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:14)
@@ -53,6 +57,9 @@ public class RdcServiceImpl implements RdcService {
 
 	@Autowired
 	private FileDataMapper fileDataDao;
+
+	@Autowired
+	private CityListMapper cityListDao;
 
 	@Override
 	public List<RdcEntity> findRdcList() {
@@ -165,7 +172,12 @@ public class RdcServiceImpl implements RdcService {
                 item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
             }
             rdcAddDTO.setStoragePics(storageFiles);
-//			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
+
+			List<FileDataEntity> honorFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_HONOR_PIC);
+			for (FileDataEntity item : honorFiles) {
+				item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+			}
+			rdcAddDTO.setHonorPics(honorFiles);
 
             String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
             for (int i = 0; i < truck.length; i++) {
@@ -287,6 +299,34 @@ public class RdcServiceImpl implements RdcService {
 	public boolean isNameUnique(String name) {
 		int count = rdcDao.checkName(name);
 		return count==0;
+	}
+
+	@Override
+	public Map<String, String> geocoderLatitude(RdcEntity rdc) {
+		Map<String, String> result = Maps.newHashMap();
+		if (!StringUtils.isEmpty(rdc.getAddress())) {
+			String cityName = "";
+			if (rdc.getCityid() > 0) {
+				CityListEntity cityInfo = cityListDao.findCityById(rdc.getCityid());
+				if (cityInfo != null) {
+					cityName = cityInfo.getCityName();
+				}
+			}
+			Map<String, String> geocoderLatitude = new BaiduMapUtil().getGeocoderLatitude(cityName + rdc.getAddress());
+			String lng = geocoderLatitude.get("lng");
+			String lat = geocoderLatitude.get("lat");
+			if (!StringUtils.isEmpty(lng) && !StringUtils.isEmpty(lat)) {
+				result.put("lng", lng);
+				result.put("lat", lat);
+				System.out.println("地址解析成功: " + rdc.getId() + "," + rdc.getName());
+				return result;
+			} else {
+				System.out.println("地址解析失败,无法定位: " + rdc.getId() + "," + rdc.getName());
+			}
+		} else {
+			System.out.println("详细地址Address为空,无法解析: " + rdc.getId() + "," + rdc.getName());
+		}
+		return null;
 	}
 
 	@Override

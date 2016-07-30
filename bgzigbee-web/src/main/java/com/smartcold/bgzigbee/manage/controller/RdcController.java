@@ -9,10 +9,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.mchange.v1.util.ArrayUtils;
+import com.smartcold.bgzigbee.manage.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,16 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
-import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
-import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcMapper;
-import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageManageTypeMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageRefregMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageTemperTypeMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
@@ -92,6 +85,9 @@ public class RdcController {
 
 	@Autowired
 	private SpiderCollectionConfigMapper spiderCollectionConfigDao;
+
+	@Autowired
+	private StorageHonorMapper storageHonorDao;
 
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
@@ -166,13 +162,17 @@ public class RdcController {
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object add(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
-			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
-			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
-		// MultipartFile[] files = { file0, file1, file2, file3, file4,
-		// arrangePic };
+	public Object add(HttpServletRequest request,
+					  @RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
+					  @RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
+					  @RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
+					  @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7,
+					  @RequestParam(required = false) MultipartFile file0,
+					  @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
+					  @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
+					  @RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
+		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
@@ -195,6 +195,9 @@ public class RdcController {
 		rdcEntity.setContact("");
 		rdcEntity.setPosition("");
 		rdcEntity.setPowerConsume(0);
+		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
+		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
 
 		rdcDao.insertRdc(rdcEntity);
 
@@ -227,8 +230,6 @@ public class RdcController {
 		// 图片上传
 		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
 		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
-		// List<UploadFileEntity> uploadFileEntities = new
-		// ArrayList<UploadFileEntity>();
 		for (MultipartFile file : files) {
 			if (file == null) {
 				continue;
@@ -244,17 +245,28 @@ public class RdcController {
 		if (!storageFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(storageFiles);
 		}
-		// ftpService.uploadFileList(uploadFileEntities);
-		// rdcExtEntity.setStoragepiclocation(new
-		// Gson().toJson(storagepicLocations));
+        // save honorPic
+		List<FileDataEntity> honorFiles = new ArrayList<FileDataEntity>();
+		for (MultipartFile file : honorfiles) {
+			if (file == null) {
+				continue;
+			}
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
+			honorFiles.add(fileDataEntity);
+		}
+		if (!honorFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(honorFiles);
+		}
 
 		// save arrangePic
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
-			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
-			// rdcExtEntity.setArrangepiclocation(dir + "/" + fileName);
 			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(arrangeFile);
@@ -268,18 +280,16 @@ public class RdcController {
 	@RequestMapping(value = "/updateRdc", method = RequestMethod.POST)
 	@ResponseBody
 	public Object update(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
-			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
-			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO	) throws Exception {
-		// System.out.println(URLDecoder.decode(rdcAddDTO.getRemark(),
-		// "UTF-8").length());
-		/*
-		 * if (URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8").length()>125) {
-		 * return new BaseDto(-1); }
-		 */
-		// MultipartFile[] files = { file0, file1, file2, file3, file4,
-		// arrangePic };
+						 @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
+						 @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
+						 @RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO,
+						 @RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
+						 @RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
+						 @RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
+						 @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7) throws Exception {
+
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
+		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
 		MultipartFile arrangePic = arrangePics;
 
 		int rdcId = rdcAddDTO.getRdcId();
@@ -295,6 +305,9 @@ public class RdcController {
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
+		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
+		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
 
 		rdcDao.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
@@ -327,12 +340,6 @@ public class RdcController {
 		rdcExtEntity.setFacility(URLDecoder.decode(rdcAddDTO.getFacility(), "UTF-8"));
 		rdcExtEntity.setCompanydevice((byte) rdcAddDTO.getCompanyDevice());
 
-		/*
-		 * rdcExtEntity.setCompanystaff((byte)0);
-		 * rdcExtEntity.setStorageheight((byte)0);
-		 * rdcExtEntity.setStoragestruct((byte)0);
-		 */
-
 		String dir = String.format("%s/rdc/%s", baseDir, rdcAddDTO.getRdcId());
 		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
 		for (MultipartFile file : files) {
@@ -341,7 +348,6 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			// uploadFileEntities.add(uploadFileEntity);
 			ftpService.uploadFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
@@ -349,6 +355,22 @@ public class RdcController {
 		}
 		if (!storageFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(storageFiles);
+		}
+		// save honorPic
+		List<FileDataEntity> honorFiles = new ArrayList<FileDataEntity>();
+		for (MultipartFile file : honorfiles) {
+			if (file == null) {
+				continue;
+			}
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
+			honorFiles.add(fileDataEntity);
+		}
+		if (!honorFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(honorFiles);
 		}
 		// save arrangePic
 		if (arrangePic != null) {
@@ -468,6 +490,28 @@ public class RdcController {
 		spiderCollectionConfigDao.deleteConfig(rdcid);
 
 		return new ResultDto(0, "删除成功");
+	}
+
+	@RequestMapping(value = "/findAllColdStorageHonor", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findAllColdStorageHonor() {
+		return storageHonorDao.findAll();
+	}
+
+	@RequestMapping(value = "/updateHonorPic", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateHonorPic(int rdcId, int[] honorPic) {
+		List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcId);
+		if (!CollectionUtils.isEmpty(rdcExtByRDCId) && honorPic.length > 0) {
+			String honorPics = "";
+			for (int i = 0, size = honorPic.length; i < size; i++) {
+				honorPics = honorPics + honorPic[i];
+				if (i != size - 1) honorPics = honorPics + ",";
+			}
+			rdcExtByRDCId.get(0).setHonorpiclocation(honorPics);
+			rdcExtDao.updateRdcExt(rdcExtByRDCId.get(0));
+		}
+		return new ResultDto(0, "资质荣誉审核成功");
 	}
 
 }

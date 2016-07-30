@@ -1,0 +1,25 @@
+<div style="background-color: #F1F1F1;">
+    <div class="row" ng-if="honorPicShow.length>0">
+        <div class="pull-left" ng-repeat="item in honorPicShow"
+             style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+            <img ng-src="{{item.location}}" style="width:100%;height:100%" alt=""/>
+        </div>
+    </div>
+    <div class="row" style="position: relative;left: 40%;right: 40%">
+        <span>授予资质荣誉列表:</span>
+        <div class="checkbox" ng-repeat="honor in honorList">
+            <label>
+                <input type="checkbox" id="honor.id" name="honor.type" ng-checked="isSelected(honor.id)"
+                       ng-click="updateSelection($event,honor.id)">{{honor.type}}
+            </label>
+        </div>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2" style="padding-left: 20%;padding-right: 20%;padding-bottom: 10px">
+        <button class="btn btn-primary" ng-if="honorPicShow.length > 0" ng-click="returnAudit(honorPicShow)"
+                ng-disabled="">返回
+        </button>
+        <button class="btn btn-primary" ng-click="submit()" ng-disabled="submitButtonDisable">提交审核
+        </button>
+    </div>
+    </section>
+</div>

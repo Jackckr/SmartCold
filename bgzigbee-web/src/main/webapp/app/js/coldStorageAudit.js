@@ -1,9 +1,9 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams) {
+coldWeb.controller('coldStorageAudit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams) {
 
-    $scope.editable = false;
+    $scope.editable = true;
     $scope.totalfiles = [];
     $scope.totalhonorfiles = [];
 
@@ -149,12 +149,12 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         });
 
     });
-    
+
     function checkCommit(){
-    	if($scope.remark.length>250)
-    		return false;
-    	else
-    		return true;
+        if($scope.remark.length>250)
+            return false;
+        else
+            return true;
     }
 
     function checkInput(){
@@ -194,7 +194,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
 
         return flag;
     }
-    
+
     $scope.addFiles = function (files) {
         if($scope.totalfiles.length + files.length > 5){
             alert("最多上传五张图片");
@@ -209,7 +209,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
     }
-    
+
     $scope.drop = function(file){
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
@@ -224,23 +224,23 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             }
         })
     }
-    
+
     $scope.deletePic = function(filedata){
-    	var r = confirm("删除图片?");
-    	if(r){
-    		$http({
-    			method:'DELETE',
-    			url:'i/rdc/deleteStoragePic',
-    			params:filedata
-    		}).success(function(){
-    			var index = $scope.storagePicShow.indexOf(filedata);
-    			if(index>=0)
-    				$scope.storagePicShow.splice(index,1);
-    			else{
-    				$scope.arrangePicShow = null;
-    			}
-    		})
-    	}
+        var r = confirm("删除图片?");
+        if(r){
+            $http({
+                method:'DELETE',
+                url:'i/rdc/deleteStoragePic',
+                params:filedata
+            }).success(function(){
+                var index = $scope.storagePicShow.indexOf(filedata);
+                if(index>=0)
+                    $scope.storagePicShow.splice(index,1);
+                else{
+                    $scope.arrangePicShow = null;
+                }
+            })
+        }
     }
 
     $scope.deleteHonorPic = function(filedata){
@@ -262,82 +262,87 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.submit = function(){
-    	$scope.submitButtonDisable = true;
-    if(checkCommit()){
-        if (checkInput()){
-            data = {
-                file0: null,
-                file1: null,
-                file2: null,
-                file3: null,
-                file4: null,
-                honor0: null,
-                honor1: null,
-                honor2: null,
-                honor3: null,
-                honor4: null,
-                honor5: null,
-                honor6: null,
-                honor7: null,
-                name : encodeURI($scope.name,"UTF-8"),
-                provinceId : $scope.provinceId,
-                cityId : $scope.cityId,
-                address : encodeURI($scope.address,"UTF-8"),
-                area : $scope.area,
-                manageType : $scope.manageType,
-                storageType : $scope.storageType,
-                temperType : $scope.temperType,
-                coldTruck1 : $scope.coldTruck1,
-                coldTruck2 : $scope.coldTruck2,
-                coldTruck3 : $scope.coldTruck3,
-                coldTruck4 : $scope.coldTruck4,
-                phoneNum : $scope.phoneNum,
-                remark : $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
+        $scope.submitButtonDisable = true;
+        if(checkCommit()){
+            if (checkInput()){
+                data = {
+                    file0: null,
+                    file1: null,
+                    file2: null,
+                    file3: null,
+                    file4: null,
+                    honor0: null,
+                    honor1: null,
+                    honor2: null,
+                    honor3: null,
+                    honor4: null,
+                    honor5: null,
+                    honor6: null,
+                    honor7: null,
+                    name : encodeURI($scope.name,"UTF-8"),
+                    provinceId : $scope.provinceId,
+                    cityId : $scope.cityId,
+                    address : encodeURI($scope.address,"UTF-8"),
+                    area : $scope.area,
+                    manageType : $scope.manageType,
+                    storageType : $scope.storageType,
+                    temperType : $scope.temperType,
+                    coldTruck1 : $scope.coldTruck1,
+                    coldTruck2 : $scope.coldTruck2,
+                    coldTruck3 : $scope.coldTruck3,
+                    coldTruck4 : $scope.coldTruck4,
+                    phoneNum : $scope.phoneNum,
+                    remark : $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
-                tonnage : $scope.tonnage,
-                structure : $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
-                companyDevice : $scope.companyDevice,
-                platform : $scope.platform,
-                lihuoRoom : $scope.lihuoRoom,
-                lihuoArea : $scope.lihuoArea,
-                lihuoTemperCtr : $scope.lihuoTemperCtr,
-                storageRefreg : $scope.storageRefreg,
-                temperRecord : $scope.temperRecord,
-                capacity1 : $scope.capacity1,
-                capacity2 : $scope.capacity2,
-                capacity3 : $scope.capacity3,
-                capacity4 : $scope.capacity4,
-                capacity5 : $scope.capacity5,
-                facility : $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
-                arrangePics : $scope.arrangePic,
-                rdcId: $stateParams.rdcID
-            }
-            for(var i = 0; i < $scope.totalfiles.length; i++){
-                data["file" + i] = $scope.files[i];
-            }
-            for(var j = 0; j < $scope.totalhonorfiles.length; j++){
-                data["honor" + j] = $scope.totalhonorfiles[j];
-            }
+                    tonnage : $scope.tonnage,
+                    structure : $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
+                    companyDevice : $scope.companyDevice,
+                    platform : $scope.platform,
+                    lihuoRoom : $scope.lihuoRoom,
+                    lihuoArea : $scope.lihuoArea,
+                    lihuoTemperCtr : $scope.lihuoTemperCtr,
+                    storageRefreg : $scope.storageRefreg,
+                    temperRecord : $scope.temperRecord,
+                    capacity1 : $scope.capacity1,
+                    capacity2 : $scope.capacity2,
+                    capacity3 : $scope.capacity3,
+                    capacity4 : $scope.capacity4,
+                    capacity5 : $scope.capacity5,
+                    facility : $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
+                    arrangePics : $scope.arrangePic,
+                    rdcId: $stateParams.rdcID
+                }
+                for(var i = 0; i < $scope.totalfiles.length; i++){
+                    data["file" + i] = $scope.files[i];
+                }
+                for(var j = 0; j < $scope.totalhonorfiles.length; j++){
+                    data["honor" + j] = $scope.totalhonorfiles[j];
+                }
 
-            Upload.upload({
-                url: '/i/rdc/updateRdc',
-                headers :{ 'Content-Transfer-Encoding': 'utf-8' },
-                data: data
-            }).then(function (resp) {
-                alert("修改成功");
-                window.location.reload();
-            }, function (resp) {
-                console.log('Error status: ' + resp.status);
-            }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.name);
-            });
-        } else {
-            alert("请填写标记*的必选项在提交!");
+                Upload.upload({
+                    url: '/i/rdc/updateRdc',
+                    headers :{ 'Content-Transfer-Encoding': 'utf-8' },
+                    data: data
+                }).then(function (resp) {
+                    alert("修改成功");
+                    window.location.reload();
+                }, function (resp) {
+                    console.log('Error status: ' + resp.status);
+                }, function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    console.log('progress: ' + progressPercentage + '% ' + evt.name);
+                });
+            } else {
+                alert("请填写标记*的必选项在提交!");
+            }
+        }
+        else{
+            alert("备注长度不得250字符!");
         }
     }
-    else{
-    	alert("备注长度不得250字符!");
+
+    $scope.honorAudit = function(rdcId){
+        alert("honorAudit" + rdcId);
+        $state.go('coldStorageHonorAudit', {"rdcId": rdcId});
     }
-   }
 });

@@ -139,7 +139,8 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     }
     
     $scope.changeAudit = function(rdc){
-    	var r=confirm("通过审核？");
+		$state.go('coldStorageAudit', {"rdcID": rdc.id});
+    	/*var r=confirm("通过审核？");
     	rdc.audit = r?1:-1;
     	$http({
     		'method':'POST',	
@@ -148,7 +149,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     			'rdcID':rdc.id,
     			'audit':rdc.audit
     		}
-    	})
+    	})*/
     }
     $scope.changeAudits = function(){
     	var r=confirm("通过审核？");

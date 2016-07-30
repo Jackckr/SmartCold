@@ -88,6 +88,8 @@ public class RdcAddDTO {
 
 	private List<FileDataEntity> storagePics;
 
+	private List<FileDataEntity> honorPics;
+
 	public FileDataEntity getArrangePic() {
 		return arrangePic;
 	}
@@ -431,5 +433,13 @@ public class RdcAddDTO {
 
 	public void setStoragePicLocation(String storagePicLocation) {
 		this.storagePicLocation = storagePicLocation;
+	}
+
+	public List<FileDataEntity> getHonorPics() {
+		return honorPics;
+	}
+
+	public void setHonorPics(List<FileDataEntity> honorPics) {
+		this.honorPics = honorPics;
 	}
 }

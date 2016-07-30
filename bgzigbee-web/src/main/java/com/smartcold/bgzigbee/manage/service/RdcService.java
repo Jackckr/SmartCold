@@ -1,6 +1,7 @@
 package com.smartcold.bgzigbee.manage.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,5 +30,7 @@ public interface RdcService {
 	boolean deleteByRdcId(int rdcID);
 	
 	boolean isNameUnique(String name);
+
+	Map<String, String> geocoderLatitude(RdcEntity rdcEntity);
 
 }
