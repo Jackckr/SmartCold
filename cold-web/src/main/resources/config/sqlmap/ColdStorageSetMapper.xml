@@ -6,7 +6,7 @@
 
     <select id="findLastNPoint" parameterType="map" resultType="ColdStorageSetEntity">
         SELECT *
-        FROM `ColdStorageSet` WHERE `coldStorageID` = #{storageID} limit #{npoint}
+        FROM `ColdStorageSet` WHERE `id` = #{storageID} limit #{npoint}
     </select>
 
     <select id="findByRdcId" parameterType="map" resultType="ColdStorageSetEntity">
