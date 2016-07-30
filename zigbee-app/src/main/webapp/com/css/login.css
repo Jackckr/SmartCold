@@ -4,99 +4,169 @@ html{
 body{
 	width: 100%;
 	height: 100%;
-    background: #0078D7;
+    background: #F4F8FB;
 }
 .login{
-	width: 80%;
-	background-color: #fff;
-	margin:40% auto;
-	border-radius: 5%;
-	padding: 0.5rem 0.9rem;
-	box-sizing: border-box;
-	box-shadow: 0 1px 10px #333;
+	margin-top: 4rem;
+    padding: 0 0.9rem;
+    box-sizing: border-box;
 }
-.head{
-	text-align: center;
-	font-size: 1.5rem;
-	color: #333;
-	line-height: 3rem;
+.inputBd{
+	position: relative;
 }
-.head i{
-	font-style: italic;
+.inputBd input{
+	display: block;
+	width: 100%;
+	text-indent: 2rem;
+	padding: 0.8rem 0;
+	font-size: 0.8rem;
+	border-bottom: 1px solid #E1E4E5;
+	background-color: transparent;
+}
+.inputBd>i{
+	position: absolute;
+	top: 50%;
+	left: 0.5rem;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	font-size: 1rem;
+	color: #BDBDBE;
+}
+.mybtn{
+	display: block;
+	width: 90%;
+	margin: 1.5rem auto;
 	font-size: 0.8rem;
 }
-.head i b{
-	color: #fff;
-	padding: 0 0.25rem;
-	margin: 0.05rem;
-	border-radius: 4px;
-	background-color: #B11010;
+.register{
+	height: 2rem;
+	margin-top: 1rem;
+	line-height: 2rem;
+	display: flex;
+	display: -webkit-flex;
 }
-.number,.password{
-	height: 1.5rem;
-	line-height: 1.5rem;
-	margin-bottom: 1rem;
-	font-size: 0.75rem;
+.register div{
+	flex: 1;
+	-webkit-flex: 1;
 }
-.number input,.password input{
-	border: 1px solid #ccc;
-	height: 1.5rem;
-	line-height: 1.5rem;
-	color: #333;
-	font-size: 0.75rem;
-	appearance: none;
-	-webkit-appearance: none;
-	text-indent: 10px;
-	width: 80%;
+.register div:last-child{
+	text-align: right;
 }
-.forget{
-	font-size: 0.7rem;
-	line-height: 1.75;
+.register div a{
+	display: block;
+	font-size: .8rem;
+	color: #8D8D8E;
 }
-.forget span{
-	cursor: default;
-}
-.btnArea{
+footer{
 	width: 100%;
+	margin-top: 4rem;
+    padding: 0 0.9rem;
+    box-sizing: border-box;
+}
+.line{
+	width: 60%;
+	margin: 0 auto 1.5rem;
+	border-bottom: 1px solid #E1E4E5;
 	text-align: center;
-	padding: 0.5rem 0;
-	box-sizing: border-box;
 }
-.btnArea .mybtn{
-	width: 40%;
-	border: 1px solid transparent;
-	font-size: 0.75rem
+.line span{
+	display: inline-block;
+	font-size: .8rem;
+	color: #8D8D8E;
+	padding: 0.5rem 2rem;
+	background-color: #F4F8FB;
+	position: relative;
+	top: 1rem;
 }
-.btnArea .mybtn:first-child{
-	background-color: #fff;
-	border: 1px solid #666;
+.three{
+	display: flex;
+	display: -webkit-flex;
+}
+.three>div{
+	flex: 1;
+	-webkit-flex: 1;
+	text-align: center;
+}
+.three>div a{
+	display: inline-block;
+	width: 2.5rem;
+	height: 2.5rem;
+	background-color: #F1594B;
+	border-radius: 50%;
+	line-height: 2.5rem;
+	text-align: center;
+	color: #fff;
+}
+.three>div:nth-child(2) a{
+	background-color: #F39826;
+}
+.three>div:nth-child(3) a{
+	background-color: #448BCB;
+}
+.three>div a i{
+	font-size: 1.5rem;
+}
+/*注册*/
+header{
+	width: 100%;
+	height: 2.2rem;
+	padding:0.3rem 0.9rem;
+	box-sizing:border-box;
+	text-align: center;
+	color: #fff;
+	line-height: 1.6rem;
+}
+header>div>a{
+	display: block;
+	width: 100%;
+	height: 100%;
+	color: #448BCB;
+	line-height: 1.6rem;
+	font-size: 1rem;
+}
+header>div>a>.iconfont{
+	font-size: 1rem;
+}
+.txt{
+	height: 100%;
+	margin:0 1rem;
 	color: #333;
+	font-size:1rem;
 }
-input[type='checkbox']{
-	width: 0.8rem;
-	height: 0.8rem;
-	-webkit-appearance:none;
-	appearance:none;
-	border: 1px solid #ccc;
+section{
+	padding:0.3rem 0.9rem;
+	box-sizing:border-box;	
+	width:100%;
+	position: relative;
+	z-index: 3;
+	margin-top: .3rem;
+}
+section .inputBd input{
+	text-indent: 0;
+}
+#yzm{
+	padding-right: 4rem;
 	box-sizing: border-box;
-	position: relative;	
-	vertical-align: middle;
 }
-input[type='checkbox']:checked:before{
-	content: '';
+.notTop{
+	margin-top: 0.3rem;
+}
+.getNum{
 	position: absolute;
-	top: -0.5rem;
-	left: 0.5rem;
-    border-bottom: 3px solid #27ae60;
-    border-right: 3px solid #27ae60;
-    background-color: transparent;
-    height: 0.8rem;
-    width: 0.3rem;
-    transform: rotate(45deg);
-    transform-origin: -35% 30%;
-    transition: all 0.2s;
+	top: 50%;
+	right: 0.2rem;
+	transform: translateY(-50%);
+	font-size: 0.8rem;
+	color: #448BCB;
 }
- input[type="checkbox"]:checked{
-    transition: all 0.2s;
-    background-color: #fff;
+.blueBg{
+	background-color: #438BCB;
+}
+.blueBg .txt,.blueBg div>a>.iconfont{
+	color: #fff;
+}
+.telShow{
+	font-size: 0.8rem;
+	color: #333;
+	margin-bottom: 0.5rem;
 }
