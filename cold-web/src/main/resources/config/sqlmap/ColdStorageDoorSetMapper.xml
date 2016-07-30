@@ -9,5 +9,10 @@
         FROM `ColdStorageDoorSet` WHERE `coldStorageId` = #{coldStorageId}
         limit #{npoint}
     </select>
+    
+    <select id="findByStorageId" parameterType="map" resultType="ColdStorageDoorSetEntity">
+        SELECT *
+        FROM `ColdStorageDoorSet` WHERE `coldStorageId` = #{storageID}
+    </select>
 
 </mapper>

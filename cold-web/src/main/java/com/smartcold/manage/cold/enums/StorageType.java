@@ -2,19 +2,11 @@ package com.smartcold.manage.cold.enums;
 
 public enum StorageType {
 
-	STORAGE_TEMP(1, "newstorage", "冷库温度"),
+	STORAGE(1, "newstorage", "冷库"),
 	
-	STORAGE_POWER(2, "newstorage", "冷库电量"),
+	DOOR(2, "newdoor", "门"),
 	
-	STORAGE_DOOR(3, "newdoor", "冷库门"),
-	
-	COMPRESSOR_POWER(4, "newcompressor", "压缩机电量"),
-	
-	COMPRESSOR_PRESS_L(5, "newcompressor", "压缩机低压"),
-	
-	COMPRESSOR_PRESS_H(6, "newcompressor", "压缩机高压"),
-	
-	COMPRESSOR_LIQUID(7, "newcompressor", "压缩机液位状态");
+	COMPRESSOR(3, "newcompressor", "压缩机");
 	
 	private int type;
 	private String table;

@@ -1,21 +1,18 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.PackMapper;
 import com.smartcold.manage.cold.dao.UsageMapper;
 import com.smartcold.manage.cold.dao.WallMaterialMapper;
-import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.GoodsService;
+import com.smartcold.manage.cold.service.StorageService;
 
 @Controller
 @RequestMapping(value = "/baseInfo")
@@ -33,6 +30,8 @@ public class BaseInfoController extends BaseController {
 	@Autowired
 	private UsageMapper usageDao;
 	
+	@Autowired
+	private StorageService storageService;
 	
 	@RequestMapping(value = "/findAllGoods", method = RequestMethod.GET)
 	@ResponseBody
@@ -58,16 +57,11 @@ public class BaseInfoController extends BaseController {
 		return usageDao.findAll();
 	}
 	
-	@RequestMapping("/findAllStorageType")
+	@RequestMapping("/getKeyValueData")
 	@ResponseBody
-	public Object findAllStorageType(){
-		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
-		for(StorageType type:StorageType.values()){
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("type", String.valueOf(type.getType()));
-			map.put("desc", type.getDesc());
-			list.add(map);
-		}
-		return list;
+	public Object getKeyValueData(@RequestParam("type")Integer type, @RequestParam("oid")int oid,
+			@RequestParam("key")String key,
+			@RequestParam(value="nums",defaultValue="480")Integer nums){
+		return storageService.findByNums(type, oid, key, nums);
 	}
 }

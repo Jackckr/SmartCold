@@ -29,13 +29,6 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
     @Autowired
     private StorageKeyValueMapper storageKeyValueDao;
     
-    private static StorageType typePower = StorageType.COMPRESSOR_POWER;
-    private static StorageType typePressLow = StorageType.COMPRESSOR_PRESS_L;
-    private static StorageType typePressHigh = StorageType.COMPRESSOR_PRESS_H;
-    
-    private List<StorageKeyValue> getNums(StorageType type,int oid,Integer nums){
-    	return storageKeyValueDao.findByNums(type.getTable(), oid, type.toString(), nums);
-    }
 
     @Override
     public List<CompressorGroupSetEntity> findByUserId(int userid) {
@@ -44,19 +37,4 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
         return compressGroupSetDao.findLastNPoint(rdcUser.getRdcid());
     }
 
-	@Override
-	public List<StorageKeyValue> findPowerByNums(int oid, Integer nums) {
-		return getNums(typePower, oid, nums);
-	}
-
-	@Override
-	public List<StorageKeyValue> findPressLowByNums(int oid, Integer nums) {
-		return getNums(typePressLow, oid, nums);
-	}
-
-	@Override
-	public List<StorageKeyValue> findPressHighByNums(int oid, Integer nums) {
-		// TODO Auto-generated method stub
-		return getNums(typePressHigh, oid, nums);
-	}
 }

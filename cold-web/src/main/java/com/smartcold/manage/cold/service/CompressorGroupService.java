@@ -11,10 +11,4 @@ import java.util.List;
  */
 public interface CompressorGroupService {
     List<CompressorGroupSetEntity> findByUserId(int userid);
-    
-    List<StorageKeyValue> findPowerByNums(int oid, Integer nums);
-    
-    List<StorageKeyValue> findPressLowByNums(int oid, Integer nums);
-    
-    List<StorageKeyValue> findPressHighByNums(int oid, Integer nums);
 }

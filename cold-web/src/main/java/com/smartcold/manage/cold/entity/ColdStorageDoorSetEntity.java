@@ -15,8 +15,18 @@ public class ColdStorageDoorSetEntity {
     private float length;
 
     private float width;
+    
+    private String name;
+    
+    public String getName() {
+		return name;
+	}
 
-    public int getId() {
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getId() {
         return id;
     }
 
