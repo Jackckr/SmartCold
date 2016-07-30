@@ -6,12 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Telephone注解
+ * APP注解
  * 表示当前为手机客户端访问
  * @author Maqiang
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Telephone  {
-	String[] produces() default {};
+public @interface APP  {
+	
 }

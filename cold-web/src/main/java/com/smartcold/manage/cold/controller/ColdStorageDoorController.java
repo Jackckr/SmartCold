@@ -14,6 +14,7 @@ import com.smartcold.manage.cold.service.ColdStorageDoorService;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 09:57)
+ * @Deprecated 将新方法添加到 NewDoorController 中
  */
 @Deprecated
 @Controller
