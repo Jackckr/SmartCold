@@ -65,12 +65,15 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         setStorage: function () {
         	$rootScope.changeRdc = function(value){
         		if(value){
+        			if(value.originalObject == $rootScope.vm.choserdc){
+        				return
+        			}
             		$rootScope.vm.choserdc = value.originalObject
         		}
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + $rootScope.vm.choserdc.id).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
-        					$rootScope.rdcId = $rootScope.choserdc.id;
+        					$rootScope.rdcId = $rootScope.vm.choserdc.id;
         					$rootScope.storageModal = data[0];
         				});
         		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + $rootScope.vm.choserdc.id).success(
