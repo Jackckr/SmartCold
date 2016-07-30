@@ -6,6 +6,7 @@ import java.util.Date;
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-05-01 23:29)
  */
+@Deprecated
 public class ColdStorageTemperDTO {
     private int id;
 

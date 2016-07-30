@@ -184,7 +184,14 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
     		
         	$http.get('/i/ShareRdcController/getSEByID', { params: {"id": $scope._dataid}  }).success(function(data) {
         		 $scope.vo=data.entity;
-        		 $scope.datatype=data.entity.dataType;
+        		 $scope.dgfiles=data.entity.files;
+        		 $scope.dgdatatype=data.entity.dataType;
+        		 $scope.storageGallery = new Array();
+        		 if($scope.dgfiles!=null&&$scope.dgfiles.length>0){
+	                  for(var j=0; j<$scope.dgfiles.length; j++){
+	                  	$scope.storageGallery.push({thumb:$scope.dgfiles[j] ,img:$scope.dgfiles[j]});
+	                  }
+	        	 }
         		 $("#shaerdailModal").modal('show');
         	}); 
 	 };
@@ -240,15 +247,11 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	  };
 	  $scope.goRelease=function(){
 		  if(user!==null&&user.id!=0){
-			  if(rdcconfig._cuttid==2){ 
-				  $state.go('releaseCarInfo',{_cuttid:rdcconfig._cuttid});
-			  }else{
 				  $state.go('releaseItemList',{_cuttid:rdcconfig._cuttid});
-			  }
 		  }else{
-			  alert("你还没有登录！请登录后操作！");
-			  var callurl=rdcconfig._cuttid==2?"#/releaseCarInfo?_cuttid="+rdcconfig._cuttid:"#/releaseItemList?_cuttid="+rdcconfig._cuttid;
-              window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html"+callurl;
+				util.info(null,"你还没有登录！请登录后操作！",function(){
+		              window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#releaseItemList?_cuttid="+rdcconfig._cuttid;
+				});
 		  }
 	 };
 	 $scope.initApp=function(){

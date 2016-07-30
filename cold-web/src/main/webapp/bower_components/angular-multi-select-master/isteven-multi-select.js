@@ -982,7 +982,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
             // updates multi-select when user select/deselect a single checkbox programatically
             // https://github.com/isteven/angular-multi-select/issues/8            
             $scope.$watch( 'inputModel' , function( newVal ) {                                 
-                if ( newVal ) {                            
+                if ( newVal ) {          
                     $scope.refreshOutputModel();                                    
                     $scope.refreshButton();                                                  
                 }

@@ -2,6 +2,8 @@
         <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
         <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
         <style>
+        	.btn.btn-default{background-color:#eee;}
+        	.btn.btn-default.active{background-color:#428BCA;color:#fff;}
            .shar_none{display: none;}
            .control-label{line-height: 32px;}
            .form-control{display: inline-block;}
@@ -14,6 +16,7 @@
             #files{width: 65px;border: medium none;margin-top: -10px;}
            #img_list { width: 1000px; overflow: hidden;}
            #img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
+           #tim_mode_2 label{margin-left: 3px;border-radius: 3px;padding: 6px;}
            /*错误提示样式*/
            label.success{display: none; } 
  	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
@@ -27,7 +30,7 @@
     	<div id="" class="shareMain">
 			<!-- 出售和求购 -->
 			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
-				<span id="tool1" class="{{appmode[dataType].tolimg[1]}}"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
+				<span id="tool1"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
 				<span id="tool2"  value="{{appmode[dataType].tool[1][0]}}" ng-click="changtype('#tool2')">{{appmode[dataType].tool[1][1]}}</span>
 			</div>
 			<!-- 出售和求购 end -->
@@ -36,38 +39,22 @@
 			      <input type="hidden" name="dataType" value="{{dataType}}">
 			      <input type="hidden" name="typeCode" value="{{typeCode}}">
 			      <input type="hidden" name="typeText" value="{{typeText}}">
-<!-- 			      <input type="hidden" name="attrvalue"> -->
 			      <input type="hidden" name="unit1" >
 			      <input type="hidden" name="unit2" >
 			    </div>
-			    <div  class="hide mode_hide mode_2_1 infoList clearfix" style="width: 600px;">
-			       <input type="hidden" name="rdcID" ng-model="rdcID">
-				    <div style="width: 100%;">
-				      <div style="text-indent: 8em;"><span class="sp_radio"><input type="radio" name="ro_rdc" ng-model="gl_rdc" value="1" checked="checked">关联库</span><span class="sp_radio"><input type="radio"  name="ro_rdc" value="0" ng-model="gl_rdc">不关联库</span></div>
-				      <div id="rdclist_info" ng-show="gl_rdc==1">
-					         <table class="table tableInfo" >
-							   <tbody>
-							      <tr  ng-repeat="rdc in rdclist" >
-							         <td width="50">
-							         	<div class="image"><img src="{{rdc.logo}}"></div>
-							         </td>
-							         <td>
-							         	<div class="company">{{rdc.name}}</div>
-							         </td>
-							         <td>
-										<div class="position">
-							         		<span class="glyphicon glyphicon-map-marker"></span>
-							         		<span class="textInfo">{{rdc.address}}</span>
-							         	</div>
-							         </td>
-							         <td class="sp_radio">
-							         <input name="rdcID_list" type="checkbox" value="{{rdc.rdcID}}">
-							         </td>
-							      </tr>			      
-							   </tbody>
-							</table>
-				       </div>
-				    </div>
+			    <div id="recinfo_div"  style="width: 600px;">
+			       <input type="hidden" name="rdcID" value="{{rdcID}}">
+				    <div class="outSon">
+						<div class="company">{{rdcinfo.name}}</div><div class="position">
+							<span class="glyphicon glyphicon-map-marker"></span>
+							<span id="rdc_address" class="textInfo">{{rdcinfo.address}}</span>
+						</div>
+					</div>
+					<div class="outSon clearfix">
+						<div class="img"  ng-repeat="img in rdcimgs" >
+							<img src="{{img}}" height="184" width="319" alt="">
+						</div>
+					</div>
 				</div>
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4  control-label " ><em>*</em>描述:</div>
@@ -133,13 +120,46 @@
 					</div>
 				</div>
 				<div class="infoList clearfix infoDate">
-					<div class="pull-left col-sm-4 control-label "><em>*</em>信息有效期:</div>
+					<div class="pull-left col-sm-4 control-label ">发车时间:</div>
 					<div class="pull-left">
-		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-		                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control"   class="span4"/>
+					   <div id="st_sttime" class="clearfix" style="width: 600px;display: -moz-box;"> 
+		                     <select id="sl_attrvalue1"  name="attrvalue1"   class="form-control pull-left" style="width:80px;margin-right:5px;" onchange="releaseCarInfo.changtimemode(this);">
+		                         <option value="1">每天</option>
+		                         <option value="2">每周</option>
+		                         <option value="3">单次</option>
+		                     </select>
+							  <div  class="btn-group shar_none obj_hide time_mod2 pull-left clearfix" data-toggle="buttons" style="margin-right:5px;">
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="-">一</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="二">二 </label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="三">三</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="四">四</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="五">五</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="六">六</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="日">日</label>
+								</div>
+							  <div id="sattim_div" class="pull-left">	
+		                       <input id="txt_sattim"  type="text" value="09:00" class="form-control  obj_hide time_mod1 time_mod2" style="width:85px;">
+		                       </div>
+		                       <div  class="shar_none obj_hide time_mod3 pull-left" style="width: 375px;">
+		                          <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+		                          <input id="reservationtime" type="text" style="width: 320px;padding-right:0;" name="reservation"  class="form-control"   class="span4" onfocus="releaseCarInfo.checktime(this);"/>
+		                       </div>
 		                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
 		                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
-					</div>
+		                 </div>
+		              </div>
+				</div>
+					<div class="infoList clearfix infoDate">
+					<div class="pull-left col-sm-4 control-label ">到达时间:</div>
+					<div class="pull-left">
+		                 <div style="width: 600px;"> 
+		                     <select id="sl_attrvalue2"  name="attrvalue2" class="form-control" style="width:80px;" >
+		                         <option value="1">当天</option>
+		                         <option value="2">次日</option>
+		                     </select>
+		                     <input id="txt_endtim" type="text" value="09:00" class="form-control shar_none time_mod1 time_mod2" style="width:85px;" onfocus="releaseCarInfo.checktime(this);">
+		                 </div>
+		              </div>
 				</div>
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>

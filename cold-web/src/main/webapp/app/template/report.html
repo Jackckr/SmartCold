@@ -154,13 +154,13 @@
             <div class="form-group">
               <label>设备：</label> 
               <select type="text" class="form-control" placeholder="Search" 
-              ng-options="option.name for option in searchOptions" ng-model="choseOption">
+              ng-options="option.desc for option in searchOptions" ng-model="choseOption">
               </select>
             </div>&nbsp;&nbsp;
             <div class="form-group" ng-hide="choseOption.key=='electric'">
               <label>冷库：</label> 
               <select type="text" class="form-control" placeholder="Search" 
-              ng-options="storage.name for storage in storages" ng-model="storageModal">
+              ng-options="storage.name for storage in mystorages" ng-model="storageModal">
               </select>
             </div>&nbsp;&nbsp;
             <div class="form-group">

@@ -13,10 +13,9 @@
     }
     $("#_citys0").append(tb_province.join(""));
     $("#_citys0 a").click(function () {
-    	debugger;
        $("#_citys0 a").removeClass("heprselect");
     	$(this).addClass("heprselect");
-	        $.get("city/findCitysByProvinceId.json",{provinceID: $(this).data('id')}, function(data) {
+	        $.get(ER.root+"/i/city/findCitysByProvinceId.json",{provinceID: $(this).data('id')}, function(data) {
 	            var g = '';
 	            for (var j = 0; j<data.length; j++) {
 	                g += '<a data-level="1" data-id="' + data[j]['cityID'] + '" data-name="' + data[j]['cityName'] + '" title="' + data[j]['cityName'] + '">' + data[j]['cityName'] + '</a>';

@@ -110,13 +110,39 @@ section{
 }
 .grid_kid i{
 	font-size: 1.5rem;
-	color:#438BCA
+	color:#438BCA;
 }
-.grid_kid:nth-child(2) i,.grid_kid:nth-child(4) i{
+.grid_kid:nth-child(2) i{
 	color:#F1594B;
 }
-.grid_kid:nth-child(3) i,.grid_kid:nth-child(5) i{
+.grid_kid:nth-child(3) i{
 	color:#F39826;
+}
+.grid_kid.share_cold i{
+	color:#438BCA;
+}
+.grid_kid.share_goods i{
+	color:#F39826;
+}
+.grid_kid.share_store i{
+	color:#F1594B;
+}
+.share_cold,.share_goods,.share_store{
+	width: 100%;
+	height: 4rem;
+}
+.share_cold i,.share_goods i,.share_store i{
+	float: left;
+	width: 30%;
+	text-align: center;
+}
+.share_cold p.info,.share_goods p.info,.share_store p.info{
+	margin-top: 0;
+	text-align: left;
+}
+.share_cold a,.share_goods a,.share_store a{
+	padding-top: 0;
+	line-height: 3.5rem;
 }
 /*发布库*/
 .main{
@@ -166,12 +192,7 @@ section{
 	text-indent: 10px;
 	display: inline-block;
 	min-width: 60%;
-	/*height: 1.8rem;*/
 	font-size: 0.75rem;
-	/*-webkit-appearance:none;
-	appearance:none;
-	border:none;
-	background-color: #FFFFFF;*/
 	color: #555;
 }
 .houseinfo>li .bg{
@@ -446,4 +467,10 @@ form+.mybtn{
 .relate,.norelate{
 	display: table-cell;
 	font-size: 0.8rem;
+}
+/*map*/
+#main{
+	width: 90%;
+	min-height: 15rem;
+	margin: 0 auto;
 }

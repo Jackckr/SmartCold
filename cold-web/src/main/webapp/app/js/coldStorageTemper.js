@@ -5,20 +5,18 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     console.log($stateParams.storageID);
     $scope.load = function () {
         var data = [];
-        $http.get('/i/coldStorage/getTemperInfoById', {
+        $http.get('/i/newStorage/getTempByNums', {
             params: {
-                "storageID": $stateParams.storageID,
-                "npoint": 480
+                "oid": $stateParams.storageID
             }
         }).success(function (result) {
-            console.log("result:" + result);
-            for (var i = 0; i < result.length; i++) {
-                console.log("result:" + result[i].storageID + result[i].temperature + ",Time: " + result[i].time);
-                var val = Date.parse(result[i].time);
+        	var list = result.list
+            for (var i = 0; i < list.length; i++) {
+                var val = Date.parse(list[i].addtime);
                 var newDate = new Date(val).getTime();
                 data.push({
                     x: newDate,
-                    y: result[i].temperature
+                    y: list[i].value
                 });
             }
 
@@ -56,7 +54,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
 
             //温度实时图——环形图
-            var temper = parseFloat(result[0].temperature).toFixed(1);
+            var temper = parseFloat(list[0].value).toFixed(1);
             $scope.curtemper = temper;
 /*            var pressureChart = echarts.init($("#temperatureNowChart").get(0));
 
@@ -135,7 +133,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             pressureChart.setOption(pressureOption);*/
 
             // 折线图
-            var startTemperature = parseFloat(result[0].startTemperature);
+            var startTemperature = parseFloat(result.startTemperature);
             $(function () {
                 $(document).ready(function () {
                     Highcharts.setOptions({

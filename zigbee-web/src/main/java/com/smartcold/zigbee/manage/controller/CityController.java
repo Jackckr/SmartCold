@@ -1,13 +1,15 @@
 package com.smartcold.zigbee.manage.controller;
 
-import com.smartcold.zigbee.manage.dao.CityListMapper;
-import com.smartcold.zigbee.manage.dao.ProvinceListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smartcold.zigbee.manage.dao.CityListMapper;
+import com.smartcold.zigbee.manage.dao.ProvinceListMapper;
+import com.smartcold.zigbee.manage.util.APP;
 
 @Controller
 @RequestMapping(value = "/city")
@@ -19,12 +21,15 @@ public class CityController {
     @Autowired
     private CityListMapper cityListDao;
 
+    
+    @APP
     @RequestMapping(value = "/findProvinceList", method = RequestMethod.GET)
     @ResponseBody
     public Object findProvinceList() {
         return provinceListMapper.findProvinceList();
     }
-
+    
+    @APP
     @RequestMapping(value = "/findCitysByProvinceId", method = RequestMethod.GET)
     @ResponseBody
     public Object findCitysByProvinceId(@RequestParam int provinceID) {

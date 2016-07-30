@@ -42,7 +42,7 @@ header>div>a>.iconfont{
 	float: left;
 	width: 25%;
 	height: 100%;
-	text-align: center;http://127.0.0.1:8020/lianku-mweb/img/banner3.jpg
+	text-align: center;
 	vertical-align: middle;
 }
 .footer>li>a{
@@ -69,6 +69,9 @@ section,.list{
 	width:100%;
 	padding: 0.5rem 0.9rem;
 	box-sizing: border-box;
+}
+section.show{
+	padding: 0 0.9rem;
 }
 .img{
 	width: 2.5rem;
@@ -272,8 +275,9 @@ section,.list{
 	position: relative;
 }
 .editarea .input{
-	padding-left: 3.5rem;
+	padding:0 0 2px 3.5rem;
 	height: 2rem;
+	color: #333;
 	box-sizing: border-box;
 }
 .bd{
@@ -298,8 +302,7 @@ section,.list{
 	line-height: 0.8rem;
 	top: 50%;
 	right: 0.9rem;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
+	margin-top: -0.4rem;
 }
 .set{
 	color: #438BCB;
@@ -339,6 +342,9 @@ section,.list{
 	box-sizing: border-box;
 	border-bottom: 2px solid #F6F5FA;
 }
+.inputs .tel:last-child{
+	border-bottom: 0;
+}
 .tel i{
 	font-size: 1rem;
 	color: #B4B4B4;
@@ -356,8 +362,11 @@ section,.list{
 	margin: 0.5rem 5%;
 	box-sizing: border-box;
 }
-input:disabled{
-	background-color: #fff;
+.inputs.show1 .tel p{
+	display: inline-block;
+	line-height: 2rem;
+	font-size: .8rem;
+	color: #333;
 }
 .show1,.show2{
 	display: none;
