@@ -401,7 +401,11 @@ section{
 	width:100%;
 }
 .idcode{
-	padding: 0.5rem 0.8rem;
+	padding: 0 0.8rem;
+	height: 1.6rem;
+	box-sizing: border-box;
+	line-height: 1.6rem;
+	margin-top: 0.2rem;
 	background-color: #438BCB;
 	font-size: 0.7rem;
 	color: #fff;
@@ -410,8 +414,13 @@ section{
 	outline: none;
 }
 .tel{
+	padding: 0.2rem 0;
 	box-sizing: border-box;
 	border-bottom: 2px solid #F6F5FA;
+	margin-bottom: 0.5rem;
+}
+.tel:first-child{
+	margin-bottom: 0;
 }
 .tel i{
 	font-size: 1rem;

@@ -14,45 +14,69 @@
 	z-index: 9999;
 	padding:0.3rem 0.9rem;
 	box-sizing:border-box;
+	 display: -webkit-box;
+    display: -ms-flexbox;
 }
 .area{
 	height: 100%;
-	min-width: 3rem;
 	line-height: 1.9rem;
 }
 .barCode{
-	width: 1.05rem;
 	height: 100%;
 	line-height: 1.9rem;
+}
+.barCode a{
+	display: inline-block;
+    height: 100%;
+    line-height: 1.9rem;
+    text-align: center;
+    width: 1.5rem;
 }
 .barCode i{
 	font-size: 1rem;
 	color: #fff;
 	position: relative;
 	top: -0.15rem;
+	display: inline-block;
+    height: 100%;
+    line-height: 1.9rem;
 }
 .city{
-	max-width: 3rem;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	color:#FFFFFF;
-	font-size: 0.75rem;	
+	display: block;
+	height: 100%;
+	color: #fff;
+	font-size: 0.7rem;	
 	line-height: 1.9rem;
 	position: relative;
 	top: -0.15rem;
+}
+.nav-city{
+	line-height: 1.9;
+	color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    margin-right: .2rem;
+    margin-left: .2rem;
+    font-size: .7rem;
 }
 .area i{
 	color: #fff;
+	padding-right:0.3rem;
 	font-size: 0.75rem;	
 	position: relative;
-	top: -0.15rem;
+    display: inline-block;
+    vertical-align: middle;
 }
 .search{
-	height: 100%;
-	margin:0 1.5rem 0 4.5rem;
-	position: relative;
-	line-height: 1.9rem;
+	-webkit-box-flex: 1;
+    -ms-flex: 1;
+    border-radius: .06rem;
+    background: rgba(0,0,0,.15);
+    height: 1.6rem;
+    line-height: 1.6rem;
+    -webkit-box-sizing: border-box;
+    position: relative;
 }
 .search input{
 	position: absolute;
@@ -111,7 +135,6 @@
 	font-size: 1.2rem;
 }
 .info{
-	/*line-height: 1rem;*/
 	font-size: 0.6rem;
 }
 .section{
