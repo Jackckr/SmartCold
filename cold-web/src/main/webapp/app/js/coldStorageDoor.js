@@ -6,20 +6,17 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
 
     $scope.load = function () {
         var data = [];
-        $http.get('/i/coldStorageDoor/findByStorageId', {
+        $http.get('/i/newDoor/getDoorStatusByNums', {
             params: {
-                "storageID": $stateParams.storageID,
-                "npoint": 480
+                "oid": $stateParams.storageID
             }
         }).success(function (result) {
-            console.log("result:" + result);
             for (var i = 0; i < result.length; i++) {
-                console.log("result:" + result[i].state + ",Time: " + result[i].addTime);
                 var val = Date.parse(result[i].addTime);
                 var newDate = new Date(val).getTime();
                 data.push({
                     x: newDate,
-                    y: result[i].state
+                    y: result[i].value
                 });
             }
 

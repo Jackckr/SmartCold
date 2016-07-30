@@ -64,11 +64,12 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         },
         setStorage: function () {
         	$rootScope.changeRdc = function(){
-        		$rootScope.vm.choserdc = $rootScope.vm.choserdcs[0];
+        		$rootScope.choserdc = $rootScope.choserdcs[0];
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + $rootScope.vm.choserdc.id).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
-        					$rootScope.rdcId = $rootScope.vm.choserdc.id;
+        					$rootScope.rdcId = $rootScope.choserdc.id;
+        					$rootScope.storageModal = data[0];
         				});
         		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + $rootScope.vm.choserdc.id).success(
         				function(data,status,headers,config){
@@ -96,34 +97,26 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                     $rootScope.compressors = compressors;
                 })
                 // 拉取冷库列表
-                $http.get('/i/coldStorage/findByUserId', {
+                $http.get('/i/newStorage/findByUserId', {
                     params: {
                         "userId": $rootScope.user.id
                     }
                 }).success(function (result) {
-                    console.log("result:" + result);
-                    for (var i = 0; i < result.length; i++) {
-                        console.log("mystorages:" + result[i].coldStorageID + ",rdcId: " + result[i].rdcId);
-                        mystorages.push({
-                            name: result[i].name,
-                            id: result[i].coldStorageID
-                        });
-                    }
-
                     $rootScope.mystorages = mystorages;
+                    $rootScope.storageModal = $rootScope.mystorages[0];
                     $rootScope.rdcId = result[0].rdcId;
                     if($rootScope.user.role == 1){
-	                    $http.get('/i/rdc/findRdcList').success(function(data,status,headers,config){
-	                		$rootScope.rdcs = data;
-	                		angular.forEach(data,function(item){
-	                			if(item.id == $rootScope.rdcId){
-	                				item.isOn = true;
-	                				$rootScope.vm = {choserdc : item};
-	                			}else{
-	                				item.isOn = false;
-	                			}
-	                		})
-	                	})
+//	                    $http.get('/i/rdc/findRdcList').success(function(data,status,headers,config){
+//	                		$rootScope.rdcs = data;
+//	                		angular.forEach(data,function(item){
+//	                			if(item.id == $rootScope.rdcId){
+//	                				item.isOn = true;
+//	                				$rootScope.vm = {choserdc : item};
+//	                			}else{
+//	                				item.isOn = false;
+//	                			}
+//	                		})
+//	                	})
                     }
                 })
             }

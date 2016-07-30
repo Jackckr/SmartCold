@@ -15,6 +15,7 @@ import com.smartcold.manage.cold.service.ColdStorageDoorService;
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 09:57)
  */
+@Deprecated
 @Controller
 @RequestMapping(value = "/coldStorageDoor")
 public class ColdStorageDoorController {

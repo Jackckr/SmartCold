@@ -4,7 +4,6 @@ import com.smartcold.manage.cold.dao.ColdStorageMapper;
 import com.smartcold.manage.cold.dao.RdcSensorMapper;
 import com.smartcold.manage.cold.entity.ColdStorageEntity;
 import com.smartcold.manage.cold.entity.RdcSensor;
-import com.smartcold.manage.cold.service.ColdStorageService;
 
 import java.util.Date;
 
@@ -25,6 +24,7 @@ import java.util.Map;
  * Description: ColdStorageController Author: qiunian.sun Update:
  * qiunian.sun(2016-03-15 23:38)
  */
+@Deprecated
 @Controller
 @RequestMapping(value = "/coldStorage")
 public class ColdStorageController {
@@ -32,8 +32,6 @@ public class ColdStorageController {
 	@Autowired
 	private ColdStorageMapper coldStorageDao;
 
-	@Autowired
-	private ColdStorageService coldStorageService;
 
 	@Autowired
 	private RdcSensorMapper rdcSensorDao;
@@ -44,17 +42,7 @@ public class ColdStorageController {
 		return coldStorageDao.findLastNPoint(storageID, npoint);
 	}
 
-	@RequestMapping(value = "/getTemperInfoById", method = RequestMethod.GET)
-	@ResponseBody
-	public Object getTemperInfoById(@RequestParam int storageID, @RequestParam int npoint) {
-		return coldStorageService.getTemperInfoById(storageID, npoint);
-	}
 
-	@RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
-	@ResponseBody
-	public Object findByUserId(@RequestParam int userId) {
-		return coldStorageService.findByUserId(userId);
-	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/findAllNewColdStorage", method = RequestMethod.GET)
