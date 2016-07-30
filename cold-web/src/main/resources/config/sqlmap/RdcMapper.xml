@@ -87,4 +87,8 @@
   <select id="findRDCByRDCId" parameterType="map" resultType="Rdc">
     SELECT * FROM `Rdc` WHERE `id` = #{rdcID}
   </select>
+  
+  <select id="searchRdc" parameterType="map" resultType="Rdc">
+    SELECT * FROM `Rdc` WHERE name like #{filter}
+  </select>
 </mapper>

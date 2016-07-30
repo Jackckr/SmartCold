@@ -34,8 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="bower_components/highlightjs/styles/default.css" />
     <link rel="stylesheet" href="bower_components/pace/themes/white/pace-theme-flash.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css">
-    <link rel="stylesheet" href="bower_components/angular-multi-select-master/isteven-multi-select.css">
-    <link rel="stylesheet" href="bower_components/angucomplete/angucomplete.css">
+    <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css">
     <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker-bs3.css">
     <style type="text/css">
     	a.disabled {
@@ -239,9 +238,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- /.search form -->
 
           <!-- Sidebar Menu -->
-          <div isteven-multi-select selection-mode="single" input-model="rdcs" output-model="vm.choserdcs"
-               button-label="name" item-label="name" tick-property="isOn" helper-elements="filter" 
-               max-height="200px" on-item-click="changeRdc()" ng-if="user.role == 1"></div>
+          <div angucomplete-alt id="members"
+              placeholder="查找RDC"
+              pause="100"
+              selected-object="changeRdc"
+              selected-object-data="vm.choserdc"
+              initial-value="vm.choserdc"
+              remote-url="/i/rdc/searchRdc?filter="
+              title-field="name"
+              minlength="1"
+              match-class="highlight"
+              maxlength="25"
+              input-class="form-control form-control-small">
+              </div>
           <ul class="sidebar-menu text-white">
             <li class="treeview">
             <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
@@ -400,8 +409,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="bower_components/highlightjs/highlight.pack.js"></script>
 <script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
-<script src="bower_components/angular-multi-select-master/isteven-multi-select.js"></script>
-<script src="bower_components/angucomplete/angucomplete.js"></script>
+<script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
 <script src="bower_components/at-table/dist/angular-table.min.js"></script>
 <script src="assets/js/three.min.js"></script>
 <script src="assets/js/OrbitControls.js"></script>
