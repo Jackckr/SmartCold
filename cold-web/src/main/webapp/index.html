@@ -241,15 +241,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
               placeholder="查找RDC"
               pause="100"
               selected-object="changeRdc"
-              selected-object-data="vm.choserdc"
-              initial-value="vm.choserdc"
               remote-url="/i/rdc/searchRdc?filter="
               title-field="name"
               minlength="1"
+              clear-selected="true"
               match-class="highlight"
               input-class="form-control form-control-small">
               </div>
           <ul class="sidebar-menu text-white">
+          <li>
+             <a class="text-white" style="font-family: cursive;">{{vm.choserdc.name}}</a>
+          </li>
             <li class="treeview">
             <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
             <span class="menu-title text-white" style="font-size: large">监控</span></a>
