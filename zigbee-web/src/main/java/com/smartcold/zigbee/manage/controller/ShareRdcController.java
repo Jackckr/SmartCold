@@ -22,7 +22,6 @@ import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.Telephone;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
