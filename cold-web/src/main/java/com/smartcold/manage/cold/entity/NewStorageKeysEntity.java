@@ -1,6 +1,6 @@
 package com.smartcold.manage.cold.entity;
 
-public class NewStorageKeys {
+public class NewStorageKeysEntity {
 	private Integer id;
 	private int type;
 	private String key;

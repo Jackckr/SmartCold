@@ -1,6 +1,5 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.CompressorGroupMapper;
 import com.smartcold.manage.cold.dao.CompressorGroupSetMapper;
-import com.smartcold.manage.cold.dao.StorageKeyValueMapper;
 import com.smartcold.manage.cold.entity.StorageKeyValue;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.CompressorGroupService;
@@ -46,7 +43,7 @@ public class CompressorGroupController {
 
 	@RequestMapping(value = "/findByRdcId", method = RequestMethod.GET)
 	public Object findByGroupId(@RequestParam int rdcId) {
-		return compressorGroupSetDao.findLastNPoint(rdcId);
+		return compressorGroupSetDao.findByRdcId(rdcId);
 	}
 	
 	@RequestMapping("/findPressByNums")

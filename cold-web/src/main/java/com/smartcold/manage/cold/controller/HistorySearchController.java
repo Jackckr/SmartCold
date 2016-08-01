@@ -14,8 +14,8 @@ public class HistorySearchController {
 	@Autowired
 	HistorySearchService historySearchService;
 	
-	@RequestMapping("/findAllStorageType")
-	public Object findAllStorageType(int rdcId){
+	@RequestMapping("/findAllStorageKeys")
+	public Object findAllStorageKeys(int rdcId){
 		
 		return historySearchService.getSearchItems(rdcId);
 	}

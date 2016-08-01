@@ -14,5 +14,8 @@
         SELECT *
         FROM `ColdStorageDoorSet` WHERE `coldStorageId` = #{storageID}
     </select>
-
+	<select id="findByRdcId" parameterType="map" resultType="ColdStorageDoorSetEntity">
+        SELECT *
+        FROM `ColdStorageDoorSet` WHERE `rdcid` = #{rdcId}
+    </select>
 </mapper>

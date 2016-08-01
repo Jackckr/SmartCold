@@ -1,6 +1,9 @@
 package com.smartcold.manage.cold.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,5 +66,14 @@ public class BaseInfoController extends BaseController {
 			@RequestParam("key")String key,
 			@RequestParam(value="nums",defaultValue="480")Integer nums){
 		return storageService.findByNums(type, oid, key, nums);
+	}
+	
+	@RequestMapping("/getKeyValueDataByTime")
+	@ResponseBody
+	public Object getKeyValueDataByTime(@RequestParam("type")Integer type, @RequestParam("oid")int oid,
+			@RequestParam("key")String key,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime){
+		return storageService.findByTime(type, oid, key, startTime, endTime);
 	}
 }

@@ -26,7 +26,7 @@ public enum StorageType {
 		}
 		throw new IllegalArgumentException("type is not correct");
 	}
-
+	
 	public int getType() {
 		return type;
 	}

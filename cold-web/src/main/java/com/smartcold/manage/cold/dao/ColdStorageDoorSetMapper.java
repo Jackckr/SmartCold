@@ -13,4 +13,6 @@ public interface ColdStorageDoorSetMapper {
     List<ColdStorageDoorSetEntity> findLastNPoint(@Param("coldStorageId") int storageID, @Param("npoint") int npoint);
     
     List<ColdStorageDoorSetEntity> findByStorageId(int storageID);
+    
+    List<ColdStorageDoorSetEntity> findByRdcId(int rdcId);
 }

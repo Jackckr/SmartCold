@@ -4,10 +4,9 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.CompressorGroupSetMapper">
 
-    <select id="findLastNPoint" parameterType="map" resultType="CompressorGroupSetEntity">
+	<select id="findByRdcId" parameterType="map" resultType="CompressorGroupSetEntity">
         SELECT *
         FROM `CompressorGroupSet` WHERE `rdcId` = #{rdcId}
         order by `addTime` asc
     </select>
-
 </mapper>

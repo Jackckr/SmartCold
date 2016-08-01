@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,12 @@ public class StorageServiceImpl implements StorageService {
 	@Override
 	public List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums) {
 		return storageKeyValueDao.findByNums(stype.getTable(), oid, key, nums);
+	}
+
+	@Override
+	public List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime) {
+		
+		return storageKeyValueDao.findByTime(StorageType.getStorageType(type).getTable(), 
+				oid, key, startTime, endTime);
 	}
 }

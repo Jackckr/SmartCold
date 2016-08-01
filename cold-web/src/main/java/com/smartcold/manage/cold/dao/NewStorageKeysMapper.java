@@ -2,10 +2,10 @@ package com.smartcold.manage.cold.dao;
 
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.NewStorageKeys;
+import com.smartcold.manage.cold.entity.NewStorageKeysEntity;
 
 public interface NewStorageKeysMapper {
-	List<NewStorageKeys> findAll();
+	List<NewStorageKeysEntity> findAll();
 	
-	boolean saveOrUpdateByType(NewStorageKeys storageKeys);
+	boolean saveOrUpdateByType(NewStorageKeysEntity storageKeys);
 }

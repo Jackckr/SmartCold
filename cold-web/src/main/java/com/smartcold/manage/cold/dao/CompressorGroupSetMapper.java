@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface CompressorGroupSetMapper {
 
-    List<CompressorGroupSetEntity> findLastNPoint(@Param("rdcId") int rdcId);
+    List<CompressorGroupSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 
 }

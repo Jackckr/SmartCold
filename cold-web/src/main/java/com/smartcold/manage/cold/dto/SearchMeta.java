@@ -7,15 +7,23 @@ package com.smartcold.manage.cold.dto;
 public class SearchMeta {
 	private int type;
 	private int oid;
-	private String typeDesc;
+	private String key;
+	private String keyDesc;
 	private String oidDesc;
 
-	public SearchMeta(int type, int oid, String typeDesc, String oidDesc) {
+	public SearchMeta(int type, int oid, String key, String keyDesc, String oidDesc) {
 		super();
 		this.type = type;
 		this.oid = oid;
-		this.typeDesc = typeDesc;
+		this.key = key;
+		this.keyDesc = keyDesc;
 		this.oidDesc = oidDesc;
+	}
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
 	}
 	public int getType() {
 		return type;
@@ -30,10 +38,10 @@ public class SearchMeta {
 		this.oid = oid;
 	}
 	public String getTypeDesc() {
-		return typeDesc;
+		return keyDesc;
 	}
 	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
+		this.keyDesc = typeDesc;
 	}
 	public String getOidDesc() {
 		return oidDesc;

@@ -1,4 +1,4 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ui.select','ngSanitize',
                                          'ngCookies', 'xeditable','angucomplete-alt','angular-table']);
 var user;
 
@@ -319,7 +319,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         templateUrl: 'app/template/rdcPower.html'
     }).state('historyData',{
     	url:'/historyData',
-    	controller: 'report',
+    	controller: 'historyData',
         templateUrl: 'app/template/historyData.html'
     });
 
