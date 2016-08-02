@@ -14,4 +14,8 @@
         order by `addtime` desc
         limit #{nums}
 	</select>
+	
+	<select id="haveKey" resultType="boolean">
+ 		SELECT EXISTS(SELECT * FROM ${table} WHERE `key`=#{key});
+ 	</select>
 </mapper>

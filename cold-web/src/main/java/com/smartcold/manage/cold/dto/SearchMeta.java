@@ -10,15 +10,34 @@ public class SearchMeta {
 	private String key;
 	private String keyDesc;
 	private String oidDesc;
+	private String unit;
 
-	public SearchMeta(int type, int oid, String key, String keyDesc, String oidDesc) {
+	public SearchMeta(int type, int oid, String key, String keyDesc, String oidDesc, String unit) {
 		super();
 		this.type = type;
 		this.oid = oid;
 		this.key = key;
 		this.keyDesc = keyDesc;
 		this.oidDesc = oidDesc;
+		this.unit = unit;
 	}
+	
+	public String getKeyDesc() {
+		return keyDesc;
+	}
+
+	public void setKeyDesc(String keyDesc) {
+		this.keyDesc = keyDesc;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	public String getKey() {
 		return key;
 	}

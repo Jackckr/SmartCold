@@ -14,4 +14,6 @@ public interface StorageKeyValueMapper {
 	
 	List<StorageKeyValue> findByNums(@Param("table")String table , @Param("oid") Integer oid,
 			@Param("key")String key, @Param("nums")Integer nums);
+	
+	boolean haveKey(@Param("table")String table, @Param("key")String key);
 }

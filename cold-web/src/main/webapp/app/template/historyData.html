@@ -9,10 +9,10 @@
 				<div class="col-lg-12">
 					<div class="col-lg-12">
 						<div class="pull-left">
-							<ui-select ng-model="selectedOption" theme="bootstrap"
+							<ui-select ng-model="item.option" theme="bootstrap"
 								style="width: 300px;" append-to-body="true"
 								title="Choose a person"> 
-								<ui-select-match>{{selectedOption.keyDesc}}-{{selectedOption.oidDesc}} </ui-select-match> 
+								<ui-select-match>{{item.option.keyDesc}}-{{item.option.oidDesc}} </ui-select-match> 
 								<ui-select-choices
 								 	group-by="'keyDesc'"
 								 	repeat="option in searchOptions">
@@ -20,7 +20,7 @@
 								</ui-select-choices> 
 							</ui-select>
 						</div>
-						<form class="navbar-form navbar-left" role="search">
+						<form class="navbar-form navbar-left" >
 	
 							&nbsp;&nbsp;
 							<div class="form-group">
@@ -49,4 +49,17 @@
 		</div>
 	</section>
 </div>
+<!--
+   IE8 support, see AngularJS Internet Explorer Compatibility http://docs.angularjs.org/guide/ie
+   For Firefox 3.6, you will also need to include jQuery and ECMAScript 5 shim
+ -->
+ <!--[if lt IE 9]>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.js"></script>
+   <script>
+     document.createElement('ui-select');
+     document.createElement('ui-select-match');
+     document.createElement('ui-select-choices');
+   </script>
+ <![endif]-->
 <script src="../../assets/js/echarts.min.js"></script>
