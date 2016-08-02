@@ -155,6 +155,9 @@ section.show{
 .adminInfo .list_name{
 	text-align: right;	
 }
+.adminInfo+.mybtn,.list.list_icon{
+	margin-bottom: 3rem;
+}
 .commentList{	
 	margin-top:0;
 	margin-bottom: 3rem;
@@ -191,6 +194,7 @@ section.show{
 .btnGroup .current{
 	background-color: #438BCB;
 	color: #fff;
+	border-color: transparent;
 }
 .position+.btnGroup{
 	margin-top: 0;
