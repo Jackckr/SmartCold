@@ -82,7 +82,10 @@
     <script>
     	$(function(){
     		$(".btnGroup").children().click(function(){
-    			$(this).addClass('current').siblings().removeClass('current')
+    			$(this).addClass('current').siblings().removeClass('current');
+    			if ($(this).index()==0) {
+    				$(this).parents('li').remove()
+    			}
     		})
     	})
     </script>
