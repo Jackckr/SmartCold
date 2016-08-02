@@ -13,6 +13,7 @@
      .time_control *{font-size: 10px;}
      .sorry{text-align: center;font-size: 18px;margin: 120px auto;}
     .ng-gallery{ width: 940px;}
+    .tableInfo tbody tr { cursor: pointer;}
     </style>
 <div class="shareMain">
 	<!--   货品、配送、仓库区域 start-->
@@ -67,7 +68,7 @@
 			      </tr>
 			   </thead>
 			   <tbody>
-			      <tr  ng-repeat="rdc in goods">
+			      <tr  ng-click="gosharedile(rdc.id);" ng-repeat="rdc in goods" >
 			         <td width="5%">
 			         	<div class="image"><img src="{{rdc.logo}}"></div>
 			         </td>
@@ -172,7 +173,7 @@
 			      </tr>
 			   </thead>
 			   <tbody>
-			      <tr  ng-repeat="rdc in pslist">
+			      <tr  ng-click="gosharedile(rdc.id);"   ng-repeat="rdc in pslist">
 			         <td width="5%">
 			         	<div class="image"><img src="{{rdc.logo}}"></div>
 			         </td>
@@ -256,7 +257,7 @@
 			      </tr>
 			   </thead>
 			   <tbody>
-			      <tr  ng-repeat="rdc in rdcs">
+			      <tr  ng-click="gosharedile(rdc.id);"   ng-repeat="rdc in rdcs">
 			         <td width="5%">
 			         	<div class="image"><img src="{{rdc.logo}}"></div>
 			         </td>

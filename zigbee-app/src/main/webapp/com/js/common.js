@@ -1,5 +1,5 @@
 'use strict';
-var ER={root:"http://192.168.1.136:8080"};
+var ER={root:"http://liankur.com/"};//var ER={root:"http://192.168.1.136:8080"};
 /**
  * 获得url参数
  * @param name
@@ -18,7 +18,6 @@ function getFont(){
 		 oHtml.style.fontSize = screenWidth/(750/40)+'px';
 	}
 }
-http://localhost:8080/zigbee%5Fmweb/
 getFont();
 // 当窗口发生改变的时候去改变根目录的font-size的值
 $(window).resize(function(event) {getFont();});
@@ -46,7 +45,7 @@ function setTime(obj) {
     	}
     } 
 
-	setTimeout(function() {setTime(obj)},1000) 
+	setTimeout(function() {setTime(obj)},1000);
 }
 $(function() {
 	//双箭头js
