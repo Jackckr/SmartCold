@@ -7,9 +7,10 @@
 	    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
 	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	    <link rel="stylesheet" href="../com/css/baguettebox.min.css">	
 	    <link rel="stylesheet" href="../com/css/coldlist.css" />
 	    <script src="../com/js/jquery.min.js"></script>
-	    <script src="../com/js/jquery.imgbox.pack.js"></script>
+		<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	</head>
 	<body style="background-color: #fff;">
@@ -34,11 +35,18 @@
 					</p>
 				</li>
 			</ul>
-			<ul class="imglist">
-				<li><a href="../com/img/list_03.png"><img src="../com/img/list_03.png"/></a></li>
-				<li><a href="../com/img/list_05.png"><img src="../com/img/list_05.png"/></a></li>
-				<li><a href="../com/img/list_07.png"><img src="../com/img/list_07.png"/></a></li>	
-			</ul>
+			<!--点击图片循环展示-->
+			<div class="baguetteBoxOne gallery">
+		        <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
+		        <a href="../com/img/cbd.jpg"><img src="../com/img/cbd.jpg" alt="" /></a>
+		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+		        <a href="../com/img/muwu.jpg"><img src="../com/img/muwu.jpg" alt="" /></a>
+		        <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
+		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+		        <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
+		        <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
+		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+			</div>
 			<ul class="infolist clearfix">
 				<li><span class="type">品类：</span><span class="text">鲜肉</span></li>
 				<li><span class="type">数量：</span><span class="text">1000吨</span></li>
@@ -63,16 +71,22 @@
 		</section>
 		
 		<script>
-		$(function(){
-		//点击图片看大图
-			$(".imglist li a").imgbox({
-				'speedIn'		: 0,
-				'speedOut'		: 0,
-				'alignment'		: 'center',
-				'overlayShow'	: true,
-				'allowMultiple'	: false
+			$(function(){
+			//点击图片看大图
+				baguetteBox.run('.baguetteBoxOne', {
+				    animation: 'slideIn',
+				    buttons: true
+				});
+				
+				if ($('.gallery').children().length==0) {
+					//如果没有图片，则隐藏
+					$('.gallery').hide();
+					$('.gallery').prev().css({
+						'marginBottom':'0.3rem'
+					})
+				}
+				
 			});
-		});
 		</script>
 	</body>
 </html>

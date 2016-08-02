@@ -242,18 +242,19 @@ section.show{
 .first{
     margin-right: 10px;
 }
-.imgShow{
-    overflow: hidden;
-    margin: 0.5rem 0;
+.gallery{
+	height: 4.5rem;
+	overflow: hidden;
+	margin: 0.3rem 0;
 }
-.imgShow .img{
-    width: 5rem;
-    height: 4.5rem;
-    border-radius: 0;
-}
-.imgShow li{
-    padding: 0;
-    margin-right: 0.5rem;
+.gallery a{
+	float: left;
+	width: 33%;
+	padding: 0 0.1rem;
+	box-sizing: border-box;
+	height: 4.5rem;
+	background-size: cover;
+	text-align: center;
 }
 .object li{
 	margin-bottom: 0.5rem;

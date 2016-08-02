@@ -250,20 +250,21 @@ section{
 	position: relative;
 	text-align: center;
 }
-.imglist li:before { 
-  content: " Broken Image :(";
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  position: absolute;
-  top: 0;
-  left: 0;
-  line-height: 4.5rem;
-  font-size: 0.5rem;
-  margin-bottom: 10px;
-  z-index: 0;
+.gallery{
+	height: 4.5rem;
+	overflow: hidden;
+	margin: 0.3rem 0;
 }
+.gallery a{
+	float: left;
+	width: 33%;
+	padding: 0 0.1rem;
+	box-sizing: border-box;
+	height: 4.5rem;
+	background-size: cover;
+	text-align: center;
+}
+
 .infolist{
 	width: 100%;
 }
