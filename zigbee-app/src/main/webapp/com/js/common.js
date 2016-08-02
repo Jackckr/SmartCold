@@ -10,6 +10,10 @@ function getUrlParam( name){var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)")
 var oHtml = document.documentElement;
 function getFont(){
 	var screenWidth = oHtml.clientWidth;
+	var screenHeight = oHtml.clientHeight;
+	if(screenWidth>screenHeight){
+		screenWidth=screenHeight
+	}
 	if (screenWidth >= 1024) {
 		oHtml.style.fontSize = "54.61333333333333px";//1024/(750/40)
 	} else if (screenWidth <= 320) {
