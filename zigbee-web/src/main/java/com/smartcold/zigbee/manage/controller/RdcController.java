@@ -197,8 +197,10 @@ public class RdcController {
 		rdcEntity.setPosition("");
 		rdcEntity.setPowerConsume(0);
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
-		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
-		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		if(!SetUtil.isNullMap(lngLatMap)){
+			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+			rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		}
 
 		rdcMapper.insertRdc(rdcEntity);
 
