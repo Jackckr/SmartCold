@@ -31,12 +31,15 @@
             <ul class="houseinfo">
                 <li>
                     <label for="name">名称</label>
-                    <input type="text"  ng-model="name" placeholder="睿冷科技"/>
+                    <input class="form-control" type="text" ng-model="name" ng-disabled="editable" name="name"
+                                   ng-remote-validate="/i/rdc/checkName"
+                                   ng-remote-method="GET">
+                            <em ng-show="rdcForm.name.$error.ngRemoteValidate">冷库名已经被注册</em>
                 </li>
                 <li>
                     <label for="province">省</label>
                     <div class="mySelect">
-                    	 <select  ng-model="provinceId" 
+                    	 <select class="form-control" ng-model="provinceId" ng-disabled="editable"
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
@@ -107,18 +110,14 @@
                 <li>
                     <label for="kg">吨位</label>                    
                     <div class="mySelect">
-	                    <select ng-model="tonnage">
-	                        <option>(选填)</option>
-	                    </select>
+	                    <input class="form-control" type="text" ng-model="tonnage">
 	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
                     <label for="structure">结构</label>                    
                     <div class="mySelect">
-	                    <select ng-model="structure">
-	                        <option>(选填)</option>
-	                    </select>
+	                    <input class="form-control" type="text" ng-model="structure">
 	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
@@ -147,9 +146,7 @@
                 <li>
                     <label for="cleanarea">理货区面积</label>                    
                     <div class="mySelect">
-	                    <select ng-model="lihuoArea">
-	                        <option>(选填)</option>
-	                    </select>
+	                    <input class="form-control" type="text" ng-model="lihuoArea">
 	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
@@ -185,14 +182,10 @@
                 </li>
             </ul>
             <ul class="houseinfo black">
-                 <li>
-                     <label for="name">名称</label>
-                     <input type="text"  ng-model="name" placeholder="睿冷科技"/>
-                 </li>
                 <li>
                     <label for="Cryogen">制冷剂类型</label>                    
                     <div class="mySelect">
-	                    <select ng-model="Cryogen">
+	                    <select >
 	                    </select>
 	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
@@ -200,7 +193,7 @@
                 <li>
                     <label for="TemperatureRecord">有无温度记录</label>                    
                     <div class="mySelect">
-	                    <select ng-model="TemperatureRecord">
+	                    <select >
 	                        <option>不限</option>
 	                    </select>
 	                </div>
@@ -209,8 +202,8 @@
              </ul>
             <!--双箭头下拉-->
             <div class="next"><i class="iconfont">&#xe649;</i></div>
+            <button class="mybtn" ng-click="submit()">确认发布</button>
         </form>
-        <button class="mybtn" onclick="location.href='releasesuccess.html'">确认发布</button>
     </section>
 
     <ul class="footer">
@@ -240,8 +233,9 @@
         </li>
     </ul>
 <script src="../bower_components/angular/angular.min.js"></script>
+<script src="../bower_components/ng-remote-validate/release/ngRemoteValidate.0.6.1.min.js"></script>
 <script type="text/javascript">
-angular.module('app', []).controller('ctrl', function($scope,$http){
+angular.module('app', ['remoteValidation']).controller('ctrl', function($scope,$http){
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
         id: 0,
