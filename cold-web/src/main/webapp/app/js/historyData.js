@@ -1,4 +1,5 @@
 coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
+	clearInterval($rootScope.timeTicket);
 	$scope.getDateTimeStringBefore = function(before){
 		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
 	}
