@@ -441,12 +441,24 @@ public class RdcController {
 	 */
 	 @RequestMapping(value = "/findRDCByID")
 	 @ResponseBody
-	 public Object findRDCByID(Integer rdcID){
+	 public ResponseData<HashMap<String, Object>> findRDCByID(Integer rdcID){
+		 if(rdcID==null){return ResponseData.newFailure("无效id");}
 		 List<HashMap<String, Object>> list = this.rdcService.findRDCById(rdcID);
 		 if (SetUtil.isnotNullList(list)) {
-			return list.get(0);
+			 for (HashMap<String, Object> data : list) {
+				 List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(Integer.parseInt(data.get("id").toString()), FileDataMapper.CATEGORY_STORAGE_PIC);
+				 if(SetUtil.isnotNullList(files)){
+						List<String> filelist =new ArrayList<String>();
+						for (FileDataEntity file : files) {
+							filelist.add(FtpService.READ_URL+file.getLocation());
+						}
+						data.put("files", filelist);
+						data.put("logo", files.get(files.size()-1).getLocation());
+				} 
+			}
+			return ResponseData.newSuccess(list);
 		} else {
-           return null;
+           return ResponseData.newFailure("没有数据");
 		}
 	 }
 	/**

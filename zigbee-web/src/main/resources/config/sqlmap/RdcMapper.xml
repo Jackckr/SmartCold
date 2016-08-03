@@ -121,7 +121,7 @@
 	</select>
 	<select id="findRDCById" parameterType="Integer" resultType="map" >
 		select 
-            r.id, r.`name`,r.address,r.capacity,r.sqm,r.cellphone ,r.struct,r.storagetype,r.coldtype,mt.type managetype,dt.type storagetype,te.type storagetempertype ,t.storagetruck,r.addtime
+            r.id, r.`name`,r.address,r.capacity,r.sqm,r.cellphone ,r.struct,r.coldtype,mt.type managetype,dt.type storagetype,te.type storagetempertype ,t.storagetruck,t.rdcscore,r.addtime
         from rdc r 
 		  LEFT JOIN rdcext t ON t.RDCID=r.id 
 		  LEFT JOIN storagemanagetype mt on  mt.id=t.managetype

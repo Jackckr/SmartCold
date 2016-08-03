@@ -30,31 +30,32 @@
                     <p class='position'> <i class="iconfont">&#xe66e;</i>{{vo.address}} </p>
                 </li>
                 <li class="fr">
-                    <ul class='star' value={{vo.score}}>
-                        <li class="filled">★</li>
-                        <li class="filled">★</li>
-                        <li class="filled">★</li>
-                        <li class="filled">★</li>
-                        <li class="filled">★</li>
+                    <ul class='star' value="{{vo.rdcscore}}" >
+                        <li class="{{vo.rdcscore>=1?'filled':''}}">★</li><li class="{{vo.rdcscore>=2?'filled':''}}">★</li><li class="{{vo.rdcscore>=3?'filled':''}}">★</li><li class="{{vo.rdcscore>=4?'filled':''}}">★</li><li class="{{vo.rdcscore>=5?'filled':''}}">★</li>
                     </ul>
                 </li>
             </ul>
             <!--点击图片循环展示-->
             <div class="baguetteBoxOne gallery">
-                <a ng-repeat="fl in vo.storagePics" href="{{fl.location}}"><img ng-src="{{fl.location}}"/></a>
+                <a ng-repeat="fl in vo.files" href="{{fl}}"><img ng-src="{{fl}}"/></a>
             </div>
             <ul class="infolist clearfix">
-               	<li><span class="type">经营类型：</span><span class="text">产地型</span></li> 
-				<li><span class="type">温度类型：</span><span class="text">{{vo.codeLave2}}</span></li>
-<!-- 				<li><span class="type">存放类型：</span><span class="text">非货架存放</span></li> -->
-				<li><span class="type">{{appmode[datatype].lab[0][0]}}：</span><span class="text">{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</span></li>
-				<li><span class="type">{{appmode[datatype].lab[1][0]}}:</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span></li>
-				<li><span class="type">电话：</span><span class="text">{{vo.phoneNum}}</span></li>
-<!-- 				<li><span class="type">冷链设施：</span><span class="text">自有冷藏车</span></li> -->
+               	<li><span class="type">经营类型：</span><span class="text">{{vo.managetype}}</span></li> 
+				<li><span class="type">温度类型：</span><span class="text">{{vo.storagetempertype}}</span></li>
+				<li><span class="type">存放类型：</span><span class="text">{{vo.storagetype}}</span></li>
+				<li><span class="type">面积：</span><span class="text">{{vo.sqm}}</span></li>
+				<li><span class="type">电话：</span><span class="text">{{vo.cellphone}}</span></li>
+				<li><span class="type">冷链设施：</span><span class="text">{{vo.storagetruck!=null?'自有冷藏车':'无'}}</span></li>
             </ul>
             <!--双箭头下拉-->            
-<!--             <ul class="infolist clearfix black">这是附加信息</ul> -->
-<!--             <div class="next"><i class="iconfont">&#xe68b;</i></div> -->
+            <ul class="infolist clearfix black">
+            	 <li ng-if="vo.capacity!=0"><span class="type">吨位：</span><span class="text">{{vo.capacity}}</span></li>
+                 <li ng-if="vo.struct!=null"><span class="type">结构：</span><span class="text">{{vo.struct}}</span></li> 
+                 <li ng-if="vo.storagetype!=null"><span class="type">冷库类型：</span><span class="text">{{vo.storagetype}}</span></li> 
+                 <li ng-if="vo.coldtype!=null"><span class="type">存储类型：</span><span class="text">{{vo.coldtype}}</span></li> 
+                 <li><span class="type">添加时间：</span><span class="text">{{vo.addtime}}</span></li> 
+            </ul>
+            <div class="next"><i class="iconfont">&#xe68b;</i></div>
         </section>
         <!--仓位列表展示-->
         <section class="more">

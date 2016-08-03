@@ -9,9 +9,10 @@
 	$scope.initdata=function(){
        //获得数据
     	$http.get(ER.root+'/i/rdc/findRDCByID', { params: {"rdcID": id} }).success(function(data) {
-    		if(data){
-    			debugger;
-    			$scope.vo=data;
+    		if(data.success){
+    			$scope.vo=data.data[0];
+    		 }else{
+    			alert(data.message);
     		 }
     	}); 
         $http.get(ER.root + "/i/ShareRdcController/getSEGDList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:1}}).success(function( data) {//货品共享
