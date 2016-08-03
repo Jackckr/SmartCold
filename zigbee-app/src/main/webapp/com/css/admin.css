@@ -449,6 +449,7 @@ section.show{
 	line-height: 1.5;
 	font-size: 0.75rem;
 	resize: none;
+	box-sizing: border-box;
 }
 .pic{
 	display: inline-block;
@@ -462,7 +463,7 @@ section.show{
 	position:relative;
 	font-size:0.8rem;
 	color:#aaa;
-	top:1rem;
+	top:0.8rem;
 }
 .pic input{
 	width: 0;

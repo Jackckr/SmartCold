@@ -532,3 +532,21 @@ form+.mybtn{
 	min-height: 15rem;
 	margin: 0 auto;
 }
+.pic{
+	display: inline-block;
+	width: 3rem;
+	height: 3rem;
+	margin-top:0.3rem;
+	border: 3px dotted #ccc;
+	background: url(../img/plus.png) no-repeat center;
+}
+.pic+span{
+	position:relative;
+	font-size:0.8rem;
+	color:#aaa;
+	top:0.5rem;
+}
+.pic input{
+	width: 0;
+	height:0;
+}

@@ -73,6 +73,6 @@ $(function() {
     	'change':function(event){
     		$(this).parent().siblings('i').html('&#xe60d;')
     	}
-    })
+  })
+	
 });
-
