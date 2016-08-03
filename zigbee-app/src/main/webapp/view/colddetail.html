@@ -7,123 +7,74 @@
         <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
         <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-        <link rel="stylesheet" href="../com/css/baguettebox.min.css">     
-        <link rel="stylesheet" href="../com/css/coldlist.css" />
-        <script src="../com/js/jquery.min.js"></script>
-        <script type="text/javascript" src="../com/js/common.js"></script>
-        <script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
+        <link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">     
+        <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" />
+       <script type="text/javascript" src="../com/js/jquery.min.js"></script>
+	    <script type="text/javascript" src="../com/js/angular.min.js"></script>
+	    <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
+		<script type="text/javascript" src="../com/js/common.js"></script>
+		<script type="text/javascript" src="../app/js/colddetail.js"></script>
     </head>
-    <body>
+    <body ng-app="app"  ng-controller="colddetail" ng-cloak>
         <!-- header -->
             <header>                 
-                <div class="area fl">
-                    <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
-                </div>
-                <div class="zoom fr">
-                    <a href="../index.html">
-                        <i class="iconfont">&#xe65a;</i>
-                    </a>
-                </div>
-                    <div class="txt">
-                        冷库详情
-                    </div>
+                <div class="area fl"> <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a></div>
+                <div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
+                <div class="txt">  冷库详情</div>
             </header>
         <!-- header end-->
         <section class="main">
             <ul class="compantDetail clearfix">
                 <li class="fl">
-                    <p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
-                    <p class='position'>
-                        <i class="iconfont">&#xe66e;</i>
-                        上海-长宁区-中山公园
-                    </p>
+                    <p class='ellipsis'>{{vo.name}}</p>
+                    <p class='position'> <i class="iconfont">&#xe66e;</i>{{vo.address}} </p>
                 </li>
                 <li class="fr">
-                    <ul class='star'>
-                        <li class="filled">★</li>
-                        <li class="filled">★</li>
-                        <li class="filled">★</li>
-                        <li class="filled">★</li>
-                        <li>★</li>
+                    <ul class='star' value="{{vo.rdcscore}}" >
+                        <li class="{{vo.rdcscore>=1?'filled':''}}">★</li><li class="{{vo.rdcscore>=2?'filled':''}}">★</li><li class="{{vo.rdcscore>=3?'filled':''}}">★</li><li class="{{vo.rdcscore>=4?'filled':''}}">★</li><li class="{{vo.rdcscore>=5?'filled':''}}">★</li>
                     </ul>
                 </li>
             </ul>
             <!--点击图片循环展示-->
-            <div class="baguetteBoxOne gallery">
-                <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
-                <a href="../com/img/cbd.jpg"><img src="../com/img/cbd.jpg" alt="" /></a>
-                <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
-                <a href="../com/img/muwu.jpg"><img src="../com/img/muwu.jpg" alt="" /></a>
-                <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
-                <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
-                <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
-                <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
-                <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+            <div class="baguetteBoxOne gallery" ng-if="vo.files">
+                <a ng-repeat="fl in vo.files" href="{{fl}}"><img ng-src="{{fl}}"/></a>
             </div>
             <ul class="infolist clearfix">
-                <li><span class="type">经营类型：</span><span class="text">产地型</span></li>
-                <li><span class="type">温度类型：</span><span class="text">冷藏型</span></li>
-                <li><span class="type">存放类型：</span><span class="text">非货架存放</span></li>
-                <li><span class="type">面积：</span><span class="text">5000㎡</span></li>
-                <li><span class="type">电话：</span><span class="text">150 2167 0673</span></li>
-                <li><span class="type">冷链设施：</span><span class="text">自有冷藏车</span></li>
+               	<li><span class="type">经营类型：</span><span class="text">{{vo.managetype}}</span></li> 
+				<li><span class="type">温度类型：</span><span class="text">{{vo.storagetempertype}}</span></li>
+				<li><span class="type">存放类型：</span><span class="text">{{vo.storagetype}}</span></li>
+				<li><span class="type">面积：</span><span class="text">{{vo.sqm}}㎡</span></li>
+            	<li ng-if="vo.capacity!=0"><span class="type">吨位：</span><span class="text">{{vo.capacity}}</span></li>
+				<li><span class="type">电话：</span><span class="text">{{vo.cellphone}}</span></li>
+				<li><span class="type">冷链设施：</span><span class="text">{{vo.storagetruck!=null?'自有冷藏车':'无'}}</span></li>
             </ul>
             <!--双箭头下拉-->            
             <ul class="infolist clearfix black">
-                <li><span class="type">温度类型：</span><span class="text">冷藏型</span></li>
-                <li><span class="type">存放类型：</span><span class="text">非货架存放</span></li>
-                <li><span class="type">面积：</span><span class="text">5000㎡</span></li>
-                <li><span class="type">电话：</span><span class="text">150 2167 0673</span></li>
-                <li><span class="type">冷链设施：</span><span class="text">自有冷藏车</span></li>
+            	 <li ng-if="vo.storagetruck"><span class="type">冷藏车数量：</span><span class="text">{{vo.storagetruck}}</span></li>
+                 <li ng-if="vo.struct"><span class="type">结构：</span><span class="text">{{vo.struct}}</span></li> 
+<!--                  <li ng-if="vo.storagetype"><span class="type">冷库类型：</span><span class="text">{{vo.storagetype}}</span></li>  -->
+                 <li ng-if="vo.coldtype"><span class="type">存储类型：</span><span class="text">{{vo.coldtype}}</span></li> 
+                 <li><span class="type">添加时间：</span><span class="text">{{vo.addtime }}</span></li> 
             </ul>
             <div class="next"><i class="iconfont">&#xe68b;</i></div>
         </section>
         <!--仓位列表展示-->
         <section class="more">
             <ul class="listDad clearfix">
-                <li class="fl">仓位&nbsp;(<span id="num">267</span>)</li>
+                <li class="fl">仓位&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
                 <li class="fr"><a href="storehouse.html"><i class="iconfont">&#xe60d;</i></a></li>
             </ul>
              <div class="coldlist">
                 <ul class="imgTable">
-                    <li class="imgCell">
-                        <a href="storehousedetail.html">
-                            <img class="fl" src="../com/img/muwu.jpg">
-                            <div class="">
-                                <p class='ellipsis'>【出租】莱芜嘉禾冷链物流有限公司 </p>
-                                <p class='position'>
-                                    <i class="iconfont">&#xe66e;</i>
-                                    上海-长宁区-中山公园
-                                </p>
-                                <ul class='star'>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li>★</li>
-                                </ul>
-                                <button class="grab" onclick="location.href='confirm.html'">立即抢单</button>
+                    <li class="imgCell" ng-repeat="rdc in rdcList" >
+                        <a href="storehousedetail.html?id={{rdc.id}}">
+                            <img class="fl" ng-src="{{rdc.logo}}">
+                            <div>
+                                <p class='ellipsis'>【{{rdc.typeText}}】 {{rdc.title}} </p>
+                                <p class='position'><i class="iconfont">&#xe66e;</i>{{rdc.detlAddress}}</p>
+                                <ul class='star'><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li></ul>
+                                <button class="grab" ng-click="gosharedile(rdc.id);">立即抢单</button>
                             </div>  
-                        </a>
-                    </li>
-                    <li class="imgCell">
-                        <a href="storehousedetail.html">
-                            <img class="fl" src="../com/img/cbd.jpg">
-                            <div class="">
-                                <p class='ellipsis'>【求租】哈尔滨冷冻厂 </p>
-                                <p class='position'>
-                                    <i class="iconfont">&#xe66e;</i>
-                                    上海-长宁区-中山公园
-                                </p>
-                                <ul class='star'>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li>★</li>
-                                </ul>
-                                <button class="grab">立即抢单</button>
-                            </div>
                         </a>
                     </li>
                 </ul>
@@ -132,50 +83,21 @@
         <!--货品列表展示-->
         <section class="more">
             <ul class="listDad clearfix">
-                <li class="fl">货品&nbsp;(<span id="num">325</span>)</li>
+                <li class="fl">货品&nbsp;(<span id="num">{{gdtotal}}</span>)</li>
                 <li class="fr"><a href="goodslist.html"><i class="iconfont">&#xe60d;</i></a></li>
             </ul>
              <div class="coldlist">
                 <ul class="imgTable">
-                    <li class="imgCell">
+                    <li class="imgCell" ng-repeat="good in goodList" >
                         <a href="goodsdetail.html">
-                            <img class="fl" src="../com/img/muwu.jpg">
+                            <img class="fl" ng-src="{{good.logo}}">
                             <div class="">
-                                <p class='ellipsis'>【出货】莱芜嘉禾冷链物流有限公司 </p>
-                                <p class='position'>
-                                    <i class="iconfont">&#xe66e;</i>
-                                    上海-长宁区-中山公园
-                                </p>
-                                <ul class='star'>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li>★</li>
-                                </ul>
-                                <button class="grab" onclick="location.href='goodsdetail.html'">立即抢单</button>
+                                <p class='ellipsis'>【{{good.typeText}}】{{good.title}}</p>
+                                <p class='position'> <i class="iconfont">&#xe66e;</i>{{good.detlAddress}}</p>
+                                <ul class='star'><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li></ul>
+                                <button class="grab" ng-click="gosharedile(good.id);">立即抢单</button>
                             </div>  
                         </a>
-                    </li>
-                    <li class="imgCell">
-                        <a href="goodsdetail.html">
-                            <img class="fl" src="../com/img/cbd.jpg">
-                            <div class="">
-                                <p class='ellipsis'>【求货】长春雨润食品有限公司 </p>
-                                <p class='position'>
-                                    <i class="iconfont">&#xe66e;</i>
-                                    上海-长宁区-中山公园
-                                </p>
-                                <ul class='star'>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li class="filled">★</li>
-                                    <li>★</li>
-                                </ul>
-                            </div>  
-                        </a>
-                        <button class="grab" onclick="location.href='goodsdetail.html'">立即抢单</button>
                     </li>
                 </ul>
             </div>
@@ -194,58 +116,21 @@
                 <li><span>性价比高</span>&nbsp;(<span id="num">120</span>)</li>
              </ul>
              <!--具体评论区域-->
-             <ul class="commentArea">
-                <li class="fl">
+             <ul class="commentArea" ng-repeat="eva in evaList">
+                <li class="fl" >
                     <img src="../com/img/women.png" alt="" />
                 </li>
                 <li>
-                    <p class='ellipsis'>花间流水</p>
+                    <p class='ellipsis'>{{eva.commerName}}</p>
                     <div class="equal clearfix">
                         <span class="fl">打分</span>
                         <ul class='star fl'>
-                            <li class="filled">★</li>
-                            <li class="filled">★</li>
-                            <li class="filled">★</li>
-                            <li class="filled">★</li>
-                            <li>★</li>
+                            <li class="{{eva.grade>=1?'filled':''}}">★</li><li class="{{eva.grade>=2?'filled':''}}">★</li><li class="{{eva.grade>=3?'filled':''}}">★</li><li class="{{eva.grade>=4?'filled':''}}">★</li><li class="{{eva.grade>=5?'filled':''}}">★</li>
                         </ul>
                     </div>
                     <p class="commentTxt">服务好，地理位置好，服务好，地理位置好。</p>
                     <div class="baguetteBoxOne gallery">
-                        <a href="../com/img/cbd.jpg"><img src="../com/img/cbd.jpg" alt="" /></a>
-                        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
-                        <a href="../com/img/muwu.jpg"><img src="../com/img/muwu.jpg" alt="" /></a>
-                        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png"/></a>
-                        <a href="../com/img/fruit_13.png"><img src="../com/img/fruit_13.png" /></a>
-                        <a href="../com/img/fruit_15.png"><img src="../com/img/fruit_15.png"/></a>
-                        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png"/></a>
-                    </div>
-                </li>
-             </ul>
-             <ul class="commentArea">
-                <li class="fl">
-                    <img src="../com/img/women.png" alt="" />
-                </li>
-                <li>
-                    <p class='ellipsis'>花间流水</p>
-                    <div class="equal clearfix">
-                        <span class="fl">打分</span>
-                        <ul class='star fl'>
-                            <li class="filled">★</li>
-                            <li class="filled">★</li>
-                            <li class="filled">★</li>
-                            <li class="filled">★</li>
-                            <li>★</li>
-                        </ul>
-                    </div>
-                    <p class="commentTxt">服务好，地理位置好，服务好，地理位置好。</p>
-                    <div class="baguetteBoxOne gallery">
-                        <a href="../com/img/fruit_13.png"><img src="../com/img/fruit_13.png" /></a>
-                        <a href="../com/img/fruit_15.png"><img src="../com/img/fruit_15.png"/></a>
-                        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png"/></a>
-                        <a href="../com/img/fruit_13.png"><img src="../com/img/fruit_13.png" /></a>
-                        <a href="../com/img/fruit_15.png"><img src="../com/img/fruit_15.png"/></a>
-                        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png"/></a>
+                        <a  ng-repeat="fl in eva.reviewPics" href="{{fl.location}}"  ><img ng-src="{{fl.location}}" alt="" /></a>
                     </div>
                 </li>
              </ul>

@@ -1,5 +1,6 @@
 'use strict';
-var ER={root:"http://liankur.com/"};//var ER={root:"http://192.168.1.136:8080"};
+var ER={root:"http://192.168.1.136:8080"};
+//var ER={root:"http://liankur.com/"};
 /**
  * 获得url参数
  * @param name
