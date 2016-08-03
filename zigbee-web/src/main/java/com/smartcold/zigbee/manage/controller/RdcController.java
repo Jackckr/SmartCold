@@ -36,6 +36,7 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
+import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
@@ -439,10 +440,12 @@ public class RdcController {
 	 * @param rdcID
 	 * @return
 	 */
+	 @APP(value="app")
 	 @RequestMapping(value = "/findRDCByID")
 	 @ResponseBody
 	 public ResponseData<HashMap<String, Object>> findRDCByID(Integer rdcID){
 		 if(rdcID==null){return ResponseData.newFailure("无效id");}
+		 String newMode="●＜1.8T:%s辆   ●1.8～6T:%s辆   ●6～14T:%s辆   ●＞14T:%s辆 ";
 		 List<HashMap<String, Object>> list = this.rdcService.findRDCById(rdcID);
 		 if (SetUtil.isnotNullList(list)) {
 			 for (HashMap<String, Object> data : list) {
@@ -453,8 +456,15 @@ public class RdcController {
 							filelist.add(FtpService.READ_URL+file.getLocation());
 						}
 						data.put("files", filelist);
-						data.put("logo", files.get(files.size()-1).getLocation());
 				} 
+				 if(data.get("storagetruck")!=null){
+					 Object[] newdata =new Object[5];
+					 String[] splitfhString = StringUtil.splitfhString(data.get("storagetruck")+"");
+					 for (int i = 0; i < splitfhString.length; i++) {
+						 newdata[i]=splitfhString[i].split(":")[1];
+					 }
+					 data.put("storagetruck", String.format(newMode, newdata) );
+				 }
 			}
 			return ResponseData.newSuccess(list);
 		} else {

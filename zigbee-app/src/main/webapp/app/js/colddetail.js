@@ -9,11 +9,7 @@
 	$scope.initdata=function(){
        //获得数据
     	$http.get(ER.root+'/i/rdc/findRDCByID', { params: {"rdcID": id} }).success(function(data) {
-    		if(data.success){
-    			$scope.vo=data.data[0];
-    		 }else{
-    			alert(data.message);
-    		 }
+    		if(data.success){$scope.vo=data.data[0]; }else{alert(data.message); }
     	}); 
         $http.get(ER.root + "/i/ShareRdcController/getSEGDList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:1}}).success(function( data) {//货品共享
 			$scope.goodList = data.data;//
@@ -26,6 +22,9 @@
 		$http.get(ER.root + "/i/ShareRdcController/getSERDCList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:3}}).success(function(data) {//冷库共享
 			$scope.rdcList = data.data;//
 			$scope.rdctotal = data.total;//
+		});
+		$http.get(ER.root + "/i/comment/findCommentsByRDCId", {params: {npoint:20,rdcID:id}}).success(function(data) {//评价信息--npoint：记录条数
+			$scope.evaList = data;//
 		});
 	};
 	$scope.initevg=function(){
