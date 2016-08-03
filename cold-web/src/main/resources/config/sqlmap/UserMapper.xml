@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.smartcold.manage.cold.dao.UserMapper" >
+<mapper namespace="com.smartcold.manage.cold.dao.olddb.UserMapper" >
 	<select id="findByPassword" parameterType="map" resultType="UserEntity">
 		SELECT *
 		FROM `User` WHERE `username` = #{username} AND `password` = #{password}
@@ -15,7 +15,7 @@
   <!--*********************************************************************************-->
   <!--xuyanan:myself of function-->
   <!--*********************************************************************************-->
-  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.UserEntity" >
+  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.olddb.UserEntity" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -36,7 +36,7 @@
     delete from User
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.UserEntity" >
+  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.olddb.UserEntity" >
     insert into User (id, username, password, 
       telephone, email, role
       )
@@ -44,7 +44,7 @@
       #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.UserEntity" >
+  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.olddb.UserEntity" >
     insert into User
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.UserEntity" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.olddb.UserEntity" >
     update User
     <set >
       <if test="username != null" >
@@ -108,7 +108,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.UserEntity" >
+  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.olddb.UserEntity" >
     update User
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},

@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.ColdStorageSetMapper;
-import com.smartcold.manage.cold.dao.RdcUserMapper;
-import com.smartcold.manage.cold.dao.StorageKeyValueMapper;
-import com.smartcold.manage.cold.entity.ColdStorageSetEntity;
-import com.smartcold.manage.cold.entity.RdcUser;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
+import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
 

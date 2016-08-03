@@ -3,8 +3,8 @@ package com.smartcold.manage.cold.service;
 import java.util.Date;
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.ColdStorageSetEntity;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 
 public interface StorageService {

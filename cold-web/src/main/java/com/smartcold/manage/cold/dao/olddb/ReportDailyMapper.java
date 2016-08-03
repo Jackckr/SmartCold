@@ -1,0 +1,16 @@
+package com.smartcold.manage.cold.dao.olddb;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.smartcold.manage.cold.entity.olddb.ReportDailyEntity;
+
+public interface ReportDailyMapper {
+
+	public ReportDailyEntity findByStorageIdDate(@Param("storageid") int storageid, @Param("day") Date day);
+
+	public List<ReportDailyEntity> findReportsByStorageId(@Param("storageid") int storageid, @Param("begin") Date begin,
+			@Param("end") Date end);
+}

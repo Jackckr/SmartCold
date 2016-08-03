@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dto.NewStorageTempDto;
-import com.smartcold.manage.cold.entity.RdcUser;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
 

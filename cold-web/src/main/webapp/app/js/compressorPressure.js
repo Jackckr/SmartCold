@@ -40,6 +40,18 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
 		}).success(function (result) {
 			$scope.runMonitor(result);
 		})
+		
+		$http.get('/i/baseInfo/getKeyValueData', {
+            params: {
+                "oid": $stateParams.compressorID,
+                type:3,
+                key:'COMPRESSOR_LIQUID',
+                nums:1
+            }
+        }).success(function(data){
+        	var liquidValue = parseFloat(data[0].value.toFixed(1));
+        	$scope.liquidMonitor(liquidValue);
+        })
     }
     $scope.load();
     
@@ -467,7 +479,10 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         };
         runChart2.setOption(runOption2);
 
-        var liquid = parseFloat(group.liquidLevel);
+        
+    }
+    
+    $scope.liquidMonitor = function(liquid){
         // 液位计
         $(function () {
             $('#floatPressureChart').highcharts({

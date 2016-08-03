@@ -2,7 +2,7 @@ package com.smartcold.manage.cold.dto;
 
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 
 public class NewStorageTempDto {
 	private float startTemperature;

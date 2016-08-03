@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.UserMapper;
+import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
-import com.smartcold.manage.cold.entity.CookieEntity;
-import com.smartcold.manage.cold.entity.Role;
-import com.smartcold.manage.cold.entity.RoleUser;
-import com.smartcold.manage.cold.entity.UserEntity;
+import com.smartcold.manage.cold.entity.olddb.CookieEntity;
+import com.smartcold.manage.cold.entity.olddb.Role;
+import com.smartcold.manage.cold.entity.olddb.RoleUser;
+import com.smartcold.manage.cold.entity.olddb.UserEntity;
 import com.smartcold.manage.cold.service.CookieService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;

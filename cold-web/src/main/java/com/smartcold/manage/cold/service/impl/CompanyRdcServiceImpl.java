@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.CompanyRdcMapper;
-import com.smartcold.manage.cold.entity.CompanyRdc;
+import com.smartcold.manage.cold.dao.olddb.CompanyRdcMapper;
+import com.smartcold.manage.cold.entity.olddb.CompanyRdc;
 import com.smartcold.manage.cold.service.CompanyRdcService;
 /**
  * @author yanan.xu

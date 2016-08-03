@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.smartcold.manage.cold.dao.PrivilegeRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.PrivilegeRole" >
+<mapper namespace="com.smartcold.manage.cold.dao.olddb.PrivilegeRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.olddb.PrivilegeRole" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="roleid" property="roleid" jdbcType="INTEGER" />
     <result column="privid" property="privid" jdbcType="INTEGER" />
@@ -20,13 +20,13 @@
     delete from PrivilegeRole
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.PrivilegeRole" >
+  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.olddb.PrivilegeRole" >
     insert into PrivilegeRole (id, roleid, privid, 
       addtime)
     values (#{id,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{privid,jdbcType=INTEGER}, 
       #{addtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.PrivilegeRole" >
+  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.olddb.PrivilegeRole" >
     insert into PrivilegeRole
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.PrivilegeRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.olddb.PrivilegeRole" >
     update PrivilegeRole
     <set >
       <if test="roleid != null" >
@@ -72,7 +72,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.PrivilegeRole" >
+  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.olddb.PrivilegeRole" >
     update PrivilegeRole
     set roleid = #{roleid,jdbcType=INTEGER},
       privid = #{privid,jdbcType=INTEGER},

@@ -11,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.smartcold.manage.cold.entity.StorageKeyValue;
-import com.smartcold.manage.cold.entity.NewStorageKeysEntity;
+import com.smartcold.manage.cold.dao.newdb.NewStorageKeysMapper;
+import com.smartcold.manage.cold.entity.newdb.NewStorageKeysEntity;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
 
@@ -29,12 +30,7 @@ public class StorageKeysNewTest {
 //		List<NewStorageKeys> lists = storageKeysNewMapper.findAll();
 //		assertTrue(lists.size()>0);
 //	}
-	
-	@Test
-	public void findKeyValues(){
-		List<StorageKeyValue> lists = storageKeyValueService.findTempByNums(1, 2);
-		assertEquals(lists.size(), 2);
-	}
+
 	
 	@Test
 	public void updateStorageKeys(){

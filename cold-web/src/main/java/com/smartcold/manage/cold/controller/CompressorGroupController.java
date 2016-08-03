@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.CompressorGroupSetMapper;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.CompressorGroupService;
 import com.smartcold.manage.cold.service.StorageService;

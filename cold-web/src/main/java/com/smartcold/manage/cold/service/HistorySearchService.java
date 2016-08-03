@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.smartcold.manage.cold.dto.SearchMeta;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 
 public interface HistorySearchService {
 
