@@ -1,7 +1,7 @@
 package com.smartcold.manage.cold.service;
 
 import com.smartcold.manage.cold.dto.BlowerDTO;
-import com.smartcold.manage.cold.entity.BlowerSetEntity;
+import com.smartcold.manage.cold.entity.olddb.BlowerSetEntity;
 
 import java.util.List;
 

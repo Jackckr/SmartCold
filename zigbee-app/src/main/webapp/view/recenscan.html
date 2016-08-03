@@ -120,7 +120,7 @@
     <script>
     	$(function(){
     		$(".btnGroup").children().click(function(){
-    			$(this).addClass('current').siblings().removeClass('current')
+    			$(this).parents('li').remove()
     		})
     	})
     </script>

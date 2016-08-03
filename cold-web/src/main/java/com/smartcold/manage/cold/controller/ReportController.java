@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.ReportDailyMapper;
-import com.smartcold.manage.cold.dao.ReportMonthlyMapper;
+import com.smartcold.manage.cold.dao.olddb.ReportDailyMapper;
+import com.smartcold.manage.cold.dao.olddb.ReportMonthlyMapper;
 
 @Controller
 @RequestMapping(value = "/report")

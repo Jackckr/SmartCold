@@ -1,6 +1,6 @@
 package com.smartcold.manage.cold.service;
 
-import com.smartcold.manage.cold.entity.CookieEntity;
+import com.smartcold.manage.cold.entity.olddb.CookieEntity;
 
 public interface CookieService {
 

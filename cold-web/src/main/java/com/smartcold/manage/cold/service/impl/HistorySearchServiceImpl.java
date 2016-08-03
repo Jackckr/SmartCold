@@ -7,17 +7,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.ColdStorageDoorSetMapper;
-import com.smartcold.manage.cold.dao.ColdStorageSetMapper;
-import com.smartcold.manage.cold.dao.CompressorGroupSetMapper;
-import com.smartcold.manage.cold.dao.NewStorageKeysMapper;
-import com.smartcold.manage.cold.dao.StorageKeyValueMapper;
+import com.smartcold.manage.cold.dao.newdb.NewStorageKeysMapper;
+import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dto.SearchMeta;
-import com.smartcold.manage.cold.entity.ColdStorageDoorSetEntity;
-import com.smartcold.manage.cold.entity.ColdStorageSetEntity;
-import com.smartcold.manage.cold.entity.CompressorGroupSetEntity;
-import com.smartcold.manage.cold.entity.NewStorageKeysEntity;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.NewStorageKeysEntity;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
+import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.HistorySearchService;
 

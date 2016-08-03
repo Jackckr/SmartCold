@@ -1,9 +1,9 @@
 package com.smartcold.manage.cold.controller;
 
-import com.smartcold.manage.cold.dao.ColdStorageMapper;
-import com.smartcold.manage.cold.dao.RdcSensorMapper;
-import com.smartcold.manage.cold.entity.ColdStorageEntity;
-import com.smartcold.manage.cold.entity.RdcSensor;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcSensorMapper;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageEntity;
+import com.smartcold.manage.cold.entity.olddb.RdcSensor;
 
 import java.util.Date;
 
