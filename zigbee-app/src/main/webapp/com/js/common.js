@@ -9,8 +9,8 @@ function getUrlParam( name){var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)")
 
 var oHtml = document.documentElement;
 function getFont(){
-	var screenWidth = oHtml.clientWidth;
-	var screenHeight = oHtml.clientHeight;
+	var screenWidth = oHtml.clientWidth;	
+	var screenHeight = oHtml.clientHeight;//处理横屏时候字体变大问题
 	if(screenWidth>screenHeight){
 		screenWidth=screenHeight
 	}
