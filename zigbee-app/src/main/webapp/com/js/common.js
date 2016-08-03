@@ -52,10 +52,6 @@ function setTime(obj) {
 
 	setTimeout(function() {setTime(obj)},1000);
 }
-//删除图片js
-function del(ops){
-	$(ops).parent('span').remove()
-}
 $(function() {
 	//双箭头js
 	$('.next').click(function(){

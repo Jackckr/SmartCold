@@ -1,4 +1,8 @@
 /*图片上传插件=============================================================*/
+//删除图片js
+function del(ops){
+	$(ops).parent('span').remove()
+}
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object		
     // Loop through the FileList and render image files as thumbnails.
