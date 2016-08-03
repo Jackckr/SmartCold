@@ -37,6 +37,7 @@ import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.VerifyUtil;
 
@@ -433,6 +434,21 @@ public class RdcController {
 		return new BaseDto(deleted ? 0 : -1);
 	}
 
+	/**
+	 * 获得冷库信息
+	 * @param rdcID
+	 * @return
+	 */
+	 @RequestMapping(value = "/findRDCByID")
+	 @ResponseBody
+	 public Object findRDCByID(Integer rdcID){
+		 List<HashMap<String, Object>> list = this.rdcService.findRDCById(rdcID);
+		 if (SetUtil.isnotNullList(list)) {
+			return list.get(0);
+		} else {
+           return null;
+		}
+	 }
 	/**
 	 * 提供筛选条件
 	 * @param sqm
