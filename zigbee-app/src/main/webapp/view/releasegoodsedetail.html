@@ -120,6 +120,13 @@
                     <label for="note">备注</label>
                     <input type="text"  id="note" placeholder="（选填）"/>
                 </li>
+                <li>
+                    <label class="pic">
+		    			<input type="file" id="files" name="files[]" multiple />
+		    		</label>
+		    		<span id="">上传图片</span>		    		
+		   			<output id="list"></output>
+                </li>
             </ul>
         </form>
         <button class="mybtn" onclick="location.href='releasesuccess.html'">确认发布</button>
@@ -150,5 +157,6 @@
             </a>
         </li>
     </ul>
+    <script type="text/javascript" src="../com/js/file_load.js" ></script>
 </body>
 </html>
