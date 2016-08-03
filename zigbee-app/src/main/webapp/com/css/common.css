@@ -156,11 +156,12 @@ img {
   }
    #list{
    	display: block;
+   	padding-top: 0.2rem;
    }
   #list span{
   	display: inline-block;
   	position: relative;
-  	margin: 0.3rem 0.2rem 0 0;
+  	margin-right: 0.2rem;
   	line-height: 0!important;
   }
   #list span i{
