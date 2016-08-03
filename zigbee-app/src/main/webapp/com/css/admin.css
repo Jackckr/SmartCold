@@ -449,6 +449,7 @@ section.show{
 	line-height: 1.5;
 	font-size: 0.75rem;
 	resize: none;
+	box-sizing: border-box;
 }
 .pic{
 	display: inline-block;

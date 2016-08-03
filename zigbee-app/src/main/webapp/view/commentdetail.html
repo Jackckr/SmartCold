@@ -67,12 +67,16 @@
     	<form class="commentInfo">
     		<textarea placeholder="跟大家分享一下您对我们冷库的感受吧~"></textarea>
     		<label class="pic">
-    			<input type="file" multiple/>    			
+    			<!--<input type="file" multiple/> -->
+    			<input type="file" id="files" name="files[]" multiple />
     		</label>
     		<span id="">上传图片</span>
+    		
+   			<output id="list"></output>
     	</form>    	
     </section>
     <button type="submit" class="mybtn" onclick="location.href='comment.html'">提交</button>
+    <script type="text/javascript" src="../com/js/file_load.js" ></script>
 	<script>
 		$(document).ready(function(){
 			$('.comment').children('p').children('i').click(function(event){
@@ -84,6 +88,7 @@
 				}
 												
 			})
+			
 		})
 	</script>
 </body>
