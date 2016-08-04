@@ -37,10 +37,14 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 		  }
 	  };
 	  $scope.pageChanged = function () {
+		  if(user==null||(user!=null&&user.id==0)){return;}
 		  $.post("/i/ShareRdcController/getRdcByUid",   {pageNum : $scope.bigCurrentPage,pageSize : $scope.maxSize}, function(data) { $scope.$apply(function () {
 	    	   $scope.rdclist = data.data;//
 			   $scope.bigTotalItems = data.total;
-			   if(data.total==0){$("#nodata_div").removeClass("hide"); $("#dataList_div").addClass("hide"); }
+			   if(data.total==0){
+				   $("#nodata_div").removeClass("hide"); 
+//			       $("#dataList_div").addClass("hide");
+			   }
 		  });});
 	  };
 	  $scope.changtype=function(_em){

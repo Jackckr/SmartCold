@@ -70,7 +70,7 @@
 			   <tbody>
 			      <tr  ng-click="gosharedile(rdc.id);" ng-repeat="rdc in goods" >
 			         <td width="5%">
-			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         	<div class="image"><img ng-src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
 			         	<div class="company">【{{rdc.typeText}}】 {{rdc.title}}</div>
@@ -175,7 +175,7 @@
 			   <tbody>
 			      <tr  ng-click="gosharedile(rdc.id);"   ng-repeat="rdc in pslist">
 			         <td width="5%">
-			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         	<div class="image"><img ng-src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
 			         	<div class="company">【{{rdc.typeText}}】 {{rdc.title}} </div>
@@ -259,7 +259,7 @@
 			   <tbody>
 			      <tr  ng-click="gosharedile(rdc.id);"   ng-repeat="rdc in rdcs">
 			         <td width="5%">
-			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         	<div class="image"><img ng-src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
 			         	<div class="company">【{{rdc.typeText}}】{{rdc.title}} </div>

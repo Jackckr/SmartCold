@@ -78,7 +78,7 @@
 			</h1>
 		</div>
 		<div class="nav-right mw-8">
-			<div class="nav-right" ng-show="user != null && user.id != 0">
+			<div class="nav-right" ng-cloak ng-show="user != null && user.id != 0" >
 				<div class="unauthenticated dropdown">
 					<!-- <strong class="text-primary dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" ng-bind="user.username"></strong><span class="caret"></span><span></span>
 					个人信息下拉菜单 start
@@ -97,26 +97,26 @@
 				   </ul>
 					个人信息下拉菜单 end -->
 					<div class="btn-group">
-				 <button class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-				<ul class="dropdown-menu hide">
-					<li>
-						<a href="#/personalRdc">个人信息</a>
-					</li>
-					<li>
-						<a href="#/personalRdc">我的发布</a>
-					</li>
-					<li>
-						<a href="#/personalOrder">我的订单</a>
-					</li>
-					<li>
-						<a href="#/personalRdc">我的冷库</a>
-					</li>
-				</ul>
-			</div>
+				     <button   class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+						 <ul class="dropdown-menu hide">
+							<li>
+								<a href="#/personalRdc">个人信息</a>
+							</li>
+							<li>
+								<a href="#/personalRdc">我的发布</a>
+							</li>
+							<li>
+								<a href="#/personalOrder">我的订单</a>
+							</li>
+							<li>
+								<a href="#/personalRdc">我的冷库</a>
+							</li>
+						</ul>
+			       </div>
 					<b><a ng-click="logout()" href="" ng-bind="'退出'">
 					</a>
 					</b>
-				</div>
+				 </div>
 			</div>
 			<!-- visible-xs -->
 			<div class="nav-right" ng-show="user == null ||user.id == 0">
