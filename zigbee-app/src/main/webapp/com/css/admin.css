@@ -200,7 +200,9 @@ section.show{
 	border-color: transparent;
 }
 .position+.btnGroup{
-	margin-top: 0;
+	margin-top: 1.5rem;
+	border-top:1px solid #eee;
+	padding-top:0.3rem;
 }
 .position+.btnGroup button{
 	padding: 0 1rem;
@@ -209,10 +211,14 @@ section.show{
 .position i{
 	color: #F07409;
 }
-.orderNum{
+.img+.company+.position{
 	position: relative;
-	top: 1rem;
+	top: 0.6rem;
 }
+/* .orderNum{
+	 position: relative;
+	top: 0.6rem;
+} */
 /*我的订单*/
 .content{
 	margin-bottom: 3rem;

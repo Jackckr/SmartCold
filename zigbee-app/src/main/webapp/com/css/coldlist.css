@@ -183,7 +183,7 @@ section{
 	border-radius: 3px;
 	margin-right: 0.9rem;
 	position: absolute;
-	bottom: 0.5rem;
+	bottom: 0.4rem;
 	right: 0;
 }
 .ellipsis{
@@ -513,4 +513,14 @@ section{
 	font-size: 0.8rem;
 	color: #999;
 	line-height: 2rem;
+}
+.nodata{
+	text-align: center;
+	font-size: 0.8rem;
+	display: none;
+}
+.nodata img{
+	margin: 2rem auto;
+	width: 6.5rem;
+	height: 6.5rem;
 }

@@ -45,6 +45,11 @@ $().ready(function() {
   					 $("#ul_mtty_list").append(mtlist.join("")); 
   					 $("#ul_stty_list").append(stlist.join("")); 
   					 $("#filter_section .listcontain li").click(function(event) {addfilter(this);});
+  					 $(".backDrop").click(function(){
+						$(".droplist a").removeClass('current').children('i').removeClass('current').html('&#xe62d;');
+						$('.listcontain').hide();
+						$(this).hide();
+					})
   			   }
   	     });
   	 };
@@ -71,6 +76,9 @@ $().ready(function() {
   	   	              $.each(rdcsList, function(index, item) { 
   	   	            	ul_select.append( gethtml(item));
   	   	              });
+  	   	              $(".nodata").hide();
+  	   	          }else{
+  	   	         $(".nodata").show();
   	   	          }
   		    });
   	};
