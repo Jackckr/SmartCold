@@ -226,6 +226,9 @@ section{
 	padding:0.5rem 0.9rem;
 	box-sizing: border-box;
 }
+.commentlist{
+	margin-top: 2.2rem!important;
+}
 .compantDetail .ellipsis{
 	color: #000;
 	font-size: 0.8rem;

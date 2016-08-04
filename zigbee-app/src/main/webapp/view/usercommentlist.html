@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>点评列表</title>
+        <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+        <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+        <link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">     
+        <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" />
+       <script type="text/javascript" src="../com/js/jquery.min.js"></script>
+	    <script type="text/javascript" src="../com/js/angular.min.js"></script>
+	    <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
+		<script type="text/javascript" src="../com/js/common.js"></script>
+		<script type="text/javascript" src="../app/js/colddetail.js"></script>
+    </head>
+    <body>
+        <!-- header -->
+            <header>                 
+                <div class="area fl"> <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a></div>
+                <div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
+                <div class="txt"> 点评列表</div>
+            </header>
+        <!-- header end-->
+
+        <!--用户点评-->
+        <section class="more commentlist">
+			<ul class="listDad clearfix">
+				<li class="fl">用户点评&nbsp;(<span id="num">642</span>)</li>
+				<!--<li class="fr"><a><i class="iconfont">&#xe60d;</i></a></li>-->
+			</ul>
+			 <ul class="borderlist clearfix">
+			 	<li><span>全部</span>&nbsp;(<span id="num">642</span>)</li>
+			 	<li><span>值得推荐</span>&nbsp;(<span id="num">343</span>)</li>
+			 	<li><span>有待改善</span>&nbsp;(<span id="num">56</span>)</li>
+			 	<li><span>信誉好</span>&nbsp;(<span id="num">123</span>)</li>
+			 	<li><span>性价比高</span>&nbsp;(<span id="num">120</span>)</li>
+			 </ul>
+			 <!--具体评论区域-->
+			 <ul class="commentArea">
+			 	<li class="fl">
+			 		<img src="../com/img/women.png" alt="" />
+			 	</li>
+			 	<li>
+			 		<p class='ellipsis'>花间流水</p>
+					<div class="equal clearfix">
+						<span class="fl">打分</span>
+						<ul class='star fl'>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li>★</li>
+						</ul>
+					</div>
+					<p class="commentTxt">服务好，地理位置好，服务好，地理位置好。</p>
+					<ul class="imglist">
+						<li><a href="../com/img/fruit_13.png"><img src="../com/img/fruit_13.png" /></a></li>
+						<li><a href="../com/img/fruit_15.png"><img src="../com/img/fruit_15.png" alt="" /></a></li>
+						<li><a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a></li>	
+					</ul>
+			 	</li>
+			 </ul>
+			 <ul class="commentArea">
+			 	<li class="fl">
+			 		<img src="../com/img/women.png" alt="" />
+			 	</li>
+			 	<li>
+			 		<p class='ellipsis'>花间流水</p>
+					<div class="equal clearfix">
+						<span class="fl">打分</span>
+						<ul class='star fl'>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li>★</li>
+						</ul>
+					</div>
+					<p class="commentTxt">服务好，地理位置好，服务好，地理位置好。</p>
+					<ul class="imglist">
+						<li><a href="../com/img/fruit_13.png"><img src="../com/img/fruit_13.png" /></a></li>
+						<li><a href="../com/img/fruit_15.png"><img src="../com/img/fruit_15.png" alt="" /></a></li>
+						<li><a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a></li>	
+					</ul>
+			 	</li>
+			 </ul>
+		</section>
+        <script>
+            $(function(){
+            //点击图片看大图
+                baguetteBox.run('.baguetteBoxOne', {
+                    animation: 'slideIn',
+                    buttons: true
+                });
+                
+                if ($('.gallery').children().length==0) {
+                    //如果没有图片，则隐藏
+                    $('.gallery').hide();
+                    $('.gallery').prev().css({
+                        'marginBottom':'0.3rem'
+                    })
+                }
+                
+            });
+        </script>
+    </body>
+</html>
