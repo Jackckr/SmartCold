@@ -281,6 +281,29 @@ section{
 .text{
 	color: #999;
 }
+.type+div div{
+	width:90%;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	line-height: 1rem;
+	margin-bottom: 0.1rem;
+}
+.type~div span{
+	display: inline-block;
+	width:40%;
+	background-color: #DDDDDD;
+	text-align: center;
+}
+.type~div span:last-child{
+	width:15%;
+	color: #999;
+	background-color: transparent;
+}
+.type~div input{
+	width: 40%;
+	font-size: 0.7rem;
+	text-indent:10px;
+}
 .next{
 	width: 100%;
 	padding: 0.4rem 0;
