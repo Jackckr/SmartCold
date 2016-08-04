@@ -104,7 +104,7 @@ public class UserController extends BaseController {
 		if (username == null || password == null || !password.equals(password1)) {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
-		if(signUpCode==null||!signUpCode.equals(request.getSession().getAttribute("signUpCode")))
+		if(signUpCode==null||!(request.getSession().getAttribute("signUpCode")+"").equalsIgnoreCase(signUpCode))
 			return new ResultDto(-1, "验证码输入错误");
 		UserEntity userEntity = new UserEntity();
 		userEntity.setUsername(username);
