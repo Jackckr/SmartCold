@@ -31,7 +31,7 @@
             <ul class="houseinfo">
                 <li>
                     <label for="name">名称</label>
-                    <input class="form-control" type="text" ng-model="name" ng-disabled="editable" name="name"
+                    <input type="text" ng-model="name" ng-disabled="editable" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET">
                             <em ng-show="rdcForm.name.$error.ngRemoteValidate">冷库名已经被注册</em>
@@ -39,7 +39,7 @@
                 <li>
                     <label for="province">省</label>
                     <div class="mySelect">
-                    	 <select class="form-control" ng-model="provinceId" ng-disabled="editable"
+                    	 <select ng-model="provinceId" ng-disabled="editable"
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
@@ -83,7 +83,7 @@
                 <li>
                     <label for="temperatureType">冷库温度类型</label>                    
                     <div class="mySelect">
-	                    <select class="form-control" ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
+	                    <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
 	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
@@ -113,14 +113,14 @@
                 <li>
                     <label for="kg">吨位</label>                    
                     <div class="mySelect">
-                        <input class="form-control" type="text" ng-model="tonnage">
+                        <input type="text" ng-model="tonnage">
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
                     <label for="structure">结构</label>                    
                     <div class="mySelect">
-                        <input class="form-control" type="text" ng-model="structure">
+                        <input type="text" ng-model="structure">
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
@@ -136,7 +136,7 @@
                 <li>
                     <label for="moon">是否有月台</label>                    
                     <div class="mySelect">
-                        <select class="form-control" ng-model="platform"
+                        <select ng-model="platform"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
@@ -144,21 +144,21 @@
                 <li>
                     <label for="cleanroom">是否有理货间</label>
                     <div class="mySelect">
-                    	<select class="form-control" ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
+                    	<select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                      </div>                   
                 </li>
                 <li>
                     <label for="cleanarea">理货区面积</label>                    
                     <div class="mySelect">
-                        <input class="form-control" type="text" ng-model="lihuoArea">
+                        <input type="text" ng-model="lihuoArea">
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
                     <label for="temperatureTypeCtr">有无温控</label>                    
                     <div class="mySelect">
-                        <select class="form-control" ng-model="lihuoTemperCtr"
+                        <select ng-model="lihuoTemperCtr"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
@@ -166,7 +166,7 @@
                 <li>
                     <label for="cryogen">制冷剂类型</label>                    
                     <div class="mySelect">
-                        <select class="form-control" ng-model="storageRefreg"
+                        <select ng-model="storageRefreg"
                                         ng-change="StorageRefregSelected(storageRefreg)"
                                         ng-options="x.id as x.type for x in storageRefregs"></select>
                     </div>
@@ -175,7 +175,7 @@
                 <li>
                     <label for="temperatureRecord">有无温度记录</label>                    
                     <div class="mySelect">
-                        <select class="form-control" ng-model="temperRecord"
+                        <select ng-model="temperRecord"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
@@ -184,58 +184,56 @@
                      <div>冷库容量：</div>
                     <div>
                         <div>
-                            <span>12°至25°</span>
-                            <input class="form-control" type="text" ng-model="capacity1">
+                            <span>12至25度</span>
+                            <input type="text" ng-model="capacity1">
                             <span>吨</span>
                         </div>
 						<div>
-                            <span>12°至-2°</span>
-                            <input class="form-control" type="text" ng-model="capacity2">
+                            <span>12至-2度</span>
+                            <input type="text" ng-model="capacity2">
                             <span>吨</span>
                         </div>
                         <div>
-                            <span>-18°至-22°</span>
-                            <input class="form-control" type="text" ng-model="capacity3">
+                            <span>-18至-22度</span>
+                            <input type="text" ng-model="capacity3">
                             <span>吨</span>
 						</div>
 						<div>
-                            <span>-22至-30°</span>
-                            <input class="form-control" type="text" ng-model="capacity4">
+                            <span>-22至-30度</span>
+                            <input type="text" ng-model="capacity4">
                             <span>吨</span>
                         </div>
                         <div>
-                            <span>-30°以下</span>
-                            <input class="form-control" type="text" ng-model="capacity5">
+                            <span>-30度以下</span>
+                            <input type="text" ng-model="capacity5">
                             <span>吨</span>
                         </div>
                         <!-- <div style="width: auto"></div> -->
                     </div>
                 </li>
                 <li>
-                    <div>周边设施：</div>
-                    <div>
-                        <textarea class="form-control" type="text" ng-model="facility"
-                                                    placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
+                    <label>周边设施：</label>
+                    <div class="mySelect">
+                        <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
                     </div>
                 </li>
                 <li>
-                    <label for="myfile">上传图片</label>                    
-                    <input type="file"  ng-model="myfile" placeholder="请选择文件"
-                         style="appearance: none;-webkit-appearance: none;background: transparent;border: 0;"/>
+                    <label for="myfile">上传图片</label>     
+                    <div class="mySelect">               
+                        <input type="file"  ng-model="myfile" placeholder="请选择文件">
+                    </div>
                 </li>
                 <li>
-                    <label class="col-sm-4 control-label">资质荣誉图：</label>
-                            <div class="col-sm-8">
-                                <div class="row">
-                                    <div class="col-sm-6 divCSS">
-                                            <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
-                                                   ngf-multiple="true" name="honorfiles">
-                                    </div>
-                                    <div class="col-sm-6 divCSS">
-                                        <small class="text-warning" style="width: 100px">*最多八张</small>
-                                    </div>
-                                </div>
-                            </div>                     
+                    <label>资质荣誉图：</label>
+                    <div class="mySelect">
+                        <div>
+                            <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
+                                       ngf-multiple="true" name="honorfiles">
+                        </div>
+                        <div>
+                            <small class="text-warning" style="width: 100px">*最多八张</small>
+                        </div>
+                    </div>                  
                 </li>
                 <li>
                     <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
@@ -244,25 +242,23 @@
                             </label>
                 </li>
                 <li>
-                    <label class="col-sm-4 control-label">功能平面布置图：</label>
-                            <div class="col-sm-8">
-                                    <input type="file" ng-model="arrangePic" name="arrangePic"
-                                           ngf-select="addArrangePic($arrangePic)">
-                            </div>
+                    <label>功能平面布置图：</label>
+                    <div class="mySelect">
+                        <input type="file" ng-model="arrangePic" name="arrangePic"
+                                   ngf-select="addArrangePic($arrangePic)">
+                    </div>
                 </li>
                 <li>
-                    <label class="col-sm-4 control-label">冷库图片：</label>
-                            <div class="col-sm-8">
-                                <div class="row">
-                                    <div class="col-sm-6 divCSS">
-                                        <input type="file" ngf-select="addFiles($files)" ng-model="files"
-                                                   ngf-multiple="true" name="files">
-                                    </div>
-                                    <div class="col-sm-6 divCSS">
-                                        <small class="text-warning" style="width: 100px">*最多五张</small>
-                                    </div>
-                                </div>
+                    <label>冷库图片：</label>
+                       <div class="mySelect">
+                           <div>
+                                <input type="file" ngf-select="addFiles($files)" ng-model="files"
+                                           ngf-multiple="true" name="files">
                             </div>
+                            <div>
+                                <small class="text-warning" style="width: 100px">*最多五张</small>
+                            </div>
+                       </div>
                 </li>
                 <li>
                     <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>

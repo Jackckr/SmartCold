@@ -226,13 +226,18 @@ section{
 	overflow: hidden;
 	border: 1px solid transparent;
 	vertical-align: middle;
-	height: 2rem;
+	/* height: 2rem; */
     line-height: 2rem;
+}
+.mySelect textarea{
+	width:99%;
+	height:auto;
+	border:1px solid #ccc;
+	resize:none;
 }
 .houseinfo>li select{
 	width: 120%;
 	height: 100%;
-	border:1px solid #222;
 	font-size: 0.75rem;
 	color: #555;
 	vertical-align: middle;
@@ -242,7 +247,7 @@ section{
 	/*666*/
 	-webkit-appearance:none;
 	appearance:none;
-	/* border:none; */
+	border:none;
 	display:block;
 	background-color: #FFFFFF;
 }
@@ -362,7 +367,7 @@ input[type='radio'].blue{
 	50%{top:0.3rem;}
 	100%{top: -0.2rem;}
 }
-form+.mybtn{	
+form+.mybtn,.next+.mybtn{	
 	display: block;
 	padding:0.3rem 0;
 	font-size: 0.9rem;
