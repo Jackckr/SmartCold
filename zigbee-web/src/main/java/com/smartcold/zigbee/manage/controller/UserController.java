@@ -36,6 +36,7 @@ public class UserController extends BaseController {
 			String cookie = cookieService.insertCookie(userName);
 			user.setPassword("******");
 			request.getSession().setAttribute("user", user);
+			System.err.println(request.getSession().getId());
             return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		}
 		return ResponseData.newFailure("用户名或者密码不正确！");
@@ -57,6 +58,9 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser")
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
+		System.err.println("请求地址："+request.getRequestURL());
+		System.err.println("getRemoteUser"+request.getRemoteUser());
+		System.err.println("getRequestedSessionId："+request.getRequestedSessionId());
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();

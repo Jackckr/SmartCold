@@ -2,34 +2,15 @@
 // var ER={root:"http://liankur.com/"};
 var ER={root:"http://192.168.1.115:8080"};
 var oHtml = document.documentElement;var countdown=60;
-if ($.ajax) {
-    $.ajax({
-        url:ER.root + "/i/user/findUser",
-        type:"GET",
-        cache:false,
-        dataType:"json",
-        xhrFields:{
-		    withCredentials: true
-        },
-        success:function(data) {
-            if (data && data.id != 0) {
-                window.findUser = data;
-            } else {
-                window.user = null;
-            }
-        }
-    });
-}
-
-function isLogin() {
-    return window.user != null && window.user.id != 0;
-}
-
+jQuery.ajaxSetup({ xhrFields:{ withCredentials: true}} );
+if($.ajax){$.ajax({url:ER.root+"/i/user/findUser",type:"GET",cache:false,dataType:"json", beforeSend: function(xhr) {xhr.withCredentials = true;},success:function(data){if(data&&data.id!=0){window.user=data;}else{window.user=null;}}});};
+function isLogin(){return window.user!=null&&window.user.id!=0;}
 function checkLogin() {
     if (!isLogin()) {
         window.location.href = "login.html#" + window.location.href;
     }
 }
+>>>>>>> 44762c308a82477d63e4e6a423f8b2885f7e2891
 function getUrlParam( name){var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  var r = window.location.search.substr(1).match(reg);  if (r!=null) return unescape(r[2]); return null; } 
 function getFont(){var screenWidth=oHtml.clientWidth;var screenHeight=oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
 function goback(){window.history.back();}//返回上一级
