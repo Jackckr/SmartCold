@@ -2,28 +2,34 @@
  * 冷库列表
  */
 $().ready(function() { 
-	  maxSize=10;
-      currentPage=  1;  // 当前页
+	  var maxSize=10;
+      var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
-	  var is_more =true;
-	  var btn_more=$("#loading");
 	  var ul_select=$("#ul_rdcsL_list");
       gosharedile=function(sharid){
-    	 window.location.href ="storehousedetail.html?id="+sharid; 
+    	 window.location.href ="colddetail.html?id="+sharid; 
       };
-      $(window).scroll(function(){
-   		var _needload=needtoloadRB();
-   		if(_needload && isLoadRB==false &&is_more){
-   			isLoadRB=true;
-   		    getPageData();
-   		}
-      });
       initevg=function(){
    		$(".droplist a").click(function(e){//条件过滤
    			$(this).children('i').addClass('current').html('&#xe62e;');
    			$(this).addClass('current').next('.listcontain').slideDown().parent().siblings().children('a').removeClass('current').children('i').removeClass('current').html('&#xe62d;').parent().siblings('.listcontain').hide();
    			$(".backDrop").show();
    		});
+   	    $(".backDrop").click(function(){
+			$(".droplist a").removeClass('current').children('i').removeClass('current').html('&#xe62d;');
+			$('.listcontain').hide();
+			$(this).hide();
+		});
+   	    $(window).scroll(function(){
+     	    var scrollTop = $(this).scrollTop();
+	     	var scrollHeight = $(document).height();
+	     	var windowHeight = $(this).height();
+	     	if(scrollTop + windowHeight > scrollHeight-30){
+	     		if(isLoadRB==false&&currentPage<totalPages){
+	     		   getPageData();
+	     		}
+	     	};
+     	});
      };
       addfilter= function(em){
   		var $this = $(em).html();
@@ -45,13 +51,9 @@ $().ready(function() {
   					 $("#ul_mtty_list").append(mtlist.join("")); 
   					 $("#ul_stty_list").append(stlist.join("")); 
   					 $("#filter_section .listcontain li").click(function(event) {addfilter(this);});
-  					 $(".backDrop").click(function(){
-						$(".droplist a").removeClass('current').children('i').removeClass('current').html('&#xe62d;');
-						$('.listcontain').hide();
-						$(this).hide();
-					})
+  					
   			   }
-  	     });
+  	      });
   	 };
   	 getFilter=function(pageNum,pageSize){
   			var sqm =$("#ul_sqm_list li.active").attr("value");
@@ -59,48 +61,31 @@ $().ready(function() {
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   		    var _options={ sqm:sqm, managetype: smty,storagetempertype:sety,datatype:3};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
-  		   return _filter;
+  		    return _filter;
   	};
   	function gethtml(rdc){
   		  var score=['<li class="imgCell" ng-repeat="rdc in rdcsList"><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
   		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score&&i!=0?'<li class="filled">★</li>':"<li>★</li>"); }
-  		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >立即抢单</button></li>');
+  		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
   		  return score.join("");
   	}
   	function getPageData(){//启用无限加载
-  		 var _filter=  getFilter(currentPage,maxSize);
-  		   $.post(ER.root+"/i/rdc/getRDCList", _filter, function(data) {	  
+  		   isLoadRB=true;
+  		   var _filter=  getFilter(currentPage,maxSize);
+  		   $.post(ER.root+"/i/rdc/getRDCList", _filter, function(data) {	
   	   	          if(data.success&&data.data.length>0){
-  	   	         	  currentPage++;
-  	   	        	  var   rdcsList = data.data;//
-  	   	              $.each(rdcsList, function(index, item) { 
-  	   	            	ul_select.append( gethtml(item));
-  	   	              });
+  	   	        	  totalPages=data.totalPages;
+  	   	         	  currentPage++; var html=[];var   rdcsList = data.data;//
+  	   	              $.each(rdcsList, function(index, item) {html.push( gethtml(item)); });
+  	   	              ul_select.append(html.join(""));
   	   	              $(".nodata").hide();
   	   	          }else{
-  	   	         $(".nodata").show();
+  	   	              $(".nodata").show();
   	   	          }
+  	   	     isLoadRB=false;
   		    });
   	};
-  	needtoloadRB=function(){
-  		return $(window).scrollTop()<(btn_more.offset().top-jQuery(window).height());
-  		/*
-  		var s=btn_more.offset().top;
-  		var btn_top=btn_more.scrollTop();
-  		var window_height=$(window).height();
-  		var scroll_Top=$(window).scrollTop();
-  		var sl= btn_top<scroll_Top+window_height?true:false;
-  		return sl;
-  		*/
-  	};
-  	
   	getPageData();
   	initFilter();
   	initevg();
 });	
-
-
-	
-
-
-

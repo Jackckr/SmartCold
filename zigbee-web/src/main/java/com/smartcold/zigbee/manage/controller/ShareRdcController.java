@@ -23,6 +23,7 @@ import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
+import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
@@ -299,9 +300,9 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
-	/*@RequestMapping(value="sharvistPhone")
+	@RequestMapping(value="sharvistPhone")
 	@ResponseBody
-	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone,String yzm){
+	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone){
 		try {
 			if(StringUtil.isnotNull(telephone)){
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
@@ -309,14 +310,18 @@ public class ShareRdcController  {
 				request.getSession().setAttribute("shear_order_id", dataid);
 				request.getSession().setAttribute("shear_order_yzm", signUpCode);
 				request.getSession().setAttribute("shear_order_telephone", telephone);
-				return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
+				ResponseData<String> instance = ResponseData.getInstance();
+				instance.setSuccess(true);
+				instance.setEntity(signUpCode);
+				instance.setMessage("验证码已发送到您的手机！请注意查收！");
+				return instance;
 			}
 			return  ResponseData.newFailure("请输入有效手机号码！！");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ResponseData.newFailure("未知异常！");
-	}*/
+	}
 	
 	
 	/**
