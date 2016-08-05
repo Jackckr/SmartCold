@@ -217,13 +217,7 @@
                         <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
                     </div>
                 </li>
-                <li>
-                    <label for="myfile">上传图片</label>     
-                    <div class="mySelect">               
-                        <input type="file"  ng-model="myfile" placeholder="请选择文件">
-                    </div>
-                </li>
-                <li>
+                 <li>
                     <label>资质荣誉图：</label>
                     <div class="mySelect">
                         <div>
@@ -373,7 +367,39 @@ angular.module('app', ['remoteValidation','ngFileUpload']).controller('ctrl', fu
     $scope.capacity3 = 0;
     $scope.capacity4 = 0;
     $scope.capacity5 = 0;
+
     $scope.totalfiles = [];
+    $scope.totalhonorfiles = [];
+
+    $scope.addFiles = function (files) {
+        if($scope.totalfiles.length + files.length > 5){
+            alert("最多上传五张图片");
+            return;
+        }
+        $scope.totalfiles = $scope.totalfiles.concat(files);
+    }
+    $scope.addHonorFiles = function (files) {
+        if($scope.totalhonorfiles.length + files.length > 8){
+            alert("最多上传八张图片");
+            return;
+        }
+        $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
+    }
+
+    $scope.drop = function(file){
+        angular.forEach($scope.totalfiles,function(item, key){
+            if(item == file){
+                $scope.totalfiles.splice(key,1);
+            }
+        })
+    }
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalhonorfiles,function(item, key){
+            if(item == honorfile){
+                $scope.totalhonorfiles.splice(key,1);
+            }
+        })
+    }
 
     function checkInput(){
         var flag = true;
@@ -460,18 +486,22 @@ angular.module('app', ['remoteValidation','ngFileUpload']).controller('ctrl', fu
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 arrangePics : $scope.arrangePic,
             }
-            // for(var i = 0; i < $scope.totalfiles.length; i++){
-            //     data["file" + i] = $scope.totalfiles[i];
-            // }
+            for(var i = 0; i < $scope.totalfiles.length; i++){
+                data["file" + i] = $scope.totalfiles[i];
+            }
+            for(var j = 0; j < $scope.totalhonorfiles.length; j++){
+                data["honor" + j] = $scope.totalhonorfiles[j];
+            }
 
             Upload.upload({
                 url: ER.root+'/i/rdc/addRdc',
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },
+                withCredentials : true,
                 data: data
             }).then(function (resp) {
                 $scope.isDisabled = false;
                 alert("添加成功");
-                $state.go('coldStoragelist', {});
+                window.location.href='releasesuccess.html';
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
