@@ -232,6 +232,7 @@ section{
 .houseinfo>li select{
 	width: 120%;
 	height: 100%;
+	border:1px solid #222;
 	font-size: 0.75rem;
 	color: #555;
 	vertical-align: middle;
@@ -241,7 +242,7 @@ section{
 	/*666*/
 	-webkit-appearance:none;
 	appearance:none;
-	border:none;
+	/* border:none; */
 	display:block;
 	background-color: #FFFFFF;
 }
