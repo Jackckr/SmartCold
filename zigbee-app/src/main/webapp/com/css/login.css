@@ -173,3 +173,11 @@ section .inputBd input{
 	color: #666;
 	margin-bottom: 0.5rem;
 }
+.warnInfo{
+	text-indent:2rem;
+	margin-top:0.5rem;
+}
+.warnInfo a{
+	color:#f80;
+	font-size:0.75rem;
+}
