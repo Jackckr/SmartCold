@@ -59,6 +59,9 @@ public class RdcServiceImpl implements RdcService {
     @Autowired
     private CityListMapper cityListDao;
 
+    @Autowired
+    private StorageHonorMapper storageHonorDao;
+
     @Override
     public List<RdcEntity> findRdcList() {
         return rdcDao.findRdcList();
@@ -175,33 +178,48 @@ public class RdcServiceImpl implements RdcService {
 //			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
 
             String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
-            for (int i = 0; i < truck.length; i++) {
-                String[] truckItem = truck[i].split(":");
-                if (truckItem[0].equalsIgnoreCase("1")) {
-                    rdcAddDTO.setColdTruck1(Integer.parseInt(truckItem[1]));
-                } else if (truckItem[0].equalsIgnoreCase("2")) {
-                    rdcAddDTO.setColdTruck2(Integer.parseInt(truckItem[1]));
-                } else if (truckItem[0].equalsIgnoreCase("3")) {
-                    rdcAddDTO.setColdTruck3(Integer.parseInt(truckItem[1]));
-                } else if (truckItem[0].equalsIgnoreCase("4")) {
-                    rdcAddDTO.setColdTruck4(Integer.parseInt(truckItem[1]));
+            if (truck.length > 0){
+                for (int i = 0; i < truck.length; i++) {
+                    String[] truckItem = truck[i].split(":");
+                    if (truckItem[0].equalsIgnoreCase("1")) {
+                        rdcAddDTO.setColdTruck1(Integer.parseInt(truckItem[1]));
+                    } else if (truckItem[0].equalsIgnoreCase("2")) {
+                        rdcAddDTO.setColdTruck2(Integer.parseInt(truckItem[1]));
+                    } else if (truckItem[0].equalsIgnoreCase("3")) {
+                        rdcAddDTO.setColdTruck3(Integer.parseInt(truckItem[1]));
+                    } else if (truckItem[0].equalsIgnoreCase("4")) {
+                        rdcAddDTO.setColdTruck4(Integer.parseInt(truckItem[1]));
+                    }
                 }
             }
+
             String[] capacity = rdcExtEntity.getStoragecapacity().split(",");// 1:2,2:2,3:2,4:1,5:1
-            for (int i = 0; i < capacity.length; i++) {
-                String[] capacityItem = capacity[i].split(":");
-                if (capacityItem[0].equalsIgnoreCase("1")) {
-                    rdcAddDTO.setCapacity1(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("2")) {
-                    rdcAddDTO.setCapacity2(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("3")) {
-                    rdcAddDTO.setCapacity3(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("4")) {
-                    rdcAddDTO.setCapacity4(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("5")) {
-                    rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
+            if (capacity.length > 0){
+                for (int i = 0; i < capacity.length; i++) {
+                    String[] capacityItem = capacity[i].split(":");
+                    if (capacityItem[0].equalsIgnoreCase("1")) {
+                        rdcAddDTO.setCapacity1(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("2")) {
+                        rdcAddDTO.setCapacity2(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("3")) {
+                        rdcAddDTO.setCapacity3(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("4")) {
+                        rdcAddDTO.setCapacity4(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("5")) {
+                        rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
+                    }
                 }
             }
+
+            String[] honorpiclocation = rdcExtEntity.getHonorpiclocation().split(",");
+            List<StorageHonorEntity> allHonors = storageHonorDao.findAll();
+            List<StorageHonorEntity> honors = Lists.newArrayList();
+            if (honorpiclocation.length > 0) {
+                for (int i = 0; i < honorpiclocation.length; i++) {
+                    honors.add(allHonors.get(Integer.parseInt(honorpiclocation[i]) - 1));
+                }
+            }
+            rdcAddDTO.setStorageHonorPics(honors);
 //			result.add(rdcAddDTO);
         }
 

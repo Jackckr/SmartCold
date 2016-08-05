@@ -1,46 +1,25 @@
 package com.smartcold.bgzigbee.manage.controller;
 
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.mchange.v1.util.ArrayUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.smartcold.bgzigbee.manage.dao.*;
+import com.smartcold.bgzigbee.manage.dto.*;
+import com.smartcold.bgzigbee.manage.entity.*;
+import com.smartcold.bgzigbee.manage.service.FtpService;
+import com.smartcold.bgzigbee.manage.service.RdcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import com.smartcold.bgzigbee.manage.dto.BaseDto;
-import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
-import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
-import com.smartcold.bgzigbee.manage.dto.ResultDto;
-import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
-import com.smartcold.bgzigbee.manage.entity.AdminEntity;
-import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
-import com.smartcold.bgzigbee.manage.entity.OperationLog;
-import com.smartcold.bgzigbee.manage.entity.RdcEntity;
-import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
-import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
-import com.smartcold.bgzigbee.manage.entity.UserEntity;
-import com.smartcold.bgzigbee.manage.service.FtpService;
-import com.smartcold.bgzigbee.manage.service.RdcService;
+import javax.servlet.http.HttpServletRequest;
+import java.net.URLDecoder;
+import java.util.*;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -502,11 +481,13 @@ public class RdcController {
 	@ResponseBody
 	public Object updateHonorPic(int rdcId, int[] honorPic) {
 		List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcId);
-		if (!CollectionUtils.isEmpty(rdcExtByRDCId) && honorPic.length > 0) {
+		if (!CollectionUtils.isEmpty(rdcExtByRDCId)) {
 			String honorPics = "";
-			for (int i = 0, size = honorPic.length; i < size; i++) {
-				honorPics = honorPics + honorPic[i];
-				if (i != size - 1) honorPics = honorPics + ",";
+			if (honorPic != null && honorPic.length > 0) {
+				for (int i = 0, size = honorPic.length; i < size; i++) {
+					honorPics = honorPics + honorPic[i];
+					if (i != size - 1) honorPics = honorPics + ",";
+				}
 			}
 			rdcExtByRDCId.get(0).setHonorpiclocation(honorPics);
 			rdcExtDao.updateRdcExt(rdcExtByRDCId.get(0));

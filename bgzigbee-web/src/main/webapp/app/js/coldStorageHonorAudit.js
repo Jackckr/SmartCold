@@ -1,4 +1,4 @@
-coldWeb.controller('coldStorageHonorAudit', function ($rootScope, $scope, $state, $cookies, $http, $stateParams) {
+coldWeb.controller('coldStorageHonorAudit', function ($rootScope, $scope, $state, $cookies, $http, $stateParams, $uibModal, $log) {
 
     $scope.rdcId = $stateParams.rdcId;
     $scope.submitButtonDisable = false;
@@ -28,7 +28,6 @@ coldWeb.controller('coldStorageHonorAudit', function ($rootScope, $scope, $state
             $scope.selected.splice(idx, 1);
             $scope.selectedTags.splice(idx, 1);
         }
-        console.log($scope.selected);
     }
 
     $scope.updateSelection = function ($event, id) {
@@ -59,4 +58,33 @@ coldWeb.controller('coldStorageHonorAudit', function ($rootScope, $scope, $state
             $state.go('coldStorageAudit', {"rdcID": $scope.rdcId});
         });
     }
+
+    $scope.zoomPic = function(item){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'myModelContent.html',  //指向上面创建的视图
+            controller: 'ModalInstanceCtrl',// 初始化模态范围
+            resolve: {
+                itemPic: function () {
+                    return item;
+                }
+            }
+        })
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date())
+        })
+    }
+
 });
+
+coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, itemPic) { //依赖于modalInstance
+    $scope.itemPic = itemPic;
+    $scope.ok = function () {
+        $uibModalInstance.close(); //关闭并返回当前选项
+    };
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel'); // 退出
+    }
+
+})
