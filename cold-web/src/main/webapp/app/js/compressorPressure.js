@@ -5,9 +5,11 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
     console.log($stateParams.compressorID);
     $scope.load = function () {
         var data = [];
-        $http.get('/i/compressorGroup/findPowerByNums', {
+        $http.get('/i/baseInfo/getKeyValueData', {
             params: {
-                "compressorID": $stateParams.compressorID
+                "oid": $stateParams.compressorID,
+                type:3,
+                key:'COMPRESSOR_POWER'
             }
         }).success(function (result) {
             for (var i = 0; i < result.length; i++) {
@@ -30,6 +32,26 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
 		}).success(function (result) {
 			$scope.pressMonitor(result);
 		})
+		
+		$http.get("/i/compressorGroup/findCompressorByNums",{
+        	params: {
+		        "compressorID": $stateParams.compressorID
+		    }
+		}).success(function (result) {
+			$scope.runMonitor(result);
+		})
+		
+		$http.get('/i/baseInfo/getKeyValueData', {
+            params: {
+                "oid": $stateParams.compressorID,
+                type:3,
+                key:'COMPRESSOR_LIQUID',
+                nums:1
+            }
+        }).success(function(data){
+        	var liquidValue = parseFloat(data[0].value.toFixed(1));
+        	$scope.liquidMonitor(liquidValue);
+        })
     }
     $scope.load();
     
@@ -217,8 +239,18 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         };
         pressureChart.setOption(pressureOption);
     }
-    
+    $scope.getArrValue = function(arr){
+    	if(arr.length<1)
+    		return -1;
+    	return arr[0].value;
+    }
     $scope.runMonitor = function(data){
+    	var compressor1 = $scope.getArrValue(data.compressor1);
+    	var compressor2 = $scope.getArrValue(data.compressor2);
+    	var compressor3 = $scope.getArrValue(data.compressor3);
+    	var compressor4 = $scope.getArrValue(data.compressor4);
+    	var compressor5 = $scope.getArrValue(data.compressor5);
+    	var compressor6 = $scope.getArrValue(data.compressor6);
     	// 环形图表示运行监控
         var runChart = echarts.init($("#runChart").get(0));
 
@@ -263,7 +295,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 x: 0,
                 y: 200,
                 itemGap: 12,
-                data: ['1号' + (parseInt(group.Compressor1) === -1 ? 0 : parseInt(group.Compressor1)), '2号' + (parseInt(group.Compressor2) === -1 ? 0 : parseInt(group.Compressor2)), '3号' + (parseInt(group.Compressor3) === -1 ? 0 : parseInt(group.Compressor3))]
+                data: ['1号' + (parseInt(compressor1) === -1 ? 0 : parseInt(compressor1)), '2号' + (parseInt(compressor2) === -1 ? 0 : parseInt(compressor2)), '3号' + (parseInt(compressor3) === -1 ? 0 : parseInt(compressor3))]
             },
             toolbox: {
                 show: false,
@@ -283,12 +315,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     itemStyle: dataStyle,
                     data: [
                         {
-                            value: parseInt(group.Compressor1) === -1 ? 0 : parseInt(group.Compressor1) * 5,
-                            name: '1号' + (parseInt(group.Compressor1) === -1 ? 0 : parseInt(group.Compressor1))
+                            value: parseInt(compressor1) === -1 ? 0 : parseInt(compressor1) * 5,
+                            name: '1号' + (parseInt(compressor1) === -1 ? 0 : parseInt(compressor1))
                         },
                         {
-                            value: parseInt(group.Compressor1) === -1 ? 100 : 100 - parseInt(group.Compressor1) * 5,
-                            name: '1号可用' + (parseInt(group.Compressor1) === -1 ? 20 : 20 - parseInt(group.Compressor1)),
+                            value: parseInt(compressor1) === -1 ? 100 : 100 - parseInt(compressor1) * 5,
+                            name: '1号可用' + (parseInt(compressor1) === -1 ? 20 : 20 - parseInt(compressor1)),
                             itemStyle: placeHolderStyle
                         }
                     ]
@@ -301,12 +333,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     itemStyle: dataStyle,
                     data: [
                         {
-                            value: parseInt(group.Compressor2) === -1 ? 0 : parseInt(group.Compressor2)* 5,
-                            name: '2号' + (parseInt(group.Compressor2) === -1 ? 0 : parseInt(group.Compressor2))
+                            value: parseInt(compressor2) === -1 ? 0 : parseInt(compressor2)* 5,
+                            name: '2号' + (parseInt(compressor2) === -1 ? 0 : parseInt(compressor2))
                         },
                         {
-                            value: parseInt(group.Compressor2) === -1 ? 100 : 100 - parseInt(group.Compressor2)* 5,
-                            name: '2号可用' + (parseInt(group.Compressor2) === -1 ? 20 : 20 - parseInt(group.Compressor2)),
+                            value: parseInt(compressor2) === -1 ? 100 : 100 - parseInt(compressor2)* 5,
+                            name: '2号可用' + (parseInt(compressor2) === -1 ? 20 : 20 - parseInt(compressor2)),
                             itemStyle: placeHolderStyle
                         }
                     ]
@@ -319,12 +351,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     itemStyle: dataStyle,
                     data: [
                         {
-                            value: parseInt(group.Compressor3) === -1 ? 0 : parseInt(group.Compressor3)* 5,
-                            name: '3号' + (parseInt(group.Compressor3) === -1 ? 0 : parseInt(group.Compressor3))
+                            value: parseInt(compressor3) === -1 ? 0 : parseInt(compressor3)* 5,
+                            name: '3号' + (parseInt(compressor3) === -1 ? 0 : parseInt(compressor3))
                         },
                         {
-                            value: parseInt(group.Compressor3) === -1 ? 100 : 100 - parseInt(group.Compressor3)* 5,
-                            name: '3号可用' + (parseInt(group.Compressor3) === -1 ? 20 : 20 - parseInt(group.Compressor3)),
+                            value: parseInt(compressor3) === -1 ? 100 : 100 - parseInt(compressor3)* 5,
+                            name: '3号可用' + (parseInt(compressor3) === -1 ? 20 : 20 - parseInt(compressor3)),
                             itemStyle: placeHolderStyle
                         }
                     ]
@@ -377,7 +409,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 x: 0,
                 y: 200,
                 itemGap: 12,
-                data: ['4号' + (parseInt(group.Compressor4) === -1 ? 0 : parseInt(group.Compressor4)), '5号' + (parseInt(group.Compressor5) === -1 ? 0 : parseInt(group.Compressor5)), '6号' + (parseInt(group.Compressor6) === -1 ? 0 : parseInt(group.Compressor6))]
+                data: ['4号' + (parseInt(compressor4) === -1 ? 0 : parseInt(compressor4)), '5号' + (parseInt(compressor5) === -1 ? 0 : parseInt(compressor5)), '6号' + (parseInt(compressor6) === -1 ? 0 : parseInt(compressor6))]
             },
             toolbox: {
                 show: false,
@@ -397,12 +429,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     itemStyle: dataStyle,
                     data: [
                         {
-                            value: parseInt(group.Compressor4) === -1 ? 0 : parseInt(group.Compressor4)* 5,
-                            name: '4号' + (parseInt(group.Compressor4) === -1 ? 0 : parseInt(group.Compressor4))
+                            value: parseInt(compressor4) === -1 ? 0 : parseInt(compressor4)* 5,
+                            name: '4号' + (parseInt(compressor4) === -1 ? 0 : parseInt(compressor4))
                         },
                         {
-                            value: parseInt(group.Compressor4) === -1 ? 100 : 100 - parseInt(group.Compressor4)* 5,
-                            name: '4号可用' + (parseInt(group.Compressor4) === -1 ? 20 : 20 - parseInt(group.Compressor4)),
+                            value: parseInt(compressor4) === -1 ? 100 : 100 - parseInt(compressor4)* 5,
+                            name: '4号可用' + (parseInt(compressor4) === -1 ? 20 : 20 - parseInt(compressor4)),
                             itemStyle: placeHolderStyle
                         }
                     ]
@@ -415,12 +447,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     itemStyle: dataStyle,
                     data: [
                         {
-                            value: parseInt(group.Compressor5) === -1 ? 0 : parseInt(group.Compressor5)* 5,
-                            name: '5号' + (parseInt(group.Compressor5) === -1 ? 0 : parseInt(group.Compressor5))
+                            value: parseInt(compressor5) === -1 ? 0 : parseInt(compressor5)* 5,
+                            name: '5号' + (parseInt(compressor5) === -1 ? 0 : parseInt(compressor5))
                         },
                         {
-                            value: parseInt(group.Compressor5) === -1 ? 100 : 100 - parseInt(group.Compressor5)* 5,
-                            name: '5号可用' + (parseInt(group.Compressor5) === -1 ? 20 : 20 - parseInt(group.Compressor5)),
+                            value: parseInt(compressor5) === -1 ? 100 : 100 - parseInt(compressor5)* 5,
+                            name: '5号可用' + (parseInt(compressor5) === -1 ? 20 : 20 - parseInt(compressor5)),
                             itemStyle: placeHolderStyle
                         }
                     ]
@@ -433,12 +465,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     itemStyle: dataStyle,
                     data: [
                         {
-                            value: parseInt(group.Compressor6) === -1 ? 0 : parseInt(group.Compressor6)* 5,
-                            name: '6号' + (parseInt(group.Compressor6) === -1 ? 0 : parseInt(group.Compressor6))
+                            value: parseInt(compressor6) === -1 ? 0 : parseInt(compressor6)* 5,
+                            name: '6号' + (parseInt(compressor6) === -1 ? 0 : parseInt(compressor6))
                         },
                         {
-                            value: parseInt(group.Compressor6) === -1 ? 100 : 100 - parseInt(group.Compressor6)* 5,
-                            name: '6号可用' + (parseInt(group.Compressor6) === -1 ? 20 : 20 - parseInt(group.Compressor6)),
+                            value: parseInt(compressor6) === -1 ? 100 : 100 - parseInt(compressor6)* 5,
+                            name: '6号可用' + (parseInt(compressor6) === -1 ? 20 : 20 - parseInt(compressor6)),
                             itemStyle: placeHolderStyle
                         }
                     ]
@@ -447,7 +479,10 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         };
         runChart2.setOption(runOption2);
 
-        var liquid = parseFloat(group.liquidLevel);
+        
+    }
+    
+    $scope.liquidMonitor = function(liquid){
         // 液位计
         $(function () {
             $('#floatPressureChart').highcharts({

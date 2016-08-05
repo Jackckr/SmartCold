@@ -85,6 +85,7 @@ section{
 	box-sizing: border-box;
 	background-color: #fff;
 	margin-bottom: 0.5rem;
+	margin-top:2.2rem;
 	font-size: 0.8rem;
 	text-align: center;
 	width: 100%;
@@ -116,7 +117,7 @@ section{
 	/*position: relative;*/
 }
 .other i{
-	color: #33788E;
+	color: #F39826;
 }
 .tempture.current{
 	color: #EB5A4A;
@@ -131,7 +132,7 @@ section{
 	border-bottom: 3px solid #438BCB;
 }
 .other.current{
-	color: #33788E;
+	color: #F39826;
 	border-bottom: 3px solid #438BCB;
 }
 .otherList{

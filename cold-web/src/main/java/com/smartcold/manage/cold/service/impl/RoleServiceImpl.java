@@ -5,8 +5,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.RoleMapper;
-import com.smartcold.manage.cold.entity.Role;
+import com.smartcold.manage.cold.dao.olddb.RoleMapper;
+import com.smartcold.manage.cold.entity.olddb.Role;
 import com.smartcold.manage.cold.service.RoleService;
 
 /**

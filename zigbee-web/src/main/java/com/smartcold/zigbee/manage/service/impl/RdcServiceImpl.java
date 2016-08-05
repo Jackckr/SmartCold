@@ -486,4 +486,9 @@ public class RdcServiceImpl implements RdcService {
 		return new PageInfo<RdcEntityDTO>(rdcList);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> findRDCById(int rdcID) {
+		return this.rdcDao.findRDCById(rdcID);
+	}
+
 }

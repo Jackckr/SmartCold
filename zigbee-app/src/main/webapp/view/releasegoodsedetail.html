@@ -41,8 +41,8 @@
         </header>
     <!-- header end-->
     <section class="toggle clearfix">
-    	<div class="rent current fl"><i class="iconfont">&#xe64e;</i>出货</div>
-    	<div class="offer fl"><i class="iconfont">&#xe64f;</i>求货</div>
+    	<div class="rent current fl"><i class="iconfont">&#xe64e;</i>出售</div>
+    	<div class="offer fl"><i class="iconfont">&#xe64f;</i>求购</div>
     </section>
     <!--coldlist-->
     <div class="coldlist">
@@ -120,6 +120,13 @@
                     <label for="note">备注</label>
                     <input type="text"  id="note" placeholder="（选填）"/>
                 </li>
+                <li>
+                    <label class="pic">
+		    			<input type="file" id="files" name="files[]" multiple />
+		    		</label>
+		    		<span id="">上传图片</span>		    		
+		   			<output id="list"></output>
+                </li>
             </ul>
         </form>
         <button class="mybtn" onclick="location.href='releasesuccess.html'">确认发布</button>
@@ -144,11 +151,12 @@
             </a>
         </li>
         <li>            
-            <a href="admin.html">
+            <a href="user.html">
                 <i class="iconfont">&#xe65e;</i>
                 <p class="info">我的</p>
             </a>
         </li>
     </ul>
+    <script type="text/javascript" src="../com/js/file_upload.js" ></script>
 </body>
 </html>

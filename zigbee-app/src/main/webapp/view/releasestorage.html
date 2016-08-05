@@ -222,9 +222,11 @@
                     <input type="text"  id="note" placeholder="（选填）"/>
                 </li>
                 <li>
-                    <label for="myfile">上传图片</label>                    
-                    <input type="file"  id="myfile" placeholder="请选择文件"
-                    	 style="appearance: none;-webkit-appearance: none;background: transparent;border: 0;"/>
+                    <label class="pic">
+		    			<input type="file" id="files" name="files[]" multiple />
+		    		</label>
+		    		<span id="">上传图片</span>		    		
+		   			<output id="list"></output>
                 </li>
             </ul>
         </form>
@@ -250,12 +252,13 @@
             </a>
         </li>
         <li>            
-            <a href="admin.html">
+            <a href="user.html">
                 <i class="iconfont">&#xe65e;</i>
                 <p class="info">我的</p>
             </a>
         </li>
     </ul>
+    <script type="text/javascript" src="../com/js/file_upload.js" ></script>
     <script type="text/javascript">
 		$(function(){
 			$('#province, #city').citylist({

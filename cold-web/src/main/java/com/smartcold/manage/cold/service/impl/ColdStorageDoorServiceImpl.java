@@ -1,9 +1,9 @@
 package com.smartcold.manage.cold.service.impl;
 
-import com.smartcold.manage.cold.dao.ColdStorageDoorMapper;
-import com.smartcold.manage.cold.dao.ColdStorageDoorSetMapper;
-import com.smartcold.manage.cold.entity.ColdStorageDoorEntity;
-import com.smartcold.manage.cold.entity.ColdStorageDoorSetEntity;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorEntity;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 import com.smartcold.manage.cold.service.ColdStorageDoorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,15 +1,15 @@
 package com.smartcold.manage.cold.service.impl;
 
 import com.google.common.collect.Lists;
-import com.smartcold.manage.cold.dao.BlowerMapper;
-import com.smartcold.manage.cold.dao.BlowerSetMapper;
-import com.smartcold.manage.cold.dao.ColdStorageSetMapper;
-import com.smartcold.manage.cold.dao.RdcUserMapper;
+import com.smartcold.manage.cold.dao.olddb.BlowerMapper;
+import com.smartcold.manage.cold.dao.olddb.BlowerSetMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
 import com.smartcold.manage.cold.dto.BlowerDTO;
-import com.smartcold.manage.cold.entity.BlowerEntity;
-import com.smartcold.manage.cold.entity.BlowerSetEntity;
-import com.smartcold.manage.cold.entity.ColdStorageSetEntity;
-import com.smartcold.manage.cold.entity.RdcUser;
+import com.smartcold.manage.cold.entity.olddb.BlowerEntity;
+import com.smartcold.manage.cold.entity.olddb.BlowerSetEntity;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
+import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.service.CompressorBlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -35,12 +35,7 @@ public interface RdcService {
 
 	void sumRdcsScore();
 
-	 /**
-	  * 获得关联库全部共享信息
-	  * @param filter
-	  * @return
-	  */
-	 public PageInfo<RdcEntityDTO> getRDCList(int pageNum,int pageSize,HashMap<String, Object> filter);
+	
 
     public List<RdcAddressDTO> findAllRdcAddressDtos();
 
@@ -49,4 +44,17 @@ public interface RdcService {
 	Map<String, String> geocoderLatitude(RdcEntity rdcEntity);
 
 	PageInfo<RdcEntityDTO> findRDCDTOByUserId(int userID,int pageNum,int pageSize);
+	
+	/**
+	 * 根据id查询rdc关联信息
+	 * @param rdcID
+	 * @return
+	 */
+	public List<HashMap<String, Object>> findRDCById( int rdcID);
+	 /**
+	  * 获得关联库全部共享信息
+	  * @param filter
+	  * @return
+	  */
+	 public PageInfo<RdcEntityDTO> getRDCList(int pageNum,int pageSize,HashMap<String, Object> filter);
 }

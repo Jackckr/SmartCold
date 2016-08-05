@@ -6,9 +6,11 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
 
     $scope.load = function () {
         var data = [];
-        $http.get('/i/newDoor/getDoorStatusByNums', {
+        $http.get('/i/baseInfo/getKeyValueData', {
             params: {
-                "oid": $stateParams.storageID
+                "oid": $stateParams.storageID,
+                type:2,
+                key:'STORAGE_DOOR'
             }
         }).success(function (result) {
             for (var i = 0; i < result.length; i++) {

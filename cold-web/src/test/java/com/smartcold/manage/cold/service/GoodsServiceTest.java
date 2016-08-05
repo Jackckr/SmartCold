@@ -3,8 +3,9 @@ package com.smartcold.manage.cold.service;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dto.BlowerDTO;
-import com.smartcold.manage.cold.entity.CompressorGroupSetEntity;
-import com.smartcold.manage.cold.entity.SingleTypeEntity;
+import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
+import com.smartcold.manage.cold.entity.olddb.SingleTypeEntity;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.RdcPowerConsumeMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcPowerConsumeMapper;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-04 11:50)

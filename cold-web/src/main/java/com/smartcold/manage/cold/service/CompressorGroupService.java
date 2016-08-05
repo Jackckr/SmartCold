@@ -1,9 +1,9 @@
 package com.smartcold.manage.cold.service;
 
-import com.smartcold.manage.cold.entity.CompressorGroupSetEntity;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
-
 import java.util.List;
+
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 
 /**
  * Author: qiunian.sun
@@ -11,10 +11,4 @@ import java.util.List;
  */
 public interface CompressorGroupService {
     List<CompressorGroupSetEntity> findByUserId(int userid);
-    
-    List<StorageKeyValue> findPowerByNums(int oid, Integer nums);
-    
-    List<StorageKeyValue> findPressLowByNums(int oid, Integer nums);
-    
-    List<StorageKeyValue> findPressHighByNums(int oid, Integer nums);
 }

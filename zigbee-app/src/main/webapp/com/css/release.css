@@ -118,7 +118,64 @@ section{
 .grid_kid:nth-child(3) i{
 	color:#F39826;
 }
-.grid_kid.share_cold i{
+.left,.right{
+	width: 49%;
+	text-align: center;
+	color: #fff;
+}
+.up a,.right a,.down a{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	color: #222;
+}
+.up a:link,.right a:link,.down a:link,
+.up a:hover,.right a:hover,.down a:hover
+.up a:active,.right a:active,.down a:active
+.up a:visited,.right a:visited,.down a:visited{
+	color: #222;
+}
+.left{	
+	height:12rem;
+	margin-right: 2%;
+}
+.right{
+	height:12rem;
+	background: #fff;
+}
+.up,.down{
+	background: #fff;
+	height: 5.8rem;	
+}
+.up a,.down a{
+	padding-top: 1.3rem;
+	box-sizing: border-box;	
+}
+.right a{
+	padding-top: 4.2rem;
+	box-sizing: border-box;	
+}
+.up{
+	margin-bottom: 0.4rem;
+}
+.up i,.down i,.right i{
+	font-size: 1.5rem;
+	margin-top: 1.6rem;
+}
+.up i{
+	color:#F1594B ;
+}
+.down i{
+	color:#F39826 ;
+}
+.right i{
+	color:#438BCA ;
+}
+.iconTxt{
+	font-size: 0.8rem;
+	margin-top: 0.3rem;
+}
+/*.grid_kid.share_cold i{
 	color:#438BCA;
 }
 .grid_kid.share_goods i{
@@ -143,7 +200,7 @@ section{
 .share_cold a,.share_goods a,.share_store a{
 	padding-top: 0;
 	line-height: 3.5rem;
-}
+}*/
 /*发布库*/
 .main{
 	padding:0.5rem 0.9rem;
@@ -169,8 +226,14 @@ section{
 	overflow: hidden;
 	border: 1px solid transparent;
 	vertical-align: middle;
-	height: 2rem;
+	/* height: 2rem; */
     line-height: 2rem;
+}
+.mySelect textarea{
+	width:99%;
+	height:auto;
+	border:1px solid #ccc;
+	resize:none;
 }
 .houseinfo>li select{
 	width: 120%;
@@ -191,6 +254,7 @@ section{
 .houseinfo>li>input[type='text'],.houseinfo>li>input[type='date']{
 	text-indent: 10px;
 	display: inline-block;
+	vertical-align:middle;
 	min-width: 60%;
 	font-size: 0.75rem;
 	color: #555;
@@ -304,7 +368,7 @@ input[type='radio'].blue{
 	50%{top:0.3rem;}
 	100%{top: -0.2rem;}
 }
-form+.mybtn{	
+form+.mybtn,.next+.mybtn{	
 	display: block;
 	padding:0.3rem 0;
 	font-size: 0.9rem;
@@ -327,6 +391,7 @@ form+.mybtn{
 	height: 2rem;
 	line-height: 2rem;
 	border-bottom: 3px solid #BDBDBD;
+	color: #BDBDBD;
 }
 .toggle i{
 	font-size: 1.2rem;
@@ -407,9 +472,9 @@ form+.mybtn{
 	color: #fff;
 	background-color: #428BCA;
 	border-radius: 3px;
-	margin-right: 0.5rem;
+	margin-right: 0.9rem;
 	position: absolute;
-	bottom: 0.5rem;
+	bottom: 0.4rem;
 	right: 0;
 }
 .ellipsis{
@@ -473,4 +538,22 @@ form+.mybtn{
 	width: 90%;
 	min-height: 15rem;
 	margin: 0 auto;
+}
+.pic{
+	display: inline-block;
+	width: 3rem;
+	height: 3rem;
+	margin-top:0.3rem;
+	border: 3px dotted #ccc;
+	background: url(../img/plus.png) no-repeat center;
+}
+.pic+span{
+	position:relative;
+	font-size:0.8rem;
+	color:#aaa;
+	top:0.5rem;
+}
+.pic input{
+	width: 0;
+	height:0;
 }
