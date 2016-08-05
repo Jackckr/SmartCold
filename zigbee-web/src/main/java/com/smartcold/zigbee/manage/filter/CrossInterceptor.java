@@ -19,8 +19,8 @@ public class CrossInterceptor extends OncePerRequestFilter {
 //	        if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
 	            // CORS "pre-flight" request
 	            response.addHeader("Access-Control-Allow-Origin", "*");
-	            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-	            response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+	            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+	            response.addHeader("Access-Control-Allow-Headers", "Content-Type,Content-Transfer-Encoding");
 	            response.addHeader("Access-Control-Max-Age", "1800");//30 min
 //	        }
 	        filterChain.doFilter(request, response);
