@@ -175,7 +175,11 @@ section .inputBd input{
 }
 .warnInfo{
 	text-indent:2rem;
-	margin-top:0.5rem;
+	height:1.5rem;
+	line-height:1.5rem;
+}
+.warnInfo+.mybtn{
+	margin-top:1rem;
 }
 .warnInfo a{
 	color:#f80;
