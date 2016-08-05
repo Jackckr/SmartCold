@@ -21,6 +21,12 @@ public class UserEntity {
 	private int role;
 
 	private Date UpdateTime;
+	
+	private String address;//-> new add
+	
+	private String avatar="app/img/rdcHeader.jpg";//用户头像->add
+	
+	
 
 	public int getId() {
 		return id;
@@ -50,12 +56,20 @@ public class UserEntity {
 		return telephone;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getEmail() {
 		return email;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public void setEmail(String email) {
@@ -93,5 +107,14 @@ public class UserEntity {
 	public void setRealname(String realname) {
 		this.realname = realname;
 	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 
 }

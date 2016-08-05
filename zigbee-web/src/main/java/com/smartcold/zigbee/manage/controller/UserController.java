@@ -60,6 +60,7 @@ public class UserController extends BaseController {
 	public Object findUser(HttpServletRequest request) {
 		System.err.println("请求地址："+request.getRequestURL());
 		System.err.println("getRemoteUser"+request.getRemoteUser());
+		System.err.println("SessionId："+request.getSession().getId());
 		System.err.println("getRequestedSessionId："+request.getRequestedSessionId());
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
