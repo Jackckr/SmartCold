@@ -158,6 +158,9 @@ section .inputBd input{
 	transform: translateY(-50%);
 	font-size: 0.8rem;
 	color: #448BCB;
+	padding:0.3rem 0.5rem;
+	border-radius:4px;
+	color:#333;
 }
 .blueBg{
 	background-color: #438BCB;
@@ -167,6 +170,6 @@ section .inputBd input{
 }
 .telShow{
 	font-size: 0.8rem;
-	color: #333;
+	color: #666;
 	margin-bottom: 0.5rem;
 }
