@@ -84,7 +84,7 @@ coldWeb.controller('designStorage', function ($scope, $location,$stateParams,$ht
 		changeGeometry($scope.infos.weight, $scope.infos.height, $scope.infos.length);
 		console.log($scope.infos.height);
 	}
-	CubeGeometry($scope.infos.weight, $scope.infos.height, $scope.infos.length);
+//	CubeGeometry($scope.infos.weight, $scope.infos.height, $scope.infos.length);
 });
 
 coldWeb.controller('designResult', function($scope, $modalInstance, $http,
