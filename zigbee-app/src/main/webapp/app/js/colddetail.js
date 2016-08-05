@@ -28,7 +28,10 @@
 		});
 	};
 	$scope.initevg=function(){
-		
+		 baguetteBox.run('.baguetteBoxOne', {
+             animation: 'slideIn',
+             buttons: true
+         });
 	};
 	$scope.initdata();
 	$scope.initevg();
