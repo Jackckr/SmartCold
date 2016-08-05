@@ -52,8 +52,6 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.provinceId = data[0].provinceId;
             $scope.storagePics = data[0].storagePics;
             $scope.storageHonorPics = data[0].storageHonorPics;
-            console.log($scope.storageHonorPics[0].id);
-            console.log($scope.storageHonorPics[1].id);
             $scope.storageGallery = new Array();
             //小于两张图片添加默认
             for(var j=0, len = $scope.storagePics.length;j < 2 - len;j++){
