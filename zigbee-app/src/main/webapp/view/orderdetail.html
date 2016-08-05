@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<title>我的订单</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	    <link rel="stylesheet" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
 	    <script src="../com/js/jquery.min.js"></script>
-	    <script src="../com/js/jquery.imgbox.pack.js"></script>
+		<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
 </head>
 	<body>
@@ -45,11 +46,18 @@
 				<span class="first">冷库地址:</span>
 				<span class="second">上海-长宁区-中山公园</span>
 			</p>
-			<ul class="imgShow">
-				<li class="img fl"><a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt=""></a></li>
-				<li class="img fl"><a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt=""></a></li>
-				<li class="img fl"><a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt=""></a></li>
-			</ul>
+			<!--点击图片循环展示-->
+			<div class="baguetteBoxOne gallery">
+		        <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
+		        <a href="../com/img/cbd.jpg"><img src="../com/img/cbd.jpg" alt="" /></a>
+		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+		        <a href="../com/img/muwu.jpg"><img src="../com/img/muwu.jpg" alt="" /></a>
+		        <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
+		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+		        <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
+		        <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
+		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+			</div>
 			<ul class="object">
 				<li>
 					<p>出租方</p>
@@ -85,23 +93,29 @@
             </a>
         </li>
         <li class="active">            
-            <a href="admin.html">
+            <a href="user.html">
                 <i class="iconfont">&#xe65e;</i>
                 <p class="info">我的</p>
             </a>
         </li>
     </ul>
     <script>
-    	$(function(){
-		//点击图片看大图
-			$(".imgShow li a").imgbox({
-				'speedIn'		: 0,
-				'speedOut'		: 0,
-				'alignment'		: 'center',
-				'overlayShow'	: true,
-				'allowMultiple'	: false
+			$(function(){
+			//点击图片看大图
+				baguetteBox.run('.baguetteBoxOne', {
+				    animation: 'slideIn',
+				    buttons: true
+				});
+				
+				if ($('.gallery').children().length==0) {
+					//如果没有图片，则隐藏
+					$('.gallery').hide();
+					$('.gallery').prev().css({
+						'marginBottom':'0.3rem'
+					})
+				}
+				
 			});
-		});
-    </script>
+		</script>
 	</body>
 </html>

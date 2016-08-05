@@ -2,7 +2,7 @@ package com.smartcold.manage.cold.service;
 
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.Rdc;
+import com.smartcold.manage.cold.entity.olddb.Rdc;
 
 public interface RdcService {
 	// public Rdc getRoleByRoleId(int rdcId);

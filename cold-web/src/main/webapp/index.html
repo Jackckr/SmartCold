@@ -37,6 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="bower_components/pace/themes/white/pace-theme-flash.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css">
     <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css">
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css" />
     <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker-bs3.css">
     <style type="text/css">
     	a.disabled {
@@ -239,6 +240,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<section class="sidebar">
 				<!-- /.search form -->
 
+
           <!-- Sidebar Menu -->
           <div angucomplete-alt id="members"
               placeholder="查找RDC"
@@ -331,7 +333,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li><a href="#/report-daily-goods"><i class="fa fa-circle-o"></i>物流设施分析</a></li>
                <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>制冷系统分析</a></li>
                <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>分析报告</a></li>
-               <li><a href="#/report-daily-data"><i class="fa fa-circle-o"></i>历史数据查询</a></li>
+               <li><a href="#/historyData"><i class="fa fa-circle-o"></i>历史数据查询</a></li>
               </ul>
             </li>
             </ul>
@@ -407,6 +409,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <script src="bower_components/pace/pace.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 <script
 	src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
@@ -417,8 +420,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script
 	src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+
 <script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
 <script src="bower_components/at-table/dist/angular-table.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-select/dist/select.min.js"></script>
 <script src="assets/js/three.min.js"></script>
 <script src="assets/js/OrbitControls.js"></script>
 <script src="assets/js/stats.min.js"></script>
@@ -442,6 +447,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/compressorBlower.js"></script>
 <script src="app/js/designStorage.js"></script>
 <script src="app/js/report.js"></script>
+<script src="app/js/historyData.js"></script>
 <script src="app/js/rdcPower.js"></script>
 <script src="app/js/warn.js"></script>
 <script src="assets/plugins/chartjs/Chart.min.js"></script>

@@ -1,4 +1,4 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select',
                                          'ngCookies', 'xeditable','angucomplete-alt','angular-table']);
 var user;
 
@@ -317,6 +317,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/rdcPower/:rdcId',
         controller: 'rdcPower',
         templateUrl: 'app/template/rdcPower.html'
+    }).state('historyData',{
+    	url:'/historyData',
+    	controller: 'historyData',
+        templateUrl: 'app/template/historyData.html'
     });
 
 });

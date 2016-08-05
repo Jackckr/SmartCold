@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.RdcMapper;
-import com.smartcold.manage.cold.dao.RdcUserMapper;
-import com.smartcold.manage.cold.entity.Rdc;
-import com.smartcold.manage.cold.entity.RdcUser;
+import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
+import com.smartcold.manage.cold.entity.olddb.Rdc;
+import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.service.RdcService;
 
 @Service

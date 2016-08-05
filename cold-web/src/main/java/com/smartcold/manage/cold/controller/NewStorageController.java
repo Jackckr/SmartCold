@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dto.NewStorageTempDto;
-import com.smartcold.manage.cold.entity.RdcUser;
-import com.smartcold.manage.cold.entity.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.RdcUser;
+import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
 
 @Controller
@@ -27,9 +28,9 @@ public class NewStorageController {
 	ColdStorageSetMapper coldSttorageSetDao;
 	
 	@RequestMapping("/getTempByNums")
-	public Object getTempByNums(Integer oid, 
+	public Object getTempByNums(Integer oid,
 			@RequestParam(value="nums",defaultValue="480")Integer nums){
-		List<StorageKeyValue> list = storageService.findTempByNums(oid, nums);
+		List<StorageKeyValue> list = storageService.findByNums(StorageType.STORAGE, oid, "STORAGE_TEMP", nums);
 		NewStorageTempDto storageTempDto = new NewStorageTempDto();
 		storageTempDto.setList(list);
 		storageTempDto.setStartTemperature(coldSttorageSetDao.findLastNPoint(oid, 1).get(0).getStartTemperature());

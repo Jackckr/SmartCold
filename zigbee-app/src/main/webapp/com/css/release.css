@@ -172,7 +172,7 @@ section{
 	color:#438BCA ;
 }
 .iconTxt{
-	font-size: 1rem;
+	font-size: 0.8rem;
 	margin-top: 0.3rem;
 }
 /*.grid_kid.share_cold i{
@@ -226,8 +226,14 @@ section{
 	overflow: hidden;
 	border: 1px solid transparent;
 	vertical-align: middle;
-	height: 2rem;
+	/* height: 2rem; */
     line-height: 2rem;
+}
+.mySelect textarea{
+	width:99%;
+	height:auto;
+	border:1px solid #ccc;
+	resize:none;
 }
 .houseinfo>li select{
 	width: 120%;
@@ -248,6 +254,7 @@ section{
 .houseinfo>li>input[type='text'],.houseinfo>li>input[type='date']{
 	text-indent: 10px;
 	display: inline-block;
+	vertical-align:middle;
 	min-width: 60%;
 	font-size: 0.75rem;
 	color: #555;
@@ -361,7 +368,7 @@ input[type='radio'].blue{
 	50%{top:0.3rem;}
 	100%{top: -0.2rem;}
 }
-form+.mybtn{	
+form+.mybtn,.next+.mybtn{	
 	display: block;
 	padding:0.3rem 0;
 	font-size: 0.9rem;
@@ -465,9 +472,9 @@ form+.mybtn{
 	color: #fff;
 	background-color: #428BCA;
 	border-radius: 3px;
-	margin-right: 0.5rem;
+	margin-right: 0.9rem;
 	position: absolute;
-	bottom: 0.5rem;
+	bottom: 0.4rem;
 	right: 0;
 }
 .ellipsis{
@@ -531,4 +538,22 @@ form+.mybtn{
 	width: 90%;
 	min-height: 15rem;
 	margin: 0 auto;
+}
+.pic{
+	display: inline-block;
+	width: 3rem;
+	height: 3rem;
+	margin-top:0.3rem;
+	border: 3px dotted #ccc;
+	background: url(../img/plus.png) no-repeat center;
+}
+.pic+span{
+	position:relative;
+	font-size:0.8rem;
+	color:#aaa;
+	top:0.5rem;
+}
+.pic input{
+	width: 0;
+	height:0;
 }

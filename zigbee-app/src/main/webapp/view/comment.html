@@ -39,17 +39,23 @@
     	<li class="clearfix">
     		<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div>
     		<p class="company">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
+    		<p class="position">
+    			<span class="orderNum">订单号：4654654654121</span>
+    		</p>
     		<p class="btnGroup">
     			<button>删除订单</button>
-    			<button>立即评价</button>
+    			<button onclick="location.href='commentdetail.html'">立即评价</button>
     		</p>
     	</li>
     	<li class="clearfix">
     		<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div>
     		<p class="company">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
+    		<p class="position">
+    			<span class="orderNum">订单号：4654654654121</span>
+    		</p>
     		<p class="btnGroup">
     			<button>删除订单</button>
-    			<button>立即评价</button>
+    			<button onclick="location.href='commentdetail.html'">立即评价</button>
     		</p>
     	</li>
     </ul>
@@ -73,7 +79,7 @@
             </a>
         </li>
         <li class="active">            
-            <a href="admin.html">
+            <a href="user.html">
                 <i class="iconfont">&#xe65e;</i>
                 <p class="info">我的</p>
             </a>
@@ -82,7 +88,9 @@
     <script>
     	$(function(){
     		$(".btnGroup").children().click(function(){
-    			$(this).addClass('current').siblings().removeClass('current')
+    			if ($(this).index()==0) {
+    				$(this).parents('li').remove()
+    			}
     		})
     	})
     </script>

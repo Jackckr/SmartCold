@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.RdcMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.service.RdcService;
 
 /**

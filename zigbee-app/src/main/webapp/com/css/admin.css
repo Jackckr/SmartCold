@@ -26,6 +26,9 @@ header>div>a>.iconfont{
 .txt{
 	height: 100%;
 	margin:0 2rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+ 	white-space: nowrap;
 }
 .footer{
 	width: 100%;
@@ -155,6 +158,9 @@ section.show{
 .adminInfo .list_name{
 	text-align: right;	
 }
+.adminInfo+.mybtn,.list.list_icon{
+	margin-bottom: 3rem;
+}
 .commentList{	
 	margin-top:0;
 	margin-bottom: 3rem;
@@ -191,9 +197,12 @@ section.show{
 .btnGroup .current{
 	background-color: #438BCB;
 	color: #fff;
+	border-color: transparent;
 }
 .position+.btnGroup{
-	margin-top: 0;
+	margin-top: 1.5rem;
+	border-top:1px solid #eee;
+	padding-top:0.3rem;
 }
 .position+.btnGroup button{
 	padding: 0 1rem;
@@ -202,10 +211,14 @@ section.show{
 .position i{
 	color: #F07409;
 }
-.orderNum{
+.img+.company+.position{
 	position: relative;
-	top: 1rem;
+	top: 0.6rem;
 }
+/* .orderNum{
+	 position: relative;
+	top: 0.6rem;
+} */
 /*我的订单*/
 .content{
 	margin-bottom: 3rem;
@@ -238,18 +251,19 @@ section.show{
 .first{
     margin-right: 10px;
 }
-.imgShow{
-    overflow: hidden;
-    margin: 0.5rem 0;
+.gallery{
+	height: 4.5rem;
+	overflow: hidden;
+	margin: 0.3rem 0;
 }
-.imgShow .img{
-    width: 5rem;
-    height: 4.5rem;
-    border-radius: 0;
-}
-.imgShow li{
-    padding: 0;
-    margin-right: 0.5rem;
+.gallery a{
+	float: left;
+	width: 33%;
+	padding: 0 0.1rem;
+	box-sizing: border-box;
+	height: 4.5rem;
+	background-size: cover;
+	text-align: center;
 }
 .object li{
 	margin-bottom: 0.5rem;
@@ -406,4 +420,58 @@ section.show{
 /*抢单成功页面*/
 .rel {
 	padding: 0.5rem 0.9rem 0;
+}
+/*评价页*/
+.comment+.mybtn{
+	margin-bottom: 3rem;
+}
+.comment p{
+	font-size: 0.8rem;
+	line-height: 1.5;
+}
+.comment p i{
+	font-size: 1rem;
+	display: inline-block;
+	padding: 0.2rem;
+	color: #ccc;
+	cursor: pointer;
+}
+.comment p i:first-child{
+	margin-left: 0.5rem;
+}
+.comment p i.current{
+	color: #f80;
+}
+.commentInfo{
+	width: 100%;
+	margin: 0.5rem 0;
+}
+.commentInfo textarea{
+	width: 100%;
+	height: 4rem;
+	border: 1px solid #ccc;
+	outline: none;
+	padding: 6px 0 0 6px;
+	line-height: 1.5;
+	font-size: 0.75rem;
+	resize: none;
+	box-sizing: border-box;
+}
+.pic{
+	display: inline-block;
+	width: 3rem;
+	height: 3rem;
+	margin-top:0.3rem;
+	border: 3px dotted #ccc;
+	background: url(../img/plus.png) no-repeat center;
+}
+.pic+span{
+	position:relative;
+	font-size:0.8rem;
+	color:#aaa;
+	top:0.8rem;
+}
+.pic input{
+	width: 0;
+	height:0;
 }

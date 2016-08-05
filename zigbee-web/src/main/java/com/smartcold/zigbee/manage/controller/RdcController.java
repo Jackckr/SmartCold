@@ -36,7 +36,9 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
+import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.VerifyUtil;
 
@@ -195,8 +197,10 @@ public class RdcController {
 		rdcEntity.setPosition("");
 		rdcEntity.setPowerConsume(0);
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
-		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
-		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		if(!SetUtil.isNullMap(lngLatMap)){
+			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+			rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		}
 
 		rdcMapper.insertRdc(rdcEntity);
 
@@ -433,6 +437,42 @@ public class RdcController {
 		return new BaseDto(deleted ? 0 : -1);
 	}
 
+	/**
+	 * 获得冷库信息
+	 * @param rdcID
+	 * @return
+	 */
+	 @APP(value="app")
+	 @RequestMapping(value = "/findRDCByID")
+	 @ResponseBody
+	 public ResponseData<HashMap<String, Object>> findRDCByID(Integer rdcID){
+		 if(rdcID==null){return ResponseData.newFailure("无效id");}
+		 String newMode="●＜1.8T:%s辆   ●1.8～6T:%s辆   ●6～14T:%s辆   ●＞14T:%s辆 ";
+		 List<HashMap<String, Object>> list = this.rdcService.findRDCById(rdcID);
+		 if (SetUtil.isnotNullList(list)) {
+			 for (HashMap<String, Object> data : list) {
+				 List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(Integer.parseInt(data.get("id").toString()), FileDataMapper.CATEGORY_STORAGE_PIC);
+				 if(SetUtil.isnotNullList(files)){
+						List<String> filelist =new ArrayList<String>();
+						for (FileDataEntity file : files) {
+							filelist.add(FtpService.READ_URL+file.getLocation());
+						}
+						data.put("files", filelist);
+				} 
+				 if(data.get("storagetruck")!=null){
+					 Object[] newdata =new Object[5];
+					 String[] splitfhString = StringUtil.splitfhString(data.get("storagetruck")+"");
+					 for (int i = 0; i < splitfhString.length; i++) {
+						 newdata[i]=splitfhString[i].split(":")[1];
+					 }
+					 data.put("storagetruck", String.format(newMode, newdata) );
+				 }
+			}
+			return ResponseData.newSuccess(list);
+		} else {
+           return ResponseData.newFailure("没有数据");
+		}
+	 }
 	/**
 	 * 提供筛选条件
 	 * @param sqm

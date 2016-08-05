@@ -19,9 +19,11 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
+import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
+import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
@@ -202,13 +204,15 @@ public class ShareRdcController  {
      * @param orderBy 排序
      * @return
      */
+	@APP
 	@RequestMapping(value = "/getSEGDList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getSEGDList(HttpServletRequest request,String type,String datatype,String goodtype, String keyword,String provinceid,String orderBy) {
+	public ResponseData<RdcShareDTO> getSEGDList(HttpServletRequest request,String rdcID,String type,String datatype,String goodtype, String keyword,String provinceid,String orderBy) {
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
 		filter.put("sstauts", 1);//必须
+		filter.put("rdcID", rdcID);
 		filter.put("datatype", datatype);//必须
 		filter.put("goodtype", goodtype);
 		filter.put("keyword", keyword);
@@ -232,13 +236,15 @@ public class ShareRdcController  {
 	 * @param orderBy 排序
 	 * @return
 	 */
+	@APP
 	@RequestMapping(value = "/getSEPSList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String orderBy) {
+	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String rdcID,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String orderBy) {
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);//OK
 		filter.put("sstauts", 1);//必须
+		filter.put("rdcID", rdcID);
 		filter.put("datatype", datatype);//必须 OK
 		filter.put("keyword", keyword);//OK
 		filter.put("stprovinceID", stprovinceID);//
@@ -251,7 +257,6 @@ public class ShareRdcController  {
 		filter.put("businessType", businessType);//业务类型->OK
 		filter.put("storagetempertype", storagetempertype);//storagetempertype->OK
 		filter.put("orderBy", orderBy);//
-		System.err.println(filter);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEPSList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
@@ -269,13 +274,15 @@ public class ShareRdcController  {
 	 * @param storagetempertype 温度类型 -> rdcext t
 	 * @return
 	 */
+	@APP
 	@RequestMapping(value = "/getSERDCList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getSERDCList(HttpServletRequest request,String datatype,String goodtype, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,String orderBy) {
+	public ResponseData<RdcShareDTO> getSERDCList(HttpServletRequest request,String rdcID,String datatype,String goodtype, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,String orderBy) {
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2  
+		filter.put("rdcID", rdcID);
 		filter.put("datatype",datatype);//必须
 		filter.put("goodtype", goodtype);
 		filter.put("sqm", getSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
@@ -293,9 +300,9 @@ public class ShareRdcController  {
 	 * 
 	 * @return
 	 */
-	/*@RequestMapping(value="sharvistPhone")
+	@RequestMapping(value="sharvistPhone")
 	@ResponseBody
-	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone,String yzm){
+	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone){
 		try {
 			if(StringUtil.isnotNull(telephone)){
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
@@ -303,14 +310,18 @@ public class ShareRdcController  {
 				request.getSession().setAttribute("shear_order_id", dataid);
 				request.getSession().setAttribute("shear_order_yzm", signUpCode);
 				request.getSession().setAttribute("shear_order_telephone", telephone);
-				return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
+				ResponseData<String> instance = ResponseData.getInstance();
+				instance.setSuccess(true);
+				instance.setEntity(signUpCode);
+				instance.setMessage("验证码已发送到您的手机！请注意查收！");
+				return instance;
 			}
 			return  ResponseData.newFailure("请输入有效手机号码！！");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ResponseData.newFailure("未知异常！");
-	}*/
+	}
 	
 	
 	/**

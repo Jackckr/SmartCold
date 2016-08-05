@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smartcold.manage.cold.dao.RdcSensorMapper">
-  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.RdcSensor">
+<mapper namespace="com.smartcold.manage.cold.dao.olddb.RdcSensorMapper">
+  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.olddb.RdcSensor">
     <id column="RSID" jdbcType="INTEGER" property="rsid" />
     <result column="SID" jdbcType="INTEGER" property="sid" />
     <result column="RdcID" jdbcType="INTEGER" property="rdcid" />
@@ -21,13 +21,13 @@
     delete from RdcSensor
     where RSID = #{rsid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.RdcSensor">
+  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.olddb.RdcSensor">
     insert into RdcSensor (RSID, SID, RdcID,
     Sx, Sy, ColdStorageID)
     values (#{rsid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER},
     #{sx,jdbcType=INTEGER}, #{sy,jdbcType=INTEGER}, #{coldstorageid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.RdcSensor">
+  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.olddb.RdcSensor">
     insert into RdcSensor
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="rsid != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.RdcSensor">
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.olddb.RdcSensor">
     update RdcSensor
     <set>
       <if test="sid != null">
@@ -82,7 +82,7 @@
     </set>
     where RSID = #{rsid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.RdcSensor">
+  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.olddb.RdcSensor">
     update RdcSensor
     set SID = #{sid,jdbcType=INTEGER},
     RdcID = #{rdcid,jdbcType=INTEGER},

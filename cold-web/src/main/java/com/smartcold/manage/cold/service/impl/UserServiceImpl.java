@@ -2,12 +2,12 @@ package com.smartcold.manage.cold.service.impl;
 
 import java.util.List;
 
-import com.smartcold.manage.cold.dao.RdcUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.UserMapper;
-import com.smartcold.manage.cold.entity.UserEntity;
+import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
+import com.smartcold.manage.cold.dao.olddb.UserMapper;
+import com.smartcold.manage.cold.entity.olddb.UserEntity;
 import com.smartcold.manage.cold.service.UserService;
 
 /**

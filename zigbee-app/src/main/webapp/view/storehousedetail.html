@@ -8,13 +8,13 @@
 	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	    <link type="text/css" rel="stylesheet" href="../com/css/common.css">
 	    <link type="text/css" rel="stylesheet" href="../com/css/coldlist.css" />
-	    <script type="text/javascript" src="../com/js/jquery.min.js"></script>
+	    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	    <script type="text/javascript" src="../com/js/angular.min.js"></script>
 	    <script type="text/javascript" src="../com/js/jquery.imgbox.pack.js"></script>
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	    <script type="text/javascript" src="../app/js/storehousedetail.js"></script>
 	</head>
-	<body style="background-color: #fff;" ng-app="mweb"  ng-controller="storehousedetail">
+	<body style="background-color: #fff;" ng-app="app"  ng-controller="storehousedetail">
 		<!-- header -->
 		    <header>
 	        	<div class="area fl">
@@ -64,18 +64,17 @@
 			<div class="input">
 				<div class="tel">
 					<i class="iconfont">&#xe608;</i>
-					<input type="tel" placeholder="请输入您的手机号"/>
-					<button class="idcode fr" onclick="setTime(this)">获取验证码</button>
+					<input id="txt_telephone" type="tel" placeholder="请输入您的手机号" ng-model="telephone" ng-change="vertelephone()" />
+					<button id="but_vercode" class="idcode fr gray" disabled="disabled" ng-click="getVerCode();">获取验证码</button>
 				</div>
 				<div class="tel">
 					<i class="iconfont ">&#xe639;</i>
-					<input type="tel" placeholder="请输入手机验证码"/>
+					<input id="txt_vcode" type="tel" placeholder="请输入手机验证码"  ng-model="verrcode"  ng-change="veteleCode()"/>
 				</div>
 			</div>
-			<button class="mybtn" onclick="location.href='success.html'">确认抢单</button>	
+			<button id="app_order" class="mybtn gray" ng-click="getOrder();"  disabled="disabled">确认抢单</button>	
 			<!--=============抢单============-->
 			<!--<button class="mybtn" onclick="location.href='confirm.html'">立即抢单</button>-->
 		</section>
 	</body>
 </html>
-

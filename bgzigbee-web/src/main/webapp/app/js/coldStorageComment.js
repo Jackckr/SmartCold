@@ -392,6 +392,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
      }, 30000);*/
 });
 
+/*
 coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) { //依赖于modalInstance
     $scope.items = items;
     $scope.selected = {
@@ -405,4 +406,4 @@ coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, ite
         $uibModalInstance.dismiss('cancel'); // 退出
     }
 
-})
+})*/
