@@ -22,10 +22,8 @@
     		<i class="iconfont">&#xe6c1;</i>
     		<input id="password" type="password" name="password"  value="" placeholder="密码"/>
     	</div>
-    	<div class="row">
-		        <div class="col-xs-8">
-		            <a style="color:red" hidden=true id="mention"></a>
-		         </div>
+		 <div class="warnInfo">
+		    <a hidden=true id="mention"></a>
 	     </div>
 		<button id="btn_login" class="mybtn" type="button" onclick="login();">登陆</button>
 		<div class="register">
@@ -78,7 +76,7 @@
 				success : function(data) {
 					if (data.success) {
 						util.setCookie("username",userName,"d7");
-                        document.cookie = data.message+';domain='+window.location.origin;
+                        document.cookie = data.message;
 						if (window.location.hash != "") {
 							backUrl = window.location.hash.substring(1);
 						} else {
