@@ -36,7 +36,7 @@
                 </li>
             </ul>
             <!--点击图片循环展示-->
-            <div class="baguetteBoxOne gallery" ng-if="vo.files">
+            <div class="baguetteBoxOne gallery" >
                 <a ng-repeat="fl in vo.files" href="{{fl}}"><img ng-src="{{fl}}"/></a>
             </div>
             <ul class="infolist clearfix">
@@ -50,7 +50,14 @@
             </ul>
             <!--双箭头下拉-->            
             <ul class="infolist clearfix black">
-            	 <li ng-if="vo.storagetruck"><span class="type">冷藏车数量：</span><span class="text">{{vo.storagetruck}}</span></li>
+            	 <li ng-if="vo.storagetruck"><span class="type">冷藏车数量：</span>
+            	 	<div>
+                        <div><span><1.8T</span><input type="text" value="1" readonly><span>量</span></div>
+                        <div><span>1.8T-6T</span><input type="text" value="1" readonly><span>量</span></div>
+                        <div><span>6T-14T</span><input type="text" value="1" readonly><span>量</span></div>
+                        <div><span>>14T</span><input type="text" value="1" readonly><span>量</span></div>
+                    </div>
+            	 </li>
                  <li ng-if="vo.struct"><span class="type">结构：</span><span class="text">{{vo.struct}}</span></li> 
 <!--                  <li ng-if="vo.storagetype"><span class="type">冷库类型：</span><span class="text">{{vo.storagetype}}</span></li>  -->
                  <li ng-if="vo.coldtype"><span class="type">存储类型：</span><span class="text">{{vo.coldtype}}</span></li> 
@@ -104,7 +111,7 @@
         </section>
         <!--用户点评-->
         <section class="more">
-            <ul class="listDad clearfix">
+            <ul class="listDad clearfix" onclick="location.href='usercommentlist.html'">
                 <li class="fl">用户点评&nbsp;(<span id="num">642</span>)</li>
                 <li class="fr"><a><i class="iconfont">&#xe60d;</i></a></li>
             </ul>

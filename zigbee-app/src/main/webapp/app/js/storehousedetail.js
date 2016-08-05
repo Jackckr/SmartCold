@@ -5,8 +5,10 @@
 	$scope.initdata=function(){
        //获得数据
 		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) {
-    	   $scope.vo=data.entity; 
-    	   $scope.datatype=data.entity.dataType;
+			if(data.success){
+				   $scope.vo=data.entity; 
+		    	   $scope.datatype=data.entity.dataType;
+			}
        });
 	};
 	$scope.initevg=function(){
