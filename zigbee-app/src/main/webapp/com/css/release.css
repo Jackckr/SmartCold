@@ -254,6 +254,7 @@ section{
 .houseinfo>li>input[type='text'],.houseinfo>li>input[type='date']{
 	text-indent: 10px;
 	display: inline-block;
+	vertical-align:middle;
 	min-width: 60%;
 	font-size: 0.75rem;
 	color: #555;
