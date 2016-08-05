@@ -78,9 +78,9 @@
 				success : function(data) {
 					if (data.success) {
 						util.setCookie("username",userName,"d7");
-                        document.cookie = data.message;
+                        document.cookie = data.message+';domain='+window.location.origin;
 						if (window.location.hash != "") {
-							backUrl = window.location.hash;
+							backUrl = window.location.hash.substring(1);
 						} else {
 							backUrl = "../index.html";
 						}

@@ -307,6 +307,7 @@
 <script src="../bower_components/ng-remote-validate/release/ngRemoteValidate.0.6.1.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript">
+checkLogin();
 angular.module('app', ['remoteValidation','ngFileUpload']).controller('ctrl', function($scope,$http, Upload){
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
