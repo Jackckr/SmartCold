@@ -17,7 +17,6 @@ coldWeb.controller('warn', function ($scope, $location, $stateParams, $http) {
     $scope.load = function () {
         $http.get('/i/warn/findAllWarningsInfoByRdcId?rdcId='+$stateParams.rdcId).success(function (result) 
 		{
-            console.log("result:" + result);
 			$scope.warningsInfo = result;
 			/*
             for (var i = 0; i < $scope.warningsInfo.length; i++) {

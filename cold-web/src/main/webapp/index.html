@@ -263,7 +263,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Optionally, you can add icons to the links -->
             <ul class="treeview-menu">
             <li class="treeview">
-              <a href="#/about"><i class="icon iconfont">&#xe678;</i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
+              <a href="" ng-click="openColdDiv()"><i class="icon iconfont">&#xe678;</i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                <li ng-repeat="storage in mystorages"><a ng-click="toMyStorageTemper(storage.id)">
                  <i class="fa fa-circle-o"></i>{{storage.name}}</a>
@@ -338,7 +338,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
             </ul>
             <ul class="sidebar-menu text-white">
-            <li class="treeview"><a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe680;</i>
+            <li class="treeview"><a href="#" ng-click="openWarn()"><i class="icon iconfont" style="color:#ffffff">&#xe680;</i>
             <span class="menu-title text-white" style="font-size: large">报警</span></a></li>
             </ul>
             <ul class="sidebar-menu text-white">

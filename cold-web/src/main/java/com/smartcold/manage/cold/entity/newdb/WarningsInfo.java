@@ -6,6 +6,8 @@ public class WarningsInfo {
 
 	private int id;
 
+	private String warningname;
+
 	private int refrsysId;
 
 	private int rdcId;
@@ -22,6 +24,14 @@ public class WarningsInfo {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getWarningname() {
+		return warningname;
+	}
+
+	public void setWarningname(String warningname) {
+		this.warningname = warningname;
 	}
 
 	public int getRefrsysId() {

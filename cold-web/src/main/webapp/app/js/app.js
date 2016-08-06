@@ -96,15 +96,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                         "userId": $rootScope.user.id
                     }
                 }).success(function (result) {
-                    console.log("result:" + result);
-                    for (var i = 0; i < result.length; i++) {
-                        console.log("compressors:" + result[i].groupId + ",rdcId: " + result[i].rdcId);
-                        compressors.push({
-                            name: "压缩机组" + result[i].groupId,
-                            id: result[i].groupId
-                        });
-                    }
-                    $rootScope.compressors = compressors;
+                    $rootScope.compressors = result;
                 })
                 // 拉取冷库列表
                 $http.get('/i/newStorage/findByUserId', {
