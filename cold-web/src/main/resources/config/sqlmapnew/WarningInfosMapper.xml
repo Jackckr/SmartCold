@@ -8,4 +8,8 @@
     select * from `warningsinfo` where rdcid=#{rdcId} order by addtime desc
 </select>
 
+<select id="findLastNWarningInfo" parameterType="map" resultType="WarningsInfo">
+    select * from `warningsinfo` where rdcid=#{rdcId} order by addtime desc limit #{point}
+</select>
+
 </mapper>

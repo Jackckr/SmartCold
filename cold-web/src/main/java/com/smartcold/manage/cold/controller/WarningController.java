@@ -17,21 +17,28 @@ public class WarningController extends BaseController {
 
 	@Autowired
 	private WarningsInfoMapper warningsInfoDao;
-	
+
 	@RequestMapping(value = "/findAllWarningsInfoByRdcId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllWarningsInfo(int rdcId) {
-		
-//		List allInfoList = new ArrayList();
+
+		// List allInfoList = new ArrayList();
 		List<WarningsInfo> warningsInfoList = warningsInfoDao.findAllWarningInfo(rdcId);
-//		for(WarningsInfo warningInfo : warningsInfoList){
-//			String warningName = warningsSetDao.findWarningSetById(warningInfo.getObjId()).getName();
-//			Map map = new HashMap();
-//			map.put("addtime", warningInfo.getAddtime());
-//			map.put("warningName", warningName);
-//			map.put("id", warningInfo.getId());
-//			allInfoList.add(map);
-//		}
+		// for(WarningsInfo warningInfo : warningsInfoList){
+		// String warningName =
+		// warningsSetDao.findWarningSetById(warningInfo.getObjId()).getName();
+		// Map map = new HashMap();
+		// map.put("addtime", warningInfo.getAddtime());
+		// map.put("warningName", warningName);
+		// map.put("id", warningInfo.getId());
+		// allInfoList.add(map);
+		// }
 		return warningsInfoList;
+	}
+
+	@RequestMapping(value = "/findLastNWarningsInfoByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findLastNWarningsInfoByRdcId(int rdcId, int point) {
+		return warningsInfoDao.findLastNWarningInfo(rdcId, point);
 	}
 }

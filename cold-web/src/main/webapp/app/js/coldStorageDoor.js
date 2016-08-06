@@ -14,7 +14,7 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
             }
         }).success(function (result) {
             for (var i = 0; i < result.length; i++) {
-                var val = Date.parse(result[i].addTime);
+                var val = Date.parse(result[i].addtime);
                 var newDate = new Date(val).getTime();
                 data.push({
                     x: newDate,
