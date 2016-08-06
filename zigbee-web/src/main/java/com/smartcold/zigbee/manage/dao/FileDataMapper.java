@@ -29,4 +29,6 @@ public interface FileDataMapper {
 	void saveFileData(FileDataEntity fileDataEntity);
 	
 	void saveFileDatas(List<FileDataEntity> fileDataEntities);
+
+	int deleteById(@Param("id") Integer id);
 }
