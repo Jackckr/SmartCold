@@ -5,8 +5,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.olddb.CompanyMapper;
-import com.smartcold.manage.cold.entity.olddb.Company;
+import com.smartcold.manage.cold.dao.newdb.CompanyMapper;
+import com.smartcold.manage.cold.entity.newdb.Company;
 import com.smartcold.manage.cold.service.CompanyService;
 /**
  * @author yanan.xu

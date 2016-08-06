@@ -31,12 +31,11 @@
 					$('input[type="radio"]').removeClass('blue');					
 					$(this).children('input').addClass("blue")
 				}
-				
 			})
 		});
     </script>
 </head>
-<body>
+<body ng-app="app">
     <!-- header -->
         <header>
         	
@@ -63,16 +62,21 @@
     	</div>
     </div>
     <!--coldlist-->
-    <div class="coldlist" style="margin-bottom: 3rem;">
+    <div class="coldlist" style="margin-bottom: 3rem;" ng-controller="ctrl">
+        <!-- 仓储信息区域start -->
+        <div ng-show="rdclist.length>0">
+            <p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
+            <p class="sorry" ><button class="btn btn-primary" ng-click="goaddrdcpag();">添加冷库信息</button>　　<button  class="btn btn-success" ng-show="{{dataType!=3}}" ng-click="simplyitem();"   >不关联库发布</button></p>
+        </div>
         <ul class="imgTable">
-        	<li class="imgCell">
+        	<li class="imgCell" ng-repeat="rdc in rdclist">
 				<a href="releasestoragedetail.html">
-					<img class="fl" src="../com/img/muwu.jpg">
+					<img class="fl" ng-src="rdc.logo">
 					<div class="">
-						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
+						<p class='ellipsis'>{{rdc.name}}</p>
 						<p class='position'>
 							<i class="iconfont">&#xe66e;</i>
-							上海-长宁区-中山公园
+							{{rdc.address}}
 						</p>
 						<ul class='star'>
 							<li class="filled">★</li>
@@ -259,16 +263,22 @@
         </li>
     </ul>
     <script type="text/javascript" src="../com/js/file_upload.js" ></script>
-    <script type="text/javascript">
-		$(function(){
-			$('#province, #city').citylist({
-	            data: data,
-	            id: 'id',
-	            children: 'cities',
-	            name: 'name',
-	            metaTag: 'name'
-	        });
-		})
-	</script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+<script type="text/javascript">
+angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope,  $http) {
+    $scope.pageChanged = function () {
+        var params={pageNum : $scope.bigCurrentPage,pageSize : $scope.maxSize}
+        $http.post(ER.root+"/i/ShareRdcController/getRdcByUid",params,function(data) { 
+            $scope.rdclist = data.data;//
+            $scope.bigTotalItems = data.total;
+            if(data.total==0){
+               $("#nodata_div").removeClass("hide"); 
+            }
+        });
+    };
+    $scope.pageChanged();
+});
+</script>
 </body>
 </html>

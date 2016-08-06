@@ -131,7 +131,7 @@ var util = {
         var oReader = new FileReader();
         oReader.onload = function(e) { oImage.src = e.target.result; };
         oReader.readAsDataURL(oFile);
-    },
+    }
 };
 
 /**

@@ -182,6 +182,12 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setStoragePics(storageFiles);
 //			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
 
+            List<FileDataEntity> honorFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_HONOR_PIC);
+            for (FileDataEntity item : honorFiles) {
+                item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+            }
+            rdcAddDTO.setHonorPics(honorFiles);
+
             String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
             if (truck.length > 0){
                 for (int i = 0; i < truck.length; i++) {

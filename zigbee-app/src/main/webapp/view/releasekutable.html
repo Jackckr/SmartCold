@@ -31,61 +31,61 @@
         <form ng-controller="ctrl" name="rdcForm">
             <ul class="houseinfo">
                 <li>
-                    <label for="name">名称</label>
+                    <label for="name">名称<em>*</em></label>
                     <input type="text" ng-model="name" ng-disabled="editable" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET">
                             <em ng-show="rdcForm.name.$error.ngRemoteValidate">冷库名已经被注册</em>
                 </li>
                 <li>
-                    <label for="province">省</label>
+                    <label for="province">省<em>*</em></label>
                     <div class="mySelect">
-                    	 <select ng-model="provinceId" ng-disabled="editable"
+                         <select ng-model="provinceId" ng-disabled="editable"
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>                    
                 </li>
                 <li>
-                    <label for="city">市</label>
+                    <label for="city">市<em>*</em></label>
                     <div class="mySelect">
-	                    <select ng-model="cityId"
+                        <select ng-model="cityId"
                                 ng-change="citySelected(cityId)"
                                 ng-options="x.cityID as x.cityName for x in citys"></select>
-	                </div>
-	                <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="geographic">地理位置</label>
+                    <label for="geographic">地理位置<em>*</em></label>
                     <input type="text"  ng-model="address" />
                 </li>
                 <li>
-                    <label for="area">面积</label>
+                    <label for="area">面积<em>*</em></label>
                     <input type="text"  ng-model="area" placeholder="冷库面积(㎡)" />
                 </li>
                 <li>
-                    <label for="operateType">冷库经营类型</label>                    
+                    <label for="operateType">冷库经营类型<em>*</em></label>                    
                     <div class="mySelect">
-	                    <select ng-model="manageType"
+                        <select ng-model="manageType"
                                     ng-change="ManageTypeSelected(manageType)"
                                     ng-options="x.id as x.type for x in manageTypes"></select>
-	                </div>
+                    </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="storageType">商品存放类型</label>                    
+                    <label for="storageType">商品存放类型<em>*</em></label>                    
                     <div class="mySelect">
-	                    <select ng-model="storageType"
+                        <select ng-model="storageType"
                                     ng-change="StorageTypeSelected(storageType)"
                                     ng-options="x.id as x.type for x in storageTypes"></select>
-	                </div>
+                    </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="temperatureType">冷库温度类型</label>                    
+                    <label for="temperatureType">冷库温度类型<em>*</em></label>                    
                     <div class="mySelect">
-	                    <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
-	                </div>
+                        <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
+                    </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li class="number">
@@ -101,7 +101,7 @@
                     </div>
                 </li>
                 <li>
-                    <label for="phone">联系电话</label>
+                    <label for="phone">联系电话<em>*</em></label>
                     <input type="text"  ng-model="phoneNum"/>
                 </li>
                 <li>
@@ -145,9 +145,10 @@
                 <li>
                     <label for="cleanroom">是否有理货间</label>
                     <div class="mySelect">
-                    	<select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
+                        <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
-                     </div>                   
+                     </div>  
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>                 
                 </li>
                 <li>
                     <label for="cleanarea">理货区面积</label>                    
@@ -189,7 +190,7 @@
                             <input type="text" ng-model="capacity1">
                             <span>吨</span>
                         </div>
-						<div>
+                        <div>
                             <span>12至-2度</span>
                             <input type="text" ng-model="capacity2">
                             <span>吨</span>
@@ -198,8 +199,8 @@
                             <span>-18至-22度</span>
                             <input type="text" ng-model="capacity3">
                             <span>吨</span>
-						</div>
-						<div>
+                        </div>
+                        <div>
                             <span>-22至-30度</span>
                             <input type="text" ng-model="capacity4">
                             <span>吨</span>
@@ -224,9 +225,7 @@
                         <div>
                             <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
                                        ngf-multiple="true" name="honorfiles">
-                        </div>
-                        <div>
-                            <small class="text-warning" style="width: 100px">*最多八张</small>
+                             <small class="text-warning fr" style="width: 100px">*最多八张</small>
                         </div>
                     </div>                  
                 </li>
@@ -249,9 +248,7 @@
                            <div>
                                 <input type="file" ngf-select="addFiles($files)" ng-model="files"
                                            ngf-multiple="true" name="files">
-                            </div>
-                            <div>
-                                <small class="text-warning" style="width: 100px">*最多五张</small>
+                                 <small class="text-warning fr" style="width: 100px">*最多五张</small>
                             </div>
                        </div>
                 </li>

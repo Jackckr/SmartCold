@@ -2,6 +2,8 @@ package com.smartcold.manage.cold.entity.olddb;
 
 import java.util.List;
 
+import com.smartcold.manage.cold.entity.newdb.GoodsEntity;
+
 public class SingleTypeEntity {
 
 	private String name;

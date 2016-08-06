@@ -106,3 +106,9 @@ ul.rating {
 .text-gray{
 	color:gray;
 }
+.text-gray.visible-lg{
+	min-height:53px;
+}
+h4.text-gray{
+	min-height:38px;
+}

@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.olddb.PrivilegeRoleMapper;
-import com.smartcold.manage.cold.entity.olddb.PrivilegeRole;
+import com.smartcold.manage.cold.dao.newdb.PrivilegeRoleMapper;
+import com.smartcold.manage.cold.entity.newdb.PrivilegeRole;
 import com.smartcold.manage.cold.service.PrivilegeRoleService;
 
 /**
