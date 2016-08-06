@@ -17,13 +17,12 @@ public class CrossInterceptor extends OncePerRequestFilter {
 	
 	    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 //	        if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
-	            System.err.println(request.getSession().getId());
-                response.setHeader("P3P", "CP=CAO PSA OUR");//解决IE下SessionID丢失的问题
-                response.setHeader("Access-Control-Max-Age", "1800");
-	            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//*request.getHeader("Origin")
-	            response.setHeader("Access-Control-Allow-Credentials","true"); //是否支持cookie跨域
-	            response.setHeader("Access-Control-Allow-Methods", "POST, GET,PUT, OPTIONS, DELETE");
-	            response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Transfer-Encoding");//,Content-Type,Content-Transfer-Encoding
-	        filterChain.doFilter(request, response);
+            response.setHeader("P3P", "CP=CAO PSA OUR");//解决IE下SessionID丢失的问题
+            response.setHeader("Access-Control-Max-Age", "1800");
+            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));//*request.getHeader("Origin")
+            response.setHeader("Access-Control-Allow-Credentials","true"); //是否支持cookie跨域
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET,PUT, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Transfer-Encoding");//,Content-Type,Content-Transfer-Encoding
+            filterChain.doFilter(request, response);
 	    }
 }

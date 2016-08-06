@@ -57,14 +57,14 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser")
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
-		System.err.println("请求地址："+request.getRequestURL());
-		System.err.println("getRemoteUser"+request.getRemoteUser());
-		System.err.println("SessionId："+request.getSession().getId());
-		System.err.println("getRequestedSessionId："+request.getRequestedSessionId());
-        long freeMemory = Runtime.getRuntime().freeMemory() / (1024*1024);   
-        System.err.println("剩余内存"+freeMemory);
-		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
+//		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
+//		System.err.println("请求地址："+request.getRequestURL());
+//		System.err.println("getRemoteUser"+request.getRemoteUser());
+//		System.err.println("SessionId："+request.getSession().getId());
+//		System.err.println("getRequestedSessionId："+request.getRequestedSessionId());
+//        long freeMemory = Runtime.getRuntime().freeMemory() / (1024*1024);   
+//        System.err.println("剩余内存"+freeMemory);
+//		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();

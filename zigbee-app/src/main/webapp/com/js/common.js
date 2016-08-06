@@ -10,6 +10,7 @@ if ($.ajax) {
 function goback() {window.history.back();}//返回上一级
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
+function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
 function checkLogin(msg) {
 	 if(window.user!=null ){return;}
 	  $.ajax({
@@ -36,10 +37,7 @@ function getUrlParam(name) {//获得地震栏参数
     return null;
 }
 
-
-
 function getFont() {
-
     if (screenWidth > screenHeight) {
         screenWidth = screenHeight;
     }
