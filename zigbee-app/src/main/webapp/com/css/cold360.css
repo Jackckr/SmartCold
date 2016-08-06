@@ -107,10 +107,10 @@ section{
 .tempture i{
 	color: #EB5A4A;
 }
-.light i{
+.light.other i{
 	color: #5BB789;
 }
-.door i{
+.door.other i{
 	color: #448BCB;
 }
 .other{
@@ -123,11 +123,11 @@ section{
 	color: #EB5A4A;
 	border-bottom: 3px solid #438BCB;
 }
-.light.current{
+.light.other.current{
 	color: #5BB789;
 	border-bottom: 3px solid #438BCB;
 }
-.door.current{
+.door.other.current{
 	color: #448BCB;
 	border-bottom: 3px solid #438BCB;
 }

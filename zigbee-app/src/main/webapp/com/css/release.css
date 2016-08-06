@@ -231,7 +231,8 @@ section{
 }
 .mySelect textarea{
 	width:99%;
-	height:auto;
+	height:2.5rem;
+	vertical-align:middle;
 	border:1px solid #ccc;
 	resize:none;
 }
@@ -556,4 +557,8 @@ form+.mybtn,.next+.mybtn{
 .pic input{
 	width: 0;
 	height:0;
+}
+em{
+	color: red;
+	font-size: 0.8rem;
 }

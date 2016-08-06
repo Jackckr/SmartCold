@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.olddb.PackMapper;
-import com.smartcold.manage.cold.dao.olddb.UsageMapper;
-import com.smartcold.manage.cold.dao.olddb.WallMaterialMapper;
+import com.smartcold.manage.cold.dao.newdb.PackMapper;
+import com.smartcold.manage.cold.dao.newdb.UsageMapper;
+import com.smartcold.manage.cold.dao.newdb.WallMaterialMapper;
 import com.smartcold.manage.cold.service.GoodsService;
 import com.smartcold.manage.cold.service.StorageService;
 

@@ -41,6 +41,7 @@
 		</div>
 	</footer>
 	<script  type="text/javascript">
+	if(!navigator.cookieEnabled){ alert("请打开手机Cookie");}
 	$("#username").val(util.getCookie("username"));
 	function showErrorInfo(msg) {
 	    var msgEl = $("#mention");

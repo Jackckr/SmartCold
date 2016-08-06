@@ -95,6 +95,8 @@ public class RdcAddDTO {
 	private File honorfile0;
 
 	private List<StorageHonorEntity> storageHonorPics;
+
+	private List<FileDataEntity> honorPics;
 	
 	public int getPageview() {
 		return pageview;
@@ -454,5 +456,13 @@ public class RdcAddDTO {
 
 	public void setStorageHonorPics(List<StorageHonorEntity> storageHonorPics) {
 		this.storageHonorPics = storageHonorPics;
+	}
+
+	public List<FileDataEntity> getHonorPics() {
+		return honorPics;
+	}
+
+	public void setHonorPics(List<FileDataEntity> honorPics) {
+		this.honorPics = honorPics;
 	}
 }

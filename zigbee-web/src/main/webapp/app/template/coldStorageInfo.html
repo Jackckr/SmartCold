@@ -268,6 +268,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" ng-if="honorPicShow.length>0">
+                            <div class="pull-left" ng-repeat="item in honorPicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%" ng-click="goPicDetail(item)" alt="" />
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deleteHonorPic(item)"></i>
+                            </div>
+                        </div>
                         <div class="col-lg-12 col-lg-offset-2">
                             <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
                                 <i class="fa fa-times danger" style="margin-right:10px;color:red;"
@@ -282,6 +288,13 @@
                                     <input type="file" ng-model="arrangePic" name="arrangePic"
                                            ngf-select="addArrangePic($arrangePic)">
                                 </form>
+                            </div>
+                        </div>
+                        <div class="form-group rdc" ng-if="arrangePicShow != null">
+                            <label class="col-sm-4 control-label"></label>
+                            <div class="" style="padding:5px;position:relative;display:inline-block">
+                                <img style="width: 86px;" ng-src="{{arrangePicShow.location}}" ng-click="goPicDetail(arrangePicShow)" alt="" />
+                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
                             </div>
                         </div>
 
@@ -299,6 +312,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" ng-if="storagePicShow.length>0">
+                            <div class="pull-left" ng-repeat="item in storagePicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%" ng-click="goPicDetail(item)" alt="" />
+                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(item)"></i>
+                            </div>
+                        </div>
                         <div class="col-lg-12 col-lg-offset-2">
                             <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
                                 <i class="fa fa-times danger" style="margin-right:1px;color:red;"
@@ -314,4 +333,13 @@
             </div>
         </div>
     </section>
-</div>
+</div><script type="text/ng-template" id="myModelContent.html">
+    <div class="modal-body">
+        <ul>
+            <img src="{{itemPic.location}}" width="100%" height="100%"/>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+</script>

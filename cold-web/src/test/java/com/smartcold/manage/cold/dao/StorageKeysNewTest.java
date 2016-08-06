@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.smartcold.manage.cold.dao.newdb.NewStorageKeysMapper;
-import com.smartcold.manage.cold.entity.newdb.NewStorageKeysEntity;
+import com.smartcold.manage.cold.entity.newdb.StorageKeysEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
@@ -35,7 +35,7 @@ public class StorageKeysNewTest {
 	@Test
 	public void updateStorageKeys(){
 		for(StorageType type:StorageType.values()){
-			NewStorageKeysEntity storageKeys = new NewStorageKeysEntity();
+			StorageKeysEntity storageKeys = new StorageKeysEntity();
 			storageKeys.setType(type.getType());
 			storageKeys.setKey(type.toString());
 			storageKeys.setDesc(type.getDesc());

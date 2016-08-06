@@ -24,4 +24,8 @@
 	  </foreach>
 	</insert>
 
+	<delete id="deleteById">
+		DELETE FROM `filedata` WHERE `id` = #{id}
+	</delete>
+
 </mapper>

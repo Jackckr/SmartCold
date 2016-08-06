@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.olddb.WarningsInfoMapper;
-import com.smartcold.manage.cold.dao.olddb.WarningsSetMapper;
-import com.smartcold.manage.cold.entity.olddb.WarningsInfo;
+import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
+import com.smartcold.manage.cold.dao.newdb.WarningsSetMapper;
+import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 
 @Controller
 @RequestMapping(value = "/warn")

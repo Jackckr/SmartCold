@@ -1,6 +1,6 @@
 $(function() {
 	//点击“其他”出现下拉单
-	$('#other').bind({
+	$('.other').bind({
 		"click":function(e){
 			$(this).children('.otherList').toggleClass('black'); 
 			$(".backDrop").toggle()
@@ -8,6 +8,7 @@ $(function() {
 		},
 		"mouseleave":function(){
 			$(this).children('.otherList').addClass('black');  
+			$(".backDrop").toggle();
 		}
 	});
 	$(".backDrop").click(function(){
@@ -19,11 +20,11 @@ $(function() {
 		var target = e.target || e.srcElement;
 		if (target.nodeName.toLocaleLowerCase() == "a") {
 			switch (target.id){
-				case 'ysj':
-					$(".dropNext").html(target.innerHTML)
+				case 'hwlt':
+					/*$(".dropNext").html(target.innerHTML)*/
 					break;
-				case 'fj':
-					$(".dropNext").html(target.innerHTML)
+				case 'zlxt':
+					/*$(".dropNext").html(target.innerHTML)*/
 					break;
 			}
 		}
