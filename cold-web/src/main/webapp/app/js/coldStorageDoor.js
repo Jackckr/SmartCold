@@ -10,11 +10,11 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
             params: {
                 "oid": $stateParams.storageID,
                 type:2,
-                key:'STORAGE_DOOR'
+                key:'state'
             }
         }).success(function (result) {
             for (var i = 0; i < result.length; i++) {
-                var val = Date.parse(result[i].addTime);
+                var val = Date.parse(result[i].addtime);
                 var newDate = new Date(val).getTime();
                 data.push({
                     x: newDate,

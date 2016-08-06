@@ -562,3 +562,11 @@ em{
 	color: red;
 	font-size: 0.8rem;
 }
+.newsList{
+	padding-left: 0.5rem;
+}
+.newsList li{
+	line-height: 1.5rem;
+	list-style: circle;
+	font-size: 0.8rem;
+}

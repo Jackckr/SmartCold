@@ -2,13 +2,21 @@ $(function() {
 	//点击“其他”出现下拉单
 	$('.other').bind({
 		"click":function(e){
-			$(this).children('.otherList').toggleClass('black'); 
-			$(".backDrop").toggle()
+			var $this = $(this).children('.otherList');
+			if($this.hasClass('black')){
+				$this.removeClass('black');
+				$(".backDrop").show()
+			}else{
+				$this.addClass('black');
+				$(".backDrop").hide()
+			}
+			/*$(this).children('.otherList').toggleClass('black'); 
+			$(".backDrop").toggle()*/
 			$(this).addClass('current').siblings().removeClass('current');
 		},
 		"mouseleave":function(){
 			$(this).children('.otherList').addClass('black');  
-			$(".backDrop").toggle();
+			$(".backDrop").hide();
 		}
 	});
 	$(".backDrop").click(function(){
@@ -21,10 +29,10 @@ $(function() {
 		if (target.nodeName.toLocaleLowerCase() == "a") {
 			switch (target.id){
 				case 'hwlt':
-					/*$(".dropNext").html(target.innerHTML)*/
+					//$(".dropNext").html(target.innerHTML)
 					break;
 				case 'zlxt':
-					/*$(".dropNext").html(target.innerHTML)*/
+					//$(".dropNext").html(target.innerHTML)
 					break;
 			}
 		}

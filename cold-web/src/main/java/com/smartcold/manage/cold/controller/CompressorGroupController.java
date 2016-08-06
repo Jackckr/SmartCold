@@ -50,9 +50,9 @@ public class CompressorGroupController {
 	public Object findPressByNums(int compressorID,String key,
 			@RequestParam(value="nums",defaultValue="2")Integer nums){
 		List<StorageKeyValue> lowPress = storageService.findByNums(StorageType.COMPRESSOR, 
-				compressorID, "COMPRESSOR_PRESS_L", nums);
+				compressorID, "lowPress", nums);
 		List<StorageKeyValue> highPress = storageService.findByNums(StorageType.COMPRESSOR, 
-				compressorID, "COMPRESSOR_PRESS_H", nums);
+				compressorID, "highPress", nums);
 		Map result = new HashMap<String, List<StorageKeyValue>>(2);
 		result.put("lowPress", lowPress);
 		result.put("highPress", highPress);
@@ -64,12 +64,12 @@ public class CompressorGroupController {
 			@RequestParam(value="nums",defaultValue="1")Integer nums){
 		Map<String, List<StorageKeyValue>> result = new HashMap<String, List<StorageKeyValue>>();
 		StorageType stype = StorageType.COMPRESSOR;
-		result.put("compressor1",storageService.findByNums(stype, compressorID, "COMPRESSOR_1", nums));
-		result.put("compressor2",storageService.findByNums(stype, compressorID, "COMPRESSOR_2", nums));
-		result.put("compressor3",storageService.findByNums(stype, compressorID, "COMPRESSOR_3", nums));
-		result.put("compressor4",storageService.findByNums(stype, compressorID, "COMPRESSOR_4", nums));
-		result.put("compressor5",storageService.findByNums(stype, compressorID, "COMPRESSOR_5", nums));
-		result.put("compressor6",storageService.findByNums(stype, compressorID, "COMPRESSOR_6", nums));
+		result.put("compressor1",storageService.findByNums(stype, compressorID, "Compressor1", nums));
+		result.put("compressor2",storageService.findByNums(stype, compressorID, "Compressor2", nums));
+		result.put("compressor3",storageService.findByNums(stype, compressorID, "Compressor3", nums));
+		result.put("compressor4",storageService.findByNums(stype, compressorID, "Compressor4", nums));
+		result.put("compressor5",storageService.findByNums(stype, compressorID, "Compressor5", nums));
+		result.put("compressor6",storageService.findByNums(stype, compressorID, "Compressor6", nums));
 		return result;
 	}
 }
