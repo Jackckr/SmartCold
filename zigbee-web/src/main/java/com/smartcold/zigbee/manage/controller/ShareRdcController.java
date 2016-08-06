@@ -295,7 +295,7 @@ public class ShareRdcController  {
 		return ResponseData.newSuccess(data);
 	}
 	
-	//------------------------------------------------------------------------------------3:抢单操作-------------------------------------------------------
+	//------------------------------------------------------------------------------------验证码-------------------------------------------------------
 	/**
 	 * 
 	 * @return
@@ -306,10 +306,10 @@ public class ShareRdcController  {
 		try {
 			if(StringUtil.isnotNull(telephone)){
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-				String signUpCode = teleVerify.identityVerify(telephone);
-				request.getSession().setAttribute("shear_order_id", dataid);
-				request.getSession().setAttribute("shear_order_yzm", signUpCode);
-				request.getSession().setAttribute("shear_order_telephone", telephone);
+				String signUpCode =teleVerify.identityVerify(telephone);
+				request.getSession().setAttribute("shear_id", dataid);
+				request.getSession().setAttribute("shear_yzm", signUpCode);
+				request.getSession().setAttribute("shear_telephone", telephone);
 				ResponseData<String> instance = ResponseData.getInstance();
 				instance.setSuccess(true);
 				instance.setEntity(signUpCode);
@@ -332,7 +332,7 @@ public class ShareRdcController  {
 	@ResponseBody
 	public boolean sharvistCode(HttpServletRequest request,String dataid,String telephone,String yzm){
 	  if(StringUtil.isnotNull(yzm)){
-		  String sysyzm=	(String) request.getSession().getAttribute("shear_order_yzm");
+		  String sysyzm=	(String) request.getSession().getAttribute("shear_yzm");
 		  return yzm.equalsIgnoreCase(sysyzm); 
 	  }
 	  return false;

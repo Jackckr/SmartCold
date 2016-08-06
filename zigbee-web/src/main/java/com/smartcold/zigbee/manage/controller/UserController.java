@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.smartcold.zigbee.manage.dao.UserMapper;
+import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 import com.taobao.api.ApiException;
 
@@ -121,6 +124,20 @@ public class UserController extends BaseController {
 		userEntity.setTelephone(telephone);
 		userDao.insertUser(userEntity);
 		return new ResultDto(0, "注册成功");
+	}
+	@RequestMapping(value = "/updateUser")
+	@ResponseBody
+	public Object updateUser(HttpServletRequest request,String data) throws ApiException {
+		if(StringUtil.isnotNull(data)){
+			UserEntity  ol_user = (UserEntity)request.getSession().getAttribute("user");
+			UserEntity	up_user= JSON.parseObject(data, UserEntity.class);//页面数据/ /1.获得表单数据
+			up_user.setId(ol_user.getId());
+			this.userDao.updateUser(up_user);
+			ol_user=this.userDao.findUserById(ol_user.getId());
+			request.getSession().setAttribute("user",ol_user);
+			return true;
+		}
+		return false;
 	}
 
 }
