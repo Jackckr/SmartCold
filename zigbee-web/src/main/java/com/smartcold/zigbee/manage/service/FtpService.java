@@ -27,4 +27,6 @@ public interface FtpService {
 	boolean uploadFileList(List<UploadFileEntity> uploadFileList);
 	
 	boolean deleteFile(String url);
+
+	boolean deleteByLocation(String location);
 }
