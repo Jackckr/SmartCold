@@ -41,6 +41,9 @@
 		</div>
 	</footer>
 	<script  type="text/javascript">
+	if(!navigator.cookieEnabled){
+	 alert("请打开手机Cookie");
+	}
 	$("#username").val(util.getCookie("username"));
 	function showErrorInfo(msg) {
 	    var msgEl = $("#mention");
@@ -78,7 +81,7 @@
 						util.setCookie("username",userName,"d7");
                         document.cookie = data.message;
 						if (window.location.hash != "") {
-							backUrl = window.location.hash;
+							backUrl = window.location.hash.substring(1);
 						} else {
 							backUrl = "../index.html";
 						}
