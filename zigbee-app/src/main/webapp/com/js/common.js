@@ -27,28 +27,8 @@ var countdown = 60;
 
 
 if ($.ajax) {
-	jQuery.ajaxSetup({
-	    xhrFields:{
-	        withCredentials:true
-	    }
-	});
+	jQuery.ajaxSetup({xhrFields:{withCredentials:true}});
 }
-//    $.ajax({
-//        url:ER.root + "/i/user/findUser",
-//        type:"GET",
-//        cache:false,
-//        dataType:"json",
-//        async:false,
-//        beforeSend:function(xhr) { xhr.withCredentials = true;},
-//        success:function(data) {
-//            if (data && data.id != 0) {
-//                window.user = data;
-//            } else {
-//                window.user = null;
-//            }
-//        }
-//    });
-//}
 
 //function isLogin() {
 //    return window.user != null && window.user.id != 0;
@@ -57,16 +37,15 @@ if ($.ajax) {
 function checkLogin(msg) {
 	 if(window.user!=null ){return;}
 	  $.ajax({
-	        url:ER.root + "/i/user/findUser",
 	        type:"GET",
 	        cache:false,
 	        dataType:"json",
-	        async:false,
+	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
 	                window.user = data;
 	            } else {
-	            	alert(msg);
+	            	alert(msg?msg:"请登录后再操作！");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
 	            }

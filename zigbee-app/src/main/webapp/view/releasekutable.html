@@ -9,11 +9,11 @@
     <title>发布库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
     <script type="text/javascript" src="../com/js/prettify.js" ></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript">checkLogin("请登录后发布！");</script>
+<!--     <script type="text/javascript"></script> -->
 </head>
 <body ng-app="app">
     <!-- header -->
@@ -298,7 +298,7 @@
 <script src="../bower_components/ng-remote-validate/release/ngRemoteValidate.0.6.1.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript">
-
+checkLogin();
 angular.module('app', ['remoteValidation','ngFileUpload']).controller('ctrl', function($scope,$http, Upload){
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
