@@ -13,7 +13,7 @@ import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dto.SearchMeta;
-import com.smartcold.manage.cold.entity.newdb.NewStorageKeysEntity;
+import com.smartcold.manage.cold.entity.newdb.StorageKeysEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
@@ -44,8 +44,8 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 		List<SearchMeta> result = new ArrayList<SearchMeta>();
 		SearchMeta searchMeta = null;
 		
-		List<NewStorageKeysEntity> storageKeys = storageKeysDao.findAll();
-		for(NewStorageKeysEntity storageKey:storageKeys){
+		List<StorageKeysEntity> storageKeys = storageKeysDao.findAll();
+		for(StorageKeysEntity storageKey:storageKeys){
 			StorageType stype = StorageType.getStorageType(storageKey.getType());
 			
 			switch (stype) {

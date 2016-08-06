@@ -23,8 +23,19 @@ public class ColdStorageSetEntity {
     private Double latitude;
 
     private String location;
+    
+    private String tempdiff;
+    
 
-    public int getId() {
+    public String getTempdiff() {
+		return tempdiff;
+	}
+
+	public void setTempdiff(String tempdiff) {
+		this.tempdiff = tempdiff;
+	}
+
+	public int getId() {
         return id;
     }
 

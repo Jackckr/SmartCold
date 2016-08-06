@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.olddb.WeatherMapper;
-import com.smartcold.manage.cold.entity.olddb.Weather;
+import com.smartcold.manage.cold.dao.newdb.WeatherMapper;
+import com.smartcold.manage.cold.entity.newdb.Weather;
 
 @Controller
 @RequestMapping(value = "/city")

@@ -3,7 +3,7 @@ package com.smartcold.manage.cold.service;
 import java.util.Date;
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.olddb.PrivilegeRole;
+import com.smartcold.manage.cold.entity.newdb.PrivilegeRole;
 
 
 public interface PrivilegeRoleService {

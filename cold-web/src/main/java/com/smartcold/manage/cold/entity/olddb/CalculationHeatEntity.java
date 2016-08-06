@@ -1,6 +1,9 @@
 package com.smartcold.manage.cold.entity.olddb;
 
 import com.smartcold.manage.cold.dto.WallEntity;
+import com.smartcold.manage.cold.entity.newdb.GoodsEntity;
+import com.smartcold.manage.cold.entity.newdb.PackEntity;
+import com.smartcold.manage.cold.entity.newdb.UsageEntity;
 
 public class CalculationHeatEntity {
 

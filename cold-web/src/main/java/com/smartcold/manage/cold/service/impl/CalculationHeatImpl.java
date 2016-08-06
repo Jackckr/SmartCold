@@ -3,14 +3,14 @@ package com.smartcold.manage.cold.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.olddb.AirEnthalpyMapper;
-import com.smartcold.manage.cold.dao.olddb.AirPropertyMapper;
-import com.smartcold.manage.cold.dao.olddb.GoodsMapper;
-import com.smartcold.manage.cold.dao.olddb.PackMapper;
-import com.smartcold.manage.cold.entity.olddb.AirEnthalpyEntity;
-import com.smartcold.manage.cold.entity.olddb.AirPropertyEntity;
+import com.smartcold.manage.cold.dao.newdb.AirEnthalpyMapper;
+import com.smartcold.manage.cold.dao.newdb.AirPropertyMapper;
+import com.smartcold.manage.cold.dao.newdb.GoodsMapper;
+import com.smartcold.manage.cold.dao.newdb.PackMapper;
+import com.smartcold.manage.cold.entity.newdb.AirEnthalpyEntity;
+import com.smartcold.manage.cold.entity.newdb.AirPropertyEntity;
+import com.smartcold.manage.cold.entity.newdb.GoodsEntity;
 import com.smartcold.manage.cold.entity.olddb.CalculationHeatEntity;
-import com.smartcold.manage.cold.entity.olddb.GoodsEntity;
 import com.smartcold.manage.cold.service.CalculationHeat;
 
 @Service

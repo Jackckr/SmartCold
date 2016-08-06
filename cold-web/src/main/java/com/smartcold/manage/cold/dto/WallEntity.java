@@ -1,6 +1,6 @@
 package com.smartcold.manage.cold.dto;
 
-import com.smartcold.manage.cold.entity.olddb.WallMaterialEntity;
+import com.smartcold.manage.cold.entity.newdb.WallMaterialEntity;
 
 public class WallEntity {
 

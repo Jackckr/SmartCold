@@ -18,7 +18,7 @@ var util={
 	 getsec:function(str){var str1=str.substring(1,str.length)*1;var str2=str.substring(0,1);if(str2=="s"){return str1*1000;}else{if(str2=="h"){return str1*60*60*1000;}else{if(str2=="d"){return str1*24*60*60*1000;}}}
 	 }
 */
-var ER = {root:"http://192.168.1.136:8080"};
+var ER = {root:"http://192.168.1.115:8080"};
 
 var oHtml = document.documentElement;
 
