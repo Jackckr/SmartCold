@@ -74,7 +74,7 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 		$scope.startTime = bothTime[0];
 		$scope.endTime = bothTime[1];
 		$http.get("/i/baseInfo/getKeyValueDataByTime?oid=" + $scope.choseStorage.id + "&startTime=" + 
-				$scope.startTime + "&endTime=" + $scope.endTime + "&type=1"
+				$scope.startTime + "&endTime=" + $scope.endTime + "&type=1&key=temperature"
 				).success(
 				function(data,status,config,headers){
 			xData2 = [];
