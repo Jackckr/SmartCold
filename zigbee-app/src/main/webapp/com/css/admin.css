@@ -93,6 +93,8 @@ section.show{
 .name{
 	margin-left: 0.5rem;
 	padding-left: 2.6rem;
+}
+.nameLogin{
 	height: 2.5rem;
 	line-height: 2.5rem;
 	font-size: 0.8rem;
