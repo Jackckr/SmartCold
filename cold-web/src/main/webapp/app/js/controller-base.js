@@ -73,12 +73,14 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 		bothTime = $scope.picktime.split(" - ");
 		$scope.startTime = bothTime[0];
 		$scope.endTime = bothTime[1];
-		$http.get("/i/coldStorage/findInfoByIdTime?storageId=" + $scope.choseStorage.id + "&startTime=" + $scope.startTime + "&endTime=" + $scope.endTime).success(
+		$http.get("/i/baseInfo/getKeyValueDataByTime?oid=" + $scope.choseStorage.id + "&startTime=" + 
+				$scope.startTime + "&endTime=" + $scope.endTime + "&type=1"
+				).success(
 				function(data,status,config,headers){
 			xData2 = [];
 			temperature2 = [];
 			angular.forEach(data,function(item){
-				xData2.push(item.addTime);
+				xData2.push(item.addtime);
 				temperature2.push(item.temperature);
 			})
 			option = getOption(xData2,temperature2);
@@ -92,10 +94,10 @@ coldWeb.controller('base', function ($rootScope, $scope, $cookies, $http ,$locat
 		$scope.init_table('#temperature-chart8',8,"Temp",$scope.startTime,$scope.endTime);
 		$scope.init_table('#temperature-chart9',5,"PWC",$scope.startTime,$scope.endTime);
 		$scope.init_table('#temperature-chart10',8,"switch",$scope.startTime,$scope.endTime);
-		$http.get("/i/newStorage/getTempByNums?oid=" + $scope.choseStorage.id + "&nums=1").success(
-				function(data,status,headers,config){
-					$scope.coldstorageTmp = data.temperature?data.temperature:null;
-				})
+//		$http.get("/i/coldStorage/getTempByNums?oid=" + $scope.choseStorage.id + "&nums=1").success(
+//				function(data,status,headers,config){
+//					$scope.coldstorageTmp = data.temperature?data.temperature:null;
+//				})
 		$scope.currentData = [{id:1,key:"Temp"},{id:2,key:"Temp"},{id:3,key:"Temp"},{id:5,key:"Temp"},
 		                      {id:7,key:"Temp"},{id:8,key:"Temp"},{id:5,key:"PWC"},{id:8,key:"switch"}]
 		angular.forEach($scope.currentData,function(item,index){
