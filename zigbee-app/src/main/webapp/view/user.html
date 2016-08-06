@@ -33,8 +33,14 @@
     		</p>
     	</div>
     </section>
-    <section class="clearfix" ng-if="!userinfo.id">
-        <div class="txt" onclick="gologin();">登录</div>
+    <section class="clearfix" ng-if="!userinfo.id">    
+    	<div class="img fl">
+    		<img src="../com/img/success.png"/>
+    	</div>
+    	<div class="rightArrow fr">
+    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+    	</div>
+        <div class="name" onclick="gologin();">点此登录</div>
     </section>
     <ul class="list list_icon">
     	<li class="clearfix" onclick="location.href='user-mycold.html'">
@@ -124,7 +130,7 @@
         </li>
         <li>            
             <a href="release.html">
-                <i class="iconfont">&#xe666;</i>
+                <i class="iconfont">&#xe6ff;</i>
                 <p class="info">发布</p>
             </a>
         </li>
@@ -136,7 +142,7 @@
         </li>
         <li class="active">            
             <a href="user.html">
-                <i class="iconfont">&#xe65e;</i>
+                <i class="iconfont">&#xe6fd;</i>
                 <p class="info">我的</p>
             </a>
         </li>

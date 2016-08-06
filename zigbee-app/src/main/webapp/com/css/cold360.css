@@ -86,7 +86,7 @@ section{
 	background-color: #fff;
 	margin-bottom: 0.5rem;
 	margin-top:2.2rem;
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 	text-align: center;
 	width: 100%;
 	display: table;
@@ -100,8 +100,8 @@ section{
 	line-height: 2rem;
 	border-bottom: 3px solid #BDBDBD;
 }
-.toggle>i{
-	font-size: 0.8rem;
+.toggle>div>i{
+	font-size: 0.9rem;
 	margin: 0.1rem 0.2rem 0;
 }
 .tempture>i{
