@@ -1,4 +1,4 @@
-package com.smartcold.manage.cold.dao.newdb;
+package com.smartcold.manage.cold.dao.olddb;
 
 import org.apache.ibatis.annotations.Param;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.smartcold.manage.cold.dao.newdb.RdcUserMapper" >
-  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.newdb.RdcUser" >
+<mapper namespace="com.smartcold.manage.cold.dao.olddb.RdcUserMapper" >
+  <resultMap id="BaseResultMap" type="RdcUser" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="rdcid" property="rdcid" jdbcType="INTEGER" />
     <result column="userid" property="userid" jdbcType="INTEGER" />
@@ -20,13 +20,13 @@
     delete from RdcUser
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.newdb.RdcUser" >
+  <insert id="insert" parameterType="RdcUser" >
     insert into RdcUser (id, rdcid, userid, 
       addtime)
     values (#{id,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
       #{addtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.newdb.RdcUser" >
+  <insert id="insertSelective" parameterType="RdcUser" >
     insert into RdcUser
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.newdb.RdcUser" >
+  <update id="updateByPrimaryKeySelective" parameterType="RdcUser" >
     update RdcUser
     <set >
       <if test="rdcid != null" >
@@ -72,7 +72,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.newdb.RdcUser" >
+  <update id="updateByPrimaryKey" parameterType="RdcUser" >
     update RdcUser
     set rdcid = #{rdcid,jdbcType=INTEGER},
       userid = #{userid,jdbcType=INTEGER},

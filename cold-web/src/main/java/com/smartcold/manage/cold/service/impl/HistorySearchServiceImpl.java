@@ -7,14 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.newdb.NewStorageKeysMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
+import com.smartcold.manage.cold.dao.newdb.StorageKeysMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dto.SearchMeta;
-import com.smartcold.manage.cold.entity.newdb.StorageKeysEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.StorageKeysEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
@@ -34,7 +34,7 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 	private CompressorGroupSetMapper compressorGroupSetDao;
 	
 	@Autowired
-	private NewStorageKeysMapper storageKeysDao;
+	private StorageKeysMapper storageKeysDao;
 	
 	@Autowired
 	private StorageKeyValueMapper storageKeyValueDao;
