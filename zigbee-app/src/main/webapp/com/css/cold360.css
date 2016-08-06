@@ -86,7 +86,7 @@ section{
 	background-color: #fff;
 	margin-bottom: 0.5rem;
 	margin-top:2.2rem;
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	text-align: center;
 	width: 100%;
 	display: table;
@@ -100,23 +100,23 @@ section{
 	line-height: 2rem;
 	border-bottom: 3px solid #BDBDBD;
 }
-.toggle i{
-	font-size: 1.2rem;
+.toggle>i{
+	font-size: 0.8rem;
 	margin: 0.1rem 0.2rem 0;
 }
-.tempture i{
+.tempture>i{
 	color: #EB5A4A;
 }
-.light.other i{
+.light.other>i{
 	color: #5BB789;
 }
-.door.other i{
+.door.other>i{
 	color: #448BCB;
 }
 .other{
 	/*position: relative;*/
 }
-.other i{
+.other>i{
 	color: #F39826;
 }
 .tempture.current{
@@ -206,3 +206,42 @@ section{
 	color: #EC594A;
 	font-size: 2rem;
 }
+.inner{
+	padding-left: 2rem;
+	background: #f3f3f3;
+}
+.inner>li{
+	border-color: #fff;
+}
+.inner>li:last-child{
+	border: 0;
+}
+.inner>li>a:before{
+	content: "";
+	width: 8px;
+	height: 8px;
+	background: #999;
+	border-radius: 50%;
+	position: absolute;
+	top: 48%;
+	left: 0.5rem;
+	transform: translateY(-50%);
+}
+.inner>li>a{
+	color: #333;
+	font-size: 0.7rem;
+	text-indent: 1.2rem;
+	position: relative;
+}
+/*.triangle{
+	display: inline-block;
+	border:0.2rem solid #999;
+	border-left-color:transparent ;
+	border-bottom-color:transparent ;
+	-webkit-transform: rotate(135deg);
+	transform: rotate(135deg);
+	vertical-align: super;
+	position: relative;
+	top:0.1rem;
+	left: 0.1rem;	
+}*/
