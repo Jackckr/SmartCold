@@ -974,3 +974,9 @@ section.content{
 .glyphicon.glyphicon-map-marker{
 	color:#FF6D3B!important
 }
+/*hornor img*/
+ .hornorYz img{
+	width:35px;
+	height:35px; 
+	background-size:cover;
+}

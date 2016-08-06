@@ -122,21 +122,24 @@ public class FtpServiceImpl implements FtpService {
 	public boolean deleteFile(String url){
 		String hostUrl = PUB_HOST+":"+READPORT;
 		int index = url.indexOf(hostUrl);
-		String pathname = url.substring(index+hostUrl.length());
-		System.out.println(pathname);
+		String location = url.substring(index+hostUrl.length());
+		return deleteByLocation(location);
+	}
+
+	@Override
+	public boolean deleteByLocation(String location){
 		boolean deleted = false;
 		try {
 			connectFtp();
-			
-			deleted = ftp.deleteFile(BASEDIR+pathname);
-			
+
+			deleted = ftp.deleteFile(BASEDIR+"/"+location);
+
 			if (!deleted) {
-				log.error("delete file failed, pathname:"+BASEDIR+pathname +
+				log.error("delete file failed, pathname:"+BASEDIR+"/"+location +
 						","+ftp.getReplyString());
 			}
 			closeFtp();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return deleted;

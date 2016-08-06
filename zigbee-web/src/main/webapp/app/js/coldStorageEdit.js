@@ -1,7 +1,7 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
+coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location, $uibModal, $log) {
 	$scope.load = function(){
 		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
 				$rootScope.user = data;
@@ -126,6 +126,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
         $scope.arrangePic = data[0].arrangepiclocation;
+        $scope.arrangePicShow = data[0].arrangePic;
+        $scope.storagePicShow = data[0].storagePics;
+        $scope.honorPicShow = data[0].honorPics;
         $scope.storagePic = angular.fromJson( data[0].storagePicLocation);
         if($scope.lihuoRoom === 0){
             $scope.hasLihuoRoom = true;
@@ -312,4 +315,68 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     	alert("备注长度不得250字符!");
     }
    }
+
+    $scope.goPicDetail = function(item){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'myModelContent.html',  //指向上面创建的视图
+            controller: 'ModalInstanceCtrl',// 初始化模态范围
+            resolve: {
+                itemPic: function () {
+                    return item;
+                }
+            }
+        })
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date())
+        })
+    }
+
+    $scope.deletePic = function(filedata){
+        var r = confirm("删除图片?");
+        if(r){
+            $http({
+                method:'DELETE',
+                url:'i/rdc/deleteStoragePic',
+                params:filedata
+            }).success(function(){
+                var index = $scope.storagePicShow.indexOf(filedata);
+                if(index>=0)
+                    $scope.storagePicShow.splice(index,1);
+                else{
+                    $scope.arrangePicShow = null;
+                }
+            })
+        }
+    }
+
+    $scope.deleteHonorPic = function(filedata){
+        var r = confirm("删除荣誉图片?");
+        if(r){
+            $http({
+                method:'DELETE',
+                url:'i/rdc/deleteStoragePic',
+                params:filedata
+            }).success(function(){
+                var index = $scope.honorPicShow.indexOf(filedata);
+                if(index>=0)
+                    $scope.honorPicShow.splice(index,1);
+                else{
+                    $scope.arrangePicShow = null;
+                }
+            })
+        }
+    }
 });
+
+
+coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, itemPic) { //依赖于modalInstance
+    $scope.itemPic = itemPic;
+    $scope.ok = function () {
+        $uibModalInstance.close(); //关闭并返回当前选项
+    };
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel'); // 退出
+    }
+})
