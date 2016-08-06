@@ -107,7 +107,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                     $rootScope.compressors = compressors;
                 })
                 // 拉取冷库列表
-                $http.get('/i/newStorage/findByUserId', {
+                $http.get('/i/coldStorage/findByUserId', {
                     params: {
                         "userId": $rootScope.user.id
                     }
