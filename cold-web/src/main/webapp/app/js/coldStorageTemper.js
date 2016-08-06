@@ -5,9 +5,10 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     console.log($stateParams.storageID);
     $scope.load = function () {
         var data = [];
-        $http.get('/i/newStorage/getTempByNums', {
+        $http.get('/i/coldStorage/getTempByNums', {
             params: {
-                "oid": $stateParams.storageID
+                "oid": $stateParams.storageID,
+                'key':'temperature'
             }
         }).success(function (result) {
         	var list = result.list

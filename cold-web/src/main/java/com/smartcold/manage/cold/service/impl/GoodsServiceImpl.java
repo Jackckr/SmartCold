@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.olddb.GoodsMapper;
-import com.smartcold.manage.cold.dao.olddb.GoodsTypeMapper;
-import com.smartcold.manage.cold.entity.olddb.GoodsEntity;
-import com.smartcold.manage.cold.entity.olddb.GoodsTypeEntity;
+import com.smartcold.manage.cold.dao.newdb.GoodsMapper;
+import com.smartcold.manage.cold.dao.newdb.GoodsTypeMapper;
+import com.smartcold.manage.cold.entity.newdb.GoodsEntity;
+import com.smartcold.manage.cold.entity.newdb.GoodsTypeEntity;
 import com.smartcold.manage.cold.entity.olddb.SingleTypeEntity;
 import com.smartcold.manage.cold.service.GoodsService;
 
