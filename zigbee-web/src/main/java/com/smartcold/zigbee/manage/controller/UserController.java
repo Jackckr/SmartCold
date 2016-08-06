@@ -36,7 +36,6 @@ public class UserController extends BaseController {
 			String cookie = cookieService.insertCookie(userName);
 			user.setPassword("******");
 			request.getSession().setAttribute("user", user);
-			System.err.println(request.getSession().getId());
             return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		}
 		return ResponseData.newFailure("用户名或者密码不正确！");
@@ -45,7 +44,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
 	public Object logout(HttpServletRequest request) {
-		request.getSession().setAttribute("user", null);
+		request.getSession().removeAttribute("user");
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals("token")) {
@@ -58,10 +57,14 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser")
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
+		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
 		System.err.println("请求地址："+request.getRequestURL());
 		System.err.println("getRemoteUser"+request.getRemoteUser());
 		System.err.println("SessionId："+request.getSession().getId());
 		System.err.println("getRequestedSessionId："+request.getRequestedSessionId());
+        long freeMemory = Runtime.getRuntime().freeMemory() / (1024*1024);   
+        System.err.println("剩余内存"+freeMemory);
+		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
