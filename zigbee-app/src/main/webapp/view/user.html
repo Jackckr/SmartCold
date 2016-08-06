@@ -9,29 +9,32 @@
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../app/js/user.js" ></script>
 </head>
-<body ng-app="app"  ng-controller="userController" ng-cloak>
+<body ng-app="app"  ng-controller="usercl" ng-cloak>
     <header>
     	<div class="txt">
     		我的
     	</div>
     </header>
-    <section class="clearfix" ng-if="user!=null">
+    <section class="clearfix" ng-show="userinfo.id">
     	<div class="img fl">
-    		<img ng-src="{{user.avatar}}"/>
+    		<img ng-src="{{userinfo.avatar}}"/>
     	</div>
     	<div class="rightArrow fr">
     		<a href=""><i class="iconfont">&#xe60d;</i></a>
     	</div>
     	<div class="name" onclick="location.href='personal.html'">
-    		<p class="nameinfo">{{user.username}}</p>
+    		<p class="nameinfo">{{userinfo.username}}</p>
     		<p class="position">
-    			<i class="iconfont">&#xe66e;</i>{{user.address}}
+    			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}
     		</p>
     	</div>
+    </section>
+    <section class="clearfix" ng-if="!userinfo.id">
+        <div class="txt" onclick="window.location.href='login.html' ">登录</div>
     </section>
     <ul class="list list_icon">
     	<li class="clearfix" onclick="location.href='user-mycold.html'">

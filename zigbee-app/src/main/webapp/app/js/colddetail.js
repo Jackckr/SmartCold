@@ -2,7 +2,7 @@
  app.controller('colddetail', function($http, $location,$scope) {
     var id  = getUrlParam("id");//当前rdc-id数据信息
 	$scope.datatype=1;
-//	$http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+	$http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
     $scope.gosharedile=function(sharid){
    	 window.location.href ="storehousedetail.html?id="+sharid; 
