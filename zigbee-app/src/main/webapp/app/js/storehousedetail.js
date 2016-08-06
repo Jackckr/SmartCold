@@ -1,6 +1,7 @@
  var app = angular.module('app', []);
  app.controller('storehousedetail', function($http, $location,$scope) {
     var id  = getUrlParam("id");
+    $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
 	$scope.initdata=function(){
        //获得数据
