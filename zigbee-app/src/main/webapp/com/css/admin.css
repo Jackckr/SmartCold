@@ -30,6 +30,10 @@ header>div>a>.iconfont{
 	text-overflow: ellipsis;
  	white-space: nowrap;
 }
+.mylogin{
+	background:transparent;
+	margin: 0;
+}
 .footer{
 	width: 100%;
 	height: 2.45rem;
@@ -89,6 +93,12 @@ section.show{
 .name{
 	margin-left: 0.5rem;
 	padding-left: 2.6rem;
+}
+.nameLogin{
+	height: 2.5rem;
+	line-height: 2.5rem;
+	font-size: 0.8rem;
+	color: #333;
 }
 .nameinfo{
 	margin-bottom: 0.2rem;
@@ -158,9 +168,13 @@ section.show{
 .adminInfo .list_name{
 	text-align: right;	
 }
-.adminInfo+.mybtn,.list.list_icon{
+.adminInfo+.mybtn,{
 	margin-bottom: 3rem;
 }
+/* .list.list_icon{
+	margin-top:2.5rem;
+}
+.nobottom  */
 .commentList{	
 	margin-top:0;
 	margin-bottom: 3rem;
