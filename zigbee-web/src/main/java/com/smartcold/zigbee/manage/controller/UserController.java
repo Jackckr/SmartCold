@@ -65,8 +65,7 @@ public class UserController extends BaseController {
 //		System.err.println("getRemoteUser"+request.getRemoteUser());
 //		System.err.println("SessionId："+request.getSession().getId());
 //		System.err.println("getRequestedSessionId："+request.getRequestedSessionId());
-//        long freeMemory = Runtime.getRuntime().freeMemory() / (1024*1024);   
-//        System.err.println("剩余内存"+freeMemory);
+//        System.err.println("剩余内存:"+ Runtime.getRuntime().freeMemory() / (1024*1024));
 //		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
