@@ -115,6 +115,7 @@ public class UserController extends BaseController {
 		userEntity.setUsername(username);
 		userEntity.setPassword(password);
 		userEntity.setEmail(email);
+		userEntity.setTelephone(telephone);
 		userDao.insertUser(userEntity);
 		return new ResultDto(0, "注册成功");
 	}

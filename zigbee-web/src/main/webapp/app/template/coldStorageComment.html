@@ -19,7 +19,12 @@
             <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;top:30px;padding-bottom: 100px;">
                 <div class="row" style="vertical-align:middle">
                     <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9" style="position: relative;padding:0">
-                        <h3 style="color: #428bca">{{rdcName}}</h3>
+                        <h3 style="color: #428bca">
+                            {{rdcName}}
+                            <span ng-repeat="honorPic in storageHonorPics" ng-if="storageHonorPics.length > 0">
+                                <img src="app/img/honor/{{honorPic.id}}.png" tooltip="{{honorPic.type}}" style="background-size: cover" width="25px" height="25px"/>
+                            </span>
+                        </h3>
                     </div>
                     <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 visible-lg" style="position: relative;top:5px;left: 0px;">
                         <a class="btn btn-success" style="position: absolute; right:12px; top:24px;"
