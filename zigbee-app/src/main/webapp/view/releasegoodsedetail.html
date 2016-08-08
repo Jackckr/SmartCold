@@ -18,10 +18,12 @@
 				if($(this).index()==1){
 					$('#name').attr('placeholder','货品求货')
 					$(".offershow").show();
+                    $(".bossToggle").hide();
 					$('.coldlist').hide();
 				}else{
 					$('#name').attr('placeholder','货品出货')
 					$(".offershow").hide();
+                    $(".bossToggle").show();
 					$('.coldlist').show();
 				}
 			})
@@ -75,11 +77,11 @@
                     <label for="name">描述</label>
                     <input type="text"  id="name" placeholder="货品出货"/>
                 </li>
-                <li>
+                <li class="bossToggle">
                     <label for="boss">供应商</label>
                     <input type="text"  id="boss"/>
                 </li>
-                 <li class="offershow">
+                 <!-- <li class="offershow">
                      <label for="province">省</label>
                      <input type="text" id="province" />
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
@@ -88,7 +90,7 @@
                      <label for="city">市</label>
                      <input type="text" id="city" />
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
-                 </li>
+                 </li> -->
                 <li>
                     <label for="category">品类</label>
                     <div class="mySelect">

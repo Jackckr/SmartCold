@@ -11,13 +11,36 @@
 	    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	    <script type="text/javascript" src="../app/js/coldlist.js" ></script>
+	    <script>
+	    	$(function(){
+	    		$(".transion").click(function(){
+	    			$(".one").hide();
+	    			$(".two").show();
+	    		})
+	    		$(".cancel").click(function(){
+	    			$(".one").show();
+	    			$(".two").hide();
+	    		})
+	    	})
+	    </script>
 	</head>
 	<body ng-app="app"  ng-controller="coldListController">
 		<!-- header -->
-		    <header>
+		    <header class="one">
 	        	<div class="area fl"><a onclick="goback()"><i class="iconfont">&#xe60e;</i></a></div>
-	        	<div class="zoom fr"><a href="search.html"><i class="iconfont">&#xe62f;</i></a></div>
+	        	<!--<div class="zoom fr"><a href="search.html"><i class="iconfont">&#xe62f;</i></a></div>-->
+	        	<div class="zoom fr"><a class="transion"><i class="iconfont">&#xe62f;</i></a></div>
 	        	<div class="txt">冷库</div>
+		    </header>
+		    <header class="two">
+	        	<div class="area fl">
+	        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+	        	</div>
+	        	
+	        	<div class="search">
+	        		<input type="text" placeholder="请输入搜索内容..."/>
+	        		<i class="iconfont">&#xe62f;</i>
+	        	</div>
 		    </header>
 		<!-- header end-->
 		

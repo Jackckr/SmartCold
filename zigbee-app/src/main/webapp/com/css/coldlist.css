@@ -124,6 +124,9 @@ section{
 .coldlist{
 	background-color: #fff;
 }
+.two{
+	display: none;
+}	
 .gpy{
 	display: inline-block;
 	width:0.45rem;
@@ -287,6 +290,7 @@ section{
 	font-size: 0.7rem;
 	color: #666;	
 	margin-bottom: 0.5rem;
+	/*border-bottom: 1px dotted #ddd;*/
 }
 .text{
 	color: #999;
@@ -341,6 +345,20 @@ section{
 	0%{top: -0.2rem;}
 	50%{top:0.3rem;}
 	100%{top: -0.2rem;}
+}
+.nextList li{
+	display: table;
+}
+.nextList li .type{
+	display: table-cell;
+	text-indent: 0;
+}
+.nextList li .compare{
+	width: 3.5rem;
+}
+.nextList li .numl{
+	width: 3rem;
+	color: #438BCB;
 }
 .more{
 	margin-top: .4rem;

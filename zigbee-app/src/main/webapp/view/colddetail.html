@@ -48,20 +48,18 @@
 				<li><span class="type">电话：</span><span class="text">{{vo.cellphone}}</span></li>
 				<li><span class="type">冷链设施：</span><span class="text">{{vo.storagetruck!=null?'自有冷藏车':'无'}}</span></li>
             </ul>
-            <!--双箭头下拉-->            
-            <ul class="infolist clearfix black">
-            	 <li ng-if="vo.storagetruck"><span class="type">冷藏车数量：</span>
-            	 	<div>
-                        <div><span><1.8T</span><input type="text" value="1" readonly><span>量</span></div>
-                        <div><span>1.8T-6T</span><input type="text" value="1" readonly><span>量</span></div>
-                        <div><span>6T-14T</span><input type="text" value="1" readonly><span>量</span></div>
-                        <div><span>>14T</span><input type="text" value="1" readonly><span>量</span></div>
-                    </div>
-            	 </li>
-                 <li ng-if="vo.struct"><span class="type">结构：</span><span class="text">{{vo.struct}}</span></li> 
-<!--                  <li ng-if="vo.storagetype"><span class="type">冷库类型：</span><span class="text">{{vo.storagetype}}</span></li>  -->
-                 <li ng-if="vo.coldtype"><span class="type">存储类型：</span><span class="text">{{vo.coldtype}}</span></li> 
+            <!--双箭头下拉-->
+            <ul class="infolist nextList clearfix black"> 
+            	 <li><span class="type">冷藏车数量：</span></li>
+                 <li><span class="type">　<!--纯粹为了占位，请勿删除：--></span><span class="text"></span></li>             	 
+				 <li><span class="type compare">&lt;1.8T:</span><span class="type numl">22</span><span class="type">辆</span></li>
+				 <li><span class="type compare">1.8T-6T:</span><span class="type numl">22</span><span class="type">辆</span></li>
+				 <li><span class="type compare">6T-14T:</span><span class="type numl">22</span><span class="type">辆</span></li>				
+				 <li><span class="type compare">&gt;14T:</span><span class="type numl">22</span><span class="type">辆</span></li>
+                 <li ng-if="vo.struct"><span class="type">结构：</span><span class="text">{{vo.struct}}</span></li>                
                  <li><span class="type">添加时间：</span><span class="text">{{vo.addtime }}</span></li> 
+<!--                  <li ng-if="vo.storagetype"><span class="type">冷库类型：</span><span class="text">{{vo.storagetype}}</span></li>  -->
+                 <li ng-if="vo.coldtype"><span class="type">存储类型：</span><span class="text">{{vo.coldtype}}</span></li>
             </ul>
             <div class="next"><i class="iconfont">&#xe68b;</i></div>
         </section>

@@ -58,7 +58,7 @@ header>div>a>.iconfont{
 	height: 100%;
 	text-align: center;
 	color: #898989;
-	padding: 0.15rem 0 0.4rem;
+	/* padding: 0.15rem 0 0.4rem; */
 	box-sizing: border-box;
 }
 .footer>.active>a{
@@ -154,6 +154,9 @@ section.show{
 .list_icon .name{
 	padding-left: 2rem;
 }
+.list.list_icon{
+	margin-bottom:2.6rem;
+}
 .myicon i{
 	font-size: 1.2rem;
 	color: #919191;
@@ -168,13 +171,9 @@ section.show{
 .adminInfo .list_name{
 	text-align: right;	
 }
-.adminInfo+.mybtn,{
+.adminInfo+.mybtn{
 	margin-bottom: 3rem;
 }
-/* .list.list_icon{
-	margin-top:2.5rem;
-}
-.nobottom  */
 .commentList{	
 	margin-top:0;
 	margin-bottom: 3rem;
@@ -308,6 +307,9 @@ section.show{
 	color: #555;
 	line-height: 2rem;
 	margin-bottom: 1rem;
+}
+.tel p:last-child{
+	margin-bottom:2.6rem;
 }
 .tel .contact+p>a{
 	display: block;
