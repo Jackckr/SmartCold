@@ -124,6 +124,9 @@ section{
 .coldlist{
 	background-color: #fff;
 }
+.two{
+	display: none;
+}	
 .gpy{
 	display: inline-block;
 	width:0.45rem;
