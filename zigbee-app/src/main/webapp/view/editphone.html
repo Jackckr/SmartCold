@@ -48,9 +48,12 @@
 	
     <div class="inputs show2">
 		<div class="tel">
+			<form id="datafrom" action="">		
+			<input type="hidden" name="id" value="{{userinfo.id}}">
 			<i class="iconfont">&#xe608;</i>
-			<form id="datafrom" action="">			<input type="tel" id="telNum" name="telephone" placeholder="请输入新手机号" ng-model="telephone" ng-change="vertelephone();"/></form>
+				<input type="tel" id="telNum" name="telephone" placeholder="请输入新手机号" ng-model="telephone" ng-change="vertelephone();"/>
 			<button id="but_vercode2" class="idcode fr gray " draggable="false" ng-click="getVerCode2();" disabled="disabled" style="background-color: #cccccc;">获取验证码</button>
+			</form>
 		</div>
 		<div class="tel">
 			<i class="iconfont ">&#xe639;</i>

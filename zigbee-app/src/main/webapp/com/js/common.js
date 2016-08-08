@@ -3,7 +3,7 @@ var countdown = 60;
 var oHtml = document.documentElement;
 var screenWidth = oHtml.clientWidth;
 var screenHeight = oHtml.clientHeight;
-var ER = {root:"http://liankur.com",coldroot:""};
+var ER = {root:"http://192.168.1.136:8080/",coldroot:"http//:192.168.1.136:8989"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
 function goback() {window.history.back();}//返回上一级
 function tourl(url){window.location.href =url;}//去指定的url
@@ -11,7 +11,29 @@ function gohome(){window.location.href ="../index.html";};//去首页
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return unescape(r[2]);}return null;};
 function getFont(){if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
-function setTime(obj){if(countdown==0){obj.removeAttribute("disabled");obj.style.background="#438BCB";obj.innerHTML="获取验证码";countdown=60;return;}else{if($(obj).siblings("input").val().length==0){alert("输入不能为空哦~");return false;}else{obj.setAttribute("disabled",true);obj.style.background="#ccc";obj.innerHTML="重新发送("+countdown+")";countdown--;}}setTimeout(function(){setTime(obj);},1000);};
+function setTime(obj) {
+    if (countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.style.background = "#438BCB";
+        obj.innerHTML = "获取验证码";
+        countdown = 60;
+        return;
+    } else {
+        if ($(obj).siblings("input").val().length == 0) {
+            alert("输入不能为空哦~");
+            return false;
+        } else {
+            obj.setAttribute("disabled", true);
+            obj.style.background = "#ccc";
+            obj.innerHTML = "重新发送(" + countdown + ")";
+            countdown--;
+        }
+    }
+    setTimeout(function() {
+        setTime(obj);
+    },
+    1000);
+};
 
 function checkLogin(msg) {
 	 if(window.user!=null ){return;}
@@ -31,7 +53,6 @@ function checkLogin(msg) {
 	        }
 	    });
 }
-
 /**
  * 事件
  */
@@ -96,7 +117,7 @@ var util = {
             }
         }
     },
-     setimg:function(em, imgid) {
+     setimg:function(em, imgid,callback) {
         var oFile = $(em)[0].files[0];
         var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
         var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
@@ -108,5 +129,6 @@ var util = {
         var oReader = new FileReader();
         oReader.onload = function(e) { oImage.src = e.target.result; };
         oReader.readAsDataURL(oFile);
+        if(callback!=null){callback();}
     }
 };

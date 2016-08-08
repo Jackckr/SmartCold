@@ -109,13 +109,35 @@
                 </ul>
             </div>
         </section>
+        <!--车辆列表展示-->
+        <section class="more">
+            <ul class="listDad clearfix">
+                <li class="fl">车辆&nbsp;(<span id="num">{{pstotal}}</span>)</li>
+                <li class="fr"><a href="goodslist.html"><i class="iconfont">&#xe60d;</i></a></li>
+            </ul>
+             <div class="coldlist">
+                <ul class="imgTable">
+                    <li class="imgCell" ng-repeat="ps in pslist" >
+                        <a href="goodsdetail.html">
+                            <img class="fl" ng-src="{{ps.logo}}">
+                            <div class="">
+                                <p class='ellipsis'>【{{ps.typeText}}】{{ps.title}}</p>
+                                <p class='position'> <i class="iconfont">&#xe66e;</i>{{ps.detlAddress}}</p>
+                                <ul class='star'><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li></ul>
+                                <button class="grab" ng-click="gosharedile(good.id);">立即抢单</button>
+                            </div>  
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
         <!--用户点评-->
         <section class="more" ng-if="evatotal">
             <ul class="listDad clearfix" onclick="location.href='usercommentlist.html'">
                 <li class="fl">用户点评&nbsp;(<span id="num">{{evatotal}}</span>)</li>
                 <li class="fr"><a><i class="iconfont">&#xe60d;</i></a></li>
             </ul>
-             <ul class="borderlist clearfix">
+             <ul class="borderlist clearfix black" >
                 <li><span>全部</span>&nbsp;(<span id="num">642</span>)</li>
                 <li><span>值得推荐</span>&nbsp;(<span id="num">343</span>)</li>
                 <li><span>有待改善</span>&nbsp;(<span id="num">56</span>)</li>
@@ -125,7 +147,7 @@
              <!--具体评论区域-->
              <ul class="commentArea" ng-repeat="eva in evaList">
                 <li class="fl" >
-                    <img src="../com/img/women.png" alt="" />
+                    <img ng-src="{{eva.avatar}}" alt="" />
                 </li>
                 <li>
                     <p class='ellipsis'>{{eva.commerName}}</p>

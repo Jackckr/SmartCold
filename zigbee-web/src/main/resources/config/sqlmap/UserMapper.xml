@@ -27,21 +27,20 @@
       <update id="updateUser" parameterType="com.smartcold.zigbee.manage.entity.UserEntity" >
         update user
         <set>
-	         <if test="audit      !=0">audit         =#{audit     }</if>
-	         <if test="role       !=0">role          =#{role      }</if>
-	         <if test="sex        !=0">sex           =#{sex       }</if>
+	         <if test="role       !=null ">role          =#{role      }</if>
+	         <if test="sex        !=null ">sex           =#{sex       }</if>
 	         <if test="username   !=null and username!=''">username      =#{username  }</if>
 	         <if test="password   !=null and password!=''">password      =#{password  }</if>
 	         <if test="telephone  !=null and telephone!=''">telephone    =#{telephone }</if>
 	         <if test="realname   !=null and realname!=''">realname      =#{realname  }</if>
 	         <if test="email      !=null and email!=''">   email         =#{email     }</if>
-	         <if test="addressid  !=0"   >addressid     =#{addressid }</if>
-	         <if test="hometownid !=0"   >hometownid    =#{hometownid}</if>
+	         <if test="addressid  !=null  ">addressid     =#{addressid }</if>
+	         <if test="hometownid !=null  ">hometownid    =#{hometownid}</if>
 	         <if test="avatar     !=null and avatar!=''"> avatar         =#{avatar    }</if>
 	         <if test="addTime    !=null and addTime!=''">addTime        =#{addTime   }</if>
 	         <if test="updateTime !=null and updateTime!=''">updateTime  =#{updateTime}</if>
         </set>
-        where id = #{id}
+        where id = ${id}
     </update>
 
     <select id="findUser" parameterType="map" resultType="UserEntity">

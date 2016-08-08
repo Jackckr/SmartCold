@@ -53,23 +53,20 @@
 			var ct=$scope.verrcode1&&$scope.mtvarcode&&($scope.mtvarcode.toLowerCase() ==$scope.verrcode1.toLowerCase());
 			$("#app_but").attr("disabled",!ct);
 			if(ct){$("#app_but").removeClass("gray");}else{$("#app_but").addClass("gray");}
-		}else{
-			$http.get(ER.root+"/i/ShareRdcController/sharvistCode",  { params: {telephone:$scope.telephone, yzm:$scope.verrcode1}  }).success(function(data) {
-				if(data){
-					$("#app_but").attr("disabled",false);
-					$("#app_but").removeClass("gray");
-				}
-			});
 		}
+        //else{
+        //	$http.get(ER.root+"/i/ShareRdcController/sharvistCode",  { params: {telephone:$scope.telephone, yzm:$scope.verrcode1}  }).success(function(data) {
+        //		if(data){
+        //			$("#app_but").attr("disabled",false);
+        //			$("#app_but").removeClass("gray");
+        //		}
+        //	});
+        //}
 	};
 	$scope.savedata=function(){//验证码
-			$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data : $('#datafrom').serialize(),success: function(data) { 
-				if(data){
-					alert("修改成功！");tourl("user.html");
-				}else{
-					alert("修改失败！请稍后重试！");
-				}
-			}
+		$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data: $('#datafrom').serialize(),success: function(data) { 
+			if(data){tourl("personal.html");}else{alert("修改失败！请稍后重试！");}
+		}
     });
 	};
 	$scope.initevg=function(){
@@ -78,23 +75,12 @@
    			$(".show1").show();
    		});
    		$('.edit2').click(function(){
+   			countdown=0;
    			if ($("#code1").val().length != 0) {   				
 	   			$(".show1").hide();
 	   			$(".show2").show();
    			} else{
    				alert('验证码不能为空,请输入验证码~');
-   			}
-   		});
-   		$('.edit3').click(function(){
-   			if ($("#code2").val().length != 0) {   				
-	   			window.location.href='personal.html';
-   			} else{
-   				if ($("#telNum").val().length == 0) {
-   					alert('请输入手机号~');
-   				} else{
-   					alert('验证码不能为空,请输入验证码~')
-   				}
-   				
    			}
    		});
 	};

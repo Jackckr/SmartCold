@@ -1,5 +1,9 @@
 package com.smartcold.zigbee.manage.controller;
 
+import java.io.IOException;
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,17 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
+import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
-import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.entity.CookieEntity;
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
+import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.StringUtil;
+import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 import com.taobao.api.ApiException;
 
@@ -27,9 +34,10 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserMapper userDao;
-
 	@Autowired
 	private CookieService cookieService;
+	@Resource(name="docLibraryService")
+	private DocLibraryService docLibraryService;
 
 	@RequestMapping(value = "/login")
 	@ResponseBody
@@ -60,13 +68,6 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser")
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-//		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
-//		System.err.println("请求地址："+request.getRequestURL());
-//		System.err.println("getRemoteUser"+request.getRemoteUser());
-//		System.err.println("SessionId："+request.getSession().getId());
-//		System.err.println("getRequestedSessionId："+request.getRequestedSessionId());
-//        System.err.println("剩余内存:"+ Runtime.getRuntime().freeMemory() / (1024*1024));
-//		System.err.println("----------------------------------------------------------------------------------------------------------------------------------------");
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
@@ -126,15 +127,29 @@ public class UserController extends BaseController {
 	}
 	@RequestMapping(value = "/updateUser")
 	@ResponseBody
-	public Object updateUser(HttpServletRequest request,String data) throws ApiException {
-		if(StringUtil.isnotNull(data)){
-			UserEntity  ol_user = (UserEntity)request.getSession().getAttribute("user");
-			UserEntity	up_user= JSON.parseObject(data, UserEntity.class);//页面数据/ /1.获得表单数据
-			up_user.setId(ol_user.getId());
-			this.userDao.updateUser(up_user);
-			ol_user=this.userDao.findUserById(ol_user.getId());
-			request.getSession().setAttribute("user",ol_user);
-			return true;
+	public Object updateUser(HttpServletRequest request,UserEntity user) throws ApiException {
+		try {
+			UserEntity old_user = (UserEntity)request.getSession().getAttribute("user");
+			List<FileDataEntity> handleFile = this.docLibraryService.handleFile(old_user.getId(), FileDataMapper.CATEGORY_AVATAR_PIC, old_user, request);//用于更新头像信息
+			if(SetUtil.isnotNullList(handleFile)){
+				FileDataEntity fileDataEntity = handleFile.get(0);
+				if(user!=null&&user.getId()==0){
+					user=new UserEntity();
+					user.setId(old_user.getId());
+				}
+				user.setAvatar(fileDataEntity.getLocation());
+			}
+			if(user!=null&&user.getId()!=0){
+				if("app/img/userimg.jpg".equals(user.getAvatar())){user.setAvatar(null);}
+				this.userDao.updateUser(user);
+				UserEntity	ol_user=this.userDao.findUserById(user.getId());
+				ol_user.setPassword(null);
+				request.getSession().setAttribute("user",ol_user);
+				return true;
+			}
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

@@ -12,7 +12,9 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script type="text/javascript" src="../app/js/personal.js" ></script>
+
     <script type="text/javascript">checkLogin();</script>
 </head>
 <body ng-app="app"  ng-controller="personal" ng-cloak>
@@ -27,7 +29,10 @@
     	<div class="rightArrow fr">
     		<a href=""><i class="iconfont">&#xe60d;</i></a>
     	</div>    	
-    	<input type="file" name="" id="headImg" value="" onchange="util.setimg(this,'user_img');"/>
+    	<input id="headImg" type="file" name=""  value="" />
+    	<form id="form1" action="">
+    	   <input name="id" type="hidden" value="{{userinfo.id}}">
+    	</form>
     </section>
     <ul class="list adminInfo">
     	<li class="clearfix" onclick="location.href='editname.html'">
