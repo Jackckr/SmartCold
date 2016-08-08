@@ -18,16 +18,19 @@
 			$('.toggle').children('div').click(function(){
 				$(this).addClass('current').siblings().removeClass('current');
 				if($(this).index()==1){
-					$(".main").show();
-					$('.coldlist').hide();
+                    $(".bossToggle").hide();
+					/*$(".main").show();
+					$('.coldlist').hide();*/
 				}else{
-					$(".main").hide();
-					$('.coldlist').show();
+                    $(".bossToggle").show();
+					/*$(".main").hide();
+					$('.coldlist').show();*/
 				}
-			})
+			});
             $('.radiocar button').click(function(event){
                 $(".main").show();
-					$('.coldlist').hide();
+                $('.coldlist').hide();
+                $(this).parent().hide()
             });
 		});
     </script>
@@ -145,7 +148,7 @@
                     <label for="name">描述</label>
                     <input type="text"  id="name" placeholder="货品出售"/>
                 </li>
-                <li>
+                <li class="bossToggle">
                     <label for="boss">供应商</label>
                     <input type="text"  id="boss"/>
                 </li>
