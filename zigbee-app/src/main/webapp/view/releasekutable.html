@@ -35,7 +35,7 @@
                     <input type="text" ng-model="name" ng-disabled="editable" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET">
-                            <em ng-show="rdcForm.name.$error.ngRemoteValidate">冷库名已经被注册</em>
+                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;">冷库名已被用</em>
                 </li>
                 <li>
                     <label for="province">省<em>*</em></label>

@@ -269,7 +269,7 @@ html{
 .grid_kid .info{
 	margin-top: 0.5rem;
 	color: #222;
-	font-size: 1rem;
+	font-size: 0.9rem;
 }
 .grid_kid:nth-child(3),.grid_kid:nth-child(4){
 	border-bottom:0;	

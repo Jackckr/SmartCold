@@ -171,13 +171,9 @@ section.show{
 .adminInfo .list_name{
 	text-align: right;	
 }
-.adminInfo+.mybtn,{
+.adminInfo+.mybtn{
 	margin-bottom: 3rem;
 }
-/* .list.list_icon{
-	margin-top:2.5rem;
-}
-.nobottom  */
 .commentList{	
 	margin-top:0;
 	margin-bottom: 3rem;
