@@ -259,6 +259,7 @@ section{
 	min-width: 60%;
 	font-size: 0.75rem;
 	color: #555;
+    line-height: 2rem;
 }
 .houseinfo>li .bg{
 	position: relative;
@@ -525,6 +526,9 @@ form+.mybtn,.next+.mybtn{
 	background-color: #fff;
 	padding: 0.5rem 0.9rem;
 	box-sizing: border-box;
+}
+.radiocar button{
+	width:90%;
 }
 .radiocar input{
 	width: 0.8rem;

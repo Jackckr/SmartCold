@@ -25,6 +25,10 @@
 					$('.coldlist').show();
 				}
 			})
+            $('.radiocar button').click(function(event){
+                $(".main").show();
+					$('.coldlist').hide();
+            });
 		});
     </script>
     
@@ -45,6 +49,9 @@
     	<div class="rent current fl"><i class="iconfont">&#xe64e;</i>出售</div>
     	<div class="offer fl"><i class="iconfont">&#xe64f;</i>求购</div>
     </section>
+     <div class="radiocar">
+        <button class="mybtn">不关联库发布</button>
+     </div>
     <!--coldlist-->
     <div class="coldlist" style="margin-bottom: 3rem;">
         <ul class="imgTable">

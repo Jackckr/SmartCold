@@ -26,16 +26,20 @@
 			})
 			
 			$('.relate').click(function(event){
-				$('input[type="radio"]').removeClass('blue');					
-				$(this).children('input').addClass("blue")
-				$('.coldlist').show();
-				$('.main').hide();
+                if(event.target.nodeName !== "DIV"){
+    				$('input[type="radio"]').removeClass('blue');
+    				$(this).children('input').addClass("blue")
+    				$('.coldlist').show();
+    				$('.main').hide();
+                }
 			});
 			$('.norelate').click(function(event){
-				$('input[type="radio"]').removeClass('blue');					
-				$(this).children('input').addClass("blue")
-				$('.coldlist').hide();
-				$('.main').show()
+                if(event.target.nodeName !== "DIV"){
+    				$('input[type="radio"]').removeClass('blue');
+    				$(this).children('input').addClass("blue")
+    				$('.coldlist').hide();
+    				$('.main').show();
+                }
 			});
 			
 		});
