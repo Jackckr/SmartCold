@@ -12,9 +12,7 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script type="text/javascript" src="../app/js/personal.js" ></script>
-
     <script type="text/javascript">checkLogin();</script>
 </head>
 <body ng-app="app"  ng-controller="personal" ng-cloak>
@@ -43,7 +41,7 @@
 	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
 	    	</div>
 	    	<div class="name">
-	    		<p class="list_name">{{userinfo.username}}</p>
+	    		<p class="list_name">{{userinfo.nickname}}</p>
 	    	</div>
     	</li>
     	<li class="clearfix">
@@ -55,12 +53,12 @@
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name set">
-	    			<select id="user_sex" class="sex_set"  name="sex" >
-		    			<option value="0">保密</option>
-		    			<option value="1">男</option>
-		    			<option value="2">女</option>
-		    		</select>
-	    		</p>	    		
+		    			<select id="user_sex" class="sex_set"  name="sex" >
+			    			<option value="0">保密</option>
+			    			<option value="1">男</option>
+			    			<option value="2">女</option>
+			    		</select>
+	    		 </p>	
 	    	</div>
     	</li>
     	<li class="clearfix">
@@ -72,7 +70,7 @@
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name set">
-	    			<select id="user_sex" class="sex_set"  name="hometownid"  ng-model="userinfo.hometownid" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+	    			<select id="sl_hometownid" class="sex_set" name="hometownid"  ng-model="userinfo.hometownid" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
 	    		</p>	    		
 	    	</div>
     	</li>
@@ -85,11 +83,7 @@
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name set">
-	    			<select id="user_sex" class="sex_set"  name="addressid" ng-model="userinfo.addressid" ng-options="x.provinceId as x.provinceName for x in provinces">
-		    			<option value="0">保密</option>
-		    			<option value="1">男</option>
-		    			<option value="2">女</option>
-		    		</select>
+	    			<select id="sl_addressid" class="sex_set"  name="addressid" ng-model="userinfo.addressid" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
 	    		</p>	    		
 	    	</div>
     	</li>
@@ -137,7 +131,7 @@
             </a>
         </li>
         <li class="active">            
-            <a href="admin.html">
+            <a href="user.html">
                 <i class="iconfont">&#xe6fd;</i>
                 <p class="info">我的</p>
             </a>

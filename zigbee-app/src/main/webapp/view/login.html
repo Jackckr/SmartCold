@@ -30,7 +30,6 @@
 			<div><a href="findpasswordfir.html">找回密码</a></div>
 			<div><a href="register.html">新用户注册</a></div>
 		</div>
-	
     </div>
 	<footer>
 		<div class="line"><span>或</span></div>
@@ -43,16 +42,6 @@
 	<script  type="text/javascript">
 	if(!navigator.cookieEnabled){ alert("请打开手机Cookie");}
 	$("#username").val(util.getCookie("username"));
-	function showErrorInfo(msg) {
-	    var msgEl = $("#mention");
-	    if (msg == null || msg == '') {
-	        msgEl.hide();
-	        msgEl.html('');
-	    } else {
-	        msgEl.show();
-	        msgEl.html(msg);
-	    }
-	}
 	function login() {
 	    var me = "#btn_login";
 	    if ($(me).data('isLoading') === true) return; //防止再次点击登录
@@ -91,7 +80,6 @@
 					}
 				}
 			});
-	    
 	};
 </script>
 </body>
