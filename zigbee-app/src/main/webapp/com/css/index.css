@@ -274,10 +274,6 @@ html{
 .imgCell .position{
 	color: #999;
 	font-size: 0.65rem;
-	width: 9rem;
-	overflow: hidden;
-	text-overflow: ellipsis;
- 	white-space: nowrap;
 }
 .star{
 	font-size: 0.8rem;

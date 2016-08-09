@@ -48,10 +48,6 @@ section.show{
 .position{
 	color: #999;
 	font-size: 0.6rem;
-	width: 9rem;
-	overflow: hidden;
-	text-overflow: ellipsis;
- 	white-space: nowrap;
 }
 .rightArrow{
     height: 2.5rem;
