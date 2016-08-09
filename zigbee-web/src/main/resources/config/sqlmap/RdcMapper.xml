@@ -19,6 +19,10 @@
 		SELECT count(cellphone) FROM `Rdc` WHERE `cellphone` = #{cellphone}
 	</select>
 	
+	<delete id="deleteByRdcID">
+		delete from rdc where id = #{rdcID}
+	</delete>
+	
     <insert id="insertRdc" parameterType="RdcEntity"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `Rdc` (

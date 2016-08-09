@@ -32,7 +32,27 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
 		$scope.getRdcs();
 	}
 	$scope.getRdcs();
-	
-	
+	$scope.goEditRdc = function (rdcID) {
+	        $state.go('coldStorageEdit', {"rdcID": rdcID});
+	}
+	$scope.deleteRdc = function(rdcID){
+	    	var r=confirm("删除冷库？");
+	    	if(r){
+	    		$http({
+	    			method:'DELETE',
+	    			url:'/i/rdc/deleteByRdcID',
+	    			params:{
+	    				'rdcID':rdcID
+	    			}
+	    		}).success(resDelRdc);
+	    	}
+	    }
+	  function resDelRdc(data){
+	    	if(data.status == 0){
+				alert("删除成功");
+				location.reload();
+			}
+	    }
+	    
 });
 

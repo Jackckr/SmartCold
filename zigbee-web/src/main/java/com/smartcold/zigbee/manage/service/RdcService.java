@@ -35,7 +35,7 @@ public interface RdcService {
 
 	void sumRdcsScore();
 
-	
+	boolean deleteByRdcId(int rdcID);
 
     public List<RdcAddressDTO> findAllRdcAddressDtos();
 

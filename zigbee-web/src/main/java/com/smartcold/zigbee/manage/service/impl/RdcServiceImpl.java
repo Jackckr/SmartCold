@@ -15,6 +15,9 @@ import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.BaiduMapUtil;
 import com.smartcold.zigbee.manage.util.MathUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -34,7 +37,8 @@ import java.util.Map;
  */
 @Service
 public class RdcServiceImpl implements RdcService {
-
+	private final static Logger log = LoggerFactory.getLogger(RdcServiceImpl.class);
+	
     private static final int goodCommentGrade = 4;
 
     @Autowired
@@ -64,6 +68,8 @@ public class RdcServiceImpl implements RdcService {
     @Autowired
     private StorageHonorMapper storageHonorDao;
 
+    @Autowired
+	private FtpService ftpService;
     @Override
     public List<RdcEntity> findRdcList() {
         return rdcDao.findRdcList();
@@ -472,6 +478,28 @@ public class RdcServiceImpl implements RdcService {
         }
     }
 
+    @Override
+	public boolean deleteByRdcId(int rdcID) {
+		//删除rdcext表中的数据
+		int nums = rdcExtDao.deleteByRdcID(rdcID);
+		log.info("delete "+nums+" rows rdcExt by rdcID:"+rdcID);
+		nums = rdcDao.deleteByRdcID(rdcID);
+		log.info("delete "+nums+" rows rdc by rdcID:"+rdcID);
+		//删除图片
+		List<FileDataEntity> fileDataEntities = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+		List<FileDataEntity> arrangePic = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+		if (!CollectionUtils.isEmpty(arrangePic)) {
+			fileDataEntities.addAll(arrangePic);
+		}
+		for(FileDataEntity item: fileDataEntities){
+			ftpService.deleteByLocation(item.getLocation());
+		}
+		nums = fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+		nums += fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+		log.info("delete "+nums+" rows FileData by rdcID:"+rdcID);
+		return true;
+	}
+    
     @Override
     public Map<String, String> geocoderLatitude(RdcEntity rdc) {
         Map<String, String> result = Maps.newHashMap();

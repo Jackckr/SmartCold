@@ -4,9 +4,9 @@
 		<div class="sidebar pull-left">
 			<ul class="infoList">
 				<li>个人信息</li>
-				<li>我的冷库</li>
+				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
 				<li>我的发布</li>
-				<li><font color="#418ACA">我的订单</font></li>
+				<li><font color="#418ACA"><a href="#/personalOrder">我的订单</a></font></li>
 				<li>我的评价</li>
 				<li>最近浏览</li>
 				<li>联系客服</li>
@@ -22,14 +22,13 @@
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
-			<ul class="imgList" ng-model="orders">
-				<li ng-repeat="order in orders">
-					<div class="img pull-left"><img src={{rdc.logo}}></div>
-					<p class="company">{{rdc.name}}</p>
-					<p class="area"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
+			<ul class="imgList">
+				<li ng-repeat="orderdto in ordersDto">
+					<div class="img pull-left"><img src={{orderdto.logo}}></div>
+					<p class="company">{{orderdto.orders.orderid}}</p>
+					<p class="area">{{orderdto.orders.ordername}}</p>
 					<p class="area">
-						{{rdc.addtime}}
-						<span class="edit">修改</span>
+						{{orderdto.orders.generatetime}}
 						<span class="delete">删除</span>
 					</p>
 				</li>

@@ -26,6 +26,8 @@ public interface RdcMapper {
     
     int checkName(String name);
     
+    int deleteByRdcID(int rdcID);
+    
     boolean checkCellphone(String cellphone);
    
     /**

@@ -196,18 +196,21 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
         	}); 
 	 };
 	 $scope.getOrder=function () {  
+		    $("#shaerdailModal").modal("hide");
+		    $(".modal-backdrop").remove();
 	    	if(user!="undefined"&&user.id!=0){
 	    	  $.ajax({ url: "/i/orders/generateOrder", data: {
 	    		  userid:user.id,
 	    		  username:user.username,
 	    		  telephone:user.telephone,
+	    		  address:user.address,
 	    		  rsdid: $scope.vo.id,
 	    		  dataType:$scope.vo.dataType,
 	    		  typeText:$scope.vo.typeText,
 	    		  releaseID:$scope.vo.releaseID,
 	    		  title:$scope.vo.title
 	    		  }, type: 'POST',dataType:"json", success: function(data) {
-	    		  alert(data.message);
+	    		  $state.go('orderGenerate', {'data':data.entity});
 	    	   }
 	    	  }); 
 	    	}

@@ -23,7 +23,7 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
 				pageSize : $scope.maxSize
             }
         }).success(function (data) {
-        	$scope.orders = data.data;
+        	$scope.ordersDto = data.data;
         	$scope.bigTotalItems = data.total;
         });
 	}
