@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
@@ -26,10 +28,12 @@ import com.smartcold.zigbee.manage.dao.StorageTemperTypeMapper;
 import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
+import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
@@ -522,6 +526,24 @@ public class RdcController {
 		return result;
 	}
 
+	@RequestMapping(value = "/findRDCDTOByUserId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findRDCDTOByUserId(@RequestParam int userID,int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		Page<RdcEntityDTO> rdcsList = rdcMapper.findRDCByUserId(userID);
+		PageInfo<RdcEntityDTO> data = new PageInfo<RdcEntityDTO>(rdcsList);
+		return ResponseData.newSuccess(data);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteByRdcID", method = RequestMethod.DELETE)
+	public Object deleteByRdcID(Integer rdcID) {
+		if (rdcID <= 0) {
+			return new BaseDto(-1);
+		}
+		rdcService.deleteByRdcId(rdcID);
+		return new BaseDto(0);
+	}
 
 	/**
 	 * findRdcDTOList

@@ -1,6 +1,8 @@
 package com.smartcold.zigbee.manage.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,16 +16,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.OrdersMapper;
 import com.smartcold.zigbee.manage.dao.RdcShareMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
+import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 
+import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
+import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -34,36 +42,47 @@ public class OrdersController extends BaseController {
 	private UserMapper userDao;
 	@Autowired
 	private RdcShareMapper rsmDao;
-
+    @Autowired
+	private FileDataMapper fileDataDao;
 	@RequestMapping(value = "/findOrdersByUserId")
 	@ResponseBody
 	public Object findOrdersByUserId(@RequestParam int userID,
 			@RequestParam int pageNum, @RequestParam int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		Page<OrdersEntity> ordersList = orderDao.findOrdersByPersonId(userID);
+		Page<OrdersDTO> ordersDTOList = new Page<OrdersDTO>();
 		for (int i = 0; i < ordersList.size(); i++) {
+			OrdersDTO ordersDTO = new OrdersDTO();
+			ordersDTO.setOrders(ordersList.get(i));
 			RdcShareDTO rsd = rsmDao.getSEByID(""
 					+ ordersList.get(i).getShareinfoid());
 			if (rsd != null) {
-				ordersList.get(i).setLogo(rsd.getLogo());
-				ordersList.get(i).setFiles(rsd.getFiles());
+				ordersDTO.setLogo(rsd.getLogo());
+				ordersDTO.setFiles(rsd.getFiles());
 			}
+			ordersDTOList.add(ordersDTO);
 		}
-		PageInfo<OrdersEntity> data = new PageInfo<OrdersEntity>(ordersList);
+		PageInfo<OrdersDTO> data = new PageInfo<OrdersDTO>(ordersDTOList);
 		return ResponseData.newSuccess(data);
 	}
-
-	@RequestMapping(value = "/findOrderByOrderId")
+	
+	/**
+	 * 
+	 * @param orderID
+	 * @return
+	 */
+/*	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
-	public Object findOrderByOrderId(@RequestParam int orderID) {
-		OrdersEntity data = orderDao.findOrderByOrderId(orderID);
+	public Object findOrderByOrderId(@RequestParam String orderID) {
+		OrdersEntity data = orderDao.findOrderByOrderId(Integer.parseInt(orderID));
 		RdcShareDTO rsd = rsmDao.getSEByID("" + data.getShareinfoid());
 		if (rsd != null) {
 			data.setLogo(rsd.getLogo());
 			data.setFiles(rsd.getFiles());
 		}
 		return ResponseData.newSuccess(data);
-	}
+	}*/
+	
 	/**
 	 * 
 	 * @param request
@@ -74,13 +93,14 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "/generateOrder")
 	@ResponseBody
 	public Object generateOrder(HttpServletRequest request, int userid,
-			String username, String telephone, int rsdid, int dataType,
+			String username, String telephone, String address, int rsdid, int dataType,
 			String typeText, int releaseID, String title) {
 		OrdersEntity order = new OrdersEntity();
+		OrdersDTO ordersDTO = new OrdersDTO();
 		try {
 			Calendar calendar = Calendar.getInstance();
 			order.setOrderid("" + calendar.getTime().getTime());
-			String ordername = "";
+			/*String ordername = "";
 			if (dataType == 1) {
 				ordername = ordername + "[货品]";
 			} else if (dataType == 2) {
@@ -89,7 +109,8 @@ public class OrdersController extends BaseController {
 				ordername = ordername + "[仓库]";
 			}
 			ordername = ordername + title;
-			ordername = ordername + typeText;
+			ordername = ordername + typeText;*/
+			String ordername = title;
 			order.setOrdername(ordername);
 			order.setOwnerid(releaseID);
 			UserEntity owner = userDao.findUserById(releaseID);
@@ -102,39 +123,39 @@ public class OrdersController extends BaseController {
 			order.setUsername(username);
 			order.setUsertele(telephone);
 			order.setShareinfoid(rsdid);
+			RdcShareDTO rsd = rsmDao.getSEByID("" + rsdid);
+			List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(rsd.getId(), FileDataMapper.CATEGORY_SHARE_PIC);
+			 if(SetUtil.isnotNullList(files)){
+					List<String> filelist =new ArrayList<String>();
+					for (FileDataEntity file : files) {
+						filelist.add(FtpService.READ_URL+file.getLocation());
+					}
+					rsd.setFiles(filelist);
+					rsd.setLogo(files.get(files.size()-1).getLocation());
+			} 
+			if (rsd != null) {
+				ordersDTO.setLogo(rsd.getLogo());
+				ordersDTO.setFiles(rsd.getFiles());
+			}
+			ordersDTO.setOrders(order);
+			ordersDTO.setRsd(rsd);
+			ordersDTO.setUseraddress(address);
+			ordersDTO.setOwneraddress(owner.getAddress());
 			orderDao.insertOrder(order);
 			// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
-			return ResponseData.newSuccess("下单成功！");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return ResponseData.newSuccess(order);
-/*<<<<<<< HEAD
-		else if (dataType==2) {
-			ordername = ordername + "[配送]";
-		}
-		else if (dataType==3) {
-			ordername = ordername + "[仓库]";
-		}
-		ordername = ordername+title;
-	    ordername = ordername+typeText;
-		order.setOrdername(ordername);
-		order.setOwnerid(releaseID);
-		UserEntity owner = userDao.findUserById(releaseID);
-		order.setOwnername(owner.getUsername());
-		order.setOwnertele(owner.getTelephone());
-		order.setUserid(userid);
-		order.setUsername(username);
-		order.setUsertele(telephone);
-		order.setShareinfoid(rsdid);
-		OrdersEntity data = order;
-		orderDao.insertOrder(order);
-		// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
-		return ResponseData.newSuccess(data);	
-=======
-		return ResponseData.newFailure("下单失败！稍后重试");
->>>>>>> 365f038f15fe050dc7786cafd577109633a5d520*/
+		OrdersDTO data = ordersDTO;
+		return ResponseData.newSuccess(data);
+	}
+	
+	@RequestMapping(value = "/getTelephone")
+	@ResponseBody
+	public void getTelephone(@RequestParam int ownerTele,
+			@RequestParam int userTele) {
+		TelephoneVerifyUtil tVerifyUtil = new TelephoneVerifyUtil();
 	}
 
 }

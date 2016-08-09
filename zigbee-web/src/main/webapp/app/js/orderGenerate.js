@@ -1,5 +1,5 @@
 coldWeb.controller('orderGenerate', function ($rootScope, $scope, $state, $stateParams,$cookies, $http, $location) {
-	$scope.orderid = $stateParams.orderid;
+	$scope.orderDto = $stateParams.data;
 	$scope.load = function(){
 		$http.get('/i/user/findUser').success(function(data,status,config,headers){
 			$rootScope.user = data;
@@ -7,19 +7,13 @@ coldWeb.controller('orderGenerate', function ($rootScope, $scope, $state, $state
 				url = "http://" + $location.host() + ":" + $location.port();
 				window.location.href = url;
 			}
-	    })
+	    });
     }
     $scope.load();
-   
-	$scope.getOrder = function() {
-    	$http.get('/i/orders/findOrderByOrderId', {
-            params: {
-                "orderID": $scope.orderid
-            }
-        }).success(function (data) {
-        	$scope.order = data.entity;
-        });
-	}
-	$scope.getOrder();
+    $scope.getTeleNum = function (ownerTele,userTele) {
+    	$http.get('/i/orders/getTelephone').success(function(data){
+    		alert("对方联系人的手机号已经发送到您的手机，请及时联系");
+	    });
+    }
 });
 

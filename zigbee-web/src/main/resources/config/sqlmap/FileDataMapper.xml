@@ -24,6 +24,10 @@
 	  </foreach>
 	</insert>
 
+	<delete id="deleteByBelongIdAndCategory">
+		DELETE FROM `filedata` WHERE `belongid` = #{belongid} AND `category` = #{category}
+	</delete>
+	
 	<delete id="deleteById">
 		DELETE FROM `filedata` WHERE `id` = #{id}
 	</delete>

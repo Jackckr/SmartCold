@@ -203,14 +203,14 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	    		  userid:user.id,
 	    		  username:user.username,
 	    		  telephone:user.telephone,
+	    		  address:user.address,
 	    		  rsdid: $scope.vo.id,
 	    		  dataType:$scope.vo.dataType,
 	    		  typeText:$scope.vo.typeText,
 	    		  releaseID:$scope.vo.releaseID,
 	    		  title:$scope.vo.title
 	    		  }, type: 'POST',dataType:"json", success: function(data) {
-	    	      $scope.orderid = data.entity.orderid;
-	    		  $state.go('orderGenerate', {'orderid':$scope.orderid});
+	    		  $state.go('orderGenerate', {'data':data.entity});
 	    	   }
 	    	  }); 
 	    	}

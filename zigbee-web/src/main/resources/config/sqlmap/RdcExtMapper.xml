@@ -138,4 +138,7 @@
         select rdc.id as id,rdc.name as name,ext.rdcscore as rdcscore,ext.rdccommentcnt as rdccommentcnt,ext.rdcrecommendpercent as rdcrecommendpercent from (select id,name from `Rdc`) as rdc left join (select RDCID,pageview,rdcscore,rdccommentcnt,rdcrecommendpercent from `RdcExt`) ext on rdc.id = ext.RDCID order by ext.pageview desc limit #{npoint};
     </select>
 
+   <delete id="deleteByRdcID">
+		delete from RdcExt where rdcid=#{rdcID}
+	</delete>
 </mapper>

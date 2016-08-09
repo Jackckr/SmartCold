@@ -22,13 +22,13 @@
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
-			<ul class="imgList" ng-model="orders">
-				<li ng-repeat="order in orders">
-					<div class="img pull-left"><img src={{order.logo}}></div>
-					<p class="company">{{order.orderid}}</p>
-					<p class="area">{{order.ordername}}</p>
+			<ul class="imgList">
+				<li ng-repeat="orderdto in ordersDto">
+					<div class="img pull-left"><img src={{orderdto.logo}}></div>
+					<p class="company">{{orderdto.orders.orderid}}</p>
+					<p class="area">{{orderdto.orders.ordername}}</p>
 					<p class="area">
-						{{order.generatetime}}
+						{{orderdto.orders.generatetime}}
 						<span class="delete">删除</span>
 					</p>
 				</li>

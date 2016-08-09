@@ -22,15 +22,15 @@
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
-			<ul class="imgList" ng-model="rdcs">
+			<ul class="imgList">
 				<li ng-repeat="rdc in rdcs">
 					<div class="img pull-left"><img src={{rdc.logo}}></div>
 					<p class="company">{{rdc.name}}</p>
 					<p class="area"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
 					<p class="area">
 						{{rdc.addtime}}
-						<span class="edit">修改</span>
-						<span class="delete">删除</span>
+						<span class="edit" ng-click="goEditRdc(rdc.id)">修改</span>
+						<span class="delete" ng-click="deleteRdc(rdc.id)">删除</span>
 					</p>
 				</li>
 			</ul>

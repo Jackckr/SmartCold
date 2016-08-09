@@ -17,6 +17,8 @@ public interface RdcExtMapper {
 
     void updateRdcExt(RdcExtEntity rdcExtEntity);
     
+    int deleteByRdcID(int rdcID);
+    
     void increasePageView(int rdcID);
 
     List<RdcScoreDTO> findScoreRdcDTOList(@Param("npoint") int npoint);
