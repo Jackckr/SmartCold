@@ -10,7 +10,7 @@ function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return unescape(r[2]);}return null;};
-function getFont(){if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
+function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
 function setTime(obj) {
     if (countdown == 0) {
         obj.removeAttribute("disabled");
@@ -34,7 +34,16 @@ function setTime(obj) {
     },
     1000);
 };
-
+function showErrorInfo(msg) {
+    var msgEl = $("#mention");
+    if (msg == null || msg == '') {
+        msgEl.hide();
+        msgEl.html('');
+    } else {
+        msgEl.show();
+        msgEl.html(msg);
+    }
+}
 function checkLogin(msg) {
 	 if(window.user!=null ){return;}
 	  $.ajax({

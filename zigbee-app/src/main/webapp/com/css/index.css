@@ -105,42 +105,6 @@ html{
 	z-index: 1;
 	background-size: cover;
 }
-.footer{
-	width: 100%;
-	height: 2.45rem;
-	background: rgba(255,255,255,.9);
-	font-size: 0.5rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 9999;
-	border-top: 1px solid #ccc;
-}
-.footer>li{
-	float: left;
-	width: 25%;
-	height: 100%;
-	text-align: center;http://127.0.0.1:8020/lianku-mweb/img/banner3.jpg
-	vertical-align: middle;
-}
-.footer>li>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	color: #898989;
-	/* padding: 0.15rem 0 0.4rem; */
-	box-sizing: border-box;
-}
-.footer>.active>a{
-	color: #428BCA;
-}
-.footer i{
-	font-size: 1.2rem;
-}
-.info{
-	font-size: 0.6rem;
-}
 .section{
 	margin-top: 2.2rem;
 	margin-bottom: 3rem;

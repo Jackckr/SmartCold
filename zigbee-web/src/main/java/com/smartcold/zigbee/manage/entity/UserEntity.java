@@ -159,7 +159,7 @@ public class UserEntity {
 	}
 
 	public String getAvatar() {
-		return  FtpService.READ_URL+avatar;
+		return  this.avatar;
 	}
 
 	public void setAvatar(String avatar) {

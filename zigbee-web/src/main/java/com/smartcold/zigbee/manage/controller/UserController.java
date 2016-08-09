@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
@@ -23,6 +21,7 @@ import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
+import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
@@ -133,14 +132,12 @@ public class UserController extends BaseController {
 			List<FileDataEntity> handleFile = this.docLibraryService.handleFile(old_user.getId(), FileDataMapper.CATEGORY_AVATAR_PIC, old_user, request);//用于更新头像信息
 			if(SetUtil.isnotNullList(handleFile)){
 				FileDataEntity fileDataEntity = handleFile.get(0);
-				if(user!=null&&user.getId()==0){
-					user=new UserEntity();
-					user.setId(old_user.getId());
-				}
-				user.setAvatar(fileDataEntity.getLocation());
+				//if(user.getId()==0){user=new UserEntity();user.setId(old_user.getId());}//数据不完整处理情况处理
+				user.setAvatar(FtpService.READ_URL+fileDataEntity.getLocation());
+			}else{
+				user.setAvatar(null);
 			}
-			if(user!=null&&user.getId()!=0){
-				if("app/img/userimg.jpg".equals(user.getAvatar())){user.setAvatar(null);}
+			if(user.getId()!=0){
 				this.userDao.updateUser(user);
 				UserEntity	ol_user=this.userDao.findUserById(user.getId());
 				ol_user.setPassword(null);
@@ -150,6 +147,16 @@ public class UserController extends BaseController {
 			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		return false;
+	}
+	@RequestMapping(value = "/checkOldPassword")
+	@ResponseBody
+	public boolean checkOldPassword(HttpServletRequest request,String pwd){
+		UserEntity ol_user = (UserEntity)request.getSession().getAttribute("user");
+		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
+		if(pwd.equals(new_user.getPassword())){
+			return true;
 		}
 		return false;
 	}
