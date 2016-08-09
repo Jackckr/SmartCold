@@ -450,7 +450,7 @@ public class RdcController {
 	 @ResponseBody
 	 public ResponseData<HashMap<String, Object>> findRDCByID(Integer rdcID){
 		 if(rdcID==null){return ResponseData.newFailure("无效id");}
-		 String newMode="●＜1.8T:%s辆   ●1.8～6T:%s辆   ●6～14T:%s辆   ●＞14T:%s辆 ";
+		 String newMode="●＜1.8T:%s辆   ●1.8～6T:%s辆   ●6～14T:%s辆   ●＞14T:%s辆 ";//需要修改
 		 List<HashMap<String, Object>> list = this.rdcService.findRDCById(rdcID);
 		 if (SetUtil.isnotNullList(list)) {
 			 for (HashMap<String, Object> data : list) {
@@ -507,18 +507,11 @@ public class RdcController {
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getRDCFilterData(HttpServletRequest request) {
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
-//       String key="getRDCFilterData";
 		HashMap<String, Object> data = new HashMap<String, Object>();
-//       if(CacheTool.hasCache(key)){
-//          data= (HashMap<String, Object>) CacheTool.getdate(key);
-//          result.setEntity(data);
-//       }else{
-		data.put("mt", this.commonService.getBaseData("storagemanagetype", "id", "type"));// 经营类型
 		data.put("dt", this.commonService.getBaseData("storagetype", "id", "type"));// 商品存放形式
+		data.put("mt", this.commonService.getBaseData("storagemanagetype", "id", "type"));// 经营类型
 		data.put("te", this.commonService.getBaseData("storagetempertype", "id", "type"));// 温度类型
 		result.setEntity(data);
-//          CacheTool.setData(key, data);
-//       }
 		return result;
 	}
 
@@ -543,9 +536,7 @@ public class RdcController {
 		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
 		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "10" : request.getParameter("pageSize")); // 每页数据量
 		HashMap<String, Object> filter=new HashMap<String, Object>();
-		if(StringUtil.isnotNull(isKey)){
-			managementType=storageType= storagetempertype=sqm=hasCar=null;
-		}
+		if(StringUtil.isnotNull(isKey)){managementType=storageType= storagetempertype=sqm=hasCar=null;}
 		filter.put("hasCar", hasCar);
 		filter.put("orderBy", orderBy);
 		filter.put("keyword", keyword);
