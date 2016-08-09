@@ -14,6 +14,7 @@ import com.smartcold.zigbee.manage.entity.*;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.BaiduMapUtil;
+import com.smartcold.zigbee.manage.util.MathUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +60,9 @@ public class RdcServiceImpl implements RdcService {
 
     @Autowired
     private CityListMapper cityListDao;
+
+    @Autowired
+    private StorageHonorMapper storageHonorDao;
 
     @Override
     public List<RdcEntity> findRdcList() {
@@ -159,6 +164,9 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setTemperRecord(rdcExtEntity.getStoragetempmonitor());
             rdcAddDTO.setTemperType(rdcExtEntity.getStoragetempertype());
             rdcAddDTO.setPageview(rdcExtEntity.getPageview() + 1);
+            rdcAddDTO.setScore(rdcExtEntity.getRdcscore());
+            rdcAddDTO.setUserCommentCount(rdcExtEntity.getRdccommentcnt());
+            rdcAddDTO.setUserRecommendPercent(rdcExtEntity.getRdcrecommendpercent());
             rdcExtDao.increasePageView(rdcID);
             List<FileDataEntity> arrangeFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
             if (!arrangeFiles.isEmpty()) {
@@ -174,53 +182,71 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setStoragePics(storageFiles);
 //			rdcAddDTO.setStoragePicLocation(gson.toJson(locationList));
 
+            List<FileDataEntity> honorFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_HONOR_PIC);
+            for (FileDataEntity item : honorFiles) {
+                item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+            }
+            rdcAddDTO.setHonorPics(honorFiles);
+
             String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
-            for (int i = 0; i < truck.length; i++) {
-                String[] truckItem = truck[i].split(":");
-                if (truckItem[0].equalsIgnoreCase("1")) {
-                    rdcAddDTO.setColdTruck1(Integer.parseInt(truckItem[1]));
-                } else if (truckItem[0].equalsIgnoreCase("2")) {
-                    rdcAddDTO.setColdTruck2(Integer.parseInt(truckItem[1]));
-                } else if (truckItem[0].equalsIgnoreCase("3")) {
-                    rdcAddDTO.setColdTruck3(Integer.parseInt(truckItem[1]));
-                } else if (truckItem[0].equalsIgnoreCase("4")) {
-                    rdcAddDTO.setColdTruck4(Integer.parseInt(truckItem[1]));
+            if (truck.length > 0){
+                for (int i = 0; i < truck.length; i++) {
+                    String[] truckItem = truck[i].split(":");
+                    if (truckItem[0].equalsIgnoreCase("1")) {
+                        rdcAddDTO.setColdTruck1(Integer.parseInt(truckItem[1]));
+                    } else if (truckItem[0].equalsIgnoreCase("2")) {
+                        rdcAddDTO.setColdTruck2(Integer.parseInt(truckItem[1]));
+                    } else if (truckItem[0].equalsIgnoreCase("3")) {
+                        rdcAddDTO.setColdTruck3(Integer.parseInt(truckItem[1]));
+                    } else if (truckItem[0].equalsIgnoreCase("4")) {
+                        rdcAddDTO.setColdTruck4(Integer.parseInt(truckItem[1]));
+                    }
                 }
             }
+
             String[] capacity = rdcExtEntity.getStoragecapacity().split(",");// 1:2,2:2,3:2,4:1,5:1
-            for (int i = 0; i < capacity.length; i++) {
-                String[] capacityItem = capacity[i].split(":");
-                if (capacityItem[0].equalsIgnoreCase("1")) {
-                    rdcAddDTO.setCapacity1(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("2")) {
-                    rdcAddDTO.setCapacity2(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("3")) {
-                    rdcAddDTO.setCapacity3(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("4")) {
-                    rdcAddDTO.setCapacity4(Integer.parseInt(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("5")) {
-                    rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
+            if (capacity.length > 0){
+                for (int i = 0; i < capacity.length; i++) {
+                    String[] capacityItem = capacity[i].split(":");
+                    if (capacityItem[0].equalsIgnoreCase("1")) {
+                        rdcAddDTO.setCapacity1(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("2")) {
+                        rdcAddDTO.setCapacity2(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("3")) {
+                        rdcAddDTO.setCapacity3(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("4")) {
+                        rdcAddDTO.setCapacity4(Integer.parseInt(capacityItem[1]));
+                    } else if (capacityItem[0].equalsIgnoreCase("5")) {
+                        rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
+                    }
                 }
             }
-//			result.add(rdcAddDTO);
+
+            if (!StringUtils.isEmpty(rdcExtEntity.getHonorpiclocation())) {
+                String[] honorpiclocation = rdcExtEntity.getHonorpiclocation().split(",");
+                List<StorageHonorEntity> allHonors = storageHonorDao.findAll();
+                List<StorageHonorEntity> honors = Lists.newArrayList();
+                if (honorpiclocation.length > 0) {
+                    for (int i = 0; i < honorpiclocation.length; i++) {
+                        honors.add(allHonors.get(Integer.parseInt(honorpiclocation[i]) - 1));
+                    }
+                }
+                rdcAddDTO.setStorageHonorPics(honors);
+            }
         }
 
-        float score = 0.0f;
         float rdcPositionScore = 0.0f;
         float rdcFacilityScore = 0.0f;
         float rdcServiceScore = 0.0f;
         float rdcHealthScore = 0.0f;
 
         int userCommentCnt = 0;
-        int userRecommendPercent = 0;
         // 计算RDC的评分/用户推荐数/评论数
         List<CommentEntity> commentsByRdcId = commentDao.findCommentsByRdcId(rdcID);
         if (!CollectionUtils.isEmpty(commentsByRdcId)) {
             userCommentCnt = commentsByRdcId.size();
-            float totalScore = 0;
             int recommendCnt = 0;
             for (CommentEntity commentEntity : commentsByRdcId) {
-                totalScore += commentEntity.getGrade();
                 rdcPositionScore += commentEntity.getLocationGrade();
                 rdcFacilityScore += commentEntity.getFacilityGrade();
                 rdcServiceScore += commentEntity.getServiceGrade();
@@ -229,13 +255,8 @@ public class RdcServiceImpl implements RdcService {
                     recommendCnt++;
                 }
             }
-            score = (float) (Math.round(totalScore / userCommentCnt * 10)) / 10;
-            userRecommendPercent = (recommendCnt * 100) / userCommentCnt;
             rdcAddDTO.setRecommentCount(recommendCnt);
         }
-        rdcAddDTO.setScore(score);
-        rdcAddDTO.setUserCommentCount(userCommentCnt);
-        rdcAddDTO.setUserRecommendPercent(userRecommendPercent);
         rdcAddDTO.setRdcPositionScore((float) (Math.round(rdcPositionScore / userCommentCnt * 10)) / 10);
         rdcAddDTO.setRdcFacilityScore((float) (Math.round(rdcFacilityScore / userCommentCnt * 10)) / 10);
         rdcAddDTO.setRdcServiceScore((float) (Math.round(rdcServiceScore / userCommentCnt * 10)) / 10);
@@ -335,42 +356,60 @@ public class RdcServiceImpl implements RdcService {
         List<RdcEntity> rdcList = rdcDao.findRdcList();
         if (!CollectionUtils.isEmpty(rdcList)) {
             for (RdcEntity rdcEntity : rdcList) {
-                List<CommentEntity> commentsByRdcId = commentDao.findCommentsByRdcId(rdcEntity.getId());
-                if (!CollectionUtils.isEmpty(commentsByRdcId)) {
-                    int userCommentCnt = commentsByRdcId.size();
-                    float totalScore = 0;
-                    int recommendCnt = 0;
-                    for (CommentEntity commentEntity : commentsByRdcId) {
-                        totalScore += commentEntity.getGrade();
-                        if (commentEntity.getGrade() >= goodCommentGrade) {
-                            recommendCnt++;
+                List<RdcExtEntity> rdcExtList = rdcExtDao.findRDCExtByRDCId(rdcEntity.getId());
+                if (!CollectionUtils.isEmpty(rdcExtList)) {
+                    RdcExtEntity rdcExt = rdcExtList.get(0);
+
+                    int userCommentCnt = rdcExt.getRdccommentcnt();
+                    int userRecommendPercent = rdcExt.getRdcrecommendpercent();
+
+                    float commentScore = 0;
+                    float honorScore = 0;
+                    List<CommentEntity> commentsByRdcId = commentDao.findCommentsByRdcId(rdcEntity.getId());
+                    if (!CollectionUtils.isEmpty(commentsByRdcId)) {
+                        userCommentCnt = commentsByRdcId.size();
+                        float totalScore = 0;
+                        int recommendCntTemp = 0;
+                        for (CommentEntity commentEntity : commentsByRdcId) {
+                            totalScore += commentEntity.getGrade();
+                            if (commentEntity.getGrade() >= goodCommentGrade) {
+                                recommendCntTemp++;
+                            }
+                        }
+                        commentScore = (float) (Math.round(totalScore / userCommentCnt * 10)) / 10;
+                        userRecommendPercent = (recommendCntTemp * 100) / userCommentCnt;
+                    }
+
+                    if (!StringUtils.isEmpty(rdcExt.getHonorpiclocation())) {
+                        // 冷库评分 大于4个荣誉则为5颗星5~8-5 4-4 3-3 2-2 1-1 0-0
+                        String[] honors = rdcExt.getHonorpiclocation().split(",");
+                        if (honors.length >= 5) {
+                            honorScore = 5;
+                        } else {
+                            honorScore = honors.length;
                         }
                     }
-                    float score = (float) (Math.round(totalScore / userCommentCnt * 10)) / 10;
-                    int userRecommendPercent = (recommendCnt * 100) / userCommentCnt;
 
-                    List<RdcExtEntity> rdcExtList = rdcExtDao.findRDCExtByRDCId(rdcEntity.getId());
-                    if (!CollectionUtils.isEmpty(rdcExtList)) {
-                        RdcExtEntity rdcExt = rdcExtList.get(0);
-                        int flag = 0;
-                        if (rdcExt.getRdcscore() != score){
-                            rdcExt.setRdcscore(score);
-                            flag ++;
-                        }
-                        if (rdcExt.getRdccommentcnt() != userCommentCnt){
-                            rdcExt.setRdccommentcnt(userCommentCnt);
-                            flag ++;
-                        }
-                        if (rdcExt.getRdcrecommendpercent() != userRecommendPercent){
-                            rdcExt.setRdcrecommendpercent(userRecommendPercent);
-                            flag ++;
-                        }
-                        if (flag != 0){
-                            rdcExtDao.updateRdcExt(rdcExt);
-                            System.out.println(new Date() + ",分数变化,更新RDC: " + rdcExt.getRDCID());
-                        } else {
-                            System.out.println(new Date() + ",不更新未发生变化的RDC: " + rdcExt.getRDCID());
-                        }
+                    //score 总分: 评论得分与荣誉评分的加权平均
+                    float score = (float) (Math.round(MathUtil.add(commentScore, honorScore) / 2 * 10)) / 10;
+                    int flag = 0;
+                    if (rdcExt.getRdcscore() != score) {
+                        rdcExt.setRdcscore(score);
+                        flag++;
+                    }
+                    if (rdcExt.getRdccommentcnt() != userCommentCnt) {
+                        rdcExt.setRdccommentcnt(userCommentCnt);
+                        flag++;
+                    }
+                    if (rdcExt.getRdcrecommendpercent() != userRecommendPercent) {
+                        rdcExt.setRdcrecommendpercent(userRecommendPercent);
+                        flag++;
+                    }
+                    if (flag != 0) {
+                        rdcExtDao.updateRdcExt(rdcExt);
+                        System.out.println(new Date() + ",分数变化,更新RDC: " + rdcExt.getRDCID());
+                    } else {
+                        System.out.println(new Date() + ",不更新未发生变化的RDC: " + rdcExt.getRDCID());
                     }
                 }
             }
@@ -466,6 +505,11 @@ public class RdcServiceImpl implements RdcService {
 		PageHelper.startPage(pageNum, pageSize);
 		Page<RdcEntityDTO> rdcList = this.rdcDao.findRDCByUserId(userID);
 		return new PageInfo<RdcEntityDTO>(rdcList);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> findRDCById(int rdcID) {
+		return this.rdcDao.findRDCById(rdcID);
 	}
 
 }

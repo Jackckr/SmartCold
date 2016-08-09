@@ -5,8 +5,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.PrivilegeMapper;
-import com.smartcold.manage.cold.entity.Privilege;
+import com.smartcold.manage.cold.dao.newdb.PrivilegeMapper;
+import com.smartcold.manage.cold.entity.newdb.Privilege;
 import com.smartcold.manage.cold.service.PrivilegeService;
 
 /**

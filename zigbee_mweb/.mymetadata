@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="zigbee_mweb"
+  name="zigbee-mweb"
   id="myeclipse.1468910501566"
   context-root="/zigbee_mweb"
   j2ee-spec="6.0"
-  archive="zigbee_mweb.war">
+  archive="zigbee-mweb.war">
   <attributes>
     <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>

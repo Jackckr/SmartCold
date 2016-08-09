@@ -1,9 +1,9 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
+coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location, $uibModal, $log) {
 	$scope.load = function(){
-			$http.get('/i/user/findUser').success(function(data,status,config,headers){
+		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
 				$rootScope.user = data;
 				if($rootScope.user == undefined || $rootScope.user.id == 0){
 					url = "http://" + $location.host() + ":" + $location.port();
@@ -13,7 +13,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
 	}
 	$scope.load();
     $scope.editable = true;
+    $scope.isDisabled = false;
     $scope.totalfiles = [];
+    $scope.totalhonorfiles = [];
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
         id: 0,
@@ -42,40 +44,33 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     }
 
     $scope.citySelected = function () {
-        //alert($scope.cityId);
     }
 
     // 获取冷库经营类型
     $http.get('/i/rdc/findAllManageType').success(function (data) {
         $scope.manageTypes = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.manageType = data[0].id;
     });
 
     $scope.ManageTypeSelected = function () {
-        //alert($scope.manageType);
     }
 
     // 获取商品存放类型
     $http.get('/i/rdc/findAllTemperType').success(function (data) {
         $scope.temperTypes = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.temperType = data[0].id;
     });
 
     $scope.TemperTypeSelected = function () {
-        //alert($scope.temperType);
     }
 
     // 获取冷库温度类型
     $http.get('/i/rdc/findAllStorageType').success(function (data) {
         $scope.storageTypes = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.storageType = data[0].id;
     });
 
     $scope.StorageTypeSelected = function () {
-        //alert($scope.storageType);
     }
 
     $scope.moreInfos = true;
@@ -87,23 +82,19 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     // 获取冷链设施类型
     $http.get('/i/rdc/findAllCompanyDevice').success(function (data) {
         $scope.companyDevices = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.companyDevice = data[0].id;
     });
 
     $scope.CompanyDeviceSelected = function () {
-        //alert($scope.companyDevice);
     }
 
     // 制冷剂类型
     $http.get('/i/rdc/findAllStorageRefreg').success(function (data) {
         $scope.storageRefregs = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.storageRefreg = data[0].id;
     });
 
     $scope.StorageRefregSelected = function () {
-        //alert($scope.storageRefreg);
     }
 
     $scope.ChangLihuoState = function () {
@@ -119,7 +110,6 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             "rdcID": $stateParams.rdcID
         }
     }).success(function (data) {
-        console.log("RdcDTODetail: " + data[0]);
         $scope.name = data[0].name;
         $scope.address = data[0].address;
         $scope.provinceId = data[0].provinceId;
@@ -129,7 +119,6 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.storageType = data[0].storageType;
         $scope.temperType = data[0].temperType;
         $scope.phoneNum = data[0].phoneNum;
-        //$scope.telphoneNum = data[0].telphoneNum;
         $scope.remark = data[0].remark;
         $scope.tonnage = data[0].tonnage;
         $scope.structure = data[0].structure;
@@ -137,6 +126,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
         $scope.arrangePic = data[0].arrangepiclocation;
+        $scope.arrangePicShow = data[0].arrangePic;
+        $scope.storagePicShow = data[0].storagePics;
+        $scope.honorPicShow = data[0].honorPics;
         $scope.storagePic = angular.fromJson( data[0].storagePicLocation);
         if($scope.lihuoRoom === 0){
             $scope.hasLihuoRoom = true;
@@ -168,39 +160,6 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             $scope.citys = data;
             $scope.cityId = data[0].cityID;
         });
-
-        /*console.log("name: " + data[0].name);
-        console.log("provinceId: " + data[0].provinceId);
-        console.log("cityId: " + data[0].cityId);
-        console.log("address: " + data[0].address);
-        console.log("area: " + data[0].area);
-        console.log("manageType: " + data[0].manageType);
-        console.log("storageType: " + data[0].storageType);
-        console.log("temperType: " + data[0].temperType);
-        console.log("coldTruck1: " + data[0].coldTruck1);
-        console.log("coldTruck2: " + data[0].coldTruck2);
-        console.log("coldTruck3: " + data[0].coldTruck3);
-        console.log("coldTruck4: " + data[0].coldTruck4);
-        console.log("phoneNum: " + data[0].phoneNum);
-        console.log("telphoneNum: " + data[0].telphoneNum);
-        console.log("remark: " + data[0].remark);
-
-        console.log("tonnage: " + data[0].tonnage);
-        console.log("structure: " + data[0].structure);
-        console.log("companyDevice: " + data[0].companyDevice);
-        console.log("platform: " + data[0].platform);
-        console.log("lihuoRoom: " + data[0].lihuoRoom);
-        console.log("lihuoArea: " + data[0].lihuoArea);
-        console.log("lihuoTemperCtr: " + data[0].lihuoTemperCtr);
-        console.log("storageRefreg: " + data[0].storageRefreg);
-        console.log("temperRecord: " + data[0].temperRecord);
-        console.log("capacity1: " + data[0].capacity1);
-        console.log("capacity2: " + data[0].capacity2);
-        console.log("capacity3: " + data[0].capacity3);
-        console.log("capacity4: " + data[0].capacity4);
-        console.log("capacity5: " + data[0].capacity5);
-        console.log("facility: " + data[0].facility);*/
-
     });
     
     $scope.drop = function(file){
@@ -210,7 +169,13 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             }
         })
     }
-    
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalhonorfiles,function(item, key){
+            if(item == honorfile){
+                $scope.totalhonorfiles.splice(key,1);
+            }
+        })
+    }
     function checkCommit(){
     	if($scope.remark.length>250)
     		return false;
@@ -249,17 +214,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             flag = false;
         }
 
-//        if ($scope.coldTruck1 === 0 && $scope.coldTruck2 === 0 &&$scope.coldTruck3 === 0 &&$scope.coldTruck4 === 0) {
-//            flag = false;
-//        }
-
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;
         }
-
-/*        if ($scope.telphoneNum == undefined || $scope.telphoneNum == '') {
-            flag = false;
-        }*/
         return flag;
     }
     
@@ -270,16 +227,32 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
+    $scope.addHonorFiles = function (files) {
+        if($scope.totalhonorfiles.length + files.length > 8){
+            alert("最多上传八张图片");
+            return;
+        }
+        $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
+    }
 
     $scope.submit = function(){
     if(checkCommit()){
         if (checkInput()){
+            $scope.isDisabled = true;
             data = {
                 file0: null,
                 file1: null,
                 file2: null,
                 file3: null,
                 file4: null,
+                honor0: null,
+                honor1: null,
+                honor2: null,
+                honor3: null,
+                honor4: null,
+                honor5: null,
+                honor6: null,
+                honor7: null,
                 name : encodeURI($scope.name,"UTF-8"),
                 provinceId : $scope.provinceId,
                 cityId : $scope.cityId,
@@ -293,7 +266,6 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 coldTruck3 : $scope.coldTruck3,
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
-                //telphoneNum : $scope.telphoneNum,
                 remark : $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
                 tonnage : $scope.tonnage,
@@ -311,55 +283,22 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
                 facility : $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
-                //honorPic : $scope.honorPic,
                 arrangePics : $scope.arrangePic,
                 rdcId: $stateParams.rdcID
             }
-            for(i = 0; i < $scope.totalfiles.length; i++){
+            for(var i = 0; i < $scope.totalfiles.length; i++){
                 data["file" + i] = $scope.files[i];
             }
-
- /*           console.log("name: " + data.name);
-            console.log("provinceId: " + data.provinceId);
-            console.log("cityId: " + data.cityId);
-            console.log("address: " + data.address);
-            console.log("area: " + data.area);
-            console.log("manageType: " + data.manageType);
-            console.log("storageType: " + data.storageType);
-            console.log("temperType: " + data.temperType);
-            console.log("coldTruck1: " + data.coldTruck1);
-            console.log("coldTruck2: " + data.coldTruck2);
-            console.log("coldTruck3: " + data.coldTruck3);
-            console.log("coldTruck4: " + data.coldTruck4);
-            console.log("phoneNum: " + data.phoneNum);
-            console.log("telphoneNum: " + data.telphoneNum);
-            console.log("remark: " + data.remark);
-
-            console.log("tonnage: " + data.tonnage);
-            console.log("structure: " + data.structure);
-            console.log("companyDevice: " + data.companyDevice);
-            console.log("platform: " + data.platform);
-            console.log("lihuoRoom: " + data.lihuoRoom);
-            console.log("lihuoArea: " + data.lihuoArea);
-            console.log("lihuoTemperCtr: " + data.lihuoTemperCtr);
-            console.log("storageRefreg: " + data.storageRefreg);
-            console.log("temperRecord: " + data.temperRecord);
-            console.log("capacity1: " + data.capacity1);
-            console.log("capacity2: " + data.capacity2);
-            console.log("capacity3: " + data.capacity3);
-            console.log("capacity4: " + data.capacity4);
-            console.log("capacity5: " + data.capacity5);
-            console.log("facility: " + data.facility);
-            console.log("honorPic: " + data.honorPic);
-            console.log("arrangePic: " + data.arrangePic);
-            console.log("file0: " + data.file0);
-            console.log("file1: " + data.file1);*/
+            for(var j = 0; j < $scope.totalhonorfiles.length; j++){
+                data["honor" + j] = $scope.totalhonorfiles[j];
+            }
 
             Upload.upload({
                 url: '/i/rdc/updateRdc',
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },
                 data: data
             }).then(function (resp) {
+                $scope.isDisabled = false;
                 alert("修改成功");
                 $state.go('coldStoragelist', {});
             }, function (resp) {
@@ -376,4 +315,68 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     	alert("备注长度不得250字符!");
     }
    }
+
+    $scope.goPicDetail = function(item){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'myModelContent.html',  //指向上面创建的视图
+            controller: 'ModalInstanceCtrl',// 初始化模态范围
+            resolve: {
+                itemPic: function () {
+                    return item;
+                }
+            }
+        })
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date())
+        })
+    }
+
+    $scope.deletePic = function(filedata){
+        var r = confirm("删除图片?");
+        if(r){
+            $http({
+                method:'DELETE',
+                url:'i/rdc/deleteStoragePic',
+                params:filedata
+            }).success(function(){
+                var index = $scope.storagePicShow.indexOf(filedata);
+                if(index>=0)
+                    $scope.storagePicShow.splice(index,1);
+                else{
+                    $scope.arrangePicShow = null;
+                }
+            })
+        }
+    }
+
+    $scope.deleteHonorPic = function(filedata){
+        var r = confirm("删除荣誉图片?");
+        if(r){
+            $http({
+                method:'DELETE',
+                url:'i/rdc/deleteStoragePic',
+                params:filedata
+            }).success(function(){
+                var index = $scope.honorPicShow.indexOf(filedata);
+                if(index>=0)
+                    $scope.honorPicShow.splice(index,1);
+                else{
+                    $scope.arrangePicShow = null;
+                }
+            })
+        }
+    }
 });
+
+
+coldWeb.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, itemPic) { //依赖于modalInstance
+    $scope.itemPic = itemPic;
+    $scope.ok = function () {
+        $uibModalInstance.close(); //关闭并返回当前选项
+    };
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel'); // 退出
+    }
+})

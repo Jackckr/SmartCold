@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>发布仓位</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+    <script type="text/javascript" src="../com/js/data.js" ></script>
+    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
+    <script type="text/javascript" src="../com/js/prettify.js" ></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script>
+    	$(function() {
+			$('.toggle').children('div').click(function(){
+				$(this).addClass('current').siblings().removeClass('current');
+				if($(this).index()==1){
+					$(".main").show();
+					$('.coldlist,.radiocar').hide();
+				}else{
+					$(".main").hide();
+					$('.coldlist,.radiocar').show();
+				}
+			})
+			$('.radiocar').children('div').click(function(){
+				/*alert(event.target.nodeName);*/
+				if(event.target.nodeName !== "DIV"){					
+					$('input[type="radio"]').removeClass('blue');					
+					$(this).children('input').addClass("blue")
+				}
+			})
+		});
+    </script>
+</head>
+<body ng-app="app">
+    <!-- header -->
+        <header>
+        	
+            <div class="area fl">
+                <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+            </div>
+            <div class="txt">
+                发布仓位
+            </div>
+        </header>
+    <!-- header end-->
+    <section class="toggle clearfix">
+    	<div class="rent current fl"><i class="iconfont">&#xe675;</i>出租</div>
+    	<div class="offer fl"><i class="iconfont">&#xe673;</i>求租</div>
+    </section>
+    <div class="radiocar">
+    	<div class="relate">
+    		<input type="radio" name="car" id="car" class="blue" checked />
+    		<label for="car">关联库</label>
+    	</div>
+    	<div class="norelate">
+    		<input type="radio" name="car" id="nocar"  />
+    		<label for="nocar">不关联库</label>
+    	</div>
+    </div>
+    <!--coldlist-->
+    <div class="coldlist" style="margin-bottom: 3rem;" ng-controller="ctrl">
+        <!-- 仓储信息区域start -->
+        <div ng-show="rdclist.length>0">
+            <p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
+            <p class="sorry" ><button class="btn btn-primary" ng-click="goaddrdcpag();">添加冷库信息</button>　　<button  class="btn btn-success" ng-show="{{dataType!=3}}" ng-click="simplyitem();"   >不关联库发布</button></p>
+        </div>
+        <ul class="imgTable">
+        	<li class="imgCell" ng-repeat="rdc in rdclist">
+				<a href="releasestoragedetail.html">
+					<img class="fl" ng-src="rdc.logo">
+					<div class="">
+						<p class='ellipsis'>{{rdc.name}}</p>
+						<p class='position'>
+							<i class="iconfont">&#xe66e;</i>
+							{{rdc.address}}
+						</p>
+						<ul class='star'>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li>★</li>
+						</ul>
+					</div>		
+				</a>
+				<button class="grab" onclick="location.href='releasestoragedetail.html'">发布</button>
+			</li>
+        	<li class="imgCell">
+				<a href="releasestoragedetail.html">
+					<img class="fl" src="../com/img/cbd.jpg">
+					<div class="">
+						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
+						<p class='position'>
+							<i class="iconfont">&#xe66e;</i>
+							上海-长宁区-中山公园
+						</p>
+						<ul class='star'>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li>★</li>
+						</ul>
+					</div>		
+				</a>
+				<button class="grab" onclick="location.href='releasestoragedetail.html'">发布</button>
+			</li>
+        	<li class="imgCell">
+				<a href="releasestoragedetail.html">
+					<img class="fl" src="../com/img/muwu.jpg">
+					<div class="">
+						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
+						<p class='position'>
+							<i class="iconfont">&#xe66e;</i>
+							上海-长宁区-中山公园
+						</p>
+						<ul class='star'>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li>★</li>
+						</ul>
+					</div>		
+				</a>
+				<button class="grab" onclick="location.href='releasestoragedetail.html'">发布</button>
+			</li>
+        	<li class="imgCell">
+				<a href="releasestoragedetail.html">
+					<img class="fl" src="../com/img/cbd.jpg">
+					<div class="">
+						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
+						<p class='position'>
+							<i class="iconfont">&#xe66e;</i>
+							上海-长宁区-中山公园
+						</p>
+						<ul class='star'>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li>★</li>
+						</ul>
+					</div>		
+				</a>
+				<button class="grab" onclick="location.href='releasestoragedetail.html'">发布</button>
+			</li>
+        </ul>
+    </div>
+    <!--求租-->
+    <section class="main maindetail  black">
+        <form>
+            <ul class="houseinfo">
+                <li>
+                    <label for="name">描述</label>
+                    <input type="text"  id="name" placeholder="求租仓位"/>
+                </li>
+                <li>
+                    <label for="province">省</label>
+                    <div class="mySelect">
+                    	<select id="province">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>                    
+                </li>
+                <li>
+                    <label for="city">市</label>
+                    <div class="mySelect">
+	                    <select id="city">
+	                        <option value="载入中">载入中</option>
+	                    </select>
+	                </div>
+	                <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="temperatureType">冷库温度类型</label>                    
+                    <div class="mySelect">
+	                    <select id="temperatureType">
+	                        <option>不限</option>
+	                        <option>冷藏库</option>
+	                        <option>冷冻库</option>
+	                        <option>超低温库</option>
+	                        <option>恒温库</option>
+	                        <option>多温区库</option>
+	                    </select>
+	                </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="storageType">商品存放类型</label>                    
+                    <div class="mySelect">
+	                    <select id="storageType">
+	                        <option>不限</option>
+	                        <option>货架存放</option>
+	                        <option>非货架存放</option>
+	                    </select>
+	                </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label>数/质/量</label>
+                    <input type="radio" name="quality" value="吨"/>吨
+                    <input type="radio" name="quality"  value="平方米" checked/>平方米
+                    <input type="radio" name="quality"  value="其他"/>其他
+                </li>
+                <li>
+                    <label for="price">单价</label>
+                    <input type="text"  id="price" placeholder="元/天·平方米"/>
+                </li>
+                <li>
+                    <label for="time">信息有效期</label>
+                    <input type="date"  id="time" />
+                    <i class="iconfont fr">&#xe63a;</i>
+                </li>
+                <li>
+                    <label for="phone">联系电话</label>
+                    <input type="text" id="phone"  placeholder="18863699825"/>
+                </li>
+                <li>
+                    <label for="note">备注</label>
+                    <input type="text"  id="note" placeholder="（选填）"/>
+                </li>
+                <li>
+                    <label class="pic">
+		    			<input type="file" id="files" name="files[]" multiple />
+		    		</label>
+		    		<span id="">上传图片</span>		    		
+		   			<output id="list"></output>
+                </li>
+            </ul>
+        </form>
+        <button class="mybtn" onclick="location.href='releasesuccess.html'">确认发布</button>
+    </section>
+    <ul class="footer">
+        <li>           
+            <a href="../index.html">
+                <i class="iconfont">&#xe65a;</i>
+                <p class="info">首页</p>
+            </a>
+        </li>
+        <li class="active">            
+            <a href="release.html">
+                <i class="iconfont">&#xe6ff;</i>
+                <p class="info">发布</p>
+            </a>
+        </li>
+        <li>          
+             <a href="news.html">
+                <i class="iconfont">&#xe6f8;</i>
+                <p class="info">资讯</p>
+            </a>
+        </li>
+        <li>            
+            <a href="user.html">
+                <i class="iconfont">&#xe6fd;</i>
+                <p class="info">我的</p>
+            </a>
+        </li>
+    </ul>
+    <script type="text/javascript" src="../com/js/file_upload.js" ></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+<script type="text/javascript">
+angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope,  $http) {
+    $scope.pageChanged = function () {
+        var params={pageNum : $scope.bigCurrentPage,pageSize : $scope.maxSize}
+        $http.post(ER.root+"/i/ShareRdcController/getRdcByUid",params,function(data) { 
+            $scope.rdclist = data.data;//
+            $scope.bigTotalItems = data.total;
+            if(data.total==0){
+               $("#nodata_div").removeClass("hide"); 
+            }
+        });
+    };
+    $scope.pageChanged();
+});
+</script>
+</body>
+</html>

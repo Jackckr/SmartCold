@@ -1,8 +1,9 @@
 package com.smartcold.manage.cold.service;
 
-import com.smartcold.manage.cold.entity.CompressorGroupSetEntity;
-
 import java.util.List;
+
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 
 /**
  * Author: qiunian.sun

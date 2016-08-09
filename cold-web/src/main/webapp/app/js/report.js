@@ -2,10 +2,12 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	$scope.getDateTimeStringBefore = function(before){
 		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
 	}
+	$http.get("/i/coldStorage/findAllStorageKeys").then(function(response){
+		$scope.searchOptions = response.data;
+		$scope.choseOption = $scope.searchOptions[0];
+	})
+
 	
-	$scope.searchOptions = [{name:"电量",key:"electric"},{name:"开门时长",key:"doorTime"},
-	                  {name:"开门次数",key:"doorTimes"},{name:"温度",key:"temperature"}];
-	$scope.choseOption = $scope.searchOptions[0];
 	$scope.time = $stateParams.time;
 	$scope.item = $stateParams.item;
 	$scope.begin = $scope.getDateTimeStringBefore(3);
@@ -41,14 +43,14 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
             }
 		}).success(function(data,headers,status,config){
 			$scope.storages = data;
-			$scope.storageModal = data.length >0 ? data[0] : '';
+//			$scope.storageModal = data.length >0 ? data[0] : ''; 放到app.js
 		})
 	}
 	
 	$scope.chageItem = function(item,time){
 		$scope.item = item;
 		$scope.time = time;
-		if($scope.item == 'total'){
+		if($scope.item == 'energy'){
 			$timeout(function() {
 				$scope.drawline($scope.dataMap['xData'],$scope.dataMap[item + 'Energy1'],$scope.dataMap[item + 'Energy2']);
 			},0)
@@ -450,8 +452,8 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 	$scope.load = function () {
 		$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
 		$http.get('/i/rdc/findRdcList').success(function(data,headers,config,status){
-			$scope.rdcList = data;
-			$scope.rdcModal = data[0];
+			$scope.rdcList = data.list;
+			$scope.rdcModal = data.list[0];
 			if($scope.time == 'daily'){
 				url = "/i/report/daily?storageId=" + $scope.rdcModal.id + "&begin=" 
 				+ $scope.getDateTimeStringBefore(0) + "&end=" + $scope.getDateTimeStringBefore(31);
@@ -495,7 +497,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 				    $scope.search();
 				},100)	
 			}
-			if($scope.item == 'total'){
+			if($scope.item == 'energy'){
 				$timeout(function() {
 		           $scope.drawbount([]);
 		         }, 0)
@@ -504,7 +506,7 @@ coldWeb.controller('report', function ($scope, $location,$stateParams,$timeout,$
 
 	}
 
-	$scope.load();
+//	$scope.load();
 });
 
 coldWeb.directive('aDisabled', function() {

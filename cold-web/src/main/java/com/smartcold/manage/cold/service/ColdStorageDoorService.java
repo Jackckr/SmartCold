@@ -3,7 +3,7 @@ package com.smartcold.manage.cold.service;
 import java.util.Date;
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.ColdStorageDoorEntity;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorEntity;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 10:37)

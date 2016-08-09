@@ -1,8 +1,10 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.io.File;
 import java.util.List;
 
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.entity.StorageHonorEntity;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-06-01 11:22)
@@ -89,6 +91,12 @@ public class RdcAddDTO {
 	private int userid;//关联用户id
 	//浏览量
 	private int pageview;
+
+	private File honorfile0;
+
+	private List<StorageHonorEntity> storageHonorPics;
+
+	private List<FileDataEntity> honorPics;
 	
 	public int getPageview() {
 		return pageview;
@@ -434,4 +442,27 @@ public class RdcAddDTO {
 		this.rdcHealthScore = rdcHealthScore;
 	}
 
+	public File getHonorfile0() {
+		return honorfile0;
+	}
+
+	public void setHonorfile0(File honorfile0) {
+		this.honorfile0 = honorfile0;
+	}
+
+	public List<StorageHonorEntity> getStorageHonorPics() {
+		return storageHonorPics;
+	}
+
+	public void setStorageHonorPics(List<StorageHonorEntity> storageHonorPics) {
+		this.storageHonorPics = storageHonorPics;
+	}
+
+	public List<FileDataEntity> getHonorPics() {
+		return honorPics;
+	}
+
+	public void setHonorPics(List<FileDataEntity> honorPics) {
+		this.honorPics = honorPics;
+	}
 }

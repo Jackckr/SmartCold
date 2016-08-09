@@ -186,14 +186,18 @@ header a.logo
 {
     line-height: 75px;
 
-    display: block;
+    display: inline-block;
 
-    width: 250px;
-    height: 75px;
-    margin-left: 10px;
+    width: 143px;
+    height: 55px;
+    margin-left: 50px;
+    background-size: cover;
+}
 
-    background: url(../img/logo.png) no-repeat;
-    background-position: left center;
+header a.logo img
+{
+    height: 100%;
+    width: 100%;
 }
 
 header a
@@ -262,6 +266,10 @@ header .unauthenticated
         -ms-flex-align: center;
 
             align-items: center;
+}
+.unauthenticated.dropdown{
+	height:55px;
+    padding-top:20px;	
 }
 header .unauthenticated > a
 {
@@ -965,4 +973,10 @@ section.content{
 }
 .glyphicon.glyphicon-map-marker{
 	color:#FF6D3B!important
+}
+/*hornor img*/
+ .hornorYz img{
+	width:35px;
+	height:35px; 
+	background-size:cover;
 }

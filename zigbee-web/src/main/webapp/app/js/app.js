@@ -1,15 +1,14 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
-    'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation', 'jkuri.gallery']);
-
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation', 'jkuri.gallery']);
+if (typeof String.prototype.startsWith != 'function') {  //支持startsWith
+    String.prototype.startsWith = function (prefix){  
+     return this.slice(0, prefix.length) === prefix;  
+    };  
+ }
 angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
-	$.ajax({
-	      url: '/i/user/findUser',
-	      type: "GET",
-	      dataType: 'json'
-	    }).success(function(data){
+	    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data){
 	    	user = data;
 	    	angular.bootstrap(document, ['ColdWeb']);
-	    })
+	    });
 });
 coldWeb.run(function (editableOptions, naviService,userService) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
@@ -48,18 +47,18 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 		setUser: function(user){
 	    	$rootScope.user = user;
 	    	$rootScope.logout = function () {
-	        	$http.get('/i/user/logout');
-	        	$rootScope.user = null;
+	        	$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
+	        	 $rootScope.user =window.user=user=null;//清除系统user;
 	        };
 	        $rootScope.gotoSmartCold = function(){
-	        	cookies = document.cookie.split(";")
+	        	cookies = document.cookie.split(";");
 	        	url = "http://www.smartcold.net";
 	        	angular.forEach(cookies,function(item){
 	        		item = item.trim();
 	        		if(item.startsWith("token=")){	        			
 	        			url = url + "/#/" + item;
 	        		}
-	        	})
+	        	});
 	        	window.open(url);
 	        }
 	    },
@@ -311,27 +310,3 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     });
 
 });
-
-
-//    var p = navigator.platform; 
-//   var system = {  win: p.indexOf("Win") == 0, mac: p.indexOf("Mac") == 0,  xll: (p == "X11") || (p.indexOf("Linux") == 0), ipad:(navigator.userAgent.match(/iPad/i) != null)?true:false,isComputer:false,isphone:false  }; 
-//    if (system.win || system.mac || system.xll||system.ipad) {  system.isComputer=true;} else {system.isphone=true; } 
-    var browser = { 
-            versions : function() {  var u = navigator.userAgent, app = navigator.appVersion; 
-                return {        
-                trident : u.indexOf('Trident') > -1, //IE内核                                  
-                presto : u.indexOf('Presto') > -1, //opera内核                                  
-                webKit : u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核                                  
-                gecko : u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核                                 
-                mobile : !!u.match(/AppleWebKit.*Mobile.*/)  || !!u.match(/AppleWebKit/), //是否为移动终端                                  
-                ios : !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端                  
-                android : u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器                                  
-                iPhone : u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器                     
-                iPad: u.indexOf('iPad') > -1, //是否iPad        
-                webApp : u.indexOf('Safari') == -1,//是否web应该程序，没有头部与底部 
-                google:u.indexOf('Chrome')>-1 
-            }; 
-        }(), 
-        language : (navigator.browserLanguage || navigator.language).toLowerCase() 
-        } ;
-//        document.writeln("语言版本: "+browser.language+" 是否为移动终端: "+browser.versions.mobile); 

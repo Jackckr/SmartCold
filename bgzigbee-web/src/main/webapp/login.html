@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/index.css">
@@ -126,7 +127,6 @@
 								},
 								success : function(data) {
 									if (data.success) {
-									debugger;
 	                                    document.cookie = data.message;
 										if (window.location.hash != "") {
 											backUrl = window.location.hash;

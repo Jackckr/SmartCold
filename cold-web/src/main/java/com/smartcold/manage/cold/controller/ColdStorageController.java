@@ -1,61 +1,59 @@
 package com.smartcold.manage.cold.controller;
 
-import com.smartcold.manage.cold.dao.ColdStorageMapper;
-import com.smartcold.manage.cold.dao.RdcSensorMapper;
-import com.smartcold.manage.cold.entity.ColdStorageEntity;
-import com.smartcold.manage.cold.entity.RdcSensor;
-import com.smartcold.manage.cold.service.ColdStorageService;
-
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcSensorMapper;
+import com.smartcold.manage.cold.dto.NewStorageTempDto;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageEntity;
+import com.smartcold.manage.cold.entity.olddb.RdcSensor;
+import com.smartcold.manage.cold.enums.StorageType;
+import com.smartcold.manage.cold.service.StorageService;
 
-/**
- * Description: ColdStorageController Author: qiunian.sun Update:
- * qiunian.sun(2016-03-15 23:38)
- */
 @Controller
-@RequestMapping(value = "/coldStorage")
+@ResponseBody
+@RequestMapping("/coldStorage")
 public class ColdStorageController {
-
+	
 	@Autowired
-	private ColdStorageMapper coldStorageDao;
-
+	StorageService storageService;
+	
 	@Autowired
-	private ColdStorageService coldStorageService;
-
+	ColdStorageSetMapper coldSttorageSetDao;
+	
+	@Autowired
+	ColdStorageMapper coldStorageDao;
+	
 	@Autowired
 	private RdcSensorMapper rdcSensorDao;
-
-	@RequestMapping(value = "/findColdStorageById", method = RequestMethod.GET)
-	@ResponseBody
-	public Object findColdStorageById(@RequestParam int storageID, @RequestParam int npoint) {
-		return coldStorageDao.findLastNPoint(storageID, npoint);
+	
+	@RequestMapping("/getTempByNums")
+	public Object getTempByNums(Integer oid,String key,
+			@RequestParam(value="nums",defaultValue="480")Integer nums){
+		List<StorageKeyValue> list = storageService.findByNums(StorageType.STORAGE, oid, key, nums);
+		NewStorageTempDto storageTempDto = new NewStorageTempDto();
+		storageTempDto.setList(list);
+		storageTempDto.setStartTemperature(coldSttorageSetDao.findLastNPoint(oid, 1).get(0).getStartTemperature());
+		return storageTempDto;
 	}
-
-	@RequestMapping(value = "/getTemperInfoById", method = RequestMethod.GET)
-	@ResponseBody
-	public Object getTemperInfoById(@RequestParam int storageID, @RequestParam int npoint) {
-		return coldStorageService.getTemperInfoById(storageID, npoint);
-	}
-
+	
 	@RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
-	@ResponseBody
 	public Object findByUserId(@RequestParam int userId) {
-		return coldStorageService.findByUserId(userId);
+		return storageService.findByUserId(userId);
 	}
-
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/findAllNewColdStorage", method = RequestMethod.GET)
 	@ResponseBody
@@ -94,13 +92,5 @@ public class ColdStorageController {
 			allInfoList.add(map);
 		}
 		return allInfoList;
-	}
-
-	@RequestMapping(value = "/findInfoByIdTime")
-	@ResponseBody
-	public Object findInfoByIdTime(int storageId, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-
-		return coldStorageDao.findPoitByTime(storageId, startTime, endTime);
 	}
 }

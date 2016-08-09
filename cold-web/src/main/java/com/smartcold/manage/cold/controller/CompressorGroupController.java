@@ -1,5 +1,9 @@
 package com.smartcold.manage.cold.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,42 +11,65 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.CompressorGroupMapper;
-import com.smartcold.manage.cold.dao.CompressorGroupSetMapper;
+import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.CompressorGroupService;
+import com.smartcold.manage.cold.service.StorageService;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 15:05)
  */
 @Controller
+@ResponseBody
 @RequestMapping(value = "/compressorGroup")
 public class CompressorGroupController {
 
-	@Autowired
-	private CompressorGroupMapper compressorGroupDao;
 
 	@Autowired
 	private CompressorGroupSetMapper compressorGroupSetDao;
 
 	@Autowired
 	private CompressorGroupService compressorGroupService;
+	
+	@Autowired
+	private StorageService storageService;
 
 	@RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
-	@ResponseBody
 	public Object findByUserId(@RequestParam int userId) {
 		return compressorGroupService.findByUserId(userId);
 	}
 
-	@RequestMapping(value = "/findByGroupId", method = RequestMethod.GET)
-	@ResponseBody
-	public Object findByGroupId(@RequestParam int compressorID, @RequestParam int npoint) {
-		System.out.println("compressorID: " + compressorID);
-		return compressorGroupDao.findLastNPoint(compressorID, npoint);
-	}
 
 	@RequestMapping(value = "/findByRdcId", method = RequestMethod.GET)
-	@ResponseBody
 	public Object findByGroupId(@RequestParam int rdcId) {
-		return compressorGroupSetDao.findLastNPoint(rdcId);
+		return compressorGroupSetDao.findByRdcId(rdcId);
+	}
+	
+	@RequestMapping("/findPressByNums")
+	public Object findPressByNums(int compressorID,String key,
+			@RequestParam(value="nums",defaultValue="2")Integer nums){
+		List<StorageKeyValue> lowPress = storageService.findByNums(StorageType.COMPRESSOR, 
+				compressorID, "lowPress", nums);
+		List<StorageKeyValue> highPress = storageService.findByNums(StorageType.COMPRESSOR, 
+				compressorID, "highPress", nums);
+		Map result = new HashMap<String, List<StorageKeyValue>>(2);
+		result.put("lowPress", lowPress);
+		result.put("highPress", highPress);
+		return result;
+	}
+	
+	@RequestMapping("/findCompressorByNums")
+	public Object findCompressorByNums(int compressorID,
+			@RequestParam(value="nums",defaultValue="1")Integer nums){
+		Map<String, List<StorageKeyValue>> result = new HashMap<String, List<StorageKeyValue>>();
+		StorageType stype = StorageType.COMPRESSOR;
+		result.put("compressor1",storageService.findByNums(stype, compressorID, "Compressor1", nums));
+		result.put("compressor2",storageService.findByNums(stype, compressorID, "Compressor2", nums));
+		result.put("compressor3",storageService.findByNums(stype, compressorID, "Compressor3", nums));
+		result.put("compressor4",storageService.findByNums(stype, compressorID, "Compressor4", nums));
+		result.put("compressor5",storageService.findByNums(stype, compressorID, "Compressor5", nums));
+		result.put("compressor6",storageService.findByNums(stype, compressorID, "Compressor6", nums));
+		return result;
 	}
 }

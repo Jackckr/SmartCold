@@ -2,7 +2,7 @@ package com.smartcold.manage.cold.service;
 
 import java.sql.Date;
 
-import com.smartcold.manage.cold.entity.RoleUser;
+import com.smartcold.manage.cold.entity.olddb.RoleUser;
 
 
 public interface RoleUserService {

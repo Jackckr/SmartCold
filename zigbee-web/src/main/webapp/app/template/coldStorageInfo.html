@@ -255,6 +255,33 @@
                         </div>
 
                         <div class="form-group rdc">
+                            <label class="col-sm-4 control-label">资质荣誉图：</label>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-6 divCSS">
+                                            <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
+                                                   ngf-multiple="true" name="honorfiles">
+                                    </div>
+                                    <div class="col-sm-6 divCSS">
+                                        <small class="text-warning" style="width: 100px">*最多八张</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="honorPicShow.length>0">
+                            <div class="pull-left" ng-repeat="item in honorPicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%" ng-click="goPicDetail(item)" alt="" />
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deleteHonorPic(item)"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-lg-offset-2">
+                            <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
+                                <i class="fa fa-times danger" style="margin-right:10px;color:red;"
+                                   ng-click="drophonor(honorfile)"></i>
+                            </label>
+                        </div>
+
+                        <div class="form-group rdc">
                             <label class="col-sm-4 control-label">功能平面布置图：</label>
                             <div class="col-sm-8">
                                 <form name="arrangeform">
@@ -263,16 +290,21 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="form-group rdc" ng-if="arrangePicShow != null">
+                            <label class="col-sm-4 control-label"></label>
+                            <div class="" style="padding:5px;position:relative;display:inline-block">
+                                <img style="width: 86px;" ng-src="{{arrangePicShow.location}}" ng-click="goPicDetail(arrangePicShow)" alt="" />
+                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
+                            </div>
+                        </div>
 
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">冷库图片：</label>
                             <div class="col-sm-8">
                                 <div class="row">
                                     <div class="col-sm-6 divCSS">
-                                        <form name="form">
-                                            <input type="file" ngf-select="addFiles($files)" ng-model="files"
+                                        <input type="file" ngf-select="addFiles($files)" ng-model="files"
                                                    ngf-multiple="true" name="files">
-                                        </form>
                                     </div>
                                     <div class="col-sm-6 divCSS">
                                         <small class="text-warning" style="width: 100px">*最多五张</small>
@@ -280,19 +312,34 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" ng-if="storagePicShow.length>0">
+                            <div class="pull-left" ng-repeat="item in storagePicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%" ng-click="goPicDetail(item)" alt="" />
+                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(item)"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-lg-offset-2">
+                            <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
+                                <i class="fa fa-times danger" style="margin-right:1px;color:red;"
+                                   ng-click="drop(file)"></i>
+                            </label>
+                        </div>
                     </form>
-                </div>
-                <div class="col-lg-12 col-lg-offset-2">
-                    <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
-                        <i class="icon-remove-sign danger" style="margin-right:10px;color:red;"
-                           ng-click="drop(file)"></i>
-                    </label>
                 </div>
             </div>
 
             <div class="col-lg-8 col-lg-offset-2" style="padding-left: 30%;padding-right: 30%;padding-bottom: 10px">
-                <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;">提交</button>
+                <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;" ng-disabled="isDisabled">提交</button>
             </div>
         </div>
     </section>
-</div>
+</div><script type="text/ng-template" id="myModelContent.html">
+    <div class="modal-body">
+        <ul>
+            <img src="{{itemPic.location}}" width="100%" height="100%"/>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">关闭</button>
+    </div>
+</script>

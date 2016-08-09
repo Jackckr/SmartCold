@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.UserMapper;
-import com.smartcold.manage.cold.entity.CookieEntity;
-import com.smartcold.manage.cold.entity.Role;
-import com.smartcold.manage.cold.entity.RoleUser;
-import com.smartcold.manage.cold.entity.UserEntity;
+import com.smartcold.manage.cold.dao.olddb.UserMapper;
+import com.smartcold.manage.cold.dto.ResultDto;
+import com.smartcold.manage.cold.entity.olddb.CookieEntity;
+import com.smartcold.manage.cold.entity.olddb.Role;
+import com.smartcold.manage.cold.entity.olddb.RoleUser;
+import com.smartcold.manage.cold.entity.olddb.UserEntity;
 import com.smartcold.manage.cold.service.CookieService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
@@ -55,7 +56,7 @@ public class UserController extends BaseController {
 	 *             login UserController
 	 * @Description: 用户登录
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Object login(HttpServletRequest request, String userName, String password, HttpServletResponse response) {
 		// UserEntity user = userDao.findByPassword(userName, password);
@@ -63,14 +64,15 @@ public class UserController extends BaseController {
 		if (user.getId() != 0) {
 			String cookie = cookieService.insertCookie(userName);
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
+			if(roleUser==null)return new ResultDto(0, "您没有权限登录该系统！若有疑问请联系管理员！");
 			Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
 			user.setPassword("******");
 			user.setRole(role.getId());
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
-			return true;
+			return new ResultDto(0, String.format("token=%s", cookie));
 		}
-		return false;
+		return new ResultDto(1, "用户名或密码错误！");
 	}
 	/*
 	 * @SuppressWarnings({ "finally", "rawtypes", "unchecked" })
@@ -117,13 +119,20 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object logout(HttpServletRequest request) {
 		request.getSession().setAttribute("user", null);
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("token")) {
+				cookieService.deleteCookie(cookie.getValue());
+			}
+		}
 		return true;
 	}
 
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {
-		UserEntity user;
+		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
+		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null) {
 			return new UserEntity();

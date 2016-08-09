@@ -2,7 +2,7 @@ package com.smartcold.manage.cold.service;
 
 import java.util.Date;
 
-import com.smartcold.manage.cold.entity.Privilege;
+import com.smartcold.manage.cold.entity.newdb.Privilege;
 
 
 public interface PrivilegeService {

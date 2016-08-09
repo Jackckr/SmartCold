@@ -3,9 +3,9 @@
     <form class="navbar-form">
 	  <div class="form-group">
 	    <label>RDC:&nbsp;&nbsp;</label>
-	    <select class="form-control" ng-options="rdc.name for rdc in rdclist" 
-	    ng-model="vm.choseRdc" ng-change="changeRdc()">
-	    </select>
+	    <div isteven-multi-select selection-mode="single" input-model="rdclist" output-model="vm.choseRdcs"
+               button-label="name" item-label="name" tick-property="isOn" helper-elements="filter" 
+               max-height="200px" on-item-click="changeRdc()" class="form-group"></div>
 	  </div>
 	</form>
   </div>
@@ -29,12 +29,12 @@
 		    ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加风机'">
 		      <label>冷库：</label>
 		      <select ng-options="storage.name for storage in storages" class="form-control"
-		       ng-model="vm.choseStorage"></select>
+		       ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
 		    </div>
 		    </form>
 		    <!--  -->
 		    <form id="addStorage" ng-show="choseDevice.name == '添加冷库'" class="col-lg-12 form-horizontal">
-		    <div style="margin-top:30px;">
+		    <div style="margin-top:30px;" class="col-lg-6">
 		      <div class="form-group">
 		        <label class="control-label col-lg-4"><em style="color:red">*</em>冷库名:</label>
 		        <div class="col-lg-8">
@@ -70,10 +70,27 @@
 		      	ng-disabled="!storageEntity.name">添加</a>
 		      </div>
 		      </div>
+		      <div class="col-lg-6">
+		        <label>已有冷库：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>冷库名</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="storage in storages">
+		           <td>{{storage.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteStorage(storage.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		    <!--  -->
 		    <form id="addDoor" ng-show="choseDevice.name == '添加冷库门'"  class="col-lg-12 form-horizontal">
-		     <div style="margin-top:30px;">
+		     <div style="margin-top:30px;" class="col-lg-6">
 		      <div class="form-group">
 		        <label class="control-label col-lg-4"><em style="color:red">*</em>门名字:</label>
 		        <div class="col-lg-8">
@@ -97,10 +114,27 @@
 		      	ng-disabled="!doorEntity.name">添加</a>
 		      </div>
 		     </div>
+		     <div class="col-lg-6">
+		        <label>已有门：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>门名字</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="door in doors">
+		           <td>{{door.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteDoor(door.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		    <!--  -->
 		    <form id="addBlower" ng-show="choseDevice.name == '添加风机'" class="col-lg-12 form-horizontal">
-		      <div style="margin-top:30px;">
+		      <div style="margin-top:30px;" class="col-lg-6">
 		        <div class="form-group">
 		         <label class="control-label col-lg-4"><em style="color:red">*</em>风机名字:</label>
 		         <div class="col-lg-8">
@@ -118,10 +152,27 @@
 		      	ng-disabled="!blowerEntity.name">添加</a>
 		       </div>
 		     </div>
+		     <div class="col-lg-6">
+		        <label>已有风机：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>风机名字</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="blower in blowers">
+		           <td>{{blower.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteBlower(blower.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		    <!--  -->
 		    <form id="addCompressGroup" ng-show="choseDevice.name == '添加压缩机组'" class="col-lg-12 form-horizontal">
-		      <div style="margin-top:30px;">
+		      <div style="margin-top:30px;" class="col-lg-6">
 		        <div class="form-group">
 		         <label class="control-label col-lg-4"><em style="color:red">*</em>机组名字:</label>
 		         <div class="col-lg-8">
@@ -151,35 +202,27 @@
 		      	ng-disabled="!compressGroupEntity.name">添加</a>
 		       </div>
 		     </div>
+		     <div class="col-lg-6">
+		        <label>已有压缩机组：</label>
+		        <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+		        <thead>
+		          <tr>
+		          <th>机组名字</th>
+		          <th>操作</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="compressGroup in compressGroups">
+		           <td>{{compressGroup.name}}</td>
+		           <td><a class="btn btn-danger btn-xs" ng-click="deleteCompressGroup(compressGroup.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
+		          </tr>
+		        </tbody>
+		        </table>
+		      </div>
 		    </form>
 		  </div>
         </uib-tab>
         <!--  -->
-        <uib-tab>
-          <uib-tab-heading>
-		      <i class="fa fa-table"></i>账号配置
-		  </uib-tab-heading>
-		  <div class="col-lg-5 col-lg-offset-3" style="margin-top:50px;">
-		    <form class="navbar-form">
-		      <div class="form-group">
-		        <label>用户名:&nbsp;&nbsp;</label>
-		        <input style="width:250px;" ng-model="vm.username" class="form-control"/>
-		      </div>
-		    </form>
-		    <form class="navbar-form">
-		      <div class="form-group">
-		        <label>密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;</label>
-		        <input style="width:250px;" ng-model="vm.password" class="form-control"/>
-		      </div>
-		    </form>
-		    <form class="navbar-form">
-		      <div class="navbar-form">
-		      	<a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="deleteAccount()">删除</a>
-		        <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="saveAccount()">修改</a>
-		      </div>
-		    </form>
-		  </div>
-        </uib-tab>
         <uib-tab>
           <uib-tab-heading>
 		      <i class="fa fa-table"></i>冷库配置
@@ -199,7 +242,7 @@
 				      <th>采集数据描述名</th>
 				      <th>采集数据存储名(唯一)</th>
 				      <th>操作
-				      <a class="btn btn-success btn-xs" ng-click="vm.addStorageItem=true">
+				      <a class="btn btn-success btn-xs" ng-click="vm.choseStorage.addItem=true">
 				      <span class="glyphicon glyphicon-plus"></span></a>
 				      </th>
 			        </tr>		        
@@ -209,144 +252,154 @@
 			          <td>{{value}}</td>
 			          <td>{{key}}</td>
 			          <td>
-			          <a class="btn btn-danger btn-xs" ng-click="deleteKey(key)"><span class="glyphicon glyphicon-minus"></span></a>
-			          <a class="btn btn-success btn-xs" ng-click="vm.addStorageItem=true"><span class="glyphicon glyphicon-plus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="deleteKey(vm.choseStorage.mapping,key)"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-success btn-xs" ng-click="vm.choseStorage.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addStorageItem && vm.choseItem.columnkey != 'handWrite'">
+			        <tr ng-if="vm.choseStorage.addItem && vm.choseItem.columnkey != 'handWrite'">
 			          <td><select ng-options="item.columnvalue for item in storageItem" ng-model="vm.choseItem" class="form-control"></select></td>
 			          <td>{{vm.choseItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
-			          ng-click="addKey()">
+			          ng-click="addKey(vm.choseStorage.mapping,vm.choseItem.columnkey,vm.choseItem.columnvalue);
+			                    resetItem(storageItem,'choseItem',vm.choseStorage)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addStorageItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(storageItem,'choseItem',vm.choseStorage)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addStorageItem && vm.choseItem.columnkey == 'handWrite'">
+			        <tr ng-if="vm.choseStorage.addItem && vm.choseItem.columnkey == 'handWrite'">
 			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
 			          <td><select ng-options="item for item in storageItemKeys" ng-model="vm.choseItemKey" class="form-control"></select></td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput"
-			          ng-click="addKey()">
+			          ng-click="addKey(vm.choseStorage.mapping,vm.choseItemKey,vm.itemInput);resetItem(storageItem,'choseItem',vm.choseStorage)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addStorageItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(storageItem,'choseItem',vm.choseStorage)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
 			      </tbody>
 			    </table>
-			    <button class="btn btn-primary pull-right" ng-click="realSaveStorage()">保存</button>
 			   </div>
 		   </div>
-		   <div class="col-lg-12" style="margin-top:30px;">
+		   <div class="" style="margin-top:30px;">
 		    <div class="col-lg-6">
-		    <form class="navbar-form">
-	  		  <div class="form-group">
-			  <label>冷库门：</label>
-			  <select ng-options="door.name for door in doors" class="form-control"
-			   ng-model="vm.choseDoor"></select>
-			   </div>
-		     </form>
 			   <div class="">
 			    <table class="table table-striped table-bordered ng-pristine ng-untouched">
 			      <thead>
 			        <tr>
+			          <th>门名字</th>
 				      <th>采集数据描述名</th>
 				      <th>采集数据存储名(唯一)</th>
-				      <th>操作
-				      <a class="btn btn-success btn-xs" ng-click="vm.addDoorItem=true">
-				      <span class="glyphicon glyphicon-plus"></span></a>
-				      </th>
+				      <th>操作</th>
 			        </tr>		        
 			      </thead>
-			      <tbody>
-			        <tr ng-repeat="(key,value) in vm.choseDoor.mapping">
+			      <tbody ng-repeat="door in doors">
+			        <tr ng-if="!objectLength(door.mapping) && !door.addItem">
+			          <td>{{door.name}}</td>
+			          <td></td>
+			          <td></td>
+			          <td>
+			          <a class="btn btn-success btn-xs" ng-click="door.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
+			          </td>
+			        </tr>
+			        <tr ng-repeat="(key,value) in door.mapping">
+			          <td rowspan="{{objectLength(door.mapping) + (door.addItem?1:0)}}" ng-if="$index == 0">{{door.name}}{{Object.keys(door).length}}</td>
 			          <td>{{value}}</td>
 			          <td>{{key}}</td>
 			          <td>
-			          <a class="btn btn-danger btn-xs" ng-click="deleteDoorKey(key)"><span class="glyphicon glyphicon-minus"></span></a>
-			          <a class="btn btn-success btn-xs" ng-click="vm.addDoorItem=true"><span class="glyphicon glyphicon-plus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="deleteKey(door.mapping,key)"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-success btn-xs" ng-click="door.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addDoorItem && vm.choseItem.columnkey != 'handWrite'">
+			        <tr ng-if="door.addItem && vm.choseItem.columnkey != 'handWrite'">
+			          <td ng-if="!objectLength(door.mapping)">{{door.name}}</td>
 			          <td><select ng-options="item.columnvalue for item in storageItem" ng-model="vm.choseItem" class="form-control"></select></td>
 			          <td>{{vm.choseItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
-			          ng-click="addDoorKey()">
+			          ng-click="addKey(door.mapping,vm.choseItem.columnkey,vm.choseItem.columnvalue);
+			                    resetItem(storageItem,'choseItem',door)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addDoorItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(storageItem,'choseItem',door)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addDoorItem && vm.choseItem.columnkey == 'handWrite'">
+			        <tr ng-if="door.addItem && vm.choseItem.columnkey == 'handWrite'">
+			          <td ng-if="!objectLength(door.mapping)">{{door.name}}</td>
 			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
 			          <td><select ng-options="item for item in storageItemKeys" ng-model="vm.choseItemKey" class="form-control"></select></td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput"
-			          ng-click="addDoorKey()">
+			          ng-click="addKey(door.mapping, vm.choseItemKey, vm.itemInput);
+			             	 	resetItem(storageItem,'choseItem',door)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addDoorItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(storageItem,'choseItem',door)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
 			      </tbody>
 			    </table>
-			    <button class="btn btn-primary pull-right" ng-click="realSaveDoor()">保存</button>
 			   </div>
 			   </div>
 			   <div class="col-lg-6">
-			   <form class="navbar-form">
-	  		  <div class="form-group">
-			  <label>风机：</label>
-			  <select ng-options="blower.name for blower in blowers" class="form-control"
-			   ng-model="vm.choseBlower"></select>
-			   </div>
-		     </form>
 			   <div class="">
 			    <table class="table table-striped table-bordered ng-pristine ng-untouched">
 			      <thead>
 			        <tr>
+			          <th>风机名字</th>
 				      <th>采集数据描述名</th>
 				      <th>采集数据存储名(唯一)</th>
 				      <th>操作
-				      <a class="btn btn-success btn-xs" ng-click="vm.addBlowerItem=true">
-				      <span class="glyphicon glyphicon-plus"></span></a>
 				      </th>
 			        </tr>		        
 			      </thead>
-			      <tbody>
-			        <tr ng-repeat="(key,value) in vm.choseBlower.mapping">
+			      <tbody ng-repeat="blower in blowers">
+			        <tr ng-if="!objectLength(blower.mapping) && !blower.addItem">
+			          <td>{{blower.name}}</td>
+			          <td></td>
+			          <td></td>
+			          <td>
+			          <a class="btn btn-success btn-xs" ng-click="blower.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
+			          </td>
+			        </tr>
+			        <tr ng-repeat="(key,value) in blower.mapping">
+			          <td rowspan="{{objectLength(blower.mapping) + (blower.addItem?1:0)}}" ng-if="$index == 0">{{blower.name}}{{Object.keys(blower).length}}</td>
 			          <td>{{value}}</td>
 			          <td>{{key}}</td>
 			          <td>
-			          <a class="btn btn-danger btn-xs" ng-click="deleteBlowerKey(key)"><span class="glyphicon glyphicon-minus"></span></a>
-			          <a class="btn btn-success btn-xs" ng-click="vm.addBlowerItem=true"><span class="glyphicon glyphicon-plus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="deleteKey(blower.mapping,key)"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-success btn-xs" ng-click="blower.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addBlowerItem && vm.choseBlowerItem.columnkey != 'handWrite'">
+			        <tr ng-if="blower.addItem && vm.choseBlowerItem.columnkey != 'handWrite'">
+			          <td ng-if="!objectLength(blower.mapping)">{{blower.name}}</td>
 			          <td><select ng-options="item.columnvalue for item in blowerItem" ng-model="vm.choseBlowerItem" class="form-control"></select></td>
 			          <td>{{vm.choseBlowerItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
-			          ng-click="addBlowerKey()">
+			          ng-click="addKey(blower.mapping,vm.choseBlowerItem.columnkey,vm.choseBlowerItem.columnvalue);
+			                    resetItem(blowerItem,'choseBlowerItem',blower)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addBlowerItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(blowerItem,'choseBlowerItem',blower)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addBlowerItem && vm.choseBlowerItem.columnkey == 'handWrite'">
+			        <tr ng-if="blower.addItem && vm.choseBlowerItem.columnkey == 'handWrite'">
+			          <td ng-if="!objectLength(blower.mapping)">{{blower.name}}</td>
 			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
 			          <td><select ng-options="item for item in blowerItemKeys" ng-model="vm.choseBlowerItemKey" class="form-control"></select></td>
 			          <td>
-			          <a class="btn btn-primary btn-xs"  ng-disabled="!vm.itemInput"
-			          ng-click="addBlowerKey()">
+			          <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput"
+			          ng-click="addKey(blower.mapping, vm.choseBlowerItemKey, vm.itemInput);
+			             	 	resetItem(blowerItem,'choseBlowerItem',blower)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addBlowerItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(blowerItem,'choseBlowerItem',blower)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
 			      </tbody>
 			    </table>
-			    <button class="btn btn-primary pull-right" ng-click="realSaveBlower()">保存</button>
 			   </div>
 			   </div>
+		   </div>
+		   <div class="col-lg-12">
+		   <button class="btn btn-primary pull-right" ng-click="realSaveStorage()">保存</button>
 		   </div>
         </uib-tab>
         <uib-tab>
@@ -368,7 +421,7 @@
 				      <th>采集数据描述名</th>
 				      <th>采集数据存储名(唯一)</th>
 				      <th>操作
-				      <a class="btn btn-success btn-xs" ng-click="vm.addCompressGroupItem=true">
+				      <a class="btn btn-success btn-xs" ng-click="vm.choseCompressGroup.addItem=true">
 				      <span class="glyphicon glyphicon-plus"></span></a>
 				      </th>
 			        </tr>		        
@@ -378,28 +431,30 @@
 			          <td>{{value}}</td>
 			          <td>{{key}}</td>
 			          <td>
-			          <a class="btn btn-danger btn-xs" ng-click="deleteCompressGroupKey(key)"><span class="glyphicon glyphicon-minus"></span></a>
-			          <a class="btn btn-success btn-xs" ng-click="vm.addCompressGroupItem=true"><span class="glyphicon glyphicon-plus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="deleteKey(vm.choseCompressGroup.mapping,key)"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-success btn-xs" ng-click="vm.choseCompressGroup.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addCompressGroupItem && vm.choseCompressGroupItem.columnkey != 'handWrite'">
+			        <tr ng-if="vm.choseCompressGroup.addItem && vm.choseCompressGroupItem.columnkey != 'handWrite'">
 			          <td><select ng-options="item.columnvalue for item in compressGroupItem" ng-model="vm.choseCompressGroupItem" class="form-control"></select></td>
 			          <td>{{vm.choseCompressGroupItem.columnkey}}</td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" 
-			          ng-click="addCompressGroupKey()">
+			          ng-click="addKey(vm.choseCompressGroup.mapping,vm.choseCompressGroupItem.columnkey,vm.choseCompressGroupItem.columnvalue);
+			                    resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addCompressGroupItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
-			        <tr ng-if="vm.addCompressGroupItem && vm.choseCompressGroupItem.columnkey == 'handWrite'">
+			        <tr ng-if="vm.choseCompressGroup.addItem && vm.choseCompressGroupItem.columnkey == 'handWrite'">
 			          <td><input ng-model="vm.itemInput" class="form-control"/></td>
 			          <td><select ng-options="item for item in compressGroupItemKeys" ng-model="vm.choseCompressGroupItemKey" class="form-control"></select></td>
 			          <td>
 			          <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput"
-			          ng-click="addCompressGroupKey()">
+			          ng-click="addKey(vm.choseCompressGroup.mapping,vm.choseCompressGroupItemKey,vm.itemInput);
+			                    resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)">
 			          <span class="glyphicon glyphicon-check"></span></a>
-			          <a class="btn btn-danger btn-xs" ng-click="vm.addCompressGroupItem=false"><span class="glyphicon glyphicon-minus"></span></a>
+			          <a class="btn btn-danger btn-xs" ng-click="resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)"><span class="glyphicon glyphicon-minus"></span></a>
 			          </td>
 			        </tr>
 			      </tbody>
@@ -443,6 +498,32 @@
 			      </tbody>
 			    </table>
 			    <button class="btn btn-primary pull-right" ng-click="realSaveWarning()">保存</button>
+			</div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading>
+		      <i class="fa fa-table"></i>账号配置
+		  </uib-tab-heading>
+		  <div class="col-lg-5 col-lg-offset-3" style="margin-top:50px;">
+		    <form class="navbar-form">
+		      <div class="form-group">
+		        <label>用户名:&nbsp;&nbsp;</label>
+		        <input style="width:250px;" ng-model="vm.username" class="form-control"/>
+		      </div>
+		    </form>
+		    <form class="navbar-form">
+		      <div class="form-group">
+		        <label>密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;</label>
+		        <input style="width:250px;" ng-model="vm.password" class="form-control"/>
+		      </div>
+		    </form>
+		    <form class="navbar-form">
+		      <div class="navbar-form">
+		      	<a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="deleteAccount()">删除</a>
+		        <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="saveAccount()">修改</a>
+		      </div>
+		    </form>
+		  </div>
         </uib-tab>
       </uib-tabset>
     </div>

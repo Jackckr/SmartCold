@@ -36,7 +36,7 @@
 			      <input type="hidden" name="typeText" value="{{typeText}}">
 			      <input type="hidden" name="detlAddress" value="">
 			    </div>
-			    <div id="recinfo_div" class="shar_none mode_hide mode_1_1 mode_3_1">
+			    <div id="recinfo_div" >
 			       <input id="txt_rdcID" type="hidden" name="rdcID" value="{{rdcID}}">
 					<div class="outSon">
 						<div class="company">{{rdcinfo.name}}</div><div class="position">
@@ -64,12 +64,12 @@
 						</select>
 					</div>
 				</div>
-				<div id="" class="mode_1_2 mode_3_2 mode_hide shar_none">
+				<div id="sh_pct_div" class="mode_hide shar_none" ><!-- class="mode_1_2 mode_3_2 mode_hide shar_none"  -->
 					<div class="infoList clearfix city">
 						<div class="pull-left col-sm-4  control-label "  ><em>*</em>省:</div>
 						<div class="pull-left">
 							 <select id="sl_provinceId" class="form-control" ng-model="provinceId" ng-disabled="editable" ng-change="changcity()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-							 <input  name="provinceId"  type="hidden" value="{{provinceId}}">
+							 <input id="txt_provinceId" name="provinceId"  type="hidden" value="{{provinceId}}">
 						</div>
 					</div>
 					<div class="infoList clearfix city"  >

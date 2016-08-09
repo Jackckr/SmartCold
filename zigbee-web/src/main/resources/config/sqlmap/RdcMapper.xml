@@ -4,7 +4,7 @@
 <mapper namespace="com.smartcold.zigbee.manage.dao.RdcMapper">
 
     <select id="findRdcList" parameterType="map" resultType="RdcEntity">
-         SELECT * FROM `Rdc` order by `addTime` desc
+         SELECT * FROM `Rdc` where `latitude`!=0 and `longitude`!=0 order by `addTime` desc
     </select>
 
     <select id="findRDCByRDCId" parameterType="map" resultType="RdcEntity">
@@ -119,10 +119,21 @@
 	        <if test="userID !=0"> and r.userid = ${userID} </if> <!--  关键字 -->
        ORDER BY r.addTime DESC
 	</select>
+	<select id="findRDCById" parameterType="Integer" resultType="map" >
+		select 
+            r.id, r.`name`,r.address,r.capacity,r.sqm,r.cellphone ,r.struct,r.coldtype,mt.type managetype,dt.type storagetype,te.type storagetempertype ,t.storagetruck,t.rdcscore,date_format(r.addtime, '%Y-%m-%d') addtime
+        from rdc r 
+		  LEFT JOIN rdcext t ON t.RDCID=r.id 
+		  LEFT JOIN storagemanagetype mt on  mt.id=t.managetype
+		  LEFT JOIN storagetype dt on  dt.id=t.storagetype
+		  LEFT JOIN storagetempertype te on  te.id=t.storagetempertype 
+		where r.id=#{rdcID} 
+		ORDER BY r.addtime desc ;
+	</select>
     
     
 	<select id="getRDCList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
-			 SELECT
+	  SELECT 
 			r.id,
 			r.name,
 			r.address,
@@ -135,7 +146,7 @@
 			Rdc r
 		LEFT JOIN rdcext t ON t.RDCID = r.id
 		WHERE 1=1
-	        <if test="keyword !=null and  keyword != ''"> and r.name like '%${keyword}%' </if> <!--  关键字 -->
+	        <if test="keyword !=null and  keyword != ''"> and  ( r.name like '%${keyword}%' or r.address like '%${keyword}%' )</if> <!--  关键字 -->
     		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!--区域 -->
     		<if test="sqm !=null and  sqm != ''"> and ${sqm} </if><!-- -->
     		<if test="managementType !=null and  managementType != ''">  and t.managetype in(${managementType}) </if><!--  经营类型-->

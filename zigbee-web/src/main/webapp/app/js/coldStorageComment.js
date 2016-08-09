@@ -51,6 +51,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.address = data[0].address;
             $scope.provinceId = data[0].provinceId;
             $scope.storagePics = data[0].storagePics;
+            $scope.storageHonorPics = data[0].storageHonorPics;
             $scope.storageGallery = new Array();
             //小于两张图片添加默认
             for(var j=0, len = $scope.storagePics.length;j < 2 - len;j++){
@@ -344,7 +345,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     }
     
       
-   $http.get('/i/user/findUser').success(function(data){
+    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data){
         $rootScope.user = data;
 	 });
 

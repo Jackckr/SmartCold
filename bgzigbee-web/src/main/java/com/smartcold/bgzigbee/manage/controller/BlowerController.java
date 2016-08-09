@@ -64,4 +64,12 @@ public class BlowerController {
 
 		return new ResultDto(0, "添加成功");
 	}
+
+	@RequestMapping(value = "/deleteBlower", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteBlower(int id) {
+		blowerDao.deleteBlower(id);
+
+		return new ResultDto(0, "删除成功");
+	}
 }

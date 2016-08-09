@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.dao;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,4 +36,8 @@ public interface RdcMapper {
     public Page<RdcEntityDTO> getRDCList(Map<String, Object> parameters);
 
 	Page<RdcEntityDTO> findRDCByUserId(@Param("userID") int userID);
+	
+	public List<HashMap<String, Object>> findRDCById( int rdcID);
+	
+	
 }

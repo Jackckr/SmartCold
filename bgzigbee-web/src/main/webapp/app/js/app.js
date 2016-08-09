@@ -236,6 +236,12 @@ coldWeb.filter('sizeformat', function () {
     }
 });
 
+coldWeb.filter('objectLength',function(){
+    return function(obj,len){
+        return Object.keys(obj).length + (len?len:0);
+    }
+});
+
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/home");
@@ -304,5 +310,13 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/operationLog',
     	controller: 'operationLog',
     	templateUrl: 'app/template/operationLog.html'
+    }).state('coldStorageAudit', {
+        url: '/coldStorageAudit/:rdcID',
+        controller: 'coldStorageAudit',
+        templateUrl: 'app/template/editStorage.html'
+    }).state('coldStorageHonorAudit', {
+        url: '/coldStorageHonorAudit/:rdcId',
+        controller: 'coldStorageHonorAudit',
+        templateUrl: 'app/template/coldStorageHonor.html'
     });
 });

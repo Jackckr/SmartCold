@@ -1,5 +1,5 @@
 <!-- 页面主体区域开始 -->
-	<link rel="stylesheet" type="text/css" href="app/css/coldsharerdc.css">
+	 <link rel="stylesheet" type="text/css" href="app/css/coldsharerdc.css">
 	<link rel="stylesheet" type="text/css" href="app/css/common.css">
      <link rel="stylesheet" type="text/css" href="app/css/share_item_info.css">
     <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
@@ -12,6 +12,8 @@
      .time_control{height: 25px;}
      .time_control *{font-size: 10px;}
      .sorry{text-align: center;font-size: 18px;margin: 120px auto;}
+    .ng-gallery{ width: 940px;}
+    .tableInfo tbody tr { cursor: pointer;}
     </style>
 <div class="shareMain">
 	<!--   货品、配送、仓库区域 start-->
@@ -66,9 +68,9 @@
 			      </tr>
 			   </thead>
 			   <tbody>
-			      <tr  ng-repeat="rdc in goods">
+			      <tr  ng-click="gosharedile(rdc.id);" ng-repeat="rdc in goods" >
 			         <td width="5%">
-			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         	<div class="image"><img ng-src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
 			         	<div class="company">【{{rdc.typeText}}】 {{rdc.title}}</div>
@@ -166,14 +168,14 @@
 			         <th style="width:30%" colspan="2">车辆信息</th>
 			         <th style="width:20%">线路</th>
 			         <th style="width:10%">要求</th>
-			         <th style="width:30%">信息有效期</th>
+			         <th style="width:30%">始发信息</th>
 			         <th style="width:10%"></th>
 			      </tr>
 			   </thead>
 			   <tbody>
-			      <tr  ng-repeat="rdc in pslist">
+			      <tr  ng-click="gosharedile(rdc.id);"   ng-repeat="rdc in pslist">
 			         <td width="5%">
-			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         	<div class="image"><img ng-src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
 			         	<div class="company">【{{rdc.typeText}}】 {{rdc.title}} </div>
@@ -255,9 +257,9 @@
 			      </tr>
 			   </thead>
 			   <tbody>
-			      <tr  ng-repeat="rdc in rdcs">
+			      <tr  ng-click="gosharedile(rdc.id);"   ng-repeat="rdc in rdcs">
 			         <td width="5%">
-			         	<div class="image"><img src="{{rdc.logo}}"></div>
+			         	<div class="image"><img ng-src="{{rdc.logo}}"></div>
 			         </td>
 			         <td>
 			         	<div class="company">【{{rdc.typeText}}】{{rdc.title}} </div>
@@ -296,38 +298,35 @@
          </div>
          <div class="modal-body">   
              <!-- 主体开始 -->
-             <div id="release_main" class="shareMain shar_none">
-					<div class="main">
-							<div ng-if="vo.typeCode==1" class="lists" style="width: 630px;">
-								<ul id="sh_img_ul"><li ng-repeat="fl in vo.files"><img src="{{fl}}" /></li></ul>
-								<i class=" bg fl"><span class="glyphicon glyphicon-chevron-left" ></span></i>
-								<i class="bg fr"><span class="glyphicon glyphicon-chevron-right"></span></i>
+             <div id="release_main" class=" shar_none" style="margin-top: 0px;">
+					<div class="main"  >
+							<div id="dg_imglist" ng-if="vo.files.length" class="lists" style="width: 630px;">
+                                    <ng-gallery images="storageGallery" thumbs-num="10" ng-if="storageGallery.length"></ng-gallery>
 							</div>
 							<p class="h4">冷库详情</p>
 							<table class="info">
 								<caption>基本信息</caption>
 								<tbody>
-									
-									<tr ng-if="datatype==2"> 
+									<tr ng-if="dgdatatype==2"> 
 				 				         <th>冷库温度类型:</th> 
 				 				        <td>{{vo.codeLave2}}</td> 
 								    </tr>  
-							        <tr ng-if="datatype==2">
+							        <tr ng-if="dgdatatype==2">
 										<th>始发地:</th>
 										<td>{{vo.unit1}}</td>
 									</tr>
-									<tr ng-if="datatype==2">
+									<tr ng-if="dgdatatype==2">
 				 						<th>目的地:</th>
 				 					   <td>{{vo.unit2}}</td>
 				  					</tr>
-				  					<tr ng-if="datatype!=2">
-										<th>{{appmode[datatype].lab[0][0]}}:</th>
-										<td>{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</td>
+				  					<tr ng-if="dgdatatype!=2">
+										<th>{{appmode[dgdatatype].lab[0][0]}}:</th>
+										<td>{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[dgdatatype].lab[0][1] }}</td>
 									</tr>
 									<tr>
-				 						 <th>{{appmode[datatype].lab[1][0]}}:</th>
+				 						 <th>{{appmode[dgdatatype].lab[1][0]}}:</th>
 				  					      <td>{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}
-				  					      <span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span>
+				  					      <span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[dgdatatype].lab[1][1] }}</span>
 				  					   </td>
 				  					</tr>
 				  					<tr>
@@ -356,7 +355,6 @@
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-default"  data-dismiss="modal">关闭 </button>
-<!--             <button type="button" class="btn btn-primary">      提交更改 </button> -->
          </div>
       </div><!-- /.modal-content -->
  </div><!-- /.modal -->

@@ -33,24 +33,20 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     }
 
     $scope.citySelected = function () {
-       //alert($scope.cityId);
     }
 
     // 获取冷库经营类型
     $http.get('/i/rdc/findAllManageType').success(function (data) {
         $scope.manageTypes = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.manageType = data[0].id;
     });
 
     $scope.ManageTypeSelected = function () {
-        //alert($scope.manageType);
     }
 
     // 获取商品存放类型
     $http.get('/i/rdc/findAllTemperType').success(function (data) {
         $scope.temperTypes = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.temperType = data[0].id;
     });
 
@@ -61,7 +57,6 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     // 获取冷库温度类型
     $http.get('/i/rdc/findAllStorageType').success(function (data) {
         $scope.storageTypes = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.storageType = data[0].id;
     });
 
@@ -79,24 +74,20 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     // 获取冷链设施类型
     $http.get('/i/rdc/findAllCompanyDevice').success(function (data) {
         $scope.companyDevices = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.companyDevice = data[0].id;
     });
 
     $scope.CompanyDeviceSelected = function () {
-        //alert($scope.companyDevice);
     }
 
 
     // 制冷剂类型
     $http.get('/i/rdc/findAllStorageRefreg').success(function (data) {
         $scope.storageRefregs = data;
-        //console.log(data.length + ":" + data[0].id);
         $scope.storageRefreg = data[0].id;
     });
 
     $scope.StorageRefregSelected = function () {
-        //alert($scope.storageRefreg);
     }
 
     $scope.hasLihuoRoom = true;
@@ -118,6 +109,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     $scope.capacity4 = 0;
     $scope.capacity5 = 0;
     $scope.totalfiles = [];
+    $scope.totalhonorfiles = [];
 
     $scope.addFiles = function (files) {
         if($scope.totalfiles.length + files.length > 5){
@@ -126,18 +118,27 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
-    $scope.addArrangePic = function (arrangePic) {
-        //$scope.arrangePic = $scope.totalfiles.concat(arrangePic);
+    $scope.addHonorFiles = function (files) {
+        if($scope.totalhonorfiles.length + files.length > 8){
+            alert("最多上传八张图片");
+            return;
+        }
+        $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
     }
-/*    $scope.addHonorPic = function (honorPic) {
-        //$scope.honorPic = $scope.totalfiles.concat(honorPic);
-    }*/
+    $scope.addArrangePic = function (arrangePic) {
+    }
 
     $scope.drop = function(file){
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
-            	console.log("key:"+key);
                 $scope.totalfiles.splice(key,1);
+            }
+        })
+    }
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalhonorfiles,function(item, key){
+            if(item == honorfile){
+                $scope.totalhonorfiles.splice(key,1);
             }
         })
     }
@@ -172,17 +173,10 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             flag = false;
         }
 
-//        if ($scope.coldTruck1 === 0 && $scope.coldTruck2 === 0 &&$scope.coldTruck3 === 0 &&$scope.coldTruck4 === 0) {
-//            flag = false;
-//        }
-
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;
         }
 
-/*        if ($scope.telphoneNum == undefined || $scope.telphoneNum == '') {
-            flag = false;
-        }*/
         return flag;
     }
 
@@ -195,6 +189,14 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 file2: null,
                 file3: null,
                 file4: null,
+                honor0: null,
+                honor1: null,
+                honor2: null,
+                honor3: null,
+                honor4: null,
+                honor5: null,
+                honor6: null,
+                honor7: null,
                 name : encodeURI($scope.name,"UTF-8"),
                 provinceId : $scope.provinceId,
                 cityId : $scope.cityId,
@@ -208,7 +210,6 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 coldTruck3 : $scope.coldTruck3,
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
-                //telphoneNum : $scope.telphoneNum,
                 remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
                 tonnage : $scope.tonnage,
@@ -226,7 +227,6 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
-                //honorPic : $scope.honorPic,
                 arrangePics : $scope.arrangePic,
             }
             for(i = 0; i < $scope.totalfiles.length; i++){

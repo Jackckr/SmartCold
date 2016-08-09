@@ -2,7 +2,7 @@ package com.smartcold.manage.cold.service;
 
 import java.util.Date;
 
-import com.smartcold.manage.cold.entity.Company;
+import com.smartcold.manage.cold.entity.newdb.Company;
 
 public interface CompanyService {
     public Company getCompByCompId(int companyId);   

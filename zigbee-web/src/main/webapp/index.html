@@ -6,6 +6,21 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+    <script type="text/javascript">
+	    var sUserAgent = navigator.userAgent.toLowerCase();
+	    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+	    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+	    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+	    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+	    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+	    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+	    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+	    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+	    /*document.writeln("您的浏览设备为：");*/
+	    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+	        window.location.href="http://m.liankur.com"; /* 链接到不同的网址  这个是手机的 */
+	    } 
+    </script>
     <link rel="stylesheet" href="assets/css/bootstrap.css"/>
     <link rel="stylesheet" href="assets/css/ngGallery.css"/>
     <link rel="stylesheet" href="assets/css/font-awesome.min.css"/>
@@ -16,6 +31,7 @@
     <link rel="stylesheet" href="assets/css/ionicons.min.css"/>
     <link rel="stylesheet" href="app/css/app.css"/>
     <link rel="stylesheet" href="app/css/rdc.css"/>
+
     <!-- <link rel="stylesheet" href="assets/css/reponstive.css"/> -->
 <script type="text/javascript">!function(a,b){if(!b.__SV){var c,d,e,f;window.dplus=b,b._i=[],b.init=function(a,c,d){function g(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]),a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var h=b;for("undefined"!=typeof d?h=b[d]=[]:d="dplus",h.people=h.people||[],h.toString=function(a){var b="dplus";return"dplus"!==d&&(b+="."+d),a||(b+=" (stub)"),b},h.people.toString=function(){return h.toString(1)+".people (stub)"},e="disable track track_links track_forms register unregister get_property identify clear set_config get_config get_distinct_id track_pageview register_once track_with_tag time_event people.set people.unset people.delete_user".split(" "),f=0;f<e.length;f++)g(h,e[f]);b._i.push([a,c,d])},b.__SV=1.1,c=a.createElement("script"),c.type="text/javascript",c.charset="utf-8",c.async=!0,c.src="//w.cnzz.com/dplus.php?token=6f151994c54e5456a96a",d=a.getElementsByTagName("script")[0],d.parentNode.insertBefore(c,d)}}(document,window.dplus||[]),dplus.init("6f151994c54e5456a96a");</script>
 <style>
@@ -56,13 +72,15 @@
 
 	<header class="light">
 		<div class="nav-left" style="overflow:hidden;">
-			<h1 style="text-indent:-9999em;font-size:0;margin:0;'">
+			<h1 style="text-indent:-9999em;font-size:0;margin:0;width: 250px;height: 75px;">
 				睿冷云-冷链行业最权威的信息平台 <a href="#/home" class="logo"
-					title='睿冷云-冷链行业最权威的信息平台'> </a>
+					title='睿冷云-冷链行业最权威的信息平台'>
+				<img src="assets/img/logo_index15.png">
+			</a>
 			</h1>
 		</div>
 		<div class="nav-right mw-8">
-			<div class="nav-right" ng-show="user != null && user.id != 0">
+			<div class="nav-right" ng-cloak ng-show="user != null && user.id != 0" >
 				<div class="unauthenticated dropdown">
 					<!-- <strong class="text-primary dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" ng-bind="user.username"></strong><span class="caret"></span><span></span>
 					个人信息下拉菜单 start
@@ -81,6 +99,7 @@
 				   </ul>
 					个人信息下拉菜单 end -->
 					<div class="btn-group">
+<<<<<<< HEAD
 				 <button class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 				<ul class="dropdown-menu">
 					<li>
@@ -98,9 +117,28 @@
 				</ul>
 			</div>
 					<b><a ng-click="logout()" href="" ng-bind="'退出'">
+<!-- =======
+				     <button   class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+						 <ul class="dropdown-menu hide">
+							<li>
+								<a href="#/personalRdc">个人信息</a>
+							</li>
+							<li>
+								<a href="#/personalRdc">我的发布</a>
+							</li>
+							<li>
+								<a href="#/personalOrder">我的订单</a>
+							</li>
+							<li>
+								<a href="#/personalRdc">我的冷库</a>
+							</li>
+						</ul>
+			       </div>
+					<b style="margin-left: 20px;"><a ng-click="logout()" href="" ng-bind="'退出'">
+>>>>>>> 365f038f15fe050dc7786cafd577109633a5d520 -->
 					</a>
 					</b>
-				</div>
+				 </div>
 			</div>
 			<!-- visible-xs -->
 			<div class="nav-right" ng-show="user == null ||user.id == 0">
@@ -176,19 +214,18 @@
 		</section>
 	</footer>
 		<script src="bower_components/jquery/dist/jquery.js"></script>
-<!-- 	<script type="text/javascript" src="assets/js/jquery.js"></script> -->
-	<!-- <script type="text/javascript" src="assets/js/handlebars.js"></script>
+<!--<script type="text/javascript" src="assets/js/jquery.js"></script> 
+	<script type="text/javascript" src="assets/js/handlebars.js"></script>
 	<script src="assets/js/modernizr.min.js"></script>
-	<script type="text/javascript"
-		src="assets/js/bower_components/angular-cookies/angular-cookies.js"></script> -->
+	<script type="text/javascript" src="assets/js/bower_components/angular-cookies/angular-cookies.js"></script> -->
 	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 	<!-- <script type="text/javascript" src="assets/js/placeholder.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.utils.js"></script>
 	<script type="text/javascript" src="assets/js/d3.v3.min.js"></script>
-	<script type="text/javascript" src="assets/js/jquery.plupload.queue.min.js"></script>
-	<script type="text/javascript" src="assets/js/echarts-all.js"></script> -->
-	<script type="text/javascript"
-		src="http://api.map.baidu.com/api?v=2.0&ak=1b7XOzUYmHvOTXlchvZuDzns"></script>
+	<script type="text/javascript" src="assets/js/jquery.plupload.queue.min.js"></script> -->
+
+	<script type="text/javascript" src="assets/js/echarts-all.js"></script> 
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1b7XOzUYmHvOTXlchvZuDzns"></script>
 	<script src="assets/js/TextIconOverlay_min.js"></script>
 	<script src="assets/js/MarkerClusterer_min.js"></script>
 	<script src="bower_components/angular/angular.min.js"></script>
@@ -220,7 +257,7 @@
 		src="assets/plugins/daterangepicker2/daterangepicker.js"></script>
 	<!-- app js -->
 
-	<script src="app/js/app.js"></script>
+	<script src="app/js/app.js?i=new Date().getTime()"></script>
 	<script src="app/js/controller-base.js"></script>
 	<script src="app/js/controller-search.js"></script>
 	<script src="app/js/controller-review.js"></script>
@@ -239,6 +276,7 @@
 	<script src="app/js/personalRdc.js"></script>
 	<script src="app/js/personalOrder.js"></script>
 	<script src="app/js/orderGenerate.js"></script>
+	<script src="app/js/utile.js"></script>
 	<script type="text/javascript">
 	   $(function() {
 	       $('.navShow>li').hover(function() {

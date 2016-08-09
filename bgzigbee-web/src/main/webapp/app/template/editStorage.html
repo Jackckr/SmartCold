@@ -5,7 +5,7 @@
     <section>
       <div class="row">
         <div class="col-lg-8 col-lg-offset-1">
-	    <div class="col-lg-10 col-lg-offset-2">
+	    <div class="col-lg-10 col-lg-offset-2" ng-hide="editable">
           <div class="row" style="padding-top: 10px;">
             <ul class="breadcrumb" style="padding-left: 45px;text-align: center;">
                 <strong>修改冷库（<em style="color: red">*</em>为必填选项 ）</strong>
@@ -19,16 +19,13 @@
                 	<input class="form-control" type="text" ng-model="name" ng-disabled="editable" name="name"
                 		ng-remote-validate="/i/rdc/checkName"
                 		ng-remote-method="GET">
-                	<em ng-show="rdcForm.name.$error.ngRemoteValidate">用户名已经被注册</em>
+                	<em ng-show="rdcForm.name.$error.ngRemoteValidate">冷库名已经被注册</em>
                 </div>
 		    </div>
 		    
             <div class="form-group rdc">
                  <label class="col-sm-4 control-label">省：<em>*</em></label>
                  <div class="col-sm-8">
-<!--                            <select ng-model="provinceId" ng-change="provinceSelected(provinceId)">
-                                <option ng-repeat="x in provinces" value="{{x.provinceId}}">{{x.provinceName}}</option>
-                            </select>-->
                      <select class="form-control" ng-model="provinceId" ng-disabled="editable" ng-change="provinceSelected(provinceId)" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                  </div>
             </div>
@@ -37,54 +34,41 @@
 	                 <div class="col-sm-8">
 	                     <select class="form-control" ng-model="cityId" 
 	                     	ng-disabled="editable" ng-change="citySelected(cityId)" ng-options="x.cityID as x.cityName for x in citys"></select>
-	              <!--       <select ng-model="cityId" ng-change="citySelected(cityId)">
-	                         <option ng-repeat="x in citys" value="{{x.cityID}}">{{x.cityName}}</option>
-	                     </select>-->
 	                 </div>
 	             </div>
 	         
 		    <div class="form-group rdc">
 		      <label class="col-sm-4 control-label">地理位置：<em>*</em></label>
                 <div class="col-sm-8">
-                    <input class="form-control" type="text" ng-model="address">
+                    <input class="form-control" type="text" ng-model="address" ng-disabled="editable">
                 </div>
 		    </div>
             
 		    <div class="form-group rdc">
 		      <label class="col-sm-4 control-label">面积：<em>*</em></label>
               <div class="col-sm-8">
-                   <input class="form-control" placeholder="冷库面积（平方米）" type="text" ng-model="area">
+                   <input class="form-control" placeholder="冷库面积（平方米）" type="text" ng-model="area" ng-disabled="editable">
               </div>
 		    </div>
 		  
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">冷库经营类型：<em>*</em></label>
                         <div class="col-sm-8">
-                            <select class="form-control" ng-model="manageType" ng-change="ManageTypeSelected(manageType)" ng-options="x.id as x.type for x in manageTypes"></select>
+                            <select class="form-control" ng-model="manageType" ng-change="ManageTypeSelected(manageType)" ng-options="x.id as x.type for x in manageTypes" ng-disabled="editable"></select>
                         </div>
                     </div>
               
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">商品存放类型：<em>*</em></label>
                         <div class="col-sm-8">
-                            <select class="form-control" ng-model="storageType" ng-change="StorageTypeSelected(storageType)" ng-options="x.id as x.type for x in storageTypes"></select>
-<!--                            <label>
-                                <input type="radio" name="storageType" class=""><em>货架存放</em>
-                            </label>
-                            <label>
-                                <input type="radio" name="storageType" class=""><em>非货架存放</em>
-                            </label>-->
-                            <!--货架/非货架——高度6米——容量冷库容量情况：
-6米以下冷库按照吨计算：12度至25度（）吨，12度至-2度（）吨，-18度至-22度（）吨，-22至-30度（）吨，-30度以下（）吨
-6米以上冷库按照托盘计算：12度至25度（）托，12度至-2度（）托，-18度至-22度（）托，-22至-30度（）托，-30度以下（）托
--->
+                            <select class="form-control" ng-model="storageType" ng-change="StorageTypeSelected(storageType)" ng-options="x.id as x.type for x in storageTypes" ng-disabled="editable"></select>
                         </div>
                     </div>
                
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">冷库温度类型：<em>*</em></label>
                         <div class="col-sm-8">
-                            <select class="form-control" ng-model="temperType" ng-change="TemperTypeSelected(temperType)" ng-options="x.id as x.type for x in temperTypes"></select>
+                            <select class="form-control" ng-model="temperType" ng-change="TemperTypeSelected(temperType)" ng-options="x.id as x.type for x in temperTypes" ng-disabled="editable"></select>
                         </div>
                     </div>
                
@@ -94,10 +78,10 @@
                             <div>
                                 <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">＜1.8T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck1">
+                                    <input class="form-control" type="text" ng-model="coldTruck1" ng-disabled="editable">
                                     <span class="input-group-addon">辆</span>
                                     <span class="input-group-addon">＜1.8T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck2">
+                                    <input class="form-control" type="text" ng-model="coldTruck2" ng-disabled="editable">
                                     <span class="input-group-addon">辆</span>
                                 </div>
                             </div>
@@ -105,41 +89,26 @@
                             <div>
                                 <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">6～14T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck3">
+                                    <input class="form-control" type="text" ng-model="coldTruck3" ng-disabled="editable">
 									<span class="input-group-addon">辆</span>
 									
 									<span class="input-group-addon">＞14T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck4">
+                                    <input class="form-control" type="text" ng-model="coldTruck4" ng-disabled="editable">
                                     <span class="input-group-addon">辆</span>
                                 </div>
                             </div>
                             <div style="width: 400px"></div>
                         </div>
-                        <!--冷藏车数量：●＜1.8T（）辆，●1.8～6T（）辆，●6～14T（）辆，●＞14T（）辆-->
                     </div>
-               
-<!--                    <div class="form-group rdc">
-                        <label class="col-sm-4 control-label">手机号：<em>*</em></label>
-                        <div class="col-sm-8">
-                        	<input class="form-control" type="text" ng-model="phoneNum" name="phoneNum"
-                        		ng-minlength="11" ng-maxlength="11">
-                			<span ng-show="rdcForm.phoneNum.$invalid">手机号格式不正确</span>
-                			<span ng-show="rdcForm.phoneNum.$error.ngRemoteValidate">手机号已经被注册</span>
-                        </div>
-                    </div>
-               
-                    <div class="form-group rdc">
-                        <label class="col-sm-4 control-label">座机号：<em>*</em></label>
-                        <div class="col-sm-8"><input class="form-control" type="text" ng-model="telphoneNum"></div>
-                    </div>-->
+
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">联系电话：<em>*</em></label>
-                        <div class="col-sm-8"><input class="form-control" type="text" name="phoneNum" ng-model="phoneNum"></div>
+                        <div class="col-sm-8"><input class="form-control" type="text" name="phoneNum" ng-model="phoneNum" ng-disabled="editable"></div>
                     </div>
                 
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">备注：</label>
-                        <div class="col-sm-8"><textarea class="form-control" type="text" ng-model="remark"></textarea></div>
+                        <div class="col-sm-8"><textarea class="form-control" type="text" ng-model="remark" ng-disabled="editable"></textarea></div>
                     </div>
                 </form>
             </div>
@@ -150,110 +119,58 @@
                     <form class="form-horizontal">
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">吨位：</label>
-                            <div class="col-sm-8"><input class="form-control" type="text" ng-model="tonnage"></div>
+                            <div class="col-sm-8"><input class="form-control" type="text" ng-model="tonnage" ng-disabled="editable"></div>
                         </div>
                   
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">结构：</label>
-                            <div class="col-sm-8"><input class="form-control" type="text" ng-model="structure"></div>
+                            <div class="col-sm-8"><input class="form-control" type="text" ng-model="structure" ng-disabled="editable"></div>
                         </div>
                    
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">冷链设施类型：</label>
                             <div class="col-sm-8">
-                                <select class="form-control" ng-model="companyDevice" ng-change="CompanyDeviceSelected(companyDevice)" ng-options="x.id as x.type for x in companyDevices"></select>
+                                <select class="form-control" ng-model="companyDevice" ng-change="CompanyDeviceSelected(companyDevice)" ng-options="x.id as x.type for x in companyDevices" ng-disabled="editable"></select>
                             </div>
                         </div>
-                    
-             <!--           <div class="form-group rdcRadio">
-                            <label class="labelText">是否有月台：</label>
-                            <label>
-                                <input type="radio" name="r1" class="" checked><em>有</em>
-                            </label>
-                            <label>
-                                <input type="radio" name="r1" class=""><em>无</em>
-                            </label>
-                        </div>-->
+
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">是否有月台：</label>
                             <div class="col-sm-8">
-                        <!--        <select ng-model="platform">
-                                    <option value="0" selected>无</option>
-                                    <option value="1">有</option>
-                                </select>-->
-                                <select class="form-control" ng-model="platform" ng-options="x.id as x.name for x in haveOrNots"></select>
+                                <select class="form-control" ng-model="platform" ng-options="x.id as x.name for x in haveOrNots" ng-disabled="editable"></select>
                             </div>
                         </div>
-                   
-                        <!--<div class="form-group rdcRadio">
-                            <label class="labelText">是否有理货间：</label>
-                            <label>
-                                <input type="radio" name="r1" class="" checked><em>有</em>
-                            </label>
-                            <label>
-                                <input type="radio" name="r1" class=""><em>无</em>
-                            </label>
-                        </div>-->
+
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">是否有理货间：</label>
                             <div class="col-sm-8">
-                        <!--        <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)">
-                                    <option value="0">无</option>
-                                    <option value="1">有</option>
-                                </select>-->
-                                <select class="form-control" ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)" ng-options="x.id as x.name for x in haveOrNots"></select>
+                                <select class="form-control" ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)" ng-options="x.id as x.name for x in haveOrNots" ng-disabled="editable"></select>
                             </div>
                         </div>
                    
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">理货区面积：</label>
-                            <div class="col-sm-8"><input class="form-control" type="text" ng-model="lihuoArea"></div>
+                            <div class="col-sm-8"><input class="form-control" type="text" ng-model="lihuoArea" ng-disabled="editable"></div>
                         </div>
-                   
-      <!--                  <div class="form-group rdcRadio">
-                            <label class="labelText">是否理货区温控：</label>
-                            <label>
-                                <input type="radio" name="r1" class="" checked><em>是</em>
-                            </label>
-                            <label>
-                                <input type="radio" name="r1" class=""><em>否</em>
-                            </label>
-                        </div>-->
+
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">理货区有无温控：</label>
                             <div class="col-sm-8">
-                          <!--      <select ng-model="lihuoTemperCtr">
-                                    <option value="0" selected>无</option>
-                                    <option value="1">有</option>
-                                </select>-->
-                                <select class="form-control" ng-model="lihuoTemperCtr" ng-options="x.id as x.name for x in haveOrNots"></select>
+                                <select class="form-control" ng-model="lihuoTemperCtr" ng-options="x.id as x.name for x in haveOrNots" ng-disabled="editable"></select>
                             </div>
                         </div>
                     
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">制冷剂类型：</label>
                             <div class="col-sm-8">
-                                <select class="form-control" ng-model="storageRefreg" ng-change="StorageRefregSelected(storageRefreg)" ng-options="x.id as x.type for x in storageRefregs"></select>
+                                <select class="form-control" ng-model="storageRefreg" ng-change="StorageRefregSelected(storageRefreg)" ng-options="x.id as x.type for x in storageRefregs" ng-disabled="editable"></select>
                             </div>
                         </div>
-                   
-                        <!--<div class="form-group rdcRadio">
-                            <label class="labelText">有无温度记录：</label>
-                            <label>
-                                <input type="radio" name="r1" class="" checked><em>有</em>
-                            </label>
-                            <label>
-                                <input type="radio" name="r1" class=""><em>无</em>
-                            </label>
-                        </div>-->
+
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">有无温度记录：</label>
                             <div class="col-sm-8">
-                    <!--            <select ng-model="temperRecord">
-                                    <option value="0" selected>无</option>
-                                    <option value="1">有</option>
-                                </select>-->
-                                <select class="form-control" ng-model="temperRecord" ng-options="x.id as x.name for x in haveOrNots"></select>
+                                <select class="form-control" ng-model="temperRecord" ng-options="x.id as x.name for x in haveOrNots" ng-disabled="editable"></select>
                             </div>
                         </div>
                    
@@ -262,52 +179,68 @@
                             <div class="col-sm-8">
                                 <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">12度至25度</span>
-                                    <input class="form-control" type="text" ng-model="capacity1">
+                                    <input class="form-control" type="text" ng-model="capacity1" ng-disabled="editable">
 									<span class="input-group-addon">吨</span>
 									
 									<span class="input-group-addon">12度至-2度</span>
-                                    <input class="form-control" type="text" ng-model="capacity2">
+                                    <input class="form-control" type="text" ng-model="capacity2" ng-disabled="editable">
 									<span class="input-group-addon">吨</span>
                                 </div>
                                 <div class="col-sm-10 input-group">
                                 	<span class="input-group-addon">-18度至-22度</span>
-                                    <input class="form-control" type="text" ng-model="capacity3">
+                                    <input class="form-control" type="text" ng-model="capacity3" ng-disabled="editable">
 									<span class="input-group-addon">吨</span>
 									
 									<span class="input-group-addon">-22至-30度</span>
-                                    <input class="form-control" type="text" ng-model="capacity4">
+                                    <input class="form-control" type="text" ng-model="capacity4" ng-disabled="editable">
 									<span class="input-group-addon">吨</span>
                                 </div>
                                 <div class="col-sm-5 input-group">
                                 	<span class="input-group-addon">-30度以下</span>
-                                    <input class="form-control" type="text" ng-model="capacity5">
+                                    <input class="form-control" type="text" ng-model="capacity5" ng-disabled="editable">
 									<span class="input-group-addon">吨</span>
                                 </div>
                                 <div style="width: 400px"></div>
                             </div>
-
-                            <!--12度至25度（）吨，12度至-2度（）吨，-18度至-22度（）吨，-22至-30度（）吨，-30度以下（）吨-->
                         </div>
                     
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">周边设施：</label>
-                            <div class="col-sm-8"><textarea class="form-control" type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea></div>
+                            <div class="col-sm-8"><textarea class="form-control" type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.." ng-disabled="editable"></textarea></div>
                         </div>
-                    
-<!--                        <div class="form-group rdc">
-                            <label class="col-sm-4 control-label">资质&荣誉：</label>
+
+                        <div class="form-group rdc">
+                            <label class="col-sm-4 control-label">资质荣誉图：</label>
                             <div class="col-sm-8">
-                                <form ng-controller="coldStorageAdd" name="honorform">
-                                    <input type="file" ng-model="honorPic" name="honorPic" ngf-select="addHonorPic($honorPic)" ngf-multiple="true">
-                                </form>
+                                <div class="row">
+                                    <div class="col-sm-6 divCSS">
+                                        <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
+                                               ngf-multiple="true" name="honorfiles" ng-disabled="editable">
+                                    </div>
+                                    <div class="col-sm-6 divCSS">
+                                        <small class="text-warning" style="width: 100px">*最多八张</small>
+                                    </div>
+                                </div>
                             </div>
-                        </div>-->
+                        </div>
+                        <div class="form-group" ng-if="honorPicShow.length>0">
+                            <div class="pull-left" ng-repeat="item in honorPicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%" alt="" />
+                                <i class="fa fa-times danger" ng-if="!editable" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deleteHonorPic(item)"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-lg-offset-2">
+                            <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
+                                <i class="fa fa-times danger" style="margin-right:10px;color:red;"
+                                   ng-click="drophonor(honorfile)"></i>
+                            </label>
+                        </div>
                    
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">功能平面布置图：</label>
                             <div class="col-sm-8">
                                 <form name="arrangeform">
-                                    <input type="file" ng-model="arrangePic" name="arrangePic" ngf-select="addArrangePic($arrangePic)">
+                                    <input type="file" ng-model="arrangePic" name="arrangePic" ngf-select="addArrangePic($arrangePic)" ng-disabled="editable">
                                 </form>
                             </div>
                         </div>
@@ -315,20 +248,16 @@
                             <label class="col-sm-4 control-label"></label>
                             <div class="" style="padding:5px;position:relative;display:inline-block">
                                 <img style="width: 86px;" ng-src="{{arrangePicShow.location}}" alt="" />
-                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
+                                <i class="fa fa-times danger" ng-if="!editable"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
                             </div>
                         </div>
-        <!--        			<dic class="form-group" ng-if="arrangePicShow != null">
-                   			<img style="width: 86px;" ng-src="{{arrangePicShow.location}}" alt="" />
-                   		</dic> -->
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">冷库图片：</label>
                             <div class="col-sm-8">
                                 <div class="row">
                                     <div class="col-sm-6 divCSS">
                                         <form name="form">
-                                            <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
-                                            <!--<input ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true">-->
+                                            <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files" ng-disabled="editable">
                                         </form>
                                     </div>
                                     <div class="col-sm-6 divCSS">
@@ -337,12 +266,14 @@
                                 </div>
                             </div>
                         </div>
-                        <dic class="form-group" ng-if="storagePicShow.length>0">
+                        <div class="form-group" ng-if="storagePicShow.length>0">
                         	<div class="pull-left" ng-repeat="item in storagePicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
 	                   			<img ng-src="{{item.location}}" style="width:100%;height:100%" alt="" />
-                        		<i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(item)"></i>
+                        		<i class="fa fa-times danger" ng-if="!editable"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(item)"></i>
                         	</div>
-                   		</dic>
+                   		</div>
+                    </form>
+                </div>
                 </div>
                 <div class="col-lg-12 col-lg-offset-2">
                     <label ng-repeat="file in totalfiles" style="margin-left:20px"><span ng-bind="file.name"></span>
@@ -351,11 +282,10 @@
                 </div>
             </div>
 
-
-         <div class="col-lg-8 col-lg-offset-2" style="padding-left: 30%;padding-right: 30%;padding-bottom: 10px">
-		    <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;" ng-disabled="submitButtonDisable">提交</button>
+         <div class="col-lg-8 col-lg-offset-2" style="padding-left: 20%;padding-right: 20%;padding-bottom: 10px">
+             <button class="btn btn-primary" ng-if="!editable" ng-click="submit()" ng-disabled="submitButtonDisable">提交</button>
+             <button class="btn btn-primary" ng-if="honorPicShow.length > 0 && editable" ng-click="honorAudit(rdcId)" ng-disabled="">资质荣誉审核</button>
+             <button class="btn btn-primary" ng-if="editable" ng-click="submit()" ng-disabled="submitButtonDisable">冷库审核</button>
         </div>
-        </div>
-      </div>
     </section>
 </div>

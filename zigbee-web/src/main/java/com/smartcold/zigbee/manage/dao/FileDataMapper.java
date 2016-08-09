@@ -21,10 +21,16 @@ public interface FileDataMapper {
 	static final String CATEGORY_COMMENT_PIC = "commentPic";
 	//评论的图片
 	static final String CATEGORY_SHARE_PIC = "sharePic";
+	//资质荣誉图片
+	static final String CATEGORY_HONOR_PIC = "honorPic";
+	//用户头像
+	static final String CATEGORY_AVATAR_PIC = "userPic";
 	
 	List<FileDataEntity> findByBelongIdAndCategory(@Param("belongid")int belongid, @Param("category")String category);
 	
 	void saveFileData(FileDataEntity fileDataEntity);
 	
 	void saveFileDatas(List<FileDataEntity> fileDataEntities);
+
+	int deleteById(@Param("id") Integer id);
 }

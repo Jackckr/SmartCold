@@ -1,6 +1,6 @@
 package com.smartcold.manage.cold.service;
 
-import com.smartcold.manage.cold.entity.CalculationHeatEntity;
+import com.smartcold.manage.cold.entity.olddb.CalculationHeatEntity;
 
 public interface CalculationHeat {
 

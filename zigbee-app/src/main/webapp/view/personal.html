@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta content="telephone=no" name="format-detection" />
+     <title>我的</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/angular.min.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+    <script type="text/javascript" src="../app/js/personal.js" ></script>
+
+    <script type="text/javascript">checkLogin();</script>
+</head>
+<body ng-app="app"  ng-controller="personal" ng-cloak>
+    <header>
+    	<div class="area fl"><a onclick="goback()"><i class="iconfont">&#xe60e;</i></a></div>
+    	<div class="txt">我的</div>
+    </header>
+    <section class="clearfix" onclick="">
+    	<div class="img fl">
+    		<img id="user_img" ng-src="{{userinfo.avatar}}" style="border-radius: 50%;height: 100%;"/>
+    	</div>
+    	<div class="rightArrow fr">
+    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+    	</div>    	
+    	<input id="headImg" type="file" name=""  value="" />
+    	<form id="form1" action="">
+    	   <input name="id" type="hidden" value="{{userinfo.id}}">
+    	</form>
+    </section>
+    <ul class="list adminInfo">
+    	<li class="clearfix" onclick="location.href='editname.html'">
+    		<div class="myicon fl">
+	    		<span class="fl">昵称</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name">{{userinfo.username}}</p>
+	    	</div>
+    	</li>
+    	<li class="clearfix">
+    		<div class="myicon fl">
+	    		<span>性别</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name set">
+	    			<select id="user_sex" class="sex_set"  name="sex" >
+		    			<option value="0">保密</option>
+		    			<option value="1">男</option>
+		    			<option value="2">女</option>
+		    		</select>
+	    		</p>	    		
+	    	</div>
+    	</li>
+    	<li class="clearfix">
+    		<div class="myicon fl">
+	    		<span>家乡</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name set">
+	    			<select id="user_sex" class="sex_set"  name="hometownid"  ng-model="userinfo.hometownid" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+	    		</p>	    		
+	    	</div>
+    	</li>
+    	<li class="clearfix">
+    		<div class="myicon fl">
+	    		<span>常居地</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name set">
+	    			<select id="user_sex" class="sex_set"  name="addressid" ng-model="userinfo.addressid" ng-options="x.provinceId as x.provinceName for x in provinces">
+		    			<option value="0">保密</option>
+		    			<option value="1">男</option>
+		    			<option value="2">女</option>
+		    		</select>
+	    		</p>	    		
+	    	</div>
+    	</li>
+    	<li class="clearfix" onclick="location.href='editphone.html'">
+    		<div class="myicon fl">
+	    		<span>手机号</span> 
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name">{{userinfo.telephone}}</p>
+	    	</div>
+    	</li>
+    	<li class="clearfix" onclick="location.href='password.html'">
+    		<div class="myicon fl">
+	    		<span>密码</span>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="list_name set">修改</p>
+	    	</div>
+    	</li>
+    </ul>
+    <button class="mybtn" ng-click="logout();">退出登录</button>
+    <ul class="footer">
+        <li>           
+            <a href="../index.html">
+                <i class="iconfont">&#xe65a;</i>
+                <p class="info">首页</p>
+            </a>
+        </li>
+        <li>            
+            <a href="release.html">
+                <i class="iconfont">&#xe6ff;</i>
+                <p class="info">发布</p>
+            </a>
+        </li>
+         <li>          
+             <a href="news.html">
+                <i class="iconfont">&#xe6f8;</i>
+                <p class="info">资讯</p>
+            </a>
+        </li>
+        <li class="active">            
+            <a href="admin.html">
+                <i class="iconfont">&#xe6fd;</i>
+                <p class="info">我的</p>
+            </a>
+        </li>
+    </ul>
+
+</body>
+</html>

@@ -3,7 +3,7 @@ coldWeb.controller('review', function ($rootScope, $scope, $state, $cookies, $ht
 		$scope.rdcid = $stateParams.rdcID;
 		$http.get('/i/rdc/findRDCByRDCId?rdcID=' + $stateParams.rdcID).success(function(data,status,config,headers){
 			$scope.rdc = data[0];
-			$http.get('/i/user/findUser').success(function(data,status,config,headers){
+			 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
 				$rootScope.user = data;
 				if($rootScope.user == null || $rootScope.user.id == 0){
 					url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorage/" + $scope.rdcid + "/review";

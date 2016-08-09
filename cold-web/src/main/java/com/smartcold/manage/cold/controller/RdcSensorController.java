@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.CompanyRdcMapper;
-import com.smartcold.manage.cold.dao.RdcSensorMapper;
-import com.smartcold.manage.cold.dao.SensorMapper;
-import com.smartcold.manage.cold.entity.RdcSensor;
-import com.smartcold.manage.cold.entity.Sensor;
+import com.smartcold.manage.cold.dao.newdb.CompanyRdcMapper;
+import com.smartcold.manage.cold.dao.newdb.SensorMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcSensorMapper;
+import com.smartcold.manage.cold.entity.newdb.Sensor;
+import com.smartcold.manage.cold.entity.olddb.RdcSensor;
 
 @Controller
 @RequestMapping(value = "/rdcSensor")
