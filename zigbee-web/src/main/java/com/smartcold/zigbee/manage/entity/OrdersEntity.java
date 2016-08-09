@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrdersEntity {
 	private int id;
@@ -16,6 +17,8 @@ public class OrdersEntity {
 	private int state;
 	private int number;
 	private Date generatetime;
+	private  List<String> files;//图片组
+	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
 		return id;
 	}
@@ -93,6 +96,18 @@ public class OrdersEntity {
 	}
 	public void setGeneratetime(Date generatetime) {
 		this.generatetime = generatetime;
+	}
+	public List<String> getFiles() {
+		return files;
+	}
+	public void setFiles(List<String> files) {
+		this.files = files;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 	
 }

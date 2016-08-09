@@ -30,26 +30,6 @@ coldWeb.controller('shareriteminfo',function($rootScope, $scope, $stateParams, $
 <<<<<<< HEAD
     } ; */
     
-    $scope.getOrder=function () {  
-    	if(user!="undefined"&&user.id!=0){
-    	  $.ajax({ url: "/i/orders/generateOrder", data: {
-    		  userid:user.id,
-    		  username:user.username,
-    		  telephone:user.telephone,
-    		  rsdid: $scope.vo.id,
-    		  dataType:$scope.vo.dataType,
-    		  typeText:$scope.vo.typeText,
-    		  releaseID:$scope.vo.releaseID,
-    		  title:$scope.vo.title
-    		  }, type: 'POST',dataType:"json", success: function(data) {
-    		  alert(data.message);
-    	   }
-    	  }); 
-    	}
-    	else{
-    		alert("登陆之后才可以抢单");
-    	}
-    	} ; 
 //    $scope.SetRemainTime= function() {   //timer处理函数  
 //        if (curCount == 0) { window.clearInterval(InterValObj);  $("#gt_yzm_but").removeAttr("disabled"); $("#gt_yzm_but").text("重新获取");   }  else {  curCount--;   $("#gt_yzm_but").text(curCount + "重新发送");  }  
 //    } ;

@@ -86,3 +86,56 @@
     padding-left: 20px; 
     cursor: pointer;   
 }
+/*我的订单*/
+.order{
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+}
+.num{
+    margin-right: 50px;
+}
+.content h4{
+    color: #438BCB;
+    line-height: 36px;
+}
+.date{
+    font-size: 14px;
+    color: #999;
+    margin: 0 15px;
+}
+.info{
+    text-indent: 3em;
+    color: #333;
+    font-size: 14px;
+}
+.dot{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    background-color: #438BCB;
+    border-radius: 50%;
+}
+.prev{
+    margin-right: 10px;
+}
+.imgShow{
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.imgShow .img{
+    width: 200px;
+    height: 140px;
+}
+.imgShow li{
+    padding: 0;
+    margin-right: 15px;
+}
+.object li{
+    width: 50%;    
+}
+.object li>p:first-child{
+    color: #438BCB;
+    font-size: 15px;
+}

@@ -189,6 +189,8 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
         	}); 
 	 };
 	 $scope.getOrder=function () {  
+		    $("#shaerdailModal").modal("hide");
+		    $(".modal-backdrop").remove();
 	    	if(user!="undefined"&&user.id!=0){
 	    	  $.ajax({ url: "/i/orders/generateOrder", data: {
 	    		  userid:user.id,
@@ -200,7 +202,8 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	    		  releaseID:$scope.vo.releaseID,
 	    		  title:$scope.vo.title
 	    		  }, type: 'POST',dataType:"json", success: function(data) {
-	    		  alert(data.message);
+	    	      $scope.orderid = data.entity.orderid;
+	    		  $state.go('orderGenerate', {'orderid':$scope.orderid});
 	    	   }
 	    	  }); 
 	    	}
