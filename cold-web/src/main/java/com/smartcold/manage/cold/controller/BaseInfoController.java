@@ -1,21 +1,17 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.Date;
-
+import com.smartcold.manage.cold.dao.newdb.*;
+import com.smartcold.manage.cold.service.GoodsService;
+import com.smartcold.manage.cold.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.newdb.PackMapper;
-import com.smartcold.manage.cold.dao.newdb.UsageMapper;
-import com.smartcold.manage.cold.dao.newdb.WallMaterialMapper;
-import com.smartcold.manage.cold.service.GoodsService;
-import com.smartcold.manage.cold.service.StorageService;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/baseInfo")
@@ -35,7 +31,10 @@ public class BaseInfoController extends BaseController {
 	
 	@Autowired
 	private StorageService storageService;
-	
+
+    @Autowired
+    private StorageKeysMapper storageKeysDao;
+
 	@RequestMapping(value = "/findAllGoods", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllGoods(){
@@ -75,5 +74,11 @@ public class BaseInfoController extends BaseController {
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime){
 		return storageService.findByTime(type, oid, key, startTime, endTime);
+	}
+
+	@RequestMapping("/getAllKeys")
+	@ResponseBody
+	public Object getAllKeys(){
+        return storageKeysDao.findAll();
 	}
 }

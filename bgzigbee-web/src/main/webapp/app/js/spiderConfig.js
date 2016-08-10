@@ -1,4 +1,4 @@
-coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload) {
+coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload, coldWebUrl) {
 	
 	$scope.load = function(){
 		$scope.vm = {}
@@ -29,6 +29,30 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		return keys;
 	}
 	
+	$scope.coldStorageKeys = [];
+	$scope.doorKeys = [];
+	$scope.compressorGroupKeys = [];
+	$scope.vm = {};
+	$scope.vm.choseStorage = {};
+	$scope.vm.choseStorage.mapping = [];
+	
+	$http.get(coldWebUrl+'baseInfo/getAllKeys').success(function(data,status,config,headers){
+		angular.forEach(data,function(item,index){
+			switch(item.type){
+			case 1:$scope.coldStorageKeys.push(item);
+				break;
+			case 2:$scope.doorKeys.push(item);
+				break;
+			case 3:$scope.compressorGroupKeys.push(item);
+				break;
+			}
+		})
+		$scope.storageItem = data;
+		$scope.vm.choseItem = data[0];
+		$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
+		$scope.vm.choseItemKey = $scope.storageItemKeys[0];
+		$scope.storageItem.push($scope.handItem);
+	})
 	
 	$scope.changeRdc = function(){
 		$scope.vm.choseRdc = $scope.vm.choseRdcs?$scope.vm.choseRdcs[0]:$scope.vm.choseRdc;
@@ -50,13 +74,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 					$scope.vm.username = data?data.username:'';
 					$scope.vm.password = data?data.password:'';
 				})
-		$http.get('/i/coldStorage/findItem').success(function(data,status,config,headers){
-			$scope.storageItem = data;
-			$scope.vm.choseItem = data[0];
-			$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
-			$scope.vm.choseItemKey = $scope.storageItemKeys[0];
-			$scope.storageItem.push($scope.handItem);
-		})
+		
 		$http.get('/i/compressorGroup/getCompressGroupByRdcId?rdcId=' + $scope.vm.choseRdc.id
 				).success(function(data,status,config,headers){
 			angular.forEach(data,function(item,index){
