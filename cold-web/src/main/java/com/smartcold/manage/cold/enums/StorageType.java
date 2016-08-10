@@ -1,12 +1,16 @@
 package com.smartcold.manage.cold.enums;
 
-public enum StorageType {
+import java.io.Serializable;
+
+public enum StorageType implements Serializable{
 
 	STORAGE(1, "coldstorage", "冷库"),
 	
 	DOOR(2, "coldstoragedoor", "门"),
 	
-	COMPRESSOR(3, "compressorgroup", "压缩机");
+	COMPRESSOR(3, "compressorgroup", "压缩机"),
+
+	BLOWER(4, "blower", "风机");
 	
 	private int type;
 	private String table;
