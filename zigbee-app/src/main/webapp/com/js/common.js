@@ -196,8 +196,8 @@ var util = {
 * 自定义alert弹出框
 *
 * */
-window.alert=function(){myalert()};
-window.confirm=function(){myconfirm()};
+window.alert=alert;
+window.confirm=confirm;
 var msg="请输入验证码~";
 var myAlert = '<div class="alert topFirst">'+
 				 '<p class="tips">提示</p>'+
@@ -216,11 +216,11 @@ var myConfirm = '<div class="confirm topFirst">'+
 					'<button class="ensure bdr">确定</button><button class="remove">取消</button>'+
 				'</div>'+
 				'<div class="backDropTop topFirst" onclick="backDropTop(this)"></div>';
-function myalert(msg){
+function alert(msg){
 	$('body').append(myAlert);
 }
 
-function myconfirm(msg){
+function confirm(msg){
 	$('body').append(myConfirm);
 }
 function backDropTop(ops){
