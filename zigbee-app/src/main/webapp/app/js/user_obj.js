@@ -1,21 +1,31 @@
-var mode = [ ['rdcID',"rdcID","orderID"],["确定要删除该冷库吗？", "确定要删除该数据吗？","确定要删除该订单信息吗？"]];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],
+		[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ];
 var urlset = [
-		[ "orderdetail.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],
-		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],
-		["orderdetail.html?id=","/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId"] ];// type=0:我的冷库  // 1：我的发布  //2:我的订单
+		[ "releasekutable.html?id=", "/i/rdc/deleteByRdcID",
+				"/i/rdc/findRDCDTOByUserId" ],
+		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid",
+				"/i/ShareRdcController/getSEListByUID" ],
+		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID",
+				"/i/orders/findOrdersByUserId" ] ];// type=0:我的冷库 // 1：我的发布
+													// //2:我的订单 3：我的点评
 var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
 var editinfo = function(id) {
 	location.href = urlset[type][0] + id;
 };
 var delrdc = function(id, em) {
 	if (confirm(mode[1][type])) {
-		var data={"rdcID":id,"orderID":id,id:id,uid:window.user.id}; 
+		var data = {
+			"rdcID" : id,
+			"orderID" : id,
+			id : id,
+			uid : window.user.id
+		};
 		$.ajax({
 			url : ER.root + urlset[type][1],
 			type : "post",
 			data : data,
 			success : function(data) {
-				if (data.status == 0||data.success) {
+				if (data.status == 0 || data.success) {
 					$(em).parents('li').remove();
 				} else {
 					alert("删除失败！请稍后重试！");
@@ -50,34 +60,35 @@ var initevg = function() {
 var gethtml = function(obj) {
 	switch (type) {
 	case 0:
-		return "<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='"
-				+ obj.logo
-				+ "'/></div><p class='company'>"
-				+ obj.name
-				+ "</p><p class='position'><i class='iconfont'>&#xe66e;</i>"
-				+ obj.address
-				+ "</p><p class='btnGroup'><button onclick='editinfo("
-				+ obj.id
-				+ ")'>修改</button><button onclick='delrdc("
-				+ obj.id
-				+ ",this);'>删除</button></p></li>";
+		return [
+				"<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='",
+				obj.logo, "'/></div><p class='company'>", obj.name,
+				"</p><p class='position'><i class='iconfont'>&#xe66e;</i>",
+				obj.address,
+				"</p><p class='btnGroup'><button onclick='editinfo(", obj.id,
+				")'>修改</button><button onclick='delrdc(", obj.id,
+				",this);'>删除</button></p></li>" ].join("");
 		break;
 	case 1:
-		return "<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='"
-				+ obj.logo
-				+ "'/></div><p class='company'>"
-				+ obj.title
-				+ "</p><p class='position'>"
-				+ obj.typeText
-				+ "</p><p class='btnGroup'><button onclick='editinfo("
-				+ obj.id
-				+ ")'>修改</button><button onclick='delrdc("
-				+ obj.id
-				+ ",this);'>删除</button></p></li>";
+		return [
+				"<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='",
+				obj.logo, "'/></div><p class='company'>", obj.title,
+				"</p><p class='position'>", obj.typeText,
+				"</p><p class='btnGroup'><button onclick='editinfo(", obj.id,
+				")'>修改</button><button onclick='delrdc(", obj.id,
+				",this);'>删除</button></p></li>" ].join("");
 	default:
 	case 2:
-		 return "<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='"+obj.logo+"'/></div><p class='company'>订单编号："+obj.orders.orderid+"</p><p class='position'>订单名称："+obj.orders.ordername+"</p><p class='btnGroup'><button onclick='editinfo("+obj.orders.id+")'>查看</button><button onclick='delrdc("+obj.orders.id+",this);'>删除</button></p></li>";
-		return "";
+		return ["<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='"
+				, obj.logo
+				, "'/></div><p class='company'>订单编号："
+				, obj.orders.orderid
+				, "</p><p class='position'>订单名称："
+				, obj.orders.ordername
+				, "</p><p class='btnGroup'><button onclick='editinfo("
+				, obj.orders.id
+				, ")'>查看</button><button onclick='delrdc("
+				, obj.orders.id + ",this);'>删除</button></p></li>"].join("");
 		break;
 	}
 

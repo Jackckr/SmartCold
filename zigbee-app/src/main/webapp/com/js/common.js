@@ -48,8 +48,8 @@ function checkLogin(msg,callback) {
 	 if(window.user!=null ){return;}
 	  $.ajax({
 	        type:"GET",
-//	        cache:false,
-//	        async: false,
+	        cache:false,
+	        async: false,
 	        dataType:"json",
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
@@ -191,3 +191,41 @@ var util = {
         });
     },
 };
+/*
+*
+* 自定义alert弹出框
+*
+* */
+var msg="请输入验证码~";
+var myAlert = '<div class="alert topFirst">'+
+				 '<p class="tips">提示</p>'+
+					'<div class="txtBody">'+
+						msg+
+					'</div>'+
+					'<button class="ensure">确定</button>'+
+				'</div>'+
+				'<div class="backDropTop topFirst" onclick="backDropTop(this)"></div>';
+
+var myConfirm = '<div class="confirm topFirst">'+
+				 '<p class="tips">提示</p>'+
+					'<div class="txtBody">'+
+						msg+
+					'</div>'+
+					'<button class="ensure bdr">确定</button><button class="remove">取消</button>'+
+				'</div>'+
+				'<div class="backDropTop topFirst" onclick="backDropTop(this)"></div>';
+function alert(msg){
+	$('body').append(myAlert);
+}
+
+function confirm(msg){
+	$('body').append(myConfirm);
+}
+function backDropTop(ops){
+		$('.topFirst').hide();
+}
+/*
+*
+* 自定义alert弹出框end
+*
+* */

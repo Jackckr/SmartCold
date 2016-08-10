@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript">checkLogin();</script>
+    <script type="text/javascript" src="../app/js/user_obj.js" ></script>
+    <script type="text/javascript">var type=2; checkLogin(null,initdata);</script>
 </head>
 <body>
     <header>
@@ -21,9 +22,7 @@
     		我的点评
     	</div>
     </header>
-    <section id="user_info" class="clearfix">
-    	
-    </section>
+    <section id="user_info" class="clearfix"></section>
     <ul id="ul_rdcsL_list" class="commentList">
     	<li class="clearfix">
     		<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div>
