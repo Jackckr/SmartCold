@@ -46,6 +46,12 @@
 		FROM `ColdStorageComment` WHERE `rdcID` = #{rdcID}
 		order by `addTime` desc
 	</select>
+	
+	<select id="findCommentsByUserId" parameterType="map" resultType="CommentEntity">
+		SELECT *
+		FROM `ColdStorageComment` WHERE `commerid` = #{userID}
+		order by `addTime` desc
+	</select>
 
 	<update id="addUsefulCnt" parameterType="int" >
 		update ColdStorageComment

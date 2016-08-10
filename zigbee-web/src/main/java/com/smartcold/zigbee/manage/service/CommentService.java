@@ -1,6 +1,8 @@
 package com.smartcold.zigbee.manage.service;
 
+import com.github.pagehelper.Page;
 import com.smartcold.zigbee.manage.dto.CommentDTO;
+import com.smartcold.zigbee.manage.dto.PersonalCommentDTO;
 import com.smartcold.zigbee.manage.entity.CommentEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,4 +18,6 @@ public interface CommentService {
 	List<CommentDTO> findCommentsRdcID(@RequestParam int rdcID, @RequestParam int npoint);
 
 	public void insertComment(CommentEntity comment);
+
+	Page<PersonalCommentDTO> findCommentsUserID(int userID);
 }
