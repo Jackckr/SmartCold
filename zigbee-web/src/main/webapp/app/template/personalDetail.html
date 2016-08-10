@@ -1,0 +1,123 @@
+	<link rel="stylesheet" type="text/css" href="app/css/personalinfo.css">
+	<div class="shareMain clearfix">
+	<!-- sidebar -->
+		<div class="sidebar pull-left">
+			<ul class="infoList">
+				<li><a href="#/personalDetail"><font color="#418ACA">个人信息</font></a></li>
+				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
+				<li><a href="#/personalPublish"><font color="black">我的发布</font></a></li>
+				<li><a href="#/personalOrder"><font color="black">我的订单</font></a></li>
+				<li><a href="#/personalComment"><font color="black">我的评价</font></a></li>
+				<li>联系客服</li>
+			</ul>
+		</div>
+	<!-- sidebar end -->
+	<!-- content -->
+		<div class="content">
+		  	<h3><font color="#418ACA">个人信息</font></h3>
+		  	<div class="editHead">
+		  		<h4>修改头像</h4>
+		  		<div class="uploadImg">
+		  			<div class="imgBd inline">
+		  				<img src={{user.avatar}} alt=""></div>
+		  			<div class="upload inline">
+		  				<p>本地上传</p>
+		  				<input type="file" ng-model="user.avatar">
+		  				<p class="intro">图片格式:GIF、JPG、JPEG、PNG,最适合尺寸120*120 像素 </p>
+		  			</div>
+		  		</div>
+		  	</div>
+		  	
+		  	<div class="editTel">
+		  		<h4>修改联系方式</h4>
+		  		<p><span>原手机号码：</span><i>{{user.telephone}}</i> <button id="authcode1" class="btn btn-primary">获取手机验证码</button></p>
+		  		 <div id="yzm1" class="hide">
+				 	<span>验证码:</span>
+			  		 <input type="text" class="newTel" placeholder="请输入您的验证码"><button id="confirm" class="btn btn-primary">确认</button>
+				 </div>
+		  		 <div id="tele2" class="hide">
+		  		 	<span>新手机号码：</span>
+			  		 <input type="text" class="newTel" placeholder="请输入您的手机号码"><button id="authcode2" class="btn btn-primary">获取手机验证码</button>
+		  		 </div>
+		  		 <div id="yzm2" class="hide">
+				 	<span>验证码:</span>
+			  		 <input type="text" class="newTel" placeholder="请输入您的验证码">
+				 </div>
+		  	</div>
+		  	
+		  	<div class="editInfo">
+		  		<h4>修改资料</h4>
+		  		<div class="lines">
+		  			<span>昵称：</span><i></i>
+		  			<input type="text" class="newTel" ng-model="user.nickname" >
+		  		</div>
+		  		<div class="lines">
+		  			<span>真实姓名：</span>
+		  			 <input type="text" class="newTel" ng-model="user.realname">
+		  		</div>
+		  		<div class="lines">
+		  			<span>邮箱：</span>
+		  			 <input type="email" class="newTel" ng-model="user.email">
+		  		</div>
+				<div class="lines">
+		  			<span>性别：</span>
+		  			 <label>
+		  			 	<input type="radio"  value="1"  name="sex" ng-model="user.sex">
+		  			 	女
+		  			 </label>
+		  			 <label>
+		  			 	<input type="radio"  value="2"  name="sex" ng-model="user.sex">
+		  			 	男
+		  			 </label>
+		  			 <label>
+		  			 	<input type="radio"  value="0"  name="sex" ng-model="user.sex" >
+		  			 	保密
+		  			 </label>
+		  		</div>
+				<div class="lines">
+		  			<span>家乡：</span>
+		  			   <select class="form-control" ng-model="user.hometownid" ng-disabled="editable"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+		  		</div>
+		  		<div class="lines">
+		  			<span>常居地：</span>
+		  			   <select class="form-control" ng-model="user.addressid" ng-disabled="editable"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+		  		</div>
+		  	</div>
+		  	<div class="editPassword">
+		  		<h4>修改密码</h4>
+		  		<div class="lines">
+		  			<span>昵称：</span><i>{{user.nickname}}</i>
+		  		</div>
+		  		<div class="lines">
+		  			<span>旧密码：</span>
+		  			 <input type="password" class="newTel" placeholder="请输入旧密码">
+		  		</div>
+		  		<div class="lines">
+		  			<span>新密码：</span>
+		  			 <input type="password" class="newTel" placeholder="6~16个字符">
+		  		</div>
+		  		<div class="lines">
+		  			<span>确认密码：</span>
+		  			 <input type="password" class="newTel" placeholder="请再次输入密码">
+		  		</div>
+		  	</div>
+		  	<p class="ok"><button class="btn btn-success">完成修改</button></p>
+		</div>
+	<!-- content end-->
+	</div>	
+	<script>
+	
+$(function(){
+	$('#authcode1').click(function(){
+		$(this).attr('disabled','disabled');
+		$('#yzm1').attr('hide','false');
+		$.post('/i/user/telephoneVerify',{
+			telephone:$('input[name=telephone]').val()
+		}, function(){
+			
+		});
+	  });
+    });
+</script>

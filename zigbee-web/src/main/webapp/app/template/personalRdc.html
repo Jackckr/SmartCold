@@ -3,12 +3,11 @@
 	<!-- sidebar -->
 		<div class="sidebar pull-left">
 			<ul class="infoList">
-				<li>个人信息</li>
-				<li ><font color="#418ACA"><a href="#/personalRdc">我的冷库</a></font></li>
-				<li>我的发布</li>
+				<li><a href="#/personalDetail"><font color="black">个人信息</font></a></li>
+				<li> <a href="#/personalRdc"><font color="#418ACA">我的冷库</font></a></li>
+				<li><a href="#/personalPublish"><font color="black">我的发布</font></a></li>
 				<li><a href="#/personalOrder"><font color="black">我的订单</font></a></li>
-				<li>我的评价</li>
-				<li>最近浏览</li>
+				<li><a href="#/personalComment"><font color="black">我的评价</font></a></li>
 				<li>联系客服</li>
 			</ul>
 		</div>
@@ -22,7 +21,7 @@
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
-			<ul class="imgList">
+			<ul class="imgList clearfix">
 				<li ng-repeat="rdc in rdcs">
 					<div class="img pull-left"><img src={{rdc.logo}}></div>
 					<p class="company">{{rdc.name}}</p>

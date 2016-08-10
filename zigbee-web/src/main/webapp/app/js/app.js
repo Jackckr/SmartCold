@@ -302,6 +302,14 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/personalOrder',
         controller: 'personalOrder',
         templateUrl: 'app/template/personalOrder.html'
+    }).state('personalDetail', {
+        url: '/personalDetail',
+        controller: 'personalDetail',
+        templateUrl: 'app/template/personalDetail.html'
+    }).state('personalComment', {
+        url: '/personalComment',
+        controller: 'personalComment',
+        templateUrl: 'app/template/personalComment.html'
     }).state('orderGenerate', {
         url: '/orderGenerate',
         params:{data:null},
