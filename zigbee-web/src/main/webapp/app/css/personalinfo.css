@@ -211,14 +211,14 @@ h4{
     font-size: 14px;
     width: 200px;
 }
-.line{
+.lines{
     margin-bottom: 5px;
 }
-.line label{
+.lines label{
     font-weight: 400;
     margin-right: 20px;
 }
-.line select{
+.lines select{
     width: 110px;
     line-height: 34px;
     border: 1px solid #ccc;

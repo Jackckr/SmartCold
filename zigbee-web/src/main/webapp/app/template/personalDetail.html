@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>个人信息详情</title>
-	<link rel="stylesheet" type="text/css" href="../css/common.css">
-	<link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../css/personalinfo.css">
-</head>
-<body>
+	<link rel="stylesheet" type="text/css" href="app/css/personalinfo.css">
 	<div class="shareMain clearfix">
 	<!-- sidebar -->
 		<div class="sidebar pull-left">
 			<ul class="infoList">
-				<li class="current">个人信息</li>
-				<li>我的冷库</li>
+				<li><font color="#418ACA"><a href="#/personalDetail">个人信息</a></font></li>
+				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
 				<li>我的发布</li>
-				<li>我的订单</li>
+				<li><a href="#/personalOrder"><font color="black">我的订单</font></a></li>
 				<li>我的评价</li>
 				<li>最近浏览</li>
 				<li>联系客服</li>
@@ -29,7 +20,7 @@
 		  		<h4>修改头像</h4>
 		  		<div class="uploadImg">
 		  			<div class="imgBd inline">
-		  				<img src="error.jpg" alt=""></div>
+		  				<img src={{user.avatar}} alt=""></div>
 		  			<div class="upload inline">
 		  				<p>本地上传</p>
 		  				<input type="file">
@@ -39,7 +30,7 @@
 		  	</div>
 		  	<div class="editTel">
 		  		<h4>修改联系方式</h4>
-		  		<p><span>原手机号码：</span><i>15856982563</i></p>
+		  		<p><span>原手机号码：</span><i>{{user.telephone}}</i></p>
 		  		 <div class="upTel">
 		  		 	<span>手机号码：</span>
 			  		 <input type="text" class="newTel" placeholder="请输入您的手机号码">
@@ -54,15 +45,15 @@
 		  	</div>
 		  	<div class="editInfo">
 		  		<h4>修改资料</h4>
-		  		<div class="line">
+		  		<div class="lines">
 		  			<span>昵称：</span><i></i>
-		  			<input type="text" class="newTel" placeholder="wellsea">
+		  			<input type="text" class="newTel" placeholder="{{user.nickname}}">
 		  		</div>
-		  		<div class="line">
+		  		<div class="lines">
 		  			<span>真实姓名：</span>
-		  			 <input type="text" class="newTel" placeholder="请输入您的真实姓名">
+		  			 <input type="text" class="newTel" placeholder="{{user.realname}}">
 		  		</div>
-				<div class="line">
+				<div class="lines">
 		  			<span>性别：</span>
 		  			 <label>
 		  			 	<input type="radio" name="sex">
@@ -77,7 +68,7 @@
 		  			 	保密
 		  			 </label>
 		  		</div>
-				<div class="line">
+				<div class="lines">
 		  			<span>家乡：</span>
 		  			 <select>
 		  			 	<option value="北京">北京</option>
@@ -85,7 +76,7 @@
 		  			 	<option value="天津">天津</option>
 		  			 </select>
 		  		</div>
-		  		<div class="line">
+		  		<div class="lines">
 		  			<span>常居地：</span>
 		  			 <select>
 		  			 	<option value="北京">北京</option>
@@ -96,18 +87,18 @@
 		  	</div>
 		  	<div class="editPassword">
 		  		<h4>修改密码</h4>
-		  		<div class="line">
-		  			<span>昵称：</span><i>wellsea</i>
+		  		<div class="lines">
+		  			<span>昵称：</span><i>{{user.nickname}}</i>
 		  		</div>
-		  		<div class="line">
+		  		<div class="lines">
 		  			<span>旧密码：</span>
 		  			 <input type="password" class="newTel" placeholder="请输入旧密码">
 		  		</div>
-		  		<div class="line">
+		  		<div class="lines">
 		  			<span>新密码：</span>
 		  			 <input type="password" class="newTel" placeholder="6~16个字符">
 		  		</div>
-		  		<div class="line">
+		  		<div class="lines">
 		  			<span>确认密码：</span>
 		  			 <input type="password" class="newTel" placeholder="请再次输入密码">
 		  		</div>
@@ -116,5 +107,3 @@
 		</div>
 	<!-- content end-->
 	</div>
-</body>
-</html>
