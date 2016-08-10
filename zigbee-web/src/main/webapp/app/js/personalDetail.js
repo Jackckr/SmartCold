@@ -9,5 +9,9 @@ coldWeb.controller('personalDetail', function ($rootScope, $scope, $state, $cook
 	    })
     }
     $scope.load();
+    // 获取省列表
+    $http.get('/i/city/findProvinceList').success(function (data) {
+        $scope.provinces = data;
+    });
 });
 
