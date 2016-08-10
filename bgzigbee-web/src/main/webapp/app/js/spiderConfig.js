@@ -32,27 +32,61 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.coldStorageKeys = [];
 	$scope.doorKeys = [];
 	$scope.compressorGroupKeys = [];
+	$scope.blowerKeys = [];
 	$scope.vm = {};
 	$scope.vm.choseStorage = {};
 	$scope.vm.choseStorage.mapping = [];
 	
-	$http.get(coldWebUrl+'baseInfo/getAllKeys').success(function(data,status,config,headers){
+	$scope.type2Keys = function(type){
+		switch(type){
+		case 1:
+			return $scope.coldStorageKeys;
+		case 2:
+			return $scope.doorKeys;
+		case 3:
+			return $scope.compressorGroupKeys;
+		case 4:
+			return $scope.blowerKeys;
+		default:
+			return [];
+		}
+	}
+	
+	$scope.typeChanged = function(item){
+		$scope.keysData = $scope.type2Keys(item.type);
+	}
+	
+	$http.get(coldWebUrl+'storageKeys/getAllKeys').success(function(data,status,config,headers){
 		angular.forEach(data,function(item,index){
-			switch(item.type){
-			case 1:$scope.coldStorageKeys.push(item);
-				break;
-			case 2:$scope.doorKeys.push(item);
-				break;
-			case 3:$scope.compressorGroupKeys.push(item);
-				break;
-			}
+			$scope.type2Keys(item.type).push(item);
 		})
-		$scope.storageItem = data;
-		$scope.vm.choseItem = data[0];
-		$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
-		$scope.vm.choseItemKey = $scope.storageItemKeys[0];
-		$scope.storageItem.push($scope.handItem);
+//		$scope.storageItem = data;
+//		$scope.vm.choseItem = data[0];
+//		$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
+//		$scope.vm.choseItemKey = $scope.storageItemKeys[0];
+//		$scope.storageItem.push($scope.handItem);
 	})
+	
+	$http.get(coldWebUrl+"storageKeys/getStorageType").success(function(data,status,config,headers){
+		$scope.storageTypes = data;
+	});
+	
+	$scope.getDescByType = function(type){
+		for(var i=0; i<$scope.storageTypes.length; i++){
+			if($scope.storageTypes[i].type==type){
+				return $scope.storageTypes[i].desc;
+			}
+		}
+		return 'not correct type';
+	}
+	
+	$scope.saveNewKey = function(){
+		if(newKey.key && newKey.type && newKey.desc){
+			
+		}else{
+			alert("输入不完整");
+		}
+	}
 	
 	$scope.changeRdc = function(){
 		$scope.vm.choseRdc = $scope.vm.choseRdcs?$scope.vm.choseRdcs[0]:$scope.vm.choseRdc;
@@ -127,8 +161,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		object[key] = value;
 	}
 	
-	$scope.resetItem = function(items,item,obj){
-		$scope.vm[item] = items[0];
+	$scope.resetItem = function(item,obj){
+		$scope.vm[item] = "";
 		$scope.vm.itemInput = "";
 		obj.addItem = false;
 	}

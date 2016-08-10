@@ -213,6 +213,67 @@
                         </form>
                     </div>
                 </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <i class="fa fa-table"></i>添加监控属性
+                    </uib-tab-heading>
+                    <div class="col-lg-12">
+                       	<div class="col-lg-5">
+                       		<form class="form-horizontal">
+                       			<div class="form-group">
+                       				<label for="" class="col-lg-3 control-label">
+                       					<em style="color:red">*</em>操作</label>
+                       				<div class="col-lg-9">
+                       					<select class="form-control" 
+                       						ng-model="newKey.type" 
+                       						ng-change="typeChanged(newKey.type)"
+                       						ng-options="item.desc for item in storageTypes track by item.type"></select>
+                       				</div>
+                       			</div>
+                       			<div class="form-group">
+                       				<label for="" class="col-lg-3 control-label"><em style="color:red">*</em>key值(英文)</label>
+                       				<div class="col-lg-9">
+                       					<input ng-model="newKey.key" class="form-control"/>
+                       				</div>
+                       			</div>
+                       			<div class="form-group">
+                       				<label for="" class="col-lg-3 control-label"><em style="color:red">*</em>描述</label>
+                       				<div class="col-lg-9">
+                       					<input ng-model="newKey.desc" class="form-control"/>
+                       				</div>
+                       			</div>
+                       			<div class="form-group">
+                       				<label for="" class="col-lg-3 control-label">单位</label>
+                       				<div class="col-lg-9">
+                       					<input ng-model="newKey.unit" class="form-control"/>
+                       				</div>
+                       			</div>
+                       			<div class="form-group">
+                       				<label for="" class="col-lg-3 control-label"></label>
+                       				<div class="col-lg-9">
+                       					<button class="btn btn-primary" ng-click="saveNewKey()">保存</button>
+                       				</div>
+                       			</div>
+                       		</form>
+                       	</div>
+                       	<div class="col-lg-7">
+                       		<table class="table">
+                       			<tr>
+                       				<th>类型</th>
+                       				<th>key</th>
+                       				<th>描述</th>
+                       				<th>单位</th>
+                       			</tr>
+                       			<tr ng-repeat="item in keysData">
+                       				<td ng-bind="getDescByType(item.type)"></td>
+                       				<td>{{item.key}}</td>
+                       				<td>{{item.desc}}</td>
+                       				<td>{{item.unit}}</td>
+                       			</tr>
+                       		</table>
+                       	</div>
+                    </div>
+               	</uib-tab>
                 <!--  -->
                 <uib-tab>
                     <uib-tab-heading>
@@ -252,9 +313,9 @@
                                         	<select ng-options="item.key for item in coldStorageKeys" ng-model="vm.choseItem" class="form-control"></select></td>
                                         <td>
                                             <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput" 
-                                            	ng-click="addKey(vm.choseStorage.mapping,vm.choseItem.key,vm.itemInput);resetItem(storageItem,'choseItem',vm.choseStorage)">
+                                            	ng-click="addKey(vm.choseStorage.mapping,vm.choseItem.key,vm.itemInput);resetItem('choseItem',vm.choseStorage)">
                                                 <span class="glyphicon glyphicon-check"></span></a>
-                                            <a class="btn btn-danger btn-xs" ng-click="resetItem(storageItem,'choseItem',vm.choseStorage)"><span class="glyphicon glyphicon-minus"></span></a>
+                                            <a class="btn btn-danger btn-xs" ng-click="resetItem('choseItem',vm.choseStorage)"><span class="glyphicon glyphicon-minus"></span></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -270,7 +331,9 @@
                                             <th>门名字</th>
                                             <th>采集数据描述名</th>
                                             <th>采集数据存储名(唯一)</th>
-                                            <th>操作</th>
+                                            <th>操作
+                                            	<a class="btn btn-success btn-xs" ng-click="door.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody ng-repeat="door in doors">
@@ -291,7 +354,7 @@
                                                 <a class="btn btn-success btn-xs" ng-click="door.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
                                             </td>
                                         </tr>
-                                        <tr ng-if="door.addItem && vm.choseItem.columnkey != 'handWrite'">
+<!--                                         <tr ng-if="door.addItem && vm.choseItem.columnkey != 'handWrite'">
                                             <td ng-if="!objectLength(door.mapping)">{{door.name}}</td>
                                             <td><select ng-options="item.columnvalue for item in storageItem" ng-model="vm.choseItem" class="form-control"></select></td>
                                             <td>{{vm.choseItem.columnkey}}</td>
@@ -301,16 +364,16 @@
                                                     <span class="glyphicon glyphicon-check"></span></a>
                                                 <a class="btn btn-danger btn-xs" ng-click="resetItem(storageItem,'choseItem',door)"><span class="glyphicon glyphicon-minus"></span></a>
                                             </td>
-                                        </tr>
-                                        <tr ng-if="door.addItem && vm.choseItem.columnkey == 'handWrite'">
+                                        </tr> -->
+                                        <tr ng-if="door.addItem">
                                             <td ng-if="!objectLength(door.mapping)">{{door.name}}</td>
                                             <td><input ng-model="vm.itemInput" class="form-control" /></td>
-                                            <td><select ng-options="item for item in storageItemKeys" ng-model="vm.choseItemKey" class="form-control"></select></td>
+                                            <td><select ng-options="item.key for item in doorKeys" ng-model="vm.choseItem" class="form-control"></select></td>
                                             <td>
-                                                <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput" ng-click="addKey(door.mapping, vm.choseItemKey, vm.itemInput);
-			             	 	resetItem(storageItem,'choseItem',door)">
+                                                <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput" ng-click="addKey(door.mapping, vm.choseItem.key, vm.itemInput);
+			             	 	resetItem('choseItem',door)">
                                                     <span class="glyphicon glyphicon-check"></span></a>
-                                                <a class="btn btn-danger btn-xs" ng-click="resetItem(storageItem,'choseItem',door)"><span class="glyphicon glyphicon-minus"></span></a>
+                                                <a class="btn btn-danger btn-xs" ng-click="resetItem('choseItem',door)"><span class="glyphicon glyphicon-minus"></span></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -347,7 +410,7 @@
                                                 <a class="btn btn-success btn-xs" ng-click="blower.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
                                             </td>
                                         </tr>
-                                        <tr ng-if="blower.addItem && vm.choseBlowerItem.columnkey != 'handWrite'">
+<!--                                         <tr ng-if="blower.addItem && vm.choseBlowerItem.columnkey != 'handWrite'">
                                             <td ng-if="!objectLength(blower.mapping)">{{blower.name}}</td>
                                             <td><select ng-options="item.columnvalue for item in blowerItem" ng-model="vm.choseBlowerItem" class="form-control"></select></td>
                                             <td>{{vm.choseBlowerItem.columnkey}}</td>
@@ -357,16 +420,16 @@
                                                     <span class="glyphicon glyphicon-check"></span></a>
                                                 <a class="btn btn-danger btn-xs" ng-click="resetItem(blowerItem,'choseBlowerItem',blower)"><span class="glyphicon glyphicon-minus"></span></a>
                                             </td>
-                                        </tr>
-                                        <tr ng-if="blower.addItem && vm.choseBlowerItem.columnkey == 'handWrite'">
+                                        </tr> -->
+                                        <tr ng-if="blower.addItem">
                                             <td ng-if="!objectLength(blower.mapping)">{{blower.name}}</td>
                                             <td><input ng-model="vm.itemInput" class="form-control" /></td>
-                                            <td><select ng-options="item for item in blowerItemKeys" ng-model="vm.choseBlowerItemKey" class="form-control"></select></td>
+                                            <td><select ng-options="item.key for item in blowerKeys" ng-model="vm.choseBlowerItem" class="form-control"></select></td>
                                             <td>
-                                                <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput" ng-click="addKey(blower.mapping, vm.choseBlowerItemKey, vm.itemInput);
-			             	 	resetItem(blowerItem,'choseBlowerItem',blower)">
+                                                <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput" ng-click="addKey(blower.mapping, vm.choseBlowerItem.key, vm.itemInput);
+			             	 	resetItem('choseBlowerItem',blower)">
                                                     <span class="glyphicon glyphicon-check"></span></a>
-                                                <a class="btn btn-danger btn-xs" ng-click="resetItem(blowerItem,'choseBlowerItem',blower)"><span class="glyphicon glyphicon-minus"></span></a>
+                                                <a class="btn btn-danger btn-xs" ng-click="resetItem('choseBlowerItem',blower)"><span class="glyphicon glyphicon-minus"></span></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -410,24 +473,25 @@
                                             <a class="btn btn-success btn-xs" ng-click="vm.choseCompressGroup.addItem=true"><span class="glyphicon glyphicon-plus"></span></a>
                                         </td>
                                     </tr>
-                                    <tr ng-if="vm.choseCompressGroup.addItem && vm.choseCompressGroupItem.columnkey != 'handWrite'">
+<!--                                     <tr ng-if="vm.choseCompressGroup.addItem && vm.choseCompressGroupItem.columnkey != 'handWrite'">
                                         <td><select ng-options="item.columnvalue for item in compressGroupItem" ng-model="vm.choseCompressGroupItem" class="form-control"></select></td>
                                         <td>{{vm.choseCompressGroupItem.columnkey}}</td>
                                         <td>
                                             <a class="btn btn-primary btn-xs" ng-click="addKey(vm.choseCompressGroup.mapping,vm.choseCompressGroupItem.columnkey,vm.choseCompressGroupItem.columnvalue);
-			                    resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)">
+			                    resetItem('choseCompressGroupItem',vm.choseCompressGroup)">
                                                 <span class="glyphicon glyphicon-check"></span></a>
-                                            <a class="btn btn-danger btn-xs" ng-click="resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)"><span class="glyphicon glyphicon-minus"></span></a>
+                                            <a class="btn btn-danger btn-xs" ng-click="resetItem('choseCompressGroupItem',vm.choseCompressGroup)"><span class="glyphicon glyphicon-minus"></span></a>
                                         </td>
-                                    </tr>
-                                    <tr ng-if="vm.choseCompressGroup.addItem && vm.choseCompressGroupItem.columnkey == 'handWrite'">
+                                    </tr> -->
+                                    <tr ng-if="vm.choseCompressGroup.addItem">
                                         <td><input ng-model="vm.itemInput" class="form-control" /></td>
-                                        <td><select ng-options="item for item in compressGroupItemKeys" ng-model="vm.choseCompressGroupItemKey" class="form-control"></select></td>
+                                        <td><select ng-options="item.key for item in compressorGroupKeys" ng-model="vm.choseCompressGroupItem" class="form-control"></select></td>
                                         <td>
-                                            <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput" ng-click="addKey(vm.choseCompressGroup.mapping,vm.choseCompressGroupItemKey,vm.itemInput);
-			                    resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)">
+                                            <a class="btn btn-primary btn-xs" ng-disabled="!vm.itemInput" 
+                                            	ng-click="addKey(vm.choseCompressGroup.mapping,vm.choseCompressGroupItem.key,vm.itemInput);
+			                    resetItem('choseCompressGroupItem',vm.choseCompressGroup)">
                                                 <span class="glyphicon glyphicon-check"></span></a>
-                                            <a class="btn btn-danger btn-xs" ng-click="resetItem(compressGroupItem,'choseCompressGroupItem',vm.choseCompressGroup)"><span class="glyphicon glyphicon-minus"></span></a>
+                                            <a class="btn btn-danger btn-xs" ng-click="resetItem('choseCompressGroupItem',vm.choseCompressGroup)"><span class="glyphicon glyphicon-minus"></span></a>
                                         </td>
                                     </tr>
                                 </tbody>

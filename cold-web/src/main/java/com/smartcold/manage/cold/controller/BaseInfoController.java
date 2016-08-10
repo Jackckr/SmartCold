@@ -1,6 +1,10 @@
 package com.smartcold.manage.cold.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.smartcold.manage.cold.dao.newdb.*;
+import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.GoodsService;
 import com.smartcold.manage.cold.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/baseInfo")
@@ -31,9 +35,6 @@ public class BaseInfoController extends BaseController {
 	
 	@Autowired
 	private StorageService storageService;
-
-    @Autowired
-    private StorageKeysMapper storageKeysDao;
 
 	@RequestMapping(value = "/findAllGoods", method = RequestMethod.GET)
 	@ResponseBody
@@ -76,9 +77,4 @@ public class BaseInfoController extends BaseController {
 		return storageService.findByTime(type, oid, key, startTime, endTime);
 	}
 
-	@RequestMapping("/getAllKeys")
-	@ResponseBody
-	public Object getAllKeys(){
-        return storageKeysDao.findAll();
-	}
 }

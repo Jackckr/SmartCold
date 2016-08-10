@@ -4,4 +4,10 @@
 	<select id="findAll" resultType="StorageKeysEntity">
 		select * from storagekeys
 	</select>
+
+	<insert id="save" parameterType="StorageKeysEntity">
+		INSERT INTO storagekeys
+			(`type`,`key`, `desc`, `unit`) VALUES
+			(#{type},#{key}, #{desc}, #{unit})
+	</insert>
 </mapper>
