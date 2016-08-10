@@ -44,18 +44,22 @@ function showErrorInfo(msg) {
         msgEl.html(msg);
     }
 }
-function checkLogin(msg) {
+function checkLogin(msg,callback) {
 	 if(window.user!=null ){return;}
 	  $.ajax({
 	        type:"GET",
 	        cache:false,
+	        async: false,
 	        dataType:"json",
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
 	                window.user = data;
+	                if(callback){
+	                	callback();
+	                }
 	            } else {
-	            	alert(msg?msg:"请登录后再操作！");
+	            	alert(msg?msg:"请登录后再操作！!!!");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
 	            }
@@ -139,5 +143,91 @@ var util = {
         oReader.onload = function(e) { oImage.src = e.target.result; };
         oReader.readAsDataURL(oFile);
         if(callback!=null){callback();}
+    },
+    initProduct:function(em,productVo){//设置对象值
+    	 $.each(em.find("*"), function(index1, item) {
+    		  var _fieldName = $(item).attr("name");
+    		  var val = productVo[_fieldName];
+              if(val=="null"||val=="NULL"){val ="";}
+              /**渲染事件 bigin**/
+              var _render = $(item).attr("render");
+              var renderDefineOfitem = option[_render];
+              if (renderDefineOfitem) {val = renderDefineOfitem.f(productVo,item,index,$(item));}
+              /**渲染事件 end**/
+              if (val!=""&&val!=undefined) {
+              	 if($(item).is('input')){ $(item).val(val); }else if($(item).is('img')){$(item).attr('src',val);}else if($(item).is('select')){ $(item).val(val); }else if($(item).is('textarea')){ $(item).val(val);}else{$(item).html(val); }
+              }
+              var _url = $(item).attr("url_to_src");
+              if (productVo[_url]) { $(item).attr('src',productVo[_url]);}
+              var _property = $(item).attr("property");
+              var eventDefineOfitem = option[_property];
+              if (eventDefineOfitem) {
+                  $(item).bind(eventDefineOfitem.e, function(){
+                      eventDefineOfitem.f(productVo,em,$(item));
+                  });
+              }
+    	 });
     }
+    ,initProductVoList : function(option) {
+        if ($.type(option) != "object") {
+            alert('parameter must be json map!');
+            return false;
+        }
+        var container = option['container'];
+        var demo = option['demo'];
+        var voList = option['voList'];
+        if (!(container && demo && voList)) {
+            return false;
+        }
+        container.children("._newProductInstance").remove();
+        $.each(voList, function(index, item) {
+            var productVo = item;
+            var _newProductInstance = demo.clone(false);
+            _newProductInstance.removeAttr("id");
+            util.initProduct(_newProductInstance,productVo);
+            _newProductInstance.show();
+            _newProductInstance.addClass("_newProductInstance");
+            container.append(_newProductInstance);
+        });
+    },
 };
+/*
+*
+* 自定义alert弹出框
+*
+* */
+window.alert=function(){myalert()};
+window.confirm=function(){myconfirm()};
+var msg="请输入验证码~";
+var myAlert = '<div class="alert topFirst">'+
+				 '<p class="tips">提示</p>'+
+					'<div class="txtBody">'+
+						msg+
+					'</div>'+
+					'<button class="ensure">确定</button>'+
+				'</div>'+
+				'<div class="backDropTop topFirst" onclick="backDropTop(this)"></div>';
+
+var myConfirm = '<div class="confirm topFirst">'+
+				 '<p class="tips">提示</p>'+
+					'<div class="txtBody">'+
+						msg+
+					'</div>'+
+					'<button class="ensure bdr">确定</button><button class="remove">取消</button>'+
+				'</div>'+
+				'<div class="backDropTop topFirst" onclick="backDropTop(this)"></div>';
+function myalert(msg){
+	$('body').append(myAlert);
+}
+
+function myconfirm(msg){
+	$('body').append(myConfirm);
+}
+function backDropTop(ops){
+		$('.topFirst').hide();
+}
+/*
+*
+* 自定义alert弹出框end
+*
+* */

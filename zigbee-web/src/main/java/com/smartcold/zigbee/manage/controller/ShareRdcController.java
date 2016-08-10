@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,6 +43,7 @@ public class ShareRdcController  {
 	@Resource(name="docLibraryService")
 	private DocLibraryService docLibraryService;
 	
+	private static final Logger logger = LoggerFactory.getLogger(ShareRdcController.class);
 
 	/**
 	 * @author MaQiang
@@ -167,7 +170,33 @@ public class ShareRdcController  {
 	    return ResponseData.newFailure("无效请求！");
 	}
 	/**
-	 * 获得货品信息
+	 * 根据用户id获得关联发布信息
+	 * @param request
+	 * @param type  出售求购
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param goodtype 过滤条件
+	 * @param keyword  关键字
+	 * @param provinceid 地域
+	 * @param orderBy 排序
+	 * @return
+	 */
+	@RequestMapping(value = "/getSEListByUID")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getSEListByUID(HttpServletRequest request,Integer userID) {
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		if(user!=null&&userID!=null&&userID!=0&&user.getId()==userID){
+			this.getPageInfo(request);
+			HashMap<String, Object> filter=new HashMap<String, Object>();
+			filter.put("sstauts", 1);//必须
+			filter.put("releaseID", userID);//必须
+			PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
+			return ResponseData.newSuccess(data);
+		}else{
+			return ResponseData.newFailure();
+		}
+	}
+	/**
+	 * 根据冷库id获得关联发布信息
 	 * @param request
 	 * @param type  出售求购
 	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
@@ -295,6 +324,77 @@ public class ShareRdcController  {
 		return ResponseData.newSuccess(data);
 	}
 	
+
+	
+	//------------------------------------------------------------------------------------免费发布消息-------------------------------------------------------
+	/**
+	 *获得用户关联的冷库信息
+	 * @param request
+	 * @param datatype
+	 * @param dataid
+	 * @return
+	 */
+	@RequestMapping(value="getRdcByUid")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request){
+		this.getPageInfo(request);//
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		if(user!=null&&user.getId()!=0 ){
+			HashMap<String, Object> parameters=new HashMap<String, Object>();
+			parameters.put("userid",user.getId());// 
+			PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
+			return ResponseData.newSuccess(rdcList);
+		}
+	    return ResponseData.newFailure();
+	}
+	/**
+	 * 删除用户关联的信息
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="delShareInfoByUid")
+	@ResponseBody
+	public ResponseData<String> delShareInfoByUid(HttpServletRequest request,Integer id,Integer uid){
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		if(user!=null&&user.getId()!=0&&id!=null &&uid!=null&&uid==user.getId()){//三级验证 防止非法操作 
+			this.rdcShareService.delShareInfoByid(id, user.getId());
+			return ResponseData.newSuccess();
+		}else{
+			if (user==null) {logger.error("非法删除操作：->未登录，数据id->"+id);} 
+			return ResponseData.newFailure("非法操作！");
+		}
+	    
+	}
+	
+	/**
+	 * 免费发布消息
+	 * @param request
+	 * @param datatype
+	 * @param dataid
+	 * @RequestParam("files") CommonsMultipartFile[] files
+	 * @return
+	 */
+	@RequestMapping(value="shareFreeRelease")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data){
+		try {
+			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
+			if(StringUtil.isnotNull(data)&&user!=null&&user.getId()!=0){//
+				RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+				rdcShareDTO.setReleaseID(user.getId());//设置发布消id//user.getId()
+				rdcShareDTO.setStauts(1);
+	            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
+	            this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, user, request);
+	            return ResponseData.newSuccess("发布成功！");
+			}else{
+				return ResponseData.newFailure("当前用户没有执行登录操作！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseData.newFailure("发布失败!请稍后重试！");
+	}
 	//------------------------------------------------------------------------------------验证码-------------------------------------------------------
 	/**
 	 * 
@@ -337,66 +437,4 @@ public class ShareRdcController  {
 	  }
 	  return false;
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value="shareApplyObj")
-	@ResponseBody
-	public ResponseData<Object> shareApplyObj(HttpServletRequest request,String dataid,String phone){
-		
-		return null;
-	}
-	//------------------------------------------------------------------------------------4:免费发布消息-------------------------------------------------------
-	/**
-	 * 免费发布消息
-	 * @param request
-	 * @param datatype
-	 * @param dataid
-	 * @return
-	 */
-	@RequestMapping(value="getRdcByUid")
-	@ResponseBody
-	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request){
-		this.getPageInfo(request);//
-		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user!=null&&user.getId()!=0 ){
-			HashMap<String, Object> parameters=new HashMap<String, Object>();
-			parameters.put("userid",user.getId());// 
-			PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
-			return ResponseData.newSuccess(rdcList);
-		}
-	    return ResponseData.newFailure();
-	}
-	
-	
-	/**
-	 * 免费发布消息
-	 * @param request
-	 * @param datatype
-	 * @param dataid
-	 * @RequestParam("files") CommonsMultipartFile[] files
-	 * @return
-	 */
-	@RequestMapping(value="shareFreeRelease")
-	@ResponseBody
-	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data){
-		try {
-			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
-			if(StringUtil.isnotNull(data)&&user!=null&&user.getId()!=0){//
-				RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
-				rdcShareDTO.setReleaseID(user.getId());//设置发布消id//user.getId()
-				rdcShareDTO.setStauts(1);
-	            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
-	            this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, user, request);
-	            return ResponseData.newSuccess("发布成功！");
-			}else{
-				return ResponseData.newFailure("当前用户没有执行登录操作！");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ResponseData.newFailure("发布失败!请稍后重试！");
-	}
-	
 }

@@ -27,5 +27,9 @@ public interface CommentMapper {
     * @return
     */
     public Page<RdcShareDTO> getSEGDList(Map<String, Object> parameters);
+
+	Page<CommentEntity> findCommentsByUserId(int userID);
+	
+	int deleteByCommentID(int commentID);
     
 }

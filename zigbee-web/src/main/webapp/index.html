@@ -99,10 +99,13 @@
 				   </ul>
 					个人信息下拉菜单 end -->
 					<div class="btn-group">
-				 <button class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+				 <!-- <button class="btn">{{user.username}}</button> --> <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="omg overhide">{{user.username}}</i><span class="caret"></span></button>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="#/personalRdc">个人信息</a>
+						<a href="#/personalDetail">个人信息</a>
+					</li>
+					<li>
+						<a href="#/personalRdc">我的冷库</a>
 					</li>
 					<li>
 						<a href="#/personalRdc">我的发布</a>
@@ -111,10 +114,10 @@
 						<a href="#/personalOrder">我的订单</a>
 					</li>
 					<li>
-						<a href="#/personalRdc">我的冷库</a>
+						<a href="#/personalOrder">我的评价</a>
 					</li>
 				</ul>
-			</div>
+			</div>　
 					<b><a ng-click="logout()" href="" ng-bind="'退出'">
 <!-- =======
 				     <button   class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
@@ -274,6 +277,8 @@
 	<script src="app/js/coldStorageMap.js"></script>
 	<script src="app/js/personalRdc.js"></script>
 	<script src="app/js/personalOrder.js"></script>
+	<script src="app/js/personalDetail.js"></script>
+	<script src="app/js/personalComment.js"></script>
 	<script src="app/js/orderGenerate.js"></script>
 	<script src="app/js/utile.js"></script>
 	<script type="text/javascript">

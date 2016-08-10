@@ -41,9 +41,20 @@
 
 </insert>
 
+ <delete id="deleteByCommentID">
+		delete from ColdStorageComment where id = #{commentID}
+	</delete>
+
+
 	<select id="findCommentsByRdcId" parameterType="map" resultType="CommentEntity">
 		SELECT *
 		FROM `ColdStorageComment` WHERE `rdcID` = #{rdcID}
+		order by `addTime` desc
+	</select>
+	
+	<select id="findCommentsByUserId" parameterType="map" resultType="CommentEntity">
+		SELECT *
+		FROM `ColdStorageComment` WHERE `commerid` = #{userID}
 		order by `addTime` desc
 	</select>
 
