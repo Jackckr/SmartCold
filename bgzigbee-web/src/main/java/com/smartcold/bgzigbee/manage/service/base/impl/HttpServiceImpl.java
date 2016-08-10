@@ -9,8 +9,10 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
-import com.smartcold.bgzigbee.manage.service.base.HttpService;
+import org.springframework.stereotype.Service;
 
+import com.smartcold.bgzigbee.manage.service.base.HttpService;
+@Service
 public class HttpServiceImpl implements HttpService {
 
 	@Override

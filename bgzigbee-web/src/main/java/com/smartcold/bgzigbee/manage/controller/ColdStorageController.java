@@ -17,6 +17,7 @@ import com.smartcold.bgzigbee.manage.dao.SpiderItemConfigMapper;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.ColdStorageSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SpiderItemType;
+import com.smartcold.bgzigbee.manage.service.RemoteService;
 
 @Controller
 @RequestMapping(value = "/coldStorage")
@@ -29,6 +30,9 @@ public class ColdStorageController {
 
 	@Autowired
 	private SpiderItemConfigMapper spiderItemConfigDao;
+	
+	@Autowired
+	private RemoteService remoteService;
 
 	@RequestMapping(value = "/getColdStorageByRdcId")
 	@ResponseBody
@@ -71,5 +75,11 @@ public class ColdStorageController {
 		coldStorageSetDao.deleteColdStorage(id);
 
 		return new ResultDto(0, "删除成功");
+	}
+	
+	@RequestMapping(value="/addStorageKey", method=RequestMethod.POST)
+	@ResponseBody
+	public Object addStorageKey(int type, String key, String desc, String unit){
+		return remoteService.saveStorageKeys(type, key, desc, unit);
 	}
 }
