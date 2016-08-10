@@ -982,6 +982,14 @@ section.content{
 }
 .dropdown div .btn.dropdown-toggle{
 	width:120px;
+	padding:6px 0;    
+}
+.omg{overflow: hidden; text-overflow: ellipsis; white-space:nowrap;}
+.overhide{
+	display:inline-block;
+	width:90px;
+	vertical-align:middle;
+    font-style: normal;
 }
 .dropdown-menu{
 	min-width:120px;

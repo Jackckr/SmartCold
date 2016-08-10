@@ -171,7 +171,7 @@ h3{
     font-weight: normal;
     margin-top: 8px;
 }
-h4{
+.editHead h4,.editTel h4,.editInfo h4,.editPassword h4{
     background-color: #f1f1f1;
     height: 30px;
     line-height: 30px;
