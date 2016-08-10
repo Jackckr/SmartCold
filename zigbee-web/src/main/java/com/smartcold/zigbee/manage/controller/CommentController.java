@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dao.CommentMapper;
+import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.CommentDTO;
 import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.PersonalCommentDTO;
@@ -57,4 +58,15 @@ public class CommentController {
     public void addUsefulCnt(@RequestParam int id) {
         commentDao.addUsefulCnt(id);
     }
+    
+    @ResponseBody
+	@RequestMapping(value = "/deleteByCommentID", method = RequestMethod.DELETE)
+	public Object deleteByCommentID(Integer commentID) {
+		if (commentID <= 0) {
+			return new BaseDto(-1);
+		}
+		commentDao.deleteByCommentID(commentID);
+		return new BaseDto(0);
+	}
+    
 }
