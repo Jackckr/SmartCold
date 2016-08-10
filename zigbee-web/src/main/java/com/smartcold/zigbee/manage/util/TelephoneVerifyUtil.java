@@ -76,6 +76,7 @@ public class TelephoneVerifyUtil {
 			return code;
 		}
 		
+		
 		public String generateCode() {
 			String[] beforeShuffle = new String[] { "2", "3", "4", "5", "6", "7",
 					"8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",

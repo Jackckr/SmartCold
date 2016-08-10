@@ -86,3 +86,152 @@
     padding-left: 20px; 
     cursor: pointer;   
 }
+/*我的订单*/
+.order{
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+}
+.num{
+    margin-right: 50px;
+}
+.content h4{
+    color: #438BCB;
+    line-height: 36px;
+}
+.date{
+    font-size: 14px;
+    color: #999;
+    margin: 0 15px;
+}
+.info{
+    text-indent: 3em;
+    color: #333;
+    font-size: 14px;
+}
+.dot{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    background-color: #438BCB;
+    border-radius: 50%;
+}
+.prev{
+    margin-right: 10px;
+}
+.imgShow{
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.imgShow .img{
+    width: 200px;
+    height: 140px;
+}
+.imgShow li{
+    padding: 0;
+    margin-right: 15px;
+}
+.object li{
+    width: 50%;    
+}
+.object li>p:first-child{
+    color: #438BCB;
+    font-size: 15px;
+}
+/*
+** 个人信息
+*/
+.editHead,.editTel,.editInfo,.editPassword{
+    margin-bottom: 15px;
+}
+p{
+    margin: 0;
+}
+h3{
+    color: #f40;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 8px;
+}
+h4{
+    background-color: #f1f1f1;
+    height: 30px;
+    line-height: 30px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 10px;
+}
+.inline{
+    display: inline-block;
+}
+.imgBd{
+    width: 140px;
+    height: 140px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-size: cover;
+    margin-right: 30px;
+    vertical-align: top;
+}
+.imgBd img{
+    width: 100%;
+    height: 100%;
+}
+.editTel span,.editInfo span,.editPassword span{
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    line-height: 34px;
+}
+.upload{
+    vertical-align: bottom;
+}
+.upload p{
+    font-size: 14px;
+    color: #333;
+    line-height: 1.75;
+}
+.upload input{
+    margin: 10px 0 20px;
+}
+.upload .intro{
+    font-size: 12px;
+    color: #999;
+}
+.upTel{
+    margin-bottom: 20px;
+}
+.newTel{
+    border: 1px solid #ccc;
+    line-height: 34px;
+    border-radius: 3px;
+    text-indent: 5px;
+    font-size: 14px;
+    width: 200px;
+}
+.line{
+    margin-bottom: 5px;
+}
+.line label{
+    font-weight: 400;
+    margin-right: 20px;
+}
+.line select{
+    width: 110px;
+    line-height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+
+}
+i{
+    font-style: normal;
+}
+.ok{
+    text-indent: 5em;
+}
+.ok button{
+    padding: 6px 30px
+}

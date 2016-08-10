@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrdersEntity {
 	private int id;
@@ -16,6 +17,7 @@ public class OrdersEntity {
 	private int state;
 	private int number;
 	private Date generatetime;
+	
 	public int getId() {
 		return id;
 	}

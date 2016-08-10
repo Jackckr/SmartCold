@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人信息详情</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/personalinfo.css">
+</head>
+<body>
+	<div class="shareMain clearfix">
+	<!-- sidebar -->
+		<div class="sidebar pull-left">
+			<ul class="infoList">
+				<li class="current">个人信息</li>
+				<li>我的冷库</li>
+				<li>我的发布</li>
+				<li>我的订单</li>
+				<li>我的评价</li>
+				<li>最近浏览</li>
+				<li>联系客服</li>
+			</ul>
+		</div>
+	<!-- sidebar end -->
+	<!-- content -->
+		<div class="content">
+		  	<h3>个人信息</h3>
+		  	<div class="editHead">
+		  		<h4>修改头像</h4>
+		  		<div class="uploadImg">
+		  			<div class="imgBd inline">
+		  				<img src="error.jpg" alt=""></div>
+		  			<div class="upload inline">
+		  				<p>本地上传</p>
+		  				<input type="file">
+		  				<p class="intro">图片格式:GIF、JPG、JPEG、PNG,最适合尺寸120*120 像素 </p>
+		  			</div>
+		  		</div>
+		  	</div>
+		  	<div class="editTel">
+		  		<h4>修改联系方式</h4>
+		  		<p><span>原手机号码：</span><i>15856982563</i></p>
+		  		 <div class="upTel">
+		  		 	<span>手机号码：</span>
+			  		 <input type="text" class="newTel" placeholder="请输入您的手机号码">
+			  		 <button class="btn btn-primary">获取手机验证码</button>
+		  		 </div>
+				 <div class="downTel hide">
+				 	<span>验证码:</span>
+			  		 <input type="text" class="newTel" placeholder="请输入您的验证码">
+			  		 <button class="btn btn-primary">确定</button>
+				 </div>
+				<p class="hide"><span>新手机号码：</span><i>15856989856</i></p>
+		  	</div>
+		  	<div class="editInfo">
+		  		<h4>修改资料</h4>
+		  		<div class="line">
+		  			<span>昵称：</span><i></i>
+		  			<input type="text" class="newTel" placeholder="wellsea">
+		  		</div>
+		  		<div class="line">
+		  			<span>真实姓名：</span>
+		  			 <input type="text" class="newTel" placeholder="请输入您的真实姓名">
+		  		</div>
+				<div class="line">
+		  			<span>性别：</span>
+		  			 <label>
+		  			 	<input type="radio" name="sex">
+		  			 	女
+		  			 </label>
+		  			 <label>
+		  			 	<input type="radio" name="sex">
+		  			 	男
+		  			 </label>
+		  			 <label>
+		  			 	<input type="radio" name="sex" checked>
+		  			 	保密
+		  			 </label>
+		  		</div>
+				<div class="line">
+		  			<span>家乡：</span>
+		  			 <select>
+		  			 	<option value="北京">北京</option>
+		  			 	<option value="上海">上海</option>
+		  			 	<option value="天津">天津</option>
+		  			 </select>
+		  		</div>
+		  		<div class="line">
+		  			<span>常居地：</span>
+		  			 <select>
+		  			 	<option value="北京">北京</option>
+		  			 	<option value="上海">上海</option>
+		  			 	<option value="天津">天津</option>
+		  			 </select>
+		  		</div>
+		  	</div>
+		  	<div class="editPassword">
+		  		<h4>修改密码</h4>
+		  		<div class="line">
+		  			<span>昵称：</span><i>wellsea</i>
+		  		</div>
+		  		<div class="line">
+		  			<span>旧密码：</span>
+		  			 <input type="password" class="newTel" placeholder="请输入旧密码">
+		  		</div>
+		  		<div class="line">
+		  			<span>新密码：</span>
+		  			 <input type="password" class="newTel" placeholder="6~16个字符">
+		  		</div>
+		  		<div class="line">
+		  			<span>确认密码：</span>
+		  			 <input type="password" class="newTel" placeholder="请再次输入密码">
+		  		</div>
+		  	</div>
+		  	<p class="ok"><button class="btn btn-success">完成修改</button></p>
+		</div>
+	<!-- content end-->
+	</div>
+</body>
+</html>

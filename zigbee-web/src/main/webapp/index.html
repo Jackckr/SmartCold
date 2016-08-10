@@ -99,6 +99,24 @@
 				   </ul>
 					个人信息下拉菜单 end -->
 					<div class="btn-group">
+				 <button class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="#/personalRdc">个人信息</a>
+					</li>
+					<li>
+						<a href="#/personalRdc">我的发布</a>
+					</li>
+					<li>
+						<a href="#/personalOrder">我的订单</a>
+					</li>
+					<li>
+						<a href="#/personalRdc">我的冷库</a>
+					</li>
+				</ul>
+			</div>
+					<b><a ng-click="logout()" href="" ng-bind="'退出'">
+<!-- =======
 				     <button   class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 						 <ul class="dropdown-menu hide">
 							<li>
@@ -116,6 +134,7 @@
 						</ul>
 			       </div>
 					<b style="margin-left: 20px;"><a ng-click="logout()" href="" ng-bind="'退出'">
+>>>>>>> 365f038f15fe050dc7786cafd577109633a5d520 -->
 					</a>
 					</b>
 				 </div>
@@ -255,6 +274,7 @@
 	<script src="app/js/coldStorageMap.js"></script>
 	<script src="app/js/personalRdc.js"></script>
 	<script src="app/js/personalOrder.js"></script>
+	<script src="app/js/orderGenerate.js"></script>
 	<script src="app/js/utile.js"></script>
 	<script type="text/javascript">
 	   $(function() {
