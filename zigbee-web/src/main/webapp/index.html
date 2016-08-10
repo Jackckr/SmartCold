@@ -99,7 +99,7 @@
 				   </ul>
 					个人信息下拉菜单 end -->
 					<div class="btn-group">
-				 <button class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+				 <!-- <button class="btn">{{user.username}}</button> --> <button data-toggle="dropdown" class="btn dropdown-toggle">{{user.username}}<span class="caret"></span></button>
 				<ul class="dropdown-menu">
 					<li>
 						<a href="#/personalDetail">个人信息</a>
@@ -117,7 +117,7 @@
 						<a href="#/personalOrder">我的评价</a>
 					</li>
 				</ul>
-			</div>
+			</div>　
 					<b><a ng-click="logout()" href="" ng-bind="'退出'">
 <!-- =======
 				     <button   class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
