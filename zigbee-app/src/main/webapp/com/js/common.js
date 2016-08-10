@@ -44,18 +44,22 @@ function showErrorInfo(msg) {
         msgEl.html(msg);
     }
 }
-function checkLogin(msg) {
+function checkLogin(msg,callback) {
 	 if(window.user!=null ){return;}
 	  $.ajax({
 	        type:"GET",
-	        cache:false,
+//	        cache:false,
+//	        async: false,
 	        dataType:"json",
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
 	                window.user = data;
+	                if(callback){
+	                	callback();
+	                }
 	            } else {
-	            	alert(msg?msg:"请登录后再操作！");
+	            	alert(msg?msg:"请登录后再操作！!!!");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
 	            }

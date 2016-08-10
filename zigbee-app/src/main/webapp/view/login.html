@@ -6,11 +6,16 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
     <title>登陆</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/login.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript">$.ajax({type:"GET",cache:false,async:false,dataType:"json",url:ER.root+"/i/user/findUser",success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
+    
 </head>
 <body>
     <div class="login">

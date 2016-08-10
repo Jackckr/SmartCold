@@ -132,7 +132,6 @@ public class UserController extends BaseController {
 			List<FileDataEntity> handleFile = this.docLibraryService.handleFile(old_user.getId(), FileDataMapper.CATEGORY_AVATAR_PIC, old_user, request);//用于更新头像信息
 			if(SetUtil.isnotNullList(handleFile)){
 				FileDataEntity fileDataEntity = handleFile.get(0);
-				//if(user.getId()==0){user=new UserEntity();user.setId(old_user.getId());}//数据不完整处理情况处理
 				user.setAvatar(FtpService.READ_URL+fileDataEntity.getLocation());
 			}else{
 				user.setAvatar(null);

@@ -39,6 +39,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 "rdcID": rdcID
             }
         }).success(function (data) {
+        	$scope.rdcinfo=data[0];
             $scope.score = data[0].score;
             $scope.userRecommendPercent = data[0].userRecommendPercent;
             $scope.userCommentCount = data[0].userCommentCount;
@@ -458,13 +459,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     $scope.goComment = function () {
         $location.path("/coldStorage/" + $stateParams.rdcID + "/review");
     }
-
     $scope.pubSerdc = function () {
-        $state.go('releaseItem',{dataid:$scope.rdcId, _cuttid: 3});
+        $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 3});
     }
 
     $scope.pubGoods = function () {
-        $state.go('releaseItem',{dataid:$scope.rdcId, _cuttid: 1});
+        $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 1});
     }
-
 });
