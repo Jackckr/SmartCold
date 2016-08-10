@@ -90,17 +90,20 @@
 		s.releaseID,
 		s.title,
 		s.unitPrice,
+		s.dataType,
 		s.unit1,
+		s.unit2,
 		s.typeText,
 		s.sqm,
-		 m.type_name codeLave1,
+		s.updatetime,
+		m.type_name codeLave1,
 		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
 		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
 		s.applyID,
 		s.bookings,
 		s.stauts,s.detlAddress,
 		r.address,
-		r. NAME,
+		r.NAME,
 		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) AS logo
 		FROM
 		shared_info s
