@@ -15,6 +15,7 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
     $scope.bigTotalItems = 12;
     // 当前页
     $scope.bigCurrentPage = 1;
+    
 	$scope.getComments = function() {
     	$http.get('/i/comment/findCommentsByUserId', {
             params: {
