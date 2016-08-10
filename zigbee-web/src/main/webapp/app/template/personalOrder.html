@@ -29,7 +29,7 @@
 					<p class="area">{{orderdto.orders.ordername}}</p>
 					<p class="area">
 						{{orderdto.orders.generatetime}}
-						<span class="delete">删除</span>
+						<span class="delete"  ng-click="goDeleteOrder(orderdto.orders.id)">删除</span>
 					</p>
 				</li>
 			</ul>

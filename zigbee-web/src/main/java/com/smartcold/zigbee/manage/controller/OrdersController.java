@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.OrdersMapper;
 import com.smartcold.zigbee.manage.dao.RdcShareMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
+import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 
@@ -150,6 +152,17 @@ public class OrdersController extends BaseController {
 		OrdersDTO data = ordersDTO;
 		return ResponseData.newSuccess(data);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteByOrderID", method = RequestMethod.DELETE)
+	public Object deleteByOrderID(Integer orderID) {
+		if (orderID <= 0) {
+			return new BaseDto(-1);
+		}
+		orderDao.deleteByOrderID(orderID);
+		return new BaseDto(0);
+	}
+
 	
 	@RequestMapping(value = "/getTelephone")
 	@ResponseBody

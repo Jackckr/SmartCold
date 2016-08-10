@@ -38,6 +38,9 @@
 		now()
 		)
     </insert>
+    <delete id="deleteByOrderID">
+		delete from orders where id = #{orderID}
+	</delete>
 
     <select id="findOrdersByPersonId" parameterType="map" resultType="OrdersEntity">
 		SELECT * FROM `orders` WHERE `userid` = #{userid} OR `ownerid` = #{userid}

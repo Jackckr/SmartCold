@@ -21,5 +21,5 @@ public interface OrdersMapper {
 	
 	void insertOrder(OrdersEntity ordersEntity);
 	
-	
+	 int deleteByOrderID(int orderID);
 }

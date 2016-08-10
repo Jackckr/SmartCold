@@ -32,5 +32,24 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
 	}
 	$scope.getOrders();
 	
+	$scope.goDeleteOrder = function(orderID){
+    	var r=confirm("删除订单？");
+    	if(r){
+    		$http({
+    			method:'DELETE',
+    			url:'/i/orders/deleteByOrderID',
+    			params:{
+    				'orderID':orderID
+    			}
+    		}).success(resDelRdc);
+    	}
+    }
+  function resDelRdc(data){
+    	if(data.status == 0){
+			alert("删除成功");
+			location.reload();
+		}
+    }
+	
 });
 
