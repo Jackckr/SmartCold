@@ -155,7 +155,7 @@ public class OrdersController extends BaseController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/deleteByOrderID", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteByOrderID")
 	public Object deleteByOrderID(Integer orderID) {
 		if (orderID <= 0) {
 			return new BaseDto(-1);
