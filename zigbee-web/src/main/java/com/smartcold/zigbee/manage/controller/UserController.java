@@ -198,10 +198,7 @@ public class UserController extends BaseController {
 	public boolean checkOldPassword(HttpServletRequest request,String pwd){
 		UserEntity ol_user = (UserEntity)request.getSession().getAttribute("user");
 		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
-		if(pwd.equals(new_user.getPassword())){
-			return true;
-		}
-		return false;
+		return pwd.equals(new_user.getPassword());
 	}
 
 }
