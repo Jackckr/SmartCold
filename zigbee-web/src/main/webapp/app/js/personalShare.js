@@ -39,15 +39,11 @@ coldWeb.controller('personalShare', function ($rootScope, $scope, $state, $cooki
     				'id':shareID,
     				'uid':$rootScope.user.id
     			}
-    		}).success(resDelRdc);
+    		}).success(function (data) {
+    				alert("删除成功");
+    				$state.reload(); 
+            });
     	}
     }
-  function resDelRdc(data){
-    	if(data.status == 0){
-			alert("删除成功");
-			location.reload();
-		}
-    }
-	
 });
 

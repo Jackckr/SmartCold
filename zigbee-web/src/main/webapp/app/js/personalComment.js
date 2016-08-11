@@ -42,15 +42,11 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
     			params:{
     				'commentID':commentID
     			}
-    		}).success(resDelRdc);
+    		}).success(function (data) {
+				alert("删除成功");
+				$state.reload(); 
+        });
     	}
     }
-  function resDelRdc(data){
-    	if(data.status == 0){
-			alert("删除成功");
-			location.reload();
-		}
-    }
-	
 });
 

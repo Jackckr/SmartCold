@@ -64,6 +64,7 @@ public class OrdersController extends BaseController {
 				ordersDTO.setFiles(rsd.getFiles());
 			}
 			ordersDTOList.add(ordersDTO);
+			ordersDTOList.setTotal(ordersList.getTotal());
 		}
 		PageInfo<OrdersDTO> data = new PageInfo<OrdersDTO>(ordersDTOList);
 		return ResponseData.newSuccess(data);
@@ -74,17 +75,19 @@ public class OrdersController extends BaseController {
 	 * @param orderID
 	 * @return
 	 */
-/*	@RequestMapping(value = "/findOrderByOrderId")
+	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
 	public Object findOrderByOrderId(@RequestParam String orderID) {
-		OrdersEntity data = orderDao.findOrderByOrderId(Integer.parseInt(orderID));
-		RdcShareDTO rsd = rsmDao.getSEByID("" + data.getShareinfoid());
+		OrdersDTO data = new OrdersDTO();
+		OrdersEntity oEntity = orderDao.findOrderByOrderId(Integer.parseInt(orderID));
+		RdcShareDTO rsd = rsmDao.getSEByID("" + oEntity.getShareinfoid());
+		data.setOrders(oEntity);
 		if (rsd != null) {
 			data.setLogo(rsd.getLogo());
 			data.setFiles(rsd.getFiles());
 		}
 		return ResponseData.newSuccess(data);
-	}*/
+	}
 	
 	/**
 	 * 
