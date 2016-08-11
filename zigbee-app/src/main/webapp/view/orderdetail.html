@@ -20,7 +20,7 @@
       var id  = getUrlParam("id");
 	  $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
       $scope.initdata=function(){
-			$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
+			$http.get(ER.root+"/i/orders/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
 			 if(data.success){
 				   $scope.vo=data.entity; 
 		    	   $scope.datatype=data.entity.dataType;

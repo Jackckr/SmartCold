@@ -4,7 +4,28 @@ var oHtml = document.documentElement;
 var screenWidth = oHtml.clientWidth;
 var screenHeight = oHtml.clientHeight;
 var ER = {root:"http://192.168.1.136:8080/",coldroot:"http//:192.168.1.136:8989"};
-if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
+if ($.ajax) {jQuery.ajaxSetup({
+	    xhrFields:{withCredentials:true}
+//		,contentType : "application/x-www-form-urlencoded;charset=utf-8"
+// , error: function(jqXHR, textStatus, errorThrown){  
+//			   if(textStatus=='timeout'){alert("超时");return;};
+//	            switch (jqXHR.status){  
+//	                case(500):  
+//	                    alert("服务器系统内部错误");  
+//	                    break;  
+//	                case(401):  
+//	                    alert("未登录");  
+//	                    break;  
+//	                case(403):  
+//	                    alert("无权限执行此操作");  
+//	                    break;  
+//	                case(408):  
+//	                    alert("请求超时");  
+//	                    break;  
+//	                default:  
+//	                    alert("未知错误");  
+//	            }  }
+	});}
 function goback() {window.history.back();}//返回上一级
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
@@ -50,7 +71,8 @@ function checkLogin(msg,callback) {
 	  $.ajax({
 	        type:"GET",
 	        cache:false,
-	        //async: false,
+	        timeout : 5000,
+//	        async: false,
 	        dataType:"json",
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
@@ -60,11 +82,16 @@ function checkLogin(msg,callback) {
 	                	callback();
 	                }
 	            } else {
-	            	alert(msg?msg:"请登录后再操作！!!!");
+	            	alert(msg?msg:"请登录后再操作！");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
 	            }
 	        }
+//	      ,complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+//				if(status=='timeout'){//超时,status还有success,error等值的情况
+//					alert("超时");
+//				}
+//			}
 	    });
 }
 /**
