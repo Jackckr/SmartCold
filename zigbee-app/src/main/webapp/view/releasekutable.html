@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>发布库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
@@ -219,12 +220,12 @@
                     </div>
                 </li>
                  <li>
-                    <label>资质荣誉图：</label>
+                    <label>资质荣誉图：<small class="text-warning">*最多八张</small></label>
                     <div class="mySelect">
                         <div>
                             <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
                                        ngf-multiple="true" name="honorfiles">
-                             <small class="text-warning fr" style="width: 100px">*最多八张</small>
+                             
                         </div>
                     </div>                  
                 </li>
@@ -242,12 +243,12 @@
                     </div>
                 </li>
                 <li>
-                    <label>冷库图片：</label>
+                    <label>冷库图片：<small class="text-warning">*最多五张</small></label>
                        <div class="mySelect">
                            <div>
                                 <input type="file" ngf-select="addFiles($files)" ng-model="files"
                                            ngf-multiple="true" name="files">
-                                 <small class="text-warning fr" style="width: 100px">*最多五张</small>
+                                 
                             </div>
                        </div>
                 </li>
