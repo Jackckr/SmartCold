@@ -82,7 +82,7 @@ function checkLogin(msg,callback) {
 	                	callback();
 	                }
 	            } else {
-	            	alert(msg?msg:"请登录后再操作！");
+	            	alert(msg?msg:"请登录后再操作~");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
 	            }
@@ -163,7 +163,7 @@ var util = {
         var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
         var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
         if (!rFilter.test(oFile.type)) {
-            alert("格式错误！请选择格式为" + msg + "的图片!");
+            alert("格式错误~请选择格式为" + msg + "的图片~");
             return;
         }
         var oImage = document.getElementById(imgid);
