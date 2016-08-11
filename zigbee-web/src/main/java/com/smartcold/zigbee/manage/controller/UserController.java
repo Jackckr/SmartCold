@@ -98,32 +98,13 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/checkVerifyCode")
 	@ResponseBody
 	public Object checkVerifyCode(HttpServletRequest request, String verifycode) {
-		if(request.getSession().getAttribute("identityVerifyCode").equals(verifycode))
-			return true;
-		return false;
-	}
-	
-	@RequestMapping(value = "/checkOldPwd")
-	@ResponseBody
-	public Object checkOldPwd(HttpServletRequest request, String oldPwd) {
-		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
-		if(user!=null){return user;}
-		Cookie[] cookies = request.getCookies();
-		if(cookies!=null&&cookies.length>0){
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("token")) {
-					CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
-					if (effectiveCookie != null) {
-						user = userDao.findUserByName(effectiveCookie.getUsername());
-						if (user.getPassword().equals(oldPwd)) {
-							return true;
-						}
-					}
-				}
-			}
+		if (verifycode!=null) {
+			if(request.getSession().getAttribute("identityVerifyCode").equals(verifycode))
+				return true;
 		}
 		return false;
 	}
+	
 	
 	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody
