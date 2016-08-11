@@ -1,13 +1,9 @@
-var mode = [ [ 'rdcID', "rdcID", "orderID" ],
-		[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ];
 var urlset = [
-		[ "releasekutable.html?id=", "/i/rdc/deleteByRdcID",
-				"/i/rdc/findRDCDTOByUserId" ],
-		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid",
-				"/i/ShareRdcController/getSEListByUID" ],
-		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID",
-				"/i/orders/findOrdersByUserId" ] ];// type=0:我的冷库 // 1：我的发布
-													// //2:我的订单 3：我的点评
+		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
+		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
+		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ]   //2:我的订单 3：我的点评
+		];										
 var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
 var editinfo = function(id) {
 	location.href = urlset[type][0] + id;
