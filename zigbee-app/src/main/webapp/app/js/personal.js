@@ -45,7 +45,7 @@
             data: formdata,
             processData: false,
             contentType: false,
-            success: function(data){if(!data){alert("修改失败！请稍后重试！");} }
+            success: function(data){if(!data){alert("修改失败咯，请稍后重试吧~");} }
           });
 	};
 	$scope.initdata();
