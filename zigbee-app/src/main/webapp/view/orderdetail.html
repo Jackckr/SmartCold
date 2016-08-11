@@ -7,20 +7,58 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<title>我的订单</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-	    <link rel="stylesheet" href="../com/css/baguettebox.min.css">
+	<link rel="stylesheet" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
-	    <script src="../com/js/jquery.min.js"></script>
-		<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
+	<script src="../com/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+	<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
+    <script type="text/javascript">checkLogin();</script>
+    <script type="text/javascript">
+     var app = angular.module("app", []).controller("orderdetail", function($http, $location,$scope) {
+      var id  = getUrlParam("id");
+	  $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+      $scope.initdata=function(){
+			$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
+			 if(data.success){
+				   $scope.vo=data.entity; 
+		    	   $scope.datatype=data.entity.dataType;
+			   }else{
+			     alert("获取数据失败！");
+			     goback();
+			     return;
+			   }
+             });
+			
+	};
+	$scope.initevg=function(){
+		
+	};
+	$scope.savedata=function(name,value){
+        var formdata = new FormData();
+        formdata.append(name,value);
+        formdata.append("id",$scope.userinfo.id);
+        $.ajax({
+        	type: 'POST',
+            url: ER.root+"/i/user/updateUser",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function(data){if(!data){alert("修改失败！请稍后重试！");} }
+          });
+	};
+	$scope.initdata();
+	$scope.initevg();
+});
+    </script>
 </head>
-	<body>
+	<body  ng-app="app"  ng-controller="orderdetail" ng-cloak>
 	    <header>
 	    	<div class="area fl">
 	    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
 	    	</div>
-	    	<div class="txt">
-	    		我的订单
-	    	</div>
+	    	<div class="txt">我的订单</div>
 	    </header>
 	    <section class="content">
 	    	<p class="order">

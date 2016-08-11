@@ -310,9 +310,10 @@ public class RdcController {
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
-		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
-		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
-
+		if(SetUtil.isNotNullMap(lngLatMap)){
+			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+			rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		}
 		rdcMapper.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
 		boolean haveRdcExt = false;
