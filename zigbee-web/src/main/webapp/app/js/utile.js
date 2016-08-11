@@ -44,7 +44,7 @@
             callback = callback || function(){};
             var __infoEl = $(
             ['<div class="modal fade" role="dialog">'
-              ,'<div class="modal-dialog" role="document">'
+              ,'<div class="modal-dialog" role="document" style="width:360px;">'
                 ,'<div class="modal-content">'
                   ,'<div class="modal-header">'
                     ,'<button type="button" class="close hide" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
@@ -54,8 +54,8 @@
                     ,'<div class="container-fluid">'
                     ,'</div>'
                   ,'</div>'
-                  ,'<div class="modal-footer">'
-                    ,'<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>'
+                  ,'<div class="modal-footer" style="padding: 10px 20px;">'
+                    ,'<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>'
                     ,'<button type="button" class="btn btn-primary hide">Save changes</button>'
                   ,'</div>'
                 ,'</div>'

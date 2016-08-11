@@ -77,9 +77,9 @@ public class OrdersController extends BaseController {
 	 */
 	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
-	public Object findOrderByOrderId(@RequestParam String orderID) {
+	public Object findOrderByOrderId(@RequestParam String id) {
 		OrdersDTO data = new OrdersDTO();
-		OrdersEntity oEntity = orderDao.findOrderByOrderId(Integer.parseInt(orderID));
+		OrdersEntity oEntity = orderDao.findOrderByOrderId(Integer.parseInt(id));	
 		RdcShareDTO rsd = rsmDao.getSEByID("" + oEntity.getShareinfoid());
 		data.setOrders(oEntity);
 		if (rsd != null) {

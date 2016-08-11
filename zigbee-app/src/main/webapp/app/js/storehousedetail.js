@@ -18,7 +18,7 @@
 		var length = ($scope.telephone+'').length; 
 		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
 		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
-		if(!ct){alert("请输入正确的手机号码！");return;}//需要手机验证
+		if(!ct){alert("请输入正确的手机号码哟~");return;}//需要手机验证
 		setTime(document.getElementById("but_vercode"));
 		$http.get(ER.root+"/i/ShareRdcController/sharvistPhone.json",  { params: {dataid:id,telephone: $scope.telephone}  }).success(function(data) {
 			if(data.success){

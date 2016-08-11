@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="findOrderByOrderId" parameterType="map" resultType="OrdersEntity">
-		SELECT * FROM `orders` WHERE `orderid` = #{orderid}
+		SELECT * FROM `orders` WHERE `id` = #{orderid}
 	</select>
 	
 	<select id="findOrdersByOrderName" parameterType="map" resultType="OrdersEntity">
