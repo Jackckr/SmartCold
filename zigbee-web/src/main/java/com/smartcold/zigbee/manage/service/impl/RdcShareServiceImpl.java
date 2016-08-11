@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.runners.Parameterized.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +70,15 @@ public class RdcShareServiceImpl implements RdcShareService {
 	@Override
 	public int addShareMsg(RdcShareDTO rdcShareDTO) {
 		return rdcShareMapper.addshareInfo(rdcShareDTO);
+	}
+	/**
+	 * 删除用户发布的信息
+	 * @param id
+	 * @param uid
+	 */
+	@Override
+	public void delShareInfoByid(int id,int uid){
+		this.rdcShareMapper.delShareInfoByid( id, uid);
 	}
     /**
      * 获得睿库信息

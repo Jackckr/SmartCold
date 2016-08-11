@@ -48,7 +48,7 @@ public class UserController extends BaseController {
 			request.getSession().setAttribute("user", user);
             return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		}
-		return ResponseData.newFailure("用户名或者密码不正确！");
+		return ResponseData.newFailure("用户名或者密码不正确~");
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -94,7 +94,17 @@ public class UserController extends BaseController {
 			return true;
 		return false;
 	}
-
+	
+	@RequestMapping(value = "/checkVerifyCode")
+	@ResponseBody
+	public Object checkVerifyCode(HttpServletRequest request, String verifycode) {
+		if (verifycode!=null) {
+			if(request.getSession().getAttribute("identityVerifyCode").equals(verifycode))
+				return true;
+		}
+		return false;
+	}
+	
 	
 	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody
@@ -103,6 +113,18 @@ public class UserController extends BaseController {
 			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
 			String signUpCode = teleVerify.signUpVerify(telephone);
 			request.getSession().setAttribute("signUpCode", signUpCode);
+			return new ResultDto(0, "验证码已发送");
+		}
+		return new ResultDto(-1, "请填写手机号");
+	}
+	
+	@RequestMapping(value = "/identityVerify", method = RequestMethod.POST)
+	@ResponseBody
+	public Object identityVerify(HttpServletRequest request, String telephone) throws ApiException {
+		if(telephone!=null&&!telephone.equals("")){
+			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
+			String identityVerifyCode = teleVerify.identityVerify(telephone);
+			request.getSession().setAttribute("identityVerifyCode", identityVerifyCode);
 			return new ResultDto(0, "验证码已发送");
 		}
 		return new ResultDto(-1, "请填写手机号");
@@ -124,15 +146,17 @@ public class UserController extends BaseController {
 		userDao.insertUser(userEntity);
 		return new ResultDto(0, "注册成功");
 	}
+	
+	
 	@RequestMapping(value = "/updateUser")
 	@ResponseBody
 	public Object updateUser(HttpServletRequest request,UserEntity user) throws ApiException {
 		try {
 			UserEntity old_user = (UserEntity)request.getSession().getAttribute("user");
+			user.setId(old_user.getId());
 			List<FileDataEntity> handleFile = this.docLibraryService.handleFile(old_user.getId(), FileDataMapper.CATEGORY_AVATAR_PIC, old_user, request);//用于更新头像信息
 			if(SetUtil.isnotNullList(handleFile)){
 				FileDataEntity fileDataEntity = handleFile.get(0);
-				//if(user.getId()==0){user=new UserEntity();user.setId(old_user.getId());}//数据不完整处理情况处理
 				user.setAvatar(FtpService.READ_URL+fileDataEntity.getLocation());
 			}else{
 				user.setAvatar(null);
@@ -155,10 +179,7 @@ public class UserController extends BaseController {
 	public boolean checkOldPassword(HttpServletRequest request,String pwd){
 		UserEntity ol_user = (UserEntity)request.getSession().getAttribute("user");
 		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
-		if(pwd.equals(new_user.getPassword())){
-			return true;
-		}
-		return false;
+		return pwd.equals(new_user.getPassword());
 	}
 
 }

@@ -310,9 +310,10 @@ public class RdcController {
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
-		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
-		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
-
+		if(SetUtil.isNotNullMap(lngLatMap)){
+			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+			rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		}
 		rdcMapper.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
 		boolean haveRdcExt = false;
@@ -454,7 +455,6 @@ public class RdcController {
 	 @ResponseBody
 	 public ResponseData<HashMap<String, Object>> findRDCByID(Integer rdcID){
 		 if(rdcID==null){return ResponseData.newFailure("无效id");}
-		 String newMode="●＜1.8T:%s辆   ●1.8～6T:%s辆   ●6～14T:%s辆   ●＞14T:%s辆 ";//需要修改
 		 List<HashMap<String, Object>> list = this.rdcService.findRDCById(rdcID);
 		 if (SetUtil.isnotNullList(list)) {
 			 for (HashMap<String, Object> data : list) {
@@ -466,13 +466,11 @@ public class RdcController {
 						}
 						data.put("files", filelist);
 				} 
-				 if(data.get("storagetruck")!=null){
-					 Object[] newdata =new Object[5];
+				 if(data.get("storagetruck")!=null){//设置车辆信息
 					 String[] splitfhString = StringUtil.splitfhString(data.get("storagetruck")+"");
 					 for (int i = 0; i < splitfhString.length; i++) {
-						 newdata[i]=splitfhString[i].split(":")[1];
+						 data.put("storagetruck"+i,  splitfhString[i].split(":")[1]);
 					 }
-					 data.put("storagetruck", String.format(newMode, newdata) );
 				 }
 			}
 			return ResponseData.newSuccess(list);
@@ -529,11 +527,9 @@ public class RdcController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/deleteByRdcID", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteByRdcID")
 	public Object deleteByRdcID(Integer rdcID) {
-		if (rdcID <= 0) {
-			return new BaseDto(-1);
-		}
+		if (rdcID==null||rdcID <= 0) {return new BaseDto(-1);}
 		rdcService.deleteByRdcId(rdcID);
 		return new BaseDto(0);
 	}

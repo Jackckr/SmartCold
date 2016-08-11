@@ -60,7 +60,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     };
     $scope.changtype=function(_em){
     	   var em=$(_em); 
-    	   if(em.attr("value")==1&&$scope.rdcinfo==null&&$scope.dataType ==3){ util.info(null,"请去去发布页面选择冷库信息！然后才能发布出租信息！！",function(){  $state.go('releaseItemList',{data:null,dataid:null,_cuttid: $scope.dataType}); });  return;}
+    	   if(em.attr("value")==1&&$scope.rdcinfo==null&&$scope.dataType ==3){ util.info(null,"请选择冷库！然后才能发布出租信息！！",function(){  $state.go('releaseItemList',{data:null,dataid:null,_cuttid: $scope.dataType}); });  return;}
   	       $("#item_type_div span").removeClass($scope.appmode[$scope.dataType].tolimg[$scope.typeCode]); 
 	       $scope.typeCode=em.attr("value");
 	       $scope.typeText=em.text();
@@ -120,7 +120,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         $scope.rdcinfo=$stateParams.data;
         $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:1;//当前数据类型
         $scope.unit = $scope.dataType==3?"元/天·平方米":"元/吨";
-        $scope.seltype=$stateParams.dataid!=null?$stateParams.dataid:1;//支持直接发布
+        $scope.seltype=$stateParams.dataid!=null?$stateParams.dataid:1;//支持直接发布(0,1)
         if ($scope.rdcinfo) {$scope.rdcID = $scope.rdcinfo.rdcID;$scope.rdcimgs = $scope.rdcinfo.files; }
         $scope.typeCode=$scope.appmode[$scope.dataType].tool[$scope.seltype][0];
         $scope.typeText=$scope.appmode[$scope.dataType].tool[$scope.seltype][1];

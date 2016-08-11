@@ -44,14 +44,11 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
 	    			params:{
 	    				'rdcID':rdcID
 	    			}
-	    		}).success(resDelRdc);
+	    		}).success(function (data) {
+    				alert("删除成功");
+    				$state.reload(); 
+            });
 	    	}
-	    }
-	  function resDelRdc(data){
-	    	if(data.status == 0){
-				alert("删除成功");
-				location.reload();
-			}
 	    }
 	    
 });

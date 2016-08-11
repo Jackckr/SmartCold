@@ -361,7 +361,6 @@ form+.mybtn,.next+.mybtn{
 .position{
 	color: #999;
 	font-size: 0.6rem;
-	width: 9rem;
 }
 .star{
 	font-size: 0.8rem;
@@ -508,4 +507,8 @@ em{
 	line-height: 1.5rem;
 	list-style: circle;
 	font-size: 0.8rem;
+}
+.text-warning{
+	font-size:0.6rem;
+	color:#8a6d3b;
 }

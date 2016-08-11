@@ -34,6 +34,7 @@ import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
+import com.taobao.api.ApiException;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -63,6 +64,7 @@ public class OrdersController extends BaseController {
 				ordersDTO.setFiles(rsd.getFiles());
 			}
 			ordersDTOList.add(ordersDTO);
+			ordersDTOList.setTotal(ordersList.getTotal());
 		}
 		PageInfo<OrdersDTO> data = new PageInfo<OrdersDTO>(ordersDTOList);
 		return ResponseData.newSuccess(data);
@@ -73,17 +75,19 @@ public class OrdersController extends BaseController {
 	 * @param orderID
 	 * @return
 	 */
-/*	@RequestMapping(value = "/findOrderByOrderId")
+	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
-	public Object findOrderByOrderId(@RequestParam String orderID) {
-		OrdersEntity data = orderDao.findOrderByOrderId(Integer.parseInt(orderID));
-		RdcShareDTO rsd = rsmDao.getSEByID("" + data.getShareinfoid());
+	public Object findOrderByOrderId(@RequestParam String id) {
+		OrdersDTO data = new OrdersDTO();
+		OrdersEntity oEntity = orderDao.findOrderByOrderId(Integer.parseInt(id));	
+		RdcShareDTO rsd = rsmDao.getSEByID("" + oEntity.getShareinfoid());
+		data.setOrders(oEntity);
 		if (rsd != null) {
 			data.setLogo(rsd.getLogo());
 			data.setFiles(rsd.getFiles());
 		}
 		return ResponseData.newSuccess(data);
-	}*/
+	}
 	
 	/**
 	 * 
@@ -154,7 +158,7 @@ public class OrdersController extends BaseController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/deleteByOrderID", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteByOrderID")
 	public Object deleteByOrderID(Integer orderID) {
 		if (orderID <= 0) {
 			return new BaseDto(-1);
@@ -166,9 +170,12 @@ public class OrdersController extends BaseController {
 	
 	@RequestMapping(value = "/getTelephone")
 	@ResponseBody
-	public void getTelephone(@RequestParam int ownerTele,
-			@RequestParam int userTele) {
+	public void getTelephone(@RequestParam String ownerTele,
+			@RequestParam String userTele,@RequestParam String ownerName,
+			@RequestParam String userName) throws ApiException {
 		TelephoneVerifyUtil tVerifyUtil = new TelephoneVerifyUtil();
+		tVerifyUtil.callUser(userTele, userName, ownerTele, ownerName);
+		tVerifyUtil.callOwner(userTele, userName, ownerTele, ownerName);
 	}
 
 }

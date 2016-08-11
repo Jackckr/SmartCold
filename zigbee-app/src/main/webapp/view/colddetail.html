@@ -52,10 +52,10 @@
             <ul class="infolist nextList clearfix black"> 
             	 <li><span class="type">冷藏车数量：</span></li>
                  <li><span class="type">　<!--纯粹为了占位，请勿删除：--></span><span class="text"></span></li>             	 
-				 <li><span class="type compare">&lt;1.8T:</span><span class="type numl">22</span><span class="type">辆</span></li>
-				 <li><span class="type compare">1.8T-6T:</span><span class="type numl">22</span><span class="type">辆</span></li>
-				 <li><span class="type compare">6T-14T:</span><span class="type numl">22</span><span class="type">辆</span></li>				
-				 <li><span class="type compare">&gt;14T:</span><span class="type numl">22</span><span class="type">辆</span></li>
+				 <li><span class="type compare">&lt;1.8T:</span><span class="type numl">{{vo.storagetruck0}}</span><span class="type">辆</span></li>
+				 <li><span class="type compare">1.8T-6T:</span><span class="type numl">{{vo.storagetruck1}}</span><span class="type">辆</span></li>
+				 <li><span class="type compare">6T-14T:</span><span class="type numl">{{vo.storagetruck2}}</span><span class="type">辆</span></li>				
+				 <li><span class="type compare">&gt;14T:</span><span class="type numl">{{vo.storagetruck3}}</span><span class="type">辆</span></li>
                  <li ng-if="vo.struct"><span class="type">结构：</span><span class="text">{{vo.struct}}</span></li>                
                  <li><span class="type">添加时间：</span><span class="text">{{vo.addtime }}</span></li> 
 <!--                  <li ng-if="vo.storagetype"><span class="type">冷库类型：</span><span class="text">{{vo.storagetype}}</span></li>  -->
