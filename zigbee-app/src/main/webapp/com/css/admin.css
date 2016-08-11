@@ -151,8 +151,7 @@ section.show{
 	color: #fff;
 	border-color: transparent;
 }
-.position+.btnGroup{
-	margin-top: 1.5rem;
+.commentList .btnGroup{
 	border-top:1px solid #eee;
 	padding-top:0.3rem;
 }
@@ -429,4 +428,11 @@ section.show{
 .pic input{
 	width: 0;
 	height:0;
+}
+.omg{
+	width: 80%;
+	float: right;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
