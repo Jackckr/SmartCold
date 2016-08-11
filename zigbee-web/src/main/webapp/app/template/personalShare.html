@@ -1,0 +1,69 @@
+	<link rel="stylesheet" type="text/css" href="app/css/personalinfo.css">
+	<div class="shareMain clearfix">
+	<!-- sidebar -->
+		<div class="sidebar pull-left">
+			<ul class="infoList">
+				<li><a href="#/personalDetail"><font color="black">个人信息</font></a></li>
+				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
+				<li><a href="#/personalShare"><font color="#418ACA">我的发布</font></a></li>
+				<li><a href="#/personalOrder"><font color="black">我的订单</font></a></li>
+				<li><a href="#/personalComment"><font color="black">我的评价</font></a></li>
+				<li>联系客服</li>
+			</ul>
+		</div>
+	<!-- sidebar end -->
+	<!-- content -->
+		<div class="content">
+		<!-- 图文列表区域 -->
+		<ul class="imgList clearfix">
+			<li ng-repeat="sharedto in sharesDto">
+				<div class="img pull-left">
+					<img src={{sharedto.logo}}>
+				</div>
+
+				<p class="company">{{sharedto.title}}</p>
+
+				<div ng-if="sharedto.dataType==3">
+					<p>
+						<span>发布类型:</span> <span>[冷库]{{sharedto.typeText}}</span>
+					</p>
+					<p>
+						<span>冷库名称:</span> <span>{{sharedto.name}}</span>
+					</p>
+				</div>
+
+				<div ng-if="sharedto.dataType==2">
+					<p>
+						<span>发布类型:</span> <span>[配送]{{sharedto.typeText}}</span>
+					</p>
+					<p>
+						<span>始发地:</span> <span>{{sharedto.unit1}}</span> <span>--></span>
+						<span>目的地:</span> <span>{{sharedto.unit2}}</span>
+					</p>
+				</div>
+
+				<div ng-if="sharedto.dataType==1">
+					<p>
+						<i></i> <span>发布类型:</span> <span>[货品]{{sharedto.typeText}}</span>
+					</p>
+					<p>
+						<span>货品类型:</span> <span>{{sharedto.codeLave1}}</span>
+					</p>
+				</div>
+				<p class="area">
+					{{sharedto.updatetime}} <span class="delete"
+						ng-click="goDeleteShare(sharedto.id)">删除</span>
+				</p></li>
+		</ul>
+		<div class="page">
+               <!-- 翻页功能 -->
+               <div class="row">
+                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
+	     </div>
+		<!-- 图文列表区域 end-->
+		</div>
+	<!-- content end-->
+	</div>

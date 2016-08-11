@@ -1,4 +1,4 @@
-coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $cookies, $http, $location) {
+coldWeb.controller('personalShare', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 	$scope.load = function(){
 		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
 			$rootScope.user = data;
@@ -15,32 +15,29 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
     $scope.bigTotalItems = 12;
     // 当前页
     $scope.bigCurrentPage = 1;
-    
-	$scope.getComments = function() {
-    	$http.get('/i/comment/findCommentsByUserId', {
+	$scope.getShares = function() {
+    	$http.get('/i/ShareRdcController/getSEListByUID', {
             params: {
-                "userID": $rootScope.user.id,
-                pageNum : $scope.bigCurrentPage,
-				pageSize : $scope.maxSize
+                "userID": $rootScope.user.id
             }
         }).success(function (data) {
-        	$scope.percommentsDto = data.data;
+        	$scope.sharesDto = data.data;
         	$scope.bigTotalItems = data.total;
         });
 	}
 	$scope.pageChanged = function() {
-		$scope.getComments();
+		$scope.getShares();
 	}
-	$scope.getComments();
+	$scope.getShares();
 	
-	$scope.goDeleteComment = function(commentID){
-    	var r=confirm("删除评价？");
+	$scope.goDeleteShare = function(shareID){
+    	var r=confirm("删除订单？");
     	if(r){
     		$http({
-    			method:'DELETE',
-    			url:'/i/comment/deleteByCommentID',
+    			url:'/i/ShareRdcController/delShareInfoByUid',
     			params:{
-    				'commentID':commentID
+    				'id':shareID,
+    				'uid':$rootScope.user.id
     			}
     		}).success(resDelRdc);
     	}
