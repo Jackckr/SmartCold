@@ -1,12 +1,16 @@
-var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ,["colddetail.html?id=","colddetail.html?id=","colddetail.html?id="]];
 var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
 		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
-		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ]   //2:我的订单 3：我的点评
+		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ]  //2:我的订单 3：我的点评
+		
 		];										
 var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
 var editinfo = function(id) {
 	location.href = urlset[type][0] + id;
+};
+var detailinfo = function(id) {
+	location.href = mode[2][type] + id;
 };
 var delrdc = function(id, em) {
 	if (confirm(mode[1][type])) {
@@ -57,7 +61,7 @@ var gethtml = function(obj) {
 	switch (type) {
 	case 0:
 		return [
-				"<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='",
+				"<li class='clearfix'  onclick='detailinfo("+ obj.id+")'><div class='img fl'><img src='",
 				obj.logo, "'/></div><p class='company'>", obj.name,
 				"</p><p class='position'><i class='iconfont'>&#xe66e;</i>",
 				obj.address,
@@ -67,7 +71,7 @@ var gethtml = function(obj) {
 		break;
 	case 1:
 		return [
-				"<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='",
+				"<li class='clearfix'  onclick='detailinfo("+ obj.id+")'><div class='img fl' ><img src='",
 				obj.logo, "'/></div><p class='company'>", obj.title,
 				"</p><p class='position'>", obj.typeText,
 				"</p><p class='btnGroup'><button onclick='editinfo(", obj.id,
@@ -75,7 +79,7 @@ var gethtml = function(obj) {
 				",this);'>删除</button></p></li>" ].join("");
 	default:
 	case 2:
-		return ["<li class='clearfix'><div class='img fl' onclick='location.href='colddetail.html''><img src='"
+		return ["<li class='clearfix'  onclick='detailinfo("+ obj.id+")'><div class='img fl' ><img src='"
 				, obj.logo
 				, "'/></div><p class='company'>订单编号："
 				, obj.orders.orderid
