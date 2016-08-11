@@ -49,7 +49,6 @@ function checkLogin(msg,callback) {
 	  $.ajax({
 	        type:"GET",
 	        cache:false,
-	        async: false,
 	        dataType:"json",
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
