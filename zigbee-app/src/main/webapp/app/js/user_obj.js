@@ -1,4 +1,4 @@
-var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ,["colddetail.html?id=","colddetail.html?id=","colddetail.html?id="]];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ,["colddetail.html?id=","colddetail.html?id=","orderdetail.html?id="]];
 var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
 		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
@@ -61,31 +61,30 @@ var gethtml = function(obj) {
 	switch (type) {
 	case 0:
 		return [
-				"<li class='clearfix'  onclick='detailinfo("+ obj.id+")'><div class='img fl'><img src='",
-				obj.logo, "'/></div><p class='company'>", obj.name,
+				"<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'><img src='",obj.logo, "'/></div><p class='company'>", obj.name,
 				"</p><p class='position'><i class='iconfont'>&#xe66e;</i>",
 				obj.address,
-				"</p><p class='btnGroup'><button onclick='editinfo(", obj.id,
+				"</p></div><p class='btnGroup'><button onclick='editinfo(", obj.id,
 				")'>修改</button><button onclick='delrdc(", obj.id,
 				",this);'>删除</button></p></li>" ].join("");
 		break;
 	case 1:
 		return [
-				"<li class='clearfix'  onclick='detailinfo("+ obj.id+")'><div class='img fl' ><img src='",
+				"<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
 				obj.logo, "'/></div><p class='company'>", obj.title,
 				"</p><p class='position'>", obj.typeText,
-				"</p><p class='btnGroup'><button onclick='editinfo(", obj.id,
+				"</p></div><p class='btnGroup'><button onclick='editinfo(", obj.id,
 				")'>修改</button><button onclick='delrdc(", obj.id,
 				",this);'>删除</button></p></li>" ].join("");
 	default:
 	case 2:
-		return ["<li class='clearfix'  onclick='detailinfo("+ obj.id+")'><div class='img fl' ><img src='"
+		return ["<li class='clearfix'><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl' ><img src='"
 				, obj.logo
 				, "'/></div><p class='company'>订单编号："
 				, obj.orders.orderid
 				, "</p><p class='position'>订单名称："
 				, obj.orders.ordername
-				, "</p><p class='btnGroup'><button onclick='editinfo("
+				, "</p></div><p class='btnGroup'><button onclick='editinfo("
 				, obj.orders.id
 				, ")'>查看</button><button onclick='delrdc("
 				, obj.orders.id + ",this);'>删除</button></p></li>"].join("");
