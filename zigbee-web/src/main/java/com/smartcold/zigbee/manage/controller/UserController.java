@@ -48,7 +48,7 @@ public class UserController extends BaseController {
 			request.getSession().setAttribute("user", user);
             return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		}
-		return ResponseData.newFailure("用户名或者密码不正确！");
+		return ResponseData.newFailure("用户名或者密码不正确~");
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
