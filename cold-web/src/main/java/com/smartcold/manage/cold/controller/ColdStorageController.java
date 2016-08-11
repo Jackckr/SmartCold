@@ -1,11 +1,13 @@
 package com.smartcold.manage.cold.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import com.smartcold.manage.cold.dao.olddb.RdcSensorMapper;
 import com.smartcold.manage.cold.dto.NewStorageTempDto;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageEntity;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcSensor;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
@@ -26,34 +29,50 @@ import com.smartcold.manage.cold.service.StorageService;
 @ResponseBody
 @RequestMapping("/coldStorage")
 public class ColdStorageController {
-	
+
 	@Autowired
 	StorageService storageService;
-	
+
 	@Autowired
 	ColdStorageSetMapper coldSttorageSetDao;
-	
+
 	@Autowired
 	ColdStorageMapper coldStorageDao;
-	
+
 	@Autowired
 	private RdcSensorMapper rdcSensorDao;
-	
+
 	@RequestMapping("/getTempByNums")
-	public Object getTempByNums(Integer oid,String key,
-			@RequestParam(value="nums",defaultValue="480")Integer nums){
+	public Object getTempByNums(Integer oid, String key,
+			@RequestParam(value = "nums", defaultValue = "480") Integer nums) {
 		List<StorageKeyValue> list = storageService.findByNums(StorageType.STORAGE, oid, key, nums);
 		NewStorageTempDto storageTempDto = new NewStorageTempDto();
 		storageTempDto.setList(list);
-		storageTempDto.setStartTemperature(coldSttorageSetDao.findLastNPoint(oid, 1).get(0).getStartTemperature());
+		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
+		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
+		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
 		return storageTempDto;
 	}
-	
+
+	@RequestMapping("/getTempByTime")
+	public Object getTempByTime(Integer oid, String key,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		List<StorageKeyValue> list = storageService.findByTime(StorageType.STORAGE.getType(), oid, key, startTime,
+				endTime);
+		NewStorageTempDto storageTempDto = new NewStorageTempDto();
+		storageTempDto.setList(list);
+		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
+		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
+		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
+		return storageTempDto;
+	}
+
 	@RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
 	public Object findByUserId(@RequestParam int userId) {
 		return storageService.findByUserId(userId);
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/findAllNewColdStorage", method = RequestMethod.GET)
 	@ResponseBody

@@ -5,13 +5,22 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     console.log($stateParams.storageID);
     $scope.load = function () {
         var data = [];
-        $http.get('/i/coldStorage/getTempByNums', {
+        var startData = [];
+        var datumTempData = [];
+        var endTime = new Date();
+        var startTime = new Date(endTime.getTime() - 6 * 60 * 60 * 1000);
+        $http.get('/i/coldStorage/getTempByTime', {
             params: {
+            	"startTime": startTime.toISOString().replace("T", " ").replace(/\..*/,""),
+            	"endTime": endTime.toISOString().replace("T", " ").replace(/\..*/,""),
                 "oid": $stateParams.storageID,
                 'key':'temperature'
             }
         }).success(function (result) {
         	var list = result.list
+        	var startTemperature = parseFloat(result.startTemperature);
+            var tempDiff = parseFloat(result.tempdiff);
+            var datumTemp = startTemperature + 0.5 * tempDiff;
             for (var i = 0; i < list.length; i++) {
                 var val = Date.parse(list[i].addtime);
                 var newDate = new Date(val).getTime();
@@ -19,6 +28,21 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                     x: newDate,
                     y: list[i].value
                 });
+            }
+            if(data.length > 0){            	
+            	startData.push({
+            		x: data[0].x,
+            		y: startTemperature
+            	});
+            	datumTempData.push({
+            		x: data[0].x,
+            		y: datumTemp
+            	});
+            }else{
+            	data.push({x:startTime.getTime(),y:null})
+            	data.push({x:endTime.getTime(),y:null})
+            	startData.push({x:endTime.getTime(),y:startTemperature})
+            	datumTempData.push({x:endTime.getTime(),y:datumTemp})
             }
 
             // 温度实时图——仪表盘
@@ -55,7 +79,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
 
             //温度实时图——环形图
-            var temper = parseFloat(list[0].value).toFixed(1);
+            var temper = list[0]?parseFloat(list[0].value).toFixed(1):null;
             $scope.curtemper = temper;
 /*            var pressureChart = echarts.init($("#temperatureNowChart").get(0));
 
@@ -134,7 +158,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             pressureChart.setOption(pressureOption);*/
 
             // 折线图
-            var startTemperature = parseFloat(result.startTemperature);
             $(function () {
                 $(document).ready(function () {
                     Highcharts.setOptions({
@@ -163,7 +186,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                             plotBorderWidth: 1
                         },
                         title: {
-                            text: '冷库温度实时监控'
+                            text: ''
                         },
                         xAxis: {
                             type: 'datetime',
@@ -171,19 +194,30 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                         },
                         yAxis: {
                             title: {
-                                text: 'Temperature(℃)'
+                                text: '温度(℃)'
                             },
                             plotLines: [{
                                 value: 0,
                                 width: 1,
                                 color: '#808080'
-                            }, {
+                            },{
                                 color: 'red',           //线的颜色，定义为红色
                                 dashStyle: 'solid',     //默认值，这里定义为实线
                                 value: startTemperature,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
                                 width: 2,
                                 label: {
-                                    text: '启动温度(' + startTemperature + '℃)', //标签的内容
+                                    text: '设定温度(' + startTemperature + '℃)', //标签的内容
+                                    align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                    x: 0                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                                }//标示线的宽度，2px
+                            }, 
+                            {
+                                color: 'red',           //线的颜色，定义为红色
+                                dashStyle: 'solid',     //默认值，这里定义为实线
+                                value: datumTemp,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                                width: 2,
+                                label: {
+                                    text: '基准温度(' + datumTemp + '℃)', //标签的内容
                                     align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
                                     x: 0                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
                                 }//标示线的宽度，2px
@@ -206,7 +240,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                             enabled: false // 禁用版权信息
                         },
                         series: [{
-                            name: 'Temperature',
+                            name: '温度',
                             markPoint: {
                                 data: [
                                     {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
@@ -225,6 +259,50 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                  });
                                  }*/
                                 return data;
+                            })()
+                        },
+                        {
+                            name: '设定温度',
+                            color: 'red',
+                            dashStyle: 'solid',
+                            marker: {
+                                symbol: 'circle'
+                            },
+                            data: (function () {
+                                /* // generate an array of random data
+                                 var data = [],
+                                 time = (new Date()).getTime(),
+                                 i;
+
+                                 for (i = -19; i <= 0; i++) {
+                                 data.push({
+                                 x: time + i * 5000,
+                                 y: Math.random() * (40) - 20
+                                 });
+                                 }*/
+                                return startData;
+                            })()
+                        },
+                        {
+                            name: '基准温度',
+                            color: 'red',
+                            dashStyle: 'solid',
+                            marker: {
+                                symbol: 'circle'
+                            },
+                            data: (function () {
+                                /* // generate an array of random data
+                                 var data = [],
+                                 time = (new Date()).getTime(),
+                                 i;
+
+                                 for (i = -19; i <= 0; i++) {
+                                 data.push({
+                                 x: time + i * 5000,
+                                 y: Math.random() * (40) - 20
+                                 });
+                                 }*/
+                                return datumTempData;
                             })()
                         }]
                     });
