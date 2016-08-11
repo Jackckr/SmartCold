@@ -8,7 +8,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         var startData = [];
         var datumTempData = [];
         var endTime = new Date();
-        var startTime = new Date(endTime.getTime() - 6 * 60 * 60 * 1000);
+        var startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
         $http.get('/i/coldStorage/getTempByTime', {
             params: {
             	"startTime": startTime.toISOString().replace("T", " ").replace(/\..*/,""),
@@ -247,17 +247,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                 ]
                             },
                             data: (function () {
-                                /* // generate an array of random data
-                                 var data = [],
-                                 time = (new Date()).getTime(),
-                                 i;
-
-                                 for (i = -19; i <= 0; i++) {
-                                 data.push({
-                                 x: time + i * 5000,
-                                 y: Math.random() * (40) - 20
-                                 });
-                                 }*/
                                 return data;
                             })()
                         },
@@ -269,17 +258,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                 symbol: 'circle'
                             },
                             data: (function () {
-                                /* // generate an array of random data
-                                 var data = [],
-                                 time = (new Date()).getTime(),
-                                 i;
-
-                                 for (i = -19; i <= 0; i++) {
-                                 data.push({
-                                 x: time + i * 5000,
-                                 y: Math.random() * (40) - 20
-                                 });
-                                 }*/
                                 return startData;
                             })()
                         },
@@ -291,17 +269,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                 symbol: 'circle'
                             },
                             data: (function () {
-                                /* // generate an array of random data
-                                 var data = [],
-                                 time = (new Date()).getTime(),
-                                 i;
-
-                                 for (i = -19; i <= 0; i++) {
-                                 data.push({
-                                 x: time + i * 5000,
-                                 y: Math.random() * (40) - 20
-                                 });
-                                 }*/
                                 return datumTempData;
                             })()
                         }]
