@@ -152,7 +152,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
       $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
       $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
       good._isLoad=psaction._isLoad=serdc._isLoad=false;
-      $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}];
+      $scope.appmode=[{title:["","货品","配送","冷库"]},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}];//1:货品 2：配送 3:仓库  
       $http.get('/i/city/findProvinceList').success(function (data) {
      	    $scope.gd_provinces = data;
      		$scope.stprovinceID =""; 

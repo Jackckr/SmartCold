@@ -2,6 +2,7 @@ package com.smartcold.zigbee.manage.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,15 +79,19 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
 	public Object findOrderByOrderId(@RequestParam String id) {
-		OrdersDTO data = new OrdersDTO();
-		OrdersEntity oEntity = orderDao.findOrderByOrderId(Integer.parseInt(id));	
-		RdcShareDTO rsd = rsmDao.getSEByID("" + oEntity.getShareinfoid());
-		data.setOrders(oEntity);
-		if (rsd != null) {
-			data.setLogo(rsd.getLogo());
-			data.setFiles(rsd.getFiles());
-		}
-		return ResponseData.newSuccess(data);
+		
+		HashMap<String, Object> dataMap=new HashMap<String, Object>();
+		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id));	
+	    UserEntity ownerUser = this.userDao.findUserById( oEntity.getOwnerid());
+	    UserEntity orderUser = this.userDao.findUserById( oEntity.getUserid());
+	    RdcShareDTO      rsd = this.rsmDao.getSEByID(oEntity.getShareinfoid()+"");
+	    ownerUser.setPassword(null);
+	    orderUser.setPassword(null);
+		dataMap.put("rsd", rsd);
+		dataMap.put("orders", oEntity);
+		dataMap.put("ownerUser", ownerUser);
+		dataMap.put("orderUser", orderUser);
+		return ResponseData.newSuccess(dataMap);
 	}
 	
 	/**

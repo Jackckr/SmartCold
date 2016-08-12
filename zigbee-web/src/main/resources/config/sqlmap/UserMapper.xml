@@ -45,19 +45,16 @@
     </update>
 
     <select id="findUser" parameterType="map" resultType="UserEntity">
-		SELECT *
-		FROM `user` WHERE `username` = #{username} AND `password` = #{password}
+					SELECT u.*,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username} AND u.`password` = #{password}
 	</select>
 	
 	
 	<select id="findUserByName" parameterType="map" resultType="UserEntity">
-		SELECT *
-		FROM `user` WHERE `username` = #{username}
+			SELECT u.*,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username}
 	</select>
 
     <select id="findUserById" parameterType="map" resultType="UserEntity">
-		SELECT *
-		FROM `user` WHERE `id` = #{id}
+		SELECT u.*,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid  WHERE u.id = #{id}
 	</select>
 
 </mapper>

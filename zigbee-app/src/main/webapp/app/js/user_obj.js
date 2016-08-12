@@ -78,7 +78,7 @@ var gethtml = function(obj) {
 				",this);'>删除</button></p></li>" ].join("");
 	default:
 	case 2:
-		return ["<li class='clearfix'><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl' ><img src='"
+		return ["<li class='clearfix'><div  onclick='detailinfo("+ obj.orders.id+")' class='clearfix'><div class='img fl' ><img src='"
 				, obj.logo
 				, "'/></div><p class='company'>订单编号："
 				, obj.orders.orderid
