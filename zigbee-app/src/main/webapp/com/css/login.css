@@ -42,12 +42,9 @@ body{
 	height: 2rem;
 	margin-top: 0.5rem;
 	line-height: 2rem;
-	display: flex;
-	display: -webkit-flex;
 }
 .register div{
-	flex: 1;
-	-webkit-flex: 1;
+	width:50%;
 }
 .register div:last-child{
 	text-align: right;
@@ -79,12 +76,11 @@ footer{
 	top: 1rem;
 }
 .three{
-	display: flex;
-	display: -webkit-flex;
+	height:2.5rem;
 }
 .three>div{
-	flex: 1;
-	-webkit-flex: 1;
+	width:33.3333%;
+	float:left;
 	text-align: center;
 }
 .three>div a{

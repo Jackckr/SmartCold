@@ -235,7 +235,7 @@ header>div>a>.iconfont{
 	height: 100%;
 	text-align: center;
 	color: #898989;
-	/* padding: 0.15rem 0 0.4rem; */
+	padding-top: 2px;
 	box-sizing: border-box;
 }
 .footer>.active>a{
