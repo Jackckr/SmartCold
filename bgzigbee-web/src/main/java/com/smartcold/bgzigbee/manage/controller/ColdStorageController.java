@@ -1,14 +1,5 @@
 package com.smartcold.bgzigbee.manage.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +9,11 @@ import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.ColdStorageSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SpiderItemType;
 import com.smartcold.bgzigbee.manage.service.RemoteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/coldStorage")
@@ -73,7 +69,6 @@ public class ColdStorageController {
 	@ResponseBody
 	public Object deleteStorage(int id) {
 		coldStorageSetDao.deleteColdStorage(id);
-
 		return new ResultDto(0, "删除成功");
 	}
 	
@@ -81,5 +76,11 @@ public class ColdStorageController {
 	@ResponseBody
 	public Object addStorageKey(int type, String key, String desc, String unit){
 		return remoteService.saveStorageKeys(type, key, desc, unit);
+	}
+	
+	@RequestMapping(value="/delStorageKey", method=RequestMethod.DELETE)
+	@ResponseBody
+	public Object delStorageKey(@RequestParam("id")Integer id){
+		return remoteService.delStorageKey(id);
 	}
 }
