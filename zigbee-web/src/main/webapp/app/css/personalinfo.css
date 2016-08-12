@@ -17,18 +17,27 @@
     padding-left: 220px;
     height: 100%;
 }
+.infoList{
+	background:#F8F8F8;
+	padding-left:0;
+}
 .infoList li{
     padding: 8px 15px;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
     text-align: center;
     cursor: pointer;
 }
-.current{
-    color: #f40!important;
+.infoList li:hover,.infoList li:hover a font{
+    color: #418ACA;
 }
 .content .input-group{
-    width: 40%;
+    width: 50%;
+}
+.content .input-group input{
+    width:70%;
+    margin-right:10px;
+    border-radius:4px!important;
 }
 /*列表一行2个*/
 .imgList li{
