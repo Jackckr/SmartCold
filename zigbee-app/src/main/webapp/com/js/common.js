@@ -187,4 +187,8 @@ var util = {
 };
 //window.alert=util.alert;
 //window.confirm=util.confirm;
+var myLoad = '<div class="loadEffect"></div>';
+function appendLoad(){
+	$('body').append(myLoad);
 
+}
