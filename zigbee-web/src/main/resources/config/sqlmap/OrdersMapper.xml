@@ -43,7 +43,14 @@
 	</delete>
 
     <select id="findOrdersByPersonId" parameterType="map" resultType="OrdersEntity">
-		SELECT * FROM `orders` WHERE `userid` = #{userid} OR `ownerid` = #{userid}
+		SELECT * FROM `orders`
+		WHERE 1=1
+	        <if test="userid !=0"> and (`userid` = #{userid} OR `ownerid` = #{userid}) </if> <!--  关键字 -->
+	        <if test="keyword != null">
+		        AND orderid  = #{keyword}
+		    </if>
+		      ORDER BY generatetime DESC
+		      
 	</select>
 
     <select id="findOrdersByUserId" parameterType="map" resultType="OrdersEntity">

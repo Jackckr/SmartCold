@@ -42,6 +42,7 @@ coldWeb.config(function ($httpProvider) {
     });
 });
 
+
 coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	return {
 		setUser: function(user){

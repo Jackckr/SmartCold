@@ -50,19 +50,33 @@ public class OrdersController extends BaseController {
 	@RequestMapping(value = "/findOrdersByUserId")
 	@ResponseBody
 	public Object findOrdersByUserId(@RequestParam int userID,
-			@RequestParam int pageNum, @RequestParam int pageSize) {
+			@RequestParam int pageNum, @RequestParam int pageSize,
+			@RequestParam(value = "keyword", required = false) String keyword) {
 		PageHelper.startPage(pageNum, pageSize);
-		Page<OrdersEntity> ordersList = orderDao.findOrdersByPersonId(userID);
+		if (keyword!=null) {
+			keyword = keyword.equals("")? null:keyword ;
+		}
+		Page<OrdersEntity> ordersList = orderDao.findOrdersByPersonId(userID,keyword);
 		Page<OrdersDTO> ordersDTOList = new Page<OrdersDTO>();
 		for (int i = 0; i < ordersList.size(); i++) {
 			OrdersDTO ordersDTO = new OrdersDTO();
 			ordersDTO.setOrders(ordersList.get(i));
 			RdcShareDTO rsd = rsmDao.getSEByID(""
 					+ ordersList.get(i).getShareinfoid());
-			if (rsd != null) {
-				ordersDTO.setLogo(rsd.getLogo());
-				ordersDTO.setFiles(rsd.getFiles());
+			if (rsd!=null) {
+				List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(rsd.getId(), FileDataMapper.CATEGORY_SHARE_PIC);
+				if (files!=null) {
+					 if(SetUtil.isnotNullList(files)){
+							List<String> filelist =new ArrayList<String>();
+							for (FileDataEntity file : files) {
+								filelist.add(FtpService.READ_URL+file.getLocation());
+							}
+							ordersDTO.setFiles(filelist);
+							ordersDTO.setLogo(filelist.get(0));
+					} 
+				}
 			}
+			ordersDTO.setRsd(rsd);
 			ordersDTOList.add(ordersDTO);
 			ordersDTOList.setTotal(ordersList.getTotal());
 		}
@@ -106,16 +120,6 @@ public class OrdersController extends BaseController {
 		try {
 			Calendar calendar = Calendar.getInstance();
 			order.setOrderid("" + calendar.getTime().getTime());
-			/*String ordername = "";
-			if (dataType == 1) {
-				ordername = ordername + "[货品]";
-			} else if (dataType == 2) {
-				ordername = ordername + "[配送]";
-			} else if (dataType == 3) {
-				ordername = ordername + "[仓库]";
-			}
-			ordername = ordername + title;
-			ordername = ordername + typeText;*/
 			String ordername = title;
 			order.setOrdername(ordername);
 			order.setOwnerid(releaseID);
@@ -131,18 +135,17 @@ public class OrdersController extends BaseController {
 			order.setShareinfoid(rsdid);
 			RdcShareDTO rsd = rsmDao.getSEByID("" + rsdid);
 			List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(rsd.getId(), FileDataMapper.CATEGORY_SHARE_PIC);
-			 if(SetUtil.isnotNullList(files)){
+			if (rsd != null) {
+			if(SetUtil.isnotNullList(files)){
 					List<String> filelist =new ArrayList<String>();
 					for (FileDataEntity file : files) {
 						filelist.add(FtpService.READ_URL+file.getLocation());
 					}
-					rsd.setFiles(filelist);
-					rsd.setLogo(files.get(files.size()-1).getLocation());
+						ordersDTO.setFiles(filelist);
+						ordersDTO.setLogo(filelist.get(0));
+					}
+					
 			} 
-			if (rsd != null) {
-				ordersDTO.setLogo(rsd.getLogo());
-				ordersDTO.setFiles(rsd.getFiles());
-			}
 			ordersDTO.setOrders(order);
 			ordersDTO.setRsd(rsd);
 			ordersDTO.setUseraddress(address);

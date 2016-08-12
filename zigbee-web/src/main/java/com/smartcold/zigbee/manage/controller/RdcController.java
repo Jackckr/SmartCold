@@ -519,9 +519,13 @@ public class RdcController {
 
 	@RequestMapping(value = "/findRDCDTOByUserId", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findRDCDTOByUserId(@RequestParam int userID,int pageNum, int pageSize) {
+	public Object findRDCDTOByUserId(@RequestParam int userID,int pageNum, int pageSize, 
+			@RequestParam(value = "keyword", required = false) String keyword) {
 		PageHelper.startPage(pageNum, pageSize);
-		Page<RdcEntityDTO> rdcsList = rdcMapper.findRDCByUserId(userID);
+		if (keyword!=null) {
+			keyword = keyword.equals("")? null:keyword ;
+		}
+		Page<RdcEntityDTO> rdcsList = rdcMapper.findRDCByUserId(userID,keyword);
 		PageInfo<RdcEntityDTO> data = new PageInfo<RdcEntityDTO>(rdcsList);
 		return ResponseData.newSuccess(data);
 	}

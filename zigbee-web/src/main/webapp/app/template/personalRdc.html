@@ -16,8 +16,8 @@
 		<div class="content">
 		   <form class="bs-example bs-example-form" role="form">
 		      <div class="input-group">
-		         <input type="text" class="form-control" placeholder="输入库名">
-		         <span class="input-group-addon">冷库搜索</span>
+		         <input type="text" ng-model="keyword" class="form-control" placeholder="输入库名">
+		         <button class="btn btn-default" ng-click="goSearch()">冷库搜索</button>
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
