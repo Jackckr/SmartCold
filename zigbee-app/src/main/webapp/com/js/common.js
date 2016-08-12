@@ -183,12 +183,10 @@ var util = {
     confirm: function(msg) {
         var myConfirm = '<div class="confirm topFirst">' + '<p class="tips">提示</p>' + '<div class="txtBody">' + msg + '</div>' + '<button class="ensure bdr">确定</button><button class="remove">取消</button>' + '</div>' + '<div class="backDropTop topFirst" onclick="backDropTop(this)"></div>';
         $('body').append(myConfirm);
+    },appendLoad:function (){
+    	$('body').append('<div class="loadEffect"></div>');
     }
 };
 //window.alert=util.alert;
 //window.confirm=util.confirm;
-var myLoad = '<div class="loadEffect"></div>';
-function appendLoad(){
-	$('body').append(myLoad);
 
-}

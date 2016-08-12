@@ -10,7 +10,6 @@
 	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 	      select    r.id rdcID, r.name,r.provinceid,r.cityid, r.address from rdc r where 1=1 <if test="userid !=null and  userid != ''"> and r.userid=#{userid} </if> GROUP BY r.id ORDER BY r.addtime  desc
 	</select>
-
 	<!-- 根据rdcid查询下面全部信息 -->
 	<select id="getSEByID" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		SELECT
@@ -29,14 +28,13 @@
 		s.sqm,
 		s.telephone,
 		s.note,
-		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
-		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
+		s.validStartTime,
+		s.validEndTime,
 		s.applyID,
 		s.bookings,
 		s.stauts,s.detlAddress,
-		r. NAME,
-		r.address,
-		r.coldtype,
+		s.codeLave1,s.codeLave2,s.codeLave3,s.codeLave4,s.attrvalue,
+		r. NAME,r.address,r.coldtype,
 		(SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1 ) AS logo
 		FROM
 		shared_info s

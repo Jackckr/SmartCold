@@ -1,4 +1,4 @@
-var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ,["colddetail.html?id=","colddetail.html?id=","orderdetail.html?id="]];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ,["colddetail.html?id=","releasedetail.html?id=","orderdetail.html?id="]];
 var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
 		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
