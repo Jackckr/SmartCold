@@ -1,106 +1,95 @@
-coldWeb.controller('personalDetail', function ($rootScope, $scope, $state, $cookies, Upload, $http, $location) {
+coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies, Upload, $http, $location) {
 	$scope.load = function(){
 		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
-			$rootScope.user = data;
-			if($rootScope.user == undefined || $rootScope.user.id == 0){
+			//$scope.$apply(function () {
+			 $scope.user = data;
+			if($scope.user == undefined || $scope.user.id == 0){
 				url = "http://" + $location.host() + ":" + $location.port();
 				window.location.href = url;
 			}
 	    })
+		//});
     }
     $scope.load();
-    $scope.oldTele = $rootScope.user.telephone;
+    $scope.oldTele = $scope.user.telephone;
     $scope.verifycode = '';
     $scope.oldPwd = '';
     $scope.newPwd1 = '';
     $scope.newPwd2 = '';
     
-    $scope.avatar = user.avatar;
-    $scope.telephone = user.telephone;
-    $scope.realname = user.realname;
-    $scope.sex = user.sex;
-    $scope.hometownid = user.hometownid;
-    $scope.addressid = user.addressid;
-    $scope.email =user.email;
-    $scope.nickname = user.nickname;
+    $scope.avatar = $scope.user.avatar;
+    $scope.telephone = $scope.user.telephone;
+    $scope.realname = $scope.user.realname;
+    $scope.sex = $scope.user.sex;
+    $scope.hometownid = $scope.user.hometownid;
+    $scope.addressid = $scope.user.addressid;
+    $scope.email =$scope.user.email;
+    $scope.nickname = $scope.user.nickname;
     // 获取省列表
     $http.get('/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
     });
-    
-    function checkVerifyCode(){
-    	if($scope.oldTele!=$rootScope.user.telephone){
-    		$http.get('/i/user/checkVerifyCode', {
-                params: {
-                    verifycode: $scope.verifycode
-                }
-            }).success(function (data) {
-            	return data;
-            });
-    	}
-    	else
-    		return true;
-    }
-    
-    
-    function checkOldPwd(){
-    	if($scope.oldPwd==''&&$scope.newPwd1==''&&$scope.newPwd2=='')
-    		return true;
-    	else{
-    		$http.get('/i/user/checkOldPwd', {
-                params: {
-                	oldPwd: $scope.oldPwd
-                }
-            }).success(function (data) {
-            	return data;
-            });
-    	}
-    		
-    }
-    
-    
-
-
-    $scope.goUpdateUser = function() {		
-    	if (checkVerifyCode()) {
-					if (checkOldPwd()) {
-						data = {
-							avatar : avatar,
-							telephone : telephone,
-							realname : realname,
-							sex : sex,
-							hometownid : hometownid,
-							addressid : addressid,
-							password : newPwd1,
-							email : email,
-							nickname : nickname
-						};
-						/*
-						 * Upload.upload({ url : '/i/user/updateUser', headers : {
-						 * 'Content-Transfer-Encoding' : 'utf-8' }, data : data
-						 * }).then(function(resp) { alert("修改成功");
-						 * $state.reload(); });
-						 */
-						
-					        var formdata = new FormData();
-				             formdata.append('fileData',$("input[type='file']")[0].files[0]);
-					        $.each(data,function(index,item){
-					          formdata.append(index, item);
-					        });
-					        $.ajax({
-					          type: 'POST',
-					            url: "/i/user/updateUser",
-					            data: formdata,
-					            processData: false,
-					            contentType: false,
-					            success: function(data){
-					            	if(!data){alert("修改失败！请稍后重试！");}}});
-					            }	
-				else {
-						alert("验证码输入错误!");
-					}
-				} else {
-					alert("旧密码输入错误!");
-				}
+    var verifyCodeflag = true;
+	var OldPwdflag = false;
+	$scope.goUpdateUser = function() {
+					$http.get('/i/user/checkVerifyCode', {
+						params : {
+							verifycode : $scope.verifycode
+						}
+					}).success(function(res1) {
+						if ($scope.oldTele != $scope.telephone) 
+						    verifyCodeflag = res1;
+						$http.get('/i/user/checkOldPassword', {
+							params : {
+								pwd : $scope.oldPwd
+							}
+						}).success(function(res2) {
+							if ($scope.oldPwd == '' && $scope.newPwd1 == ''
+								&& $scope.newPwd2 == '')
+							OldPwdflag = true;
+							else
+								OldPwdflag = res2;
+							if (verifyCodeflag) {
+									if (OldPwdflag) {
+										data = {
+											avatar : $scope.avatar,
+											telephone : $scope.telephone,
+											realname : $scope.realname,
+											sex : $scope.sex,
+											hometownid : $scope.hometownid,
+											addressid : $scope.addressid,
+											password : $scope.newPwd1,
+											email : $scope.email,
+											nickname : $scope.nickname
+										};
+										var formdata = new FormData();
+										formdata.append('fileData',
+												$("input[type='file']")[0].files[0]);
+										$.each(data, function(index, item) {
+											formdata.append(index, item);
+										});
+										$.ajax({
+											type : 'POST',
+											url : "/i/user/updateUser",
+											data : formdata,
+											processData : false,
+											contentType : false,
+											success : function(data) {
+												//alert("删除成功");
+												//$state.reload(); 
+												window.location.reload();
+											}
+										});
+									} else {
+										alert("旧密码输入错误!");
+									}
+								} else {
+									alert("验证码输入错误!");
+								}
+						});
+					});
+				
+				
+			
 			};
 		});
