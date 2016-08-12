@@ -79,13 +79,43 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		}
 		return 'not correct type';
 	}
-	
+	$scope.newKey = {};
 	$scope.saveNewKey = function(){
+		var newKey = $scope.newKey;
 		if(newKey.key && newKey.type && newKey.desc){
-			
+			var params ={
+				key:newKey.key,
+				type:newKey.type.type,
+				desc:newKey.desc,
+				unit:newKey.unit
+			}
+			var req = {
+				method:'post',
+				url:"/i/coldStorage/addStorageKey",
+				data:$.param(params),
+				headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+			}
+			$http(req).then(function(resp){
+				$scope.newKey = {};
+				params.id = resp.data;
+				$scope.type2Keys(params.type).push(params);
+			})
 		}else{
 			alert("输入不完整");
 		}
+	}
+	
+	$scope.delStorageKey = function(item){
+		var req = {
+			method:'delete',
+			url:"/i/coldStorage/delStorageKey?id="+item.id
+//			data:'id='+id,
+//			headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+		}
+		$http(req).then(function(resp){
+			var i = $scope.keysData.indexOf(item);
+			$scope.keysData.splice(i,1);
+		})
 	}
 	
 	$scope.changeRdc = function(){

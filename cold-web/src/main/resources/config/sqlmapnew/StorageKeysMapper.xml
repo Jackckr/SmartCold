@@ -5,9 +5,13 @@
 		select * from storagekeys
 	</select>
 
-	<insert id="save" parameterType="StorageKeysEntity">
+	<insert id="save" parameterType="StorageKeysEntity" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO storagekeys
 			(`type`,`key`, `desc`, `unit`) VALUES
 			(#{type},#{key}, #{desc}, #{unit})
 	</insert>
+
+	<delete id="deleteById">
+		DELETE FROM storagekeys WHERE id=#{id}
+	</delete>
 </mapper>
