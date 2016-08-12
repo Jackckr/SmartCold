@@ -50,23 +50,22 @@
 		        AND orderid  = #{keyword}
 		    </if>
 		      ORDER BY generatetime DESC
-		      
 	</select>
 
     <select id="findOrdersByUserId" parameterType="map" resultType="OrdersEntity">
-		SELECT * FROM `orders` WHERE `userid` = #{userid}
+		SELECT * FROM `orders` WHERE `userid` = #{userid} ORDER BY generatetime DESC
 	</select>
 	
 	<select id="findOrdersByOwnerId" parameterType="map" resultType="OrdersEntity">
-		SELECT * FROM `orders` WHERE `ownerid` = #{ownerid}
+		SELECT * FROM `orders` WHERE `ownerid` = #{ownerid} ORDER BY generatetime DESC
 	</select>
 	
 	<select id="findOrderByOrderId" parameterType="map" resultType="OrdersEntity">
-		SELECT * FROM `orders` WHERE `id` = #{orderid}
+		SELECT * FROM `orders` WHERE `id` = #{orderid} ORDER BY generatetime DESC
 	</select>
 	
 	<select id="findOrdersByOrderName" parameterType="map" resultType="OrdersEntity">
-		SELECT * FROM `orders` WHERE `ordername` = #{ordername}
+		SELECT * FROM `orders` WHERE `ordername` = #{ordername} ORDER BY generatetime DESC
 	</select>
 
 

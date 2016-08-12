@@ -309,4 +309,14 @@ header>div>a>.iconfont{
  * 
  * */
  /* 公共头部和底部样式 end*/
- 
+ .loadEffect{
+ 	width: 100%;
+ 	height: 100%;
+ 	margin: 0 auto;
+ 	background: url(../img/load.jpg) no-repeat center;
+ 	background-size: cover; 
+ 	position: fixed;
+ 	top: 0;
+ 	right: 0;	
+ 	z-index: 99999;
+ }

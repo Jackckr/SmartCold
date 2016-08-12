@@ -113,7 +113,7 @@
 		WHERE
 		s.stauts = #{sstauts} 
 		<if test="releaseID !=null and  releaseID != 0"> and s.releaseID=#{releaseID} </if>
-		<if test="dataType !=null and  dataType != 0"> and s.dataType=#{datatype} </if>
+		<if test="datatype !=null and  datatype != ''"> and s.dataType=#{datatype} </if>
 		<if test="rdcID !=null and  rdcID != 0"> and s.rdcID=#{rdcID} </if>
 		<if test="type !=null and  type != ''"> and s.typeCode=#{type} </if>
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->

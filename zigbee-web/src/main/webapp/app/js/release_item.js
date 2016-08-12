@@ -80,15 +80,19 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	    }
 	};
 	$scope.submit = function(){
+		if ($("#but_submit").data('isLoading') === true) return; 
 		if(user!==null&&user.id!=0){
    	    if(!$("#release_item_from").valid()){ $($("#release_item_from input.error")[0]).focus(); return; } }else{ util.info(null,"你还没有登录！请登录后操作！",function(){ window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";}); return; } 
+		 $("#but_submit").text("保存中...");
+		 $("#but_submit").data('isLoading', true);
 		var data = {data:releaseItem.addvo(), "files":$scope.totalfiles};
 		Upload.upload({
 	        url: "/i/ShareRdcController/shareFreeRelease",
 	        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 	        data: data
 	    }).then(function (resp) {
-	    	alert("发布成功！");
+	    	$("#but_submit").text("发布"); $("#but_submit").delay(500).data('isLoading',false);
+	    	alert(resp.data.message);
 	    	$scope.gocoldShareComment();
 	    }, function (resp) {
 	        console.log('Error status: ' + resp.status);

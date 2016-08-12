@@ -531,7 +531,7 @@ public class RdcServiceImpl implements RdcService {
 	@Override
 	public PageInfo<RdcEntityDTO> findRDCDTOByUserId(int userID,int pageNum,int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		Page<RdcEntityDTO> rdcList = this.rdcDao.findRDCByUserId(userID);
+		Page<RdcEntityDTO> rdcList = this.rdcDao.findRDCByUserId(userID,null);
 		return new PageInfo<RdcEntityDTO>(rdcList);
 	}
 
