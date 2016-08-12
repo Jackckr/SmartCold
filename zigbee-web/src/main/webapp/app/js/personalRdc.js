@@ -19,6 +19,7 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
     	$http.get('/i/rdc/findRDCDTOByUserId', {
             params: {
                 "userID": $rootScope.user.id,
+                 keyword:$scope.keyword,
                 pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize
             }
@@ -27,6 +28,11 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
         	$scope.bigTotalItems = data.total;
         });
 	}
+	
+    $scope.goSearch = function () {
+        $scope.getRdcs();
+    }
+
 	
 	$scope.pageChanged = function() {
 		$scope.getRdcs();

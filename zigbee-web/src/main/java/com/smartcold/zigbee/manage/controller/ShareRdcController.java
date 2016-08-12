@@ -195,6 +195,8 @@ public class ShareRdcController  {
 			return ResponseData.newFailure();
 		}
 	}
+	
+	
 	/**
 	 * 根据冷库id获得关联发布信息
 	 * @param request

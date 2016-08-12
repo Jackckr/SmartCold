@@ -303,7 +303,7 @@
 							<div id="dg_imglist" ng-if="vo.files.length" class="lists" style="width: 630px;">
                                     <ng-gallery images="storageGallery" thumbs-num="10" ng-if="storageGallery.length"></ng-gallery>
 							</div>
-							<p class="h4">冷库详情</p>
+							<p class="h4" val="{{dgdatatype}}">{{appmode[0].title[dgdatatype]}}详情</p>
 							<table class="info">
 								<caption>基本信息</caption>
 								<tbody>

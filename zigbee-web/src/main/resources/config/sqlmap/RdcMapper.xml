@@ -106,11 +106,12 @@
     </update>
     
     
-	<select id="findRDCByUserId" parameterType="Integer" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
+	<select id="findRDCByUserId" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
 			 SELECT
 			r.id,
 			r.name,
 			r.address,
+			r.addtime,
 			t.rdcscore score,
 			t.rdccommentcnt userCommentCount,
 			t.rdcrecommendpercent userRecommendPercent,
@@ -121,6 +122,9 @@
 		LEFT JOIN rdcext t ON t.RDCID = r.id
 		WHERE 1=1
 	        <if test="userID !=0"> and r.userid = ${userID} </if> <!--  关键字 -->
+	        <if test="keyword != null">
+		        AND r.name like "%"#{keyword}"%"
+		    </if>
        ORDER BY r.addTime DESC
 	</select>
 	<select id="findRDCById" parameterType="Integer" resultType="map" >

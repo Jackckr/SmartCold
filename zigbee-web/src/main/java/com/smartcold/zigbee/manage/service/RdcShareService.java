@@ -42,6 +42,7 @@ public interface RdcShareService {
  	   * @return
  	   */
  	  public PageInfo<RdcShareDTO> getRdcList(int pageNum,int pageSize,Map<String, Object> parameters);
+
 	  /**
 	    * 获得商品共享信息
 	    * @param filter
