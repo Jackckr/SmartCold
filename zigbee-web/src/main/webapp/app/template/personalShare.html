@@ -24,29 +24,29 @@
 				<p class="company">{{sharedto.title}}</p>
 
 				<div ng-if="sharedto.dataType==3">
-					<p>
+					<p class="area">
 						<span>发布类型:</span> <span>[冷库]{{sharedto.typeText}}</span>
 					</p>
-					<p>
+					<p class="area">
 						<span>冷库名称:</span> <span>{{sharedto.name}}</span>
 					</p>
 				</div>
 
 				<div ng-if="sharedto.dataType==2">
-					<p>
+					<p class="area">
 						<span>发布类型:</span> <span>[配送]{{sharedto.typeText}}</span>
 					</p>
-					<p>
+					<p class="area">
 						<span>始发地:</span> <span>{{sharedto.unit1}}</span> <span>--></span>
 						<span>目的地:</span> <span>{{sharedto.unit2}}</span>
 					</p>
 				</div>
 
 				<div ng-if="sharedto.dataType==1">
-					<p>
+					<p class="area">
 						<i></i> <span>发布类型:</span> <span>[货品]{{sharedto.typeText}}</span>
 					</p>
-					<p>
+					<p class="area">
 						<span>货品类型:</span> <span>{{sharedto.codeLave1}}</span>
 					</p>
 				</div>

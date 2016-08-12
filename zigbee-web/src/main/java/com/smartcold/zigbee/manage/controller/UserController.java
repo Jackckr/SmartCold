@@ -98,7 +98,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/checkVerifyCode")
 	@ResponseBody
 	public Object checkVerifyCode(HttpServletRequest request, String verifycode) {
-		if (verifycode!=null) {
+		if (verifycode!=null&&request.getSession().getAttribute("identityVerifyCode")!=null) {
 			if(request.getSession().getAttribute("identityVerifyCode").equals(verifycode))
 				return true;
 		}

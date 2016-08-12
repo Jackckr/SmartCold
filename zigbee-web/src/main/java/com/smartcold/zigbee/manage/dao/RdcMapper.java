@@ -37,7 +37,7 @@ public interface RdcMapper {
      */
     public Page<RdcEntityDTO> getRDCList(Map<String, Object> parameters);
 
-	Page<RdcEntityDTO> findRDCByUserId(@Param("userID") int userID);
+	Page<RdcEntityDTO> findRDCByUserId(@Param("userID") int userID, @Param("keyword") String keyword);
 	
 	public List<HashMap<String, Object>> findRDCById( int rdcID);
 	

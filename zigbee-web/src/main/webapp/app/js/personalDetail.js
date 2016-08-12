@@ -31,6 +31,27 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
     });
     var verifyCodeflag = true;
 	var OldPwdflag = false;
+	
+	$scope.setimg = function(em, imgid) {
+        var oFile = $(em)[0].files[0];
+        var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
+        var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
+        if (!rFilter.test(oFile.type)) {
+            alert("格式错误~请选择格式为" + msg + "的图片~");
+            return;
+        }
+        var oImage = document.getElementById(imgid);
+        var oReader = new FileReader();
+        oReader.onload = function(e) {
+            oImage.src = e.target.result;
+        };
+        oReader.readAsDataURL(oFile);
+      
+    };
+
+    $("#headImg").change(function() {
+    	$scope.setimg(this,'showimg');
+        });
 	$scope.goUpdateUser = function() {
 					$http.get('/i/user/checkVerifyCode', {
 						params : {

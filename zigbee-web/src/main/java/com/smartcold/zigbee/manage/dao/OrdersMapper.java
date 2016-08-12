@@ -2,6 +2,8 @@ package com.smartcold.zigbee.manage.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.github.pagehelper.Page;
 import com.smartcold.zigbee.manage.entity.OrdersEntity;
 
@@ -13,7 +15,7 @@ public interface OrdersMapper {
 
 	Page<OrdersEntity> findOrdersByOwnerId(int ownerid); 
 	
-	Page<OrdersEntity> findOrdersByPersonId(int userid); 
+	Page<OrdersEntity> findOrdersByPersonId(@Param("userid") int userid, @Param("keyword") String keyword); 
 	
 	OrdersEntity findOrderByOrderId(int orderid);
 	
