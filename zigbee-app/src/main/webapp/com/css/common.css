@@ -304,6 +304,7 @@ header>div>a>.iconfont{
 .confirm .bdr{
 	border-right: 1px solid #eee;
 }
+.ng-cloak{display:none;} 
 /*
  自定义alert弹出框end
  * 

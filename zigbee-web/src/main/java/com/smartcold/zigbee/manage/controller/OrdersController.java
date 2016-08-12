@@ -31,6 +31,7 @@ import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 
 import com.smartcold.zigbee.manage.service.FtpService;
+import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
@@ -48,6 +49,8 @@ public class OrdersController extends BaseController {
 	private RdcShareMapper rsmDao;
     @Autowired
 	private FileDataMapper fileDataDao;
+    @Autowired
+    private RdcShareService rdcShareService;
 	@RequestMapping(value = "/findOrdersByUserId")
 	@ResponseBody
 	public Object findOrdersByUserId(@RequestParam int userID,
@@ -82,15 +85,17 @@ public class OrdersController extends BaseController {
 		
 		HashMap<String, Object> dataMap=new HashMap<String, Object>();
 		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id));	
-	    UserEntity ownerUser = this.userDao.findUserById( oEntity.getOwnerid());
-	    UserEntity orderUser = this.userDao.findUserById( oEntity.getUserid());
-	    RdcShareDTO      rsd = this.rsmDao.getSEByID(oEntity.getShareinfoid()+"");
-	    ownerUser.setPassword(null);
-	    orderUser.setPassword(null);
-		dataMap.put("rsd", rsd);
-		dataMap.put("orders", oEntity);
-		dataMap.put("ownerUser", ownerUser);
-		dataMap.put("orderUser", orderUser);
+		if(oEntity!=null){
+		    UserEntity ownerUser = this.userDao.findUserById( oEntity.getOwnerid());
+		    UserEntity orderUser = this.userDao.findUserById( oEntity.getUserid());
+		    RdcShareDTO      rsd = this.rdcShareService.getSEByID(oEntity.getShareinfoid()+"");
+		    ownerUser.setPassword(null);
+		    orderUser.setPassword(null);
+			dataMap.put("rsd", rsd);
+			dataMap.put("orders", oEntity);
+			dataMap.put("ownerUser", ownerUser);
+			dataMap.put("orderUser", orderUser);
+		}
 		return ResponseData.newSuccess(dataMap);
 	}
 	
