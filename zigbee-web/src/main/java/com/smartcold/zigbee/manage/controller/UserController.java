@@ -175,6 +175,7 @@ public class UserController extends BaseController {
 		}
 		return false;
 	}
+	
 	@RequestMapping(value = "/checkOldPassword")
 	@ResponseBody
 	public boolean checkOldPassword(HttpServletRequest request,String pwd){
