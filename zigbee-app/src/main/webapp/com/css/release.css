@@ -152,6 +152,9 @@ section{
 .houseinfo>li:first-child input{
 	width:85%;
 }
+input[type="text"]:disabled{
+	background:transparent
+}
 .houseinfo>li label{
 	display: inline-block;
 	color: #999;
@@ -193,7 +196,9 @@ body,html{
 	display:block;
 	background-color: transparent
 }
-.houseinfo>li>input[type='text'],.houseinfo>li>input[type='date']{
+.houseinfo>li>input[type='text'],
+.houseinfo>li>input[type='date'],
+.houseinfo>li>.mySelect>input[type='text']{
 	text-indent: 10px;
 	display: inline-block;
 	vertical-align:middle;
