@@ -1,4 +1,4 @@
-coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload) {
+coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload, coldWebUrl) {
 	
 	$scope.load = function(){
 		$scope.vm = {}
@@ -29,6 +29,94 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		return keys;
 	}
 	
+	$scope.coldStorageKeys = [];
+	$scope.doorKeys = [];
+	$scope.compressorGroupKeys = [];
+	$scope.blowerKeys = [];
+	$scope.vm = {};
+	$scope.vm.choseStorage = {};
+	$scope.vm.choseStorage.mapping = [];
+	
+	$scope.type2Keys = function(type){
+		switch(type){
+		case 1:
+			return $scope.coldStorageKeys;
+		case 2:
+			return $scope.doorKeys;
+		case 3:
+			return $scope.compressorGroupKeys;
+		case 4:
+			return $scope.blowerKeys;
+		default:
+			return [];
+		}
+	}
+	
+	$scope.typeChanged = function(item){
+		$scope.keysData = $scope.type2Keys(item.type);
+	}
+	
+	$http.get(coldWebUrl+'storageKeys/getAllKeys').success(function(data,status,config,headers){
+		angular.forEach(data,function(item,index){
+			$scope.type2Keys(item.type).push(item);
+		})
+//		$scope.storageItem = data;
+//		$scope.vm.choseItem = data[0];
+//		$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
+//		$scope.vm.choseItemKey = $scope.storageItemKeys[0];
+//		$scope.storageItem.push($scope.handItem);
+	})
+	
+	$http.get(coldWebUrl+"storageKeys/getStorageType").success(function(data,status,config,headers){
+		$scope.storageTypes = data;
+	});
+	
+	$scope.getDescByType = function(type){
+		for(var i=0; i<$scope.storageTypes.length; i++){
+			if($scope.storageTypes[i].type==type){
+				return $scope.storageTypes[i].desc;
+			}
+		}
+		return 'not correct type';
+	}
+	$scope.newKey = {};
+	$scope.saveNewKey = function(){
+		var newKey = $scope.newKey;
+		if(newKey.key && newKey.type && newKey.desc){
+			var params ={
+				key:newKey.key,
+				type:newKey.type.type,
+				desc:newKey.desc,
+				unit:newKey.unit
+			}
+			var req = {
+				method:'post',
+				url:"/i/coldStorage/addStorageKey",
+				data:$.param(params),
+				headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+			}
+			$http(req).then(function(resp){
+				$scope.newKey = {};
+				params.id = resp.data;
+				$scope.type2Keys(params.type).push(params);
+			})
+		}else{
+			alert("输入不完整");
+		}
+	}
+	
+	$scope.delStorageKey = function(item){
+		var req = {
+			method:'delete',
+			url:"/i/coldStorage/delStorageKey?id="+item.id
+//			data:'id='+id,
+//			headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+		}
+		$http(req).then(function(resp){
+			var i = $scope.keysData.indexOf(item);
+			$scope.keysData.splice(i,1);
+		})
+	}
 	
 	$scope.changeRdc = function(){
 		$scope.vm.choseRdc = $scope.vm.choseRdcs?$scope.vm.choseRdcs[0]:$scope.vm.choseRdc;
@@ -50,13 +138,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 					$scope.vm.username = data?data.username:'';
 					$scope.vm.password = data?data.password:'';
 				})
-		$http.get('/i/coldStorage/findItem').success(function(data,status,config,headers){
-			$scope.storageItem = data;
-			$scope.vm.choseItem = data[0];
-			$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
-			$scope.vm.choseItemKey = $scope.storageItemKeys[0];
-			$scope.storageItem.push($scope.handItem);
-		})
+		
 		$http.get('/i/compressorGroup/getCompressGroupByRdcId?rdcId=' + $scope.vm.choseRdc.id
 				).success(function(data,status,config,headers){
 			angular.forEach(data,function(item,index){
@@ -109,8 +191,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		object[key] = value;
 	}
 	
-	$scope.resetItem = function(items,item,obj){
-		$scope.vm[item] = items[0];
+	$scope.resetItem = function(item,obj){
+		$scope.vm[item] = "";
 		$scope.vm.itemInput = "";
 		obj.addItem = false;
 	}

@@ -1,28 +1,3 @@
-header{
-	width: 100%;
-	height: 2.2rem;
-	background-color: #438BCB;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 9999;
-	padding:0.3rem 0.9rem;
-	box-sizing:border-box;
-	text-align: center;
-	color: #fff;
-	line-height: 1.6rem;
-}
-header>div>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	color: #fff;
-	line-height: 1.6rem;
-	font-size: 1rem;
-}
-header>div>a>.iconfont{
-	font-size: 1rem;
-}
 .txt{
 	height: 100%;
 	margin:0 2rem;
@@ -30,41 +5,9 @@ header>div>a>.iconfont{
 	text-overflow: ellipsis;
  	white-space: nowrap;
 }
-.footer{
-	width: 100%;
-	height: 2.45rem;
-	background: rgba(255,255,255,.9);
-	font-size: 0.5rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 9999;
-	border-top: 1px solid #ccc;
-}
-.footer>li{
-	float: left;
-	width: 25%;
-	height: 100%;
-	text-align: center;
-	vertical-align: middle;
-}
-.footer>li>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	color: #898989;
-	padding: 0.15rem 0 0.4rem;
-	box-sizing: border-box;
-}
-.footer>.active>a{
-	color: #428BCA;
-}
-.footer i{
-	font-size: 1.2rem;
-}
-.info{
-	font-size: 0.6rem;
+.mylogin{
+	background:transparent;
+	margin: 0;
 }
 section,.list{
 	margin: 2.5rem 0 0.5rem;
@@ -89,6 +32,12 @@ section.show{
 .name{
 	margin-left: 0.5rem;
 	padding-left: 2.6rem;
+}
+.nameLogin{
+	height: 2.5rem;
+	line-height: 2.5rem;
+	font-size: 0.8rem;
+	color: #333;
 }
 .nameinfo{
 	margin-bottom: 0.2rem;
@@ -144,6 +93,9 @@ section.show{
 .list_icon .name{
 	padding-left: 2rem;
 }
+.list.list_icon{
+	margin-bottom:2.6rem;
+}
 .myicon i{
 	font-size: 1.2rem;
 	color: #919191;
@@ -158,11 +110,11 @@ section.show{
 .adminInfo .list_name{
 	text-align: right;	
 }
-.adminInfo+.mybtn,.list.list_icon{
+.adminInfo+.mybtn{
 	margin-bottom: 3rem;
 }
 .commentList{	
-	margin-top:0;
+	margin-top:2.5rem;
 	margin-bottom: 3rem;
 }
 .commentList li{
@@ -199,8 +151,7 @@ section.show{
 	color: #fff;
 	border-color: transparent;
 }
-.position+.btnGroup{
-	margin-top: 1.5rem;
+.commentList .btnGroup{
 	border-top:1px solid #eee;
 	padding-top:0.3rem;
 }
@@ -294,6 +245,9 @@ section.show{
 	color: #555;
 	line-height: 2rem;
 	margin-bottom: 1rem;
+}
+.tel p:last-child{
+	margin-bottom:2.6rem;
 }
 .tel .contact+p>a{
 	display: block;
@@ -475,3 +429,4 @@ section.show{
 	width: 0;
 	height:0;
 }
+

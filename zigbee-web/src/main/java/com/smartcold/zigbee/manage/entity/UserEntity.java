@@ -2,15 +2,17 @@ package com.smartcold.zigbee.manage.entity;
 
 import java.util.Date;
 
+import com.smartcold.zigbee.manage.service.FtpService;
+
 public class UserEntity {
 
 	private int id;
 
-	private int sex;//-> new add  0:保密-> 1:男->  2:女  
-
-	private int role;
+	private Integer role;
 	
 	private String email;
+	
+	private String nickname;//-> new add  昵称
 	
 	private String username;
 
@@ -19,12 +21,14 @@ public class UserEntity {
 	private String telephone;
 	
 	private String realname;
+	
+	private Integer sex;//-> new add  0:保密-> 1:男->  2:女 
 
-	private int addressid;//-> new add 
+	private Integer addressid;//-> new add 
 	
 	private String address;//-> new add:无意义，仅显示
 	
-	private int hometownid;//家乡->add
+	private Integer hometownid;//家乡->add
 	
 	private String hometown;//家乡->add:无意义，仅显示
 	
@@ -33,7 +37,7 @@ public class UserEntity {
 	private Date UpdateTime;
 
 	private String avatar="app/img/userimg.jpg";//用户头像->add
-	
+
 	public int getId() {
 		return id;
 	}
@@ -42,20 +46,20 @@ public class UserEntity {
 		this.id = id;
 	}
 
-	public int getSex() {
-		return sex;
-	}
-
-	public void setSex(int sex) {
-		this.sex = sex;
-	}
-
-	public int getRole() {
+	public Integer getRole() {
 		return role;
 	}
 
-	public void setRole(int role) {
+	public void setRole(Integer role) {
 		this.role = role;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {
@@ -64,6 +68,14 @@ public class UserEntity {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getPassword() {
@@ -82,20 +94,28 @@ public class UserEntity {
 		this.telephone = telephone;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getRealname() {
 		return realname;
 	}
 
 	public void setRealname(String realname) {
 		this.realname = realname;
+	}
+
+	public Integer getSex() {
+		return sex;
+	}
+
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+
+	public Integer getAddressid() {
+		return addressid;
+	}
+
+	public void setAddressid(Integer addressid) {
+		this.addressid = addressid;
 	}
 
 	public String getAddress() {
@@ -106,12 +126,20 @@ public class UserEntity {
 		this.address = address;
 	}
 
-	public String getAvatar() {
-		return this.avatar;
+	public Integer getHometownid() {
+		return hometownid;
 	}
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
+	public void setHometownid(Integer hometownid) {
+		this.hometownid = hometownid;
+	}
+
+	public String getHometown() {
+		return hometown;
+	}
+
+	public void setHometown(String hometown) {
+		this.hometown = hometown;
 	}
 
 	public Date getAddTime() {
@@ -127,31 +155,16 @@ public class UserEntity {
 	}
 
 	public void setUpdateTime(Date updateTime) {
-		this.UpdateTime = updateTime;
+		UpdateTime = updateTime;
 	}
 
-	public String getHometown() {
-		return this.hometown;
+	public String getAvatar() {
+		return  this.avatar;
 	}
 
-	public void setHometown(String hometown) {
-		this.hometown = hometown;
+	public void setAvatar(String avatar) {
+		this.avatar =  avatar;
 	}
-
-	public int getAddressid() {
-		return addressid;
-	}
-
-	public void setAddressid(int addressid) {
-		this.addressid = addressid;
-	}
-
-	public int getHometownid() {
-		return hometownid;
-	}
-
-	public void setHometownid(int hometownid) {
-		this.hometownid = hometownid;
-	}
-
+	
+	
 }

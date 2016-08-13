@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,6 +43,7 @@ public class ShareRdcController  {
 	@Resource(name="docLibraryService")
 	private DocLibraryService docLibraryService;
 	
+	private static final Logger logger = LoggerFactory.getLogger(ShareRdcController.class);
 
 	/**
 	 * @author MaQiang
@@ -167,7 +170,35 @@ public class ShareRdcController  {
 	    return ResponseData.newFailure("无效请求！");
 	}
 	/**
-	 * 获得货品信息
+	 * 根据用户id获得关联发布信息
+	 * @param request
+	 * @param type  出售求购
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param goodtype 过滤条件
+	 * @param keyword  关键字
+	 * @param provinceid 地域
+	 * @param orderBy 排序
+	 * @return
+	 */
+	@RequestMapping(value = "/getSEListByUID")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getSEListByUID(HttpServletRequest request,Integer userID) {
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		if(user!=null&&userID!=null&&userID!=0&&user.getId()==userID){
+			this.getPageInfo(request);
+			HashMap<String, Object> filter=new HashMap<String, Object>();
+			filter.put("sstauts", 1);//必须
+			filter.put("releaseID", userID);//必须
+			PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
+			return ResponseData.newSuccess(data);
+		}else{
+			return ResponseData.newFailure();
+		}
+	}
+	
+	
+	/**
+	 * 根据冷库id获得关联发布信息
 	 * @param request
 	 * @param type  出售求购
 	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
@@ -295,61 +326,11 @@ public class ShareRdcController  {
 		return ResponseData.newSuccess(data);
 	}
 	
-	//------------------------------------------------------------------------------------3:抢单操作-------------------------------------------------------
-	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value="sharvistPhone")
-	@ResponseBody
-	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone){
-		try {
-			if(StringUtil.isnotNull(telephone)){
-				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-				String signUpCode = teleVerify.identityVerify(telephone);
-				request.getSession().setAttribute("shear_order_id", dataid);
-				request.getSession().setAttribute("shear_order_yzm", signUpCode);
-				request.getSession().setAttribute("shear_order_telephone", telephone);
-				ResponseData<String> instance = ResponseData.getInstance();
-				instance.setSuccess(true);
-				instance.setEntity(signUpCode);
-				instance.setMessage("验证码已发送到您的手机！请注意查收！");
-				return instance;
-			}
-			return  ResponseData.newFailure("请输入有效手机号码！！");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ResponseData.newFailure("未知异常！");
-	}
+
 	
-	
+	//------------------------------------------------------------------------------------免费发布消息-------------------------------------------------------
 	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value="sharvistCode")
-	@ResponseBody
-	public boolean sharvistCode(HttpServletRequest request,String dataid,String telephone,String yzm){
-	  if(StringUtil.isnotNull(yzm)){
-		  String sysyzm=	(String) request.getSession().getAttribute("shear_order_yzm");
-		  return yzm.equalsIgnoreCase(sysyzm); 
-	  }
-	  return false;
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value="shareApplyObj")
-	@ResponseBody
-	public ResponseData<Object> shareApplyObj(HttpServletRequest request,String dataid,String phone){
-		
-		return null;
-	}
-	//------------------------------------------------------------------------------------4:免费发布消息-------------------------------------------------------
-	/**
-	 * 免费发布消息
+	 *获得用户关联的冷库信息
 	 * @param request
 	 * @param datatype
 	 * @param dataid
@@ -368,7 +349,25 @@ public class ShareRdcController  {
 		}
 	    return ResponseData.newFailure();
 	}
-	
+	/**
+	 * 删除用户关联的信息
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="delShareInfoByUid")
+	@ResponseBody
+	public ResponseData<String> delShareInfoByUid(HttpServletRequest request,Integer id,Integer uid){
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		if(user!=null&&user.getId()!=0&&id!=null &&uid!=null&&uid==user.getId()){//三级验证 防止非法操作 
+			this.rdcShareService.delShareInfoByid(id, user.getId());
+			return ResponseData.newSuccess();
+		}else{
+			if (user==null) {logger.error("非法删除操作：->未登录，数据id->"+id);} 
+			return ResponseData.newFailure("非法操作！");
+		}
+	    
+	}
 	
 	/**
 	 * 免费发布消息
@@ -398,5 +397,59 @@ public class ShareRdcController  {
 		}
 		return ResponseData.newFailure("发布失败!请稍后重试！");
 	}
+	//------------------------------------------------------------------------------------验证码-------------------------------------------------------
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="sharvistPhone")
+	@ResponseBody
+	public ResponseData<String> sharvistPhone(HttpServletRequest request,String key,String dataid,String telephone){
+		try {
+			if(StringUtil.isnotNull(telephone)){
+				key= key+"";
+				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
+				String signUpCode ="aaaa";//teleVerify.identityVerify(telephone);
+//				request.getSession().setAttribute(key+"shear_id", dataid);
+				request.getSession().setAttribute(key+"shear_yzm", signUpCode);
+//				request.getSession().setAttribute(key+"shear_telephone", telephone);
+				ResponseData<String> instance = ResponseData.getInstance();
+				instance.setSuccess(true);
+				instance.setEntity(signUpCode);
+				instance.setMessage("验证码已发送到您的手机！请注意查收！");
+				return instance;
+			}
+			return  ResponseData.newFailure("请输入有效手机号码！！");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseData.newFailure("未知异常！");
+	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="sharvistCode")
+	@ResponseBody
+	public boolean sharvistCode(HttpServletRequest request,String key,String dataid,String telephone,String yzm){
+	  if(StringUtil.isnotNull(yzm)){
+		  key= key+"";
+		  String sysyzm=	(String) request.getSession().getAttribute(key+"shear_yzm");
+		  return yzm.equalsIgnoreCase(sysyzm); 
+	  }
+	  return false;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="delvistCode")
+	@ResponseBody
+	public void delvistCode(HttpServletRequest request,String key){
+		if(StringUtil.isnotNull(key)){
+		  request.getSession().removeAttribute(key+"shear_yzm");
+		}
+	}
 }

@@ -19,6 +19,7 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
     	$http.get('/i/rdc/findRDCDTOByUserId', {
             params: {
                 "userID": $rootScope.user.id,
+                 keyword:$scope.keyword,
                 pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize
             }
@@ -28,11 +29,33 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
         });
 	}
 	
+    $scope.goSearch = function () {
+        $scope.getRdcs();
+    }
+
+	
 	$scope.pageChanged = function() {
 		$scope.getRdcs();
 	}
 	$scope.getRdcs();
-	
-	
+	$scope.goEditRdc = function (rdcID) {
+	        $state.go('coldStorageEdit', {"rdcID": rdcID});
+	}
+	$scope.deleteRdc = function(rdcID){
+	    	var r=confirm("删除冷库？");
+	    	if(r){
+	    		$http({
+	    			method:'DELETE',
+	    			url:'/i/rdc/deleteByRdcID',
+	    			params:{
+	    				'rdcID':rdcID
+	    			}
+	    		}).success(function (data) {
+    				alert("删除成功");
+    				$state.reload(); 
+            });
+	    	}
+	    }
+	    
 });
 

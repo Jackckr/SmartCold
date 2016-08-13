@@ -18,6 +18,12 @@ public interface RdcShareService {
 	 * @return
 	 */
 	public RdcShareDTO getSEByID(String id);
+	/**
+	 * 删除用户发布的信息
+	 * @param id
+	 * @param uid
+	 */
+	public void delShareInfoByid(int id,int uid);
  	/**
  	 * 发布消息
  	 * @param rdcShareDTO
@@ -36,6 +42,7 @@ public interface RdcShareService {
  	   * @return
  	   */
  	  public PageInfo<RdcShareDTO> getRdcList(int pageNum,int pageSize,Map<String, Object> parameters);
+
 	  /**
 	    * 获得商品共享信息
 	    * @param filter

@@ -17,11 +17,15 @@ body{
 .inputBd input{
 	display: block;
 	width: 100%;
-	text-indent: 2rem;
 	padding: 0.8rem 0;
 	font-size: 0.8rem;
 	border-bottom: 1px solid #E1E4E5;
 	background-color: transparent;
+    box-sizing: border-box;
+}
+.login .inputBd input{
+	padding-left:2rem;
+    box-sizing: border-box;
 }
 .inputBd>i{
 	position: absolute;
@@ -42,12 +46,9 @@ body{
 	height: 2rem;
 	margin-top: 0.5rem;
 	line-height: 2rem;
-	display: flex;
-	display: -webkit-flex;
 }
 .register div{
-	flex: 1;
-	-webkit-flex: 1;
+	width:50%;
 }
 .register div:last-child{
 	text-align: right;
@@ -59,7 +60,7 @@ body{
 }
 footer{
 	width: 100%;
-	margin-top: 6rem;
+	margin-top: 2rem;
     padding: 0 0.9rem;
     box-sizing: border-box;
 }
@@ -79,12 +80,11 @@ footer{
 	top: 1rem;
 }
 .three{
-	display: flex;
-	display: -webkit-flex;
+	height:2.5rem;
 }
 .three>div{
-	flex: 1;
-	-webkit-flex: 1;
+	width:33.3333%;
+	float:left;
 	text-align: center;
 }
 .three>div a{
@@ -108,30 +108,18 @@ footer{
 }
 /*注册*/
 header{
-	width: 100%;
-	height: 2.2rem;
-	padding:0.3rem 0.9rem;
-	box-sizing:border-box;
-	text-align: center;
-	color: #fff;
-	line-height: 1.6rem;
+	background-color: transparent;
+	position: static;
 }
-header>div>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	color: #448BCB;
-	line-height: 1.6rem;
-	font-size: 1rem;
-}
-header>div>a>.iconfont{
-	font-size: 1rem;
+.area.fl a i{
+	color: #438BCB;
 }
 .txt{
 	height: 100%;
 	margin:0 1rem;
 	color: #333;
 	font-size:1rem;
+	color: #555;
 }
 section{
 	padding:0.3rem 0.9rem;
@@ -155,9 +143,10 @@ section .inputBd input{
 	position: absolute;
 	top: 50%;
 	right: 0.2rem;
+	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
 	font-size: 0.8rem;
-	color: #448BCB;
+	color: #448BCB!important;
 	padding:0.3rem 0.5rem;
 	border-radius:4px;
 	color:#333;

@@ -8,8 +8,10 @@
     <title>我的点评</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../app/js/user_obj.js" ></script>
+    <script type="text/javascript">var type=2; checkLogin(null,initdata);</script>
 </head>
 <body>
     <header>
@@ -20,39 +22,29 @@
     		我的点评
     	</div>
     </header>
-    <section class="clearfix">
-    	<div class="img fl">
-    		<img src="../com/img/women.png"/>
-    	</div>
-    	<!--<div class="rightArrow fr">
-    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-    	</div>-->
-    	<div class="name" onclick="location.href='personal.html'">
-    		<p class="nameinfo">木棉先森</p>
-    		<p class="position">
-    			<i class="iconfont">&#xe66e;</i>
-				上海-长宁区-中山公园
-    		</p>
-    	</div>
-    </section>
-    <ul class="commentList">
+<!--     <section id="user_info" class="clearfix"></section> -->
+    <ul id="ul_rdcsL_list" class="commentList">
     	<li class="clearfix">
-    		<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div>
-    		<p class="company">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
-    		<p class="position">
-    			<span class="orderNum">订单号：4654654654121</span>
-    		</p>
+    		<div class="clearfix">
+    			<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div>
+	    		<p class="company omg">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
+	    		<p class="position">
+	    			<span class="orderNum">订单号：4654654654121</span>
+	    		</p>
+    		</div>
     		<p class="btnGroup">
     			<button>删除订单</button>
     			<button onclick="location.href='commentdetail.html'">立即评价</button>
     		</p>
     	</li>
     	<li class="clearfix">
-    		<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div>
-    		<p class="company">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
-    		<p class="position">
-    			<span class="orderNum">订单号：4654654654121</span>
-    		</p>
+    		<div class="clearfix">
+	    		<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div>
+	    		<p class="company omg">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p>
+	    		<p class="position">
+	    			<span class="orderNum">订单号：4654654654121</span>
+	    		</p>
+    		</div>
     		<p class="btnGroup">
     			<button>删除订单</button>
     			<button onclick="location.href='commentdetail.html'">立即评价</button>
@@ -66,21 +58,27 @@
                 <p class="info">首页</p>
             </a>
         </li>
-        <li>            
-            <a href="release.html">
-                <i class="iconfont">&#xe666;</i>
-                <p class="info">发布</p>
-            </a>
-        </li>
         <li>          
             <a href="share.html">
                 <i class="iconfont">&#xe6f8;</i>
                 <p class="info">资讯</p>
             </a>
         </li>
+        <li>            
+            <a href="release.html">
+                <i class="iconfont">&#xe6ff;</i>
+                <p class="info">发布</p>
+            </a>
+        </li>
+        <li>          
+            <a href="review.html">
+                <i class="iconfont">&#xe642;</i>
+                <p class="info">追溯</p>
+            </a>
+        </li>
         <li class="active">            
             <a href="user.html">
-                <i class="iconfont">&#xe65e;</i>
+                <i class="iconfont">&#xe6fd;</i>
                 <p class="info">我的</p>
             </a>
         </li>

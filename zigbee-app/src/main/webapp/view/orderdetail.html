@@ -7,69 +7,116 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<title>我的订单</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-	    <link rel="stylesheet" href="../com/css/baguettebox.min.css">
+	<link rel="stylesheet" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
-	    <script src="../com/js/jquery.min.js"></script>
-		<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+	<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
+    <script type="text/javascript">checkLogin();</script>
+    <script type="text/javascript">
+     var app = angular.module("app", []).controller("orderdetail", function($http, $location,$scope) {
+      var id  = getUrlParam("id");
+      if(id==null||id==""||id=="undefined"){return;}
+      $scope.appmode=[{title:["","货品","配送","冷库"]}];//1:货品 2：配送 3:仓库
+	  $http.defaults.withCredentials=true;$http.defaults.headers={"Content-Type": "application/x-www-form-urlencoded"};
+      $scope.initdata=function(){
+			$http.get(ER.root+"/i/orders/findOrderByOrderId",  { params: {id:id}  }).success(function(data) { //获得数据
+			 if(data.success){
+				   $scope.rsd=data.entity.rsd; //发布的信息
+				   $scope.orders=data.entity.orders; //订单信息
+				   $scope.ownerUser=data.entity.ownerUser; //发布者信息
+				   $scope.orderUser=data.entity.orderUser; //订单者信息
+				    if($scope.rsd){
+				       $scope.datatype=$scope.rsd.dataType;
+				       $scope.typetitle=$scope.appmode[0].title[$scope.datatype]+data.entity.rsd.typeText;
+				    }else{
+				      $("#sec_content").html("商品信息已失效！");
+				    }
+			   }else{
+			       $("#sec_content").html("获取数据失败！");// goback();
+			   }
+			  
+             });
+	};
+	$scope.initevg=function(){
+		  baguetteBox.run('.baguetteBoxOne', {
+				    animation: 'slideIn',
+				    buttons: true
+				});
+				
+				if ($('.gallery').children().length==0) {
+// 					如果没有图片，则隐藏
+					$('.gallery').hide();
+					$('.gallery').prev().css({
+						'marginBottom':'0.3rem'
+					});
+				}
+	};
+	$scope.initdata();
+	$scope.initevg();
+});
+    </script>
 </head>
-	<body>
+	<body  ng-app="app"  ng-controller="orderdetail" ng-cloak >
 	    <header>
 	    	<div class="area fl">
 	    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
 	    	</div>
-	    	<div class="txt">
-	    		我的订单
-	    	</div>
+	    	<div class="txt">我的订单</div>
 	    </header>
-	    <section class="content">
+	    <section id="sec_content" class="content "><!--  -->
 	    	<p class="order">
-		   		<span class="num">订单号：4654654654121</span>
+		   		<span class="num">订单号：{{orders.orderid}}</span>
 		    </p>
 		    <p class="order">
-		   		<span class="orderName">订单名称：<span>(仓库)</span>上海批发市场</span>
+		   		<span class="orderName">订单名称：<span>({{appmode[0].title[datatype]}})</span>{{rsd.title}}</span>
 		    </p>
 		<!-- 订单详情区域 -->
-			<h4>订单详情 <span class="date">2016-07-23</span></h4>
-			<p class="infos">
-				<i class="dot"></i>
-				<span class="first">订单类型:</span>
-				<span class="second">冷库出租</span>
+			<h4><i class="dot"></i>订单详情 <span class="date">{{orders.generatetime}}</span></h4>
+			<p class="infos" style="margin-left: 20px;">
+				<span class="first">订单类型:</span><span class="second">{{typetitle}}</span>
 			</p>
-			<p class="infos">
-				<i class="dot"></i>
-				<span class="first">冷库名称:</span>
-				<span class="second">莱芜嘉禾冷链物流有限公司 </span>
-			</p>
-			<p class="infos">
-				<i class="dot"></i>
-				<span class="first">冷库地址:</span>
-				<span class="second">上海-长宁区-中山公园</span>
-			</p>
+			<div ng-if="datatype==3" style="margin-left: 20px;">
+			   <p class="infos"><span class="first">温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
+			   <p class="infos"><span class="first">冷库名称:</span><span class="second">{{rsd.name}}</span></p>
+			   <p class="infos"><span class="first">冷库地址:</span><span class="second">{{rsd.address}}</span></p>
+			</div>
+			<div ng-if="datatype==2" style="margin-left: 20px;">
+			   <p class="infos"><span class="first">始　　发　地:</span><span class="second">{{rsd.unit1}}</span></p>
+			   <p class="infos"><span class="first">目　　的　地:</span><span class="second">{{rsd.unit2}}</span></p>
+			   <p class="infos"><span class="first">业&nbsp;务&nbsp;类&nbsp;型:</span><span class="second">{{rsd.codeLave1}}</span></p>
+			   <p class="infos"><span class="first">车&nbsp;辆&nbsp;类&nbsp;型:</span><span class="second">{{rsd.codeLave3}}</span></p>
+			   <p class="infos"><span class="first">冷库温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
+			</div>
+			
+			<div ng-if="datatype==1" style="margin-left: 20px;">
+		        <p class="infos"><span class="first">品　　　类:</span><span class="second">{{rsd.codeLave1}}</span></p>
+			    <p class="infos"><span class="first">供　应　商:</span><span class="second">{{rsd.unit1?rsd.unit1:'不详' }}</span></p>
+			    <p class="infos"><span class="first">最大预定量:</span><span class="second">{{rsd.sqm }}吨</span></p>
+			    <p class="infos"><span class="first">单　　　价:</span><span class="second">{{rsd.unitPrice == 0.00 ?"面议":rsd.unitPrice+'元/吨'}}</span></p>
+			</div>
+			<h4><i class="dot"></i>其他信息 <span class="date">{{orders.generatetime}}</span></h4>
+			<div style="margin-left: 20px;">
+			   <p class="infos"><span class="first">信息有效期:</span><span class="second">{{rsd.validStartTime}}至{{rsd.validEndTime}}</span></p>
+			   <p class="infos"><span class="first">备注:</span><span class="second">{{rsd.note?rsd.note:'无'}}</span></p>
+			</div>
 			<!--点击图片循环展示-->
-			<div class="baguetteBoxOne gallery">
-		        <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
-		        <a href="../com/img/cbd.jpg"><img src="../com/img/cbd.jpg" alt="" /></a>
-		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
-		        <a href="../com/img/muwu.jpg"><img src="../com/img/muwu.jpg" alt="" /></a>
-		        <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
-		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
-		        <a href="../com/img/list_03.png"><img src="../com/img/list_03.png" alt="" /></a>
-		        <a href="../com/img/list_05.png"><img src="../com/img/list_05.png" alt="" /></a>
-		        <a href="../com/img/list_07.png"><img src="../com/img/list_07.png" alt="" /></a>
+			<div class="baguetteBoxOne gallery" ng-if="rsd.files">
+		         <a ng-repeat="fl in rsd.files" ng-href="{{fl}}"><img ng-src="{{fl}}"/></a>
 			</div>
 			<ul class="object">
 				<li>
 					<p>出租方</p>
-					<p><span>姓名：</span>王晓明</p>
-					<p><span>联系电话：</span>12646542165</p>
-					<p><span>地址：</span>上海市长宁区中山公园</p>
+					<p><span>姓名：</span>{{ownerUser.nickname}}</p>
+					<p><span>联系电话：</span>{{ownerUser.telephone}}</p>
+					<p><span>地址：</span>{{ownerUser.address}}</p>
 				</li>
 				<li>
 					<p>租入方</p>
-					<p><span>姓名：</span>王晓明</p>
-					<p><span>联系电话：</span>12646542165</p>
-					<p><span>地址：</span>上海市长宁区中山公园</p>
+					<p><span>姓名：</span>{{orderUser.nickname}}</p>
+					<p><span>联系电话：</span>{{orderUser.telephone}}</p>
+					<p><span>地址：</span>{{orderUser.address}}</p>
 				</li>
 			</ul>
 	    </section>
@@ -80,42 +127,30 @@
                 <p class="info">首页</p>
             </a>
         </li>
-        <li>            
-            <a href="release.html">
-                <i class="iconfont">&#xe666;</i>
-                <p class="info">发布</p>
-            </a>
-        </li>
         <li>          
              <a href="news.html">
                 <i class="iconfont">&#xe6f8;</i>
                 <p class="info">资讯</p>
             </a>
         </li>
+        <li>            
+            <a href="release.html">
+                <i class="iconfont">&#xe6ff;</i>
+                <p class="info">发布</p>
+            </a>
+        </li>
+        <li>          
+            <a href="review.html">
+                <i class="iconfont">&#xe642;</i>
+                <p class="info">追溯</p>
+            </a>
+        </li>
         <li class="active">            
             <a href="user.html">
-                <i class="iconfont">&#xe65e;</i>
+                <i class="iconfont">&#xe6fd;</i>
                 <p class="info">我的</p>
             </a>
         </li>
     </ul>
-    <script>
-			$(function(){
-			//点击图片看大图
-				baguetteBox.run('.baguetteBoxOne', {
-				    animation: 'slideIn',
-				    buttons: true
-				});
-				
-				if ($('.gallery').children().length==0) {
-					//如果没有图片，则隐藏
-					$('.gallery').hide();
-					$('.gallery').prev().css({
-						'marginBottom':'0.3rem'
-					})
-				}
-				
-			});
-		</script>
 	</body>
 </html>

@@ -27,14 +27,20 @@
     		<a href=""><i class="iconfont">&#xe60d;</i></a>
     	</div>
     	<div class="name" onclick="location.href='personal.html'">
-    		<p class="nameinfo">{{userinfo.username}}</p>
-    		<p class="position">
+    		<p class="nameinfo omg">{{userinfo.nickname}}</p>
+    		<p class="position omg">
     			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}
     		</p>
     	</div>
     </section>
-    <section class="clearfix" ng-if="!userinfo.id">
-        <div class="txt" onclick="gologin();">登录</div>
+    <section class="clearfix" ng-if="!userinfo.id">    
+    	<div class="img fl">
+    		<img src="../com/img/success.png"/>
+    	</div>
+    	<div class="rightArrow fr">
+    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+    	</div>
+        <div class="name nameLogin" onclick="gologin();">点此登录</div>
     </section>
     <ul class="list list_icon">
     	<li class="clearfix" onclick="location.href='user-mycold.html'">
@@ -122,21 +128,27 @@
                 <p class="info">首页</p>
             </a>
         </li>
-        <li>            
-            <a href="release.html">
-                <i class="iconfont">&#xe666;</i>
-                <p class="info">发布</p>
-            </a>
-        </li>
         <li>          
             <a href="news.html">
                 <i class="iconfont">&#xe6f8;</i>
                 <p class="info">资讯</p>
             </a>
         </li>
+        <li>            
+            <a href="release.html">
+                <i class="iconfont">&#xe6ff;</i>
+                <p class="info">发布</p>
+            </a>
+        </li>
+        <li>          
+            <a href="review.html">
+                <i class="iconfont">&#xe642;</i>
+                <p class="info">追溯</p>
+            </a>
+        </li>
         <li class="active">            
             <a href="user.html">
-                <i class="iconfont">&#xe65e;</i>
+                <i class="iconfont">&#xe6fd;</i>
                 <p class="info">我的</p>
             </a>
         </li>

@@ -3,12 +3,11 @@
 	<!-- sidebar -->
 		<div class="sidebar pull-left">
 			<ul class="infoList">
-				<li>个人信息</li>
-				<li><font color="#418ACA">我的冷库</font></li>
-				<li>我的发布</li>
-				<li>我的订单</li>
-				<li>我的评价</li>
-				<li>最近浏览</li>
+				<li><a href="#/personalDetail"><font color="black">个人信息</font></a></li>
+				<li> <a href="#/personalRdc"><font color="#418ACA">我的冷库</font></a></li>
+				<li><a href="#/personalShare"><font color="black">我的发布</font></a></li>
+				<li><a href="#/personalOrder"><font color="black">我的订单</font></a></li>
+				<li><a href="#/personalComment"><font color="black">我的评价</font></a></li>
 				<li>联系客服</li>
 			</ul>
 		</div>
@@ -17,20 +16,20 @@
 		<div class="content">
 		   <form class="bs-example bs-example-form" role="form">
 		      <div class="input-group">
-		         <input type="text" class="form-control" placeholder="输入库名">
-		         <span class="input-group-addon">冷库搜索</span>
+		         <input type="text" ng-model="keyword" class="form-control" placeholder="输入库名">
+		         <button class="btn btn-default" ng-click="goSearch()">冷库搜索</button>
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
-			<ul class="imgList" ng-model="rdcs">
+			<ul class="imgList clearfix">
 				<li ng-repeat="rdc in rdcs">
 					<div class="img pull-left"><img src={{rdc.logo}}></div>
 					<p class="company">{{rdc.name}}</p>
-					<p class="area"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
+					<p class="area omg"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
 					<p class="area">
 						{{rdc.addtime}}
-						<span class="edit">修改</span>
-						<span class="delete">删除</span>
+						<span class="edit" ng-click="goEditRdc(rdc.id)">修改</span>
+						<span class="delete" ng-click="deleteRdc(rdc.id)">删除</span>
 					</p>
 				</li>
 			</ul>

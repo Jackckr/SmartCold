@@ -8,8 +8,9 @@
 	<title>修改昵称</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript">checkLogin();</script>
 </head>
 <body>
     <header>
@@ -26,24 +27,34 @@
     <section class="clearfix">
     	<div class="editarea">
     		<span class="fl">昵称</span>
-    		<p class="input"><input type="text" value="木棉先森"/></p>
+    		<p class="input"><input id="txt_nickname" name="nickname" type="text" /></p>
     		<i class="deleteEdit">&times;</i>
     	</div>
     </section>
    <script>
    	$(function(){
-   		$('.deleteEdit').click(function(){
-   			$(".input input").val("").focus();
-   		});
+      	$("#txt_nickname").val(window.user.nickname);
+   		$('.deleteEdit').click(function(){$(".input input").val("").focus();});
    		$(".zoom").click(function(){
-   			if ($(".input input").val()=="" || $(".input input").val()==null || $(".input input").val()== undefined) {
-   				alert("昵称不能为空哦~")
+   		  var nickname=  $("#txt_nickname").val();
+   			if (nickname&&nickname!="") {
+		        var formdata = new FormData();
+		        formdata.append("id", window.user.id);
+		        formdata.append("nickname", nickname);
+		        $.ajax({
+		        	type: 'POST',
+		            url: ER.root+"/i/user/updateUser",
+		            data: formdata,processData: false, contentType: false,
+		            success: function(data){
+		                 if(!data){alert("修改失败哟~请稍后重试~");}else{
+		                   window.location.href="personal.html";
+		                 } }
+		          });
    			} else{
-   				window.location.href='personal.html'
+   				alert("昵称不能为空哦~");
    			}
-   		})
-   		
-   	})
+   		});
+   	});
    </script>
 </body>
 </html>

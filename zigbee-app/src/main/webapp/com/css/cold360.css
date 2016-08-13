@@ -2,67 +2,8 @@
  * administrator:jinghiayang
  * date:2016.7.14
  */
-header{
-	width: 100%;
-	height: 2.2rem;
-	background-color: #438BCB;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 9999;
-	padding:0.3rem 0.9rem;
-	box-sizing:border-box;
-	text-align: center;
-	color: #fff;
-	line-height: 1.6rem;
-}
-header>div>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	color: #fff;
-	line-height: 1.6rem;
-	font-size: 1rem;
-}
-header>div>a>.iconfont{
-	font-size: 1rem;
-}
-.txt{
-	height: 100%;
-	margin:0 1rem;
-}
-.footer{
-	width: 100%;
-	height: 2.45rem;
-	background: rgba(255,255,255,.9);
-	font-size: 0.5rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 9999;
-	border-top: 1px solid #ccc;
-}
-.footer>li{
-	float: left;
-	width: 25%;
-	height: 100%;
-	text-align: center;
-	vertical-align: middle;
-}
-.footer>li>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	color: #898989;
-	padding-top: 0.2rem;
-	box-sizing: border-box;
-}
-.footer>.active>a{
-	color: #428BCA;
-}
-.footer i{
-	font-size: 1.2rem;
+body{
+	background-color: #eee;
 }
 .info{
 	font-size: 0.6rem;
@@ -86,7 +27,7 @@ section{
 	background-color: #fff;
 	margin-bottom: 0.5rem;
 	margin-top:2.2rem;
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 	text-align: center;
 	width: 100%;
 	display: table;
@@ -100,8 +41,8 @@ section{
 	line-height: 2rem;
 	border-bottom: 3px solid #BDBDBD;
 }
-.toggle>i{
-	font-size: 0.8rem;
+.toggle>div>i{
+	font-size: 0.9rem;
 	margin: 0.1rem 0.2rem 0;
 }
 .tempture>i{
@@ -162,8 +103,8 @@ section{
 	background-color: #fff;
 	padding: 0.2rem 0.9rem;
 	box-sizing: border-box;
-	min-height: 22rem;
-	margin-bottom: 3rem;
+	min-height: 18rem;
+	margin-bottom: 2.5rem;
 }
 .swiper-container {
     width: 100%;
@@ -201,7 +142,7 @@ section{
 }
 .temperaturenum{
 	padding:0.2rem 0.8rem;
-	margin: 0.3rem 0 1rem;
+	/*margin: 0.3rem 0 1rem;*/
 	text-align: left;	
 	color: #EC594A;
 	font-size: 2rem;
@@ -225,23 +166,28 @@ section{
 	position: absolute;
 	top: 48%;
 	left: 0.5rem;
+	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
 .inner>li>a{
 	color: #333;
-	font-size: 0.7rem;
+	font-size: 0.75rem;
 	text-indent: 1.2rem;
 	position: relative;
 }
-/*.triangle{
-	display: inline-block;
-	border:0.2rem solid #999;
-	border-left-color:transparent ;
-	border-bottom-color:transparent ;
-	-webkit-transform: rotate(135deg);
-	transform: rotate(135deg);
-	vertical-align: super;
+.footer li a{
 	position: relative;
-	top:0.1rem;
-	left: 0.1rem;	
-}*/
+}
+.countNum{
+	position: absolute;
+	width:0.8rem;
+	height: 0.8rem;
+	border-radius: 50%;
+	top: 0.1rem;
+	right: 1rem;
+	background-color: #f40;
+	font-size: 0.5rem;
+	color: #fff;
+	text-align: center;
+	line-height: 0.8rem;
+}

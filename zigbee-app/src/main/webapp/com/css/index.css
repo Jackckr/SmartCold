@@ -4,6 +4,9 @@
 * @Last Modified by:   wellsea
 * @Last Modified time: 2016-08-04 11:57:20
 */
+html{
+	font-size: 20px;
+}
 .header{
 	width: 100%;
 	height: 2.2rem;
@@ -29,7 +32,7 @@
 	display: inline-block;
     height: 100%;
     line-height: 1.9rem;
-    text-align: center;
+    text-align: right;
     width: 1.5rem;
 }
 .barCode i{
@@ -89,6 +92,7 @@
 	box-sizing: border-box;
 	z-index: 0;
 	font-size: 0.7rem;
+    line-height: 1.6rem;
 }
 .search i{
 	font-size: 0.8rem;
@@ -100,42 +104,6 @@
 	right: 0.5rem;
 	z-index: 1;
 	background-size: cover;
-}
-.footer{
-	width: 100%;
-	height: 2.45rem;
-	background: rgba(255,255,255,.9);
-	font-size: 0.5rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 9999;
-	border-top: 1px solid #ccc;
-}
-.footer>li{
-	float: left;
-	width: 25%;
-	height: 100%;
-	text-align: center;http://127.0.0.1:8020/lianku-mweb/img/banner3.jpg
-	vertical-align: middle;
-}
-.footer>li>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	color: #898989;
-	padding: 0.15rem 0 0.4rem;
-	box-sizing: border-box;
-}
-.footer>.active>a{
-	color: #428BCA;
-}
-.footer i{
-	font-size: 1.2rem;
-}
-.info{
-	font-size: 0.6rem;
 }
 .section{
 	margin-top: 2.2rem;
@@ -265,7 +233,7 @@
 .grid_kid .info{
 	margin-top: 0.5rem;
 	color: #222;
-	font-size: 1rem;
+	font-size: 0.9rem;
 }
 .grid_kid:nth-child(3),.grid_kid:nth-child(4){
 	border-bottom:0;	
@@ -282,6 +250,9 @@
 }
 .grid_kid:nth-child(3) i{
 	color:#F39826;
+}
+.grid_kid:nth-child(4) i{
+	color:#0CB78A;
 }
 /*图文列表*/
 .coldlist{
@@ -370,7 +341,7 @@
 ._citys { width: 100%; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative; box-sizing: border-box;}
 ._citys span { color: #56b4f8; height: 1rem; width: 1rem; font-size:0.8rem; line-height: 0.95rem; text-align: center; border-radius: 3px; position: absolute; right: 0.9rem; top: 0.5rem; border: 1px solid #56b4f8; cursor: pointer; }
 ._citys0 { width: 100%; height: 1.5rem; display: inline-block; border-bottom: 0.1rem solid #56b4f8; padding: 0; margin: 0;}
-._citys0 li { display: inline-block; line-height: 1.5rem; font-size: 0.7rem; color: #888; width: 4rem;text-align: center; cursor: pointer; }
+._citys0 li { display: inline-block; line-height: 1.6rem; font-size: 0.7rem; color: #888; width: 4rem;text-align: center; cursor: pointer; }
 .citySel { background-color: #56b4f8; color: #fff !important; }
 ._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
 ._citys1 a { width: 4rem; height: 1.5rem; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 0.5rem; margin-top: 0.4rem; line-height: 1.5rem; text-align: center; cursor: pointer; font-size:0.7rem; overflow: hidden; 
@@ -378,4 +349,3 @@
 	text-overflow: ellipsis;}
 ._citys1 a:hover { color: #fff; background-color: #56b4f8; }
 .AreaS { background-color: #56b4f8 !important; color: #fff !important; }
-

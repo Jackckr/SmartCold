@@ -42,6 +42,7 @@ coldWeb.config(function ($httpProvider) {
     });
 });
 
+
 coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	return {
 		setUser: function(user){
@@ -52,7 +53,7 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	        };
 	        $rootScope.gotoSmartCold = function(){
 	        	cookies = document.cookie.split(";");
-	        	url = "http://www.smartcold.net";
+	        	url = "http://www.smartcold.org.cn";
 	        	angular.forEach(cookies,function(item){
 	        		item = item.trim();
 	        		if(item.startsWith("token=")){	        			
@@ -302,6 +303,23 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/personalOrder',
         controller: 'personalOrder',
         templateUrl: 'app/template/personalOrder.html'
+    }).state('personalDetail', {
+        url: '/personalDetail',
+        controller: 'personalDetail',
+        templateUrl: 'app/template/personalDetail.html'
+    }).state('personalComment', {
+        url: '/personalComment',
+        controller: 'personalComment',
+        templateUrl: 'app/template/personalComment.html'
+    }).state('personalShare', {
+        url: '/personalShare',
+        controller: 'personalShare',
+        templateUrl: 'app/template/personalShare.html'
+    }).state('orderGenerate', {
+        url: '/orderGenerate',
+        params:{data:null},
+        controller: 'orderGenerate',
+        templateUrl: 'app/template/order.html'
     }).state('coldStorageAuth', {
         url: '/coldStorageAuth/:rdcID',
         controller: 'coldStorageAuth',

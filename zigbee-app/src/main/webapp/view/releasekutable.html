@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>发布库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
     <script type="text/javascript" src="../com/js/prettify.js" ></script>
-<!--     <script type="text/javascript"></script> -->
 </head>
 <body ng-app="app">
     <!-- header -->
@@ -35,7 +35,7 @@
                     <input type="text" ng-model="name" ng-disabled="editable" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET">
-                            <em ng-show="rdcForm.name.$error.ngRemoteValidate">冷库名已经被注册</em>
+                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;">冷库名已被用</em>
                 </li>
                 <li>
                     <label for="province">省<em>*</em></label>
@@ -220,12 +220,12 @@
                     </div>
                 </li>
                  <li>
-                    <label>资质荣誉图：</label>
+                    <label>资质荣誉图：<small class="text-warning">*最多八张</small></label>
                     <div class="mySelect">
                         <div>
                             <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
                                        ngf-multiple="true" name="honorfiles">
-                             <small class="text-warning fr" style="width: 100px">*最多八张</small>
+                             
                         </div>
                     </div>                  
                 </li>
@@ -243,12 +243,12 @@
                     </div>
                 </li>
                 <li>
-                    <label>冷库图片：</label>
+                    <label>冷库图片：<small class="text-warning">*最多五张</small></label>
                        <div class="mySelect">
                            <div>
                                 <input type="file" ngf-select="addFiles($files)" ng-model="files"
                                            ngf-multiple="true" name="files">
-                                 <small class="text-warning fr" style="width: 100px">*最多五张</small>
+                                 
                             </div>
                        </div>
                 </li>
@@ -272,21 +272,27 @@
                 <p class="info">首页</p>
             </a>
         </li>
-        <li class="active">            
-            <a href="release.html">
-                <i class="iconfont">&#xe666;</i>
-                <p class="info">发布</p>
-            </a>
-        </li>
         <li>          
              <a href="news.html">
                 <i class="iconfont">&#xe6f8;</i>
                 <p class="info">资讯</p> 
             </a>
         </li>
+        <li class="active">            
+            <a href="release.html">
+                <i class="iconfont">&#xe6ff;</i>
+                <p class="info">发布</p>
+            </a>
+        </li>
+        <li>          
+            <a href="review.html">
+                <i class="iconfont">&#xe642;</i>
+                <p class="info">追溯</p>
+            </a>
+        </li>
         <li>            
             <a href="user.html">
-                <i class="iconfont">&#xe65e;</i>
+                <i class="iconfont">&#xe6fd;</i>
                 <p class="info">我的</p>
             </a>
         </li>

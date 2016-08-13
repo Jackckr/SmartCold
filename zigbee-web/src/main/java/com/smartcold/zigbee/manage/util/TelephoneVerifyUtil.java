@@ -27,22 +27,6 @@ public class TelephoneVerifyUtil {
 		 * DefaultTaobaoClient("http://gw.api.tbsandbox.com/router/rest",
 		 * "23403710", "bc0977e92f79fa23c1d5f1cc28ef8953");
 		 */
-		public String verifyMessage(String telephone) throws ApiException {
-			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-			req.setExtend("123456");
-			req.setSmsType("normal");
-			req.setSmsFreeSignName("链库网");
-			String code = generateCode();
-			// System.out.println("{\"code\":\"123\"}");
-			 System.out.println("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
-			req.setSmsParamString("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
-			req.setRecNum(telephone);
-			//req.setSmsTemplateCode("SMS_12145753"); //【链库网】验证码3GZ9，您正在进行链库身份验证，打死不要告诉别人哦！
-			req.setSmsTemplateCode("SMS_12145749");//【链库网】验证码Q6C4，您正在注册成为lianku用户，感谢您的支持！
-			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-			System.out.println(rsp.getBody());
-			return code;
-		}
 		
 		public String identityVerify(String telephone) throws ApiException {
 			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
@@ -75,6 +59,47 @@ public class TelephoneVerifyUtil {
 			System.out.println(rsp.getBody());
 			return code;
 		}
+		
+		/**
+		 * 
+		 * @param userTele
+		 * @param username
+		 * @param ownerTele
+		 * @param ownername
+		 * @throws ApiException
+		 */
+		public void callUser(String userTele,String username,String ownerTele,String ownername) throws ApiException {
+			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+			req.setExtend("123456");
+			req.setSmsType("normal");
+			req.setSmsFreeSignName("链库网");
+			req.setSmsParamString("{\"name\":" + "\"" + ownername + "\"" +",\"telephone\":" + "\"" + ownerTele+ "\"}");
+			req.setRecNum(userTele);
+			req.setSmsTemplateCode("SMS_12461024");//买家模板内容：您已经抢到来自${name}的订单，手机号为${telephone}，请及时联系。
+			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+			System.out.println(rsp.getBody());
+		}
+		
+		/**
+		 * 
+		 * @param userTele
+		 * @param username
+		 * @param ownerTele
+		 * @param ownername
+		 * @throws ApiException
+		 */
+		public void callOwner(String userTele,String username,String ownerTele,String ownername) throws ApiException {
+			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+			req.setExtend("123456");
+			req.setSmsType("normal");
+			req.setSmsFreeSignName("链库网");
+			req.setSmsParamString("{\"name\":" + "\"" + username + "\"" +",\"telephone\":" + "\"" + userTele+ "\"}");
+			req.setRecNum(ownerTele);
+			req.setSmsTemplateCode("SMS_12496126");//卖家：　您的订单已经被${name}抢到，手机号为${telephone}，请及时联系。
+			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+			System.out.println(rsp.getBody());
+		}
+		
 		
 		public String generateCode() {
 			String[] beforeShuffle = new String[] { "2", "3", "4", "5", "6", "7",

@@ -120,10 +120,16 @@ section{
 	background-color:#438BCB;
 	color: #fff;
 }
+.footer>.active{
+	background: #fff;
+}
 /*图文列表*/
 .coldlist{
 	background-color: #fff;
 }
+.two{
+	display: none;
+}	
 .gpy{
 	display: inline-block;
 	width:0.45rem;
@@ -181,6 +187,8 @@ section{
 .imgCell a>img+div{
 	font-size: 0.5rem;
 	text-indent: 0.25rem;
+	padding-left: 3.6rem;
+	box-sizing: border-box;
 }
 .grab{
 	width: 4rem;
@@ -209,7 +217,7 @@ section{
 	padding: 0.3rem 0.9rem;
 	text-align: center;
 	box-sizing: border-box;
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.3rem;
 }
 .rent .btn{
 	background-color: #438BCB;
@@ -287,6 +295,7 @@ section{
 	font-size: 0.7rem;
 	color: #666;	
 	margin-bottom: 0.5rem;
+	/*border-bottom: 1px dotted #ddd;*/
 }
 .text{
 	color: #999;
@@ -341,6 +350,20 @@ section{
 	0%{top: -0.2rem;}
 	50%{top:0.3rem;}
 	100%{top: -0.2rem;}
+}
+.nextList li{
+	display: table;
+}
+.nextList li .type{
+	display: table-cell;
+	text-indent: 0;
+}
+.nextList li .compare{
+	width: 3.5rem;
+}
+.nextList li .numl{
+	width: 3rem;
+	color: #438BCB;
 }
 .more{
 	margin-top: .4rem;
@@ -554,6 +577,7 @@ section{
 	text-align: center;
 	font-size: 0.8rem;
 	display: none;
+	margin-top: 3rem;
 }
 .nodata img{
 	margin: 2rem auto;
@@ -561,3 +585,8 @@ section{
 	height: 6.5rem;
 }
 .gray{background-color: #ccc;}
+.codeMain{
+	width: 100%;
+	height: 29rem;
+	padding: 0;
+}

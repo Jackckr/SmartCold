@@ -31,6 +31,8 @@ public class CommentDTO {
 
 	private float sanitaryGrade;
 	
+	private String avatar="app/img/userimg.jpg";//用户头像->add
+	
 	private List<FileDataEntity> reviewPics;
 
 	private int usefulcnt;
@@ -138,4 +140,13 @@ public class CommentDTO {
 	public void setUsefulcnt(int usefulcnt) {
 		this.usefulcnt = usefulcnt;
 	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	
 }

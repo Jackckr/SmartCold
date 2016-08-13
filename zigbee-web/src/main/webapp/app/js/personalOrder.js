@@ -19,11 +19,12 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
     	$http.get('/i/orders/findOrdersByUserId', {
             params: {
                 "userID": $rootScope.user.id,
+                keyword:$scope.keyword,
                 pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize
             }
         }).success(function (data) {
-        	$scope.orders = data.data;
+        	$scope.ordersDto = data.data;
         	$scope.bigTotalItems = data.total;
         });
 	}
@@ -32,5 +33,29 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
 	}
 	$scope.getOrders();
 	
+	
+	 $scope.goSearch = function () {
+		 $scope.getOrders();
+	    }
+	$scope.goShowOrder = function (orderdto) {
+        $state.go('orderGenerate', {"data": orderdto});
+}
+	
+	
+	$scope.goDeleteOrder = function(orderID){
+    	var r=confirm("删除订单？");
+    	if(r){
+    		$http({
+    			method:'DELETE',
+    			url:'/i/orders/deleteByOrderID',
+    			params:{
+    				'orderID':orderID
+    			}
+    		}).success(function (data) {
+				alert("删除成功");
+				$state.reload(); 
+        });
+    	}
+    }
 });
 

@@ -23,10 +23,18 @@ public class CommonServiceImpl implements CommonService {
 	public List<Map<String, Object>> getCommData(String codetype) {
 		return this.commonMapper.getCommData(codetype);
 	}
+	@Override
+	public List<Map<String, Object>> getCommDataByID(Integer type_code,String codetype) {
+		return this.commonMapper.getCommDataByID(type_code, codetype);
+	}
 	
 	@Override
 	public List<Map<String, Object>> getBaseData(String table, String code,String value) {
 		return this.commonMapper.getBaseData(table, code, value);
+	}
+	@Override
+	public List<Map<String, Object>> getBaseData(String table, String code,String value, Integer id) {
+		return this.commonMapper.getBaseDataByID(table, code, value, id);
 	}
 
 

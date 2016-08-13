@@ -3,6 +3,8 @@ package com.smartcold.zigbee.manage.dao;
 
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.github.pagehelper.Page;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 
@@ -13,13 +15,19 @@ import com.smartcold.zigbee.manage.dto.RdcShareDTO;
  */
 public interface RdcShareMapper {
 	
+	
 	/**
 	 * 获得共享详情
 	 * @param id
 	 * @return
 	 */
 	public RdcShareDTO getSEByID(String id);
-	
+	/**
+	 * 删除用户发布的信息
+	 * @param id
+	 * @param uid
+	 */
+	public void delShareInfoByid(@Param("id")int id,@Param("uid")int uid);
    /**
     * 发布消息
     * @param rdcShareDTO

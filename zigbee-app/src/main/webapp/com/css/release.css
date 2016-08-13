@@ -2,72 +2,6 @@
  * administrator:jinghiayang
  * date:2016.7.14
  */
-header{
-	width: 100%;
-	height: 2.2rem;
-	background-color: #438BCB;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 9999;
-	padding:0.3rem 0.9rem;
-	box-sizing:border-box;
-	text-align: center;
-	color: #fff;
-	line-height: 1.6rem;
-}
-header>div>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	color: #fff;
-	line-height: 1.6rem;
-	font-size: 1rem;
-}
-header>div>a>.iconfont{
-	font-size: 1rem;
-}
-.txt{
-	height: 100%;
-	margin:0 1rem;
-}
-.footer{
-	width: 100%;
-	height: 2.45rem;
-	background: rgba(255,255,255,.9);
-	font-size: 0.5rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 9999;
-	border-top: 1px solid #ccc;
-}
-.footer>li{
-	float: left;
-	width: 25%;
-	height: 100%;
-	text-align: center;
-	vertical-align: middle;
-}
-.footer>li>a{
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	color: #898989;
-	padding: 0.15rem 0 0.4rem;
-	box-sizing: border-box;
-}
-.footer>.active>a{
-	color: #428BCA;
-}
-.footer i{
-	font-size: 1.2rem;
-}
-.info{
-	/*line-height: 1rem;*/
-	font-size: 0.6rem;
-}
 section{
 	margin: 2.5rem 0 0.1rem;
 	height: 2rem;
@@ -215,6 +149,9 @@ section{
 	font-size: 0.75rem;
 	width: 100%;
 }
+.houseinfo>li:first-child input{
+	width:85%;
+}
 .houseinfo>li label{
 	display: inline-block;
 	color: #999;
@@ -223,21 +160,25 @@ section{
 	min-width: 60%;
 	height: 100%;
 	display: inline-block;
-	overflow: hidden;
+	/* overflow: hidden; */
 	border: 1px solid transparent;
 	vertical-align: middle;
 	/* height: 2rem; */
     line-height: 2rem;
 }
 .mySelect textarea{
-	width:99%;
+	width:120%;
 	height:2.5rem;
 	vertical-align:middle;
 	border:1px solid #ccc;
 	resize:none;
 }
+body{
+	overflow-x:hidden;
+	width:100%;
+}
 .houseinfo>li select{
-	width: 120%;
+	width:150%;
 	height: 100%;
 	font-size: 0.75rem;
 	color: #555;
@@ -250,7 +191,7 @@ section{
 	appearance:none;
 	border:none;
 	display:block;
-	background-color: #FFFFFF;
+	background-color: transparent
 }
 .houseinfo>li>input[type='text'],.houseinfo>li>input[type='date']{
 	text-indent: 10px;
@@ -259,6 +200,7 @@ section{
 	min-width: 60%;
 	font-size: 0.75rem;
 	color: #555;
+    line-height: 2rem;
 }
 .houseinfo>li .bg{
 	position: relative;
@@ -288,6 +230,7 @@ input[type='radio']:checked:after{
 	position: absolute;
 	top: 50%;
 	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
 	transform: translate(-50%,-50%);
 	width: 70%;
 	height: 70%;
@@ -526,6 +469,9 @@ form+.mybtn,.next+.mybtn{
 	padding: 0.5rem 0.9rem;
 	box-sizing: border-box;
 }
+.radiocar button{
+	width:90%;
+}
 .radiocar input{
 	width: 0.8rem;
 	height: 0.8rem;
@@ -569,4 +515,8 @@ em{
 	line-height: 1.5rem;
 	list-style: circle;
 	font-size: 0.8rem;
+}
+.text-warning{
+	font-size:0.6rem;
+	color:#8a6d3b;
 }

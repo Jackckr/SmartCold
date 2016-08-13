@@ -1,11 +1,10 @@
  var app = angular.module('app', []);
  app.controller('storehousedetail', function($http, $location,$scope) {
-    var id  = getUrlParam("id");
+   var key="order", id  = getUrlParam("id");
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
 	$scope.initdata=function(){
-       //获得数据
-		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) {
+		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
 			if(data.success){
 				   $scope.vo=data.entity; 
 		    	   $scope.datatype=data.entity.dataType;
@@ -19,9 +18,9 @@
 		var length = ($scope.telephone+'').length; 
 		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
 		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
-		if(!ct){alert("请输入正确的手机号码！");return;}//需要手机验证
+		if(!ct){alert("请输入正确的手机号码哟~");return;}//需要手机验证
 		setTime(document.getElementById("but_vercode"));
-		$http.get(ER.root+"/i/ShareRdcController/sharvistPhone.json",  { params: {dataid:id,telephone: $scope.telephone}  }).success(function(data) {
+		$http.get(ER.root+"/i/ShareRdcController/sharvistPhone.json",  { params: {key:key,dataid:id,telephone: $scope.telephone}  }).success(function(data) {
 			if(data.success){
 				$scope.mtvarcode=data.entity;//
 				$("#but_vercode").data('vc', true);
@@ -42,7 +41,7 @@
 			$("#app_order").attr("disabled",!ct);
 			if(ct){$("#app_order").removeClass("gray");}else{$("#app_order").addClass("gray");}
 		}else{
-			$http.get(ER.root+"/i/ShareRdcController/sharvistCode",  { params: { dataid:id, telephone:$scope.telephone, yzm:$scope.verrcode}  }).success(function(data) {
+			$http.get(ER.root+"/i/ShareRdcController/sharvistCode",  { params: {key:key, dataid:id, telephone:$scope.telephone, yzm:$scope.verrcode}  }).success(function(data) {
 				if(data){
 					$("#app_order").attr("disabled",false);
 					$("#app_order").removeClass("gray");

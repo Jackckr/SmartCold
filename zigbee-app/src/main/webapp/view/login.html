@@ -6,11 +6,16 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta content="telephone=no" name="format-detection" />
-    <title>登陆</title>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title>登录</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/login.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript">$.ajax({type:"GET",cache:false,async:false,dataType:"json",url:ER.root+"/i/user/findUser",success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
+    
 </head>
 <body>
     <div class="login">
@@ -25,17 +30,16 @@
 		 <div class="warnInfo">
 		    <a hidden=true id="mention"></a>
 	     </div>
-		<button id="btn_login" class="mybtn" type="button" onclick="login();">登陆</button>
+		<button id="btn_login" class="mybtn" type="button" onclick="login();">登录</button>
 		<div class="register">
-			<div><a href="findpasswordfir.html">找回密码</a></div>
-			<div><a href="register.html">新用户注册</a></div>
+			<div class="fl"><a href="findpasswordfir.html">找回密码</a></div>
+			<div class="fr"><a href="register.html">新用户注册</a></div>
 		</div>
-	
     </div>
 	<footer>
 		<div class="line"><span>或</span></div>
 		<div class="three">
-			<div><a href="javascript:;"><i class="iconfont">&#xe6bd;</i></a></div>
+			<div><a href="javascript:;"><i class="iconfont">&#xe707;</i></a></div>
 			<div><a href="javascript:;"><i class="iconfont">&#xe6bf;</i></a></div>
 			<div><a href="javascript:;"><i class="iconfont">&#xe6c0;</i></a></div>
 		</div>
@@ -43,16 +47,6 @@
 	<script  type="text/javascript">
 	if(!navigator.cookieEnabled){ alert("请打开手机Cookie");}
 	$("#username").val(util.getCookie("username"));
-	function showErrorInfo(msg) {
-	    var msgEl = $("#mention");
-	    if (msg == null || msg == '') {
-	        msgEl.hide();
-	        msgEl.html('');
-	    } else {
-	        msgEl.show();
-	        msgEl.html(msg);
-	    }
-	}
 	function login() {
 	    var me = "#btn_login";
 	    if ($(me).data('isLoading') === true) return; //防止再次点击登录
@@ -60,10 +54,10 @@
 	    userName = $("#username").val();
 	    password = $("#password").val();
 	    if (userName == '') {
-	        showErrorInfo("用户名不能为空！");
+	        showErrorInfo("用户名不能为空~");
 	        return;
 	    } else if (password == '') {
-	        showErrorInfo("密码不能为空！");
+	        showErrorInfo("密码不能为空~");
 	        return;
 	    }
 	    $(me).text("登录中...");
@@ -91,7 +85,6 @@
 					}
 				}
 			});
-	    
 	};
 </script>
 </body>
