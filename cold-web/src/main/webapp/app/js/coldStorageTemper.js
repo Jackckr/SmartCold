@@ -14,7 +14,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             	"startTime": startTime.toISOString().replace("T", " ").replace(/\..*/,""),
             	"endTime": endTime.toISOString().replace("T", " ").replace(/\..*/,""),
                 "oid": $stateParams.storageID,
-                'key':'temperature'
+                'key':'Temp'
             }
         }).success(function (result) {
         	var list = result.list

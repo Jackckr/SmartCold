@@ -34,6 +34,7 @@ public class StorageKeysController {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("type", sy.getType());
             jsonObject.addProperty("desc", sy.getDesc());
+            jsonObject.addProperty("table", sy.getTable());
             jsonArray.add(jsonObject);
         }
         return jsonArray;

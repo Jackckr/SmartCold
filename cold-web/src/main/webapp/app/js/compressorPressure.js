@@ -9,7 +9,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
             params: {
                 "oid": $stateParams.compressorID,
                 type:3,
-                key:'powerConsume'
+                key:'Current'
             }
         }).success(function (result) {
             for (var i = 0; i < result.length; i++) {
