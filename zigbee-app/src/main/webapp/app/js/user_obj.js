@@ -1,9 +1,9 @@
-var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ] ,["colddetail.html?id=","releasedetail.html?id=","orderdetail.html?id="]];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ,"确定要删除该评价吗？"] ,["colddetail.html?id=","releasedetail.html?id=","orderdetail.html?id="]];
 var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
 		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
-		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ]  //2:我的订单 3：我的点评
-		
+		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ] , //2:我的订单
+		[ "orderdetail.html?id=", "/i/comment/deleteByCommentID","/i/comment/findCommentsByUserId" ]  // 3：我的点评
 		];										
 var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
 var editinfo = function(id) {
@@ -14,15 +14,10 @@ var detailinfo = function(id) {
 };
 var delrdc = function(id, em) {
 	if (confirm(mode[1][type])) {
-		var data = {
-			"rdcID" : id,
-			"orderID" : id,
-			id : id,
-			uid : window.user.id
-		};
+		var data = {"rdcID" : id,"orderID" : id,id:id,commentID:id,uid : window.user.id};
 		$.ajax({
 			url : ER.root + urlset[type][1],
-			type : "post",
+			type : "post",//DELETE
 			data : data,
 			success : function(data) {
 				if (data.status == 0 || data.success) {
@@ -76,7 +71,7 @@ var gethtml = function(obj) {
 				"</p></div><p class='btnGroup'><button onclick='editinfo(", obj.id,
 				")'>修改</button><button onclick='delrdc(", obj.id,
 				",this);'>删除</button></p></li>" ].join("");
-	default:
+	
 	case 2:
 		return ["<li class='clearfix'><div  onclick='detailinfo("+ obj.orders.id+")' class='clearfix'><div class='img fl' ><img src='"
 				, obj.logo
@@ -89,16 +84,22 @@ var gethtml = function(obj) {
 				, ")'>查看</button><button onclick='delrdc("
 				, obj.orders.id + ",this);'>删除</button></p></li>"].join("");
 		break;
+	case 3:
+		return ["<li class='clearfix'><div class='clearfix'><div class='img fl' ><img src='"
+		        , obj.commentdto.avatar
+		        , "'/></div><p class='company'>名称："
+		        , obj.rdcname
+		        , "</p><p class='position'>点评内容："
+		        , obj.commentdto.content
+		        , "</p></div><p class='btnGroup'><button onclick='delrdc("
+		        , obj.commentdto.id + ",this);'>删除</button></p></li>"].join("");
+		break;
+	default:break;
 	}
-
 };
 var getPageData = function() {// 启用无限加载
 	isLoadRB = true;//
-	var _filter = {
-		pageNum : currentPage,
-		pageSize : maxSize,
-		userID : window.user.id
-	};
+	var _filter = {pageNum : currentPage,pageSize : maxSize,userID : window.user.id};
 	$.get(ER.root + urlset[type][2], _filter, function(data) {
 		if (data.success && data.data.length > 0) {
 			totalPages = data.totalPages;
