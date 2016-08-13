@@ -10,9 +10,9 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
     }
     $scope.load();
 	 // 显示最大页数
-    $scope.maxSize = 12;
+    $scope.maxSize = 10;
     // 总条目数(默认每页十条)
-    $scope.bigTotalItems = 12;
+    $scope.bigTotalItems = 0;
     // 当前页
     $scope.bigCurrentPage = 1;
     

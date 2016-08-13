@@ -10,7 +10,32 @@
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript">checkLogin();</script>
+    <script type="text/javascript">
+     function initdata(){
+      	$("#txt_nickname").val(window.user.nickname);
+   		$('.deleteEdit').click(function(){$(".input input").val("").focus();});
+   		$(".zoom").click(function(){
+   		  var nickname=  $("#txt_nickname").val();
+   			if (nickname&&nickname!="") {
+		        var formdata = new FormData();
+		        formdata.append("id", window.user.id);
+		        formdata.append("nickname", nickname);
+		        $.ajax({
+		        	type: 'POST',
+		            url: ER.root+"/i/user/updateUser",
+		            data: formdata,processData: false, contentType: false,
+		            success: function(data){
+		                 if(!data){alert("修改失败哟~请稍后重试~");}else{
+		                   window.location.href="personal.html";
+		                 }}
+		          });
+   			} else{
+   				alert("昵称不能为空哦~");
+   			}
+   		});
+   	}
+   	checkLogin(null,initdata);
+    </script>
 </head>
 <body>
     <header>
@@ -31,30 +56,5 @@
     		<i class="deleteEdit">&times;</i>
     	</div>
     </section>
-   <script>
-   	$(function(){
-      	$("#txt_nickname").val(window.user.nickname);
-   		$('.deleteEdit').click(function(){$(".input input").val("").focus();});
-   		$(".zoom").click(function(){
-   		  var nickname=  $("#txt_nickname").val();
-   			if (nickname&&nickname!="") {
-		        var formdata = new FormData();
-		        formdata.append("id", window.user.id);
-		        formdata.append("nickname", nickname);
-		        $.ajax({
-		        	type: 'POST',
-		            url: ER.root+"/i/user/updateUser",
-		            data: formdata,processData: false, contentType: false,
-		            success: function(data){
-		                 if(!data){alert("修改失败哟~请稍后重试~");}else{
-		                   window.location.href="personal.html";
-		                 } }
-		          });
-   			} else{
-   				alert("昵称不能为空哦~");
-   			}
-   		});
-   	});
-   </script>
 </body>
 </html>
