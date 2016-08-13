@@ -1,9 +1,10 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.enums.StorageType;
+import com.smartcold.manage.cold.service.CompressorGroupService;
+import com.smartcold.manage.cold.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
-import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
-import com.smartcold.manage.cold.enums.StorageType;
-import com.smartcold.manage.cold.service.CompressorGroupService;
-import com.smartcold.manage.cold.service.StorageService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 15:05)
@@ -59,7 +58,7 @@ public class CompressorGroupController {
 		return result;
 	}
 	
-	@RequestMapping("/findCompressorByNums")
+	/*@RequestMapping("/findCompressorByNums")
 	public Object findCompressorByNums(int compressorID,
 			@RequestParam(value="nums",defaultValue="1")Integer nums){
 		Map<String, List<StorageKeyValue>> result = new HashMap<String, List<StorageKeyValue>>();
@@ -71,5 +70,5 @@ public class CompressorGroupController {
 		result.put("compressor5",storageService.findByNums(stype, compressorID, "Compressor5", nums));
 		result.put("compressor6",storageService.findByNums(stype, compressorID, "Compressor6", nums));
 		return result;
-	}
+	}*/
 }
