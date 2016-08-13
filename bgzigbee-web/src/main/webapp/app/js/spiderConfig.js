@@ -2,8 +2,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.load = function(){
 		$scope.vm = {}
-		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."}
-		$scope.storageEntity = {}
+		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."};
+		$scope.storageEntity = {};
 		$scope.doorEntity = {}
 		$scope.blowerEntity = {}
 		$scope.compressGroupEntity = {}
