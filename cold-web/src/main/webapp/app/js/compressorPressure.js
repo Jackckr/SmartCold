@@ -33,9 +33,9 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
 			$scope.pressMonitor(result);
 		})
 		
-		$http.get("/i/compressorGroup/findCompressorByNums",{
+		$http.get("/i/compressor/findLoad",{
         	params: {
-		        "compressorID": $stateParams.compressorID
+		        "groupId": $stateParams.compressorID
 		    }
 		}).success(function (result) {
 			$scope.runMonitor(result);
@@ -240,7 +240,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         pressureChart.setOption(pressureOption);
     }
     $scope.getArrValue = function(arr){
-    	if(arr.length<1)
+    	if(!arr || arr.length<1)
     		return -1;
     	return arr[0].value;
     }
