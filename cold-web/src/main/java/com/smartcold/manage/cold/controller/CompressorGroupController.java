@@ -49,9 +49,9 @@ public class CompressorGroupController {
 	@RequestMapping("/findPressByNums")
 	public Object findPressByNums(int compressorID,String key,
 			@RequestParam(value="nums",defaultValue="2")Integer nums){
-		List<StorageKeyValue> lowPress = storageService.findByNums(StorageType.COMPRESSOR, 
+		List<StorageKeyValue> lowPress = storageService.findByNums(StorageType.COMPRESSORGROUP,
 				compressorID, "lowPress", nums);
-		List<StorageKeyValue> highPress = storageService.findByNums(StorageType.COMPRESSOR, 
+		List<StorageKeyValue> highPress = storageService.findByNums(StorageType.COMPRESSORGROUP,
 				compressorID, "highPress", nums);
 		Map result = new HashMap<String, List<StorageKeyValue>>(2);
 		result.put("lowPress", lowPress);
@@ -63,7 +63,7 @@ public class CompressorGroupController {
 	public Object findCompressorByNums(int compressorID,
 			@RequestParam(value="nums",defaultValue="1")Integer nums){
 		Map<String, List<StorageKeyValue>> result = new HashMap<String, List<StorageKeyValue>>();
-		StorageType stype = StorageType.COMPRESSOR;
+		StorageType stype = StorageType.COMPRESSORGROUP;
 		result.put("compressor1",storageService.findByNums(stype, compressorID, "Compressor1", nums));
 		result.put("compressor2",storageService.findByNums(stype, compressorID, "Compressor2", nums));
 		result.put("compressor3",storageService.findByNums(stype, compressorID, "Compressor3", nums));
