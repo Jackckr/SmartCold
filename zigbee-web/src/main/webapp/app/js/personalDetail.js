@@ -9,22 +9,25 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 			}
 	    })
 		//});
+	    $scope.oldTele = $scope.user.telephone;
+		    $scope.verifycode = '';
+		    $scope.oldPwd = '';
+		    $scope.newPwd1 = '';
+		    $scope.newPwd2 = '';
+		    
+		    $scope.avatar = $scope.user.avatar;
+		    $scope.telephone = $scope.user.telephone;
+		    $scope.realname = $scope.user.realname;
+		    $scope.sex = $scope.user.sex;
+		    $scope.hometownid = $scope.user.hometownid;
+		    $scope.addressid = $scope.user.addressid;
+		    $scope.email =$scope.user.email;
+		    if($scope.email=="undefined")
+		    	$scope.email = "username@email.com";
+		    $scope.nickname = $scope.user.nickname;
     }
     $scope.load();
-    $scope.oldTele = $scope.user.telephone;
-    $scope.verifycode = '';
-    $scope.oldPwd = '';
-    $scope.newPwd1 = '';
-    $scope.newPwd2 = '';
-    
-    $scope.avatar = $scope.user.avatar;
-    $scope.telephone = $scope.user.telephone;
-    $scope.realname = $scope.user.realname;
-    $scope.sex = $scope.user.sex;
-    $scope.hometownid = $scope.user.hometownid;
-    $scope.addressid = $scope.user.addressid;
-    $scope.email =$scope.user.email;
-    $scope.nickname = $scope.user.nickname;
+   
     // 获取省列表
     $http.get('/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
@@ -71,7 +74,11 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 							else
 								OldPwdflag = res2;
 							if (verifyCodeflag) {
-									if (OldPwdflag) {
+									if (OldPwdflag){ 
+										if($scope.hometownid==undefined)
+											$scope.hometownid =  '';
+										if($scope.addressid==undefined)
+											$scope.addressid =  '';
 										data = {
 											avatar : $scope.avatar,
 											telephone : $scope.telephone,
@@ -101,7 +108,9 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 												window.location.reload();
 											}
 										});
-									} else {
+									
+									 
+									}else {
 										alert("旧密码输入错误!");
 									}
 								} else {

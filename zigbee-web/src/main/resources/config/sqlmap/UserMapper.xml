@@ -34,9 +34,10 @@
 	         <if test="username   !=null and username !=''">username   =#{username  },</if>
 	         <if test="password   !=null and password !=''">password   =#{password  },</if>
 	         <if test="telephone  !=null and telephone!=''">telephone  =#{telephone },</if>
-	         <if test="realname   !=null and realname !=''"> realname  =#{realname  },</if>
+	        <!--  <if test="realname   !=null and realname !=''"> realname  =#{realname  },</if>
 	         <if test="nickname   !=null and nickname !=''"> nickname  =#{nickname  },</if>
-	         <if test="email      !=null and email    !=''">   email   =#{email     },</if>
+	         <if test="email      !=null and email    !=''">   email   =#{email     },</if> -->
+	         realname  =#{realname  }, nickname  =#{nickname  }, email   =#{email     },
 	         <if test="avatar     !=null and avatar   !=''">   avatar  =#{avatar    },</if>
 	         <if test="addTime    !=null and addTime  !=''">addTime    =#{addTime   },</if>
 	         <if test="updateTime !=null and updateTime!=''">updateTime=#{updateTime}</if>

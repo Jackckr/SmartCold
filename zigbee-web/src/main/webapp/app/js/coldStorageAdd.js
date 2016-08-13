@@ -14,7 +14,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     $scope.load();
     $scope.editable = false;
     $scope.isDisabled = false;
-
+    $scope.phoneNum = user.telephone;
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
         id: 0,
