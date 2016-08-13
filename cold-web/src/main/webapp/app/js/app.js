@@ -57,6 +57,19 @@ coldWeb.config(function($httpProvider) {
 });
 
 
+coldWeb.factory('baseTools',['$rootScope',function(){
+	return {
+		getFormatTimeString: function(delta){
+			delta = delta ? delta : 0;
+			return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/,"")
+		},
+		formatTime: function(timeString){
+			return new Date(Date.parse(timeString)).toISOString().replace("T", " ").replace(/\..*/,"")
+		}
+	}
+}])
+
+
 coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($rootScope, $state,$http) {
     return {
         setUser: function (user) {
