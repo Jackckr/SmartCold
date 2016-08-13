@@ -429,10 +429,4 @@ section.show{
 	width: 0;
 	height:0;
 }
-.omg{
-	width: 80%;
-	float: right;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
+

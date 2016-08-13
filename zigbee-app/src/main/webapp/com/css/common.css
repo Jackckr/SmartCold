@@ -86,6 +86,11 @@ img {
 .fr{
 	float: right;
 }
+.omg{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 @font-face {font-family: 'iconfont';
     src: url('../fonts/iconfont.eot'); /* IE9*/
     src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
