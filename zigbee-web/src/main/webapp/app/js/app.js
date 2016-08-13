@@ -302,6 +302,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/personalOrder',
         controller: 'personalOrder',
         templateUrl: 'app/template/personalOrder.html'
+    }).state('coldStorageAuth', {
+        url: '/coldStorageAuth/:rdcID',
+        controller: 'coldStorageAuth',
+        templateUrl: 'app/template/coldStorageAuth.html'
     });
 
 });

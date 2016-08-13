@@ -355,19 +355,28 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
     	}
     	return false;
     }
-    
+
     $scope.goEditRdc = function (rdcID) {
-         if($rootScope.user == null || $rootScope.user.id == 0){
-                  url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageComment/"+rdcID;
-                  window.location.href = url;
-          } else {
-        	     if(checkRdcidAndUserid()){
-                   $state.go('coldStorageEdit', {"rdcID": rdcID});
-        	     }
-        	     else{
-        	    	 alert("没有修改该冷库的权限");
-        	     }
-           }
+        if ($rootScope.user == null || $rootScope.user.id == 0) {
+            url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageComment/" + rdcID;
+            window.location.href = url;
+        } else {
+            if (checkRdcidAndUserid()) {
+                $state.go('coldStorageEdit', {"rdcID": rdcID});
+            }
+            else {
+                alert("没有修改该冷库的权限");
+            }
+        }
+    }
+
+    $scope.goAuthRdc = function (rdcID) {
+        if ($rootScope.user == null || $rootScope.user.id == 0) {
+            url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageComment/" + rdcID;
+            window.location.href = url;
+        } else {
+            $state.go('coldStorageAuth', {"rdcID": rdcID});
+        }
     }
 
     $scope.goSearch = function () {

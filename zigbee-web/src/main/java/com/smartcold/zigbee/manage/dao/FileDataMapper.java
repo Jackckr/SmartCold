@@ -23,6 +23,8 @@ public interface FileDataMapper {
 	static final String CATEGORY_SHARE_PIC = "sharePic";
 	//资质荣誉图片
 	static final String CATEGORY_HONOR_PIC = "honorPic";
+	//认证图片
+	static final String CATEGORY_AUTH_PIC = "authPic";
 	
 	List<FileDataEntity> findByBelongIdAndCategory(@Param("belongid")int belongid, @Param("category")String category);
 	

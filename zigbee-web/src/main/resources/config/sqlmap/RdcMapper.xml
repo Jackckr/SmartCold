@@ -97,6 +97,9 @@
             <if test="latitude != null" >
                 latitude = #{latitude,jdbcType=DOUBLE},
             </if>
+			<if test="audit != null" >
+				audit = #{audit,jdbcType=INTEGER},
+			</if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>

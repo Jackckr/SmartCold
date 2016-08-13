@@ -1,0 +1,41 @@
+<div>
+    <section>
+        <div class="row" style="height: 75px;width: 100%"></div>
+    </section>
+    <section>
+        <div class="row" style="position:relative;top: 20px;min-height: 400px">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+                <div class="row">
+                    <div>
+                        <middle class="text-warning">
+                            温馨提示：若需要成为冷库真正的拥有者,那就快来上传该冷库的营业执照等相关冷库认证,一旦经过审核,你就会成为冷库的主人。
+                        </middle>
+                    </div>
+                    <div style="min-height: 320px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
+                             style="position:relative;top: 150px;bottom: 100px;left: 50px">
+                            <button class="btn btn-success" ngf-select="addAuthFiles($files)" type="file"
+                                    ng-model="authfiles"
+                                    name="authfiles" ngf-pattern="'.png,.jpg,.jpeg'">上传图片
+                            </button>
+                            <small class="text-warning" style="margin-left:30px;">*最多五张(必须为.jpg,.png,.jpeg格式)</small>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <img id="img0" style="position:relative;left: 50px;top: 20px;max-height: 300px;max-width: 500px;">
+                        </div>
+                    </div>
+                    <div>
+                        <label ng-repeat="authfile in totalauthfiles" style="margin-left:20px"><span
+                                ng-bind="authfile.name"></span>
+                            <i class="fa fa-times danger" style="margin-right:10px;color:red;"
+                               ng-click="dropauth(authfile)"></i>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="text-align: center">
+            <button class="btn btn-primary" ng-click="submit()" ng-disabled="isDisabled">提交</button>
+        </div>
+</section>
+</div>
