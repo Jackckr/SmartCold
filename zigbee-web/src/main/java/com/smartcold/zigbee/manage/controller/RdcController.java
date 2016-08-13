@@ -576,4 +576,27 @@ public class RdcController {
 	public void runLngLat() {
 		rdcService.calculateLngLat();
 	}
+
+
+	@RequestMapping(value = "/authRdc", method = RequestMethod.POST)
+	@ResponseBody
+	public Object authRdc(HttpServletRequest request, @RequestParam(required = false) MultipartFile authfile0, int rdcId) throws Exception {
+		MultipartFile authfile = authfile0;
+
+		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
+		String dir = String.format("%s/rdc/%s", baseDir, rdcId);
+		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+		if (authfile != null) {
+			String fileName = String.format("rdc%s_%s_%s.%s", rdcId, user.getId(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_AUTH_PIC, rdcEntity.getId(), fileName);
+			fileDataDao.saveFileData(arrangeFile);
+		}
+		// 上传认证后更改冷库审核状态为待审核
+		rdcEntity.setAudit(0);
+		rdcMapper.updateRdc(rdcEntity);
+		return new BaseDto(0);
+	}
 }

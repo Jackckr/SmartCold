@@ -23,7 +23,7 @@
 		$("#but_vercode2").attr("disabled",!ct).css("background-color",ct?"#438BCB":"#cccccc");
 	};
 	$scope.getMobileCode=function(key,telephone,vcid){
-		$http.get(ER.root+"/i/ShareRdcController/sharvistPhone.json",  { params: {telephone:telephone}  }).success(function(data) {
+		$http.get(ER.root+"/i/ShareRdcController/sharvistPhone.json",  { params: {key:key,telephone:telephone}  }).success(function(data) {
 			if(data.success){
 				$scope.mtvarcode=data.entity;//
 				$(vcid).data('vc', true);
@@ -37,7 +37,7 @@
 			$("#ver_code_but").attr("disabled",!ct);
 			if(ct){$("#ver_code_but").removeClass("gray");}else{$("#ver_code_but").addClass("gray");}
 		}else{
-			$http.get(ER.root+"/i/ShareRdcController/sharvistCode",  { params: {telephone:$scope.userinfo.telephone, yzm:$scope.verrcode}  }).success(function(data) {
+			$http.get(ER.root+"/i/ShareRdcController/sharvistCode",  { params: {key:'user_upphone',telephone:$scope.userinfo.telephone, yzm:$scope.verrcode}  }).success(function(data) {
 				if(data){
 					$("#ver_code_but").attr("disabled",false);
 					$("#ver_code_but").removeClass("gray");

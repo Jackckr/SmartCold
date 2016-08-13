@@ -125,6 +125,12 @@
 			<if test="commit != null">
 			  commit = #{commit,jdbcType=LONGVARCHAR},
 			</if>
+			<if test="userId != null" >
+				userId = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="audit != null" >
+				audit = #{audit,jdbcType=INTEGER},
+			</if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>

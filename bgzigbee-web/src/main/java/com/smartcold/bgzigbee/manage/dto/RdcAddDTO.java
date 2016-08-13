@@ -90,6 +90,8 @@ public class RdcAddDTO {
 
 	private List<FileDataEntity> honorPics;
 
+	private List<RdcAuthDTO> authPics;
+
 	public FileDataEntity getArrangePic() {
 		return arrangePic;
 	}
@@ -441,5 +443,13 @@ public class RdcAddDTO {
 
 	public void setHonorPics(List<FileDataEntity> honorPics) {
 		this.honorPics = honorPics;
+	}
+
+	public List<RdcAuthDTO> getAuthPics() {
+		return authPics;
+	}
+
+	public void setAuthPics(List<RdcAuthDTO> authPics) {
+		this.authPics = authPics;
 	}
 }

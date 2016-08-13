@@ -168,6 +168,7 @@ public class RdcController {
 		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+		rdcEntity.setUserId(user.getId());
 		rdcEntity.setType(0);
 		rdcEntity.setStoragetype("");
 		rdcEntity.setColdtype("");
@@ -495,4 +496,12 @@ public class RdcController {
 		return new ResultDto(0, "资质荣誉审核成功");
 	}
 
+	@RequestMapping(value = "/updateRdcAuth", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateRdcAuth(int rdcId, int authUserId) {
+		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
+		rdcEntity.setUserId(authUserId);
+		rdcDao.updateRdc(rdcEntity);
+		return new ResultDto(0, "冷库认证审核成功");
+	}
 }
