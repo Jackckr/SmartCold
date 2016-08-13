@@ -17,11 +17,15 @@ body{
 .inputBd input{
 	display: block;
 	width: 100%;
-	text-indent: 2rem;
 	padding: 0.8rem 0;
 	font-size: 0.8rem;
 	border-bottom: 1px solid #E1E4E5;
 	background-color: transparent;
+    box-sizing: border-box;
+}
+.login .inputBd input{
+	padding-left:2rem;
+    box-sizing: border-box;
 }
 .inputBd>i{
 	position: absolute;
