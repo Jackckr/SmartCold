@@ -41,6 +41,15 @@ public class StorageKeysController {
 
     @RequestMapping(value="/saveStorageKeys", method = RequestMethod.POST)
     public Object saveStorageKeys(StorageKeysEntity storageKeysEntity){
-        return storageKeysDao.save(storageKeysEntity);
+        boolean res = storageKeysDao.save(storageKeysEntity);
+        if (res){
+            return storageKeysEntity.getId();
+        }else
+            return "failed to save";
+    }
+
+    @RequestMapping(value = "/delStorageKey", method = RequestMethod.POST)
+    public Object delStorageKey(int id){
+        return storageKeysDao.deleteById(id);
     }
 }

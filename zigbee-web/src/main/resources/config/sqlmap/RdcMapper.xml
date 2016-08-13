@@ -101,16 +101,20 @@
             <if test="latitude != null" >
                 latitude = #{latitude,jdbcType=DOUBLE},
             </if>
+			<if test="audit != null" >
+				audit = #{audit,jdbcType=INTEGER},
+			</if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     
     
-	<select id="findRDCByUserId" parameterType="Integer" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
+	<select id="findRDCByUserId" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
 			 SELECT
 			r.id,
 			r.name,
 			r.address,
+			r.addtime,
 			t.rdcscore score,
 			t.rdccommentcnt userCommentCount,
 			t.rdcrecommendpercent userRecommendPercent,
@@ -121,6 +125,9 @@
 		LEFT JOIN rdcext t ON t.RDCID = r.id
 		WHERE 1=1
 	        <if test="userID !=0"> and r.userid = ${userID} </if> <!--  关键字 -->
+	        <if test="keyword != null">
+		        AND r.name like "%"#{keyword}"%"
+		    </if>
        ORDER BY r.addTime DESC
 	</select>
 	<select id="findRDCById" parameterType="Integer" resultType="map" >
@@ -149,7 +156,7 @@
 		FROM
 			Rdc r
 		LEFT JOIN rdcext t ON t.RDCID = r.id
-		WHERE 1=1
+		WHERE audit!=-1 
 	        <if test="keyword !=null and  keyword != ''"> and  ( r.name like '%${keyword}%' or r.address like '%${keyword}%' )</if> <!--  关键字 -->
     		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!--区域 -->
     		<if test="sqm !=null and  sqm != ''"> and ${sqm} </if><!-- -->

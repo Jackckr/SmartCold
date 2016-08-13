@@ -318,5 +318,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageHonorAudit/:rdcId',
         controller: 'coldStorageHonorAudit',
         templateUrl: 'app/template/coldStorageHonor.html'
+    }).state('coldStorageAuthAudit', {
+        url: '/coldStorageAuthAudit/:rdcId',
+        controller: 'coldStorageAuthAudit',
+        templateUrl: 'app/template/coldStorageAuth.html'
     });
 });

@@ -24,6 +24,7 @@ import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
+import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 import com.taobao.api.ApiException;
 
@@ -98,7 +99,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/checkVerifyCode")
 	@ResponseBody
 	public Object checkVerifyCode(HttpServletRequest request, String verifycode) {
-		if (verifycode!=null) {
+		if (verifycode!=null&&request.getSession().getAttribute("identityVerifyCode")!=null) {
 			if(request.getSession().getAttribute("identityVerifyCode").equals(verifycode))
 				return true;
 		}
@@ -180,6 +181,29 @@ public class UserController extends BaseController {
 		UserEntity ol_user = (UserEntity)request.getSession().getAttribute("user");
 		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
 		return pwd.equals(new_user.getPassword());
+	}
+	@RequestMapping(value = "/upPwdByTelephone")
+	@ResponseBody
+	public ResponseData<String> upPwdByTelephone(HttpServletRequest request,String key,String toke,UserEntity user){
+		if(StringUtil.isnotNull(key)&&StringUtil.isnotNull(toke)){
+			String stoke=request.getSession().getAttribute(key+"shear_yzm")+""; request.getSession().removeAttribute(key+"shear_yzm");  
+			if(toke.equalsIgnoreCase(stoke)){
+				boolean isok=this.userDao.upPwdByTelephone(user)>0;
+				if(isok){
+					return ResponseData.newSuccess("密码修改重置成功！");
+					
+				}else{
+					return ResponseData.newFailure("密码重置失败！该账户已被锁定！请联系管理员！");
+				}
+			}else{
+				return ResponseData.newFailure("非法操作！");			}
+		}
+		return ResponseData.newFailure("非法操作！");		//返回受影响的行
+	}
+	@RequestMapping(value = "/existenceUserName")
+	@ResponseBody
+	public boolean existenceUserName(HttpServletRequest request,String userName){
+		return this.userDao.existenceUserName(userName)>0;
 	}
 
 }

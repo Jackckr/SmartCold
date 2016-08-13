@@ -30,7 +30,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* 图片自适应 */
 img {
 	width: 100%;
-	min-height: 100%;
+	height: 100%;
 	width: auto\9; /* ie8 */
 	-ms-interpolation-mode: bicubic;/*为了照顾ie图片缩放失真*/
 }
@@ -85,6 +85,11 @@ img {
 }
 .fr{
 	float: right;
+}
+.omg{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 @font-face {font-family: 'iconfont';
     src: url('../fonts/iconfont.eot'); /* IE9*/
@@ -235,7 +240,7 @@ header>div>a>.iconfont{
 	height: 100%;
 	text-align: center;
 	color: #898989;
-	/* padding: 0.15rem 0 0.4rem; */
+	padding-top: 2px;
 	box-sizing: border-box;
 }
 .footer>.active>a{
@@ -304,9 +309,32 @@ header>div>a>.iconfont{
 .confirm .bdr{
 	border-right: 1px solid #eee;
 }
+.ng-cloak{display:none;} 
 /*
  自定义alert弹出框end
  * 
  * */
  /* 公共头部和底部样式 end*/
- 
+.loadEffect{
+ 	width: 100%;
+ 	height: 100%;
+ 	margin: 0 auto;
+ 	background: url(../img/load.jpg) no-repeat center;
+ 	background-size: cover; 
+ 	position: fixed;
+ 	top: 0;
+ 	right: 0;	
+ 	z-index: 99999;
+ }
+ /*没有数据显示tupiantishi*/
+.nodata{
+	text-align: center;
+	font-size: 0.8rem;
+	display: none;
+	margin-top: 3rem;
+}
+.nodata img{
+	margin: 2rem auto;
+	width: 6.5rem;
+	height: 6.5rem;
+}

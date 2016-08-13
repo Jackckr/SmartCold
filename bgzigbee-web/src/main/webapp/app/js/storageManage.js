@@ -168,4 +168,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
             }
         })
     }
+	$scope.authAudit = function(rdc){
+		$state.go('coldStorageAuthAudit', {"rdcId": rdc.id});
+	}
 });

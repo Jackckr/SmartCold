@@ -10,7 +10,11 @@ import java.util.Map;
 public interface CommonService {
 	
 	 List<Map<String, Object>> getCommData(String codetype);
+	
+	 List<Map<String, Object>> getCommDataByID(Integer id,String codetype);
 
 	 List<Map<String, Object>> getBaseData(String table,String code,String value);
+	 
+	 List<Map<String, Object>> getBaseData(String table,String code,String value,Integer id);
 	 
 }

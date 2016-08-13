@@ -16,8 +16,8 @@
 		<div class="content">
 		   <form class="bs-example bs-example-form" role="form">
 		      <div class="input-group">
-		         <input type="text" class="form-control" placeholder="输入库名">
-		         <span class="input-group-addon">冷库搜索</span>
+		         <input type="text" ng-model="keyword" class="form-control" placeholder="输入库名">
+		         <button class="btn btn-default" ng-click="goSearch()">冷库搜索</button>
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
@@ -25,7 +25,7 @@
 				<li ng-repeat="rdc in rdcs">
 					<div class="img pull-left"><img src={{rdc.logo}}></div>
 					<p class="company">{{rdc.name}}</p>
-					<p class="area"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
+					<p class="area omg"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
 					<p class="area">
 						{{rdc.addtime}}
 						<span class="edit" ng-click="goEditRdc(rdc.id)">修改</span>

@@ -19,6 +19,7 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
     	$http.get('/i/orders/findOrdersByUserId', {
             params: {
                 "userID": $rootScope.user.id,
+                keyword:$scope.keyword,
                 pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize
             }
@@ -31,6 +32,15 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
 		$scope.getOrders();
 	}
 	$scope.getOrders();
+	
+	
+	 $scope.goSearch = function () {
+		 $scope.getOrders();
+	    }
+	$scope.goShowOrder = function (orderdto) {
+        $state.go('orderGenerate', {"data": orderdto});
+}
+	
 	
 	$scope.goDeleteOrder = function(orderID){
     	var r=confirm("删除订单？");

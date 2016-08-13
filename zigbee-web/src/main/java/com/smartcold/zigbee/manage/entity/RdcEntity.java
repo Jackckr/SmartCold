@@ -45,6 +45,8 @@ public class RdcEntity {
     private double longitude;
 
     private double latitude;
+
+    private Integer audit;
 	
 	public int getUserId() {
 		return userid;
@@ -220,5 +222,13 @@ public class RdcEntity {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public Integer getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Integer audit) {
+        this.audit = audit;
     }
 }

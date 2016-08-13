@@ -107,13 +107,17 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
         $scope.totalfiles.splice(index,1);
     };
 	$scope.submit = function(){
+		if ($("#but_submit").data('isLoading') === true) return; 
 		if(user!==null&&user.id!=0){ if (!$("#release_item_from").valid()) { $($("#release_item_from input.error")[0]).focus();  return; }  }else{util.info(null,"请登录后执行该操作！",function(){ window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";});return;}
+		 $("#but_submit").text("保存中...");
+		 $("#but_submit").data('isLoading', true);
 		var data = {data:releaseCarInfo.addvo(), "files":$scope.totalfiles};
 		Upload.upload({
             url: "/i/ShareRdcController/shareFreeRelease",
             headers :{ 'Content-Transfer-Encoding': 'utf-8' },
             data: data
         }).then(function (resp) {
+        	$("#but_submit").text("发布"); $("#but_submit").delay(500).data('isLoading',false);
         	alert(resp.data.message);
         	$scope.gocoldShareComment();
         }, function (resp) {
