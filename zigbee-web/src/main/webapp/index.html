@@ -82,82 +82,30 @@
 		<div class="nav-right mw-8">
 			<div class="nav-right" ng-cloak ng-show="user != null && user.id != 0" >
 				<div class="unauthenticated dropdown">
-					<!-- <strong class="text-primary dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" ng-bind="user.username"></strong><span class="caret"></span><span></span>
-					个人信息下拉菜单 start
-				   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="left:-80%">
-				      <li role="presentation">
-				         <a role="menuitem" tabindex="-1" href="#/personalInfo">个人信息</a>
-				      </li>
-				      <li role="presentation">
-				         <a role="menuitem" tabindex="-1" href="#/personalInfo">我的发布</a>
-				      </li>
-				      <li role="presentation">
-				         <a role="menuitem" tabindex="-1" href="#">
-				                                                                       我的冷库
-				         </a>
-				      </li>
-				   </ul>
-					个人信息下拉菜单 end -->
 					<div class="btn-group">
-				 <!-- <button class="btn">{{user.username}}</button> --> <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="omg overhide">{{user.username}}</i><span class="caret"></span></button>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="#/personalDetail">个人信息</a>
-					</li>
-					<li>
-						<a href="#/personalRdc">我的冷库</a>
-					</li>
-					<li>
-						<a href="#/personalShare">我的发布</a>
-					</li>
-					<li>
-						<a href="#/personalOrder">我的订单</a>
-					</li>
-					<li>
-						<a href="#/personalComment">我的评价</a>
-					</li>
-				</ul>
-			</div>　
-					<b><a ng-click="logout()" href="" ng-bind="'退出'">
-<!-- =======
-				     <button   class="btn">{{user.username}}</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-						 <ul class="dropdown-menu hide">
-							<li>
-								<a href="#/personalRdc">个人信息</a>
-							</li>
-							<li>
-								<a href="#/personalRdc">我的发布</a>
-							</li>
-							<li>
-								<a href="#/personalOrder">我的订单</a>
-							</li>
-							<li>
-								<a href="#/personalRdc">我的冷库</a>
-							</li>
-						</ul>
-			       </div>
-					<b style="margin-left: 20px;"><a ng-click="logout()" href="" ng-bind="'退出'">
->>>>>>> 365f038f15fe050dc7786cafd577109633a5d520 -->
-					</a>
-					</b>
+				 <a class="btn btn-default" href="#/personalDetail">{{user.username}}</a>
+		 <!--		 <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="omg overhide">{{user.username}}</i><span class="caret"></span></button>
+<!-- 						<ul class="dropdown-menu"> -->
+<!-- 							<li><a href="#/personalDetail">个人信息</a></li> -->
+<!-- 							<li><a href="#/personalRdc">我的冷库</a></li> -->
+<!-- 							<li><a href="#/personalShare">我的发布</a></li> -->
+<!-- 							<li><a href="#/personalOrder">我的订单</a></li> -->
+<!-- 							<li><a href="#/personalComment">我的评价</a></li> -->
+<!-- 						</ul> -->
+					</div>　
+					<b><a ng-click="logout()" href="" ng-bind="'退出'"></a></b>
 				 </div>
 			</div>
 			<!-- visible-xs -->
 			<div class="nav-right" ng-show="user == null ||user.id == 0">
-
-				<div class="unauthenticated">
-					<a href="login.html"> 登录 </a> <span> </span> <a href="signup.html">
-						注册 </a>
-				</div>
-
+				<div class="unauthenticated"><a href="login.html"> 登录 </a> <span> </span> <a href="signup.html">注册 </a></div>
 			</div>
 			<ul class="nav nav-right black-850">
 				<li><a href="#/home"> 首页 </a></li>
 				<li><a href="" ng-click="toColdStorageList()"> 找库 </a></li>
 				<li><a href="" ng-click="toColdShareComment()"> 共享 </a></li>
 				<li><a href="#/search"> 追溯 </a></li>
-				<li><a href="" ng-click="gotoSmartCold()" target="view_frame">
-						冷库360 </a></li>
+				<li><a href="" ng-click="gotoSmartCold()" target="view_frame">冷库360 </a></li>
 			</ul>
 
 			<ul class="navShow navPo show-850">
@@ -168,8 +116,7 @@
 						<li><a href="" ng-click="toColdStorageList()"> 找库 </a></li>
 						<li><a href="" ng-click="toColdShareComment()"> 共享 </a></li>
 						<li><a href="#/search"> 追溯 </a></li>
-						<li><a href="" ng-click="gotoSmartCold()" target="view_frame">
-								冷库360 </a></li>
+						<li><a href="" ng-click="gotoSmartCold()" target="view_frame">冷库360 </a></li>
 					</ol></li>
 			</ul>
 		</div>

@@ -53,7 +53,7 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	        };
 	        $rootScope.gotoSmartCold = function(){
 	        	cookies = document.cookie.split(";");
-	        	url = "http://www.smartcold.net";
+	        	url = "http://www.smartcold.org.cn";
 	        	angular.forEach(cookies,function(item){
 	        		item = item.trim();
 	        		if(item.startsWith("token=")){	        			
