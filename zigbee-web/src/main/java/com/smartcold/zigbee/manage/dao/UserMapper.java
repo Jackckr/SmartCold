@@ -14,4 +14,8 @@ public interface UserMapper {
 	void insertUser(UserEntity userEntity);
 	
 	void updateUser(UserEntity userEntity);
+	
+	public int upPwdByTelephone(UserEntity userEntity);
+	
+	public int existenceUserName(@Param("username")String username);
 }

@@ -120,6 +120,9 @@ section{
 	background-color:#438BCB;
 	color: #fff;
 }
+.footer>.active{
+	background: #fff;
+}
 /*图文列表*/
 .coldlist{
 	background-color: #fff;
