@@ -2,20 +2,17 @@ package com.smartcold.manage.cold.entity.olddb;
 
 import java.util.Date;
 
-/**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-03-19 11:52)
- */
-public class ColdStorageLightSetEntity {
-
+public class CompressorSetEntity {
 	private int id;
-	  
-	private int rdcid;
-	  
-	private float power;
-	  
+
+	private int compressorgroupid;
+
+	private String name;
+
+	private int power;
+
 	private String mapping;
-	  
+
 	private Date addTime;
 
 	public int getId() {
@@ -26,19 +23,27 @@ public class ColdStorageLightSetEntity {
 		this.id = id;
 	}
 
-	public int getRdcid() {
-		return rdcid;
+	public int getCompressorgroupid() {
+		return compressorgroupid;
 	}
 
-	public void setRdcid(int rdcid) {
-		this.rdcid = rdcid;
+	public void setCompressorgroupid(int compressorgroupid) {
+		this.compressorgroupid = compressorgroupid;
 	}
 
-	public float getPower() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPower() {
 		return power;
 	}
 
-	public void setPower(float power) {
+	public void setPower(int power) {
 		this.power = power;
 	}
 
@@ -57,4 +62,5 @@ public class ColdStorageLightSetEntity {
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
 	}
+
 }

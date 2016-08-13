@@ -573,17 +573,6 @@ section{
 	color: #999;
 	line-height: 2rem;
 }
-.nodata{
-	text-align: center;
-	font-size: 0.8rem;
-	display: none;
-	margin-top: 3rem;
-}
-.nodata img{
-	margin: 2rem auto;
-	width: 6.5rem;
-	height: 6.5rem;
-}
 .gray{background-color: #ccc;}
 .codeMain{
 	width: 100%;

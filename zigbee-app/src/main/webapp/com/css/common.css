@@ -326,3 +326,15 @@ header>div>a>.iconfont{
  	right: 0;	
  	z-index: 99999;
  }
+ /*没有数据显示tupiantishi*/
+.nodata{
+	text-align: center;
+	font-size: 0.8rem;
+	display: none;
+	margin-top: 3rem;
+}
+.nodata img{
+	margin: 2rem auto;
+	width: 6.5rem;
+	height: 6.5rem;
+}
