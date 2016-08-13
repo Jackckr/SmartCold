@@ -9,7 +9,7 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 			}
 	    })
 		//});
-	    $scope.oldTele = $scope.user.telephone;
+	        $scope.oldTele = $scope.user.telephone;
 		    $scope.verifycode = '';
 		    $scope.oldPwd = '';
 		    $scope.newPwd1 = '';
@@ -22,9 +22,17 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 		    $scope.hometownid = $scope.user.hometownid;
 		    $scope.addressid = $scope.user.addressid;
 		    $scope.email =$scope.user.email;
-		    if($scope.email=="undefined")
-		    	$scope.email = "username@email.com";
 		    $scope.nickname = $scope.user.nickname;
+		    if($scope.email=="undefined")
+		    	$scope.email = "";
+		    if($scope.oldTele=="undefined")
+		    	$scope.oldTele = "";
+		    if($scope.realname=="undefined")
+		    	$scope.realname = "";
+		    if($scope.nickname=="undefined")
+		    	$scope.nickname = "";
+		    if($scope.telephone=="undefined")
+		    	$scope.telephone = "";
     }
     $scope.load();
    
