@@ -32,7 +32,6 @@ import com.smartcold.zigbee.manage.service.FtpService;
 @Service("docLibraryService")
 public class DocLibraryServiceImpl implements DocLibraryService {
     private static String baseDir = "sharepicture";
-    private static Logger logger = LoggerFactory.getLogger(DocLibraryServiceImpl.class);
     @Autowired
     private FtpService ftpService;
     @Autowired
@@ -46,28 +45,21 @@ public class DocLibraryServiceImpl implements DocLibraryService {
     @Override
     public List<FileDataEntity> handleFile(HttpServletRequest r, UserEntity user)
         throws IOException {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(r.getSession()
-                                                                                   .getServletContext());
-
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(r.getSession() .getServletContext());
         if (multipartResolver.isMultipart(r)) {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) r;
             Iterator<String> iter = multiRequest.getFileNames();
             List<FileDataEntity> files = new ArrayList<FileDataEntity>();
-
             while (iter.hasNext()) {
                 String para = iter.next();
                 MultipartFile file = multiRequest.getFile(para);
-
                 if (file != null) {
                     //	               
-
                     //	                    files.add(doc);
                 }
             }
-
             return files;
         }
-
         return null;
     }
 

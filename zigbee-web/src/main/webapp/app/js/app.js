@@ -320,6 +320,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         params:{data:null},
         controller: 'orderGenerate',
         templateUrl: 'app/template/order.html'
+    }).state('coldStorageAuth', {
+        url: '/coldStorageAuth/:rdcID',
+        controller: 'coldStorageAuth',
+        templateUrl: 'app/template/coldStorageAuth.html'
     });
 
 });
