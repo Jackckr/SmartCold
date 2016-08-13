@@ -34,7 +34,7 @@
     }
 </style>
 <div style="background-color: #F1F1F1;">
-    <div class="row" ng-if="authPicShow.length>0">
+    <div class="row" ng-if="authPicShow !== undefined">
         <div>
             <ul id="products">
                 <li ng-repeat="item in authPicShow">
@@ -45,11 +45,20 @@
             </ul>
         </div>
     </div>
+    <div class="row" ng-if="authPicShow == undefined" style="min-height: 200px;margin-top: 50px">
+        <div>
+            <ul style="text-align: center">
+                <h2>
+                    还没有用户发布营业执照,无法进行冷库认证!
+                </h2>
+            </ul>
+        </div>
+    </div>
     <div class="col-lg-8 col-lg-offset-2" style="padding-left: 20%;padding-right: 20%;padding-bottom: 10px">
         <button class="btn btn-primary" ng-click="returnStorageManage()"
                 ng-disabled="">返回
         </button>
-        <button class="btn btn-primary" ng-click="submit()" ng-disabled="submitButtonDisable">审核通过
+        <button class="btn btn-primary" ng-click="submit()">审核通过
         </button>
     </div>
     </section>
