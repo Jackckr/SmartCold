@@ -32,7 +32,7 @@ html{
 	display: inline-block;
     height: 100%;
     line-height: 1.9rem;
-    text-align: center;
+    text-align: right;
     width: 1.5rem;
 }
 .barCode i{

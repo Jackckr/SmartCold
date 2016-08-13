@@ -118,7 +118,7 @@ var getPageData = function() {// 启用无限加载
 };
 
 function initdata() {
-	setuserinfo();
+//	setuserinfo();
 	getPageData();
 	initevg();
 }
