@@ -156,7 +156,7 @@
 		FROM
 			Rdc r
 		LEFT JOIN rdcext t ON t.RDCID = r.id
-		WHERE 1=1
+		WHERE audit!=-1 
 	        <if test="keyword !=null and  keyword != ''"> and  ( r.name like '%${keyword}%' or r.address like '%${keyword}%' )</if> <!--  关键字 -->
     		<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if> <!--区域 -->
     		<if test="sqm !=null and  sqm != ''"> and ${sqm} </if><!-- -->
