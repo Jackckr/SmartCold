@@ -198,15 +198,18 @@ div.select_2 select{
     -ms-box-sizing: border-box;
     -o-box-sizing: border-box;
     box-sizing: border-box;
+    font-size:12px;
+    
 }
 .tableInfo tbody tr td:first-child{
      padding:8px 0 0;
 }
 .image{
-    width: 80px;
-    height: 70px;
+    width:66px;
+    height: 66px;
     background-color: pink;
     position: relative;
+    margin-bottom:3px;
 }
 .image img{
     position: absolute;
@@ -221,6 +224,20 @@ div.select_2 select{
 .company,.position{
     text-align: left;
     line-height: 24px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.company{
+	font-size:14px;
+}
+.position,._sh_orang{
+	font-size:12px;
+	text-indent:3px;
+	color:#707070!important;
+}
+.tableInfo tbody tr td:nth-child(3) .position{
+	text-align:center;
 }
 nav{
     text-align: center;
