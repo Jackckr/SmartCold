@@ -6,12 +6,37 @@ public enum StorageType implements Serializable{
 
 	STORAGE(1, "coldstorage", "冷库"),
 	
-	DOOR(2, "coldstoragedoor", "门"),
+	DOOR(2, "coldstoragedoor", "冷库门"),
 	
-	COMPRESSOR(3, "compressorgroup", "压缩机"),
+	COMPRESSORGROUP(3, "compressorgroup", "压缩机组"),
 
-	BLOWER(4, "blower", "风机");
-	
+	BLOWER(4, "blower", "风机"),
+
+	COMPRESSOR(5, "compressor", "压缩机"),
+
+	WINDSCREEN(6, "windscreen", "风幕机"),
+
+	EVAPORATIVE(7, "evaporative", "蒸发冷系统"),
+
+	EVAPORATIVEWATER(8, "evaporativewater", "蒸发冷水泵系统"),
+
+	EVAPORATIVEBLOWER(9, "evaporativeblower", "蒸发冷风机系统"),
+
+	POWER(10, "power", "电表"),
+
+	PLATFORMDOOR(11, "platformdoor", "月台门"),
+
+	PRESSUREPLATFORM(12, "pressureplatform", "液压平台"),
+
+	CHARGINGPILE(13, "chargingpile", "充电桩"),
+
+	FORKLIFT(14, "forklift", "叉车"),
+
+	COLDSTORAGELIGHT(15, "coldstoragelight", "灯组"),
+
+	CIRCULATINGPUMP(16, "circulatingpump", "防冻循环泵");
+
+
 	private int type;
 	private String table;
 	private String desc;

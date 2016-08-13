@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.smartcold.bgzigbee.manage.dao.*;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
+import com.smartcold.bgzigbee.manage.dto.RdcAuthDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.bgzigbee.manage.entity.*;
@@ -60,6 +61,9 @@ public class RdcServiceImpl implements RdcService {
 
 	@Autowired
 	private CityListMapper cityListDao;
+
+	@Autowired
+	private UserMapper userDao;
 
 	@Override
 	public List<RdcEntity> findRdcList() {
@@ -168,16 +172,40 @@ public class RdcServiceImpl implements RdcService {
             }
 
             List<FileDataEntity> storageFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
-            for (FileDataEntity item : storageFiles) {
-                item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
-            }
-            rdcAddDTO.setStoragePics(storageFiles);
+            if (!CollectionUtils.isEmpty(storageFiles)){
+				for (FileDataEntity item : storageFiles) {
+					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+				}
+				rdcAddDTO.setStoragePics(storageFiles);
+			}
 
 			List<FileDataEntity> honorFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_HONOR_PIC);
-			for (FileDataEntity item : honorFiles) {
-				item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+			if (!CollectionUtils.isEmpty(honorFiles)) {
+				for (FileDataEntity item : honorFiles) {
+					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+				}
+				rdcAddDTO.setHonorPics(honorFiles);
 			}
-			rdcAddDTO.setHonorPics(honorFiles);
+
+			List<FileDataEntity> authFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_AUTH_PIC);
+			if (!CollectionUtils.isEmpty(authFiles)) {
+				List<RdcAuthDTO> rdcAuthDTOs = Lists.newArrayList();
+				RdcAuthDTO rdcAuthDTO;
+				for (FileDataEntity item : authFiles) {
+					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+					rdcAuthDTO = new RdcAuthDTO();
+					rdcAuthDTO.setAuthPics(Lists.newArrayList(item));
+					String location = item.getLocation();
+					if (!StringUtils.isEmpty(location)) {
+						String[] temps = location.split("_");
+						int userId = Integer.parseInt(temps[1]);
+						rdcAuthDTO.setUserId(userId);
+						rdcAuthDTO.setUserName(userDao.findUserById(userId).getUsername());
+					}
+					rdcAuthDTOs.add(rdcAuthDTO);
+				}
+				rdcAddDTO.setAuthPics(rdcAuthDTOs);
+			}
 
             String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
             for (int i = 0; i < truck.length; i++) {

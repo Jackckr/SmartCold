@@ -63,6 +63,39 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             $rootScope.user = user;
         },
         setStorage: function () {
+        	$rootScope.initAllByRdcId = function(rdcId){
+        		// 初始化冷库
+        		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
+        				function(data,status,headers,config){
+        					$rootScope.mystorages = data;
+        					$rootScope.rdcId = $rootScope.vm.choserdc.id;
+        					$rootScope.storageModal = data[0];
+        				});
+        		// 初始化压缩机组
+        		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(
+        				function(data,status,headers,config){
+        					$rootScope.compressorGroups = data;
+        					// 初始化压缩机
+        					angular.forEach($rootScope.compressorGroups,function(item){
+        						$http.get('/i/compressor/findBygroupId?groupId=' + item.id).success(
+        								function(data,status,headers,config){
+        									item.compressors = data;
+        								})
+        					})
+        				})
+        	  // 初始化电量
+        	  $http.get('/i/power/findByRdcId?rdcId=' + rdcId).success(
+        			  function(data,status,headers,config){
+        				  $rootScope.powers = data;
+        			  })
+        	 //  初始化月台门
+             $http.get('/i/platformDoor/findByRdcId?rdcId=' + rdcId).success(
+            		 function(data,status,headers,config){
+            			 $rootScope.platformDoors = data;
+            		 })
+             // 初始化
+        	}
+        	
         	$rootScope.changeRdc = function(value){
         		if(value){
         			if(value.originalObject == $rootScope.vm.choserdc){
@@ -70,16 +103,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         			}
             		$rootScope.vm.choserdc = value.originalObject
         		}
-        		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + $rootScope.vm.choserdc.id).success(
-        				function(data,status,headers,config){
-        					$rootScope.mystorages = data;
-        					$rootScope.rdcId = $rootScope.vm.choserdc.id;
-        					$rootScope.storageModal = data[0];
-        				});
-        		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + $rootScope.vm.choserdc.id).success(
-        				function(data,status,headers,config){
-        					$rootScope.compressors = data;
-        				})
+        		$rootScope.initAllByRdcId($rootScope.vm.choserdc.id)
         	}
 
             var compressors = [];
@@ -87,27 +111,12 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
             	$http.get('/i/rdc/findRDCByUserid?userid=' + $rootScope.user.id).success(
             			function(data,status,headers,config){
+            				if(data.length == 0){
+            					document.location.href = "/notAudit.html";
+            				}
             				$rootScope.vm = {choserdc:data[0]}
+            				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id)
             			})
-            	
-                // 拉取压缩机组列表
-                $http.get('/i/compressorGroup/findByUserId', {
-                    params: {
-                        "userId": $rootScope.user.id
-                    }
-                }).success(function (result) {
-                    $rootScope.compressors = result;
-                })
-                // 拉取冷库列表
-                $http.get('/i/coldStorage/findByUserId', {
-                    params: {
-                        "userId": $rootScope.user.id
-                    }
-                }).success(function (result) {
-                    $rootScope.mystorages = result;
-                    $rootScope.storageModal = $rootScope.mystorages[0];
-                    $rootScope.rdcId = result[0].rdcId;
-                })
             }
 
             $rootScope.toMyCompressor = function (compressorID) {
@@ -313,6 +322,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/historyData',
     	controller: 'historyData',
         templateUrl: 'app/template/historyData.html'
+    }).state('power',{
+    	url:'/power/{powerid}',
+    	controller: 'power',
+        templateUrl: 'app/template/power.html'
     });
 
 });

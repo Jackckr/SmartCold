@@ -60,9 +60,9 @@ public class CommentController {
     }
     
     @ResponseBody
-	@RequestMapping(value = "/deleteByCommentID", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteByCommentID")
 	public Object deleteByCommentID(Integer commentID) {
-		if (commentID <= 0) {
+		if (commentID==null||commentID <= 0) {
 			return new BaseDto(-1);
 		}
 		commentDao.deleteByCommentID(commentID);

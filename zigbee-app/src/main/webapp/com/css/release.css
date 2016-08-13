@@ -149,6 +149,12 @@ section{
 	font-size: 0.75rem;
 	width: 100%;
 }
+.houseinfo>li:first-child input{
+	width:85%;
+}
+input[type="text"]:disabled{
+	background:transparent
+}
 .houseinfo>li label{
 	display: inline-block;
 	color: #999;
@@ -157,21 +163,25 @@ section{
 	min-width: 60%;
 	height: 100%;
 	display: inline-block;
-	overflow: hidden;
+	/* overflow: hidden; */
 	border: 1px solid transparent;
 	vertical-align: middle;
 	/* height: 2rem; */
     line-height: 2rem;
 }
 .mySelect textarea{
-	width:99%;
+	width:120%;
 	height:2.5rem;
 	vertical-align:middle;
 	border:1px solid #ccc;
 	resize:none;
 }
+body,html{
+	overflow-x:hidden;
+	width:100%;
+}
 .houseinfo>li select{
-	width: 120%;
+	width:150%;
 	height: 100%;
 	font-size: 0.75rem;
 	color: #555;
@@ -184,9 +194,11 @@ section{
 	appearance:none;
 	border:none;
 	display:block;
-	background-color: #FFFFFF;
+	background-color: transparent
 }
-.houseinfo>li>input[type='text'],.houseinfo>li>input[type='date']{
+.houseinfo>li>input[type='text'],
+.houseinfo>li>input[type='date'],
+.houseinfo>li>.mySelect>input[type='text']{
 	text-indent: 10px;
 	display: inline-block;
 	vertical-align:middle;
@@ -223,6 +235,7 @@ input[type='radio']:checked:after{
 	position: absolute;
 	top: 50%;
 	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
 	transform: translate(-50%,-50%);
 	width: 70%;
 	height: 70%;

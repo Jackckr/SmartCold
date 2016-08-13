@@ -4,6 +4,7 @@
 
 <mapper namespace="com.smartcold.zigbee.manage.dao.UserMapper">
 
+
     <insert id="insertUser" parameterType="UserEntity">
         INSERT INTO `user`(
 		`username`,
@@ -44,16 +45,18 @@
         </set>
         where id = ${id}
     </update>
-
-    <select id="findUser" parameterType="map" resultType="UserEntity">
-					SELECT u.*,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username} AND u.`password` = #{password}
+    <update id="upPwdByTelephone" parameterType="com.smartcold.zigbee.manage.entity.UserEntity" >
+        update user set password   =#{password} where  username=#{username} ;
+    </update>
+    <select id="existenceUserName" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM user u  WHERE u.`username` = #{username};
 	</select>
-	
-	
+    <select id="findUser" parameterType="map" resultType="UserEntity">
+		SELECT u.*,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username} AND u.`password` = #{password}
+	</select>
 	<select id="findUserByName" parameterType="map" resultType="UserEntity">
 			SELECT u.*,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username}
 	</select>
-
     <select id="findUserById" parameterType="map" resultType="UserEntity">
 		SELECT u.*,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid  WHERE u.id = #{id}
 	</select>

@@ -109,14 +109,14 @@
                     <div class="mySelect">
                         <input type="text" ng-model="tonnage">
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <!--<i class="iconfont fr moreinfo">&#xe60d;</i>-->
                 </li>
                 <li>
                     <label for="structure">结构</label>                    
                     <div class="mySelect">
                         <input type="text" ng-model="structure">
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <!--<i class="iconfont fr moreinfo">&#xe60d;</i>-->
                 </li>
                 <li>
                     <label for="deviceType">冷链设施类型</label>                    
@@ -148,7 +148,7 @@
                     <div class="mySelect">
                         <input type="text" ng-model="lihuoArea">
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <!--<i class="iconfont fr moreinfo">&#xe60d;</i>-->
                 </li>
                 <li>
                     <label for="temperatureTypeCtr">有无温控</label>                    
@@ -213,12 +213,12 @@
                     </div>
                 </li>
                  <li>
-                    <label>资质荣誉图：</label>
+                    <label>资质荣誉图：
+                             <small class="text-warning fr" style="width: 100px">*最多八张</small></label>
                     <div class="mySelect">
                         <div>
                             <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
                                        ngf-multiple="true" name="honorfiles">
-                             <small class="text-warning fr" style="width: 100px">*最多八张</small>
                         </div>
                        
                     </div>                  
@@ -251,12 +251,12 @@
                      </div>
                 </li>
                 <li>
-                    <label>冷库图片：</label>
+                    <label>冷库图片：
+                                 <small class="text-warning fr" style="width: 100px">*最多五张</small></label>
                        <div class="mySelect">
                            <div>
                                 <input type="file" ngf-select="addFiles($files)" ng-model="files"
                                            ngf-multiple="true" name="files">
-                                 <small class="text-warning fr" style="width: 100px">*最多五张</small>
                             </div>
                        </div>
                 </li>
@@ -288,6 +288,12 @@
                 <p class="info">首页</p>
             </a>
         </li>
+        <li>          
+             <a href="news.html">
+                <i class="iconfont">&#xe6f8;</i>
+                <p class="info">资讯</p> 
+            </a>
+        </li>
         <li >            
             <a href="release.html">
                 <i class="iconfont">&#xe6ff;</i>
@@ -295,9 +301,9 @@
             </a>
         </li>
         <li>          
-             <a href="news.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p> 
+            <a href="review.html">
+                <i class="iconfont">&#xe642;</i>
+                <p class="info">追溯</p>
             </a>
         </li>
         <li class="active">            
