@@ -26,16 +26,11 @@ $(function() {
 	$('.otherList').click(function(e){
 		var e = e || window.event;
 		var target = e.target || e.srcElement;
-		if (target.nodeName.toLocaleLowerCase() == "a") {
-			switch (target.id){
-				case 'hwlt':
-					//$(".dropNext").html(target.innerHTML)
-					break;
-				case 'zlxt':
-					//$(".dropNext").html(target.innerHTML)
-					break;
-			}
-		}
+		$(this).prev('.dropNext').children('b').html(target.innerHTML);
+		var activeColor = $(this).css('color');
+		$(this).find('a').css({'color':'#555'});
+		target.style.color = activeColor;
+		/*alert(target.innerHTML)*/
 	});
 	//图表切换
 	var swiper = new Swiper('.swiper-container', {
