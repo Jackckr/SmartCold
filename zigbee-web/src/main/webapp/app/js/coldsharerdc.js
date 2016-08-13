@@ -199,6 +199,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 		    $("#shaerdailModal").modal("hide");
 		    $(".modal-backdrop").remove();
 	    	if(user!="undefined"&&user.id!=0){
+	    		if(user.telephone!=''&&user.telephone!=undefined){
 	    	  $.ajax({ url: "/i/orders/generateOrder", data: {
 	    		  userid:user.id,
 	    		  username:user.username,
@@ -210,9 +211,18 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	    		  releaseID:$scope.vo.releaseID,
 	    		  title:$scope.vo.title
 	    		  }, type: 'POST',dataType:"json", success: function(data) {
-	    		  $state.go('orderGenerate', {'data':data.entity});
+	    			  if(!data.success){
+	    				  alert(data.message);
+	    			  }
+	    			  else{
+	    				  $state.go('orderGenerate', {'data':data.entity});
+	    			  }
 	    	   }
 	    	  }); 
+	    	}
+	    		else{
+	    			alert("请留下手机号之后再下单");
+	    		}
 	    	}
 	    	else{
 	    		alert("登陆之后才可以抢单");

@@ -43,7 +43,7 @@ section{
 }
 .toggle>div>i{
 	font-size: 0.9rem;
-	margin: 0.1rem 0.2rem 0;
+	/*margin: 0.1rem 0.2rem 0;*/
 }
 .tempture>i{
 	color: #EB5A4A;
@@ -157,7 +157,7 @@ section{
 .inner>li:last-child{
 	border: 0;
 }
-.inner>li>a:before{
+/*.inner>li>a:before{
 	content: "";
 	width: 8px;
 	height: 8px;
@@ -168,11 +168,11 @@ section{
 	left: 0.5rem;
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
-}
+}*/
 .inner>li>a{
 	color: #333;
 	font-size: 0.75rem;
-	text-indent: 1.2rem;
+	text-indent: 1rem;
 	position: relative;
 }
 .footer li a{
@@ -190,4 +190,13 @@ section{
 	color: #fff;
 	text-align: center;
 	line-height: 0.8rem;
+}
+b{
+	font-weight: 400;
+	display: inline-block;
+	vertical-align: middle;
+	width: 2rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

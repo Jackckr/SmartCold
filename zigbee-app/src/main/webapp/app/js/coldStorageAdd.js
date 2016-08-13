@@ -1,20 +1,4 @@
-/**
- * Created by qiunian.sun on 16/4/9.
- */
-coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cookies, $http, Upload,$location) {
-	$scope.load = function(){
-	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
-			$rootScope.user = data;
-			if($rootScope.user == undefined || $rootScope.user.id == 0){
-				url = "http://" + $location.host() + ":" + $location.port();
-				window.location.href = url;
-			}
-	    })
-    }
-    $scope.load();
-    $scope.editable = false;
-    $scope.isDisabled = false;
-    $scope.phoneNum = user.telephone;
+angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldStorageAdd', function($scope,$http, Upload){
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
         id: 0,
@@ -24,15 +8,13 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         id: 1,
         name: "有",
     });
-
     // 获取省列表
-    $http.get('/i/city/findProvinceList').success(function (data) {
+    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
     });
-
     // 根据省ID查询城市列表
     $scope.provinceSelected = function () {
-        $http.get('/i/city/findCitysByProvinceId', {
+        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
             params: {
                 "provinceID": $scope.provinceId
             }
@@ -41,73 +23,31 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             $scope.cityId = data[0].cityID;
         });
     }
-
-    $scope.citySelected = function () {
-    }
-
     // 获取冷库经营类型
-    $http.get('/i/rdc/findAllManageType').success(function (data) {
+    $http.get(ER.root+'/i/rdc/findAllManageType').success(function (data) {
         $scope.manageTypes = data;
         $scope.manageType = data[0].id;
     });
-
-    $scope.ManageTypeSelected = function () {
-    }
-
     // 获取商品存放类型
-    $http.get('/i/rdc/findAllTemperType').success(function (data) {
+    $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
         $scope.temperTypes = data;
         $scope.temperType = data[0].id;
     });
-
-    $scope.TemperTypeSelected = function () {
-    }
-
     // 获取冷库温度类型
-    $http.get('/i/rdc/findAllStorageType').success(function (data) {
+    $http.get(ER.root+'/i/rdc/findAllStorageType').success(function (data) {
         $scope.storageTypes = data;
         $scope.storageType = data[0].id;
     });
-
-    $scope.StorageTypeSelected = function () {
-    }
-
-    $scope.moreInfos = true;
-    // 检查输入的参数
-
-    $scope.addMore = function () {
-        $scope.moreInfos = !$scope.moreInfos;
-    }
-
     // 获取冷链设施类型
-    $http.get('/i/rdc/findAllCompanyDevice').success(function (data) {
+    $http.get(ER.root+'/i/rdc/findAllCompanyDevice').success(function (data) {
         $scope.companyDevices = data;
         $scope.companyDevice = data[0].id;
     });
-
-    $scope.CompanyDeviceSelected = function () {
-    }
-
-
     // 制冷剂类型
-    $http.get('/i/rdc/findAllStorageRefreg').success(function (data) {
+    $http.get(ER.root+'/i/rdc/findAllStorageRefreg').success(function (data) {
         $scope.storageRefregs = data;
         $scope.storageRefreg = data[0].id;
     });
-
-    $scope.StorageRefregSelected = function () {
-    }
-
-    $scope.hasLihuoRoom = true;
-    $scope.lihuoRoom = 0;
-
-    $scope.ChangLihuoState = function () {
-        $scope.hasLihuoRoom = !$scope.hasLihuoRoom;
-    }
-
-    $scope.files;
-    $scope.honorfiles;
-
     $scope.coldTruck1 = 0;
     $scope.coldTruck2 = 0;
     $scope.coldTruck3 = 0;
@@ -119,7 +59,6 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     $scope.capacity5 = 0;
     $scope.totalfiles = [];
     $scope.totalhonorfiles = [];
-
     $scope.addFiles = function (files) {
         if($scope.totalfiles.length + files.length > 5){
             alert("最多上传五张图片");
@@ -134,9 +73,6 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
     }
-    $scope.addArrangePic = function (arrangePic) {
-    }
-
     $scope.drop = function(file){
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
@@ -169,25 +105,20 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         if ($scope.area == undefined || $scope.area == '') {
             flag = false;
         }
-
         if ($scope.manageType == undefined || $scope.manageType == '') {
             flag = false;
         }
-
         if ($scope.storageType == undefined || $scope.storageType == '') {
             flag = false;
         }
-
         if ($scope.temperType == undefined || $scope.temperType == '') {
             flag = false;
         }
-
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;
         }
         return flag;
     }
-
     $scope.submit = function(){
         if (checkInput()){
             $scope.isDisabled = true;
@@ -219,7 +150,6 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
                 remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
-
                 tonnage : $scope.tonnage,
                 structure: $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
                 companyDevice : $scope.companyDevice,
@@ -243,15 +173,15 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             for(var j = 0; j < $scope.totalhonorfiles.length; j++){
                 data["honor" + j] = $scope.totalhonorfiles[j];
             }
-
             Upload.upload({
-                url: '/i/rdc/addRdc',
+                url: ER.root+'/i/rdc/addRdc',
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },
+                withCredentials : true,
                 data: data
             }).then(function (resp) {
                 $scope.isDisabled = false;
                 alert("添加成功");
-                $state.go('coldStoragelist', {});
+                window.location.href='releasesuccess.html';
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
@@ -261,7 +191,5 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         } else {
             alert("请填写标记*的必选项在提交!");
         }
-
-
     }
 });
