@@ -9,4 +9,9 @@
         FROM `CompressorGroupSet` WHERE `rdcId` = #{rdcId}
         order by `addTime` asc
     </select>
+    
+    <select id="findById" parameterType="map" resultType="CompressorGroupSetEntity">
+        SELECT *
+        FROM `CompressorGroupSet` WHERE `id` = #{id}
+    </select>
 </mapper>
