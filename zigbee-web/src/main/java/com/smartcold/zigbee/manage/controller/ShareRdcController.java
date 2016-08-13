@@ -404,14 +404,15 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="sharvistPhone")
 	@ResponseBody
-	public ResponseData<String> sharvistPhone(HttpServletRequest request,String dataid,String telephone){
+	public ResponseData<String> sharvistPhone(HttpServletRequest request,String key,String dataid,String telephone){
 		try {
 			if(StringUtil.isnotNull(telephone)){
+				key= key+"";
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
 				String signUpCode =teleVerify.identityVerify(telephone);
-				request.getSession().setAttribute("shear_id", dataid);
-				request.getSession().setAttribute("shear_yzm", signUpCode);
-				request.getSession().setAttribute("shear_telephone", telephone);
+				request.getSession().setAttribute(key+"shear_id", dataid);
+				request.getSession().setAttribute(key+"shear_yzm", signUpCode);
+				request.getSession().setAttribute(key+"shear_telephone", telephone);
 				ResponseData<String> instance = ResponseData.getInstance();
 				instance.setSuccess(true);
 				instance.setEntity(signUpCode);
@@ -432,8 +433,9 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="sharvistCode")
 	@ResponseBody
-	public boolean sharvistCode(HttpServletRequest request,String dataid,String telephone,String yzm){
+	public boolean sharvistCode(HttpServletRequest request,String key,String dataid,String telephone,String yzm){
 	  if(StringUtil.isnotNull(yzm)){
+		  key= key+"";
 		  String sysyzm=	(String) request.getSession().getAttribute("shear_yzm");
 		  return yzm.equalsIgnoreCase(sysyzm); 
 	  }
