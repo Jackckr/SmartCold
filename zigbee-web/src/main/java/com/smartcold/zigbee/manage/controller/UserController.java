@@ -47,7 +47,7 @@ public class UserController extends BaseController {
 			UserEntity user = userDao.findUser(userName, EncodeUtil.encodeByMD5(password));
 			if (user != null) {
 				String cookie = cookieService.insertCookie(userName);
-				user.setPassword(null);
+				user.setPassword("********");
 				request.getSession().setAttribute("user", user);
 	            return  ResponseData.newSuccess(String.format("token=%s", cookie));
 			}
@@ -88,9 +88,11 @@ public class UserController extends BaseController {
 			CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
 			if (effectiveCookie != null) {
 				user = userDao.findUserByName(effectiveCookie.getUsername());
-				user.setPassword(null);
-				request.getSession().setAttribute("user", user);
-				return user;
+				if(user!=null){
+					user.setPassword("********");
+					request.getSession().setAttribute("user", user);
+					return user;
+				}
 			}
 		}
 		user = new UserEntity();
@@ -175,7 +177,7 @@ public class UserController extends BaseController {
 				if(StringUtil.isnotNull(user.getPassword())){user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));}
 				this.userDao.updateUser(user);
 				UserEntity	ol_user=this.userDao.findUserById(user.getId());
-				ol_user.setPassword(null);
+				ol_user.setPassword("********");
 				request.getSession().setAttribute("user",ol_user);
 				return true;
 			}
@@ -189,6 +191,8 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/checkOldPassword")
 	@ResponseBody
 	public boolean checkOldPassword(HttpServletRequest request,String pwd){
+		if(StringUtil.isNull(pwd)){return false;};
+		pwd=EncodeUtil.encodeByMD5(pwd);
 		UserEntity ol_user = (UserEntity)request.getSession().getAttribute("user");
 		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
 		return pwd.equals(new_user.getPassword());
