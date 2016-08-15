@@ -1,9 +1,10 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.enums.StorageType;
+import com.smartcold.manage.cold.service.CompressorGroupService;
+import com.smartcold.manage.cold.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
-import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
-import com.smartcold.manage.cold.enums.StorageType;
-import com.smartcold.manage.cold.service.CompressorGroupService;
-import com.smartcold.manage.cold.service.StorageService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 15:05)
@@ -49,9 +48,9 @@ public class CompressorGroupController {
 	@RequestMapping("/findPressByNums")
 	public Object findPressByNums(int compressorID,String key,
 			@RequestParam(value="nums",defaultValue="2")Integer nums){
-		List<StorageKeyValue> lowPress = storageService.findByNums(StorageType.COMPRESSOR, 
+		List<StorageKeyValue> lowPress = storageService.findByNums(StorageType.COMPRESSORGROUP,
 				compressorID, "lowPress", nums);
-		List<StorageKeyValue> highPress = storageService.findByNums(StorageType.COMPRESSOR, 
+		List<StorageKeyValue> highPress = storageService.findByNums(StorageType.COMPRESSORGROUP,
 				compressorID, "highPress", nums);
 		Map result = new HashMap<String, List<StorageKeyValue>>(2);
 		result.put("lowPress", lowPress);
@@ -59,11 +58,11 @@ public class CompressorGroupController {
 		return result;
 	}
 	
-	@RequestMapping("/findCompressorByNums")
+	/*@RequestMapping("/findCompressorByNums")
 	public Object findCompressorByNums(int compressorID,
 			@RequestParam(value="nums",defaultValue="1")Integer nums){
 		Map<String, List<StorageKeyValue>> result = new HashMap<String, List<StorageKeyValue>>();
-		StorageType stype = StorageType.COMPRESSOR;
+		StorageType stype = StorageType.COMPRESSORGROUP;
 		result.put("compressor1",storageService.findByNums(stype, compressorID, "Compressor1", nums));
 		result.put("compressor2",storageService.findByNums(stype, compressorID, "Compressor2", nums));
 		result.put("compressor3",storageService.findByNums(stype, compressorID, "Compressor3", nums));
@@ -71,5 +70,5 @@ public class CompressorGroupController {
 		result.put("compressor5",storageService.findByNums(stype, compressorID, "Compressor5", nums));
 		result.put("compressor6",storageService.findByNums(stype, compressorID, "Compressor6", nums));
 		return result;
-	}
+	}*/
 }

@@ -10,7 +10,7 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
             params: {
                 "oid": $stateParams.storageID,
                 type:2,
-                key:'state'
+                key:'Switch'
             }
         }).success(function (result) {
             for (var i = 0; i < result.length; i++) {

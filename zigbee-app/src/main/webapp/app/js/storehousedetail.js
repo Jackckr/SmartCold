@@ -11,7 +11,7 @@
 			}
        });
 	};
-	$scope.initevg=function(){
+	$scope.initevg=function(){ 
 		$("#she_imglist li a").imgbox({'speedIn': 0,'speedOut'	: 0,'alignment'		: 'center','overlayShow'	: true,'allowMultiple'	: false});//图片
 	};
 	$scope.getVerCode=function(){

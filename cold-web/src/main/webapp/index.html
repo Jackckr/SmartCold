@@ -273,7 +273,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="treeview">
               <a href="#/about"><i class="icon iconfont">&#xe689;</i><span class="menu-title">能耗</span><i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-               <li><a><i class="fa fa-circle-o"></i>耗电量</a></li>
+               <li class="treeview"><a href="#/about"><i class="icon iconfont">&#xe689;</i>
+               <span class="menu-title">耗电量</span><i class="fa fa-angle-left pull-right"></i></a>
+                 <ul class="treeview-menu">
+                   <li ng-repeat="power in powers"><a href="#/power/{{power.id}}"><i class="fa fa-circle-o"></i>{{power.name}}</a>
+                   </li>
+                 </ul>
+               </li>
                <li><a><i class="fa fa-circle-o"></i>耗水量</a></li>
               </ul>
             </li>
@@ -291,8 +297,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li>
                  <a><i class="fa fa-circle-o"></i>月台门<i class="fa fa-angle-left pull-right"></i></a>
                  <ul class="treeview-menu">
-	               <li ng-repeat="storage in mystorages"><a ng-click="">
-	                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
+	               <li ng-repeat="platformDoor in platformDoors"><a ng-click="">
+	                 <i class="fa fa-circle-o"></i>{{platformDoor.name}}</a>
 	               </li>
 	              </ul>
                </li>
@@ -312,8 +318,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li>
                  <a><i class="fa fa-circle-o"></i>制冷机组<i class="fa fa-angle-left pull-right"></i></a>
                  <ul class="treeview-menu" style="display: none;">
-                    <li ng-repeat="compressor in compressors"><a href="" ng-click="toMyCompressor(compressor.id)">
-                    <i class="fa fa-circle-o"></i> {{compressor.name}}</a></li>
+                    <li ng-repeat="compressorGroup in compressorGroups"><a href="" ng-click="toMyCompressor(compressorGroup.id)">
+                    <i class="fa fa-circle-o"></i> {{compressorGroup.name}}</a></li>
                   </ul>
                </li>
                <li><a><i class="fa fa-circle-o"></i>冷凝系统</a></li>

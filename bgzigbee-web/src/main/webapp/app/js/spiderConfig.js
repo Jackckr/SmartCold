@@ -2,8 +2,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.load = function(){
 		$scope.vm = {}
-		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."}
-		$scope.storageEntity = {}
+		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."};
+		$scope.storageEntity = {};
 		$scope.doorEntity = {}
 		$scope.blowerEntity = {}
 		$scope.compressGroupEntity = {}
@@ -60,11 +60,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		angular.forEach(data,function(item,index){
 			$scope.type2Keys(item.type).push(item);
 		})
-//		$scope.storageItem = data;
-//		$scope.vm.choseItem = data[0];
-//		$scope.storageItemKeys = getDistinctColumnKey($scope.storageItem);
-//		$scope.vm.choseItemKey = $scope.storageItemKeys[0];
-//		$scope.storageItem.push($scope.handItem);
 	})
 	
 	$http.get(coldWebUrl+"storageKeys/getStorageType").success(function(data,status,config,headers){
