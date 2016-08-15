@@ -70,7 +70,7 @@
         <!-- 仓储信息区域start -->
         <div ng-show="rdclist.length<=0">
             <p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
-            <p class="sorry" ><button class="btn btn-primary" ng-click="goaddrdcpag();">添加冷库信息</button>　　<button  class="btn btn-success" ng-show="{{dataType!=3}}" ng-click="simplyitem();"   >不关联库发布</button></p>
+            <p class="sorry" ><button class="mybtn" ng-click="goaddrdcpag();">添加冷库信息</button>　　<button  class="mybtn" ng-show="{{dataType!=3}}" ng-click="simplyitem();"   >不关联库发布</button></p>
         </div>
         <ul class="imgTable">
         	<li class="imgCell" ng-repeat="rdcdto in rdclist">

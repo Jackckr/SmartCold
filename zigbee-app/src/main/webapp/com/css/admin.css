@@ -193,8 +193,9 @@ section.show{
 }
 .dot{
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    vertical-align:middle;
+    width: .3rem;
+    height: .3rem;
     margin-right: 5px;
     background-color: #438BCB;
     border-radius: 50%;
