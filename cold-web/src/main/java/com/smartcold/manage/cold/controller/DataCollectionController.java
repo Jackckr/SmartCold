@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +31,7 @@ public class DataCollectionController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/dataCollection", method = RequestMethod.POST)
 	@ResponseBody
-	public Object storageDataCollection(String data) {
+	public Object storageDataCollection(@RequestBody String data) {
 		try {
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {
 			}.getType());
