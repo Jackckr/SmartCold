@@ -3,7 +3,8 @@ var countdown = 60;
 var oHtml = document.documentElement;
 var screenWidth = oHtml.clientWidth;
 var screenHeight = oHtml.clientHeight;
-var ER = {root:"http://liankur.com",coldroot:"http//:192.168.1.136:8989"};
+var ER = {root:"http://192.168.1.136:8080",coldroot:"http//:192.168.1.136:8989",isdebug:true};
+//var ER = {root:"http://liankur.com",coldroot:"http//:192.168.1.136:8989",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({
 	    xhrFields:{withCredentials:true}
 //		,contentType : "application/x-www-form-urlencoded;charset=utf-8"
@@ -72,15 +73,13 @@ function checkLogin(msg,callback) {
 	        type:"GET",
 	        cache:false,
 	        timeout : 5000,
-//	        async: false,
 	        dataType:"json",
+	        data:{token:util.getCookie('token')},
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
 	                window.user = data;
-	                if(callback){
-	                	callback();
-	                }
+	                if(callback){callback(); }
 	            } else {
 	            	alert(msg?msg:"请登录后再操作~");
 	                window.user = null;
@@ -120,7 +119,7 @@ $(function() {
     });
 });
 var util = {
-    //cook:s20是代表20秒,h是指小时，如12小时则是：h12,d是天数，30天则：d30
+    //cook:s20是代表20秒,h是指小时，如12小时则是：h12,d是天数，30天则：d30 
     setCookie:function(a, c, d) {
         var b = util.getsec(d);
         var e = new Date();
@@ -138,7 +137,7 @@ var util = {
     delCookie:function(a) {
         var c = new Date();
         c.setTime(c.getTime() - 1);
-        var b = getCookie(a);
+        var b = util.getCookie(a);
         if (b != null) {
             document.cookie = a + "=" + b + ";expires=" + c.toGMTString();
         }
