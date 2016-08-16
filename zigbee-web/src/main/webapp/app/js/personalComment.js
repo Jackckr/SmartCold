@@ -33,6 +33,12 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
 	}
 	$scope.getComments();
 	
+	$scope.goDetail = function (rdcID) {
+   	 console.log("rdcID" + rdcID);
+        $state.go('coldStorageComment', {"rdcID": rdcID});
+    };
+	
+	
 	$scope.goDeleteComment = function(commentID){
     	var r=confirm("删除评价？");
     	if(r){
