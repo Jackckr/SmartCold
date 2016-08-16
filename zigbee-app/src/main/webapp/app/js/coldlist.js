@@ -20,6 +20,11 @@ $().ready(function() {
 			$('.listcontain').hide();
 			$(this).hide();
 		});
+   	    $("#searchDara_div i").click(function(e){//搜索
+   	    	currentPage=1;
+ 	  		ul_select.empty();
+   	  	    getPageData();
+   	    });
    	    $(window).scroll(function(){
      	    var scrollTop = $(this).scrollTop();
 	     	var scrollHeight = $(document).height();
@@ -44,8 +49,9 @@ $().ready(function() {
   	 initFilter=function(){
   		   var mtlist=[],stlist=[],prove=[];
   		   $.get(ER.root+'/i/city/findProvinceList',function(data) {
-				 $.each(data, function(i, vo){prove.push("<li value='"+vo.areaId+"' >"+vo.provinceName+"</li>"); });
+				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
 				 $("#ul_address_list").append(prove.join("")); 
+				 $("#ul_address_list li").click(function(event) {addfilter(this);});
   		   });
   		   $.post(ER.root+"/i/rdc/getRDCFilterData",function(data) {
   			   if(data.success){	
@@ -54,7 +60,7 @@ $().ready(function() {
   					 $.each(_stty, function(i, vo){stlist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });  
   					 $("#ul_mtty_list").append(mtlist.join("")); 
   					 $("#ul_stty_list").append(stlist.join("")); 
-  					 $("#filter_section .listcontain li").click(function(event) {addfilter(this);});
+  					 $("#ul_mtty_list li,#ul_stty_list li").click(function(event) {addfilter(this);});
   			   }
   	      });
   	 };
@@ -63,13 +69,14 @@ $().ready(function() {
   		    var smty=$("#ul_stty_list li.active").attr("value");//温度
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   			var adds=$("#ul_address_list li.active").attr("value");////地区
-  		    var _options={ sqm:sqm, managetype: smty,storagetempertype:sety,provinceid:adds};
+  			var keyword=$("#searchDara_div input").val();////关键字搜索
+  		    var _options={ sqm:sqm, managetype: smty,storagetempertype:sety,provinceid:adds,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
   	function gethtml(rdc){
-  		  var score=['<li class="imgCell" ng-repeat="rdc in rdcsList"><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
-  		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score&&i!=0?'<li class="filled">★</li>':"<li>★</li>"); }
+  		  var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
+  		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); }
   		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
   		  return score.join("");
   	}
