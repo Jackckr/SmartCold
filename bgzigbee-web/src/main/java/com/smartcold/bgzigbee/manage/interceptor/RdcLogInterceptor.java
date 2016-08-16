@@ -1,26 +1,24 @@
 package com.smartcold.bgzigbee.manage.interceptor;
 
-import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
+import com.smartcold.bgzigbee.manage.entity.AdminEntity;
+import com.smartcold.bgzigbee.manage.entity.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.smartcold.bgzigbee.manage.dao.OperationLogMapper;
-import com.smartcold.bgzigbee.manage.entity.AdminEntity;
-import com.smartcold.bgzigbee.manage.entity.OperationLog;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.Date;
 
 public class RdcLogInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	private OperationLogMapper operationLogDao;
-	
+
 	private AdminEntity adminEntity;
 
 	@Override
