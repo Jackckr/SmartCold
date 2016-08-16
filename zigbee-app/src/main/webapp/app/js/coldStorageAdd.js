@@ -1,5 +1,7 @@
+checkLogin();
 angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldStorageAdd', function($scope,$http, Upload){
     $scope.haveOrNots = [];
+    $scope.phoneNum = window.user.telephone;
     $scope.haveOrNots.push({
         id: 0,
         name: "无",

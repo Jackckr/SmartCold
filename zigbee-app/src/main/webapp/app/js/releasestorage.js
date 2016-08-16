@@ -1,4 +1,4 @@
-angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope,  $http) {
+/*angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope,  $http) {
 	$scope.load = function(){
 		checkLogin();
 		 $.ajax({type: "GET",cache: false,dataType: 'json',url: ER.root +'/i/user/findUser'}).success(function(data,status,config,headers){
@@ -28,4 +28,4 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope,  $h
         });
     };
    
-});
+});*/

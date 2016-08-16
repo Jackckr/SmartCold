@@ -517,7 +517,7 @@ public class RdcController {
 		return result;
 	}
 
-	@RequestMapping(value = "/findRDCDTOByUserId", method = RequestMethod.GET)
+	@RequestMapping(value = "/findRDCDTOByUserId")
 	@ResponseBody
 	public Object findRDCDTOByUserId(@RequestParam int userID,int pageNum, int pageSize, 
 			@RequestParam(value = "keyword", required = false) String keyword) {

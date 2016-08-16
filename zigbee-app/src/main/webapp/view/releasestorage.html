@@ -8,15 +8,17 @@
     <title>发布仓位</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-    <script type="text/javascript" src="../com/js/data.js" ></script>
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" />
+   <!--  <script type="text/javascript" src="../com/js/data.js" ></script> -->
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
-    <script type="text/javascript" src="../com/js/prettify.js" ></script>
+   <!--  <script type="text/javascript" src="../com/js/prettify.js" ></script> -->
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/js/file_upload.js" ></script>
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
-    <script type="text/javascript" src="../app/js/releasestorage.js"></script>
+    <!--  <script type="text/javascript" src="../com/js/file_upload.js" ></script>-->
+    <!-- <script src="../bower_components/angular/angular.min.js"></script> -->
+<!--     <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script> -->     
+<script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
+<!--     <script type="text/javascript" src="../app/js/releasestorage.js"></script> -->
     <script>
     	$(function() {
 			$('.toggle').children('div').click(function(){
@@ -39,7 +41,7 @@
 		});
     </script>
 </head>
-<body ng-app="app">
+<body >
     <!-- header -->
         <header>
         	
@@ -66,34 +68,24 @@
     	</div>
     </div> -->
     <!--coldlist-->
-    <div class="coldlist" style="margin-bottom: 3rem;" ng-controller="ctrl">
+    <div class="coldlist" style="margin-bottom: 3rem;" >
         <!-- 仓储信息区域start -->
         <div ng-show="rdclist.length<=0">
             <p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
-            <p class="sorry" ><button class="mybtn" ng-click="goaddrdcpag();">添加冷库信息</button>　　<button  class="mybtn" ng-show="{{dataType!=3}}" ng-click="simplyitem();"   >不关联库发布</button></p>
+            <p class="sorry" ><button class="mybtn" ng-click="goaddrdcpag();">添加冷库信息</button>
         </div>
-        <ul class="imgTable">
-        	<li class="imgCell" ng-repeat="rdcdto in rdclist">
-				<a href="releasestoragedetail.html">
-					<img class="fl" ng-src="{{rdcdto.logo}}">
-					<div class="">
-						<p class='ellipsis'>{{rdcdto.name}}</p>
-						<p class='position'>
-							<i class="iconfont">&#xe66e;</i>
-							{{rdcdto.address}}
-						</p>
-						<ul class='star'>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li>★</li>
-						</ul>
-					</div>		
-				</a>
-				<button class="grab" onclick="location.href='releasestoragedetail.html'">发布</button>
-			</li>
-        </ul>
+       <!--筛选之后无数据时显示下面图片-->
+		<div class="nodata">
+			<img src="../com/img/nodata.jpg" alt="" />
+			<p>没有符合筛选条件的数据哦~~</p>
+		</div>
+		<!--筛选之后无数据时显示下面图片-->
+		<div class="backDrop"></div>
+		<!--coldlist-->
+        <div class="coldlist fixtop">
+	        <ul id="ul_rdcsL_list" class="imgTable" ></ul>
+             <a id="loading" href="javascript:;" onclick="getPageData();"></a>  
+        </div>
     </div>
     <!--求租-->
     <section class="main maindetail  black">
