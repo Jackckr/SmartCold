@@ -4,6 +4,7 @@
 $().ready(function() { 
 	  var maxSize=10;
       var isLoadRB=false;  
+      var rdcid=getUrlParam("rdcid");
 	  var ul_select=$("#ul_goodlist_list");
 	  var type=1, totalPages=  currentPage=  1;  // 当前页//rental_type:出租类型:1:出租 2:求租
       gosharedile=function(sharid){//共享详情
@@ -66,7 +67,7 @@ $().ready(function() {
   	 getFilter=function(pageNum,pageSize){
   		    var adds=$("#ul_hascar_list li.active").attr("value");////地区
   			var gdty=$("#ul_goodtype_list li.active").attr("value");//商品类型
-  		    var _options={provinceid:adds, goodtype: gdty,type:type,datatype:1};
+  		    var _options={provinceid:adds, goodtype: gdty,type:type,datatype:1,rdcID:rdcid};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};

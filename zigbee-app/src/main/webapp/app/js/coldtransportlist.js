@@ -4,10 +4,11 @@
 $().ready(function() { 
 	  var maxSize=10;
       var isLoadRB=false;  
+      var rdcid=getUrlParam("rdcid");
 	  var ul_select=$("#ul_rdcsL_list");
 	  var type=totalPages=  currentPage=  1;  // 当前页
       gosharedile=function(sharid){
-    	 window.location.href ="colddetail.html?id="+sharid; 
+    	 window.location.href ="storehousedetail.html?id="+sharid; 
       };
       initevg=function(){
     	$("#tool_but button").click(function(e){
@@ -75,6 +76,7 @@ $().ready(function() {
   		    var _options={
 					type:type,//类型
 					datatype:2,//请求数据类型
+					rdcID:rdcid,
 					carType:ctty, //车型	
 					provincefwID:adds,
 					businessType: bsty,//业务类型 

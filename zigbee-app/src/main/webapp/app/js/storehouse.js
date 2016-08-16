@@ -5,6 +5,7 @@ $().ready(function() {
 	  var maxSize=10;
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
+	  var rdcid=getUrlParam("rdcid");
 	  var type=1, totalPages=  currentPage=  1;  // 当前页//rental_type:出租类型:1:出租 2:求租
       gosharedile=function(sharid){//共享详情
     	 window.location.href ="colddetail.html?id="+sharid; 
@@ -75,7 +76,7 @@ $().ready(function() {
   		    var smty=$("#ul_stty_list li.active").attr("value");//温度
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   			var adds=$("#ul_hascar_list li.active").attr("value");////地区
-  		    var _options={ sqm:sqm, managetype: sety,storagetempertype:smty,provinceid:adds,type:type,datatype:3};
+  		    var _options={type:type,datatype:3,rdcID:rdcid,sqm:sqm, managetype: sety,storagetempertype:smty,provinceid:adds};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
