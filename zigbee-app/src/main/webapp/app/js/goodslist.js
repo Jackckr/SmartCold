@@ -3,13 +3,19 @@
  */
 $().ready(function() { 
 	  var maxSize=10;
-      var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
-	  var ul_select=$("#ul_rdcsL_list");
-      gosharedile=function(sharid){
+	  var ul_select=$("#ul_goodlist_list");
+	  var type=1, totalPages=  currentPage=  1;  // 当前页//rental_type:出租类型:1:出租 2:求租
+      gosharedile=function(sharid){//共享详情
     	 window.location.href ="colddetail.html?id="+sharid; 
       };
       initevg=function(){
+    	$("#tool_but button").click(function(e){
+    		 type=this.value;
+    		 currentPage=1;
+    		 ul_select.empty();
+    		 getPageData();
+    	});
    		$(".droplist a").click(function(e){//条件过滤
    			$(this).children('i').addClass('current').html('&#xe62e;');
    			$(this).addClass('current').next('.listcontain').slideDown().parent().siblings().children('a').removeClass('current').children('i').removeClass('current').html('&#xe62d;').parent().siblings('.listcontain').hide();
@@ -20,11 +26,6 @@ $().ready(function() {
 			$('.listcontain').hide();
 			$(this).hide();
 		});
-   	    $("#searchDara_div i").click(function(e){//搜索
-   	    	currentPage=1;
- 	  		ul_select.empty();
-   	  	    getPageData();
-   	    });
    	    $(window).scroll(function(){
      	    var scrollTop = $(this).scrollTop();
 	     	var scrollHeight = $(document).height();
@@ -47,43 +48,38 @@ $().ready(function() {
   		getPageData();
   	 };
   	 initFilter=function(){
-  		   var mtlist=[],stlist=[],prove=[];
+  		   var gdlist=[],prove=[];
   		   $.get(ER.root+'/i/city/findProvinceList',function(data) {
 				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
-				 $("#ul_address_list").append(prove.join("")); 
-				 $("#ul_address_list li").click(function(event) {addfilter(this);});
+				 $("#ul_hascar_list").append(prove.join("")); 
+				 $("#ul_hascar_list li").click(function(event) {addfilter(this);});
   		   });
-  		   $.post(ER.root+"/i/rdc/getRDCFilterData",function(data) {
+  		   $.post(ER.root+"/i/ShareRdcController/getGDFilterData",function(data) {
   			   if(data.success){	
-  					 var _mtty=data.entity.mt, _stty=data.entity.te;//经营类型,温度类型
-  					 $.each(_mtty, function(i, vo){mtlist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });
-  					 $.each(_stty, function(i, vo){stlist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });  
-  					 $("#ul_mtty_list").append(mtlist.join("")); 
-  					 $("#ul_stty_list").append(stlist.join("")); 
-  					 $("#ul_mtty_list li,#ul_stty_list li").click(function(event) {addfilter(this);});
+  				var _gdty=data.entity.gt;//经营类型,温度类型
+  				 $.each(_gdty, function(i, vo){gdlist.push("<li value='"+vo.type_code+"' >"+vo.type_name+"/"+vo.type_desc+"</li>"); });
+  				 $("#ul_goodtype_list").append(gdlist.join("")) ; 
+  				 $("#ul_goodtype_list li").click(function(event) {addfilter(this);});
   			   }
   	      });
   	 };
   	 getFilter=function(pageNum,pageSize){
-  			var sqm =$("#ul_sqm_list li.active").attr("value");//面积
-  		    var smty=$("#ul_stty_list li.active").attr("value");//温度
-  			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
-  			var adds=$("#ul_address_list li.active").attr("value");////地区
-  			var keyword=$("#searchDara_div input").val();////关键字搜索
-  		    var _options={ sqm:sqm, managetype: smty,storagetempertype:sety,provinceid:adds,keyword:keyword};
+  		    var adds=$("#ul_hascar_list li.active").attr("value");////地区
+  			var gdty=$("#ul_goodtype_list li.active").attr("value");//商品类型
+  		    var _options={provinceid:adds, goodtype: gdty,type:type,datatype:1};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
   	function gethtml(rdc){
-  		  var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
-  		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); }
+  		  var score=['<li class="imgCell" ><a href="storehousedetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">【'+rdc.typeText+"】"+rdc.title+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.detlAddress+'</p><ul class="star" value="'+rdc.score+'">'];
+  		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score&&i!=0?'<li class="filled">★</li>':"<li class='filled'>★</li>"); }
   		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
   		  return score.join("");
   	}
   	function getPageData(){//启用无限加载
   		   isLoadRB=true;
   		   var _filter=  getFilter(currentPage,maxSize);
-  		   $.post(ER.root+"/i/rdc/getRDCList", _filter, function(data) {	
+  		   $.post(ER.root+"/i/ShareRdcController/getSEGDList", _filter, function(data) {	
   	   	          if(data.success&&data.data.length>0){
   	   	        	  totalPages=data.totalPages;
   	   	         	  currentPage++; var html=[];var   rdcsList = data.data;//
@@ -93,7 +89,7 @@ $().ready(function() {
   	   	          }else{
   	   	              $(".nodata").show();
   	   	          }
-  	   	     isLoadRB=false;
+  	   	          isLoadRB=false;
   		    });
   	};
   	getPageData();

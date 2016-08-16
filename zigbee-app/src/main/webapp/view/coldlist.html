@@ -13,15 +13,9 @@
 	    <script type="text/javascript" src="../app/js/coldlist.js" ></script>
 	    <script>
 	    	$(function(){
-	    		$(".transion").click(function(){
-	    			$(".one").hide();
-	    			$(".two").show();
-	    		})
-	    		$(".cancel").click(function(){
-	    			$(".one").show();
-	    			$(".two").hide();
-	    		})
-	    	})
+	    		$(".transion").click(function(){$(".one").hide();$(".two").show();});
+	    		$(".cancel").click(function(){$(".one").show();$(".two").hide();});
+	    	});
 	    </script>
 	</head>
 	<body ng-app="app"  ng-controller="coldListController">
@@ -37,9 +31,9 @@
 	        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
 	        	</div>
 	        	
-	        	<div class="search">
+	        	<div id="searchDara_div" class="search">
 	        		<input type="text" placeholder="请输入搜索内容..."/>
-	        		<i class="iconfont">&#xe62f;</i>
+	        		<i class="iconfont" >&#xe62f;</i>
 	        	</div>
 		    </header>
 		<!-- header end-->
