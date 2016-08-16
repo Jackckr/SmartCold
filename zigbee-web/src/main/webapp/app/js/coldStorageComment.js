@@ -262,6 +262,7 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.rdcAddress = data[0].address;
             $scope.rdcCityId = data[0].cityid;
             $scope.rdcUserId = data[0].userid;
+            $scope.rdcAudit = data[0].audit;
             //alert($scope.rdcCityId); // 根据cityId进行查询cityName
             var cityName = '';
             $http.get('/i/city/findCityById', {
@@ -474,5 +475,13 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
 
     $scope.pubGoods = function () {
         $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 1});
+    }
+
+    $scope.isStorageOwner = function (user) {
+        return $scope.isLogin(user) && user.id==$scope.rdcUserId;
+    }
+
+    $scope.isLogin = function (user) {
+        return undefined!=user && user.id > 0;
     }
 });

@@ -8,7 +8,7 @@
     </delete>
     <!--     获得睿库信息 -->
 	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
-	      select    r.id rdcID, r.name,r.provinceid,r.cityid, r.address from rdc r where 1=1 <if test="userid !=null and  userid != ''"> and r.userid=#{userid} </if> GROUP BY r.id ORDER BY r.addtime  desc
+	      select    r.id rdcID, r.name,r.provinceid,r.cityid, r.address, r.audit from rdc r where 1=1 <if test="userid !=null and  userid != ''"> and r.userid=#{userid} </if> GROUP BY r.id ORDER BY r.addtime  desc
 	</select>
 	<!-- 根据rdcid查询下面全部信息 -->
 	<select id="getSEByID" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
