@@ -1,7 +1,6 @@
 coldWeb.controller('coldStorageAuthAudit', function ($rootScope, $scope, $state, $cookies, $http, $stateParams, $uibModal, $log) {
 
     $scope.rdcId = $stateParams.rdcId;
-    $scope.submitButtonDisable = false;
     $scope.authUserId = undefined;
 
         $http.get('/i/rdc/findRDCDTOByRDCId', {
@@ -10,7 +9,7 @@ coldWeb.controller('coldStorageAuthAudit', function ($rootScope, $scope, $state,
         }
     }).success(function (data) {
         $scope.name = data[0].name;
-        $scope.authPicShow = data[0].authPics;
+                $scope.authPicShow = data[0].authPics;
     });
 
     $scope.returnStorageManage = function(){
@@ -25,7 +24,6 @@ coldWeb.controller('coldStorageAuthAudit', function ($rootScope, $scope, $state,
         if ($scope.authUserId == undefined){
             alert("必须选择一个用户的认证,才能提交审核!");
         } else {
-            $scope.submitButtonDisable = true;
             $http({
                 method: 'POST',
                 url: '/i/rdc/updateRdcAuth',

@@ -22,6 +22,7 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.FtpService;
+import com.smartcold.zigbee.manage.util.EncodeUtil;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
@@ -42,14 +43,19 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/login")
 	@ResponseBody
 	public ResponseData<String> login(HttpServletRequest request, String userName, String password) {
-		UserEntity user = userDao.findUser(userName, password);
-		if (user != null) {
-			String cookie = cookieService.insertCookie(userName);
-			user.setPassword("******");
-			request.getSession().setAttribute("user", user);
-            return  ResponseData.newSuccess(String.format("token=%s", cookie));
+		if(StringUtil.isnotNull(userName)&&StringUtil.isnotNull(password)){
+			UserEntity user = userDao.findUser(userName, EncodeUtil.encodeByMD5(password));
+			if (user != null) {
+				String cookie = cookieService.insertCookie(userName);
+				user.setPassword("********");
+				request.getSession().setAttribute("user", user);
+	            return  ResponseData.newSuccess(String.format("token=%s", cookie));
+			}
+			return ResponseData.newFailure("用户名或者密码不正确~");
+		}else{
+			return ResponseData.newFailure("用户名和密码不能为空~");
 		}
-		return ResponseData.newFailure("用户名或者密码不正确~");
+		
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -67,20 +73,25 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/findUser")
 	@ResponseBody
-	public Object findUser(HttpServletRequest request) {
+	public Object findUser(HttpServletRequest request,String token) {
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
-		Cookie[] cookies = request.getCookies();
-		if(cookies!=null&&cookies.length>0){
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("token")) {
-					CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
-					if (effectiveCookie != null) {
-						user = userDao.findUserByName(effectiveCookie.getUsername());
-						user.setPassword("******");
-						request.getSession().setAttribute("user", user);
-						return user;
-					}
+		if(StringUtil.isNull(token)){
+			Cookie[] cookies = request.getCookies();
+			if(cookies!=null&&cookies.length>0){
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals("token")) {token=	cookie.getValue();break;}
+				}
+			}
+		}
+		if(StringUtil.isnotNull(token)){
+			CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
+			if (effectiveCookie != null) {
+				user = userDao.findUserByName(effectiveCookie.getUsername());
+				if(user!=null){
+					user.setPassword("********");
+					request.getSession().setAttribute("user", user);
+					return user;
 				}
 			}
 		}
@@ -141,7 +152,7 @@ public class UserController extends BaseController {
 			return new ResultDto(-1, "验证码输入错误");
 		UserEntity userEntity = new UserEntity();
 		userEntity.setUsername(username);
-		userEntity.setPassword(password);
+		userEntity.setPassword(EncodeUtil.encodeByMD5(password));
 		userEntity.setEmail(email);
 		userEntity.setTelephone(telephone);
 		userDao.insertUser(userEntity);
@@ -163,9 +174,10 @@ public class UserController extends BaseController {
 				user.setAvatar(null);
 			}
 			if(user.getId()!=0){
+				if(StringUtil.isnotNull(user.getPassword())){user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));}
 				this.userDao.updateUser(user);
 				UserEntity	ol_user=this.userDao.findUserById(user.getId());
-				ol_user.setPassword(null);
+				ol_user.setPassword("********");
 				request.getSession().setAttribute("user",ol_user);
 				return true;
 			}
@@ -175,9 +187,12 @@ public class UserController extends BaseController {
 		}
 		return false;
 	}
+	
 	@RequestMapping(value = "/checkOldPassword")
 	@ResponseBody
 	public boolean checkOldPassword(HttpServletRequest request,String pwd){
+		if(StringUtil.isNull(pwd)){return false;};
+		pwd=EncodeUtil.encodeByMD5(pwd);
 		UserEntity ol_user = (UserEntity)request.getSession().getAttribute("user");
 		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
 		return pwd.equals(new_user.getPassword());
@@ -188,6 +203,7 @@ public class UserController extends BaseController {
 		if(StringUtil.isnotNull(key)&&StringUtil.isnotNull(toke)){
 			String stoke=request.getSession().getAttribute(key+"shear_yzm")+""; request.getSession().removeAttribute(key+"shear_yzm");  
 			if(toke.equalsIgnoreCase(stoke)){
+				if(StringUtil.isnotNull(user.getPassword())){user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));}
 				boolean isok=this.userDao.upPwdByTelephone(user)>0;
 				if(isok){
 					return ResponseData.newSuccess("密码修改重置成功！");

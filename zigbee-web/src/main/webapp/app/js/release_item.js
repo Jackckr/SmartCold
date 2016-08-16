@@ -39,6 +39,11 @@ var releaseItem = {
         var data = $("#release_item_from").serializeArray();
         $.each(data, function(index, item) { vo[item.name] = item.value; });
         return JSON.stringify(vo);
+        },
+        drop:function(i){
+        	$("#imglistp"+i).remove();
+        	releaseItem.$scope.totalfiles.splice(i-1,1);
+        	alert(releaseItem.$scope.totalfiles);
         }
 };
 
@@ -67,7 +72,8 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	       $scope.initpriv();
 	       $scope.initMode();
     };
-
+    
+    
 	$scope.addFiles = function(files) {
 	    $scope.totalfiles = $scope.totalfiles.concat(files);
 	    $("#img_list").empty();
@@ -76,7 +82,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	    f; f = files[i]; i++) {
 	        if (!f.type.match('image.*')) { continue; }
 	        var reader = new FileReader();
-	        reader.onload = (function(theFile) { return function(e) { var innerHTML = ['<span><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/></span>'].join(''); $("#img_list").append(innerHTML); };})(f); reader.readAsDataURL(f);
+	        reader.onload = (function(theFile) { return function(e) { var innerHTML = ['<span id="imglistp'+i+'"><img class="thumb " src="', e.target.result, '" title="', escape(theFile.name), '"/></span>'].join(''); $("#img_list").append(innerHTML); };})(f); reader.readAsDataURL(f);//<i  onclick="releaseItem.drop('+i+')">×</i>
 	    }
 	};
 	$scope.submit = function(){

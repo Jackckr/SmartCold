@@ -2,7 +2,9 @@
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	 $scope.logout = function () {
 			$http.get(ER.root+'/i/user/logout');
-           	$scope.user=window.user  = null;gohome();
+           	$scope.user=window.user  = null;
+           	util.delCookie("token");
+           	gohome();
      };
 	$scope.initdata=function(){
 		 $.ajax({cache: false,type: "POST",url:ER.root+"/i/user/findUser", success: function(data) {

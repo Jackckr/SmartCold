@@ -11,6 +11,8 @@ public class CompressorSetEntity {
 
 	private int power;
 
+	private float waterRatio;
+
 	private String mapping;
 
 	private Date addTime;
@@ -45,6 +47,14 @@ public class CompressorSetEntity {
 
 	public void setPower(int power) {
 		this.power = power;
+	}
+
+	public float getWaterRatio() {
+		return waterRatio;
+	}
+
+	public void setWaterRatio(float waterRatio) {
+		this.waterRatio = waterRatio;
 	}
 
 	public String getMapping() {
