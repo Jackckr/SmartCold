@@ -66,6 +66,8 @@
 	color: #fff;
     background-color: #000;
 }
+.ng-cloak{display: none;}
+.user_info{color: #418BCA;text-decoration:none;cursor: pointer;}
 </style>
 </head>
 <body class="home-layout">
@@ -79,11 +81,11 @@
 			</a>
 			</h1>
 		</div>
-		<div class="nav-right mw-8">
-			<div class="nav-right" ng-cloak ng-show="user != null && user.id != 0" >
+		<div class="nav-right mw-8" ng-cloak>
+			<div class="nav-right"  ng-show="user != null && user.id != 0" >
 				<div class="unauthenticated dropdown">
 					<div class="btn-group">
-				 <a class="btn btn-default" href="#/personalDetail">{{user.username}}</a>
+					<span class="user_info"  onclick="window.location.href='#/personalDetail'">{{user.username}}</span>
 		 <!--		 <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="omg overhide">{{user.username}}</i><span class="caret"></span></button>
 <!-- 						<ul class="dropdown-menu"> -->
 <!-- 							<li><a href="#/personalDetail">个人信息</a></li> -->

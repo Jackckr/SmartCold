@@ -14,8 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../com/css/login.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript">$.ajax({type:"GET",cache:false,async:false,dataType:"json",url:ER.root+"/i/user/findUser",success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
-    
+    <script type="text/javascript">$.ajax({type:"GET",cache:false,async:false,data:{token:util.getCookie('token')},dataType:"json",url:ER.root+"/i/user/findUser",xhrFields: { withCredentials: true },success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
 </head>
 <body>
     <div class="login">
@@ -71,6 +70,7 @@
 				success : function(data) {
 					if (data.success) {
 						util.setCookie("username",userName,"d7");
+						util.setCookie("toke",data.message,"d7");
                         document.cookie = data.message;
 						if (window.location.hash != "") {
 							backUrl = window.location.hash.substring(1);

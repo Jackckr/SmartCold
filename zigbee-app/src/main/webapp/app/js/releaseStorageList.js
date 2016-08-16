@@ -1,7 +1,10 @@
 /**
  * 冷库列表
  */
-$().ready(function() { 
+//$.ajax({type: "GET",cache: false,dataType: 'json',url: ER.root +'/i/user/findUser'}).success(function(data,status,config,headers){
+checkLogin();
+//		 window.user = data;
+         $().ready(function() { 
 	  var maxSize=10;
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
@@ -75,7 +78,7 @@ $().ready(function() {
   		    return _filter;
   	};
   	function gethtml(rdc){
-  		  var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
+  		  var score=['<li class="imgCell" ><a href="releasestorage.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
   		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); }
   		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
   		  return score.join("");
@@ -83,7 +86,11 @@ $().ready(function() {
   	function getPageData(){//启用无限加载
   		   isLoadRB=true;
   		   var _filter=  getFilter(currentPage,maxSize);
-  		   $.post(ER.root+"/i/rdc/getRDCList", _filter, function(data) {	
+  		  $.post(ER.root+"/i/rdc/findRDCDTOByUserId", {
+  			   userID: window.user.id,
+               keyword:"",
+               pageNum: currentPage,
+               pageSize:maxSize}, _filter, function(data) {	
   	   	          if(data.success&&data.data.length>0){
   	   	        	  totalPages=data.totalPages;
   	   	         	  currentPage++; var html=[];var   rdcsList = data.data;//
@@ -100,3 +107,4 @@ $().ready(function() {
   	initFilter();
   	initevg();
 });	
+//})

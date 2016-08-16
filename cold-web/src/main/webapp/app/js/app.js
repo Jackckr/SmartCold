@@ -57,6 +57,53 @@ coldWeb.config(function($httpProvider) {
 });
 
 
+coldWeb.factory('baseTools',['$rootScope',function(){
+	return {
+		getFormatTimeString: function(delta){
+			delta = delta ? delta : 0;
+			return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/,"")
+		},
+		formatTime: function(timeString){
+			return new Date(Date.parse(timeString)).toISOString().replace("T", " ").replace(/\..*/,"")
+		},
+		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type){
+			option = {
+				    tooltip : {
+				        trigger: 'axis'
+				    },
+				    title: {
+		                text: title
+		            },
+				    calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+				            data : xData
+				        }
+				    ],
+				    yAxis : [
+					        {
+					            type : 'value',
+					            name : yName,
+					            axisLabel : {
+					                formatter: '{value} ' + yUnit
+					            }
+					        }
+					    ],
+				    series : [
+				        {
+				            name:lineName,
+				            type: type,
+				            data:yData,
+				        }
+				    ]
+				};
+			return option
+		}
+	}
+}])
+
+
 coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($rootScope, $state,$http) {
     return {
         setUser: function (user) {
@@ -64,11 +111,11 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         },
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
+        		$rootScope.rdcId = rdcId;
         		// 初始化冷库
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
-        					$rootScope.rdcId = $rootScope.vm.choserdc.id;
         					$rootScope.storageModal = data[0];
         				});
         		// 初始化压缩机组
@@ -326,6 +373,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/power/{powerid}',
     	controller: 'power',
         templateUrl: 'app/template/power.html'
+    }).state('waterCost',{
+    	url:'/waterCost',
+    	controller: 'waterCost',
+        templateUrl: 'app/template/waterCost.html'
     });
 
 });

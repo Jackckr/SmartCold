@@ -73,33 +73,33 @@
 		   		<span class="orderName">订单名称：<span>({{appmode[0].title[datatype]}})</span>{{rsd.title}}</span>
 		    </p>
 		<!-- 订单详情区域 -->
-			<h4><i class="dot"></i>订单详情 <span class="date">{{orders.generatetime}}</span></h4>
-			<p class="infos" style="margin-left: 20px;">
-				<span class="first">订单类型:</span><span class="second">{{typetitle}}</span>
+			<h4>订单详情 <span class="date">{{orders.generatetime}}</span></h4>
+			<p class="infos">
+				<i class="dot"></i><span class="first">订单类型:</span><span class="second">{{typetitle}}</span>
 			</p>
-			<div ng-if="datatype==3" style="margin-left: 20px;">
-			   <p class="infos"><span class="first">温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
-			   <p class="infos"><span class="first">冷库名称:</span><span class="second">{{rsd.name}}</span></p>
-			   <p class="infos"><span class="first">冷库地址:</span><span class="second">{{rsd.address}}</span></p>
+			<div ng-if="datatype==3">
+			   <p class="infos"><i class="dot"></i><span class="first">温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">冷库名称:</span><span class="second">{{rsd.name}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">冷库地址:</span><span class="second">{{rsd.address}}</span></p>
 			</div>
-			<div ng-if="datatype==2" style="margin-left: 20px;">
-			   <p class="infos"><span class="first">始　　发　地:</span><span class="second">{{rsd.unit1}}</span></p>
-			   <p class="infos"><span class="first">目　　的　地:</span><span class="second">{{rsd.unit2}}</span></p>
-			   <p class="infos"><span class="first">业&nbsp;务&nbsp;类&nbsp;型:</span><span class="second">{{rsd.codeLave1}}</span></p>
-			   <p class="infos"><span class="first">车&nbsp;辆&nbsp;类&nbsp;型:</span><span class="second">{{rsd.codeLave3}}</span></p>
-			   <p class="infos"><span class="first">冷库温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
+			<div ng-if="datatype==2">
+			   <p class="infos"><i class="dot"></i><span class="first">始发地:</span><span class="second">{{rsd.unit1}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">目的地:</span><span class="second">{{rsd.unit2}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">业务类型:</span><span class="second">{{rsd.codeLave1}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">车辆类型:</span><span class="second">{{rsd.codeLave3}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">冷库温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
 			</div>
 			
-			<div ng-if="datatype==1" style="margin-left: 20px;">
-		        <p class="infos"><span class="first">品　　　类:</span><span class="second">{{rsd.codeLave1}}</span></p>
-			    <p class="infos"><span class="first">供　应　商:</span><span class="second">{{rsd.unit1?rsd.unit1:'不详' }}</span></p>
-			    <p class="infos"><span class="first">最大预定量:</span><span class="second">{{rsd.sqm }}吨</span></p>
-			    <p class="infos"><span class="first">单　　　价:</span><span class="second">{{rsd.unitPrice == 0.00 ?"面议":rsd.unitPrice+'元/吨'}}</span></p>
+			<div ng-if="datatype==1">
+		        <p class="infos"><i class="dot"></i><span class="first">品类:</span><span class="second">{{rsd.codeLave1}}</span></p>
+			    <p class="infos"><i class="dot"></i><span class="first">供应商:</span><span class="second">{{rsd.unit1?rsd.unit1:'不详' }}</span></p>
+			    <p class="infos"><i class="dot"></i><span class="first">最大预定量:</span><span class="second">{{rsd.sqm }}吨</span></p>
+			    <p class="infos"><i class="dot"></i><span class="first">单价:</span><span class="second">{{rsd.unitPrice == 0.00 ?"面议":rsd.unitPrice+'元/吨'}}</span></p>
 			</div>
-			<h4><i class="dot"></i>其他信息 <span class="date">{{orders.generatetime}}</span></h4>
-			<div style="margin-left: 20px;">
-			   <p class="infos"><span class="first">信息有效期:</span><span class="second">{{rsd.validStartTime}}至{{rsd.validEndTime}}</span></p>
-			   <p class="infos"><span class="first">备注:</span><span class="second">{{rsd.note?rsd.note:'无'}}</span></p>
+			<h4>其他信息 <span class="date">{{orders.generatetime}}</span></h4>
+			<div>
+			   <p class="infos"><i class="dot"></i><span class="first">有效期:</span><span class="second">{{rsd.validStartTime}}至{{rsd.validEndTime}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">备注:</span><span class="second">{{rsd.note?rsd.note:'无'}}</span></p>
 			</div>
 			<!--点击图片循环展示-->
 			<div class="baguetteBoxOne gallery" ng-if="rsd.files">

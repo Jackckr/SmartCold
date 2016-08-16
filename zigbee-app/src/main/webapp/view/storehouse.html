@@ -11,31 +11,27 @@
 	    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	    <script type="text/javascript" src="../com/js/index.js" ></script>
+	    <script type="text/javascript" src="../app/js/storehouse.js"></script>
 	</head>
 	<body>
 		<!-- header -->
 		    <header>
-		    	
 	        	<div class="area fl">
 	        		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
 	        	</div>
 	        	<div class="zoom fr">
 	        		<a href="search.html"><i class="iconfont">&#xe62f;</i></a>
 	        	</div>
-	        	<div class="txt">
-	        		仓位租赁
-	        	</div>
+	        	<div class="txt">仓位租赁</div>
 		    </header>
 		<!-- header end-->
-		<section class="fixed">
+		<section id="filter_section"  class="fixed">
 			<div class="droplist">
 				<a href="javascript:;"><span>区域</span><i class="iconfont">&#xe62d;</i></a>
 				<div class="listcontain">
-					<div class="type">车辆</div>
+					<div class="type">区域</div>
 					<ul id="ul_hascar_list" class="list">
 						<li class="active" value="">不限</li>
-						<li value="1">安徽</li>
-						<li value="0">江苏</li>
 					</ul>
 				</div>
 			</div>
@@ -45,25 +41,17 @@
 					<div class="type">
 						经营类型
 					</div>
-					<ul class="list">
+					<ul id="ul_mtty_list" class="list">
 						<li class="active">不限</li>
-						<li>产地型</li>
-						<li>市场型</li>
-						<li>仓储型</li>
-						<li>配送型</li>
-						<li>生产型</li>
-						<li>中央厨房</li>
 					</ul>
 				</div>
 			</div>
 			<div class="droplist">
 				<a href="javascript:;"><span>温度类型</span><i class="iconfont">&#xe62d;</i></a>
 				<div class="listcontain">
-					<div class="type">温度类型</div>
-					<ul class="list">
+					<div  class="type">温度类型</div>
+					<ul  id="ul_stty_list" class="list">
 						<li class="active">不限</li>
-						<li>冷藏库</li>
-						<li>冷冻库</li>
 					</ul>
 				</div>
 			</div>
@@ -73,11 +61,14 @@
 					<div class="type">
 						所需面积
 					</div>
-					<ul class="list">
-						<li class="active">不限</li>
-						<li>1000㎡以下</li>
-						<li>1000~3000㎡</li>
-						<li>3000~6000㎡</li>
+					<ul id="ul_sqm_list" class="list">
+						<li class="active" value=""> 不限</li>
+						<li value="<1000">1000㎡以下</li>
+						<li value="1000~3000" >1000~3000㎡</li>
+						<li value="3000~6000">3000~6000㎡</li>
+						<li value="6000~12000">6000~12000㎡</li>
+						<li value="12000~20000">12000~20000㎡</li>
+						<li value=">20000">20000㎡以上</li>
 					</ul>
 				</div>
 			</div>
@@ -85,139 +76,37 @@
 		<!--黑色遮罩-->
 		<div class="backDrop"></div>
 		<!--出租/求租切换按钮-->
-		<div class="rent fixtop">
-			<button class="rentKId btn">出租</button><button class="wanted">求租</button>
+		<div id="tool_but" class="rent fixtop">
+			<button class="rentKId btn"  value="1">出租</button><button class="wanted" value="2">求租</button>
 		</div>
 		<!--coldlist-->
         <div class="coldlist">
-	        <ul class="imgTable">
-	        	<li class="imgCell">
-					<a href="storehousedetail.html">
-						<img class="fl" src="../com/img/muwu.jpg">
-						<div class="">
-							<p class='ellipsis'>【出租】仓库出租</p>
-							<p class='position omg'>
-								<i class="iconfont">&#xe66e;</i>
-								上海-长宁区-中山公园
-							</p>
-							<ul class='star'>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li>★</li>
-							</ul>
-							<button class="grab" onclick="location.href='confirm.html'">立即抢单</button>
-						</div>						
-                        
-					</a>
-				</li>
-	        	<li class="imgCell">
-					<a href="storehousedetail.html">
-						<img class="fl" src="../com/img/cbd.jpg">
-						<div class="">
-							<p class='ellipsis'>【出租】昌盛农业专业合作社冷库求租</p>
-							<p class='position omg'>
-								<i class="iconfont">&#xe66e;</i>
-								上海-长宁区-中山公园
-							</p>
-							<ul class='star'>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li>★</li>
-							</ul>
-							<button class="grab">立即抢单</button>
-						</div>						
-                        
-					</a>
-				</li>
-	        	<li class="imgCell">
-					<a href="storehousedetail.html">
-						<img class="fl" src="../com/img/muwu.jpg">
-						<div class="">
-							<p class='ellipsis'>【出租】仓库出租</p>
-							<p class='position omg'>
-								<i class="iconfont">&#xe66e;</i>
-								上海-长宁区-中山公园
-							</p>
-							<ul class='star'>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li>★</li>
-							</ul>
-							<button class="grab">立即抢单</button>
-						</div>						
-                        
-					</a>
-				</li>
-	        	<li class="imgCell">
-					<a href="storehousedetail.html">
-						<img class="fl" src="../com/img/muwu.jpg">
-						<div class="">
-							<p class='ellipsis'>【出租】仓库出租</p>
-							<p class='position omg'>
-								<i class="iconfont">&#xe66e;</i>
-								上海-长宁区-中山公园
-							</p>
-							<ul class='star'>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li>★</li>
-							</ul>
-							<button class="grab">立即抢单</button>
-						</div>						
-                        
-					</a>
-				</li>
-	        	<li class="imgCell">
-					<a href="storehousedetail.html">
-						<img class="fl" src="../com/img/shuijiao.jpg">
-						<div class="">
-							<p class='ellipsis'>【出租】仓库出租111</p>
-							<p class='position omg'>
-								<i class="iconfont">&#xe66e;</i>
-								上海-长宁区-中山公园
-							</p>
-							<ul class='star'>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li>★</li>
-							</ul>
-							<button class="grab">立即抢单</button>
-						</div>						
-                        
-					</a>
-				</li>   
-	        	<li class="imgCell">
-					<a href="storehousedetail.html">
-						<img class="fl" src="../com/img/muwu.jpg">
-						<div class="">
-							<p class='ellipsis'>【出租】仓库出租111</p>
-							<p class='position omg'>
-								<i class="iconfont">&#xe66e;</i>
-								上海-长宁区-中山公园
-							</p>
-							<ul class='star'>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li class="filled">★</li>
-								<li>★</li>
-							</ul>
-							<button class="grab">立即抢单</button>
-						</div>						
-                        
-					</a>
-				</li>  	
+	        <ul id="ul_rdcsL_list" class="imgTable">
+<!-- 	        	<li class="imgCell"> -->
+<!-- 					<a href="storehousedetail.html"> -->
+<!-- 						<img class="fl" src="../com/img/muwu.jpg"> -->
+<!-- 						<div class=""> -->
+<!-- 							<p class='ellipsis'>【出租】仓库出租</p> -->
+<!-- 							<p class='position omg'> -->
+<!-- 								<i class="iconfont">&#xe66e;</i> -->
+<!-- 								上海-长宁区-中山公园 -->
+<!-- 							</p> -->
+<!-- 							<ul class='star'> -->
+<!-- 								<li class="filled">★</li> -->
+<!-- 								<li class="filled">★</li> -->
+<!-- 								<li class="filled">★</li> -->
+<!-- 								<li class="filled">★</li> -->
+<!-- 								<li>★</li> -->
+<!-- 							</ul> -->
+<!-- 							<button class="grab" onclick="location.href='confirm.html'">立即抢单</button> -->
+<!-- 						</div>						 -->
+<!-- 					</a> -->
+<!-- 				</li> -->
 	        </ul>
         </div>
+        <div class="nodata">
+			<img src="../com/img/nodata.jpg" alt="" />
+			<p>没有符合筛选条件的数据哦~~</p>
+		</div>
 	</body>
 </html>
