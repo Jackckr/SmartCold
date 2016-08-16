@@ -1,5 +1,15 @@
 coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload, coldWebUrl) {
-	
+
+	$http.get(coldWebUrl+"storageKeys/getStorageType").success(function(data,status,config,headers){
+		$scope.storageTypes = data;
+		$scope.devices = [];
+		angular.forEach(data, function (item) {
+			item.name = '添加'+item.desc;
+			$scope.devices.push(item);
+		})
+		$scope.choseDevice = $scope.devices[0];
+	});
+
 	$scope.load = function(){
 		$scope.vm = {}
 		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."};
@@ -7,8 +17,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$scope.doorEntity = {}
 		$scope.blowerEntity = {}
 		$scope.compressGroupEntity = {}
-		$scope.devices = [{id:0,name:"添加冷库"},{id:1,name:"添加冷库门"},{id:2,name:"添加风机"},{id:3,name:"添加压缩机组"}]
-		$scope.choseDevice = $scope.devices[0];
+
 		$http.get('/i/rdc/findRdcList').success(function(data,status,config,headers){
 			$scope.rdclist = data;
 			$scope.vm.choseRdc = data[0];
@@ -28,11 +37,24 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		})
 		return keys;
 	}
-	
+
 	$scope.coldStorageKeys = [];
 	$scope.doorKeys = [];
 	$scope.compressorGroupKeys = [];
 	$scope.blowerKeys = [];
+	$scope.compressorKeys = [];
+	$scope.windscreenKeys = [];
+	$scope.evaporativeKeys = [];
+	$scope.evaporativewaterKeys = [];
+	$scope.evaporativeblowerKeys = [];
+	$scope.powerKeys = [];
+	$scope.platformdoorKeys = [];
+	$scope.pressureplatformKeys = [];
+	$scope.chargingpileKeys = [];
+	$scope.forkliftKeys = [];
+	$scope.coldstoragelightKeys = [];
+	$scope.circulatingpumpKeys = [];
+
 	$scope.vm = {};
 	$scope.vm.choseStorage = {};
 	$scope.vm.choseStorage.mapping = [];
@@ -47,6 +69,30 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			return $scope.compressorGroupKeys;
 		case 4:
 			return $scope.blowerKeys;
+		case 5:
+			return $scope.compressorKeys;
+		case 6:
+			return $scope.windscreenKeys;
+		case 7:
+			return $scope.evaporativeKeys;
+		case 8:
+			return $scope.evaporativewaterKeys;
+		case 9:
+			return $scope.evaporativeblowerKeys;
+		case 10:
+			return $scope.powerKeys;
+		case 11:
+			return $scope.platformdoorKeys;
+		case 12:
+			return $scope.pressureplatformKeys;
+		case 13:
+			return $scope.chargingpileKeys;
+		case 14:
+			return $scope.forkliftKeys;
+		case 15:
+			return $scope.coldstoragelightKeys;
+		case 16:
+			return $scope.circulatingpumpKeys;
 		default:
 			return [];
 		}
@@ -62,9 +108,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		})
 	})
 	
-	$http.get(coldWebUrl+"storageKeys/getStorageType").success(function(data,status,config,headers){
-		$scope.storageTypes = data;
-	});
+
 	
 	$scope.getDescByType = function(type){
 		for(var i=0; i<$scope.storageTypes.length; i++){
@@ -122,6 +166,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			angular.forEach(data,function(item,index){
 				data[index].mapping = JSON.parse(data[index].mapping)
 			})
+
 			$scope.storages = data;
 			$scope.vm.choseStorage = data[0];
 			$scope.vm.warnings = $scope.vm.choseRdc.mapping.hasOwnProperty("warnings")?$scope.vm.choseRdc.mapping.warnings:[];

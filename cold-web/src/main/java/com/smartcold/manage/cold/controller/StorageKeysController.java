@@ -41,7 +41,7 @@ public class StorageKeysController {
     }
 
     @RequestMapping(value="/saveStorageKeys", method = RequestMethod.POST)
-    public Object saveStorageKeys(StorageKeysEntity storageKeysEntity){
+    public Object saveStorageKeys(StorageKeysEntity storageKeysEntity) {
         boolean res = storageKeysDao.save(storageKeysEntity);
         if (res){
             return storageKeysEntity.getId();

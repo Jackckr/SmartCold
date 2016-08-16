@@ -1,17 +1,17 @@
 package com.smartcold.bgzigbee.manage.service.base.impl;
 
+import com.smartcold.bgzigbee.manage.service.base.HttpService;
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.stereotype.Service;
-
-import com.smartcold.bgzigbee.manage.service.base.HttpService;
 @Service
 public class HttpServiceImpl implements HttpService {
 
@@ -86,6 +86,7 @@ public class HttpServiceImpl implements HttpService {
 			conn.setRequestProperty("accept", "*/*");
 			conn.setRequestProperty("connection", "Keep-Alive");
 			conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)");
+			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 
 			// 发送POST请求必须设置如下两行
 			conn.setConnectTimeout(2000);
@@ -96,7 +97,7 @@ public class HttpServiceImpl implements HttpService {
 			out = new PrintWriter(conn.getOutputStream());
 			// 发送请求参数
 
-			// String encodedParams = URLEncoder.encode(params,"utf-8");
+            String encodedParams = URLEncoder.encode(params,"utf-8");
 			out.print(params);
 			// flush输出流的缓冲
 			out.flush();

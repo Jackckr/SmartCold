@@ -239,6 +239,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         };
         pressureChart.setOption(pressureOption);
     }
+    
     $scope.getArrValue = function(arr){
     	if(!arr || arr.length<1)
     		return -1;

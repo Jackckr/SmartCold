@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface SetTableMapper {
     public boolean updateMapping(@Param("table") String table, @Param("mapping") String mapping, @Param("id")int id);
+
+    public boolean deleteById(@Param("table")String table, @Param("id") int id);
 }

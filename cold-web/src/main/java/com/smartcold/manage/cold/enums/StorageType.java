@@ -10,17 +10,17 @@ public enum StorageType implements Serializable{
 	
 	COMPRESSORGROUP(3, "compressorgroup", "压缩机组"),
 
-	BLOWER(4, "blower", "风机"),
+	BLOWER(4, "blower", "冷风机"),
 
-	COMPRESSOR(5, "compressor", "压缩机"),
+	COMPRESSOR(5, "compressor", "单体压缩机"),
 
 	WINDSCREEN(6, "windscreen", "风幕机"),
 
 	EVAPORATIVE(7, "evaporative", "蒸发冷系统"),
 
-	EVAPORATIVEWATER(8, "evaporativewater", "蒸发冷水泵系统"),
+	EVAPORATIVEWATER(8, "evaporativewater", "蒸发冷水泵"),
 
-	EVAPORATIVEBLOWER(9, "evaporativeblower", "蒸发冷风机系统"),
+	EVAPORATIVEBLOWER(9, "evaporativeblower", "蒸发冷风机"),
 
 	POWER(10, "power", "电表"),
 
