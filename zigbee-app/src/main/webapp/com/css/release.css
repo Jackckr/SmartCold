@@ -150,7 +150,7 @@ section{
 	width: 100%;
 }
 .houseinfo>li:first-child input{
-	width:85%;
+	width:70%;
 }
 input[type="text"]:disabled{
 	background:transparent
@@ -196,6 +196,7 @@ body,html{
 	display:block;
 	background-color: transparent
 }
+.houseinfo>li>.fr>input[type='text'],
 .houseinfo>li>input[type='text'],
 .houseinfo>li>input[type='date'],
 .houseinfo>li>.mySelect>input[type='text']{
@@ -206,6 +207,7 @@ body,html{
 	font-size: 0.75rem;
 	color: #555;
     line-height: 2rem;
+    background-color: transparent
 }
 .houseinfo>li .bg{
 	position: relative;
@@ -524,4 +526,15 @@ em{
 .text-warning{
 	font-size:0.6rem;
 	color:#8a6d3b;
+}
+.sorry{
+    text-align: center;
+    font-size: 0.7rem;
+    line-height:1.75;
+    margin: 0.5rem 0;
+    padding:0.5rem 0.9rem 0;
+}
+.sorry button{
+	padding:0.2rem 0.8rem;
+	margin-bottom:.5rem;
 }

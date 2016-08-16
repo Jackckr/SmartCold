@@ -10,9 +10,9 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
     }
     $scope.load();
 	 // 显示最大页数
-    $scope.maxSize = 12;
+    $scope.maxSize = 10;
     // 总条目数(默认每页十条)
-    $scope.bigTotalItems = 12;
+    $scope.bigTotalItems = 0;
     // 当前页
     $scope.bigCurrentPage = 1;
     
@@ -32,6 +32,12 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
 		$scope.getComments();
 	}
 	$scope.getComments();
+	
+	$scope.goDetail = function (rdcID) {
+   	 console.log("rdcID" + rdcID);
+        $state.go('coldStorageComment', {"rdcID": rdcID});
+    };
+	
 	
 	$scope.goDeleteComment = function(commentID){
     	var r=confirm("删除评价？");

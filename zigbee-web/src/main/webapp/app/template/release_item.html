@@ -12,6 +12,50 @@
            #files{width: 65px;border: medium none;margin-top: -10px;}
            #img_list { width: 1000px; overflow: hidden;}
            #img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
+           
+           
+ .file {
+    position: relative;
+    display: inline-block;
+    background: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    padding:8px 12px;
+    overflow: hidden;
+    color: white;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #363636;
+/*     border-color: #78C3F3; */
+/*     color: #004974; */
+    text-decoration: none;
+}
+#img_list span i{
+  position: absolute;
+cursor: pointer;
+color: #fff;
+border-radius: 3px;
+background: rgba(0,0,0,.5);
+margin-left: -21px;
+width: 18px;
+height: 18px;
+text-align: center;
+opacity: 0.6;
+line-height: 13px;
+font: normal normal normal 18px/1 FontAwesome;
+}
+
+
            /*错误提示样式*/
            label.success{display: none; } 
  	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
@@ -139,8 +183,8 @@
 				<div class="infoList clearfix">
 					<div class="pull-left">图片:</div>
 					<div class="pull-left">
+					    <a href="javascript:;" class="file">+ 选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
 					    <output id="img_list"></output>
-						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" >
 					</div>
 				</div>
 				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>

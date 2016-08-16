@@ -264,13 +264,14 @@ public class ShareRdcController  {
 	 * @param carType 车型
 	 * @param businessType 业务类型
 	 * @param storagetempertype 温度类型
+	 * @param provincefwID 配送范围 -》app专用
 	 * @param orderBy 排序
 	 * @return
 	 */
 	@APP
 	@RequestMapping(value = "/getSEPSList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String rdcID,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String orderBy) {
+	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String rdcID,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String provincefwID,String orderBy) {
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);//OK
@@ -286,6 +287,7 @@ public class ShareRdcController  {
 		filter.put("validEndTime", validEndTime);//
 		filter.put("carType", carType);//车型->ok
 		filter.put("businessType", businessType);//业务类型->OK
+		filter.put("provincefwID", provincefwID);//
 		filter.put("storagetempertype", storagetempertype);//storagetempertype->OK
 		filter.put("orderBy", orderBy);//
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEPSList(this.pageNum, this.pageSize, filter);
@@ -409,7 +411,7 @@ public class ShareRdcController  {
 			if(StringUtil.isnotNull(telephone)){
 				key= key+"";
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-				String signUpCode ="aaaa";//teleVerify.identityVerify(telephone);
+				String signUpCode =teleVerify.identityVerify(telephone);
 //				request.getSession().setAttribute(key+"shear_id", dataid);
 				request.getSession().setAttribute(key+"shear_yzm", signUpCode);
 //				request.getSession().setAttribute(key+"shear_telephone", telephone);

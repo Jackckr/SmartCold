@@ -157,6 +157,7 @@
 		<if test="stcityID !=null and  stcityID != ''"> and s.stcityID in(${stcityID}) </if>  <!-- codeLave2:温度类型 -->
 		<if test="toprovinceID !=null and  toprovinceID != ''"> and s.toprovinceID in(${toprovinceID}) </if>  <!-- codeLave2:温度类型 -->
 		<if test="tocityID !=null and  tocityID != ''"> and s.tocityID in(${tocityID}) </if>  <!-- codeLave2:温度类型 -->
+		<if test="provincefwID !=null and  provincefwID != ''"> and ( s.stprovinceID in(${provincefwID}) or s.toprovinceID in(${provincefwID}))  </if>  <!-- 配送范围 -->
 		<if test="validStartTime !=null and  validStartTime != ''"> and ( s.validStartTime &lt;=#{validStartTime} AND s.validEndTime &gt;=#{validEndTime} ) </if>  <!-- 时间范围 -->
 		GROUP BY s.id
 		ORDER BY s.updatetime DESC

@@ -6,4 +6,8 @@
         UPDATE ${table} SET mapping=#{mapping}
         WHERE id=#{id}
     </update>
+    <delete id="deleteById">
+        DELETE FROM ${table} WHERE id=#{id}
+    </delete>
+
 </mapper>

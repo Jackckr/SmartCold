@@ -19,7 +19,6 @@
     <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script type="text/javascript" src="../app/js/coldStorageAdd.js"></script>
     <script type="text/javascript">
-    checkLogin();
     </script>
 </head>
 <body ng-app="rdcadd"  ng-controller="coldStorageAdd">
@@ -38,7 +37,7 @@
             <ul class="houseinfo">
                 <li>
                     <label for="name">名称<em>*</em></label>
-                    <form name="rdcForm">
+                    <form name="rdcForm" class="fr" style="width:85%;"> 
                     <input type="text" ng-model="name" ng-disabled="editable" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET">

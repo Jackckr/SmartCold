@@ -5,7 +5,7 @@
  }else{
      var app = angular.module('app', []);
      app.controller('colddetail', function($http, $location,$scope) { 
-    	$scope.dataid=id;
+    	$scope.rdcid=id;
 		$scope.datatype=1;
 		$http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	    $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 

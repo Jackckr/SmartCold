@@ -18,7 +18,7 @@
     <body ng-app="app"  ng-controller="colddetail" ng-cloak>
         <!-- header -->
             <header>                 
-                <div class="area fl"> <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a></div>
+                <div class="area fl"> <a href="coldlist.html"><i class="iconfont">&#xe60e;</i></a></div>
                 <div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
                 <div class="txt">  冷库详情</div>
             </header>
@@ -67,7 +67,7 @@
         <section class="more">
             <ul class="listDad clearfix">
                 <li class="fl">仓位&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
-                <li class="fr"><a href="storehouse.html"><i class="iconfont">&#xe60d;</i></a></li>
+                <li class="fr"><a href="storehouse.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
             </ul>
              <div class="coldlist">
                 <ul class="imgTable">
@@ -89,7 +89,7 @@
         <section class="more">
             <ul class="listDad clearfix">
                 <li class="fl">货品&nbsp;(<span id="num">{{gdtotal}}</span>)</li>
-                <li class="fr"><a href="goodslist.html"><i class="iconfont">&#xe60d;</i></a></li>
+                <li class="fr"><a href="goodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
             </ul>
              <div class="coldlist">
                 <ul class="imgTable">
@@ -111,7 +111,7 @@
         <section class="more">
             <ul class="listDad clearfix">
                 <li class="fl">车辆&nbsp;(<span id="num">{{pstotal}}</span>)</li>
-                <li class="fr"><a href="coldtransportlist.html"><i class="iconfont">&#xe60d;</i></a></li>
+                <li class="fr"><a href="coldtransportlist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
             </ul>
              <div class="coldlist">
                 <ul class="imgTable">

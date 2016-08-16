@@ -8,26 +8,20 @@
 	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	    <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" />
-	    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+	    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	    <script type="text/javascript" src="../app/js/coldlist.js" ></script>
 	    <script>
 	    	$(function(){
-	    		$(".transion").click(function(){
-	    			$(".one").hide();
-	    			$(".two").show();
-	    		})
-	    		$(".cancel").click(function(){
-	    			$(".one").show();
-	    			$(".two").hide();
-	    		})
-	    	})
+	    		$(".transion").click(function(){$(".one").hide();$(".two").show();});
+	    		$(".cancel").click(function(){$(".one").show();$(".two").hide();});
+	    	});
 	    </script>
 	</head>
 	<body ng-app="app"  ng-controller="coldListController">
 		<!-- header -->
 		    <header class="one">
-	        	<div class="area fl"><a onclick="goback()"><i class="iconfont">&#xe60e;</i></a></div>
+	        	<div class="area fl"><a href="../index.html"><i class="iconfont">&#xe60e;</i></a></div>
 	        	<!--<div class="zoom fr"><a href="search.html"><i class="iconfont">&#xe62f;</i></a></div>-->
 	        	<div class="zoom fr"><a class="transion"><i class="iconfont">&#xe62f;</i></a></div>
 	        	<div class="txt">冷库</div>
@@ -37,9 +31,9 @@
 	        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
 	        	</div>
 	        	
-	        	<div class="search">
+	        	<div id="searchDara_div" class="search">
 	        		<input type="text" placeholder="请输入搜索内容..."/>
-	        		<i class="iconfont">&#xe62f;</i>
+	        		<i class="iconfont" >&#xe62f;</i>
 	        	</div>
 		    </header>
 		<!-- header end-->
