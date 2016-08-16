@@ -51,7 +51,7 @@
                             <li id="comment">
                                 <a href="" ng-click="goColdStorageComment(rdcId)" data-toggle="tab">冷库评论</a>
                             </li>
-                            <li id="publish" ng-if="isStorageOwner(user) && rdcAudit === 1">
+                            <li id="publish">
                                 <a href="" ng-click="goColdStoragePublish(rdcId)" data-toggle="tab">信息发布</a>
                             </li>
                         </ul>
@@ -394,7 +394,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="coldStoragepublish" ng-if="isStorageOwner(user) && rdcAudit === 1">
+                            <div class="tab-pane" id="coldStoragepublish">
                                 <div class="row" style="margin-top: 10px;margin-bottom: 2px">
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
                                         <button class="btn btn-success" ng-click="pubSerdc()">发布冷库</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

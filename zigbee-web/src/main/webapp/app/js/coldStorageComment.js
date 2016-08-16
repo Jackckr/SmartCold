@@ -470,11 +470,37 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         $location.path("/coldStorage/" + $stateParams.rdcID + "/review");
     }
     $scope.pubSerdc = function () {
-        $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 3});
+        if ($rootScope.user == null || $rootScope.user.id == 0) {
+            var url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageComment/" + $scope.rdcId;
+            window.location.href = url;
+        } else {
+            if ($rootScope.user.id==$scope.rdcUserId){
+                if ($scope.rdcAudit === 1) {
+                    $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 3});
+                } else {
+                    alert("当前冷库尚未通过认证,无法发布信息!");
+                }
+            } else {
+                alert("您不是冷库的主人,无法发布信息!");
+            }
+        }
     }
 
     $scope.pubGoods = function () {
-        $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 1});
+        if ($rootScope.user == null || $rootScope.user.id == 0) {
+            var url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageComment/" + $scope.rdcId;
+            window.location.href = url;
+        } else {
+            if ($rootScope.user.id==$scope.rdcUserId){
+                if ($scope.rdcAudit === 1) {
+                    $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 1});
+                } else {
+                    alert("当前冷库尚未通过认证,无法发布信息!");
+                }
+            } else {
+                alert("您不是冷库的主人,无法发布信息!");
+            }
+        }
     }
 
     $scope.isStorageOwner = function (user) {
