@@ -53,6 +53,7 @@ public class RdcShareDTO {
 	private String address;//地址
 	private String detlAddress;//详细地址
 	private String coldtype;
+	private int audit;//审核状态：-1未通过，0待审核，1通过审核
 	private  List<String> files;//图片组
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
@@ -306,5 +307,13 @@ public class RdcShareDTO {
 	}
 	public void setDetlAddress(String detlAddress) {
 		this.detlAddress = detlAddress;
+	}
+
+	public int getAudit() {
+		return audit;
+	}
+
+	public void setAudit(int audit) {
+		this.audit = audit;
 	}
 }

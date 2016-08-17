@@ -12,8 +12,8 @@
                     {{rdcName}}
                 </li>
                 <span class="pull-right">
-                    <button class="btn btn-primary btn-xs" type="button" ng-if="undefined!=user && user.id > 0" ng-click="goAuthRdc(rdcId)">冷库认证</button>
-                    <button class="btn btn-primary btn-xs" type="button" ng-if="undefined!=user && user.id > 0 && user.id==rdcUserId" ng-click="goEditRdc(rdcId)">修改冷库</button>
+                    <button class="btn btn-primary btn-xs" type="button" ng-if="isLogin(user)" ng-click="goAuthRdc(rdcId)">冷库认证</button>
+                    <button class="btn btn-primary btn-xs" type="button" ng-if="isStorageOwner(user)" ng-click="goEditRdc(rdcId)">修改冷库</button>
                 </span>
             </ul>
         </div>
@@ -327,24 +327,6 @@
                                             <!-- <a href="#" style="margin-left: 10px;">有图片(55)</a> -->
                                         </div>
                                     </div>
-              <!--                      <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
-                                        <select style="width: 120px;margin-top: 10px;margin-left: 15px;">
-                                            <option value="1" selected>热门排序</option>
-                                            <option value="2">时间排序</option>
-                                        </select>
-                                        <select style="width: 120px;margin-top: 10px;margin-left: 15px;">
-                                            <option value="-1" selected>全部冷库类型</option>
-                                            <option value="制冷">制冷</option>
-                                            <option value="保险">保险</option>
-                                            <option value="储藏">储藏</option>
-                                        </select>
-                                        <select style="width: 120px;margin-top: 10px;margin-left: 15px;">
-                                            <option value selected>全部类型</option>
-                                            <option value="大冷库">大冷库</option>
-                                            <option value="中冷库">中冷库</option>
-                                            <option value="小冷库">小冷库</option>
-                                        </select>
-                                    </div>-->
                                 </div>
                                 <div class="row" ng-repeat="comment in comments"
                                      style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px  solid #d3d3d3;">

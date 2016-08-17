@@ -1,7 +1,7 @@
 /**
  * Created by sunqiunian on 16/3/3.
  */
-coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParams, $http,$rootScope) {
+coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParams, $http,$rootScope, baseTools) {
     console.log($stateParams.storageID);
     $scope.load = function () {
         var data = [];
@@ -11,8 +11,8 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         var startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
         $http.get('/i/coldStorage/getTempByTime', {
             params: {
-            	"startTime": startTime.toISOString().replace("T", " ").replace(/\..*/,""),
-            	"endTime": endTime.toISOString().replace("T", " ").replace(/\..*/,""),
+            	"startTime": baseTools.formatTime(startTime),
+            	"endTime": baseTools.formatTime(endTime),
                 "oid": $stateParams.storageID,
                 'key':'Temp'
             }

@@ -41,7 +41,16 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>cors</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/controller/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>noheader</filter-name>
+		<filter-class>com.smartcold.manage.cold.filter.NoHeaderFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>noheader</filter-name>
+		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
 
 	<servlet-mapping>
