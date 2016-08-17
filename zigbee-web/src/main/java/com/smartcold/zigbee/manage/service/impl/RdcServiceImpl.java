@@ -170,6 +170,8 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setStructure(rdcEntity.getStruct());
             rdcAddDTO.setTelphoneNum(rdcEntity.getPhone());
             rdcAddDTO.setTonnage(rdcEntity.getCapacity());
+            rdcAddDTO.setAudit(rdcEntity.getAudit());
+            rdcAddDTO.setUserid(rdcEntity.getUserid());
         }
 
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0 && !CollectionUtils.isEmpty(rdcExtByRDCId)

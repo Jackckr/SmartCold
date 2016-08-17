@@ -20,6 +20,7 @@ import com.smartcold.manage.cold.service.CookieService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
 import com.smartcold.manage.cold.service.UserService;
+import com.smartcold.manage.cold.util.EncodeUtil;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -60,7 +61,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object login(HttpServletRequest request, String userName, String password, HttpServletResponse response) {
 		// UserEntity user = userDao.findByPassword(userName, password);
-		UserEntity user = userService.getUserByNAndP(userName, password);
+		UserEntity user = userService.getUserByNAndP(userName, EncodeUtil.encodeByMD5(password));
 		if (user.getId() != 0) {
 			String cookie = cookieService.insertCookie(userName);
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());

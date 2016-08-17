@@ -68,6 +68,12 @@ public class RdcController {
 	@Autowired
 	private StorageHonorMapper storageHonorDao;
 
+	@Autowired
+	private RdcUserMapper rdcUserDao;
+
+	@Autowired
+	private RdcAuthLogMapper rdcAuthLogDao;
+
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -167,7 +173,7 @@ public class RdcController {
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
-		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+		AdminEntity user = (AdminEntity) request.getSession().getAttribute("admin");
 		rdcEntity.setUserId(user.getId());
 		rdcEntity.setType(0);
 		rdcEntity.setStoragetype("");
@@ -498,10 +504,25 @@ public class RdcController {
 
 	@RequestMapping(value = "/updateRdcAuth", method = RequestMethod.POST)
 	@ResponseBody
-	public Object updateRdcAuth(int rdcId, int authUserId) {
+	public Object updateRdcAuth(HttpServletRequest request, int rdcId, int authUserId) {
 		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
 		rdcEntity.setUserId(authUserId);
 		rdcDao.updateRdc(rdcEntity);
+
+		RdcAuthLogEntity rdcAuthLogEntity = new RdcAuthLogEntity();
+		AdminEntity admin = (AdminEntity)request.getSession().getAttribute("admin");
+		rdcAuthLogEntity.setType("认证审核");
+		rdcAuthLogEntity.setAuthuserid(admin.getId()); // 审核人
+		rdcAuthLogEntity.setApplyuserid(authUserId); // 申请人
+		rdcAuthLogEntity.setChangeduserid(rdcEntity.getUserId()); // 被替换人
+		rdcAuthLogEntity.setDesc("审核通过,更新冷库库主");
+		rdcAuthLogDao.insert(rdcAuthLogEntity);
+
+		RdcUser rdcUser = new RdcUser();
+		rdcUser.setRdcid(rdcId);
+		rdcUser.setUserid(authUserId);
+		rdcUser.setAddtime(new Date());
+		rdcUserDao.insertSelective(rdcUser);
 		return new ResultDto(0, "冷库认证审核成功");
 	}
 }

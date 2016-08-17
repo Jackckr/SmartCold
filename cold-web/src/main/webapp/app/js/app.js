@@ -60,11 +60,15 @@ coldWeb.config(function($httpProvider) {
 coldWeb.factory('baseTools',['$rootScope',function(){
 	return {
 		getFormatTimeString: function(delta){
-			delta = delta ? delta : 0;
+			delta = delta ? delta + 8 * 60 * 60 * 1000: 8 * 60 * 60 * 1000;
 			return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/,"")
 		},
-		formatTime: function(timeString){
-			return new Date(Date.parse(timeString)).toISOString().replace("T", " ").replace(/\..*/,"")
+		formatTime: function(time){
+			if (typeof(time) == "string"){				
+				return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+			}else{
+				return new Date(time.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+			}
 		},
 		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type){
 			option = {
@@ -377,6 +381,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/waterCost',
     	controller: 'waterCost',
         templateUrl: 'app/template/waterCost.html'
+    }).state('platformDoor',{
+    	url:'/platformDoor/{doorid}',
+    	controller: 'platformDoor',
+        templateUrl: 'app/template/platformDoor.html'
     });
 
 });

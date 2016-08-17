@@ -14,8 +14,12 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
      $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:datatype;//当前数据类型
      $scope.appmode=[{url1:""},{tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],btn:"发布"},{tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],btn:"发布"},{tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],btn:"发布"}];
 	 $scope.releaseitem=function(data){//带数据发布
-		  var url= $scope.dataType==2?"releaseCarInfo":"releaseItem";
-		  $state.go(url,{data:data,dataid:$scope.typeCode-1,_cuttid: $scope.dataType});
+		 if (data.audit === 1) {
+			 var url= $scope.dataType==2?"releaseCarInfo":"releaseItem";
+			 $state.go(url,{data:data,dataid:$scope.typeCode-1,_cuttid: $scope.dataType});
+		 } else {
+			 alert("当前冷库尚未通过认证,无法发布信息!");
+		 }
 	 };
 	 $scope.simplyitem=function(){//不关联发布
 		 if(user==null||(user!=null&&user.id==0)){ util.info(null,"你还没有登录！请登录后操作！",function(){
