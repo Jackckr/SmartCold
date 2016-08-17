@@ -69,6 +69,7 @@ function showErrorInfo(msg) {
 }
 function checkLogin(msg,callback) {
 	 if(window.user!=null ){return;}
+//	 $("body").hide();
 	  $.ajax({
 	        type:"GET",
 	        cache:false,
@@ -78,12 +79,14 @@ function checkLogin(msg,callback) {
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
+//	            	$("body").show();
 	                window.user = data;
 	                if(callback){callback(); }
 	            } else {
 	            	alert(msg?msg:"请登录后再操作~");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
+	                return;
 	            }
 	        }
 //	      ,complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数

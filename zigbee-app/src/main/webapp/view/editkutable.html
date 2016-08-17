@@ -38,7 +38,7 @@
                 <li>
                     <label for="province">省<em>*</em></label>
                     <div class="mySelect">
-                         <select ng-model="provinceId" ng-disabled="editable" ng-change="provinceSelected(provinceId)"  ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                         <select ng-model="provinceId"  ng-change="provinceSelected(provinceId)"  ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>                    
                 </li>
