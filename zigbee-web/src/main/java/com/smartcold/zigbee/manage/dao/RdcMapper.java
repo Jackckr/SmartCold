@@ -41,5 +41,6 @@ public interface RdcMapper {
 	
 	public List<HashMap<String, Object>> findRDCById( int rdcID);
 	
-	
+	RdcEntityDTO findRDCEntityDtoByRdcId(@Param("rdcID") int rdcID);
+
 }

@@ -119,6 +119,13 @@ public class RdcController {
 		return rdcService.findScoreRdcDTOList(npoint);
 	}
 
+	@RequestMapping(value = "/findRDCEntityDtoByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findRDCEntityDtoByRdcId(@RequestParam int rdcID) {
+		return rdcMapper.findRDCEntityDtoByRdcId(rdcID);
+	}
+	
+	
 	@RequestMapping(value = "/findRDCByRDCId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRDCByRDCId(@RequestParam int rdcID) {
