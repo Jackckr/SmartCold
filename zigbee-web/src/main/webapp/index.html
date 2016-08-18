@@ -85,7 +85,10 @@
 			<div class="nav-right"  ng-show="user != null && user.id != 0" >
 				<div class="unauthenticated dropdown">
 					<div class="btn-group">
-					<span class="user_info"  onclick="window.location.href='#/personalDetail'"><img class="user_info" src="{{user.avatar}}" style="border-radius: 50%;height: 20px; width: 20px;">{{user.username}}</span>
+					<span class="user_info"  onclick="window.location.href='#/personalDetail'">
+					<img class="user_info" ng-src="{{user.avatar}}" style="border-radius: 50%;height: 40px; width: 40px;">&nbsp;&nbsp;
+					{{user.username}}
+					</span>
 		 <!--		 <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="omg overhide">{{user.username}}</i><span class="caret"></span></button>
 <!-- 						<ul class="dropdown-menu"> -->
 <!-- 							<li><a href="#/personalDetail">个人信息</a></li> -->
@@ -94,7 +97,7 @@
 <!-- 							<li><a href="#/personalOrder">我的订单</a></li> -->
 <!-- 							<li><a href="#/personalComment">我的评价</a></li> -->
 <!-- 						</ul> -->
-					</div>　
+					</div>&nbsp;&nbsp;
 					<b><a ng-click="logout()" href="" ng-bind="'退出'"></a></b>
 				 </div>
 			</div>
