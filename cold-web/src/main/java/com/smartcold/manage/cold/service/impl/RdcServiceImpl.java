@@ -36,7 +36,7 @@ public class RdcServiceImpl implements RdcService {
 	public List<Rdc> findRdcByUserid(int userid) {
 		RdcUser rdcUser = rdcUserDao.findByUserId(userid);
 		if (rdcUser == null) {
-			return null;
+			return Lists.newArrayList();
 		} else {
 			return rdcDao.findRDCByRDCId(rdcUser.getRdcid());
 		}
@@ -56,6 +56,8 @@ public class RdcServiceImpl implements RdcService {
 					}
 				}
 			}
+		} else {
+			result = findRdcByUserid(userid);
 		}
 		return result;
 	}
