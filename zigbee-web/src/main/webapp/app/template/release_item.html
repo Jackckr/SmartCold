@@ -1,4 +1,3 @@
-<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" href="app/css/common.css">
         <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
         <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
@@ -13,8 +12,7 @@
            #files{width: 65px;border: medium none;margin-top: -10px;}
            #img_list { width: 1000px; overflow: hidden;}
            #img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
-           
-           
+                      
  .file {
     position: relative;
     display: inline-block;
@@ -181,194 +179,6 @@ font: normal normal normal 18px/1 FontAwesome;
 				<div class="infoList clearfix">
 					<div class="pull-left">图片:</div>
 					<div class="pull-left">
-					    <a href="javascript:;" class="file">选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
-					    <output id="img_list"></output>
-					</div>
-				</div>
-				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>
-			</form>
-    	</div>
-=======
-        <link rel="stylesheet" type="text/css" href="app/css/common.css">
-        <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
-        <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
-        <style>
-           .shar_none{display: none;}
-           .control-label{line-height: 32px;}
-           .form-control{display: inline-block;}
-           .input-group-addon{display: block;height: 34px;float: left;width: 49px;}
-           .form-control:FOCUS{box-shadow: 0 0 2px #00A6FF !important; border-color: #00A6FF !important;}
-           .sp_radio{margin-right: 10px;}
-           .sp_radio input{width: 20px !important;}
-           #files{width: 65px;border: medium none;margin-top: -10px;}
-           #img_list { width: 1000px; overflow: hidden;}
-           #img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
-                      
- .file {
-    position: relative;
-    display: inline-block;
-    border: 1px solid #CCCCCC;
-    border-radius: 4px;
-    overflow: hidden;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 29px;
-    width:85px;
-    height:29px;
-    text-indent:2em;
-    font-size:12px;
-    background:url(app/img/image-upload.png) no-repeat center;
-}
-.file input {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    opacity: 0;
-}
-#img_list span i{
-  position: absolute;
-cursor: pointer;
-color: #fff;
-border-radius: 3px;
-background: rgba(0,0,0,.5);
-margin-left: -21px;
-width: 18px;
-height: 18px;
-text-align: center;
-opacity: 0.6;
-line-height: 13px;
-font: normal normal normal 18px/1 FontAwesome;
-}
-
-
-           /*错误提示样式*/
-           label.success{display: none; } 
- 	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
-	       input.error:FOCUS{  box-shadow: 0 0 5px #00A6FF !important; border-color: #00A6FF !important;} 
-	       input.error:FOCUS+label.error{ border-color: #00A6FF;color:#00A6FF; box-shadow: 0 0 5px #00A6FF !important;}
-	       input.error:FOCUS+label.error::before{ border-color: #00A6FF;}
-		   label.error::before{content:"";padding:0px;margin:0px;width:10px;height:10px;position:absolute;border-left:1px solid red;border-bottom:1px solid red;background-color:white;left:-6px;top:10px;transform:rotate(45deg);}
-		   label.error{float:left;position:absolute;color:red;border:1px solid red;border-radius:5px;padding:5px 20px;text-align:left;margin-left:10px;background-color:white;box-shadow:0 0 5px #d74f5a !important;}
-      </style>
-    
-    	<div id="release_main" class="shareMain shar_none">
-			<!-- 出货和求货 -->
-			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
-				<span id="tool1"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>  <!-- class="{{appmode[dataType].tolimg[1]}}"  -->
-				<span id="tool2"  value="{{appmode[dataType].tool[1][0]}}" ng-click="changtype('#tool2')">{{appmode[dataType].tool[1][1]}}</span>
-			</div>
-			<!-- 出货和求货 end -->
-			<form id="release_item_from" name="itemform"  class="formInfo" >
-			    <div id="hide_div">
-			      <input type="hidden" name="dataType" value="{{dataType}}">
-			      <input type="hidden" name="typeCode" value="{{typeCode}}">
-			      <input type="hidden" name="typeText" value="{{typeText}}">
-			      <input type="hidden" name="detlAddress" value="">
-			    </div>
-			    <div id="recinfo_div" >
-			       <input id="txt_rdcID" type="hidden" name="rdcID" value="{{rdcID}}">
-					<div class="outSon">
-						<div class="company">{{rdcinfo.name}}</div><div class="position">
-							<span class="glyphicon glyphicon-map-marker"></span>
-							<span id="rdc_address" class="textInfo">{{rdcinfo.address}}</span>
-						</div>
-					</div>
-					<div class="outSon clearfix">
-						<div class="img"  ng-repeat="img in rdcimgs" >
-							<img src="{{img}}" height="184" width="319" alt="">
-						</div>
-					</div>
-				</div>
-				<div class="infoList clearfix">
-					<div class="pull-left col-sm-4  control-label " ><em>*</em>描述:</div>
-					<div class="pull-left">
-						<input id="tx_title" type="text" class="form-control" placeholder="" name="title" >
-					</div>
-				</div>
-				<div class="mode_3 shar_none mode_hide infoList clearfix">
-					<div class="pull-left col-sm-4  control-label " ><em>*</em>温度类型:</div>
-					<div class="pull-left">
-                       <select  id="tx_attrvalue" name="codeLave2" class="form-control" >
-							<option ng-repeat="x in  codeLave2" value="{{x.id}}">{{x.type}}</option>
-						</select>
-					</div>
-				</div>
-				<div id="sh_pct_div" class="mode_hide shar_none" ><!-- class="mode_1_2 mode_3_2 mode_hide shar_none"  -->
-					<div class="infoList clearfix city">
-						<div class="pull-left col-sm-4  control-label "  ><em>*</em>省:</div>
-						<div class="pull-left">
-							 <select id="sl_provinceId" class="form-control" ng-model="provinceId" ng-disabled="editable" ng-change="changcity()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-							 <input id="txt_provinceId" name="provinceId"  type="hidden" value="{{provinceId}}">
-						</div>
-					</div>
-					<div class="infoList clearfix city"  >
-						<div class="pull-left col-sm-4  control-label " ><em>*</em>市:</div>
-						<div class="pull-left">
-							<select id="sl_cityid" name="cityid"  class="form-control">
-								<option ng-repeat="x in city" value="{{x.cityID}}">{{x.cityName}}</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="mode_1 shar_none mode_hide infoList clearfix">
-					<div class="pull-left col-sm-4 control-label "><em>*</em>品类:</div>
-					<div class="pull-left">
-						<select  id="good_type" name="codeLave1" class="form-control" >
-							<option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
-						</select>
-					</div>
-					<div class="mode_1_1 shar_none mode_hide">
-						   <div class="infoList clearfix">
-								<div class="pull-left col-sm-4  control-label " >供应商:</div>
-								<div class="pull-left">
-									<input id="tx_title" type="text" class="form-control" placeholder="" name="unit1" >
-								</div>
-							</div>
-					</div>
-				</div>
-				<div class="infoList clearfix infoDate ">
-					<div class="pull-left col-sm-4 control-label "><em>*</em>{{appmode[dataType].lab[0][0]}}:</div>
-					<div class="pull-left">
-						<input type="text" placeholder="" class="form-control" name="sqm" ><span class="count" >{{appmode[dataType].lab[0][1]}} </span>
-                        <span class="mode_3 shar_none">
-                             <span class="sp_radio"><input  name="unit" type="radio" value="元/天·平方米" checked="checked"  ng-model="unit" >平方米</span>
-                             <span class="sp_radio"><input name="unit" type="radio" value="元/天·吨"    ng-model="unit" >吨</span>
-                             <span class="sp_radio"><input  name="unit" type="radio" value="元/天·其他" ng-model="unit" > 其他</span>
-                        </span>
-					</div>
-				</div>
-				<div class="infoList clearfix infoDate ">
-					<div class="pull-left col-sm-4 control-label ">{{appmode[dataType].lab[1][0]}}:</div>
-					<div class="pull-left">
-						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{unit}}</span><!-- {{appmode[dataType].lab[1][1]}} -->
-					</div>
-				</div>
-			
-				<div class="infoList clearfix infoDate">
-					<div class="pull-left col-sm-4 control-label "><em>*</em>信息有效期:</div>
-					<div class="pull-left">
-		                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-		                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control "   class="span4"/>
-		                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
-		                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
-					</div>
-				</div>
-				<div class="infoList clearfix">
-					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>
-					<div class="pull-left">
-						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone}}">
-					</div>
-				</div>
-				<div class="infoList clearfix">
-					<div class="pull-left">备注:</div>
-					<div class="pull-left">
-						<textarea name="note" placehoder="可填" class="form-control"></textarea>
-					</div>
-				</div>
-				<div class="infoList clearfix">
-					<div class="pull-left">图片:</div>
-					<div class="pull-left">
 					    <output id="img_list"></output>
 					     <a href="javascript:;" class="file">选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
 					</div>
@@ -376,4 +186,3 @@ font: normal normal normal 18px/1 FontAwesome;
 				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>
 			</form>
     	</div>
->>>>>>> 7f30347f0db4562e9bb9109a7793eab8597816ea
