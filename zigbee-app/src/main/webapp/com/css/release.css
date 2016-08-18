@@ -159,6 +159,11 @@ input[type="text"]:disabled{
 	display: inline-block;
 	color: #999;
 }
+.houseinfo>li label>.pic{
+	width:2rem;
+	height:2rem;
+	margin-left:0.5rem;
+}
 .mySelect{
 	min-width: 60%;
 	height: 100%;
