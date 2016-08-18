@@ -46,6 +46,14 @@ public enum SetTables {
         this.desc = desc;
     }
 
+    public static SetTables getByType(int type){
+        for (SetTables item : SetTables.values()) {
+            if (item.type == type)
+                return item;
+        }
+        throw new IllegalArgumentException("invalid type");
+    }
+
     public static boolean checkTable(String table){
         for (SetTables item : SetTables.values()) {
             if (item.table.equals(table))
@@ -54,4 +62,7 @@ public enum SetTables {
         throw new IllegalArgumentException("invalide table name");
     }
 
+    public String getTable() {
+        return table;
+    }
 }

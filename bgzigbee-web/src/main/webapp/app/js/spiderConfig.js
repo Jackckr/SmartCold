@@ -194,6 +194,40 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$scope.vm.choseCompressGroupItemKey = $scope.compressGroupItemKeys[0];
 			$scope.compressGroupItem.push($scope.handItem);
 		})
+
+        $http.get('/i/spiderConfig/find/evaporativeSet?rdcId='+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.evaporativeSets = resp.data;
+            $scope.vm.choseEvaporative = resp.data[0];
+        })
+
+        $http.get("/i/spiderConfig/findByRdcid?table=powerset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.powerSets = resp.data;
+        })
+
+        $http.get("/i/spiderConfig/findByRdcid?table=platformdoorset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.platformDoorSets = resp.data;
+        })
+
+        $http.get("/i/spiderConfig/findByRdcid?table=pressureplatformset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.pressurePlatformSets = resp.data;
+        })
+
+        $http.get("/i/spiderConfig/findByRdcid?table=chargingpileset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.chargingpileSets = resp.data;
+        })
+
+        $http.get("/i/spiderConfig/findByRdcid?table=forkliftset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.forkliftSets = resp.data;
+        })
+
+        $http.get("/i/spiderConfig/findByRdcid?table=coldstoragelightset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.coldStorageLightSets = resp.data;
+        })
+
+        $http.get("/i/spiderConfig/findByRdcid?table=circulatingpumpset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+            $scope.circulatingPumpSets = resp.data;
+        })
+
 	}
 	
 	$scope.changeStorage = function(){
@@ -220,6 +254,175 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$scope.vm.choseBlowerItemKey = $scope.blowerItemKeys[0];
 			$scope.blowerItem.push($scope.handItem);
 		})
+        // find windscreen
+        $http.get('/i/spiderConfig/find/windscreenSet?storageId='+$scope.vm.choseStorage.id).then(function (resp) {
+            $scope.windScreenSets = resp.data;
+
+            console.log($scope.vm.choseStorage.name);
+        })
+	}
+
+	$scope.changeCompressGroup = function () {
+		$http.get('i/compressorGroup/findCompressorByGid?groupId='+$scope.vm.choseCompressGroup.id)
+			.then(function (resp) {
+				 $scope.compressorSets = resp.data;
+			});
+	}
+	$scope.compressorSet={};
+	$scope.addCompress = function () {
+		var object = $scope.compressorSet;
+		object.compressorgroupid=$scope.vm.choseCompressGroup.id;
+		$http.post("/i/compressorGroup/saveCompressor", object).then(function (resp) {
+			alert(resp.data.message);
+			$scope.compressorSet = {};
+			$scope.changeCompressGroup();
+		});
+	}
+
+	$scope.windScreenSet = {}
+	$scope.addWindScreen = function () {
+		var object = $scope.windscreenSet;
+		object.coldStorageId = $scope.vm.choseStorage.id;
+		$http.post("/i/spiderConfig/add/windscreenset", object).then(function (resp) {
+			alert(resp.data.message);
+			$scope.changeStorage();
+			$scope.windScreenSet = {};
+		})
+	}
+    $scope.evaporativeSet = {};
+	$scope.addEvaporativeSet = function () {
+        var object = $scope.evaporativeSet;
+        object.rdcid = $scope.vm.choseRdc.id;
+        $http.post("/i/spiderConfig/add/evaporativeSet", object).then(function (resp) {
+            alert(resp.data.message);
+            $scope.changeRdc();
+            $scope.evaporativeSet = {};
+        })
+    }
+    $scope.changeEvaporative = function () {
+        $http.get("/i/spiderConfig/find/evaporativeWaterSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+            $scope.evaporativeWaterSets = resp.data;
+        })
+        $http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+            $scope.evaporativeBlowerSets = resp.data;
+        })
+    }
+    $scope.evaporativeWaterSet = {};
+    $scope.addEvaporativeWaterSet = function () {
+        var object = $scope.evaporativeWaterSet;
+        object.evaporativeid = $scope.vm.choseEvaporative.id;
+        $http.post("/i/spiderConfig/add/evaporativeWaterSet", object).then(function (resp) {
+            alert(resp.data.message);
+            $scope.changeEvaporative();
+            $scope.evaporativeWaterSet = {};
+        })
+    }
+
+    $scope.evaporativeBlowerSet = {}
+    $scope.addEvaporativeBlowerSet = function () {
+        var obj = $scope.evaporativeBlowerSet;
+        obj.evaporativeid = $scope.vm.choseEvaporative.id;
+        $http.post("/i/spiderConfig/add/evaporativeBlowerSet", obj).then(function (resp) {
+            alert(resp.data.message);
+            $scope.changeEvaporative();
+            $scope.evaporativeBlowerSet = {};
+        })
+    }
+
+    $scope.platformDoorSet = {}
+    $scope.addplatformDoorSet = function () {
+        var obj = $scope.platformDoorSet;
+        obj.rdcid = $scope.vm.choseRdc.id;
+        $http.post("/i/spiderConfig/add/platformDoorSet", obj).then(function (resp) {
+            alert(resp.data.message);
+            $scope.changeRdc();
+            $scope.platformDoorSet = {};
+        })
+    }
+
+    $scope.coldStorageLightSet = {}
+    $scope.addColdStorageLightSet = function () {
+        var obj = $scope.coldStorageLightSet;
+        obj.rdcid = $scope.vm.choseRdc.id;
+        $http.post("/i/spiderConfig/add/coldStorageLightSet", obj).then(function (resp) {
+            alert(resp.data.message);
+            $scope.changeRdc();
+            $scope.coldStorageLightSet = {};
+        })
+    }
+
+    $scope.addRdcIdAndName = function (obj, table) {
+        obj.rdcid = $scope.vm.choseRdc.id;
+        obj.table = table+'set';
+        $http.post("/i/spiderConfig/add/rdcidAndName", obj).then(function (resp) {
+            alert(resp.data.message);
+            obj.name = '';
+            $scope.changeRdc();
+        })
+    }
+
+    $scope.delById = function(table,item, arrayData){
+		var flag = confirm("确认删除？");
+		if (flag) {
+			$http.delete("/i/spiderConfig/delete/id", {
+				params: {"table": table + "set", "id": item.id}
+			}).then(function (resp) {
+				alert(resp.data.message);
+				var index =  arrayData.indexOf(item);
+				arrayData.splice(index, 1);
+			})
+		}
+	}
+
+	$scope.saveObjectToUrl = function(url, object, callback){
+		if(callback){
+			$http.post(url,object).then(callback);
+		}else {
+			$http.post(url,object).then(function (resp) {
+				alert(resp.data.message);
+			})
+		}
+
+	}
+	
+	$scope.deviceChange = function (choseDevice) {
+		console.log(choseDevice.name);
+        switch(choseDevice.type) {
+            // case 1:
+            //     return $scope.coldStorageKeys;
+            // case 2:
+            //     return $scope.doorKeys;
+            // case 3:
+            //     return $scope.compressorGroupKeys;
+            // case 4:
+            //     return $scope.blowerKeys;
+            case 5:
+                $scope.changeCompressGroup();
+                break;
+            case 6:
+                return $scope.windscreenKeys;
+            case 7:
+                return $scope.evaporativeKeys;
+            case 8:
+                //return $scope.evaporativewaterKeys;
+            case 9:
+                return $scope.changeEvaporative();
+            case 10:
+                return $scope.powerKeys;
+            case 11:
+                return $scope.platformdoorKeys;
+            case 12:
+                return $scope.pressureplatformKeys;
+            case 13:
+                return $scope.chargingpileKeys;
+            case 14:
+                return $scope.forkliftKeys;
+            case 15:
+                return $scope.coldstoragelightKeys;
+            case 16:
+                return $scope.circulatingpumpKeys;
+            default:
+        }
 	}
 	
 	$scope.deleteKey = function(object,key){
@@ -341,7 +544,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		})
 	}
 	
-	$scope.addCompress = function(){
+	$scope.addCompressGroup = function(){
 		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
 		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
 			alert(data.message);
@@ -393,3 +596,51 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.load();
 	
 });
+// coldWeb.directive("setTable", function ($templateCache) {
+//
+// 	var defaults = {
+// 		templateUrl: 'ng-gallery.html'
+// 	};
+//
+//
+// 	var template_url = defaults.templateUrl;
+// 	// Set the default template
+// 	$templateCache.put(template_url,
+// 		'<div class="{{ baseClass }}">' +
+// 		'  <div ng-repeat="i in images">' +
+// 		'    <img ng-src="{{ i.thumb }}" class="{{ thumbClass }}" ng-click="openGallery($index)" alt="Image {{ $index + 1 }}" />' +
+// 		'  </div>' +
+// 		'</div>' +
+// 		'<div class="ng-overlay" ng-show="opened">' +
+// 		'</div>' +
+// 		'<div class="ng-gallery-content" unselectable="on" ng-show="opened" ng-swipe-left="nextImage()" ng-swipe-right="prevImage()">' +
+// 		'  <div class="uil-ring-css" ng-show="loading"><div></div></div>' +
+// 		'<a href="{{getImageDownloadSrc()}}" target="_blank" ng-show="showImageDownloadButton()" class="download-image"><i class="fa fa-download"></i></a>' +
+// 		'  <a class="close-popup" ng-click="closeGallery()"><i class="fa fa-close"></i></a>' +
+// 		'  <a class="nav-left" ng-click="prevImage()"><i class="fa fa-angle-left"></i></a>' +
+// 		'  <img ondragstart="return false;" draggable="false" ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" />' +
+// 		'  <a class="nav-right" ng-click="nextImage()"><i class="fa fa-angle-right"></i></a>' +
+// 		'  <span class="info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}</span>' +
+// 		'  <div class="ng-thumbnails-wrapper">' +
+// 		'    <div class="ng-thumbnails slide-left">' +
+// 		'      <div ng-repeat="i in images">' +
+// 		'        <img ng-src="{{ i.thumb }}" ng-class="{\'active\': index === $index}" ng-click="changeImage($index)" />' +
+// 		'      </div>' +
+// 		'    </div>' +
+// 		'  </div>' +
+// 		'</div>'
+// 	);
+//
+// 	return {
+// 		restrict: 'E',
+// 		scope: {
+// 			notShow:"id",
+// 		},
+// 		templateUrl: function (element, attrs) {
+// 			return attrs.templateUrl || defaults.templateUrl;
+// 		},
+// 		link: function (scope, element, attrs) {
+//
+// 		}
+// 	}
+// });

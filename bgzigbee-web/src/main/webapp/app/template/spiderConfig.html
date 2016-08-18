@@ -18,13 +18,26 @@
                         <form class="navbar-form">
                             <div class="col-lg-4 form-group" style="margin-top:20px;">
                                 <label>操作：</label>
-                                <select ng-options="device.name for device in devices" class="form-control" ng-model="choseDevice"></select>
+                                <select ng-options="device.name for device in devices" class="form-control" ng-model="choseDevice" ng-change="deviceChange(choseDevice)"></select>
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加风机'">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;"
+                                 ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加冷风机' || choseDevice.table=='windscreen' ">
                                 <label>冷库：</label>
                                 <select ng-options="storage.name for storage in storages" class="form-control" ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
+                            </div>
+                        </form>
+                        <form class="navbar-form">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressor'">
+                                <label>压缩机组：</label>
+                                <select ng-options="item.name for item in compressGroups" class="form-control" ng-model="vm.choseCompressGroup" ng-change="changeCompressGroup()"></select>
+                            </div>
+                        </form>
+                        <form class="navbar-form">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'evaporativewater' || choseDevice.table =='evaporativeblower' ">
+                                <label>蒸发冷系统：</label>
+                                <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
                             </div>
                         </form>
                         <!--  -->
@@ -126,7 +139,7 @@
                             </div>
                         </form>
                         <!--  -->
-                        <form id="addBlower" ng-show="choseDevice.name == '添加风机'" class="col-lg-12 form-horizontal">
+                        <form id="addBlower" ng-show="choseDevice.name == '添加冷风机'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>风机名字:</label>
@@ -190,7 +203,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-8">
-                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompress()" ng-disabled="!compressGroupEntity.name">添加</a>
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompressGroup()" ng-disabled="!compressGroupEntity.name">添加</a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -207,6 +220,398 @@
                                             <td>{{compressGroup.name}}</td>
                                             <td><a class="btn btn-danger btn-xs" ng-click="deleteCompressGroup(compressGroup.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+
+                        <form id="addCompressor" ng-show="choseDevice.table == 'compressor'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="compressorSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">匹数：</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="compressorSet.power" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">水耗系数:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="compressorSet.waterRatio" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompress()" ng-disabled="!compressorSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>已有单体压缩机：</label>
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in compressorSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, compressorSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--风幕机-->
+                        <form id="addWindScreen" ng-show="choseDevice.table == 'windscreen'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="windScreenSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addWindScreen()" ng-disabled="!windscreenSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>已有单体压缩机：</label>
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in windScreenSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, windScreenSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--添加蒸发冷系统-->
+                        <form id="addEvaporative" ng-show="choseDevice.table == 'evaporative'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="evaporativeSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addEvaporativeSet()" ng-disabled="!evaporativeSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in evaporativeSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, evaporativeSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--添加蒸发冷水泵-->
+                        <form id="addEvaporativeWater" ng-show="choseDevice.table == 'evaporativewater'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="evaporativeWaterSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addEvaporativeWaterSet()" ng-disabled="!evaporativeWaterSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in evaporativeWaterSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, evaporativeWaterSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--添加冷风机-->
+                        <form id="addEvaporativedBlower" ng-show="choseDevice.table == 'evaporativeblower'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="evaporativeBlowerSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addEvaporativeBlowerSet()" ng-disabled="!evaporativeBlowerSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in evaporativeBlowerSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, evaporativeBlowerSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--添加电表-->
+                        <form id="addpower" ng-show="choseDevice.table == 'power'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="powerSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addRdcIdAndName(powerSet, choseDevice.table)" ng-disabled="!powerSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in powerSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, powerSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--月台门-->
+                        <form id="addPlatformdoor" ng-show="choseDevice.table == 'platformdoor'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="platformDoorSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">门长度(M):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="platformDoorSet.length" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">门宽度(M):</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="platformDoorSet.width" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addplatformDoorSet()" ng-disabled="!platformDoorSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in platformDoorSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, platformDoorSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--液压平台-->
+                        <form id="addPressurePlatform" ng-show="choseDevice.table == 'pressureplatform'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="pressurePlatformSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addRdcIdAndName(pressurePlatformSet, choseDevice.table)" ng-disabled="!pressurePlatformSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in pressurePlatformSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, pressurePlatformSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--充电桩-->
+                        <form id="addChargingpile" ng-show="choseDevice.table == 'chargingpile'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="chargingpileSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addRdcIdAndName(chargingpileSet, choseDevice.table)" ng-disabled="!chargingpileSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in chargingpileSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, chargingpileSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--叉车-->
+                        <form id="addForkliftSet" ng-show="choseDevice.table == 'forklift'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="forkliftSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addRdcIdAndName(forkliftSet, choseDevice.table)" ng-disabled="!forkliftSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in forkliftSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, forkliftSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--灯组-->
+                        <form id="addColdStorageLight" ng-show="choseDevice.table == 'coldstoragelight'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="coldStorageLightSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">功率(kw):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="coldStorageLightSet.power" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addColdStorageLightSet()" ng-disabled="!coldStorageLightSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in coldStorageLightSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, coldStorageLightSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!--防冻循环-->
+                        <form id="addCirculatingPump" ng-show="choseDevice.table == 'circulatingpump'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="circulatingPumpSet.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addRdcIdAndName(circulatingPumpSet, choseDevice.table)" ng-disabled="!circulatingPumpSet.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
+                                    <thead>
+                                    <tr>
+                                        <th>名字</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in circulatingPumpSets">
+                                        <td>{{item.name}}</td>
+                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, circulatingPumpSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>

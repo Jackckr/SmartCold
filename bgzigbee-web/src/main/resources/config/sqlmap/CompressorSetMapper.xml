@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.CompressorSetMapper">
+	<insert id="insert">
+		INSERT INTO `compressorset` (`compressorgroupid`, `name`,`power`, `waterRatio`)
+		VALUES (#{compressorgroupid}, #{name}, #{power}, #{waterRatio})
+	</insert>
+
+	<select id="findById" parameterType="map" resultType="CompressorSetEntity">
+		SELECT *
+		FROM `compressorset` WHERE `id` = #{id}
+	</select>
+	
+	<select id="findCompressorByGroupid" parameterType="map" resultType="CompressorSetEntity">
+		SELECT *
+		FROM `compressorset` WHERE `compressorgroupid` = #{groupId}
+	</select>
+
+</mapper>
