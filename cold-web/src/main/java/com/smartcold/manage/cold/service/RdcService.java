@@ -15,5 +15,7 @@ public interface RdcService {
 	//
 	// public Rdc modifyRdc(String rdcName, String address, Date addTime);
 
-	public List<Rdc> findRdcByUserid(int userid);
+	List<Rdc> findRdcByUserid(int userid);
+
+	List<Rdc> findRdcsByUserId(int userId);
 }
