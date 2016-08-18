@@ -8,11 +8,15 @@
     <title>发布货品</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-    <script type="text/javascript" src="../com/js/data.js" ></script>
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
-    <script type="text/javascript" src="../com/js/prettify.js" ></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" />
+<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
+<script type="text/javascript" src="../com/js/common.js"></script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript"
+	src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+<script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
+<script type="text/javascript" src="../app/js/releasestorage.js"></script>
     <script>
     	$(function() {
 			$('.toggle').children('div').click(function(){
@@ -36,7 +40,7 @@
     </script>
     
 </head>
-<body>
+<body ng-app="app" ng-controller="ctrl">
     <!-- header -->
         <header>
         	
@@ -57,160 +61,88 @@
      </div>
     <!--coldlist-->
     <div class="coldlist" style="margin-bottom: 3rem;">
-        <ul class="imgTable">
-        	<li class="imgCell">
-				<a href="releasegoodsedetail.html">
-					<img class="fl" src="../com/img/muwu.jpg">
-					<div class="">
-						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
-						<p class='position'>
-							<i class="iconfont">&#xe66e;</i>
-							上海-长宁区-中山公园
-						</p>
-						<ul class='star'>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li>★</li>
-						</ul>
-					</div>		
-				</a>
-				<button class="grab" onclick="location.href='releasegoodsedetail.html'">发布</button>
-			</li>
-
-        	<li class="imgCell">
-				<a href="releasegoodsedetail.html">
-					<img class="fl" src="../com/img/muwu.jpg">
-					<div class="">
-						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
-						<p class='position'>
-							<i class="iconfont">&#xe66e;</i>
-							上海-长宁区-中山公园
-						</p>
-						<ul class='star'>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li>★</li>
-						</ul>
-					</div>		
-				</a>
-				<button class="grab" onclick="location.href='releasegoodsedetail.html'">发布</button>
-			</li>
-        	<li class="imgCell">
-				<a href="releasegoodsedetail.html">
-					<img class="fl" src="../com/img/shuijiao.jpg">
-					<div class="">
-						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
-						<p class='position'>
-							<i class="iconfont">&#xe66e;</i>
-							上海-长宁区-中山公园
-						</p>
-						<ul class='star'>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li>★</li>
-						</ul>
-					</div>		
-				</a>
-				<button class="grab" onclick="location.href='releasegoodsedetail.html'">发布</button>
-			</li>   
-        	<li class="imgCell">
-				<a href="releasegoodsedetail.html">
-					<img class="fl" src="../com/img/muwu.jpg">
-					<div class="">
-						<p class='ellipsis'>莱芜嘉禾冷链物流有限公司</p>
-						<p class='position'>
-							<i class="iconfont">&#xe66e;</i>
-							上海-长宁区-中山公园
-						</p>
-						<ul class='star'>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li class="filled">★</li>
-							<li>★</li>
-						</ul>
-					</div>		
-				</a>
-				<button class="grab" onclick="location.href='releasegoodsedetail.html'">发布</button>
-			</li>  	
-        </ul>
+      <!--    <div ng-show="rdcsList.length<=0">
+			<p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需关联冷库发布请先添加冷库！</p>
+			<p class="sorry">
+				<button class="mybtn" ng-click="goaddrdcpag();">添加冷库信息</button>
+		</div> -->
+       <div>
+			<ul id="ul_rdcsL_list" class="imgTable"></ul>
+			<a id="loading" href="javascript:;" onclick="getPageData();"></a>
+		</div>
     </div>
     <section class="main maindetail black">
-        <form>
+       	<form id="release_item_from" name="itemform" >
+        <input type="hidden" id="dataType" ng-model="dataType" value="1">
+			      <input type="hidden" id="typeCode" ng-model="typeCode" value="1">
+			      <input type="hidden" id="typeText" ng-model="typeText" value="出售">
+			      <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
             <ul class="houseinfo">
                 <li>
                     <label for="name">描述</label>
-                    <input type="text"  id="name" placeholder="货品出售"/>
+                    <input type="text" ng-model="title"  id="name" placeholder="货品出售"/>
                 </li>
                 <li class="bossToggle">
                     <label for="boss">供应商</label>
-                    <input type="text"  id="boss"/>
+                    <input type="text" ng-model="unit1" id="boss"/>
                 </li>
                  <li class="offershow">
                     <label for="province">省</label>
                     <div class="mySelect">
-                    	<select id="province">
-	                        <option value="载入中">载入中</option>
-	                    </select>
+                    	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
+                                    ng-change="provinceSelected(provinceId)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
                  <li class="offershow">
                     <label for="city">市</label>
                     <div class="mySelect">
-	                    <select id="city">
-	                        <option value="载入中">载入中</option>
-	                    </select>
+	                    <select ng-model="cityId" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
                 <li>
                     <label for="category">品类</label>
                     <div class="mySelect">
-	                    <select id="category">
-	                        <option>不限</option>
-	                        <option>鲜肉/-2~4℃</option>
+	                    <select id="category" id="good_type" name="codeLave1" ng-model="codeLave1">
+	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
 	                    </select>
 	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
                     <label for="num">数量</label>
-                    <input type="text" id="num" placeholder="吨"/>
+                    <input type="text" id="num" placeholder="吨" ng-model="sqm"/>
                 </li>
                 <li>
                     <label for="price">单价</label>
-                    <input type="text"  id="price" placeholder="元/吨"/>
+                    <input type="text" ng-model="unitprice" id="price" placeholder="元/吨"/>
                 </li>
                 <li>
                     <label for="time">信息有效期</label>
-                    <input type="date"  id="time" />
+                    <input type="date" ng-model="reservationtime" id="time" />
                     <i class="iconfont fr">&#xe63a;</i>
                 </li>
                 <li>
                     <label for="phone">联系电话</label>
-                    <input type="text" id="phone"  placeholder="1886369982511"/>
+                    <input type="text" id="phone" ng-model="telephone" />
                 </li>
                 <li>
                     <label for="note">备注</label>
-                    <input type="text"  id="note" placeholder="（选填）"/>
+                    <input type="text" ng-model="note" id="note" placeholder="（选填）"/>
                 </li>
                 <li>
                     <label class="pic">
-		    			<input type="file" id="files" name="files[]" multiple />
-		    		</label>
-		    		<span id="">上传图片</span>		    		
-		   			<output id="list"></output>
+		    			<input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
+				 </label> <span id="">上传图片</span><br>
+	            <output id="list"></output>
                 </li>
             </ul>
         </form>
-        <button class="mybtn" onclick="location.href='releasesuccess.html'">确认发布</button>
+        <button class="mybtn" ng-click="goodSubmit()" >确认发布</button>
     </section>
     <ul class="footer">
         <li>           
@@ -244,18 +176,5 @@
             </a>
         </li>
     </ul>
-    <script type="text/javascript" src="../com/js/file_upload.js" ></script>
-    <script type="text/javascript">
-		$(function(){
-			$('#province, #city').citylist({
-	            data: data,
-	            id: 'id',
-	            children: 'cities',
-	            name: 'name',
-	            metaTag: 'name'
-	        });
-		})
-		
-	</script>
 </body>
 </html>

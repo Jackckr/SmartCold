@@ -5,8 +5,9 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 	 if(user==null||(user!=null&&user.id==0)){ util.info(null,"你还没有登录！请登录后操作！",function(){window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";return; });}
 	 $("#shareMain_list").removeClass("hide");
 	 $scope.typeCode=1;
-	 $scope.maxSize = 5;	// 显示最大页数
+	 $scope.maxSize = 10;	// 显示最大页数
      $scope.bigTotalItems = 0; // 总条目数(默认每页十条)
+     $scope.page = {bigCurrentPage:1 };
      $scope.bigCurrentPage = 1;  // 当前页
      $scope._cuttid=$stateParams._cuttid;//系统传参  rdcconfig
      var datatype= $location.search()._cuttid;//外部传参
@@ -42,7 +43,7 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 	  };
 	  $scope.pageChanged = function () {
 		  if(user==null||(user!=null&&user.id==0)){return;}
-		  $.post("/i/ShareRdcController/getRdcByUid",   {pageNum : $scope.bigCurrentPage,pageSize : $scope.maxSize}, function(data) { $scope.$apply(function () {
+		  $.post("/i/ShareRdcController/getRdcByUid",   {pageNum : $scope.page.bigCurrentPage,pageSize : $scope.maxSize}, function(data) { $scope.$apply(function () {
 	    	   $scope.rdclist = data.data;//
 			   $scope.bigTotalItems = data.total;
 			   if(data.total==0){

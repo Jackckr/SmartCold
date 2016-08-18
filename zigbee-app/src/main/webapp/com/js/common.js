@@ -3,7 +3,7 @@ var countdown = 60;
 var oHtml = document.documentElement;
 var screenWidth = oHtml.clientWidth;
 var screenHeight = oHtml.clientHeight;
-var ER = {root:"http://192.168.1.136:8080",coldroot:"http//:192.168.1.136:8989",isdebug:true};
+var ER = {root:"http://192.168.1.136:8080",coldroot:"http//:192.168.1.199:8989",isdebug:true};
 //var ER = {root:"http://liankur.com",coldroot:"http//:192.168.1.136:8989",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({
 	    xhrFields:{withCredentials:true}

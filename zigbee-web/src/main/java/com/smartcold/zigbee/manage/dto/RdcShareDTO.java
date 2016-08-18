@@ -39,6 +39,7 @@ public class RdcShareDTO {
 	private String addtime; // 添加时间
 	private String updatetime; // 最后更新时间
 	//->拓展字段  ->车
+	
 	private int stprovinceID;
 	private int stcityID;
 	private String staddress;
