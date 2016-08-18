@@ -3,78 +3,107 @@ package com.smartcold.manage.cold.entity.newdb;
 import java.util.Date;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-03-19 11:54)
+ * Author: qiunian.sun Date: qiunian.sun(2016-03-19 11:54)
  */
 public class GoodsColdStorageEntity {
 
-    private int id;
+	private int id;
 
-    private int goodsId;
+	private int coldstorageid;
 
-    private int coldStorageId;
+	private float frozenInputQuantity;
 
-    private float inputQuantity;
+	private float forzenOutputQuantity;
 
-    private float outputQuantity;
+	private float freshIutputQuantity;
 
-    private float inputTemperature;
+	private float freshOutputQuantity;
 
-    private Date addTime;
+	private float frozenInputTemperature;
 
-    public int getId() {
-        return id;
-    }
+	private float freshInputTemperature;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	private Date collectionTime;
 
-    public int getGoodsId() {
-        return goodsId;
-    }
+	private Date addTime;
 
-    public void setGoodsId(int goodsId) {
-        this.goodsId = goodsId;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public int getColdStorageId() {
-        return coldStorageId;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setColdStorageId(int coldStorageId) {
-        this.coldStorageId = coldStorageId;
-    }
+	public int getColdstorageid() {
+		return coldstorageid;
+	}
 
-    public float getInputQuantity() {
-        return inputQuantity;
-    }
+	public void setColdstorageid(int coldstorageid) {
+		this.coldstorageid = coldstorageid;
+	}
 
-    public void setInputQuantity(float inputQuantity) {
-        this.inputQuantity = inputQuantity;
-    }
+	public float getFrozenInputQuantity() {
+		return frozenInputQuantity;
+	}
 
-    public float getOutputQuantity() {
-        return outputQuantity;
-    }
+	public void setFrozenInputQuantity(float frozenInputQuantity) {
+		this.frozenInputQuantity = frozenInputQuantity;
+	}
 
-    public void setOutputQuantity(float outputQuantity) {
-        this.outputQuantity = outputQuantity;
-    }
+	public float getForzenOutputQuantity() {
+		return forzenOutputQuantity;
+	}
 
-    public float getInputTemperature() {
-        return inputTemperature;
-    }
+	public void setForzenOutputQuantity(float forzenOutputQuantity) {
+		this.forzenOutputQuantity = forzenOutputQuantity;
+	}
 
-    public void setInputTemperature(float inputTemperature) {
-        this.inputTemperature = inputTemperature;
-    }
+	public float getFreshIutputQuantity() {
+		return freshIutputQuantity;
+	}
 
-    public Date getAddTime() {
-        return addTime;
-    }
+	public void setFreshIutputQuantity(float freshIutputQuantity) {
+		this.freshIutputQuantity = freshIutputQuantity;
+	}
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
+	public float getFreshOutputQuantity() {
+		return freshOutputQuantity;
+	}
+
+	public void setFreshOutputQuantity(float freshOutputQuantity) {
+		this.freshOutputQuantity = freshOutputQuantity;
+	}
+
+	public float getFrozenInputTemperature() {
+		return frozenInputTemperature;
+	}
+
+	public void setFrozenInputTemperature(float frozenInputTemperature) {
+		this.frozenInputTemperature = frozenInputTemperature;
+	}
+
+	public float getFreshInputTemperature() {
+		return freshInputTemperature;
+	}
+
+	public void setFreshInputTemperature(float freshInputTemperature) {
+		this.freshInputTemperature = freshInputTemperature;
+	}
+
+	public Date getCollectionTime() {
+		return collectionTime;
+	}
+
+	public void setCollectionTime(Date collectionTime) {
+		this.collectionTime = collectionTime;
+	}
+
+	public Date getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
+	}
 }
