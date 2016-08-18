@@ -109,6 +109,28 @@
     </update>
     
     
+    
+    
+    <select id="findRDCEntityDtoByRdcId" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
+			 SELECT
+			r.id,
+			r.name,
+			r.address,
+			r.addtime,
+			t.rdcscore score,
+			t.rdccommentcnt userCommentCount,
+			t.rdcrecommendpercent userRecommendPercent,
+			t.pageview,
+			( SELECT location 	FROM 	filedata f WHERE f.belongid = r.id AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1) AS logo
+		FROM
+			Rdc r
+		LEFT JOIN rdcext t ON t.RDCID = r.id
+		WHERE 1=1
+	        <if test="rdcID !=0"> and r.id = ${rdcID} </if> <!--  关键字 -->
+        ORDER BY r.addTime DESC
+	</select>
+    
+    
 	<select id="findRDCByUserId" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
 			 SELECT
 			r.id,

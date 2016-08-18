@@ -19,14 +19,14 @@
     		我的
     	</div>
     </header>
-    <section class="clearfix" ng-show="userinfo.id">
+    <section class="clearfix" ng-show="userinfo.id" onclick="location.href='personal.html'">
     	<div class="img fl">
     		<img ng-src="{{userinfo.avatar}}"/>
     	</div>
     	<div class="rightArrow fr">
     		<a href=""><i class="iconfont">&#xe60d;</i></a>
     	</div>
-    	<div class="name" onclick="location.href='personal.html'">
+    	<div class="name">
     		<p class="nameinfo omg">{{userinfo.nickname}}</p>
     		<p class="position omg">
     			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}

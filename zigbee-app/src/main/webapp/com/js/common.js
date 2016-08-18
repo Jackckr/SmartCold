@@ -3,7 +3,7 @@ var countdown = 60;
 var oHtml = document.documentElement;
 var screenWidth = oHtml.clientWidth;
 var screenHeight = oHtml.clientHeight;
-var ER = {root:"http://192.168.1.136:8080",coldroot:"http//:192.168.1.136:8989",isdebug:true};
+var ER = {root:"http://192.168.1.136:8080",coldroot:"http//:192.168.1.136:8089",isdebug:true};
 //var ER = {root:"http://liankur.com",coldroot:"http//:192.168.1.136:8989",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({
 	    xhrFields:{withCredentials:true}
@@ -69,6 +69,7 @@ function showErrorInfo(msg) {
 }
 function checkLogin(msg,callback) {
 	 if(window.user!=null ){return;}
+//	 $("body").hide();
 	  $.ajax({
 	        type:"GET",
 	        cache:false,
@@ -78,12 +79,14 @@ function checkLogin(msg,callback) {
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
+//	            	$("body").show();
 	                window.user = data;
 	                if(callback){callback(); }
 	            } else {
 	            	alert(msg?msg:"请登录后再操作~");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
+	                return;
 	            }
 	        }
 //	      ,complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数

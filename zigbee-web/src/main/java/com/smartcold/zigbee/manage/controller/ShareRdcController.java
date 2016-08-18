@@ -346,6 +346,7 @@ public class ShareRdcController  {
 		if(user!=null&&user.getId()!=0 ){
 			HashMap<String, Object> parameters=new HashMap<String, Object>();
 			parameters.put("userid",user.getId());// 
+			parameters.put("audit",1);// 
 			PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
 			return ResponseData.newSuccess(rdcList);
 		}
