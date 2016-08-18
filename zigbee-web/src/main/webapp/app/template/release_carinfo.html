@@ -1,3 +1,4 @@
+<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" href="app/css/common.css">
         <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
         <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
@@ -222,3 +223,227 @@ font: normal normal normal 18px/1 FontAwesome;
 				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>
 			</form>
     	</div>
+=======
+        <link rel="stylesheet" type="text/css" href="app/css/common.css">
+        <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
+        <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
+        <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/bootstrap-datetimepicker.min.css" />
+        <style>
+        	.btn.btn-default{background-color:#eee;}
+        	.btn.btn-default.active{background-color:#428BCA;color:#fff;}
+           .shar_none{display: none ;}
+           .control-label{line-height: 32px;}
+           .form-control{display: inline-block;}
+           .input-group-addon{display: block;height: 34px;float: left;width: 49px;}
+           .form-control:FOCUS{box-shadow: 0 0 2px #00A6FF !important; border-color: #00A6FF !important;}
+           .sp_radio{margin-right: 60px;}
+           .sp_radio input{width: 20px !important;}
+            .arrdes{padding: 6px 12px;font-size: 12px;color: #555;background-color: #fff;background-image: none;border-radius: 4px; }
+/*             #rdclist_info{height: 200px;overflow-y: scroll;} */
+            #files{width: 65px;border: medium none;margin-top: -10px;}
+           #img_list { width: 1000px; overflow: hidden;}
+           #img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
+           #tim_mode_2 label{margin-left: 3px;border-radius: 3px;padding: 6px;}
+           
+                      
+ .file {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 29px;
+    width:85px;
+    height:29px;
+    text-indent:2em;
+    font-size:12px;
+    background:url(app/img/image-upload.png) no-repeat center;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+#img_list span i{
+  position: absolute;
+cursor: pointer;
+color: #fff;
+border-radius: 3px;
+background: rgba(0,0,0,.5);
+margin-left: -21px;
+width: 18px;
+height: 18px;
+text-align: center;
+opacity: 0.6;
+line-height: 13px;
+font: normal normal normal 18px/1 FontAwesome;
+}
+           /*错误提示样式*/
+           label.success{display: none; } 
+ 	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
+	       input.error:FOCUS{  box-shadow: 0 0 5px #00A6FF !important; border-color: #00A6FF !important;} 
+	       input.error:FOCUS+label.error{ border-color: #00A6FF;color:#00A6FF; box-shadow: 0 0 5px #00A6FF !important;}
+	       input.error:FOCUS+label.error::before{ border-color: #00A6FF;}
+		   label.error::before{content:"";padding:0px;margin:0px;width:10px;height:10px;position:absolute;border-left:1px solid red;border-bottom:1px solid red;background-color:white;left:-6px;top:10px;transform:rotate(45deg);}
+		   label.error{float:left;position:absolute;color:red;border:1px solid red;border-radius:5px;padding:5px 20px;text-align:left;margin-left:10px;background-color:white;box-shadow:0 0 5px #d74f5a !important;}
+      </style>
+    
+    	<div id="" class="shareMain">
+			<!-- 出售和求购 -->
+			<div id="item_type_div" class="{{appmode[dataType].tolimg[0]}}">
+				<span id="tool1"  value="{{appmode[dataType].tool[0][0]}}" ng-click="changtype('#tool1')">{{appmode[dataType].tool[0][1]}}</span>
+				<span id="tool2"  value="{{appmode[dataType].tool[1][0]}}" ng-click="changtype('#tool2')">{{appmode[dataType].tool[1][1]}}</span>
+			</div>
+			<!-- 出售和求购 end -->
+			<form id="release_item_from" name="itemform"  class="formInfo" >
+			    <div id="hide_div">
+			      <input type="hidden" name="dataType" value="{{dataType}}">
+			      <input type="hidden" name="typeCode" value="{{typeCode}}">
+			      <input type="hidden" name="typeText" value="{{typeText}}">
+			      <input type="hidden" name="unit1" >
+			      <input type="hidden" name="unit2" >
+			    </div>
+			    <div id="recinfo_div"  style="width: 600px;">
+			       <input type="hidden" name="rdcID" value="{{rdcID}}">
+				    <div class="outSon">
+						<div class="company">{{rdcinfo.name}}</div><div class="position">
+							<span class="glyphicon glyphicon-map-marker"></span>
+							<span id="rdc_address" class="textInfo">{{rdcinfo.address}}</span>
+						</div>
+					</div>
+					<div class="outSon clearfix">
+						<div class="img"  ng-repeat="img in rdcimgs" >
+							<img src="{{img}}" height="184" width="319" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>描述:</div>
+					<div class="pull-left">
+						<input id="tx_title" type="text" class="form-control"  name="title" >
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>业务类型:</div>
+					<div class="pull-left">
+                       <select  id="tx_attrvalue" name="codeLave1" class="form-control" >
+							<option ng-repeat="x in  codeLave1" value="{{x.type_code}}">{{x.type_name}}</option>
+						</select>
+
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>温度类型:</div>
+					<div class="pull-left">
+                       <select  id="tx_attrvalue" name="codeLave2" class="form-control" >
+							<option ng-repeat="x in  codeLave2" value="{{x.type_code}}">{{x.type_name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>车型:</div>
+					<div class="pull-left">
+                       <select  id="tx_attrvalue" name="codeLave3" class="form-control" >
+							<option ng-repeat="x in  ps_cr_type" value="{{x.id}}">{{x.type}}</option>
+						</select>
+
+					</div>
+				</div>
+			   <div class="infoList clearfix  ">
+					<div class="pull-left col-sm-4 control-label ">单价:</div>
+					<div class="pull-left">
+						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{appmode[dataType].lab[1][1]}}</span>
+					</div>
+				</div>
+				<div id="" >
+					<div class="infoList clearfix city">
+						<div class="pull-left" style="margin-top: 10px;" ><em>*</em>线路:</div>
+						<div  class="pull-left" >
+						    <div style="width: 600px;"> 
+						             <span class="">出发地</span>
+									 <select id="sl_provinceId1" name="provinceId1" class="arrdes" style="width: 100px;"   ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+									 <input class=""  name="stprovinceID"  type="hidden" value="{{stprovinceID}}">
+									 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 100px;"  >
+										<option ng-repeat="x in city1" value="{{x.cityID}}">{{x.cityName}}</option>
+									 </select>
+									 <input type="text"   name="staddress" class="arrdes" style="width:200px" >
+							 </div>
+							 <div style="width: 600px;">
+							         <span class="">目的地</span>
+									 <select id="sl_provinceId2" name="provinceId2"  class="arrdes" style="width: 100px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+									 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}">
+									 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 100px;" >
+										<option ng-repeat="x in city2" value="{{x.cityID}}">{{x.cityName}}</option>
+									 </select>
+									 <input type="text"  name="toaddress" class="arrdes" style="width:200px;" ><span>（选填）</span>
+							 </div>
+						</div>
+					</div>
+				</div>
+				<div class="infoList clearfix infoDate">
+					<div class="pull-left col-sm-4 control-label ">发车时间:</div>
+					<div class="pull-left">
+					   <div id="st_sttime" class="clearfix" style="width: 600px;display: -moz-box;"> 
+		                     <select id="sl_attrvalue1"  name="attrvalue1"   class="form-control pull-left" style="width:80px;margin-right:5px;" onchange="releaseCarInfo.changtimemode(this);">
+		                         <option value="1">每天</option>
+		                         <option value="2">每周</option>
+		                         <option value="3">单次</option>
+		                     </select>
+							  <div  class="btn-group shar_none obj_hide time_mod2 pull-left clearfix" data-toggle="buttons" style="margin-right:5px;">
+								   <label class="btn btn-default" style="border-radius:5px 0px 0px 5px;"><input type="checkbox" class="wk_erw" value="-">一</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="二">二 </label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="三">三</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="四">四</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="五">五</label>
+								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="六">六</label>
+								   <label class="btn btn-default" style="border-radius:0px 5px 5px 0px;"><input type="checkbox" class="wk_erw" value="日">日</label>
+								</div>
+							   <div id="sattim_div" class="pull-left">	
+							     <span class="add-on input-group-addon shar_none obj_hide time_mod3" style="display: none;border-radius: 4px;margin-right: -5px;"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+		                         <input id="txt_sattim"  type="text" name="txt_sattim" value="09:00" class="form-control  form_datetime" style="width:85px;" >
+		                       </div>
+		                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
+		                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
+		                 </div>
+		              </div>
+				</div>
+				<div  id="en_endtime" class="infoList clearfix infoDate">
+					<div class="pull-left col-sm-4 control-label ">到达时间:</div>
+					<div class="pull-left">
+		                 <div style="width: 600px;"> 
+		                     <select id="sl_attrvalue2"  name="attrvalue2" class="form-control  shar_none obj_hide time_mod1 time_mod2" style="width:80px;" >
+		                         <option value="1">当天</option>
+		                         <option value="2">次日</option>
+		                     </select>
+		                     <span class="add-on input-group-addon shar_none obj_hide time_mod3" style="display: none;border-radius: 4px;margin-right: -5px;"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+		                     <input id="txt_endtim"  type="text" name="txt_endtim" value="17:00" class="form-control  time_mod1 time_mod2" style="width:85px;" >
+		                 </div>
+		              </div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>
+					<div class="pull-left">
+						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone}}">
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left">备注:</div>
+					<div class="pull-left">
+						<textarea name="note" placehoder="可填" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="infoList clearfix">
+					<div class="pull-left">图片:</div>
+					<div class="pull-left">
+					    <output id="img_list"></output>
+						  <a href="javascript:;" class="file">选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
+					</div>
+				</div>
+				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>
+			</form>
+    	</div>
+>>>>>>> 7f30347f0db4562e9bb9109a7793eab8597816ea
