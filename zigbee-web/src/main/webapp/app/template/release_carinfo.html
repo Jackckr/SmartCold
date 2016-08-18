@@ -23,15 +23,20 @@
  .file {
     position: relative;
     display: inline-block;
-    background: #CCCCCC;
+/*     background: #CCCCCC; */
     border: 1px solid #CCCCCC;
     border-radius: 4px;
-    padding:8px 12px;
+/*     padding:8px 12px; */
     overflow: hidden;
-    color: white;
+/*     color: white; */
     text-decoration: none;
     text-indent: 0;
-    line-height: 20px;
+    line-height: 29px;
+    width:85px;
+    height:29px;
+    text-indent:2em;
+    font-size:12px;
+    background:url(app/img/image-upload.png) no-repeat center;
 }
 .file input {
     position: absolute;
@@ -39,12 +44,6 @@
     right: 0;
     top: 0;
     opacity: 0;
-}
-.file:hover {
-    background: #363636;
-/*     border-color: #78C3F3; */
-/*     color: #004974; */
-    text-decoration: none;
 }
 #img_list span i{
   position: absolute;
@@ -219,7 +218,7 @@ font: normal normal normal 18px/1 FontAwesome;
 					<div class="pull-left">
 					    <output id="img_list"></output>
 <!-- 						<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"> -->
-						  <a href="javascript:;" class="file">+ 选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
+						  <a href="javascript:;" class="file">选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
 					</div>
 				</div>
 				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>
