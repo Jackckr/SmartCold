@@ -40,10 +40,8 @@ var releaseItem = {
         $.each(data, function(index, item) { vo[item.name] = item.value; });
         return JSON.stringify(vo);
         },
-        drop:function(i){
-        	$("#imglistp"+i).remove();
-        	releaseItem.$scope.totalfiles.splice(i-1,1);
-        	alert(releaseItem.$scope.totalfiles);
+        deleteimg:function (i,em){//releaseCarInfo.deleteimg
+        	releaseItem.$scope.drop(i,em);
         }
 };
 
@@ -73,18 +71,40 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	       $scope.initMode();
     };
     
-    
-	$scope.addFiles = function(files) {
-	    $scope.totalfiles = $scope.totalfiles.concat(files);
-	    $("#img_list").empty();
-	    var files = $scope.totalfiles; // FileList object
-	    for (var i = 0,
-	    f; f = files[i]; i++) {
-	        if (!f.type.match('image.*')) { continue; }
-	        var reader = new FileReader();
-	        reader.onload = (function(theFile) { return function(e) { var innerHTML = ['<span id="imglistp'+i+'"><img class="thumb " src="', e.target.result, '" title="', escape(theFile.name), '"/></span>'].join(''); $("#img_list").append(innerHTML); };})(f); reader.readAsDataURL(f);//<i  onclick="releaseItem.drop('+i+')">×</i>
+	$scope.addFiles = function (files) {
+		if(files.length==0){return;};
+		var allfiles = $scope.totalfiles.concat(files);
+		if(allfiles.length>10){
+			alert("最多选择10张！");
+		}
+       if( allfiles!=$scope.totalfiles){
+    	   $scope.totalfiles=allfiles;
+    	   $scope.refimg();
+       }
+    };
+    $scope.refimg=function(){
+    	$("#img_list").empty();
+    	var files = $scope.totalfiles ; // FileList object
+	    for (var i = 0, f; f = files[i]; i++) {
+	      if (!f.type.match('image.*')) { continue;}
+	         var reader = new FileReader();
+	         reader.onload = (function(theFile) {  return function(e) { 
+	        	 var innerHTML = ['<span id="thumb_id' + i + '"><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/><i onclick="releaseItem.deleteimg(' + i+",'" +theFile.name+ '\')">×</i></span>'].join('');
+	        	    $("#img_list").last().append(innerHTML);
+	        	 };
+	        	})(f);
+	      reader.readAsDataURL(f);
 	    }
-	};
+    };
+	$scope.drop = function(i,imgname){
+		angular.forEach($scope.totalfiles,function(item, key){
+            if(item.name == imgname){
+                $scope.totalfiles.splice(key,1);
+                $('#img_list img[title=\''+imgname+'\']').parent().remove();
+                return false;
+            }
+        });
+    };
 	$scope.submit = function(){
 		if ($("#but_submit").data('isLoading') === true) return; 
 		if(user!==null&&user.id!=0){
