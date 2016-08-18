@@ -991,6 +991,6 @@ section.content{
 	vertical-align:middle;
     font-style: normal;
 }
-.dropdown-menu{
-	min-width:120px;
+.btn-group.omg{
+	max-width:120px;
 }
