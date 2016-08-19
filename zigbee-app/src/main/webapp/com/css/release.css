@@ -212,10 +212,11 @@ body,html{
 	font-size: 0.75rem;
 	color: #555;
     line-height: 2rem;
-   /*  background-color: transparent */
+   background-color: transparent;
 }
 .houseinfo>li>input[type='date']{
 	line-height: 1.75;
+	background-color: #eee;
 }
 .houseinfo>.bg{
 	position: relative;
