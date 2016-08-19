@@ -192,13 +192,13 @@
                  <li class="bg">
                      <label for="arrow">出发地</label>
                       <div class="mySelect">
-	                    <select id="businessType">
-	                      <option>北京</option>
-	                    </select>
-	                    <select id="businessType">
-	                      <option>北京</option>
-	                    </select>
-	                    <input type="text" placeholder="请输入详细地址" style="min-width:130%;"/>
+	                    <select id="businessType" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
+                                    ng-change="stprovinceSelected(stprovinceID)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+	                    <select id="businessType" ng-model="stcityID" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in stcitys"></select>
+	                    <input type="text" placeholder="请输入详细地址" ng-model="staddress" style="min-width:130%;"/>
 	                </div>
                  </li>
                  <li>
@@ -211,13 +211,13 @@
                  <li class="bg">
                      <label for="arrow">目的地</label>
                       <div class="mySelect">
-	                    <select id="businessType">
-	                      <option>北京</option>
-	                    </select>
-	                    <select id="businessType">
-	                      <option>北京</option>
-	                    </select>
-	                    <input type="text" placeholder="请输入详细地址" style="min-width:130%;"/>
+	                    <select id="businessType" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
+                                    ng-change="toprovinceSelected(toprovinceID)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+	                    <select id="businessType" ng-model="tocityID" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in tocitys"></select>
+	                    <input type="text" placeholder="请输入详细地址" ng-model="toaddress" style="min-width:130%;"/>
 	                </div>
                  </li>
                  <li>

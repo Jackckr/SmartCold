@@ -41,6 +41,31 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	            $scope.cityId = data[0].cityID;
 	        });
 	    }
+	    
+	    
+	    // 根据出发地省ID查询城市列表
+	    $scope.stprovinceSelected = function () {
+	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	            params: {
+	                "provinceID": $scope.stprovinceID
+	            }
+	        }).success(function (data) {
+	            $scope.stcitys = data;
+	            $scope.stcityId = data[0].cityID;
+	        });
+	    }
+	    
+	    // 根据目的地省ID查询城市列表
+	    $scope.toprovinceSelected = function () {
+	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	            params: {
+	                "provinceID": $scope.toprovinceID
+	            }
+	        }).success(function (data) {
+	            $scope.tocitys = data;
+	            $scope.tocityId = data[0].cityID;
+	        });
+	    }
 
 	    $scope.citySelected = function () {
 	    }
@@ -103,6 +128,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave2:$scope.codeLave22,
 					codeLave3:$scope.codeLave3,
 					unitPrice : $scope.unitprice,
+		            stprovinceID:$scope.stprovinceID,
+				    stcityID:$scope.stcityID,
+				    toprovinceID:$scope.toprovinceID,
+					tocityID:$scope.tocityID,
 					unit1:$scope.staddress,
 					unit2:$scope.toaddress,
 					validStartTime:$scope.startTime,
