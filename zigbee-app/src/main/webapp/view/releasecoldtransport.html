@@ -184,20 +184,41 @@
                     <label for="price">价格</label>
                     <input type="text" name="unitPrice" ng-model="unitPrice" id="price" placeholder="面议"/>
                 </li>
-                 <li>
+                 <!-- <li>
                      <label for="start" class="bg">出发地</label>
                      <input type="text" id="start" name="staddress" ng-model="staddress" placeholder="（选填）" />
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li> -->
+                 <li class="bg">
+                     <label for="arrow">出发地</label>
+                      <div class="mySelect">
+	                    <select id="businessType">
+	                      <option>北京</option>
+	                    </select>
+	                    <select id="businessType">
+	                      <option>北京</option>
+	                    </select>
+	                    <input type="text" placeholder="请输入详细地址" style="min-width:130%;"/>
+	                </div>
                  </li>
                  <li>
                      <label for="startTime">出发时间</label>
                      <input type="date" id="startTime" ng-model="startTime" placeholder="（选填）" />
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
-                 <li>
-                     <label for="arrow" class="bg">目的地</label>
-                     <input type="text" id="arrow" ng-model="toaddress" placeholder="（选填）"/>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <!--  <label for="arrow" class="bg">目的地</label>
+                     <input type="text" id="arrow" ng-model="toaddress" placeholder="（选填）"/> -->
+                 <li class="bg">
+                     <label for="arrow">目的地</label>
+                      <div class="mySelect">
+	                    <select id="businessType">
+	                      <option>北京</option>
+	                    </select>
+	                    <select id="businessType">
+	                      <option>北京</option>
+	                    </select>
+	                    <input type="text" placeholder="请输入详细地址" style="min-width:130%;"/>
+	                </div>
                  </li>
                  <li>
                      <label for="arriveTime">到达时间</label>
