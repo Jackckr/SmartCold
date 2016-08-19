@@ -1,10 +1,12 @@
 /**
  * 冷库列表
  */
+checkLogin();
 $().ready(function() { 
 	  var maxSize=10;
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
+      var userid = window.user.id;
 	  var ul_select=$("#ul_rdcsL_list");
 	  var flag = document.getElementById('dataType').value;
       gosharedile=function(sharid){
@@ -37,7 +39,7 @@ $().ready(function() {
   	function getPageData(){//启用无限加载
   		   isLoadRB=true;
   		  $.post(ER.root+"/i/rdc/findRDCDTOByUserId", {
-  			   userID: window.user.id,
+  			   userID: userid,
                keyword:"",
                pageNum: currentPage,
                pageSize:maxSize},  function(data) {	
