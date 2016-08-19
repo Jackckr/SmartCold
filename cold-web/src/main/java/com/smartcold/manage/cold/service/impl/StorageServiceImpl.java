@@ -48,7 +48,7 @@ public class StorageServiceImpl implements StorageService {
 	public List<StorageKeyValue> findByNums(int type, int oid, String key, int nums) {
 		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
 		if (deviceEntity != null) {
-			return storageDataCollectionDao.findLastNPoint("", deviceEntity.getDeviceid(), key, nums);
+			return storageDataCollectionDao.findLastNPoint(null, deviceEntity.getDeviceid(), key, nums);
 		} else {
 			String table = StorageType.getStorageType(type).getTable();
 			List<StorageKeyValue> result = storageKeyValueDao.findByNums(table, oid, key, nums);
@@ -60,7 +60,7 @@ public class StorageServiceImpl implements StorageService {
 	public List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums) {
 		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(stype.getType(), oid);
 		if (deviceEntity != null) {
-			return storageDataCollectionDao.findLastNPoint("", deviceEntity.getDeviceid(), key, nums);
+			return storageDataCollectionDao.findLastNPoint(null, deviceEntity.getDeviceid(), key, nums);
 		} else {
 			return storageKeyValueDao.findByNums(stype.getTable(), oid, key, nums);
 		}
@@ -70,7 +70,7 @@ public class StorageServiceImpl implements StorageService {
 	public List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime) {
 		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
 		if (deviceEntity != null) {
-			return storageDataCollectionDao.findByTime("", deviceEntity.getDeviceid(), key, startTime, endTime);
+			return storageDataCollectionDao.findByTime(null, deviceEntity.getDeviceid(), key, startTime, endTime);
 		} else {
 			return storageKeyValueDao.findByTime(StorageType.getStorageType(type).getTable(), oid, key, startTime,
 					endTime);

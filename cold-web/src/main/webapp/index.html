@@ -256,7 +256,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               >
               </div>
           <div>
-            <select 
+            <select ng-if="user.role != 1"
             class="form-control"
             ng-options="rdc.name for rdc in vm.allUserRdcs" 
             ng-model="vm.choserdc" 
