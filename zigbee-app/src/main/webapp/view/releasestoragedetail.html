@@ -77,11 +77,9 @@
 						<p class='position'>
 							<i class="iconfont">&#xe66e;</i> {{rdcdto.address}}
 						</p>
-						<ul class='star' ng-repeat="item in star">
+						<ul class='star'  ng-repeat="item in star">
 							<li class="filled">★</li>
-						</ul>
-						<ul class='star' ng-repeat="item in nostar">
-						<li>★</li>
+							<!-- <li ng-repeat="item in nostar">★</li> -->
 						</ul>
 					</div> </a></li>
 		</ul>
@@ -120,6 +118,8 @@
                                     ng-options="x.id as x.type for x in storageTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 				<li><label>数/质/量</label> 
+				
+				<input type="text" id="sqm" ng-model="sqm"/>
 				<input type="radio" name="quality" ng-model="unit" name="unit"
 					value="吨" />吨
 			    <input type="radio" name="quality" value="平方米" ng-model="unit" name="unit"
