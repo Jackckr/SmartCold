@@ -78,7 +78,7 @@
                                 <p class='ellipsis'>【{{rdc.typeText}}】 {{rdc.title}} </p>
                                 <p class='position'><i class="iconfont">&#xe66e;</i>{{rdc.detlAddress}}</p>
                                 <ul class='star'><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li></ul>
-                                <button class="grab" ng-click="gosharedile(rdc.id);">立即抢单</button>
+                                <button class="grab" >立即抢单</button>
                             </div>  
                         </a>
                     </li>
@@ -94,13 +94,13 @@
              <div class="coldlist">
                 <ul class="imgTable">
                     <li class="imgCell" ng-repeat="good in goodList" >
-                        <a href="goodsdetail.html">
+                        <a href="storehousedetail.html?id={{good.id}}">
                             <img class="fl" ng-src="{{good.logo}}">
                             <div class="">
                                 <p class='ellipsis'>【{{good.typeText}}】{{good.title}}</p>
                                 <p class='position'> <i class="iconfont">&#xe66e;</i>{{good.detlAddress}}</p>
                                 <ul class='star'><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li></ul>
-                                <button class="grab" ng-click="gosharedile(good.id);">立即抢单</button>
+                                <button class="grab">立即抢单</button>
                             </div>  
                         </a>
                     </li>
@@ -116,13 +116,13 @@
              <div class="coldlist">
                 <ul class="imgTable">
                     <li class="imgCell" ng-repeat="ps in pslist" >
-                        <a href="coldtransportdetail.html">
+                        <a href="storehousedetail.html?id={{ps.id}}">
                             <img class="fl" ng-src="{{ps.logo}}">
                             <div class="">
                                 <p class='ellipsis'>【{{ps.typeText}}】{{ps.title}}</p>
                                 <p class='position'> <i class="iconfont">&#xe66e;</i>{{ps.detlAddress}}</p>
                                 <ul class='star'><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li><li class="filled">★</li></ul>
-                                <button class="grab" ng-click="gosharedile(good.id);">立即抢单</button>
+                                <button class="grab" >立即抢单</button>
                             </div>  
                         </a>
                     </li>

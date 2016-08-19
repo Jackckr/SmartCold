@@ -17,7 +17,7 @@ public interface OrdersMapper {
 	
 	Page<OrdersEntity> findOrdersByPersonId(@Param("userid") int userid, @Param("keyword") String keyword); 
 	
-	OrdersEntity findOrderByOrderId(int orderid);
+	OrdersEntity findOrderByOrderId(@Param("orderid")int orderid,@Param("userid")int userid);
 	
 	List<OrdersEntity> findOrdersByOrderName(String ordername); 
 	

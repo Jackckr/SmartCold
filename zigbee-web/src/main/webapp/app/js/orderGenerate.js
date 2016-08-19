@@ -19,7 +19,11 @@ coldWeb.controller('orderGenerate', function ($rootScope, $scope, $state, $state
     	    	userName : $scope.orderDto.orders.username
     	    }
     	}).success(function (data) {
-    		alert("对方联系人的手机号已经发送到您的手机，请及时联系");
+    		if(data){
+    			alert("对方联系人的手机号已经发送到您的手机，请及时联系");
+    		}else{
+    			alert("发送消息失败！");
+    		}
     	});
     }
 });

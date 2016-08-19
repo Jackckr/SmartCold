@@ -61,7 +61,7 @@
 	</select>
 	
 	<select id="findOrderByOrderId" parameterType="map" resultType="OrdersEntity">
-		SELECT * FROM `orders` WHERE `id` = #{orderid} ORDER BY generatetime DESC
+		SELECT * FROM `orders` WHERE `id` = #{orderid} and (ownerid=#{userid} or userid=#{userid}) ORDER BY generatetime DESC
 	</select>
 	
 	<select id="findOrdersByOrderName" parameterType="map" resultType="OrdersEntity">
