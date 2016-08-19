@@ -63,8 +63,8 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 			delta = delta ? delta + 8 * 60 * 60 * 1000: 8 * 60 * 60 * 1000;
 			return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/,"")
 		},
-		formatTime: function(time){
-			if (typeof(time) == "string"){				
+		formatTime: function(timeString){
+			if (typeof(timeString) == "string"){				
 				return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
 			}else{
 				return new Date(time.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
@@ -201,10 +201,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             $rootScope.toMyStorageDoor = function (storageID) {
                 console.log(storageID);
                 $state.go('coldStorageDoor', {'storageID': storageID});
-            };
-            $rootScope.toMyStorageGoods = function (storageID) {
-                console.log(storageID);
-                $state.go('coldStorageInOutGoods', {'storageID': storageID});
             };
             $rootScope.toMap = function () {
                 $state.go('coldStorageMap', {});
@@ -346,7 +342,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'coldStorageDoor',
         templateUrl: 'app/template/coldStorageDoor.html'
     }).state('coldStorageInOutGoods', {
-        url: '/coldStorageInOutGoods/:storageID',
+        url: '/coldStorageInOutGoods',
         controller: 'coldStorageInOutGoods',
         templateUrl: 'app/template/coldStorageInOutGoods.html'
     }).state('coldStorageTemper', {

@@ -165,7 +165,7 @@ public class UserController extends BaseController {
 	public Object updateUser(HttpServletRequest request,UserEntity user) throws ApiException {
 		try {
 			UserEntity old_user = (UserEntity)request.getSession().getAttribute("user");
-		//	user.setId(old_user.getId());
+			user.setId(old_user.getId());
 			List<FileDataEntity> handleFile = this.docLibraryService.handleFile(old_user.getId(), FileDataMapper.CATEGORY_AVATAR_PIC, old_user, request);//用于更新头像信息
 			if(SetUtil.isnotNullList(handleFile)){
 				FileDataEntity fileDataEntity = handleFile.get(0);

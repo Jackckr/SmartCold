@@ -1,7 +1,15 @@
 package com.smartcold.bgzigbee.manage.controller;
 
-import java.util.Map;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
+import com.smartcold.bgzigbee.manage.dao.CompressorGroupSetMapper;
+import com.smartcold.bgzigbee.manage.dao.CompressorSetMapper;
+import com.smartcold.bgzigbee.manage.dao.SpiderItemConfigMapper;
+import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.entity.CompressorGroupSetEntity;
+import com.smartcold.bgzigbee.manage.entity.CompressorSetEntity;
+import com.smartcold.bgzigbee.manage.enums.SpiderItemType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,14 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import com.smartcold.bgzigbee.manage.dao.CompressorGroupSetMapper;
-import com.smartcold.bgzigbee.manage.dao.SpiderItemConfigMapper;
-import com.smartcold.bgzigbee.manage.dto.ResultDto;
-import com.smartcold.bgzigbee.manage.entity.CompressorGroupSetEntity;
-import com.smartcold.bgzigbee.manage.enums.SpiderItemType;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/compressorGroup")
@@ -29,6 +30,9 @@ public class CompressorGroupSetController {
 
 	@Autowired
 	private SpiderItemConfigMapper spiderItemConfigDao;
+
+	@Autowired
+	private CompressorSetMapper compressorSetDao;
 
 	@RequestMapping(value = "/getCompressGroupByRdcId")
 	@ResponseBody
@@ -72,4 +76,23 @@ public class CompressorGroupSetController {
 
 		return new ResultDto(0, "删除成功");
 	}
+
+	@RequestMapping("/findCompressorByGid")
+	@ResponseBody
+	public Object findCompressorByGid(int groupId){
+		return compressorSetDao.findCompressorByGroupid(groupId);
+	}
+
+	@RequestMapping(value="/saveCompressor", method = RequestMethod.POST)
+    @ResponseBody
+    public Object saveCompressor(@RequestBody CompressorSetEntity entity){
+	    try {
+            if (compressorSetDao.insert(entity)) {
+                return new ResultDto(0, "保存成功");
+            }
+        }catch (Exception e){
+
+        }
+        return new ResultDto(-1, "失败");
+    }
 }

@@ -10,6 +10,8 @@ public class ResultDto {
 
 	}
 
+
+
 	public ResultDto(int status, String message) {
 		this.status = status;
 		this.message = message;

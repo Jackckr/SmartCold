@@ -6,7 +6,7 @@
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <title>发布库</title>
+    <title>修改库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
@@ -215,14 +215,12 @@
                 </li>
                  <li style="border:0;">
                     <label>资质荣誉图：
-                             <small class="text-warning fr" style="width: 100px">*最多八张</small></label>
-                    <div class="mySelect">
-                        <div>
-                            <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
+                             <small class="text-warning" style="width: 100px">*最多八张</small>
+                             <label class="pic">
+		    					<input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
                                        ngf-multiple="true" name="honorfiles">
-                        </div>
-                       
-                    </div>                  
+						    </label>
+                             </label>                 
                 </li>
                 <li class="clearfix">
                    <div class="form-group" ng-if="honorPicShow.length>0">
@@ -237,29 +235,27 @@
                             </label>
                 </li>
                 <li class="clearfix">
-                    <label>功能平面布置图：</label>
-                    <div class="mySelect">
-<!--                            <form name="arrangeform"> -->
-                                    <input type="file" ng-model="arrangePic" name="arrangePic" ngf-select="addArrangePic($arrangePic)">
-<!--                             </form> -->
-                    </div>
+                    <label>功能平面布置图：
+                        <label class="pic">
+		    				<input type="file" ng-model="arrangePic" name="arrangePic" ngf-select="addArrangePic($arrangePic)">
+						 </label>
+                    </label>
                     <div class="form-group rdc" ng-if="arrangePicShow != null">
-                            <label class="col-sm-4 control-label"></label>
-                            <div class="" style="padding:5px;position:relative;display:inline-block">
-                                <img style="width: 86px;" ng-src="{{arrangePicShow.location}}" ng-click="goPicDetail(arrangePicShow)" alt="" />
-                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
-                            </div>
+                        <label class="col-sm-4 control-label"></label>
+                        <div class="" style="padding:5px;position:relative;display:inline-block">
+                            <img style="width: 86px;" ng-src="{{arrangePicShow.location}}" ng-click="goPicDetail(arrangePicShow)" alt="" />
+                            <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
+                        </div>
                      </div>
                 </li>
                 <li style="border:0;">
                     <label>冷库图片：
-                                 <small class="text-warning fr" style="width: 100px">*最多五张</small></label>
-                       <div class="mySelect">
-                           <div>
-                                <input type="file" ngf-select="addFiles($files)" ng-model="files"
-                                           ngf-multiple="true" name="files">
-                            </div>
-                       </div>
+                        <small class="text-warning" style="width: 100px">*最多五张</small>
+                        <label class="pic">
+		    				<input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
+						</label>
+                    </label>
+                      
                 </li>
                 <li class="clearfix">
                      <div class="form-group" ng-if="storagePicShow.length>0">
