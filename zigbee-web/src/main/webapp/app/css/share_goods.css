@@ -372,3 +372,8 @@ em{
 .rent>span.noRentCur:before{
     background: url(../img/shareitem/rent.fw.png) no-repeat -22px -19px;
 }
+#img_list span:hover i{
+  color:red;
+  background: rgba(0, 0, 0, .8) none repeat scroll 0 0;
+  opacity: 1
+}

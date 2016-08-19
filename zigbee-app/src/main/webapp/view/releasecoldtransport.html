@@ -184,20 +184,41 @@
                     <label for="price">价格</label>
                     <input type="text" name="unitPrice" ng-model="unitPrice" id="price" placeholder="面议"/>
                 </li>
-                 <li>
+                 <!-- <li>
                      <label for="start" class="bg">出发地</label>
                      <input type="text" id="start" name="staddress" ng-model="staddress" placeholder="（选填）" />
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li> -->
+                 <li class="bg">
+                     <label for="arrow">出发地</label>
+                      <div class="mySelect">
+	                    <select id="businessType" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
+                                    ng-change="stprovinceSelected(stprovinceID)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+	                    <select id="businessType" ng-model="stcityID" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in stcitys"></select>
+	                    <input type="text" placeholder="请输入详细地址" ng-model="staddress" style="min-width:130%;"/>
+	                </div>
                  </li>
                  <li>
                      <label for="startTime">出发时间</label>
                      <input type="date" id="startTime" ng-model="startTime" placeholder="（选填）" />
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
-                 <li>
-                     <label for="arrow" class="bg">目的地</label>
-                     <input type="text" id="arrow" ng-model="toaddress" placeholder="（选填）"/>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <!--  <label for="arrow" class="bg">目的地</label>
+                     <input type="text" id="arrow" ng-model="toaddress" placeholder="（选填）"/> -->
+                 <li class="bg">
+                     <label for="arrow">目的地</label>
+                      <div class="mySelect">
+	                    <select id="businessType" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
+                                    ng-change="toprovinceSelected(toprovinceID)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+	                    <select id="businessType" ng-model="tocityID" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in tocitys"></select>
+	                    <input type="text" placeholder="请输入详细地址" ng-model="toaddress" style="min-width:130%;"/>
+	                </div>
                  </li>
                  <li>
                      <label for="arriveTime">到达时间</label>
