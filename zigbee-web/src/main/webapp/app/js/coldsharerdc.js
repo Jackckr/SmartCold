@@ -149,8 +149,9 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
       $scope.maxSize = 10;	// 显示最大页数
       rdcconfig.$scope=$scope;
       rdcconfig._cuttid=$stateParams._cuttid?$stateParams._cuttid:rdcconfig._cuttid;//系统传参
-      $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
-      $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
+//      $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
+//      $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
+      $scope.page = {bigCurrentPage1:1,bigCurrentPage2:1,bigCurrentPage3:1,bigTotalItems1:0,bigTotalItems2:0,bigTotalItems3:0 };
       good._isLoad=psaction._isLoad=serdc._isLoad=false;
       $scope.appmode=[{title:["","货品","配送","冷库"]},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}];//1:货品 2：配送 3:仓库  
       $http.get('/i/city/findProvinceList').success(function (data) {
@@ -232,29 +233,29 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
     	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
      };
      $scope.pageChanged1 = function () {
-		   var _filter=  good.getFilter($scope.bigCurrentPage1,$scope.maxSize);
+		   var _filter=  good.getFilter($scope.page.bigCurrentPage1,$scope.maxSize);
 		    $.post("/i/ShareRdcController/getSEGDList", _filter, function(data) {	  
 	            $scope.$apply(function () {
 	            	$scope.goods = data.data;//
-			        $scope.bigTotalItems1 = data.total;
+			        $scope.page.bigTotalItems1 = data.total;
 	             });
 		    });
 	   };
 	  $scope.pageChanged2 = function () {
-		   var _filter=  psaction.getFilter($scope.bigCurrentPage2,$scope.maxSize);
+		   var _filter=  psaction.getFilter($scope.page.bigCurrentPage2,$scope.maxSize);
 		   $.post("/i/ShareRdcController/getSEPSList", _filter, function(data) {	  
 	           $scope.$apply(function () {
-	           	$scope.pslist = data.data;//
-			        $scope.bigTotalItems2 = data.total;
+	              $scope.pslist = data.data;//
+			      $scope.page.bigTotalItems2 = data.total;
 	            });
 		    });
 	  };
 	  $scope.pageChanged3 = function () {
-		   var _filter=  serdc.getFilter($scope.bigCurrentPage3,$scope.maxSize);
+		   var _filter=  serdc.getFilter($scope.page.bigCurrentPage3,$scope.maxSize);
 		   $.post("/i/ShareRdcController/getSERDCList", _filter, function(data) {	  
 	           $scope.$apply(function () {
 	        	   $scope.rdcs = data.data;//
-	   	        $scope.bigTotalItems3 = data.total;
+	   	           $scope.page.bigTotalItems3 = data.total;
 	            });
 		    });
 	  };

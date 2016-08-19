@@ -45,7 +45,7 @@
 			   </tbody>
 			</table>
 			<div ng-if="bigTotalItems>0" class="row" style="text-align: center;margin: 0px auto;width: 80%;">
-			   <pagination  total-items="bigTotalItems"  ng-change="pageChanged()" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+			   <pagination  total-items="bigTotalItems"  ng-change="pageChanged()" ng-model="page.bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 			     <a style="float: right;width: 254px; text-align: center;" varlue="{{dataType}}">
 					  <button  class="btn btn-success" ng-show="{{dataType!=3}}" ng-click="simplyitem();" >不关联库发布</button>
 				</a>

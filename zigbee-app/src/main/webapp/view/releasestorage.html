@@ -11,13 +11,14 @@
 <title>发布仓位</title>
 <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-<!-- <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" /> -->
+<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
+<script type="text/javascript" src="../com/datepicker/date.js"></script>
+<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
 <script src="../bower_components/angular/angular.min.js"></script>
-<script type="text/javascript"
-	src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+<script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
 <script type="text/javascript" src="../app/js/releasestorage.js"></script>
 <script>
@@ -39,7 +40,9 @@
 					$('input[type="radio"]').removeClass('blue');					
 					$(this).children('input').addClass("blue")
 				}
-			})
+			});
+			/*date*/
+			$('#time').date();
 		});
     </script>
 </head>
@@ -111,16 +114,21 @@
                                     ng-options="x.id as x.type for x in storageTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 				<li><label>数/质/量</label> 
-				<input type="radio" name="quality" ng-model="unit" name="unit"
-					value="吨" />吨
-			    <input type="radio" name="quality" value="平方米" ng-model="unit" name="unit"
-					checked />平方米 
-			    <input type="radio" name="quality" value="其他"  ng-model="unit" name="unit" />其他</li>
+					<input type="text" id="sqm" ng-model="sqm" style="min-width:4rem;width:5rem;"/>
+					<label><input type="radio" name="quality" ng-model="unit" name="unit"
+					value="吨" />吨</label>
+			    	<label><input type="radio" name="quality" value="平方米" ng-model="unit" name="unit"
+					checked />平方米 </label>
+			   		<label><input type="radio" name="quality" value="其他"  ng-model="unit" name="unit" />其他</label>
+				</li>
 			    
 				<li><label for="price">单价</label> <input type="text" id="price" name="unitPrice"
 					placeholder="元/天·平方米" ng-model="unitprice"/></li>
-				<li><label for="time">信息有效期</label> <input type="date" name="reservationtime"
-					id="time" ng-model="reservationtime"/> <i class="iconfont fr">&#xe63a;</i></li>
+				<li><label for="time">信息有效期</label> 
+					<div class="mySelect">
+						<input type="text" id="time" class="kbtn" ng-model="reservationtime"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i></li>
 				<li><label for="phone">联系电话</label> <input type="text" name="telephone"
 					id="phone"  ng-model="telephone"/></li>
 				<li><label for="note">备注</label> <input type="text" id="note"
@@ -132,6 +140,7 @@
 		</form>
 		<button class="mybtn" ng-click="submit()">确认发布</button>
 	</section>
+	<div id="datePlugin"></div>
 	<ul class="footer">
 		<li><a href="../index.html"> <i class="iconfont">&#xe65a;</i>
 				<p class="info">首页</p> </a></li>

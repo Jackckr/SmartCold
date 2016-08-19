@@ -1,7 +1,7 @@
  var id  = getUrlParam("id");//当前rdc-id数据信息
  if(id==null||id==''){
 	 	$(document.body).html("");
-	 	alert("非法请求！");
+	 	alert("请求内容不存在！");
  }else{
      var app = angular.module('app', []);
      app.controller('colddetail', function($http, $location,$scope) { 
@@ -9,7 +9,10 @@
 		$scope.datatype=1;
 		$http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	    $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
-	    $scope.gosharedile=function(sharid){ window.location.href ="storehousedetail.html?id="+sharid; };
+	    $scope.gosharedile=function(sharid){ 
+	    	debugger;
+//	    	window.location.href ="storehousedetail.html?id="+sharid;
+        };
 		$scope.initdata=function(){
 	       //获得数据
 	    	$http.get(ER.root+'/i/rdc/findRDCByID', { params: {"rdcID": id}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}

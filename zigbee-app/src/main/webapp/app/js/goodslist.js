@@ -8,7 +8,7 @@ $().ready(function() {
 	  var ul_select=$("#ul_goodlist_list");
 	  var type=1, totalPages=  currentPage=  1;  // 当前页//rental_type:出租类型:1:出租 2:求租
       gosharedile=function(sharid){//共享详情
-    	 window.location.href ="colddetail.html?id="+sharid; 
+    	 window.location.href ="storehousedetail.html?id="+sharid; 
       };
       initevg=function(){
     	$("#tool_but button").click(function(e){

@@ -158,6 +158,8 @@ input[type="text"]:disabled{
 .houseinfo>li label{
 	display: inline-block;
 	color: #999;
+	vertical-align: middle;
+}
 }
 .houseinfo>li label>.pic{
 	width:2rem;
@@ -212,19 +214,27 @@ body,html{
 	font-size: 0.75rem;
 	color: #555;
     line-height: 2rem;
-    background-color: transparent
+   background-color: transparent;
 }
-.houseinfo>li .bg{
+.houseinfo>li>input[type='date']{
+	line-height: 1.75;
+	background-color: #eee;
+}
+.houseinfo>.bg{
 	position: relative;
+	overflow:hidden;
 }
-.houseinfo>li .bg:before{
+.houseinfo>.bg:before{
 	content: "";
 	position: absolute;
-	width: 120%;
-	height: 20%;
+	width: 13%;
+	height: 10%;
 	background: #fff;
 	bottom: -5%;
 	left: 0;
+}
+.houseinfo>.bg select{
+	border-bottom:1px solid #eaeae9;
 }
 input[type='radio']{
 	width: 0.8rem;

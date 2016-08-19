@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
     <script type="text/javascript">checkLogin();</script>
     <script type="text/javascript">
-     var app = angular.module("app", []).controller("orderdetail", function($http, $location,$scope) {
+      var app = angular.module("app", []).controller("orderdetail", function($http, $location,$scope) {
       var id  = getUrlParam("id");
       if(id==null||id==""||id=="undefined"){return;}
       $scope.appmode=[{title:["","货品","配送","冷库"]}];//1:货品 2：配送 3:仓库
@@ -39,6 +39,18 @@
 			  
              });
 	};
+	 $scope.getTeleNum = function () {
+    	$http.get(ER.root+"/i/orders/getTelephone", {
+    	    params: {
+    	    	ownerTele: $scope.orders.ownertele,
+    	    	userTele : $scope.orders.usertele,
+    	    	ownerName : $scope.orders.ownername,
+    	    	userName : $scope.orders.username
+    	    }
+    	}).success(function (data) {
+    		alert("对方联系人的手机号已经发送到您的手机，请及时联系");
+    	});
+    };
 	$scope.initevg=function(){
 		  baguetteBox.run('.baguetteBoxOne', {
 				    animation: 'slideIn',
@@ -109,16 +121,17 @@
 				<li>
 					<p>出租方</p>
 					<p><span>姓名：</span>{{ownerUser.nickname}}</p>
-					<p><span>联系电话：</span>{{ownerUser.telephone}}</p>
+<!-- 					<p><span>联系电话：</span>{{ownerUser.telephone}}</p> -->
 					<p><span>地址：</span>{{ownerUser.address}}</p>
 				</li>
 				<li>
 					<p>租入方</p>
 					<p><span>姓名：</span>{{orderUser.nickname}}</p>
-					<p><span>联系电话：</span>{{orderUser.telephone}}</p>
+<!-- 					<p><span>联系电话：</span>{{orderUser.telephone}}</p> -->
 					<p><span>地址：</span>{{orderUser.address}}</p>
 				</li>
 			</ul>
+			<button id="app_order" class="mybtn" ng-click="getTeleNum();"  >获取联系方式</button>
 	    </section>
 	    <ul class="footer">
         <li>           

@@ -1,8 +1,10 @@
 checkLogin();
 angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upload, $http) { 
-	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+	 $http.defaults.withCredentials=true;
+	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var url=window.location.href;
 	var arrurl=url.split("?id=");
+	$scope.telephone = window.user.telephone;
 	if(arrurl[1]!=''&&arrurl[1]!=undefined){
 	 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
          params: {
@@ -14,10 +16,12 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	 $scope.nostar = [];
     	 $scope.star.length = $scope.rdcdto.score;
     	 $scope.nostar.length = 5-$scope.rdcdto.score;
+    	 for(var i=0;i<$scope.star.length;i++){
+    		 $scope.star[i] = 1;
+    	 }
      });
 	}
 	$scope.totalfiles = [];
-	$scope.telephone = window.user.telephone;
 	 $scope.goaddrdcpag=function(){
 			  $location.path("/coldStorageAdd");
 	  };
@@ -35,6 +39,31 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        }).success(function (data) {
 	            $scope.citys = data;
 	            $scope.cityId = data[0].cityID;
+	        });
+	    }
+	    
+	    
+	    // 根据出发地省ID查询城市列表
+	    $scope.stprovinceSelected = function () {
+	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	            params: {
+	                "provinceID": $scope.stprovinceID
+	            }
+	        }).success(function (data) {
+	            $scope.stcitys = data;
+	            $scope.stcityId = data[0].cityID;
+	        });
+	    }
+	    
+	    // 根据目的地省ID查询城市列表
+	    $scope.toprovinceSelected = function () {
+	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	            params: {
+	                "provinceID": $scope.toprovinceID
+	            }
+	        }).success(function (data) {
+	            $scope.tocitys = data;
+	            $scope.tocityId = data[0].cityID;
 	        });
 	    }
 
@@ -99,6 +128,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave2:$scope.codeLave22,
 					codeLave3:$scope.codeLave3,
 					unitPrice : $scope.unitprice,
+		            stprovinceID:$scope.stprovinceID,
+				    stcityID:$scope.stcityID,
+				    toprovinceID:$scope.toprovinceID,
+					tocityID:$scope.tocityID,
 					unit1:$scope.staddress,
 					unit2:$scope.toaddress,
 					validStartTime:$scope.startTime,
@@ -109,7 +142,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					typeCode : $scope.typeCode,
 					typeText : $scope.typeText,
 					rdcID : $scope.rdcID,
-					address:$scope.rdcAddress
+					detlAddress:$scope.rdcAddress
 					
 			};
 			var sdata  = JSON.stringify(simdata);
@@ -158,7 +191,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					typeCode : $scope.typeCode,
 					typeText : $scope.typeText,
 					rdcID : $scope.rdcID,
-					address:$scope.rdcAddress
+					detlAddress:$scope.rdcAddress
 					
 			};
 			var sdata  = JSON.stringify(simdata);
@@ -196,7 +229,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave2 : $scope.temperType,
 					codeLave1:$scope.storageType,
 					unit : $scope.unit,
-					unitPrice : $scope.unitPrice,
+					sqm:$scope.sqm,
+					unitPrice : $scope.unitprice,
 					validEndTime : $scope.reservationtime,
 					telephone:$scope.telephone,
 					note : $scope.note,
@@ -204,7 +238,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					typeCode : $scope.typeCode,
 					typeText : $scope.typeText,
 					rdcID : $scope.rdcID,
-					address:$scope.rdcAddress
+					detlAddress:$scope.rdcAddress
 			};
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};

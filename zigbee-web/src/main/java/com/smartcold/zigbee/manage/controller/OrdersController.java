@@ -33,6 +33,7 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
@@ -95,10 +96,11 @@ public class OrdersController extends BaseController {
 	 */
 	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
-	public Object findOrderByOrderId(@RequestParam String id) {
-		
+	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id) {
 		HashMap<String, Object> dataMap=new HashMap<String, Object>();
-		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id));	
+		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		if(user==null||user.getId()==0){ResponseData.newFailure("-1");}
+		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id),user.getId());	
 		if(oEntity!=null){
 		    UserEntity ownerUser = this.userDao.findUserById( oEntity.getOwnerid());
 		    UserEntity orderUser = this.userDao.findUserById( oEntity.getUserid());
@@ -109,8 +111,10 @@ public class OrdersController extends BaseController {
 			dataMap.put("orders", oEntity);
 			dataMap.put("ownerUser", ownerUser);
 			dataMap.put("orderUser", orderUser);
+			return ResponseData.newSuccess(dataMap);
+		}else{
+			return ResponseData.newFailure("没有订单信息！");
 		}
-		return ResponseData.newSuccess(dataMap);
 	}
 	
 	/**
@@ -183,12 +187,16 @@ public class OrdersController extends BaseController {
 	
 	@RequestMapping(value = "/getTelephone")
 	@ResponseBody
-	public void getTelephone(@RequestParam String ownerTele,
-			@RequestParam String userTele,@RequestParam String ownerName,
-			@RequestParam String userName) throws ApiException {
-		TelephoneVerifyUtil tVerifyUtil = new TelephoneVerifyUtil();
-		tVerifyUtil.callUser(userTele, userName, ownerTele, ownerName);
-		tVerifyUtil.callOwner(userTele, userName, ownerTele, ownerName);
+	public boolean getTelephone(@RequestParam String ownerTele,@RequestParam String userTele,@RequestParam String ownerName,@RequestParam String userName)  {
+		try {
+			TelephoneVerifyUtil tVerifyUtil = new TelephoneVerifyUtil();
+			tVerifyUtil.callUser(userTele, userName, ownerTele, ownerName);
+			tVerifyUtil.callOwner(userTele, userName, ownerTele, ownerName);
+			return true;
+		} catch (ApiException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
