@@ -8,9 +8,12 @@
     <title>发布仓位</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
+<script type="text/javascript" src="../com/datepicker/date.js"></script>
+<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript"
 	src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
@@ -25,6 +28,9 @@
                      window.flag = 0;
 				}
 			});
+			/*date*/
+			$('#startTime').date();
+			$('#arriveTime').date();
 		});
     </script>
 </head>
@@ -120,7 +126,10 @@
                  </li>
                  <li>
                      <label for="startTime">出发时间</label>
-                     <input type="date" id="startTime" ng-model="startTime" placeholder="（选填）" />
+                     <div class="mySelect">
+						<input type="text" id="startTime" class="kbtn" ng-model="startTime"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
                  </li>
                  <li class="bg">
                      <label for="arrow">目的地</label>
@@ -136,7 +145,10 @@
                  </li>
                  <li>
                      <label for="arriveTime">到达时间</label>
-                     <input type="date" id="arriveTime" ng-model="arriveTime" placeholder="（选填）"/>
+                     <div class="mySelect">
+						<input type="text" id="arriveTime" class="kbtn" ng-model="arriveTime"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i></li>
                  </li>
 				<li><label for="phone">联系电话</label> <input type="text" name="telephone"
 					id="phone" ng-model="telephone"/></li>
@@ -149,6 +161,7 @@
         </form>
         <button class="mybtn" ng-click="carSubmit()">确认发布</button>
     </section>
+    <div id="datePlugin"></div>
     <ul class="footer">
         <li>           
             <a href="../index.html">

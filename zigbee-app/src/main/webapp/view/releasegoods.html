@@ -8,9 +8,11 @@
     <title>发布货品</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" /> -->
+<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
+<script type="text/javascript" src="../com/datepicker/date.js"></script>
+<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript"
@@ -36,6 +38,8 @@
                 $('.coldlist').hide();
                 $(this).parent().hide()
             });
+            /*date*/
+			$('#time').date();
 		});
     </script>
     
@@ -123,7 +127,9 @@
                 </li>
                 <li>
                     <label for="time">信息有效期</label>
-                    <input type="date" ng-model="reservationtime" id="time" />
+                    <div class="mySelect">
+						<input type="text" id="time" class="kbtn" ng-model="reservationtime"/>
+					</div>
                     <i class="iconfont fr">&#xe63a;</i>
                 </li>
                 <li>
@@ -144,6 +150,7 @@
         </form>
         <button class="mybtn" ng-click="goodSubmit()" >确认发布</button>
     </section>
+    <div id="datePlugin"></div>
     <ul class="footer">
         <li>           
             <a href="../index.html">

@@ -1,79 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
-    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <title>发布冷运</title>
-    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-    <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
-    <script>
-    	$(function() {
-			$('.toggle').children('div').click(function(){
-				$(this).addClass('current').siblings().removeClass('current');
-				if($(this).index()==1){
-					$('.radiocar').hide();
-					$('.coldlist').hide();
-					$('.main').show();
-				}else{
-					$('.radiocar').show()
-					$('.coldlist').show();
-					$('.main').hide();
-				}
-			})
-			
-			$('.relate').click(function(event){
-                if(event.target.nodeName !== "DIV"){
-    				$('input[type="radio"]').removeClass('blue');
-    				$(this).children('input').addClass("blue")
-    				$('.coldlist').show();
-    				$('.main').hide();
-                }
-			});
-			$('.norelate').click(function(event){
-                if(event.target.nodeName !== "DIV"){
-    				$('input[type="radio"]').removeClass('blue');
-    				$(this).children('input').addClass("blue")
-    				$('.coldlist').hide();
-    				$('.main').show();
-                }
-			});
-			
-		});
-    </script>
-</head>
-<body>
-    header
-        <header>
-        	
-            <div class="area fl">
-                <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
-            </div>
-            <div class="txt">
-                发布冷运
-            </div>
-        </header>
-    header end
-    <section class="toggle clearfix">
-    	<div class="rent current fl"><i class="iconfont">&#xe658;</i>找货</div>
-    	<div class="offer fl"><i class="iconfont">&#xe656;</i>找车</div>
-    </section>
-    <div class="radiocar">
-    	<div class="relate">
-    		<input type="radio" name="car" class="blue" id="car" checked />
-    		<label for="car">关联库</label>
-    	</div>
-    	<div class="norelate">
-    		<input type="radio" name="car" id="nocar"  />
-    		<label for="nocar">不关联库</label>
-    	</div>
-    </div>
-    coldlist
-    <div class="coldlist" style="margin-bottom: 3rem;">
-    </div> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,10 +8,12 @@
     <title> 发布冷运</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" /> -->
+<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
+<script type="text/javascript" src="../com/datepicker/date.js"></script>
+<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript"
 	src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
@@ -108,6 +34,9 @@
                 $('.coldlist').hide();
                 $(this).parent().hide()
             });
+			/*date*/
+			$('#startTime').date();
+			$('#arriveTime').date();
 		});
     </script>
 </head>
@@ -203,11 +132,11 @@
                  </li>
                  <li>
                      <label for="startTime">出发时间</label>
-                     <input type="date" id="startTime" ng-model="startTime" placeholder="（选填）" />
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <div class="mySelect">
+						<input type="text" id="startTime" class="kbtn" ng-model="startTime"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
                  </li>
-                    <!--  <label for="arrow" class="bg">目的地</label>
-                     <input type="text" id="arrow" ng-model="toaddress" placeholder="（选填）"/> -->
                  <li class="bg">
                      <label for="arrow">目的地</label>
                       <div class="mySelect">
@@ -222,8 +151,11 @@
                  </li>
                  <li>
                      <label for="arriveTime">到达时间</label>
-                     <input type="date" id="arriveTime" ng-model="arriveTime" placeholder="（选填）"/>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <div class="mySelect">
+						<input type="text" id="arriveTime" class="kbtn" ng-model="arriveTime"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
+                    
                  </li>
 				<li><label for="phone">联系电话</label> <input type="text" name="telephone"
 					id="phone" ng-model="telephone"/></li>
@@ -236,6 +168,7 @@
         </form>
         <button class="mybtn" ng-click="carSubmit()">确认发布</button>
     </section>
+	<div id="datePlugin"></div>
     <ul class="footer">
         <li>           
             <a href="../index.html">

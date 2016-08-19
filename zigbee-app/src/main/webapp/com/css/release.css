@@ -158,6 +158,8 @@ input[type="text"]:disabled{
 .houseinfo>li label{
 	display: inline-block;
 	color: #999;
+	vertical-align: middle;
+}
 }
 .houseinfo>li label>.pic{
 	width:2rem;
@@ -220,6 +222,7 @@ body,html{
 }
 .houseinfo>.bg{
 	position: relative;
+	overflow:hidden;
 }
 .houseinfo>.bg:before{
 	content: "";
@@ -229,6 +232,9 @@ body,html{
 	background: #fff;
 	bottom: -5%;
 	left: 0;
+}
+.houseinfo>.bg select{
+	border-bottom:1px solid #eaeae9;
 }
 input[type='radio']{
 	width: 0.8rem;
