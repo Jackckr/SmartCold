@@ -94,37 +94,51 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
 	});  
 	$scope.files;
 	$scope.totalfiles = [];
+//	$scope.addFiles = function (files) {
+//		if(files.length==0){return;};
+//		var allfiles = $scope.totalfiles.concat(files);
+//		if(allfiles.length>10){
+//			alert("最多选择10张！");
+//		}
+//       if( allfiles!=$scope.totalfiles){
+//    	   $scope.totalfiles=allfiles;
+//    	   $scope.refimg();
+//       }
+//    };
+//    $scope.refimg=function(){
+//    	$("#img_list").empty();
+//    	var files = $scope.totalfiles ; // FileList object
+//	    for (var i = 0, f; f = files[i]; i++) {
+//	      if (!f.type.match('image.*')) { continue;}
+//	         var reader = new FileReader();
+//	         reader.onload = (function(theFile) {  return function(e) { 
+//	        	 var innerHTML = ['<span id="thumb_id' + i + '"><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/><i onclick="releaseCarInfo.deleteimg(' + i+",'" +theFile.name+ '\')">×</i></span>'].join('');
+//	        	    $("#img_list").last().append(innerHTML);
+//	        	 };
+//	        	})(f);
+//	      reader.readAsDataURL(f);
+//	    }
+//    };
+//	$scope.drop = function(i,imgname){
+//		angular.forEach($scope.totalfiles,function(item, key){
+//            if(item.name == imgname){
+//                $scope.totalfiles.splice(key,1);
+//                $('#img_list img[title=\''+imgname+'\']').parent().remove();
+//               return false;
+//            }
+//        });
+//    };
 	$scope.addFiles = function (files) {
 		if(files.length==0){return;};
 		var allfiles = $scope.totalfiles.concat(files);
-		if(allfiles.length>10){
-			alert("最多选择10张！");
-		}
-       if( allfiles!=$scope.totalfiles){
-    	   $scope.totalfiles=allfiles;
-    	   $scope.refimg();
-       }
+		if(allfiles.length>10){alert("最多选择10张！");return;}
+        $scope.totalfiles=allfiles; 
     };
-    $scope.refimg=function(){
-    	$("#img_list").empty();
-    	var files = $scope.totalfiles ; // FileList object
-	    for (var i = 0, f; f = files[i]; i++) {
-	      if (!f.type.match('image.*')) { continue;}
-	         var reader = new FileReader();
-	         reader.onload = (function(theFile) {  return function(e) { 
-	        	 var innerHTML = ['<span id="thumb_id' + i + '"><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/><i onclick="releaseCarInfo.deleteimg(' + i+",'" +theFile.name+ '\')">×</i></span>'].join('');
-	        	    $("#img_list").last().append(innerHTML);
-	        	 };
-	        	})(f);
-	      reader.readAsDataURL(f);
-	    }
-    };
-	$scope.drop = function(i,imgname){
-		angular.forEach($scope.totalfiles,function(item, key){
-            if(item.name == imgname){
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalfiles,function(item, key){
+            if(item == honorfile){
                 $scope.totalfiles.splice(key,1);
-                $('#img_list img[title=\''+imgname+'\']').parent().remove();
-               return false;
+                return false;
             }
         });
     };
