@@ -26,7 +26,7 @@
     		</a>    		
     	</div>
     	<div class="search">
-    		<input type="text" placeholder="请输入搜索内容"/>
+    		<input type="text" placeholder="请输入搜索内容" onkeydown="seachList(this)"/>
     		<i class="iconfont">&#xe62f;</i>
     	</div>
     	<div class="barCode">
@@ -34,6 +34,9 @@
     			<i class="iconfont">&#xe63f;</i>
     		</a>
     	</div>
+    </div>
+    <div  id="searchTips" style="display:none;width:291px;height:auto;position:absolute;z-index:9001;">
+		    <ul></ul>
     </div>
 <!-- header end-->
 <!-- session -->
