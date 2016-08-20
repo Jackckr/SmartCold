@@ -48,6 +48,12 @@
 
 			var rdcID = $.getUrlParam('storageID');			
 
+			if(rdcID!=1063)
+				{
+				$("#saveBtn").hide();
+				$("#temp").hide();
+				}
+			
 			$.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+rdcID,function(data,status){
 				$("body").css("background","url("+data+")").css("background-size","1050px 590px");
 			});
@@ -141,7 +147,7 @@
 
 <body>
 <button id ="saveBtn">保存配置</button>
-<p align="right" style="color:#823F3F;font-size:20px;">库外温度</p>
+<p id="temp" align="right" style="color:#823F3F;font-size:20px;">库外温度</p>
 <p id="cityTemp" align="right" style="color:#823F3F;font-size:20px;"></p>
 </body>
 </html>
