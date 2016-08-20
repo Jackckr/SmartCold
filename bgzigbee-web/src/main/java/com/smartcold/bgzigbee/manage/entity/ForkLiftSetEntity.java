@@ -9,10 +9,20 @@ public class ForkLiftSetEntity {
 	private String name;
 	  
 	private int rdcid;
+
+	private float power;
 	  
 	private String mapping;
 	  
 	private Date addTime;
+
+	public float getPower() {
+		return power;
+	}
+
+	public void setPower(float power) {
+		this.power = power;
+	}
 
 	public int getId() {
 		return id;
