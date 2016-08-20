@@ -18,7 +18,8 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
             var defrostCnt = 0;
             var freeCnt = 0;
             for (var i = 0; i < result.length; i++) {
-                console.log("result:" + result[i].coldStorageId + ",blowerId: " + result[i].blowerId + ",coldStorageName: " + result[i].coldStorageName );
+            	result[i].runTime = parseFloat(result[i].runTime / 3600).toFixed(2)
+            	result[i].defrostTime = parseFloat(result[i].defrostTime / 3600).toFixed(2)
                 if (parseInt(result[i].isRunning) === 1){
                     coldCnt = coldCnt + 1;
                 }
