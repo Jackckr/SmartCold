@@ -243,9 +243,23 @@ header>div>a>.iconfont{
 	color: #898989;
 	padding-top: 2px;
 	box-sizing: border-box;
+	position: relative;
 }
 .footer>.active>a{
 	color: #428BCA;
+}
+.countNum{
+	position: absolute;
+	width:0.8rem;
+	height: 0.8rem;
+	border-radius: 50%;
+	top: 0.1rem;
+	right: 1rem;
+	background-color: #f40;
+	font-size: 0.5rem;
+	color: #fff;
+	text-align: center;
+	line-height: 0.8rem;
 }
 .footer i{
 	font-size: 1.2rem;
