@@ -28,8 +28,8 @@
 		<!-- header end-->
 		<section class="main">
 			<ul class="compantDetail clearfix">
-				<li class="fl">
-					<p class='ellipsis'>{{vo.title}}<span class="gold">【{{vo.typeText}}】</span></p>
+				<li>
+					<p class='ellips'>{{vo.title}}<span class="gold">【{{vo.typeText}}】</span></p>
 					<p class='position'>
 						<i class="iconfont">&#xe66e;</i>{{vo.detlAddress}}
 					</p>
@@ -39,12 +39,10 @@
 				<li ng-repeat="fl in vo.files"><a href="{{fl}}"><img ng-src="{{fl}}" alt="" /></a></li>
 			</ul>
 			<ul class="infolist clearfix">
-				<li><span class="type">冷库名称：</span><span class="text">{{vo.name}}</span></li>
+				<li class="widthL"><span class="type">冷库名称：</span><span class="text">{{vo.name}}</span></span></li>
+				<li class="widthL"><span class="type">冷库地址：</span><span class="text">{{rsd.address}}</span></li>
 				<li><span class="type">经营类型：</span><span class="text">产地型</span></li>
 				<li><span class="type">温度类型：</span><span class="text">{{vo.codeLave2}}</span></li>
-				<li><span class="type">冷库地址:</span><span class="text">{{rsd.address}}</span></li>
-				<li><span class="type">{{appmode[datatype].lab[0][0]}}:</span><span class="text">{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</span></li>
-				<li><span class="type">{{appmode[datatype].lab[1][0]}}:</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span></li>
 				<li>
 					<span class="type fl">星级：</span>
 					<ul class='star fl'>
@@ -55,6 +53,9 @@
 						<li>★</li>
 					</ul>
 				</li>
+				<li><span class="type">{{appmode[datatype].lab[0][0]}}：</span><span class="text">{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</span></li>
+				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span></li>
+				
 				<!--<li><span class="type">电话：</span><span class="text">{{vo.telephone}}</span></li>-->
 			</ul>
 			<p class="dateline"><span class="type">备注：</span><span class="text">{{rsd.note?rsd.note:'无'}}</span></p>

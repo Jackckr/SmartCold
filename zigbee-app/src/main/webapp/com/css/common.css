@@ -91,6 +91,7 @@ img {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+.widthL{width:100%!important;}
 @font-face {font-family: 'iconfont';
     src: url('../fonts/iconfont.eot'); /* IE9*/
     src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
