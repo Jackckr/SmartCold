@@ -251,10 +251,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
               minlength="1"
               clear-selected="true"
               match-class="highlight"
-              input-class="form-control form-control-small">
+              input-class="form-control form-control-small"
+              ng-if="user.role == 1"
+              >
               </div>
+          <div>
+            <select ng-if="user.role != 1"
+            class="form-control"
+            ng-options="rdc.name for rdc in vm.allUserRdcs" 
+            ng-model="vm.choserdc" 
+            ng-change="initAllByRdcId(vm.choserdc.id)"></select>
+          </div>
           <ul class="sidebar-menu text-white">
-          <li>
+          <li ng-if="user.role == 1">
              <a class="text-white" style="font-family: cursive;">{{vm.choserdc.name}}</a>
           </li>
             <li class="treeview">

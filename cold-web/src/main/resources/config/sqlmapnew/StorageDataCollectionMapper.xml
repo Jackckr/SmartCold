@@ -4,6 +4,12 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper">
 
+		<resultMap id="dataResultMap" type="StorageKeyValue">
+		  <id property="id" column="id" />
+		  <result property="key" column="key"/>
+		  <result property="value" column="value"/>
+		  <result property="addtime" column="addtime"/>
+		</resultMap>
 
 	<insert id="batchInsert" parameterType="StorageDataCollectionEntity">
 		INSERT INTO `storageDataCollection`
@@ -28,7 +34,7 @@
     </foreach>
 	</insert>
 	
-	<select id="findLastNPoint" parameterType="map" resultType="StorageDataCollectionEntity">
+	<select id="findLastNPoint" parameterType="map" resultMap="dataResultMap">
 	    SELECT * FROM storagedatacollection
 	    WHERE 1 =1
 	    <if test="apid != null">
@@ -45,7 +51,7 @@
 	
 	</select>
 	
-	<select id="findByTime" parameterType="map" resultType="StorageDataCollectionEntity">
+	<select id="findByTime" parameterType="map" resultMap="dataResultMap">
 	    SELECT * FROM storagedatacollection
 	    WHERE 1 =1
 	    <if test="apid != null">

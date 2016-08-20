@@ -5,11 +5,11 @@
     $scope.appmode=[{title:["","货品详情","配送详情","冷库详情"]},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
 	$scope.initdata=function(){
 		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
-			if(data.success){
-				   $scope.vo=data.entity; 
-		    	   $scope.datatype=data.entity.dataType;
-			}
-       });
+			if(data.success){ $scope.vo=data.entity; $scope.datatype=data.entity.dataType;}
+        });
+		 $http.get(ER.root + "/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
+			  if (data && data.id != 0) {  window.user = data; }  
+		 });
 	};
 	$scope.initevg=function(){ 
 		$("#she_imglist li a").imgbox({'speedIn': 0,'speedOut'	: 0,'alignment'		: 'center','overlayShow'	: true,'allowMultiple'	: false});//图片
@@ -50,28 +50,30 @@
 		}
 		
 	};
-	
 	 $scope.getOrder=function () {  
-		 /*
-	    	if(user!="undefined"&&user.id!=0){
-	    	  $.ajax({ url: "/i/orders/generateOrder", data: {
-	    		  userid:user.id,
-	    		  username:user.username,
-	    		  telephone:user.telephone,
-	    		  rsdid: $scope.vo.id,
-	    		  dataType:$scope.vo.dataType,
-	    		  typeText:$scope.vo.typeText,
-	    		  releaseID:$scope.vo.releaseID,
-	    		  title:$scope.vo.title
-	    		  }, type: 'POST',dataType:"json", success: function(data) {
-	    			  window.location.href ='success.html';
-	    	   }
-	    	  }); 
-	    	}
-	    	else{
-	    		alert("登陆之后才可以抢单");
-	    	}
-	    	*/
+			if(window.user!=undefined&&window.user.id!=0){
+	    		if(user.telephone!=''&&user.telephone!=undefined){
+			    	  $.ajax({ url: ER.root +"/i/orders/generateOrder", data: {
+			    		  userid:window.user.id,
+			    		  username:window.user.username,
+			    		  telephone:window.user.telephone,
+			    		  address:window.user.address,
+			    		  rsdid: $scope.vo.id,
+			    		  dataType:$scope.vo.dataType,
+			    		  typeText:$scope.vo.typeText,
+			    		  releaseID:$scope.vo.releaseID,
+			    		  title:$scope.vo.title
+			    		  }, type: 'POST',dataType:"json", success: function(data) {
+			    			  if(data.success){
+			    				  window.location.href ='orderdetail.html?id='+data.entity.orders.id;
+			    			  }
+			    			  else{
+			    				  window.location.href ='fail.html';
+			    			  }
+			    	   }
+			    	  }); 
+			    	}else{alert("请留下手机号之后再下单");}}else{checkLogin("登陆之后才可以抢单");}
+	    	
     } ; 
 	$scope.initdata();
 	$scope.initevg();

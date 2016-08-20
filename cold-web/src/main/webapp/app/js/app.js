@@ -67,7 +67,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 			if (typeof(timeString) == "string"){				
 				return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
 			}else{
-				return new Date(time.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+				return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
 			}
 		},
 		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type){
@@ -160,12 +160,12 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             var compressors = [];
             var mystorages = [];
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
-            	$http.get('/i/rdc/findRDCByUserid?userid=' + $rootScope.user.id).success(
+            	$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(
             			function(data,status,headers,config){
             				if(data.length == 0){
             					document.location.href = "/notAudit.html";
             				}
-            				$rootScope.vm = {choserdc:data[0]}
+            				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
             				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id)
             			})
             }

@@ -17,6 +17,17 @@
     <script type="text/javascript">$.ajax({type:"GET",cache:false,async:false,data:{token:util.getCookie('token')},dataType:"json",url:ER.root+"/i/user/findUser",xhrFields: { withCredentials: true },success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
 </head>
 <body>
+ 		<header>	    		
+        	<div class="area fl">
+        		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+        	</div>
+        	<!--<div class="zoom fr">
+        		<a href="search.html"><i class="iconfont">&#xe62f;</i></a>
+        	</div>-->
+        	<div class="txt">
+        		登录
+        	</div>
+	    </header>
     <div class="login">
     	<div class="inputBd">
     		<i class="iconfont">&#xe6be;</i>
