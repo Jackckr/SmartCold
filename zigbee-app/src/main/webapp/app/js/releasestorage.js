@@ -69,7 +69,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 
 	    $scope.citySelected = function () {
 	    }
-	    // 获取商品存放类型
+	    // 获取商品温度类型
 	    $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
 	        $scope.temperTypes = data;
 	        $scope.temperType = data[0].id;
@@ -78,8 +78,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    $scope.TemperTypeSelected = function () {
 	    }
 
-	    // 获取冷库温度类型
-	    $http.get(ER.root+'/i/rdc/findAllStorageType').success(function (data) {
+	    // 获取冷库经营类型
+	    $http.get(ER.root+'/i/rdc/findAllManageType').success(function (data) {
 	        $scope.storageTypes = data;
 	        $scope.storageType = data[0].id;
 	    });
