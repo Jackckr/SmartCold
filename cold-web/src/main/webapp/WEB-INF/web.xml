@@ -41,7 +41,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>cors</filter-name>
-		<url-pattern>/i/storageKeys/*</url-pattern>
+		<url-pattern>/i/*</url-pattern>
 	</filter-mapping>
 	
 	<filter>
