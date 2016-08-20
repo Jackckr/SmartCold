@@ -16,11 +16,11 @@ public enum SetTables {
 
     WINDSCREENSET(6,  "windscreenset",  "风幕机"),
 
-    EVAPORATIVESET(7,  "evaporativeset",  "蒸发冷系统"),
+    EVAPORATIVESET(7,  "evaporativeset",  "冷凝系统"),
 
-    EVAPORATIVEWATERSET(8,  "evaporativewaterset",  "蒸发冷水泵系统"),
+    EVAPORATIVEWATERSET(8,  "evaporativewaterset",  "冷凝系统水泵"),
 
-    EVAPORATIVEBLOWERSET(9,  "evaporativeblowerset",  "蒸发冷风机系统"),
+    EVAPORATIVEBLOWERSET(9,  "evaporativeblowerset",  "冷凝系统风机"),
 
     POWERSET(10,  "powerset",  "电表"),
 

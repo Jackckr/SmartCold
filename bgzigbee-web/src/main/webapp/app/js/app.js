@@ -1,6 +1,6 @@
 var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
     'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation']);
-coldWeb.constant('coldWebUrl', 'http://localhost:8081/i/');
+coldWeb.constant('coldWebUrl', 'http://www.smartcold.org.cn/i/');
 angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
 	angular.bootstrap(document, ['ColdWeb']);
 });

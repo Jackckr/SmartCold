@@ -1,9 +1,9 @@
 package com.smartcold.bgzigbee.manage.controller;
 
 import com.smartcold.bgzigbee.manage.dao.*;
-import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.dto.UpdateMappingDTO;
 import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.enums.SetTables;
 import com.smartcold.bgzigbee.manage.service.SpiderConfigService;
@@ -46,12 +46,18 @@ public class SpiderConfigController {
     @Autowired
     private ColdstorageLightSetMapping coldstorageLightSetMapping;
 
-    @RequestMapping("/mapping/update")
-    public Object updateSetTableMapping(String table, String mapping, int id){
-        if (SetTables.checkTable(table) && setTableMapper.updateMapping(table, mapping, id)) {
-            return new BaseDto(0);
+    @Autowired
+    private ForkLiftSetMapping forkLiftSetMapping;
+
+    @Autowired
+    private DeviceObjectMappingMapper deviceObjectMappingMapper;
+
+    @RequestMapping("/update/mapping")
+    public Object updateSetTableMapping(@RequestBody UpdateMappingDTO updateMappingDTO){
+        if (SetTables.checkTable(updateMappingDTO.getTable()) && setTableMapper.updateMapping(updateMappingDTO.getTable(), updateMappingDTO.getMapping(), updateMappingDTO.getId())) {
+            return new ResultDto(0, "删除成功");
         }
-        return new BaseDto(-1);
+        return new ResultDto(-1, "添加失败");
     }
 
     @RequestMapping(value = "/delete/id", method = RequestMethod.DELETE)
@@ -145,6 +151,22 @@ public class SpiderConfigController {
     @RequestMapping(value = "/add/coldStorageLightSet", method = RequestMethod.POST)
     public Object addColdStorageLightSet(@RequestBody ColdStorageLightSetEntity coldStorageLightSetEntity){
         if (coldstorageLightSetMapping.insert(coldStorageLightSetEntity)) {
+            return new ResultDto(0, "添加成功");
+        }
+        return new ResultDto(-1, "添加失败");
+    }
+
+    @RequestMapping(value = "/add/forkliftSet", method = RequestMethod.POST)
+    public Object addForklift(@RequestBody ForkLiftSetEntity forkLiftSetEntity){
+        if (forkLiftSetMapping.insert(forkLiftSetEntity)) {
+            return new ResultDto(0, "添加成功");
+        }
+        return new ResultDto(-1, "添加失败");
+    }
+
+    @RequestMapping(value = "/add/deviceObjectMapping", method = RequestMethod.POST)
+    public Object addDeviceObjectMapping(@RequestBody DeviceObjectMappingEntity deviceObjectMappingEntity){
+        if (deviceObjectMappingMapper.insert(deviceObjectMappingEntity)) {
             return new ResultDto(0, "添加成功");
         }
         return new ResultDto(-1, "添加失败");
