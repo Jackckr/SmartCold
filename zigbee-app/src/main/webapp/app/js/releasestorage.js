@@ -165,7 +165,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 		$scope.goodSubmit = function(){
 			$scope.rdcID = '';
-			$scope.rdcAddress = '';
+			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if( $scope.unit1==""||$scope.unit1==undefined){
 				$scope.typeCode = 2;
 				$scope.typeText = "求购";
@@ -214,7 +214,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		
 		$scope.submit = function(){
 			$scope.rdcID = '';
-			$scope.rdcAddress = '';
+			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if( $scope.provinceId==""||$scope.provinceId==undefined){
 				$scope.typeCode = 1;
 				$scope.typeText = "出租";
