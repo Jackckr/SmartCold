@@ -7,9 +7,9 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
     $scope.defrostCnt = 0;
     $scope.freeCnt = 0;
     $scope.load = function () {
-        $http.get('/i/compressorBlower/findByUserId', {
+        $http.get('/i/compressorBlower/findByRdcId', {
             params: {
-                "userId": $stateParams.userId
+                "rdcId": $stateParams.rdcId
             }
         }).success(function (result) {
             console.log("result:" + result);

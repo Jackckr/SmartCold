@@ -174,7 +174,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                 $state.go('compressorPressure', {'compressorID': compressorID});
             };
             $rootScope.toMyBlowers = function () {
-                $state.go('compressorBlower', {'userId': $rootScope.user.id});
+                $state.go('compressorBlower', {'rdcId': $rootScope.rdcId});
             };
             //$rootScope.mystorages = [{'name': "上海-浦东-#1", 'id': 1}, {'name': "上海-浦东-#2",'id': 2}, {'name': "北京-五环-#1", 'id': 3}];
 //      xuyanan coldStorageDiv.html - -
@@ -354,7 +354,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'compressorPressure',
         templateUrl: 'app/template/compressorPressure.html'
     }).state('compressorBlower', {
-        url: '/compressorBlower/:userId',
+        url: '/compressorBlower/{rdcId}',
         controller: 'compressorBlower',
         templateUrl: 'app/template/compressorBlower.html'
     }).state('coldStorageDiv', {
