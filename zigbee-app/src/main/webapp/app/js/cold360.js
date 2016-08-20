@@ -1,7 +1,7 @@
 var app = angular.module('app', []);
 app.controller('cold360', function ($scope, $location, $http,$rootScope) {
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
-    var storageID = 3;
+    var storageID = 2;
 
     var formatTime = function(timeString){
         if (typeof(timeString) == "string"){
@@ -66,7 +66,7 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
                         }
                     });
 
-                    $('#temperatureChart').highcharts({
+                    $('#main').highcharts({
                         chart: {
                             type: 'spline',
                             animation: Highcharts.svg, // don't animate in old IE
