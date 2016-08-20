@@ -1,10 +1,7 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,12 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.olddb.ColdStorageMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
-import com.smartcold.manage.cold.dao.olddb.RdcSensorMapper;
 import com.smartcold.manage.cold.dto.NewStorageTempDto;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
-import com.smartcold.manage.cold.entity.olddb.ColdStorageEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
-import com.smartcold.manage.cold.entity.olddb.RdcSensor;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
 
@@ -39,8 +33,6 @@ public class ColdStorageController {
 	@Autowired
 	ColdStorageMapper coldStorageDao;
 
-	@Autowired
-	private RdcSensorMapper rdcSensorDao;
 
 	@RequestMapping("/getTempByNums")
 	public Object getTempByNums(Integer oid, String key,
@@ -73,7 +65,8 @@ public class ColdStorageController {
 		return storageService.findByUserId(userId);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	//废弃不用
+/*	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/findAllNewColdStorage", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllNewColdStorage(int rdcId) {
@@ -111,5 +104,5 @@ public class ColdStorageController {
 			allInfoList.add(map);
 		}
 		return allInfoList;
-	}
+	}*/
 }
