@@ -43,8 +43,6 @@
 				<li class="widthL" ng-if="vo.codeLave1!=''&&vo.codeLave1!=undefined"><span class="type">经营类型：</span><span class="text">{{vo.codeLave1}}</span></li>
 				<li ng-if="vo.codeLave2!=''&&vo.codeLave2!=undefined"><span class="type">温度类型：</span><span class="text">{{vo.codeLave2}}</span></li>
 				<li ng-if="vo.detlAddress!=''&&vo.detlAddress!=undefined"><span class="type">冷库地址:</span><span class="text">{{vo.detlAddress}}</span></li>
-				<li><span class="type">{{appmode[datatype].lab[0][0]}}:</span><span class="text">{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</span></li>
-				<li><span class="type">{{appmode[datatype].lab[1][0]}}:</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span></li>
 				<li>
 					<span class="type fl">星级：</span>
 					<ul class='star fl'>
