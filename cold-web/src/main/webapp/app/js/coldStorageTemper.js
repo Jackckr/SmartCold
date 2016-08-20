@@ -215,7 +215,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                 color: 'red',           //线的颜色，定义为红色
                                 dashStyle: 'solid',     //默认值，这里定义为实线
                                 value: datumTemp,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                                width: 2,
+                                width: 1,
                                 label: {
                                     text: '基准温度(' + datumTemp + '℃)', //标签的内容
                                     align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
