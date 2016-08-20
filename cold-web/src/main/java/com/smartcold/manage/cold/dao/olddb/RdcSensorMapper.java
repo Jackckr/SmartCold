@@ -22,4 +22,6 @@ public interface RdcSensorMapper {
     
     RdcSensor selectBySID(Integer sid);
     
+    RdcSensor findByOid(Integer oid);
+    
 }

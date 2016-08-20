@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>multiDiv</title>
+	<script type="text/javascript" src="bower_components/jquery-ui-1.10.4.custom/js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="bower_components/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.js"></script>
+	<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui-1.10.4.custom/css/base/jquery-ui-1.10.4.custom.css"/>
+	<script type="text/javascript" language="javascript">
+
+		$(document).ready(function(){
+			$.getUrlParam = function (name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) return unescape(r[2]); return null;
+			}
+
+			var rdcID = $.getUrlParam('storageID');			
+
+			$.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+rdcID,function(data,status){
+				$("body").css("background","url("+data+")").css("background-size","1050px 590px");
+			});
+			
+			$("#rotateDiv").draggable({
+				start: function() {
+					console.log("start");
+				},
+				drag: function() {
+					console.log("dragging");
+				},
+				stop: function(event,ui) {
+					console.log("stop");
+					div_x = ui.offset.top;
+					div_y = ui.offset.left;
+				}
+			});
+			
+			var current = 0;
+			$("#saveBtn").click(function(){
+			});
+			$("#rotateDiv").click(function(){
+				current = (current+90)%360;
+				this.style.transform = 'rotate('+current+'deg)';
+			});
+		});
+	</script>
+</head>
+
+<body>
+<button id ="saveBtn">保存配置</button>
+<div id="rotateDiv" style="background-color:black; width:120px;hight:15px">xx</div>
+</body>
+</html>
