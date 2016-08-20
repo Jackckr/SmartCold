@@ -19,6 +19,7 @@ import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.SetUtil;
+import com.smartcold.zigbee.manage.util.StringUtil;
 
 /*
  * Copyright (C) DCIS 版权所有
@@ -142,20 +143,32 @@ public class RdcShareServiceImpl implements RdcShareService {
 					vo.setLogo(files.get(files.size()-1).getLocation());
 			} 
 			 if(3==vo.getDataType()){
-				 List<Map<String, Object>> dataMap1 = this.commonMapper.getBaseDataByID("storagemanagetype", "id", "type",Integer.parseInt(vo.getCodeLave1()));//经营类型
-				 if(SetUtil.isnotNullList(dataMap1)){ vo.setCodeLave1(dataMap1.get(0).get("type")+"") ; }
-				 List<Map<String, Object>> dataMap2 = this.commonMapper.getBaseDataByID("storagetempertype", "id", "type",Integer.parseInt(vo.getCodeLave2()));// 温度类型
-				 if(SetUtil.isnotNullList(dataMap2)){ vo.setCodeLave2(dataMap2.get(0).get("type")+"") ; }
+				 if(StringUtil.isnotNull(vo.getCodeLave1())){
+					 List<Map<String, Object>> dataMap1 = this.commonMapper.getBaseDataByID("storagemanagetype", "id", "type",Integer.parseInt(vo.getCodeLave1()));//经营类型
+					 if(SetUtil.isnotNullList(dataMap1)){ vo.setCodeLave1(dataMap1.get(0).get("type")+"") ; }
+				 }
+				 if(StringUtil.isnotNull(vo.getCodeLave2())){
+				   List<Map<String, Object>> dataMap2 = this.commonMapper.getBaseDataByID("storagetempertype", "id", "type",Integer.parseInt(vo.getCodeLave2()));// 温度类型
+				  if(SetUtil.isnotNullList(dataMap2)){ vo.setCodeLave2(dataMap2.get(0).get("type")+"") ; }
+				 }
 			 }else if(2==vo.getDataType()){
-				 List<Map<String, Object>> dataMap1 = this.commonMapper.getCommDataByID(Integer.parseInt(vo.getCodeLave1()),"ps_fm_type");//业务类型
-				 if(SetUtil.isnotNullList(dataMap1)){ vo.setCodeLave1(dataMap1.get(0).get("type_name")+"") ; }
-				 List<Map<String, Object>> dataMap2 = this.commonMapper.getCommDataByID(Integer.parseInt(vo.getCodeLave2()),"ps_cl_type");//温度类型
-				 if(SetUtil.isnotNullList(dataMap2)){ vo.setCodeLave2(dataMap2.get(0).get("type_name")+"") ; }
-				 List<Map<String, Object>> dataMap3 = this.commonMapper.getBaseDataByID("storagetruck", "id", "type",Integer.parseInt(vo.getCodeLave3()));//车型
-				 if(SetUtil.isnotNullList(dataMap3)){ vo.setCodeLave3(dataMap3.get(0).get("type")+"") ; }
+				 if(StringUtil.isnotNull(vo.getCodeLave1())){
+					 List<Map<String, Object>> dataMap1 = this.commonMapper.getCommDataByID(Integer.parseInt(vo.getCodeLave1()),"ps_fm_type");//业务类型
+					 if(SetUtil.isnotNullList(dataMap1)){ vo.setCodeLave1(dataMap1.get(0).get("type_name")+"") ; }
+				 }
+				 if(StringUtil.isnotNull(vo.getCodeLave2())){
+					 List<Map<String, Object>> dataMap2 = this.commonMapper.getCommDataByID(Integer.parseInt(vo.getCodeLave2()),"ps_cl_type");//温度类型
+					 if(SetUtil.isnotNullList(dataMap2)){ vo.setCodeLave2(dataMap2.get(0).get("type_name")+"") ; }
+				 }
+				 if(StringUtil.isnotNull(vo.getCodeLave3())){
+					 List<Map<String, Object>> dataMap3 = this.commonMapper.getBaseDataByID("storagetruck", "id", "type",Integer.parseInt(vo.getCodeLave3()));//车型
+					 if(SetUtil.isnotNullList(dataMap3)){ vo.setCodeLave3(dataMap3.get(0).get("type")+"") ; }
+				 }
 			 }else if(1==vo.getDataType()){
-				 List<Map<String, Object>> dataMap = this.commonMapper.getCommDataByID(Integer.parseInt(vo.getCodeLave1()),"good_type");
-				 if(SetUtil.isnotNullList(dataMap)){ vo.setCodeLave1(dataMap.get(0).get("type_name")+"") ; }
+				 if(StringUtil.isnotNull(vo.getCodeLave1())){
+					 List<Map<String, Object>> dataMap = this.commonMapper.getCommDataByID(Integer.parseInt(vo.getCodeLave1()),"good_type");
+					 if(SetUtil.isnotNullList(dataMap)){ vo.setCodeLave1(dataMap.get(0).get("type_name")+"") ; }
+				 }
 			 }
 		 }
 		 return vo;
