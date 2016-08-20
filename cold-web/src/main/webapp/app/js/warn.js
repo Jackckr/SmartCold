@@ -11,7 +11,6 @@ coldWeb.controller('warn', function($scope, $location, $stateParams, $http) {
 			 angular.forEach(result,function(index){
 				 $scope.data.push({
 					 id: index.id,
-				     name: index.warningName,
 				     level: index.level,
 				     time: index.addtime
 				 });
@@ -51,10 +50,6 @@ coldWeb.controller('warn', function($scope, $location, $stateParams, $http) {
 			    		        field: 'id',
 			    		        title: '告警id',
 			    		        sortable: true
-			    		    }, {
-			    		        field: 'name',
-			    		        title: '告警类型',
-			    		        sortable: true,
 			    		    }, {
 			    		        field: 'level',
 			    		        title: '告警级别',
