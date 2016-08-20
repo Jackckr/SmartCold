@@ -20,9 +20,7 @@ public class WeatherController extends BaseController {
 	@ResponseBody
 	public Object findTempByCityID(int cityID) {
 		Weather weather = new Weather();
-		System.out.println("cityId: "+cityID);
 		weather = weatherDao.findTempByCityID(cityID);
-		System.out.println(weather.getTemp1());
-		return (float)(Math.round(weather.getTemp1()*100))/100;
+		return (float)(Math.round(weather.getTemp1()*10))/10;
 	}
 }

@@ -64,6 +64,7 @@
 		    AND `key` = #{key} 
 	    </if>
 	    AND addtime > #{startTime} AND addtime &lt; #{endTime} 
+	    ORDER BY `addtime` DESC
 	
 	</select>
 

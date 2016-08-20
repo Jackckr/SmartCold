@@ -3,34 +3,69 @@
  */
 coldWeb.controller('warn', function($scope, $location, $stateParams, $http) {
 	console.log($stateParams.rdcId);
-	// 配置分页基本参数
-	$scope.paginationConf = {
-		currentPage : 1,
-		itemsPerPage : 15,
-		pagesLength : 15,
-		perPageOptions : [ 10, 20, 30, 40, 50 ],
-		rememberPerPage : 'perPageItems',
-		onChange : function() {
-
-		}
-	}
+	
 	$scope.load = function() {
-		$http.get(
-				'/i/warn/findLastNWarningsInfoByRdcId?rdcId='
-						+ $stateParams.rdcId + "&point=100").success(
-				function(result) {
-					$scope.warningsInfo = result;
-					/*
-					 * for (var i = 0; i < $scope.warningsInfo.length; i++) {
-					 * console.log("id:" + $scope.warningsInfo[i].id + "
-					 * warningName:" +$scope.warningsInfo[i].warningName +"
-					 * addtime:" + $scope.warningsInfo[i].addtime); }
-					 */
-				});
+		$http.get('/i/warn/findLastNWarningsInfoByRdcId?rdcId='
+				+ $stateParams.rdcId + '&point=100').success(function(result){
+			$scope.data = [];
+			 angular.forEach(result,function(index){
+				 $scope.data.push({
+					 id: index.id,
+				     level: index.level,
+				     time: index.addtime
+				 });
+			 });
+
+			 $scope.bsTableControl = {
+			            options: {
+			                data: $scope.data,
+			                rowStyle: function rowStyle(row,index){
+			                	return {
+			                		css: {
+			                			"border-color":"white white white",
+			                			"color": "black",
+				                        "background-color": "#DDDDDD",
+				                    }
+			                	}
+			                	return {};
+			                },
+			                cellStyle: function cellStyle(value, row, index){
+			                	if(row == 1)
+			                	      return { "background-color": "#DDDDDD"};
+			                },
+			                cache: false,
+			                height: 400,
+			                undefinedText: "NULL",
+			                pagination: true,
+			                search: true,
+			                showColumns: false,
+			                showRefresh: false,
+			                minimumCountColumns: 2,
+			                clickToSelect: true,
+			                escape: true,
+			                maintainSelected: true,
+			                toolbar: '#copyArea',
+						    showToggle: true,
+			                columns: [{
+			    		        field: 'id',
+			    		        title: '告警id',
+			    		        sortable: true
+			    		    }, {
+			    		        field: 'level',
+			    		        title: '告警级别',
+			    		        sortable: true,
+			    		    }, {
+			    		        field: 'time',
+			    		        title: '告警时间',
+			    		        sortable: true,
+			    		    }]
+			            }
+			        };
+		});
 	}
-	$scope.load();
-	/*
-	 * var timeTicket; timeTicket = setInterval(function () { $scope.load(); },
-	 * 30000);
-	 */
+	$scope.load();	
+	var timeTicket; 
+	timeTicket = setInterval(function () { $scope.load();},
+	  60000);
+	 
 });

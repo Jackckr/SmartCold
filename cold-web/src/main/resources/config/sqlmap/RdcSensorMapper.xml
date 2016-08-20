@@ -23,9 +23,10 @@
   </delete>
   <insert id="insert" parameterType="com.smartcold.manage.cold.entity.olddb.RdcSensor">
     insert into RdcSensor (RSID, SID, RdcID,
-    Sx, Sy, ColdStorageID)
+    Sx, Sy, ColdStorageID, type, oid, key)
     values (#{rsid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER},
-    #{sx,jdbcType=INTEGER}, #{sy,jdbcType=INTEGER}, #{coldstorageid,jdbcType=INTEGER})
+    #{sx,jdbcType=INTEGER}, #{sy,jdbcType=INTEGER}, #{coldstorageid,jdbcType=INTEGER}, 
+    #{type,jdbcType=INTEGER},#{oid,jdbcType=INTEGER},#{key,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.olddb.RdcSensor">
     insert into RdcSensor
@@ -103,5 +104,11 @@
     <include refid="Base_Column_List" />
     from RdcSensor
     where SID = #{sid,jdbcType=INTEGER}
+  </select>
+    <select id="findByOid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from RdcSensor
+    where oid = #{oid,jdbcType=INTEGER}
   </select>
 </mapper>

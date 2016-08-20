@@ -12,8 +12,38 @@ public class RdcSensor {
     private Integer sy;
 
     private Integer coldstorageid;
+    
+    private int type;
+    
+    private int oid;
+    
+    private String key;
 
-    public Integer getRsid() {
+    public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getOid() {
+		return oid;
+	}
+
+	public void setOid(int oid) {
+		this.oid = oid;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public Integer getRsid() {
         return rsid;
     }
 

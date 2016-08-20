@@ -74,7 +74,7 @@ $().ready(function() {
   	function gethtml(rdc){
   		  var score=['<li class="imgCell" ><a href="storehousedetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">【'+rdc.typeText+"】"+rdc.title+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.detlAddress+'</p><ul class="star" value="'+rdc.score+'">'];
   		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score&&i!=0?'<li class="filled">★</li>':"<li class='filled'>★</li>"); }
-  		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
+  		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >立即联系</button></li>');
   		  return score.join("");
   	}
   	function getPageData(){//启用无限加载

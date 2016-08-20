@@ -13,6 +13,8 @@ public class ForkLiftSetEntity {
 	private String mapping;
 	  
 	private Date addTime;
+	
+	private double power;
 
 	public int getId() {
 		return id;
@@ -52,5 +54,13 @@ public class ForkLiftSetEntity {
 
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
+	}
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
 	}
 }

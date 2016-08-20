@@ -26,7 +26,7 @@
     		</a>    		
     	</div>
     	<div class="search">
-    		<input type="text" placeholder="请输入搜索内容"/>
+    		<input type="text" placeholder="请输入搜索内容" onkeydown="seachList(this)"/>
     		<i class="iconfont">&#xe62f;</i>
     	</div>
     	<div class="barCode">
@@ -34,6 +34,9 @@
     			<i class="iconfont">&#xe63f;</i>
     		</a>
     	</div>
+    </div>
+    <div  id="searchTips" style="display:none;width:291px;height:auto;position:absolute;z-index:9001;">
+		    <ul></ul>
     </div>
 <!-- header end-->
 <!-- session -->
@@ -70,28 +73,41 @@
 		<section class="grid">
 			<div class="grid_kid">
 				<a href="view/coldlist.html">
-					<i class="iconfont">&#xe669;</i>
+					<i class="iconfont blueI">&#xe669;</i>
 					<p class="info">冷库资源</p>
 				</a>
 			</div>
 			<div class="grid_kid">
-				<a href="view/share.html">
-					<i class="iconfont">&#xe6bc;</i>
-					<p class="info">信息共享</p>					
-				</a>
-			</div>
-			<div class="grid_kid">
 				<a href="view/map.html">
-					<i class="iconfont">&#xe660;</i>
+					<i class="iconfont goldI">&#xe660;</i>
 					<p class="info">冷库地图</p>					
 				</a>
 			</div>
 			<div class="grid_kid">
+				<a href="view/share.html">
+					<i class="iconfont greenI">&#xe6bc;</i>
+					<p class="info">信息共享</p>					
+				</a>
+			</div>
+			<div class="grid_kid">
+				<a href="view/release.html">
+					<i class="iconfont blueI">&#xe721;</i>
+					<p class="info">信息发布</p>					
+				</a>
+			</div>
+			<div class="grid_kid">
+				<a href="view/review.html">
+					<i class="iconfont redI">&#xe664;</i>
+					<p class="info">温度追溯</p>					
+				</a>
+			</div>
+			<div class="grid_kid">
 				<a href="view/cold360.html">
-					<i class="iconfont">&#xe66c;</i>
+					<i class="iconfont greenI">&#xe66c;</i>
 					<p class="info">冷库360</p>					
 				</a>
 			</div>
+<!-- 			是 -->
 	 </section>
 <!-- session end-->
 <!-- footer -->
@@ -108,17 +124,11 @@
                 <p class="info">资讯</p>
             </a>
         </li>
-        <li>            
-            <a href="view/release.html">
-                <i class="iconfont">&#xe6ff;</i>
-                <p class="info">发布</p>
-            </a>
-        </li>
-        <!--有需要的时候解开注释-->
-        <li>          
-            <a href="view/review.html">
-                <i class="iconfont">&#xe642;</i>
-                <p class="info">追溯</p>
+        <li>        
+            <a href="view/messages.html">
+                <i class="iconfont">&#xe71c;</i>
+                <p class="info">消息</p>
+                <span class="countNum">66</span>
             </a>
         </li>
         <li>            

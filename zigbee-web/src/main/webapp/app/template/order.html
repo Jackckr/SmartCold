@@ -3,15 +3,15 @@
 	<!-- content -->
 		<div class="content">
 		   <p class="order">
-		   		<span class="num">订单号：{{orderDto.orders.orderid}}</span>
-		   		<span class="name">订单名称：{{orderDto.orders.ordername}}</span>
+		   		<span class="num">联络单号：{{orderDto.orders.orderid}}</span>
+		   		<span class="name">联络单名称：{{orderDto.orders.ordername}}</span>
 		   </p>
-		<!-- 订单详情区域 -->
-			<h4>订单详情 <span class="date">{{orderDto.orders.generatetime}}</span></h4>
+		<!-- 联络单详情区域 -->
+			<h4>联络单详情 <span class="date">{{orderDto.orders.generatetime}}</span></h4>
 			<div ng-if="orderDto.rsd.dataType==3">
 			<p class="info">
 				<i class="dot"></i>
-				<span class="prev">订单类型:</span>
+				<span class="prev">联络单类型:</span>
 				<span class="next">[冷库]{{orderDto.rsd.typeText}}</span>
 			</p>
 			<p class="info">
@@ -29,7 +29,7 @@
 			<div ng-if="orderDto.rsd.dataType==2">
 			<p class="info">
 				<i class="dot"></i>
-				<span class="prev">订单类型:</span>
+				<span class="prev">联络单类型:</span>
 				<span class="next">[配送]{{orderDto.rsd.typeText}}</span>
 			</p>
 			<p class="info">
@@ -47,7 +47,7 @@
 			<div ng-if="orderDto.rsd.dataType==1">
 			<p class="info">
 				<i class="dot"></i>
-				<span class="prev">订单类型:</span>
+				<span class="prev">联络单类型:</span>
 				<span class="next">[货品]{{orderDto.rsd.typeText}}</span>
 			</p>
 			<p class="info">
@@ -82,7 +82,7 @@
 				</li>
 			</ul>
 			<button id="getTeleNum" class="btn btn-primary " ng-click="getTeleNum()">获取联系方式</button>  
-		<!-- 订单详情区域 end-->
+		<!-- 联络单详情区域 end-->
 		</div>
 	<!-- content end-->
 	</div>

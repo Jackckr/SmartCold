@@ -25,15 +25,11 @@
         <!-- header end-->
         <section class="main">
             <ul class="compantDetail clearfix">
-                <li class="fl">
-                    <p class='ellipsis'>{{vo.name}}</p>
+                <li>
+                    <p class='ellips'>{{vo.name}}</p>
                     <p class='position'> <i class="iconfont">&#xe66e;</i>{{vo.address}} </p>
                 </li>
-                <li class="fr">
-                    <ul class='star' value="{{vo.rdcscore}}" >
-                        <li class="{{vo.rdcscore>=1?'filled':''}}">★</li><li class="{{vo.rdcscore>=2?'filled':''}}">★</li><li class="{{vo.rdcscore>=3?'filled':''}}">★</li><li class="{{vo.rdcscore>=4?'filled':''}}">★</li><li class="{{vo.rdcscore>=5?'filled':''}}">★</li>
-                    </ul>
-                </li>
+               
             </ul>
             <!--点击图片循环展示-->
             <div class="baguetteBoxOne gallery" ng-if="vo.files">
@@ -43,6 +39,12 @@
                	<li><span class="type">经营类型：</span><span class="text">{{vo.managetype}}</span></li> 
 				<li><span class="type">温度类型：</span><span class="text">{{vo.storagetempertype}}</span></li>
 				<li><span class="type">存放类型：</span><span class="text">{{vo.storagetype}}</span></li>
+				 <li>
+				 	<span class="type fl">星级：</span>
+                    <ul class='star fl' value="{{vo.rdcscore}}" >
+                        <li class="{{vo.rdcscore>=1?'filled':''}}">★</li><li class="{{vo.rdcscore>=2?'filled':''}}">★</li><li class="{{vo.rdcscore>=3?'filled':''}}">★</li><li class="{{vo.rdcscore>=4?'filled':''}}">★</li><li class="{{vo.rdcscore>=5?'filled':''}}">★</li>
+                    </ul>
+                </li>
 				<li><span class="type">面积：</span><span class="text">{{vo.sqm}}㎡</span></li>
             	<li ng-if="vo.capacity!=0"><span class="type">吨位：</span><span class="text">{{vo.capacity}}</span></li>
 				<li><span class="type">电话：</span><span class="text">{{vo.cellphone}}</span></li>

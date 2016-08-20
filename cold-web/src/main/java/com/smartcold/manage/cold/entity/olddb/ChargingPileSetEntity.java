@@ -5,14 +5,24 @@ import java.util.Date;
 public class ChargingPileSetEntity {
 
 	private int id;
-	  
+
 	private String name;
-	  
+
 	private int rdcid;
-	  
+
 	private String mapping;
-	  
+
 	private Date addTime;
+
+	private double power;
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
+	}
 
 	public int getId() {
 		return id;
