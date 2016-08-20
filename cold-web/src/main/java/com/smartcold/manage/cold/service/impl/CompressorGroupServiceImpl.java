@@ -72,7 +72,7 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 			double lH = lRunH.size() > 0 ? lRunH.get(0).getValue() : 0;
 			List<StorageKeyValue> lRunM = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
 					compressor.getId(), "runM", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime));
-			double lM = lRunM.size() > 0 ? lRunH.get(0).getValue() : 0;
+			double lM = lRunM.size() > 0 ? lRunM.get(0).getValue() : 0;
 			List<StorageKeyValue> lRunS = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
 					compressor.getId(), "runS", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime));
 			double lS = lRunS.size() > 0 ? lRunS.get(0).getValue() : 0;
@@ -83,8 +83,13 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 			List<StorageKeyValue> runS = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
 					compressor.getId(), "runS", 1);
 			totalRunTime += runH.size() > 0 ? runH.get(0).getValue() - lH : 0;
-			totalRunTime += runM.size() > 0 ? runM.get(0).getValue() - lM : 0;
-			totalRunTime += runS.size() > 0 ? runS.get(0).getValue() - lS : 0;
+			totalRunTime += runM.size() > 0 ? (runM.get(0).getValue() - lM) / 60 : 0;
+			totalRunTime += runS.size() > 0 ? (runS.get(0).getValue() - lS) / 3600 : 0;
+			if (totalRunTime < 0) {
+				entity.setCompressorGroupName(entity.getCompressorGroupName()
+						+ String.format("[%s,%s,rH:%s,lH:%s,rM:%s,lM:%s,rS:%s,ls:%s]", compressor.getId(), totalRunTime,
+								runH.get(0).getValue(), lH, runM.get(0).getValue(), lM, runS.get(0).getValue(), lS));
+			}
 			waterCost = compressor.getPower() * compressor.getWaterRatio() * totalRunTime * 3600 / 2422.8 / 1000;
 		}
 

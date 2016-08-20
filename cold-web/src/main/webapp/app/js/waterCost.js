@@ -1,4 +1,4 @@
-coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools) {
+coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools,$timeout) {
 	$scope.load = function(){
 		barCharts = echarts.init($('#bar')[0]);
 		$http.get("/i/compressorGroup/getAllWaterCostByRdcId?rdcId=" + $rootScope.rdcId).success(
@@ -15,5 +15,7 @@ coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools) {
 				})
 	}
 	
-	$scope.load();
+	$timeout(function(){
+		$scope.load();
+	},0)
 });
