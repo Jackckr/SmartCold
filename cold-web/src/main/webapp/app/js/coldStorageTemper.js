@@ -79,7 +79,9 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
 
             //温度实时图——环形图
-            var temper = list[0]?parseFloat(list[0].value).toFixed(1):null;
+            
+            var temper = list.length > 0?parseFloat(list[list.length - 1]).toFixed(1):null;
+            //list[0]?parseFloat(list[0].value).toFixed(1):null;
             $scope.curtemper = temper;
 /*            var pressureChart = echarts.init($("#temperatureNowChart").get(0));
 

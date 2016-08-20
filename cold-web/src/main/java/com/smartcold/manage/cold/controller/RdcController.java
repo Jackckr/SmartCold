@@ -48,4 +48,10 @@ public class RdcController {
 	public Object findRDCsByUserid(@RequestParam int userid) {
 		return rdcService.findRdcsByUserId(userid);
 	}
+
+	@RequestMapping(value = "/findRDCByUserid", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findRDCByUserid(@RequestParam int userid) {
+		return rdcService.findRdcByUserid(userid);
+	}
 }

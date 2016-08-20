@@ -252,18 +252,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
               clear-selected="true"
               match-class="highlight"
               input-class="form-control form-control-small"
-              ng-if="user.role == 1"
+              ng-if="user.role == 3"
               >
               </div>
           <div>
-            <select ng-if="user.role != 1"
+            <select ng-if="user.role == 2"
             class="form-control"
             ng-options="rdc.name for rdc in vm.allUserRdcs" 
             ng-model="vm.choserdc" 
             ng-change="initAllByRdcId(vm.choserdc.id)"></select>
           </div>
           <ul class="sidebar-menu text-white">
-          <li ng-if="user.role == 1">
+          <li ng-if="user.role == 3 || user.role == 1">
              <a class="text-white" style="font-family: cursive;">{{vm.choserdc.name}}</a>
           </li>
             <li class="treeview">
@@ -311,7 +311,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	               </li>
 	              </ul>
                </li>
-               <li><a><i class="#/about"><span>其他设施</span></i></a></li>
+               <li><a href="#/otherDevice"><i class=""><span>其他设施</span></i></a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -469,6 +469,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/power.js"></script>
 <script src="app/js/waterCost.js"></script>
 <script src="app/js/platformDoor.js"></script>
+<script src="app/js/other.js"></script>
 <!--  -->
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
 <script src="assets/plugins/fastclick/fastclick.min.js"></script>

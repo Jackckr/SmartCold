@@ -381,6 +381,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/platformDoor/{doorid}',
     	controller: 'platformDoor',
         templateUrl: 'app/template/platformDoor.html'
+    }).state('other',{
+    	url:'/otherDevice',
+    	controller: 'other',
+        templateUrl: 'app/template/other.html'
     });
 
 });
