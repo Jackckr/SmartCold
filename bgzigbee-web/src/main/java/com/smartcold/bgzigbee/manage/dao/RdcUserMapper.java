@@ -17,4 +17,6 @@ public interface RdcUserMapper {
     int updateByPrimaryKey(RdcUser record);
 
     RdcUser findByUserId(Integer userid);
+
+    RdcUser findByRdcId(Integer rdcid);
 }
