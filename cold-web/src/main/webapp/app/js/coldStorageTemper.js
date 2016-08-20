@@ -79,7 +79,9 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 
 
             //温度实时图——环形图
-            var temper = list[0]?parseFloat(list[0].value).toFixed(1):null;
+            
+            var temper = list.length > 0?parseFloat(list[0].value).toFixed(1):null;
+            //list[0]?parseFloat(list[0].value).toFixed(1):null;
             $scope.curtemper = temper;
 /*            var pressureChart = echarts.init($("#temperatureNowChart").get(0));
 
@@ -200,16 +202,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                                 value: 0,
                                 width: 1,
                                 color: '#808080'
-                            },{
-                                color: 'red',           //线的颜色，定义为红色
-                                dashStyle: 'solid',     //默认值，这里定义为实线
-                                value: startTemperature,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                                width: 2,
-                                label: {
-                                    text: '设定温度(' + startTemperature + '℃)', //标签的内容
-                                    align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                    x: 0                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                }//标示线的宽度，2px
                             }, 
                             {
                                 color: 'red',           //线的颜色，定义为红色
@@ -248,17 +240,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                             },
                             data: (function () {
                                 return data;
-                            })()
-                        },
-                        {
-                            name: '设定温度',
-                            color: 'red',
-                            dashStyle: 'solid',
-                            marker: {
-                                symbol: 'circle'
-                            },
-                            data: (function () {
-                                return startData;
                             })()
                         },
                         {

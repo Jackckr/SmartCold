@@ -11,7 +11,7 @@
 	
 	<select id="findByStorageId" parameterType="map" resultType="WindScreenSetEntity">
 		SELECT *
-		FROM `windscreenset` WHERE `storageid` = #{storageid}
+		FROM `windscreenset` WHERE `coldstorageid` = #{storageid}
 	</select>
 
 </mapper>

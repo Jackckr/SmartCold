@@ -149,7 +149,7 @@ section{
 }
 .star{
 	font-size: 0.8rem;
-	margin:0 0.1rem;
+	line-height:1.2rem;
 	color: #CACACA;
 	overflow: hidden;
 }
@@ -201,7 +201,7 @@ section{
 	border-radius: 3px;
 	margin-right: 0.9rem;
 	position: absolute;
-	bottom: 0.4rem;
+	bottom: 0.2rem;
 	right: 0;
 }
 .ellipsis{
