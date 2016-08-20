@@ -142,6 +142,8 @@ public class RdcShareServiceImpl implements RdcShareService {
 					vo.setLogo(files.get(files.size()-1).getLocation());
 			} 
 			 if(3==vo.getDataType()){
+				 List<Map<String, Object>> dataMap1 = this.commonMapper.getBaseDataByID("storagemanagetype", "id", "type",Integer.parseInt(vo.getCodeLave1()));//经营类型
+				 if(SetUtil.isnotNullList(dataMap1)){ vo.setCodeLave1(dataMap1.get(0).get("type")+"") ; }
 				 List<Map<String, Object>> dataMap2 = this.commonMapper.getBaseDataByID("storagetempertype", "id", "type",Integer.parseInt(vo.getCodeLave2()));// 温度类型
 				 if(SetUtil.isnotNullList(dataMap2)){ vo.setCodeLave2(dataMap2.get(0).get("type")+"") ; }
 			 }else if(2==vo.getDataType()){
