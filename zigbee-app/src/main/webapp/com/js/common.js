@@ -1,20 +1,11 @@
 "use strict";
 //var countdown = 60;
 var oHtml = document.documentElement;
-<<<<<<< HEAD
 var _sysconfig={countdown:60,isdebug:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}
-=======
-var screenWidth = oHtml.clientWidth;
-var screenHeight = oHtml.clientHeight;
-var ER = {root:"http://192.168.1.199:8080",coldroot:"http//:192.168.1.199:8089",isdebug:true};
-//var ER = {root:"http://liankur.com",coldroot:"http//:192.168.1.136:8989",isdebug:true};
-if ($.ajax) {jQuery.ajaxSetup({
-	    xhrFields:{withCredentials:true}
->>>>>>> f92133b869d1d94404075024f453a96140d66c25
 //		,contentType : "application/x-www-form-urlencoded;charset=utf-8"
 // , error: function(jqXHR, textStatus, errorThrown){  
 //			   if(textStatus=='timeout'){alert("超时");return;};
