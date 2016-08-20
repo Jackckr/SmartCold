@@ -10,12 +10,15 @@
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+	<script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
+    <script type="text/javascript" src="../app/js/cold360.js" ></script>
 </head>
-<body>
+<body ng-app="app" ng-controller="cold360" ng-cloak>
     <!-- header -->
          <header>
             <div class="area fl">
@@ -75,9 +78,9 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
             	<p class="actually">冷库实时温度</p>
-            	<p class="temperaturenum">-15℃</p>
+            	<p class="temperaturenum">{{curtemper}}℃</p>
             	 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    			<div id="main"></div>    
+    			<div id="temperatureChart"></div>
             </div>
             <div class="swiper-slide">
             	请耐心等待......
@@ -119,7 +122,7 @@
             </a>
         </li>
     </ul>
-    <script>
+<!--    <script>
 	      // 基于准备好的dom，初始化echarts图表
         var myChart = echarts.init(document.getElementById('main')); 
         
@@ -177,6 +180,6 @@
 		};                   
         // 为echarts对象加载数据 
         myChart.setOption(option); 
-    </script>
+    </script>-->
 </body>
 </html>
