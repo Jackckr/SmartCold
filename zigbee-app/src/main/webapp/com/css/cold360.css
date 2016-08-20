@@ -21,6 +21,25 @@ section{
 	box-sizing: border-box;
 }
 /*温度、电耗、开门样式*/
+.rdcDropList{
+    position: absolute;
+    top: 102%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 5px #111;
+    display: none;
+}
+.rdcDropList li{
+    font-size: 0.75rem;
+    color: #666;
+    line-height: 1.8rem;
+    width:100%;
+    text-align:left;
+    padding: 0 .9rem;
+    border-bottom:1px solid #eee;
+    box-sizing:border-box;
+}
 .toggle{
 	padding: 0;
 	box-sizing: border-box;
@@ -134,9 +153,9 @@ section{
 }
 .actually{
 	text-align: left;
-	font-size: 16px;
+	font-size: 0.8rem;
 	font-weight: normal;
-	color: #333;
+	color: #438BCB;
 	line-height: 1.5rem;
 	text-indent: 1.5em;
 }

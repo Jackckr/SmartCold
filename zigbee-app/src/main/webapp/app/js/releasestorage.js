@@ -112,6 +112,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		$scope.carSubmit = function(){
 			$scope.rdcID = '';
 			$scope.rdcAddress = '';
+			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
+			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
 			if(window.flag==1){
 				$scope.typeCode = 2;
 				$scope.typeText = "找车";
@@ -127,13 +129,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave1:$scope.codeLave11,
 					codeLave2:$scope.codeLave22,
 					codeLave3:$scope.codeLave3,
-					unitPrice : $scope.unitprice,
+					unitPrice : $scope.unitPrice,
 		            stprovinceID:$scope.stprovinceID,
 				    stcityID:$scope.stcityID,
 				    toprovinceID:$scope.toprovinceID,
 					tocityID:$scope.tocityID,
-					unit1:$scope.staddress,
-					unit2:$scope.toaddress,
+					unit1:stplace,
+					unit2:toplace,
 					validStartTime:$scope.startTime,
 					validEndTime : $scope.arriveTime,
 					telephone:$scope.telephone,
