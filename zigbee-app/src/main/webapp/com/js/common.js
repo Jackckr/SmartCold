@@ -2,7 +2,7 @@
 var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
-var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}
 //		,contentType : "application/x-www-form-urlencoded;charset=utf-8"

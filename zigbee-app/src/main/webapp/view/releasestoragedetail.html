@@ -117,13 +117,13 @@
 				
 				<input type="text" id="sqm" ng-model="sqm" style="min-width:4rem;width:5rem;"/>
 				<label><input type="radio" name="quality" ng-model="unit" name="unit"
-					value="吨" />吨</label>&nbsp;&nbsp;
-			    <label><input type="radio" name="quality" value="平方米" ng-model="unit" name="unit"
+					value="元/天·吨" />吨</label>&nbsp;&nbsp;
+			    <label><input type="radio" name="quality" value="元/天·平方米" ng-model="unit" name="unit"
 					checked />平方米 </label> &nbsp;&nbsp;
-			    <label><input type="radio" name="quality" value="其他"  ng-model="unit" name="unit" />其他</label> </li>
+			    <label><input type="radio" name="quality" value="元/天·其他"  ng-model="unit" name="unit" />其他</label> </li>
 					
 				<li><label for="price">单价</label> <input type="text" id="price" name="unitPrice"
-					placeholder="元/天·平方米" ng-model="unitprice"/></li>
+					placeholder="元/天·单位" ng-model="unitprice"/></li>
 					
 				<li>
 					<label for="time">信息有效期</label>
@@ -147,7 +147,7 @@
 	<button class="mybtn" ng-click="submit()">确认发布</button>
 	</section>
 	<div id="datePlugin"></div>
-	<ul class="footer">
+	<!--<ul class="footer">
 		<li><a href="../index.html"> <i class="iconfont">&#xe65a;</i>
 				<p class="info">首页</p> </a></li>
 		<li><a href="news.html"> <i class="iconfont">&#xe6f8;</i>
@@ -159,7 +159,7 @@
 				<p class="info">追溯</p> </a></li>
 		<li><a href="user.html"> <i class="iconfont">&#xe6fd;</i>
 				<p class="info">我的</p> </a></li>
-	</ul>
+	</ul>-->
 	<script type="text/javascript" src="../com/js/file_upload.js"></script>
 </body>
 </html>

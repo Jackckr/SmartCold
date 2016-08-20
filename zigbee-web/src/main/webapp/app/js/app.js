@@ -53,14 +53,14 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	        	 if((window.location.hash).indexOf("#/personalDetail")>0){ window.location.href="#/home";}
 	        };
 	        $rootScope.gotoSmartCold = function(){
-	        	cookies = document.cookie.split(";");
+//	        	cookies = document.cookie.split(";");
 	        	url = "http://www.smartcold.org.cn";
-	        	angular.forEach(cookies,function(item){
-	        		item = item.trim();
-	        		if(item.startsWith("token=")){	        			
-	        			url = url + "/#/" + item;
-	        		}
-	        	});
+//	        	angular.forEach(cookies,function(item){
+//	        		item = item.trim();
+//	        		if(item.startsWith("token=")){	        			
+//	        			url = url + "/#/" + item;
+//	        		}
+//	        	});
 	        	window.open(url);
 	        }
 	    },

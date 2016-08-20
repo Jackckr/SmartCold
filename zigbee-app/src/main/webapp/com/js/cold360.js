@@ -19,9 +19,19 @@ $(function() {
 			$(".backDrop").hide();
 		}
 	});
+	/*rdc下拉列表*/
+	$(".zoom").click(function () {
+        $('.rdcDropList').slideDown();
+        $(".backDrop").show();
+    })
+	$('.rdcDropList li').click(function () {
+        $('.rdcDropList').hide();
+        $(".backDrop").hide();
+    })
 	$(".backDrop").click(function(){
 			$('.otherList').addClass('black');
 			$(this).hide();
+			$('.rdcDropList').hide();
 		})
 	$('.otherList').click(function(e){
 		var e = e || window.event;

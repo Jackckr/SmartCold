@@ -215,10 +215,8 @@ html{
 .grid_kid{
 	float: left;
 	width: 50%;
-	height: 7.5rem;
+	height: 5rem;
 	background: #fff;
-	border-right:3px solid #F4F4F4;
-	border-bottom:3px solid #F4F4F4;
 	box-sizing: border-box;
 	text-align: center;
 	font-size: 0.7rem;
@@ -227,31 +225,37 @@ html{
 	display: block;
 	width: 100%;
 	height: 100%;
-	padding-top: 1.2rem;
+	padding-top: .4rem;
 	box-sizing: border-box;
 }
 .grid_kid .info{
-	margin-top: 0.5rem;
+	margin-top: 0.3rem;
 	color: #222;
-	font-size: 0.9rem;
+	font-size: 0.8rem;
 }
-.grid_kid:nth-child(3),.grid_kid:nth-child(4){
-	border-bottom:0;	
+/* .grid_kid:nth-child(3){
+	border-left:3px solid #F4F4F4;
+} */
+.grid_kid:nth-child(2n+1){	
+	border-right:3px solid #F4F4F4;
+	border-bottom:3px solid #F4F4F4;	
 }
 .grid_kid:nth-child(2n){
-	border-right:0;	
+	border-bottom:3px solid #F4F4F4;	
 }
 .grid_kid i{
-	font-size: 2rem;
+	font-size: 1.8rem;
+}
+.blueI{
 	color:#438BCA
 }
-.grid_kid:nth-child(2) i{
+.goldI{
+	color:#F39826; 
+}
+.redI{
 	color:#F1594B;
 }
-.grid_kid:nth-child(3) i{
-	color:#F39826;
-}
-.grid_kid:nth-child(4) i{
+.greenI{
 	color:#0CB78A;
 }
 /*图文列表*/

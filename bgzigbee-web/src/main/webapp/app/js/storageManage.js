@@ -127,16 +127,18 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 			location.reload();
 		}
     }
-    
-    $scope.getAudit = function(i){
-    	if(i==0)
-    		return '待审核';
-    	else if(i>0){
-    		return '通过';
-    	}else{
-    		return '未通过';
-    	}
-    }
+
+	$scope.getAudit = function (i) {
+		if (i == 0)
+			return '待审核';
+		else if (i == 1) {
+			return '通过';
+		} if (i == 2) {
+			return '已认证';
+		} else {
+			return '未通过';
+		}
+	}
     
     $scope.changeAudit = function(rdc){
 		$state.go('coldStorageAudit', {"rdcID": rdc.id});
