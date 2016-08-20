@@ -1,7 +1,6 @@
 var app = angular.module('app', []);
 app.controller('cold360', function ($scope, $location, $http,$rootScope) {
-    alert("***");
-
+    $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
     var storageID = 3;
 
     var formatTime = function(timeString){
@@ -18,7 +17,7 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
         var datumTempData = [];
         var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
-        $http.get(ER.coldroot+'/i/coldStorage/getTempByTime', {
+        $http.get(ER.coldroot+'/i/storageKeys/coldStorage/getTempByTime', {
             params: {
                 "startTime": formatTime(startTime),
                 "endTime": formatTime(endTime),

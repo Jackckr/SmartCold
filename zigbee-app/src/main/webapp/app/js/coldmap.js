@@ -1,5 +1,6 @@
 var app = angular.module('app', []);
 app.controller('coldmap', function ($http) {
+    $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
     // 百度地图API功能
     var map = new BMap.Map("rdcMapChart");
     var point = new BMap.Point(110.114129, 24.550339);
