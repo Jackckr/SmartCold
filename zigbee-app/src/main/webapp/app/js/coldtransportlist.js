@@ -87,7 +87,7 @@ $().ready(function() {
   		    return _filter;
   	};
   	function gethtml(rdc){
-  		  var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">【'+rdc.typeText+"】"+rdc.title+'</p><p class="position omg">出发地：'+rdc.unit1+"　目的地:"+rdc.unit2+'</p><ul class="star" value="'+rdc.score+'">'];
+  		  var score=['<li class="imgCell" ><a href="#"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">【'+rdc.typeText+"】"+rdc.title+'</p><p class="position omg">出发地：'+rdc.unit1+"　目的地:"+rdc.unit2+'</p><ul class="star" value="'+rdc.score+'">'];
   		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li　class='filled'>★</li>"); }
   		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
   		  return score.join("");
