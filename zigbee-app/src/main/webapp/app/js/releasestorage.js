@@ -69,7 +69,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 
 	    $scope.citySelected = function () {
 	    }
-	    // 获取商品存放类型
+	    // 获取商品温度类型
 	    $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
 	        $scope.temperTypes = data;
 	        $scope.temperType = data[0].id;
@@ -78,8 +78,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    $scope.TemperTypeSelected = function () {
 	    }
 
-	    // 获取冷库温度类型
-	    $http.get(ER.root+'/i/rdc/findAllStorageType').success(function (data) {
+	    // 获取冷库经营类型
+	    $http.get(ER.root+'/i/rdc/findAllManageType').success(function (data) {
 	        $scope.storageTypes = data;
 	        $scope.storageType = data[0].id;
 	    });
@@ -112,6 +112,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		$scope.carSubmit = function(){
 			$scope.rdcID = '';
 			$scope.rdcAddress = '';
+			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
+			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
 			if(window.flag==1){
 				$scope.typeCode = 2;
 				$scope.typeText = "找车";
@@ -127,13 +129,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave1:$scope.codeLave11,
 					codeLave2:$scope.codeLave22,
 					codeLave3:$scope.codeLave3,
-					unitPrice : $scope.unitprice,
+					unitPrice : $scope.unitPrice,
 		            stprovinceID:$scope.stprovinceID,
 				    stcityID:$scope.stcityID,
 				    toprovinceID:$scope.toprovinceID,
 					tocityID:$scope.tocityID,
-					unit1:$scope.staddress,
-					unit2:$scope.toaddress,
+					unit1:stplace,
+					unit2:toplace,
 					validStartTime:$scope.startTime,
 					validEndTime : $scope.arriveTime,
 					telephone:$scope.telephone,
@@ -165,7 +167,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 		$scope.goodSubmit = function(){
 			$scope.rdcID = '';
-			$scope.rdcAddress = '';
+			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if( $scope.unit1==""||$scope.unit1==undefined){
 				$scope.typeCode = 2;
 				$scope.typeText = "求购";
@@ -214,7 +216,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		
 		$scope.submit = function(){
 			$scope.rdcID = '';
-			$scope.rdcAddress = '';
+			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if( $scope.provinceId==""||$scope.provinceId==undefined){
 				$scope.typeCode = 1;
 				$scope.typeText = "出租";

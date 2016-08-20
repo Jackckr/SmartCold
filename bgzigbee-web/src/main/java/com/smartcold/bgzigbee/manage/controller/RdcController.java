@@ -87,7 +87,7 @@ public class RdcController {
 			@RequestParam(value = "pageSize", required=false) Integer pageSize,
 			@RequestParam(value = "audit", required = false) Integer audit,
 			@RequestParam(value = "keyword", required = false) String keyword) {
-		if (audit !=null && !(audit == -1 || audit == 1 || audit == 0)) {
+		if (audit !=null && !(audit == -1 || audit == 1 || audit == 0 || audit == 2)) {
 			audit = null;
 		}
 //		System.out.println(keyword);
@@ -507,6 +507,7 @@ public class RdcController {
 	public Object updateRdcAuth(HttpServletRequest request, int rdcId, int authUserId) {
 		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
 		rdcEntity.setUserId(authUserId);
+		rdcEntity.setAudit(2); // 已认证
 		rdcDao.updateRdc(rdcEntity);
 
 		RdcAuthLogEntity rdcAuthLogEntity = new RdcAuthLogEntity();
