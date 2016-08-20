@@ -385,6 +385,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/otherDevice',
     	controller: 'other',
         templateUrl: 'app/template/other.html'
+    }).state('light',{
+    	url:'/light',
+    	controller: 'light',
+        templateUrl: 'app/template/light.html'
     });
 
 });

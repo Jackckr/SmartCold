@@ -5,9 +5,9 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 		$scope.electricMap = {AU:null,BU:null,CU:null,AI:null,BI:null,CI:null};
 		$scope.powerid = $stateParams.powerid;
 		endTime = baseTools.getFormatTimeString();
-		startTime = baseTools.getFormatTimeString(1 * 60 * 60 * 1000);
+		startTime = baseTools.getFormatTimeString(-1 * 60 * 60 * 1000);
 		url = "/i/baseInfo/getKeyValueDataByTime?type=" + 10 + "&oid=" + $scope.powerid 
-			  + "&key=Current" + "&startTime=" + startTime + "&endTime=" + endTime;
+			  + "&key=PWC" + "&startTime=" + startTime + "&endTime=" + endTime;
 		$http.get(url).success(function(data,status,headers,config){
 			$scope.powerData = data;
 			var xData = [];
