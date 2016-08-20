@@ -3,10 +3,9 @@ var countdown = 60;
 var oHtml = document.documentElement;
 var screenWidth = oHtml.clientWidth;
 var screenHeight = oHtml.clientHeight;
-var ER = {root:"http://192.168.1.136:8080",coldroot:"http//:192.168.1.136:8089",isdebug:true};
-//var ER = {root:"http://liankur.com",coldroot:"http//:192.168.1.136:8989",isdebug:true};
-if ($.ajax) {jQuery.ajaxSetup({
-	    xhrFields:{withCredentials:true}
+var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+//var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}
 //		,contentType : "application/x-www-form-urlencoded;charset=utf-8"
 // , error: function(jqXHR, textStatus, errorThrown){  
 //			   if(textStatus=='timeout'){alert("超时");return;};
