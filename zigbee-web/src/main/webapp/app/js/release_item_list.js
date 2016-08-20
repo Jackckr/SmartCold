@@ -15,7 +15,7 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
      $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:datatype;//当前数据类型
      $scope.appmode=[{url1:""},{tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],btn:"发布"},{tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],btn:"发布"},{tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],btn:"发布"}];
 	 $scope.releaseitem=function(data){//带数据发布
-		 if (data.audit === 1) {
+		 if (data.audit === 2) {
 			 var url= $scope.dataType==2?"releaseCarInfo":"releaseItem";
 			 $state.go(url,{data:data,dataid:$scope.typeCode-1,_cuttid: $scope.dataType});
 		 } else {
