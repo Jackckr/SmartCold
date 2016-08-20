@@ -103,7 +103,7 @@
                  <li class="offershow">
                     <label for="city">市</label>
                     <div class="mySelect">
-	                    <select ng-model="cityId" name="cityid"
+	                    <select id="city" ng-model="cityId" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
@@ -152,7 +152,7 @@
         <button class="mybtn" ng-click="goodSubmit()" >确认发布</button>
     </section>
     <div id="datePlugin"></div>
-    <ul class="footer">
+    <!--<ul class="footer">
         <li>           
             <a href="../index.html">
                 <i class="iconfont">&#xe65a;</i>
@@ -183,7 +183,7 @@
                 <p class="info">我的</p>
             </a>
         </li>
-    </ul>
+    </ul>-->
     <script type="text/javascript" src="../com/js/file_upload.js" ></script>
 </body>
 </html>

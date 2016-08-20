@@ -1,5 +1,5 @@
 var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select',
-                                         'ngCookies', 'xeditable','angucomplete-alt','angular-table']);
+                                         'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
 var user;
 
 angular.element(document).ready(function($ngCookies, $location) {

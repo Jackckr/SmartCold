@@ -6,7 +6,7 @@
 				<li><a href="#/personalDetail"><font color="black">个人信息</font></a></li>
 				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
 				<li><a href="#/personalShare"><font color="black">我的发布</font></a></li>
-				<li><a href="#/personalOrder"><font color="#418ACA">我的订单</font></a></li>
+				<li><a href="#/personalOrder"><font color="#418ACA">我的联络单</font></a></li>
 				<li><a href="#/personalComment"><font color="black">我的评价</font></a></li>
 				<li>联系客服</li>
 			</ul>
@@ -16,8 +16,8 @@
 		<div class="content">
 		   <form class="bs-example bs-example-form" role="form">
 		      <div class="input-group">
-		         <input type="text" ng-model="keyword"  class="form-control" placeholder="输入订单号">
-		           <button class="btn btn-default" ng-click="goSearch()">订单搜索</button>
+		         <input type="text" ng-model="keyword"  class="form-control" placeholder="输入联络单号">
+		           <button class="btn btn-default" ng-click="goSearch()">联络单搜索</button>
 		      </div>
 		   </form>
 		<!-- 图文列表区域 -->
@@ -29,19 +29,19 @@
 					
 					<div ng-if="orderdto.rsd.dataType==3">
 					<p class="area">
-						<span>订单类型:</span> <span>[冷库]{{orderdto.rsd.typeText}}</span>
+						<span>联络单类型:</span> <span>[冷库]{{orderdto.rsd.typeText}}</span>
 					</p>
 				</div>
 
 				<div ng-if="orderdto.rsd.dataType==2">
 					<p class="area">
-						<span>订单类型:</span> <span>[配送]{{orderdto.rsd.typeText}}</span>
+						<span>联络单类型:</span> <span>[配送]{{orderdto.rsd.typeText}}</span>
 					</p>
 				</div>
 
 				<div ng-if="orderdto.rsd.dataType==1">
 					<p class="area">
-						<i></i> <span>订单类型:</span> <span>[货品]{{orderdto.rsd.typeText}}</span>
+						<i></i> <span>联络单类型:</span> <span>[货品]{{orderdto.rsd.typeText}}</span>
 					</p>
 				</div>
 					

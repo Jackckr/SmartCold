@@ -148,7 +148,11 @@ public class UserController extends BaseController {
 		if (username == null || password == null || !password.equals(password1)) {
 			return new ResultDto(-1, "用户名和密码不能为空");
 		}
-		if(signUpCode==null||!(request.getSession().getAttribute("signUpCode")+"").equalsIgnoreCase(signUpCode))
+		String sessyzm=""+request.getSession().getAttribute("signUpCode");
+		if(StringUtil.isNull(sessyzm)||"null".endsWith(sessyzm)){
+			sessyzm=request.getSession().getAttribute("signUpCodeshear_yzm")+"";
+			}//跨app获得验证码
+		if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
 			return new ResultDto(-1, "验证码输入错误");
 		UserEntity userEntity = new UserEntity();
 		userEntity.setUsername(username);

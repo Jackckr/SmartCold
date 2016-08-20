@@ -149,7 +149,7 @@ section{
 }
 .star{
 	font-size: 0.8rem;
-	margin: 0.1rem;
+	margin:0 0.1rem;
 	color: #CACACA;
 	overflow: hidden;
 }
@@ -247,7 +247,7 @@ section{
 .commentlist{
 	margin-top: 2.2rem!important;
 }
-.compantDetail .ellipsis{
+.compantDetail .ellipsis,.compantDetail .ellips{
 	color: #000;
 	font-size: 0.8rem;
 	margin-bottom: 0.3rem;
@@ -322,6 +322,16 @@ section{
 	width: 40%;
 	font-size: 0.7rem;
 	text-indent:10px;
+}
+.infolist>li.widthL{
+	display:table;
+}
+.infolist>li.widthL span{
+	display:table-cell;
+}
+.infolist>li.widthL .type{
+	width:4rem;
+	text-indent:0;
 }
 .next{
 	width: 100%;
@@ -576,6 +586,6 @@ section{
 .gray{background-color: #ccc;}
 .codeMain{
 	width: 100%;
-	height: 29rem;
+	height: 33rem;
 	padding: 0;
 }

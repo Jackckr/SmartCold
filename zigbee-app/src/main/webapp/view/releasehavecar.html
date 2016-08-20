@@ -115,10 +115,10 @@
                  <li class="bg">
                      <label for="start">出发地</label>
                      <div class="mySelect">
-	                     <select id="businessType" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
+	                     <select id="stprovince" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="stprovinceSelected(stprovinceID)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-	                    <select id="businessType" ng-model="stcityID" name="cityid"
+	                    <select id="stcity" ng-model="stcityID" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in stcitys"></select>
 	                    <input type="text" placeholder="请输入详细地址" ng-model="staddress" style="min-width:130%;"/>
@@ -134,10 +134,10 @@
                  <li class="bg">
                      <label for="arrow">目的地</label>
                       <div class="mySelect">
-	                    <select id="businessType" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
+	                    <select id="toprovince" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="toprovinceSelected(toprovinceID)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-	                    <select id="businessType" ng-model="tocityID" name="cityid"
+	                    <select id="tocity" ng-model="tocityID" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in tocitys"></select>
 	                    <input type="text" placeholder="请输入详细地址" ng-model="toaddress" style="min-width:130%;"/>
@@ -162,7 +162,7 @@
         <button class="mybtn" ng-click="carSubmit()">确认发布</button>
     </section>
     <div id="datePlugin"></div>
-    <ul class="footer">
+    <!--<ul class="footer">
         <li>           
             <a href="../index.html">
                 <i class="iconfont">&#xe65a;</i>
@@ -193,7 +193,7 @@
                 <p class="info">我的</p>
             </a>
         </li>
-    </ul>
+    </ul>-->
     <script type="text/javascript" src="../com/js/file_upload.js" ></script>
 </body>
 </html>

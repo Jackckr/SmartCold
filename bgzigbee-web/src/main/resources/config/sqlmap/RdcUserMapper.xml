@@ -87,4 +87,11 @@
     where userid = #{userid,jdbcType=INTEGER}
   </select>
 
+  <select id="findByRdcId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from RdcUser
+    where rdcid = #{rdcid,jdbcType=INTEGER}
+  </select>
+
 </mapper>

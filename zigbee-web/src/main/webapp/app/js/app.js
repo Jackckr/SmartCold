@@ -50,17 +50,17 @@ coldWeb.factory('userService',['$rootScope','$http', function($rootScope,$http){
 	    	$rootScope.logout = function () {
 	        	$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
 	        	 $rootScope.user =window.user=user=null;//清除系统user;
-	        	 if((window.location.hash).indexOf("#/personalDetail")>0){ window.location.href="#/home";}
+	        	 window.location.href="#/home";
 	        };
 	        $rootScope.gotoSmartCold = function(){
-	        	cookies = document.cookie.split(";");
+//	        	cookies = document.cookie.split(";");
 	        	url = "http://www.smartcold.org.cn";
-	        	angular.forEach(cookies,function(item){
-	        		item = item.trim();
-	        		if(item.startsWith("token=")){	        			
-	        			url = url + "/#/" + item;
-	        		}
-	        	});
+//	        	angular.forEach(cookies,function(item){
+//	        		item = item.trim();
+//	        		if(item.startsWith("token=")){	        			
+//	        			url = url + "/#/" + item;
+//	        		}
+//	        	});
 	        	window.open(url);
 	        }
 	    },
