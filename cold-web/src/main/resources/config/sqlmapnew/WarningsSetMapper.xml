@@ -5,7 +5,7 @@
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.WarningsSetMapper">
 
 <select id="findWarningSetById" parameterType="map" resultType="WarningsSet">
-    select * from `warningsSet` where id=#{objId}
+    select * from `warningsset` where id=#{objId}
 </select>
 
 </mapper>

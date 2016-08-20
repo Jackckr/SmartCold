@@ -74,6 +74,9 @@ public class RdcController {
 	@Autowired
 	private RdcAuthLogMapper rdcAuthLogDao;
 
+	@Autowired
+	private RoleUserMapper roleUserDao;
+
 
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -519,11 +522,27 @@ public class RdcController {
 		rdcAuthLogEntity.setDesc("审核通过,更新冷库库主");
 		rdcAuthLogDao.insert(rdcAuthLogEntity);
 
-		RdcUser rdcUser = new RdcUser();
-		rdcUser.setRdcid(rdcId);
-		rdcUser.setUserid(authUserId);
-		rdcUser.setAddtime(new Date());
-		rdcUserDao.insertSelective(rdcUser);
+		RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(authUserId); // 默认用户账号与管理员账号不会重复
+		if (roleUserByUserId == null) {
+			RoleUser roleUser = new RoleUser();
+			roleUser.setRoleid(1); // op
+			roleUser.setUserid(authUserId);
+			roleUser.setAddtime(new Date());
+			roleUserDao.insertSelective(roleUser);
+		}
+
+		RdcUser byRdcId = rdcUserDao.findByRdcId(rdcId);
+		if (byRdcId == null) {
+			RdcUser rdcUser = new RdcUser();
+			rdcUser.setRdcid(rdcId);
+			rdcUser.setUserid(authUserId);
+			rdcUser.setAddtime(new Date());
+			rdcUserDao.insertSelective(rdcUser);
+		} else {
+			byRdcId.setUserid(authUserId);
+			rdcUserDao.updateByPrimaryKeySelective(byRdcId);
+		}
+
 		return new ResultDto(0, "冷库认证审核成功");
 	}
 }
