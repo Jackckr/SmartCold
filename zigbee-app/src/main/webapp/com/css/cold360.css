@@ -194,22 +194,6 @@ section{
 	text-indent: 1rem;
 	position: relative;
 }
-.footer li a{
-	position: relative;
-}
-.countNum{
-	position: absolute;
-	width:0.8rem;
-	height: 0.8rem;
-	border-radius: 50%;
-	top: 0.1rem;
-	right: 1rem;
-	background-color: #f40;
-	font-size: 0.5rem;
-	color: #fff;
-	text-align: center;
-	line-height: 0.8rem;
-}
 b{
 	font-weight: 400;
 	display: inline-block;
