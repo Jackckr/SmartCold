@@ -79,16 +79,16 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
 	            	 data: yData.low
 	            },
     	        {
-    	            name: '高温警戒线',
-    	            type: 'bar',
-    	            stack: 'one',
-    	            data: yData.high
-    	        },
-    	        {
     	            name: '当前温度',
     	            type: 'bar',
     	            stack: 'one',
     	            data: yData.temp
+    	        },
+    	        {
+    	            name: '高温警戒线',
+    	            type: 'bar',
+    	            stack: 'one',
+    	            data: yData.high
     	        }
     	    ]
     	};

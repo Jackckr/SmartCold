@@ -42,7 +42,7 @@ fill:rgba(30,144,255,0.8);
                             <a style="float:right;"><font class="font">状态监控</font></a>
                             </div>
                             <div ng-repeat="compressor in compressors" 
-                            style="width:{{100 / compressors.length}}%;margin-top:40px;float:left;" class="text-center">
+                            style="width:16.66%;margin-top:40px;float:left;" class="text-center">
                             <img ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1" src="assets/img/pressure1_run.png" style="width:100%;float:left;" >
                             <img ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0" src="assets/img/pressure1_stop.png" style="width:100%;float:left;" >
                             <img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" >
@@ -63,7 +63,8 @@ fill:rgba(30,144,255,0.8);
                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 border text-center"
                              style="height:220px;margin-top:10px;">
                               <label class="font">蒸发冷水泵</label>
-	                          <img alt="" src="assets/img/evawater.png" style="width:100%;margin-top:10px;">
+	                          <img ng-if="evaporative.evaWater && evaporative.evaWater.isRunning" alt="" src="assets/img/evawater_run.png" style="width:100%;margin-top:10px;">
+	                          <img ng-if="!evaporative.evaWater || !evaporative.evaWater.isRunning" alt="" src="assets/img/evawater_stop.png" style="width:100%;margin-top:10px;">
                              </div>
                              <div id="runChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
                              <div class="col-lg-12">
@@ -72,7 +73,7 @@ fill:rgba(30,144,255,0.8);
                              <div ng-repeat="evaBlowers in evaporative.evaBlowers" 
                             style="margin-top:10px;float:left;margin-left: {{$index == 0?0:30}}px;" class="text-center">
                             <img ng-if="evaBlowersisRunning==1" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
-                            <img ng-if="evaBlowers.isRunning==0" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
+                            <img ng-if="evaBlowers.isRunning==0" src="assets/img/evablower_stop.png" style="width:100%;float:left;" >
                             <!-- <img ng-if="compressor.type == 2 && compressor.isRunning==1" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
                             <img ng-if="compressor.type == 2 && compressor.isRunning==0" src="assets/img/evablower_run.png" style="width:100%;float:left;" > -->
                             <label>{{evaBlowers.name}}</label>

@@ -88,10 +88,10 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 				    yAxis : [
 					        {
 					            type : 'value',
-					            name : yName,
-					            axisLabel : {
-					                formatter: '{value} ' + yUnit
-					            }
+					            name : yName + "(" + yUnit + ")",
+//					            axisLabel : {
+//					                formatter: '{value} ' + yUnit
+//					            }
 					        }
 					    ],
 				    series : [

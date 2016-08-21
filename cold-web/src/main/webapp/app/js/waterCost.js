@@ -18,4 +18,8 @@ coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools,$ti
 	$timeout(function(){
 		$scope.load();
 	},0)
+	clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        $scope.load();
+    }, 30000);
 });
