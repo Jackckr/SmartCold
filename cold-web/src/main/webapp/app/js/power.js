@@ -1,4 +1,4 @@
-coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseTools) {
+coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseTools,$rootScope) {
 	
 	$scope.load = function(){	
 		lineChart = echarts.init($('#line')[0]);
