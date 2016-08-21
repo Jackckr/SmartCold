@@ -1,3 +1,24 @@
+<style type="text/css">
+.border{
+border-color: orange;
+border-width: 1px;
+border-style: solid;
+}
+.hr{
+color: orange;
+border-width: 1px;
+border-style: solid;
+border-top-color:orange;
+}
+.font{
+color:rgba(30,144,255,0.8);
+font-size:25px;
+font-family:微软雅黑;
+font-weight:bolder;
+fill:rgba(30,144,255,0.8);
+}
+</style>
+
 <div class="page-content">
     <div class="page-header">
 
@@ -10,54 +31,61 @@
 
                 <!-- Pressure CHART -->
                 <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">压缩机组压力监控</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
                     <div class="box-body">
                         <div class="chart">
-                            <div id="pressureChart" style="height:220px;" class="col-lg-3 col-sm-3 col-xs-3 col-md-3"></div>
-                            <div id="runChart" style="height:220px;" class="col-lg-3 col-sm-3 col-xs-3 col-md-3"></div>
-                            <div id="runChart2" style="height:220px;" class="col-lg-3 col-sm-3 col-xs-3 col-md-3"></div>
-                            <div id="floatPressureChart" style="height:220px;" class="col-lg-3 col-sm-3 col-xs-3 col-md-3"></div>
+                        
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                            <div id="pressureChart" style="height:220px;"
+                             class="col-lg-3 col-sm-3 col-xs-3 col-md-3 border"></div>
+                            <div id="runChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
+                            <div class="col-lg-12">
+                            <a style="float:right;"><font class="font">状态监控</font></a>
+                            </div>
+                            <div ng-repeat="compressor in compressors" 
+                            style="width:{{100 / compressors.length}}%;margin-top:40px;float:left;" class="text-center">
+                            <img ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1" src="assets/img/pressure1_run.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0" src="assets/img/pressure1_stop.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==0" src="assets/img/pressure2_stop.png" style="width:100%;float:left;" >
+                            <label>{{compressor.name}}</label>
+                            </div>
+                            </div>
+                          </div>
+                          
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="margin-top: 10px;">
+                          	<hr class="hr">
+                            <div id="floatPressureChart" style="height:220px;" class="col-lg-3 col-sm-3 col-xs-3 col-md-3 border"></div>
+                            <div id="exTempChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
+                          </div>
+                          
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="margin-top: 10px;">
+                            <hr class="hr">
+                             <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 border text-center"
+                             style="height:220px;margin-top:10px;">
+                              <label class="font">蒸发冷水泵</label>
+	                          <img alt="" src="assets/img/evawater.png" style="width:100%;margin-top:10px;">
+                             </div>
+                             <div id="runChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
+                             <div class="col-lg-12">
+                            	<a style="float:right;"><font class="font">蒸发冷风机</font></a>
+                             </div>
+                             <div ng-repeat="evaBlowers in evaporative.evaBlowers" 
+                            style="margin-top:10px;float:left;margin-left: {{$index == 0?0:30}}px;" class="text-center">
+                            <img ng-if="evaBlowersisRunning==1" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
+                            <img ng-if="evaBlowers.isRunning==0" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
+                            <!-- <img ng-if="compressor.type == 2 && compressor.isRunning==1" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 2 && compressor.isRunning==0" src="assets/img/evablower_run.png" style="width:100%;float:left;" > -->
+                            <label>{{evaBlowers.name}}</label>
+                            </div>
+                            </div>
+                           </div>
+                           
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                          <hr class="hr">
+                          </div>
                         </div>
                     </div>
-                </div><!-- 2 -->
-
-<!--                <div style="height:900px;width: 900px" class="box bg-gray">
-                    <div class="box-body">
-                        <canvas id="thermometer" width="600px" height="600px"></canvas>
-                        <div style="position: relative; top: 20px; left: 25px;">
-                            <form id="drawTemp">
-                                <input type="text" id="temp" name="temp" value="-30" maxlength="3"/>
-                                <br>
-                                <input id="defaultSlider" type="range" min="-30" max="50" ng-click="setTempAndDraw();" />
-                                <br>
-                                <input type="button" value="Draw" ng-click="drawMap()">
-                            </form>
-                        </div>
-                    </div>
-                </div>-->
-
-                <!-- Pressure CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">压缩机组电量监控</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="powerChart" style="height:180px" class="col-lg-12 col-sm-12 col-xs-12 col-md-12"></div>
-                        </div>
-                    </div>
-                </div><!-- 2 -->
-
+                </div>
             </div>
 
         </div>

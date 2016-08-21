@@ -79,6 +79,13 @@ public class CompressorGroupController {
 		return result;
 	}
 
+	@RequestMapping(value = "/findCompressorState", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findCompressorState(int compressorGroupId) {
+
+		return compressorGroupService.getCompressorsState(compressorGroupId);
+	}
+
 	/*
 	 * @RequestMapping("/findCompressorByNums") public Object
 	 * findCompressorByNums(int compressorID,

@@ -30,12 +30,16 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                 });
             }
             if(data.length > 0){            	
-            	startData.push({
-            		x: data[0].x,
-            		y: startTemperature
-            	});
+//            	startData.push({
+//            		x: data[0].x,
+//            		y: startTemperature
+//            	});
             	datumTempData.push({
             		x: data[0].x,
+            		y: datumTemp
+            	});
+            	datumTempData.push({
+            		x: data[data.length - 1].x,
             		y: datumTemp
             	});
             }else{

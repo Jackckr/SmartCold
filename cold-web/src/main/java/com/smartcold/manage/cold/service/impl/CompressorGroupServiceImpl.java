@@ -2,7 +2,9 @@ package com.smartcold.manage.cold.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorSetMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
+import com.smartcold.manage.cold.dto.CompressorDto;
 import com.smartcold.manage.cold.dto.CompressorGroupWaterCostEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
@@ -95,6 +98,23 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 
 		entity.setWaterCost(waterCost);
 		return entity;
+	}
+
+	@Override
+	public List<CompressorDto> getCompressorsState(int groupId) {
+		List<CompressorSetEntity> compressors = compressorSetDao.findCompressorByGroupid(groupId);
+		ArrayList<CompressorDto> result = new ArrayList<CompressorDto>();
+		for (CompressorSetEntity compressor : compressors) {
+			HashMap<String, Double> keyValues = new HashMap<String, Double>();
+			List<StorageKeyValue> infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
+					compressor.getId(), "run", 1);
+			keyValues.put("isRunning", infos.size() > 0 ? infos.get(0).getValue() : 0);
+			infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(), compressor.getId(), "exTemp", 1);
+			keyValues.put("exTemp", infos.size() > 0 ? infos.get(0).getValue() : 0);
+			result.add(new CompressorDto(compressor, keyValues));
+		}
+
+		return result;
 	}
 
 }

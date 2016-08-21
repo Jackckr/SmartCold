@@ -13,9 +13,39 @@ public class CompressorSetEntity {
 
 	private float waterRatio;
 
+	private int type;
+
+	private float highTemp;
+
+	private float lowTemp;
+
 	private String mapping;
 
 	private Date addTime;
+
+	public float getHighTemp() {
+		return highTemp;
+	}
+
+	public void setHighTemp(float highTemp) {
+		this.highTemp = highTemp;
+	}
+
+	public float getLowTemp() {
+		return lowTemp;
+	}
+
+	public void setLowTemp(float lowTemp) {
+		this.lowTemp = lowTemp;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public int getId() {
 		return id;

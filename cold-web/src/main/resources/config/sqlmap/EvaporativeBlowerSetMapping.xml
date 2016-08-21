@@ -11,7 +11,7 @@
 	
 	<select id="findByEvaporativeId" parameterType="map" resultType="EvaporativeBlowerSetEntity">
 		SELECT *
-		FROM `evaporativeblowerset` WHERE `rdcId` = #{rdcId}
+		FROM `evaporativeblowerset` WHERE `evaporativeId` = #{evaporativeId}
 	</select>
 
 </mapper>
