@@ -62,7 +62,10 @@ public class SpiderConfigController {
 
     @RequestMapping(value = "/delete/id", method = RequestMethod.DELETE)
     public Object deleteById(String table, int id){
-        if (SetTables.checkTable(table) && setTableMapper.deleteById(table, id)) {
+        if (!(table.equals("deviceobjectmapping") || SetTables.checkTable(table) )){
+            return new ResultDto(-2, "非法参数");
+        }
+        if (setTableMapper.deleteById(table, id)) {
             return new ResultDto(0, "删除成功");
         }
         return new ResultDto(-1,"删除失败");
@@ -94,6 +97,11 @@ public class SpiderConfigController {
             return setTableMapper.findByRdcId(table, rdcid);
         }
         return new ResultDto(-1, "error");
+    }
+
+    @RequestMapping("/find/deviceObjectMapping")
+    public Object findDeviceObjectMapping(int type, int oid){
+        return deviceObjectMappingMapper.findByTypeOid(type, oid);
     }
 
     /**
@@ -166,8 +174,9 @@ public class SpiderConfigController {
 
     @RequestMapping(value = "/add/deviceObjectMapping", method = RequestMethod.POST)
     public Object addDeviceObjectMapping(@RequestBody DeviceObjectMappingEntity deviceObjectMappingEntity){
+
         if (deviceObjectMappingMapper.insert(deviceObjectMappingEntity)) {
-            return new ResultDto(0, "添加成功");
+            return new ResultDto(deviceObjectMappingEntity.getId(), "添加成功");
         }
         return new ResultDto(-1, "添加失败");
     }

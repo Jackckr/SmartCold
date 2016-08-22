@@ -10,6 +10,13 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$scope.choseDevice = $scope.devices[0];
 	});
 
+    // $scope.getTypeObjectByType = function (type) {
+    //     angular.forEach($scope.storageTypes, function (item) {
+    //         if (item.type == type)
+    //             return item;
+    //     })
+    // }
+
 	$scope.load = function(){
 		$scope.vm = {}
 		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."};
@@ -66,13 +73,13 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$http.get(coldWebUrl+'storageKeys/getAllKeys').success(function(data,status,config,headers){
+	    $scope.allKeys = data;
 		angular.forEach(data,function(item,index){
 			$scope.type2Keys(item.type).push(item);
 		})
 	})
 	
 
-	
 	$scope.getDescByType = function(type){
 		for(var i=0; i<$scope.storageTypes.length; i++){
 			if($scope.storageTypes[i].type==type){
@@ -430,6 +437,19 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		}
 	}
 
+    $scope.delByTableId = function(table,item, arrayData){
+        var flag = confirm("确认删除？");
+        if (flag) {
+            $http.delete("/i/spiderConfig/delete/id", {
+                params: {"table": table, "id": item.id}
+            }).then(function (resp) {
+                alert(resp.data.message);
+                var index =  arrayData.indexOf(item);
+                arrayData.splice(index, 1);
+            })
+        }
+    }
+
 
 	$scope.deviceChanges = function (choseDevice) {
 		console.log(choseDevice.name);
@@ -669,17 +689,34 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.tag = {}
 	$scope.tagTypeChanged = function () {
        $scope.objectsOid = $scope.deviceChanges($scope.tag.type);
+        $scope.deviceObjectMapping = {};
     }
 
     $scope.addTag = function () {
-        $http.post("/i/spiderConfig/add/deviceObjectMapping",{
+        var obj = {
             deviceid:$scope.tag.deviceid,
             type:$scope.tag.type.type,
             oid:$scope.tag.oid.id
-        }).then(function (resp) {
+        }
+        $http.post("/i/spiderConfig/add/deviceObjectMapping", obj).then(function (resp) {
             alert(resp.data.message)
-            $scope.tag = {};
+            obj.id = resp.data.status;
+            $scope.deviceObjectMapping.push(obj);
+            $scope.tag.deviceid = '';
         })
+    }
+
+    $scope.changeOid = function () {
+        if ($scope.tag.type && $scope.tag.oid) {
+            $http.get('/i/spiderConfig/find/deviceObjectMapping', {
+                params: {
+                    type: $scope.tag.type.type,
+                    oid: $scope.tag.oid.id
+                }
+            }).then(function (resp) {
+                $scope.deviceObjectMapping = resp.data;
+            })
+        }
     }
 
 
