@@ -708,13 +708,26 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 
     $scope.changeOid = function () {
         if ($scope.tag.type && $scope.tag.oid) {
-            $http.get('/i/spiderConfig/find/deviceObjectMapping', {
+            $http.get(coldWebUrl+'deviceObjectMapping/findByTypeOid', {
                 params: {
                     type: $scope.tag.type.type,
                     oid: $scope.tag.oid.id
                 }
             }).then(function (resp) {
-                $scope.deviceObjectMapping = resp.data;
+                $scope.deviceObjectMapping = resp.data?resp.data:[];
+            })
+        }
+    }
+
+    $scope.delDeviceObjectMapping = function (item, arrayData) {
+        var flag = confirm("确认删除？");
+        if (flag) {
+            $http.delete("/i/spiderConfig/del/deviceObjectMapping", {
+                params: {"id": item.id}
+            }).then(function (resp) {
+                alert(resp.data.message);
+                var index =  arrayData.indexOf(item);
+                arrayData.splice(index, 1);
             })
         }
     }

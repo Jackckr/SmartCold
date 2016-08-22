@@ -6,6 +6,7 @@ import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UpdateMappingDTO;
 import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.enums.SetTables;
+import com.smartcold.bgzigbee.manage.service.RemoteService;
 import com.smartcold.bgzigbee.manage.service.SpiderConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,7 @@ public class SpiderConfigController {
     private ForkLiftSetMapping forkLiftSetMapping;
 
     @Autowired
-    private DeviceObjectMappingMapper deviceObjectMappingMapper;
+    private RemoteService remoteService;
 
     @RequestMapping("/update/mapping")
     public Object updateSetTableMapping(@RequestBody UpdateMappingDTO updateMappingDTO){
@@ -99,9 +100,11 @@ public class SpiderConfigController {
         return new ResultDto(-1, "error");
     }
 
-    @RequestMapping("/find/deviceObjectMapping")
-    public Object findDeviceObjectMapping(int type, int oid){
-        return deviceObjectMappingMapper.findByTypeOid(type, oid);
+
+
+    @RequestMapping(value = "/del/deviceObjectMapping" , method = RequestMethod.DELETE)
+    public Object delDeviceObjectMapping(int id){
+        return remoteService.delDeviceObjectMappingById(id);
     }
 
     /**
@@ -174,10 +177,8 @@ public class SpiderConfigController {
 
     @RequestMapping(value = "/add/deviceObjectMapping", method = RequestMethod.POST)
     public Object addDeviceObjectMapping(@RequestBody DeviceObjectMappingEntity deviceObjectMappingEntity){
+        Object res = remoteService.insertDeviceObjectMapping(deviceObjectMappingEntity);
+        return res;
 
-        if (deviceObjectMappingMapper.insert(deviceObjectMappingEntity)) {
-            return new ResultDto(deviceObjectMappingEntity.getId(), "添加成功");
-        }
-        return new ResultDto(-1, "添加失败");
     }
 }
