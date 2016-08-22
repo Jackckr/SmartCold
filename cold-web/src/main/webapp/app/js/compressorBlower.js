@@ -7,9 +7,9 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
     $scope.defrostCnt = 0;
     $scope.freeCnt = 0;
     $scope.load = function () {
-        $http.get('/i/compressorBlower/findByUserId', {
+        $http.get('/i/compressorBlower/findByRdcId', {
             params: {
-                "userId": $stateParams.userId
+                "rdcId": $stateParams.rdcId
             }
         }).success(function (result) {
             console.log("result:" + result);
@@ -18,7 +18,8 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
             var defrostCnt = 0;
             var freeCnt = 0;
             for (var i = 0; i < result.length; i++) {
-                console.log("result:" + result[i].coldStorageId + ",blowerId: " + result[i].blowerId + ",coldStorageName: " + result[i].coldStorageName );
+            	result[i].runTime = parseFloat(result[i].runTime / 3600).toFixed(2)
+            	result[i].defrostTime = parseFloat(result[i].defrostTime / 3600).toFixed(2)
                 if (parseInt(result[i].isRunning) === 1){
                     coldCnt = coldCnt + 1;
                 }

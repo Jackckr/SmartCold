@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.olddb.EvaporativeSetMapping;
+import com.smartcold.manage.cold.service.EvaporativeSetService;
 
 @Controller
 @RequestMapping(value = "/evaporative")
@@ -15,6 +16,9 @@ public class EvaporativeSetController {
 
 	@Autowired
 	private EvaporativeSetMapping evaporativeSetDao;
+
+	@Autowired
+	private EvaporativeSetService evaporativeSetService;
 
 	@RequestMapping(value = "/findById", method = RequestMethod.GET)
 	@ResponseBody
@@ -26,5 +30,12 @@ public class EvaporativeSetController {
 	@ResponseBody
 	public Object findByRdcId(@RequestParam int rdcId) {
 		return evaporativeSetDao.findByRdcId(rdcId);
+	}
+
+	@RequestMapping(value = "/findInfoByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findInfoByRdcId(@RequestParam int rdcId) {
+
+		return evaporativeSetService.getInfoByRdcId(rdcId);
 	}
 }

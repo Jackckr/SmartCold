@@ -12,8 +12,8 @@ coldWeb.controller('other', function ($scope, $location, $timeout, $http,$rootSc
 				var xData = []
 				var yData = []
 				angular.forEach(infos,function(info){
-					xData.push(info.cost)
-					yData.push(baseTools.formatTime(info.time))
+					yData.push(info.cost)
+					xData.push(baseTools.formatTime(info.time))
 				})
 				chart.setOption(baseTools.getEchartSingleOption($scope.keyDescribleMap[key], xData, yData, 
 						"耗能", "kW.h", $scope.keyDescribleMap[key], "line"))
