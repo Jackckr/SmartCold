@@ -52,7 +52,7 @@ public class StorageKeysController {
                 return new ResultDto(-1, "添加失败");
             }
         }catch (Exception e){
-            return new ResultDto(-1, "添加失败");
+            return new ResultDto(-1, "key重复");
         }
     }
 

@@ -98,10 +98,13 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 				headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 			}
 			$http(req).then(function(resp){
-				$scope.newKey = {};
-				alert(resp.data.message);
-				params.id = resp.data.status;
-				$scope.type2Keys(params.type).push(params);
+			    if (resp.data.status > -1) {
+
+                    $scope.newKey = {};
+                    params.id = resp.data.status;
+                    $scope.type2Keys(params.type).push(params);
+                }
+                alert(resp.data.message);
 			})
 		}else{
 			alert("输入不完整");
@@ -116,8 +119,12 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 //			headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 		}
 		$http(req).then(function(resp){
-			var i = $scope.keysData.indexOf(item);
-			$scope.keysData.splice(i,1);
+		    if (resp.data) {
+                var i = $scope.keysData.indexOf(item);
+                $scope.keysData.splice(i, 1);
+            }else {
+                alert("删除失败");
+            }
 		})
 	}
 
