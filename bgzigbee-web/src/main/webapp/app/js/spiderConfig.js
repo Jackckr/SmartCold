@@ -99,7 +99,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			}
 			$http(req).then(function(resp){
 				$scope.newKey = {};
-				params.id = resp.data;
+				alert(resp.data.message);
+				params.id = resp.data.status;
 				$scope.type2Keys(params.type).push(params);
 			})
 		}else{
