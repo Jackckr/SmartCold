@@ -5,7 +5,7 @@
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-	<title>我的订单</title>
+	<title>我的联络单</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	<link rel="stylesheet" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
@@ -24,9 +24,9 @@
 			$http.get(ER.root+"/i/orders/findOrderByOrderId",  { params: {id:id}  }).success(function(data) { //获得数据
 			 if(data.success){
 				   $scope.rsd=data.entity.rsd; //发布的信息
-				   $scope.orders=data.entity.orders; //订单信息
+				   $scope.orders=data.entity.orders; //联络单信息
 				   $scope.ownerUser=data.entity.ownerUser; //发布者信息
-				   $scope.orderUser=data.entity.orderUser; //订单者信息
+				   $scope.orderUser=data.entity.orderUser; //联络单者信息
 				    if($scope.rsd){
 				       $scope.datatype=$scope.rsd.dataType;
 				       $scope.typetitle=$scope.appmode[0].title[$scope.datatype]+data.entity.rsd.typeText;
@@ -75,19 +75,19 @@
 	    	<div class="area fl">
 	    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
 	    	</div>
-	    	<div class="txt">我的订单</div>
+	    	<div class="txt">我的联络单</div>
 	    </header>
 	    <section id="sec_content" class="content "><!--  -->
 	    	<p class="order">
-		   		<span class="num">订单号：{{orders.orderid}}</span>
+		   		<span class="num">联络单号：{{orders.orderid}}</span>
 		    </p>
 		    <p class="order">
-		   		<span class="orderName">订单名称：<span>({{appmode[0].title[datatype]}})</span>{{rsd.title}}</span>
+		   		<span class="orderName">联络单名称：<span>({{appmode[0].title[datatype]}})</span>{{rsd.title}}</span>
 		    </p>
-		<!-- 订单详情区域 -->
-			<h4>订单详情 <span class="date">{{orders.generatetime}}</span></h4>
+		<!-- 联络单详情区域 -->
+			<h4>联络单详情 <span class="date">{{orders.generatetime}}</span></h4>
 			<p class="infos">
-				<i class="dot"></i><span class="first">订单类型:</span><span class="second">{{typetitle}}</span>
+				<i class="dot"></i><span class="first">联络单类型:</span><span class="second">{{typetitle}}</span>
 			</p>
 			<div ng-if="datatype==3">
 			   <p class="infos"><i class="dot"></i><span class="first">温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
