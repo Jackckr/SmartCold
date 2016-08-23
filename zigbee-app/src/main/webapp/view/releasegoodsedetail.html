@@ -36,7 +36,8 @@
 				}
 			});
 			/*date*/
-			$('#time').date();
+			 $('#sttime').date();
+			 $('#endtime').date();
 		});
     </script>
 </head>
@@ -84,7 +85,7 @@
 			      <input type="hidden" id="rdcflag" ng-model="rdcflag" value="1">
             <ul class="houseinfo">
                 <li>
-                    <label for="name">描述</label>
+                    <label for="name">描述</label><em>*</em>
                     <input type="text" ng-model="title"  id="name" placeholder="货品出售"/>
                 </li>
                 <li class="bossToggle">
@@ -92,7 +93,7 @@
                     <input type="text" ng-model="unit1" id="boss"/>
                 </li>
                  <li class="offershow">
-                    <label for="province">省</label>
+                    <label for="province">省</label><em>*</em>
                     <div class="mySelect">
                     	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
                                     ng-change="provinceSelected(provinceId)"
@@ -101,7 +102,7 @@
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
                  <li class="offershow">
-                    <label for="city">市</label>
+                    <label for="city">市</label><em>*</em>
                     <div class="mySelect">
 	                    <select id="city" ng-model="cityId" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
@@ -110,7 +111,7 @@
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
                 <li>
-                    <label for="category">品类</label>
+                    <label for="category">品类</label><em>*</em>
                     <div class="mySelect">
 	                    <select id="category" id="good_type" name="codeLave1" ng-model="codeLave1">
 	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
@@ -119,22 +120,30 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="num">数量</label>
+                    <label for="num">数量</label><em>*</em>
                     <input type="text" id="num" placeholder="吨" ng-model="sqm"/>
                 </li>
                 <li>
                     <label for="price">单价</label>
-                    <input type="text" ng-model="unitprice" id="price" placeholder="元/吨"/>
+                    <input type="text" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
                 </li>
                 <li>
-                    <label for="time">信息有效期</label>
-                    <div class="mySelect">
-						<input type="text" id="time" class="kbtn" ng-model="reservationtime"/>
+					<label for="time">有效开始时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" id="sttime" class="kbtn"/>
 					</div>
-                    <i class="iconfont fr">&#xe63a;</i>
-                </li>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
+				
+				<li>
+					<label for="time">有效结束时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" id="endtime" class="kbtn"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
                 <li>
-                    <label for="phone">联系电话</label>
+                    <label for="phone">联系电话</label><em>*</em>
                     <input type="text" id="phone" ng-model="telephone" />
                 </li>
                 <li>

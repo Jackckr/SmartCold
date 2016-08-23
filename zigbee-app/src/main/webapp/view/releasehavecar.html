@@ -78,11 +78,11 @@
 			       <input type="hidden" id="rdcflag" ng-model="rdcflag" value="1">
             <ul class="houseinfo">
                 <li>
-                    <label for="name">描述</label>
+                    <label for="name">描述</label><em>*</em>
                     <input type="text"  id="name" ng-model="title" placeholder="发布冷运描述"/>
                 </li>
                 <li>
-                    <label for="businessType">业务类型</label>
+                    <label for="businessType">业务类型</label><em>*</em>
                     <div class="mySelect">
 	                    <select id="businessType" name="codeLave1" ng-model="codeLave11">
 	                      <option ng-repeat="x in  codeLave1" value="{{x.type_code}}">{{x.type_name}}</option>
@@ -91,7 +91,7 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="temperatureType">温度类型</label>                                      
+                    <label for="temperatureType">温度类型</label> <em>*</em>                                     
                     <div class="mySelect">
 	                    <select id="temperatureType" name="codeLave2" ng-model="codeLave22">
 	                        	<option ng-repeat="x in  codeLave2" value="{{x.type_code}}">{{x.type_name}}</option>
@@ -100,7 +100,7 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="carType">车型</label>                                      
+                    <label for="carType">车型</label>   <em>*</em>                                   
                     <div class="mySelect">
 	                    <select id="carType" name="codeLave3" ng-model="codeLave3">
 	                       <option ng-repeat="x in  ps_cr_type" value="{{x.id}}">{{x.type}}</option>
@@ -113,7 +113,7 @@
                     <input type="text" name="unitPrice" ng-model="unitPrice" id="price" placeholder="面议"/>
                 </li>
                  <li class="bg">
-                     <label for="start">出发地</label>
+                     <label for="start">出发地</label><em>*</em>
                      <div class="mySelect">
 	                     <select id="stprovince" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="stprovinceSelected(stprovinceID)"
@@ -125,14 +125,14 @@
 	                </div>
                  </li>
                  <li>
-                     <label for="startTime">出发时间</label>
+                     <label for="startTime">出发时间</label><em>*</em>
                      <div class="mySelect">
 						<input type="text" id="startTime" class="kbtn" ng-model="startTime"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
                  </li>
                  <li class="bg">
-                     <label for="arrow">目的地</label>
+                     <label for="arrow">目的地</label><em>*</em>
                       <div class="mySelect">
 	                    <select id="toprovince" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="toprovinceSelected(toprovinceID)"
@@ -144,13 +144,14 @@
 	                </div>
                  </li>
                  <li>
-                     <label for="arriveTime">到达时间</label>
+                     <label for="arriveTime">到达时间</label><em>*</em>
                      <div class="mySelect">
 						<input type="text" id="arriveTime" class="kbtn" ng-model="arriveTime"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i></li>
                  </li>
-				<li><label for="phone">联系电话</label> <input type="text" name="telephone"
+				<li><label for="phone">联系电话</label><em>*</em>
+				 <input type="text" name="telephone"
 					id="phone" ng-model="telephone"/></li>
 				<li><label for="note">备注</label> <input type="text" id="note"
 					placeholder="（选填）" ng-model="note" name="note"/></li>
