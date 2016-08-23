@@ -131,7 +131,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.telephone == undefined || $scope.telephone == '') {
 	            flag = false;
 	        }
-	        if ($scope.reservationtime == undefined || $scope.reservationtime == '') {
+	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
+	            flag = false;
+	        }
+	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
 	            flag = false;
 	        }
 	        return flag;
@@ -156,7 +159,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.telephone == undefined || $scope.telephone == '') {
 	            flag = false;
 	        }
-	        if ($scope.reservationtime == undefined || $scope.reservationtime == '') {
+	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
+	            flag = false;
+	        }
+	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
 	            flag = false;
 	        }
 	        return flag;
@@ -193,10 +199,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.telephone == undefined || $scope.telephone == '') {
 	            flag = false;
 	        }
-	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
+	        if ($scope.startTime == undefined || $scope.startTime == '') {
 	            flag = false;
 	        }
-	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
+	        if ($scope.arriveTime == undefined || $scope.arriveTime == '') {
 	            flag = false;
 	        }
 	        return flag;
@@ -206,6 +212,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 		$scope.carSubmit = function(){
 			$scope.rdcID = '';
+			$scope.startTime = $("#startTime").val();
+			$scope.arriveTime = $("#arriveTime").val();
 			$scope.rdcAddress = '';
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
@@ -267,6 +275,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 		$scope.goodSubmit = function(){
 			$scope.rdcID = '';
+			$scope.validStartTime = $("#sttime").val();
+			$scope.validEndTime = $("#endtime").val();
 			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if( $scope.unit1==""||$scope.unit1==undefined){
 				$scope.typeCode = 2;
@@ -286,7 +296,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave1:$scope.codeLave1,
 					unit1 : $scope.unit1,
 					unitPrice : $scope.unitprice,
-					validEndTime : $scope.reservationtime,
+					validStartTime : $scope.validStartTime,
+					validEndTime : $scope.validEndTime,
 					sqm:$scope.sqm,
 					telephone:$scope.telephone,
 					note : $scope.note,
@@ -320,7 +331,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		
 		$scope.submit = function(){
 			$scope.rdcID = '';
-			//$scope.date = $('#time').date();
+			$scope.validStartTime = $("#sttime").val();
+			$scope.validEndTime = $("#endtime").val();
 			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if( ($scope.provinceId==""||$scope.provinceId==undefined)&&$scope.rdcdto!=undefined){
 				$scope.typeCode = 1;
@@ -339,7 +351,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					unit : $scope.unit,
 					sqm:$scope.sqm,
 					unitPrice : $scope.unitprice,
-					validEndTime : $scope.reservationtime,
+					validStartTime : $scope.validStartTime,
+					validEndTime : $scope.validEndTime,
 					telephone:$scope.telephone,
 					note : $scope.note,
 					dataType : $scope.dataType,

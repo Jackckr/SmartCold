@@ -36,7 +36,8 @@
 				}
 			});
 			/*date*/
-			$('#time').date();
+			 $('#sttime').date();
+			 $('#endtime').date();
 		});
     </script>
 </head>
@@ -127,12 +128,20 @@
                     <input type="text" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
                 </li>
                 <li>
-                    <label for="time">信息有效期</label><em>*</em>
-                    <div class="mySelect">
-						<input type="text" id="time" class="kbtn" ng-model="reservationtime"/>
+					<label for="time">有效开始时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" id="sttime" class="kbtn"/>
 					</div>
-                    <i class="iconfont fr">&#xe63a;</i>
-                </li>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
+				
+				<li>
+					<label for="time">有效结束时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" id="endtime" class="kbtn"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
                 <li>
                     <label for="phone">联系电话</label><em>*</em>
                     <input type="text" id="phone" ng-model="telephone" />
