@@ -40,16 +40,12 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
     	var yData = {high:[],low:[],temp:[]}
     	var xData = []
     	
-    	function sort(temp){
-    		var tp = [];
-    		tp.push(temp)
-    	}
-    	
     	angular.forEach(compressors,function(compressor){
     		xData.push(compressor.name);
     		temp = [{key:'high',value:compressor.highTemp},
     		        {key:'low',value:compressor.lowTemp},
     		        {key:'temp',value:compressor.keyValues.exTemp}]
+    		temp.sort(function(a,b){return b.value - a.value})
     		yData[temp[0].key].push(temp[0].value - temp[1].value)
     		yData[temp[1].key].push(temp[1].value - temp[2].value)
     		yData[temp[2].key].push(temp[2].value)
