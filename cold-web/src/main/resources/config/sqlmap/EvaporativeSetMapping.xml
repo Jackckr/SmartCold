@@ -9,9 +9,9 @@
 		FROM `evaporativeset` WHERE `id` = #{id}
 	</select>
 	
-	<select id="findByRdcId" parameterType="map" resultType="EvaporativeSetEntity">
+	<select id="findByGroupId" parameterType="map" resultType="EvaporativeSetEntity">
 		SELECT *
-		FROM `evaporativeset` WHERE `rdcId` = #{rdcId}
+		FROM `evaporativeset` WHERE `groupId` = #{groupId}
 	</select>
 
 </mapper>

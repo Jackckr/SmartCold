@@ -36,9 +36,9 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 	    })
 	}
 	
-	$scope.load();
+	$scope.preLoad();
 	clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        $scope.load();
+    	$scope.preLoad();
     }, 30000);
 });

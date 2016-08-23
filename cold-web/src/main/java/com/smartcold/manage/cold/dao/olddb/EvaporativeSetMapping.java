@@ -10,5 +10,5 @@ public interface EvaporativeSetMapping {
 
 	EvaporativeSetEntity findByid(@Param("id") int id);
 
-	List<EvaporativeSetEntity> findByRdcId(@Param("rdcId") int rdcId);
+	List<EvaporativeSetEntity> findByGroupId(@Param("groupId") int groupId);
 }

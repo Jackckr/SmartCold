@@ -26,16 +26,23 @@ public class EvaporativeSetController {
 		return evaporativeSetDao.findByid(id);
 	}
 
-	@RequestMapping(value = "/findByRdcId", method = RequestMethod.GET)
-	@ResponseBody
-	public Object findByRdcId(@RequestParam int rdcId) {
-		return evaporativeSetDao.findByRdcId(rdcId);
-	}
+//	@RequestMapping(value = "/findByRdcId", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Object findByRdcId(@RequestParam int rdcId) {
+//		return evaporativeSetDao.findByRdcId(rdcId);
+//	}
+//
+//	@RequestMapping(value = "/findInfoByRdcId", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Object findInfoByRdcId(@RequestParam int rdcId) {
+//
+//		return evaporativeSetService.getInfoByRdcId(rdcId);
+//	}
 
-	@RequestMapping(value = "/findInfoByRdcId", method = RequestMethod.GET)
+	@RequestMapping(value = "/findInfoByGroupId", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findInfoByRdcId(@RequestParam int rdcId) {
+	public Object findInfoByGruopId(@RequestParam int groupId) {
 
-		return evaporativeSetService.getInfoByRdcId(rdcId);
+		return evaporativeSetService.getInfoByGroupId(groupId);
 	}
 }
