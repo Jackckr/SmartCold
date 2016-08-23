@@ -217,22 +217,23 @@
                     <label>资质荣誉图：
                              <small class="text-warning" style="width: 100px">*最多八张</small>
                              <label class="pic">
-		    					<input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
-                                       ngf-multiple="true" name="honorfiles">
+		    					<input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"  ngf-multiple="true" name="honorfiles">
 						    </label>
                              </label>                 
                 </li>
                 <li class="clearfix">
                    <div class="form-group" ng-if="honorPicShow.length>0">
                             <div class="pull-left" ng-repeat="item in honorPicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
-                                <img ng-src="{{item.location}}" style="width:100%;height:100%" ng-click="goPicDetail(item)" alt="" />
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%"  />
                                 <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deleteHonorPic(item)"></i>
                             </div>
-                      </div>
-                    <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
-                                <i class="fa fa-times danger" style="margin-right:10px;color:red;"
-                                   ng-click="drophonor(honorfile)"></i>
-                            </label>
+                    </div>
+                     <div class="form-group" ng-if="totalhonorfiles.length>0">
+                            <div class="pull-left" ng-repeat="honorfile in totalhonorfiles" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ngf-src="honorfile" style="width:100%;height:100%"  alt="{{honorfile.name}}" title="{{honorfile.name}}"/>
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="drophonor(honorfile)"></i>
+                            </div>
+                    </div>
                 </li>
                 <li class="clearfix">
                     <label>功能平面布置图：
@@ -621,7 +622,7 @@ checkLogin();
         if(r){
             $http({
                 method:"DELETE",
-                url:"i/rdc/deleteStoragePic",
+                url:ER.root+"/i/rdc/deleteStoragePic",
                 params:filedata
             }).success(function(){
                 var index = $scope.storagePicShow.indexOf(filedata);
@@ -639,7 +640,7 @@ checkLogin();
         if(r){
             $http({
                 method:"DELETE",
-                url:"i/rdc/deleteStoragePic",
+                url:ER.root+"/i/rdc/deleteStoragePic",
                 params:filedata
             }).success(function(){
                 var index = $scope.honorPicShow.indexOf(filedata);
