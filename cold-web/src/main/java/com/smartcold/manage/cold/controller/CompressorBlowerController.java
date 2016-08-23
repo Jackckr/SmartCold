@@ -9,19 +9,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-05-02 23:04)
+ * Author: qiunian.sun Date: qiunian.sun(2016-05-02 23:04)
  */
 @Controller
 @RequestMapping(value = "/compressorBlower")
 public class CompressorBlowerController {
 
-    @Autowired
-    private CompressorBlowerService compressorBlowerService;
+	@Autowired
+	private CompressorBlowerService compressorBlowerService;
 
-    @RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
-    @ResponseBody
-    public Object findByUserId(@RequestParam int userId) {
-        return compressorBlowerService.findByUserId(userId);
-    }
+	@RequestMapping(value = "/findByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findByRdcId(@RequestParam int rdcId) {
+		return compressorBlowerService.findByRdcId(rdcId);
+	}
 }

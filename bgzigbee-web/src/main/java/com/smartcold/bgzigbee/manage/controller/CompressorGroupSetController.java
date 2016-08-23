@@ -86,13 +86,10 @@ public class CompressorGroupSetController {
 	@RequestMapping(value="/saveCompressor", method = RequestMethod.POST)
     @ResponseBody
     public Object saveCompressor(@RequestBody CompressorSetEntity entity){
-	    try {
-            if (compressorSetDao.insert(entity)) {
-                return new ResultDto(0, "保存成功");
-            }
-        }catch (Exception e){
+		if (compressorSetDao.insert(entity)) {
+			return new ResultDto(0, "保存成功");
+		}
 
-        }
         return new ResultDto(-1, "失败");
     }
 }

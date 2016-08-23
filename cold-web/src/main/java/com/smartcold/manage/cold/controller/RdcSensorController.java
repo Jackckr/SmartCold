@@ -82,10 +82,10 @@ public class RdcSensorController {
 		
 		for(ColdStorageSetEntity storageSet : coldSttorageSetDao.findByRdcId(rdcId)){
 			Map map = new HashMap();
-			map.put("storageID", storageSet.getColdStorageID());
-			List<StorageKeyValue> list = storageService.findByNums(1, storageSet.getColdStorageID(), "Temp", 1);
+			map.put("storageID", storageSet.getId());
+			List<StorageKeyValue> list = storageService.findByNums(1, storageSet.getId(), "Temp", 1);
 			map.put("temperature", (float) (Math.round(list.get(0).getValue() * 10)) / 10);
-			RdcSensor rdcSensor = rdcSensorDao.findByOid(storageSet.getColdStorageID());
+			RdcSensor rdcSensor = rdcSensorDao.findByOid(storageSet.getId());
 			if (rdcSensor != null) {
 				if (rdcSensor.getSx() != null)
 					map.put("div_x", rdcSensor.getSx());

@@ -10,5 +10,19 @@
     <select id="findInfoByDeviceId" resultType="DeviceObjectMappingEntity" parameterType="map">
         SELECT * FROM `deviceObjectMapping` WHERE `deviceid` = #{deviceId}
     </select>
+
+    <select id="findByTypeOid" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity">
+        SELECT * FROM `deviceObjectMapping`
+        WHERE `type`=#{type} and `oid`=#{oid}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `deviceObjectMapping` (`deviceid`, `oid`, `type`)
+        VALUES (#{deviceid}, #{oid}, #{type})
+    </insert>
+
+    <delete id="delById">
+        DELETE FROM `deviceObjectMapping` WHERE `id`=#{id}
+    </delete>
     
 </mapper>

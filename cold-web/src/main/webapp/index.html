@@ -253,18 +253,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
               clear-selected="true"
               match-class="highlight"
               input-class="form-control form-control-small"
-              ng-if="user.role == 1"
+              ng-if="user.role == 3"
               >
               </div>
           <div>
-            <select ng-if="user.role != 1"
+            <select ng-if="user.role == 2"
             class="form-control"
             ng-options="rdc.name for rdc in vm.allUserRdcs" 
             ng-model="vm.choserdc" 
             ng-change="initAllByRdcId(vm.choserdc.id)"></select>
           </div>
           <ul class="sidebar-menu text-white">
-          <li ng-if="user.role == 1">
+          <li ng-if="user.role == 3 || user.role == 1">
              <a class="text-white" style="font-family: cursive;">{{vm.choserdc.name}}</a>
           </li>
             <li class="treeview">
@@ -312,14 +312,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	               </li>
 	              </ul>
                </li>
-               <li><a><i class="#/about"><span>其他设施</span></i></a></li>
+               <li>
+                  <a><i class="fa fa-circle-o"></i>其他物流设施监控<i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+	               <li><a href="#/otherDevice"><i class=""><span>其他设施</span></i></a></li>
+	               <li><a href="#/light"><i class=""><span>照明</span></i></a></li>
+                  </ul>
+               </li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#/about"><i class="icon iconfont">&#xe6b9;</i><span class="menu-title">货物流通</span><i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                <li><a href="#/coldStorageInOutGoods"><i class="fa fa-circle-o"></i>货物流通量</a></li>
-               <li><a><i class="fa fa-circle-o"></i>进货温度</a></li>
+               <!-- <li><a><i class="fa fa-circle-o"></i>进货温度</a></li> -->
               </ul>
             </li>
             <li class="treeview">
@@ -332,8 +338,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <i class="fa fa-circle-o"></i> {{compressorGroup.name}}</a></li>
                   </ul>
                </li>
-               <li><a><i class="fa fa-circle-o"></i>冷凝系统</a></li>
-               <li><a><i class="fa fa-circle-o"></i>蒸发系统(风机)</a></li>
+               <!-- <li><a><i class="fa fa-circle-o"></i>冷凝系统</a></li> -->
+               <li><a href="#/compressorBlower/{{rdcId}}"><i class="fa fa-circle-o"></i>蒸发系统(风机)</a></li>
               </ul>
             </li>
             </ul>
@@ -373,7 +379,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <span class="menu-title text-white" style="font-size: large">选型</span></a></li>
             </ul>
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu" ng-if="user.role == 2">
+          <ul class="sidebar-menu" ng-if="user.role == 3">
             <li class="header">导航</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>
@@ -472,6 +478,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/power.js"></script>
 <script src="app/js/waterCost.js"></script>
 <script src="app/js/platformDoor.js"></script>
+<script src="app/js/other.js"></script>
 <!--  -->
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
 <script src="assets/plugins/fastclick/fastclick.min.js"></script>

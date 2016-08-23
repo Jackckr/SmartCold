@@ -13,6 +13,8 @@ public class WindScreenSetEntity {
 	private String mapping;
 
 	private Date addTime;
+	
+	private double power;
 
 	public int getId() {
 		return id;
@@ -52,6 +54,14 @@ public class WindScreenSetEntity {
 
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
+	}
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
 	}
 
 }

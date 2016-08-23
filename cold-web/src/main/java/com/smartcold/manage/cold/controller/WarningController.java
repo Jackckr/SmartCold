@@ -39,11 +39,11 @@ public class WarningController extends BaseController {
 		List<WarningsInfo> warningsInfoList = warningsInfoDao.findLastNWarningInfo(rdcId, point);
 		List allInfoList = new ArrayList();
 		for(WarningsInfo warningInfo : warningsInfoList){
-			String warningName = warningsSetDao.findWarningSetById(warningInfo.getObjId()).getName();
-//ce shi			String warningName = warningsSetDao.findWarningSetById(1).getName();
+//			String warningName = warningsSetDao.findWarningSetById(warningInfo.getObjId()).getName();
+//			String warningName = warningsSetDao.findWarningSetById(1).getName();
 			Map map = new HashMap();
 			map.put("addtime", warningInfo.getAddtime());
-			map.put("warningName", warningName);
+//			map.put("warningName", warningName);
 			map.put("level", warningInfo.getLevel());
 			map.put("id", warningInfo.getId());
 			allInfoList.add(map);

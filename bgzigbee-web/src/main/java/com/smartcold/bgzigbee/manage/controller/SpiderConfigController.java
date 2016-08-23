@@ -1,11 +1,12 @@
 package com.smartcold.bgzigbee.manage.controller;
 
 import com.smartcold.bgzigbee.manage.dao.*;
-import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.dto.UpdateMappingDTO;
 import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.enums.SetTables;
+import com.smartcold.bgzigbee.manage.service.RemoteService;
 import com.smartcold.bgzigbee.manage.service.SpiderConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,17 +47,26 @@ public class SpiderConfigController {
     @Autowired
     private ColdstorageLightSetMapping coldstorageLightSetMapping;
 
-    @RequestMapping("/mapping/update")
-    public Object updateSetTableMapping(String table, String mapping, int id){
-        if (SetTables.checkTable(table) && setTableMapper.updateMapping(table, mapping, id)) {
-            return new BaseDto(0);
+    @Autowired
+    private ForkLiftSetMapping forkLiftSetMapping;
+
+    @Autowired
+    private RemoteService remoteService;
+
+    @RequestMapping("/update/mapping")
+    public Object updateSetTableMapping(@RequestBody UpdateMappingDTO updateMappingDTO){
+        if (SetTables.checkTable(updateMappingDTO.getTable()) && setTableMapper.updateMapping(updateMappingDTO.getTable(), updateMappingDTO.getMapping(), updateMappingDTO.getId())) {
+            return new ResultDto(0, "删除成功");
         }
-        return new BaseDto(-1);
+        return new ResultDto(-1, "添加失败");
     }
 
     @RequestMapping(value = "/delete/id", method = RequestMethod.DELETE)
     public Object deleteById(String table, int id){
-        if (SetTables.checkTable(table) && setTableMapper.deleteById(table, id)) {
+        if (!(table.equals("deviceobjectmapping") || SetTables.checkTable(table) )){
+            return new ResultDto(-2, "非法参数");
+        }
+        if (setTableMapper.deleteById(table, id)) {
             return new ResultDto(0, "删除成功");
         }
         return new ResultDto(-1,"删除失败");
@@ -88,6 +98,13 @@ public class SpiderConfigController {
             return setTableMapper.findByRdcId(table, rdcid);
         }
         return new ResultDto(-1, "error");
+    }
+
+
+
+    @RequestMapping(value = "/del/deviceObjectMapping" , method = RequestMethod.DELETE)
+    public Object delDeviceObjectMapping(int id){
+        return remoteService.delDeviceObjectMappingById(id);
     }
 
     /**
@@ -148,5 +165,20 @@ public class SpiderConfigController {
             return new ResultDto(0, "添加成功");
         }
         return new ResultDto(-1, "添加失败");
+    }
+
+    @RequestMapping(value = "/add/forkliftSet", method = RequestMethod.POST)
+    public Object addForklift(@RequestBody ForkLiftSetEntity forkLiftSetEntity){
+        if (forkLiftSetMapping.insert(forkLiftSetEntity)) {
+            return new ResultDto(0, "添加成功");
+        }
+        return new ResultDto(-1, "添加失败");
+    }
+
+    @RequestMapping(value = "/add/deviceObjectMapping", method = RequestMethod.POST)
+    public Object addDeviceObjectMapping(@RequestBody DeviceObjectMappingEntity deviceObjectMappingEntity){
+        Object res = remoteService.insertDeviceObjectMapping(deviceObjectMappingEntity);
+        return res;
+
     }
 }

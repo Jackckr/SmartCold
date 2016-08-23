@@ -11,4 +11,6 @@ public interface ForkLiftSetMapping {
 
 	List<ForkLiftSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 
+	boolean insert(ForkLiftSetEntity forkLiftSetEntity);
+
 }

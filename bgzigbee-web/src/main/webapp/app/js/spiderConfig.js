@@ -10,6 +10,13 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$scope.choseDevice = $scope.devices[0];
 	});
 
+    // $scope.getTypeObjectByType = function (type) {
+    //     angular.forEach($scope.storageTypes, function (item) {
+    //         if (item.type == type)
+    //             return item;
+    //     })
+    // }
+
 	$scope.load = function(){
 		$scope.vm = {}
 		$scope.handItem = {columnkey:"handWrite",columnvalue:"手动输入..."};
@@ -59,57 +66,20 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.vm.choseStorage = {};
 	$scope.vm.choseStorage.mapping = [];
 	
-	$scope.type2Keys = function(type){
-		switch(type){
-		case 1:
-			return $scope.coldStorageKeys;
-		case 2:
-			return $scope.doorKeys;
-		case 3:
-			return $scope.compressorGroupKeys;
-		case 4:
-			return $scope.blowerKeys;
-		case 5:
-			return $scope.compressorKeys;
-		case 6:
-			return $scope.windscreenKeys;
-		case 7:
-			return $scope.evaporativeKeys;
-		case 8:
-			return $scope.evaporativewaterKeys;
-		case 9:
-			return $scope.evaporativeblowerKeys;
-		case 10:
-			return $scope.powerKeys;
-		case 11:
-			return $scope.platformdoorKeys;
-		case 12:
-			return $scope.pressureplatformKeys;
-		case 13:
-			return $scope.chargingpileKeys;
-		case 14:
-			return $scope.forkliftKeys;
-		case 15:
-			return $scope.coldstoragelightKeys;
-		case 16:
-			return $scope.circulatingpumpKeys;
-		default:
-			return [];
-		}
-	}
+
 	
 	$scope.typeChanged = function(item){
 		$scope.keysData = $scope.type2Keys(item.type);
 	}
 	
 	$http.get(coldWebUrl+'storageKeys/getAllKeys').success(function(data,status,config,headers){
+	    $scope.allKeys = data;
 		angular.forEach(data,function(item,index){
 			$scope.type2Keys(item.type).push(item);
 		})
 	})
 	
 
-	
 	$scope.getDescByType = function(type){
 		for(var i=0; i<$scope.storageTypes.length; i++){
 			if($scope.storageTypes[i].type==type){
@@ -135,9 +105,13 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 				headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 			}
 			$http(req).then(function(resp){
-				$scope.newKey = {};
-				params.id = resp.data;
-				$scope.type2Keys(params.type).push(params);
+			    if (resp.data.status > -1) {
+
+                    $scope.newKey = {};
+                    params.id = resp.data.status;
+                    $scope.type2Keys(params.type).push(params);
+                }
+                alert(resp.data.message);
 			})
 		}else{
 			alert("输入不完整");
@@ -152,10 +126,53 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 //			headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 		}
 		$http(req).then(function(resp){
-			var i = $scope.keysData.indexOf(item);
-			$scope.keysData.splice(i,1);
+		    if (resp.data) {
+                var i = $scope.keysData.indexOf(item);
+                $scope.keysData.splice(i, 1);
+            }else {
+                alert("删除失败");
+            }
 		})
 	}
+
+    $scope.type2Keys = function(type){
+        switch(type){
+            case 1:
+                return $scope.coldStorageKeys;
+            case 2:
+                return $scope.doorKeys;
+            case 3:
+                return $scope.compressorGroupKeys;
+            case 4:
+                return $scope.blowerKeys;
+            case 5:
+                return $scope.compressorKeys;
+            case 6:
+                return $scope.windscreenKeys;
+            case 7:
+                return $scope.evaporativeKeys;
+            case 8:
+                return $scope.evaporativewaterKeys;
+            case 9:
+                return $scope.evaporativeblowerKeys;
+            case 10:
+                return $scope.powerKeys;
+            case 11:
+                return $scope.platformdoorKeys;
+            case 12:
+                return $scope.pressureplatformKeys;
+            case 13:
+                return $scope.chargingpileKeys;
+            case 14:
+                return $scope.forkliftKeys;
+            case 15:
+                return $scope.coldstoragelightKeys;
+            case 16:
+                return $scope.circulatingpumpKeys;
+            default:
+                return [];
+        }
+    }
 	
 	$scope.changeRdc = function(){
 		$scope.vm.choseRdc = $scope.vm.choseRdcs?$scope.vm.choseRdcs[0]:$scope.vm.choseRdc;
@@ -186,49 +203,63 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			})
 			$scope.compressGroups = data;
 			$scope.vm.choseCompressGroup = data[0];
+            $scope.vm.choseCompressGroup ? $scope.changeCompressGroup():null;
 		})
-		$http.get('/i/compressorGroup/findItem').success(function(data,status,config,headers){
-			$scope.compressGroupItem = data;
-			$scope.vm.choseCompressGroupItem = data[0];
-			$scope.compressGroupItemKeys = getDistinctColumnKey($scope.compressGroupItem);
-			$scope.vm.choseCompressGroupItemKey = $scope.compressGroupItemKeys[0];
-			$scope.compressGroupItem.push($scope.handItem);
-		})
+		// $http.get('/i/compressorGroup/findItem').success(function(data,status,config,headers){
+		// 	$scope.compressGroupItem = data;
+		// 	$scope.vm.choseCompressGroupItem = data[0];
+		// 	$scope.compressGroupItemKeys = getDistinctColumnKey($scope.compressGroupItem);
+		// 	$scope.vm.choseCompressGroupItemKey = $scope.compressGroupItemKeys[0];
+		// 	$scope.compressGroupItem.push($scope.handItem);
+		// })
+
 
         $http.get('/i/spiderConfig/find/evaporativeSet?rdcId='+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.evaporativeSets = resp.data;
+            angular.forEach($scope.evaporativeSets, function (item, index) {
+                $scope.evaporativeSets[index].mapping = JSON.parse($scope.evaporativeSets[index].mapping);
+            })
             $scope.vm.choseEvaporative = resp.data[0];
+            $scope.vm.choseEvaporative?$scope.changeEvaporative():null;
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=powerset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.powerSets = resp.data;
+            $scope.mapping2Object($scope.powerSets);
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=platformdoorset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.platformDoorSets = resp.data;
+            $scope.mapping2Object($scope.platformDoorSets);
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=pressureplatformset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.pressurePlatformSets = resp.data;
+            $scope.mapping2Object($scope.pressurePlatformSets);
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=chargingpileset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.chargingpileSets = resp.data;
+            $scope.mapping2Object($scope.chargingpileSets);
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=forkliftset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.forkliftSets = resp.data;
+            $scope.mapping2Object($scope.forkliftSets);
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=coldstoragelightset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.coldStorageLightSets = resp.data;
+            $scope.mapping2Object($scope.coldStorageLightSets);
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=circulatingpumpset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.circulatingPumpSets = resp.data;
+            $scope.mapping2Object($scope.circulatingPumpSets);
         })
-
-	}
+        $scope.tag.type = {};
+        $scope.tagTypeChanged();
+    }
 	
 	$scope.changeStorage = function(){
 		$http.get('/i/coldStorageDoor/getcoldStorageDoorByStorageId?coldStorageId=' + $scope.vm.choseStorage.id
@@ -257,7 +288,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         // find windscreen
         $http.get('/i/spiderConfig/find/windscreenSet?storageId='+$scope.vm.choseStorage.id).then(function (resp) {
             $scope.windScreenSets = resp.data;
-
+            angular.forEach($scope.windScreenSets, function (item, index) {
+                $scope.windScreenSets[index].mapping = JSON.parse($scope.windScreenSets[index].mapping);
+            })
             console.log($scope.vm.choseStorage.name);
         })
 	}
@@ -265,9 +298,22 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.changeCompressGroup = function () {
 		$http.get('i/compressorGroup/findCompressorByGid?groupId='+$scope.vm.choseCompressGroup.id)
 			.then(function (resp) {
-				 $scope.compressorSets = resp.data;
+				$scope.compressorSets = resp.data;
+                angular.forEach($scope.compressorSets, function (item,index) {
+                    $scope.compressorSets[index].mapping = JSON.parse($scope.compressorSets[index].mapping);
+                })
+                $scope.vm.choseCompressor = $scope.compressorSets?$scope.compressorSets[0]:{};
 			});
 	}
+
+	$scope.mapping2Object = function (sets) {
+	    if (sets.length <1)
+	        return;
+        angular.forEach(sets, function (item, index) {
+            sets[index].mapping = JSON.parse(sets[index].mapping);
+        })
+    }
+
 	$scope.compressorSet={};
 	$scope.addCompress = function () {
 		var object = $scope.compressorSet;
@@ -281,7 +327,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 
 	$scope.windScreenSet = {}
 	$scope.addWindScreen = function () {
-		var object = $scope.windscreenSet;
+		var object = $scope.windScreenSet;
 		object.coldStorageId = $scope.vm.choseStorage.id;
 		$http.post("/i/spiderConfig/add/windscreenset", object).then(function (resp) {
 			alert(resp.data.message);
@@ -302,9 +348,15 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.changeEvaporative = function () {
         $http.get("/i/spiderConfig/find/evaporativeWaterSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
             $scope.evaporativeWaterSets = resp.data;
+            angular.forEach($scope.evaporativeWaterSets, function (item, index) {
+                $scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
+            })
         })
         $http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
             $scope.evaporativeBlowerSets = resp.data;
+            angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
+                $scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
+            })
         })
     }
     $scope.evaporativeWaterSet = {};
@@ -351,6 +403,17 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         })
     }
 
+    $scope.forkliftSet = {}
+    $scope.addForklift = function () {
+        var obj = $scope.forkliftSet;
+        obj = $scope.vm.choseRdc.id;
+        $http.post("/i/spiderConfig/add/forkliftSet", obj).then(function (resp) {
+            alert(resp.data.message);
+            $scope.changeRdc();
+            $scope.forkliftSet= {};
+        })
+    }
+
     $scope.addRdcIdAndName = function (obj, table) {
         obj.rdcid = $scope.vm.choseRdc.id;
         obj.table = table+'set';
@@ -374,53 +437,55 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		}
 	}
 
-	$scope.saveObjectToUrl = function(url, object, callback){
-		if(callback){
-			$http.post(url,object).then(callback);
-		}else {
-			$http.post(url,object).then(function (resp) {
-				alert(resp.data.message);
-			})
-		}
+    $scope.delByTableId = function(table,item, arrayData){
+        var flag = confirm("确认删除？");
+        if (flag) {
+            $http.delete("/i/spiderConfig/delete/id", {
+                params: {"table": table, "id": item.id}
+            }).then(function (resp) {
+                alert(resp.data.message);
+                var index =  arrayData.indexOf(item);
+                arrayData.splice(index, 1);
+            })
+        }
+    }
 
-	}
-	
-	$scope.deviceChange = function (choseDevice) {
+
+	$scope.deviceChanges = function (choseDevice) {
 		console.log(choseDevice.name);
         switch(choseDevice.type) {
-            // case 1:
-            //     return $scope.coldStorageKeys;
-            // case 2:
-            //     return $scope.doorKeys;
-            // case 3:
-            //     return $scope.compressorGroupKeys;
-            // case 4:
-            //     return $scope.blowerKeys;
+            case 1:
+                return $scope.storages;
+            case 2:
+                return $scope.doors;
+            case 3:
+                return $scope.compressGroups;
+            case 4:
+                return $scope.blowers;
             case 5:
-                $scope.changeCompressGroup();
-                break;
+                return $scope.compressorSets;
             case 6:
-                return $scope.windscreenKeys;
+                return $scope.windScreenSets;
             case 7:
-                return $scope.evaporativeKeys;
+                return $scope.evaporativeSets;
             case 8:
-                //return $scope.evaporativewaterKeys;
+                return $scope.evaporativeWaterSets;
             case 9:
-                return $scope.changeEvaporative();
+                return $scope.evaporativeBlowerSets;
             case 10:
-                return $scope.powerKeys;
+                return $scope.powerSets;
             case 11:
-                return $scope.platformdoorKeys;
+                return $scope.platformDoorSets;
             case 12:
-                return $scope.pressureplatformKeys;
+                return $scope.pressurePlatformSets;
             case 13:
-                return $scope.chargingpileKeys;
+                return $scope.chargingpileSets;
             case 14:
-                return $scope.forkliftKeys;
+                return $scope.forkliftSets;
             case 15:
-                return $scope.coldstoragelightKeys;
+                return $scope.coldStorageLightSets;
             case 16:
-                return $scope.circulatingpumpKeys;
+                return $scope.circulatingPumpSets;
             default:
         }
 	}
@@ -452,7 +517,21 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		angular.forEach($scope.blowers,function(item){
 			$scope.realSaveBlower(item);
 		})
+
+        angular.forEach($scope.windScreenSets, function (item) {
+            $scope.updateMapping("windscreenset", item);
+        })
 	}
+
+	$scope.updateMapping = function (table, obj) {
+        $http.post("/i/spiderConfig/update/mapping", {
+            table:table,
+            id:obj.id,
+            mapping:JSON.stringify(obj.mapping)
+        }).then(function (resp) {
+
+        })
+    }
 	
 	$scope.realSaveDoor = function(door){
 		url = '/i/coldStorageDoor/updateMapping?id=' + door.id 
@@ -474,8 +553,23 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$http.post(url).success(function(data,status,config,headers){
 			alert(data.message);
 		})
+
+        angular.forEach($scope.compressorSets, function (item) {
+            $scope.updateMapping("compressorset", item);
+        })
 	}
-	
+
+	$scope.realSaveEvaporative = function () {
+        angular.forEach($scope.evaporativeSets, function (item) {
+            $scope.updateMapping("evaporativeset", item);
+        })
+        angular.forEach($scope.evaporativeBlowerSets, function (item) {
+            $scope.updateMapping("evaporativeblowerset", item);
+        })
+        alert("保存成功");
+    }
+
+
 	$scope.saveAccount = function(){
 		$http.post('/i/rdc/updateSpiderConfig',{
 			rdcid: $scope.vm.choseRdc.id,
@@ -592,55 +686,111 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			});
 		}		
 	}
-	
+    $scope.tag = {}
+	$scope.tagTypeChanged = function () {
+       $scope.objectsOid = $scope.deviceChanges($scope.tag.type);
+        $scope.deviceObjectMapping = {};
+    }
+
+    $scope.addTag = function () {
+        var obj = {
+            deviceid:$scope.tag.deviceid,
+            type:$scope.tag.type.type,
+            oid:$scope.tag.oid.id
+        }
+        $http.post("/i/spiderConfig/add/deviceObjectMapping", obj).then(function (resp) {
+            alert(resp.data.message)
+            obj.id = resp.data.status;
+            $scope.deviceObjectMapping.push(obj);
+            $scope.tag.deviceid = '';
+        })
+    }
+
+    $scope.changeOid = function () {
+        if ($scope.tag.type && $scope.tag.oid) {
+            $http.get(coldWebUrl+'deviceObjectMapping/findByTypeOid', {
+                params: {
+                    type: $scope.tag.type.type,
+                    oid: $scope.tag.oid.id
+                }
+            }).then(function (resp) {
+                $scope.deviceObjectMapping = resp.data?resp.data:[];
+            })
+        }
+    }
+
+    $scope.delDeviceObjectMapping = function (item, arrayData) {
+        var flag = confirm("确认删除？");
+        if (flag) {
+            $http.delete("/i/spiderConfig/del/deviceObjectMapping", {
+                params: {"id": item.id}
+            }).then(function (resp) {
+                alert(resp.data.message);
+                var index =  arrayData.indexOf(item);
+                arrayData.splice(index, 1);
+            })
+        }
+    }
+
+
+
 	$scope.load();
 	
 });
-// coldWeb.directive("setTable", function ($templateCache) {
-//
-// 	var defaults = {
-// 		templateUrl: 'ng-gallery.html'
-// 	};
-//
-//
-// 	var template_url = defaults.templateUrl;
-// 	// Set the default template
-// 	$templateCache.put(template_url,
-// 		'<div class="{{ baseClass }}">' +
-// 		'  <div ng-repeat="i in images">' +
-// 		'    <img ng-src="{{ i.thumb }}" class="{{ thumbClass }}" ng-click="openGallery($index)" alt="Image {{ $index + 1 }}" />' +
-// 		'  </div>' +
-// 		'</div>' +
-// 		'<div class="ng-overlay" ng-show="opened">' +
-// 		'</div>' +
-// 		'<div class="ng-gallery-content" unselectable="on" ng-show="opened" ng-swipe-left="nextImage()" ng-swipe-right="prevImage()">' +
-// 		'  <div class="uil-ring-css" ng-show="loading"><div></div></div>' +
-// 		'<a href="{{getImageDownloadSrc()}}" target="_blank" ng-show="showImageDownloadButton()" class="download-image"><i class="fa fa-download"></i></a>' +
-// 		'  <a class="close-popup" ng-click="closeGallery()"><i class="fa fa-close"></i></a>' +
-// 		'  <a class="nav-left" ng-click="prevImage()"><i class="fa fa-angle-left"></i></a>' +
-// 		'  <img ondragstart="return false;" draggable="false" ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" />' +
-// 		'  <a class="nav-right" ng-click="nextImage()"><i class="fa fa-angle-right"></i></a>' +
-// 		'  <span class="info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}</span>' +
-// 		'  <div class="ng-thumbnails-wrapper">' +
-// 		'    <div class="ng-thumbnails slide-left">' +
-// 		'      <div ng-repeat="i in images">' +
-// 		'        <img ng-src="{{ i.thumb }}" ng-class="{\'active\': index === $index}" ng-click="changeImage($index)" />' +
-// 		'      </div>' +
-// 		'    </div>' +
-// 		'  </div>' +
-// 		'</div>'
-// 	);
-//
-// 	return {
-// 		restrict: 'E',
-// 		scope: {
-// 			notShow:"id",
-// 		},
-// 		templateUrl: function (element, attrs) {
-// 			return attrs.templateUrl || defaults.templateUrl;
-// 		},
-// 		link: function (scope, element, attrs) {
-//
-// 		}
-// 	}
-// });
+
+coldWeb.directive("mappingTable", function ($http) {
+
+    var defaults = {
+        templateUrl: 'app/template/mappingTable.html'
+    };
+
+
+    var template_url = defaults.templateUrl;
+
+
+    return {
+        restrict: 'E',
+        templateUrl: function (element, attrs) {
+            return attrs.templateUrl || defaults.templateUrl;
+        },
+        scope:{
+            objectSets:'=',
+            objectKeys:'='
+        },
+        link: function (scope, element, attrs) {
+            scope.name = attrs.name;
+            scope.table = attrs.table;
+
+            scope.deleteKey = function(object,key){
+                delete object[key];
+            }
+            scope.addKey = function(object,key,value){
+                if (key && value)
+                    object[key] = value;
+            }
+
+            scope.resetItem = function(item,obj){
+                scope.choseKey = "";
+                scope.itemInput = "";
+                obj.addItem = false;
+            }
+            scope.objectLength = function(obj){
+                return Object.keys(obj).length;
+            }
+            scope.save = function () {
+               if (scope.table && scope.table.length){
+                   angular.forEach(scope.objectSets, function (item) {
+                       $http.post("/i/spiderConfig/update/mapping", {
+                           table:scope.table,
+                           id:item.id,
+                           mapping:JSON.stringify(item.mapping)
+                       }).then(function (resp) {
+
+                       })
+                   })
+                   alert("保存成功");
+               }
+            }
+        }
+    }
+});

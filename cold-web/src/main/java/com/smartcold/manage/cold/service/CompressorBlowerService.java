@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface CompressorBlowerService {
 
-    List<BlowerDTO> findByUserId(int userid);
+    List<BlowerDTO> findByRdcId(int userid);
 }

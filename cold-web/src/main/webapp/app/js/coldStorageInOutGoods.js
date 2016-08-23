@@ -15,7 +15,7 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
         var freshTemp = [];
         var time = [];
         url = "/i/other/findGoodsByDate?coldstorageId=" + storageId + 
-        "&startCollectionTime=" + baseTools.getFormatTimeString(-30 * 24 * 60 * 60 * 1000) + "&endCollectionTime=" + baseTools.getFormatTimeString()  
+        "&startCollectionTime=" + baseTools.getFormatTimeString(-10 * 24 * 60 * 60 * 1000) + "&endCollectionTime=" + baseTools.getFormatTimeString()  
         $http.get(url).success(function(data,status,config,header){
         	angular.forEach(data,function(item){
         		frozenIn.push(item.frozenInputQuantity);

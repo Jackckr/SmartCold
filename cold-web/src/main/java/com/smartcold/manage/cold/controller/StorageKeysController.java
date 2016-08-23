@@ -3,6 +3,7 @@ package com.smartcold.manage.cold.controller;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.smartcold.manage.cold.dao.newdb.StorageKeysMapper;
+import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageKeysEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,17 @@ public class StorageKeysController {
 
     @RequestMapping(value="/saveStorageKeys", method = RequestMethod.POST)
     public Object saveStorageKeys(StorageKeysEntity storageKeysEntity) {
-        boolean res = storageKeysDao.save(storageKeysEntity);
-        if (res){
-            return storageKeysEntity.getId();
-        }else
-            return "failed to save";
+        try {
+            boolean res = storageKeysDao.save(storageKeysEntity);
+            if (res){
+                //return storageKeysEntity.getId();
+                return new ResultDto(storageKeysEntity.getId(),"添加成功");
+            }else {
+                return new ResultDto(-1, "添加失败");
+            }
+        }catch (Exception e){
+            return new ResultDto(-1, "key重复");
+        }
     }
 
     @RequestMapping(value = "/delStorageKey", method = RequestMethod.POST)
