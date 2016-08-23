@@ -87,35 +87,34 @@
 			      <input type="hidden" id="typeText" ng-model="typeText" value="求租">
 			       <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
 			<ul class="houseinfo">
-				<li><label for="name">描述</label> <input type="text" id="name"
+				<li><label for="name">描述</label><em>*</em> <input type="text" id="name"
 					placeholder="仓位出租" ng-model="title"/></li>
-				<li class="offershow"><label for="province">省</label>
+				<li class="offershow"><label for="province">省</label><em>*</em>
 					<div class="mySelect">
 						<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li class="offershow"><label for="city">市</label>
+				<li class="offershow"><label for="city">市</label><em>*</em>
 					<div class="mySelect">
 						<select id="city" ng-model="cityId" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li><label for="temperatureType">冷库温度类型</label>
+				<li><label for="temperatureType">冷库温度类型</label><em>*</em>
 					<div class="mySelect">
 						<select id="temperatureType" ng-model="temperType" name="temperType"
                                     ng-change="TemperTypeSelected(temperType)"
                                     ng-options="x.id as x.type for x in temperTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li><label for="storageType">经营类型</label>
+				<li><label for="storageType">经营类型</label><em>*</em>
 					<div class="mySelect">
 						<select ng-model="storageType" name="storageType"
                                     ng-change="StorageTypeSelected(storageType)"
                                     ng-options="x.id as x.type for x in storageTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li><label>数/质/量</label> 
-				
-				<input type="text" id="sqm" ng-model="sqm" style="min-width:4rem;width:5rem;"/>
+				<li><label>数/质/量</label> <em>*</em>
+				<input type="text" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"/>
 				<label><input type="radio" name="quality" ng-model="unit" name="unit"
 					value="元/天·吨" />吨</label>&nbsp;&nbsp;
 			    <label><input type="radio" name="quality" value="元/天·平方米" ng-model="unit" name="unit"
@@ -123,18 +122,18 @@
 			    <label><input type="radio" name="quality" value="元/天·其他"  ng-model="unit" name="unit" />其他</label> </li>
 					
 				<li><label for="price">单价</label> <input type="text" id="price" name="unitPrice"
-					placeholder="元/天·单位" ng-model="unitprice"/></li>
+					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
 					
 				<li>
-					<label for="time">信息有效期</label>
+					<label for="time">信息有效期</label><em>*</em>
 					<div class="mySelect">
-						<input type="text" name="reservationtime"
+						<input type="text" name="time"
 					id="time" ng-model="reservationtime" class="kbtn"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
 					
-				<li><label for="phone">联系电话</label>  <input type="text" name="telephone"
+				<li><label for="phone">联系电话</label><em>*</em>  <input type="text" name="telephone"
 					id="phone"  ng-model="telephone"/></li>
 					
 				<li><label for="note">备注</label> <input type="text" id="note"

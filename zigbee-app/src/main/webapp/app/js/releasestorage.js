@@ -109,6 +109,101 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		$scope.typeText = document.getElementById('typeText').value;
 	    $scope.rdcflag = document.getElementById('rdcflag').value;
 	    
+	    function checkStorageSubmit(){
+	        var flag = true;
+	        // 检查必须填写项
+	        if ($scope.title == undefined || $scope.title == '' ) {
+	            flag = false;
+	        }
+	        if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') {
+	            flag = false;
+	        }
+	        if ($scope.temperType == undefined || $scope.temperType == '') {
+	            flag = false;
+	        }
+	        
+	        if ($scope.storageType == undefined || $scope.storageType == '') {
+	            flag = false;
+	        }
+	        if ($scope.sqm == undefined || $scope.sqm == '') {
+	            flag = false;
+	        }
+	        if ($scope.telephone == undefined || $scope.telephone == '') {
+	            flag = false;
+	        }
+	        if ($scope.reservationtime == undefined || $scope.reservationtime == '') {
+	            flag = false;
+	        }
+	        return flag;
+	    }
+	    
+	    
+	    function checkGoodsSubmit(){
+	        var flag = true;
+	        // 检查必须填写项
+	        if ($scope.title == undefined || $scope.title == '' ) {
+	            flag = false;
+	        }
+	        if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') {
+	            flag = false;
+	        }
+	        if ($scope.codeLave1 == undefined || $scope.codeLave1 == '') {
+	            flag = false;
+	        }
+	        if ($scope.sqm == undefined || $scope.sqm == '') {
+	            flag = false;
+	        }
+	        if ($scope.telephone == undefined || $scope.telephone == '') {
+	            flag = false;
+	        }
+	        if ($scope.reservationtime == undefined || $scope.reservationtime == '') {
+	            flag = false;
+	        }
+	        return flag;
+	    }
+	    
+	    
+	    function checkCarSubmit(){
+	        var flag = true;
+	        // 检查必须填写项
+	        if ($scope.title == undefined || $scope.title == '' ) {
+	            flag = false;
+	        }
+	        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) {
+	            flag = false;
+	        }
+	        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {
+	            flag = false;
+	        }
+	        if ($scope.stcityID == undefined || $scope.stcityID == '' ) {
+	            flag = false;
+	        }
+	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {
+	            flag = false;
+	        }
+	        if ($scope.codeLave1 == undefined || $scope.codeLave1 == '') {
+	            flag = false;
+	        }
+	        if ($scope.codeLave2 == undefined || $scope.codeLave2 == '') {
+	            flag = false;
+	        }
+	        if ($scope.codeLave3 == undefined || $scope.codeLave3 == '') {
+	            flag = false;
+	        }
+	        if ($scope.telephone == undefined || $scope.telephone == '') {
+	            flag = false;
+	        }
+	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
+	            flag = false;
+	        }
+	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
+	            flag = false;
+	        }
+	        return flag;
+	    }
+	    
+	    
+	    
 		$scope.carSubmit = function(){
 			$scope.rdcID = '';
 			$scope.rdcAddress = '';
@@ -124,6 +219,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcAddress = $scope.rdcdto.address;
 				}
 			var vo = {}; 
+			if(checkCarSubmit()){
 			var simdata = {
 					title:$scope.title,
 					codeLave1:$scope.codeLave11,
@@ -162,6 +258,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 		        console.log('progress: ' + progressPercentage + '% ' + evt.name);
 		    });
+			}
+			else {
+	            alert("请填写标记*的必选项在提交!");
+	        }
 		}
 	    
 	    
@@ -178,6 +278,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcAddress = $scope.rdcdto.address;
 				}
 			var vo = {}; 
+			if(checkGoodsSubmit()){
 			var simdata = {
 					title:$scope.title,
 					provinceid : $scope.provinceId,
@@ -211,19 +312,24 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 		        console.log('progress: ' + progressPercentage + '% ' + evt.name);
 		    });
+			}
+			else {
+	            alert("请填写标记*的必选项在提交!");
+	        }
 		}
-		
 		
 		$scope.submit = function(){
 			$scope.rdcID = '';
+			//$scope.date = $('#time').date();
 			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
-			if( $scope.provinceId==""||$scope.provinceId==undefined){
+			if( ($scope.provinceId==""||$scope.provinceId==undefined)&&$scope.rdcdto!=undefined){
 				$scope.typeCode = 1;
 				$scope.typeText = "出租";
 				$scope.rdcID = $scope.rdcdto.id;
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
 			var vo = {}; 
+			if(checkStorageSubmit()){
 			var simdata = {
 					title:$scope.title,
 					provinceid : $scope.provinceId,
@@ -257,5 +363,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 		        console.log('progress: ' + progressPercentage + '% ' + evt.name);
 		    });
+			}
+			else {
+	            alert("请填写标记*的必选项在提交!");
+	        }
 		}
 });
