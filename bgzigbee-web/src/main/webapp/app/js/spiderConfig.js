@@ -269,6 +269,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 					})
 					$scope.doors = data;
 					$scope.vm.choseDoor = data.length>0?data[0]:[];
+                    $scope.tagTypeChanged();
 				})
 		$http.get('/i/blower/getBlowerByColdStorageId?coldStorageId=' + $scope.vm.choseStorage.id
 				).success(function(data,status,config,headers){
@@ -277,6 +278,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 					})
 					$scope.blowers = data;
 					$scope.vm.choseBlower = data.length>0?data[0]:[];
+            $scope.tagTypeChanged();
 				})
 		$http.get('/i/blower/findItem').success(function(data,status,config,headers){
 			$scope.blowerItem = data;
@@ -291,7 +293,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             angular.forEach($scope.windScreenSets, function (item, index) {
                 $scope.windScreenSets[index].mapping = JSON.parse($scope.windScreenSets[index].mapping);
             })
-            console.log($scope.vm.choseStorage.name);
+            $scope.tagTypeChanged();
         })
 	}
 
@@ -303,6 +305,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                     $scope.compressorSets[index].mapping = JSON.parse($scope.compressorSets[index].mapping);
                 })
                 $scope.vm.choseCompressor = $scope.compressorSets?$scope.compressorSets[0]:{};
+                $scope.tagTypeChanged();
 			});
 	}
 
@@ -351,12 +354,14 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             angular.forEach($scope.evaporativeWaterSets, function (item, index) {
                 $scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
             })
+            $scope.tagTypeChanged();
         })
         $http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
             $scope.evaporativeBlowerSets = resp.data;
             angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
                 $scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
             })
+            $scope.tagTypeChanged();
         })
     }
     $scope.evaporativeWaterSet = {};

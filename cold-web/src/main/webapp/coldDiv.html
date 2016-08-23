@@ -47,12 +47,6 @@
 			}
 
 			var rdcID = $.getUrlParam('storageID');			
-
-			if(rdcID!=1063)
-				{
-				$("#saveBtn").hide();
-				$("#temp").hide();
-				}
 			
 			$.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+rdcID,function(data,status){
 				$("body").css("background","url("+data+")").css("background-size","1050px 590px");

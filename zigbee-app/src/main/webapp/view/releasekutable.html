@@ -235,13 +235,11 @@
                         <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
                     </div>
                 </li>
-                 <li>
+                 <li style="border:0;">
                     <label>资质荣誉图：<small class="text-warning">*最多八张</small></label>
-                    <div class="mySelect">
-                        <div>
+                   <label class="pic">
                             <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles" ngf-multiple="true" name="honorfiles">                       
-                        </div>
-                    </div>                  
+                    </label>                
                 </li>
                 <li>
                     <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px">
@@ -252,16 +250,15 @@
                 <li>
                     <label>功能平面布置图：</label>
                     <div class="mySelect">
-                        <input type="file" ng-model="arrangePic" name="arrangePic"  ngf-select="addArrangePic($arrangePic)">
-                    </div>
+                      <input type="file" ng-model="arrangePic" name="arrangePic"  ngf-select="addArrangePic($arrangePic)">
+ 					</div>
                 </li>
-                <li>
+                <li style="border:0;">
                     <label>冷库图片：<small class="text-warning">*最多五张</small></label>
-                       <div class="mySelect">
-                           <div>
-                                <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">            
-                            </div>
-                       </div>
+                    <label class="pic">
+                    	<input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
+					</label>           
+                           
                 </li>
                 <li>
                     <label ng-repeat="file in totalfiles" style="margin-left:20px">

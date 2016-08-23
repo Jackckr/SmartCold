@@ -1,8 +1,8 @@
-var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该订单信息吗？" ,"确定要删除该评价吗？"] ,["colddetail.html?id=","releasedetail.html?id=","orderdetail.html?id="]];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该联络单信息吗？" ,"确定要删除该评价吗？"] ,["colddetail.html?id=","releasedetail.html?id=","orderdetail.html?id="]];
 var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
 		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
-		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ] , //2:我的订单
+		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ] , //2:我的联络单
 		[ "orderdetail.html?id=", "/i/comment/deleteByCommentID","/i/comment/findCommentsByUserId" ]  // 3：我的点评
 		];										
 var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
@@ -75,9 +75,9 @@ var gethtml = function(obj) {
 	case 2:
 		return ["<li class='clearfix'><div  onclick='detailinfo("+ obj.orders.id+")' class='clearfix'><div class='img fl' ><img src='"
 				, obj.logo
-				, "'/></div><p class='company'>订单编号："
+				, "'/></div><p class='company'>联络单编号："
 				, obj.orders.orderid
-				, "</p><p class='position'>订单名称："
+				, "</p><p class='position'>联络单名称："
 				, obj.orders.ordername
 				, "</p></div><p class='btnGroup'><button onclick='editinfo("
 				, obj.orders.id
