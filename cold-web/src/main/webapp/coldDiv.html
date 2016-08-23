@@ -109,7 +109,7 @@
 					for(var i=0;i<divNum;i++)
 						$("#wd"+lengku.rdc[i].storageID).text("温度: "+lengku.rdc[i].temperature+"°C");
 				});
-			},1000);
+			},30000);
 
 			$("#saveBtn").click(function(){
 				var confirmState = confirm("位置固定后不可再改变，确定请继续");
@@ -141,7 +141,7 @@
 
 <body>
 <button id ="saveBtn">保存配置</button>
-<p id="temp" align="right" style="color:#823F3F;font-size:20px;">库外温度</p>
+<!--  <p id="temp" align="right" style="color:#823F3F;font-size:20px;">库外温度</p> -->
 <p id="cityTemp" align="right" style="color:#823F3F;font-size:20px;"></p>
 </body>
 </html>
