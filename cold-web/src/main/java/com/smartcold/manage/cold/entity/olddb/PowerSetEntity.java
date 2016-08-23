@@ -5,14 +5,24 @@ import java.util.Date;
 public class PowerSetEntity {
 
 	private int id;
-	
+
 	private String name;
-	
+
+	private float radio;
+
 	private int rdcid;
-	
+
 	private String mapping;
-	
+
 	private Date addTime;
+
+	public float getRadio() {
+		return radio;
+	}
+
+	public void setRadio(float radio) {
+		this.radio = radio;
+	}
 
 	public int getId() {
 		return id;
