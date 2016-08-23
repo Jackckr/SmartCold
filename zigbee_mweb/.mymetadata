@@ -3,7 +3,7 @@
   type="WEB"
   name="zigbee-mweb"
   id="myeclipse.1468910501566"
-  context-root="/zigbee_mweb"
+  context-root="/zigbee-mweb"
   j2ee-spec="6.0"
   archive="zigbee-mweb.war">
   <attributes>
