@@ -1161,6 +1161,19 @@
                                         ng-change="tagTypeChanged()"
                                         ng-options="item.desc for item in storageTypes track by item.type"></select>
                             </div>
+                            <div class="form-group"
+                                     ng-show="tag.type.name == '添加冷库门' || tag.type.name == '添加冷风机' || tag.type.table=='windscreen' ">
+                                <label>冷库：</label>
+                                <select ng-options="storage.name for storage in storages" class="form-control" ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
+                            </div>
+                            <div class="form-group" ng-show="tag.type.table == 'compressor'">
+                                <label>压缩机组：</label>
+                                <select ng-options="item.name for item in compressGroups" class="form-control" ng-model="vm.choseCompressGroup" ng-change="changeCompressGroup()"></select>
+                            </div>
+                            <div class="form-group" ng-show="tag.type.table == 'evaporativewater' || tag.type.table =='evaporativeblower' ">
+                                <label>蒸发冷系统：</label>
+                                <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
+                            </div>
                             <div class="form-group">
                                 <label>映射对象：</label>
                                 <select class="form-control"
