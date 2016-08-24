@@ -8,6 +8,7 @@
     <title>链库网</title>
     <link rel="stylesheet" type="text/css" href="com/css/common.css">
     <link rel="stylesheet" type="text/css" href="com/css/index.css">
+    <link rel="stylesheet" type="text/css" href="com/css/coldlist.css" />
     <script type="text/javascript" src="com/js/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="com/js/TouchSlide.1.1.source.js"></script>
 </head>
@@ -18,15 +19,12 @@
     	<!--<div class="area" style="width: 3rem;padding-right: 0.3rem;">
     		<img src="com/img/logo.png" style="vertical-align: text-top;"/>    		
     	</div>-->
-    	<div class="area">
-    		<a class="city" href="javascript:;">
-    			<span class="nav-city" id="city">
-    				上海
-    			</span><i class="iconfont">&#xe62d;</i>
-    		</a>    		
+    	<div  class="area">
+    		<a id="hf_addres" class="city" href="javascript:;"><span class="nav-city" id="city">上海</span><i class="iconfont">&#xe62d;</i></a> 
+    		<a id="hf_back" class="black" ><i class="iconfont">&#xe60e;</i></a> 
     	</div>
     	<div class="search">
-    		<input type="text" placeholder="请输入搜索内容" onkeydown="seachList(this)"/>
+    		<input id="searchdiv" type="text" placeholder="请输入搜索内容" />
     		<i class="iconfont">&#xe62f;</i>
     	</div>
     	<div class="barCode">
@@ -34,9 +32,6 @@
     			<i class="iconfont">&#xe63f;</i>
     		</a>
     	</div>
-    </div>
-    <div  id="searchTips" style="display:none;width:291px;height:auto;position:absolute;z-index:9001;">
-		    <ul></ul>
     </div>
 <!-- header end-->
 <!-- session -->
@@ -112,12 +107,49 @@
 	 
 	 
 </div>
-<div id="seachdata"  class=" black" >
-  
-  
+<div id="seachdata"  class="section black" >
+  	  <section id="defseachdata" class="main black">
+			<ul class="listDad clearfix">
+				<li class="fl">热门搜索</li>
+			</ul>
+			 <ul class="borderlist clearfix">
+			 	<li><span>冷链金融贷</span>&nbsp;(<span id="num">343</span>)</li>
+			 	<li><span>冷链保险</span>&nbsp;(<span id="num">56</span>)</li>
+			 </ul>
+
+			<ul class="listDad clearfix">
+				<li class="fl">历史搜索</li>
+			</ul>
+			 <ul class="borderlist clearfix">
+			 	<li><span>苹果出售</span>&nbsp;(<span id="num">343</span>)</li>
+			 </ul>
+			 <p class="delete">清除历史记录</p>
+	</section>
+    <section id="cuttseachdata" class="main ">
+            <div id="rdclist">
+                <span id="title" onclick="">冷库(22)信息 共 100条</span>  
+				<ul class="  listDad clearfix">
+				 <li>222</li>
+				 <li>222</li>
+				 <li>222</li>
+				 <li>222</li>
+	           </ul>
+           </div>
+            <div id="shearlist">
+                <span id="title" onclick="">共享(22)信息共 100条</span>  
+				<ul class="  listDad clearfix">
+				 <li>222</li>
+				 <li>222</li>
+				 <li>222</li>
+				 <li>222</li>
+	           </ul>
+           </div>
+	</section>
+
 </div>
 <!-- session end-->
 <!-- footer -->
+<div id="footer">
     <ul class="footer">
         <li class="active">           
             <a href="index.html">
@@ -145,9 +177,8 @@
             </a>
         </li>
     </ul>
+</div>    
 <!-- footer end-->
- 
- 
     <script type="text/javascript" src="com/js/Popt.js"></script>
     <script type="text/javascript" src="com/js/citySet.js"></script>
     <script type="text/javascript" src="com/js/common.js"></script>

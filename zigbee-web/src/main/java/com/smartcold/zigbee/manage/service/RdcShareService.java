@@ -31,6 +31,12 @@ public interface RdcShareService {
  	 */ 
  	  public int addShareMsg(RdcShareDTO rdcShareDTO);
  	  /**
+ 	   * 更新发布消息
+ 	   * @param rdcShareDTO
+ 	   * @return
+ 	   */
+ 	  public int updateshareInfo(RdcShareDTO rdcShareDTO);
+ 	  /**
  	   * 获得关联库全部信息
  	   * @param filter
  	   * @return

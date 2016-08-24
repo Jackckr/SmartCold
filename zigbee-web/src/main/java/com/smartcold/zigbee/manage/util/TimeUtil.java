@@ -14,7 +14,11 @@ import java.util.Date;
 public class TimeUtil {
 
     private static Logger logger = LoggerFactory.getLogger(TimeUtil.class);
-
+	public static SimpleDateFormat	datefm	= new java.text.SimpleDateFormat("yyyy-MM-dd");
+	public static SimpleDateFormat	datefmnyr	= new java.text.SimpleDateFormat("yyyy年MM月dd日");
+	public static SimpleDateFormat	dateFormat	= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    
+	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
     /**
      * Date转String
      *

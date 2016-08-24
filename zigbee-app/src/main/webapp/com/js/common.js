@@ -2,9 +2,9 @@
 var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
-var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+//var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://192.168.1.199:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
-//var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
 function goback() { if(window.location.pathname.indexOf("login.html")&&window.location.hash.indexOf("user-")!=-1){window.location.href ="user.html";}else{ window.history.back();}}//返回上一级
 
