@@ -80,12 +80,12 @@ fill:rgba(30,144,255,0.8);
                              </div>
                              <div id="runChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
                              <div class="col-lg-12 text-center">
-                               <img src="assets/img/run.png"/> 运行 <img src="assets/img/stop.png"/> 停止
+                               <img src="assets/img/eva_run.png"/> 运行 <img src="assets/img/stop.png"/> 停止
                             	<a style="float:right;"><font class="font">冷凝系统风机</font></a>
                              </div>
                              <div ng-repeat="evaBlowers in evaporative.evaBlowers" 
                             style="margin-top:10px;float:left;margin-left: {{$index == 0?0:30}}px;" class="text-center">
-                            <img ng-if="evaBlowersisRunning==1" src="assets/img/evablower_run.png" style="float:left;" class="myImg">
+                            <img ng-if="evaBlowers.isRunning==1" src="assets/img/evablower_run.png" style="float:left;" class="myImg">
                             <img ng-if="evaBlowers.isRunning==0" src="assets/img/evablower_stop.png" style="float:left;" class="myImg">
                             <!-- <img ng-if="compressor.type == 2 && compressor.isRunning==1" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
                             <img ng-if="compressor.type == 2 && compressor.isRunning==0" src="assets/img/evablower_run.png" style="width:100%;float:left;" > -->

@@ -6,6 +6,7 @@ $().ready(function() {
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
+	  $("#searchDara_div input").val(getUrlParam("key"));
       gosharedile=function(sharid){
     	 window.location.href ="colddetail.html?id="+sharid; 
       };

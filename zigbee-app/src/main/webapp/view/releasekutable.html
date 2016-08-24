@@ -34,14 +34,14 @@
             </div>
         </header>
     <!-- header end-->
-    <section class="main">
+    <section class="main" style="margin-bottom:0;">
             <ul class="houseinfo">
                 <li>
                     <label for="name">名称<em>*</em></label>
                     <form name="rdcForm" class="fr" style="width:85%;"> 
                     <input type="text" ng-model="name" ng-disabled="editable" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
-                                   ng-remote-method="GET">
+                                   ng-remote-method="GET" placeholder="请输入冷库名称">
                             <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;">冷库名已被用</em>
                             </form>
                 </li>
@@ -65,7 +65,7 @@
                 </li>
                 <li>
                     <label for="geographic">地理位置<em>*</em></label>
-                    <input type="text"  ng-model="address" />
+                    <input type="text"  ng-model="address" placeholder="请输入地理位置" />
                 </li>
                 <li>
                     <label for="area">面积<em>*</em></label>
@@ -119,11 +119,11 @@
                 </li>
                 <li>
                     <label for="phone">联系电话<em>*</em></label>
-                    <input type="text"  ng-model="phoneNum"/>
+                    <input type="text"  ng-model="phoneNum" placeholder="请输入联系方式"/>
                 </li>
                 <li>
                     <label for="note">备注</label>
-                    <input type="text"  ng-model="remark"/>
+                    <input type="text"  ng-model="remark"  placeholder="选填"/>
                 </li>
                 
             </ul>
@@ -170,7 +170,7 @@
                 <li>
                     <label for="cleanarea">理货区面积</label>                    
                     <div class="mySelect">
-                        <input type="text" ng-model="lihuoArea">
+                        <input type="text" ng-model="lihuoArea" placeholder="面积">
                     </div>
 <!--                     <i class="iconfont fr moreinfo">&#xe60d;</i> -->
                 </li>
@@ -267,80 +267,9 @@
                         <i class="fa fa-times danger" style="margin-right:1px;color:red;" ng-click="drop(file)"></i>
                     </label>
                 </li>
-                <!-- 完善发布时候解注  -->
-                <!-- 
-                <li style="border:0;">
-                    <label>资质荣誉图：
-                        <small class="text-warning">*最多八张</small>
-                        <label class="pic">
-		    			    <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles" ngf-multiple="true" name="honorfiles">
-				        </label>
-                    </label>                 
-                </li>
-                <li class="clearfix">
-                    <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px">
-                        <span ng-bind="honorfile.name"></span>
-                        <i class="fa fa-times danger" style="margin-right:10px;color:red;" ng-click="drophonor(honorfile)"></i>
-                    </label>
-                </li>
-                <li class="clearfix">
-                    <label>功能平面布置图：
-                    	<label class="pic">
-		    			  <input type="file" ng-model="arrangePic" name="arrangePic"
-                                   ngf-select="addArrangePic($arrangePic)">
-				 		 </label>
-                    </label>
-                </li>
-                <li style="border:0;">
-                   <label>冷库图片：
-                        <small class="text-warning">*最多五张</small>
-                    	<label class="pic">
-		    			  <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
-				        </label>
-                    </label>
-                </li>
-                <li class="clearfix">
-                    <label ng-repeat="file in totalfiles" style="margin-left:20px">
-                        <span ng-bind="file.name"></span>
-                        <i class="fa fa-times danger" style="margin-right:1px;color:red;"  ng-click="drop(file)"></i>
-                    </label>
-                </li> -->
              </ul>
             <!--双箭头下拉-->
             <div class="next"><i class="iconfont">&#xe649;</i></div>
             <button class="mybtn" ng-click="submit()">确认发布</button>
     </section>
-
-    <!--<ul class="footer">
-        <li>           
-            <a href="../index.html">
-                <i class="iconfont">&#xe65a;</i>
-                <p class="info">首页</p>
-            </a>
-        </li>
-        <li>          
-             <a href="news.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p> 
-            </a>
-        </li>
-        <li class="active">            
-            <a href="release.html">
-                <i class="iconfont">&#xe6ff;</i>
-                <p class="info">发布</p>
-            </a>
-        </li>
-        <li>          
-            <a href="review.html">
-                <i class="iconfont">&#xe642;</i>
-                <p class="info">追溯</p>
-            </a>
-        </li>
-        <li>            
-            <a href="user.html">
-                <i class="iconfont">&#xe6fd;</i>
-                <p class="info">我的</p>
-            </a>
-        </li>
-    </ul>-->
 </body>
