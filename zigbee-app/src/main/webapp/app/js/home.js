@@ -1,7 +1,7 @@
-function gordcdile(sharid){window.location.href ="view/colddetail.html?id="+sharid; };
-function goshadile(sharid){window.location.href ="view/storehousedetail.html?id="+sharid; };
-function gordclist(){window.location.href =encodeURI("view/coldlist.html?key="+$("#searchdiv").val()) ;};
-function gosharlist(){window.location.href ="view/coldlist.html?key="+$("#searchdiv").val(); };
+function gordcdile(sharid){ $("#searchdiv").val(""); window.location.href ="view/colddetail.html?id="+sharid; };
+function goshadile(sharid){$("#searchdiv").val("");window.location.href ="view/storehousedetail.html?id="+sharid; };
+function gordclist(){var key= $("#searchdiv").val();$("#searchdiv").val("");window.location.href =encodeURI("view/coldlist.html?key="+key) ;};
+function gosharlist(){var key= $("#searchdiv").val();$("#searchdiv").val("");keywindow.location.href ="view/coldlist.html?key="+key; };
 $().ready(function() { 
 	var province=null,shear=false;
 	function initdata(){
@@ -52,11 +52,15 @@ $().ready(function() {
 	}
 	function initevg(){
 		 $("#searchdiv").keyup(function(event){
-			seachList(this)
+			seachList(this);
 		 });
 		 $("#city").click(function (e) {
 			SelCity(this,e,province);
 			$("#city").siblings('i').html('&#xe62e;');
+		 });
+		 $("#searchdivi").click(function (e) {
+			var key= $("#searchdiv").val();$("#searchdiv").val('');
+			window.location.href =encodeURI("view/searchList.html?key="+key) ;
 		 });
 		 $("#hf_back").click(function(){
 				shear=false;
