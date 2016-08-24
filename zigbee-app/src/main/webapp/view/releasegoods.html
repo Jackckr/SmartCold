@@ -18,8 +18,9 @@
 <script type="text/javascript"
 	src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
-<script type="text/javascript" src="../app/js/releasestorage.js"></script>
-    <script>
+</head>
+<body ng-app="app" ng-controller="ctrl">
+  <script>
     	$(function() {
 			$('.toggle').children('div').click(function(){
 				$(this).addClass('current').siblings().removeClass('current');
@@ -43,9 +44,6 @@
 			 $('#endtime').date();
 		});
     </script>
-    
-</head>
-<body ng-app="app" ng-controller="ctrl">
     <!-- header -->
         <header>
         	
@@ -112,7 +110,7 @@
                 <li>
                     <label for="category">品类</label><em>*</em>
                     <div class="mySelect">
-	                    <select id="category" id="good_type" name="codeLave1" ng-model="codeLave1">
+	                    <select id="category" id="good_type" name="codeLave11" ng-model="codeLave11">
 	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
 	                    </select>
 	                </div>
@@ -193,4 +191,5 @@
         </li>
     </ul>-->
 </body>
+<script type="text/javascript" src="../app/js/releasestorage.js"></script>
 </html>
