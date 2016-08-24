@@ -1,4 +1,4 @@
-coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
+coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) {
 	clearInterval($rootScope.timeTicket);
 	$scope.getDateTimeStringBefore = function(before){
 		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
@@ -47,8 +47,8 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 				var listData = response.data;
 				var xData=[],data=[];
 				angular.forEach(listData,function(item){
-					xData.push(item.addtime);
-					data.push(item.value);
+					xData.unshift(baseTools.formatTime(item.addtime));
+					data.unshift(item.value);
 				});
 				$scope.drawDataLine(xData,data);
 			})

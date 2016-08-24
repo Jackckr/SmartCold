@@ -1,16 +1,17 @@
 package com.smartcold.manage.cold.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 import com.smartcold.manage.cold.service.ColdStorageDoorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 10:38)
@@ -25,11 +26,9 @@ public class ColdStorageDoorServiceImpl implements ColdStorageDoorService {
 	private ColdStorageDoorSetMapper coldStorageDoorSetDao;
 
 	@Override
-	public List<ColdStorageDoorEntity> findByStorageId(int storageID, int npoint) {
-		List<ColdStorageDoorSetEntity> setList = coldStorageDoorSetDao.findLastNPoint(storageID, 1);
-		int doorId = setList.get(0).getId();
-		List<ColdStorageDoorEntity> results = coldStorageDoorDao.findLastNPoint(doorId, npoint);
-		return results;
+	public List<ColdStorageDoorSetEntity> findByStorageId(int storageID) {
+
+		return coldStorageDoorSetDao.findByStorageId(storageID);
 	}
 
 	@Override

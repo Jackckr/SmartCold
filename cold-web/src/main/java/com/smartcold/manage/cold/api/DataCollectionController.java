@@ -41,7 +41,7 @@ public class DataCollectionController extends BaseController {
 			String apID = dataCollectionBatchEntity.get("apID").toString();
 			ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
 			for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
-				Date time = new Date(Integer.parseInt(info.get("time")) * 1000);
+				Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
 				String deviceId = info.remove("devID").toString();
 				for (Entry<String, String> item : info.entrySet()) {
 					arrayList

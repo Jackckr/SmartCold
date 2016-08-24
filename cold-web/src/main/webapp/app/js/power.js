@@ -13,8 +13,8 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 			var xData = [];
 			var yData = [];
 			angular.forEach($scope.powerData,function(item){
-				xData.push(baseTools.formatTime(item.addtime))
-				yData.push(item.value)
+				xData.unshift(baseTools.formatTime(item.addtime))
+				yData.unshift(item.value)
 			})
 			option = baseTools.getEchartSingleOption('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line');
 			lineChart.setOption(option);
