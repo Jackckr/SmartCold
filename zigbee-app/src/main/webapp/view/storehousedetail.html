@@ -36,9 +36,12 @@
 					</p>
 				</li>
 			</ul>
-			<ul id="she_imglist" class="imglist">
+			 <div id="she_imglist" class="imglist baguetteBoxOne gallery" ng-if="vo.files">
+                <a ng-repeat="fl in vo.files" href="{{fl}}"><img ng-src="{{fl}}"/></a>
+            </div>
+			<!-- <ul id="she_imglist" class="imglist">
 				<li ng-repeat="fl in vo.files"><a href="{{fl}}"><img ng-src="{{fl}}" alt="" /></a></li>
-			</ul>
+			</ul> -->
 			<!-- ======================================================================================= 冷仓信息共享-->
 			<div ng-if="vo.dataType==3">
 			<ul class="infolist clearfix">
