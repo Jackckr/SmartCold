@@ -93,7 +93,7 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 						+ String.format("[%s,%s,rH:%s,lH:%s,rM:%s,lM:%s,rS:%s,ls:%s]", compressor.getId(), totalRunTime,
 								runH.get(0).getValue(), lH, runM.get(0).getValue(), lM, runS.get(0).getValue(), lS));
 			}
-			waterCost = compressor.getPower() * compressor.getWaterRatio() * totalRunTime * 3600 / 2422.8 / 1000;
+			waterCost += compressor.getPower() * compressor.getWaterRatio() * totalRunTime * 3600 / 2422.8 / 1000;
 		}
 
 		entity.setWaterCost(waterCost);
