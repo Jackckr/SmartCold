@@ -262,6 +262,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     }
 	
 	$scope.changeStorage = function(){
+		if (!$scope.vm.choseStorage){
+			return;
+		}
 		$http.get('/i/coldStorageDoor/getcoldStorageDoorByStorageId?coldStorageId=' + $scope.vm.choseStorage.id
 				).success(function(data,status,config,headers){
 					angular.forEach(data,function(item,index){
