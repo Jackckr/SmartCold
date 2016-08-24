@@ -361,9 +361,10 @@ html{
 	margin: 0.4rem 0 0.6rem;
 }
 .listDad li{
-	font-size: 0.8rem;
-	line-height: 1.75rem;
+	font-size: 0.7rem;
+	line-height: 1.5rem;
 	border-bottom: 1px solid #e6e6e6;
+	color: #666;
 }
 .listDad li.fl{
 	border:0;
@@ -388,9 +389,8 @@ html{
 }
 #rdctitle,#shartitle{
 	font-size: 0.8rem;
-	color: #333;
+	color: #438BCB;
 	line-height: 2;
-	text-decoration: underline;
 }
 .delete{
 	text-align: center;
