@@ -68,10 +68,10 @@
 	<!--coldlist-->
 	<div class="coldlist">
 		<!-- 仓储信息区域start -->
-		<div class="nodata">
+		<div class="nodata" style="background:#F6F5FA;">
 			<p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
 			<p class="sorry">
-				<button class="mybtn" ng-click="goaddrdcpag();">添加冷库信息</button>
+				<button class="mybtn" onclick="location.href='releasekutable.html'">添加冷库信息</button>
 		</div>
 		<!--coldlist-->
 		<div>
@@ -79,6 +79,7 @@
 			<a id="loading" href="javascript:;" onclick="getPageData();"></a>
 		</div>
 	</div>
+	
 	<!--求租-->
 	<section class="main maindetail  black">
 		<form id="release_item_from" name="itemform" >
@@ -134,7 +135,7 @@
 				<li>
 					<label for="time">有效开始时间</label><em>*</em>
 					<div class="mySelect">
-						<input type="text" id="sttime" class="kbtn"/>
+						<input type="text" id="sttime" placeholder="请选择开始时间" class="kbtn"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
@@ -142,7 +143,7 @@
 				<li>
 					<label for="time">有效结束时间</label><em>*</em>
 					<div class="mySelect">
-						<input type="text" id="endtime" class="kbtn"/>
+						<input type="text" id="endtime" placeholder="请选择结束时间" class="kbtn"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>

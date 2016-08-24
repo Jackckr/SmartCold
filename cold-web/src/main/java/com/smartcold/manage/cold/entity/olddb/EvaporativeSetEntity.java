@@ -7,7 +7,7 @@ public class EvaporativeSetEntity {
 
 	private String name;
 
-	private int rdcid;
+	private int groupId;
 
 	private String mapping;
 
@@ -29,12 +29,12 @@ public class EvaporativeSetEntity {
 		this.name = name;
 	}
 
-	public int getRdcid() {
-		return rdcid;
+	public int getGroupId() {
+		return groupId;
 	}
 
-	public void setRdcid(int rdcid) {
-		this.rdcid = rdcid;
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 
 	public String getMapping() {

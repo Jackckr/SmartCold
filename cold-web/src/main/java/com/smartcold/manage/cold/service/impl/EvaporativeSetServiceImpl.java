@@ -36,10 +36,10 @@ public class EvaporativeSetServiceImpl implements EvaporativeSetService {
 	private EvaporativeSetMapping evaDao;
 
 	@Override
-	public EvaporativeDto getInfoByRdcId(int rdcId) {
+	public EvaporativeDto getInfoByGroupId(int rdcId) {
 		EvaporativeDto result = new EvaporativeDto();
 		ArrayList<EvaporativeBlowerDto> blowers = new ArrayList<EvaporativeBlowerDto>();
-		List<EvaporativeSetEntity> evaSetEntity = evaDao.findByRdcId(rdcId);
+		List<EvaporativeSetEntity> evaSetEntity = evaDao.findByGroupId(rdcId);
 		if (evaSetEntity.size() > 0) {
 			List<EvaporativeBlowerSetEntity> evaBlowers = evaBlowerDao.findByEvaporativeId(evaSetEntity.get(0).getId());
 			for (EvaporativeBlowerSetEntity entity : evaBlowers) {

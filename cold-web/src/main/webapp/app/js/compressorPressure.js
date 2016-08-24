@@ -17,7 +17,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
         			$scope.compressors = data;
         			$scope.exTemp(data);
         		})
-        $http.get("/i/evaporative/findInfoByRdcId?rdcId=" + $rootScope.rdcId).success(
+        $http.get("/i/evaporative/findInfoByGroupId?groupId=" + $scope.groupId).success(
         		function(data,status,config,header){
         			$scope.evaporative = data;
         		})
