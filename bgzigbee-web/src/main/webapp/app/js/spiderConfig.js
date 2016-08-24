@@ -799,3 +799,32 @@ coldWeb.directive("mappingTable", function ($http) {
         }
     }
 });
+/**
+ * @Params
+ *  array-objects: 数组对象。每个对象必须有一个id属性，不然无法更新和删除
+ *  update-url,delete-url:更新和删除的url地址
+ *  colums: 需要在table中显示的列,csv格式
+ *  colums-th: table中的th，csv格式，与colums对应
+ *
+ */
+coldWeb.directive("ajaxTable", function ($http) {
+    return {
+        restrict: 'E',
+        templateUrl: 'app/template/ajax-table.html',
+        scope: {
+            arrayObjects: '='
+        },
+        link: function (scope, element, attrs) {
+            scope.columsTh = attrs.columsTh;
+
+            scope.update = function (obj) {
+
+                obj.editable = false;
+            }
+
+            scope.delete = function (obj) {
+
+            }
+        }
+    }
+})
