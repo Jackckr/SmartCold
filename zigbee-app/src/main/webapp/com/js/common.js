@@ -12,7 +12,9 @@ function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
-function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return unescape(r[2]);}return null;};
+function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){
+	return decodeURI(unescape(r[2]));}
+return null;};
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
 function setTime(obj) {
     if (_sysconfig.countdown == 0) {

@@ -14,6 +14,7 @@ import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
+import com.smartcold.zigbee.manage.util.ResponseData;
 
 @Controller
 @RequestMapping(value = "/UtilController")
@@ -33,15 +34,20 @@ public class UtilController   {
 	 */
 	@RequestMapping(value = "/searchdata")
 	@ResponseBody
-	public Object searchdata(HttpServletRequest request,String provinceid,String keyword) {
+	public ResponseData<HashMap<String, Object>> searchdata(HttpServletRequest request,String provinceid,String keyword) {
 		HashMap<String, Object> alldata=new HashMap<String, Object>();
 		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("sstauts", 1);
 		filter.put("keyword", keyword);
 		filter.put("provinceid", provinceid);
 		PageInfo<RdcEntityDTO> rdcList = this.rdcService.getRDCList(1,10, filter);
 		PageInfo<RdcShareDTO> sharList = this.rdcShareService.getSEListByRdcID(1, 10, filter);
-		if(rdcList.getTotal()>0){alldata.put("rdc", rdcList);}
-		if(sharList.getTotal()>0){alldata.put("shar", sharList);}
-		return alldata;
+		if(rdcList.getTotal()>0){alldata.put("rdcList", rdcList);}
+		if(sharList.getTotal()>0){alldata.put("sharList", sharList);}
+		if(alldata.size()>0){
+			return ResponseData.newSuccess(alldata);
+		}else{
+			return ResponseData.newFailure("抱歉！暂时没有找到相关信息！");
+		}
 	}
 }
