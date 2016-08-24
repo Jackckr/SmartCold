@@ -7,9 +7,12 @@
     <result column="RdcID" jdbcType="INTEGER" property="rdcid" />
     <result column="Sx" jdbcType="INTEGER" property="sx" />
     <result column="Sy" jdbcType="INTEGER" property="sy" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="oid" jdbcType="INTEGER" property="oid" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
   </resultMap>
   <sql id="Base_Column_List">
-    RSID, SID, RdcID, Sx, Sy
+    RSID, SID, RdcID, Sx, Sy,`type`,`oid`,`key`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select

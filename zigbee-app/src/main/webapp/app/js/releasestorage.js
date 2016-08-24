@@ -4,7 +4,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var url=window.location.href;
 	var arrurl=url.split("?id=");
-	$scope.telephone = window.user.telephone;
+	  $.ajax({type:"GET", cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",
+	        success:function(data) {
+	        	$scope.telephone = data.telephone;
+	        }
+	    });
 	if(arrurl[1]!=''&&arrurl[1]!=undefined){
 	 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
          params: {
@@ -150,7 +154,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') {
 	            flag = false;
 	        }
-	        if ($scope.codeLave1 == undefined || $scope.codeLave1 == '') {
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
 	            flag = false;
 	        }
 	        if ($scope.sqm == undefined || $scope.sqm == '') {
@@ -187,13 +191,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {
 	            flag = false;
 	        }
-	        if ($scope.codeLave1 == undefined || $scope.codeLave1 == '') {
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
 	            flag = false;
 	        }
-	        if ($scope.codeLave2 == undefined || $scope.codeLave2 == '') {
+	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {
 	            flag = false;
 	        }
-	        if ($scope.codeLave3 == undefined || $scope.codeLave3 == '') {
+	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {
 	            flag = false;
 	        }
 	        if ($scope.telephone == undefined || $scope.telephone == '') {
@@ -232,7 +236,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					title:$scope.title,
 					codeLave1:$scope.codeLave11,
 					codeLave2:$scope.codeLave22,
-					codeLave3:$scope.codeLave3,
+					codeLave3:$scope.codeLave33,
 					unitPrice : $scope.unitPrice,
 		            stprovinceID:$scope.stprovinceID,
 				    stcityID:$scope.stcityID,
@@ -293,7 +297,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					title:$scope.title,
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
-					codeLave1:$scope.codeLave1,
+					codeLave1:$scope.codeLave11,
 					unit1 : $scope.unit1,
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,

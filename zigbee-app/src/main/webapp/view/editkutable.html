@@ -217,7 +217,7 @@
                     <label>资质荣誉图：
                              <small class="text-warning" style="width: 100px">*最多八张</small>
                              <label class="pic">
-		    					<input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"  ngf-multiple="true" name="honorfiles">
+		    					<input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"  ngf-multiple="true" name="honorfiles" accept="image/png,image/gif,image/jpeg">
 						    </label>
                              </label>                 
                 </li>
@@ -238,22 +238,29 @@
                 <li class="clearfix">
                     <label>功能平面布置图：
                         <label class="pic">
-		    				<input type="file" ng-model="arrangePic" name="arrangePic" ngf-select="addArrangePic($arrangePic)">
+		    				<input type="file" ng-model="arrangePic" name="arrangePic"  accept="image/png,image/gif,image/jpeg" ngf-select="addArrangePic($files)">
 						 </label>
                     </label>
-                    <div class="form-group rdc" ng-if="arrangePicShow != null">
+                    <div class="form-group rdc" ng-if="arrangePicShow != null && newarrangePic==null">
                         <label class="col-sm-4 control-label"></label>
                         <div class="" style="padding:5px;position:relative;display:inline-block">
-                            <img style="width: 86px;" ng-src="{{arrangePicShow.location}}" ng-click="goPicDetail(arrangePicShow)" alt="" />
-                            <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(arrangePicShow)"></i>
+                            <img style="width: 86px;" ng-src="{{arrangePicShow.location}}"  />
+                            <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletecarrangePic(arrangePicShow)" ></i>
                         </div>
                      </div>
+                     <div class="form-group" ng-if="newarrangePic!=null&&newarrangePic.length>0">
+                            <div class="pull-left" ng-repeat="file in newarrangePic" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ngf-src="file" style="width:100%;height:100%"  alt="{{file.name}}" title="{{file.name}}"/>
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="dropcutt(file)"></i>
+                            </div>
+                    </div>
+                     
                 </li>
                 <li style="border:0;">
                     <label>冷库图片：
                         <small class="text-warning" style="width: 100px">*最多五张</small>
                         <label class="pic">
-		    				<input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
+		    				<input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files" accept="image/png,image/gif,image/jpeg" >
 						</label>
                     </label>
                       
@@ -453,6 +460,14 @@ checkLogin();
             }
         });
     };
+    $scope.dropcutt = function(file){//删除平面图
+//         angular.forEach($scope.totalfiles,function(item, key){
+//             if(item == file){
+//                 $scope.totalfiles.splice(key,1);
+//             }
+//         });
+         $scope.newarrangePic=null;
+    };
     $scope.drophonor = function(honorfile){
         angular.forEach($scope.totalhonorfiles,function(item, key){
             if(item == honorfile){
@@ -505,14 +520,21 @@ checkLogin();
     }
     
     $scope.addFiles = function (files) {
-        if($scope.totalfiles.length + files.length > 5){
+        if(($scope.storagePicShow.length +$scope.totalfiles.length+ files.length) > 5){
             alert("最多上传五张图片");
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     };
+     $scope.newarrangePic=null;
+    $scope.addArrangePic = function (files) {//平面图
+       if(files!=null){
+         $scope.newarrangePic=[];
+          $scope.newarrangePic =$scope.newarrangePic.concat(files);
+        }
+    };
     $scope.addHonorFiles = function (files) {
-        if($scope.totalhonorfiles.length + files.length > 8){
+        if( $scope.honorPicShow.length+ $scope.totalhonorfiles.length + files.length > 8){
             alert("最多上传八张图片");
             return;
         }
@@ -634,7 +656,18 @@ checkLogin();
             });
         }
     };
-
+  $scope.deletecarrangePic = function(filedata,st){
+        var r =st?true: confirm("删除平面图?");
+        if(r){
+            $http({
+                method:"DELETE",
+                url:ER.root+"/i/rdc/deleteStoragePic",
+                params:filedata
+            }).success(function(){
+                    $scope.arrangePicShow = null;
+            });
+        }
+    };
     $scope.deleteHonorPic = function(filedata){
         var r = confirm("删除荣誉图片?");
         if(r){
