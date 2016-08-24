@@ -1,7 +1,7 @@
-function gordcdile(sharid){ $("#searchdiv").val(""); window.location.href ="view/colddetail.html?id="+sharid; };
-function goshadile(sharid){$("#searchdiv").val("");window.location.href ="view/storehousedetail.html?id="+sharid; };
-function gordclist(){var key= $("#searchdiv").val();$("#searchdiv").val("");window.location.href =encodeURI("view/coldlist.html?key="+key) ;};
-function gosharlist(){var key= $("#searchdiv").val();$("#searchdiv").val("");keywindow.location.href ="view/coldlist.html?key="+key; };
+function gordcdile(sharid){window.location.href ="view/colddetail.html?id="+sharid; };
+function goshadile(sharid){window.location.href ="view/storehousedetail.html?id="+sharid; };
+function gordclist(){window.location.href =encodeURI("view/coldlist.html?key="+$("#searchdiv").val()) ;};
+function gosharlist(){window.location.href ="view/coldlist.html?key="+$("#searchdiv").val(); };
 $().ready(function() { 
 	var province=null,shear=false;
 	function initdata(){
@@ -28,14 +28,14 @@ $().ready(function() {
 	                	 if(rdcList){
 	     	   	         	  var html=[];var   rdcsList = rdcList.list;//
 	     	   	         	  $("#rdctitle").html("冷库("+key+")信息 共 "+rdcList.total+"条");
-	     	   	              $.each(rdcsList, function(index, item) {html.push("<li id="+item.id+" onclick='gordcdile("+item.id+")'>"+item.name+"</li>"); });
+	     	   	              $.each(rdcsList, function(index, item) {html.push("<li class='omg' id="+item.id+" onclick='gordcdile("+item.id+")'><i class='iconfont'>&#xe62f;</i>"+item.name+"</li>"); });
 	     	   	              $("#rdclist ul").append(html.join(""));
 	     	   	              $("#rdclist").show();
 	                	 }
 	                	 if(sharList){
 	     	   	         	  var html=[];var   rdcsList = sharList.list;//
 	     	   	         	  $("#shartitle").html("共享("+key+")信息 共 "+sharList.total+"条");
-	     	   	              $.each(rdcsList, function(index, item) {html.push("<li id="+item.id+" onclick='goshadile("+item.id+")'>"+item.title+"</li>"); });
+	     	   	              $.each(rdcsList, function(index, item) {html.push("<li class='omg' id="+item.id+" onclick='goshadile("+item.id+")'><i class='iconfont'>&#xe62f;</i>"+item.title+"</li>"); });
 	     	   	              $("#shearlist ul").append(html.join(""));
 	     	   	              $("#shearlist").show();
 	                	 }
@@ -52,15 +52,11 @@ $().ready(function() {
 	}
 	function initevg(){
 		 $("#searchdiv").keyup(function(event){
-			seachList(this);
+			seachList(this)
 		 });
 		 $("#city").click(function (e) {
 			SelCity(this,e,province);
 			$("#city").siblings('i').html('&#xe62e;');
-		 });
-		 $("#searchdivi").click(function (e) {
-			var key= $("#searchdiv").val();$("#searchdiv").val('');
-			window.location.href =encodeURI("view/searchList.html?key="+key) ;
 		 });
 		 $("#hf_back").click(function(){
 				shear=false;
