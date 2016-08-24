@@ -65,12 +65,22 @@ public class ColdStorageController {
 		return new ResultDto(0, "添加成功");
 	}
 
-	@RequestMapping(value = "/deleteStorage", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteStorage", method = RequestMethod.DELETE)
 	@ResponseBody
 	public Object deleteStorage(int id) {
 		coldStorageSetDao.deleteColdStorage(id);
 		return new ResultDto(0, "删除成功");
 	}
+
+	@RequestMapping(value = "/updateStorage", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateStorage(@RequestBody ColdStorageSetEntity coldStorageSetEntity){
+		if (coldStorageSetDao.update(coldStorageSetEntity)) {
+			return new ResultDto(0, "修改成功");
+		}
+		return new ResultDto(-1, "修改失败");
+	}
+
 	
 	@RequestMapping(value="/addStorageKey", method=RequestMethod.POST)
 	@ResponseBody

@@ -16,7 +16,7 @@ public enum SetTables {
 
     WINDSCREENSET(6,  "windscreenset",  "风幕机"),
 
-    EVAPORATIVESET(7,  "evaporativeset",  "冷凝系统"),
+//    EVAPORATIVESET(7,  "evaporativeset",  "冷凝系统"),
 
     EVAPORATIVEWATERSET(8,  "evaporativewaterset",  "冷凝系统水泵"),
 
@@ -59,10 +59,18 @@ public enum SetTables {
             if (item.table.equals(table))
                 return true;
         }
-        throw new IllegalArgumentException("invalide table name");
+        throw new IllegalArgumentException("invalide table name: "+table);
     }
 
     public String getTable() {
         return table;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 }
