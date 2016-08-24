@@ -18,7 +18,9 @@
 <script type="text/javascript"
 	src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
-    <script>
+</head>
+<body ng-app="app" ng-controller="ctrl">
+  <script>
     	$(function() {
 			$('.toggle').children('div').click(function(){
 				$(this).addClass('current').siblings().removeClass('current');
@@ -42,9 +44,6 @@
 			 $('#endtime').date();
 		});
     </script>
-    
-</head>
-<body ng-app="app" ng-controller="ctrl">
     <!-- header -->
         <header>
         	
