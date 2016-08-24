@@ -47,14 +47,14 @@ public class RdcSensorController {
     @RequestMapping(value = "/findRdcBkgImaUrl", method = RequestMethod.GET)
     @ResponseBody
     public Object findRdcBkgImaUrl( int rdcId) {
-//    	return compRdcDao.selectByRdcId(rdcId).getImgurl();   	
-    	List<FileDataEntity> arrangeFiles = fileDataDao.findByBelongIdAndCategory(rdcId, FileDataMapper.CATEGORY_ARRANGE_PIC);
+    	return compRdcDao.selectByRdcId(rdcId).getImgurl();   	
+/*    	List<FileDataEntity> arrangeFiles = fileDataDao.findByBelongIdAndCategory(rdcId, FileDataMapper.CATEGORY_ARRANGE_PIC);
         String imgUrl = null;
     	if (!arrangeFiles.isEmpty()) {
             FileDataEntity arrangeFile = arrangeFiles.get(0);
             imgUrl = String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, arrangeFile.getLocation());
         }
-        return imgUrl;
+        return imgUrl;*/
     }
 /*    
     // get list of sensor by the id of rdc
