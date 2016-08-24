@@ -4,7 +4,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var url=window.location.href;
 	var arrurl=url.split("?id=");
-	$scope.telephone = window.user.telephone;
+	  $.ajax({type:"GET", cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",
+	        success:function(data) {
+	        	$scope.telephone = data.telephone;
+	        }
+	    });
 	if(arrurl[1]!=''&&arrurl[1]!=undefined){
 	 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
          params: {
