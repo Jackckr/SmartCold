@@ -34,6 +34,12 @@ public interface RdcShareMapper {
     * @return
     */
    public int addshareInfo(RdcShareDTO rdcShareDTO);
+   /**
+    * 更新发布消息
+    * @param rdcShareDTO
+    * @return
+    */
+   public int updateshareInfo(RdcShareDTO rdcShareDTO);
     
    /**
     * 获得睿库信息

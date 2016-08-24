@@ -39,8 +39,12 @@ public class RdcShareServiceImpl implements RdcShareService {
      */
 	@Override
 	public int addShareMsg(RdcShareDTO rdcShareDTO) {
-		return rdcShareMapper.addshareInfo(rdcShareDTO);
+		return this.rdcShareMapper.addshareInfo(rdcShareDTO);
 	}
+	@Override
+	public int updateshareInfo(RdcShareDTO rdcShareDTO){
+		  return this.rdcShareMapper.updateshareInfo(rdcShareDTO);
+	 }
 	/**
 	 * 删除用户发布的信息
 	 * @param id

@@ -173,6 +173,7 @@ public class RdcController {
 	public Object findAllCompanyDevice() {
 		return companyDeviceDao.findAll();
 	}
+	
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
