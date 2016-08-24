@@ -5,14 +5,23 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
     console.log($stateParams.storageID);
 
     $scope.load = function () {
-        var data = [];
-        $http.get('/i/baseInfo/getKeyValueData', {
+        $http.get('/i/coldStorageDoor/findByStorageId?storageID=' + $stateParams.storageID).success(
+        		function(data,status,config,header){
+        			if(data.length > 0){
+        				$scope.drawDoor(data[0].id)
+        			}
+        		})
+    }
+    
+    $scope.drawDoor = function(doorid){
+    	$http.get('/i/baseInfo/getKeyValueData', {
             params: {
-                "oid": $stateParams.storageID,
+                "oid": doorid,
                 type:2,
                 key:'Switch'
             }
         }).success(function (result) {
+        	var data = [];
             for (var i = 0; i < result.length; i++) {
                 var val = Date.parse(result[i].addtime);
                 var newDate = new Date(val).getTime();
@@ -145,7 +154,6 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
             });
 
         })
-
     }
     $scope.load();
 

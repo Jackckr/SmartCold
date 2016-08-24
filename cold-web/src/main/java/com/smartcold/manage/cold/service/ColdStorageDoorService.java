@@ -4,12 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorEntity;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 10:37)
  */
 public interface ColdStorageDoorService {
-	List<ColdStorageDoorEntity> findByStorageId(int storageID, int npoint);
+	List<ColdStorageDoorSetEntity> findByStorageId(int storageID);
 
 	List<ColdStorageDoorEntity> findOpenTimeByStorageId(int storageID, Date startTime, Date endTime);
 

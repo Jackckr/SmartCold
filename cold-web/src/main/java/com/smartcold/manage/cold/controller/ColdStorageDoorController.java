@@ -14,6 +14,7 @@ import com.smartcold.manage.cold.service.ColdStorageDoorService;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 09:57)
+ * 
  * @Deprecated 将新方法添加到 NewDoorController 中
  */
 @Deprecated
@@ -26,8 +27,8 @@ public class ColdStorageDoorController {
 
 	@RequestMapping(value = "/findByStorageId", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findByStorageId(@RequestParam int storageID, @RequestParam int npoint) {
-		return coldStorageDoorService.findByStorageId(storageID, npoint);
+	public Object findByStorageId(@RequestParam int storageID) {
+		return coldStorageDoorService.findByStorageId(storageID);
 	}
 
 	@RequestMapping(value = "/findOpenTimeByStorageIdTime", method = RequestMethod.GET)
