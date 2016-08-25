@@ -2,7 +2,7 @@ function gordcdile(sharid){window.location.href ="view/colddetail.html?id="+shar
 function goshadile(sharid){window.location.href ="view/storehousedetail.html?id="+sharid; };
 function gordclist(){window.location.href =encodeURI("view/coldlist.html?key="+$("#searchdiv").val()) ;};
 function gosharlist(){window.location.href ="view/coldlist.html?key="+$("#searchdiv").val(); };
-function goshkeylist(em){var key=	$(em).attr("value");util.setCookie("shdatakey",key,"d1");window.location.href ="view/searchList.html";};
+function goshkeylist(em){var key=	$(em).attr("value");util.setCookie("shdatakey",key,"d1");window.location.href ="view/searchList.html?key="+key;};
 $().ready(function() { 
 	var province=null,sccsize=0,shear=false;
 	function initdata(){

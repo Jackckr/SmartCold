@@ -115,7 +115,7 @@ var util = {
     },
     delCookie:function(a) {
         var c = new Date();
-        c.setTime(c.getTime() - 1);
+        c.setTime(c.getTime() - 1000);
         var b = util.getCookie(a);
         if (b != null) {
             document.cookie = a + "=" + b + ";expires=" + c.toGMTString();

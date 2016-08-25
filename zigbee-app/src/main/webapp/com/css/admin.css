@@ -351,17 +351,30 @@ section.show{
 }
 .inputs .tel:last-child{
 	border-bottom: 0;
+	position:relative;
 }
 .tel i{
 	font-size: 1rem;
 	color: #B4B4B4;
 	vertical-align: middle;
 }
+.inputs .tel:last-child i{
+	position:absolute;
+	left:0;
+	top:50%;
+	-webkit-transform:translateY(-50%);
+	transform:translateY(-50%);
+}
 .tel input{
 	height: 2rem;
 	font-size: 0.8rem;
 	line-height: 2rem;
 	color: #333;
+}
+.inputs .tel:last-child input[type='text']{
+	display:block;
+	width:100%;
+	text-indent:1.25rem;
 }
 .mybtn{
 	font-size: 0.8rem;

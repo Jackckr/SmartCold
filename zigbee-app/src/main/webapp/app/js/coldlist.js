@@ -6,11 +6,15 @@ $().ready(function() {
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
-	  $("#searchDara_div input").val(util.getCookie("shdatakey"));
+	  if(getUrlParam("key")){
+		  $("#searchDara_div input").val(util.getCookie("shdatakey"));util.delCookie("shdatakey");
+	  }
       gosharedile=function(sharid){
     	 window.location.href ="colddetail.html?id="+sharid; 
       };
       initevg=function(){
+        $(".transion").click(function(){$(".one").hide();$(".two").show();});
+  		$(".cancel").click(function(){$(".one").show();$(".two").hide();});
    		$(".droplist a").click(function(e){//条件过滤
    			$(this).children('i').addClass('current').html('&#xe62e;');
    			$(this).addClass('current').next('.listcontain').slideDown().parent().siblings().children('a').removeClass('current').children('i').removeClass('current').html('&#xe62d;').parent().siblings('.listcontain').hide();
@@ -52,7 +56,7 @@ $().ready(function() {
   		   $.get(ER.root+'/i/city/findProvinceList',function(data) {
 				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
 				 $("#ul_address_list").append(prove.join("")); 
-				 $("#ul_address_list li").click(function(event) {addfilter(this);});
+//				 $("#ul_address_list li").click(function(event) {addfilter(this);});
   		   });
   		   $.post(ER.root+"/i/rdc/getRDCFilterData",function(data) {
   			   if(data.success){	
@@ -62,7 +66,7 @@ $().ready(function() {
   					 $("#ul_mtty_list").append(mtlist.join("")); 
   					 $("#ul_stty_list").append(stlist.join("")); 
 //  					 $("#filter_section li").click(function(event) {addfilter(this);});
-  					$("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
+//  					$("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
   			   }
   	      });
   	 };
