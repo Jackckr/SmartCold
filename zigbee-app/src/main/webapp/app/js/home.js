@@ -2,6 +2,7 @@ function gordcdile(sharid){window.location.href ="view/colddetail.html?id="+shar
 function goshadile(sharid){window.location.href ="view/storehousedetail.html?id="+sharid; };
 function gordclist(){window.location.href =encodeURI("view/coldlist.html?key="+$("#searchdiv").val()) ;};
 function gosharlist(){window.location.href ="view/coldlist.html?key="+$("#searchdiv").val(); };
+function goshkeylist(em){var key=	$(em).attr("value");util.setCookie("shdatakey",key,"d1");window.location.href ="view/searchList.html";};
 $().ready(function() { 
 	var province=null,sccsize=0,shear=false;
 	function initdata(){
@@ -13,30 +14,26 @@ $().ready(function() {
 		 var histlist=JSON.parse(hist);
 		   var html=[]; 
 		   $.each(histlist, function(index, item) {
-               html.push('<li><span>'+item.key+'</span>&nbsp;(<span id="num">'+item.sccsize+'</span>)</li>');			   
+               html.push('<li onclick="goshkeylist(this)" value='+item.key+'><span>'+item.key+'</span>&nbsp;(<span id="num">'+item.sccsize+'</span>)</li>');			   
 		   });
 		   $("#ul_hoist").html(html.join(''));
 		}
-		
 	}
 	function addshhist(key){//添加历史纪录
+		key=key.trim();
 		var hist=util.getCookie("mianshdt");
 		var histjson=[];
-		  if(hist){
-			  histjson=JSON.parse(hist);
-				if(histjson.length>=10){histjson.pop();}
-			};
-			histjson.push({'key':key,'sccsize':sccsize});
-		    var	histdata=JSON.stringify(histjson);
-		    util.setCookie("mianshdt",histdata,"d7");//保存7天
+		 if(hist){var i=-1; histjson=JSON.parse(hist);if(hist.indexOf(":\""+key+"\",")){$.each(histjson, function(index, item) {if(item.key==key){i=index; return false; }});if(i!=-1){ histjson.splice(i,1); }}if(histjson.length>=10){histjson.pop();}};
+		histjson.unshift({'key':key,'sccsize':sccsize});
+	    var	histdata=JSON.stringify(histjson);
+	    util.setCookie("mianshdt",histdata,"d7");//保存7天
+	    util.setCookie("shdatakey",key,"d1");//保存7天
 	}
 	function initevg(){
 		 $("#searchdiv").keyup(function(event){seachList(this);});
 		 $("#del_hist").click(function (e) {$("#ul_hoist").empty();  util.delCookie("mianshdt"); });
 		 $("#city").click(function (e) {if(province){SelCity(this,e,province);$("#city").siblings('i').html('&#xe62e;');} });
-		 $("#searchdivi").click(function(){
-			 var key=$("#searchdiv").val();$("#searchdiv").val("");addshhist(key); window.location.href ="view/searchList.html?key="+key;
-		 });
+		 $("#searchdivi").click(function(){ var key=$("#searchdiv").val();$("#searchdiv").val("");addshhist(key); window.location.href ="view/searchList.html"; });
 		 $("#searchdiv").focus(function(){ _sysconfig.resize=false;if(!shear){shear=true;getSHHistory(); $("#maindiv,#hf_addres,#footer").hide();$("#seachdata,#hf_back").show();}});
 		 $("#hf_back").click(function(){ _sysconfig.resize=true;shear=false;$("#shearlist ul,#rdclist ul,#shartitle,#rdctitle").empty();$("#searchdiv").val("");$("#seachdata,#hf_back").hide();$("#maindiv,#hf_addres,#defseachdata,#footer").show();});
 	};

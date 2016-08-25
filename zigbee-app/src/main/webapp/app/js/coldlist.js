@@ -6,7 +6,7 @@ $().ready(function() {
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
-	  $("#searchDara_div input").val(getUrlParam("key"));
+	  $("#searchDara_div input").val(util.getCookie("shdatakey"));
       gosharedile=function(sharid){
     	 window.location.href ="colddetail.html?id="+sharid; 
       };
@@ -53,7 +53,6 @@ $().ready(function() {
 				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
 				 $("#ul_address_list").append(prove.join("")); 
 				 $("#ul_address_list li").click(function(event) {addfilter(this);});
-				 // $("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
   		   });
   		   $.post(ER.root+"/i/rdc/getRDCFilterData",function(data) {
   			   if(data.success){	
@@ -62,7 +61,8 @@ $().ready(function() {
   					 $.each(_stty, function(i, vo){stlist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });  
   					 $("#ul_mtty_list").append(mtlist.join("")); 
   					 $("#ul_stty_list").append(stlist.join("")); 
-  					 $("#filter_section li").click(function(event) {addfilter(this);});
+//  					 $("#filter_section li").click(function(event) {addfilter(this);});
+  					$("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
   			   }
   	      });
   	 };
