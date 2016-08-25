@@ -158,6 +158,23 @@ public class ShareRdcController  {
 	}
 	//-------------------------------------------------2->数据展示 1：货品 2：配送  3：仓库具有公共属性,可重用方法，但为了后期维护和程序健壮性----采用3个公共方法,方便分库分表---------------------------------------------------
 	/**
+	 * 获得修改发布信息详细信息
+	 * @param request
+	
+	 * @return
+	 */
+	@RequestMapping(value = "/getSEByIDForEdit")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getSEByIDForEdit(HttpServletRequest request,String id) {
+		if(StringUtil.isnotNull(id)){
+			RdcShareDTO data = this.rdcShareService.getSEByIDForEdit(id);
+			return ResponseData.newSuccess(data);
+		}
+	    return ResponseData.newFailure("无效请求！");
+	}
+	
+	
+	/**
 	 * 获得发布信息详细信息
 	 * @param request
 	

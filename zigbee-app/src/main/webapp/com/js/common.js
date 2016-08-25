@@ -2,8 +2,9 @@
 var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
-//var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+//var ER = {root:"http://192.168.1.199:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+//var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url

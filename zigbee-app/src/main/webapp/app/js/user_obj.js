@@ -1,7 +1,7 @@
 var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该联络单信息吗？" ,"确定要删除该评价吗？"] ,["colddetail.html?id=","releasedetail.html?id=","orderdetail.html?id="]];
 var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
-		[ "editkutable.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
+		[ "editshareinfo.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
 		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ] , //2:我的联络单
 		[ "orderdetail.html?id=", "/i/comment/deleteByCommentID","/i/comment/findCommentsByUserId" ]  // 3：我的点评
 		];										
@@ -9,6 +9,15 @@ var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
 var editinfo = function(id) {
 	location.href = urlset[type][0] + id;
 };
+var editshareinfo = function(id,dataType) {
+	if(dataType==1)
+	       location.href = "editgoodsinfo.html?id=" + id;
+	if(dataType==2)
+		   location.href = "edittranslateinfo.html?id=" + id;
+	if(dataType==3)
+		   location.href = "editstorageinfo.html?id=" + id;
+};
+
 var detailinfo = function(id) {
 	location.href = mode[2][type] + id;
 };
@@ -68,7 +77,7 @@ var gethtml = function(obj) {
 				"<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
 				obj.logo, "'/></div><p class='company'>", obj.title,
 				"</p><p class='position'>", obj.typeText,
-				"</p></div><p class='btnGroup'><button onclick='editinfo(", obj.id,
+				"</p></div><p class='btnGroup'><button onclick='editshareinfo(", obj.id,",",obj.dataType,
 				")'>修改</button><button onclick='delrdc(", obj.id,
 				",this);'>删除</button></p></li>" ].join("");
 	
