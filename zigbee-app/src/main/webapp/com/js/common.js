@@ -1,9 +1,8 @@
 "use strict";
 var oHtml = document.documentElement;
-var _sysconfig={countdown:60,isdebug:true};
+var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-//var ER = {root:"http://192.168.1.199:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
 function goback() { if(window.location.pathname.indexOf("login.html")&&window.location.hash.indexOf("user-")!=-1){window.location.href ="user.html";}else{ window.history.back();}}//返回上一级
@@ -82,7 +81,7 @@ function checkLogin(msg,callback) {
  * 事件
  */
 getFont();
-$(window).resize(function(event) { getFont();});
+$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //自动改变页面根目录字体大小
 $(function() {
     $(".next").click(function() {

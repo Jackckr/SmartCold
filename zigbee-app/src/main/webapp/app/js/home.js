@@ -5,10 +5,20 @@ function gosharlist(){window.location.href ="view/coldlist.html?key="+$("#search
 $().ready(function() { 
 	var province=null,shear=false;
 	function initdata(){
-		$.getJSON(ER.root+'/i/city/findProvinceList',function(data){
-			province=data;
-		});//
+		$.getJSON(ER.root+'/i/city/findProvinceList',function(data){province=data;});//footer
 	};
+	function initevg(){
+		 $("#searchdiv").keyup(function(event){seachList(this);});
+		 $("#city").click(function (e) {SelCity(this,e,province);$("#city").siblings('i').html('&#xe62e;'); });
+		 $("#searchdivi").click(function(){
+			 var key=$("#searchdiv").val();$("#searchdiv").val("");
+		    window.location.href ="view/searchList.html?key="+key;
+		 });
+		 $("#searchdiv").focus(function(){ _sysconfig.resize=false;if(!shear){shear=true;$("#maindiv,#hf_addres,#footer").hide();$("#seachdata,#hf_back").show();}});
+		 $("#hf_back").click(function(){ _sysconfig.resize=true;shear=false;$("#shearlist ul,#rdclist ul,#shartitle,#rdctitle").empty();$("#searchdiv").val("");$("#seachdata,#hf_back").hide();$("#maindiv,#hf_addres,#defseachdata,#footer").show();});
+	};
+	initdata();
+	initevg();
 	function seachList(em){
 		var key= $(em).val();
 		if(key!=""){
@@ -50,32 +60,6 @@ $().ready(function() {
 			$("#cuttseachdata").hide();
 		}
 	}
-	function initevg(){
-		 $("#searchdiv").keyup(function(event){
-			seachList(this)
-		 });
-		 $("#city").click(function (e) {
-			SelCity(this,e,province);
-			$("#city").siblings('i').html('&#xe62e;');
-		 });
-		 $("#hf_back").click(function(){
-				shear=false;
-				$("#shearlist ul,#rdclist ul,#shartitle,#rdctitle").empty();
-				$("#searchdiv").val("");
-				$("#seachdata,#hf_back").hide();
-				$("#maindiv,#hf_addres,#defseachdata").show();
-		  });
-		  $("#searchdiv").focus(function(){
-			if(!shear){
-				shear=true;
-				$("#maindiv,#hf_addres").hide();
-				$("#seachdata,#hf_back").show();
-		   }
-		});
-		
-	};
-	initdata();
-	initevg();
 });
 
 	
