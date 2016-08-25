@@ -8,9 +8,11 @@
     <title>链库网</title>
     <link rel="stylesheet" type="text/css" href="com/css/common.css">
     <link rel="stylesheet" type="text/css" href="com/css/index.css">
-    <link rel="stylesheet" type="text/css" href="com/css/coldlist.css" />
     <script type="text/javascript" src="com/js/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="com/js/TouchSlide.1.1.source.js"></script>
+    <style>
+   
+    </style>
 </head>
 <body >
 <!-- header -->
@@ -25,7 +27,7 @@
     	</div>
     	<div class="search">
     		<input id="searchdiv" type="text" placeholder="请输入搜索内容" />
-    		<i class="iconfont">&#xe62f;</i>
+    		<i id="searchdivi" class="iconfont">&#xe62f;</i>
     	</div>
     	<div class="barCode">
     		<a href="view/review.html">
@@ -35,7 +37,7 @@
     </div>
 <!-- header end-->
 <!-- session -->
-    <div id="maindiv"  class="section "  >
+    <div id="maindiv"  class="section ">
         <!-- banner主要代码 Start ================================ -->
 			<div id="focus" class="focus">
 				<div class="hd">
@@ -47,7 +49,7 @@
 						<li><img _src="com/img/banner1.jpg" src="com/img/blank.png"/></li>
 						<li><img _src="com/img/banner2.jpg" src="com/img/blank.png"/></li>
 						<li><img _src="com/img/banner3.jpg" src="com/img/blank.png"/></li>
-						<li><img _src="com/img/banner4.jpg" src="com/img/blank.png"/></li>
+						<li><img _src="com/img/banner4.jpg" src="com/img/blank.png"/></li>http://127.0.0.1:8020/zigbee-app/src/main/webapp/com/img/banner4.jpg
 					</ul>
 				</div>
 			</div>
@@ -108,13 +110,13 @@
 	 
 </div>
 <div id="seachdata"  class="section black" >
-  	  <section id="defseachdata" class="main black">
+  	  <section id="defseachdata" class="main ">
 			<ul class="listDad clearfix">
 				<li class="fl">热门搜索</li>
 			</ul>
 			 <ul class="borderlist clearfix">
-			 	<li><span>冷链金融贷</span>&nbsp;(<span id="num">343</span>)</li>
-			 	<li><span>冷链保险</span>&nbsp;(<span id="num">56</span>)</li>
+			 	<li><span>冷链金融贷</span>&nbsp;(<span id="num1">343</span>)</li>
+			 	<li><span>冷链保险</span>&nbsp;(<span id="num2">56</span>)</li>
 			 </ul>
 
 			<ul class="listDad clearfix">
@@ -125,25 +127,16 @@
 			 </ul>
 			 <p class="delete">清除历史记录</p>
 	</section>
-    <section id="cuttseachdata" class="main ">
-            <div id="rdclist">
-                <span id="title" onclick="">冷库(22)信息 共 100条</span>  
-				<ul class="  listDad clearfix">
-				 <li>222</li>
-				 <li>222</li>
-				 <li>222</li>
-				 <li>222</li>
-	           </ul>
+    <section id="cuttseachdata" class="main black">
+            <div id="rdclist" class="black">
+                <span id="rdctitle" onclick="gordclist();"></span>  
+				<ul class="listDad clearfix"></ul>
            </div>
-            <div id="shearlist">
-                <span id="title" onclick="">共享(22)信息共 100条</span>  
-				<ul class="  listDad clearfix">
-				 <li>222</li>
-				 <li>222</li>
-				 <li>222</li>
-				 <li>222</li>
-	           </ul>
+            <div id="shearlist" class="black">
+                <span id="shartitle" onclick="gosharlist()">共享(22)信息共 100条</span>  
+				<ul class="listDad clearfix"></ul>
            </div>
+           <div id="nochdata" class="black">没有找到相关的信息~~~</div>
 	</section>
 
 </div>

@@ -1,5 +1,7 @@
 package com.smartcold.bgzigbee.manage.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.smartcold.bgzigbee.manage.dao.*;
 import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
@@ -83,13 +85,13 @@ public class SpiderConfigController {
     }
 
     @RequestMapping("/find/evaporativeWaterSet")
-    public Object findEvaporativeWaterSet(int evaporativeid){
-        return evaporativeWaterSetMapping.findByEvaporativeId(evaporativeid);
+    public Object findEvaporativeWaterSet(int groupid){
+        return evaporativeWaterSetMapping.findByGroupid(groupid);
     }
 
     @RequestMapping("/find/evaporativeBlowerSet")
-    public Object findEvaporativeBloeSet(int evaporativeid){
-        return evaporativeBlowerSetMapping.findByEvaporativeId(evaporativeid);
+    public Object findEvaporativeBloeSet(int groupid){
+        return evaporativeBlowerSetMapping.findByGroupid(groupid);
     }
 
     @RequestMapping("/findByRdcid")
@@ -180,5 +182,17 @@ public class SpiderConfigController {
         Object res = remoteService.insertDeviceObjectMapping(deviceObjectMappingEntity);
         return res;
 
+    }
+    @RequestMapping("/getSetTables")
+    public Object getStorageType(){
+        JsonArray jsonArray = new JsonArray();
+        for (SetTables sy: SetTables.values()){
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("type", sy.getType());
+            jsonObject.addProperty("desc", sy.getDesc());
+            jsonObject.addProperty("table", sy.getTable());
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
     }
 }

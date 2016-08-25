@@ -1,0 +1,29 @@
+<!--params name, objectSets, objectKeys-->
+<table class="table table-striped table-bordered ng-pristine ng-untouched">
+    <thead>
+    <tr>
+        <th ng-repeat="item in columsTh">{{item}}</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="obj in arrayObjects">
+            <td ng-repeat="colum in colums">
+                <span ng-hide="obj.editable">{{obj[colum]}}</span>
+                <input style="width: 100%;height: 100%;" type="text" ng-model="obj[colum]" ng-show="obj.editable">
+            </td>
+            <td>
+                <a class="btn btn-success btn-xs" ng-click="obj.editable = true" ng-hide="obj.editable"><span
+                        class="glyphicon glyphicon-pencil"></span></a>
+                <a class="btn btn-danger btn-xs" ng-click="delete(obj)" ng-hide="obj.editable" >
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+                <a class="btn btn-success btn-xs" ng-click="update(obj)" ng-show="obj.editable"><span
+                        class="glyphicon glyphicon-ok"></span></a>
+                <a class="btn btn-danger btn-xs" ng-click="obj.editable=false" ng-show="obj.editable" >
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

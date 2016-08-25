@@ -1,6 +1,6 @@
 coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload, coldWebUrl) {
 
-	$http.get(coldWebUrl+"storageKeys/getStorageType").success(function(data,status,config,headers){
+	$http.get("/i/spiderConfig/getSetTables").success(function(data,status,config,headers){
 		$scope.storageTypes = data;
 		$scope.devices = [];
 		angular.forEach(data, function (item) {
@@ -262,6 +262,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     }
 	
 	$scope.changeStorage = function(){
+		if (!$scope.vm.choseStorage){
+			return;
+		}
 		$http.get('/i/coldStorageDoor/getcoldStorageDoorByStorageId?coldStorageId=' + $scope.vm.choseStorage.id
 				).success(function(data,status,config,headers){
 					angular.forEach(data,function(item,index){
@@ -307,6 +310,20 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                 $scope.vm.choseCompressor = $scope.compressorSets?$scope.compressorSets[0]:{};
                 $scope.tagTypeChanged();
 			});
+		$http.get("/i/spiderConfig/find/evaporativeWaterSet?groupid="+$scope.vm.choseCompressGroup.id).then(function (resp) {
+			$scope.evaporativeWaterSets = resp.data;
+			angular.forEach($scope.evaporativeWaterSets, function (item, index) {
+				$scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
+			})
+			$scope.tagTypeChanged();
+		})
+		$http.get("/i/spiderConfig/find/evaporativeBlowerSet?groupid="+$scope.vm.choseCompressGroup.id).then(function (resp) {
+			$scope.evaporativeBlowerSets = resp.data;
+			angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
+				$scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
+			})
+			$scope.tagTypeChanged();
+		})
 	}
 
 	$scope.mapping2Object = function (sets) {
@@ -349,28 +366,15 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         })
     }
     $scope.changeEvaporative = function () {
-        $http.get("/i/spiderConfig/find/evaporativeWaterSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
-            $scope.evaporativeWaterSets = resp.data;
-            angular.forEach($scope.evaporativeWaterSets, function (item, index) {
-                $scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
-            })
-            $scope.tagTypeChanged();
-        })
-        $http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
-            $scope.evaporativeBlowerSets = resp.data;
-            angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
-                $scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
-            })
-            $scope.tagTypeChanged();
-        })
+
     }
     $scope.evaporativeWaterSet = {};
     $scope.addEvaporativeWaterSet = function () {
         var object = $scope.evaporativeWaterSet;
-        object.evaporativeid = $scope.vm.choseEvaporative.id;
+        object.groupid= $scope.vm.choseCompressGroup.id;
         $http.post("/i/spiderConfig/add/evaporativeWaterSet", object).then(function (resp) {
             alert(resp.data.message);
-            $scope.changeEvaporative();
+            $scope.changeCompressGroup();
             $scope.evaporativeWaterSet = {};
         })
     }
@@ -378,10 +382,10 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.evaporativeBlowerSet = {}
     $scope.addEvaporativeBlowerSet = function () {
         var obj = $scope.evaporativeBlowerSet;
-        obj.evaporativeid = $scope.vm.choseEvaporative.id;
+        obj.groupid = $scope.vm.choseCompressGroup.id;
         $http.post("/i/spiderConfig/add/evaporativeBlowerSet", obj).then(function (resp) {
             alert(resp.data.message);
-            $scope.changeEvaporative();
+            $scope.changeCompressGroup();
             $scope.evaporativeBlowerSet = {};
         })
     }
@@ -433,7 +437,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		var flag = confirm("确认删除？");
 		if (flag) {
 			$http.delete("/i/spiderConfig/delete/id", {
-				params: {"table": table + "set", "id": item.id}
+				params: {"table": table, "id": item.id}
 			}).then(function (resp) {
 				alert(resp.data.message);
 				var index =  arrayData.indexOf(item);
@@ -457,7 +461,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 
 
 	$scope.deviceChanges = function (choseDevice) {
-		console.log(choseDevice.name);
         switch(choseDevice.type) {
             case 1:
                 return $scope.storages;
@@ -562,17 +565,16 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         angular.forEach($scope.compressorSets, function (item) {
             $scope.updateMapping("compressorset", item);
         })
+		// angular.forEach($scope.evaporativeSets, function (item) {
+		// 	$scope.updateMapping("evaporativeset", item);
+		// })
+		angular.forEach($scope.evaporativeBlowerSets, function (item) {
+			$scope.updateMapping("evaporativeblowerset", item);
+		})
+		angular.forEach($scope.evaporativeWaterSets, function (item) {
+			$scope.updateMapping("evaporativewaterset", item);
+		})
 	}
-
-	$scope.realSaveEvaporative = function () {
-        angular.forEach($scope.evaporativeSets, function (item) {
-            $scope.updateMapping("evaporativeset", item);
-        })
-        angular.forEach($scope.evaporativeBlowerSets, function (item) {
-            $scope.updateMapping("evaporativeblowerset", item);
-        })
-        alert("保存成功");
-    }
 
 
 	$scope.saveAccount = function(){
@@ -799,3 +801,59 @@ coldWeb.directive("mappingTable", function ($http) {
         }
     }
 });
+/**
+ * @Params
+ *  array-objects: 数组对象。每个对象必须有一个id属性，不然无法更新和删除
+ *  update-url,delete-url:更新和删除的url地址
+ *  colums: 需要在table中显示的列,csv格式
+ *  colums-th: table中的th，csv格式，与colums对应
+ *
+ */
+coldWeb.directive("ajaxTable", function ($http) {
+	var defaults = {
+		deleteUrl : '/i/spiderConfig/delete/id'
+	}
+    return {
+        restrict: 'E',
+        templateUrl: 'app/template/ajax-table.html',
+        scope: {
+            arrayObjects: '='
+        },
+        link: function (scope, element, attrs) {
+            scope.columsTh = attrs.columsTh.split(',');
+			scope.colums = attrs.colums.split(',');
+
+			var updateUrl = attrs.updateUrl;
+			var deleteUrl = attrs.deleteUrl?attrs.deleteUrl:defaults.deleteUrl;
+			var table = attrs.table;
+
+            scope.update = function (obj) {
+            	if (obj.mapping){
+            		delete obj.mapping;
+				}
+				if (updateUrl){
+					$http.post(updateUrl, obj).then(function (resp) {
+						alert(resp.data.message);
+					})
+				}
+                obj.editable = false;
+            }
+
+            scope.delete = function (obj) {
+				if(confirm("确定删除?")){
+					var params = {id:obj.id};
+					if (table){
+						params.table = table;
+					}
+					$http.delete(deleteUrl,{
+						params:params
+					}).success(function(data,status,headers,config){
+						alert(data.message);
+						var i = scope.arrayObjects.indexOf(obj);
+						scope.arrayObjects.splice(i, 1);
+					});
+				}
+            }
+        }
+    }
+})

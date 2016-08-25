@@ -85,31 +85,31 @@
                         <form class="navbar-form">
                             <div class="col-lg-4 form-group" style="margin-top:20px;">
                                 <label>操作：</label>
-                                <select ng-options="device.name for device in devices" class="form-control" ng-model="choseDevice" ng-change="deviceChange(choseDevice)"></select>
+                                <select ng-options="device.name for device in devices" class="form-control" ng-model="choseDevice" ></select>
                             </div>
                         </form>
                         <form class="navbar-form">
                             <div class="col-lg-4 form-group" style="margin-top:20px;"
-                                 ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加冷风机' || choseDevice.table=='windscreen' ">
+                                 ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加冷风机' || choseDevice.table=='windscreenset' ">
                                 <label>冷库：</label>
                                 <select ng-options="storage.name for storage in storages" class="form-control" ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressor'">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressorset' || choseDevice.table == 'evaporativewaterset' || choseDevice.table =='evaporativeblowerset' ">
                                 <label>压缩机组：</label>
                                 <select ng-options="item.name for item in compressGroups" class="form-control" ng-model="vm.choseCompressGroup" ng-change="changeCompressGroup()"></select>
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'evaporativewater' || choseDevice.table =='evaporativeblower' ">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="false">
                                 <label>蒸发冷系统：</label>
                                 <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
                             </div>
                         </form>
                         <!--  -->
                         <form id="addStorage" ng-show="choseDevice.name == '添加冷库'" class="col-lg-12 form-horizontal">
-                            <div style="margin-top:30px;" class="col-lg-6">
+                            <div style="margin-top:30px;" class="col-lg-5">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>冷库名:</label>
                                     <div class="col-lg-8">
@@ -144,22 +144,13 @@
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addStorage()" ng-disabled="!storageEntity.name">添加</a>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-7">
                                 <label>已有冷库：</label>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                        <tr>
-                                            <th>冷库名</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="storage in storages">
-                                            <td>{{storage.name}}</td>
-                                            <td><a class="btn btn-danger btn-xs" ng-click="deleteStorage(storage.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <ajax-table array-objects="storages"
+                                            delete-url="/i/coldStorage/deleteStorage"
+                                            update-url="/i/coldStorage/updateStorage"
+                                            colums-th="冷库名,理论能耗(KJ/h),冷库经度(°),冷库维度(°),冷库位置"
+                                            colums="name,energyCost,longitude,latitude,location"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -206,7 +197,7 @@
                             </div>
                         </form>
                         <!--  -->
-                        <form id="addBlower" ng-show="choseDevice.name == '添加冷风机'" class="col-lg-12 form-horizontal">
+                        <form id="addBlower" ng-show="choseDevice.table == 'blowerset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>风机名字:</label>
@@ -292,7 +283,7 @@
                             </div>
                         </form>
 
-                        <form id="addCompressor" ng-show="choseDevice.table == 'compressor'" class="col-lg-12 form-horizontal">
+                        <form id="addCompressor" ng-show="choseDevice.table == 'compressorset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -335,7 +326,7 @@
                             </div>
                         </form>
                         <!--风幕机-->
-                        <form id="addWindScreen" ng-show="choseDevice.table == 'windscreen'" class="col-lg-12 form-horizontal">
+                        <form id="addWindScreen" ng-show="choseDevice.table == 'windscreenset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -366,7 +357,7 @@
                             </div>
                         </form>
                         <!--添加蒸发冷系统-->
-                        <form id="addEvaporative" ng-show="choseDevice.table == 'evaporative'" class="col-lg-12 form-horizontal">
+                        <form id="addEvaporative" ng-show="choseDevice.table == 'evaporativeset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -396,7 +387,7 @@
                             </div>
                         </form>
                         <!--添加蒸发冷水泵-->
-                        <form id="addEvaporativeWater" ng-show="choseDevice.table == 'evaporativewater'" class="col-lg-12 form-horizontal">
+                        <form id="addEvaporativeWater" ng-show="choseDevice.table == 'evaporativewaterset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -426,7 +417,7 @@
                             </div>
                         </form>
                         <!--添加冷风机-->
-                        <form id="addEvaporativedBlower" ng-show="choseDevice.table == 'evaporativeblower'" class="col-lg-12 form-horizontal">
+                        <form id="addEvaporativedBlower" ng-show="choseDevice.table == 'evaporativeblowerset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -456,7 +447,7 @@
                             </div>
                         </form>
                         <!--添加电表-->
-                        <form id="addpower" ng-show="choseDevice.table == 'power'" class="col-lg-12 form-horizontal">
+                        <form id="addpower" ng-show="choseDevice.table == 'powerset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -486,7 +477,7 @@
                             </div>
                         </form>
                         <!--月台门-->
-                        <form id="addPlatformdoor" ng-show="choseDevice.table == 'platformdoor'" class="col-lg-12 form-horizontal">
+                        <form id="addPlatformdoor" ng-show="choseDevice.table == 'platformdoorset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -528,7 +519,7 @@
                             </div>
                         </form>
                         <!--液压平台-->
-                        <form id="addPressurePlatform" ng-show="choseDevice.table == 'pressureplatform'" class="col-lg-12 form-horizontal">
+                        <form id="addPressurePlatform" ng-show="choseDevice.table == 'pressureplatformset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -558,7 +549,7 @@
                             </div>
                         </form>
                         <!--充电桩-->
-                        <form id="addChargingpile" ng-show="choseDevice.table == 'chargingpile'" class="col-lg-12 form-horizontal">
+                        <form id="addChargingpile" ng-show="choseDevice.table == 'chargingpileset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -588,7 +579,7 @@
                             </div>
                         </form>
                         <!--叉车-->
-                        <form id="addForkliftSet" ng-show="choseDevice.table == 'forklift'" class="col-lg-12 form-horizontal">
+                        <form id="addForkliftSet" ng-show="choseDevice.table == 'forkliftset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -624,7 +615,7 @@
                             </div>
                         </form>
                         <!--灯组-->
-                        <form id="addColdStorageLight" ng-show="choseDevice.table == 'coldstoragelight'" class="col-lg-12 form-horizontal">
+                        <form id="addColdStorageLight" ng-show="choseDevice.table == 'coldstoragelightset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -660,7 +651,7 @@
                             </div>
                         </form>
                         <!--防冻循环-->
-                        <form id="addCirculatingPump" ng-show="choseDevice.table == 'circulatingpump'" class="col-lg-12 form-horizontal">
+                        <form id="addCirculatingPump" ng-show="choseDevice.table == 'circulatingpumpset'" class="col-lg-12 form-horizontal">
                             <div style="margin-top:30px;" class="col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label col-lg-4"><em style="color:red">*</em>名字:</label>
@@ -985,12 +976,18 @@
                             </table>
                         </div>
                     </div>
+                    <div class="col-lg-6" >
+                        <mapping-table data-name="冷凝系统风机" object-keys="evaporativeblowerKeys" object-sets="evaporativeBlowerSets"></mapping-table>
+                    </div>
+                    <div class="col-lg-6" >
+                        <mapping-table data-name="冷凝系统水泵" object-keys="evaporativewaterKeys" object-sets="evaporativeWaterSets"></mapping-table>
+                    </div>
                     <div class="col-lg-7">
                         <button class="btn btn-primary pull-right" ng-click="realSaveCompressGroup()">保存</button>
                     </div>
                 </uib-tab>
                 <!--冷凝系统配置-->
-                <uib-tab>
+<!--                <uib-tab>
                     <uib-tab-heading>
                         <i class="fa fa-table"></i>冷凝系统配置
                     </uib-tab-heading>
@@ -1039,17 +1036,12 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-lg-6" >
-                            <mapping-table data-name="蒸发冷风机" object-keys="evaporativeblowerKeys" object-sets="evaporativeBlowerSets"></mapping-table>
-                        </div>
-                        <div class="col-lg-6" >
-                            <mapping-table data-name="蒸发冷水泵" object-keys="evaporativewaterKeys" object-sets="evaporativeWaterSets"></mapping-table>
-                        </div>
+
                         <div class="col-lg-12">
                             <button class="btn btn-primary pull-right" ng-click="realSaveEvaporative()">保存</button>
                         </div>
                     </div>
-                </uib-tab>
+                </uib-tab>-->
                 <uib-tab>
                     <uib-tab-heading>
                         <i class="fa fa-table"></i>电表配置
@@ -1162,15 +1154,15 @@
                                         ng-options="item.desc for item in storageTypes track by item.type"></select>
                             </div>
                             <div class="form-group"
-                                     ng-show="tag.type.name == '添加冷库门' || tag.type.name == '添加冷风机' || tag.type.table=='windscreen' ">
+                                     ng-show="tag.type.name == '添加冷库门' || tag.type.table == 'blowerset' || tag.type.table=='windscreenset' ">
                                 <label>冷库：</label>
                                 <select ng-options="storage.name for storage in storages" class="form-control" ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
                             </div>
-                            <div class="form-group" ng-show="tag.type.table == 'compressor'">
+                            <div class="form-group" ng-show="tag.type.table == 'compressorset' || tag.type.table == 'evaporativewaterset' || tag.type.table =='evaporativeblowerset' ">
                                 <label>压缩机组：</label>
                                 <select ng-options="item.name for item in compressGroups" class="form-control" ng-model="vm.choseCompressGroup" ng-change="changeCompressGroup()"></select>
                             </div>
-                            <div class="form-group" ng-show="tag.type.table == 'evaporativewater' || tag.type.table =='evaporativeblower' ">
+                            <div class="form-group" ng-show="">
                                 <label>蒸发冷系统：</label>
                                 <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
                             </div>
