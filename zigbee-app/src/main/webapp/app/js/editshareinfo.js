@@ -5,7 +5,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	var url=window.location.href;
 	var arrurl=url.split("?id=");
 	if(arrurl[1]!=''&&arrurl[1]!=undefined){
-	 $http.get(ER.root+'/i/ShareRdcController/getSEByID', {
+	 $http.get(ER.root+'/i/ShareRdcController/getSEByIDForEdit', {
          params: {
              "id": arrurl[1]
          }
@@ -31,7 +31,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	 $scope.temperType = $scope.rdcsharedto.codeLave2;
     	 $scope.storageType = $scope.rdcsharedto.codeLave1;
     	 $scope.unit = $scope.rdcsharedto.unit;
-    		 
+    	 $scope.totalfiles = $scope.rdcsharedto.files;
     	 if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
     		 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
     	         params: {
@@ -44,6 +44,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
      });
 	}
 	$scope.totalfiles = [];
+	
 	  // 获取省列表
 	    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
 	        $scope.provinces = data;
