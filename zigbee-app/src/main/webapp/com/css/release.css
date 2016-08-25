@@ -554,7 +554,7 @@ em{
 	margin-bottom:.5rem;
 }
 /* 资讯css -------------------------------------- */
-article{
+.newsImgList{
 	margin-top: 2.5rem;
 	margin-bottom: 3rem;
 	background: #fff;
@@ -596,7 +596,7 @@ article{
 
 .tabBox .bd li a {
 	color: #555;
-	font-size: .75rem;
+	font-size: .7rem;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 /* 去掉链接触摸高亮 */		
@@ -611,37 +611,37 @@ article{
 	text-decoration: underline;
 }
 .newsImg li{
-			border-bottom: 2px solid #F6F5FA;
-			padding: 0.4rem;
-		}
-		.newsImg li a{
-			display: block;
-			position: relative;
-		}
-		.imgFl{
-			width: 4rem;
-			height: 3rem;
-			margin-right: .3rem;
-			background-size: cover;
-		}
-		.newsTitle{
-			font-size: 0.7rem;
-			line-height: 1.525;
-		} 
-		.newsTxt span{
-			font-size: .6rem;
-			color: #999;
-			margin-right: .2rem;
-		}
-		.newsDate{
-			position: absolute;
-			bottom: 0;
-			left: 4.3rem;
-		}
-		.newsTxt .newsBd{
-			color: #BB2626;
-			border: 1px solid #BB2626;
-			border-radius: 3px;
-			display: inline-block;
-			padding: 0 .3rem;
-		}
+	border-bottom: 2px solid #F6F5FA;
+	padding: 0.4rem;
+}
+.newsImg li a{
+	display: block;
+	position: relative;
+}
+.imgFl{
+	width: 4rem;
+	height: 3rem;
+	margin-right: .3rem;
+	background-size: cover;
+}
+.newsTitle{
+	font-size: 0.7rem;
+	line-height: 1.525;
+} 
+.newsTxt span{
+	font-size: .6rem;
+	color: #999;
+	margin-right: .2rem;
+}
+.newsDate{
+	position: absolute;
+	bottom: 0;
+	left: 4.3rem;
+}
+.newsTxt .newsBd{
+	color: #BB2626;
+	border: 1px solid #BB2626;
+	border-radius: 3px;
+	display: inline-block;
+	padding: 0 .3rem;
+}
