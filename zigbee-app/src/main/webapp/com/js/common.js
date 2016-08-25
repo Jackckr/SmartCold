@@ -1,6 +1,6 @@
 "use strict";
 var oHtml = document.documentElement;
-var _sysconfig={countdown:60,isdebug:true};
+var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 var ER = {root:"http://192.168.1.199:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
@@ -82,7 +82,7 @@ function checkLogin(msg,callback) {
  * 事件
  */
 getFont();
-$(window).resize(function(event) { getFont();});
+$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //自动改变页面根目录字体大小
 $(function() {
     $(".next").click(function() {

@@ -36,7 +36,7 @@
 					</p>
 				</li>
 			</ul>
-			 <div id="she_imglist" class="imglist baguetteBoxOne gallery" ng-if="vo.files">
+			 <div id="she_imglist" class="baguetteBoxOne gallery" ng-if="vo.files">
                 <a ng-repeat="fl in vo.files" href="{{fl}}"><img ng-src="{{fl}}"/></a>
             </div>
 			<!-- <ul id="she_imglist" class="imglist">
@@ -131,7 +131,7 @@
 <!-- 				</div> -->
 <!-- 				<div class="tel"> -->
 <!-- 					<i class="iconfont ">&#xe639;</i> -->
-<!-- 					<input id="txt_vcode" type="tel" placeholder="请输入手机验证码"  ng-model="verrcode"  ng-change="veteleCode()"/> -->
+<!-- 					<input id="txt_vcode" type="text" placeholder="请输入手机验证码"  ng-model="verrcode"  ng-change="veteleCode()"/> -->
 <!-- 				</div> -->
 <!-- 			</div> -->
 			<button id="app_order" class="mybtn" ng-click="getOrder();"  >确认抢单</button>	<!-- disabled="disabled" -->
