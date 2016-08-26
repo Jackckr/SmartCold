@@ -20,18 +20,37 @@ $(function() {
 		}
 	});
 	/*rdc下拉列表*/
-	$(".zoom").click(function () {
+	$(".transion").click(function(){
+	 	$(".one").hide();
+	 	$(".two").show();	 	
+	 });
+  	 $(".cancel").click(function(){
+  	 	$(".one").show();
+  	 	$(".two").hide();
+  	 	$('.searchTop').hide();
+  	 });
+  	 $("#searchDara_div input").keyup(function(){
+  	 	$('.searchTop').show()
+  	 })
+  	 $(".rdcList li").click(function(){
+	 	$('.searchTop').hide();
+	 	$(".one").children('.txt').text($(this).children('span').html())
+	 	$(".one").show();
+	 	$(".two").hide();
+	 });
+	/*rdc下拉列表*/ 
+	/*$(".zoom").click(function () {
         $('.rdcDropList').slideDown();
         $(".backDrop").show();
     })
 	$('.rdcDropList li').click(function () {
         $('.rdcDropList').hide();
         $(".backDrop").hide();
-    })
+    })*/
 	$(".backDrop").click(function(){
 			$('.otherList').addClass('black');
 			$(this).hide();
-			$('.rdcDropList').hide();
+			//$('.rdcDropList').hide();
 		})
 	$('.otherList').click(function(e){
 		var e = e || window.event;
@@ -53,4 +72,3 @@ $(function() {
     });
 	
 });
-
