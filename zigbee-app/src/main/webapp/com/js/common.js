@@ -2,10 +2,12 @@
 var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
-var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+//var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://192.168.1.199:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
-//var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
+var userjson=window.sessionStorage.getItem("user");
+if(userjson){window.user=JSON.parse(userjson);}
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
@@ -57,7 +59,8 @@ function checkLogin(msg,callback) {
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
-	                window.user = data;
+	            	window.user = data;
+	            	 window.sessionStorage.setItem("user",JSON.stringify(data));
 	                if(callback){callback(); }
 	            } else {
 	                window.user = null;
@@ -65,11 +68,6 @@ function checkLogin(msg,callback) {
 	                return;
 	            }
 	        }
-//	      ,complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
-//				if(status=='timeout'){//超时,status还有success,error等值的情况
-//					alert("超时");
-//				}
-//			}
 	    });
 }
 /**
