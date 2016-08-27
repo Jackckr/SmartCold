@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -63,70 +62,4 @@
 	</div>
 	<button id="app_but" class="mybtn edit3 show2 gray" disabled="disabled" ng-click="savedata();" >提交</button>	
 </body>
-=======
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
-    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <meta content="telephone=no" name="format-detection" />
-	<title>修改手机</title>
-    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-    <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
-    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/js/angular.min.js"></script>
-    <script type="text/javascript" src="../app/js/editphone.js" ></script>
-    <script type="text/javascript">checkLogin();</script>
-</head>
-<body ng-app="app"  ng-controller="usercl" ng-cloak>
-    <header>
-    	<div class="area fl">
-    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
-    	</div>
-    	<div class="txt">
-    		修改手机
-    	</div>
-    </header>
-    <section class="clearfix show">
-    	<div class="editarea">
-    		<span class="fl">手机号</span>
-    		<p class="input">{{userinfo.telephone}}</p>
-    	</div>
-    </section>
-    <button class="mybtn show edit1">修改手机号</button>
-    
-    <div class="inputs show1">
-		<div class="tel">
-			<i class="iconfont">&#xe608;</i>
-			<input type="tel" value="{{userinfo.telephone}}" readonly/>
-			<button id="but_vercode" class="idcode fr" ng-click="getVerCode();">获取验证码</button>
-		</div>
-		<div class="tel">
-			<i class="iconfont ">&#xe639;</i>
-			<input type="text" id="code1" placeholder="请输入手机验证码" ng-model="verrcode"  ng-change="veteleCode()"/>
-		</div>
-	</div>
-	<button id="ver_code_but" class="mybtn edit2 show1 gray" disabled="disabled" >验证</button>	
-	
-	
-    <div class="inputs show2">
-		<div class="tel">
-			<form id="datafrom" action="">		
-			<input type="hidden" name="id" value="{{userinfo.id}}">
-			<i class="iconfont">&#xe608;</i>
-				<input type="tel" id="telNum" name="telephone" placeholder="请输入新手机号" ng-model="telephone" ng-change="vertelephone();"/>
-			<button id="but_vercode2" class="idcode fr gray " draggable="false" ng-click="getVerCode2();" disabled="disabled" style="background-color: #cccccc;">获取验证码</button>
-			</form>
-		</div>
-		<div class="tel">
-			<i class="iconfont ">&#xe639;</i>
-			<input type="text" id="code2" placeholder="请输入手机验证码" ng-model="verrcode1"  ng-change="veteleCode2()" />
-		</div>
-	</div>
-	<button id="app_but" class="mybtn edit3 show2 gray" disabled="disabled" ng-click="savedata();" >提交</button>	
-</body>
->>>>>>> ab26e97552fc8956abf83d838b4e1b873f369462
 </html>
