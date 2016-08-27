@@ -11,7 +11,15 @@
 	
 	<select id="findByRdcId" parameterType="map" resultType="ColdStorageLightSetEntity">
 		SELECT *
-		FROM `coldstoragelightset` WHERE `rdcId` = #{rdcId}
+		FROM `coldstoragelightset` WHERE `rdcid` = #{rdcId}
 	</select>
+	
+	<update id="updateSet" parameterType="ColdStorageLightSetEntity">
+    update `coldstoragelightset`
+    set `positionX` = #{positionX,jdbcType=INTEGER},
+        `positionY` = #{positionY,jdbcType=INTEGER},
+        `rotate` = #{rotate,jdbcType=INTEGER}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
 
 </mapper>
