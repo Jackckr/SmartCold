@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
@@ -30,11 +30,8 @@
             <div class="txt">
                 监控
             </div>
-            <ul class="rdcDropList">
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
+            <ul class="rdcDropList" ng-repeat="storage in storages">
+                <li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
             </ul>
         </header>
     <!-- header end-->
@@ -81,19 +78,7 @@
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-            	<p class="actually">低温库</p>
-            	<p class="temperaturenum">{{curtemper}}℃</p>
-            	 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    			<div id="main"></div>
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
+        <div class="swiper-wrapper" id="chartView">
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
@@ -128,64 +113,5 @@
             </a>
         </li>
     </ul>
-<!--    <script>
-	      // 基于准备好的dom，初始化echarts图表
-        var myChart = echarts.init(document.getElementById('main')); 
-        
-        option = {
-		    title : {
-		        text: '冷库历史温度',
-		        y:15,
-		        textStyle:{
-			    	fontSize: 16,
-				    fontWeight: 'normal',
-				    color: '#333',
-				    fontFamily :"'微软雅黑', Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif"
-			    }
-		    },
-		     tooltip : {
-		        textStyle:{
-			    	fontSize:'12'
-			    }
-		    },
-		    xAxis : [
-		        {
-		            type : 'category',
-		            boundaryGap : false,
-		            data : ['1：00','2：00','3：00','4：00','5：00','6：00','7：00']
-		        }
-		    ],
-		    yAxis : [
-		        {
-		            type : 'value',
-		            axisLabel : {
-		                formatter: '{value} °C'
-		            }
-		        }
-		    ],
-		     grid :{
-			  		x:50
-			  },
-		    series : [
-		        {
-		            type:'line',
-		            data:[-11, -15, -10, -13, -9, -12, -7],
-		            /*markPoint : {
-		                data : [
-		                    {type : 'max', name: '最大值'},
-		                    {type : 'min', name: '最小值'}
-		                ]
-		            },*/
-		            markLine : {
-		                data : [
-		                    {type : 'average', name: '启动温度'}
-		                ]
-		            }
-		        }
-		    ]
-		};                   
-        // 为echarts对象加载数据 
-        myChart.setOption(option); 
-    </script>-->
 </body>
 </html>
