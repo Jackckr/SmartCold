@@ -1,18 +1,17 @@
 "use strict";
 var oHtml = document.documentElement;
-var _sysconfig={countdown:60,isdebug:true};
+var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 var ER = {root:"http://192.168.1.199:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 //var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
-function goback() { if(window.location.pathname.indexOf("login.html")&&window.location.hash.indexOf("user-")!=-1){window.location.href ="user.html";}else{ window.history.back();}}//返回上一级
-
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
-function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return unescape(r[2]);}return null;};
+function goback() { if(window.location.pathname.indexOf("login.html")&&window.location.hash.indexOf("user-")!=-1){window.location.href ="user.html";}else{ window.history.back();}}//返回上一级
+function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
 function setTime(obj) {
     if (_sysconfig.countdown == 0) {
@@ -49,7 +48,6 @@ function showErrorInfo(msg) {
 }
 function checkLogin(msg,callback) {
 	 if(window.user!=null ){return;}
-//	 $("body").hide();
 	  $.ajax({
 	        type:"GET",
 	        cache:false,
@@ -59,11 +57,9 @@ function checkLogin(msg,callback) {
 	        url:ER.root + "/i/user/findUser",
 	        success:function(data) {
 	            if (data && data.id != 0) {
-//	            	$("body").show();
 	                window.user = data;
 	                if(callback){callback(); }
 	            } else {
-//	            	alert(msg?msg:"请登录后再操作~");
 	                window.user = null;
 	                window.location.href = "login.html#" + window.location.href;
 	                return;
@@ -80,7 +76,7 @@ function checkLogin(msg,callback) {
  * 事件
  */
 getFont();
-$(window).resize(function(event) { getFont();});
+$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //自动改变页面根目录字体大小
 $(function() {
     $(".next").click(function() {
@@ -103,7 +99,8 @@ $(function() {
 });
 var util = {
     //cook:s20是代表20秒,h是指小时，如12小时则是：h12,d是天数，30天则：d30 
-    setCookie:function(a, c, d) {
+    setCookie:function(a, c, d,e) {
+    	if(e){util.delCookie(a);}
         var b = util.getsec(d);
         var e = new Date();
         e.setTime(e.getTime() + b * 1);
@@ -119,7 +116,7 @@ var util = {
     },
     delCookie:function(a) {
         var c = new Date();
-        c.setTime(c.getTime() - 1);
+        c.setTime(c.getTime() - 1000);
         var b = util.getCookie(a);
         if (b != null) {
             document.cookie = a + "=" + b + ";expires=" + c.toGMTString();

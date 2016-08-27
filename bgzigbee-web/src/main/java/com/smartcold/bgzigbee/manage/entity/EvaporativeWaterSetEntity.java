@@ -14,6 +14,16 @@ public class EvaporativeWaterSetEntity {
 
 	private Date addTime;
 
+	private int groupid;
+
+	public int getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(int groupid) {
+		this.groupid = groupid;
+	}
+
 	public int getId() {
 		return id;
 	}

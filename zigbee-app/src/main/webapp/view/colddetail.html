@@ -15,10 +15,10 @@
 	    <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
 		<script type="text/javascript" src="../app/js/colddetail.js"></script>
     </head>
-    <body ng-app="app"  ng-controller="colddetail" ng-cloak>
+    <body ng-app="app"  ng-controller="colddetail" ng-cloak on-finish-render-filters>
         <!-- header -->
             <header>                 
-                <div class="area fl"> <a href="coldlist.html"><i class="iconfont">&#xe60e;</i></a></div>
+                <div class="area fl"> <a  onclick="goback();"><i class="iconfont">&#xe60e;</i></a></div>
                 <div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
                 <div class="txt">  冷库详情</div>
             </header>

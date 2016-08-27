@@ -220,10 +220,18 @@ public class UserController extends BaseController {
 		}
 		return ResponseData.newFailure("非法操作！");		//返回受影响的行
 	}
+	
+	/**
+	 * 检查用户名是否占用
+	 * @param request true：表示当前用户名已存在或为null->不能注册
+	 * @param userName
+	 * @return
+	 */
 	@RequestMapping(value = "/existenceUserName")
 	@ResponseBody
 	public boolean existenceUserName(HttpServletRequest request,String userName){
-		return this.userDao.existenceUserName(userName)>0;
+		if(StringUtil.isNull(userName)){return true;}
+	    return this.userDao.existenceUserName(userName)>0;
 	}
 
 }

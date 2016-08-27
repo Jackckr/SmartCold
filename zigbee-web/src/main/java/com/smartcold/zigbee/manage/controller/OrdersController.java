@@ -139,7 +139,7 @@ public class OrdersController extends BaseController {
 			order.setOwnerid(releaseID);
 			UserEntity owner = userDao.findUserById(releaseID);
 			if (StringUtil.isNull(owner.getTelephone())) {
-				return ResponseData.newFailure("下单失败！发布之没有留下联系方式！");
+				return ResponseData.newFailure("下单失败！发布者没有留下联系方式！");
 			}
 			order.setOwnername(owner.getUsername());
 			order.setOwnertele(owner.getTelephone());

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.net.time.TimeUDPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,10 @@ import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
+import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
+import com.smartcold.zigbee.manage.util.TimeUtil;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
@@ -154,6 +157,23 @@ public class ShareRdcController  {
 		return "";
 	}
 	//-------------------------------------------------2->数据展示 1：货品 2：配送  3：仓库具有公共属性,可重用方法，但为了后期维护和程序健壮性----采用3个公共方法,方便分库分表---------------------------------------------------
+	/**
+	 * 获得修改发布信息详细信息
+	 * @param request
+	
+	 * @return
+	 */
+	@RequestMapping(value = "/getSEByIDForEdit")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> getSEByIDForEdit(HttpServletRequest request,String id) {
+		if(StringUtil.isnotNull(id)){
+			RdcShareDTO data = this.rdcShareService.getSEByIDForEdit(id);
+			return ResponseData.newSuccess(data);
+		}
+	    return ResponseData.newFailure("无效请求！");
+	}
+	
+	
 	/**
 	 * 获得发布信息详细信息
 	 * @param request
@@ -387,11 +407,16 @@ public class ShareRdcController  {
 			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
 			if(StringUtil.isnotNull(data)&&user!=null&&user.getId()!=0){//
 				RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
-				rdcShareDTO.setReleaseID(user.getId());//设置发布消id//user.getId()
-				rdcShareDTO.setStauts(1);
-	            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
-	            this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, user, request);
-	            return ResponseData.newSuccess("发布成功！");
+				if(rdcShareDTO.getId()==0){
+					rdcShareDTO.setReleaseID(user.getId());//设置发布消id//user.getId()
+					rdcShareDTO.setStauts(1);
+		            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
+				}else{
+					rdcShareDTO.setUpdatetime(TimeUtil.getDateTime());
+					this.rdcShareService.updateshareInfo(rdcShareDTO);//修改发布消息
+				}
+				this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, user, request);
+			    return ResponseData.newSuccess("发布成功！");
 			}else{
 				return ResponseData.newFailure("当前用户没有执行登录操作！");
 			}

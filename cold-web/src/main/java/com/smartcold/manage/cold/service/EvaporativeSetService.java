@@ -4,5 +4,5 @@ import com.smartcold.manage.cold.dto.EvaporativeDto;
 
 public interface EvaporativeSetService {
 
-	public EvaporativeDto getInfoByRdcId(int rdcId);
+	public EvaporativeDto getInfoByGroupId(int GroupId);
 }

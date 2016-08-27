@@ -46,10 +46,20 @@
 				if (r != null) return unescape(r[2]); return null;
 			}
 
-			var rdcID = $.getUrlParam('storageID');			
 			
+			var rdcID = $.getUrlParam('storageID');			
 			$.get("/i/rdcSensor/findRdcBkgImaUrl?rdcId="+rdcID,function(data,status){
-				$("body").css("background","url("+data+")").css("background-size","1050px 590px");
+				if(data!=null){
+					  $("#saveBtn").show();
+					  $("#alert").hide();
+					  $("body").css("background","url("+data+")").css("background-size","1050px 590px");
+				}
+				else{
+					$("#saveBtn").hide();
+					$("#alert").show();
+//					$("#saveBtn").attr('disabled',false);
+				}
+				  
 			});
 			
            $.get("i/rdc/findRDCByRDCId?rdcID="+rdcID,function(data,status){
@@ -109,7 +119,7 @@
 					for(var i=0;i<divNum;i++)
 						$("#wd"+lengku.rdc[i].storageID).text("温度: "+lengku.rdc[i].temperature+"°C");
 				});
-			},1000);
+			},30000);
 
 			$("#saveBtn").click(function(){
 				var confirmState = confirm("位置固定后不可再改变，确定请继续");
@@ -140,8 +150,9 @@
 </head>
 
 <body>
-<button id ="saveBtn">保存配置</button>
-<p id="temp" align="right" style="color:#823F3F;font-size:20px;">库外温度</p>
-<p id="cityTemp" align="right" style="color:#823F3F;font-size:20px;"></p>
+<button id ="saveBtn" style="margin-left:10px;height:20px;">保存配置</button>
+<!--  <p id="temp" align="right" style="color:#823F3F;font-size:20px;">库外温度</p> -->
+<!--  <p id="cityTemp" align="right" style="color:#823F3F;font-size:20px;"></p> -->
+<p id="alert">请上传冷库平面分布图</p>
 </body>
 </html>

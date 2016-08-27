@@ -20,7 +20,6 @@
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
-<script type="text/javascript" src="../app/js/releasestorage.js"></script>
 <script>
         
     	$(function() {
@@ -69,10 +68,10 @@
 	<!--coldlist-->
 	<div class="coldlist">
 		<!-- 仓储信息区域start -->
-		<div ng-show="rdcsList.length<=0">
+		<div class="nodata" style="background:#F6F5FA;">
 			<p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
 			<p class="sorry">
-				<button class="mybtn" ng-click="goaddrdcpag();">添加冷库信息</button>
+				<button class="mybtn" onclick="location.href='releasekutable.html'">添加冷库信息</button>
 		</div>
 		<!--coldlist-->
 		<div>
@@ -80,6 +79,7 @@
 			<a id="loading" href="javascript:;" onclick="getPageData();"></a>
 		</div>
 	</div>
+	
 	<!--求租-->
 	<section class="main maindetail  black">
 		<form id="release_item_from" name="itemform" >
@@ -135,7 +135,7 @@
 				<li>
 					<label for="time">有效开始时间</label><em>*</em>
 					<div class="mySelect">
-						<input type="text" id="sttime" class="kbtn"/>
+						<input type="text" id="sttime" placeholder="请选择开始时间" class="kbtn"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
@@ -143,7 +143,7 @@
 				<li>
 					<label for="time">有效结束时间</label><em>*</em>
 					<div class="mySelect">
-						<input type="text" id="endtime" class="kbtn"/>
+						<input type="text" id="endtime" placeholder="请选择结束时间" class="kbtn"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
@@ -155,7 +155,7 @@
 					placeholder="（选填）" ng-model="note" name="note"/></li>
 				<li><label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
 				 </label> <span id="">上传图片</span><br>
-	            <output id="list"></output>
+	              <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
 			</ul>
 		</form>
 		<button class="mybtn" ng-click="submit()">确认发布</button>
@@ -175,4 +175,5 @@
 				<p class="info">我的</p> </a></li>
 	</ul>-->
 </body>
+<script type="text/javascript" src="../app/js/releasestorage.js"></script>
 </html>

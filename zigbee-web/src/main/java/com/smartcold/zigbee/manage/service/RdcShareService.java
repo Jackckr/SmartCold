@@ -12,6 +12,14 @@ import com.smartcold.zigbee.manage.dto.RdcShareDTO;
  */
 public interface RdcShareService {
 	
+	
+	
+	 /**
+ 	 * 获得修改共享信息详情
+ 	 * @param id
+ 	 * @return
+ 	 */
+ 	public RdcShareDTO getSEByIDForEdit(String id);
 	/**
 	 * 获得共享详情
 	 * @param id
@@ -30,6 +38,12 @@ public interface RdcShareService {
  	 * @return
  	 */ 
  	  public int addShareMsg(RdcShareDTO rdcShareDTO);
+ 	  /**
+ 	   * 更新发布消息
+ 	   * @param rdcShareDTO
+ 	   * @return
+ 	   */
+ 	  public int updateshareInfo(RdcShareDTO rdcShareDTO);
  	  /**
  	   * 获得关联库全部信息
  	   * @param filter

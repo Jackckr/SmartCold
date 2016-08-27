@@ -39,8 +39,12 @@ public class RdcShareServiceImpl implements RdcShareService {
      */
 	@Override
 	public int addShareMsg(RdcShareDTO rdcShareDTO) {
-		return rdcShareMapper.addshareInfo(rdcShareDTO);
+		return this.rdcShareMapper.addshareInfo(rdcShareDTO);
 	}
+	@Override
+	public int updateshareInfo(RdcShareDTO rdcShareDTO){
+		  return this.rdcShareMapper.updateshareInfo(rdcShareDTO);
+	 }
 	/**
 	 * 删除用户发布的信息
 	 * @param id
@@ -125,6 +129,33 @@ public class RdcShareServiceImpl implements RdcShareService {
 		 Page<RdcShareDTO> serdcList = this.rdcShareMapper.getSEListByRdcID(parameters);
 		 return new PageInfo<RdcShareDTO>(serdcList);
 	 }
+     
+     
+     
+     
+     /**
+ 	 * 获得修改共享信息详情
+ 	 * @param id
+ 	 * @return
+ 	 */
+ 	public RdcShareDTO getSEByIDForEdit(String id){
+ 		 RdcShareDTO vo = this.rdcShareMapper.getSEByID(id);
+ 		 if(vo!=null){
+ 			 List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(vo.getId(), FileDataMapper.CATEGORY_SHARE_PIC);
+ 			 if(SetUtil.isnotNullList(files)){
+ 					List<String> filelist =new ArrayList<String>();
+ 					for (FileDataEntity file : files) {
+ 						filelist.add(FtpService.READ_URL+file.getLocation());
+ 					}
+ 					vo.setFiles(filelist);
+ 					vo.setLogo(files.get(files.size()-1).getLocation());
+ 			} 
+ 		 }
+ 		 return vo;
+ 	}
+     
+     
+     
     /**
 	 * 获得共享详情
 	 * @param id

@@ -1,7 +1,13 @@
 checkLogin();
 angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldStorageAdd', function($scope,$http, Upload){
     $scope.haveOrNots = [];
-    $scope.phoneNum = window.user.telephone;
+    
+     $.ajax({type:"GET", cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",
+	        success:function(data) {
+	        	$scope.phoneNum = data.telephone;
+	        }
+	    });
+    
     $scope.haveOrNots.push({
         id: 0,
         name: "无",

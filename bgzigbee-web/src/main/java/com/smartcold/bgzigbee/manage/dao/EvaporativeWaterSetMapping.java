@@ -9,7 +9,7 @@ public interface EvaporativeWaterSetMapping {
 
 	EvaporativeWaterSetEntity findById(@Param("id") int id);
 
-	List<EvaporativeWaterSetEntity> findByEvaporativeId(@Param("evaporativeid") int evaporativeId);
+	List<EvaporativeWaterSetEntity> findByGroupid(@Param("groupid") int groupid);
 
 	boolean insert(EvaporativeWaterSetEntity evaporativeWaterSetEntity);
 }

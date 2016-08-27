@@ -1,12 +1,13 @@
 var app = angular.module('app', []).controller('register',function($http, $location, $scope) {
 	$http.defaults.withCredentials = true;$http.defaults.headers = {'Content-Type' : 'application/x-www-form-urlencoded'};
-	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false};
+	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
 	$scope.vsphone = function(telephone) {// 验证手机号码
 		var length = (telephone + '').length;
 		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
 		return telephone && length == 11&& mobile.test(telephone);
 	};
 	$scope.vertelephone = function() {// 验证手机号码
+		$("#code2").val('');$("#but_vercode").data('vc', false);_sysconfig.countdown =0;
 		var ct = $scope.vsphone($scope.telephone);
 		if(ct){
 			victdata.victtl=true;

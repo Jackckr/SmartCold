@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta charset="utf-8" name="keywords"
+	content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商" />
+<meta charset="utf-8" name="description"
+	content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。" />
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<title>发布仓位</title>
+<link rel="stylesheet" type="text/css" href="../com/css/common.css">
+<link rel="stylesheet" type="text/css" href="../com/css/release.css">
+<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
+<script type="text/javascript" src="../com/js/common.js"></script>
+<script type="text/javascript" src="../com/datepicker/date.js"></script>
+<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+<script type="text/javascript" src="../app/js/editshareinfo.js"></script>
+</head>
+<body ng-app="app" ng-controller="ctrl">
+	<!-- header -->
+	<header>
+
+		<div class="area fl">
+			<a onclick="goback()"><i class="iconfont">&#xe60e;</i>
+			</a>
+		</div>
+		<div class="txt">发布货品信息修改</div>
+	</header>
+	
+	<section class="main maindetail" style="margin-top:2.5rem">
+	<div class="coldlist" ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
+      <ul class="imgTable">
+			<li class="imgCell"><a href="javascript:;"> <img class="fl"
+					src="{{rdcdto.logo}}">
+					<div class="">
+						<p class='ellipsis'>{{rdcdto.name}}</p>
+						<p class='position'>
+							<i class="iconfont">&#xe66e;</i> {{rdcdto.address}}
+						</p>
+						<ul class='star'>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li class="filled">★</li>
+							<li>★</li>
+						</ul>
+					</div> </a></li>
+		</ul>
+    </div>
+			<form id="release_item_from" name="itemform" >
+            <ul class="houseinfo">
+                <li>
+                    <label for="name">描述</label><em>*</em>
+                    <input type="text" ng-model="title"  id="name" placeholder="货品出售"/>
+                </li>
+                <li class="bossToggle" ng-if="rdcsharedto.typeCode==1">
+                    <label for="boss">供应商</label>
+                    <input type="text" ng-model="unit1" id="boss"/>
+                </li>
+                 <li class="offershow">
+                    <label for="province">省</label><em>*</em>
+                    <div class="mySelect">
+                    	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
+                                    ng-change="provinceSelected(provinceId)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                    </div>
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
+                 <li class="offershow">
+                    <label for="city">市</label><em>*</em>
+                    <div class="mySelect">
+	                    <select id="city" ng-model="cityId" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in citys"></select>
+	                </div>
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
+                <li>
+                    <label for="category">品类</label><em>*</em>
+                    <div class="mySelect">
+	                    <select id="category" id="good_type" name="codeLave11" ng-model="codeLave11">
+	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
+	                    </select>
+	                </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="num">数量</label><em>*</em>
+                    <input type="text" id="num" placeholder="吨" ng-model="sqm"/>
+                </li>
+                <li>
+                    <label for="price">单价</label>
+                    <input type="text" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
+                </li>
+                <li>
+					<label for="time">有效开始时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" placeholder="请选择开始时间" ng-model="validStartTime" id="sttime" class="kbtn"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
+				
+				<li>
+					<label for="time">有效结束时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" placeholder="请选择结束时间" id="endtime" ng-model="validEndTime" class="kbtn"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
+                <li>
+                    <label for="phone">联系电话</label><em>*</em>
+                    <input type="text" id="phone" ng-model="telephone" />
+                </li>
+                <li>
+                    <label for="note">备注</label>
+                    <input type="text" ng-model="note" id="note" placeholder="（选填）"/>
+                </li>
+                <li>
+                    <label class="pic">
+		    			<input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
+				 </label> <span id="">上传图片</span><br>
+	            <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
+                </li>
+            </ul>
+        </form>
+        <button class="mybtn" ng-click="goodSubmit()" >确认修改</button>
+	</section>
+	<div id="datePlugin"></div>
+</body>
+</html>

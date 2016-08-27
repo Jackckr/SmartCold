@@ -4,7 +4,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var url=window.location.href;
 	var arrurl=url.split("?id=");
-	$scope.telephone = window.user.telephone;
+	  $.ajax({type:"GET", cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",
+	        success:function(data) {
+	        	$scope.telephone = data.telephone;
+	        }
+	    });
 	if(arrurl[1]!=''&&arrurl[1]!=undefined){
 	 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
          params: {
@@ -93,17 +97,20 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    $http.get(ER.root+'/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
 	    $scope.StorageTypeSelected = function () {
 	    }
-	    $scope.addFiles = function(files) {
-		    $scope.totalfiles = $scope.totalfiles.concat(files);
-		    $("#list").empty();
-		    var files = $scope.totalfiles; // FileList object
-		    for (var i = 0,
-		    f; f = files[i]; i++) {
-		        if (!f.type.match('image.*')) { continue; }
-		        var reader = new FileReader();
-		        reader.onload = (function(theFile) { return function(e) { var innerHTML = ['<span id="imglistp'+i+'"><img class="thumb " src="', e.target.result, '" title="', escape(theFile.name), '"/></span>'].join(''); $("#list").append(innerHTML); };})(f); reader.readAsDataURL(f);//<i  onclick="releaseItem.drop('+i+')">×</i>
-		    }
-		};
+	    $scope.addFiles = function (files) {
+			if(files.length==0){return;};
+			var allfiles = $scope.totalfiles.concat(files);
+			if(allfiles.length>10){alert("最多选择10张！");return;}
+	        $scope.totalfiles=allfiles; 
+	    };
+	    $scope.drophonor = function(honorfile){
+	        angular.forEach($scope.totalfiles,function(item, key){
+	            if(item == honorfile){
+	                $scope.totalfiles.splice(key,1);
+	                return false;
+	            }
+	        });
+	    };
 		$scope.dataType = document.getElementById('dataType').value;
 		$scope.typeCode = document.getElementById('typeCode').value;
 		$scope.typeText = document.getElementById('typeText').value;
@@ -150,7 +157,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') {
 	            flag = false;
 	        }
-	        if ($scope.codeLave1 == undefined || $scope.codeLave1 == '') {
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
 	            flag = false;
 	        }
 	        if ($scope.sqm == undefined || $scope.sqm == '') {
@@ -187,13 +194,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {
 	            flag = false;
 	        }
-	        if ($scope.codeLave1 == undefined || $scope.codeLave1 == '') {
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
 	            flag = false;
 	        }
-	        if ($scope.codeLave2 == undefined || $scope.codeLave2 == '') {
+	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {
 	            flag = false;
 	        }
-	        if ($scope.codeLave3 == undefined || $scope.codeLave3 == '') {
+	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {
 	            flag = false;
 	        }
 	        if ($scope.telephone == undefined || $scope.telephone == '') {
@@ -232,7 +239,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					title:$scope.title,
 					codeLave1:$scope.codeLave11,
 					codeLave2:$scope.codeLave22,
-					codeLave3:$scope.codeLave3,
+					codeLave3:$scope.codeLave33,
 					unitPrice : $scope.unitPrice,
 		            stprovinceID:$scope.stprovinceID,
 				    stcityID:$scope.stcityID,
@@ -293,7 +300,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					title:$scope.title,
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
-					codeLave1:$scope.codeLave1,
+					codeLave1:$scope.codeLave11,
 					unit1 : $scope.unit1,
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,

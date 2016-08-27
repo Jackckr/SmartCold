@@ -1,6 +1,5 @@
 package com.smartcold.manage.cold.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EvaporativeDto {

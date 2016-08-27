@@ -6,10 +6,15 @@ $().ready(function() {
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
+	  if(getUrlParam("key")){
+		  $("#searchDara_div input").val(util.getCookie("shdatakey"));util.delCookie("shdatakey");
+	  }
       gosharedile=function(sharid){
     	 window.location.href ="colddetail.html?id="+sharid; 
       };
       initevg=function(){
+        $(".transion").click(function(){$(".one").hide();$(".two").show();});
+  		$(".cancel").click(function(){$(".one").show();$(".two").hide();});
    		$(".droplist a").click(function(e){//条件过滤
    			$(this).children('i').addClass('current').html('&#xe62e;');
    			$(this).addClass('current').next('.listcontain').slideDown().parent().siblings().children('a').removeClass('current').children('i').removeClass('current').html('&#xe62d;').parent().siblings('.listcontain').hide();
@@ -51,7 +56,7 @@ $().ready(function() {
   		   $.get(ER.root+'/i/city/findProvinceList',function(data) {
 				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
 				 $("#ul_address_list").append(prove.join("")); 
-				 $("#ul_address_list li").click(function(event) {addfilter(this);});
+//				 $("#ul_address_list li").click(function(event) {addfilter(this);});
   		   });
   		   $.post(ER.root+"/i/rdc/getRDCFilterData",function(data) {
   			   if(data.success){	
@@ -60,7 +65,8 @@ $().ready(function() {
   					 $.each(_stty, function(i, vo){stlist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });  
   					 $("#ul_mtty_list").append(mtlist.join("")); 
   					 $("#ul_stty_list").append(stlist.join("")); 
-  					 $("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
+//  					 $("#filter_section li").click(function(event) {addfilter(this);});
+//  					$("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
   			   }
   	      });
   	 };
@@ -75,10 +81,10 @@ $().ready(function() {
   		    return _filter;
   	};
   	function gethtml(rdc){
-  		  var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
-  		  for ( var i = 1; i <= 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); }
-  		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
-  		  return score.join("");
+  		 var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
+  		 	  for ( var i = 1; i <= 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); }
+  		 		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
+  		   		  return score.join("");
   	}
   	function getPageData(){//启用无限加载
   		   isLoadRB=true;

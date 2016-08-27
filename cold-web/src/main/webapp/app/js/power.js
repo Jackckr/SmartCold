@@ -1,6 +1,14 @@
 coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseTools,$rootScope) {
 	
-	$scope.load = function(){	
+	
+	$scope.preLoad = function(){
+		url = '/i/power/findById?id=' + $stateParams.powerid;
+		$http.get(url).success(function(data,status,config,header){
+			$scope.load(data);
+		})
+	}
+	
+	$scope.load = function(powerSet){	
 		lineChart = echarts.init($('#line')[0]);
 		$scope.electricMap = {AU:null,BU:null,CU:null,AI:null,BI:null,CI:null};
 		$scope.powerid = $stateParams.powerid;
@@ -14,7 +22,7 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 			var yData = [];
 			angular.forEach($scope.powerData,function(item){
 				xData.unshift(baseTools.formatTime(item.addtime))
-				yData.unshift(item.value)
+				yData.unshift(item.value * powerSet.radio)
 			})
 			option = baseTools.getEchartSingleOption('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line');
 			lineChart.setOption(option);
@@ -28,9 +36,9 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 	    })
 	}
 	
-	$scope.load();
+	$scope.preLoad();
 	clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        $scope.load();
+    	$scope.preLoad();
     }, 30000);
 });
