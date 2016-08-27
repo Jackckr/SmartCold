@@ -65,7 +65,6 @@
 				}
 				}
 			});
-		
 			    function getmatrix(a,b,c,d,e,f){  
 			        var aa=Math.round(180*Math.asin(a)/ Math.PI);  
 			        var bb=Math.round(180*Math.acos(b)/ Math.PI);  
@@ -80,6 +79,7 @@
 			            deg=360-cc||360-dd;  
 			        }  
 			        return deg>=360?0:deg;  
+			        //return (aa+','+bb+','+cc+','+dd);  
 			    }    
 			    
 			    setInterval(function(){
