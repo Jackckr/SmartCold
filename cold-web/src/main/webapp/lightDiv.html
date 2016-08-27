@@ -57,7 +57,6 @@
 				}else{
 					$("#saveBtn").hide();
 					for(var i=0;i<divNum;i++){
-						console.log("xxxxx"+lengku.rdc[i].status);
 						if(lengku.rdc[i].status == 1)
 					    $("body").append('<div style="position:absolute;background-color:orange;width:130px;height:10px;top:'+lengku.rdc[i].div_x+'px;left:'+lengku.rdc[i].div_y+'px;transform:rotate('+lengku.rdc[i].rotate+'deg)" id="'+lengku.rdc[i].storageID+'"></div>');
 						else
@@ -66,17 +65,7 @@
 				}
 				}
 			});
-			
-			/* 
-			    * 解析matrix矩阵，0°-360°，返回旋转角度 
-			    * 当a=b||-a=b,0<=deg<=180 
-			    * 当-a+b=180,180<=deg<=270 
-			    * 当a+b=180,270<=deg<=360 
-			    * 
-			    * 当0<=deg<=180,deg=d; 
-			    * 当180<deg<=270,deg=180+c; 
-			    * 当270<deg<=360,deg=360-(c||d); 
-			    * */  
+		
 			    function getmatrix(a,b,c,d,e,f){  
 			        var aa=Math.round(180*Math.asin(a)/ Math.PI);  
 			        var bb=Math.round(180*Math.acos(b)/ Math.PI);  
@@ -91,7 +80,6 @@
 			            deg=360-cc||360-dd;  
 			        }  
 			        return deg>=360?0:deg;  
-			        //return (aa+','+bb+','+cc+','+dd);  
 			    }    
 			    
 			    setInterval(function(){
@@ -101,9 +89,9 @@
 							lengku.rdc[i] = data[i];
 						for(var i=0;i<divNum;i++){
 							if(lengku.rdc[i].status == 1)
-							$("#"+lengku.rdc[i].storageID).css("background-color","gray");
-							else
 							$("#"+lengku.rdc[i].storageID).css("background-color","orange");
+							else
+							$("#"+lengku.rdc[i].storageID).css("background-color","gray");
 						}
 					});
 				},30000);
