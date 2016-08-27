@@ -29,7 +29,7 @@
 			<a onclick="goback()"><i class="iconfont">&#xe60e;</i>
 			</a>
 		</div>
-		<div class="txt">共享信息修改</div>
+		<div class="txt">发布货品信息修改</div>
 	</header>
 	
 	<section class="main maindetail" style="margin-top:2.5rem">
@@ -124,7 +124,7 @@
                     <label class="pic">
 		    			<input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
 				 </label> <span id="">上传图片</span><br>
-	            <output id="list"></output>
+	            <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
                 </li>
             </ul>
         </form>

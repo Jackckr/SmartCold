@@ -97,17 +97,20 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    $http.get(ER.root+'/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
 	    $scope.StorageTypeSelected = function () {
 	    }
-	    $scope.addFiles = function(files) {
-		    $scope.totalfiles = $scope.totalfiles.concat(files);
-		    $("#list").empty();
-		    var files = $scope.totalfiles; // FileList object
-		    for (var i = 0,
-		    f; f = files[i]; i++) {
-		        if (!f.type.match('image.*')) { continue; }
-		        var reader = new FileReader();
-		        reader.onload = (function(theFile) { return function(e) { var innerHTML = ['<span id="imglistp'+i+'"><img class="thumb " src="', e.target.result, '" title="', escape(theFile.name), '"/></span>'].join(''); $("#list").append(innerHTML); };})(f); reader.readAsDataURL(f);//<i  onclick="releaseItem.drop('+i+')">×</i>
-		    }
-		};
+	    $scope.addFiles = function (files) {
+			if(files.length==0){return;};
+			var allfiles = $scope.totalfiles.concat(files);
+			if(allfiles.length>10){alert("最多选择10张！");return;}
+	        $scope.totalfiles=allfiles; 
+	    };
+	    $scope.drophonor = function(honorfile){
+	        angular.forEach($scope.totalfiles,function(item, key){
+	            if(item == honorfile){
+	                $scope.totalfiles.splice(key,1);
+	                return false;
+	            }
+	        });
+	    };
 		$scope.dataType = document.getElementById('dataType').value;
 		$scope.typeCode = document.getElementById('typeCode').value;
 		$scope.typeText = document.getElementById('typeText').value;
