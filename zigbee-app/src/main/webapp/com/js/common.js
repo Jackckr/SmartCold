@@ -2,10 +2,10 @@
 var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
-var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-//var ER = {root:"http://192.168.1.199:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
-//var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+//var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
+var userjson=window.sessionStorage.getItem("user");if(userjson){window.user=JSON.parse(userjson);}
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
@@ -13,6 +13,7 @@ function gologin(){ window.location.href = "login.html#" + window.location.href;
 function goback() { if(window.location.pathname.indexOf("login.html")&&window.location.hash.indexOf("user-")!=-1){window.location.href ="user.html";}else{ window.history.back();}}//返回上一级
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
+function checktoken(){if(window.user==null ){$.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",success:function(data) {if (data && data.id != 0) {window.user = data;window.sessionStorage.setItem("user",JSON.stringify(data)); } else { window.user = null;window.sessionStorage.removeItem("user"); }} });}}
 function setTime(obj) {
     if (_sysconfig.countdown == 0) {
         obj.removeAttribute("disabled");
@@ -46,31 +47,16 @@ function showErrorInfo(msg) {
         msgEl.html(msg);
     }
 }
+
 function checkLogin(msg,callback) {
-	 if(window.user!=null ){return;}
-	  $.ajax({
-	        type:"GET",
-	        cache:false,
-	        timeout : 5000,
-	        dataType:"json",
-	        data:{token:util.getCookie('token')},
-	        url:ER.root + "/i/user/findUser",
-	        success:function(data) {
-	            if (data && data.id != 0) {
-	                window.user = data;
-	                if(callback){callback(); }
-	            } else {
-	                window.user = null;
-	                window.location.href = "login.html#" + window.location.href;
-	                return;
-	            }
-	        }
-//	      ,complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
-//				if(status=='timeout'){//超时,status还有success,error等值的情况
-//					alert("超时");
-//				}
-//			}
-	    });
+	 if(window.user!=null ){
+		 if(callback){callback(); }
+		 return true;
+	 }else{
+		 window.user = null;
+         window.location.href = "login.html#" + window.location.href;
+         return false;
+	 }
 }
 /**
  * 事件

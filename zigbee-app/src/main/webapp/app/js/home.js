@@ -1,3 +1,4 @@
+checktoken();
 function gordcdile(sharid){window.location.href ="view/colddetail.html?id="+sharid; };
 function goshadile(sharid){window.location.href ="view/storehousedetail.html?id="+sharid; };
 function gordclist(){window.location.href =encodeURI("view/coldlist.html?key="+$("#searchdiv").val()) ;};
@@ -84,6 +85,7 @@ $().ready(function() {
 			$("#cuttseachdata").hide();
 		}
 	}
+	
 });
 
 	

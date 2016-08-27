@@ -4,20 +4,26 @@
 			$http.get(ER.root+'/i/user/logout');
            	$scope.user=window.user  = null;
            	util.delCookie("token");
+           	window.sessionStorage.removeItem("user");
            	gohome();
      };
 	$scope.initdata=function(){
-		 $.ajax({cache: false,type: "POST",url:ER.root+"/i/user/findUser", success: function(data) {
-			 $scope.$apply(function () {
-            	 if(data.id!=0){ 
-            		 $("#user_sex").val(data.sex);
-            		 $scope.userinfo= data;
-            	 }
-		    });
-		 } });
 		 $http.get(ER.root+'/i/city/findProvinceList').success(function(data) {
-         	   $scope.provinces = data;
-         });
+       	   $scope.provinces = data;
+       });
+		 if(window.user==null){ 
+			 $.ajax({cache: false,type: "POST",url:ER.root+"/i/user/findUser", success: function(data) {
+				 $scope.$apply(function () {
+	            	 if(data.id!=0){ 
+	            		 $("#user_sex").val(data.sex);
+	            		 $scope.userinfo= data;
+	            	 }
+			    });
+			 } });
+		 }else{
+			 $("#user_sex").val(window.user.sex);
+			 $scope.userinfo=window.user;
+		 }
 	};
 	$scope.initevg=function(){
 		$("#headImg").change(function() {
