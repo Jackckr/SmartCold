@@ -38,7 +38,10 @@
 	    `energyCost`, 
 	    `longitude`, 
 	    `latitude`, 
-	    `location`
+	    `location`,
+	    `tempdiff`,
+	    `overtempalarm`,
+	    `overtempdelay`
 	    )
 	    VALUES
 	    (
@@ -48,7 +51,10 @@
 	    #{energyCost},
 	    #{longitude},
 	    #{latitude},
-	    #{location}
+	    #{location},
+	    #{tempdiff},
+	    #{overtempalarm},
+	    #{overtempdelay}
 	    )
 	</insert>
 	

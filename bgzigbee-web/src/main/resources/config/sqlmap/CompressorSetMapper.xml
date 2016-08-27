@@ -7,6 +7,17 @@
 		INSERT INTO `compressorset` (`compressorgroupid`, `name`,`power`, `waterRatio`)
 		VALUES (#{compressorgroupid}, #{name}, #{power}, #{waterRatio})
 	</insert>
+	<update id="updateById">
+		UPDATE `compressorset` SET
+		`name` = #{name},
+		`power` = #{power},
+		`waterRatio` = #{waterRatio}
+		WHERE `id` = #{id}
+	</update>
+	<delete id="deleteById">
+		DELETE FROM `compressorset` WHERE `id` = #{id}
+	</delete>
+
 
 	<select id="findById" parameterType="map" resultType="CompressorSetEntity">
 		SELECT *

@@ -12,7 +12,7 @@ public enum SetTables {
 
     BLOWERSET(4,  "blowerset",  "风机"),
 
-    COMPRESSORSET(5,  "compressorset",  "压缩机"),
+    COMPRESSORSET(5,  "compressorset",  "单体压缩机"),
 
     WINDSCREENSET(6,  "windscreenset",  "风幕机"),
 

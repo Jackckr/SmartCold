@@ -14,7 +14,19 @@
 		UPDATE `CompressorGroupSet` SET mapping=#{mapping}
 		WHERE `id` = #{id}
 	</update>
-	
+	<update id="updateById">
+		UPDATE `CompressorGroupSet` SET
+        `name` = #{name},
+        `lowPress` = #{lowPress},
+        `pressDiff` = #{pressDiff},
+        `meltFrostTemperature` = #{meltFrostTemperature},
+        `crashStopPress` = #{crashStopPress},
+        `highPressAlarm` = #{highPressAlarm},
+        `highTempAlarm` = #{highTempAlarm},
+        `lowTempAlarm` = #{lowTempAlarm}
+        WHERE id = #{id}
+	</update>
+
 	<insert id="insertCompressorGroup" parameterType="CompressorGroupSetEntity">
 	  INSERT INTO `compressorgroupset` 
 	  (
@@ -22,7 +34,11 @@
 	  `rdcid`, 
 	  `lowPress`, 
 	  `pressDiff`, 
-	  `meltFrostTemperature`, 
+	  `meltFrostTemperature`,
+	  `crashStopPress`,
+	  `highPressAlarm`,
+	  `highTempAlarm`,
+	  `lowTempAlarm`,
 	  `addTime`
 	  )
 	  VALUES
@@ -31,7 +47,11 @@
 	  #{rdcId}, 
 	  #{lowPress}, 
 	  #{pressDiff}, 
-	  #{meltFrostTemperature}, 
+	  #{meltFrostTemperature},
+	  #{crashStopPress},
+	  #{highPressAlarm},
+	  #{highTempAlarm},
+	  #{lowTempAlarm},
 	  now()
 	  );
 	  

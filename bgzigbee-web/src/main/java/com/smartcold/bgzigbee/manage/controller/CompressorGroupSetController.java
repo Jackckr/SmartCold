@@ -69,7 +69,7 @@ public class CompressorGroupSetController {
 		return new ResultDto(0, "添加成功");
 	}
 
-	@RequestMapping(value = "/deleteCompressGroup", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteCompressGroup", method = RequestMethod.DELETE)
 	@ResponseBody
 	public Object deleteCompressGroup(int id) {
 		compressorGroupSetDao.deleteCompressorGroup(id);
@@ -89,7 +89,33 @@ public class CompressorGroupSetController {
 		if (compressorSetDao.insert(entity)) {
 			return new ResultDto(0, "保存成功");
 		}
-
         return new ResultDto(-1, "失败");
     }
+
+    @RequestMapping(value = "/updateCompressGroup", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateCompressGroup(@RequestBody CompressorGroupSetEntity entity){
+		if (compressorGroupSetDao.updateById(entity)) {
+			return new ResultDto(0, "更新成功");
+		}
+		return new ResultDto(-1, "更新失败");
+	}
+
+	@RequestMapping(value = "/deleteCompressor", method = RequestMethod.DELETE)
+	@ResponseBody
+	public Object deleteCompressor(int id){
+		if (compressorSetDao.deleteById(id)) {
+			return new ResultDto(0, "删除成功");
+		}
+		return new ResultDto(-1, "删除失败");
+	}
+
+	@RequestMapping(value = "/updateCompressor", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateCompressor(@RequestBody CompressorSetEntity entity) {
+		if (compressorSetDao.updateById(entity)) {
+			return new ResultDto(0, "更新成功");
+		}
+		return new ResultDto(-1, "失败");
+	}
 }
