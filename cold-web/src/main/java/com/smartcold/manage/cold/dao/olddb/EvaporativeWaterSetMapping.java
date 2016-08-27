@@ -1,14 +1,13 @@
 package com.smartcold.manage.cold.dao.olddb;
 
-import java.util.List;
-
+import com.smartcold.manage.cold.entity.olddb.EvaporativeWaterSetEntity;
 import org.apache.ibatis.annotations.Param;
 
-import com.smartcold.manage.cold.entity.olddb.EvaporativeWaterSetEntity;
+import java.util.List;
 
 public interface EvaporativeWaterSetMapping {
 
 	EvaporativeWaterSetEntity findById(@Param("id") int id);
 
-	List<EvaporativeWaterSetEntity> findByEvaporativeId(@Param("evaporativeId") int evaporativeId);
+	List<EvaporativeWaterSetEntity> findByGroupid(@Param("groupid") int groupid);
 }

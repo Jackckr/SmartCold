@@ -1,14 +1,13 @@
 package com.smartcold.manage.cold.dao.olddb;
 
-import java.util.List;
-
+import com.smartcold.manage.cold.entity.olddb.EvaporativeBlowerSetEntity;
 import org.apache.ibatis.annotations.Param;
 
-import com.smartcold.manage.cold.entity.olddb.EvaporativeBlowerSetEntity;
+import java.util.List;
 
 public interface EvaporativeBlowerSetMapping {
 
 	EvaporativeBlowerSetEntity findById(@Param("id") int id);
 
-	List<EvaporativeBlowerSetEntity> findByEvaporativeId(@Param("evaporativeId") int evaporativeId);
+	List<EvaporativeBlowerSetEntity> findByGroupid(@Param("groupid") int groupid);
 }

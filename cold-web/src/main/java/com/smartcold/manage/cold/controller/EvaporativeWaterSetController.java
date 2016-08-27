@@ -22,9 +22,9 @@ public class EvaporativeWaterSetController {
 		return evaporativeWaterSetDao.findById(id);
 	}
 
-	@RequestMapping(value = "/findByEvaporativeId", method = RequestMethod.GET)
+	@RequestMapping(value = "/findByGroupid", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findByEvaporativeId(@RequestParam int evaporativeId) {
-		return evaporativeWaterSetDao.findByEvaporativeId(evaporativeId);
+	public Object findByGroupid(@RequestParam int evaporativeId) {
+		return evaporativeWaterSetDao.findByGroupid(evaporativeId);
 	}
 }
