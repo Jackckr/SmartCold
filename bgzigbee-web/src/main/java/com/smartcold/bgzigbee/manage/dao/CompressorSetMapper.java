@@ -12,4 +12,8 @@ public interface CompressorSetMapper {
 	List<CompressorSetEntity> findCompressorByGroupid(@Param("groupId") int groupId);
 
 	boolean insert(CompressorSetEntity compressorSetEntity);
+
+	boolean updateById(CompressorSetEntity entity);
+
+	boolean deleteById(@Param("id") int id);
 }

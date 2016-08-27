@@ -153,6 +153,21 @@ public class SpiderConfigController {
         return new ResultDto(-1, "添加失败");
     }
 
+    @RequestMapping(value = "/update/plateformDoor", method = RequestMethod.POST)
+    @ResponseBody
+    public Object updatePlateformDoor(@RequestBody PlatformDoorSetEntity entity) {
+        if (platformDoorSetMapping.updateById(entity)) {
+            return new ResultDto(0, "更新成功");
+        }
+        return new ResultDto(-1, "更新失败");
+    }
+
+    @RequestMapping(value = "/delete/plateformDoor", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Object deletePlateformDoor(int id) {
+        return deleteById(SetTables.PLATFORMDOORSET.getTable(), id);
+    }
+
     @RequestMapping(value = "/add/platformDoorSet", method = RequestMethod.POST)
     public Object addPlatformDoorSet(@RequestBody PlatformDoorSetEntity platformDoorSetEntity){
         if (platformDoorSetMapping.insert(platformDoorSetEntity)) {

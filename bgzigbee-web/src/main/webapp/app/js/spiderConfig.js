@@ -828,11 +828,13 @@ coldWeb.directive("ajaxTable", function ($http) {
 			var table = attrs.table;
 
             scope.update = function (obj) {
-            	if (obj.mapping){
-            		delete obj.mapping;
-				}
+
 				if (updateUrl){
-					$http.post(updateUrl, obj).then(function (resp) {
+				    var params = {id:obj.id};
+				    for(var i=0; i<scope.colums.length; i++){
+				    	params[scope.colums[i]] = obj[scope.colums[i]];
+					}
+					$http.post(updateUrl, params).then(function (resp) {
 						alert(resp.data.message);
 					})
 				}

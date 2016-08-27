@@ -140,6 +140,30 @@
                                         <input style="width:250px;" ng-model="storageEntity.location" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">起始温度(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="storageEntity.startTemperature" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">温度差(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="storageEntity.tempdiff" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">超温报警值(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="storageEntity.overtempalarm" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">超温报警延时(s):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="storageEntity.overtempdelay" class="form-control" />
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addStorage()" ng-disabled="!storageEntity.name">添加</a>
                                 </div>
@@ -149,8 +173,8 @@
                                 <ajax-table array-objects="storages"
                                             delete-url="/i/coldStorage/deleteStorage"
                                             update-url="/i/coldStorage/updateStorage"
-                                            colums-th="冷库名,理论能耗(KJ/h),冷库经度(°),冷库维度(°),冷库位置"
-                                            colums="name,energyCost,longitude,latitude,location"></ajax-table>
+                                            colums-th="冷库名,理论能耗(KJ/h),冷库经度(°),冷库维度(°),冷库位置,起始温度(℃),温度差(℃),超温报警值(℃),超温报警延时(s)"
+                                            colums="name,energyCost,longitude,latitude,location,startTemperature,tempdiff,overtempalarm,overtempdelay"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -174,26 +198,23 @@
                                         <input style="width:250px;" ng-model="doorEntity.width" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">风幕机功率(kW):</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="doorEntity.blowerpower" class="form-control" />
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addDoor()" ng-disabled="!doorEntity.name">添加</a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <label>已有门：</label>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                        <tr>
-                                            <th>门名字</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="door in doors">
-                                            <td>{{door.name}}</td>
-                                            <td><a class="btn btn-danger btn-xs" ng-click="deleteDoor(door.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <ajax-table array-objects="doors"
+                                            delete-url="/i/coldStorageDoor/deleteDoor"
+                                            update-url="/i/coldStorageDoor/updateDoor"
+                                            colums-th="名字,门长度(M),门宽度(M),风幕机功率(kW)"
+                                            colums="name,length,width,blowerpower"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -260,26 +281,41 @@
                                         <input style="width:250px;" ng-model="compressGroupEntity.meltFrostTemperature" class="form-control" />
                                     </div>
                                 </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="control-label col-lg-4">急停压力(kPa):</label>-->
+                                    <!--<div class="col-lg-8">-->
+                                        <!--<input style="width:250px;" ng-model="compressGroupEntity.crashStopPress" class="form-control" />-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">高压压力过高报警值（kPa):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="compressGroupEntity.highPressAlarm" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">排气温度过高报警值(°C):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="compressGroupEntity.highTempAlarm" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">排气温度过低报警值(°C):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="compressGroupEntity.lowTempAlarm" class="form-control" />
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompressGroup()" ng-disabled="!compressGroupEntity.name">添加</a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <label>已有压缩机组：</label>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                        <tr>
-                                            <th>机组名字</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="compressGroup in compressGroups">
-                                            <td>{{compressGroup.name}}</td>
-                                            <td><a class="btn btn-danger btn-xs" ng-click="deleteCompressGroup(compressGroup.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <ajax-table array-objects="compressGroups"
+                                            delete-url="/i/compressorGroup/deleteCompressGroup"
+                                            update-url="/i/compressorGroup/updateCompressGroup"
+                                            colums-th="名字,设定低压,设定压差,化霜温度,高压压力过高报警值,排气温度过高报警值,排气温度过低报警值"
+                                            colums="name,lowPress,pressDiff,meltFrostTemperature,highPressAlarm,highTempAlarm,lowTempAlarm"></ajax-table>
                             </div>
                         </form>
 
@@ -309,20 +345,11 @@
                             </div>
                             <div class="col-lg-6">
                                 <label>已有单体压缩机：</label>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                    <tr>
-                                        <th>名字</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="item in compressorSets">
-                                        <td>{{item.name}}</td>
-                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, compressorSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <ajax-table array-objects="compressorSets"
+                                            delete-url="/i/compressorGroup/deleteCompressor"
+                                            update-url="/i/compressorGroup/updateCompressor"
+                                            colums-th="名字,匹数,水耗系数"
+                                            colums="name,power,waterRatio"></ajax-table>
                             </div>
                         </form>
                         <!--风幕机-->
@@ -502,20 +529,11 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                    <tr>
-                                        <th>名字</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="item in platformDoorSets">
-                                        <td>{{item.name}}</td>
-                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, platformDoorSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <ajax-table array-objects="platformDoorSets"
+                                            delete-url="/i/spiderConfig/delete/plateformDoor"
+                                            update-url="/i/spiderConfig/update/plateformDoor"
+                                            colums-th="名字,门长度,门宽度"
+                                            colums="name,length,width"></ajax-table>
                             </div>
                         </form>
                         <!--液压平台-->

@@ -25,6 +25,36 @@ public class ColdStorageSetEntity {
 
 	private String mapping;
 
+	private float tempdiff;
+
+	private float overtempalarm;
+
+	private float overtempdelay;
+
+	public float getTempdiff() {
+		return tempdiff;
+	}
+
+	public void setTempdiff(float tempdiff) {
+		this.tempdiff = tempdiff;
+	}
+
+	public float getOvertempalarm() {
+		return overtempalarm;
+	}
+
+	public void setOvertempalarm(float overtempalarm) {
+		this.overtempalarm = overtempalarm;
+	}
+
+	public float getOvertempdelay() {
+		return overtempdelay;
+	}
+
+	public void setOvertempdelay(float overtempdelay) {
+		this.overtempdelay = overtempdelay;
+	}
+
 	public int getId() {
 		return id;
 	}

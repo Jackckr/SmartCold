@@ -1,10 +1,9 @@
 package com.smartcold.bgzigbee.manage.dao;
 
-import java.util.List;
-
+import com.smartcold.bgzigbee.manage.entity.CompressorGroupSetEntity;
 import org.apache.ibatis.annotations.Param;
 
-import com.smartcold.bgzigbee.manage.entity.CompressorGroupSetEntity;
+import java.util.List;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 14:24)
@@ -18,4 +17,6 @@ public interface CompressorGroupSetMapper {
 	void insertCompressorGroup(CompressorGroupSetEntity entity);
 
 	void deleteCompressorGroup(@Param("id") int id);
+
+	boolean updateById(CompressorGroupSetEntity entity);
 }
