@@ -3,12 +3,12 @@ var app = angular.module('app', []);
 app.controller('cold360', function ($scope, $location, $http,$rootScope) {
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 
+    $scope.user = window.user;
+    $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
+    //if (window.user.roleid == 3); 超管特殊处理
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            for (var i = 0; i < $scope.storages.length; i++) {
-                $scope.allRds = $scope.storages[i].id; // 右上角下拉
-            }
             $scope.viewStorage($scope.storages[0].id);
         }
     });
@@ -24,6 +24,9 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
                 }
             }
         });
+        $(".one").show();
+        $(".two").hide();
+        $('.searchTop').hide();
     }
 
     var formatTime = function(timeString){
@@ -212,17 +215,6 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
             });
 
         });
-    }
-
-    function getElementsByClassName(n) {
-        var classElements = [],allElements = document.getElementsByTagName('*');
-        for (var i=0; i< allElements.length; i++ )
-        {
-            if (allElements[i].className == n ) {
-                classElements[classElements.length] = allElements[i];
-            }
-        }
-        return classElements;
     }
 
     clearInterval($rootScope.timeTicket);

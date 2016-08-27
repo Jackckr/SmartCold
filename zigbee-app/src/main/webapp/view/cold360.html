@@ -25,7 +25,7 @@
                 <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
             </div>
             <div class="zoom fr">
-                <a  class="transion"><i class="iconfont">&#xe73c;</i></a>
+                <a class="transion"><i class="iconfont">&#xe73c;</i></a>
             </div>
             <div class="txt omg">
                 监控
@@ -40,7 +40,7 @@
         	</div>
 
         	<div id="searchDara_div" class="search">
-        		<input type="text" placeholder="查找RDC..."/>
+        		<input type="text" placeholder="查找RDC..." ng-model="searchContent"/>
         		<i class="iconfont" >&#xe62f;</i>
         	</div>
 	    </header>
@@ -98,11 +98,11 @@
   </div>
 	<!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
-	 	<ul class="rdcList">
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>莱芜嘉禾冷链物流有限公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>安德水产总公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>湖北寿康永乐上门物流园-测试数据-transiontransion-货品-出货</span></li>
+	 	<ul class="rdcList" ng-repeat="rdclist in storages | filter:searchContent">
+	 		<li class="omg" ng-click="viewStorage(rdclist.id)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+	 		<!--<li class="omg"><i class='iconfont'>&#xe62f;</i><span>安德水产总公司</span></li>-->
+	 		<!--<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li>-->
+	 		<!--<li class="omg"><i class='iconfont'>&#xe62f;</i><span>湖北寿康永乐上门物流园-测试数据-transiontransion-货品-出货</span></li>-->
 	 	</ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
