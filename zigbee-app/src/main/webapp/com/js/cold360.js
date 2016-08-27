@@ -1,17 +1,10 @@
 $(function() {
 	//点击“其他”出现下拉单
 	$('.other').bind({
-		"click":function(e){
+		"click":function(e){//alert("双击")
 			var $this = $(this).children('.otherList');
-			if($this.hasClass('black')){
-				$this.removeClass('black');
-				$(".backDrop").show()
-			}else{
-				$this.addClass('black');
-				$(".backDrop").hide()
-			}
-			/*$(this).children('.otherList').toggleClass('black'); 
-			$(".backDrop").toggle()*/
+			$this.removeClass('black');
+			$(".backDrop").show();	
 			$(this).addClass('current').siblings().removeClass('current');
 		},
 		"mouseleave":function(){
@@ -20,27 +13,53 @@ $(function() {
 		}
 	});
 	/*rdc下拉列表*/
-	$(".zoom").click(function () {
+	$(".transion").click(function(){
+	 	$(".one").hide();
+	 	$(".two").show();	 	
+	 });
+  	 $(".cancel").click(function(){
+  	 	$(".one").show();
+  	 	$(".two").hide();
+  	 	$('.searchTop').hide();
+  	 });
+  	 $("#searchDara_div input").keyup(function(){
+  	 	$('.searchTop').show()
+  	 })
+  	 $(".rdcList li").click(function(){
+	 	$('.searchTop').hide();
+	 	$(".one").children('.txt').text($(this).children('span').html())
+	 	$(".one").show();
+	 	$(".two").hide();
+	 });
+	/*rdc下拉列表*/ 
+	/*$(".zoom").click(function () {
         $('.rdcDropList').slideDown();
         $(".backDrop").show();
     })
 	$('.rdcDropList li').click(function () {
         $('.rdcDropList').hide();
         $(".backDrop").hide();
-    })
+    })*/
 	$(".backDrop").click(function(){
 			$('.otherList').addClass('black');
 			$(this).hide();
-			$('.rdcDropList').hide();
+			//$('.rdcDropList').hide();
 		})
 	$('.otherList').click(function(e){
 		var e = e || window.event;
 		var target = e.target || e.srcElement;
-		$(this).prev('.dropNext').children('b').html(target.innerHTML);
-		var activeColor = $(this).css('color');
-		$(this).find('a').css({'color':'#555'});
-		target.style.color = activeColor;
-		/*alert(target.innerHTML)*/
+		if ($(target).next().hasClass('inner')) {
+			$(this).removeClass('black');
+			$(".backDrop").show();
+		} else{
+			$(this).prev('.dropNext').children('b').html(target.innerHTML);
+			var activeColor = $(this).css('color');
+			$(this).find('a').css({'color':'#555'});
+			target.style.color = activeColor;
+			$(this).addClass('black');
+			$(".backDrop").hide();
+		}
+		event.stopPropagation();
 	});
 	//图表切换
 	var swiper = new Swiper('.swiper-container', {
@@ -53,4 +72,3 @@ $(function() {
     });
 	
 });
-

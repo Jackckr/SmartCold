@@ -20,14 +20,14 @@
 </head>
 <body ng-app="app" ng-controller="cold360" ng-cloak>
     <!-- header -->
-         <header>
+         <header class="one">
             <div class="area fl">
                 <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
             </div>
             <div class="zoom fr">
-                <a href="javascript:;"><i class="iconfont">&#xe717;</i></a>
+                <a  class="transion"><i class="iconfont">&#xe73c;</i></a>
             </div>
-            <div class="txt">
+            <div class="txt omg">
                 监控
             </div>
             <ul class="rdcDropList">
@@ -37,6 +37,16 @@
                 <li>莱芜嘉禾冷链物流有限公司</li>
             </ul>
         </header>
+        <header class="two">
+        	<div class="area fl">
+        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+        	</div>
+        	
+        	<div id="searchDara_div" class="search">
+        		<input type="text" placeholder="查找RDC..."/>
+        		<i class="iconfont" >&#xe62f;</i>
+        	</div>
+	    </header>
     <!-- header end-->
     <section class="toggle">
     	<div class="tempture current" id="temperature" onclick="location.href='cold360.html'"><i class="iconfont">&#xe67f;</i>温度</div>
@@ -101,6 +111,17 @@
         <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
         <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
   </div>
+	<!--rdc列表--------------------------------------------------> 
+	 <section class="searchTop">
+	 	<ul class="rdcList">
+	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>莱芜嘉禾冷链物流有限公司</span></li>
+	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>安德水产总公司</span></li>
+	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li> 		
+	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>湖北寿康永乐上门物流园-测试数据-transiontransion-货品-出货</span></li>
+	 	</ul>
+	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
+	 </section>
+	 <!--rdc列表-----------------------------------------------> 
     <ul class="footer">
         <li class="active">           
             <a href="">
@@ -128,64 +149,8 @@
             </a>
         </li>
     </ul>
-<!--    <script>
-	      // 基于准备好的dom，初始化echarts图表
-        var myChart = echarts.init(document.getElementById('main')); 
-        
-        option = {
-		    title : {
-		        text: '冷库历史温度',
-		        y:15,
-		        textStyle:{
-			    	fontSize: 16,
-				    fontWeight: 'normal',
-				    color: '#333',
-				    fontFamily :"'微软雅黑', Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif"
-			    }
-		    },
-		     tooltip : {
-		        textStyle:{
-			    	fontSize:'12'
-			    }
-		    },
-		    xAxis : [
-		        {
-		            type : 'category',
-		            boundaryGap : false,
-		            data : ['1：00','2：00','3：00','4：00','5：00','6：00','7：00']
-		        }
-		    ],
-		    yAxis : [
-		        {
-		            type : 'value',
-		            axisLabel : {
-		                formatter: '{value} °C'
-		            }
-		        }
-		    ],
-		     grid :{
-			  		x:50
-			  },
-		    series : [
-		        {
-		            type:'line',
-		            data:[-11, -15, -10, -13, -9, -12, -7],
-		            /*markPoint : {
-		                data : [
-		                    {type : 'max', name: '最大值'},
-		                    {type : 'min', name: '最小值'}
-		                ]
-		            },*/
-		            markLine : {
-		                data : [
-		                    {type : 'average', name: '启动温度'}
-		                ]
-		            }
-		        }
-		    ]
-		};                   
-        // 为echarts对象加载数据 
-        myChart.setOption(option); 
-    </script>-->
+<script>	    
+	 
+</script>
 </body>
 </html>
