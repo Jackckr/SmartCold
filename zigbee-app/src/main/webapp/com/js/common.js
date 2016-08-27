@@ -152,6 +152,8 @@ var util = {
     	$('body').append('<div class="loadEffect"></div>');
     }
 };
-//window.alert=util.alert;
-//window.confirm=util.confirm;
-
+window.onload = function(){
+	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{
+		var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");
+	}});
+};
