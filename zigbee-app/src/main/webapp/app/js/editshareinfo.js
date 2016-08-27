@@ -11,6 +11,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
          }
      }).success(function (data) {
     	 $scope.rdcsharedto = data.entity;
+    	 $scope.typeCode = $scope.rdcsharedto.typeCode;
     	 $scope.title = $scope.rdcsharedto.title;
     	 $scope.telephone = $scope.rdcsharedto.telephone;
     	 $scope.validStartTime = $scope.rdcsharedto.validStartTime;
@@ -29,9 +30,12 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	 $scope.unit1 = $scope.rdcsharedto.unit1;
     	 $scope.sqm = $scope.rdcsharedto.sqm;
     	 $scope.temperType = $scope.rdcsharedto.codeLave2;
-    	 $scope.storageType = $scope.rdcsharedto.codeLave1;
+    	 $scope.manageType = $scope.rdcsharedto.codeLave1;
     	 $scope.unit = $scope.rdcsharedto.unit;
     	 $scope.totalfiles = $scope.rdcsharedto.files;
+    	 $scope.provinceSelected();
+    	 $scope.stprovinceSelected();
+    	 $scope.toprovinceSelected();
     	 if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
     		 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
     	         params: {
@@ -43,8 +47,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	 }
      });
 	}
-	$scope.totalfiles = [];
-	
 	  // 获取省列表
 	    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
 	        $scope.provinces = data;
@@ -86,40 +88,50 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 
 	    $scope.citySelected = function () {
 	    }
+	  
+	    
+	    // 获取冷库经营类型
+	    $http.get(ER.root+"/i/rdc/findAllManageType").success(function (data) {
+	        $scope.manageTypes = data;
+	        $scope.manageType = data[0].id;
+	    });
+
+	    $scope.ManageTypeSelected = function () {
+	    };
+
 	    // 获取商品温度类型
-	    $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
+	    $http.get(ER.root+"/i/rdc/findAllTemperType").success(function (data) {
 	        $scope.temperTypes = data;
 	        $scope.temperType = data[0].id;
 	    });
 
 	    $scope.TemperTypeSelected = function () {
-	    }
-	    // 获取冷库经营类型
-	    $http.get(ER.root+'/i/rdc/findAllManageType').success(function (data) {
-	        $scope.storageTypes = data;
-	        $scope.storageType = data[0].id;
-	    });
-	    
+	    };
+	    //冷运参数
 	    $http.get(ER.root+'/i/ShareRdcController/getPSFilterData').success(function(data) {
         	$scope.codeLave1 = data.entity.fm;
         	$scope.codeLave2 = data.entity.cl;
         	$scope.ps_cr_type = data.entity.sk;
-        }); //
+        }); 
+	    //货物参数
+	    $http.get(ER.root+'/i/ShareRdcController/getGDFilterData').success(function(data) {
+	    	$scope.good_type = data.entity.gt;
+	    	}); 
 	    
-	    $http.get(ER.root+'/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
-	    $scope.StorageTypeSelected = function () {
-	    }
-	    $scope.addFiles = function(files) {
-		    $scope.totalfiles = $scope.totalfiles.concat(files);
-		    $("#list").empty();
-		    var files = $scope.totalfiles; // FileList object
-		    for (var i = 0,
-		    f; f = files[i]; i++) {
-		        if (!f.type.match('image.*')) { continue; }
-		        var reader = new FileReader();
-		        reader.onload = (function(theFile) { return function(e) { var innerHTML = ['<span id="imglistp'+i+'"><img class="thumb " src="', e.target.result, '" title="', escape(theFile.name), '"/></span>'].join(''); $("#list").append(innerHTML); };})(f); reader.readAsDataURL(f);//<i  onclick="releaseItem.drop('+i+')">×</i>
-		    }
-		};
+	    $scope.addFiles = function (files) {
+			if(files.length==0){return;};
+			var allfiles = $scope.totalfiles.concat(files);
+			if(allfiles.length>10){alert("最多选择10张！");return;}
+	        $scope.totalfiles=allfiles; 
+	    };
+	    $scope.drophonor = function(honorfile){
+	        angular.forEach($scope.totalfiles,function(item, key){
+	            if(item == honorfile){
+	                $scope.totalfiles.splice(key,1);
+	                return false;
+	            }
+	        });
+	    };
 	    function checkStorageSubmit(){
 	        var flag = true;
 	        // 检查必须填写项
@@ -133,7 +145,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	            flag = false;
 	        }
 	        
-	        if ($scope.storageType == undefined || $scope.storageType == '') {
+	        if ($scope.manageType == undefined || $scope.manageType == '') {
 	            flag = false;
 	        }
 	        if ($scope.sqm == undefined || $scope.sqm == '') {

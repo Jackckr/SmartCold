@@ -29,7 +29,7 @@
 			<a onclick="goback()"><i class="iconfont">&#xe60e;</i>
 			</a>
 		</div>
-		<div class="txt">共享信息修改</div>
+		<div class="txt">发布仓库信息修改</div>
 	</header>
 	
 	<section class="main maindetail" style="margin-top:2.5rem">
@@ -56,34 +56,37 @@
 			<ul class="houseinfo">
 				<li><label for="name">描述</label> <em>*</em><input type="text" id="name" ng-model="title"
 					placeholder="求租仓位" /></li>
-				<li ng-if="rdcsharedto.typeCode==2"><label for="province">省</label>
-				<em>*</em>
-					<div class="mySelect">
-						<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
+					
+				 <li class="offershow" ng-if="typeCode==2">
+                    <label for="province">省</label><em>*</em>
+                    <div class="mySelect">
+                    	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li ng-if="rdcsharedto.typeCode==2"><label for="city">市</label>
-				<em>*</em>
-					<div class="mySelect">
-						<select id="city" ng-model="cityId" name="cityid"
+                    </div>
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
+                 <li class="offershow"  ng-if="typeCode==2">
+                    <label for="city">市</label><em>*</em>
+                    <div class="mySelect">
+	                    <select id="city" ng-model="cityId" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
-					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+	                </div>
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
 				<li><label for="temperatureType">冷库温度类型</label>
 				<em>*</em>
 					<div class="mySelect">
-						<select ng-model="temperType" name="temperType"
-                                    ng-change="TemperTypeSelected(temperType)"
-                                    ng-options="x.id as x.type for x in temperTypes"></select>
+						 <select ng-model="manageType"
+                                    ng-change="ManageTypeSelected(manageType)"
+                                    ng-options="x.id as x.type for x in manageTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 					
-				<li><label for="storageType">经营类型</label>
+				<li><label for="manageType">经营类型</label>
 				<em>*</em>
 					<div class="mySelect">
-						<select ng-model="storageType" name="storageType"
-                                    ng-change="StorageTypeSelected(storageType)"
-                                    ng-options="x.id as x.type for x in storageTypes"></select>
+						   <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 					
 				<li><label>数/质/量</label> 
@@ -119,9 +122,9 @@
 					id="phone"  ng-model="telephone"/></li>
 				<li><label for="note">备注</label> <input type="text" id="note"
 					placeholder="（选填）" ng-model="note" name="note"/></li>
-				<li><label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
+				<li><label class="pic"> <input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
 				 </label> <span id="">上传图片</span><br>
-	            <output id="list"></output>
+	            <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
 			</ul>
 		</form>
 		<button class="mybtn" ng-click="submit()">确认修改</button>

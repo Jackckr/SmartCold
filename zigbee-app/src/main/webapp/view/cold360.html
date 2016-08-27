@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
@@ -30,18 +30,15 @@
             <div class="txt omg">
                 监控
             </div>
-            <ul class="rdcDropList">
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
+            <ul class="rdcDropList" ng-repeat="storage in storages">
+                <li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
             </ul>
         </header>
         <header class="two">
         	<div class="area fl">
         		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
         	</div>
-        	
+
         	<div id="searchDara_div" class="search">
         		<input type="text" placeholder="查找RDC..."/>
         		<i class="iconfont" >&#xe62f;</i>
@@ -91,19 +88,7 @@
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-            	<p class="actually">低温库</p>
-            	<p class="temperaturenum">{{curtemper}}℃</p>
-            	 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    			<div id="main"></div>
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
+        <div class="swiper-wrapper" id="chartView">
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
@@ -111,17 +96,17 @@
         <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
         <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
   </div>
-	<!--rdc列表--------------------------------------------------> 
+	<!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
 	 	<ul class="rdcList">
 	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>莱芜嘉禾冷链物流有限公司</span></li>
 	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>安德水产总公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li> 		
+	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li>
 	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>湖北寿康永乐上门物流园-测试数据-transiontransion-货品-出货</span></li>
 	 	</ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
-	 <!--rdc列表-----------------------------------------------> 
+	 <!--rdc列表----------------------------------------------->
     <ul class="footer">
         <li class="active">           
             <a href="">
@@ -149,8 +134,5 @@
             </a>
         </li>
     </ul>
-<script>	    
-	 
-</script>
 </body>
 </html>
