@@ -63,9 +63,11 @@ public class UserController extends BaseController {
 	public Object logout(HttpServletRequest request) {
 		request.getSession().removeAttribute("user");
 		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("token")) {
-				cookieService.deleteCookie(cookie.getValue());
+		if(cookies!=null&&cookies.length>0){
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					cookieService.deleteCookie(cookie.getValue());
+				}
 			}
 		}
 		return true;
