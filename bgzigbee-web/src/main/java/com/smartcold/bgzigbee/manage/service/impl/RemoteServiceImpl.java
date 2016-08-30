@@ -10,8 +10,8 @@ import com.smartcold.bgzigbee.manage.service.base.HttpService;
 @Service
 public class RemoteServiceImpl implements RemoteService {
 	
-	public final static String COLD_WEB_URL = "http://www.smartcold.org.cn/i/";
-//	public final static String COLD_WEB_URL = "http://localhost:8081/i/";
+//	public final static String COLD_WEB_URL = "http://www.smartcold.org.cn/i/";
+	public final static String COLD_WEB_URL = "http://localhost:8081/i/";
 
 	@Autowired
 	HttpService httpService;

@@ -537,10 +537,19 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             id:obj.id,
             mapping:JSON.stringify(obj.mapping)
         }).then(function (resp) {
-
         })
     }
-	
+
+    $scope.realSaveRdc = function () {
+		$http.post("/i/spiderConfig/update/mapping", {
+			table:'rdc',
+			id:$scope.vm.choseRdc.id,
+			mapping:JSON.stringify($scope.vm.choseRdc.mapping)
+		}).then(function (resp) {
+			alert('保存成功');
+		})
+	}
+
 	$scope.realSaveDoor = function(door){
 		url = '/i/coldStorageDoor/updateMapping?id=' + door.id 
 		+ '&mapping=' + JSON.stringify(door.mapping);

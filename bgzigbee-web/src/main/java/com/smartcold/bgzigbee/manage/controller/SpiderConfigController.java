@@ -57,8 +57,11 @@ public class SpiderConfigController {
 
     @RequestMapping("/update/mapping")
     public Object updateSetTableMapping(@RequestBody UpdateMappingDTO updateMappingDTO){
-        if (SetTables.checkTable(updateMappingDTO.getTable()) && setTableMapper.updateMapping(updateMappingDTO.getTable(), updateMappingDTO.getMapping(), updateMappingDTO.getId())) {
-            return new ResultDto(0, "删除成功");
+        if (updateMappingDTO.getTable().equals("rdc") || SetTables.checkTable(updateMappingDTO.getTable()) ) {
+
+            if (setTableMapper.updateMapping(updateMappingDTO.getTable(), updateMappingDTO.getMapping(), updateMappingDTO.getId())) {
+                return new ResultDto(0, "删除成功");
+            }
         }
         return new ResultDto(-1, "添加失败");
     }
