@@ -11,4 +11,6 @@ public interface ColdstorageLightSetMapping {
 	ColdStorageLightSetEntity findById(@Param("id") int id);
 
 	List<ColdStorageLightSetEntity> findByRdcId(@Param("rdcId") int rdcId);
+	
+	int updateSet(ColdStorageLightSetEntity lightSetEntity);
 }

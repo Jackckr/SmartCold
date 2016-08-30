@@ -53,7 +53,7 @@
     		</span>
     		 <ul class="otherList black">
     			<li><a href="javascript:;" id="">电耗</a></li>
-    			<li><a href="javascript:;" id="">能耗</a></li>
+    			<li><a href="javascript:;" id="">水耗</a></li>
     		</ul> 
     	</div>
     	<div class="door other" id="opendoor"><i class="iconfont">&#xe6ed;</i>
@@ -88,8 +88,7 @@
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper" id="chartView">
-        </div>
+        <div class="swiper-wrapper" id="chartView"></div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
         <!-- Add Arrows -->
@@ -100,9 +99,6 @@
 	 <section class="searchTop">
 	 	<ul class="rdcList" ng-repeat="rdclist in storages | filter:searchContent">
 	 		<li class="omg" ng-click="viewStorage(rdclist.id)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
-	 		<!--<li class="omg"><i class='iconfont'>&#xe62f;</i><span>安德水产总公司</span></li>-->
-	 		<!--<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li>-->
-	 		<!--<li class="omg"><i class='iconfont'>&#xe62f;</i><span>湖北寿康永乐上门物流园-测试数据-transiontransion-货品-出货</span></li>-->
 	 	</ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
