@@ -4,12 +4,14 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 
     $scope.user = window.user;
+    $scope.activeEnergy = 'power';
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
     //if (window.user.roleid == 3); 超管特殊处理
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            $scope.viewStorage($scope.storages[0].id);
+            $scope.rdcId = $scope.storages[0].id;
+            $scope.viewStorage($scope.rdcId);
         }
     });
 
@@ -72,10 +74,53 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         })
     }
 
-    clearInterval($rootScope.timeTicket);
-    $rootScope.timeTicket = setInterval(function () {
+    function clearSwiper(){
+        $("div").remove(".swiper-slide");
+    }
+
+    $scope.powerEnergy = function(){
+        clearSwiper();
+        $scope.swiper = 0;
+        $scope.activeEnergy = 'power';
+
         for (var i = 0; i < $scope.powers.length; i++) {
             $scope.load($scope.powers[i]);
+        }
+    }
+
+    $scope.waterEnergy = function(){
+        clearSwiper();
+        $scope.activeEnergy = 'water';
+
+        var mainId = 'water';
+        var innerHTML = '<div class="swiper-slide">' +
+            '<div id='+mainId+' style="height: 350px;width: 350px;position: relative;left: 20px"></div> ';
+        $("#chartView").last().append(innerHTML);
+
+        var barCharts = echarts.init($('#' + mainId)[0]);
+        $http.get(ER.coldroot + "/i/compressorGroup/getAllWaterCostByRdcId?rdcId=" + $scope.rdcId).success(
+            function(data){
+                $scope.waterCosts = data;
+                var xData = []
+                var yData = []
+                angular.forEach($scope.waterCosts,function(item){
+                    xData.push(item.compressorGroupName);
+                    yData.push(item.waterCost);
+                })
+                var option = $scope.creatOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'bar');
+                barCharts.setOption(option);
+            })
+    }
+
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        if ($scope.activeEnergy == 'power'){
+            for (var i = 0; i < $scope.powers.length; i++) {
+                $scope.load($scope.powers[i]);
+            }
+        }
+        if ($scope.activeEnergy == 'water'){
+            $scope.waterEnergy();
         }
     }, 30000);
 
