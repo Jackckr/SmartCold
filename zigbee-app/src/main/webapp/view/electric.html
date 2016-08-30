@@ -6,16 +6,18 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>监控--电耗</title>
-    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-    <link rel="stylesheet" href="../com/css/swiper.min.css" />
-    <link rel="stylesheet" href="../com/css/cold360.css" />
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/js/cold360.js" ></script>
+	<link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" href="../com/css/swiper.min.css" />
+	<link rel="stylesheet" href="../com/css/cold360.css" />
+	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="../com/js/angular.min.js"></script>
+	<script type="text/javascript" src="../com/js/swiper.min.js" ></script>
+	<script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+	<script type="text/javascript" src="../com/js/common.js"></script>
+	<script type="text/javascript" src="../com/js/cold360.js" ></script>
+	<script type="text/javascript" src="../app/js/electric.js" ></script>
 </head>
-<body>
+<body ng-app="app" ng-controller="electric" ng-cloak>
      <!-- header -->
         <header class="one">        	
             <div class="area fl">
@@ -40,7 +42,7 @@
         	</div>
         	
         	<div id="searchDara_div" class="search">
-        		<input type="text" placeholder="查找RDC..."/>
+				<input type="text" placeholder="查找RDC..." ng-model="searchContent"/>
         		<i class="iconfont" >&#xe62f;</i>
         	</div>
 	    </header>
@@ -88,20 +90,7 @@
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-            	<p class="actually">RDC电量监控</p>
-            	 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    			<div id="main"></div>
-    
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
-        </div>
+		<div class="swiper-wrapper" id="chartView"></div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
         <!-- Add Arrows -->
@@ -110,12 +99,9 @@
   </div>
   <!--rdc列表--------------------------------------------------> 
 	 <section class="searchTop">
-	 	<ul class="rdcList">
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>莱芜嘉禾冷链物流有限公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>安德水产总公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li> 		
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>湖北寿康永乐上门物流园-测试数据-transiontransion-货品-出货</span></li>
-	 	</ul>
+		 <ul class="rdcList" ng-repeat="rdclist in storages | filter:searchContent">
+			 <li class="omg" ng-click="viewStorage(rdclist.id)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+		 </ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
 	 <!--rdc列表-----------------------------------------------> 
@@ -145,90 +131,5 @@
             </a>
         </li>
     </ul>
-    
-    <script>
-	    // 基于准备好的dom，初始化echarts实例
-		var myChart = echarts.init(document.getElementById('main'));
-		var dataAll = [
-		    [
-		        [10.0, 8.04],
-		        [8.0, 6.95],
-		        [13.0, 7.58],
-		        [9.0, 8.81],
-		        [11.0, 8.33],
-		        [14.0, 9.96],
-		        [6.0, 7.24],
-		        [4.0, 4.26],
-		        [12.0, 10.84],
-		        [7.0, 4.82],
-		        [5.0, 5.68]
-		    ]
-		];
-		
-		var markLineOpt = {
-		    animation: false,
-		    label: {
-		        normal: {
-		            formatter: 'y = 0.5 * x + 3',
-		            textStyle: {
-		                align: 'right'
-		            }
-		        }
-		    },
-		    lineStyle: {
-		        normal: {
-		            type: 'solid'
-		        }
-		    },
-		    tooltip: {
-		        formatter: 'y = 0.5 * x + 3'
-		    },
-		    data: [[{
-		        coord: [0, 3],
-		        symbol: 'none'
-		    }, {
-		        coord: [20, 13],
-		        symbol: 'none'
-		    }]]
-		};
-		
-		option = {
-		    /*title: {
-		        text: 'RDC电量监控',
-		        x: 'left',
-		        y: 1,
-		        textStyle:{
-			    	fontSize: 16,
-				    fontWeight: 'normal',
-				    color: '#333',
-				    fontFamily :"'微软雅黑', Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif"
-			    },
-		    },*/
-		    grid: [
-		        {x: '7%', y: '7%', width: '90%', height: '80%'}
-		    ],
-		    tooltip: {
-		        formatter: 'Group {a}: ({c})'
-		    },
-		    xAxis: [
-		        {gridIndex: 0, min: 0, max: 20}
-		    ],
-		    yAxis: [
-		        {gridIndex: 0, min: 0, max: 15}
-		    ],
-		    series: [
-		        {
-		            name: 'I',
-		            type: 'scatter',
-		            xAxisIndex: 0,
-		            yAxisIndex: 0,
-		            data: dataAll[0],
-		            markLine: markLineOpt
-		        }
-		    ]
-		};
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-    </script>
 </body>
 </html>

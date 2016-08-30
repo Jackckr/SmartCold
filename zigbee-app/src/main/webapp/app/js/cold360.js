@@ -17,10 +17,8 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
-                if ($scope.mystorages.length > 0) {
-                    for (var i = 0; i < $scope.mystorages.length; i++) {
-                        $scope.load($scope.mystorages[i]);
-                    }
+                for (var i = 0; i < $scope.mystorages.length; i++) {
+                    $scope.load($scope.mystorages[i]);
                 }
             }
         });
