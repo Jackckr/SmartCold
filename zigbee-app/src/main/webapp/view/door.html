@@ -9,13 +9,16 @@
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="../com/js/angular.min.js"></script>
+	<script type="text/javascript" src="../com/js/swiper.min.js" ></script>
+	<script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+	<script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
+    <script type="text/javascript" src="../app/js/facility.js" ></script>
 </head>
-<body>
+<body ng-app="app" ng-controller="facility" ng-cloak>
     <!-- header -->
         <header class="one">       	
             <div class="area fl">
@@ -88,20 +91,21 @@
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-            	<p class="actually">冷库门开关监控</p>
-            	 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    			<div id="main"></div>
-    
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
-            <div class="swiper-slide">
-            	请耐心等待......
-            </div>
-        </div>
+		<div class="swiper-wrapper" id="chartView"></div>
+        <!--<div class="swiper-wrapper">-->
+            <!--<div class="swiper-slide">-->
+            	<!--<p class="actually">冷库门开关监控</p>-->
+            	 <!--&lt;!&ndash; 为ECharts准备一个具备大小（宽高）的Dom &ndash;&gt;-->
+    			<!--<div id="main"></div>-->
+    <!---->
+            <!--</div>-->
+            <!--<div class="swiper-slide">-->
+            	<!--请耐心等待......-->
+            <!--</div>-->
+            <!--<div class="swiper-slide">-->
+            	<!--请耐心等待......-->
+            <!--</div>-->
+        <!--</div>-->
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
         <!-- Add Arrows -->
@@ -145,90 +149,5 @@
             </a>
         </li>
     </ul>
-    
-    <script>
-	    // 基于准备好的dom，初始化echarts实例
-			var myChart = echarts.init(document.getElementById('main'));
-			var dataAll = [
-			    [
-			        [10.0, 8.04],
-			        [8.0, 6.95],
-			        [13.0, 7.58],
-			        [9.0, 8.81],
-			        [11.0, 8.33],
-			        [14.0, 9.96],
-			        [6.0, 7.24],
-			        [4.0, 4.26],
-			        [12.0, 10.84],
-			        [7.0, 4.82],
-			        [5.0, 5.68]
-			    ]
-			];
-			
-			var markLineOpt = {
-			    animation: false,
-			    label: {
-			        normal: {
-			            formatter: 'y = 0.5 * x + 3',
-			            textStyle: {
-			                align: 'right'
-			            }
-			        }
-			    },
-			    lineStyle: {
-			        normal: {
-			            type: 'solid'
-			        }
-			    },
-			    tooltip: {
-			        formatter: 'y = 0.5 * x + 3'
-			    },
-			    data: [[{
-			        coord: [0, 3],
-			        symbol: 'none'
-			    }, {
-			        coord: [20, 13],
-			        symbol: 'none'
-			    }]]
-			};
-			
-			option = {
-			    /*title: {
-			        text: '冷库门开关监控',
-			        x: 'left',
-			        y: 1,
-			        textStyle:{
-				    	fontSize: 16,
-					    fontWeight: 'normal',
-					    color: '#333',
-					    fontFamily :"'微软雅黑', Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif"
-				    },
-			    },*/
-			    grid: [
-			        {x: '7%', y: '7%', width: '90%', height: '80%'}
-			    ],
-			    tooltip: {
-			        formatter: 'Group {a}: ({c})'
-			    },
-			    xAxis: [
-			        {gridIndex: 0, min: 0, max: 20}
-			    ],
-			    yAxis: [
-			        {gridIndex: 0, min: 0, max: 15}
-			    ],
-			    series: [
-			        {
-			            name: 'I',
-			            type: 'scatter',
-			            xAxisIndex: 0,
-			            yAxisIndex: 0,
-			            data: dataAll[0],
-			            markLine: markLineOpt
-			        }
-			    ]
-			};
-			// 使用刚指定的配置项和数据显示图表。
-			myChart.setOption(option);
-    </script>
 </body>
 </html>
