@@ -163,7 +163,7 @@ section{
 	color: #EC594A;
 	font-size: 1.8em;
 }
-div[id^="main"]{
+div[id^="main"],.actually+div[id]{
 	min-height:15rem;
 	
 }

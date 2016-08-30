@@ -107,6 +107,7 @@
             __infoEl.on({'click':function(e){
                 callback.call(this,$(e.currentTarget).is('.btn-primary')?'yes':'no',e);
                 __infoEl.remove();
+                return $(e.currentTarget).is('.btn-primary');
             }},'.btn-cancel,.btn-primary');
             $('body').append(__infoEl.addClass('js-modal-info'));
             __infoEl.modal(true);
@@ -164,6 +165,10 @@
         	};
         }
 	};
-	window.alert = $.proxy(function(msg){
-		util.info(null,msg);
-		});
+	window.alert = $.proxy(function(msg){util.info(null,msg);});
+//	window.confirm = $.proxy(function(msg){
+//		var s=util.quest(null,msg);
+//		debugger;
+//	   return s;	
+//	});
+	

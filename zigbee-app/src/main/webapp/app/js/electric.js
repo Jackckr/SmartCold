@@ -51,7 +51,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         if ($scope.swiper < $scope.powers.length){
             var innerHTML = '<div class="swiper-slide">' +
                 '<p class="actually">'+powerSet.name+'</p>' +
-                '<div id='+mainId+' style="height: 350px;width: 350px;position: relative;left: 20px"></div> ';
+                '<div id='+mainId+' style="height: 18rem;width: 18rem;position: relative;left: 1rem"></div> ';
             $("#chartView").last().append(innerHTML);
             $scope.swiper +=1;
         }
@@ -94,7 +94,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
 
         var mainId = 'water';
         var innerHTML = '<div class="swiper-slide">' +
-            '<div id='+mainId+' style="height: 350px;width: 350px;position: relative;left: 20px"></div> ';
+            '<div id='+mainId+' style="height: 18rem;width: 18rem;position: relative;left: 1rem"></div> ';
         $("#chartView").last().append(innerHTML);
 
         var barCharts = echarts.init($('#' + mainId)[0]);
@@ -130,9 +130,21 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
                 trigger: 'axis'
             },
             title: {
-                text: title
+                text: title,
+                x:'left',
+                textStyle: {
+                    fontSize: 16,
+                    fontWeight: 400,
+                    color: '#333'          // 主标题文字颜色
+                },
             },
             calculable : true,
+            grid: {
+                x:55,
+                y: 60,
+                x2: 75,
+                /*y2: 60,*/
+            },
             xAxis : [
                 {
                     type : 'category',
@@ -143,7 +155,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
                 {
                     type : 'value',
                     name : yName + "(" + yUnit + ")"
-                }
+                }                
             ],
             series : [
                 {

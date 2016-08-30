@@ -56,17 +56,18 @@ $().ready(function() {
   		   $.get(ER.root+'/i/city/findProvinceList',function(data) {
 				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
 				 $("#ul_address_list").append(prove.join("")); 
-//				 $("#ul_address_list li").click(function(event) {addfilter(this);});
+				 $("#ul_address_list li").click(function(event) {addfilter(this);});
   		   });
   		   $.post(ER.root+"/i/rdc/getRDCFilterData",function(data) {
   			   if(data.success){	
-  					 var _mtty=data.entity.mt, _stty=data.entity.te;//经营类型,温度类型
+  					 var _mtty=data.entity.mt,
+  					 _stty=data.entity.te;//经营类型,温度类型
   					 $.each(_mtty, function(i, vo){mtlist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });
   					 $.each(_stty, function(i, vo){stlist.push("<li value='"+vo.id+"' >"+vo.type+"</li>"); });  
   					 $("#ul_mtty_list").append(mtlist.join("")); 
   					 $("#ul_stty_list").append(stlist.join("")); 
 //  					 $("#filter_section li").click(function(event) {addfilter(this);});
-//  					$("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
+  					$("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function(event) {addfilter(this);});
   			   }
   	      });
   	 };
@@ -76,7 +77,7 @@ $().ready(function() {
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   			var adds=$("#ul_address_list li.active").attr("value");////地区
   			var keyword=$("#searchDara_div input").val();////关键字搜索
-  		    var _options={ sqm:sqm, managetype: smty,storagetempertype:sety,provinceid:adds,keyword:keyword};
+  		    var _options={ sqm:sqm, storagetempertype: smty,managementType:sety,provinceid:adds,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
