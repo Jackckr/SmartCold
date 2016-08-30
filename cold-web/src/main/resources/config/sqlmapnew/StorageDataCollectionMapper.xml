@@ -8,7 +8,7 @@
 		  <id property="id" column="id" />
 		  <result property="key" column="key"/>
 		  <result property="value" column="value"/>
-		  <result property="addtime" column="addtime"/>
+		  <result property="addtime" column="time"/>
 		</resultMap>
 
 	<insert id="batchInsert" parameterType="StorageDataCollectionEntity">
@@ -46,7 +46,7 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if> 
-	    ORDER BY addtime DESC 
+	    ORDER BY time DESC 
 	    LIMIT #{limit} 
 	
 	</select>
@@ -63,8 +63,8 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
-	    AND addtime > #{startTime} AND addtime &lt; #{endTime} 
-	    ORDER BY `addtime` DESC
+	    AND time > #{startTime} AND time &lt; #{endTime} 
+	    ORDER BY `time` DESC
 	
 	</select>
 
