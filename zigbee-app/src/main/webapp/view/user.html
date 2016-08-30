@@ -19,29 +19,31 @@
     		我的
     	</div>
     </header>
-    <section class="clearfix" ng-show="userinfo.id" onclick="location.href='personal.html'">
-    	<div class="img fl">
-    		<img ng-src="{{userinfo.avatar}}"/>
-    	</div>
-    	<div class="rightArrow fr">
-    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-    	</div>
-    	<div class="name">
-    		<p class="nameinfo omg">{{userinfo.nickname}}</p>
-    		<p class="position omg">
-    			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}
-    		</p>
-    	</div>
-    </section>
-    <section class="clearfix" ng-if="!userinfo.id">    
-    	<div class="img fl">
-    		<img src="../com/img/success.png"/>
-    	</div>
-    	<div class="rightArrow fr">
-    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-    	</div>
-        <div class="name nameLogin" onclick="gologin();">点此登录</div>
-    </section>
+    <div id="userinfo" ng-cloak>
+	    <section class="clearfix" ng-show="userinfo.id" onclick="location.href='personal.html'">
+	    	<div class="img fl">
+	    		<img ng-src="{{userinfo.avatar}}"/>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="nameinfo omg">{{userinfo.nickname}}</p>
+	    		<p class="position omg">
+	    			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}
+	    		</p>
+	    	</div>
+	    </section>
+	    <section class="clearfix" ng-if="!userinfo.id">    
+	    	<div class="img fl">
+	    		<img src="../com/img/success.png"/>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	        <div class="name nameLogin" onclick="gologin();">点此登录</div>
+	    </section>
+    </div>
     <ul class="list list_icon">
     	<li class="clearfix" ng-login="user-mycold.html">
     		<div class="myicon fl">

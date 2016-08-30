@@ -501,7 +501,11 @@ public class RdcController {
 				if(betsmdata.length==2){
 					sqlfilter.append(" r.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
 				}else{
-					sqlfilter.append(" r.sqm  "+betsmdata[0]+" or");
+					if(sqm.indexOf("<")!=-1||sqm.indexOf(">")!=-1){
+						sqlfilter.append(" r.sqm  "+betsmdata[0]+" or");
+					}else{
+						return "";
+					}
 				}
 			}
 			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
