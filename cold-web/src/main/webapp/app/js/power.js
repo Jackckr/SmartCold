@@ -27,7 +27,7 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 			option = baseTools.getEchartSingleOption('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line');
 			lineChart.setOption(option);
 		})
-		templateUrl = "/i/baseInfo/getKeyValueData?type=" + 10 + "&oid=" + $scope.powerid 
+		templateUrl = "/i/baseInfo/getKeyValueData?type=" + 10 + "&oid=" + $scope.powerid
 			  + "&nums=1" + "&key="
 	    angular.forEach($scope.electricMap,function(item,key){
 	    	$http.get(templateUrl + key).success(function(data,status,headers,config){
