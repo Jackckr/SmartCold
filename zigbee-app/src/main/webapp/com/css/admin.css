@@ -443,4 +443,43 @@ section.show{
 	width: 0;
 	height:0;
 }
-
+/* 我的消息 */
+html,body{
+	height:100%;
+}
+.body{
+	margin-top: 2.4rem;
+	background-color: #fff;
+	min-height: 82%;
+	padding:0 .9rem 2.5rem;
+	box-sizing: border-box;
+}
+.messageList{
+	border-bottom: 1px solid #eee;
+	padding:.7rem 0;
+}
+.messageImg{
+	width: 2rem;
+	height: 2rem;
+	line-height:2rem;
+	background-color: #F39826;
+	text-align: center;
+	border-radius: 50%;
+	margin-right:.3rem;
+}
+.red{background-color: #F1594B;}
+.messageImg i{
+	color: #fff;
+	font-size: 1rem;
+}
+.messageInfo{
+	color: #999;
+	font-size: .7rem;
+}
+.messageInfo strong{
+	color: #333;
+	font-size: .75rem;
+}
+.detail{
+	margin-top:.3rem;
+}
