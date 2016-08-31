@@ -40,7 +40,7 @@
 		FROM `inforcategory` WHERE `id` = #{categoryID}
 	</select>
 	
-	<delete id="updateInforCategory" parameterType="map">
+	<delete id="deleteInforCategory" parameterType="map">
 	    DELETE FROM inforcategory WHERE `id` = #{categoryID}
 	</delete>
 	
