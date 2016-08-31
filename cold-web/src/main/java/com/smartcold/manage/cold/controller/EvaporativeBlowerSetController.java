@@ -22,9 +22,9 @@ public class EvaporativeBlowerSetController {
 		return evaporativeBlowerSetDao.findById(id);
 	}
 
-	@RequestMapping(value = "/findByEvaporativeId", method = RequestMethod.GET)
+	@RequestMapping(value = "/findByGroupid", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findByEvaporativeId(@RequestParam int evaporativeId) {
-		return evaporativeBlowerSetDao.findByEvaporativeId(evaporativeId);
+	public Object findByGroupid(@RequestParam int evaporativeId) {
+		return evaporativeBlowerSetDao.findByGroupid(evaporativeId);
 	}
 }

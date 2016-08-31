@@ -186,6 +186,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
                 console.log("openColdDiv: "+$rootScope.rdcId);
                 $state.go('coldStorageDiv',{'storageID': $rootScope.rdcId});
             }
+            $rootScope.openLightDiv = function (){
+                console.log("openLightDiv: "+$rootScope.rdcId);
+                $state.go('light',{'storageID': $rootScope.rdcId});
+            }
             $rootScope.openWarn = function (){
                 console.log("openWarn: "+$rootScope.rdcId);
                 $state.go('warn',{'rdcId': $rootScope.rdcId});
@@ -386,9 +390,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'other',
         templateUrl: 'app/template/other.html'
     }).state('light',{
-    	url:'/light',
+    	url:'/light/:storageID',
     	controller: 'light',
-        templateUrl: 'app/template/light.html'
+        templateUrl: 'app/template/coldStorageLightDiv.html'
     });
 
 });

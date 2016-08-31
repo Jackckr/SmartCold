@@ -25,6 +25,46 @@ public class CompressorGroupSetEntity {
 
 	private String mapping;
 
+	private float crashStopPress;
+
+	private float highPressAlarm;
+
+	private float highTempAlarm;
+
+	private float lowTempAlarm;
+
+	public float getCrashStopPress() {
+		return crashStopPress;
+	}
+
+	public void setCrashStopPress(float crashStopPress) {
+		this.crashStopPress = crashStopPress;
+	}
+
+	public float getHighPressAlarm() {
+		return highPressAlarm;
+	}
+
+	public void setHighPressAlarm(float highPressAlarm) {
+		this.highPressAlarm = highPressAlarm;
+	}
+
+	public float getHighTempAlarm() {
+		return highTempAlarm;
+	}
+
+	public void setHighTempAlarm(float highTempAlarm) {
+		this.highTempAlarm = highTempAlarm;
+	}
+
+	public float getLowTempAlarm() {
+		return lowTempAlarm;
+	}
+
+	public void setLowTempAlarm(float lowTempAlarm) {
+		this.lowTempAlarm = lowTempAlarm;
+	}
+
 	public int getId() {
 		return id;
 	}

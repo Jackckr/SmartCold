@@ -8,10 +8,11 @@
 		SELECT *
 		FROM `evaporativewaterset` WHERE `id` = #{id}
 	</select>
-	
-	<select id="findByEvaporativeId" parameterType="map" resultType="EvaporativeWaterSetEntity">
+
+
+	<select id="findByGroupid" parameterType="map" resultType="EvaporativeWaterSetEntity">
 		SELECT *
-		FROM `evaporativewaterset` WHERE `evaporativeId` = #{evaporativeId}
+		FROM `evaporativewaterset` WHERE `groupid` = #{groupid}
 	</select>
 
 </mapper>

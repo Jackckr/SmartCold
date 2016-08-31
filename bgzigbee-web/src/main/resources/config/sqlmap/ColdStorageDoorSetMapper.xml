@@ -14,7 +14,15 @@
 		UPDATE `ColdStorageDoorSet` SET mapping=#{mapping}
 		WHERE `id` = #{coldStorageDoorId}
 	</update>
-	
+	<update id="updateDoor">
+		UPDATE `coldstoragedoorset` SET
+		`name` = #{name},
+		`length` = #{length},
+		`width` = #{width},
+		`blowerpower` = #{blowerpower}
+		WHERE id=#{id}
+	</update>
+
 	<insert id="insertDoor" parameterType="ColdStorageDoorSetEntity">
 	  INSERT INTO `coldstoragedoorset` 
 	  (
@@ -22,7 +30,8 @@
 	  `rdcid`, 
 	  `coldstorageid`, 
 	  `length`, 
-	  `width`
+	  `width`,
+	  `blowerpower`
 	  )
 	  VALUES
 	  (
@@ -30,7 +39,8 @@
 	  #{rdcId},
 	  #{coldStorageId},
 	  #{length},
-	  #{width}
+	  #{width},
+	  #{blowerpower}
 	  );
 	  
 	</insert>

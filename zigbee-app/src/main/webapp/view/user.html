@@ -19,31 +19,33 @@
     		我的
     	</div>
     </header>
-    <section class="clearfix" ng-show="userinfo.id" onclick="location.href='personal.html'">
-    	<div class="img fl">
-    		<img ng-src="{{userinfo.avatar}}"/>
-    	</div>
-    	<div class="rightArrow fr">
-    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-    	</div>
-    	<div class="name">
-    		<p class="nameinfo omg">{{userinfo.nickname}}</p>
-    		<p class="position omg">
-    			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}
-    		</p>
-    	</div>
-    </section>
-    <section class="clearfix" ng-if="!userinfo.id">    
-    	<div class="img fl">
-    		<img src="../com/img/success.png"/>
-    	</div>
-    	<div class="rightArrow fr">
-    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-    	</div>
-        <div class="name nameLogin" onclick="gologin();">点此登录</div>
-    </section>
+    <div id="userinfo" ng-cloak>
+	    <section class="clearfix" ng-show="userinfo.id" onclick="location.href='personal.html'">
+	    	<div class="img fl">
+	    		<img ng-src="{{userinfo.avatar}}"/>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	    	<div class="name">
+	    		<p class="nameinfo omg">{{userinfo.nickname}}</p>
+	    		<p class="position omg">
+	    			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}
+	    		</p>
+	    	</div>
+	    </section>
+	    <section class="clearfix" ng-if="!userinfo.id">    
+	    	<div class="img fl">
+	    		<img src="../com/img/success.png"/>
+	    	</div>
+	    	<div class="rightArrow fr">
+	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    	</div>
+	        <div class="name nameLogin" onclick="gologin();">点此登录</div>
+	    </section>
+    </div>
     <ul class="list list_icon">
-    	<li class="clearfix" onclick="location.href='user-mycold.html'">
+    	<li class="clearfix" ng-login="user-mycold.html">
     		<div class="myicon fl">
 	    		<i class="iconfont">&#xe6d3;</i>
 	    	</div>
@@ -54,7 +56,7 @@
 	    		<p class="list_name">我的冷库</p>
 	    	</div>
     	</li>
-    	<li class="clearfix" onclick="location.href='user-myrelease.html'">
+    	<li class="clearfix" ng-login="user-myrelease.html">
     		<div class="myicon fl">
 	    		<i class="iconfont">&#xe666;</i>
 	    	</div>
@@ -65,7 +67,7 @@
 	    		<p class="list_name">我的发布</p>
 	    	</div>
     	</li>
-    	<li class="clearfix" onclick="location.href='user-myorder.html'">
+    	<li class="clearfix" ng-login="user-myorder.html">
     		<div class="myicon fl">
 	    		<i class="iconfont">&#xe6a4;</i>
 	    	</div>
@@ -76,7 +78,7 @@
 	    		<p class="list_name">我的联络单</p>
 	    	</div>
     	</li>
-    	<li class="clearfix" onclick="location.href='user-comment.html'">
+    	<li class="clearfix" ng-login="user-comment.html">
     		<div class="myicon fl">
 	    		<i class="iconfont">&#xe6b7;</i>
 	    	</div>
@@ -87,7 +89,7 @@
 	    		<p class="list_name">我的点评</p>
 	    	</div>
     	</li>
-    	<li class="clearfix" onclick="location.href='recenscan.html'">
+    	<li class="clearfix" ng-login="recenscan.html">
     		<div class="myicon fl">
 	    		<i class="iconfont">&#xe6b8;</i>
 	    	</div>

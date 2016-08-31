@@ -6,8 +6,178 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>链库网</title>
-    <link rel="stylesheet" type="text/css" href="com/css/common.css">
-    <link rel="stylesheet" type="text/css" href="com/css/index.css">
+    <style type="text/css">
+    
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.body{
+    background: black;
+}
+.view-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-perspective: 1200px;
+    perspective: 1200px;
+}
+.view-page{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.view-page{
+    display: -webkit-box;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.view-page{
+    color: #fff;
+}
+.view-1{
+    background: #b3c589;
+}
+.view-2{
+    background: #8fc241;
+}
+.view-3{
+    background: #e2a04c;
+}
+.view-4{
+    background: #81add2;
+}
+
+/* View animations */
+.view-1.ng-enter{
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+    -webkit-animation: rotateCubeTopIn .5s ease-in both;
+    animation: rotateCubeTopIn .5s ease-in both;
+}
+.view-1.ng-leave{
+    -webkit-animation: moveToLeft .5s both;
+    animation: moveToLeft .5s both;
+}
+.view-2.ng-enter{
+    -webkit-animation: moveFromRight .5s both;
+    animation: moveFromRight .5s both;
+}
+.view-2.ng-leave{
+    -webkit-animation: scaleDown .5s both;
+    animation: scaleDown .5s both;
+}
+.view-3.ng-enter{
+    -webkit-animation: moveFromBottom .5s both;
+    animation: moveFromBottom .5s both;
+    z-index: 200;
+}
+.view-3.ng-leave{
+    -webkit-transform-origin: 0% 0%;
+    transform-origin: 0% 0%;
+    -webkit-animation: rotateFall 1s ease-in both;
+    animation: rotateFall 1s ease-in both;
+    z-index: 200;
+}
+.view-4.ng-enter{
+    -webkit-animation: scaleUp .5s both;
+    animation: scaleUp .5s both;
+}
+.view-4.ng-leave{
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-animation: rotateCubeTopOut .5s ease-in both;
+    animation: rotateCubeTopOut .5s ease-in both;
+}
+
+/* Animation keyframes. */
+@-webkit-keyframes moveToLeft {
+    from { }
+    to { -webkit-transform: translateX(-100%); }
+}
+@keyframes moveToLeft {
+    from { }
+    to { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+}
+
+@-webkit-keyframes moveFromRight {
+    from { -webkit-transform: translateX(100%); }
+}
+@keyframes moveFromRight {
+    from { -webkit-transform: translateX(100%); transform: translateX(100%); }
+}
+
+@-webkit-keyframes scaleDown {
+    from { }
+    to { opacity: 0; -webkit-transform: scale(.8); }
+}
+@keyframes scaleDown {
+    from { }
+    to { opacity: 0; -webkit-transform: scale(.8); transform: scale(.8); }
+}
+
+@-webkit-keyframes moveFromBottom {
+    from { -webkit-transform: translateY(100%); }
+}
+@keyframes moveFromBottom {
+    from { -webkit-transform: translateY(100%); transform: translateY(100%); }
+}
+
+@-webkit-keyframes rotateFall {
+    0% { -webkit-transform: rotateZ(0deg); }
+    20% { -webkit-transform: rotateZ(10deg); -webkit-animation-timing-function: ease-out; }
+    40% { -webkit-transform: rotateZ(17deg); }
+    60% { -webkit-transform: rotateZ(16deg); }
+    100% { -webkit-transform: translateY(100%) rotateZ(17deg); }
+}
+@keyframes rotateFall {
+    0% { -webkit-transform: rotateZ(0deg); transform: rotateZ(0deg); }
+    20% { -webkit-transform: rotateZ(10deg); transform: rotateZ(10deg); -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+    40% { -webkit-transform: rotateZ(17deg); transform: rotateZ(17deg); }
+    60% { -webkit-transform: rotateZ(16deg); transform: rotateZ(16deg); }
+    100% { -webkit-transform: translateY(100%) rotateZ(17deg); transform: translateY(100%) rotateZ(17deg); }
+}
+
+@-webkit-keyframes scaleUp {
+    from { opacity: 0; -webkit-transform: scale(.8); }
+}
+@keyframes scaleUp {
+    from { opacity: 0; -webkit-transform: scale(.8); transform: scale(.8); }
+}
+
+@-webkit-keyframes rotateCubeTopOut {
+    0% { }
+    50% { -webkit-animation-timing-function: ease-out; -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg); }
+    100% { opacity: .3; -webkit-transform: translateY(-100%) rotateX(90deg); }
+}
+@keyframes rotateCubeTopOut {
+    0% {}
+    50% { -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg); transform: translateY(-50%) translateZ(-200px) rotateX(45deg); }
+    100% { opacity: .3; -webkit-transform: translateY(-100%) rotateX(90deg); transform: translateY(-100%) rotateX(90deg); }
+}
+
+@-webkit-keyframes rotateCubeTopIn {
+    0% { opacity: .3; -webkit-transform: translateY(100%) rotateX(-90deg); }
+    50% { -webkit-animation-timing-function: ease-out; -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg); }
+}
+@keyframes rotateCubeTopIn {
+    0% { opacity: .3; -webkit-transform: translateY(100%) rotateX(-90deg); transform: translateY(100%) rotateX(-90deg); }
+    50% { -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg); transform: translateY(50%) translateZ(-200px) rotateX(-45deg); }
+}
+    </style>
     <script type="text/javascript" src="com/js/jquery-3.1.0.min.js"></script>
 
 </head>
@@ -28,8 +198,8 @@
 		        <li><a href="view/news.html"><i class="iconfont">&#xe6f8;</i><p class="info">资讯</p></a></li>
 		        <li><a href="view/messages.html"><i class="iconfont">&#xe71c;</i><p class="info">消息</p><span class="countNum">66</span></a></li>
 		        <li><a href="view/user.html"><i class="iconfont">&#xe6fd;</i><p class="info">我的</p></a></li>
-		    </ul>
-		  </div>
+		     </ul>
+		    </div>
 	    </div>
 	    <!-- 2级页面 -->
 	    <div class="view-page view-2" ng-switch-when="2">
@@ -41,10 +211,5 @@
 	    </div>
 	</div>
   </div> 
-
-    <script type="text/javascript" src="com/js/Popt.js"></script>
-    <script type="text/javascript" src="com/js/citySet.js"></script>
-    <script type="text/javascript" src="com/js/common.js"></script>
-    <script type="text/javascript" src="app/js/home.js"></script>
 </body>
 </html>

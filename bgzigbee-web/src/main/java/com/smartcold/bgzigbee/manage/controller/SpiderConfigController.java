@@ -57,8 +57,11 @@ public class SpiderConfigController {
 
     @RequestMapping("/update/mapping")
     public Object updateSetTableMapping(@RequestBody UpdateMappingDTO updateMappingDTO){
-        if (SetTables.checkTable(updateMappingDTO.getTable()) && setTableMapper.updateMapping(updateMappingDTO.getTable(), updateMappingDTO.getMapping(), updateMappingDTO.getId())) {
-            return new ResultDto(0, "删除成功");
+        if (updateMappingDTO.getTable().equals("rdc") || SetTables.checkTable(updateMappingDTO.getTable()) ) {
+
+            if (setTableMapper.updateMapping(updateMappingDTO.getTable(), updateMappingDTO.getMapping(), updateMappingDTO.getId())) {
+                return new ResultDto(0, "删除成功");
+            }
         }
         return new ResultDto(-1, "添加失败");
     }
@@ -151,6 +154,21 @@ public class SpiderConfigController {
             return new ResultDto(0, "添加成功");
         }
         return new ResultDto(-1, "添加失败");
+    }
+
+    @RequestMapping(value = "/update/plateformDoor", method = RequestMethod.POST)
+    @ResponseBody
+    public Object updatePlateformDoor(@RequestBody PlatformDoorSetEntity entity) {
+        if (platformDoorSetMapping.updateById(entity)) {
+            return new ResultDto(0, "更新成功");
+        }
+        return new ResultDto(-1, "更新失败");
+    }
+
+    @RequestMapping(value = "/delete/plateformDoor", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Object deletePlateformDoor(int id) {
+        return deleteById(SetTables.PLATFORMDOORSET.getTable(), id);
     }
 
     @RequestMapping(value = "/add/platformDoorSet", method = RequestMethod.POST)

@@ -80,6 +80,7 @@
 				complete : function(e){$(me).text("登录"); $(me).delay(500).data('isLoading',false);},
 				success : function(data) {
 					if (data.success) {
+					    checktoken();//检查token
 						util.setCookie("username",userName,"d7");
 						util.setCookie("token",data.message.substr(6),"d7");
                         document.cookie = data.message;

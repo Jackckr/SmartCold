@@ -19,6 +19,16 @@ public class ColdStorageDoorSetEntity {
 
 	private String mapping;
 
+	private float blowerpower;
+
+	public float getBlowerpower() {
+		return blowerpower;
+	}
+
+	public void setBlowerpower(float blowerpower) {
+		this.blowerpower = blowerpower;
+	}
+
 	public int getId() {
 		return id;
 	}

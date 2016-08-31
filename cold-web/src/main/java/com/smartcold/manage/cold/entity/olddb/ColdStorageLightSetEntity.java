@@ -15,8 +15,41 @@ public class ColdStorageLightSetEntity {
 	private float power;
 	  
 	private String mapping;
+	
+	private String name;
 	  
 	private Date addTime;
+	
+	private Integer positionX;
+	
+	private Integer positionY;
+	
+	private Integer rotate;
+	
+
+	public Integer getDiv_x() {
+		return positionX;
+	}
+
+	public void setDiv_x(Integer div_x) {
+		this.positionX = div_x;
+	}
+
+	public Integer getDiv_y() {
+		return positionY;
+	}
+
+	public void setDiv_y(Integer div_y) {
+		this.positionY = div_y;
+	}
+
+	public Integer getRotate() {
+		return rotate;
+	}
+
+	public void setRotate(Integer rotate) {
+		this.rotate = rotate;
+	}
 
 	public int getId() {
 		return id;
@@ -56,5 +89,13 @@ public class ColdStorageLightSetEntity {
 
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

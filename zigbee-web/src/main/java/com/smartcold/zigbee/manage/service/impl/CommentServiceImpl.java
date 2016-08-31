@@ -23,6 +23,7 @@ import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommentService;
 import com.smartcold.zigbee.manage.service.FtpService;
+import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.TimeUtil;
 
 /**
@@ -89,7 +90,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public Page<PersonalCommentDTO> findCommentsUserID(int userID) {
-		Page<CommentEntity> commentDTOList = commentDao.findCommentsByUserId(userID);
+		Page<CommentEntity> commentDTOList = commentDao.findCommentsByUserId(userID);//准备使用连接查询替换
 		Page<PersonalCommentDTO> results = new Page<PersonalCommentDTO>();
 		for (CommentEntity commentEntity : commentDTOList) {
 			PersonalCommentDTO pDto = new PersonalCommentDTO();
@@ -113,11 +114,15 @@ public class CommentServiceImpl implements CommentService {
 			commentDTO.setReviewPics(reviewPics);;
 			commentDTO.setCommerID(commentEntity.getCommerID());
 			UserEntity userEntity = userDao.findUserById(commentEntity.getCommerID());
-			RdcEntity rdcEntity = rdcDao.findRDCByRDCId(commentEntity.getRdcID()).get(0);
+			List<RdcEntity> rdclist = rdcDao.findRDCByRDCId(commentEntity.getRdcID());
+			if(SetUtil.isnotNullList(rdclist)){//修正2016-08-30 500错误
+				RdcEntity rdcEntity=rdclist.get(0);
+				pDto.setRdcname(rdcEntity.getName());
+			}
 			commentDTO.setCommerName(userEntity.getUsername());
 			commentDTO.setAvatar(userEntity.getAvatar());
 			pDto.setCommentdto(commentDTO);
-			pDto.setRdcname(rdcEntity.getName());
+			
 			if (!reviewPics.isEmpty()) {
 				pDto.setLogo(reviewPics.get(0).getLocation());
 			}

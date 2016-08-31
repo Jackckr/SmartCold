@@ -66,7 +66,7 @@
             <div class="next"><i class="iconfont">&#xe68b;</i></div>
         </section>
         <!--仓位列表展示-->
-        <section class="more">
+        <section class="more" ng-if="rdctotal">
             <ul class="listDad clearfix">
                 <li class="fl">仓位&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
                 <li class="fr"><a href="storehouse.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
@@ -88,7 +88,7 @@
             </div>
         </section>
         <!--货品列表展示-->
-        <section class="more">
+        <section class="more" ng-if="gdtotal">
             <ul class="listDad clearfix">
                 <li class="fl">货品&nbsp;(<span id="num">{{gdtotal}}</span>)</li>
                 <li class="fr"><a href="goodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
@@ -110,7 +110,7 @@
             </div>
         </section>
         <!--车辆列表展示-->
-        <section class="more">
+        <section class="more" ng-if="pstotal">
             <ul class="listDad clearfix">
                 <li class="fl">车辆&nbsp;(<span id="num">{{pstotal}}</span>)</li>
                 <li class="fr"><a href="coldtransportlist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>

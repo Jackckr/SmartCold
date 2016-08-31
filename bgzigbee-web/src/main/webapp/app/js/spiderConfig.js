@@ -537,10 +537,19 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             id:obj.id,
             mapping:JSON.stringify(obj.mapping)
         }).then(function (resp) {
-
         })
     }
-	
+
+    $scope.realSaveRdc = function () {
+		$http.post("/i/spiderConfig/update/mapping", {
+			table:'rdc',
+			id:$scope.vm.choseRdc.id,
+			mapping:JSON.stringify($scope.vm.choseRdc.mapping)
+		}).then(function (resp) {
+			alert('保存成功');
+		})
+	}
+
 	$scope.realSaveDoor = function(door){
 		url = '/i/coldStorageDoor/updateMapping?id=' + door.id 
 		+ '&mapping=' + JSON.stringify(door.mapping);
@@ -828,11 +837,13 @@ coldWeb.directive("ajaxTable", function ($http) {
 			var table = attrs.table;
 
             scope.update = function (obj) {
-            	if (obj.mapping){
-            		delete obj.mapping;
-				}
+
 				if (updateUrl){
-					$http.post(updateUrl, obj).then(function (resp) {
+				    var params = {id:obj.id};
+				    for(var i=0; i<scope.colums.length; i++){
+				    	params[scope.colums[i]] = obj[scope.colums[i]];
+					}
+					$http.post(updateUrl, params).then(function (resp) {
 						alert(resp.data.message);
 					})
 				}

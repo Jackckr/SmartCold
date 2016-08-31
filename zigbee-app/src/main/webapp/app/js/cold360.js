@@ -1,7 +1,31 @@
+checkLogin();
 var app = angular.module('app', []);
 app.controller('cold360', function ($scope, $location, $http,$rootScope) {
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
-    var storageID = 2;
+
+    $scope.user = window.user;
+    $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
+    //if (window.user.roleid == 3); 超管特殊处理
+    $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
+        if (data && data.length > 0) {
+            $scope.storages = data;
+            $scope.viewStorage($scope.storages[0].id);
+        }
+    });
+
+    $scope.viewStorage = function (rdcId) {
+        $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.mystorages = data;
+                for (var i = 0; i < $scope.mystorages.length; i++) {
+                    $scope.load($scope.mystorages[i]);
+                }
+            }
+        });
+        $(".one").show();
+        $(".two").hide();
+        $('.searchTop').hide();
+    }
 
     var formatTime = function(timeString){
         if (typeof(timeString) == "string"){
@@ -11,7 +35,11 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
         }
     }
 
-    $scope.load = function () {
+    $scope.swiper = 0;
+    $scope.load = function (storage) {
+        var storageID = storage.id;
+        $scope.mystorageName = storage.name;
+
         var data = [];
         var startData = [];
         var datumTempData = [];
@@ -55,135 +83,143 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
 
             //温度实时图——环形图
             var temper = list[0]?parseFloat(list[0].value).toFixed(1):null;
-            $scope.curtemper = temper;
 
             // 折线图
-            $(function () {
-                $(document).ready(function () {
-                    Highcharts.setOptions({
-                        global: {
-                            useUTC: false
-                        }
-                    });
+            $(document).ready(function () {
+                Highcharts.setOptions({
+                    global: {
+                        useUTC: false
+                    }
+                });
 
-                    $('#main').highcharts({
-                        chart: {
-                            type: 'spline',
-                            animation: Highcharts.svg, // don't animate in old IE
-                            marginRight: 10,
-                            backgroundColor: {
-                                linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
-                                stops: [
-                                    [0, 'rgb(210, 214, 222)'],
-                                    [1, 'rgb(210, 214, 222)']
-                                ]
-                            },
-                            borderColor: '#d2d6de',
-                            borderWidth: 2,
-                            className: 'dark-container',
-                            plotBackgroundColor: 'rgba(210, 214, 222, .1)',
-                            plotBorderColor: '#d2d6de',
-                            plotBorderWidth: 1
+                var mainId = 'main' + storage.id;
+                //var swiper = getElementsByClassName("swiper-slide");
+                if ($scope.swiper < $scope.mystorages.length){
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">'+storage.name+'</p>' +
+                        '<p class="temperaturenum">'+temper+'℃</p>' +
+                        '<div id='+mainId+'></div> ';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper +=1;
+                }
+
+                $('#' + mainId).highcharts({
+                    chart: {
+                        type: 'spline',
+                        animation: Highcharts.svg, // don't animate in old IE
+                        marginRight: 10,
+                        backgroundColor: {
+                            linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
+                            stops: [
+                                [0, 'rgb(210, 214, 222)'],
+                                [1, 'rgb(210, 214, 222)']
+                            ]
                         },
+                        borderColor: '#d2d6de',
+                        borderWidth: 2,
+                        className: 'dark-container',
+                        plotBackgroundColor: 'rgba(210, 214, 222, .1)',
+                        plotBorderColor: '#d2d6de',
+                        plotBorderWidth: 1
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        tickPixelInterval: 150,
+                    },
+                    yAxis: {
                         title: {
-                            text: ''
+                            text: '温度(℃)'
                         },
-                        xAxis: {
-                            type: 'datetime',
-                            tickPixelInterval: 150,
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        },{
+                            color: 'red',           //线的颜色，定义为红色
+                            dashStyle: 'solid',     //默认值，这里定义为实线
+                            value: startTemperature,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                            width: 2,
+                            label: {
+                                text: '设定温度(' + startTemperature + '℃)', //标签的内容
+                                align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
+                                x: 0                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            }//标示线的宽度，2px
                         },
-                        yAxis: {
-                            title: {
-                                text: '温度(℃)'
-                            },
-                            plotLines: [{
-                                value: 0,
-                                width: 1,
-                                color: '#808080'
-                            },{
+                            {
                                 color: 'red',           //线的颜色，定义为红色
                                 dashStyle: 'solid',     //默认值，这里定义为实线
-                                value: startTemperature,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                                value: datumTemp,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
                                 width: 2,
                                 label: {
-                                    text: '设定温度(' + startTemperature + '℃)', //标签的内容
+                                    text: '基准温度(' + datumTemp + '℃)', //标签的内容
                                     align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
                                     x: 0                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
                                 }//标示线的宽度，2px
-                            },
-                                {
-                                    color: 'red',           //线的颜色，定义为红色
-                                    dashStyle: 'solid',     //默认值，这里定义为实线
-                                    value: datumTemp,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                                    width: 1,
-                                    label: {
-                                        text: '基准温度(' + datumTemp + '℃)', //标签的内容
-                                        align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
-                                        x: 0                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
-                                    }//标示线的宽度，2px
-                                }]
+                            }]
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.name + '</b><br/>' +
+                                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                Highcharts.numberFormat(this.y, 2);
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    exporting: {
+                        enabled: false
+                    },
+                    credits: {
+                        enabled: false // 禁用版权信息
+                    },
+                    series: [{
+                        name: '温度',
+                        markPoint: {
+                            data: [
+                                {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                            ]
                         },
-                        tooltip: {
-                            formatter: function () {
-                                return '<b>' + this.series.name + '</b><br/>' +
-                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                                    Highcharts.numberFormat(this.y, 2);
-                            }
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        exporting: {
-                            enabled: false
-                        },
-                        credits: {
-                            enabled: false // 禁用版权信息
-                        },
-                        series: [{
-                            name: '温度',
-                            markPoint: {
-                                data: [
-                                    {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-                                ]
+                        data: (function () {
+                            return data;
+                        })()
+                    },
+                        {
+                            name: '设定温度',
+                            color: 'red',
+                            dashStyle: 'solid',
+                            marker: {
+                                symbol: 'circle'
                             },
                             data: (function () {
-                                return data;
+                                return startData;
                             })()
                         },
-                            {
-                                name: '设定温度',
-                                color: 'red',
-                                dashStyle: 'solid',
-                                marker: {
-                                    symbol: 'circle'
-                                },
-                                data: (function () {
-                                    return startData;
-                                })()
+                        {
+                            name: '基准温度',
+                            color: 'red',
+                            dashStyle: 'solid',
+                            marker: {
+                                symbol: 'circle'
                             },
-                            {
-                                name: '基准温度',
-                                color: 'red',
-                                dashStyle: 'solid',
-                                marker: {
-                                    symbol: 'circle'
-                                },
-                                data: (function () {
-                                    return datumTempData;
-                                })()
-                            }]
-                    });
+                            data: (function () {
+                                return datumTempData;
+                            })()
+                        }]
                 });
-
             });
+
         });
     }
 
-    $scope.load();
-
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        $scope.load();
+        for (var i = 0; i < $scope.mystorages.length; i++) {
+            $scope.load($scope.mystorages[i]);
+        }
     }, 30000);
 
 });

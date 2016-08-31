@@ -45,11 +45,15 @@ public class CommentController {
     @RequestMapping(value = "/findCommentsByUserId", method = RequestMethod.GET)
     @ResponseBody
     public Object findCommentsByUserId(@RequestParam int userID,@RequestParam int pageNum, @RequestParam int pageSize) {
-    	PageHelper.startPage(pageNum, pageSize);
-    	Page<PersonalCommentDTO> commentsList = commentService.findCommentsUserID(userID);
-    	
-    	PageInfo<PersonalCommentDTO> data = new PageInfo<PersonalCommentDTO>(commentsList);
-    	return ResponseData.newSuccess(data);
+    	try {
+			PageHelper.startPage(pageNum, pageSize);
+			Page<PersonalCommentDTO> commentsList = commentService.findCommentsUserID(userID);
+			PageInfo<PersonalCommentDTO> data = new PageInfo<PersonalCommentDTO>(commentsList);
+			return ResponseData.newSuccess(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseData.newFailure();
+		}
     }
     
 

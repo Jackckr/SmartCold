@@ -13,4 +13,6 @@ public interface PlatformDoorSetMapping {
 
 	boolean insert(PlatformDoorSetEntity platformDoorSetEntity);
 
+	boolean updateById(PlatformDoorSetEntity entity);
+
 }

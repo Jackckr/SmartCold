@@ -160,17 +160,17 @@ img {
     -webkit-background-size: cover;
     background-size: cover;
   }
-   #list{
+   .img_list{
    	display: block;
    	padding-top: 0.2rem;
    }
-  #list span{
+ .img_list span{
   	display: inline-block;
   	position: relative;
   	margin-right: 0.2rem;
   	line-height: 0!important;
   }
-  #list span i{
+  .img_list span i{
   	position: absolute;
   	top: 0;
   	right: 0;
@@ -179,10 +179,11 @@ img {
   	text-align: center;
   	line-height: 0.7rem;
   	cursor: pointer;
-  	color: #fff;
-  	font-size: 0.6;
+  	color: #f00;
+  	font-size: 1rem;
   	border-radius: 3px;
-  	background: rgba(0,0,0,.5);
+  	z-index:20;
+  	background: rgba(0,0,0,.5); 
   }
   .gray{background-color: gray;}
 
@@ -266,7 +267,6 @@ header>div>a>.iconfont{
 }
 .info{
 	font-size: 0.6rem;
-	margin-top:-.1rem;
 }
 /*
  自定义alert弹出框
