@@ -4,21 +4,22 @@
      em{color: red;font-size: 12px;}
      .form-horizontal .control-label{text-align: center;padding: 7px 0 0 0;}
      .checkbox-inline{padding: 0 20px 0 0;}
+     .checkbox-inline input[type='radio']{margin:0 3px;}
      .myTop{padding: 4px 40px;margin-top: 10px;}
  </style>
  <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
     <div>
-    	<!-- tab栏切换 -->
+    	<!-- tab栏切换=========================================================================================== -->
         <ul id="myTab" class="nav nav-tabs">
-    		<li class="active"><a href="#addNews" data-toggle="tab">添加发布</a></li>
-    		<li><a href="#alreadyRel" data-toggle="tab">已发布(0)</a></li>
-    		<li><a href="#looking" data-toggle="tab">审核中(0)</a></li>
-    		<li><a href="#notPass" data-toggle="tab">未通过(0)</a></li>
-    		<li><a href="#overstay" data-toggle="tab">已过期(0)</a></li>
+    		<li class="active"><a href="#addNews" data-toggle="tab"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;添加发布</a></li>
+    		<li><a href="#alreadyRel" data-toggle="tab"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;已发布(0)</a></li>
+    		<li><a href="#looking" data-toggle="tab"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;审核中(0)</a></li>
+    		<li><a href="#notPass" data-toggle="tab"><span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;&nbsp;未通过(0)</a></li>
+    		<li><a href="#overstay" data-toggle="tab"><span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;已过期(0)</a></li>
     	</ul>
         <div id="myTabContent" class="tab-content">
     		<div class="tab-pane fade in active" id="addNews">
-            <!-- 信息类型 -->
+            	<!-- 信息类型=========================================================================================== -->
     			<div class="newsTyps">
                     <form class="form-horizontal" role="form"> 
         				<div class="form-group clearfix"> 
@@ -31,7 +32,7 @@
     				    </div>
                     </form>   
                 </div>
-                <!-- 信息标题 -->
+                <!-- 信息标题=========================================================================================== -->
                 <div class="newsTitle">
                     <form class="form-horizontal" role="form"> 
                         <div class="form-group clearfix"> 
@@ -42,7 +43,7 @@
     				    </div> 
                     </form>
                 </div>
-                <!-- 信息关键词 -->
+                <!-- 信息关键词=========================================================================================== -->
                 <div class="keyWords">
                     <form class="form-horizontal" role="form"> 
                         <div class="form-group clearfix"> 
@@ -53,7 +54,7 @@
                         </div> 
                     </form>
                 </div>
-                <!-- 信息说明 -->
+                <!-- 信息说明=========================================================================================== -->
                 <div class="newsInfo">
                     <form class="form-horizontal" role="form"> 
                         <div class="form-group clearfix"> 
