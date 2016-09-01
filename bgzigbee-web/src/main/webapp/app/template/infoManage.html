@@ -20,8 +20,8 @@
     <div>
     	<!-- tab栏切换=========================================================================================== -->
         <ul id="myTab" class="nav nav-tabs">
-    		<li class="active"><a href="#addNews" data-toggle="tab"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;添加发布</a></li>
-    		<li><a href="#alreadyRel" data-toggle="tab"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;已发布(0)</a></li>
+    		<li class="active"><a href="#addNews" data-toggle="tab"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;发布信息</a></li>
+    		<li><a href="#alreadyRel" data-toggle="tab"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;已发布({{bigTotalItems}})</a></li>
     		<li><a href="#looking" data-toggle="tab"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;审核中(0)</a></li>
     		<li><a href="#notPass" data-toggle="tab"><span class="glyphicon glyphicon-floppy-remove"></span>&nbsp;&nbsp;未通过(0)</a></li>
     		<li><a href="#overstay" data-toggle="tab"><span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;已过期(0)</a></li>
@@ -113,27 +113,25 @@
     		</div>
 <!-- ==============================正在开发中================================================= -->
     		<div class="tab-pane fade" id="alreadyRel">
-    			<ul class="imgList">
+    			<ul class="imgList" ng-repeat="information in AllInformation">
                     <li>
                         <div class="img pull-left"><img src="../img/coldChain.jpg"></div>
-                        <p class="title_news">低温食品常温运输储藏？严查！</p>
+                        <p class="title_news">{{information.title}}</p>
                         <p class="time_news p_bottom">
-                            2016-07-16
-                            <span class="info_edit">修改</span>
-                            <span class="info_delete">删除</span>
-                        </p>
-                    </li>
-                    <li>
-                        <div class="img pull-left"><img src="../img/coldChain.jpg"></div>
-                        <p class="title_news">生鲜电商行业频遭打击 紫云冷链呼吁关注支线冷链  知名平台美味七七轰然倒下之后，生鲜电商行业年内再传噩耗</p>
-                        <p class="time_news p_bottom">
-                            2016-07-16
-                            <span class="info_edit">修改</span>
-                            <span class="info_delete">删除</span>
+                            {{information.posttime}}
+                            <span class="info_edit" ng-click="goEdit(information.id)">修改</span>
+                            <span class="info_delete" ng-click="goDelete(information.id)">删除</span>
                         </p>
                     </li>
                 </ul>
-
+               <div class="page">
+               <!-- 翻页功能 -->
+               <div class="row">
+                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
+	</div>
     		</div>
     		<div class="tab-pane fade" id="looking">
     			<p>审核中----正在开发中，敬请期待……</p>
