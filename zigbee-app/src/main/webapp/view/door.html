@@ -43,7 +43,7 @@
         	</div>
         	
         	<div id="searchDara_div" class="search">
-        		<input type="text" placeholder="查找RDC..."/>
+				<input type="text" placeholder="查找RDC..." ng-model="searchContent"/>
         		<i class="iconfont" >&#xe62f;</i>
         	</div>
 	    </header>
@@ -64,10 +64,10 @@
     			<b>设施</b><i class="iconfont">&#xe6f7;</i>
     		</span>
     		 <ul class="otherList black">
-    			<li><a href="javascript:;" id="">冷库门</a></li>
-    			<li><a href="javascript:;" id="">月台门</a></li>
-    			<li><a href="javascript:;" id="">照明系统</a></li>
-    			<li><a href="javascript:;" id="">其他设施</a></li>
+    			<li><a href="javascript:;" id="storageDoor" ng-click="storageDoorFacility()">冷库门</a></li>
+    			<li><a href="javascript:;" id="platformDoor" ng-click="platformDoorFacility()">月台门</a></li>
+    			<li><a href="javascript:;" id="lightSys" ng-click="lightSysFacility()">照明系统</a></li>
+    			<li><a href="javascript:;" id="otherFacility" ng-click="otherFacilityFacility()">其他设施</a></li>
     		</ul>
     	</div>
     	<div class="other" id="other" ><i class="iconfont">&#xe69f;</i> 
@@ -92,20 +92,6 @@
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
 		<div class="swiper-wrapper" id="chartView"></div>
-        <!--<div class="swiper-wrapper">-->
-            <!--<div class="swiper-slide">-->
-            	<!--<p class="actually">冷库门开关监控</p>-->
-            	 <!--&lt;!&ndash; 为ECharts准备一个具备大小（宽高）的Dom &ndash;&gt;-->
-    			<!--<div id="main"></div>-->
-    <!---->
-            <!--</div>-->
-            <!--<div class="swiper-slide">-->
-            	<!--请耐心等待......-->
-            <!--</div>-->
-            <!--<div class="swiper-slide">-->
-            	<!--请耐心等待......-->
-            <!--</div>-->
-        <!--</div>-->
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
         <!-- Add Arrows -->
@@ -114,12 +100,9 @@
   </div>
   <!--rdc列表--------------------------------------------------> 
 	 <section class="searchTop">
-	 	<ul class="rdcList">
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>莱芜嘉禾冷链物流有限公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>安德水产总公司</span></li>
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>山东远信物流有限公司</span></li> 		
-	 		<li class="omg"><i class='iconfont'>&#xe62f;</i><span>湖北寿康永乐上门物流园-测试数据-transiontransion-货品-出货</span></li>
-	 	</ul>
+		 <ul class="rdcList" ng-repeat="rdclist in storages | filter:searchContent">
+			 <li class="omg" ng-click="viewStorage(rdclist.id)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+		 </ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
 	 <!--rdc列表-----------------------------------------------> 
