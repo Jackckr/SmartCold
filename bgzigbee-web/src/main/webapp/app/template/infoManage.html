@@ -2,19 +2,25 @@
      button{display: inline-block;background-color: #337AB7;padding: 3px 5px;margin-bottom: 3px;color: #fff;border-radius: 4px;}
      #myTabContent{margin-top: 10px;}
      em{color: red;font-size: 12px;}
-     .form-horizontal .control-label{text-align: left;text-indent: 2em;padding: 7px 0 0 0;}
+     .form-horizontal .control-label{text-align: left;text-indent: 2em;padding: 7px 0 0 0;min-width:92px;}
      .checkbox-inline{padding: 0 20px 0 0;}
      .checkbox-inline input[type='radio']{margin:0 3px;}
      .myTop{padding: 4px 40px;margin-top: 10px;}
-    .imgList li { overflow: hidden; margin: 10px 0; padding: 10px; vertical-align: middle; position: relative;background: #fff;}
-    .img { width: 100px; height: 80px; background-size: cover; position: relative; *overflow: hidden; margin-right: 30px; }
+     .imgList{width:48%;margin-right:1%; box-sizing:border-box;}
+    .imgList li {overflow: hidden; margin: 10px 0; padding: 10px; vertical-align: middle; position: relative;background: #fff;}
+    .img { width: 100px; height: 80px; background-size: cover; position: relative; *overflow: hidden; margin-right: 20px; }
     .img img { position: relative; z-index: 1; width: 100%; height: 100%; }
     .img:before { content: "Broken Image :("; position: absolute; top: 0; left: 0; width: 100%; height: 100%; line-height: 78px; border: 1px solid #eee; box-sizing: border-box; z-index: 0; text-align: center; }
     .title_news { font-size: 14px; color: #333; margin-top: 10px; }
     .time_news { font-size: 12px; color: #999; }
+    .title_news a{display:block;}
+    .title_news a:focus{outline: 0;}
+    .title_news a:hover{color: #f40;}
     .p_bottom{position: absolute;bottom: 0;left: 140px;}
     .time_news>.glyphicon { color: #f40; margin-right: 10px; }
     .info_edit, .info_delete { color: #418ACA; display: inline-block; padding-left: 20px; cursor: pointer; }
+    #file0{padding-top:7px;}
+    #img0{max-width:100px;max-height:80px;}
  </style>
  <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
     <div>
@@ -51,6 +57,41 @@
     				    </div> 
                     </form>
                 </div>
+                 <!-- 上传封面图片=========================================================================================== -->
+                <div class="newsCoverImg">
+                    <form class="form-horizontal" role="form"> 
+                        <div class="form-group clearfix"> 
+    				        <label class="col-sm-1 control-label">封面图片<em>*</em></label> 
+    				        <div class="col-sm-6"> 
+    				            <form name="form0" id="form0" >
+									<input type="file" name="file0" id="file0" /><img src="" id="img0" >
+								</form>
+    				        </div> 
+    				    </div> 
+                    </form>
+                </div>
+                <script>	
+					$("#file0").change(function(){
+						var objUrl = getObjectURL(this.files[0]) ;
+						console.log("objUrl = "+objUrl) ;
+						if (objUrl) {
+							$("#img0").attr("src", objUrl) ;
+						}
+					}) ;
+					//建立一個可存取到該file的url
+					function getObjectURL(file) {
+						var url = null ; 
+						if (window.createObjectURL!=undefined) { // basic
+							url = window.createObjectURL(file) ;
+						} else if (window.URL!=undefined) { // mozilla(firefox)
+							url = window.URL.createObjectURL(file) ;
+						} else if (window.webkitURL!=undefined) { // webkit or chrome
+							url = window.webkitURL.createObjectURL(file) ;
+						}
+						return url ;
+					}
+				</script>
+				<!-- 上传封面图片 end=========================================================================================== -->
                 <!-- 信息关键词=========================================================================================== -->
                 <div class="keyWords">
                     <form class="form-horizontal" role="form"> 
@@ -111,12 +152,12 @@
                     删除编辑器</button>
                 </div>
     		</div>
-<!-- ==============================正在开发中================================================= -->
-    		<div class="tab-pane fade" id="alreadyRel">
-    			<ul class="imgList" ng-repeat="information in AllInformation">
+<!-- ==============================已发布信息================================================= -->
+    		<div class="tab-pane fade clearfix" id="alreadyRel">
+    			<ul class="imgList pull-left" ng-repeat="information in AllInformation">
                     <li>
-                        <div class="img pull-left"><img src="../img/coldChain.jpg"></div>
-                        <p class="title_news">{{information.title}}</p>
+                        <div class="img pull-left"><img src="app/img/food.jpg"></div>
+                        <p class="title_news omg"><a data-toggle="modal" href="#myModal">{{information.title}}</a></p>
                         <p class="time_news p_bottom">
                             {{information.posttime}}
                             <span class="info_edit" ng-click="goEdit(information.id)">修改</span>
@@ -125,13 +166,32 @@
                     </li>
                 </ul>
                <div class="page">
-               <!-- 翻页功能 -->
-               <div class="row">
-                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
-                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
-                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-                </div>
-	</div>
+	               <!-- 翻页功能 -->
+	               <div class="row">
+	                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
+	                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+	                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+	                </div>
+			  </div>
+				<!-- 模态框（Modal） --> 
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+				    <div class="modal-dialog" style="width:888px;"> 
+				        <div class="modal-content"> 
+				            <div class="modal-header"> 
+				                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+				                <h4 class="modal-title" id="myModalLabel">2016中国（镜泊湖）国际农产品冷链物流峰会新闻发布会在京举行</h4> 
+				            </div> 
+				            <div class="modal-body">
+				            	8月3日上午，2016第四届中国（镜泊湖）国际农产品冷链物流峰会新闻发布会在北京举行。中国物流与采购联合会副会长兼秘书长崔忠付，黑龙江省办公
+				            	厅副主任刘春林，牡丹江市政协副主席、阳明区区委书记姜英波，黑龙江省商务厅流通业发展处处长王洪宝，牡丹江市人民政府副秘书长马磊等出席新闻发
+				            	布会。发布会由中物联冷链物流专业委员会秘书长秦玉鸣主持。
+				            </div> 
+				            <div class="modal-footer"> 
+				                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				            </div> 
+				        </div><!-- /.modal-content --> 
+				    </div><!-- /.modal --> 
+				</div>
     		</div>
     		<div class="tab-pane fade" id="looking">
     			<p>审核中----正在开发中，敬请期待……</p>
