@@ -21,6 +21,7 @@ public class WeatherController extends BaseController {
 	public Object findTempByCityID(int cityID) {
 		Weather weather = new Weather();
 		weather = weatherDao.findTempByCityID(cityID);
+		if(weather==null)return 0;
 		return (float)(Math.round(weather.getTemp1()*10))/10;
 	}
 }
