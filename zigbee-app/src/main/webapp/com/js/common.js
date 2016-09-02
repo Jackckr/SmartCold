@@ -10,6 +10,7 @@ var userjson=window.sessionStorage.getItem("user");if(userjson){window.user=JSON
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
+function setIOS(token){util.setCookie("token",token,"d7");checktoken();}//同步token
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
 function showErrorInfo(msg){var msgEl=$("#mention");if(msg==null||msg==''){msgEl.hide();msgEl.html('');}else{msgEl.show();msgEl.html(msg);}}
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
