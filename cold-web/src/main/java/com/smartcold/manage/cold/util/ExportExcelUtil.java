@@ -23,7 +23,7 @@ import com.smartcold.manage.cold.entity.olddb.UserEntity;
 /** 
  * EXCEL报表工具类. 
  *  
- * @author Jeelon 
+ * @author Maqiang34 
  */  
 public class ExportExcelUtil {  
   
@@ -48,7 +48,7 @@ public class ExportExcelUtil {
      * @param o
      * @return
      */
-    private static String getFieldValueByName(String fieldName, Object o) {  
+    public static String getFieldValueByName(String fieldName, Object o) {  //
 	       try {    
 	           String firstLetter = fieldName.substring(0, 1).toUpperCase();    
 	           String getter = "get" + firstLetter + fieldName.substring(1);    
@@ -92,8 +92,8 @@ public class ExportExcelUtil {
 	 * @param mode  数据模型 ：demo{{"id","角色","用户名","密码","电话","邮箱"},{"id","role","username","password","telephone","email"},{"1","1","5","5","5","5"}} ;//标题（必须），对应属性（必须），宽度
 	 * @param list //数据集合
 	 */
-	//HttpServletRequest request,  HttpServletResponse response,
-	 public static void expExcel( HttpServletResponse response,String fileName,String title,String mode[][], @SuppressWarnings("rawtypes") List list)  {  
+	@SuppressWarnings("rawtypes")
+	public static void expExcel( HttpServletResponse response,String fileName,String title,String mode[][], List list)  {  
 		 try {  
 			    response.reset();  
 			    fileName = new String(fileName.getBytes("GBK"), "iso8859-1");  
