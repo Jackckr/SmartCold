@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('facility', function ($scope, $location, $http, $rootScope) {
+app.controller('facility', function ($scope, $location, $http, $rootScope, $sce) {
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 
     $scope.user = window.user;
@@ -9,7 +9,8 @@ app.controller('facility', function ($scope, $location, $http, $rootScope) {
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            $scope.viewStorage($scope.storages[0].id);
+            $scope.rdcId = $scope.storages[0].id;
+            $scope.viewStorage($scope.rdcId);
         }
     });
 
@@ -315,6 +316,57 @@ app.controller('facility', function ($scope, $location, $http, $rootScope) {
         })
     }
 
+    $scope.drawOther = function() {
+
+        var keyDescribleMap = {forkLift:"叉车日耗能",windScreen:"风幕机日耗能",
+            pressurePlatform:"液压平台日耗能",chargingPile:"充电桩日耗能"}
+        url = ER.coldroot + "/i/other/findOtherDeviceCosts?rdcId=" + $scope.rdcId + "&startTime="
+            + getFormatTimeString(-30 * 24 * 60 * 60 * 1000) + "&endTime=" + getFormatTimeString()
+        $http.get(url).success(function(data){
+            $scope.otherInfos = data;
+            angular.forEach(data,function(infos,key){
+                var mainId = key + "Chart";
+                var chartId = "#" + mainId;
+                if ($scope.swiper < 4){
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">'+keyDescribleMap[key]+'</p>' +
+                        '<div id='+mainId+'></div> ';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper +=1;
+                }
+
+                var chart = echarts.init($(chartId).get(0));
+                var xData = []
+                var yData = []
+                angular.forEach(infos,function(info){
+                    yData.push(info.cost)
+                    xData.push(formatTime(info.time))
+                })
+                chart.setOption($scope.creatOption(keyDescribleMap[key], xData, yData,
+                    "耗能", "kW.h", keyDescribleMap[key], "line"))
+            })
+        })
+    }
+
+    $scope.drawLightSys = function() {
+        if ($scope.rdcId) {
+            var url = "lightDiv.html?storageID=" + $scope.rdcId;
+            $scope.trustSrc = $sce.trustAsResourceUrl(url);
+            if ($scope.swiper < 1){
+
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<div class="page-content"> ' +
+                    '<h1 class="text-white page-header">灯组分布图</h1> ' +
+                    '<div class="row" style="margin-left:10px"> ' +
+                    '<iframe seamless frameborder="0" width="550" height="290" ng-src="{{trustSrc}}"></iframe> ' +
+                    '</div></div>' +
+                    '</div> ';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper +=1;
+            }
+        }
+    }
+
     $scope.activeEnergy = 'storageDoor';
     $scope.storageDoorFacility = function () {
         clearSwiper();
@@ -338,19 +390,77 @@ app.controller('facility', function ($scope, $location, $http, $rootScope) {
         clearSwiper();
         $scope.swiper = 0;
         $scope.activeEnergy = 'lightSys';
+        $scope.drawLightSys();
     }
 
     $scope.otherFacilityFacility = function () {
         clearSwiper();
         $scope.swiper = 0;
         $scope.activeEnergy = 'otherFacility';
-
+        $scope.drawOther();
     }
 
     function clearSwiper(){
         $("div").remove(".swiper-slide");
         $scope.swiper = 0;
         $scope.defaltswiper = 0;
+    }
+
+    var getFormatTimeString = function(delta){
+        delta = delta ? delta + 8 * 60 * 60 * 1000: 8 * 60 * 60 * 1000;
+        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/,"")
+    }
+
+    var formatTime = function(timeString){
+        if (typeof(timeString) == "string"){
+            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+        }else{
+            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+        }
+    }
+
+    $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type){
+        var option = {
+            tooltip : {
+                trigger: 'axis'
+            },
+            title: {
+                text: title,
+                x:'left',
+                textStyle: {
+                    fontSize: 16,
+                    fontWeight: 400,
+                    color: '#333'          // 主标题文字颜色
+                },
+            },
+            calculable : true,
+            grid: {
+                x:55,
+                y: 60,
+                x2: 75,
+                /*y2: 60,*/
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : xData
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    name : yName + "(" + yUnit + ")"
+                }
+            ],
+            series : [
+                {
+                    name:lineName,
+                    type: type,
+                    data:yData,
+                }
+            ]
+        };
+        return option
     }
 
     clearInterval($rootScope.timeTicket);
@@ -364,6 +474,12 @@ app.controller('facility', function ($scope, $location, $http, $rootScope) {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawFlatform($scope.mystorages[i]);
             }
+        }
+        if ($scope.activeEnergy == 'lightSys'){
+            $scope.drawLightSys();
+        }
+        if ($scope.activeEnergy == 'otherFacility'){
+            $scope.drawOther();
         }
     }, 30000);
 
