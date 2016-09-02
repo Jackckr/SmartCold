@@ -7,7 +7,8 @@ $().ready(function() {
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
 	  if(getUrlParam("key")){
-		  $("#searchDara_div input").val(util.getCookie("shdatakey"));util.delCookie("shdatakey");
+		  $("#searchDara_div input").val(window.sessionStorage.getItem("shdatakey"));
+		  window.sessionStorage.removeItem("shdatakey");
 	  }
       gosharedile=function(sharid){
     	 window.location.href ="colddetail.html?id="+sharid; 

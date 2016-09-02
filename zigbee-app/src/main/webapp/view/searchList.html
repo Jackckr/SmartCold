@@ -12,15 +12,10 @@
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	    <script type="text/javascript">
 		$().ready(function() { 
-			  var maxSize=10;
-		      var totalPages=  currentPage=  1;  // 当前页
-		      var isLoadRB=false;  
 			  var ul_select=$("#ul_rdcsL_list");
-			  $("#searchDara_div input").val(util.getCookie("shdatakey"));
-			  util.delCookie("shdatakey");
-		      gosharedile=function(sharid){
-		    	 window.location.href ="colddetail.html?id="+sharid; 
-		      };
+			  var maxSize=10,totalPages=  currentPage=  1,isLoadRB=false;  
+			  $("#searchDara_div input").val(window.sessionStorage.getItem("shdatakey"));window.sessionStorage.removeItem("shdatakey");
+		      gosharedile=function(sharid){window.location.href ="colddetail.html?id="+sharid;};
 		      initevg=function(){
 		   		$(".droplist a").click(function(e){//条件过滤
 		   			$(this).children('i').addClass('current').html('&#xe62e;');
