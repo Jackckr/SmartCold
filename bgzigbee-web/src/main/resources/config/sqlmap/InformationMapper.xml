@@ -45,7 +45,7 @@
                 browsenum = #{browsenum},
             </if>
             <if test="content != null" >
-                content = #{content,
+                content = #{content},
             </if>
         </set>
         where id = #{id}
@@ -68,7 +68,13 @@
 	
 	<select id="findInformationByPosterID" parameterType="map" resultType="InformationEntity">
 		SELECT *
-		FROM `information` WHERE `posterid` = #{posterID}
+		FROM `information`
+		<where> `posterid` = #{posterID}
+		    <if test="keyword != null">
+		        AND title like "%"#{keyword}"%"
+		    </if>
+		 </where>
+         order by `posttime` desc 
 	</select>
 	
 	<select id="findInformationByCategory" parameterType="map" resultType="InformationEntity">

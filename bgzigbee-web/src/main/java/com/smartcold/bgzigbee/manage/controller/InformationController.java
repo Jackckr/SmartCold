@@ -14,7 +14,11 @@ import com.smartcold.bgzigbee.manage.dao.InformationMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.InformationEntity;
-
+/**
+ * 资讯controller
+ * @author jkq
+ *
+ */
 @Controller
 @RequestMapping(value = "/information")
 public class InformationController extends BaseController {
@@ -24,10 +28,20 @@ public class InformationController extends BaseController {
 	@Autowired
 	private InforCategoryMapper inforCategoryDao;
 	
-	@RequestMapping(value = "/findAllInformation")
+	/**
+	 * 为后台管理员操作提供查询服务
+	 * @param pageNum
+	 * @param pageSize
+	 * @param posterID
+	 * @param keyword
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/findAllInformationForAdmin")
 	@ResponseBody
-	public Object findAllInformation(@RequestParam(value="pageNum",required=false) Integer pageNum,
+	public Object findAllInformationForAdmin(@RequestParam(value="pageNum",required=false) Integer pageNum,
 			@RequestParam(value="pageSize") Integer pageSize, 
+			@RequestParam(value="posterID") Integer posterID, 
 			//@RequestParam(value="audit", required=false) Integer audit,
 			@RequestParam(value="keyword", required=false) String keyword) throws UnsupportedEncodingException {
 	    /*	if( !(audit == -1 || audit == 1 || audit == 0) ){
@@ -36,32 +50,82 @@ public class InformationController extends BaseController {
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 12:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
-		if(keyword.equals("undefined"))
-			keyword = null;
-		/*else{
-		    keyword = URLDecoder.decode(keyword, "UTF-8");
-		}*/
-		return new PageInfo<InformationEntity>(informationDao.findAllInformation(keyword));
-		
+		if (posterID!=1) {
+			return new PageInfo<InformationEntity>(informationDao.findInformationByPosterID(posterID,keyword));
+		}
+		else {
+			return new PageInfo<InformationEntity>(informationDao.findAllInformation(keyword));
+		}
 	}
 	
+	
+	/**
+	 * 为前台user资讯查询提供服务
+	 * @param pageNum
+	 * @param pageSize
+	 * @param keyword
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/findAllInformationForUser")
+	@ResponseBody
+	public Object findAllInformationForUser(@RequestParam(value="pageNum",required=false) Integer pageNum,
+			@RequestParam(value="pageSize") Integer pageSize, 
+			@RequestParam(value="keyword", required=false) String keyword) throws UnsupportedEncodingException {
+		pageNum = pageNum == null? 1:pageNum;
+		pageSize = pageSize==null? 12:pageSize;
+		PageHelper.startPage(pageNum, pageSize);
+	    return new PageInfo<InformationEntity>(informationDao.findAllInformation(keyword));
+	}
+	
+	/**
+	 * 删除资讯
+	 * @param inforID
+	 * @return
+	 */
 	@RequestMapping(value = "/deleteInformation", method = RequestMethod.GET)
 	@ResponseBody
 	public Object deleteInformation(int inforID) {
 		 informationDao.deleteInformation(inforID);
 		 return new BaseDto(0);
 	}
-
+	
+	/**
+	 * 根据资讯id查找资讯
+	 * @param inforID
+	 * @return
+	 */
+	@RequestMapping(value = "/findInformationByID", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findInformationByID(@RequestParam int inforID) {
+		return informationDao.findInformationByID(inforID);
+	}
+	
+	/**
+	 * 添加和修改资讯公用服务，根据id是否为空判断是发布或是修改
+	 * @param information
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping(value = "/addInformation", method = RequestMethod.GET)
 	@ResponseBody
 	public Object addInformation(InformationEntity information) throws UnsupportedEncodingException {
 		if (information.getTitle() == null || information.getContent() == null) {
 			return new ResultDto(-1, "标题和内容不能为空");
 		}
-		informationDao.insertInformation(information);
+		if (information.getId()!=0) {
+			informationDao.updateInformation(information);
+		}
+		else {
+			informationDao.insertInformation(information);
+		}
 		return new BaseDto(0);
 	}
 	
+	/**
+	 * 查询所有的资讯类别
+	 * @return
+	 */
 	@RequestMapping(value = "/findAllInforCategory", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllInforCategory() {
