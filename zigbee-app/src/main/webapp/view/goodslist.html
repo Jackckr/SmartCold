@@ -12,13 +12,31 @@
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	    <script type="text/javascript" src="../com/js/index.js" ></script>
 	    <script type="text/javascript" src="../app/js/goodslist.js"></script>
+	    <script type="text/javascript">
+	    $(function(){
+	    	$(".transion").click(function(){$(".one").hide();$(".two").show();});
+  			$(".cancel").click(function(){$(".one").show();$(".two").hide();});
+	    })	     	
+	    </script>
 	</head>
 	<body>
 		<!-- header -->
-		     <header>
+		     <header class="one">
 	        	<div class="area fl"><a href="share.html"><i class="iconfont">&#xe60e;</i></a></div>
-	        	<div class="zoom fr"><a href="search.html"><i class="iconfont">&#xe62f;</i></a></div>
+	        	<div class="zoom fr"><!-- <a href="search.html"><i class="iconfont">&#xe62f;</i></a> -->
+	        		<a class="transion"><i class="iconfont">&#xe62f;</i></a>
+	        	</div>
 	        	<div class="txt">货品交易</div>
+		    </header>
+		     <header class="two">
+	        	<div class="area fl">
+	        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+	        	</div>
+	        	
+	        	<div id="searchDara_div" class="search" style="margin-right:0">
+	        		<input type="text" onkeyup="" placeholder="请输入搜索内容..."/>
+	        		<i class="iconfont" onclick="">&#xe62f;</i>
+	        	</div>
 		    </header>
 		<!-- header end-->
 		<section id="filter_section" class="fixed">

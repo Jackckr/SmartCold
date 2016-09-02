@@ -13,18 +13,34 @@
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	    <script type="text/javascript" src="../com/js/index.js" ></script>
 	    <script type="text/javascript" src="../app/js/coldtransportlist.js" ></script>
+	    <script type="text/javascript">
+	    $(function(){
+	    	$(".transion").click(function(){$(".one").hide();$(".two").show();});
+  			$(".cancel").click(function(){$(".one").show();$(".two").hide();});
+	    })	     	
+	    </script>
 	</head>
 	<body>
 		<!-- header -->
-		    <header>
+		    <header class="one">
 	        	<div class="area fl">
 	        		<a href="share.html"><i class="iconfont">&#xe60e;</i></a>
 	        	</div>
 	        	<div class="zoom fr">
-	        		<a href="search.html"><i class="iconfont">&#xe62f;</i></a>
+	        		<!-- <a href="search.html"><i class="iconfont">&#xe62f;</i></a> -->
+	        		<a class="transion"><i class="iconfont">&#xe62f;</i></a>
 	        	</div>
 	        	<div class="txt">
 	        		车货匹配
+	        	</div>
+		    </header> <header class="two">
+	        	<div class="area fl">
+	        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+	        	</div>
+	        	
+	        	<div id="searchDara_div" class="search" style="margin-right:0">
+	        		<input type="text" onkeyup="" placeholder="请输入搜索内容..."/>
+	        		<i class="iconfont" onclick="">&#xe62f;</i>
 	        	</div>
 		    </header>
 		<!-- header end-->
