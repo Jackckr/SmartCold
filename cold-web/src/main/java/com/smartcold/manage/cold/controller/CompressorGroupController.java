@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dto.CompressorGroupWaterCostEntity;
+import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
@@ -33,6 +36,9 @@ public class CompressorGroupController {
 
 	@Autowired
 	private CompressorGroupService compressorGroupService;
+
+	@Autowired
+	private ColdStorageAnalysisMapper analysisDao;
 
 	@Autowired
 	private StorageService storageService;
@@ -74,6 +80,21 @@ public class CompressorGroupController {
 
 		for (CompressorGroupSetEntity groupSet : groupSets) {
 			result.add(compressorGroupService.getWaterCost(groupSet.getId()));
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/findAnalysisByRdcidKeyDate", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findAnalysisByRdcidKeyDate(int rdcId, String key, Date startTime, Date endTime) {
+		HashMap<String, List<ColdStorageAnalysisEntity>> result = new HashMap<String, List<ColdStorageAnalysisEntity>>();
+
+		List<CompressorGroupSetEntity> groups = compressorGroupSetDao.findByRdcId(rdcId);
+		for (CompressorGroupSetEntity group : groups) {
+			List<ColdStorageAnalysisEntity> datas = analysisDao.findValueByDate(StorageType.COMPRESSORGROUP.getType(),
+					group.getId(), key, startTime, endTime);
+			result.put(group.getName(), datas);
 		}
 
 		return result;
