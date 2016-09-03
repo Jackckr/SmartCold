@@ -19,6 +19,6 @@ public interface StorageService {
 
 	List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime);
 
-	Map<String, List<ColdStorageAnalysisEntity>> findAnalysisByRdcidKeyDate(int rdcid, String key, Date startTime,
-			Date endTime);
+	Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findAnalysisByRdcidKeyDate(int rdcid, List<String> keys,
+			Date startTime, Date endTime);
 }

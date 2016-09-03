@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
@@ -20,6 +19,7 @@ import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.enums.StorageType;
+import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.StorageService;
 
 @Service
@@ -41,7 +41,7 @@ public class StorageServiceImpl implements StorageService {
 	private StorageDataCollectionMapper storageDataCollectionDao;
 
 	@Autowired
-	private ColdStorageAnalysisMapper analysisDao;
+	private ColdStorageAnalysisService analysisService;
 
 	@Override
 	public List<ColdStorageSetEntity> findByUserId(int userId) {
@@ -85,15 +85,13 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public Map<String, List<ColdStorageAnalysisEntity>> findAnalysisByRdcidKeyDate(int rdcid, String key,
-			Date startTime, Date endTime) {
-		HashMap<String, List<ColdStorageAnalysisEntity>> result = new HashMap<String, List<ColdStorageAnalysisEntity>>();
+	public Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findAnalysisByRdcidKeyDate(int rdcid,
+			List<String> keys, Date startTime, Date endTime) {
+		HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>> result = new HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>>();
 		List<ColdStorageSetEntity> storages = coldStorageSetDao.findByRdcId(rdcid);
 		for (ColdStorageSetEntity storage : storages) {
-			List<ColdStorageAnalysisEntity> keyValues = analysisDao.findValueByDate(StorageType.STORAGE.getType(),
-					storage.getId(), key, startTime, endTime);
-			result.put(storage.getName(), keyValues);
-
+			result.put(storage.getName(), analysisService.findValueByDateKeys(StorageType.STORAGE.getType(),
+					storage.getId(), keys, startTime, endTime));
 		}
 		return result;
 	}

@@ -393,6 +393,22 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/light/:storageID',
     	controller: 'light',
         templateUrl: 'app/template/coldStorageLightDiv.html'
+    }).state('overTemperature',{
+    	url:'/overTemperature/{rdcId}',
+    	controller: 'overTemperature',
+        templateUrl: 'app/template/overTemperature.html'
+    }).state('overTemperatureYZ',{
+    	url:'/overTemperatureYZ/{rdcId}',
+    	controller: 'overTemperatureYZ',
+        templateUrl: 'app/template/overTemperatureYZ.html'
+    }).state('BWYZ',{
+    	url:'/BWYZ/{rdcId}',
+    	controller: 'BWYZ',
+        templateUrl: 'app/template/BWYZ.html'
+    }).state('WDZQYZ',{
+    	url:'/WDZQYZ/{rdcId}',
+    	controller: 'WDZQYZ',
+        templateUrl: 'app/template/WDZQYZ.html'
     });
 
 });

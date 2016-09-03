@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -64,40 +65,11 @@ public class ColdStorageController {
 		return storageService.findByUserId(userId);
 	}
 
-	@RequestMapping(value = "/findAnalysisByRdcidKeyDate", method = RequestMethod.GET)
+	@RequestMapping(value = "/findAnalysisByRdcidKeysDate", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findAnalysisByRdcidKeyDate(int rdcid, String key, Date startTime, Date endTime) {
-		return storageService.findAnalysisByRdcidKeyDate(rdcid, key, startTime, endTime);
+	public Object findAnalysisByRdcidKeyDate(int rdcid, String keys,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		return storageService.findAnalysisByRdcidKeyDate(rdcid, Arrays.asList(keys.split(",")), startTime, endTime);
 	}
-
-	// 废弃不用
-	/*
-	 * @SuppressWarnings({ "rawtypes", "unchecked" })
-	 * 
-	 * @RequestMapping(value = "/findAllNewColdStorage", method =
-	 * RequestMethod.GET)
-	 * 
-	 * @ResponseBody public Object findAllNewColdStorage(int rdcId) {
-	 * List<ColdStorageEntity> coldStoInfoList = new ArrayList(); List
-	 * allInfoList = new ArrayList(); coldStoInfoList =
-	 * coldStorageDao.findNewInsertColdStorages();
-	 * 
-	 * for (ColdStorageEntity coldStorage : coldStoInfoList) { Map map = new
-	 * HashMap(); map.put("storageID", coldStorage.getStorageID());
-	 * map.put("temperature", (float) (Math.round(coldStorage.getTemperature() *
-	 * 100)) / 100); RdcSensor rdcSensor =
-	 * rdcSensorDao.selectBySID(coldStorage.getStorageID()); if (rdcSensor !=
-	 * null) { if (rdcSensor.getSx() != null)
-	 * 
-	 * map.put("div_x", rdcSensor.getSx()); else map.put("div_x", ""); if
-	 * (rdcSensor.getSy() != null) map.put("div_y", rdcSensor.getSy()); else
-	 * map.put("div_y", ""); } else { RdcSensor newRdcSensor = new RdcSensor();
-	 * newRdcSensor.setRdcid(rdcId);
-	 * newRdcSensor.setSid(coldStorage.getStorageID());
-	 * newRdcSensor.setSx(null); newRdcSensor.setSy(null);
-	 * newRdcSensor.setColdstorageid(coldStorage.getStorageID()); int
-	 * insertState = rdcSensorDao.insert(newRdcSensor); System.out.println(
-	 * "insert RdcSensor data" + insertState); map.put("div_x", "");
-	 * map.put("div_y", ""); } allInfoList.add(map); } return allInfoList; }
-	 */
 }

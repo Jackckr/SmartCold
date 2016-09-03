@@ -1,25 +1,27 @@
 package com.smartcold.manage.cold.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dto.CompressorGroupWaterCostEntity;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
+import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.CompressorGroupService;
 import com.smartcold.manage.cold.service.StorageService;
 
@@ -38,7 +40,7 @@ public class CompressorGroupController {
 	private CompressorGroupService compressorGroupService;
 
 	@Autowired
-	private ColdStorageAnalysisMapper analysisDao;
+	private ColdStorageAnalysisService analysisService;
 
 	@Autowired
 	private StorageService storageService;
@@ -85,16 +87,17 @@ public class CompressorGroupController {
 		return result;
 	}
 
-	@RequestMapping(value = "/findAnalysisByRdcidKeyDate", method = RequestMethod.GET)
+	@RequestMapping(value = "/findAnalysisByRdcidKeysDate", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findAnalysisByRdcidKeyDate(int rdcId, String key, Date startTime, Date endTime) {
-		HashMap<String, List<ColdStorageAnalysisEntity>> result = new HashMap<String, List<ColdStorageAnalysisEntity>>();
+	public Object findAnalysisByRdcidKeyDate(int rdcId, String keys,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>> result = new HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>>();
 
 		List<CompressorGroupSetEntity> groups = compressorGroupSetDao.findByRdcId(rdcId);
 		for (CompressorGroupSetEntity group : groups) {
-			List<ColdStorageAnalysisEntity> datas = analysisDao.findValueByDate(StorageType.COMPRESSORGROUP.getType(),
-					group.getId(), key, startTime, endTime);
-			result.put(group.getName(), datas);
+			result.put(group.getName(), analysisService.findValueByDateKeys(StorageType.COMPRESSORGROUP.getType(),
+					group.getId(), Arrays.asList(keys.split(",")), startTime, endTime));
 		}
 
 		return result;
