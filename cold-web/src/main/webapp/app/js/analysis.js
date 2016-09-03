@@ -20,7 +20,7 @@ coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $loc
 					var chart = echarts.init($(chartId).get(0));
 					angular.forEach(storage['ChaoWenShiJian'],function(item){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
-						yData.unshift(item['value'])
+						yData.unshift(item['value'] / 60)
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
 							xData, yData, "时间", "m", "超温时间", "bar"));
@@ -243,3 +243,37 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 	
 	$scope.load();
 });
+
+coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
+	$scope.load = function(){
+		$scope.rdcId = $stateParams.rdcId;
+		var endTime = new Date();
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
+            params: {
+            	"startTime": baseTools.formatTime(startTime),
+            	"endTime": baseTools.formatTime(endTime),
+                "rdcid": $scope.rdcId,
+                'keys':'DoorTotalTime'
+            } 
+		}).success(function(data,status,config,header){
+			$scope.data = data;
+			angular.forEach(data,function(storage,key){
+				$timeout(function(){					
+					xData = []
+					yData = []
+					var chartId = "#" + key + "Chart"
+					var chart = echarts.init($(chartId).get(0));
+					angular.forEach(storage['DoorTotalTime'],function(item){
+						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
+						yData.unshift(item['value'] / 60)
+					})
+					chart.setOption(baseTools.getEchartSingleOption("", 
+							xData, yData, "时间", "m", "开门时间", "bar"));
+				},0)
+			})
+		})
+	}
+	
+	$scope.load();
+})

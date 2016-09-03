@@ -409,6 +409,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/WDZQYZ/{rdcId}',
     	controller: 'WDZQYZ',
         templateUrl: 'app/template/WDZQYZ.html'
+    }).state('doorAnalysis',{
+    	url:'/doorAnalysis/{rdcId}',
+    	controller: 'doorAnalysis',
+        templateUrl: 'app/template/doorAnalysis.html'
     });
 
 });
