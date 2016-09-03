@@ -163,110 +163,140 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 "compressorID": compressorID
             }
         }).success(function (result) {
-            var mainId = "pressureChart" + compressorID;
-            var barId = "#" + mainId;
-            if ($scope.swiper < $scope.compressorGroups.length){
-                var innerHTML = '<div class="swiper-slide">' +
-                    '<p class="actually">'+compressor.name+'</p>' +
-                    '<div id='+mainId+'></div> ';
-                $("#chartView").last().append(innerHTML);
-                $scope.swiper +=1;
+            var compressorsImg = '';
+            if ($scope.swiper < $scope.compressorGroups.length) {
+                $http.get(ER.coldroot + "/i/compressorGroup/findCompressorState?compressorGroupId=" + compressorID).success(function (data) {
+                    var compressors = data;
+                    if (compressors.length > 0) {
+                        for (var i = 0; i < compressors.length; i++) {
+                            compressorsImg += '<div style="margin-top:10px;float:left;" class="text-center">';
+                            if (compressors[i].type == 1 && compressors[i].keyValues.isRunning == 1) {
+                                compressorsImg += '<img src="../../com/img/pressure1_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                            }
+                            if (compressors[i].type == 1 && compressors[i].keyValues.isRunning == 0) {
+                                compressorsImg += '<img src="../../com/img/pressure1_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                            }
+                            if (compressors[i].type == 2 && compressors[i].keyValues.isRunning == 1) {
+                                compressorsImg += '<img src="../../com/img/pressure2_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                            }
+                            if (compressors[i].type == 2 && compressors[i].keyValues.isRunning == 0) {
+                                compressorsImg += '<img src="../../com/img/pressure2_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                            }
+                            compressorsImg += '<label>' + compressors[i].name + '</label></div>';
+                        }
+                    }
+                    var mainId = "pressureChart" + compressorID;
+                    var barId = "#" + mainId;
+                    if ($scope.swiper < $scope.compressorGroups.length){
+                        var title = '<p><img src="../../com/img/run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止</p>';
+                        var innerHTML = '<div class="swiper-slide">' +
+                            '<p class="actually">'+compressor.name+'</p>' +
+                            '<div id='+mainId+'></div>' +
+                            title+
+                            compressorsImg +
+                            '</div>';
+                        $("#chartView").last().append(innerHTML);
+                        $scope.swiper +=1;
+                    }
+
+                    var data = result;
+                    var lowPress = data.lowPress.length>0?data.lowPress[0].value:0;
+                    var highPress = data.highPress.length>0?data.highPress[0].value:100;
+                    var pressureChart = echarts.init($(barId).get(0));
+
+                    var dataStyle = {
+                        normal: {
+                            label: {show: false},
+                            labelLine: {show: false}
+                        }
+                    };
+                    var placeHolderStyle = {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                            label: {show: false},
+                            labelLine: {show: false}
+                        },
+                        emphasis: {
+                            color: 'rgba(0,0,0,0)'
+                        }
+                    };
+                    var pressureOption = {
+                        title: {
+                            text: '压力监控',
+                            x: 'center',
+                            y: 'center',
+                            itemGap: 20,
+                            textStyle: {
+                                color: 'rgba(30,144,255,0.8)',
+                                fontFamily: '微软雅黑',
+                                fontSize: 25,
+                                fontWeight: 'bolder'
+                            }
+                        },
+                        tooltip: {
+                            show: true,
+                            formatter: "{b} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'horizontal',
+                            x: 30,
+                            y: 250,
+                            itemGap: 12,
+                            data: ['高压' + parseFloat(highPress).toFixed(0), '低压' + parseFloat(lowPress).toFixed(0)]
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {show: true},
+                                dataView: {show: true, readOnly: false},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        series: [
+                            {
+                                name: '高压压力',
+                                type: 'pie',
+                                clockWise: false,
+                                radius: [70, 90],
+                                itemStyle: dataStyle,
+                                data: [
+                                    {
+                                        value: parseInt(highPress / 20),
+                                        name: '高压' + parseFloat(highPress).toFixed(0)
+                                    },
+                                    {
+                                        value: 100 - parseInt(highPress / 20),
+                                        name: '高压可用:' + (2000 - parseInt(highPress)),
+                                        itemStyle: placeHolderStyle
+                                    }
+                                ]
+                            },
+                            {
+                                name: '低压压力',
+                                type: 'pie',
+                                clockWise: false,
+                                radius: [50, 70],
+                                itemStyle: dataStyle,
+                                data: [
+                                    {
+                                        value: parseInt(lowPress / 20),
+                                        name: '低压' + parseFloat(lowPress).toFixed(0)
+                                    },
+                                    {
+                                        value: 100 - parseInt(lowPress / 20),
+                                        name: '高压可用:' + (2000 - parseInt(lowPress).toFixed(0)),
+                                        itemStyle: placeHolderStyle
+                                    }
+                                ]
+                            }
+                        ]
+                    };
+                    pressureChart.setOption(pressureOption);
+                })
             }
 
-            var data = result;
-            var lowPress = data.lowPress.length>0?data.lowPress[0].value:0;
-            var highPress = data.highPress.length>0?data.highPress[0].value:100;
-            var pressureChart = echarts.init($(barId).get(0));
 
-            var dataStyle = {
-                normal: {
-                    label: {show: false},
-                    labelLine: {show: false}
-                }
-            };
-            var placeHolderStyle = {
-                normal: {
-                    color: 'rgba(0,0,0,0)',
-                    label: {show: false},
-                    labelLine: {show: false}
-                },
-                emphasis: {
-                    color: 'rgba(0,0,0,0)'
-                }
-            };
-            var pressureOption = {
-                title: {
-                    text: '压力监控',
-                    x: 'center',
-                    y: 'center',
-                    itemGap: 20,
-                    textStyle: {
-                        color: 'rgba(30,144,255,0.8)',
-                        fontFamily: '微软雅黑',
-                        fontSize: 25,
-                        fontWeight: 'bolder'
-                    }
-                },
-                tooltip: {
-                    show: true,
-                    formatter: "{b} ({d}%)"
-                },
-                legend: {
-                    orient: 'horizontal',
-                    x: 30,
-                    y: 250,
-                    itemGap: 12,
-                    data: ['高压' + parseFloat(highPress).toFixed(0), '低压' + parseFloat(lowPress).toFixed(0)]
-                },
-                toolbox: {
-                    show: false,
-                    feature: {
-                        mark: {show: true},
-                        dataView: {show: true, readOnly: false},
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
-                series: [
-                    {
-                        name: '高压压力',
-                        type: 'pie',
-                        clockWise: false,
-                        radius: [70, 90],
-                        itemStyle: dataStyle,
-                        data: [
-                            {
-                                value: parseInt(highPress / 20),
-                                name: '高压' + parseFloat(highPress).toFixed(0)
-                            },
-                            {
-                                value: 100 - parseInt(highPress / 20),
-                                name: '高压可用:' + (2000 - parseInt(highPress)),
-                                itemStyle: placeHolderStyle
-                            }
-                        ]
-                    },
-                    {
-                        name: '低压压力',
-                        type: 'pie',
-                        clockWise: false,
-                        radius: [50, 70],
-                        itemStyle: dataStyle,
-                        data: [
-                            {
-                                value: parseInt(lowPress / 20),
-                                name: '低压' + parseFloat(lowPress).toFixed(0)
-                            },
-                            {
-                                value: 100 - parseInt(lowPress / 20),
-                                name: '高压可用:' + (2000 - parseInt(lowPress).toFixed(0)),
-                                itemStyle: placeHolderStyle
-                            }
-                        ]
-                    }
-                ]
-            };
-            pressureChart.setOption(pressureOption);
         })
         //$http.get("/i/compressorGroup/findCompressorState?compressorGroupId=" + compressorID).success(
         //    function(data){
@@ -313,9 +343,10 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     }
                 }
                 if ($scope.swiper < $scope.compressorGroups.length){
+                    var title = '<img src="../../com/img/eva_run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止';
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">'+compressor.name+'</p>' +
-                        '<img src="../../com/img/eva_run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止' +
+                        title+
                         img +
                         evaBlowersImg +
                         '</div> ';
