@@ -11,32 +11,8 @@ coldWeb.controller('coolingAnalysis', function ($scope, $location, $stateParams,
 		});
 	};
     $scope.createhech=function(id,chardata){
-    	
     	$(id).highcharts({
-    		
             title: { text: '', x: -20 }, credits: {enabled: false },
-            chart:{
-            	zoomType: 'x',
-                panning: true,
-                panKey: 'shift'
-//            	borderColor: '#EBBA95',
-//                borderWidth: 2,
-//                animation: Highcharts.svg, // don't animate in old IE
-//                marginRight: 10,
-//                backgroundColor: {
-//                    linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
-//                    stops: [
-//                        [0, 'rgb(210, 214, 222)'],
-//                        [1, 'rgb(210, 214, 222)']
-//                    ]
-//                },
-//                borderColor: '#d2d6de',
-//                borderWidth: 2,
-//                className: 'dark-container',
-//                plotBackgroundColor: 'rgba(210, 214, 222, .1)',
-//                plotBorderColor: '#d2d6de',
-//                plotBorderWidth: 1
-            },
             xAxis: { categories: chardata.xdata },
             yAxis: {title: { text: ''},plotLines: [{ value: 0, width: 1, color: '#808080' }]},
             tooltip: { valueSuffix: '°C' },
