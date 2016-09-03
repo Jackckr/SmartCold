@@ -172,16 +172,16 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                         for (var i = 0; i < compressors.length; i++) {
                             compressorsImg += '<div style="margin-top:10px;float:left;" class="text-center">';
                             if (compressors[i].type == 1 && compressors[i].keyValues.isRunning == 1) {
-                                compressorsImg += '<img src="../../com/img/pressure1_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure1_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
                             }
                             if (compressors[i].type == 1 && compressors[i].keyValues.isRunning == 0) {
-                                compressorsImg += '<img src="../../com/img/pressure1_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure1_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
                             }
                             if (compressors[i].type == 2 && compressors[i].keyValues.isRunning == 1) {
-                                compressorsImg += '<img src="../../com/img/pressure2_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure2_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
                             }
                             if (compressors[i].type == 2 && compressors[i].keyValues.isRunning == 0) {
-                                compressorsImg += '<img src="../../com/img/pressure2_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure2_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
                             }
                             compressorsImg += '<label>' + compressors[i].name + '</label></div>';
                         }
@@ -189,7 +189,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     var mainId = "pressureChart" + compressorID;
                     var barId = "#" + mainId;
                     if ($scope.swiper < $scope.compressorGroups.length) {
-                        var title = '<p><img src="../../com/img/run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止</p>';
+                        var title = '<p><img src="../com/img/run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止</p>';
                         var innerHTML = '<div class="swiper-slide">' +
                             '<p class="actually">' + compressor.name + '</p>' +
                             '<div id=' + mainId + '></div>' +
@@ -307,26 +307,26 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 var evaporative = data;
                 var img = '';
                 if (evaporative.evaWater && evaporative.evaWater.isRunning) {
-                    img = '<img alt="" src="../../com/img/evawater_run.png" style="margin-top:10px;" class="myImg">';
+                    img = '<img alt="" src="../com/img/evawater_run.png" style="margin-top:10px;" class="myImg">';
                 }
                 if (!evaporative.evaWater || !evaporative.evaWater.isRunning) {
-                    img = '<img alt="" src="../../com/img/evawater_stop.png" style="margin-top:10px;" class="myImg">';
+                    img = '<img alt="" src="../com/img/evawater_stop.png" style="margin-top:10px;" class="myImg">';
                 }
                 var evaBlowersImg = '';
                 if (evaporative.evaBlowers.length > 0) {
                     for (var i = 0; i < evaporative.evaBlowers.length; i++) {
                         evaBlowersImg += '<div style="margin-top:10px;float:left;" class="text-center">';
                         if (evaporative.evaBlowers[i].isRunning == 1) {
-                            evaBlowersImg += '<img src="../../com/img/evablower_run.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
+                            evaBlowersImg += '<img src="../com/img/evablower_run.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
                         }
                         if (evaporative.evaBlowers[i].isRunning == 0) {
-                            evaBlowersImg += '<img src="../../com/img/evablower_stop.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
+                            evaBlowersImg += '<img src="../com/img/evablower_stop.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
                         }
                         evaBlowersImg += '<label>' + evaporative.evaBlowers[i].name + '</label></div>';
                     }
                 }
                 if ($scope.swiper < $scope.compressorGroups.length) {
-                    var title = '<img src="../../com/img/eva_run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止';
+                    var title = '<img src="../com/img/eva_run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止';
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">' + compressor.name + '</p>' +
                         title +
