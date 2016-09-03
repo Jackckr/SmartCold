@@ -1,7 +1,8 @@
 checkLogin();
 var app = angular.module('app', []);
 app.controller('facility', function ($scope, $location, $http, $rootScope, $sce) {
-    $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+    $http.defaults.withCredentials = true;
+    $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
     $scope.user = window.user;
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
@@ -31,7 +32,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
     $scope.swiper = 0;
     $scope.defaltswiper = 0;
 
-    $scope.drawDoor = function(storage){
+    $scope.drawDoor = function (storage) {
 
         $http.get(ER.coldroot + '/i/coldStorageDoor/findByStorageId?storageID=' + storage.id).success(function (data) {
             if (data.length > 0) {
@@ -39,8 +40,8 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                 $http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
                     params: {
                         "oid": doorId,
-                        type:2,
-                        key:'Switch'
+                        type: 2,
+                        key: 'Switch'
                     }
                 }).success(function (result) {
                     var data = [];
@@ -64,12 +65,12 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                             });
 
                             var mainId = 'door' + doorId;
-                            if ($scope.swiper < $scope.mystorages.length){
+                            if ($scope.swiper < $scope.mystorages.length) {
                                 var innerHTML = '<div class="swiper-slide">' +
-                                    '<p class="actually">'+storage.name+'</p>' +
-                                    '<div id='+mainId+'></div> ';
+                                    '<p class="actually">' + storage.name + '</p>' +
+                                    '<div id=' + mainId + '></div> ';
                                 $("#chartView").last().append(innerHTML);
-                                $scope.swiper +=1;
+                                $scope.swiper += 1;
                             }
 
                             $('#' + mainId).highcharts({
@@ -78,7 +79,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                     animation: Highcharts.svg, // don't animate in old IE
                                     marginRight: 10,
                                     backgroundColor: {
-                                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                                        linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
                                         stops: [
                                             [0, 'rgb(210, 214, 222)'],
                                             [1, 'rgb(210, 214, 222)']
@@ -96,15 +97,15 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                 },
                                 xAxis: {
                                     type: 'datetime',
-                                    tickPixelInterval:  200,
+                                    tickPixelInterval: 200,
                                 },
                                 yAxis: {
                                     allowDecimals: false,
                                     labels: {
-                                        formatter:function(){
-                                            if(this.value===0) {
+                                        formatter: function () {
+                                            if (this.value === 0) {
                                                 return "关";
-                                            }else if(this.value===1) {
+                                            } else if (this.value === 1) {
                                                 return "开";
                                             }
                                         }
@@ -117,13 +118,13 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                         width: 1,
                                         color: '#808080'
                                     }],
-                                    max:1,
-                                    min:0,
+                                    max: 1,
+                                    min: 0,
                                 },
                                 tooltip: {
                                     formatter: function () {
                                         var state = undefined;
-                                        if (this.y === 1){
+                                        if (this.y === 1) {
                                             state = '冷库处于开门状态';
                                         } else {
                                             state = '冷库处于关门状态';
@@ -149,7 +150,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                     groupPadding: 0, //分组之间的距离值
                                     borderWidth: 0,
                                     shadow: false,
-                                    pointWidth:48, //柱子之间的距离值
+                                    pointWidth: 48, //柱子之间的距离值
                                     data: (function () {
                                         return data;
                                     })()
@@ -162,27 +163,27 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                 });
             } else {
                 var mainId = 'defalt' + $scope.defaltswiper;
-                if ($scope.swiper < $scope.mystorages.length){
+                if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">'+storage.name+'</p>' +
-                        '<div id='+mainId+'></div> ';
+                        '<p class="actually">' + storage.name + '</p>' +
+                        '<div id=' + mainId + '></div> ';
                     $("#chartView").last().append(innerHTML);
-                    $scope.defaltswiper +=1;
-                    $scope.swiper +=1;
+                    $scope.defaltswiper += 1;
+                    $scope.swiper += 1;
                 }
             }
         })
     }
 
-    $scope.drawFlatform = function(storage) {
+    $scope.drawFlatform = function (storage) {
         $http.get(ER.coldroot + '/i/coldStorageDoor/findByStorageId?storageID=' + storage.id).success(function (data) {
             if (data.length > 0) {
                 var doorId = data[0].id;
                 $http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
                     params: {
                         "oid": doorId,
-                        type:11,
-                        key:'Switch'
+                        type: 11,
+                        key: 'Switch'
                     }
                 }).success(function (result) {
                     var data = [];
@@ -205,12 +206,12 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                             });
 
                             var mainId = 'platform' + doorId;
-                            if ($scope.swiper < $scope.mystorages.length){
+                            if ($scope.swiper < $scope.mystorages.length) {
                                 var innerHTML = '<div class="swiper-slide">' +
-                                    '<p class="actually">'+storage.name+'</p>' +
-                                    '<div id='+mainId+'></div> ';
+                                    '<p class="actually">' + storage.name + '</p>' +
+                                    '<div id=' + mainId + '></div> ';
                                 $("#chartView").last().append(innerHTML);
-                                $scope.swiper +=1;
+                                $scope.swiper += 1;
                             }
 
                             $('#' + mainId).highcharts({
@@ -219,7 +220,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                     animation: Highcharts.svg, // don't animate in old IE
                                     marginRight: 10,
                                     backgroundColor: {
-                                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                                        linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
                                         stops: [
                                             [0, 'rgb(210, 214, 222)'],
                                             [1, 'rgb(210, 214, 222)']
@@ -237,15 +238,15 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                 },
                                 xAxis: {
                                     type: 'datetime',
-                                    tickPixelInterval:  200,
+                                    tickPixelInterval: 200,
                                 },
                                 yAxis: {
                                     allowDecimals: false,
                                     labels: {
-                                        formatter:function(){
-                                            if(this.value===0) {
+                                        formatter: function () {
+                                            if (this.value === 0) {
                                                 return "关";
-                                            }else if(this.value===1) {
+                                            } else if (this.value === 1) {
                                                 return "开";
                                             }
                                         }
@@ -258,13 +259,13 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                         width: 1,
                                         color: '#808080'
                                     }],
-                                    max:1,
-                                    min:0,
+                                    max: 1,
+                                    min: 0,
                                 },
                                 tooltip: {
                                     formatter: function () {
                                         var state = undefined;
-                                        if (this.y === 1){
+                                        if (this.y === 1) {
                                             state = '冷库处于开门状态';
                                         } else {
                                             state = '冷库处于关门状态';
@@ -291,7 +292,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                     groupPadding: 0, //分组之间的距离值
                                     borderWidth: 0,
                                     shadow: false,
-                                    pointWidth:48, //柱子之间的距离值
+                                    pointWidth: 48, //柱子之间的距离值
                                     data: (function () {
                                         return data;
                                     })()
@@ -304,41 +305,43 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                 })
             } else {
                 var mainId = 'defalt' + $scope.defaltswiper;
-                if ($scope.swiper < $scope.mystorages.length){
+                if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">'+storage.name+'</p>' +
-                        '<div id='+mainId+'></div> ';
+                        '<p class="actually">' + storage.name + '</p>' +
+                        '<div id=' + mainId + '></div> ';
                     $("#chartView").last().append(innerHTML);
-                    $scope.defaltswiper +=1;
-                    $scope.swiper +=1;
+                    $scope.defaltswiper += 1;
+                    $scope.swiper += 1;
                 }
             }
         })
     }
 
-    $scope.drawOther = function() {
+    $scope.drawOther = function () {
 
-        var keyDescribleMap = {forkLift:"叉车日耗能",windScreen:"风幕机日耗能",
-            pressurePlatform:"液压平台日耗能",chargingPile:"充电桩日耗能"}
+        var keyDescribleMap = {
+            forkLift: "叉车日耗能", windScreen: "风幕机日耗能",
+            pressurePlatform: "液压平台日耗能", chargingPile: "充电桩日耗能"
+        }
         url = ER.coldroot + "/i/other/findOtherDeviceCosts?rdcId=" + $scope.rdcId + "&startTime="
             + getFormatTimeString(-30 * 24 * 60 * 60 * 1000) + "&endTime=" + getFormatTimeString()
-        $http.get(url).success(function(data){
+        $http.get(url).success(function (data) {
             $scope.otherInfos = data;
-            angular.forEach(data,function(infos,key){
+            angular.forEach(data, function (infos, key) {
                 var mainId = key + "Chart";
                 var chartId = "#" + mainId;
-                if ($scope.swiper < 4){
+                if ($scope.swiper < 4) {
                     var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">'+keyDescribleMap[key]+'</p>' +
-                        '<div id='+mainId+'></div> ';
+                        '<p class="actually">' + keyDescribleMap[key] + '</p>' +
+                        '<div id=' + mainId + '></div> ';
                     $("#chartView").last().append(innerHTML);
-                    $scope.swiper +=1;
+                    $scope.swiper += 1;
                 }
 
                 var chart = echarts.init($(chartId).get(0));
                 var xData = []
                 var yData = []
-                angular.forEach(infos,function(info){
+                angular.forEach(infos, function (info) {
                     yData.push(info.cost)
                     xData.push(formatTime(info.time))
                 })
@@ -346,25 +349,6 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                     "耗能", "kW.h", keyDescribleMap[key], "line"))
             })
         })
-    }
-
-    $scope.drawLightSys = function() {
-        if ($scope.rdcId) {
-            var url = "lightDiv.html?storageID=" + $scope.rdcId;
-            $scope.trustSrc = $sce.trustAsResourceUrl(url);
-            if ($scope.swiper < 1){
-
-                var innerHTML = '<div class="swiper-slide">' +
-                    '<div class="page-content"> ' +
-                    '<h1 class="text-white page-header">灯组分布图</h1> ' +
-                    '<div class="row" style="margin-left:10px"> ' +
-                    '<iframe seamless frameborder="0" width="550" height="290" ng-src="{{trustSrc}}"></iframe> ' +
-                    '</div></div>' +
-                    '</div> ';
-                $("#chartView").last().append(innerHTML);
-                $scope.swiper +=1;
-            }
-        }
     }
 
     $scope.activeEnergy = 'storageDoor';
@@ -386,13 +370,6 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
         }
     }
 
-    $scope.lightSysFacility = function () {
-        clearSwiper();
-        $scope.swiper = 0;
-        $scope.activeEnergy = 'lightSys';
-        $scope.drawLightSys();
-    }
-
     $scope.otherFacilityFacility = function () {
         clearSwiper();
         $scope.swiper = 0;
@@ -400,63 +377,63 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
         $scope.drawOther();
     }
 
-    function clearSwiper(){
+    function clearSwiper() {
         $("div").remove(".swiper-slide");
         $scope.swiper = 0;
         $scope.defaltswiper = 0;
     }
 
-    var getFormatTimeString = function(delta){
-        delta = delta ? delta + 8 * 60 * 60 * 1000: 8 * 60 * 60 * 1000;
-        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/,"")
+    var getFormatTimeString = function (delta) {
+        delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
+        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
     }
 
-    var formatTime = function(timeString){
-        if (typeof(timeString) == "string"){
-            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
-        }else{
-            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+    var formatTime = function (timeString) {
+        if (typeof(timeString) == "string") {
+            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        } else {
+            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
         }
     }
 
-    $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type){
+    $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
-            tooltip : {
+            tooltip: {
                 trigger: 'axis'
             },
             title: {
                 text: title,
-                x:'left',
+                x: 'left',
                 textStyle: {
                     fontSize: 16,
                     fontWeight: 400,
                     color: '#333'          // 主标题文字颜色
                 },
             },
-            calculable : true,
+            calculable: true,
             grid: {
-                x:55,
+                x: 55,
                 y: 60,
                 x2: 75,
                 /*y2: 60,*/
             },
-            xAxis : [
+            xAxis: [
                 {
-                    type : 'category',
-                    data : xData
+                    type: 'category',
+                    data: xData
                 }
             ],
-            yAxis : [
+            yAxis: [
                 {
-                    type : 'value',
-                    name : yName + "(" + yUnit + ")"
+                    type: 'value',
+                    name: yName + "(" + yUnit + ")"
                 }
             ],
-            series : [
+            series: [
                 {
-                    name:lineName,
+                    name: lineName,
                     type: type,
-                    data:yData,
+                    data: yData,
                 }
             ]
         };
@@ -465,20 +442,17 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        if ($scope.activeEnergy == 'storageDoor'){
+        if ($scope.activeEnergy == 'storageDoor') {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawDoor($scope.mystorages[i]);
             }
         }
-        if ($scope.activeEnergy == 'platformDoor'){
+        if ($scope.activeEnergy == 'platformDoor') {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawFlatform($scope.mystorages[i]);
             }
         }
-        if ($scope.activeEnergy == 'lightSys'){
-            $scope.drawLightSys();
-        }
-        if ($scope.activeEnergy == 'otherFacility'){
+        if ($scope.activeEnergy == 'otherFacility') {
             $scope.drawOther();
         }
     }, 30000);

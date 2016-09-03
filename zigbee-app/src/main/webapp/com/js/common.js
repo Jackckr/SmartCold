@@ -1,5 +1,4 @@
 "use strict";
-console.log("comm.js");
 var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
@@ -11,8 +10,9 @@ var userjson=window.sessionStorage.getItem("user");if(userjson){window.user=JSON
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
+function setIOS_hidebar(){ if(window.location.pathname.indexOf("360")==-1){ $(".footer").hide();}}//同步token
 function setIOS_token(token){util.setCookie("token",token,"d7");checktoken();}//同步token
-function setIOS_hidebar(){$(".footer").hide();}//同步token
+function setIOS_deltoken(){ $http.get(ER.root+'/i/user/logout');window.user  = null;util.delCookie("token");window.sessionStorage.removeItem("user");}//同步token
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
 function showErrorInfo(msg){var msgEl=$("#mention");if(msg==null||msg==''){msgEl.hide();msgEl.html('');}else{msgEl.show();msgEl.html(msg);}}
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
@@ -47,3 +47,7 @@ window.onload = function(){
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 };
+
+
+
+
