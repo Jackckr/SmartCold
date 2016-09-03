@@ -1,5 +1,5 @@
 coldWeb.controller('infoManage', function($rootScope, $scope, $state, $cookies,
-		$http, $location) {
+		$http, $location, Upload) {
 	$scope.load = function() {
 		$.ajax({
 			type : "GET",
@@ -58,6 +58,9 @@ coldWeb.controller('infoManage', function($rootScope, $scope, $state, $cookies,
 	$scope.goSearch = function() {
 		$scope.getAllInformation();
 	};
+	
+	
+	
 
 	function delcfm() {
 		if (!confirm("确认要删除？")) {
@@ -78,6 +81,17 @@ coldWeb.controller('infoManage', function($rootScope, $scope, $state, $cookies,
 		}
 	};
 	
+	$scope.goDetail = function(inforID) {
+	  $http.get('/i/information/findInformationByID', {
+				params : {
+					"inforID" : inforID
+				}
+			}).success(function(data) {
+				$scope.informationDetail = data;
+				document.getElementById("content").innerHTML=$scope.informationDetail.content;
+			});
+	};
+	
 
 	$scope.goEdit = function(inforID) {
 		// 获取当前冷库的详情
@@ -92,7 +106,9 @@ coldWeb.controller('infoManage', function($rootScope, $scope, $state, $cookies,
 					$scope.mainwords = data.keywords;
 					$scope.content = data.content;
 					$scope.id = data.id;
+					$scope.coverpic = data.coverpic;
 					UE.getEditor('editor').setContent($scope.content);
+					$('#img0').attr("src",$scope.coverpic);
 					$('#myTab li').eq(0).addClass('active').siblings()
 							.removeClass('active');
 					$('#addNews').addClass('active').addClass('in').siblings()
@@ -111,36 +127,40 @@ coldWeb.controller('infoManage', function($rootScope, $scope, $state, $cookies,
 		}
 		return flag;
 	}
+	 $scope.addCoverPic = function (arrangePic) {
+	   };
 
 	$scope.inforSubmit = function() {
 		// alert(UE.getEditor('editor').getContent());
 		$scope.content = UE.getEditor('editor').getContent();
 		if (checkInput()) {
-			$http({
-				method : 'GET',
-				url : '/i/information/addInformation',
-				params : {
-					'id' : $scope.id,
-					'title' : $scope.title,
-					'category' : $scope.inforCategory,
-					'posterid' : $rootScope.admin.id,
-					'keywords' : $scope.mainwords,
-					'content' : $scope.content
-				}
-			}).then(
-					function(resp) {
-						alert("添加成功");
-						window.location.reload();
-					},
-					function(resp) {
-						console.log('Error status: ' + resp.status);
-					},
-					function(evt) {
-						var progressPercentage = parseInt(100.0 * evt.loaded
-								/ evt.total);
-						console.log('progress: ' + progressPercentage + '% '
-								+ evt.name);
-					});
+			 data = {
+					    'id' : $scope.id,
+						'title' : $scope.title,
+						'category' : $scope.inforCategory,
+						'posterid' : $rootScope.admin.id,
+						'keywords' : $scope.mainwords,
+						'content' : $scope.content,
+						'uploadcoverpic' : $scope.coverpic
+		            };
+			  Upload.upload({
+	                url: '/i/information/addInformation',
+	                headers :{ 'Content-Transfer-Encoding': 'utf-8' },
+	                data: data
+	            }).then(
+						function(resp) {
+							alert("添加成功");
+							window.location.reload();
+						},
+						function(resp) {
+							console.log('Error status: ' + resp.status);
+						},
+						function(evt) {
+							var progressPercentage = parseInt(100.0 * evt.loaded
+									/ evt.total);
+							console.log('progress: ' + progressPercentage + '% '
+									+ evt.name);
+						});
 		} else {
 			alert("标题和内容不允许为空!");
 		}

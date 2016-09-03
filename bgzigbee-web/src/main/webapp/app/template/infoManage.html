@@ -65,7 +65,7 @@
     				        <label class="col-sm-1 control-label">封面图片<em>*</em></label> 
     				        <div class="col-sm-6"> 
     				            <form name="form0" id="form0" >
-									<input type="file" name="file0" id="file0"  ng-model="file" /><img src="" id="img0" >
+									<input type="file" name="file0" id="file0"  ng-model="coverpic"  ngf-select="addCoverPic($coverpic)" /><img src="" id="img0" >
 								</form>
     				        </div> 
     				    </div> 
@@ -157,8 +157,8 @@
     		<div class="tab-pane fade clearfix" id="alreadyRel">
     			<ul class="imgList pull-left" ng-repeat="information in AllInformation">
                     <li>
-                        <div class="img pull-left"><img src="app/img/food.jpg"></div>
-                        <p class="title_news omg"><a data-toggle="modal" href="#myModal">{{information.title}}</a></p>
+                        <div class="img pull-left"><img src="{{information.coverpic}}"></div>
+                        <p class="title_news omg"><a data-toggle="modal" href="#myModal" ng-click="goDetail(information.id)">{{information.title}}</a></p>
                         <p class="time_news p_bottom">
                             {{information.posttime}}
                             <span class="info_edit" ng-click="goEdit(information.id)">修改</span>
@@ -179,12 +179,9 @@
 				        <div class="modal-content"> 
 				            <div class="modal-header"> 
 				                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
-				                <h4 class="modal-title" id="myModalLabel">2016中国（镜泊湖）国际农产品冷链物流峰会新闻发布会在京举行</h4> 
+				                <h4 class="modal-title" id="myModalLabel">{{informationDetail.title}}</h4> 
 				            </div> 
-				            <div class="modal-body">
-				            	8月3日上午，2016第四届中国（镜泊湖）国际农产品冷链物流峰会新闻发布会在北京举行。中国物流与采购联合会副会长兼秘书长崔忠付，黑龙江省办公
-				            	厅副主任刘春林，牡丹江市政协副主席、阳明区区委书记姜英波，黑龙江省商务厅流通业发展处处长王洪宝，牡丹江市人民政府副秘书长马磊等出席新闻发
-				            	布会。发布会由中物联冷链物流专业委员会秘书长秦玉鸣主持。
+				            <div id="content" class="modal-body">
 				            </div> 
 				            <div class="modal-footer"> 
 				                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
