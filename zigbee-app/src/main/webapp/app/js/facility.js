@@ -351,25 +351,6 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
         })
     }
 
-    //$scope.drawLightSys = function() {
-    //    if ($scope.rdcId) {
-    //        var url = "lightDiv.html?storageID=" + $scope.rdcId;
-    //        $scope.trustSrc = $sce.trustAsResourceUrl(url);
-    //        if ($scope.swiper < 1){
-    //
-    //            var innerHTML = '<div class="swiper-slide">' +
-    //                '<div class="page-content"> ' +
-    //                '<h1 class="text-white page-header">灯组分布图</h1> ' +
-    //                '<div class="row" style="margin-left:10px"> ' +
-    //                '<iframe seamless frameborder="0" width="550" height="290" ng-src="{{trustSrc}}"></iframe> ' +
-    //                '</div></div>' +
-    //                '</div> ';
-    //            $("#chartView").last().append(innerHTML);
-    //            $scope.swiper +=1;
-    //        }
-    //    }
-    //}
-
     $scope.activeEnergy = 'storageDoor';
     $scope.storageDoorFacility = function () {
         clearSwiper();
@@ -388,13 +369,6 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
             $scope.drawFlatform($scope.mystorages[i]);
         }
     }
-
-    //$scope.lightSysFacility = function () {
-    //    clearSwiper();
-    //    $scope.swiper = 0;
-    //    $scope.activeEnergy = 'lightSys';
-    //    $scope.drawLightSys();
-    //}
 
     $scope.otherFacilityFacility = function () {
         clearSwiper();
@@ -478,9 +452,6 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                 $scope.drawFlatform($scope.mystorages[i]);
             }
         }
-        //if ($scope.activeEnergy == 'lightSys'){
-        //    $scope.drawLightSys();
-        //}
         if ($scope.activeEnergy == 'otherFacility') {
             $scope.drawOther();
         }
