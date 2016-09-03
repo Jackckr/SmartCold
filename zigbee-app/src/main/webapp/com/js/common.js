@@ -1,5 +1,4 @@
 "use strict";
-console.log("comm.js");
 var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;

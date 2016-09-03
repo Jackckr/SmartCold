@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>监控--电耗</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" href="../com/css/swiper.min.css" />
+    <link rel="stylesheet" href="../com/css/cold360.css" />
+	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="../com/js/angular.min.js"></script>
+	<script type="text/javascript" src="../com/js/swiper.min.js" ></script>
+	<script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+	<script type="text/javascript" src="../com/js/highcharts.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/cold360.js" ></script>
+    <script type="text/javascript" src="../app/js/facility.js" ></script>
+</head>
+<body ng-app="app" ng-controller="facility" ng-cloak>
+    <!-- header -->
+        <header class="one">       	
+            <div class="area fl">
+                <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
+            </div>
+            <div class="zoom fr">
+                <a  class="transion"><i class="iconfont">&#xe73c;</i></a>
+            </div>
+            <div class="txt omg">
+                监控
+            </div>
+            <ul class="rdcDropList">
+                <li>莱芜嘉禾冷链物流有限公司</li>
+                <li>莱芜嘉禾冷链物流有限公司</li>
+                <li>莱芜嘉禾冷链物流有限公司</li>
+                <li>莱芜嘉禾冷链物流有限公司</li>
+            </ul>
+        </header>
+        <header class="two">
+        	<div class="area fl">
+        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+        	</div>
+        	
+        	<div id="searchDara_div" class="search">
+				<input type="text" placeholder="查找RDC..." ng-model="searchContent"/>
+        		<i class="iconfont" >&#xe62f;</i>
+        	</div>
+	    </header>
+    <!-- header end-->
+    <section class="toggle">
+    	<div class="tempture" id="temperature" onclick="location.href='cold360.html'"><i class="iconfont">&#xe67f;</i>温度</div>
+    	<div class="light other" id="electric" onclick="location.href='electric.html'"><i class="iconfont">&#xe6f1;</i>
+    		<span class="dropNext">
+    			<b>能耗</b><i class="iconfont">&#xe6f7;</i>
+    		</span>
+            <ul class="otherList black">
+                <li><a href="javascript:;" id="powerEnergy" ng-click="powerEnergy()">电耗</a></li>
+                <li><a href="javascript:;" id="waterEnergy" ng-click="waterEnergy()">水耗</a></li>
+            </ul>
+    	</div>
+    	<div class="door other current" id="opendoor"><i class="iconfont">&#xe6ed;</i>
+    		<span class="dropNext">
+    			<b>设施</b><i class="iconfont">&#xe6f7;</i>
+    		</span>
+    		 <ul class="otherList black">
+    			<li><a href="javascript:;" id="storageDoor" ng-click="storageDoorFacility()">冷库门</a></li>
+    			<li><a href="javascript:;" id="platformDoor" ng-click="platformDoorFacility()">月台门</a></li>
+    			<!--<li><a href="javascript:;" id="lightSys" ng-click="lightSysFacility()">照明系统</a></li>-->
+    			<li><a href="javascript:;" id="otherFacility" ng-click="otherFacilityFacility()">其他设施</a></li>
+    		</ul>
+    	</div>
+    	<div class="other" id="other" onclick="location.href='other.html'"><i class="iconfont">&#xe69f;</i>
+    		<span class="dropNext">
+    			<b>其他</b><i class="iconfont">&#xe6f7;</i>
+    		</span>
+    		<ul class="otherList black">
+    			<li><a href="javascript:;" id="hwlt">货物流通</a></li>
+    			<li>
+    				<a href="javascript:;" id="zlxt">
+    					制冷系统
+    				</a>
+    					<ul class="inner">
+	    					<li><a href="javascript:;">制冷机组</a></li>
+	    					<li><a href="javascript:;">冷凝系统</a></li>
+	    				</ul>
+    			</li>
+                <li><a href="javascript:;" id="zfxt">蒸发系统</a></li>
+    		</ul>    		
+    	</div>
+    </section>
+    <div class="backDrop"></div>
+	<div class="swiper-container chart temperature">
+		<div class="swiper-wrapper" id="chartView"></div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
+        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
+  </div>
+  <!--rdc列表--------------------------------------------------> 
+	 <section class="searchTop">
+		 <ul class="rdcList" ng-repeat="rdclist in storages | filter:searchContent">
+			 <li class="omg" ng-click="viewStorage(rdclist.id)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+		 </ul>
+	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
+	 </section>
+	 <!--rdc列表-----------------------------------------------> 
+    <ul class="footer">
+        <li class="active">           
+            <a href="">
+                <i class="iconfont">&#xe695;</i>
+                <p class="info">监控</p>
+            </a>
+        </li>
+        <li>            
+            <a href="">
+                <i class="iconfont">&#xe682;</i>
+                <p class="info">分析</p>
+            </a>
+        </li>
+        <li>          
+            <a href="">
+                <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
+                <p class="info">告警</p>
+            </a>
+        </li>
+        <li>            
+            <a href="">
+                <i class="iconfont">&#xe6a5;</i>
+                <p class="info">配置</p>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>
