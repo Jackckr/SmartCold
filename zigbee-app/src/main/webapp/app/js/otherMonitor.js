@@ -353,19 +353,39 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
             var coldCnt = 0;
             var defrostCnt = 0;
             var freeCnt = 0;
+
+            var coldDetails = '';
+            var defrostDetails = '';
+            var freeDetails = '';
             for (var i = 0; i < result.length; i++) {
                 result[i].runTime = parseFloat(result[i].runTime / 3600).toFixed(2)
                 result[i].defrostTime = parseFloat(result[i].defrostTime / 3600).toFixed(2)
                 if (parseInt(result[i].isRunning) === 1) {
                     coldCnt = coldCnt + 1;
+                    if (coldDetails == '') {
+                        coldDetails += result[i].blowerId
+                    } else {
+                        coldDetails += ',' + result[i].blowerId;
+                    }
                 }
                 if (parseInt(result[i].isDefrosting) === 1) {
                     defrostCnt = defrostCnt + 1;
+                    if (defrostDetails == '') {
+                        defrostDetails += result[i].blowerId;
+                    } else {
+                        defrostDetails += ',' + result[i].blowerId;
+                    }
                 }
                 if (parseInt(result[i].isRunning) === 0 && parseInt(result[i].isDefrosting) === 0) {
                     freeCnt = freeCnt + 1;
+                    if (freeDetails == '') {
+                        freeDetails += result[i].blowerId
+                    } else {
+                        freeDetails += ',' + result[i].blowerId;
+                    }
                 }
             }
+
             $scope.coldCnt = coldCnt;
             $scope.defrostCnt = defrostCnt;
             $scope.freeCnt = freeCnt;
@@ -376,19 +396,22 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     '<span class="info-box-icon bg-green" style="height: 85px;width: 85px;">' +
                     '<i class="fa fa-life-ring bg-green"></i></span> ' +
                     '<div class="info-box-content" style="padding-left: 2px"> ' +
-                    '<span class="info-box-text"><span style="font-size: 20px;color: coral">制冷</span><span style="font-size: 40px;color: coral">&nbsp;&nbsp;' + $scope.coldCnt + '</span></span> ' +
+                    '<span class="info-box-text"><span style="font-size: 20px;color: coral">制冷</span><span style="font-size: 40px;color: coral">' + $scope.coldCnt + '</span></span> ' +
+                    '<p>'+coldDetails+'</p>' +
                     '</div></div>' +
                     '<div style="height: 100px"> ' +
                     '<span class="info-box-icon bg-yellow" style="height: 85px;width: 85px;">' +
                     '<i class="fa fa-life-ring bg-yellow"></i></span> ' +
                     '<div class="info-box-content" style="padding-left: 2px"> ' +
-                    '<span class="info-box-text"><span style="font-size: 20px;color: coral">化霜</span><span style="font-size: 40px;color: coral">&nbsp;&nbsp;' + $scope.defrostCnt + '</span></span> ' +
+                    '<span class="info-box-text"><span style="font-size: 20px;color: coral">化霜</span><span style="font-size: 40px;color: coral">' + $scope.defrostCnt + '</span></span> ' +
+                    '<p>'+defrostDetails+'</p>' +
                     '</div></div>' +
                     '<div style="height: 100px"> ' +
                     '<span class="info-box-icon bg-red" style="height: 85px;width: 85px;">' +
                     '<i class="fa fa-life-ring bg-red"></i></span> ' +
                     '<div class="info-box-content" style="padding-left: 2px"> ' +
-                    '<span class="info-box-text"><span style="font-size: 20px;color: coral">待机</span><span style="font-size: 40px;color: coral">&nbsp;&nbsp;' + $scope.freeCnt + '</span></span> ' +
+                    '<p><span class="info-box-text"><span style="font-size: 20px;color: coral">待机</span><span style="font-size: 40px;color: coral">' + $scope.freeCnt + '</span></span></p>' +
+                    '<p>'+freeDetails+'</p>' +
                     '</div></div>' +
                     '</div> ';
                 $("#chartView").last().append(innerHTML);
