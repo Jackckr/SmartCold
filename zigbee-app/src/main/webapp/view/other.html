@@ -14,10 +14,42 @@
 	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
 	<script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-	<script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+	<script type="text/javascript" src="../com/js/echarts-all.js" ></script>
+	<script type="text/javascript" src="../com/js/highcharts.js"></script>
 	<script type="text/javascript" src="../com/js/common.js"></script>
 	<script type="text/javascript" src="../com/js/cold360.js" ></script>
 	<script type="text/javascript" src="../app/js/otherMonitor.js" ></script>
+	<style type="text/css">
+		.border{
+			border-color: orange;
+			border-width: 1px;
+			border-style: solid;
+		}
+		.hr{
+			color: orange;
+			border-width: 1px;
+			border-style: solid;
+			border-top-color:orange;
+		}
+		.font{
+			color:rgba(30,144,255,0.8);
+			font-size:25px;
+			font-family:微软雅黑;
+			font-weight:bolder;
+			fill:rgba(30,144,255,0.8);
+		}
+		@media screen and (max-width: 1366px) {
+			.myImg{
+				width:100%;
+			}
+
+		}
+		@media screen and (min-width: 1367px) {
+			.myImg{
+				width:75%;
+			}
+		}
+	</style>
 </head>
 <body ng-app="app" ng-controller="otherMonitor" ng-cloak>
      <!-- header -->
@@ -83,6 +115,7 @@
     				</a>
     					<ul class="inner">
 	    					<li><a href="javascript:;" ng-click="compressorPressureOther()">制冷机组</a></li>
+	    					<li><a href="javascript:;" ng-click="exhaustTemperOther()">排气温度</a></li>
 	    					<li><a href="javascript:;" ng-click="condensationOther()">冷凝系统</a></li>
 	    				</ul>
     			</li>
