@@ -116,6 +116,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
         		$rootScope.rdcId = rdcId;
+        	    window.sessionStorage.setItem("360rdcId", rdcId);//缓存rdcid
         		// 初始化冷库
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
@@ -393,6 +394,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/light/:storageID',
     	controller: 'light',
         templateUrl: 'app/template/coldStorageLightDiv.html'
-    });
+    }).state('coolingAnalysis',{//制冷系统分析  -参数 rdcID
+    	url: '/coolingAnalysis',
+    	controller: 'coolingAnalysis',
+        templateUrl: 'app/template/coolingAnalysis.html'
+    });;
 
 });
