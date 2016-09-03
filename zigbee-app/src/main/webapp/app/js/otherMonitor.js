@@ -11,6 +11,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
             $scope.storages = data;
             $scope.rdcId = $scope.storages[0].id;
             $scope.viewStorage($scope.rdcId);
+            $scope.initCompressorPressure($scope.rdcId);
         }
     });
 
@@ -140,6 +141,177 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
         })
     }
 
+    $scope.initCompressorPressure = function(rdcId){
+        // 初始化压缩机组
+        $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(
+            function (data) {
+                $scope.compressorGroups = data;
+                angular.forEach($scope.compressorGroups, function (item) {
+                    $http.get(ER.coldroot + '/i/compressor/findBygroupId?groupId=' + item.id).success(
+                        function (data) {
+                            item.compressors = data;
+                        })
+                })
+            })
+    }
+
+    $scope.drawCompressorPressure = function(compressor){
+        var compressorID = compressor.id;
+        var data = [];
+        $http.get(ER.coldroot + "/i/compressorGroup/findPressByNums", {
+            params: {
+                "compressorID": compressorID
+            }
+        }).success(function (result) {
+            var mainId = "pressureChart" + compressorID;
+            var barId = "#" + mainId;
+            if ($scope.swiper < $scope.compressorGroups.length){
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">'+compressor.name+'</p>' +
+                    '<div id='+mainId+'></div> ';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper +=1;
+            }
+
+            var data = result;
+            var lowPress = data.lowPress.length>0?data.lowPress[0].value:0;
+            var highPress = data.highPress.length>0?data.highPress[0].value:100;
+            var pressureChart = echarts.init($(barId).get(0));
+
+            var dataStyle = {
+                normal: {
+                    label: {show: false},
+                    labelLine: {show: false}
+                }
+            };
+            var placeHolderStyle = {
+                normal: {
+                    color: 'rgba(0,0,0,0)',
+                    label: {show: false},
+                    labelLine: {show: false}
+                },
+                emphasis: {
+                    color: 'rgba(0,0,0,0)'
+                }
+            };
+            var pressureOption = {
+                title: {
+                    text: '压力监控',
+                    x: 'center',
+                    y: 'center',
+                    itemGap: 20,
+                    textStyle: {
+                        color: 'rgba(30,144,255,0.8)',
+                        fontFamily: '微软雅黑',
+                        fontSize: 25,
+                        fontWeight: 'bolder'
+                    }
+                },
+                tooltip: {
+                    show: true,
+                    formatter: "{b} ({d}%)"
+                },
+                legend: {
+                    orient: 'horizontal',
+                    x: 30,
+                    y: 250,
+                    itemGap: 12,
+                    data: ['高压' + parseFloat(highPress).toFixed(0), '低压' + parseFloat(lowPress).toFixed(0)]
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                series: [
+                    {
+                        name: '高压压力',
+                        type: 'pie',
+                        clockWise: false,
+                        radius: [70, 90],
+                        itemStyle: dataStyle,
+                        data: [
+                            {
+                                value: parseInt(highPress / 20),
+                                name: '高压' + parseFloat(highPress).toFixed(0)
+                            },
+                            {
+                                value: 100 - parseInt(highPress / 20),
+                                name: '高压可用:' + (2000 - parseInt(highPress)),
+                                itemStyle: placeHolderStyle
+                            }
+                        ]
+                    },
+                    {
+                        name: '低压压力',
+                        type: 'pie',
+                        clockWise: false,
+                        radius: [50, 70],
+                        itemStyle: dataStyle,
+                        data: [
+                            {
+                                value: parseInt(lowPress / 20),
+                                name: '低压' + parseFloat(lowPress).toFixed(0)
+                            },
+                            {
+                                value: 100 - parseInt(lowPress / 20),
+                                name: '高压可用:' + (2000 - parseInt(lowPress).toFixed(0)),
+                                itemStyle: placeHolderStyle
+                            }
+                        ]
+                    }
+                ]
+            };
+            pressureChart.setOption(pressureOption);
+        })
+        //$http.get("/i/compressorGroup/findCompressorState?compressorGroupId=" + compressorID).success(
+        //    function(data){
+        //        $scope.compressors = data;
+        //        $scope.exTemp(data);
+        //    })
+
+        //
+        //$http.get('/i/baseInfo/getKeyValueData', {
+        //    params: {
+        //        "oid": compressorID,
+        //        type:3,
+        //        key:'liquidLevel',
+        //        nums:1
+        //    }
+        //}).success(function(data){
+        //    var liquidValue = data.length > 0?parseFloat(data[0].value.toFixed(1)):0;
+        //    $scope.liquidMonitor(liquidValue);
+        //})
+    }
+
+    $scope.drawCondensation = function(compressor){
+        $http.get(ER.coldroot + "/i/evaporative/findInfoByGroupId?groupId=" + compressor.id).success(
+            function(data){
+                var evaporative = data;
+                var img = '';
+                if (evaporative.evaWater && evaporative.evaWater.isRunning) {
+                    img = '<img alt="" src="../../com/img/evawater_run.png" style="margin-top:10px;" class="myImg">';
+                }
+                if (!evaporative.evaWater || !evaporative.evaWater.isRunning) {
+                    img = '<img alt="" src="../../com/img/evawater_stop.png" style="margin-top:10px;" class="myImg">';
+                }
+                if ($scope.swiper < $scope.compressorGroups.length){
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">'+compressor.name+'</p>' +
+                        '<img src="../../com/img/eva_run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止' +
+                        img +
+                        '</div> ';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper +=1;
+                }
+
+            })
+    }
+
     $scope.coldCnt = 0;
     $scope.defrostCnt = 0;
     $scope.freeCnt = 0;
@@ -195,25 +367,6 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 $scope.swiper +=1;
             }
         })
-
-        //
-        //
-        //if ($scope.rdcId) {
-        //    var url = "lightDiv.html?storageID=" + $scope.rdcId;
-        //    $scope.trustSrc = $sce.trustAsResourceUrl(url);
-        //    if ($scope.swiper < 1){
-        //
-        //        var innerHTML = '<div class="swiper-slide">' +
-        //            '<div class="page-content"> ' +
-        //            '<h1 class="text-white page-header">灯组分布图</h1> ' +
-        //            '<div class="row" style="margin-left:10px"> ' +
-        //            '<iframe seamless frameborder="0" width="550" height="290" ng-src="{{trustSrc}}"></iframe> ' +
-        //            '</div></div>' +
-        //            '</div> ';
-        //        $("#chartView").last().append(innerHTML);
-        //        $scope.swiper +=1;
-        //    }
-        //}
     }
 
     $scope.activeEnergy = 'drawInOutGoods';
@@ -229,8 +382,8 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
         clearSwiper();
         $scope.swiper = 0;
         $scope.activeEnergy = 'compressorPressure';
-        for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.drawCompressorPressure($scope.mystorages[i]);
+        for (var i = 0; i < $scope.compressorGroups.length; i++) {
+            $scope.drawCompressorPressure($scope.compressorGroups[i]);
         }
     }
 
@@ -238,8 +391,8 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
         clearSwiper();
         $scope.swiper = 0;
         $scope.activeEnergy = 'condensation';
-        for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.drawCondensation($scope.mystorages[i]);
+        for (var i = 0; i < $scope.compressorGroups.length; i++) {
+            $scope.drawCondensation($scope.compressorGroups[i]);
         }
     }
 
