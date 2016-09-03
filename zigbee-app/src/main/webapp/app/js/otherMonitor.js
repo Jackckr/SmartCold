@@ -299,11 +299,25 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 if (!evaporative.evaWater || !evaporative.evaWater.isRunning) {
                     img = '<img alt="" src="../../com/img/evawater_stop.png" style="margin-top:10px;" class="myImg">';
                 }
+                var evaBlowersImg = '';
+                if (evaporative.evaBlowers.length > 0) {
+                    for (var i = 0; i < evaporative.evaBlowers.length; i++) {
+                        evaBlowersImg += '<div style="margin-top:10px;float:left;" class="text-center">';
+                        if (evaporative.evaBlowers[i].isRunning==1){
+                            evaBlowersImg += '<img src="../../com/img/evablower_run.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
+                        }
+                        if (evaporative.evaBlowers[i].isRunning==0) {
+                            evaBlowersImg += '<img src="../../com/img/evablower_stop.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
+                        }
+                        evaBlowersImg += '<label>' + evaporative.evaBlowers[i].name + '</label></div>';
+                    }
+                }
                 if ($scope.swiper < $scope.compressorGroups.length){
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">'+compressor.name+'</p>' +
                         '<img src="../../com/img/eva_run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止' +
                         img +
+                        evaBlowersImg +
                         '</div> ';
                     $("#chartView").last().append(innerHTML);
                     $scope.swiper +=1;
