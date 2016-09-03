@@ -189,7 +189,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     var mainId = "pressureChart" + compressorID;
                     var barId = "#" + mainId;
                     if ($scope.swiper < $scope.compressorGroups.length) {
-                        var title = '<p><img src="../com/img/run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止</p>';
+                        var title = '<p><img src="../com/img/run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止</p>';
                         var innerHTML = '<div class="swiper-slide">' +
                             '<p class="actually">' + compressor.name + '</p>' +
                             '<div id=' + mainId + '></div>' +
