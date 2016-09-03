@@ -48,7 +48,7 @@ public class InformationController extends BaseController {
 			audit = null;
 		}*/
 		pageNum = pageNum == null? 1:pageNum;
-		pageSize = pageSize==null? 12:pageSize;
+		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
 		if (posterID!=1) {
 			return new PageInfo<InformationEntity>(informationDao.findInformationByPosterID(posterID,keyword));
@@ -73,7 +73,7 @@ public class InformationController extends BaseController {
 			@RequestParam(value="pageSize") Integer pageSize, 
 			@RequestParam(value="keyword", required=false) String keyword) throws UnsupportedEncodingException {
 		pageNum = pageNum == null? 1:pageNum;
-		pageSize = pageSize==null? 12:pageSize;
+		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
 	    return new PageInfo<InformationEntity>(informationDao.findAllInformation(keyword));
 	}

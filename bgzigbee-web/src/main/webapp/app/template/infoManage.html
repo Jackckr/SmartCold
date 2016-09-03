@@ -64,7 +64,7 @@
     				        <label class="col-sm-1 control-label">封面图片<em>*</em></label> 
     				        <div class="col-sm-6"> 
     				            <form name="form0" id="form0" >
-									<input type="file" name="file0" id="file0" /><img src="" id="img0" >
+									<input type="file" name="file0" id="file0"  ng-model="file" /><img src="" id="img0" >
 								</form>
     				        </div> 
     				    </div> 
@@ -173,7 +173,8 @@
 	                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 	                </div>
 			  </div>
-				<!-- 模态框（Modal） --> 
+    		</div>
+    		<!-- 模态框（Modal） --> 
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
 				    <div class="modal-dialog" style="width:888px;"> 
 				        <div class="modal-content"> 
@@ -192,7 +193,6 @@
 				        </div><!-- /.modal-content --> 
 				    </div><!-- /.modal --> 
 				</div>
-    		</div>
     		<div class="tab-pane fade" id="looking">
     			<p>审核中----正在开发中，敬请期待……</p>
     		</div>

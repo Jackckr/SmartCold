@@ -21,14 +21,15 @@ coldWeb.controller('infoManage', function($rootScope, $scope, $state, $cookies,
 	};
 	$scope.load();
 	$scope.id = 0;
-	$scope.maxSize = 12;
+	$scope.maxSize = 10;
 	// 总条目数(默认每页十条)
-	$scope.bigTotalItems = 12;
+	$scope.bigTotalItems = 10;
 	// 当前页
 	$scope.bigCurrentPage = 1;
 	// 获取资讯分类列表
 	$http.get('/i/information/findAllInforCategory').success(function(data) {
 		$scope.inforCategorys = data;
+		$scope.inforCategory = data[0].id;
 	});
 
 	// 获取资讯列表
@@ -76,6 +77,7 @@ coldWeb.controller('infoManage', function($rootScope, $scope, $state, $cookies,
 			});
 		}
 	};
+	
 
 	$scope.goEdit = function(inforID) {
 		// 获取当前冷库的详情
