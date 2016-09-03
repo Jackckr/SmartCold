@@ -49,20 +49,6 @@ window.onload = function(){
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 };
 
-var ws=null,as='pop-in';
-function plusReady(){
-	ws=plus.webview.currentWebview();
-	// Android处理返回键
-	plus.key.addEventListener('backbutton',function(){
-		back();
-	},false);
-	compatibleAdjust();
-}
-if(w.plus){
-	plusReady();
-}else{
-	document.addEventListener('plusready',plusReady,false);
-}
 
 
 
