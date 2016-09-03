@@ -21,6 +21,7 @@
     .info_edit, .info_delete { color: #418ACA; display: inline-block; padding-left: 20px; cursor: pointer; }
     #file0{padding-top:7px;}
     #img0{max-width:100px;max-height:80px;}
+    .modal-body { max-height: 500px; overflow-y: scroll; }
  </style>
  <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
     <div>
@@ -165,13 +166,11 @@
                         </p>
                     </li>
                 </ul>
-               <div class="page">
-	               <!-- 翻页功能 -->
-	               <div class="row">
-	                    <pagination style="margin-left: 30%" ng-change="pageChanged()" total-items="bigTotalItems"
+               <div class="page pull-left" style="text-align:center;width:100%;">
+	               <!-- 翻页功能 -->	               
+	                    <pagination ng-change="pageChanged()" total-items="bigTotalItems"
 	                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
-	                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-	                </div>
+	                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>	                
 			  </div>
     		</div>
     		<!-- 模态框（Modal） --> 

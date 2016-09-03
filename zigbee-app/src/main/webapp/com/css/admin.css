@@ -115,7 +115,7 @@ section.show{
 }
 .commentList{	
 	margin-top:2.5rem;
-	margin-bottom: 3rem;
+	padding-bottom: 3rem;
 }
 .commentList li{
 	background-color: #fff;
@@ -172,7 +172,7 @@ section.show{
 } */
 /*我的订单*/
 .content{
-	margin-bottom: 3rem;
+	padding-bottom: 3rem;
 }
 .order,.infos{
     color: #333;
