@@ -357,7 +357,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        data: data
 		    }).then(function (resp) {
 		    	alert(resp.data.message);
-		    	window.location.href ="storehouse.html"; 
+		    	window.location.href ="user-myrelease.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {

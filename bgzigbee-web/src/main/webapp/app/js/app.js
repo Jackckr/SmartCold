@@ -299,6 +299,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/adminlist',
         controller: 'adminlist',
         templateUrl: 'app/template/adminManage.html'
+    }).state('infoManage', {
+        url: '/infoManage',
+        controller: 'infoManage',
+        templateUrl: 'app/template/infoManage.html'
     }).state('spiderConfig', {
         url: '/spiderConfig',
         controller: 'spiderConfig',

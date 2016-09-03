@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>我的消息</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
 	</head>
@@ -16,16 +17,50 @@
         	<div class="area fl">
                 <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
             </div>
+            <div class="zoom fr"><a class="transion"><i class="iconfont">&#xe62f;</i></a></div>
             <div class="txt">
                我的消息
             </div>
         </header>
     <!-- header end-->
-		<p style="font-size: .75rem; margin-top: 2.5rem;margin-bottom: .5rem;">　 　您可以在此查看找车、找货、出租、求租等消息.</p>
-		<p style="font-size: .75rem;">　正在努力开发中，敬请期待......</p>
-		<div style="text-align: center;width: 8rem;height: 8rem;margin: 2rem auto;">
-			<img src="../com/img/no.png" "/>
-		</div>
+		<div class="body">
+            <div class="messageList clearfix" onclick="confirm('正在开发中，敬请期待……')">
+                <div class="messageImg fl">
+                    <i class="iconfont">&#xe73b;</i>
+                </div>
+                <div class="messageInfo">
+                    <strong>链库R管家</strong>
+                    <div class="time fr">
+                        2016/8/24&nbsp;&nbsp;15:12
+                    </div>
+                    <p class="detail omg">您有一笔订单正在进行中，点击查看详情！</p>
+                </div>
+            </div>
+            <div class="messageList clearfix" onclick="confirm('正在开发中，敬请期待……')">
+                <div class="messageImg red fl">
+                    <i class="iconfont">&#xe739;</i>
+                </div>
+                <div class="messageInfo">
+                    <strong>最新小告示</strong>
+                    <div class="time fr">
+                       	 昨天&nbsp;&nbsp;10:20
+                    </div>
+                    <p class="detail omg">启动洪荒之力，分分钟建立网上大库！</p>
+                </div>
+            </div>
+            <div class="messageList clearfix" onclick="location.href='user-myorder.html'">
+                <div class="messageImg fl">
+                    <i class="iconfont">&#xe74f;</i>
+                </div>
+                <div class="messageInfo">
+                    <strong>联络单</strong>
+                    <div class="time fr">
+                       	 昨天&nbsp;&nbsp;18:20
+                    </div>
+                    <p class="detail omg">你有两笔联络单待处理,请前往处理~</p>
+                </div>
+            </div>
+        </div>
 		
 	<ul class="footer">
         <li>           
@@ -34,7 +69,7 @@
                 <p class="info">首页</p>
             </a>
         </li>
-        <li>          
+        <li>
              <a href="news.html">
                 <i class="iconfont">&#xe6f8;</i>
                 <p class="info">资讯</p>

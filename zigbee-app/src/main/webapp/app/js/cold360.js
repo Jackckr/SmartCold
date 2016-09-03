@@ -1,7 +1,8 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('cold360', function ($scope, $location, $http,$rootScope) {
-    $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+app.controller('cold360', function ($scope, $location, $http, $rootScope) {
+    $http.defaults.withCredentials = true;
+    $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
     $scope.user = window.user;
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
@@ -27,11 +28,11 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
         $('.searchTop').hide();
     }
 
-    var formatTime = function(timeString){
-        if (typeof(timeString) == "string"){
-            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
-        }else{
-            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+    var formatTime = function (timeString) {
+        if (typeof(timeString) == "string") {
+            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        } else {
+            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
         }
     }
 
@@ -45,12 +46,12 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
         var datumTempData = [];
         var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
-        $http.get(ER.coldroot+'/i/coldStorage/getTempByTime', {
+        $http.get(ER.coldroot + '/i/coldStorage/getTempByTime', {
             params: {
                 "startTime": formatTime(startTime),
                 "endTime": formatTime(endTime),
                 "oid": storageID,
-                'key':'Temp'
+                'key': 'Temp'
             }
         }).success(function (result) {
             var list = result.list
@@ -65,7 +66,7 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
                     y: list[i].value
                 });
             }
-            if(data.length > 0){
+            if (data.length > 0) {
                 startData.push({
                     x: data[0].x,
                     y: startTemperature
@@ -74,15 +75,15 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
                     x: data[0].x,
                     y: datumTemp
                 });
-            }else{
-                data.push({x:startTime.getTime(),y:null})
-                data.push({x:endTime.getTime(),y:null})
-                startData.push({x:endTime.getTime(),y:startTemperature})
-                datumTempData.push({x:endTime.getTime(),y:datumTemp})
+            } else {
+                data.push({x: startTime.getTime(), y: null})
+                data.push({x: endTime.getTime(), y: null})
+                startData.push({x: endTime.getTime(), y: startTemperature})
+                datumTempData.push({x: endTime.getTime(), y: datumTemp})
             }
 
             //温度实时图——环形图
-            var temper = list[0]?parseFloat(list[0].value).toFixed(1):null;
+            var temper = list[0] ? parseFloat(list[0].value).toFixed(1) : null;
 
             // 折线图
             $(document).ready(function () {
@@ -94,13 +95,13 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
 
                 var mainId = 'main' + storage.id;
                 //var swiper = getElementsByClassName("swiper-slide");
-                if ($scope.swiper < $scope.mystorages.length){
+                if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">'+storage.name+'</p>' +
-                        '<p class="temperaturenum">'+temper+'℃</p>' +
-                        '<div id='+mainId+'></div> ';
+                        '<p class="actually">' + storage.name + '</p>' +
+                        '<p class="temperaturenum">' + temper + '℃</p>' +
+                        '<div id=' + mainId + '></div> ';
                     $("#chartView").last().append(innerHTML);
-                    $scope.swiper +=1;
+                    $scope.swiper += 1;
                 }
 
                 $('#' + mainId).highcharts({
@@ -137,7 +138,7 @@ app.controller('cold360', function ($scope, $location, $http,$rootScope) {
                             value: 0,
                             width: 1,
                             color: '#808080'
-                        },{
+                        }, {
                             color: 'red',           //线的颜色，定义为红色
                             dashStyle: 'solid',     //默认值，这里定义为实线
                             value: startTemperature,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
