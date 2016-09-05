@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.controller;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,9 +53,12 @@ public class AnalysisController {
 					}
 				    chardata.put("xdata", xdata);//展示数据
 				List<Object> templist=new ArrayList<Object>();
+				DecimalFormat    dfformat   = new DecimalFormat("######0.00");   
 				for (CompressorGroupSetEntity comss : compressList) {
 					double y1[]=new double[xdata.length];
-					for (int i = 0; i<xdata.length; i++) {y1[i]=Math.random()*2;}
+					for (int i = 0; i<xdata.length; i++) {
+						y1[i]=Double.parseDouble(dfformat.format(Math.random()*2));
+					}
 					HashMap<String, Object> charxdata=new HashMap<String, Object>();//
 					charxdata.put("name", comss.getName());
 					charxdata.put("id", comss.getId());

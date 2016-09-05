@@ -1,0 +1,27 @@
+<div class="page-content">
+    <div class="page-header">
+
+    </div>
+
+    <section class="content">
+        <div class="row">
+
+            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" ng-repeat="(key,dt) in data">
+
+                <!-- Storage CHART -->
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;30日保温因子τ趋势图</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <div id="{{key}}Chart" style="height:300px;"></div>
+                        </div>
+                    </div>
+                </div><!-- 2 -->
+
+            </div>
+        </div>
+    </section>
+</div>
+<script src="../../assets/js/echarts-all.js"></script>

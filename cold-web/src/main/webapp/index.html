@@ -350,12 +350,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe682;</i>
               <span class="menu-title text-white" style="font-size: large">分析及报告</span></a>
               <ul class="treeview-menu">
-               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>温度分析</a></li>
-               <li><a href="#/report-daily-energy"><i class="fa fa-circle-o"></i>能耗分析</a></li>
-               <li><a href="#/report-daily-goods"><i class="fa fa-circle-o"></i>物流设施分析</a></li>
+               <li>
+               	<a href="#"><i class="fa fa-circle-o"></i>温度分析<i class="fa fa-angle-left pull-right"></i></a>
+               	<ul class="treeview-menu">
+               	<li><a href="#/overTemperature/{{rdcId}}"><i class="fa fa-circle-o"></i>超温时长统计</a></li>
+               	<li><a href="#/overTemperatureYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>超温因子统计</a></li>
+               	<li><a href="#/BWYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>保温因子统计</a></li>
+               	<li><a href="#/WDZQYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>温度周期因子统计</a></li>
+               	</ul>
+               </li>
+               <li><a href="#/doorAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>冷库门运行分析</a></li>
+               <li><a href="#/report-daily-goods"><i class="fa fa-circle-o"></i>冷库日热量分析</a></li>
                <li><a href="#/coolingAnalysis"><i class="fa fa-circle-o"></i>制冷系统分析</a></li>
-               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>分析报告</a></li>
                <li><a href="#/historyData"><i class="fa fa-circle-o"></i>历史数据查询</a></li>
+               <li><a href="#/historyData"><i class="fa fa-circle-o"></i>报表功能</a></li>
+               <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>分析报告</a></li>
               </ul>
             </li>
             </ul>
@@ -481,6 +490,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/platformDoor.js"></script>
 <script src="app/js/other.js"></script>
 <script src="app/js/coolingAnalysis.js"></script>
+<script src="app/js/analysis.js"></script>
 <!--  -->
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
 <script src="assets/plugins/fastclick/fastclick.min.js"></script>

@@ -12,6 +12,7 @@
 		`posterid`,
 		`browsenum`,
 		`content`,
+		`coverpic`,
 		`posttime`
 		)
 		VALUE 
@@ -22,6 +23,7 @@
 		#{posterid},
 		#{browsenum},
 		#{content},
+		#{coverpic},
 		now()
 		)
     </insert>
@@ -46,6 +48,9 @@
             </if>
             <if test="content != null" >
                 content = #{content},
+            </if>
+            <if test="coverpic != null" >
+                coverpic = #{coverpic},
             </if>
         </set>
         where id = #{id}

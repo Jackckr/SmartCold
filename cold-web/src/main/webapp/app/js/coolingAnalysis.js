@@ -15,7 +15,7 @@ coldWeb.controller('coolingAnalysis', function ($scope, $location, $stateParams,
             title: { text: '', x: -20 }, credits: {enabled: false },
             xAxis: { categories: chardata.xdata },
             yAxis: {title: { text: ''},plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-            tooltip: { valueSuffix: '°C' },
+//            tooltip: { valueSuffix: '' },
             legend: { layout: 'vertical', align: 'right',verticalAlign: 'middle',  borderWidth: 0},
             series: chardata.chdata });
       };
