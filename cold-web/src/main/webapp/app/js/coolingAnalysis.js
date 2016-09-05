@@ -3,9 +3,7 @@
  * 
  */
 coldWeb.controller('coolingAnalysis', function ($scope, $location, $stateParams, $http,$rootScope) {
-	$scope.rdcid= window.sessionStorage.getItem("360rdcId");//缓存rdcid
-	$scope.doorId = $stateParams.rdcId;
-	debugger;
+	$scope.rdcid = $stateParams.rdcId;
 	$scope.initdata=function(){
 		Highcharts.setOptions({  colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] }); 
 		$http.get('/i/AnalysisController/getCoolingAnalysis',{params: {rdcId:$scope.rdcid}} ).success(function(data,status,headers,config){

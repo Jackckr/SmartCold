@@ -39,7 +39,7 @@ public class AnalysisController {
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getCoolingAnalysis(Integer rdcId,Integer[] compressorsId) {
 		try {
-			if(rdcId==null){return null;}
+			if(rdcId==null){return ResponseData.newFailure("非法请求！");}
 			List<CompressorGroupSetEntity> compressList = this.compressorGroupSetDao.findByRdcId(rdcId);
 			if(SetUtil.isnotNullList(compressList)){
 				HashMap<String, Object> chardata=new HashMap<String, Object>();//
@@ -57,7 +57,7 @@ public class AnalysisController {
 				for (CompressorGroupSetEntity comss : compressList) {
 					double y1[]=new double[xdata.length];
 					for (int i = 0; i<xdata.length; i++) {
-						y1[i]=Double.parseDouble(dfformat.format(Math.random()*2));
+						y1[i]=Double.parseDouble(dfformat.format(Math.random()));
 					}
 					HashMap<String, Object> charxdata=new HashMap<String, Object>();//
 					charxdata.put("name", comss.getName());

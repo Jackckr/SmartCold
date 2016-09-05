@@ -1,11 +1,11 @@
 checkLogin();
 var app = angular.module('app', []);
 app.controller('cold360', function ($scope, $location, $http, $rootScope) {
+	$scope.user = window.user;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-
-    $scope.user = window.user;
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
+    Highcharts.setOptions({ global: { useUTC: false }});
     //if (window.user.roleid == 3); 超管特殊处理
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
@@ -13,13 +13,12 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
             $scope.viewStorage($scope.storages[0].id);
         }
     });
-
     $scope.viewStorage = function (rdcId) {
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
                 for (var i = 0; i < $scope.mystorages.length; i++) {
-                    $scope.load($scope.mystorages[i]);
+                    $scope.load($scope.mystorages[i],false);
                 }
             }
         });
@@ -37,7 +36,7 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
     }
 
     $scope.swiper = 0;
-    $scope.load = function (storage) {
+    $scope.load = function (storage,isreload ) {
         var storageID = storage.id;
         $scope.mystorageName = storage.name;
 
@@ -46,54 +45,37 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
         var datumTempData = [];
         var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
-        $http.get(ER.coldroot + '/i/coldStorage/getTempByTime', {
-            params: {
-                "startTime": formatTime(startTime),
-                "endTime": formatTime(endTime),
-                "oid": storageID,
-                'key': 'Temp'
-            }
-        }).success(function (result) {
-            var list = result.list
+        
+        $http.get(ER.coldroot + '/i/coldStorage/getTempByTime', { params: {'key': 'Temp',"oid": storageID, "startTime": formatTime(startTime), "endTime": formatTime(endTime)}}).success(function (result) {
+            var list = result.list;
             var startTemperature = parseFloat(result.startTemperature);
             var tempDiff = parseFloat(result.tempdiff);
             var datumTemp = startTemperature + 0.5 * tempDiff;
             for (var i = 0; i < list.length; i++) {
                 var val = Date.parse(list[i].addtime);
                 var newDate = new Date(val).getTime();
-                data.push({
-                    x: newDate,
-                    y: list[i].value
-                });
+                data.push({x: newDate, y: list[i].value});
             }
             if (data.length > 0) {
-                startData.push({
-                    x: data[0].x,
-                    y: startTemperature
-                });
-                datumTempData.push({
-                    x: data[0].x,
-                    y: datumTemp
-                });
+                startData.push({x: data[0].x, y: startTemperature });
+                datumTempData.push({ x: data[0].x, y: datumTemp });
             } else {
-                data.push({x: startTime.getTime(), y: null})
-                data.push({x: endTime.getTime(), y: null})
-                startData.push({x: endTime.getTime(), y: startTemperature})
-                datumTempData.push({x: endTime.getTime(), y: datumTemp})
+                data.push({x: startTime.getTime(), y: null});
+                data.push({x: endTime.getTime(), y: null});
+                startData.push({x: endTime.getTime(), y: startTemperature});
+                datumTempData.push({x: endTime.getTime(), y: datumTemp});
             }
 
             //温度实时图——环形图
             var temper = list[0] ? parseFloat(list[0].value).toFixed(1) : null;
-
-            // 折线图
-            $(document).ready(function () {
-                Highcharts.setOptions({
-                    global: {
-                        useUTC: false
-                    }
-                });
-
-                var mainId = 'main' + storage.id;
+            var mainId = 'main' + storage.id;
+            if(isreload){//避免重新创建
+                var chart=	$('#' + mainId).highcharts();
+                chart.series[0].setData(data);
+                chart.series[1].setData(startData);
+                chart.series[2].setData(datumTempData);
+                return;
+            }
                 //var swiper = getElementsByClassName("swiper-slide");
                 if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
@@ -103,7 +85,6 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
                     $("#chartView").last().append(innerHTML);
                     $scope.swiper += 1;
                 }
-
                 $('#' + mainId).highcharts({
                     chart: {
                         type: 'spline',
@@ -213,13 +194,13 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
                 });
             });
 
-        });
+//        });
     }
-
+    
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
         for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.load($scope.mystorages[i]);
+            $scope.load($scope.mystorages[i],true);
         }
     }, 30000);
 
