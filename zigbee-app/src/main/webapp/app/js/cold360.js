@@ -74,13 +74,14 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
                 chart.series[0].setData(data);
                 chart.series[1].setData(startData);
                 chart.series[2].setData(datumTempData);
+                $("#tm"+mainId).html(temper+"℃");
                 return;
             }
                 //var swiper = getElementsByClassName("swiper-slide");
                 if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">' + storage.name + '</p>' +
-                        '<p class="temperaturenum">' + temper + '℃</p>' +
+                        '<p id="tm'+mainId+'" class="temperaturenum">' + temper + '℃</p>' +
                         '<div id=' + mainId + '></div> ';
                     $("#chartView").last().append(innerHTML);
                     $scope.swiper += 1;
