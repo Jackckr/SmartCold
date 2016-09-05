@@ -393,9 +393,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('light',{
     	url:'/light/:storageID',
     	controller: 'light',
-        templateUrl: 'app/template/coldStorageLightDiv.html'
+        templateUrl: 'app/template/light.html'
     }).state('coolingAnalysis',{//制冷系统分析  -参数 rdcID
-    	url: '/coolingAnalysis',
+    	url: '/coolingAnalysis/{rdcId}',
     	controller: 'coolingAnalysis',
         templateUrl: 'app/template/coolingAnalysis.html'
     }).state('overTemperature',{
