@@ -11,6 +11,8 @@
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/TouchSlide.1.1.source.js" ></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../app/js/information.js"></script>
     <style type="text/css">	
 		
 	</style>
@@ -23,123 +25,43 @@
             </div>
         </header>
     <!-- header end-->
+    <div class="nodata">
+			    <img src="../com/img/nodata.jpg" alt="" />
+			    <p>没有符合筛选条件的数据哦~~</p>
+		        </div>
     <article class="newsImgList">
 		<!-- Tab切换 -->
 		<div id="tabBox1" class="tabBox">
 			<div class="hd">
 				<ul class="clearfix">
-					<li><a href="javascript:void(0)">行业咨询</a></li>
+					<li><a href="javascript:void(0)">行业资讯</a></li>
 					<li><a href="javascript:void(0)">冷链知识</a></li>
 					<li><a href="javascript:void(0)">其他</a></li>
 				</ul>
 			</div>
-			<div class="bd" id="tabBox1-bd"><!-- 添加id，js用到 -->
-				<div class="con newsImg"><!-- 高度自适应需添加外层 -->
-					<ul>
-						<li>
-							<a href="http://www.cclcn.com/shtmlnewsfiles/ecomnews/458/2016/201671412034032172.shtml" class="clearfix">
-								<div class="imgFl fl">
-									<img src="../com/img/fruit_13.png"/>
-								</div>
-								<div class="newsTxt">
-									<p class="newsTitle">低温食品常温运输储藏？严查！</p>
-									<p class="newsDate">
-										<span>2016/8/20</span>
-										<span>15:20:30</span>
-										<span class="newsBd">热门</span>
-									</p>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="http://www.cclcn.com/shtmlnewsfiles/ecomnews/458/2016/201671915222030041.shtml" class="clearfix">
-								<div class="imgFl fl">
-									<img src="../com/img/cbd.jpg"/>
-								</div>
-								<div class="newsTxt">
-									<p class="newsTitle">生鲜电商行业频遭打击 紫云冷链呼吁关注支线冷链  知名平台美味七七轰然倒下之后，生鲜电商行业年内再传噩耗</p>
-									<p class="newsDate">
-										<span>2016/8/20</span>
-										<span>15:20:30</span>
-										<span class="newsBd">推荐</span>
-									</p>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="http://www.cclcn.com/shtmlnewsfiles/ecomnews/458/2016/201662217032085285.shtml" class="clearfix">
-								<div class="imgFl fl">
-									<img src="../com/img/fruit_15.png"/>
-								</div>
-								<div class="newsTxt">
-									<p class="newsTitle">农产品冷链流通标准化工作会议推动体</p>
-									<p class="newsDate">
-										<span>2016/8/20</span>
-										<span>15:20:30</span>
-									</p>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="http://www.cclcn.com/shtmlnewsfiles/ecomnews/453/2016/201681615551400663.shtml" class="clearfix">
-								<div class="imgFl fl">
-									<img src="../com/img/muwu.jpg"/>
-								</div>
-								<div class="newsTxt">
-									<p class="newsTitle">吉林西瓜滞销，复合型冷库建设刻不容</p>
-									<p class="newsDate">
-										<span>2016/8/20</span>
-										<span>15:20:30</span>
-									</p>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="http://www.cclcn.com/shtmlnewsfiles/ecomnews/453/2016/201680812253416631.shtml" class="clearfix">
-								<div class="imgFl fl">
-									<img src="../com/img/list_07.png"/>
-								</div>
-								<div class="newsTxt">
-									<p class="newsTitle">oTMS：互联网+驱动冷链物流站上价值高峰</p>
-									<p class="newsDate">
-										<span>2016/8/20</span>
-										<span>15:20:30</span>
-									</p>
-								</div>
-							</a>
-						</li>
-					</ul>
+			<div class="bd" id="tabBox1-bd">
+				<!-- 添加id，js用到 -->
+				<div class="con newsImg">
+					<!-- 高度自适应需添加外层 -->
+					<ul id="ul_newsL_list1"></ul>
+					<a id="loading" href="javascript:;" onclick="getPageData1();"></a>
 				</div>
-				<div class="con"><!-- 高度自适应需添加外层 -->
-					<ul>
-						<li><a href="#">1000吨以上冷库设计选型计算</a></li>
-						<li><a href="#">2016小型冷库维修知识大全</a></li>
-						<li><a href="#">冷库制冷设备的中小修内容有哪些?</a></li>
-						<li><a href="#">冷库及物流存在哪些问题?</a></li>
-						<li><a href="#">组合冷库安装要求</a></li>
-						<li><a href="#">冷库制冷设备的中小修内容有哪些?</a></li>
-						<li><a href="#">冷库及物流存在哪些问题?</a></li>
-						<li><a href="#">组合冷库安装要求</a></li>
-						<li><a href="#">冷库制冷设备的中小修内容有哪些?</a></li>
-						<li><a href="#">冷库及物流存在哪些问题?</a></li>
-						<li><a href="#">组合冷库安装要求</a></li>
+				
+				<div class="con newsImg">
+					<!-- 高度自适应需添加外层 -->
+					 <ul id="ul_newsL_list2">
 					</ul>
+					<a id="loading" href="javascript:;" onclick="getPageData2();"></a>
 				</div>
-				<div class="con"><!-- 高度自适应需添加外层 -->
-					<ul>
-						<li><a href="#">组合冷库安装要求</a></li>
-						<li><a href="#">传统制冷节流机构的工作原理及匹配</a></li>
-						<li><a href="#">冷库制冷设备的中小修内容有哪些?</a></li>
-						<li><a href="#">冷库及物流存在哪些问题?</a></li>
-						<li><a href="#">组合冷库安装要求</a></li>
-						<li><a href="#">冷库及物流存在哪些问题?</a></li>
-						<li><a href="#">组合冷库安装要求</a></li>
+				<div class="con newsImg">
+					<!-- 高度自适应需添加外层 -->
+					 <ul id="ul_newsL_list3">
 					</ul>
+					<a id="loading" href="javascript:;" onclick="getPageData3();"></a>
 				</div>
 
 			</div>
 		</div>
-		<a class="readMore" href="#">更多&gt;&gt;</a>
 		<script type="text/javascript">
 		TouchSlide({ slideCell:"#tabBox1",
 			endFun:function(i){ //高度自适应
