@@ -65,7 +65,10 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
             })
             barOption = {
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    textStyle: {
+                    	fontSize: 12
+                    }
                 },
                 toolbox: {
                     show: false,
@@ -79,7 +82,16 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 },
                 calculable: true,
                 legend: {
+                	 textStyle: {
+                     	fontSize: 12
+                     },
                     data: ['冻品进货量', '冻品发货量', '鲜品进货量', '鲜品发货量', '冻品进货温度', '鲜品进货温度']
+                },
+                grid: {
+                	x:45,
+                	y:100,
+                	width: '75%',
+                	height:'50%'
                 },
                 xAxis: [
                     {
@@ -90,16 +102,16 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 yAxis: [
                     {
                         type: 'value',
-                        name: '货物量',
+                        name: '货物量/kg',
                         axisLabel: {
-                            formatter: '{value} kg'
+                            formatter: '{value}'
                         }
                     },
                     {
                         type: 'value',
-                        name: '温度',
+                        name: '温度/°C',
                         axisLabel: {
-                            formatter: '{value} °C'
+                            formatter: '{value}'
                         }
                     }
                 ],
@@ -170,18 +182,18 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     var compressors = data;
                     if (compressors.length > 0) {
                         for (var i = 0; i < compressors.length; i++) {
-                            compressorsImg += '<div style="margin-top:10px;float:left;" class="text-center">';
+                            compressorsImg += '<div class="runImg" style="">';
                             if (compressors[i].type == 1 && compressors[i].keyValues.isRunning == 1) {
-                                compressorsImg += '<img src="../com/img/pressure1_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure1_run.png">&nbsp;';
                             }
                             if (compressors[i].type == 1 && compressors[i].keyValues.isRunning == 0) {
-                                compressorsImg += '<img src="../com/img/pressure1_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure1_stop.png">&nbsp;';
                             }
                             if (compressors[i].type == 2 && compressors[i].keyValues.isRunning == 1) {
-                                compressorsImg += '<img src="../com/img/pressure2_run.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure2_run.png">&nbsp;';
                             }
                             if (compressors[i].type == 2 && compressors[i].keyValues.isRunning == 0) {
-                                compressorsImg += '<img src="../com/img/pressure2_stop.png" style="float:left;width: 30px;height: 30px;" class="myImg">';
+                                compressorsImg += '<img src="../com/img/pressure2_stop.png">&nbsp;';
                             }
                             compressorsImg += '<label>' + compressors[i].name + '</label></div>';
                         }
@@ -189,7 +201,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     var mainId = "pressureChart" + compressorID;
                     var barId = "#" + mainId;
                     if ($scope.swiper < $scope.compressorGroups.length) {
-                        var title = '<p><img src="../com/img/run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止</p>';
+                        var title = '<p class="pressureImg"><img src="../com/img/run.png"/> 运行 <img src="../com/img/stop.png"/> 停止</p>';
                         var innerHTML = '<div class="swiper-slide">' +
                             '<p class="actually">' + compressor.name + '</p>' +
                             '<div id=' + mainId + '></div>' +
@@ -236,12 +248,18 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                         },
                         tooltip: {
                             show: true,
-                            formatter: "{b} ({d}%)"
+                            formatter: "{b} ({d}%)",
+                            textStyle: {
+                            	fontSize: 12
+                            }
                         },
                         legend: {
                             orient: 'horizontal',
-                            x: 30,
-                            y: 250,
+                            x: 'center',
+                            y: 20,
+                            textStyle: {
+                            	fontSize: 14
+                            },
                             itemGap: 12,
                             data: ['高压' + parseFloat(highPress).toFixed(0), '低压' + parseFloat(lowPress).toFixed(0)]
                         },
@@ -307,30 +325,30 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 var evaporative = data;
                 var img = '';
                 if (evaporative.evaWater && evaporative.evaWater.isRunning) {
-                    img = '<img alt="" src="../com/img/evawater_run.png" style="margin-top:10px;" class="myImg">';
+                    img = '<img alt="" src="../com/img/evawater_run.png" class="myImg1">';
                 }
                 if (!evaporative.evaWater || !evaporative.evaWater.isRunning) {
-                    img = '<img alt="" src="../com/img/evawater_stop.png" style="margin-top:10px;" class="myImg">';
+                    img = '<img alt="" src="../com/img/evawater_stop.png" class="myImg1">';
                 }
                 var evaBlowersImg = '';
                 if (evaporative.evaBlowers.length > 0) {
                     for (var i = 0; i < evaporative.evaBlowers.length; i++) {
-                        evaBlowersImg += '<div style="margin-top:10px;float:left;" class="text-center">';
+                        evaBlowersImg += '<div style="margin-top:10px;float:left;width:33%;">';
                         if (evaporative.evaBlowers[i].isRunning == 1) {
-                            evaBlowersImg += '<img src="../com/img/evablower_run.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
+                            evaBlowersImg += '<img src="../com/img/evablower_run.png" class="myImg2">';
                         }
                         if (evaporative.evaBlowers[i].isRunning == 0) {
-                            evaBlowersImg += '<img src="../com/img/evablower_stop.png" style="float:left;width: 50px;height: 50px;" class="myImg">';
+                            evaBlowersImg += '<img src="../com/img/evablower_stop.png" class="myImg2">';
                         }
-                        evaBlowersImg += '<label>' + evaporative.evaBlowers[i].name + '</label></div>';
+                        evaBlowersImg += '<label style="font-size:.7rem;">' + evaporative.evaBlowers[i].name + '</label></div>';
                     }
                 }
                 if ($scope.swiper < $scope.compressorGroups.length) {
-                    var title = '<img src="../com/img/eva_run.png" style="height: 12px;width: 20px;"/> 运行 <img src="../com/img/stop.png" style="height: 12px;width: 20px;"/> 停止';
-                    var innerHTML = '<div class="swiper-slide">' +
+                    var title = '<p class="evawaterP"><img src="../com/img/eva_run.png"/> 运行 <img src="../com/img/stop.png"/> 停止</p>';
+                    var innerHTML = '<div class="swiper-slide evawater">' +
                         '<p class="actually">' + compressor.name + '</p>' +
-                        title +
                         img +
+                        title +
                         evaBlowersImg +
                         '</div> ';
                     $("#chartView").last().append(innerHTML);
@@ -365,7 +383,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     if (coldDetails == '') {
                         coldDetails += result[i].blowerId
                     } else {
-                        coldDetails += ',' + result[i].blowerId;
+                        coldDetails += '/' + result[i].blowerId;
                     }
                 }
                 if (parseInt(result[i].isDefrosting) === 1) {
@@ -373,7 +391,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     if (defrostDetails == '') {
                         defrostDetails += result[i].blowerId;
                     } else {
-                        defrostDetails += ',' + result[i].blowerId;
+                        defrostDetails += '/' + result[i].blowerId;
                     }
                 }
                 if (parseInt(result[i].isRunning) === 0 && parseInt(result[i].isDefrosting) === 0) {
@@ -381,7 +399,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     if (freeDetails == '') {
                         freeDetails += result[i].blowerId
                     } else {
-                        freeDetails += ',' + result[i].blowerId;
+                        freeDetails += '/' + result[i].blowerId;
                     }
                 }
             }
@@ -392,26 +410,26 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
 
             if ($scope.swiper < 1) {
                 var innerHTML = '<div class="swiper-slide">' +
-                    '<div style="height: 100px"> ' +
-                    '<span class="info-box-icon bg-green" style="height: 85px;width: 85px;">' +
+                    '<div class="zhengFaSys"> ' +
+                    '<span class="info-box-icon bg-green">' +
                     '<i class="fa fa-life-ring bg-green"></i></span> ' +
-                    '<div class="info-box-content" style="padding-left: 2px"> ' +
-                    '<span class="info-box-text"><span style="font-size: 20px;color: coral">制冷</span><span style="font-size: 40px;color: coral">' + $scope.coldCnt + '</span></span> ' +
-                    '<p>风机:'+coldDetails+'</p>' +
+                    '<div class="info-box-content"> ' +
+                    '<span class="info-box-text"><span>制冷&nbsp;</span><span>' + $scope.coldCnt + '</span></span> ' +
+                    '<p class="fengji"><span>风机:</span>'+coldDetails+'</p>' +
                     '</div></div>' +
-                    '<div style="height: 100px"> ' +
-                    '<span class="info-box-icon bg-yellow" style="height: 85px;width: 85px;">' +
+                    '<div class="zhengFaSys"> ' +
+                    '<span class="info-box-icon bg-yellow">' +
                     '<i class="fa fa-life-ring bg-yellow"></i></span> ' +
-                    '<div class="info-box-content" style="padding-left: 2px"> ' +
-                    '<span class="info-box-text"><span style="font-size: 20px;color: coral">化霜</span><span style="font-size: 40px;color: coral">' + $scope.defrostCnt + '</span></span> ' +
-                    '<p>风机:'+defrostDetails+'</p>' +
+                    '<div class="info-box-content"> ' +
+                    '<span class="info-box-text"><span>化霜&nbsp;</span><span>' + $scope.defrostCnt + '</span></span> ' +
+                    '<p class="fengji"><span>风机:</span>'+defrostDetails+'</p>' +
                     '</div></div>' +
-                    '<div style="height: 100px"> ' +
-                    '<span class="info-box-icon bg-red" style="height: 85px;width: 85px;">' +
+                    '<div class="zhengFaSys"> ' +
+                    '<span class="info-box-icon bg-red">' +
                     '<i class="fa fa-life-ring bg-red"></i></span> ' +
-                    '<div class="info-box-content" style="padding-left: 2px"> ' +
-                    '<p><span class="info-box-text"><span style="font-size: 20px;color: coral">待机</span><span style="font-size: 40px;color: coral">' + $scope.freeCnt + '</span></span></p>' +
-                    '<p>风机:'+freeDetails+'</p>' +
+                    '<div class="info-box-content"> ' +
+                    '<p><span class="info-box-text"><span>待机&nbsp;</span><span>' + $scope.freeCnt + '</span></span></p>' +
+                    '<p class="fengji"><span>风机:</span>'+freeDetails+'</p>' +
                     '</div></div>' +
                     '</div> ';
                 $("#chartView").last().append(innerHTML);
@@ -440,8 +458,8 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 if ($scope.swiper < $scope.compressorGroups.length) {
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">' + compressor.name + '</p>' +
-                        '<div id=' + mainfloatId + ' style="height: 18rem;"></div>' +
-                        '<div id=' + mainexTempId + ' style="height: 18rem;"></div>' +
+                        '<div id=' + mainfloatId + ' style="min-height:10rem;"></div>' +
+                        '<div id=' + mainexTempId + ' style="height: 10rem;"></div>' +
                         '</div>';
                     $("#chartView").last().append(innerHTML);
                     $scope.swiper += 1;
@@ -471,10 +489,11 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                         title: {
                             text: '液位',
                             itemGap: 20,
+                            y:20,
                             style: {
                                 color: 'rgba(30,144,255,0.8)',
                                 fontFamily: '微软雅黑',
-                                fontSize: 25,
+                                fontSize: 20,
                                 fontWeight: 'bolder'
                             }
                         },
@@ -494,6 +513,9 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                         },
                         tooltip: {
                             pointFormat: 'Level is: <b>{point.y:.1f} mL</b>',
+                            textStyle: {
+                            	fontSize: 12
+                            }
                         },
                         credits: {
                             enabled: false // 禁用版权信息
@@ -539,12 +561,21 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     legend: {
                         data: ['高温警戒线', '低温警戒线', '当前温度'],
                         align: 'left',
-                        left: 10
+                        left: 10,
+                        y:'bottom'
                     },
-                    tooltip: {},
+                    grid: {
+                    	x:30,
+                    	y:20,
+                    	width:'75%'
+                    },
+                    tooltip: {
+                        textStyle: {
+                        	fontSize: 12
+                        }},
                     xAxis: {
                         data: xData,
-                        name: '压缩机名',
+                        name: '压缩机',
                         silent: false
                     },
                     yAxis: {
@@ -642,7 +673,10 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                textStyle: {
+                	fontSize: 12
+                }
             },
             title: {
                 text: title,

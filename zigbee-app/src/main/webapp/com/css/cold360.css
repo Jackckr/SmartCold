@@ -142,7 +142,7 @@ section{
 }
 .swiper-button-next i,.swiper-button-prev i{
 	font-size: 1.5rem;
-	color: #ccc;
+	color: #888;
 	line-height: 1.8rem;
 }
 #main{
@@ -272,4 +272,66 @@ b{
 }
 .transion i{
 	font-size: 1.3rem!important;
+}
+/* other */
+.zhengFaSys{
+	height: 4rem;
+	margin-bottom:.5rem;
+	background-color: #CCE8CF;
+}
+.zhengFaSys .info-box-icon{
+	height: 4rem;
+	width: 4rem;
+	line-height:4rem;
+}
+.zhengFaSys .info-box-content{
+	padding-left: 2px;
+	padding-right: 0;
+	margin-left:4.2rem;
+	text-align:left;
+}
+.zhengFaSys .info-box-text>span{
+	color:coral;
+	font-size: .7rem;
+}
+.zhengFaSys .info-box-text>span:nth-child(2){
+	font-size: 1.2rem;
+}
+.fengji{
+	font-size: .7rem;
+	margin-top:.3rem;
+	word-wrap: break-word;
+	color:#333;
+}
+.fengji span{
+	white-space: nowrap;
+}
+.runImg{
+	margin-top:10px;float:left;font-size:.7rem;width:33%;
+}
+.runImg img{
+	width: 30px;
+	height: 20px;
+	vertical-align: middle;
+}
+.pressureImg{
+	font-size:.7rem;
+}
+.pressureImg img,.evawaterP img{
+	height: 12px;
+	width: 20px;
+}
+.evawaterP{
+	font-size:.7rem;
+	margin-top:1.5rem;
+}
+.myImg1{
+	margin-top:10px;
+	width:13.6rem;
+	height:8rem;
+}
+.myImg2{
+	float:left;
+	width: 50px;
+	height: 50px;
 }

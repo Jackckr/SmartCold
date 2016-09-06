@@ -403,7 +403,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
             },
             title: {
                 text: title,
-                x: 'left',
+                x: 'center',
                 textStyle: {
                     fontSize: 16,
                     fontWeight: 400,
