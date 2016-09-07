@@ -1,3 +1,24 @@
+    <style type="text/css">
+.groupobj .sl_group_obj{width: 350px;border-radius: 3px;background-color: #f4f4f4;cursor: pointer;} 
+.groupobj .sl_drop{    float: right;position: relative; margin: -24px 10px 0px 0px; color: #000000;font-size: 10px;}
+.groupobj .sl_drop_data{  position: absolute;z-index: 2;background: white; border: 1px solid #ccc;width: 452px;color: black;}
+#filter_div ul{padding: 0px;}
+#filter_div li{list-style-type:none; display: block;border: 2px solid #CCCCCC; margin-top: 5px;cursor: pointer;}
+.ul_key_list{display: block;height: 50px;}
+.ul_key_list li{float: left;margin:5px;padding: 5px 5px;}
+#filter_div li.select{border-color:#0095FF !important;}
+#filter_div li.select:AFTER{} 
+#val_list_div ul{float: left;width: 100%;height: 100%;overflow: hidden;    display: block; }
+
+.ng-hide {
+  height: 0;
+  width: 0;
+  background-color: transparent;
+ 
+  left: -200px;
+  height:100px;
+}
+</style>
 <div>
 	<section class="content-header">
 		<h1 class="page-header">历史数据查询</h1>
@@ -8,19 +29,20 @@
 				<!-- 查询数据展示  -->
 				<div class="col-lg-12">
 					<div class="col-lg-12">
-						<div class="pull-left">
-							<ui-select ng-model="item.option" theme="bootstrap"
-								style="width: 300px;" append-to-body="true"
-								title="Choose a person"> 
-								<ui-select-match>{{item.option.keyDesc}}-{{item.option.oidDesc}} </ui-select-match> 
-								<ui-select-choices
-								 	group-by="'keyDesc'"
-								 	repeat="option in searchOptions">
-									<div ng-bind="option.oidDesc"></div>
-								</ui-select-choices> 
-							</ui-select>
+						<div id="filter_sl_div" class="pull-left groupobj">
+						  <span><span class="form-control sl_group_obj" ng-click='slgroupsl()'></span><i class="sl_drop" >▼</i></span>
+						  <div id="filter_div" class="pull-left sl_drop_data" ng-show="showobjgroup">
+						     <ul id="ul_key_list" class="ul_key_list">
+						       <li ng-repeat="(key,value) in  keylist" id="li_key_{{key}}" value="{{key}}" ng-click="showkeyli(key)">{{value}}</li>
+						     </ul>
+						     <div id="val_list_div">
+						        <ul  ng-repeat="(key,value) in  keydata"  id="{{key}}_ul_val" class="hide">
+						         <li ng-repeat="obj in  value" value="{{obj.oid}}" ng-click="selkeyvl($event)" class="select">{{obj.oidDesc}}</li>
+						       </ul>
+						     </div>
+						  </div>
 						</div>
-						<form class="navbar-form navbar-left" >
+						<form class="navbar-form navbar-left " style="margin-top: 0px;" >
 	
 							&nbsp;&nbsp;
 							<div class="form-group">
@@ -34,8 +56,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<button type="submit" class="btn btn-default"
-									ng-click="search()">查询</button>
+								<button type="submit" class="btn btn-default" ng-click="search()">查询</button>
+								<button id="but_expdata" type="button" class="btn btn-success" ng-click="expdata()">导出</button>
 							</div>
 						</form>
 					</div>

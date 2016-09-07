@@ -1,39 +1,33 @@
 coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) {
-	/**
-	 *初始化面板 
-	 */
 	clearInterval($rootScope.timeTicket);
-	var rdcid= window.sessionStorage.getItem("360rdcId");//缓存rdcid
-	$http.get("/i/historySearch/findAllStorageKeys",{params:{'rdcId':rdcid,types:'1,2'}}).success(function(data){$scope.keylist = data.key;$scope.keydata = data.keydata;});
-	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
+	$scope.getDateTimeStringBefore = function(before){
+		return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,'');
+	}
+	
+	$http.get("/i/historySearch/findAllStorageKeys",{
+		params:{
+			'rdcId':$rootScope.vm.choserdc.id
+		}
+	}).success(function(response){
+		$scope.searchOptions = response;
+		$scope.item = {option: $scope.searchOptions[0]};
+		$scope.itemArray = [
+		                    {id: 1, name: 'first'},
+		                    {id: 2, name: 'second'},
+		                    {id: 3, name: 'third'},
+		                    {id: 4, name: 'fourth'},
+		                    {id: 5, name: 'fifth'},
+		                ];
+
+		                $scope.selected = {item:$scope.itemArray[0]};
+	})
+
 	$scope.begin = $scope.getDateTimeStringBefore(3);
 	$scope.end = $scope.getDateTimeStringBefore(0);
 	$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
 	
- 
-	$scope.selkeyvl=function($event){
-		var em=$($event.target); if(em.hasClass("select")){em.removeClass("select"); }else{ em.addClass("select");}
-	};
-	$scope.showkeyli=function(key){
-		$("#ul_key_list li").removeClass("select");$("#li_key_"+key).addClass("select");$("#val_list_div ul").addClass("hide");$("#"+key+"_ul_val").removeClass("hide");
-	};
-	$scope.slgroupsl=function(e){//点击下拉框事件
-		if($("#ul_key_list li.select").length==0){  var slkeyem=$("#ul_key_list li").first();$("#"+slkeyem.attr("value")+"_ul_val").removeClass("hide"); slkeyem.addClass("select");;}
-		$scope.showobjgroup=true;
-	};
-	$scope.expdata=function(){//导出数据
-//	     if ($("#but_expdata").data('isLoading') === true) return; $("#but_expdata").text('导出中。。。').data('isLoading',true);   $("#but_expdata").delay(1000000000).data('isLoading',false).text("导出11");
-	        var expfrom= $("<form>").attr('style', 'display:none').attr('target', '').attr('method', 'post').attr('action', 'i/historySearch/expHistoryData').attr('id', "expdataform");
-	        expfrom.append($("<input>").attr("name","rdcid").attr("value",rdcid));
-	        expfrom.append($("<input>").attr("name","filename").attr("value","导出历史数据"));
-	        expfrom.appendTo('body').submit().remove();
-   };
- 
-
-	/**
-	 * 搜索数据
-	 */
+	
 	$scope.search = function(){
 		var selected = $scope.item.option;
 		if(selected){
@@ -57,10 +51,9 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
 					data.unshift(item.value);
 				});
 				$scope.drawDataLine(xData,data);
-			});
+			})
 		}
-	};
-
+	}
 	
 	$scope.drawDataLine = function(xData,data){
 		var lineChart = echarts.init($('#data-chart')[0]);
@@ -68,36 +61,42 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
 		data = data.length > 0 ? data : [34,35,34,21];
 		var dataView = {show: true, readOnly: true, textareaColor:'#fff'};
 		option = {
-				calculable : true,
-			    tooltip : {trigger: 'axis' },
-			    legend: {  data:[$scope.item.option.keyDesc]},
-			    xAxis : [ { type : 'category',data : xData} ],
-			    yAxis : [{ type : 'value', name : $scope.item.option.unit,axisLabel : {formatter: '{value}'}} ],
-			    series : [ { name:$scope.item.option.keyDesc, type:'line', data:data }]
-			 };
+			    tooltip : {
+			        trigger: 'axis'
+			    },
+			    calculable : true,
+			    legend: {
+			        data:[$scope.item.option.keyDesc]
+			    },
+//			    toolbox: {
+//			        show : true,
+//			        feature : {
+//			            dataView : dataView,
+//			        }
+//			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : xData
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            name : $scope.item.option.unit,
+			            axisLabel : {
+			                formatter: '{value}'
+			            }
+			        }
+			    ],
+			    series : [
+			        {
+			            name:$scope.item.option.keyDesc,
+			            type:'line',
+			            data:data
+			        }
+			    ]
+			};
 		lineChart.setOption(option);
-	};
-//	 $(document).one("click", function ()  {//对document绑定一个影藏Div方法
-//		  alert();
-//		   $scope.showobjgroup=false;
-//		   $("#filter_div").addClass("hide");
-//	 });
-	
-	$(document).bind('click',function(e){ 
-		if($scope.showobjgroup){
-			var e = e || window.event; //浏览器兼容性 
-			var elem = e.target || e.srcElement; 
-			while (elem) { //循环判断至跟节点，防止点击的是div子元素 
-			if (elem.id && elem.id=='filter_sl_div') { 
-			   return; 
-			 } 
-			 elem = elem.parentNode; 
-			}
-			$scope.$apply(function () {
-			 $scope.showobjgroup=false;
-//			 $("#filter_div").addClass("hide");
-			});
-		}
-		
-	});
+	}
 });
