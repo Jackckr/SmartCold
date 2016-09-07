@@ -4,7 +4,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
 	 */
 	clearInterval($rootScope.timeTicket);
 	var rdcid= window.sessionStorage.getItem("360rdcId");//缓存rdcid
-	$http.get("/i/historySearch/findAllStorageKeys",{params:{'rdcId':rdcid,types:'1,2'}}).success(function(data){$scope.keylist = data.key;$scope.keydata = data.keydata;});
+	$http.get("/i/historySearch/findStorageKeysByFilter",{params:{'rdcId':rdcid,types:'1,2'}}).success(function(data){$scope.keylist = data.key;$scope.keydata = data.keydata;});
 	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
 	$scope.begin = $scope.getDateTimeStringBefore(3);
 	$scope.end = $scope.getDateTimeStringBefore(0);
