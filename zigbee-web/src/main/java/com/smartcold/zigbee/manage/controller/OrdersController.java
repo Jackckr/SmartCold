@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
@@ -25,11 +23,9 @@ import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
-
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
-
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.ResponseData;
@@ -99,7 +95,7 @@ public class OrdersController extends BaseController {
 	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id) {
 		HashMap<String, Object> dataMap=new HashMap<String, Object>();
 		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user==null||user.getId()==0){ResponseData.newFailure("-1");}
+		if(user==null||user.getId()==0){return ResponseData.newFailure("请登录后查看信息");}
 		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id),user.getId());	
 		if(oEntity!=null){
 		    UserEntity ownerUser = this.userDao.findUserById( oEntity.getOwnerid());
