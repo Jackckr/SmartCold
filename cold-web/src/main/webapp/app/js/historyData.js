@@ -1,17 +1,13 @@
 coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) {
-	/**
-	 *初始化面板 
-	 */
 	clearInterval($rootScope.timeTicket);
 	var rdcid= window.sessionStorage.getItem("360rdcId");//缓存rdcid
 	$http.get("/i/historySearch/findStorageKeysByFilter",{params:{'rdcId':rdcid,types:'1,2'}}).success(function(data){$scope.keylist = data.key;$scope.keydata = data.keydata;});
 	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
 	$scope.begin = $scope.getDateTimeStringBefore(3);
 	$scope.end = $scope.getDateTimeStringBefore(0);
+	$scope.oidlist=[],$scope.sltit="",$scope.mkey=null;
 	$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
-	
- 
 	$scope.selkeyvl=function($event){
 		var em=$($event.target); if(em.hasClass("select")){em.removeClass("select"); }else{ em.addClass("select");}
 	};
@@ -29,7 +25,16 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
 	        expfrom.append($("<input>").attr("name","filename").attr("value","导出历史数据"));
 	        expfrom.appendTo('body').submit().remove();
    };
- 
+   $scope.gettit=function(){
+	   var keem=$("#ul_key_list li.select");
+	   var key=keem.attr("value");
+	   var lilist= $("#"+key+"_ul_val li.select");
+	   $scope.oidlist=[];var text=[];
+	   $.each(lilist, function(index, item) {
+		   $scope.oidlist.push(item.attributes.value.nodeValue); text.push( item.textContent);
+	    });
+	   $scope.sltit=keem.text()+ "-"+ (text.join(" "));;
+	};
 
 	/**
 	 * 搜索数据
@@ -85,7 +90,10 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
 			 } 
 			 elem = elem.parentNode; 
 			}
-			$scope.$apply(function () {$scope.showobjgroup=false;});
+			$scope.$apply(function () {
+				$scope.gettit();
+				$scope.showobjgroup=false;
+			});
 		}
 	});
 });
