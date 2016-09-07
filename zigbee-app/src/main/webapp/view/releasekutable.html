@@ -97,29 +97,29 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li class="number">
-                    <div>冷藏车数量</div>
+                	<label>冷藏车数量</label> 
                     <div>
                         <div>
                             <span><1.8T</span>
-                            <input type="text" ng-model="coldTruck1"><span>量</span>
+                            <input type="number" ng-model="coldTruck1"><span>量</span>
                         </div>
                         <div>
                         	<span>1.8T-6T</span>
-                        	<input type="text" ng-model="coldTruck2"><span>量</span>
+                        	<input type="number" ng-model="coldTruck2"><span>量</span>
                         </div>
                         <div>
                        		 <span>6T-14T</span>
-                        	 <input type="text" ng-model="coldTruck3"><span>量</span>
+                        	 <input type="number" ng-model="coldTruck3"><span>量</span>
                         </div>
                         <div>
                         	<span>>14T</span>
-                        	<input type="text" ng-model="coldTruck4"><span>量</span>
+                        	<input type="number" ng-model="coldTruck4"><span>量</span>
                         </div>
                     </div>
                 </li>
                 <li>
                     <label for="phone">联系电话<em>*</em></label>
-                    <input type="text"  ng-model="phoneNum" placeholder="请输入联系方式"/>
+                    <input type="number"  ng-model="phoneNum" placeholder="请输入联系方式"/>
                 </li>
                 <li>
                     <label for="note">备注</label>
@@ -141,7 +141,7 @@
                         <select ng-model="structure"
                                         ng-options="x.id as x.type for x in structures"></select>
                     </div>
-<!--                     <i class="iconfont fr moreinfo">&#xe60d;</i> -->
+ 					<i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                <!--  <li>
                     <label for="deviceType">冷链设施类型</label>                    
@@ -201,43 +201,33 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li class="number">
-                     <div>冷库容量：</div>
+                	<label style="white-space: nowrap;">冷库容量</label>
                     <div>
+					<div>
+						<span class="nowrap">12~25℃</span><input type="number"
+							ng-model="capacity1"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height1"><span class="nowrap fr">高m</span>
+					</div>
+					<div>
+						<span class="nowrap">12~-2℃</span><input type="number"
+							ng-model="capacity2"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height2"><span class="nowrap fr">高m</span>
+					</div>
                         <div>
-                                   <span>12度至25度</span>
-                                    <input type="text" ng-model="capacity1">
-                                    <span>面积（平方）</span>
-                                     <input type="text" ng-model="height1">
-                                    <span>高度（米）</span>
-                        </div>
+						<span class="nowrap">-18~-22℃</span><input type="number"
+							ng-model="capacity3"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height3"><span class="nowrap fr">高m</span>
+					</div>
                         <div>
-                            <span>12度至25度</span>
-                                    <input type="text" ng-model="capacity2">
-                                    <span>面积（平方）</span>
-                                     <input type="text" ng-model="height2">
-                                    <span>高度（米）</span>
-                        </div>
+						<span class="nowrap">-22~-30℃</span><input type="number"
+							ng-model="capacity4"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height4"><span class="nowrap fr">高m</span>
+					</div>
                         <div>
-                            <span>12度至25度</span>
-                                    <input type="text" ng-model="capacity3">
-                                    <span>面积（平方）</span>
-                                     <input type="text" ng-model="height3">
-                                    <span>高度（米）</span>
-                        </div>
-                        <div>
-                            <span>12度至25度</span>
-                                    <input type="text" ng-model="capacity4">
-                                    <span>面积（平方）</span>
-                                     <input type="text" ng-model="height4">
-                                    <span>高度（米）</span>
-                        </div>
-                        <div>
-                            <span>12度至25度</span>
-                                    <input type="text" ng-model="capacity5">
-                                    <span>面积（平方）</span>
-                                     <input type="text" ng-model="height5">
-                                    <span>高度（米）</span>
-                        </div>
+						<span class="nowrap">&lt;-30℃</span><input type="number"
+							ng-model="capacity5"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height5"><span class="nowrap fr">高m</span>
+					</div>
                         <!-- <div style="width: auto"></div> -->
                     </div>
                 </li>

@@ -206,6 +206,7 @@ body,html{
 .houseinfo>li>.fr>input[type='text'],
 .houseinfo>li>input[type='text'],
 .houseinfo>li>input[type='date'],
+.houseinfo>li>input[type='number'],
 .houseinfo>li>.mySelect>input[type='text']{
 	text-indent: 10px;
 	display: inline-block;
@@ -280,7 +281,7 @@ input[type='radio'].blue{
 	position: relative;
 }
 .number>div>div{
-	margin:0.3rem 0.5rem;
+	margin:0.3rem 0;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	line-height: 1.5rem;
@@ -299,6 +300,22 @@ input[type='radio'].blue{
 .number>div input{
 	width: 6rem;
 	font-size: 0.75rem;
+}
+.nowrap{
+	white-space: nowrap;
+	width:2.5rem!important;
+}
+.nowrap+input{
+	width:3.16rem!important;
+	text-align: center;
+}
+.number>div span.nowrap:first-child{
+	width:3.5rem!important;
+}
+.number>div span.nowrap:last-child{
+	background-color: #DDDDDD;
+	width:1.5rem!important;
+	color:#555!important;
 }
 .num:before{
 	content: "辆";
