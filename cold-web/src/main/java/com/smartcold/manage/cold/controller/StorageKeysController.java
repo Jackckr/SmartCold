@@ -25,7 +25,7 @@ public class StorageKeysController {
 
     @RequestMapping("/getAllKeys")
     public Object getAllKeys(){
-        return storageKeysDao.findAll();
+        return storageKeysDao.findAll(null);
     }
 
     @RequestMapping("/getStorageType")

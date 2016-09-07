@@ -6,9 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface StorageKeysMapper {
-	List<StorageKeysEntity> findAll();
+	
+	boolean deleteById(@Param("id")int id);
 	
 	boolean save(StorageKeysEntity storageKeys);
-
-	boolean deleteById(@Param("id")int id);
+	
+	List<StorageKeysEntity> findAll(@Param("types")String  types);
 }

@@ -160,9 +160,10 @@ public class ExportExcelUtil {
 		        if(mode.length>=3){//指定列宽
 			       for (int i = 0; i < mode[2].length; i++) {sheet.setColumnWidth(i, Integer.parseInt(mode[2][i])*1000);  }
 		        }
-		        for (int i = 0; i < list.size(); i++) {  
+		        for (int i = 0; i < list.size(); i++) {  //65536
 		              Object object = list.get(i);  
 		              row = sheet.createRow(i + 2);  
+		              System.err.println("创建row:"+i);
 		              for (int j = 0;j < datamode.length; j++) {
 	  	            	cell = row.createCell(j);  
 	  	                cell.setCellStyle(cellStyle); 
