@@ -217,6 +217,9 @@ body,html{
     line-height: 2rem;
    background-color: transparent;
 }
+.tac input[type='number']{
+	text-align: center;
+}
 .houseinfo>li>input[type='date']{
 	line-height: 1.75;
 	background-color: #eee;
