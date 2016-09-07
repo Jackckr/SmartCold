@@ -153,13 +153,14 @@
        ORDER BY r.addTime DESC
 	</select>
 	<select id="findRDCById" parameterType="Integer" resultType="map" >
-		select 
-            r.id, r.`name`,r.address,r.capacity,r.sqm,r.cellphone ,r.struct,r.coldtype,mt.type managetype,dt.type storagetype,te.type storagetempertype ,t.storagetruck,t.rdcscore,date_format(r.addtime, '%Y-%m-%d') addtime
+		 select 
+            r.id, r.`name`,r.address,r.capacity,r.sqm,r.cellphone ,t.storagestruct,sgt.type struct ,r.coldtype,mt.type managetype,dt.type storagetype,te.type storagetempertype ,t.storagetruck,t.rdcscore,date_format(r.addtime, '%Y-%m-%d') addtime
         from rdc r 
 		  LEFT JOIN rdcext t ON t.RDCID=r.id 
 		  LEFT JOIN storagemanagetype mt on  mt.id=t.managetype
 		  LEFT JOIN storagetype dt on  dt.id=t.storagetype
 		  LEFT JOIN storagetempertype te on  te.id=t.storagetempertype 
+      left join storagestruct sgt on   t.storagestruct=sgt.id
 		where r.id=#{rdcID} 
 		ORDER BY r.addtime desc ;
 	</select>

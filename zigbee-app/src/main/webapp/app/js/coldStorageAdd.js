@@ -36,6 +36,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         $scope.manageTypes = data;
         $scope.manageType = data[0].id;
     });
+    // 获取冷库结构类型
+    $http.get(ER.root+"/i/rdc/findAllStorageStructureType").success(function (data) {
+        $scope.structures = data;
+        $scope.structure = data[0].id;
+    });
     // 获取商品存放类型
     $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
         $scope.temperTypes = data;
@@ -158,9 +163,9 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
                 remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
-                tonnage : $scope.tonnage,
+               // tonnage : $scope.tonnage,
                 structure: $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
-                companyDevice : $scope.companyDevice,
+                //companyDevice : $scope.companyDevice,
                 platform : $scope.platform,
                 lihuoRoom : $scope.lihuoRoom,
                 lihuoArea : $scope.lihuoArea,
@@ -172,6 +177,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 capacity3 : $scope.capacity3,
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
+                height1 : $scope.height1,
+                height2 : $scope.height2,
+                height3 : $scope.height3,
+                height4 : $scope.height4,
+                height5 : $scope.height5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 arrangePics : $scope.arrangePic,
             }

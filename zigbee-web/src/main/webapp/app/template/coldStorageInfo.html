@@ -154,7 +154,6 @@
                             <label class="col-sm-4 control-label">建筑结构：</label>
                             <div class="col-sm-8">
                                 <select class="form-control" ng-model="structure"
-                                        ng-change="RdcStructureSelected(structure)"
                                         ng-options="x.id as x.type for x in structures"></select>
                             </div>
                         </div>
@@ -225,26 +224,38 @@
                                     <span class="input-group-addon">面积（平方）</span>
                                      <input class="form-control" type="text" ng-model="height1">
                                     <span class="input-group-addon">高度（米）</span>
-                                    
-                                    <span class="input-group-addon">12度至-2度</span>
-                                    <input class="form-control" type="text" ng-model="capacity2">
-                                    <span class="input-group-addon">吨</span>
+                                </div>
+                              <br/>
+                                <div class="col-sm-9 input-group">
+                                <span class="input-group-addon">12度至-2度</span>
+                                   <input class="form-control" type="text" ng-model="capacity2">
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height2">
+                                    <span class="input-group-addon">高度（米）</span>
                                 </div>
                                 <br/>
                                 <div class="col-sm-9 input-group">
                                     <span class="input-group-addon">-18度至-22度</span>
-                                    <input class="form-control" type="text" ng-model="capacity3">
-                                    <span class="input-group-addon">吨</span>
-
-                                    <span class="input-group-addon">-22至-30度</span>
-                                    <input class="form-control" type="text" ng-model="capacity4">
-                                    <span class="input-group-addon">吨</span>
+                                   <input class="form-control" type="text" ng-model="capacity3">
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height3">
+                                    <span class="input-group-addon">高度（米）</span>
                                 </div>
+                                  <br/>
+                                <div class="col-sm-9 input-group">
+                                <span class="input-group-addon">-22至-30度</span>
+                                   <input class="form-control" type="text" ng-model="capacity4">
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height4">
+                                    <span class="input-group-addon">高度（米）</span>
+                                    </div>
                                 <br/>
-                                <div class="col-sm-4 input-group">
+                                <div class="col-sm-9 input-group">
                                     <span class="input-group-addon">-30度以下</span>
                                     <input class="form-control" type="text" ng-model="capacity5">
-                                    <span class="input-group-addon">吨</span>
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height5">
+                                    <span class="input-group-addon">高度（米）</span>
                                 </div>
                                 <div style="width: 400px"></div>
                             </div>

@@ -37,6 +37,8 @@ public class RdcExtEntity {
     private byte storagetempmonitor;
 
     private String storagecapacity;
+    
+    private String storagecapacityheight;
 
     private String storagetruck;
 
@@ -266,4 +268,12 @@ public class RdcExtEntity {
     public void setRdcrecommendpercent(int rdcrecommendpercent) {
         this.rdcrecommendpercent = rdcrecommendpercent;
     }
+
+	public String getStoragecapacityheight() {
+		return storagecapacityheight;
+	}
+
+	public void setStoragecapacityheight(String storagecapacityheight) {
+		this.storagecapacityheight = storagecapacityheight;
+	}
 }

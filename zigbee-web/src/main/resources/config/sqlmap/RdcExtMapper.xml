@@ -19,8 +19,8 @@
         `companystaff`,
         `managetype`,
         `storagetype`,
-        `storageheight`,
         `storagestruct`,
+        `storageheight`,
         `storageplatform`,
         `storageplatformtype`,
         `storageislihuo`,
@@ -29,6 +29,7 @@
         `storagerefreg`,
         `storagetempmonitor`,
         `storagecapacity`,
+        `storagecapacityheight`,
         `storagetruck`,
         `storagetempertype`,
         `facility`,
@@ -43,8 +44,8 @@
         #{companystaff},
         #{managetype},
         #{storagetype},
-        #{storageheight},
         #{storagestruct},
+        #{storageheight},
         #{storageplatform},
         #{storageplatformtype},
         #{storageislihuo},
@@ -53,6 +54,7 @@
         #{storagerefreg},
         #{storagetempmonitor},
         #{storagecapacity},
+        #{storagecapacityheight},
         #{storagetruck},
         #{storagetempertype},
         #{facility},
@@ -70,6 +72,9 @@
             </if>
             <if test="managetype != null" >
                 managetype = #{managetype,jdbcType=TINYINT},
+            </if>
+             <if test="storagestruct != null" >
+                storagestruct = #{storagestruct,jdbcType=TINYINT},
             </if>
             <if test="storagetype != null" >
                 storagetype = #{storagetype,jdbcType=TINYINT},
@@ -94,6 +99,9 @@
             </if>
             <if test="storagecapacity != null" >
                 storagecapacity = #{storagecapacity,jdbcType=VARCHAR},
+            </if>
+            <if test="storagecapacityheight != null" >
+                storagecapacityheight = #{storagecapacityheight,jdbcType=VARCHAR},
             </if>
             <if test="storagetruck != null" >
                 storagetruck = #{storagetruck,jdbcType=VARCHAR},

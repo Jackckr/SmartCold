@@ -105,21 +105,22 @@
                 
             </ul>
             <ul class="houseinfo black">
-                <li>
+                <!-- <li>
                     <label for="kg">吨位</label>                    
                     <div class="mySelect">
                         <input type="text" ng-model="tonnage">
                     </div>
-                    <!--<i class="iconfont fr moreinfo">&#xe60d;</i>-->
-                </li>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li> -->
                 <li>
-                    <label for="structure">结构</label>                    
+                    <label for="structure">建筑结构</label>                    
                     <div class="mySelect">
-                        <input type="text" ng-model="structure">
+                        <select ng-model="structure"
+                                        ng-options="x.id as x.type for x in structures"></select>
                     </div>
                     <!--<i class="iconfont fr moreinfo">&#xe60d;</i>-->
                 </li>
-                <li>
+                <!-- <li>
                     <label for="deviceType">冷链设施类型</label>                    
                     <div class="mySelect">
                         <select ng-model="companyDevice"
@@ -127,9 +128,9 @@
                                         ng-options="x.id as x.type for x in companyDevices"></select>
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
+                </li> -->
                 <li>
-                    <label for="moon">是否有月台</label>                    
+                    <label for="moon">是否有封闭月台</label>                    
                     <div class="mySelect">
                         <select ng-model="platform"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -137,7 +138,7 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="cleanroom">是否有理货间</label>
+                    <label for="cleanroom">是否有理货区</label>
                     <div class="mySelect">
                         <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -177,32 +178,42 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li class="number">
-                     <div>冷库容量：</div>
+                     <div>冷库容积：</div>
                     <div>
                         <div>
-                            <span>12至25度</span>
-                            <input type="text" ng-model="capacity1">
-                            <span>吨</span>
+                                   <span>12度至25度</span>
+                                    <input type="text" ng-model="capacity1">
+                                    <span>面积（平方）</span>
+                                     <input type="text" ng-model="height1">
+                                    <span>高度（米）</span>
                         </div>
                         <div>
-                            <span>12至-2度</span>
-                            <input type="text" ng-model="capacity2">
-                            <span>吨</span>
+                            <span>12度至25度</span>
+                                    <input type="text" ng-model="capacity2">
+                                    <span>面积（平方）</span>
+                                     <input type="text" ng-model="height2">
+                                    <span>高度（米）</span>
                         </div>
                         <div>
-                            <span>-18至-22度</span>
-                            <input type="text" ng-model="capacity3">
-                            <span>吨</span>
+                            <span>12度至25度</span>
+                                    <input type="text" ng-model="capacity3">
+                                    <span>面积（平方）</span>
+                                     <input type="text" ng-model="height3">
+                                    <span>高度（米）</span>
                         </div>
                         <div>
-                            <span>-22至-30度</span>
-                            <input type="text" ng-model="capacity4">
-                            <span>吨</span>
+                            <span>12度至25度</span>
+                                    <input type="text" ng-model="capacity4">
+                                    <span>面积（平方）</span>
+                                     <input type="text" ng-model="height4">
+                                    <span>高度（米）</span>
                         </div>
                         <div>
-                            <span>-30度以下</span>
-                            <input type="text" ng-model="capacity5">
-                            <span>吨</span>
+                            <span>12度至25度</span>
+                                    <input type="text" ng-model="capacity5">
+                                    <span>面积（平方）</span>
+                                     <input type="text" ng-model="height5">
+                                    <span>高度（米）</span>
                         </div>
                         <!-- <div style="width: auto"></div> -->
                     </div>
@@ -349,6 +360,11 @@ checkLogin();
     $scope.ManageTypeSelected = function () {
     };
 
+// 获取冷库结构类型
+    $http.get(ER.root+"/i/rdc/findAllStorageStructureType").success(function (data) {
+        $scope.structures = data;
+        $scope.structure = data[0].id;
+    });
     // 获取商品存放类型
     $http.get(ER.root+"/i/rdc/findAllTemperType").success(function (data) {
         $scope.temperTypes = data;
@@ -373,11 +389,11 @@ checkLogin();
         $scope.moreInfos = !$scope.moreInfos;
     };
 
-    // 获取冷链设施类型
+   /*  // 获取冷链设施类型
     $http.get(ER.root+"/i/rdc/findAllCompanyDevice").success(function (data) {
         $scope.companyDevices = data;
         $scope.companyDevice = data[0].id;
-    });
+    }); */
 
     $scope.CompanyDeviceSelected = function () {
     };
@@ -412,9 +428,9 @@ checkLogin();
 	        $scope.temperType = data[0].temperType;
 	        $scope.phoneNum = data[0].phoneNum;
 	        $scope.remark = data[0].remark?data[0].remark:"";
-	        $scope.tonnage = data[0].tonnage;
+	       // $scope.tonnage = data[0].tonnage;
 	        $scope.structure = data[0].structure;
-	        $scope.companyDevice = data[0].companyDevice;
+	       // $scope.companyDevice = data[0].companyDevice;
 	        $scope.platform = data[0].platform;
 	        $scope.lihuoRoom = data[0].lihuoRoom;
 	        $scope.arrangePic = data[0].arrangepiclocation;
@@ -436,6 +452,11 @@ checkLogin();
 	        $scope.capacity3 = data[0].capacity3;
 	        $scope.capacity4 = data[0].capacity4;
 	        $scope.capacity5 = data[0].capacity5;
+	        $scope.height1 = data[0].height1;
+            $scope.height2 = data[0].height2;
+       		$scope.height3 = data[0].height3;
+            $scope.height4 = data[0].height4;
+            $scope.height5 = data[0].height5;
 	        $scope.coldTruck1 = data[0].coldTruck1;
 	        $scope.coldTruck2 = data[0].coldTruck2;
 	        $scope.coldTruck3 = data[0].coldTruck3;
@@ -574,9 +595,9 @@ checkLogin();
                 phoneNum : $scope.phoneNum,
                 remark : $scope.structure == undefined ? "" : encodeURI($scope.remark, "UTF-8"),
 
-                tonnage : $scope.tonnage,
+                //tonnage : $scope.tonnage,
                 structure : $scope.structure == undefined ? "" : encodeURI($scope.structure, "UTF-8"),
-                companyDevice : $scope.companyDevice,
+               // companyDevice : $scope.companyDevice,
                 platform : $scope.platform,
                 lihuoRoom : $scope.lihuoRoom,
                 lihuoArea : $scope.lihuoArea,
@@ -588,6 +609,11 @@ checkLogin();
                 capacity3 : $scope.capacity3,
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
+                 height1 : $scope.height1,
+                height2 : $scope.height2,
+                height3 : $scope.height3,
+                height4 : $scope.height4,
+                height5 : $scope.height5,
                 facility : $scope.structure == undefined ? "" : encodeURI($scope.facility, "UTF-8"),
                 arrangePics : $scope.arrangePic,
                 rdcId:  $scope.rdcId

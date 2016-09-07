@@ -44,7 +44,7 @@ public class RdcAddDTO {
 
 	private float tonnage;
 
-	private String structure;
+	private int structure;
 
 	private int companyDevice;
 
@@ -60,11 +60,56 @@ public class RdcAddDTO {
 
 	private int temperRecord;
 
-	private int capacity1;
+	private int capacity1;//冷库容积-面积
 	private int capacity2;
 	private int capacity3;
 	private int capacity4;
 	private int capacity5;
+	private int height1;//冷库容积-面积
+	private int height2;
+	private int height3;
+	private int height4;
+	private int height5;
+
+	public int getHeight1() {
+		return height1;
+	}
+
+	public void setHeight1(int height1) {
+		this.height1 = height1;
+	}
+
+	public int getHeight2() {
+		return height2;
+	}
+
+	public void setHeight2(int height2) {
+		this.height2 = height2;
+	}
+
+	public int getHeight3() {
+		return height3;
+	}
+
+	public void setHeight3(int height3) {
+		this.height3 = height3;
+	}
+
+	public int getHeight4() {
+		return height4;
+	}
+
+	public void setHeight4(int height4) {
+		this.height4 = height4;
+	}
+
+	public int getHeight5() {
+		return height5;
+	}
+
+	public void setHeight5(int height5) {
+		this.height5 = height5;
+	}
 
 	private String facility;
 
@@ -268,11 +313,11 @@ public class RdcAddDTO {
 		this.tonnage = tonnage;
 	}
 
-	public String getStructure() {
+	public int getStructure() {
 		return structure;
 	}
 
-	public void setStructure(String structure) {
+	public void setStructure(int structure) {
 		this.structure = structure;
 	}
 

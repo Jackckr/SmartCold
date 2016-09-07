@@ -148,7 +148,7 @@
                                     <h3 style="color: #00a7d0">其他信息</h3>
                                     <table class="commentinfo">
                                         <tbody>
-                                        <tr ng-hide="tonnage === undefined || tonnage === 0">
+                                        <!-- <tr ng-hide="tonnage === undefined || tonnage === 0">
                                             <td>冷库吨位</td>
                                             <td>
                                                 <ul>
@@ -157,9 +157,9 @@
                                                     </li>
                                                 </ul>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                         <tr ng-hide="structure === undefined || structure === '' || structure === null">
-                                            <td>冷库结构</td>
+                                            <td>建筑结构</td>
                                             <td>
                                                 <ul>
                                                     <li>
@@ -168,7 +168,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="companyDevice === undefined || companyDevice === 0">
+                                        <!-- <tr ng-hide="companyDevice === undefined || companyDevice === 0">
                                             <td>冷链设施类型</td>
                                             <td>
                                                 <ul>
@@ -177,9 +177,9 @@
                                                     </li>
                                                 </ul>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                         <tr ng-hide="platform === undefined">
-                                            <td>是否有月台</td>
+                                            <td>是否有封闭月台</td>
                                             <td>
                                                 <ul>
                                                     <li>
@@ -189,7 +189,7 @@
                                             </td>
                                         </tr>
                                         <tr ng-hide="lihuoRoom === undefined">
-                                            <td>是否有理货间</td>
+                                            <td>是否有理货区</td>
                                             <td>
                                                 <ul>
                                                     <li>
@@ -239,11 +239,12 @@
                                             </td>
                                         </tr>
                                         <tr ng-hide="capacity1 === undefined || capacity2 === undefined || capacity3 === undefined || capacity4 === undefined || capacity5 === undefined || (capacity1 === 0 && capacity2 === 0 && capacity3 === 0 && capacity4 === 0 && capacity5 === 0)">
-                                            <td>冷库容量</td>
+                                            <td>冷库容积</td>
                                             <td>
                                                 <ul>
                                                     <li>
-                                                        12度至25度:{{capacity1}}吨&nbsp;&nbsp;&nbsp;12度至-2度:{{capacity2}}吨&nbsp;&nbsp;&nbsp;-18度至-22度:{{capacity3}}吨&nbsp;&nbsp;&nbsp;-22至-30度:{{capacity4}}吨&nbsp;&nbsp;&nbsp;-30度以下:{{capacity5}}吨
+                                                        12度至25度:{{capacity1}}平方{{height1}}米&nbsp;&nbsp;&nbsp;12度至-2度:{{capacity2}}平方{{height2}}米&nbsp;&nbsp;&nbsp;-18度至-22度:{{capacity3}}平方{{height3}}米&nbsp;&nbsp;&nbsp;
+                                                        -22至-30度:{{capacity4}}平方{{height4}}米&nbsp;&nbsp;&nbsp;-30度以下:{{capacity5}}平方{{height5}}米
                                                     </li>
                                                 </ul>
                                             </td>
@@ -258,7 +259,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="remark === undefined || remark === '' || remark === null">
+                                        <tr ng-hide="remark == 'undefined' || remark === '' || remark === null">
                                             <td>备注</td>
                                             <td style="word-break : break-all; float: left; padding:2px 0 2px 60px; margin-right: 10px; width: 88%;overflow:hidden;text-overflow:ellipsis;">
                                              {{remark}}
