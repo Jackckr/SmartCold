@@ -121,31 +121,34 @@
             <div ng-hide="moreInfos">
                 <div class="col-lg-8 col-lg-offset-1">
                     <form class="form-horizontal">
-                        <div class="form-group rdc">
+                       <!--  <div class="form-group rdc">
                             <label class="col-sm-4 control-label">吨位：</label>
                             <div class="col-sm-8"><input class="form-control" type="text" ng-model="tonnage"></div>
-                        </div>
+                        </div> -->
                   
                         <div class="form-group rdc">
-                            <label class="col-sm-4 control-label">结构：</label>
-                            <div class="col-sm-8"><input class="form-control" type="text" ng-model="structure"></div>
+                            <label class="col-sm-4 control-label">建筑结构：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="structure"
+                                        ng-options="x.id as x.type for x in structures"></select>
+                            </div>
                         </div>
                    
-                        <div class="form-group rdc">
+                       <!--  <div class="form-group rdc">
                             <label class="col-sm-4 control-label">冷链设施类型：</label>
                             <div class="col-sm-8">
                                 <select class="form-control" ng-model="companyDevice" ng-change="CompanyDeviceSelected(companyDevice)" ng-options="x.id as x.type for x in companyDevices"></select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group rdc">
-                            <label class="col-sm-4 control-label">是否有月台：</label>
+                            <label class="col-sm-4 control-label">是否有封闭月台：</label>
                             <div class="col-sm-8">
                                 <select class="form-control" ng-model="platform" ng-options="x.id as x.name for x in haveOrNots"></select>
                             </div>
                         </div>
                         <div class="form-group rdc">
-                            <label class="col-sm-4 control-label">是否有理货间：</label>
+                            <label class="col-sm-4 control-label">是否有理货区：</label>
                             <div class="col-sm-8">
                                 <select class="form-control" ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)" ng-options="x.id as x.name for x in haveOrNots"></select>
                             </div>
@@ -177,32 +180,49 @@
                         </div>
                    
                         <div class="form-group minInput">
-                            <label class="col-sm-4 control-label">冷库容量：</label>
+                             <label class="col-sm-4 control-label">冷库容积：</label>
                             <div class="col-sm-8">
-                                <div class="col-sm-10 input-group">
-                                	<span class="input-group-addon">12度至25度</span>
+                                <div class="col-sm-9 input-group">
+                                    <span class="input-group-addon">12度至25度</span>
                                     <input class="form-control" type="text" ng-model="capacity1">
-									<span class="input-group-addon">吨</span>
-									
-									<span class="input-group-addon">12度至-2度</span>
-                                    <input class="form-control" type="text" ng-model="capacity2">
-									<span class="input-group-addon">吨</span>
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height1">
+                                    <span class="input-group-addon">高度（米）</span>
                                 </div>
-                                <div class="col-sm-10 input-group">
-                                	<span class="input-group-addon">-18度至-22度</span>
-                                    <input class="form-control" type="text" ng-model="capacity3">
-									<span class="input-group-addon">吨</span>
-									
-									<span class="input-group-addon">-22至-30度</span>
-                                    <input class="form-control" type="text" ng-model="capacity4">
-									<span class="input-group-addon">吨</span>
+                              <br/>
+                                <div class="col-sm-9 input-group">
+                                <span class="input-group-addon">12度至-2度</span>
+                                   <input class="form-control" type="text" ng-model="capacity2">
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height2">
+                                    <span class="input-group-addon">高度（米）</span>
                                 </div>
-                                <div class="col-sm-6 input-group">
-                                	<span class="input-group-addon">-30度以下</span>
+                                <br/>
+                                <div class="col-sm-9 input-group">
+                                    <span class="input-group-addon">-18度至-22度</span>
+                                   <input class="form-control" type="text" ng-model="capacity3">
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height3">
+                                    <span class="input-group-addon">高度（米）</span>
+                                </div>
+                                  <br/>
+                                <div class="col-sm-9 input-group">
+                                <span class="input-group-addon">-22至-30度</span>
+                                   <input class="form-control" type="text" ng-model="capacity4">
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height4">
+                                    <span class="input-group-addon">高度（米）</span>
+                                    </div>
+                                <br/>
+                                <div class="col-sm-9 input-group">
+                                    <span class="input-group-addon">-30度以下</span>
                                     <input class="form-control" type="text" ng-model="capacity5">
-									<span class="input-group-addon">吨</span>
+                                    <span class="input-group-addon">面积（平方）</span>
+                                     <input class="form-control" type="text" ng-model="height5">
+                                    <span class="input-group-addon">高度（米）</span>
                                 </div>
                                 <div style="width: 400px"></div>
+                            </div>
                             </div>
 
                         </div>

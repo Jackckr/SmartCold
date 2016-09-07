@@ -124,12 +124,12 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.remark = data[0].remark;
             //$scope.tonnage = data[0].tonnage;
             //$scope.companyDevice = data[0].companyDevice;
-            for (var i = 0, len = $scope.companyDevices.length; i < len; i++) {
+           /* for (var i = 0, len = $scope.companyDevices.length; i < len; i++) {
                 if ($scope.companyDevices[i].id === $scope.companyDevice) {
                     $scope.companyDevice = $scope.companyDevices[i].type;
                     break;
                 }
-            }
+            }*/
             $scope.platform = data[0].platform;
             if ($scope.platform === 0){
                 $scope.platform = "无";

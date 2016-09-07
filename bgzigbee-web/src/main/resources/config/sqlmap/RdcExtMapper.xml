@@ -34,6 +34,7 @@
         `facility`,
         `honorpiclocation`,
         `arrangepiclocation`,
+        `storagecapacityheight`,
         `storagepiclocation`
         )
         VALUES
@@ -58,6 +59,7 @@
         #{facility},
         #{honorpiclocation},
         #{arrangepiclocation},
+        #{storagecapacityheight},
         #{storagepiclocation}
         );
     </insert>
@@ -70,6 +72,9 @@
             </if>
             <if test="managetype != null" >
                 managetype = #{managetype,jdbcType=TINYINT},
+            </if>
+            <if test="storagestruct != null" >
+                storagestruct = #{storagestruct,jdbcType=TINYINT},
             </if>
             <if test="storagetype != null" >
                 storagetype = #{storagetype,jdbcType=TINYINT},
@@ -103,6 +108,9 @@
             </if>
             <if test="facility != null" >
                 facility = #{facility,jdbcType=VARCHAR},
+            </if>
+             <if test="storagecapacityheight != null" >
+                storagecapacityheight = #{storagecapacityheight,jdbcType=VARCHAR},
             </if>
             <if test="honorpiclocation != null" >
                 honorpiclocation = #{honorpiclocation,jdbcType=LONGVARCHAR},

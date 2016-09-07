@@ -25,11 +25,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         $scope.storageTypes = data;
     });
 
-    // 获取冷链设施类型
+    /*// 获取冷链设施类型
     $http.get('/i/rdc/findAllCompanyDevice').success(function (data) {
         $scope.companyDevices = data;
     });
-
+*/
     // 制冷剂类型
     $http.get('/i/rdc/findAllStorageRefreg').success(function (data) {
         $scope.storageRefregs = data;
@@ -91,6 +91,14 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             });
 
             $scope.area = data[0].area;
+            
+            $scope.structure = data[0].structure;
+            for (var i = 0, len = $scope.structures.length; i < len; i++) {
+                if ($scope.structures[i].id === $scope.structure) {
+                    $scope.structure = $scope.structures[i].type;
+                    break;
+                }
+            }
             $scope.manageType = data[0].manageType;
             for (var i = 0, len = $scope.manageTypes.length; i < len; i++) {
                 if ($scope.manageTypes[i].id === $scope.manageType) {
@@ -115,15 +123,15 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.phoneNum = data[0].phoneNum;
             //$scope.telphoneNum = data[0].telphoneNum;
             $scope.remark = data[0].remark;
-            $scope.tonnage = data[0].tonnage;
+            //$scope.tonnage = data[0].tonnage;
             $scope.structure = data[0].structure;
-            $scope.companyDevice = data[0].companyDevice;
-            for (var i = 0, len = $scope.companyDevices.length; i < len; i++) {
+            //$scope.companyDevice = data[0].companyDevice;
+            /*for (var i = 0, len = $scope.companyDevices.length; i < len; i++) {
                 if ($scope.companyDevices[i].id === $scope.companyDevice) {
                     $scope.companyDevice = $scope.companyDevices[i].type;
                     break;
                 }
-            }
+            }*/
             $scope.platform = data[0].platform;
             if ($scope.platform === 0){
                 $scope.platform = "无";
@@ -164,6 +172,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.capacity3 = data[0].capacity3;
             $scope.capacity4 = data[0].capacity4;
             $scope.capacity5 = data[0].capacity5;
+            $scope.height1 = data[0].height1;
+            $scope.height2 = data[0].height2;
+            $scope.height3 = data[0].height3;
+            $scope.height4 = data[0].height4;
+            $scope.height5 = data[0].height5;
             $scope.coldTruck1 = data[0].coldTruck1;
             $scope.coldTruck2 = data[0].coldTruck2;
             $scope.coldTruck3 = data[0].coldTruck3;

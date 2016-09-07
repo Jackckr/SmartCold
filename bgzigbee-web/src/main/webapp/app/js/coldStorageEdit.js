@@ -33,6 +33,11 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             $scope.cityId = data[0].cityID;
         });
     }
+    // 获取冷库结构类型
+    $http.get('/i/rdc/findAllStorageStructureType').success(function (data) {
+        $scope.structures = data;
+        $scope.structure = data[0].id;
+    });
 
     $scope.citySelected = function () {
     }
@@ -109,9 +114,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.temperType = data[0].temperType;
         $scope.phoneNum = data[0].phoneNum;
         $scope.remark = data[0].remark;
-        $scope.tonnage = data[0].tonnage;
+        //$scope.tonnage = data[0].tonnage;
         $scope.structure = data[0].structure;
-        $scope.companyDevice = data[0].companyDevice;
+       // $scope.companyDevice = data[0].companyDevice;
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
         $scope.arrangePicShow = data[0].arrangePic;
@@ -132,6 +137,11 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         $scope.capacity3 = data[0].capacity3;
         $scope.capacity4 = data[0].capacity4;
         $scope.capacity5 = data[0].capacity5;
+        $scope.height1 = data[0].height1;
+        $scope.height2 = data[0].height2;
+        $scope.height3 = data[0].height3;
+        $scope.height4 = data[0].height4;
+        $scope.height5 = data[0].height5;
         $scope.coldTruck1 = data[0].coldTruck1;
         $scope.coldTruck2 = data[0].coldTruck2;
         $scope.coldTruck3 = data[0].coldTruck3;
@@ -294,9 +304,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 phoneNum : $scope.phoneNum,
                 remark : $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
-                tonnage : $scope.tonnage,
+                //tonnage : $scope.tonnage,
                 structure : $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
-                companyDevice : $scope.companyDevice,
+                //companyDevice : $scope.companyDevice,
                 platform : $scope.platform,
                 lihuoRoom : $scope.lihuoRoom,
                 lihuoArea : $scope.lihuoArea,
@@ -308,6 +318,11 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 capacity3 : $scope.capacity3,
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
+                height1 : $scope.height1,
+                height2 : $scope.height2,
+                height3 : $scope.height3,
+                height4 : $scope.height4,
+                height5 : $scope.height5,
                 facility : $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 arrangePics : $scope.arrangePic,
                 rdcId: $stateParams.rdcID
