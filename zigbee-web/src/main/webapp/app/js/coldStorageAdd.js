@@ -220,7 +220,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 phoneNum : $scope.phoneNum,
                 remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
 
-                tonnage : $scope.tonnage,
+                //tonnage : $scope.tonnage,
                 structure: $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
                 companyDevice : $scope.companyDevice,
                 platform : $scope.platform,
