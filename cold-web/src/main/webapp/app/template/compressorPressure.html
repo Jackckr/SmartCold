@@ -85,8 +85,8 @@ fill:rgba(30,144,255,0.8);
                              </div>
                              <div ng-repeat="evaBlowers in evaporative.evaBlowers" 
                             style="margin-top:10px;float:left;margin-left: {{$index == 0?0:30}}px;" class="text-center">
-                            <img ng-if="evaBlowers.isRunning==1" src="assets/img/evablower_run.png" style="float:left;" class="myImg">
-                            <img ng-if="evaBlowers.isRunning==0" src="assets/img/evablower_stop.png" style="float:left;" class="myImg">
+                            <img ng-if="evaBlowers.isRunning==1" src="assets/img/evablower_run.png" style="float:left;width:100px;height:100px;" class="myImg">
+                            <img ng-if="evaBlowers.isRunning==0" src="assets/img/evablower_stop.png" style="float:left;width:100px;height:100px;" class="myImg">
                             <!-- <img ng-if="compressor.type == 2 && compressor.isRunning==1" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
                             <img ng-if="compressor.type == 2 && compressor.isRunning==0" src="assets/img/evablower_run.png" style="width:100%;float:left;" > -->
                             <label>{{evaBlowers.name}}</label>
