@@ -32,7 +32,11 @@ var delrdc = function(id, em) {
 				if (data.status == 0 || data.success) {
 					$(em).parents('li').remove();
 				} else {
-					alert("删除失败！请稍后重试！");
+					//alert("删除失败！请稍后重试！");
+					 layer.open({
+					    content: '删除失败！请稍后重试吧'
+					    ,btn: '确定'
+					  });
 				}
 			}
 		});

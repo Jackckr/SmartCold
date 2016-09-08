@@ -11,9 +11,11 @@
     <meta http-equiv="Cache" content="no-cache">
     <title>登录</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/login.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
     <script type="text/javascript">$.ajax({type:"POST",cache:false,async:false,data:{token:util.getCookie("token")},dataType:"json",url:ER.root+"/i/user/findUser",xhrFields: { withCredentials: true },success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
 </head>
 <body>
@@ -55,7 +57,7 @@
 		</div>
 	</footer>
 	<script  type="text/javascript">
-	if(!navigator.cookieEnabled){ alert("请打开手机Cookie");}
+	if(!navigator.cookieEnabled){ /* alert("请打开手机Cookie"); */layer.open({content: '请打开手机Cookie~',btn: '确定'});}
 	$("#username").val(util.getCookie("username"));
 	function login() {
 	    var me = "#btn_login";

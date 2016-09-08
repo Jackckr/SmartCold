@@ -2,12 +2,30 @@
  app.controller('usercl', function($http, $location,$scope) {
 	$http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	$scope.initdata=function(){
-		 $.ajax({cache: false,type: "POST",url:ER.root+"/i/user/findUser", success: function(data) {
-			 $scope.$apply(function () {
-            	 if(data.id!=0){ $scope.userinfo= data;}
-		    });
-		 } });
+       $scope.userinfo= window.user;
 	};
+	$scope.initevg=function(){
+		$('.edit1').click(function(){
+   			$(".show").hide();
+   			$(".show1").show();
+   		});
+   		$('.edit2').click(function(){
+   			countdown=0;
+   			if ($("#code1").val().length != 0) {   				
+	   			$(".show1").hide();
+	   			$(".show2").show();
+   			} else{
+   				//alert('验证码不能为空,请输入验证码~');
+   				layer.open({
+   				    content: '验证码不能为空,请输入验证码~'
+   				    ,btn: '确定'
+   				  });
+   			}
+   		});
+	};
+	$scope.initdata();
+	$scope.initevg();
+	
 	$scope.getVerCode=function(){
 		setTime(document.getElementById("but_vercode"));
 		$scope.getMobileCode('user_upphone',$scope.userinfo.telephone,'#but_vercode');
@@ -28,7 +46,11 @@
 				$scope.mtvarcode=data.entity;//
 				$(vcid).data('vc', true);
 			}
-			alert(data.message);
+			//alert(data.message);
+			 layer.open({
+			    content: data.message
+			    ,btn: '确定'
+			  });
 		});
 	};
 	$scope.veteleCode=function(){//验证码
@@ -54,38 +76,14 @@
 			$("#app_but").attr("disabled",!ct);
 			if(ct){$("#app_but").removeClass("gray");}else{$("#app_but").addClass("gray");}
 		}
-        //else{
-        //	$http.get(ER.root+"/i/ShareRdcController/sharvistCode",  { params: {telephone:$scope.telephone, yzm:$scope.verrcode1}  }).success(function(data) {
-        //		if(data){
-        //			$("#app_but").attr("disabled",false);
-        //			$("#app_but").removeClass("gray");
-        //		}
-        //	});
-        //}
 	};
 	$scope.savedata=function(){//验证码
 		$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data: $('#datafrom').serialize(),success: function(data) { 
-			if(data){tourl("personal.html");}else{alert("修改失败！请稍后重试！");}
+			if(data){tourl("personal.html");}else{/*alert("修改失败！请稍后重试！");*/layer.open({content:'修改失败了，请稍后重试吧',btn: '确定'});}
 		}
     });
 	};
-	$scope.initevg=function(){
-		$('.edit1').click(function(){
-   			$(".show").hide();
-   			$(".show1").show();
-   		});
-   		$('.edit2').click(function(){
-   			countdown=0;
-   			if ($("#code1").val().length != 0) {   				
-	   			$(".show1").hide();
-	   			$(".show2").show();
-   			} else{
-   				alert('验证码不能为空,请输入验证码~');
-   			}
-   		});
-	};
-	$scope.initdata();
-	$scope.initevg();
+	
 });
 
 	

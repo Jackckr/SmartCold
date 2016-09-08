@@ -134,7 +134,7 @@ public class OrdersController extends BaseController {
 			order.setOrdername(ordername);
 			order.setOwnerid(releaseID);
 			UserEntity owner = userDao.findUserById(releaseID);
-			if (StringUtil.isNull(owner.getTelephone())) {
+			if (owner!=null&&StringUtil.isNull(owner.getTelephone())) {
 				return ResponseData.newFailure("下单失败！发布者没有留下联系方式！");
 			}
 			order.setOwnername(owner.getUsername());
@@ -144,6 +144,9 @@ public class OrdersController extends BaseController {
 			order.setUsertele(telephone);
 			order.setShareinfoid(rsdid);
 			RdcShareDTO rsd = rsmDao.getSEByID("" + rsdid);
+			if(rsd==null){
+				return ResponseData.newFailure("下单失败！当前发布信息已失效！");
+			}
 			List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(rsd.getId(), FileDataMapper.CATEGORY_SHARE_PIC);
 			if (rsd != null) {
 			if(SetUtil.isnotNullList(files)){
@@ -165,6 +168,7 @@ public class OrdersController extends BaseController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return ResponseData.newFailure("下单失败！当前发布信息已失效！");
 		}
 		OrdersDTO data = ordersDTO;
 		return ResponseData.newSuccess(data);

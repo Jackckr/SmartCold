@@ -74,14 +74,22 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     $scope.totalhonorfiles = [];
     $scope.addFiles = function (files) {
         if($scope.totalfiles.length + files.length > 5){
-            alert("最多上传五张图片");
+           // alert("最多上传五张图片");
+            layer.open({
+                content: '最多上传五张图片哦'
+                ,btn: '确定'
+              });
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
     $scope.addHonorFiles = function (files) {
         if($scope.totalhonorfiles.length + files.length > 8){
-            alert("最多上传八张图片");
+            //alert("最多上传八张图片");
+        	layer.open({
+                content: '最多上传八张图片哦'
+                ,btn: '确定'
+              });
             return;
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
@@ -198,7 +206,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 data: data
             }).then(function (resp) {
                 $scope.isDisabled = false;
-                alert("添加成功");
+                //alert("添加成功");
+                layer.open({
+                    content: '添加成功'
+                    ,btn: '确定'
+                  });
                 window.location.href='releasesuccess.html';
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
@@ -207,7 +219,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 console.log('progress: ' + progressPercentage + '% ' + evt.name);
             });
         } else {
-            alert("请填写标记*的必选项在提交!");
+            //alert("请填写标记*的必选项在提交!");
+            layer.open({
+                content: '请填写标记*的必选项在提交哦'
+                ,btn: '确定'
+              });
         }
     }
 });

@@ -30,7 +30,11 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 	$scope.getMobileCode = function(key, telephone, vcid) {//获取验证码
 		$http.get(ER.root+ "/i/ShareRdcController/sharvistPhone.json",{params : {key : 'signUpCode',telephone : telephone}}).success(function(data) {
 				if (data.success) {$scope.mtvarcode = data.entity;$(vcid).data('vc', true);}
-				alert(data.message);
+				//alert(data.message);
+				layer.open({
+				    content: data.message
+				    ,btn: '确定'
+				  });
 		});
 	};
     $scope.veteleCode = function() {// 验证码
@@ -80,7 +84,11 @@ var app = angular.module('app', []).controller('register',function($http, $locat
             complete : function(e){$(me).text("注册"); $(me).delay(500).data('isLoading',false);},
             success: function(data){
             	if(data.status==0){
-            		alert(data.message);
+            		//alert(data.message);
+            		layer.open({
+    				    content: data.message
+    				    ,btn: '确定'
+    				  });
             		window.location.href = "login.html";
             	}else{
             		$("#mention1").html(data.message);

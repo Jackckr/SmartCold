@@ -121,7 +121,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    $scope.addFiles = function (files) {
 			if(files.length==0){return;};
 			var allfiles = $scope.totalfiles.concat(files);
-			if(allfiles.length>10){alert("最多选择10张！");return;}
+			if(allfiles.length>10){/*alert("最多选择10张！");*/ layer.open({content: '最多选择10张哦' ,btn: '确定'});return;}
 	        $scope.totalfiles=allfiles; 
 	    };
 	    $scope.drophonor = function(honorfile){
@@ -264,7 +264,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	alert(resp.data.message);
+		    	//alert(resp.data.message);
+		    	layer.open({content: resp.data.message,btn: '确定'});
 		    	window.location.href ="coldtransportlist.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
@@ -274,7 +275,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    });
 			}
 			else {
-	            alert("请填写标记*的必选项在提交!");
+	            //alert("请填写标记*的必选项在提交!");
+	            layer.open({content:'请填写标记*的必选项再提交哦',btn: '确定'});
 	        }
 		}
 	    
@@ -310,7 +312,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	alert(resp.data.message);
+		    	//alert(resp.data.message);
+		    	layer.open({content:resp.data.message,btn: '确定'});
 		    	window.location.href ="goodslist.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
@@ -320,7 +323,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    });
 			}
 			else {
-	            alert("请填写标记*的必选项在提交!");
+	            //alert("请填写标记*的必选项在提交!");
+	            layer.open({content:'请填写标记*的必选项再提交哦',btn: '确定'});
 	        }
 		}
 		
@@ -356,7 +360,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	alert(resp.data.message);
+		    	//alert(resp.data.message);
+		    	layer.open({content:resp.data.message,btn: '确定'});
 		    	window.location.href ="user-myrelease.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
@@ -366,7 +371,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    });
 			}
 			else {
-	            alert("请填写标记*的必选项在提交!");
+	            //alert("请填写标记*的必选项在提交!");
+				 layer.open({content:'请填写标记*的必选项再提交哦',btn: '确定'});
 	        }
 		}
 });

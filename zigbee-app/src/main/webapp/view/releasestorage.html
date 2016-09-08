@@ -10,11 +10,13 @@
 	content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 <title>发布仓位</title>
 <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
 <link rel="stylesheet" type="text/css" href="../com/css/release.css">
 <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
+<script type="text/javascript" src="../com/js/layer.js"></script>
 <script type="text/javascript" src="../com/datepicker/date.js"></script>
 <script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
 <script src="../bower_components/angular/angular.min.js"></script>
@@ -154,7 +156,7 @@
 				<li><label for="note">备注</label> <input type="text" id="note"
 					placeholder="（选填）" ng-model="note" name="note"/></li>
 				<li><label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
-				 </label> <span id="">上传图片</span><br>
+				 </label> <span id="">上传图片<small class="text-warning" style="width: 100px">(最多十张)</small></span><br>
 	              <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
 			</ul>
 		</form>

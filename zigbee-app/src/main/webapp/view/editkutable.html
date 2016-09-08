@@ -8,10 +8,12 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>修改库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
     <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
     <script type="text/javascript" src="../com/js/prettify.js" ></script>
 </head>
@@ -447,7 +449,11 @@ checkLogin();
 	        });
 	     });
 	   }else{
-	     alert("非法访问！");
+	     //alert("非法访问！");
+	      layer.open({
+		    content: '非法访问~~'
+		    ,btn: '确定'
+		  });
 	     return ;
 	   }
 	    
@@ -519,7 +525,11 @@ checkLogin();
     
     $scope.addFiles = function (files) {
         if(($scope.storagePicShow.length +$scope.totalfiles.length+ files.length) > 5){
-            alert("最多上传五张图片");
+           // alert("最多上传五张图片");
+             layer.open({
+			    content: '最多上传五张图片哦'
+			    ,btn: '确定'
+			  });            
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
@@ -533,7 +543,11 @@ checkLogin();
     };
     $scope.addHonorFiles = function (files) {
         if( $scope.honorPicShow.length+ $scope.totalhonorfiles.length + files.length > 8){
-            alert("最多上传八张图片");
+            //alert("最多上传八张图片");
+            layer.open({
+			    content: '最多上传八张图片哦'
+			    ,btn: '确定'
+			  });  
             return;
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
@@ -608,7 +622,11 @@ checkLogin();
                 data: data
             }).then(function (resp) {
                 $scope.isDisabled = false;
-                alert("修改成功");
+               // alert("修改成功");
+                layer.open({
+				    content: '修改成功'
+				    ,btn: '确定'
+				  });  
                 goback();
             }, function (resp) {
                 console.log("Error status: " + resp.status);
@@ -617,11 +635,19 @@ checkLogin();
                 console.log("progress: " + progressPercentage + "% " + evt.name);
             });
         } else {
-            alert("请填写标记*的必选项在提交!");
+            //alert("请填写标记*的必选项在提交!");
+            layer.open({
+			    content: '请填写标记*的必选项再提交哦'
+			    ,btn: '确定'
+			  }); 
         }
     }
     else{
-    	alert("备注长度不得250字符!");
+    	//alert("备注长度不得250字符!");
+    	layer.open({
+		    content: '备注长度不得250字符哦'
+		    ,btn: '确定'
+		  });
     }
    };
 

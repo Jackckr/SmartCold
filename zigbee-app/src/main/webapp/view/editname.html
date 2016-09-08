@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<title>修改昵称</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+        <script type="text/javascript" src="../com/js/layer.js"></script>
 </head>
 <body>
     <header>
@@ -45,12 +47,17 @@
 		            url: ER.root+"/i/user/updateUser",
 		            data: formdata,processData: false, contentType: false,
 		            success: function(data){
-		                 if(!data){alert("修改失败哟~请稍后重试~");}else{
+		                 if(!data){/* alert("修改失败哟~请稍后重试~"); */layer.open({content: '修改失败哟~请稍后重试~',btn: '确定'});}else{
 		                   window.location.href="personal.html";
 		                 }}
 		          });
    			} else{
-   				alert("昵称不能为空哦~");
+   				//alert("昵称不能为空哦~");
+   				 layer.open({
+				    content: '昵称不能为空哦~'
+				    ,btn: '确定'
+				  });
+   				
    			}
    		});
    	}

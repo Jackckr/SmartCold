@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<title>我的联络单</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
 	<link rel="stylesheet" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
 	<script type="text/javascript" src="../com/js/baguettebox.min.js" ></script>
     <script type="text/javascript">checkLogin();</script>
     <script type="text/javascript">
@@ -48,7 +50,8 @@
     	    	userName : $scope.orders.username
     	    }
     	}).success(function (data) {
-    		alert("对方联系人的手机号已经发送到您的手机，请及时联系");
+//     		alert("对方联系人的手机号已经发送到您的手机，请及时联系");
+			layer.open({content: '对方联系人的手机号已经发送到您的手机，请及时联系~',btn: '确定'});
     	});
     };
 	$scope.initevg=function(){
