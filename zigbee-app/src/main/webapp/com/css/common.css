@@ -268,80 +268,8 @@ header>div>a>.iconfont{
 .info{
 	font-size: 0.6rem;
 }
-/*
- 自定义alert弹出框
- * 
- * */
-.backDropTop{
-	position: fixed;
-	width: 100%;
-	min-height: 100%;
-	top: 0;
-	left: 0;
-	background: rgba(0,0,0,.5);
-	z-index: 10000;
-}
-.alert,.confirm{
-	position: fixed;
-	width:95%;
-	top: 40%;
-	left: 50%;
-	overflow: hidden;
-	-webkit-transform: translate(-50%,-50%);
-	transform: translate(-50%,-50%);
-	border-radius: 10px;
-	background: #fff;
-	z-index: 10001;
-}
-.tips{
-	text-align: center;
-	font-size: 0.8rem;
-	line-height: 2.5;
-	color: #222;
-	background-color: #eee;
-}
-.txtBody{
-	font-size: 0.8rem;
-	line-height: 1.75;
-	padding: 0.5rem 0;
-	color: #222;
-	text-indent: 2em;
-}
-.alert button,.confirm button{
-	text-align: center;
-	font-size: 0.8rem;
-	line-height: 3;
-	color: #438BCB;
-	background-color: #fff;
-}
-.alert button{
-	width: 100%;
-	border-top: 1px solid #eee;
-}
-.confirm button{
-	width: 50%;
-	border-top: 1px solid #eee;
-}
-.confirm .bdr{
-	border-right: 1px solid #eee;
-}
-.ng-cloak{display:none;} 
-/*
- 自定义alert弹出框end
- * 
- * */
  /* 公共头部和底部样式 end*/
-.loadEffect{
- 	width: 100%;
- 	height: 100%;
- 	margin: 0 auto;
- 	background: url(../img/load.jpg) no-repeat center;
- 	background-size: cover; 
- 	position: fixed;
- 	top: 0;
- 	right: 0;	
- 	z-index: 99999;
- }
+.ng-cloak{display:none;}
  /*没有数据显示tupiantishi*/
 .nodata{
 	text-align: center;
@@ -353,4 +281,10 @@ header>div>a>.iconfont{
 	margin: 2rem auto;
 	width: 6.5rem;
 	height: 6.5rem;
+}
+.layui-m-layerbtn span{
+	font-size: .8rem!important;
+}
+.layui-m-layercont{
+	font-size: .8rem!important;
 }
