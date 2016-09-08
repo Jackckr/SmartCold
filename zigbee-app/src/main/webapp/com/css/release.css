@@ -206,6 +206,7 @@ body,html{
 .houseinfo>li>.fr>input[type='text'],
 .houseinfo>li>input[type='text'],
 .houseinfo>li>input[type='date'],
+.houseinfo>li>input[type='number'],
 .houseinfo>li>.mySelect>input[type='text']{
 	text-indent: 10px;
 	display: inline-block;
@@ -215,6 +216,9 @@ body,html{
 	color: #555;
     line-height: 2rem;
    background-color: transparent;
+}
+.tac input[type='number']{
+	text-align: center;
 }
 .houseinfo>li>input[type='date']{
 	line-height: 1.75;
@@ -280,7 +284,7 @@ input[type='radio'].blue{
 	position: relative;
 }
 .number>div>div{
-	margin:0.3rem 0.5rem;
+	margin:0.3rem 0;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	line-height: 1.5rem;
@@ -299,6 +303,22 @@ input[type='radio'].blue{
 .number>div input{
 	width: 6rem;
 	font-size: 0.75rem;
+}
+.nowrap{
+	white-space: nowrap;
+	width:2.5rem!important;
+}
+.nowrap+input{
+	width:3.16rem!important;
+	text-align: center;
+}
+.number>div span.nowrap:first-child{
+	width:3.5rem!important;
+}
+.number>div span.nowrap:last-child{
+	background-color: #DDDDDD;
+	width:1.5rem!important;
+	color:#555!important;
 }
 .num:before{
 	content: "辆";
@@ -599,17 +619,7 @@ em{
 	font-size: .7rem;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-/* 去掉链接触摸高亮 */		
-.readMore {
-	display: block;
-	height: 1.5rem;
-	line-height: 1.5rem;
-	margin: 0.3rem auto;
-	font-size: .75rem;
-	text-align: center;
-	color: #438BCB;
-	text-decoration: underline;
-}
+/* 去掉链接触摸高亮 */	
 .newsImg li{
 	border-bottom: 2px solid #F6F5FA;
 	padding: 0.4rem;
@@ -623,30 +633,4 @@ em{
 	height: 3rem;
 	margin-right: .3rem;
 	background-size: cover;
-}
-.newsTitle{
-	font-size: 0.7rem;
-	line-height: 1.525;
-	overflow : hidden;
-    text-overflow: ellipsis;
-  	display: -webkit-box;
-  	-webkit-line-clamp: 2;
-  	-webkit-box-orient: vertical;
-} 
-.newsTxt span{
-	font-size: .6rem;
-	color: #999;
-	margin-right: .2rem;
-}
-.newsDate{
-	position: absolute;
-	bottom: 0;
-	left: 4.3rem;
-}
-.newsTxt .newsBd{
-	color: #BB2626;
-	border: 1px solid #BB2626;
-	border-radius: 3px;
-	display: inline-block;
-	padding: 0 .3rem;
 }

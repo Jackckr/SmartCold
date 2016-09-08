@@ -53,7 +53,13 @@
             data: formdata,
             processData: false,
             contentType: false,
-            success: function(data){if(!data){alert("修改失败咯，请稍后重试吧~");} }
+            success: function(data){if(!data){
+            	//alert("修改失败咯，请稍后重试吧~");
+            	layer.open({
+            	    content: '修改失败咯，请稍后重试吧~'
+            	    ,btn: '确定'
+            	  });
+            } }
           });
 	};
 	$scope.initdata();

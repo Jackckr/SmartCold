@@ -29,7 +29,11 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 	$scope.getMobileCode = function(key, telephone, vcid) {//获取验证码
 		$http.get(ER.root+ "/i/ShareRdcController/sharvistPhone.json",{params : {key : 'user_findwpd',telephone : telephone}}).success(function(data) {
 				if (data.success) {$scope.mtvarcode = data.entity;$(vcid).data('vc', true);}
-				alert(data.message);
+				//alert(data.message);
+				layer.open({
+    		 	    content: data.message
+    		 	    ,btn: '确定'
+    		 	  });
 		});
 	};
     $scope.veteleCode = function() {// 验证码
@@ -82,7 +86,11 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
             complete : function(e){$(me).text("确定"); $(me).delay(500).data('isLoading',false);},
             success: function(data){
             	if(data.success){
-            		alert("密码重置成功！");
+            		//alert("密码重置成功！");
+            		layer.open({
+	    		 	    content: '密码重置成功咯~'
+	    		 	    ,btn: '确定'
+	    		 	  });
             		window.location.href = "login.html";
             	}else{
             		$("#mention2").html("修改失败~请稍后重试~");

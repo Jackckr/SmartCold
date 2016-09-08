@@ -36,6 +36,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         $scope.manageTypes = data;
         $scope.manageType = data[0].id;
     });
+    // 获取冷库结构类型
+    $http.get(ER.root+"/i/rdc/findAllStorageStructureType").success(function (data) {
+        $scope.structures = data;
+        $scope.structure = data[0].id;
+    });
     // 获取商品存放类型
     $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
         $scope.temperTypes = data;
@@ -69,14 +74,22 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     $scope.totalhonorfiles = [];
     $scope.addFiles = function (files) {
         if($scope.totalfiles.length + files.length > 5){
-            alert("最多上传五张图片");
+           // alert("最多上传五张图片");
+            layer.open({
+                content: '最多上传五张图片哦'
+                ,btn: '确定'
+              });
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
     $scope.addHonorFiles = function (files) {
         if($scope.totalhonorfiles.length + files.length > 8){
-            alert("最多上传八张图片");
+            //alert("最多上传八张图片");
+        	layer.open({
+                content: '最多上传八张图片哦'
+                ,btn: '确定'
+              });
             return;
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
@@ -158,9 +171,9 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum,
                 remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
-                tonnage : $scope.tonnage,
+               // tonnage : $scope.tonnage,
                 structure: $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
-                companyDevice : $scope.companyDevice,
+                //companyDevice : $scope.companyDevice,
                 platform : $scope.platform,
                 lihuoRoom : $scope.lihuoRoom,
                 lihuoArea : $scope.lihuoArea,
@@ -172,6 +185,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 capacity3 : $scope.capacity3,
                 capacity4 : $scope.capacity4,
                 capacity5 : $scope.capacity5,
+                height1 : $scope.height1,
+                height2 : $scope.height2,
+                height3 : $scope.height3,
+                height4 : $scope.height4,
+                height5 : $scope.height5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 arrangePics : $scope.arrangePic,
             }
@@ -188,7 +206,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 data: data
             }).then(function (resp) {
                 $scope.isDisabled = false;
-                alert("添加成功");
+                //alert("添加成功");
+                layer.open({
+                    content: '添加成功'
+                    ,btn: '确定'
+                  });
                 window.location.href='releasesuccess.html';
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
@@ -197,7 +219,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 console.log('progress: ' + progressPercentage + '% ' + evt.name);
             });
         } else {
-            alert("请填写标记*的必选项在提交!");
+            //alert("请填写标记*的必选项在提交!");
+            layer.open({
+                content: '请填写标记*的必选项在提交哦'
+                ,btn: '确定'
+              });
         }
     }
 });

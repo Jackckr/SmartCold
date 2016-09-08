@@ -35,6 +35,25 @@
 	    		text-indent: 2em;
 	    		line-height: 1.75;
 	    	}
+	    	body{
+	    		background: #fff;
+	    		overflow-x:scroll;
+	    	}
+	    	#infoContent p,#infoContent span,#infoContent a{
+	    		font-size:.75rem!important;
+	    		text-indent:2em;
+	    		word-break:break-all;
+	    		word-wrap:break-word; 
+	    	}
+	    	#infoContent img{
+	    		max-width:100%;
+	    		max-height:10rem;
+	    	}
+	    	#infoContent table,#infoContent th,#infoContent tr,#infoContent td{
+	    		border:1px solid #ccc;
+	    		border-collapse: 0!important;
+	    		border-spacing:0!important;
+	    	}
 	    </style>
 	</head>
 	<body ng-app="app" ng-controller="newsdetail">
@@ -50,7 +69,7 @@
 	    		<p class="omg">中国冷链物流联合会</p>
 	    		 <span>{{informationDetail.posttime}}</span> 
 	    	</div>
-	    	<div id="content">
+	    	<div id="infoContent">
 	    	</div>
 	    </article>
 	</body>

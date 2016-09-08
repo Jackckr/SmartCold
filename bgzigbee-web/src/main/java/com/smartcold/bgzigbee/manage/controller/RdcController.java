@@ -8,6 +8,8 @@ import com.smartcold.bgzigbee.manage.dto.*;
 import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
+import com.smartcold.bgzigbee.manage.util.SetUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class RdcController {
 	@Autowired
 	private RdcExtMapper rdcExtDao;
 
+	@Autowired
+	private StorageStructureTypeMapper storageStructureDao;
+	
 	@Autowired
 	private RdcService rdcService;
 
@@ -147,6 +152,11 @@ public class RdcController {
 	public Object findAllCompanyDevice() {
 		return companyDeviceDao.findAll();
 	}
+	@RequestMapping(value = "/findAllStorageStructureType", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findAllStorageStructureType() {
+		return storageStructureDao.findAll();
+	}
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
@@ -169,7 +179,6 @@ public class RdcController {
 		}
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
 		rdcEntity.setSqm(rdcAddDTO.getArea());
-		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
@@ -185,9 +194,10 @@ public class RdcController {
 		rdcEntity.setPosition("");
 		rdcEntity.setPowerConsume(0);
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
+		if(!SetUtil.isNullMap(lngLatMap)){
 		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
 		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
-
+		}
 		rdcDao.insertRdc(rdcEntity);
 
 		// 插入rdc表,返回对应的ID
@@ -195,6 +205,7 @@ public class RdcController {
 		rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
+		rdcExtEntity.setStoragestruct((byte)rdcAddDTO.getStructure());
 		rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
 		rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
 		rdcExtEntity.setStorageislihuo((byte) rdcAddDTO.getLihuoRoom());
@@ -204,7 +215,10 @@ public class RdcController {
 		rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
 		String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
 				+ rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity4();
+		String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
+				+ rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
 		rdcExtEntity.setStoragecapacity(capacity);
+		rdcExtEntity.setStoragecapacityheight(capacityheight);
 		String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
 				+ rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
 		rdcExtEntity.setStoragetruck(truck);
@@ -214,8 +228,6 @@ public class RdcController {
 
 		rdcExtEntity.setCompanystaff((byte) 0);
 		rdcExtEntity.setStorageheight((byte) 0);
-		rdcExtEntity.setStoragestruct((byte) 0);
-
 		// 图片上传
 		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
 		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
@@ -287,7 +299,6 @@ public class RdcController {
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
 		rdcEntity.setSqm(rdcAddDTO.getArea());
-		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
@@ -295,9 +306,10 @@ public class RdcController {
 		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
+		if(SetUtil.isNotNullMap(lngLatMap)){
 		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
 		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
-
+		}
 		rdcDao.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
 		boolean haveRdcExt = false;
@@ -312,6 +324,7 @@ public class RdcController {
 		// 插入rdc表,返回对应的ID
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
+		rdcExtEntity.setStoragestruct((byte)rdcAddDTO.getStructure());
 		rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
 		rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
 		rdcExtEntity.setStorageislihuo((byte) rdcAddDTO.getLihuoRoom());
@@ -321,6 +334,9 @@ public class RdcController {
 		rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
 		String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
 				+ rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity4();
+		String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
+				+ rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
+		rdcExtEntity.setStoragecapacityheight(capacityheight);
 		rdcExtEntity.setStoragecapacity(capacity);
 		String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
 				+ rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();

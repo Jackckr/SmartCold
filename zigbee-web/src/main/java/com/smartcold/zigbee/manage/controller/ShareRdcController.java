@@ -81,7 +81,7 @@ public class ShareRdcController  {
 						 return ResponseData.newSuccess(objdata);
 					} catch (Exception e) {
 							e.printStackTrace();
-							return ResponseData.newFailure("网络异常！稍后重试！");
+							return ResponseData.newFailure("网络异常~稍后重试~");
 					}
 				}
 	}
@@ -170,7 +170,7 @@ public class ShareRdcController  {
 			RdcShareDTO data = this.rdcShareService.getSEByIDForEdit(id);
 			return ResponseData.newSuccess(data);
 		}
-	    return ResponseData.newFailure("无效请求！");
+	    return ResponseData.newFailure("无效请求~");
 	}
 	
 	
@@ -187,7 +187,7 @@ public class ShareRdcController  {
 			RdcShareDTO data = this.rdcShareService.getSEByID(id);
 			return ResponseData.newSuccess(data);
 		}
-	    return ResponseData.newFailure("无效请求！");
+	    return ResponseData.newFailure("无效请求~");
 	}
 	/**
 	 * 根据用户id获得关联发布信息
@@ -387,7 +387,7 @@ public class ShareRdcController  {
 			return ResponseData.newSuccess();
 		}else{
 			if (user==null) {logger.error("非法删除操作：->未登录，数据id->"+id);} 
-			return ResponseData.newFailure("非法操作！");
+			return ResponseData.newFailure("非法操作~");
 		}
 	    
 	}
@@ -416,14 +416,14 @@ public class ShareRdcController  {
 					this.rdcShareService.updateshareInfo(rdcShareDTO);//修改发布消息
 				}
 				this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, user, request);
-			    return ResponseData.newSuccess("发布成功！");
+			    return ResponseData.newSuccess("发布成功~");
 			}else{
-				return ResponseData.newFailure("当前用户没有执行登录操作！");
+				return ResponseData.newFailure("当前用户没有执行登录操作~");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseData.newFailure("发布失败!请稍后重试！");
+		return ResponseData.newFailure("发布失败~请稍后重试~");
 	}
 	//------------------------------------------------------------------------------------验证码-------------------------------------------------------
 	/**
@@ -444,14 +444,14 @@ public class ShareRdcController  {
 				ResponseData<String> instance = ResponseData.getInstance();
 				instance.setSuccess(true);
 				instance.setEntity(signUpCode);
-				instance.setMessage("验证码已发送到您的手机！请注意查收！");
+				instance.setMessage("验证码已发送到您的手机~请注意查收~");
 				return instance;
 			}
-			return  ResponseData.newFailure("请输入有效手机号码！！");
+			return  ResponseData.newFailure("请输入有效的手机号码~");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseData.newFailure("未知异常！");
+		return ResponseData.newFailure("未知异常~");
 	}
 	
 	

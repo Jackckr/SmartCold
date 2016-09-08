@@ -7,9 +7,9 @@
 		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
 			if(data.success){ $scope.vo=data.entity; $scope.datatype=data.entity.dataType;}
         });
-		 $http.get(ER.root + "/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
+		/* $http.get(ER.root + "/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
 			  if (data && data.id != 0) {  window.user = data; }  
-		 });
+		 });*/
 	};
 	$scope.initevg=function(){ 
 		$("#she_imglist li a").imgbox({'speedIn': 0,'speedOut'	: 0,'alignment'		: 'center','overlayShow'	: true,'allowMultiple'	: false});//图片
@@ -18,14 +18,15 @@
 		var length = ($scope.telephone+'').length; 
 		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
 		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
-		if(!ct){alert("请输入正确的手机号码哟~");return;}//需要手机验证
+		if(!ct){/*alert("请输入正确的手机号码哟~");*/layer.open({content: '请输入正确的手机号码哟~',btn: '确定'});return;}//需要手机验证
 		setTime(document.getElementById("but_vercode"));
 		$http.get(ER.root+"/i/ShareRdcController/sharvistPhone.json",  { params: {key:key,dataid:id,telephone: $scope.telephone}  }).success(function(data) {
 			if(data.success){
 				$scope.mtvarcode=data.entity;//
 				$("#but_vercode").data('vc', true);
 			}
-			alert(data.message);
+			//alert(data.message);
+			layer.open({content: data.message,btn: '确定'});
 		});
 	};
 	$scope.vertelephone=function(){//验证手机号码
@@ -72,7 +73,7 @@
 			    			  }
 			    	   }
 			    	  }); 
-			    	}else{alert("请留下手机号之后再下单");}}else{checkLogin("登陆之后才可以抢单");}
+			    	}else{/*alert("请留下手机号之后再下单")*/layer.open({content: '请留下手机号之后再下单',btn: '确定'});}}else{checkLogin("登陆之后才可以抢单");}
 	    	
     } ; 
 	$scope.initdata();

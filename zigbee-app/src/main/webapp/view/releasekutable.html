@@ -8,10 +8,12 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>发布库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
     <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
     <script type="text/javascript" src="../com/js/prettify.js" ></script>
     <script src="../bower_components/angular/angular.min.js"></script>
@@ -96,30 +98,30 @@
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
-                <li class="number">
-                    <div>冷藏车数量</div>
+                <li class="number tac">
+                	<label>冷藏车数量</label> 
                     <div>
                         <div>
                             <span><1.8T</span>
-                            <input type="text" ng-model="coldTruck1"><span>量</span>
+                            <input type="number" ng-model="coldTruck1"><span>量</span>
                         </div>
                         <div>
                         	<span>1.8T-6T</span>
-                        	<input type="text" ng-model="coldTruck2"><span>量</span>
+                        	<input type="number" ng-model="coldTruck2"><span>量</span>
                         </div>
                         <div>
                        		 <span>6T-14T</span>
-                        	 <input type="text" ng-model="coldTruck3"><span>量</span>
+                        	 <input type="number" ng-model="coldTruck3"><span>量</span>
                         </div>
                         <div>
                         	<span>>14T</span>
-                        	<input type="text" ng-model="coldTruck4"><span>量</span>
+                        	<input type="number" ng-model="coldTruck4"><span>量</span>
                         </div>
                     </div>
                 </li>
                 <li>
                     <label for="phone">联系电话<em>*</em></label>
-                    <input type="text"  ng-model="phoneNum" placeholder="请输入联系方式"/>
+                    <input type="number"  ng-model="phoneNum" placeholder="请输入联系方式"/>
                 </li>
                 <li>
                     <label for="note">备注</label>
@@ -128,21 +130,22 @@
                 
             </ul>
             <ul class="houseinfo black">
-                <li>
+              <!--   <li>
                     <label for="kg">吨位</label>                    
                     <div class="mySelect">
                         <input type="text" ng-model="tonnage">
                     </div>
-<!--                     <i class="iconfont fr moreinfo">&#xe60d;</i> -->
-                </li>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li> -->
                 <li>
-                    <label for="structure">结构</label>                    
+                    <label for="structure">建筑结构</label>                    
                     <div class="mySelect">
-                        <input type="text" ng-model="structure">
+                        <select ng-model="structure"
+                                        ng-options="x.id as x.type for x in structures"></select>
                     </div>
-<!--                     <i class="iconfont fr moreinfo">&#xe60d;</i> -->
+ 					<i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
-                <li>
+               <!--  <li>
                     <label for="deviceType">冷链设施类型</label>                    
                     <div class="mySelect">
                         <select ng-model="companyDevice"
@@ -150,9 +153,9 @@
                                         ng-options="x.id as x.type for x in companyDevices"></select>
                     </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
+                </li> -->
                 <li>
-                    <label for="moon">是否有月台</label>                    
+                    <label for="moon">是否有封闭月台</label>                    
                     <div class="mySelect">
                         <select ng-model="platform"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -160,7 +163,7 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li>
-                    <label for="cleanroom">是否有理货间</label>
+                    <label for="cleanroom">是否有理货区</label>
                     <div class="mySelect">
                         <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -200,33 +203,33 @@
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
                 <li class="number">
-                     <div>冷库容量：</div>
+                	<label style="white-space: nowrap;">冷库容量</label>
                     <div>
+					<div>
+						<span class="nowrap">12~25℃</span><input type="number"
+							ng-model="capacity1"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height1"><span class="nowrap fr">高m</span>
+					</div>
+					<div>
+						<span class="nowrap">12~-2℃</span><input type="number"
+							ng-model="capacity2"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height2"><span class="nowrap fr">高m</span>
+					</div>
                         <div>
-                            <span>12至25度</span>
-                            <input type="text" ng-model="capacity1">
-                            <span>吨</span>
-                        </div>
+						<span class="nowrap">-18~-22℃</span><input type="number"
+							ng-model="capacity3"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height3"><span class="nowrap fr">高m</span>
+					</div>
                         <div>
-                            <span>12至-2度</span>
-                            <input type="text" ng-model="capacity2">
-                            <span>吨</span>
-                        </div>
+						<span class="nowrap">-22~-30℃</span><input type="number"
+							ng-model="capacity4"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height4"><span class="nowrap fr">高m</span>
+					</div>
                         <div>
-                            <span>-18至-22度</span>
-                            <input type="text" ng-model="capacity3">
-                            <span>吨</span>
-                        </div>
-                        <div>
-                            <span>-22至-30度</span>
-                            <input type="text" ng-model="capacity4">
-                            <span>吨</span>
-                        </div>
-                        <div>
-                            <span>-30度以下</span>
-                            <input type="text" ng-model="capacity5">
-                            <span>吨</span>
-                        </div>
+						<span class="nowrap">&lt;-30℃</span><input type="number"
+							ng-model="capacity5"><span class="nowrap">面积㎡</span><input
+							type="number" ng-model="height5"><span class="nowrap fr">高m</span>
+					</div>
                         <!-- <div style="width: auto"></div> -->
                     </div>
                 </li>

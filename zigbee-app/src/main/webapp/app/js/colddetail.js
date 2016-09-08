@@ -1,7 +1,11 @@
  var id  = getUrlParam("id");//当前rdc-id数据信息
  if(id==null||id==''){
 	 	$(document.body).html("");
-	 	alert("请求内容不存在！");
+	 	layer.open({
+	 	    content: '请求内容不存在~~'
+	 	    ,btn: '确定'
+	 	  });
+	 	//alert("请求内容不存在！");
  }else{
      var app = angular.module('app', []);
      app.controller('colddetail', function($http, $location,$scope) { 
@@ -16,7 +20,13 @@
 		$scope.initdata=function(){
 	       //获得数据
 	    	$http.get(ER.root+'/i/rdc/findRDCByID', { params: {"rdcID": id}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-	    		if(data.success){$scope.vo=data.data[0]; }else{alert(data.message); }
+	    		if(data.success){$scope.vo=data.data[0]; }else{
+	    			//alert(data.message);
+	    			layer.open({
+	    		 	    content: data.message
+	    		 	    ,btn: '确定'
+	    		 	  });
+	    			}
 	    	}); 
 	        $http.get(ER.root + "/i/ShareRdcController/getSEGDList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:1}}).success(function( data) {//货品共享
 				$scope.goodList = data.data;//
@@ -41,7 +51,7 @@
 		$scope.initdata();
 		$scope.initevg();
 		$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
-			alert("22");
+			//alert("22");
 	          //下面是在table render完成后执行的js
 	          var table = $("#leaderBoard").dataTable({
 	              bJQueryUI: true,
@@ -54,7 +64,7 @@
     	        restrict: 'A',
     	        link: function(scope, element, attr) {
     	            if (scope.$last === true) {
-    	            	alert("2");
+    	            	//alert("2");
     	                $timeout(function() {
     	                    scope.$emit('ngRepeatFinished');
     	                });

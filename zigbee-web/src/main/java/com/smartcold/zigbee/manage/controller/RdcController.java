@@ -24,16 +24,15 @@ import com.smartcold.zigbee.manage.dao.RdcExtMapper;
 import com.smartcold.zigbee.manage.dao.RdcMapper;
 import com.smartcold.zigbee.manage.dao.StorageManageTypeMapper;
 import com.smartcold.zigbee.manage.dao.StorageRefregMapper;
+import com.smartcold.zigbee.manage.dao.StorageStructureTypeMapper;
 import com.smartcold.zigbee.manage.dao.StorageTemperTypeMapper;
 import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
-import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
-import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
@@ -79,6 +78,9 @@ public class RdcController {
 	@Autowired
 	private StorageRefregMapper storageRefregDao;
 
+	@Autowired
+	private StorageStructureTypeMapper storageStructureDao;
+	
 	@Autowired
 	private CompanyDeviceMapper companyDeviceDao;
 
@@ -161,6 +163,12 @@ public class RdcController {
 	public Object findAllStorageType() {
 		return storageTypeDao.findAll();
 	}
+	
+	@RequestMapping(value = "/findAllStorageStructureType", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findAllStorageStructureType() {
+		return storageStructureDao.findAll();
+	}
 
 	@RequestMapping(value = "/findAllStorageRefreg", method = RequestMethod.GET)
 	@ResponseBody
@@ -194,7 +202,6 @@ public class RdcController {
 		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
 		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
-		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
@@ -219,6 +226,7 @@ public class RdcController {
 		// 插入rdc表,返回对应的ID
 		RdcExtEntity rdcExtEntity = new RdcExtEntity();
 		rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
+		rdcExtEntity.setStoragestruct((byte)rdcAddDTO.getStructure());
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
 		rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
@@ -230,7 +238,10 @@ public class RdcController {
 		rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
 		String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
 				+ rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity4();
+		String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
+				+ rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
 		rdcExtEntity.setStoragecapacity(capacity);
+		rdcExtEntity.setStoragecapacityheight(capacityheight);
 		String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
 				+ rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
 		rdcExtEntity.setStoragetruck(truck);
@@ -240,8 +251,6 @@ public class RdcController {
 
 		rdcExtEntity.setCompanystaff((byte) 0);
 		rdcExtEntity.setStorageheight((byte) 0);
-		rdcExtEntity.setStoragestruct((byte) 0);
-
 		// 图片上传
 		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
 		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
@@ -313,7 +322,6 @@ public class RdcController {
 		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
 		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
-		rdcEntity.setStruct(URLDecoder.decode(rdcAddDTO.getStructure(), "UTF-8"));
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
@@ -337,6 +345,7 @@ public class RdcController {
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
 		rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
+		rdcExtEntity.setStoragestruct((byte)rdcAddDTO.getStructure());
 		rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
 		rdcExtEntity.setStorageislihuo((byte) rdcAddDTO.getLihuoRoom());
 		rdcExtEntity.setStoragelihuocontrol((byte) rdcAddDTO.getLihuoTemperCtr());
@@ -345,7 +354,10 @@ public class RdcController {
 		rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
 		String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
 				+ rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity4();
+		String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
+				+ rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
 		rdcExtEntity.setStoragecapacity(capacity);
+		rdcExtEntity.setStoragecapacityheight(capacityheight);
 		String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
 				+ rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
 		rdcExtEntity.setStoragetruck(truck);
@@ -464,7 +476,7 @@ public class RdcController {
 	 public ResponseData<HashMap<String, Object>> findRDCByID(Integer rdcID){
 		 if(rdcID==null){return ResponseData.newFailure("无效id");}
 		 List<HashMap<String, Object>> list = this.rdcService.findRDCById(rdcID);
-		 if (SetUtil.isnotNullList(list)) {
+		 if (SetUtil.isnotNullList(list)) { 
 			 for (HashMap<String, Object> data : list) {
 				 List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(Integer.parseInt(data.get("id").toString()), FileDataMapper.CATEGORY_STORAGE_PIC);
 				 if(SetUtil.isnotNullList(files)){

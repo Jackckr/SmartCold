@@ -79,10 +79,10 @@ public class StorageServiceImpl implements StorageService {
 		if (deviceEntity != null) {
 			return storageDataCollectionDao.findByTime(null, deviceEntity.getDeviceid(), key, startTime, endTime);
 		} else {
-			return storageKeyValueDao.findByTime(StorageType.getStorageType(type).getTable(), oid, key, startTime,
-					endTime);
+			return storageKeyValueDao.findByTime(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime);
 		}
 	}
+	
 
 	@Override
 	public Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findAnalysisByRdcidKeyDate(int rdcid,
@@ -94,5 +94,39 @@ public class StorageServiceImpl implements StorageService {
 					storage.getId(), keys, startTime, endTime));
 		}
 		return result;
+	}
+	
+	@Override
+	public List<Object> findobjByFilter(HashMap<String, Object> filter) {
+		return coldStorageSetDao.findobjByFilter(filter);
+	}
+	
+	/**
+	 * 1. SELECT * FROM `deviceObjectMapping` WHERE `type` = #{type} AND `oid` = #{oid}->deviceid
+	 * 
+	 * 2. SELECT * FROM storagedatacollection
+	    WHERE 1 =1
+	    <if test="apid != null">
+		    AND `apid` = #{apid} 
+	    </if>
+	    <if test="deviceid != null">
+		    AND `deviceid` = #{deviceid} 
+	    </if>
+	    <if test="key != null">
+		    AND `key` = #{key} 
+	    </if>
+	    AND time > #{startTime} AND time &lt; #{endTime} 
+	    ORDER BY `time` DESC	
+	 *
+	 * select * from ${table} where `key`=#{key} AND oid=#{oid} AND `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` desc
+	 * 	    select * from ${table} where `key`=#{key} AND oid=#{oid} AND `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` desc
+	 * 
+	 * 
+	 */
+	@Override
+	public List<StorageKeyValue> findStorageByFilter(HashMap<String, Object> filter) {
+  //  
+		
+     return null;
 	}
 }

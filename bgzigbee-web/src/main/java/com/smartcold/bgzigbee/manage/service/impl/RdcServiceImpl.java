@@ -145,7 +145,6 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setPhoneNum(rdcEntity.getCellphone());
             rdcAddDTO.setProvinceId(rdcEntity.getProvinceid());
             rdcAddDTO.setRemark(rdcEntity.getCommit());
-            rdcAddDTO.setStructure(rdcEntity.getStruct());
             rdcAddDTO.setTelphoneNum(rdcEntity.getPhone());
             rdcAddDTO.setTonnage(rdcEntity.getCapacity());
         }
@@ -156,6 +155,7 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setCompanyDevice(rdcExtEntity.getCompanydevice());
             rdcAddDTO.setFacility(rdcExtEntity.getFacility());
             rdcAddDTO.setLihuoArea(rdcExtEntity.getStoragelihuoarea());
+            rdcAddDTO.setStructure(rdcExtEntity.getStoragestruct());
             rdcAddDTO.setLihuoRoom(rdcExtEntity.getStorageislihuo());
             rdcAddDTO.setLihuoTemperCtr(rdcExtEntity.getStoragelihuocontrol());
             rdcAddDTO.setManageType(rdcExtEntity.getManagetype());
@@ -235,6 +235,24 @@ public class RdcServiceImpl implements RdcService {
                     rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
                 }
             }
+            String[] capacityheight = rdcExtEntity.getStoragecapacityheight().split(",");// 1:2,2:2,3:2,4:1,5:1
+            if (capacityheight.length > 0){
+                for (int i = 0; i < capacityheight.length; i++) {
+                    String[] capacityheightItem = capacityheight[i].split(":");
+                    if (capacityheightItem[0].equalsIgnoreCase("1")) {
+                        rdcAddDTO.setHeight1(Integer.parseInt(capacityheightItem[1]));
+                    } else if (capacityheightItem[0].equalsIgnoreCase("2")) {
+                        rdcAddDTO.setHeight2(Integer.parseInt(capacityheightItem[1]));
+                    } else if (capacityheightItem[0].equalsIgnoreCase("3")) {
+                        rdcAddDTO.setHeight3(Integer.parseInt(capacityheightItem[1]));
+                    } else if (capacityheightItem[0].equalsIgnoreCase("4")) {
+                        rdcAddDTO.setHeight4(Integer.parseInt(capacityheightItem[1]));
+                    } else if (capacityheightItem[0].equalsIgnoreCase("5")) {
+                        rdcAddDTO.setHeight5(Integer.parseInt(capacityheightItem[1]));
+                    }
+                }
+            }
+
 //			result.add(rdcAddDTO);
         }
 

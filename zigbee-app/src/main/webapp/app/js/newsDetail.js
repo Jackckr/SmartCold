@@ -10,7 +10,7 @@
 				}
 			}).success(function(data) {
 				$scope.informationDetail = data;
-				document.getElementById("content").innerHTML=$scope.informationDetail.content;
+				document.getElementById("infoContent").innerHTML=$scope.informationDetail.content;
 		});
 	}
 });
