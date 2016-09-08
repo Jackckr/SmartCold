@@ -6,10 +6,11 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
     Highcharts.setOptions({ global: { useUTC: false }});
-    //if (window.user.roleid == 3); 超管特殊处理
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
+            $scope.currentRdc = $scope.storages[0];
+            $scope.rdcName = $scope.storages[0].name;
             $scope.viewStorage($scope.storages[0].id);
         }
     });
@@ -22,6 +23,33 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
                 }
             }
         });
+        $(".one").show();
+        $(".two").hide();
+        $('.searchTop').hide();
+    }
+    $scope.searchRdcs = function (searchContent) {
+        // 超管特殊处理
+        if ($scope.user.roleid == 3) {
+            $http.get(ER.coldroot + '/i/rdc/searchRdc?filter=' + searchContent).success(function (data) {
+                if (data && data.length > 0) {
+                    $scope.storages = data;
+                }
+            });
+        }
+    }
+    $scope.changeRdc = function (rdc) {
+        $scope.swiper = 0;
+        clearSwiper();
+        $scope.rdcName = rdc.name;
+        $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdc.id).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.mystorages = data;
+                for (var i = 0; i < $scope.mystorages.length; i++) {
+                    $scope.load($scope.mystorages[i],false);
+                }
+            }
+        });
+        $scope.searchContent = "";
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -196,6 +224,10 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
             });
 
 //        });
+    }
+
+    function clearSwiper() {
+        $("div").remove(".swiper-slide");
     }
     
     clearInterval($rootScope.timeTicket);
