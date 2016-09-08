@@ -40,19 +40,10 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
     $scope.changeRdc = function (rdc) {
         $scope.swiper = 0;
         clearSwiper();
+        $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
-        $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdc.id).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.mystorages = data;
-                for (var i = 0; i < $scope.mystorages.length; i++) {
-                    $scope.load($scope.mystorages[i],false);
-                }
-            }
-        });
         $scope.searchContent = "";
-        $(".one").show();
-        $(".two").hide();
-        $('.searchTop').hide();
+        $scope.viewStorage(rdc.id);
     }
 
     var formatTime = function (timeString) {
