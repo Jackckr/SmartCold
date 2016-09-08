@@ -3,8 +3,13 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
+<<<<<<< HEAD
+var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+//var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+=======
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 var ER = {root:"http://192.168.1.117:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+>>>>>>> c3ff9f219c052114ec182f8565878ba6afd15f99
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
 var userjson=window.sessionStorage.getItem("user");if(userjson){window.user=JSON.parse(userjson);}/*else{checktoken();}*/
 function backDropTop(ops){$('.topFirst').hide();}
