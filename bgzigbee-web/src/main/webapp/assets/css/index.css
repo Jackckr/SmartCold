@@ -37,12 +37,16 @@ body{
 .home span,.back span{
 	width: 26px;
 	height:26px;
-	margin-top: 17px;
+	margin-top: 20px;
 	font-size: 20px;
-	line-height: 26px;
+	line-height: 24px;
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	color: #909090;
+}
+.back:hover span{
+	color:#337AB7;
+	border-color:#337AB7;
 }
 .userArea .h4{
 	margin-top:25px;
@@ -383,7 +387,7 @@ tbody tr td{
 }
 
 .minInput input{
-    text-align: right;
+    text-align: center;
     position: relative;
     margin: 0 0px;
     width: 30px;
