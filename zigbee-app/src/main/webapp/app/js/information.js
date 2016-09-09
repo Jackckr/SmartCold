@@ -1,7 +1,6 @@
 /**
  * 冷库列表
  */
-checkLogin();
 $().ready(function() { 
 	  var maxSize=10;
       var totalPages=  currentPage=  1;  // 当前页
