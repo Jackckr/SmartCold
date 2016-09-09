@@ -37,9 +37,9 @@ $().ready(function() {
    	   	         	  currentPage++; var html=[];var   newsList = data.data;//
    	   	              $.each(newsList, function(index, item) {html.push( gethtml(item)); });
    	   	              ul_select1.append(html.join(""));
-   	   	              $(".nodata").hide();
+//   	   	              $(".nodata").hide();
    	   	          }else{
-   	   	              $(".nodata").show();
+//   	   	              $(".nodata").show();
    	   	          }
    	   	     isLoadRB=false;
    		    });
@@ -56,9 +56,9 @@ $().ready(function() {
 	   	         	  currentPage++; var html=[];var   newsList = data.data;//
 	   	              $.each(newsList, function(index, item) {html.push( gethtml(item)); });
 	   	              ul_select2.append(html.join(""));
-	   	              $(".nodata").hide();
+//	   	              $(".nodata").hide();
 	   	          }else{
-	   	              $(".nodata").show();
+//	   	              $(".nodata").show();
 	   	          }
 	   	     isLoadRB=false;
 		    });
@@ -75,9 +75,9 @@ $().ready(function() {
 	   	         	  currentPage++; var html=[];var   newsList = data.data;//
 	   	              $.each(newsList, function(index, item) {html.push( gethtml(item)); });
 	   	              ul_select3.append(html.join(""));
-	   	              $(".nodata").hide();
+//	   	              $(".nodata").hide();
 	   	          }else{
-	   	              $(".nodata").show();
+//	   	              $(".nodata").show();
 	   	          }
 	   	     isLoadRB=false;
 		    });

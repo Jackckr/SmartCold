@@ -14,7 +14,6 @@
     <script src="../bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="../app/js/information.js"></script>
     <style type="text/css">	
-		
 	</style>
 </head>
 <body>
@@ -32,7 +31,7 @@
 				<ul class="clearfix">
 					<li><a href="javascript:void(0)">行业资讯</a></li>
 					<li><a href="javascript:void(0)">冷链知识</a></li>
-					<li><a href="javascript:void(0)">其他</a></li>
+					<li><a href="javascript:void(0)">关于我们</a></li>
 				</ul>
 			</div>
 			<div class="bd" id="tabBox1-bd">
@@ -40,20 +39,20 @@
 				<div class="con newsImg">
 					<!-- 高度自适应需添加外层 -->
 					<ul id="ul_newsL_list1"></ul>
-					<a id="loading" href="javascript:;" onclick="getPageData1();"></a>
+<!-- 					<a id="loading" href="javascript:;" onclick="getPageData1();"></a> -->
 				</div>
 				
 				<div class="con newsImg">
 					<!-- 高度自适应需添加外层 -->
 					 <ul id="ul_newsL_list2">
 					</ul>
-					<a id="loading" href="javascript:;" onclick="getPageData2();"></a>
+<!-- 					<a id="loading" href="javascript:;" onclick="getPageData2();"></a> -->
 				</div>
 				<div class="con newsImg">
 					<!-- 高度自适应需添加外层 -->
 					 <ul id="ul_newsL_list3">
 					</ul>
-					<a id="loading" href="javascript:;" onclick="getPageData3();"></a>
+<!-- 					<a id="loading" href="javascript:;" onclick="getPageData3();"></a> -->
 				</div>
 
 			</div>
@@ -61,9 +60,11 @@
 		<script type="text/javascript">
 		TouchSlide({ slideCell:"#tabBox1",
 			endFun:function(i){ //高度自适应
+			//alert(i);
 				var bd = document.getElementById("tabBox1-bd");
 				bd.parentNode.style.height = bd.children[i].children[0].offsetHeight+"px";
 				if(i>0)bd.parentNode.style.transition="200ms";//添加动画效果
+				if($("#ul_newsL_list"+(i+1)+" li").length==0){  $(".nodata").show();}else{$(".nodata").hide();}
 			}
 		});
 		</script>
@@ -71,7 +72,7 @@
     </article>
     <div class="nodata">
    		 <img src="../com/img/nodata.jpg" alt="" />
-    	<p>暂时没有资讯信息哦~~</p>
+    	<p>暂时没有相关资讯信息哦~~</p>
     </div>
 
     <ul class="footer">

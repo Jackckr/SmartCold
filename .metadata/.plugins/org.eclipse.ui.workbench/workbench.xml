@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="32" version="2.0">
+<workbench progressCount="59" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="52" y="52">
 <fastViewData fastViewLocation="1024">
@@ -31,7 +31,7 @@
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.css.core.csssource.source" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="com.genuitec.eclipse.webdesigner3.editors.html" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
@@ -47,22 +47,37 @@
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
+<part id="4"/>
+<part id="5"/>
+<part id="6"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="com.genuitec.eclipse.webdesigner3.editors.html" name="editStorage.html" partName="editStorage.html" path="D:/SmartCold/bgzigbee-web/src/main/webapp/app/template/editStorage.html" title="editStorage.html" tooltip="bgzigbee-web/src/main/webapp/app/template/editStorage.html" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/bgzigbee-web/src/main/webapp/app/template/editStorage.html"/>
+<editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="common.js" partName="common.js" path="D:/SmartCold/zigbee-app/src/main/webapp/com/js/common.js" title="common.js" tooltip="zigbee-app/src/main/webapp/com/js/common.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/zigbee-app/src/main/webapp/com/js/common.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1843" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.wst.css.core.csssource.source" name="index.css" partName="index.css" path="D:/SmartCold/bgzigbee-web/src/main/webapp/assets/css/index.css" title="index.css" tooltip="bgzigbee-web/src/main/webapp/assets/css/index.css" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/bgzigbee-web/src/main/webapp/assets/css/index.css"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="7228" selectionTopPixel="6552"/>
+<editor id="com.genuitec.eclipse.webdesigner3.editors.html" name="storehouse.html" partName="storehouse.html" path="D:/SmartCold/zigbee-app/src/main/webapp/view/storehouse.html" title="storehouse.html" tooltip="zigbee-app/src/main/webapp/view/storehouse.html" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/zigbee-app/src/main/webapp/view/storehouse.html"/>
 </editor>
-<editor id="com.genuitec.eclipse.webdesigner3.editors.html" name="coldStorageAuth.html" partName="coldStorageAuth.html" path="D:/SmartCold/bgzigbee-web/src/main/webapp/app/template/coldStorageAuth.html" title="coldStorageAuth.html" tooltip="bgzigbee-web/src/main/webapp/app/template/coldStorageAuth.html" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/bgzigbee-web/src/main/webapp/app/template/coldStorageAuth.html"/>
+<editor id="org.eclipse.wst.css.core.csssource.source" name="cold360.css" partName="cold360.css" path="D:/SmartCold/zigbee-app/src/main/webapp/com/css/cold360.css" title="cold360.css" tooltip="zigbee-app/src/main/webapp/com/css/cold360.css" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/zigbee-app/src/main/webapp/com/css/cold360.css"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="99" selectionTopPixel="0"/>
 </editor>
-<editor activePart="true" focus="true" id="com.genuitec.eclipse.webdesigner3.editors.html" name="coldStorageInfo.html" partName="coldStorageInfo.html" path="D:/SmartCold/bgzigbee-web/src/main/webapp/app/template/coldStorageInfo.html" title="coldStorageInfo.html" tooltip="bgzigbee-web/src/main/webapp/app/template/coldStorageInfo.html" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/bgzigbee-web/src/main/webapp/app/template/coldStorageInfo.html"/>
+<editor id="com.genuitec.eclipse.webdesigner3.editors.html" name="editkutable.html" partName="editkutable.html" path="D:/SmartCold/zigbee-app/src/main/webapp/view/editkutable.html" title="editkutable.html" tooltip="zigbee-app/src/main/webapp/view/editkutable.html" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/zigbee-app/src/main/webapp/view/editkutable.html"/>
+</editor>
+<editor activePart="true" focus="true" id="com.genuitec.eclipse.webdesigner3.editors.html" name="news.html" partName="news.html" path="D:/SmartCold/zigbee-app/src/main/webapp/view/news.html" title="news.html" tooltip="zigbee-app/src/main/webapp/view/news.html" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/zigbee-app/src/main/webapp/view/news.html"/>
+</editor>
+<editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="information.js" partName="information.js" path="D:/SmartCold/zigbee-app/src/main/webapp/app/js/information.js" title="information.js" tooltip="zigbee-app/src/main/webapp/app/js/information.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/zigbee-app/src/main/webapp/app/js/information.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="21" selectionOffset="1641" selectionTopPixel="216"/>
+</editor>
+<editor id="org.eclipse.wst.css.core.csssource.source" name="common.css" partName="common.css" path="D:/SmartCold/zigbee-app/src/main/webapp/com/css/common.css" title="common.css" tooltip="zigbee-app/src/main/webapp/com/css/common.css" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/zigbee-app/src/main/webapp/com/css/common.css"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -73,25 +88,32 @@
 <viewState/>
 </view>
 <view id="com.genuitec.javascript.debug.ui.scriptView" partName="JavaScript Scripts Inspector"/>
+<view id="org.eclipse.search.ui.views.SearchView" partName="Search">
+<viewState isPinned="false">
+<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
+<view IMemento.internal.id="org.eclipse.search.text.FileSearchResultPage" org.eclipse.search.lastActivation="1" org.eclipse.search.resultpage.layout="2" org.eclipse.search.resultpage.limit="1000" org.eclipse.search.resultpage.sorting="2"/>
+</viewState>
+</view>
 <view id="org.eclipse.ui.views.ResourceNavigator" partName="Navigator">
-<viewState LINK_NAVIGATOR_TO_EDITOR="0" sorter="1">
+<viewState LINK_NAVIGATOR_TO_EDITOR="1" sorter="1">
 <filters>
 <filter element="*.class" isEnabled="false"/>
 <filter element=".*" isEnabled="false"/>
 </filters>
 <expanded>
-<element path="/bgzigbee-web"/>
-<element path="/bgzigbee-web/src"/>
-<element path="/bgzigbee-web/src/main"/>
-<element path="/bgzigbee-web/src/main/webapp"/>
-<element path="/bgzigbee-web/src/main/webapp/app"/>
-<element path="/bgzigbee-web/src/main/webapp/app/css"/>
-<element path="/bgzigbee-web/src/main/webapp/app/template"/>
-<element path="/bgzigbee-web/src/main/webapp/assets"/>
-<element path="/bgzigbee-web/src/main/webapp/assets/css"/>
+<element path="/zigbee-app"/>
+<element path="/zigbee-app/src"/>
+<element path="/zigbee-app/src/main"/>
+<element path="/zigbee-app/src/main/webapp"/>
+<element path="/zigbee-app/src/main/webapp/app"/>
+<element path="/zigbee-app/src/main/webapp/app/js"/>
+<element path="/zigbee-app/src/main/webapp/com"/>
+<element path="/zigbee-app/src/main/webapp/com/css"/>
+<element path="/zigbee-app/src/main/webapp/com/js"/>
+<element path="/zigbee-app/src/main/webapp/view"/>
 </expanded>
 <selection>
-<element path="/bgzigbee-web/src/main/webapp/app/template/coldStorageInfo.html"/>
+<element path="/zigbee-app/src/main/webapp/view/news.html"/>
 </selection>
 </viewState>
 </view>
@@ -363,7 +385,13 @@
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <view id="org.eclipse.ui.views.ResourceNavigator"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
 <fastViewBars>
+<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@63b8ace9" orientation="256" selectedTabId="org.eclipse.search.ui.views.SearchView" style="0">
+<fastViews>
+<view id="org.eclipse.search.ui.views.SearchView" ratio="0.29903537"/>
+</fastViews>
+</fastViewBar>
 <fastViewBar fastViewLocation="131072" id="org.eclipse.debug.internal.ui.ToolsFolderView" orientation="256" selectedTabId="org.eclipse.debug.ui.VariableView" style="0">
 <fastViews>
 <view id="org.eclipse.debug.ui.VariableView" ratio="0.3"/>
@@ -373,7 +401,6 @@
 </fastViewBar>
 <fastViewBar fastViewLocation="1024" id="org.eclipse.debug.internal.ui.ConsoleFolderView" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
 <fastViews>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.5016077"/>
 <view id="org.eclipse.ui.views.TaskList" ratio="0.3"/>
 <view id="com.genuitec.javascript.debug.ui.scriptView" ratio="0.3"/>
 </fastViews>
@@ -424,7 +451,6 @@
 </info>
 <info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.944086" ratioLeft="878" ratioRight="52" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
 <folder appearance="2" expanded="2">
-<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.TaskList" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
@@ -447,10 +473,18 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@389c90cc" ratio="0.7595376" ratioLeft="1314" ratioRight="416" relationship="2" relative="org.eclipse.ui.editorss">
-<folder appearance="2" expanded="2">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@63b8ace9" ratio="0.5946237" ratioLeft="553" ratioRight="377" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6623331b" ratio="0.9483871" ratioLeft="882" ratioRight="48" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="956" ratioRight="956" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
@@ -471,141 +505,141 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/app/js/releasestorage.js"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/app/js/user_obj.js"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/com/js/common.js"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/editkutable.html"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/login.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/orderdetail.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/password.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/releasekutable.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/app/js/coldStorageAdd.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.html.core.htmlsource.source" path="/zigbee-app/src/main/webapp/view/releasekutable.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/app/js/user.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/user.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/app/js/personal.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-web/src/main/webapp/signup.html"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/releasestorage.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/zigbee-web/src/main/java/com/smartcold/zigbee/manage/controller/OrdersController.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" path="/zigbee-app/src/main/webapp/com/css/common.css"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/releasegoods.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/releasecoldtransport.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/storehouse.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.html.core.htmlsource.source" path="/zigbee-app/src/main/webapp/view/storehouse.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" path="/zigbee-app/src/main/webapp/com/css/cold360.css"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/editkutable.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/editphone.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/app/js/editphone.js"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/zigbee-web/src/main/java/com/smartcold/zigbee/manage/controller/ShareRdcController.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=bgzigbee-web/D:\/myeclipse\/Common\/binary\/com.sun.java.jdk.win32.x86_64_1.6.0.013\/jre\/lib\/rt.jar&lt;java.util.concurrent(ThreadPoolExecutor.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/newsdetail.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/index.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/bgzigbee-web/src/main/webapp/index.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" path="/bgzigbee-web/src/main/webapp/assets/css/index.css"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/bgzigbee-web/src/main/webapp/app/template/coldStorageAuth.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/bgzigbee-web/src/main/webapp/app/template/commentManage.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/bgzigbee-web/src/main/webapp/app/template/editStorage.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" path="/bgzigbee-web/src/main/webapp/assets/css/index.css"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/bgzigbee-web/src/main/webapp/app/template/coldStorageAuth.html"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/bgzigbee-web/src/main/webapp/app/template/coldStorageInfo.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" path="/zigbee-app/src/main/webapp/view/news.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/zigbee-app/src/main/webapp/app/js/information.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" path="/zigbee-app/src/main/webapp/com/css/common.css"/>
 </editors>
-<item historyLabel="login.html" index="4"/>
-<item historyLabel="orderdetail.html" index="5">
-<position info="not_deleted" x="2654" y="5"/>
+<item historyLabel="login.html" index="1"/>
+<item historyLabel="common.js" index="0">
+<position/>
 </item>
-<item historyLabel="login.html" index="4"/>
-<item historyLabel="orderdetail.html" index="5"/>
-<item historyLabel="password.html" index="6"/>
-<item historyLabel="orderdetail.html" index="5"/>
-<item historyLabel="password.html" index="6"/>
-<item historyLabel="orderdetail.html" index="5"/>
-<item historyLabel="password.html" index="6"/>
-<item historyLabel="orderdetail.html" index="5"/>
-<item historyLabel="password.html" index="6"/>
-<item historyLabel="releasestorage.html" index="7">
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="login.html" index="1"/>
+<item historyLabel="releasekutable.html" index="2"/>
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="releasekutable.html" index="4">
+<position info="not_deleted" x="1825" y="8"/>
+</item>
+<item historyLabel="coldStorageAdd.js" index="3">
+<position info="not_deleted" x="830" y="0"/>
+</item>
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="login.html" index="1"/>
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="user.js" index="5">
+<position/>
+</item>
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="user.js" index="5">
+<position info="not_deleted" x="475" y="0"/>
+</item>
+<item historyLabel="user.html" index="6"/>
+<item historyLabel="user.js" index="5">
+<position info="not_deleted" x="475" y="0"/>
+</item>
+<item historyLabel="personal.js" index="7">
+<position/>
+</item>
+<item historyLabel="user.html" index="6"/>
+<item historyLabel="user.js" index="5">
+<position info="not_deleted" x="479" y="27"/>
+</item>
+<item historyLabel="personal.js" index="7">
+<position info="not_deleted" x="385" y="12"/>
+</item>
+<item historyLabel="login.html" index="1"/>
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="login.html" index="1"/>
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="login.html" index="1"/>
+<item historyLabel="common.js" index="0">
+<position/>
+</item>
+<item historyLabel="login.html" index="1"/>
+<item historyLabel="signup.html" index="8"/>
+<item historyLabel="releasekutable.html" index="2"/>
+<item historyLabel="releasestorage.html" index="9"/>
+<item historyLabel="releasegoods.html" index="10"/>
+<item historyLabel="releasecoldtransport.html" index="11"/>
+<item historyLabel="storehouse.html" index="12">
+<position info="not_deleted" x="4768" y="0"/>
+</item>
+<item historyLabel="storehouse.html" index="13">
+<position info="not_deleted" x="4768" y="0"/>
+</item>
+<item historyLabel="cold360.css" index="14">
+<position info="not_deleted" x="99" y="0"/>
+</item>
+<item historyLabel="releasekutable.html" index="2"/>
+<item historyLabel="editkutable.html" index="15"/>
+<item historyLabel="common.js" index="0">
+<position info="not_deleted" x="2447" y="23"/>
+</item>
+<item historyLabel="common.js" index="0">
+<position info="not_deleted" x="1843" y="0"/>
+</item>
+<item historyLabel="news.html" index="16"/>
+<item historyLabel="information.js" index="17">
+<position info="not_deleted" x="600" y="0"/>
+</item>
+<item historyLabel="news.html" index="16"/>
+<item historyLabel="common.css" index="18">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="password.html" index="6"/>
-<item historyLabel="releasestorage.html" index="7"/>
-<item historyLabel="releasestorage.js" index="0">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="news.html" index="16"/>
+<item historyLabel="information.js" index="17">
+<position info="not_deleted" x="2267" y="10"/>
 </item>
-<item historyLabel="releasestorage.html" index="7"/>
-<item historyLabel="editkutable.html" index="3"/>
-<item historyLabel="OrdersController.java" index="8">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="common.js" index="0">
+<position info="not_deleted" x="1843" y="0"/>
 </item>
-<item historyLabel="OrdersController.java" index="8">
-<position info="not_deleted" x="5054" y="0"/>
+<item historyLabel="information.js" index="17">
+<position info="not_deleted" x="2267" y="10"/>
 </item>
-<item historyLabel="OrdersController.java" index="8">
-<position info="not_deleted" x="5546" y="0"/>
+<item historyLabel="news.html" index="16"/>
+<item historyLabel="information.js" index="17">
+<position info="not_deleted" x="1641" y="21"/>
 </item>
-<item historyLabel="OrdersController.java" index="8">
-<position info="not_deleted" x="6485" y="10"/>
-</item>
-<item historyLabel="orderdetail.html" index="5"/>
-<item historyLabel="OrdersController.java" index="8">
-<position info="not_deleted" x="6496" y="4"/>
-</item>
-<item historyLabel="releasestorage.html" index="7">
-<position info="not_deleted" x="6331" y="0"/>
-</item>
-<item historyLabel="common.css" index="9">
-<position info="not_deleted" x="6081" y="0"/>
-</item>
-<item historyLabel="user_obj.js" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="user_obj.js" index="1">
-<position info="not_deleted" x="1157" y="7"/>
-</item>
-<item historyLabel="editkutable.html" index="10">
-<position info="not_deleted" x="30329" y="7"/>
-</item>
-<item historyLabel="editphone.html" index="11"/>
-<item historyLabel="editphone.js" index="12">
-<position info="not_deleted" x="562" y="0"/>
-</item>
-<item historyLabel="editphone.html" index="11"/>
-<item historyLabel="common.js" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="ShareRdcController.java" index="13">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="ShareRdcController.java" index="13">
-<position info="not_deleted" x="16389" y="0"/>
-</item>
-<item historyLabel="common.js" index="2">
-<position info="not_deleted" x="1280" y="0"/>
-</item>
-<item historyLabel="ThreadPoolExecutor.class" index="14">
-<position info="not_deleted" x="36944" y="34"/>
-</item>
-<item historyLabel="common.js" index="2">
-<position info="not_deleted" x="266" y="0"/>
-</item>
-<item historyLabel="newsdetail.html" index="15"/>
-<item historyLabel="index.html" index="16"/>
-<item historyLabel="index.html" index="17"/>
-<item historyLabel="index.css" index="18">
-<position info="not_deleted" x="633" y="0"/>
-</item>
-<item historyLabel="index.html" index="17"/>
-<item historyLabel="coldStorageAuth.html" index="19"/>
-<item historyLabel="commentManage.html" index="20"/>
-<item historyLabel="editStorage.html" index="21"/>
-<item historyLabel="index.css" index="22">
-<position info="not_deleted" x="7227" y="0"/>
-</item>
-<item historyLabel="editStorage.html" index="21"/>
-<item historyLabel="index.css" index="22">
-<position info="not_deleted" x="7228" y="0"/>
-</item>
-<item historyLabel="coldStorageAuth.html" index="23"/>
-<item active="true" historyLabel="coldStorageInfo.html" index="24"/>
+<item active="true" historyLabel="news.html" index="16"/>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
-<trimArea IMemento.internal.id="16384">
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@741eb0ed"/>
-</trimArea>
 <trimArea IMemento.internal.id="131072">
 <trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.ToolsFolderView"/>
 <trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.OutlineFolderView"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@389c90cc"/>
 </trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
@@ -616,54 +650,55 @@
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@2bafd193"/>
 <trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.ConsoleFolderView"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@63b8ace9"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="coldStorageInfo.html" tooltip="bgzigbee-web/src/main/webapp/app/template/coldStorageInfo.html">
-<persistable path="/bgzigbee-web/src/main/webapp/app/template/coldStorageInfo.html"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" name="common.css" tooltip="zigbee-app/src/main/webapp/com/css/common.css">
+<persistable path="/zigbee-app/src/main/webapp/com/css/common.css"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="coldStorageAuth.html" tooltip="bgzigbee-web/src/main/webapp/app/template/coldStorageAuth.html">
-<persistable path="/bgzigbee-web/src/main/webapp/app/template/coldStorageAuth.html"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="information.js" tooltip="zigbee-app/src/main/webapp/app/js/information.js">
+<persistable path="/zigbee-app/src/main/webapp/app/js/information.js"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" name="index.css" tooltip="bgzigbee-web/src/main/webapp/assets/css/index.css">
-<persistable path="/bgzigbee-web/src/main/webapp/assets/css/index.css"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="editStorage.html" tooltip="bgzigbee-web/src/main/webapp/app/template/editStorage.html">
-<persistable path="/bgzigbee-web/src/main/webapp/app/template/editStorage.html"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="commentManage.html" tooltip="bgzigbee-web/src/main/webapp/app/template/commentManage.html">
-<persistable path="/bgzigbee-web/src/main/webapp/app/template/commentManage.html"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="index.html" tooltip="bgzigbee-web/src/main/webapp/index.html">
-<persistable path="/bgzigbee-web/src/main/webapp/index.html"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="index.html" tooltip="zigbee-app/src/main/webapp/index.html">
-<persistable path="/zigbee-app/src/main/webapp/index.html"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="newsdetail.html" tooltip="zigbee-app/src/main/webapp/view/newsdetail.html">
-<persistable path="/zigbee-app/src/main/webapp/view/newsdetail.html"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ThreadPoolExecutor.class" tooltip="java.util.concurrent.ThreadPoolExecutor">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=bgzigbee-web/D:\/myeclipse\/Common\/binary\/com.sun.java.jdk.win32.x86_64_1.6.0.013\/jre\/lib\/rt.jar&lt;java.util.concurrent(ThreadPoolExecutor.class"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ShareRdcController.java" tooltip="zigbee-web/src/main/java/com/smartcold/zigbee/manage/controller/ShareRdcController.java">
-<persistable path="/zigbee-web/src/main/java/com/smartcold/zigbee/manage/controller/ShareRdcController.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="common.js" tooltip="zigbee-app/src/main/webapp/com/js/common.js">
-<persistable path="/zigbee-app/src/main/webapp/com/js/common.js"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="editphone.js" tooltip="zigbee-app/src/main/webapp/app/js/editphone.js">
-<persistable path="/zigbee-app/src/main/webapp/app/js/editphone.js"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="editphone.html" tooltip="zigbee-app/src/main/webapp/view/editphone.html">
-<persistable path="/zigbee-app/src/main/webapp/view/editphone.html"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="news.html" tooltip="zigbee-app/src/main/webapp/view/news.html">
+<persistable path="/zigbee-app/src/main/webapp/view/news.html"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="editkutable.html" tooltip="zigbee-app/src/main/webapp/view/editkutable.html">
 <persistable path="/zigbee-app/src/main/webapp/view/editkutable.html"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="user_obj.js" tooltip="zigbee-app/src/main/webapp/app/js/user_obj.js">
-<persistable path="/zigbee-app/src/main/webapp/app/js/user_obj.js"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" name="cold360.css" tooltip="zigbee-app/src/main/webapp/com/css/cold360.css">
+<persistable path="/zigbee-app/src/main/webapp/com/css/cold360.css"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="storehouse.html" tooltip="zigbee-app/src/main/webapp/view/storehouse.html">
+<persistable path="/zigbee-app/src/main/webapp/view/storehouse.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="releasecoldtransport.html" tooltip="zigbee-app/src/main/webapp/view/releasecoldtransport.html">
+<persistable path="/zigbee-app/src/main/webapp/view/releasecoldtransport.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="releasegoods.html" tooltip="zigbee-app/src/main/webapp/view/releasegoods.html">
+<persistable path="/zigbee-app/src/main/webapp/view/releasegoods.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="releasestorage.html" tooltip="zigbee-app/src/main/webapp/view/releasestorage.html">
+<persistable path="/zigbee-app/src/main/webapp/view/releasestorage.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="signup.html" tooltip="zigbee-web/src/main/webapp/signup.html">
+<persistable path="/zigbee-web/src/main/webapp/signup.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="personal.js" tooltip="zigbee-app/src/main/webapp/app/js/personal.js">
+<persistable path="/zigbee-app/src/main/webapp/app/js/personal.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="user.html" tooltip="zigbee-app/src/main/webapp/view/user.html">
+<persistable path="/zigbee-app/src/main/webapp/view/user.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="user.js" tooltip="zigbee-app/src/main/webapp/app/js/user.js">
+<persistable path="/zigbee-app/src/main/webapp/app/js/user.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="coldStorageAdd.js" tooltip="zigbee-app/src/main/webapp/app/js/coldStorageAdd.js">
+<persistable path="/zigbee-app/src/main/webapp/app/js/coldStorageAdd.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.genuitec.eclipse.webdesigner3.editors.html" name="releasekutable.html" tooltip="zigbee-app/src/main/webapp/view/releasekutable.html">
+<persistable path="/zigbee-app/src/main/webapp/view/releasekutable.html"/>
 </file>
 </mruList>
 </workbench>
