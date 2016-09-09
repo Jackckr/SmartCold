@@ -9,7 +9,7 @@
     </title>
     <link rel="stylesheet" href="assets/css/bootstrap.css"/>
     <link rel="stylesheet" href="assets/css/signin.css">
-    <link rel="stylesheet" href="assets/css/homenewlayout.css"/>
+    <link rel="stylesheet" href="assets/css/homenewlayout.css"/>>
 	<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 </head>
 <body class="home-layout ">
