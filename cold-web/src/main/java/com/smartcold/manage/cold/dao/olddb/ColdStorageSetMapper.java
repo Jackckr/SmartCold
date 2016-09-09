@@ -1,11 +1,10 @@
 package com.smartcold.manage.cold.dao.olddb;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Author: qiunian.sun
@@ -14,8 +13,6 @@ import java.util.List;
 public interface ColdStorageSetMapper {
     
     List<ColdStorageSetEntity> findAllColdStorage();
-    
-    List<Object> findobjByFilter(HashMap<String, Object> filter);
     
     List<ColdStorageSetEntity> findByRdcId(@Param("rdcId") int rdcId);
     

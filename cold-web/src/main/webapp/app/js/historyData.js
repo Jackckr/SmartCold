@@ -53,8 +53,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
                 data:{type:$scope.sl_type,oids:$scope.oidlist,onames: $scope.oldnames,key:$scope.sl_key,startTime:$scope.begin,endTime:$scope.end},//
                 success: function(data) {
                     if(data.success){
-                    	
-//                    	$scope.drawDataLine()
+                    	$scope.drawDataLine(data.entity);
 //                      alert('消息',msg+'成功！','info');
                    }else{
 //                    	alert('消息',msg+'失败！','error');

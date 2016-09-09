@@ -125,7 +125,7 @@ public class BaseInfoController extends BaseController {
 	
 	@RequestMapping("/getKeyValueDataByFilter")
 	@ResponseBody
-	public ResponseData<Object> getKeyValueDataByFilter(Integer type,String key,Integer[] oids,String[] onames, String startTime,String endTime){
+	public ResponseData<HashMap<String, Object>> getKeyValueDataByFilter(Integer type,String key,Integer[] oids,String[] onames, String startTime,String endTime){
 		try {
 			System.err.println(type+"/"+key+"/"+oids+"/"+onames+"/"+startTime+"/"+endTime);
 			if(key!=null&&key!=""){
@@ -141,20 +141,23 @@ public class BaseInfoController extends BaseController {
 			        	HashMap<String, Object> linmap=new HashMap<String, Object>();
 			             int oid=	oids[i];String oname=onames[i];		        
 			        	 List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
-			        	 if(datalist.size()>maxsize){ index=i; };
+			        	 if(datalist.size()>maxsize){ index=oid; };
 			        	 linmap.put("type", "line");
 			        	 linmap.put("data", datalist);
 			        	 linmap.put("name", oname);
 			        	 restList.add(linmap);
 					}
-			        
+			        if(index!=-1){
+			        	List<Object> findobjByFilter = storageService.findobjByFilter(type, index, key,"time", sttime, edTime);
+			        	restData.put("xData", findobjByFilter);
+			        }
 			        restData.put("ydata", restList);
-//			        restData.put("xData", value);
+			        return ResponseData.newSuccess(restData);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseData.newSuccess();
+		return ResponseData.newFailure();
 	}
 
 }

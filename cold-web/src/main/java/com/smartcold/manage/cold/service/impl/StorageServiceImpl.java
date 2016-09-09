@@ -97,8 +97,15 @@ public class StorageServiceImpl implements StorageService {
 	}
 	
 	@Override
-	public List<Object> findobjByFilter(HashMap<String, Object> filter) {
-		return coldStorageSetDao.findobjByFilter(filter);
+	public List<Object> findobjByFilter(int type, int oid, String key, String colm,Date startTime, Date endTime) {
+		HashMap<String,Object> filter=new HashMap<String, Object>();
+		filter.put("type", type);
+		filter.put("oid", oid);
+		filter.put("key", key);
+		filter.put("colm", colm);
+		filter.put("startTime", startTime);
+		filter.put("endTime", endTime);
+		return storageDataCollectionDao.findobjByFilter(filter);
 	}
 	
 	/**

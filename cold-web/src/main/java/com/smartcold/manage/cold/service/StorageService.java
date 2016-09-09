@@ -14,7 +14,7 @@ public interface StorageService {
 
 	List<ColdStorageSetEntity> findByUserId(int userId);
 
-    List<Object> findobjByFilter(HashMap<String, Object> filter);
+    List<Object> findobjByFilter(int type, int oid, String key, String colm,Date startTime, Date endTime);
  
 	List<StorageKeyValue> findStorageByFilter(HashMap<String, Object> filter);
 	
