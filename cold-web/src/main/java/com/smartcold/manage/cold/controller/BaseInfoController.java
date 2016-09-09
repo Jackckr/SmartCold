@@ -1,14 +1,12 @@
 package com.smartcold.manage.cold.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.smartcold.manage.cold.dao.newdb.*;
-import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
-import com.smartcold.manage.cold.enums.StorageType;
-import com.smartcold.manage.cold.service.GoodsService;
-import com.smartcold.manage.cold.service.StorageService;
-import com.smartcold.manage.cold.util.ResponseData;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.smartcold.manage.cold.dao.newdb.PackMapper;
+import com.smartcold.manage.cold.dao.newdb.UsageMapper;
+import com.smartcold.manage.cold.dao.newdb.WallMaterialMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.service.GoodsService;
+import com.smartcold.manage.cold.service.StorageService;
+import com.smartcold.manage.cold.util.ResponseData;
 
 @Controller
 @RequestMapping(value = "/baseInfo")
@@ -40,6 +42,8 @@ public class BaseInfoController extends BaseController {
 	
 	@Autowired
 	private StorageService storageService;
+	
+	SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");  
 
 	@RequestMapping(value = "/findAllGoods", method = RequestMethod.GET)
 	@ResponseBody
@@ -92,9 +96,8 @@ public class BaseInfoController extends BaseController {
     public  int daysBetween(Date smdate,Date bdate) 
     {    
         try {
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
-			smdate=sdf.parse(sdf.format(smdate));  
-			bdate=sdf.parse(sdf.format(bdate));  
+			smdate=dateFormat.parse(dateFormat.format(smdate));  
+			bdate=dateFormat.parse(dateFormat.format(bdate));  
 			Calendar cal = Calendar.getInstance();    
 			cal.setTime(smdate);    
 			long time1 = cal.getTimeInMillis();                 
@@ -135,21 +138,27 @@ public class BaseInfoController extends BaseController {
 			        String groupfm=getDateFormat(daysBetween(sttime, edTime));
 			        System.err.println(groupfm);
 			        HashMap<String,Object> restData=new HashMap<String, Object>();
-			        List<Object> restList=new ArrayList<Object>();
-			        int maxsize=0;int index=-1;
+			        LinkedList<HashMap<String, Object>> restList=new LinkedList<HashMap<String, Object>>();
+			         LinkedList<List<StorageKeyValue>> xtemp=new LinkedList<List<StorageKeyValue>>();
+			        int maxsize=0,index=-1;
 			        for (int i = 0; i < oids.length; i++) {
 			        	HashMap<String, Object> linmap=new HashMap<String, Object>();
 			             int oid=	oids[i];String oname=onames[i];		        
 			        	 List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
-			        	 if(datalist.size()>maxsize){ index=oid; };
+			        	 if(datalist.size()>maxsize){ index=i; };
 			        	 linmap.put("type", "line");
 			        	 linmap.put("data", datalist);
 			        	 linmap.put("name", oname);
+			        	 xtemp.add(datalist);
 			        	 restList.add(linmap);
 					}
 			        if(index!=-1){
-			        	List<Object> findobjByFilter = storageService.findobjByFilter(type, index, key,"time", sttime, edTime);
-			        	restData.put("xData", findobjByFilter);
+			        	List<StorageKeyValue> list = xtemp.get(index);
+			        	String [] xdt=new String[list.size()];
+			        	for (int i = 0; i < list.size(); i++) {
+			        		xdt[i]=dateFormat.format( list.get(i).getAddtime());
+						}
+			        	restData.put("xdata", xdt);
 			        }
 			        restData.put("ydata", restList);
 			        return ResponseData.newSuccess(restData);

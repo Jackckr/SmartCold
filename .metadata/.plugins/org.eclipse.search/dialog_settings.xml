@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="">
-		<item value="TRUE" key="org.eclipse.wst.jsdt.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
+	</section>
+	<section name="">
+		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
+		<item value="TRUE" key="org.eclipse.wst.jsdt.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.wst.jsdt.search.resultpage.limit"/>
 	</section>
 	<section name="DialogBounds_SearchDialog">
 		<item value="1039" key="DIALOG_WIDTH"/>
 		<item value="308" key="DIALOG_Y_ORIGIN"/>
-		<item value="501" key="DIALOG_HEIGHT"/>
 		<item value="449" key="DIALOG_X_ORIGIN"/>
+		<item value="501" key="DIALOG_HEIGHT"/>
 		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|0|3|2|1|34|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="Search">
@@ -46,7 +49,7 @@
 		<item value="12" key="HISTORY_SIZE"/>
 		<section name="HISTORY11">
 			<item value="false" key="isRegExSearch"/>
-			<item value="&lt;script type=&quot;text/javascript&quot; src=&quot;../app/js/personal.js&quot;&gt;&lt;/script&gt;" key="textPattern"/>
+			<item value="colddetail.js" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -61,7 +64,7 @@
 		</section>
 		<section name="HISTORY10">
 			<item value="false" key="isRegExSearch"/>
-			<item value="personal.js" key="textPattern"/>
+			<item value="findPassword.js" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -72,7 +75,7 @@
 		</section>
 		<section name="HISTORY9">
 			<item value="false" key="isRegExSearch"/>
-			<item value="colddetail.js" key="textPattern"/>
+			<item value="lianku_common.js" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -83,7 +86,7 @@
 		</section>
 		<section name="HISTORY8">
 			<item value="false" key="isRegExSearch"/>
-			<item value="findPassword.js" key="textPattern"/>
+			<item value="user_obj.js" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -94,7 +97,7 @@
 		</section>
 		<section name="HISTORY5">
 			<item value="false" key="isRegExSearch"/>
-			<item value="editphone.js" key="textPattern"/>
+			<item value="storehousedetail.js" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -105,7 +108,7 @@
 		</section>
 		<section name="HISTORY4">
 			<item value="false" key="isRegExSearch"/>
-			<item value="setTime" key="textPattern"/>
+			<item value="alert" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -116,7 +119,7 @@
 		</section>
 		<section name="HISTORY7">
 			<item value="false" key="isRegExSearch"/>
-			<item value="lianku_common.js" key="textPattern"/>
+			<item value="editphone.js" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -127,7 +130,7 @@
 		</section>
 		<section name="HISTORY6">
 			<item value="false" key="isRegExSearch"/>
-			<item value="user_obj.js" key="textPattern"/>
+			<item value="setTime" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -138,7 +141,7 @@
 		</section>
 		<section name="HISTORY2">
 			<item value="false" key="isRegExSearch"/>
-			<item value="alert" key="textPattern"/>
+			<item value="请输入有效手机号码" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -149,7 +152,7 @@
 		</section>
 		<section name="HISTORY3">
 			<item value="false" key="isRegExSearch"/>
-			<item value="storehousedetail.js" key="textPattern"/>
+			<item value="confirm" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -160,7 +163,7 @@
 		</section>
 		<section name="HISTORY0">
 			<item value="false" key="isRegExSearch"/>
-			<item value="请输入有效手机号码" key="textPattern"/>
+			<item value="sessionStorage" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -171,7 +174,7 @@
 		</section>
 		<section name="HISTORY1">
 			<item value="false" key="isRegExSearch"/>
-			<item value="confirm" key="textPattern"/>
+			<item value="checktoken" key="textPattern"/>
 			<item value="0" key="scope"/>
 			<item value="true" key="ignoreCase"/>
 			<list key="fileNamePatterns">
@@ -181,11 +184,11 @@
 			</list>
 		</section>
 	</section>
+	<section name="SearchDialog.ScopePart">
+		<item value="0" key="scope"/>
+	</section>
 	<section name="org.eclipse.wst.jsdt.ui.JavaSearchResultPage">
 		<item value="TRUE" key="org.eclipse.wst.jsdt.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.wst.jsdt.search.resultpage.limit"/>
-	</section>
-	<section name="SearchDialog.ScopePart">
-		<item value="0" key="scope"/>
 	</section>
 </section>
