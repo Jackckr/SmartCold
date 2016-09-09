@@ -4,7 +4,7 @@
 			$http.get(ER.root+'/i/user/logout');
            	$scope.user=window.user  = null;
            	util.delCookie("token");
-           	window.sessionStorage.removeItem("user");
+           	window.localStorage.lkuser=null;
            	gohome();
      };
 	$scope.initdata=function(){

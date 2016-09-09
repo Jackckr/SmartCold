@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/login.css">
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script type="text/javascript">$.ajax({type:"POST",cache:false,async:false,data:{token:util.getCookie("token")},dataType:"json",url:ER.root+"/i/user/findUser",xhrFields: { withCredentials: true },success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
+</head>
+<body>
+ 		<header>	    		
+        	<div class="area fl">
+        		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+        	</div>
+        	<!--<div class="zoom fr">
+        		<a href="search.html"><i class="iconfont">&#xe62f;</i></a>
+        	</div>-->
+        	<div class="txt">
+        		登录
+        	</div>
+	    </header>
+    <div class="login">
+    	<div class="inputBd">
+    		<i class="iconfont">&#xe6be;</i>
+    		<input id="username" type="text" name="username"  value="" placeholder="手机号"/>
+    	</div>
+    	<div class="inputBd">
+    		<i class="iconfont">&#xe6c1;</i>
+    		<input id="password" type="password" name="password"  value="" placeholder="密码"/>
+    	</div>
+		 <div class="warnInfo">
+		    <a hidden=true id="mention"></a>
+	     </div>
+		<button id="btn_login" class="mybtn" type="button" onclick="login();">登录</button>
+		<div class="register">
+			<div class="fl"><a href="findpasswordfir.html">找回密码</a></div>
+			<div class="fr"><a href="register.html">新用户注册</a></div>
+		</div>
+    </div>
+	<footer>
+		<div class="line"><span>或</span></div>
+		<div class="three">
+			<div><a href="javascript:;"><i class="iconfont">&#xe707;</i></a></div>
+			<div><a href="javascript:;"><i class="iconfont">&#xe6bf;</i></a></div>
+			<div><a href="javascript:;"><i class="iconfont">&#xe6c0;</i></a></div>
+		</div>
+	</footer>
+	<script  type="text/javascript">
+	if(!navigator.cookieEnabled){ /* alert("请打开手机Cookie"); */layer.open({content: '请打开手机Cookie~',btn: '确定'});}
+	$("#username").val(util.getCookie("username"));
+	function login() {
+	    var me = "#btn_login";
+	    if ($(me).data('isLoading') === true) return; //防止再次点击登录
+	    showErrorInfo("");
+	    userName = $("#username").val();
+	    password = $("#password").val();
+	    if (userName == '') {
+	        showErrorInfo("用户名不能为空~");
+	        return;
+	    } else if (password == '') {
+	        showErrorInfo("密码不能为空~");
+	        return;
+	    }
+	    $(me).text("登录中...");
+	    $(me).data('isLoading', true);
+	       $.ajax({
+				type : "POST",
+				dataType : "json",
+				url : ER.root+"/i/user/login",
+				data : {userName : userName,password : password},
+				complete : function(e){$(me).text("登录"); $(me).delay(500).data('isLoading',false);},
+				success : function(data) {
+					if (data.success) {
+					$.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:toke}, url:ER.root + "/i/user/findUser",success:function(data) {if (data && data.id != 0) {
+						window.user = data;
+						util.setCookie("username",userName,"d7");
+						window.localStorage.lkuser=JSON.stringify(data);
+						util.setCookie("username",userName,"d7");
+						util.setCookie("token",data.message.substr(6),"d7");
+//                         document.cookie = data.message;
+						if (window.location.hash != "") {
+							backUrl = window.location.hash.substring(1);
+						} else {
+							backUrl = "../index.html";
+						}
+						window.location.href = backUrl;
+						window.Event.returnValue = false;
+					} else {
+						window.user = null;
+						window.localStorage.lkuser=null;
+						 $("#mention")[0].hidden = false;
+						 showErrorInfo("服务异常！请联系管理员！");
+					}} });
+// 					    checktoken();//检查token
+// 						util.setCookie("username",userName,"d7");
+// 						util.setCookie("token",data.message.substr(6),"d7");
+//                         document.cookie = data.message;
+// 						if (window.location.hash != "") {
+// 							backUrl = window.location.hash.substring(1);
+// 						} else {
+// 							backUrl = "../index.html";
+// 						}
+// 						window.location.href = backUrl;
+// 						window.Event.returnValue = false;
+					} else {
+					    $("#mention")[0].hidden = false;
+						showErrorInfo(data.message);
+					}
+				}
+			});
+	};
+	
+$.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:toke}, url:ER.root + "/i/user/findUser",success:function(data) {if (data && data.id != 0) {
+	window.user = data;
+	window.localStorage.lkuser=JSON.stringify(data);
+} else {
+	window.user = null;
+	window.localStorage.lkuser=null;
+	}} });
+	
+</script>
+</body>
+</html>

@@ -82,10 +82,14 @@
 				complete : function(e){$(me).text("登录"); $(me).delay(500).data('isLoading',false);},
 				success : function(data) {
 					if (data.success) {
-					    checktoken();//检查token
+					var token=data.message.substr(6);
+					  $.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:token}, url:ER.root + "/i/user/findUser",success:function(userdata) {if (userdata && userdata.id != 0) {
+						window.user = userdata;
 						util.setCookie("username",userName,"d7");
-						util.setCookie("token",data.message.substr(6),"d7");
-                        document.cookie = data.message;
+						window.localStorage.lkuser=JSON.stringify(userdata);
+						util.setCookie("username",userName,"d7");
+						util.setCookie("token",token,"d7");
+//                         document.cookie = data.message;
 						if (window.location.hash != "") {
 							backUrl = window.location.hash.substring(1);
 						} else {
@@ -94,12 +98,31 @@
 						window.location.href = backUrl;
 						window.Event.returnValue = false;
 					} else {
+						window.user = null;
+						window.localStorage.lkuser=null;
+						 $("#mention")[0].hidden = false;
+						 showErrorInfo("服务异常！请联系管理员！");
+					}} });
+// 					    checktoken();//检查token
+// 						util.setCookie("username",userName,"d7");
+// 						util.setCookie("token",data.message.substr(6),"d7");
+//                         document.cookie = data.message;
+// 						if (window.location.hash != "") {
+// 							backUrl = window.location.hash.substring(1);
+// 						} else {
+// 							backUrl = "../index.html";
+// 						}
+// 						window.location.href = backUrl;
+// 						window.Event.returnValue = false;
+					} else {
 					    $("#mention")[0].hidden = false;
 						showErrorInfo(data.message);
 					}
 				}
 			});
 	};
+
+	
 </script>
 </body>
 </html>

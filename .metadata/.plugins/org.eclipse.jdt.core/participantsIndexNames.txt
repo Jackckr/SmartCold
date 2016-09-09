@@ -1,0 +1,3 @@
+INDEX VERSION 1.126
+D:\SmartCold\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2121908937.index
+\bgzigbee-web\src\main\java

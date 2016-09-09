@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <!--  <meta http-equiv="refresh" content="10"> -->
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>修改库</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
+    <script type="text/javascript" src="../com/js/prettify.js" ></script>
+</head>
+<body ng-app="app" ng-cloak>
+    <!-- header -->
+        <header>
+        	
+            <div class="area fl">
+                <a  onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+            </div>
+            <div class="txt">修改库</div>
+        </header>
+    <!-- header end-->
+    <section class="main">
+        <form ng-controller="coldStorageEdit" name="rdcForm">
+            <ul class="houseinfo">
+                <li>
+                    <label for="name">名称<em>*</em></label>
+                    <input type="text" ng-model="name" ng-disabled="editable" name="name"
+                                   ng-remote-validate="http://liankur.com/i/rdc/checkName"
+                                   ng-remote-method="GET">
+                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;display: none;">冷库名已被用</em>
+                </li>
+                <li>
+                    <label for="province">省<em>*</em></label>
+                    <div class="mySelect">
+                         <select ng-model="provinceId"  ng-change="provinceSelected(provinceId)"  ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>                    
+                </li>
+                <li>
+                    <label for="city">市<em>*</em></label>
+                    <div class="mySelect">
+                        <select ng-model="cityId" ng-change="citySelected(cityId)" ng-options="x.cityID as x.cityName for x in citys"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="geographic">地理位置<em>*</em></label>
+                    <input type="text"  ng-model="address" />
+                </li>
+                <li>
+                    <label for="area">面积<em>*</em></label>
+                    <input type="text"  ng-model="area" placeholder="冷库面积(㎡)" />
+                </li>
+                <li>
+                    <label for="operateType">冷库经营类型<em>*</em></label>                    
+                    <div class="mySelect">
+                        <select ng-model="manageType"
+                                    ng-change="ManageTypeSelected(manageType)"
+                                    ng-options="x.id as x.type for x in manageTypes"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="storageType">商品存放类型<em>*</em></label>                    
+                    <div class="mySelect">
+                        <select ng-model="storageType"
+                                    ng-change="StorageTypeSelected(storageType)"
+                                    ng-options="x.id as x.type for x in storageTypes"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="temperatureType">冷库温度类型<em>*</em></label>                    
+                    <div class="mySelect">
+                        <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li class="number tac">
+                    <label>冷藏车数量</label>
+                    <div>
+                        <div><span><1.8T</span><input type="number" ng-model="coldTruck1"><span>量</span></div>
+                        <div><span>1.8T-6T</span><input type="number" ng-model="coldTruck2"><span>量</span></div>
+                        <div><span>6T-14T</span><input type="number" ng-model="coldTruck3"><span>量</span></div>
+                        <div><span>>14T</span><input type="number" ng-model="coldTruck4"><span>量</span></div>
+                    </div>
+                </li>
+                <li>
+                    <label for="phone">联系电话<em>*</em></label>
+                    <input type="number"  ng-model="phoneNum"/>
+                </li>
+                <li>
+                    <label for="note">备注</label>
+                    <input type="text"  ng-model="remark"/>
+                </li>
+                
+            </ul>
+            <ul class="houseinfo black">
+                <!-- <li>
+                    <label for="kg">吨位</label>                    
+                    <div class="mySelect">
+                        <input type="text" ng-model="tonnage">
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li> -->
+                <li>
+                    <label for="structure">建筑结构</label>                    
+                    <div class="mySelect">
+                        <select ng-model="structure"
+                                        ng-options="x.id as x.type for x in structures"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <!-- <li>
+                    <label for="deviceType">冷链设施类型</label>                    
+                    <div class="mySelect">
+                        <select ng-model="companyDevice"
+                                        ng-change="CompanyDeviceSelected(companyDevice)"
+                                        ng-options="x.id as x.type for x in companyDevices"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li> -->
+                <li>
+                    <label for="moon">是否有封闭月台</label>                    
+                    <div class="mySelect">
+                        <select ng-model="platform"
+                                        ng-options="x.id as x.name for x in haveOrNots"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="cleanroom">是否有理货区</label>
+                    <div class="mySelect">
+                        <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
+                                        ng-options="x.id as x.name for x in haveOrNots"></select>
+                     </div>  
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>                 
+                </li>
+                <li>
+                    <label for="cleanarea">理货区面积</label>                    
+                    <div class="mySelect">
+                        <input type="text" ng-model="lihuoArea">
+                    </div>
+                    <!--<i class="iconfont fr moreinfo">&#xe60d;</i>-->
+                </li>
+                <li>
+                    <label for="temperatureTypeCtr">有无温控</label>                    
+                    <div class="mySelect">
+                        <select ng-model="lihuoTemperCtr"
+                                        ng-options="x.id as x.name for x in haveOrNots"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="cryogen">制冷剂类型</label>                    
+                    <div class="mySelect">
+                        <select ng-model="storageRefreg"
+                                        ng-change="StorageRefregSelected(storageRefreg)"
+                                        ng-options="x.id as x.type for x in storageRefregs"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="temperatureRecord">有无温度记录</label>                    
+                    <div class="mySelect">
+                        <select ng-model="temperRecord"
+                                        ng-options="x.id as x.name for x in haveOrNots"></select>
+                    </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li class="number">
+                     <label>冷库容积</label>
+                    <div>
+                        <div>
+							<span class="nowrap">12~25℃</span><input type="number" ng-model="capacity1"><span class="nowrap">面积㎡</span><input type="number" ng-model="height1"><span class="nowrap fr">高m</span>
+						</div>
+                        <div>
+							<span class="nowrap">12~-2℃</span><input type="number" ng-model="capacity2"><span class="nowrap">面积㎡</span><input type="number" ng-model="height2"><span class="nowrap fr">高m</span>
+						</div>
+                        <div>
+                            <span class="nowrap">-18~-22℃</span><input type="number" ng-model="capacity3"><span class="nowrap">面积㎡</span><input type="number" ng-model="height3"><span class="nowrap fr">高m</span>
+                        </div>
+                        <div>
+                            <span class="nowrap">-22~-30℃</span><input type="number" ng-model="capacity4"><span class="nowrap">面积㎡</span><input type="number" ng-model="height4"><span class="nowrap fr">高m</span>
+                        </div>
+                        <div>
+                            <span class="nowrap">&lt;-30℃</span><input type="number" ng-model="capacity5"><span class="nowrap">面积㎡</span><input type="number" ng-model="height5"><span class="nowrap fr">高m</span>
+                        </div>
+                        <!-- <div style="width: auto"></div> -->
+                    </div>
+                </li>
+                <li>
+                    <label>周边设施：</label>
+                    <div class="mySelect">
+                        <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
+                    </div>
+                </li>
+                 <li style="border:0;">
+                    <label>资质荣誉图：
+                             <small class="text-warning" style="width: 100px">*最多八张</small>
+                             <label class="pic">
+		    					<input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"  ngf-multiple="true" name="honorfiles" accept="image/png,image/gif,image/jpeg">
+						    </label>
+                             </label>                 
+                </li>
+                <li class="clearfix">
+                   <div class="form-group" ng-if="honorPicShow.length>0">
+                            <div class="pull-left" ng-repeat="item in honorPicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%"  />
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deleteHonorPic(item)"></i>
+                            </div>
+                    </div>
+                     <div class="form-group" ng-if="totalhonorfiles.length>0">
+                            <div class="pull-left" ng-repeat="honorfile in totalhonorfiles" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ngf-src="honorfile" style="width:100%;height:100%"  alt="{{honorfile.name}}" title="{{honorfile.name}}"/>
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="drophonor(honorfile)"></i>
+                            </div>
+                    </div>
+                </li>
+                <li class="clearfix">
+                    <label>功能平面布置图：
+                        <label class="pic">
+		    				<input type="file" ng-model="arrangePic" name="arrangePic"  accept="image/png,image/gif,image/jpeg" ngf-select="addArrangePic($files)">
+						 </label>
+                    </label>
+                    <div class="form-group rdc" ng-if="arrangePicShow != null && newarrangePic==null">
+                        <label class="col-sm-4 control-label"></label>
+                        <div class="" style="padding:5px;position:relative;display:inline-block">
+                            <img style="width: 86px;" ng-src="{{arrangePicShow.location}}"  />
+                            <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletecarrangePic(arrangePicShow)" ></i>
+                        </div>
+                     </div>
+                     <div class="form-group" ng-if="newarrangePic!=null&&newarrangePic.length>0">
+                            <div class="pull-left" ng-repeat="file in newarrangePic" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ngf-src="file" style="width:100%;height:100%"  alt="{{file.name}}" title="{{file.name}}"/>
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="dropcutt(file)"></i>
+                            </div>
+                    </div>
+                     
+                </li>
+                <li style="border:0;">
+                    <label>冷库图片：
+                        <small class="text-warning" style="width: 100px">*最多五张</small>
+                        <label class="pic">
+		    				<input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files" accept="image/png,image/gif,image/jpeg" >
+						</label>
+                    </label>
+                      
+                </li>
+                <li class="clearfix">
+                     <div class="form-group" ng-if="storagePicShow.length>0">
+                            <div class="pull-left" ng-repeat="item in storagePicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ng-src="{{item.location}}" style="width:100%;height:100%" ng-click="goPicDetail(item)" alt="" />
+                                <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(item)"></i>
+                            </div>
+                      </div>
+                       <div class="form-group" ng-if="totalfiles.length>0">
+                            <div class="pull-left" ng-repeat="file in totalfiles" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                                <img ngf-src="file" style="width:100%;height:100%"  alt="{{file.name}}" title="{{file.name}}"/>
+                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="drop(file)"></i>
+                        </div>
+                    </div>
+                </li>
+             </ul>
+            <!--双箭头下拉-->
+            <div class="next"><i class="iconfont">&#xe649;</i></div>
+            <button class="mybtn" ng-click="submit()">提交</button>
+        </form>
+    </section>
+
+    <ul class="footer">
+        <li>           
+            <a href="../index.html">
+                <i class="iconfont">&#xe65a;</i>
+                <p class="info">首页</p>
+            </a>
+        </li>
+        <li>          
+             <a href="news.html">
+                <i class="iconfont">&#xe6f8;</i>
+                <p class="info">资讯</p>
+            </a>
+        </li>
+        <li>            
+            <a href="messages.html">
+                <i class="iconfont">&#xe71c;</i>
+                <p class="info">消息</p>
+            </a>
+        </li>
+        <li class="active">            
+            <a href="user.html">
+                <i class="iconfont">&#xe6fd;</i>
+                <p class="info">我的</p>
+            </a>
+        </li>
+    </ul>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../bower_components/ng-remote-validate/release/ngRemoteValidate.0.6.1.min.js"></script>
+<script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+<script type="text/javascript">
+checkLogin();
+ var app = angular.module("app", ["remoteValidation","ngFileUpload"]);
+ app.controller("coldStorageEdit", function ($scope,$http, Upload) {
+    $scope.editable = true;
+    $scope.isDisabled = false;
+    $scope.totalfiles = [];
+    $scope.totalhonorfiles = [];
+    $scope.haveOrNots = [{id: 0,name: "无"},{ id: 1,name: "有"}];
+    // 获取省列表
+    $http.get(ER.root+"/i/city/findProvinceList").success(function (data) {
+        $scope.provinces = data;
+    });
+
+    // 根据省ID查询城市列表
+    $scope.provinceSelected = function () {
+        $http.get(ER.root+"/i/city/findCitysByProvinceId", {params: {"provinceID": $scope.provinceId} }).success(function (data) {
+            $scope.citys = data;
+            $scope.cityId = data[0].cityID;
+        });
+    };
+
+    $scope.citySelected = function () {
+    };
+
+    // 获取冷库经营类型
+    $http.get(ER.root+"/i/rdc/findAllManageType").success(function (data) {
+        $scope.manageTypes = data;
+        $scope.manageType = data[0].id;
+    });
+
+    $scope.ManageTypeSelected = function () {
+    };
+
+// 获取冷库结构类型
+    $http.get(ER.root+"/i/rdc/findAllStorageStructureType").success(function (data) {
+        $scope.structures = data;
+        $scope.structure = data[0].id;
+    });
+    // 获取商品存放类型
+    $http.get(ER.root+"/i/rdc/findAllTemperType").success(function (data) {
+        $scope.temperTypes = data;
+        $scope.temperType = data[0].id;
+    });
+
+    $scope.TemperTypeSelected = function () {
+    };
+
+    // 获取冷库温度类型
+    $http.get(ER.root+"/i/rdc/findAllStorageType").success(function (data) {
+        $scope.storageTypes = data;
+        $scope.storageType = data[0].id;
+    });
+
+    $scope.StorageTypeSelected = function () {
+    };
+
+    $scope.moreInfos = true;
+
+    $scope.addMore = function () {
+        $scope.moreInfos = !$scope.moreInfos;
+    };
+
+   /*  // 获取冷链设施类型
+    $http.get(ER.root+"/i/rdc/findAllCompanyDevice").success(function (data) {
+        $scope.companyDevices = data;
+        $scope.companyDevice = data[0].id;
+    }); */
+
+    $scope.CompanyDeviceSelected = function () {
+    };
+
+    // 制冷剂类型
+    $http.get(ER.root+"/i/rdc/findAllStorageRefreg").success(function (data) {
+        $scope.storageRefregs = data;
+        $scope.storageRefreg = data[0].id;
+    });
+
+    $scope.StorageRefregSelected = function () {
+    };
+
+    $scope.ChangLihuoState = function () {
+        $scope.hasLihuoRoom = !$scope.hasLihuoRoom;
+    };
+
+
+    $scope.rdcId =getUrlParam("id");
+    // 获取当前冷库的详情
+     if($scope.rdcId){
+	    $http.get(ER.root+"/i/rdc/findRDCDTOByRDCId", {
+	        params: { "rdcID":  $scope.rdcId }
+	    }).success(function (data) {
+	        $scope.name = data[0].name;
+	        $scope.address = data[0].address;
+	        $scope.provinceId = data[0].provinceId;
+	        $scope.cityId = data[0].cityId;
+	        $scope.area = data[0].area;
+	        $scope.manageType = data[0].manageType;
+	        $scope.storageType = data[0].storageType;
+	        $scope.temperType = data[0].temperType;
+	        $scope.phoneNum = data[0].phoneNum;
+	        $scope.remark = data[0].remark?data[0].remark:"";
+	       // $scope.tonnage = data[0].tonnage;
+	        $scope.structure = data[0].structure;
+	       // $scope.companyDevice = data[0].companyDevice;
+	        $scope.platform = data[0].platform;
+	        $scope.lihuoRoom = data[0].lihuoRoom;
+	        $scope.arrangePic = data[0].arrangepiclocation;
+	        $scope.arrangePicShow = data[0].arrangePic;
+	        $scope.storagePicShow = data[0].storagePics;
+	        $scope.honorPicShow = data[0].honorPics;
+	        $scope.storagePic = angular.fromJson( data[0].storagePicLocation);
+	        if($scope.lihuoRoom === 0){
+	            $scope.hasLihuoRoom = true;
+	        } else {
+	            $scope.hasLihuoRoom = false;
+	        }
+	        $scope.lihuoArea = data[0].lihuoArea;
+	        $scope.lihuoTemperCtr = data[0].lihuoTemperCtr;
+	        $scope.storageRefreg = data[0].storageRefreg;
+	        $scope.temperRecord = data[0].temperRecord;
+	        $scope.capacity1 = data[0].capacity1;
+	        $scope.capacity2 = data[0].capacity2;
+	        $scope.capacity3 = data[0].capacity3;
+	        $scope.capacity4 = data[0].capacity4;
+	        $scope.capacity5 = data[0].capacity5;
+	        $scope.height1 = data[0].height1;
+            $scope.height2 = data[0].height2;
+       		$scope.height3 = data[0].height3;
+            $scope.height4 = data[0].height4;
+            $scope.height5 = data[0].height5;
+	        $scope.coldTruck1 = data[0].coldTruck1;
+	        $scope.coldTruck2 = data[0].coldTruck2;
+	        $scope.coldTruck3 = data[0].coldTruck3;
+	        $scope.coldTruck4 = data[0].coldTruck4;
+	        $scope.facility = data[0].facility;
+	
+	        // 根据省ID查询城市列表
+	        $http.get(ER.root+"/i/city/findCitysByProvinceId", { params: { "provinceID": $scope.provinceId}}).success(function (data) {
+	            $scope.citys = data;
+	            $scope.cityId = data[0].cityID;
+	        });
+	     });
+	   }else{
+	     //alert("非法访问！");
+	      layer.open({
+		    content: '非法访问~~'
+		    ,btn: '确定'
+		  });
+	     return ;
+	   }
+	    
+    $scope.drop = function(file){
+        angular.forEach($scope.totalfiles,function(item, key){
+            if(item == file){
+                $scope.totalfiles.splice(key,1);
+            }
+        });
+    };
+    $scope.dropcutt = function(file){//删除平面图
+//         angular.forEach($scope.totalfiles,function(item, key){
+//             if(item == file){
+//                 $scope.totalfiles.splice(key,1);
+//             }
+//         });
+         $scope.newarrangePic=null;
+    };
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalhonorfiles,function(item, key){
+            if(item == honorfile){
+                $scope.totalhonorfiles.splice(key,1);
+            }
+        });
+    };
+    function checkCommit(){
+    	if($scope.remark.length>250)
+    		return false;
+    	else
+    		return true;
+    }
+
+    function checkInput(){
+        var flag = true;
+        // 检查必须填写项
+        if ($scope.name == undefined || $scope.name == "") {
+            flag = false;
+        }
+        if ($scope.provinceId == undefined || $scope.provinceId == "") {
+            flag = false;
+        }
+        if ($scope.cityId == undefined || $scope.cityId == "") {
+            flag = false;
+        }
+        if ($scope.address == undefined || $scope.address == "") {
+            flag = false;
+        }
+        if ($scope.area == undefined || $scope.area == "") {
+            flag = false;
+        }
+
+        if ($scope.manageType == undefined || $scope.manageType == "") {
+            flag = false;
+        }
+
+        if ($scope.storageType == undefined || $scope.storageType == "") {
+            flag = false;
+        }
+
+        if ($scope.temperType == undefined || $scope.temperType == "") {
+            flag = false;
+        }
+
+        if ($scope.phoneNum == undefined || $scope.phoneNum == "") {
+            flag = false;
+        }
+        return flag;
+    }
+    
+    $scope.addFiles = function (files) {
+        if(($scope.storagePicShow.length +$scope.totalfiles.length+ files.length) > 5){
+            alert("最多上传五张图片");
+            return;
+        }
+        $scope.totalfiles = $scope.totalfiles.concat(files);
+    };
+     $scope.newarrangePic=null;
+    $scope.addArrangePic = function (files) {//平面图
+       if(files!=null){
+         $scope.newarrangePic=[];
+          $scope.newarrangePic =$scope.newarrangePic.concat(files);
+        }
+    };
+    $scope.addHonorFiles = function (files) {
+        if( $scope.honorPicShow.length+ $scope.totalhonorfiles.length + files.length > 8){
+            alert("最多上传八张图片");
+            return;
+        }
+        $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
+    };
+
+    $scope.submit = function(){
+    if(checkCommit()){
+        if (checkInput()){
+            $scope.isDisabled = true;
+            data = {
+                file0: null,
+                file1: null,
+                file2: null,
+                file3: null,
+                file4: null,
+                honor0: null,
+                honor1: null,
+                honor2: null,
+                honor3: null,
+                honor4: null,
+                honor5: null,
+                honor6: null,
+                honor7: null,
+                name : encodeURI($scope.name,"UTF-8"),
+                provinceId : $scope.provinceId,
+                cityId : $scope.cityId,
+                address : encodeURI($scope.address,"UTF-8"),
+                area : $scope.area,
+                manageType : $scope.manageType,
+                storageType : $scope.storageType,
+                temperType : $scope.temperType,
+                coldTruck1 : $scope.coldTruck1,
+                coldTruck2 : $scope.coldTruck2,
+                coldTruck3 : $scope.coldTruck3,
+                coldTruck4 : $scope.coldTruck4,
+                phoneNum : $scope.phoneNum,
+                remark : $scope.structure == undefined ? "" : encodeURI($scope.remark, "UTF-8"),
+
+                //tonnage : $scope.tonnage,
+                structure : $scope.structure == undefined ? "" : encodeURI($scope.structure, "UTF-8"),
+               // companyDevice : $scope.companyDevice,
+                platform : $scope.platform,
+                lihuoRoom : $scope.lihuoRoom,
+                lihuoArea : $scope.lihuoArea,
+                lihuoTemperCtr : $scope.lihuoTemperCtr,
+                storageRefreg : $scope.storageRefreg,
+                temperRecord : $scope.temperRecord,
+                capacity1 : $scope.capacity1,
+                capacity2 : $scope.capacity2,
+                capacity3 : $scope.capacity3,
+                capacity4 : $scope.capacity4,
+                capacity5 : $scope.capacity5,
+                 height1 : $scope.height1,
+                height2 : $scope.height2,
+                height3 : $scope.height3,
+                height4 : $scope.height4,
+                height5 : $scope.height5,
+                facility : $scope.structure == undefined ? "" : encodeURI($scope.facility, "UTF-8"),
+                arrangePics : $scope.arrangePic,
+                rdcId:  $scope.rdcId
+            };
+            for(var i = 0; i < $scope.totalfiles.length; i++){
+                data["file" + i] = $scope.files[i];
+            }
+            for(var j = 0; j < $scope.totalhonorfiles.length; j++){
+                data["honor" + j] = $scope.totalhonorfiles[j];
+            }
+
+            Upload.upload({
+                url: ER.root+"/i/rdc/updateRdc",
+                headers :{ "Content-Transfer-Encoding": "utf-8" },
+                data: data
+            }).then(function (resp) {
+                $scope.isDisabled = false;
+                alert("修改成功");
+                goback();
+            }, function (resp) {
+                console.log("Error status: " + resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log("progress: " + progressPercentage + "% " + evt.name);
+            });
+        } else {
+            alert("请填写标记*的必选项在提交!");
+        }
+    }
+    else{
+    	alert("备注长度不得250字符!");
+    }
+   };
+
+    $scope.goPicDetail = function(item){
+        var modalInstance = $uibModal.open({
+            templateUrl: "myModelContent.html",  //指向上面创建的视图
+            controller: "ModalInstanceCtrl",// 初始化模态范围
+            resolve: {
+                itemPic: function () {
+                    return item;
+                }
+            }
+        });
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info("Modal dismissed at: " + new Date());
+        });
+    };
+
+    $scope.deletePic = function(filedata){
+        var r = confirm("删除图片?");
+        if(r){
+            $http({
+                method:"DELETE",
+                url:ER.root+"/i/rdc/deleteStoragePic",
+                params:filedata
+            }).success(function(){
+                var index = $scope.storagePicShow.indexOf(filedata);
+                if(index>=0)
+                    $scope.storagePicShow.splice(index,1);
+                else{
+                    $scope.arrangePicShow = null;
+                }
+            });
+        }
+    };
+  $scope.deletecarrangePic = function(filedata,st){
+        var r =st?true: confirm("删除平面图?");
+        if(r){
+            $http({
+                method:"DELETE",
+                url:ER.root+"/i/rdc/deleteStoragePic",
+                params:filedata
+            }).success(function(){
+                    $scope.arrangePicShow = null;
+            });
+        }
+    };
+    $scope.deleteHonorPic = function(filedata){
+        var r = confirm("删除荣誉图片?");
+        if(r){
+            $http({
+                method:"DELETE",
+                url:ER.root+"/i/rdc/deleteStoragePic",
+                params:filedata
+            }).success(function(){
+                var index = $scope.honorPicShow.indexOf(filedata);
+                if(index>=0)
+                    $scope.honorPicShow.splice(index,1);
+                else{
+                    $scope.arrangePicShow = null;
+                }
+            });
+        }
+    };
+});
+</script>
+</body>

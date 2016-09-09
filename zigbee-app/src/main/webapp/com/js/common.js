@@ -6,20 +6,26 @@ getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://192.168.1.136:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
-var userjson=window.sessionStorage.getItem("user");if(userjson){window.user=JSON.parse(userjson);}/*else{checktoken();}*/
+var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);}/*else{checktoken();}*/
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
 function setIOS_hidebar(){ if(window.location.pathname.indexOf("360")==-1){ $(".footer").hide();}}//同步token
 function setIOS_token(token){util.setCookie("token",token,"d7");checktoken();}//同步token
-function setIOS_deltoken(){ $http.get(ER.root+'/i/user/logout');window.user  = null;util.delCookie("token");window.sessionStorage.removeItem("user");}//同步token
+function setIOS_deltoken(){ $http.get(ER.root+'/i/user/logout');window.user  = null;util.delCookie("token");window.localStorage.lkuser=null;}//同步token
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
 function showErrorInfo(msg){var msgEl=$("#mention");if(msg==null||msg==''){msgEl.hide();msgEl.html('');}else{msgEl.show();msgEl.html(msg);}}
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
 function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(); } return true; }else{ window.user = null;window.location.href = "login.html#" + window.location.href; return false;}}
 function goback() {if( typeof ios_gohome == 'function'){ios_gohome();return;}if(window.location.pathname.indexOf("login.html")&&window.location.hash.indexOf("user-")!=-1){window.location.href ="user.html";}else{ window.history.back();}}//返回上一级
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
-function checktoken(toke){if(window.user==null ){if(toke==undefined){toke=util.getCookie('token');}$.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:toke}, url:ER.root + "/i/user/findUser",success:function(data) {if (data && data.id != 0) {window.user = data;window.sessionStorage.setItem("user",JSON.stringify(data)); } else { window.user = null;window.sessionStorage.removeItem("user"); }} });}}
+function checktoken(toke){if(window.user==null ){if(toke==undefined){toke=util.getCookie('token');}$.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:toke}, url:ER.root + "/i/user/findUser",success:function(data) {if (data && data.id != 0) {
+	window.user = data;
+	window.localStorage.lkuser=JSON.stringify(data);
+} else {
+	window.user = null;
+	window.localStorage.lkuser=null;
+	}} });}}
 function setTime(obj){if(_sysconfig.countdown==0){obj.removeAttribute("disabled");obj.style.background="#438BCB";obj.innerHTML="获取验证码";_sysconfig.countdown=60;return;}else{if($(obj).siblings("input").val().length==0){/*alert("输入不能为空哦~");*/layer.open({content: '输入不能为空哦~',btn: '确定'});return false;}else{obj.setAttribute("disabled",true);obj.style.background="#ccc";obj.innerHTML="重新发送("+_sysconfig.countdown+")";_sysconfig.countdown--;}}setTimeout(function(){setTime(obj);},1000);};
 var util = {
     //cook:s20是代表20秒,h是指小时，如12小时则是：h12,d是天数，30天则：d30 
