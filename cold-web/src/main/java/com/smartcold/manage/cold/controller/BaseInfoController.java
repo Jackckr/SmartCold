@@ -1,14 +1,17 @@
 package com.smartcold.manage.cold.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.smartcold.manage.cold.dao.newdb.*;
-import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
-import com.smartcold.manage.cold.enums.StorageType;
-import com.smartcold.manage.cold.service.GoodsService;
-import com.smartcold.manage.cold.service.StorageService;
-import com.smartcold.manage.cold.util.ResponseData;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,9 +21,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.smartcold.manage.cold.dao.newdb.PackMapper;
+import com.smartcold.manage.cold.dao.newdb.UsageMapper;
+import com.smartcold.manage.cold.dao.newdb.WallMaterialMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.UserEntity;
+import com.smartcold.manage.cold.service.GoodsService;
+import com.smartcold.manage.cold.service.StorageService;
+import com.smartcold.manage.cold.util.ExportExcelUtil;
+import com.smartcold.manage.cold.util.ResponseData;
 
 @Controller
 @RequestMapping(value = "/baseInfo")
@@ -40,6 +49,8 @@ public class BaseInfoController extends BaseController {
 	
 	@Autowired
 	private StorageService storageService;
+	
+	
 
 	@RequestMapping(value = "/findAllGoods", method = RequestMethod.GET)
 	@ResponseBody
@@ -92,9 +103,9 @@ public class BaseInfoController extends BaseController {
     public  int daysBetween(Date smdate,Date bdate) 
     {    
         try {
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
-			smdate=sdf.parse(sdf.format(smdate));  
-			bdate=sdf.parse(sdf.format(bdate));  
+        	SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");  
+			smdate=dateFormat.parse(dateFormat.format(smdate));  
+			bdate=dateFormat.parse(dateFormat.format(bdate));  
 			Calendar cal = Calendar.getInstance();    
 			cal.setTime(smdate);    
 			long time1 = cal.getTimeInMillis();                 
@@ -123,20 +134,60 @@ public class BaseInfoController extends BaseController {
 	     else  return "yyyy-MM-dd";
     } 
 	
+    
+	/**
+	 * 1. SELECT * FROM `deviceObjectMapping` WHERE `type` = #{type} AND `oid` = #{oid}->deviceid
+	 * 
+	 * 2. SELECT * FROM storagedatacollection
+	    WHERE 1 =1
+	    <if test="apid != null">
+		    AND `apid` = #{apid} 
+	    </if>
+	    <if test="deviceid != null">
+		    AND `deviceid` = #{deviceid} 
+	    </if>
+	    <if test="key != null">
+		    AND `key` = #{key} 
+	    </if>
+	    AND time > #{startTime} AND time &lt; #{endTime} 
+	    ORDER BY `time` DESC	
+	 *
+	 * select * from ${table} where `key`=#{key} AND oid=#{oid} AND `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` desc
+	 * 	    select * from ${table} where `key`=#{key} AND oid=#{oid} AND `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` desc
+	 * 
+	 * 
+	 */
 	@RequestMapping("/getKeyValueDataByFilter")
 	@ResponseBody
-	public ResponseData<Object> getKeyValueDataByFilter(Integer type,String key,Integer[] oids,String[] onames, String startTime,String endTime){
+	public ResponseData<HashMap<String, Object>> getKeyValueDataByFilter(Integer type,String key,Integer[] oids,String[] onames, String startTime,String endTime){
 		try {
 			System.err.println(type+"/"+key+"/"+oids+"/"+onames+"/"+startTime+"/"+endTime);
-			if(key!=null&&key!=""){
+			if(key!=null&&key!=""&&oids!=null&&oids.length>0){
 				 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 			        Date sttime=sdf.parse(startTime);  
 			        Date edTime=sdf.parse(endTime);  
-			        String groupfm=getDateFormat(daysBetween(sttime, edTime));
+			        int daysBetween = daysBetween(sttime, edTime);
+			        String groupfm=getDateFormat(daysBetween);
 			        System.err.println(groupfm);
 			        HashMap<String,Object> restData=new HashMap<String, Object>();
-			        List<Object> restList=new ArrayList<Object>();
-			        int maxsize=0;int index=-1;
+			        LinkedList<HashMap<String, Object>> restList=new LinkedList<HashMap<String, Object>>();
+			         LinkedList<List<StorageKeyValue>> xtemp=new LinkedList<List<StorageKeyValue>>();
+			        int maxsize=0,index=-1;
+			        HashMap<String, Object> temp=new LinkedHashMap<String, Object>();
+			    	List<Object> maklist=new ArrayList<Object>();
+			    	HashMap<String, Object> dttemp=new LinkedHashMap<String, Object>();
+			    	temp.put("type", "average");
+			    	temp.put("name", "平均值");
+			    	maklist.add(temp);
+			    	dttemp.put("data", maklist);
+			    	
+			    	List<Object> mtklist=new ArrayList<Object>();
+			    	HashMap<String, Object> rttemp=new LinkedHashMap<String, Object>();
+			    	HashMap<String, Object>mttemp=new LinkedHashMap<String, Object>();
+			    	mttemp.put("type", "max");
+			    	mttemp.put("name", "最大值");
+			    	mtklist.add(mttemp);
+			    	rttemp.put("data", mtklist);
 			        for (int i = 0; i < oids.length; i++) {
 			        	HashMap<String, Object> linmap=new HashMap<String, Object>();
 			             int oid=	oids[i];String oname=onames[i];		        
@@ -145,16 +196,56 @@ public class BaseInfoController extends BaseController {
 			        	 linmap.put("type", "line");
 			        	 linmap.put("data", datalist);
 			        	 linmap.put("name", oname);
+			        	 linmap.put("markLine",dttemp);
+			        	 linmap.put("markPoint",rttemp);
+			        	 xtemp.add(datalist);
 			        	 restList.add(linmap);
 					}
-			        
+			        if(index!=-1){
+			        	List<StorageKeyValue> list = xtemp.get(index);
+			        	String [] xdt=new String[list.size()];
+			        	for (int i = 0; i < list.size(); i++) {
+			        		xdt[i]=sdf.format( list.get(i).getAddtime());
+						}
+			        	restData.put("xdata", xdt);
+			        }else{
+			        	String [] xdt=new String[daysBetween];
+						for (int i = 0; i<daysBetween; i++) {
+							Calendar c  = Calendar.getInstance();
+							c.add(Calendar.DAY_OF_MONTH,-daysBetween+i);
+							xdt[i]=sdf.format(c.getTime());
+						}
+						restData.put("xdata", xdt);//展示数据
+			        }
 			        restData.put("ydata", restList);
-//			        restData.put("xData", value);
+			        return ResponseData.newSuccess(restData);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseData.newSuccess();
+		return ResponseData.newFailure();
+	}
+	
+	@RequestMapping("/expHistoryData")
+	public void expHistoryData(HttpServletRequest request,HttpServletResponse response,String filename,String title,Integer type,String key,Integer[] oids,String[] onames, String startTime,String endTime){
+		  try {
+			List<UserEntity> list = new ArrayList<UserEntity>();  
+			    for (int i = 0; i < 40000; i++) {
+			  	  UserEntity user = new UserEntity();  
+			  	  user.setId(10000+i);
+			  	  user.setUsername("XYZ"+i);
+			  	  user.setPassword("pwd"+i);
+			  	  user.setTelephone("135978113215");
+			  	  user.setEmail(i+"@qq.com");
+			  	  user.setRole(1);
+			  	  list.add(user);  
+			  	  System.err.println("创建第"+i+"条数据！");
+				   }
+			   String mode[][]={{"id","角色","用户名","密码","电话","邮箱"},{"id","role","username","password","telephone","email"},{"2","2","5","5","5","5"}} ;//标题（必须），对应属性（必须），宽度
+			   ExportExcelUtil.expExcel(response,filename+".xls",title,mode,list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

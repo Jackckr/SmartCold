@@ -266,8 +266,14 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        data: data
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
-		    	layer.open({content: resp.data.message,btn: '确定'});
-		    	window.location.href ="releasesuccess.html"; 
+		    	layer.open({
+		    		content: resp.data.message
+		    		,btn: '确定'
+	    			,shadeClose:false
+	                ,yes:function(){
+	    		    	window.location.href ="releasesuccess.html"; 
+	                }
+		    	});
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -325,8 +331,16 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        data: data
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
-		    	layer.open({content: resp.data.message,btn: '确定'});
-		    	window.location.href ="releasesuccess.html"; 
+		    	//layer.open({content: resp.data.message,btn: '确定'});
+		    	layer.open({
+		    		content: resp.data.message
+		    		,btn: '确定'
+	    			,shadeClose:false
+	                ,yes:function(){
+	    		    	window.location.href ="releasesuccess.html"; 
+	                }
+		    	});
+		    	//window.location.href ="releasesuccess.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -380,8 +394,16 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        data: data
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
-		    	layer.open({content: resp.data.message,btn: '确定'});
-		    	window.location.href ="releasesuccess.html"; 
+		    	//layer.open({content: resp.data.message,btn: '确定'});
+		    	//window.location.href ="releasesuccess.html";
+		    	layer.open({
+		    		content: resp.data.message
+		    		,btn: '确定'
+	    			,shadeClose:false
+	                ,yes:function(){
+	    		    	window.location.href ="releasesuccess.html"; 
+	                }
+		    	});
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
