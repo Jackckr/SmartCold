@@ -3,9 +3,12 @@ package com.smartcold.manage.cold.util;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -23,7 +26,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
  */
 public class ExportExcelUtil {
 
-	
+	private static SimpleDateFormat timeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 
 	/**
 	 * 
@@ -98,6 +101,9 @@ public class ExportExcelUtil {
 			String getter = "get" + firstLetter + fieldName.substring(1);
 			Method method = o.getClass().getMethod(getter, new Class[] {});
 			Object value = method.invoke(o, new Object[] {});
+			if(value instanceof Date ){
+				return timeFormat.format(value);
+			}
 			return value.toString();
 		} catch (Exception e) {
 			return null;
@@ -230,6 +236,12 @@ public class ExportExcelUtil {
 					cell.setCellValue(new HSSFRichTextString(getFieldValueByName(datamode[j], object)));
 				}
 			}
+		}else{
+			sheet.addMergedRegion(new CellRangeAddress(2, (short) 2, 0, (short) mode.length));
+			row = sheet.createRow(2);
+			cell = row.createCell(1);
+			cell.setCellStyle(cellStyleTitle);
+			cell.setCellValue(new HSSFRichTextString("没有数据！"));
 		}
 	}
 

@@ -28,7 +28,9 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
 		if($scope.sl_type&&$scope.sl_key&&$scope.oidlist&&$scope.oidlist.length>0){
 			
 	        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/baseInfo/expHistoryData').attr('id', "expdataform");
-	        expfrom.attr("accept-charset","GBK");//.attr("onsubmit","document.charset='utf-8'");
+//	        expfrom.attr("accept-charset","UTF-8");//.attr("onsubmit","document.charset='utf-8'");
+//	        expfrom.attr("charset","UTF-8");//.attr("onsubmit","document.charset='utf-8'");
+	        expfrom.attr("Content-Type","application/json;charset=UTF-8");//.attr("onsubmit","document.charset='utf-8'");
 	        expfrom.append($("<input>").attr("name","rdcid").attr("value",rdcid));
 	        expfrom.append($("<input>").attr("name","filename").attr("value","历史数据"));
 	        expfrom.append($("<input>").attr("name","title").attr("value",$scope.slgptit));
@@ -37,7 +39,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,baseTools) 
 	        expfrom.append($("<input>").attr("name","onames").attr("value",$scope.oldnames));
 	        expfrom.append($("<input>").attr("name","key").attr("value",$scope.sl_key));
 	        expfrom.append($("<input>").attr("name","startTime").attr("value",$scope.begin));
-	        expfrom.append($("<input>").attr("name","endTime").attr("value",$scope.begin));
+	        expfrom.append($("<input>").attr("name","endTime").attr("value",$scope.end));
 	        expfrom.appendTo('body').submit();
 	        //.remove();
 		}else{

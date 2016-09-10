@@ -11,5 +11,7 @@ public interface StorageKeysMapper {
 	
 	boolean save(StorageKeysEntity storageKeys);
 	
-	List<StorageKeysEntity> findAll(@Param("types")String  types);
+	List<StorageKeysEntity> findAll();
+	
+	List<StorageKeysEntity> findbyFilter(@Param("types")String  types,@Param("keys")String keys);
 }
