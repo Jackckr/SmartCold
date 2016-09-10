@@ -208,14 +208,7 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 				         yAxis : [
 				                  {
 				                	  type : 'value',
-				                	  name : '降温因子',
-				                	  axisLabel : {
-				                		  formatter: '{value}'
-				                	  }
-				                  },
-				                  {
-				                	  type : 'value',
-				                	  name : '升温因子',
+				                	  name : '温度因子',
 				                	  axisLabel : {
 				                		  formatter: '{value}'
 				                	  }
@@ -225,12 +218,13 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 		                            {
 		                            	name:'降温因子',
 		                            	type:'bar',
+		                            	color:'blue',
 		                            	data:yData1
 		                            },
 		                            {
 		                            	name:'升温因子',
 		                            	type:'bar',
-		                            	yAxisIndex: 1,
+		                            	color:'red',
 		                            	data:yData2
 		                            }
 		                            ]
