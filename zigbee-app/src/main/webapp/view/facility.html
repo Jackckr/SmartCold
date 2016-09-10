@@ -24,17 +24,14 @@
             <div class="area fl">
                 <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
             </div>
-            <div class="zoom fr">
+            <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
                 <a  class="transion"><i class="iconfont">&#xe73c;</i></a>
             </div>
             <div class="txt omg">
-                监控
+                {{rdcName}}
             </div>
-            <ul class="rdcDropList">
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
-                <li>莱芜嘉禾冷链物流有限公司</li>
+            <ul class="rdcDropList" ng-repeat="storage in storages">
+                <li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
             </ul>
         </header>
         <header class="two">
@@ -43,7 +40,7 @@
         	</div>
         	
         	<div id="searchDara_div" class="search">
-				<input type="text" placeholder="查找RDC..." ng-model="searchContent"/>
+				<input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
         		<i class="iconfont" >&#xe62f;</i>
         	</div>
 	    </header>
@@ -101,9 +98,9 @@
   </div>
   <!--rdc列表--------------------------------------------------> 
 	 <section class="searchTop">
-		 <ul class="rdcList" ng-repeat="rdclist in storages | filter:searchContent">
-			 <li class="omg" ng-click="viewStorage(rdclist.id)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
-		 </ul>
+         <ul class="rdcList">
+             <li class="omg" ng-repeat="rdclist in storages | filter:searchContent"><i class='iconfont'>&#xe62f;</i><span ng-click="changeRdc(rdclist)">{{rdclist.name}}</span></li>
+         </ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
 	 <!--rdc列表-----------------------------------------------> 

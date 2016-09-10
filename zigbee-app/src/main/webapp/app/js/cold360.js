@@ -38,7 +38,6 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
         }
     }
     $scope.changeRdc = function (rdc) {
-        $scope.swiper = 0;
         clearSwiper();
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
@@ -218,6 +217,7 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
     }
 
     function clearSwiper() {
+        $scope.swiper = 0;
         $("div").remove(".swiper-slide");
     }
     

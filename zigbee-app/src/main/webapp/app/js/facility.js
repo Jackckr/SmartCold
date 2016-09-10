@@ -6,11 +6,11 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
 
     $scope.user = window.user;
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
-    //if (window.user.roleid == 3); 超管特殊处理
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
             $scope.rdcId = $scope.storages[0].id;
+            $scope.rdcName = $scope.storages[0].name;
             $scope.viewStorage($scope.rdcId);
         }
     });
@@ -27,6 +27,24 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
+    }
+
+    $scope.searchRdcs = function (searchContent) {
+        // 超管特殊处理
+        if ($scope.user.roleid == 3) {
+            $http.get(ER.coldroot + '/i/rdc/searchRdc?filter=' + searchContent).success(function (data) {
+                if (data && data.length > 0) {
+                    $scope.storages = data;
+                }
+            });
+        }
+    }
+    $scope.changeRdc = function (rdc) {
+        clearSwiper();
+        $scope.rdcId = rdc.id;
+        $scope.rdcName = rdc.name;
+        $scope.searchContent = "";
+        $scope.viewStorage(rdc.id);
     }
 
     $scope.swiper = 0;

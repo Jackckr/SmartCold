@@ -42,7 +42,6 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         }
     }
     $scope.changeRdc = function (rdc) {
-        $scope.swiper = 0;
         clearSwiper();
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
@@ -95,12 +94,12 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
     }
 
     function clearSwiper() {
+        $scope.swiper = 0;
         $("div").remove(".swiper-slide");
     }
 
     $scope.powerEnergy = function () {
         clearSwiper();
-        $scope.swiper = 0;
         $scope.activeEnergy = 'power';
 
         for (var i = 0; i < $scope.powers.length; i++) {
