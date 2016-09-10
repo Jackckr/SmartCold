@@ -7,6 +7,7 @@ import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 public class NewStorageTempDto {
 	private float startTemperature;
 	private float tempdiff;
+	private String name;
 	private List<StorageKeyValue> list;
 
 	public float getStartTemperature() {
@@ -23,6 +24,14 @@ public class NewStorageTempDto {
 
 	public void setTempdiff(float tempdiff) {
 		this.tempdiff = tempdiff;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<StorageKeyValue> getList() {

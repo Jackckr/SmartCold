@@ -178,7 +178,7 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 					var chart = echarts.init($(chartId).get(0));
 					angular.forEach(storage['JiangWenYinZi'],function(item,index){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
-						yData1.unshift(storage['JiangWenYinZi'][index]['value'])
+						yData1.unshift(0 - storage['JiangWenYinZi'][index]['value'])
 						yData2.unshift(storage['ShengWenYinZi'][index]['value'])
 					})
 					option = {

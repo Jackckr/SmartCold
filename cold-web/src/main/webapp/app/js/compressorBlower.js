@@ -41,5 +41,7 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
     $rootScope.timeTicket = setInterval(function () {
         $scope.load();
     }, 30000);
-
+    $scope.$on('$destroy',function(){
+    	clearInterval($rootScope.timeTicket);
+    })
 });

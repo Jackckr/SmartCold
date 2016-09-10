@@ -57,6 +57,7 @@ public class ColdStorageController {
 		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
 		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
 		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
+		storageTempDto.setName(coldStorageSetEntity.getName());
 		return storageTempDto;
 	}
 

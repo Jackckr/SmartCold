@@ -64,8 +64,10 @@ coldWeb.controller('warn', function($scope, $location, $stateParams, $http) {
 		});
 	}
 	$scope.load();	
-	var timeTicket; 
-	timeTicket = setInterval(function () { $scope.load();},
-	  60000);
-	 
+	$rootScope.timeTicket = setInterval(function () {
+        $scope.load();
+    }, 60000);
+    $scope.$on('$destroy',function(){
+    	clearInterval($rootScope.timeTicket);
+    })
 });
