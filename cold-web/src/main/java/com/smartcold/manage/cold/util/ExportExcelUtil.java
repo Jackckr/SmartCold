@@ -237,8 +237,8 @@ public class ExportExcelUtil {
 				}
 			}
 		}else{
-			sheet.addMergedRegion(new CellRangeAddress(2, (short) 2, 0, (short) mode.length));
 			row = sheet.createRow(2);
+			sheet.addMergedRegion(new CellRangeAddress(2, (short) 2, 0, (short) mode.length));
 			cell = row.createCell(1);
 			cell.setCellStyle(cellStyleTitle);
 			cell.setCellValue(new HSSFRichTextString("没有数据！"));
