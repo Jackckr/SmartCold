@@ -207,18 +207,24 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             }).then(function (resp) {
                 $scope.isDisabled = false;
                 //alert("添加成功");
+                $('.mybtn').attr('disabled',true);
+            	$('.mybtn').css('backgroundColor','gray');
                 layer.open({
-                    content: '添加成功'
-                    ,btn: '确定'
-                  });
-                window.location.href='releasesuccess.html';
+	                content: '添加成功'
+	                ,btn: '确定' 
+	            	,shadeClose:false
+	                ,yes:function(){
+	                	window.location.href='releasesuccessku.html';
+	                }
+	              });               
+                
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 console.log('progress: ' + progressPercentage + '% ' + evt.name);
             });
-        } else {
+        } else {        	
             //alert("请填写标记*的必选项在提交!");
             layer.open({
                 content: '请填写标记*的必选项再提交哦'

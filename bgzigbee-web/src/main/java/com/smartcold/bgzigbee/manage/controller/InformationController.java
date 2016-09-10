@@ -120,15 +120,15 @@ public class InformationController extends BaseController {
 		if (information.getTitle() == null || information.getContent() == null) {
 			return new ResultDto(-1, "标题和内容不能为空");
 		}
-		String dir = String.format("%s/rdc/%s", baseDir, information.getId());
-		if (uploadcoverpic != null) {
+		if(null!=uploadcoverpic){
+		    String dir = String.format("%s/rdc/%s", baseDir, information.getId());
 			String fileName = String.format("information%s_%s.%s", information.getId(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, uploadcoverpic, dir);
 			ftpService.uploadFile(uploadFileEntity);
 			information.setCoverpic(FtpService.READ_URL+dir + "/" + fileName);
 		}
 		else {
-			  throw new Exception("资讯上传图片时，封面图片为空异常");
+			information.setCoverpic(null);
 		}
 		if (information.getId()!=0) {
 			
