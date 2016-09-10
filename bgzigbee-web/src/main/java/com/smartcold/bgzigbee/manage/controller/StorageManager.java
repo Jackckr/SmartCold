@@ -3,24 +3,14 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.State;
-import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
 import com.smartcold.bgzigbee.manage.service.FtpService;
-import com.smartcold.bgzigbee.manage.service.impl.FtpServiceImpl;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.mockito.internal.matchers.Equals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 public class StorageManager
 {
