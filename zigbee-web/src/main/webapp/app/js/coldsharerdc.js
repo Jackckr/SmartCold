@@ -10,11 +10,11 @@ var rdcconfig={
 			$("#table"+em.value).removeClass("hide");
 			rdcconfig.$scope.initApp();//初始化App
 	},addfilter:function(id,em){
-		 $($(id).parent()).prev().removeClass("active");
-	      if(em.hasClass("active")){em.removeClass("active"); }else{ em.addClass("active");}
-	      if( $(id+".active").length==0){//||$(id+".active").length==($(id).length-1)
-	        $(id).removeClass("active");
-	        $($(id).parent()).prev().addClass("active");
+		 $($(id).parent()).prev().removeClass("active_rdc");
+	      if(em.hasClass("active_rdc")){em.removeClass("active_rdc"); }else{ em.addClass("active_rdc");}
+	      if( $(id+".active_rdc").length==0){//||$(id+".active_rdc").length==($(id).length-1)
+	        $(id).removeClass("active_rdc");
+	        $($(id).parent()).prev().addClass("active_rdc");
 	      }
 	      rdcconfig.$scope.changDataMode();   //通知组件刷新数据
 	   }
@@ -33,7 +33,7 @@ var good={
 		  }});
 	}
 	,getFilter:function(pageNum,pageSize){
-			  var gttyarr= $("#good_type_div li.active").length==$("#good_type_div li").length||$("#good_type_div li.active").length==0?null:$("#good_type_div li.active");
+			  var gttyarr= $("#good_type_div li.active_rdc").length==$("#good_type_div li").length||$("#good_type_div li.active_rdc").length==0?null:$("#good_type_div li.active_rdc");
 		      var gdty=null;
 		      if(gttyarr){gdty=[];  $.each(gttyarr, function(i, vo){gdty.push(vo.value);});gdty=gdty.join(","); }
 			  var _options={
@@ -80,9 +80,9 @@ var psaction={
 		,getFilter:function(pageNum,pageSize){
 				  var stentime=$("#reservationtime").val().split(" - ");
 			      if(stentime.length!=2){ stentime=[null,null]; }
-		    	  var ctlist= ($("#car_type_div li.active").length==$("#car_type_div li").length||$("#car_type_div li.active").length==0)?null:$("#car_type_div li.active");
-			      var clist=($("#cool_type_div li.active").length==$("#cool_type_div li").length||$("#cool_type_div li.active").length==0)?null:$("#cool_type_div li.active");
-				  var bslist=($("#business_type_div li.active").length==$("#business_type_div li").length||$("#business_type_div li.active").length==0)?null:$("#business_type_div li.active");
+		    	  var ctlist= ($("#car_type_div li.active_rdc").length==$("#car_type_div li").length||$("#car_type_div li.active_rdc").length==0)?null:$("#car_type_div li.active_rdc");
+			      var clist=($("#cool_type_div li.active_rdc").length==$("#cool_type_div li").length||$("#cool_type_div li.active_rdc").length==0)?null:$("#cool_type_div li.active_rdc");
+				  var bslist=($("#business_type_div li.active_rdc").length==$("#business_type_div li").length||$("#business_type_div li.active_rdc").length==0)?null:$("#business_type_div li.active_rdc");
 			      var bsty=null,clty=null,ctty=null;
 			      if(bslist){bsty=[];  $.each(bslist, function(i, vo){bsty.push(vo.value);});bsty=bsty.join(","); }
 			      if(clist){clty=[];  $.each(clist, function(i, vo){clty.push(vo.value);});clty=clty.join(","); }
@@ -125,9 +125,9 @@ var serdc = {
 			   }});
 		},
 		getFilter:function(pageNum,pageSize){
-		  var sqmlist= ($("#sqm_div li.active").length==$("#sqm_div li").length||$("#sqm_div li.active").length==0)?null:$("#sqm_div li.active");
-	      var setyList=($("#stfl_div li.active").length==$("#stfl_div li").length||$("#stfl_div li.active").length==0)?null:$("#stfl_div li.active");
-		  var smtyList=($("#mtfl_div li.active").length==$("#mtfl_div li").length||$("#mtfl_div li.active").length==0)?null:$("#mtfl_div li.active");
+		  var sqmlist= ($("#sqm_div li.active_rdc").length==$("#sqm_div li").length||$("#sqm_div li.active_rdc").length==0)?null:$("#sqm_div li.active_rdc");
+	      var setyList=($("#stfl_div li.active_rdc").length==$("#stfl_div li").length||$("#stfl_div li.active_rdc").length==0)?null:$("#stfl_div li.active_rdc");
+		  var smtyList=($("#mtfl_div li.active_rdc").length==$("#mtfl_div li").length||$("#mtfl_div li.active_rdc").length==0)?null:$("#mtfl_div li.active_rdc");
 	      var smty=null,sety=null,sqm=null;
 	      if(smtyList){smty=[];  $.each(smtyList, function(i, vo){smty.push(vo.value);});smty=smty.join(","); }
 	      if(setyList){sety=[];  $.each(setyList, function(i, vo){sety.push(vo.value);});sety=sety.join(","); }
@@ -176,7 +176,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 		}
 	 };
      $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
-     $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");$scope.changDataMode();});//业务类型
+     $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active_rdc"); $(this).addClass("active_rdc");$scope.changDataMode();});//业务类型
      $scope.gosharedile=function(sharid){
     		$scope.datatype=1;
     		$scope._dataid =sharid;//当前数据类型

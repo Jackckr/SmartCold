@@ -13,6 +13,10 @@
 !*.gif
 !*.properties
 
+*.gitignore
+.gitignore/
+.gitignore/*
+.gitignore/**/*
 
 # Compiled source #
 ###################
@@ -71,7 +75,15 @@ bin/
 *.iml
 *.ipr
 *.iws
+.metadata
+.metadata/.plugins/*
+.metadata/.plugins/**/*
+.metadata/.plugins/**/**/*
+.metadata/*
+.metadata/**/*
+.metadata/**/**/*
 .idea/
+
 
 # database config ignore
 cold-web/src/main/resources/config/spring/local/appcontext-db.xml

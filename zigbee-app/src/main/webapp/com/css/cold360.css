@@ -8,6 +8,9 @@ body{
 .info{
 	font-size: 0.6rem;
 }
+header .txt{
+	font-size: .8rem;
+}
 section{
 	margin: 2.5rem 0 0.1rem;
 	height: 2rem;
