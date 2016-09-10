@@ -181,6 +181,14 @@
 	      <scope>system</scope>
 	      <systemPath>${project.basedir}/lib/ueditor.jar</systemPath>
 	    </dependency>
+	    <!-- 支持消息推送编辑器  -->
+	    <dependency> 
+            <groupId>comet4j-tomcat7</groupId> 
+            <artifactId>test</artifactId> 
+            <version>1.0</version> 
+            <scope>system</scope> 
+            <systemPath>${project.basedir}/lib/comet4j-tomcat7.jar</systemPath>
+        </dependency> 
 	</dependencies>
 
 	<build>

@@ -91,7 +91,7 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
                  $state.go('coldStorageComment', {"rdcID": rdcID});
      };
     $scope.goAddRdc = function () {
-    	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data){
+        $http.get('/i/user/findUser').success(function(data){
             $rootScope.user = data;
             if($rootScope.user == null || $rootScope.user.id == 0){
                 url = "http://" + $location.host() + ":" + $location.port() + "/login.html#/coldStorageAdd";
