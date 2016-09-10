@@ -17,4 +17,5 @@ public interface StorageDataCollectionMapper {
 
 	List<StorageKeyValue> findByTime(@Param("apid") String apid, @Param("deviceid") String deviceid,
 			@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+	
 }

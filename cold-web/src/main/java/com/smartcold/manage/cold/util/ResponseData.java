@@ -28,7 +28,7 @@ public class ResponseData<T> {
 			rd = new ResponseData<T>();
 			TLRD.set(rd);
 		}
-		return rd;
+		return rd;// new ResponseData<T>();
 	}
 
 	/**
