@@ -13,24 +13,25 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
         if (r != null) return unescape(r[2]); return null;
     }
     var rootRdcId = $.getUrlParam('storageID');
-    if (rootRdcId == undefined || rootRdcId == null) {
-        $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.storages = data;
-                $scope.currentRdc = $scope.storages[0];
-                $scope.rdcId = $scope.storages[0].id;
-                $scope.rdcName = $scope.storages[0].name;
-                $scope.viewStorage($scope.storages[0].id);
+
+    $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
+        if (data && data.length > 0) {
+            $scope.storages = data;
+            if (rootRdcId == undefined || rootRdcId == null) {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
+                    $scope.viewStorage($scope.storages[0].id);
+            } else {
+                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+                    $scope.currentRdc = data[0];
+                    $scope.rdcName =  data[0].name;
+                    $scope.rdcId =  data[0].id;
+                    $scope.viewStorage($scope.rdcId);
+                });
             }
-        });
-    } else {
-        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-            $scope.currentRdc = data[0];
-            $scope.rdcName =  data[0].name;
-            $scope.rdcId =  data[0].id;
-            $scope.viewStorage($scope.rdcId);
-        });
-    }
+        }
+    });
 
     $scope.viewStorage = function (rdcId) {
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
