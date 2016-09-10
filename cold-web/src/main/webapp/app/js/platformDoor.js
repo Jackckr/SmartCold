@@ -152,5 +152,7 @@ coldWeb.controller('platformDoor', function ($scope, $location, $stateParams, $h
     $rootScope.timeTicket = setInterval(function () {
         $scope.load();
     }, 30000);
-
+    $scope.$on('$destroy',function(){
+    	clearInterval($rootScope.timeTicket);
+    })
 });

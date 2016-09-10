@@ -18,6 +18,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             }
         }).success(function (result) {
         	var list = result.list
+        	$scope.name = result.name
         	var startTemperature = parseFloat(result.startTemperature);
             var tempDiff = parseFloat(result.tempdiff);
             var datumTemp = startTemperature + 0.5 * tempDiff;
@@ -270,5 +271,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     $rootScope.timeTicket = setInterval(function () {
         $scope.load();
     }, 30000);
-
+    $scope.$on('$destroy',function(){
+    	clearInterval($rootScope.timeTicket);
+    })
 });
