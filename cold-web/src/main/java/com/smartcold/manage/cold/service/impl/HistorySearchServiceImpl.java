@@ -1,5 +1,15 @@
 package com.smartcold.manage.cold.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageKeysMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
@@ -13,17 +23,6 @@ import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.HistorySearchService;
-import com.smartcold.manage.cold.util.ResponseData;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.annotation.DirtiesContext;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class HistorySearchServiceImpl implements HistorySearchService {
@@ -43,13 +42,12 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 	@Autowired
 	private StorageKeyValueMapper storageKeyValueDao;
 	
-	@Deprecated
 	@Override
 	public List<SearchMeta> getSearchItems(int rdcId) {
 		List<SearchMeta> result = new ArrayList<SearchMeta>();
 		SearchMeta searchMeta = null;
 		
-		List<StorageKeysEntity> storageKeys = storageKeysDao.findAll(null);
+		List<StorageKeysEntity> storageKeys = storageKeysDao.findAll();
 		for(StorageKeysEntity storageKey:storageKeys){
 			StorageType stype = StorageType.getStorageType(storageKey.getType());
 			
@@ -92,13 +90,17 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 								
 		return result;
 	}
+	/**
+	 * 历史数据查询
+	 * 
+	 */
 	@Override
-	public Map<String, Object> getSearchItems(int rdcId,String types) {
+	public LinkedHashMap<String, Object> getSearchItems(int rdcId,String types) {
 		SearchMeta searchMeta = null;
-		Map<String , Object> allresult=new HashMap<String, Object>();
-		Map<String , Object> result=new HashMap<String, Object>();
-		Map<String , Object> reskey=new HashMap<String, Object>();
-		List<StorageKeysEntity> storageKeys =this.storageKeysDao.findAll(types);
+		LinkedHashMap<String , Object> allresult=new LinkedHashMap<String, Object>();
+		LinkedHashMap<String , Object> result=new LinkedHashMap<String, Object>();
+		LinkedHashMap<String , Object> reskey=new LinkedHashMap<String, Object>();
+		List<StorageKeysEntity> storageKeys =this.storageKeysDao.findbyFilter("1,2"," 'Temp','powerConsume','Switch' ");
 		for(StorageKeysEntity storageKey:storageKeys){
 			StorageType stype = StorageType.getStorageType(storageKey.getType());
 			switch (stype) {
@@ -124,18 +126,7 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 				result.put(storageKey.getType()+"_"+storageKey.getKey(), smList);
 				reskey.put(storageKey.getType()+"_"+storageKey.getKey(), storageKey.getDesc());
 				break;
-//			case COMPRESSORGROUP:
-//				//查看key是否有数据
-//				if (storageKeyValueDao.haveKey(StorageType.COMPRESSORGROUP.getTable(), storageKey.getKey())) {
-//					// 压缩机
-//					List<CompressorGroupSetEntity> pressSets = compressorGroupSetDao.findByRdcId(rdcId);
-//					for(CompressorGroupSetEntity pressSet:pressSets){
-//						searchMeta = new SearchMeta(StorageType.COMPRESSORGROUP.getType(), pressSet.getId(),
-//								storageKey.getKey(), storageKey.getDesc(), pressSet.getName(), storageKey.getUnit());
-//						result.add(searchMeta);
-//					}
-//				}
-//				break;
+
 			default:
 				break;
 			}
@@ -143,11 +134,6 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 		allresult.put("key", reskey);
 		allresult.put("keydata", result);
 		return allresult;
-	}
-	@Override
-	public List<StorageKeyValue> findValuesByTime(int type, Date startTime, Date endTime) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

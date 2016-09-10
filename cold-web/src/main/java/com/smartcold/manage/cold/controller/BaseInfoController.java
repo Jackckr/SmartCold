@@ -226,23 +226,20 @@ public class BaseInfoController extends BaseController {
 		return ResponseData.newFailure();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/expHistoryData")
 	public void expHistoryData(HttpServletRequest request,HttpServletResponse response,String filename,String title,Integer type,String key,Integer[] oids,String[] onames, String startTime,String endTime){
 		  try {
-			List<UserEntity> list = new ArrayList<UserEntity>();  
-			    for (int i = 0; i < 40000; i++) {
-			  	  UserEntity user = new UserEntity();  
-			  	  user.setId(10000+i);
-			  	  user.setUsername("XYZ"+i);
-			  	  user.setPassword("pwd"+i);
-			  	  user.setTelephone("135978113215");
-			  	  user.setEmail(i+"@qq.com");
-			  	  user.setRole(1);
-			  	  list.add(user);  
-			  	  System.err.println("创建第"+i+"条数据！");
-				   }
-			   String mode[][]={{"id","角色","用户名","密码","电话","邮箱"},{"id","role","username","password","telephone","email"},{"2","2","5","5","5","5"}} ;//标题（必须），对应属性（必须），宽度
-			   ExportExcelUtil.expExcel(response,filename+".xls",title,mode,list);
+			 List<List>  alldata=new ArrayList<List>();
+			 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+		     Date sttime=sdf.parse(startTime);    Date edTime=sdf.parse(endTime);  
+			 String mode[][]={{"id","key","值","时间"},{"id","key","value","addtime"},{"2","2","5","5","5","5"}} ;//标题（必须），对应属性（必须），宽度
+			 for (int i = 0; i < oids.length; i++) {
+				  int oid=	oids[i];
+				 List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
+				 alldata.add(datalist);
+			 }
+			  ExportExcelUtil.expExcel(response,filename+"_"+title+".xls",title,mode,onames, alldata);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
