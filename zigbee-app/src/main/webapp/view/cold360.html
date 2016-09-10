@@ -47,7 +47,7 @@
     <!-- header end-->
     <section class="toggle">
     	<div class="tempture current" id="temperature"><i class="iconfont">&#xe67f;</i>温度</div>
-    	<div class="light other" id="electric" onclick="location.href='electric.html'"><i class="iconfont">&#xe6f1;</i>
+    	<div class="light other" id="electric" ng-click="goElectric()"><i class="iconfont">&#xe6f1;</i>
     		<span class="dropNext">
     			<b>能耗</b><i class="iconfont">&#xe6f7;</i>
     		</span>
@@ -56,7 +56,7 @@
                 <li><a href="javascript:;" id="waterEnergy" ng-click="waterEnergy()">水耗</a></li>
             </ul>
     	</div>
-    	<div class="door other" id="opendoor" onclick="location.href='facility.html'"><i class="iconfont">&#xe6ed;</i>
+    	<div class="door other" id="opendoor" ng-click="goFacility()"><i class="iconfont">&#xe6ed;</i>
     		<span class="dropNext">
     			<b>设施</b><i class="iconfont">&#xe6f7;</i>
     		</span>
@@ -67,7 +67,7 @@
                 <li><a href="javascript:;" id="otherFacility" ng-click="otherFacilityFacility()">其他设施</a></li>
             </ul>
     	</div>
-    	<div class="other" id="other" onclick="location.href='other.html'"><i class="iconfont">&#xe69f;</i>
+    	<div class="other" id="other" ng-click="goOtherMonitor()"><i class="iconfont">&#xe69f;</i>
     		<span class="dropNext">
     			<b>其他</b><i class="iconfont">&#xe6f7;</i>
     		</span>
