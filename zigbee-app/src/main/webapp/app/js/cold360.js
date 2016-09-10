@@ -85,7 +85,7 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
             }
 
             //温度实时图——环形图
-            var temper = list[0] ? parseFloat(list[0].value).toFixed(1) : null;
+            var temper = list[0] ? parseFloat(list[0].value).toFixed(1) : '';
             var mainId = 'main' + storage.id;
             if(isreload){//避免重新创建
                 var chart=	$('#' + mainId).highcharts();
