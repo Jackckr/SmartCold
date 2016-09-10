@@ -622,12 +622,17 @@ checkLogin();
                 data: data
             }).then(function (resp) {
                 $scope.isDisabled = false;
+                $('.mybtn').attr('disabled',true);
+            	$('.mybtn').css('backgroundColor','gray');
                // alert("修改成功");
                 layer.open({
 				    content: '修改成功'
 				    ,btn: '确定'
-				  });  
-                goback();
+				    ,shadeClose:false
+				    ,yes:function(){
+				    	goback();
+				    }
+				  });                
             }, function (resp) {
                 console.log("Error status: " + resp.status);
             }, function (evt) {
