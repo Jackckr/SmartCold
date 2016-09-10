@@ -216,16 +216,24 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 				                  ],
 		                  series : [
 		                            {
-		                            	name:'降温因子',
-		                            	type:'bar',
-		                            	color:'blue',
-		                            	data:yData1
-		                            },
-		                            {
 		                            	name:'升温因子',
 		                            	type:'bar',
-		                            	color:'red',
+		                            	itemStyle:{
+		                            		normal:{
+		                            			color: 'rgb(255,67,80)'
+		                            		}
+		                            	},
 		                            	data:yData2
+		                            },
+		                            {
+		                            	name:'降温因子',
+		                            	type:'bar',
+		                            	itemStyle:{
+		                            		normal:{
+		                            			color: 'rgb(135,206,250)'
+		                            		}
+		                            	},
+		                            	data:yData1
 		                            }
 		                            ]
 					};
