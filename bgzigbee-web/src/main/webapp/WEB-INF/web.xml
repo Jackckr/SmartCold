@@ -35,7 +35,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
-	<listener>
+	<!-- <listener>
         <description>Comet4J容器侦听</description>
         <listener-class>org.comet4j.core.CometAppListener</listener-class>
     </listener>
@@ -52,7 +52,7 @@
     <servlet-mapping>
         <servlet-name>CometServlet</servlet-name>
         <url-pattern>/conn</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping> -->
 	
 <filter>  
     <filter-name>characterEncodingFilter</filter-name>  

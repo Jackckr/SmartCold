@@ -214,7 +214,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
 	                ,btn: '确定' 
 	            	,shadeClose:false
 	                ,yes:function(){
-	                	window.location.href='releasesuccessku.html';
+	                	window.location.href='releasesuccess.html?id=0';
 	                }
 	              });               
                 

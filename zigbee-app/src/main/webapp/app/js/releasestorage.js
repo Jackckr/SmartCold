@@ -271,7 +271,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    		,btn: '确定'
 	    			,shadeClose:false
 	                ,yes:function(){
-	    		    	window.location.href ="releasesuccess.html"; 
+	    		    	window.location.href ="releasesuccess.html?id=3"; 
 	                }
 		    	});
 		    }, function (resp) {
@@ -337,7 +337,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    		,btn: '确定'
 	    			,shadeClose:false
 	                ,yes:function(){
-	    		    	window.location.href ="releasesuccess.html"; 
+	    		    	window.location.href ="releasesuccess.html?id=2"; 
 	                }
 		    	});
 		    	//window.location.href ="releasesuccess.html"; 
@@ -401,7 +401,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    		,btn: '确定'
 	    			,shadeClose:false
 	                ,yes:function(){
-	    		    	window.location.href ="releasesuccess.html"; 
+	    		    	window.location.href ="releasesuccess.html?id=1"; 
 	                }
 		    	});
 		    }, function (resp) {
