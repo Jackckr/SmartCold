@@ -58,6 +58,7 @@
 	</footer>
 	<script  type="text/javascript">
 	if(!navigator.cookieEnabled){ /* alert("请打开手机Cookie"); */layer.open({content: '请打开手机Cookie~',btn: '确定'});}
+      try { window.localStorage.sfhide = "foobar";} catch(_) {layer.open({content: '请关闭隐身模式再浏览……',btn: '确定'});}
 	$("#username").val(util.getCookie("username"));
 	function login() {
 	    var me = "#btn_login";
