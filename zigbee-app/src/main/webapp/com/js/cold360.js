@@ -15,7 +15,8 @@ $(function() {
 	/*rdc下拉列表*/
 	$(".transion").click(function(){
 	 	$(".one").hide();
-	 	$(".two").show();	 	
+	 	$(".two").show();	
+	 	$('.search input').focus()
 	 });
   	 $(".cancel").click(function(){
   	 	$(".one").show();

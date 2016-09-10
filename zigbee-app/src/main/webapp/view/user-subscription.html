@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+	    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+	    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+	    <title>我的订阅</title>
+	    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	    <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
+	    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+	    <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+	    <script type="text/javascript" src="../com/js/common.js"></script>
+    </head>
+    <body>
+    	 <header>
+	    	<div class="area fl">
+	    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+	    	</div>
+	    	<div class="txt">我的订阅</div>
+	    </header>
+	    <section style="margin-bottom: 3rem;">
+	    	<ul class="subscription">
+	    		<li>
+	    			<span><i class="iconfont">&#xe675;</i>出租</span>
+	    			<button class="addSub">订阅</button>
+	    			<button class="scan" onclick="window.location.href='storehouse.html'">预览</button>
+	    		</li>
+	    		<li>
+	    			<span><i class="iconfont">&#xe673;</i>求租</span>
+	    			<button class="addSub">订阅</button>
+	    			<button class="scan" onclick="window.location.href='storehouse.html'">预览</button>
+	    		</li>
+	    		<li>
+	    			<span><i class="iconfont">&#xe64e;</i>出售</span>
+	    			<button class="addSub">订阅</button>
+	    			<button class="scan" onclick="window.location.href='goodslist.html'">预览</button>
+	    		</li>
+	    		<li>
+	    			<span><i class="iconfont">&#xe64f;</i>求购</span>
+	    			<button class="addSub">订阅</button>
+	    			<button class="scan" onclick="window.location.href='goodslist.html'">预览</button>
+	    		</li>
+	    		<li>
+	    			<span><i class="iconfont">&#xe658;</i>找货</span>
+	    			<button class="addSub">订阅</button>
+	    			<button class="scan" onclick="window.location.href='coldtransportlist.html'">预览</button>
+	    		</li>
+	    		<li>
+	    			<span><i class="iconfont">&#xe656;</i>找车</span>
+	    			<button class="addSub">订阅</button>
+	    			<button class="scan" onclick="window.location.href='coldtransportlist.html'">预览</button>
+	    		</li>
+	    	</ul>
+	    </section>
+	    <ul class="footer">
+	        <li><a href="../index.html"><i class="iconfont">&#xe65a;</i><p class="info">首页</p></a></li>
+	        <li>          
+	             <a href="news.html">
+	                <i class="iconfont">&#xe6f8;</i>
+	                <p class="info">资讯</p>
+	            </a>
+	        </li>
+	        <li>            
+	            <a href="messages.html">
+	                <i class="iconfont">&#xe71c;</i>
+	                <p class="info">消息</p>
+	            </a>
+	        </li>
+	        <li class="active"><a href="user.html"><i class="iconfont">&#xe6fd;</i><p class="info">我的</p></a></li>
+	    </ul>
+	    <script type="text/javascript">
+	    	$(function() {
+	    		$(".addSub").click(function (event) {
+	    			$(this).toggleClass('curSub');
+	    		})
+	    	});
+	    </script>
+    </body>
+</html>
