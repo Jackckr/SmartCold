@@ -6,14 +6,33 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
     Highcharts.setOptions({ global: { useUTC: false }});
+
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    var rootRdcId = $.getUrlParam('storageID');
+
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            $scope.currentRdc = $scope.storages[0];
-            $scope.rdcName = $scope.storages[0].name;
-            $scope.viewStorage($scope.storages[0].id);
+            if (rootRdcId == undefined || rootRdcId == null) {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
+                    $scope.viewStorage($scope.storages[0].id);
+            } else {
+                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+                    $scope.currentRdc = data[0];
+                    $scope.rdcName =  data[0].name;
+                    $scope.rdcId =  data[0].id;
+                    $scope.viewStorage($scope.rdcId);
+                });
+            }
         }
     });
+
     $scope.viewStorage = function (rdcId) {
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
@@ -43,6 +62,16 @@ app.controller('cold360', function ($scope, $location, $http, $rootScope) {
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+    }
+
+    $scope.goElectric = function () {
+        window.location.href='electric.html?storageID=' + $scope.rdcId;
+    }
+    $scope.goFacility = function () {
+        window.location.href='facility.html?storageID=' + $scope.rdcId;
+    }
+    $scope.goOtherMonitor = function () {
+        window.location.href='other.html?storageID=' + $scope.rdcId;
     }
 
     var formatTime = function (timeString) {

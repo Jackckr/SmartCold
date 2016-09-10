@@ -15,7 +15,8 @@ $(function() {
 	/*rdc下拉列表*/
 	$(".transion").click(function(){
 	 	$(".one").hide();
-	 	$(".two").show();	 	
+	 	$(".two").show();	
+	 	$('.search input').focus()
 	 });
   	 $(".cancel").click(function(){
   	 	$(".one").show();
@@ -71,5 +72,5 @@ $(function() {
 		observer: true,//修改swiper自己或子元素时，自动初始化swiper
 		observeParents: true//修改swiper的父元素时，自动初始化swiper
     });
-	
+
 });
