@@ -1,7 +1,6 @@
 package com.smartcold.manage.cold.dao.newdb;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -10,8 +9,6 @@ import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 
 public interface StorageDataCollectionMapper {
-	
-	List<Object> findobjByFilter(HashMap<String, Object> filter);
 
 	void batchInsert(List<StorageDataCollectionEntity> batchEntity);
 

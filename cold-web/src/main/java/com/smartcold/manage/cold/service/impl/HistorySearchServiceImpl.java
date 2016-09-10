@@ -98,7 +98,7 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 		Map<String , Object> allresult=new HashMap<String, Object>();
 		Map<String , Object> result=new HashMap<String, Object>();
 		Map<String , Object> reskey=new HashMap<String, Object>();
-		List<StorageKeysEntity> storageKeys =this.storageKeysDao.findAll(null);
+		List<StorageKeysEntity> storageKeys =this.storageKeysDao.findAll(types);
 		for(StorageKeysEntity storageKey:storageKeys){
 			StorageType stype = StorageType.getStorageType(storageKey.getType());
 			switch (stype) {

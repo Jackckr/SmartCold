@@ -96,44 +96,4 @@ public class StorageServiceImpl implements StorageService {
 		return result;
 	}
 	
-	@Override
-	public List<Object> findobjByFilter(int type, int oid, String key, String colm,Date startTime, Date endTime) {
-		HashMap<String,Object> filter=new HashMap<String, Object>();
-		filter.put("type", type);
-		filter.put("oid", oid);
-		filter.put("key", key);
-		filter.put("colm", colm);
-		filter.put("startTime", startTime);
-		filter.put("endTime", endTime);
-		return storageDataCollectionDao.findobjByFilter(filter);
-	}
-	
-	/**
-	 * 1. SELECT * FROM `deviceObjectMapping` WHERE `type` = #{type} AND `oid` = #{oid}->deviceid
-	 * 
-	 * 2. SELECT * FROM storagedatacollection
-	    WHERE 1 =1
-	    <if test="apid != null">
-		    AND `apid` = #{apid} 
-	    </if>
-	    <if test="deviceid != null">
-		    AND `deviceid` = #{deviceid} 
-	    </if>
-	    <if test="key != null">
-		    AND `key` = #{key} 
-	    </if>
-	    AND time > #{startTime} AND time &lt; #{endTime} 
-	    ORDER BY `time` DESC	
-	 *
-	 * select * from ${table} where `key`=#{key} AND oid=#{oid} AND `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` desc
-	 * 	    select * from ${table} where `key`=#{key} AND oid=#{oid} AND `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` desc
-	 * 
-	 * 
-	 */
-	@Override
-	public List<StorageKeyValue> findStorageByFilter(HashMap<String, Object> filter) {
-  //  
-		
-     return null;
-	}
 }

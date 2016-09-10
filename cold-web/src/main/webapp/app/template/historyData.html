@@ -23,7 +23,7 @@
 						       <li ng-repeat="(key,value) in  keylist" id="li_key_{{key}}" value="{{key}}"  ng-click="showkeyli(key)">{{value}}</li>
 						     </ul>
 						     <div id="val_list_div">
-						        <ul  ng-repeat="(key,value) in  keydata"  id="{{key}}_ul_val" sl_type="{{value[0].type}}" sl_key="{{value[0].key}}" value="{{key}}" class="hide">
+						        <ul  ng-repeat="(key,value) in  keydata"  id="{{key}}_ul_val" sl_type="{{value[0].type}}" sl_unit="{{value[0].unit}}" sl_key="{{value[0].key}}" value="{{key}}" class="hide">
 						         <li ng-repeat="obj in  value" value="{{obj.oid}}" oid="{{obj.oid}}" ng-click="selkeyvl($event)" class="select">{{obj.oidDesc}}</li>
 						       </ul>
 						     </div>
@@ -49,7 +49,7 @@
 					</div>
 					<div class="col-lg-12">
 						<div class="box box-gray">
-							<div class="bg-gray" id="data-chart" style="height: 300px;"></div>
+							<div class="bg-gray" id="data-chart" style="height: 600px;"></div>
 						</div>
 					</div>
 				</div>

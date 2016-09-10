@@ -51,22 +51,6 @@
 	
 	</select>
 	
-	<select id="findobjByFilter" parameterType="map" resultType="map">
-       SELECT ${colm} FROM storagedatacollection
-	    WHERE 1 =1
-	    <if test="apid != null">
-		    AND `apid` = #{apid} 
-	    </if>
-	    <if test="deviceid != null">
-		    AND `deviceid` = #{deviceid} 
-	    </if>
-	    <if test="key != null">
-		    AND `key` = #{key} 
-	    </if>
-	    AND time > #{startTime} AND time &lt; #{endTime} 
-	    ORDER BY `time` DESC
-    </select>
-	
 	<select id="findByTime" parameterType="map" resultMap="dataResultMap">
 	    SELECT * FROM storagedatacollection
 	    WHERE 1 =1

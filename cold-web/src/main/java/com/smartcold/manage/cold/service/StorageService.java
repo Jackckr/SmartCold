@@ -1,7 +1,6 @@
 package com.smartcold.manage.cold.service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +13,6 @@ public interface StorageService {
 
 	List<ColdStorageSetEntity> findByUserId(int userId);
 
-    List<Object> findobjByFilter(int type, int oid, String key, String colm,Date startTime, Date endTime);
- 
-	List<StorageKeyValue> findStorageByFilter(HashMap<String, Object> filter);
-	
 	List<StorageKeyValue> findByNums(int type, int oid, String key, int nums);
 
 	List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums);
