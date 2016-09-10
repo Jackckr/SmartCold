@@ -267,7 +267,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
 		    	layer.open({content: resp.data.message,btn: '确定'});
-		    	window.location.href ="coldtransportlist.html"; 
+		    	window.location.href ="releasesuccess.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -326,7 +326,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
 		    	layer.open({content: resp.data.message,btn: '确定'});
-		    	window.location.href ="goodslist.html"; 
+		    	window.location.href ="releasesuccess.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -381,7 +381,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
 		    	layer.open({content: resp.data.message,btn: '确定'});
-		    	window.location.href ="storehouse.html"; 
+		    	window.location.href ="releasesuccess.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {

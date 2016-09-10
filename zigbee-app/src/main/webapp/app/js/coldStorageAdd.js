@@ -211,7 +211,8 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                     content: '添加成功'
                     ,btn: '确定'
                   });
-                window.location.href='releasesuccess.html';
+                
+                window.location.href='releasesuccessku.html';
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
