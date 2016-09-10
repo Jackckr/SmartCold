@@ -59,8 +59,8 @@ public class ColdStorageController {
 
 	@RequestMapping(value = "/insertStorage", method = RequestMethod.POST)
 	@ResponseBody
-	public Object insertStorage(@RequestBody ColdStorageSetEntity entity) {
-		coldStorageSetDao.insertColdStorage(entity);
+	public Object insertStorage(@RequestBody ColdStorageSetEntity coldStorageSetEntity) {
+		coldStorageSetDao.insertColdStorage(coldStorageSetEntity);
 
 		return new ResultDto(0, "添加成功");
 	}

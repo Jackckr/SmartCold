@@ -6,13 +6,31 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
 
     $scope.user = window.user;
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
-    //if (window.user.roleid == 3); 超管特殊处理
+
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    var rootRdcId = $.getUrlParam('storageID');
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            $scope.rdcId = $scope.storages[0].id;
-            $scope.viewStorage($scope.rdcId);
-            $scope.initCompressorPressure($scope.rdcId);
+            if (rootRdcId == undefined || rootRdcId == null) {
+                $scope.currentRdc = $scope.storages[0];
+                $scope.rdcId = $scope.storages[0].id;
+                $scope.rdcName = $scope.storages[0].name;
+                $scope.viewStorage($scope.storages[0].id);
+                $scope.initCompressorPressure($scope.rdcId);
+            } else {
+                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+                    $scope.currentRdc = data[0];
+                    $scope.rdcName =  data[0].name;
+                    $scope.rdcId =  data[0].id;
+                    $scope.viewStorage($scope.rdcId);
+                    $scope.initCompressorPressure($scope.rdcId);
+                });
+            }
         }
     });
 
@@ -28,6 +46,35 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
+    }
+
+    $scope.searchRdcs = function (searchContent) {
+        // 超管特殊处理
+        if ($scope.user.roleid == 3) {
+            $http.get(ER.coldroot + '/i/rdc/searchRdc?filter=' + searchContent).success(function (data) {
+                if (data && data.length > 0) {
+                    $scope.storages = data;
+                }
+            });
+        }
+    }
+    $scope.changeRdc = function (rdc) {
+        clearSwiper();
+        $scope.rdcId = rdc.id;
+        $scope.rdcName = rdc.name;
+        $scope.searchContent = "";
+        $scope.viewStorage(rdc.id);
+        $scope.initCompressorPressure(rdc.id);
+    }
+
+    $scope.goTempture = function () {
+        window.location.href='cold360.html?storageID=' + $scope.rdcId;
+    }
+    $scope.goElectric = function () {
+        window.location.href='electric.html?storageID=' + $scope.rdcId;
+    }
+    $scope.goFacility = function () {
+        window.location.href='facility.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;

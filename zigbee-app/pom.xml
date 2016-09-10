@@ -49,11 +49,6 @@
 					<warName>${project.artifactId}-${env}-${project.version}</warName>
 					<webResources>
 						<resource>
-							<directory>src/main/resources</directory>
-							<filtering>false</filtering>
-							<targetPath>WEB-INF/classes</targetPath>
-						</resource>
-						<resource>
 							<directory>src/main/webapp</directory>
 							<filtering>false</filtering>
 							<includes>
