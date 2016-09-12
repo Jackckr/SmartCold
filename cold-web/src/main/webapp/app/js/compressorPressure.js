@@ -57,6 +57,18 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
     	        align: 'left',
     	        left: 10
     	    },
+    	    title: {
+                text: '排气温度监控',
+                x: 'right',
+                y: 'top',
+                itemGap: 20,
+                textStyle: {
+                    color: 'rgba(30,144,255,0.8)',
+                    fontFamily: '微软雅黑',
+                    fontSize: 25,
+                    fontWeight: 'bolder'
+                }
+            },
     	    tooltip: {},
     	    xAxis: {
     	        data: xData,

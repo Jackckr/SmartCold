@@ -24,7 +24,7 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 				xData.unshift(baseTools.formatTime(item.addtime))
 				yData.unshift(item.value * powerSet.radio)
 			})
-			option = baseTools.getEchartSingleOption('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line', yData[0]);
+			option = baseTools.getEchartSingleOption('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line', parseInt(yData[0]));
 			lineChart.setOption(option);
 		})
 		templateUrl = "/i/baseInfo/getKeyValueData?type=" + 10 + "&oid=" + $scope.powerid
