@@ -9,20 +9,22 @@
         <param-value>/WEB-INF/classes/log4j.properties</param-value>  
     </context-param>  
     
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
     
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-            <!--classpath*:config/spring/common/appcontext-*.xml,-->
             classpath*:config/spring/local/appcontext-*.xml,
         </param-value>
 	</context-param>
 	
-	<listener>
+    <listener><!-- log4监听 -->
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+	<listener><!-- srping mvc监听 -->
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener><!-- 防止内存泄露        --> 
+	   <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>   
 	</listener>
 
 	<servlet>
@@ -66,6 +68,8 @@
 		<url-pattern>/a/*</url-pattern>
 		<url-pattern>/i/*</url-pattern>
 	</servlet-mapping>
+	
+	
 	<welcome-file-list>
 	    <welcome-file>index.html</welcome-file>
 	</welcome-file-list>

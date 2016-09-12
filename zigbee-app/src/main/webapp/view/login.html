@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
-    <script type="text/javascript">$.ajax({type:"POST",cache:false,async:false,data:{token:util.getCookie("token")},dataType:"json",url:ER.root+"/i/user/findUser",xhrFields: { withCredentials: true },success:function(data){if(data&&data.id!=0){window.location.href="../index.html"}}});</script>
+    <script type="text/javascript">if(window.user!=null){window.location.href="../index.html";}</script>
 </head>
 <body>
  		<header>	    		
@@ -59,7 +59,7 @@
 	<script  type="text/javascript">
 	if(!navigator.cookieEnabled){ /* alert("请打开手机Cookie"); */layer.open({content: '请打开手机Cookie~',btn: '确定'});}
       try { window.localStorage.sfhide = "foobar";} catch(_) {layer.open({content: '请关闭隐身模式再浏览……',btn: '确定'});}
-	$("#username").val(util.getCookie("username"));
+	  $("#username").val(util.getCookie("username"));
 	function login() {
 	    var me = "#btn_login";
 	    if ($(me).data('isLoading') === true) return; //防止再次点击登录
@@ -85,12 +85,10 @@
 					if (data.success) {
 					var token=data.message.substr(6);
 					  $.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:token}, url:ER.root + "/i/user/findUser",success:function(userdata) {if (userdata && userdata.id != 0) {
-						window.user = userdata;
 						util.setCookie("username",userName,"d7");
 						window.localStorage.lkuser=JSON.stringify(userdata);
-						util.setCookie("username",userName,"d7");
+						window.sessionStorage.lkuser=window.localStorage.lkuser; 
 						util.setCookie("token",token,"d7");
-//                         document.cookie = data.message;
 						if (window.location.hash != "") {
 							backUrl = window.location.hash.substring(1);
 						} else {
@@ -100,21 +98,11 @@
 						window.Event.returnValue = false;
 					} else {
 						window.user = null;
-						window.localStorage.lkuser=null;
+						window.sessionStorage.removeItem("lkuser");
+						window.localStorage.removeItem("lkuser");
 						 $("#mention")[0].hidden = false;
 						 showErrorInfo("服务异常！请联系管理员！");
 					}} });
-// 					    checktoken();//检查token
-// 						util.setCookie("username",userName,"d7");
-// 						util.setCookie("token",data.message.substr(6),"d7");
-//                         document.cookie = data.message;
-// 						if (window.location.hash != "") {
-// 							backUrl = window.location.hash.substring(1);
-// 						} else {
-// 							backUrl = "../index.html";
-// 						}
-// 						window.location.href = backUrl;
-// 						window.Event.returnValue = false;
 					} else {
 					    $("#mention")[0].hidden = false;
 						showErrorInfo(data.message);
