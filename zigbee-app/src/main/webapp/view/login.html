@@ -87,7 +87,7 @@
 					  $.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:token}, url:ER.root + "/i/user/findUser",success:function(userdata) {if (userdata && userdata.id != 0) {
 						util.setCookie("username",userName,"d7");
 						window.localStorage.lkuser=JSON.stringify(userdata);
-						window.sessionStorage.lkuser=window.localStorage.lkuser; 
+// 						window.sessionStorage.lkuser=window.localStorage.lkuser; 
 						util.setCookie("token",token,"d7");
 						if (window.location.hash != "") {
 							backUrl = window.location.hash.substring(1);
@@ -98,7 +98,6 @@
 						window.Event.returnValue = false;
 					} else {
 						window.user = null;
-						window.sessionStorage.removeItem("lkuser");
 						window.localStorage.removeItem("lkuser");
 						 $("#mention")[0].hidden = false;
 						 showErrorInfo("服务异常！请联系管理员！");

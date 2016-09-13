@@ -106,7 +106,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 			return option
 		}
 	}
-}])
+}]);
 
 
 coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($rootScope, $state,$http) {
@@ -117,6 +117,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
         		$rootScope.rdcId = rdcId;
+        		window.sessionStorage.smrdcId=rdcId;//缓存rdcid
         		// 初始化冷库
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){

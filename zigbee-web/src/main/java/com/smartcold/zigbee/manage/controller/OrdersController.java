@@ -94,11 +94,15 @@ public class OrdersController extends BaseController {
 	 */
 	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
-	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id) {
+	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id,Integer uid) {
 		HashMap<String, Object> dataMap=new HashMap<String, Object>();
-		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user==null||user.getId()==0){return ResponseData.newFailure("请登录后查看信息");}
-		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id),user.getId());	
+		if(uid==null||uid==0){
+			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+			if(user==null||user.getId()==0){return ResponseData.newFailure("请登录后查看信息");}else{
+				uid=user.getId();
+			}
+		}
+		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id),uid);	
 		if(oEntity!=null){
 		    UserEntity ownerUser = this.userDao.findUserById( oEntity.getOwnerid());
 		    UserEntity orderUser = this.userDao.findUserById( oEntity.getUserid());

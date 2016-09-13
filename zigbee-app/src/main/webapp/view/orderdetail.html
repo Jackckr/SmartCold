@@ -23,7 +23,7 @@
       $scope.appmode=[{title:["","货品","配送","冷库"]}];//1:货品 2：配送 3:仓库
 	  $http.defaults.withCredentials=true;$http.defaults.headers={"Content-Type": "application/x-www-form-urlencoded"};
       $scope.initdata=function(){
-			$http.get(ER.root+"/i/orders/findOrderByOrderId",  { params: {id:id}  }).success(function(data) { //获得数据
+			$http.get(ER.root+"/i/orders/findOrderByOrderId",  { params: {id:id,uid:window.user.id}  }).success(function(data) { //获得数据
 			 if(data.success){
 				   $scope.rsd=data.entity.rsd; //发布的信息
 				   $scope.orders=data.entity.orders; //联络单信息
@@ -70,10 +70,12 @@
 	};
 	$scope.initdata();
 	$scope.initevg();
+	$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {/*alert("33");*/ baguetteBox.run('.baguetteBoxOne', {buttons:true});});
 });
+app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
     </script>
 </head>
-	<body  ng-app="app"  ng-controller="orderdetail" ng-cloak >
+	<body  ng-app="app"  ng-controller="orderdetail" ng-cloak on-finish-render-filters>
 	    <header>
 	    	<div class="area fl">
 	    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>

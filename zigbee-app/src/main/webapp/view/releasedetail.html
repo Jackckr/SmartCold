@@ -53,11 +53,12 @@
 
 	$scope.initdata();
 	$scope.initevg();
+	$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {/*alert("33");*/ baguetteBox.run('.baguetteBoxOne', {buttons:true});});
 });
-
+app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
     </script>
 </head>
-	<body  ng-app="app"  ng-controller="releasedetail" ng-cloak  >
+	<body  ng-app="app"  ng-controller="releasedetail" ng-cloak ng-cloak on-finish-render-filters >
 	    <header>
 	    	<div class="area fl">
 	    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>

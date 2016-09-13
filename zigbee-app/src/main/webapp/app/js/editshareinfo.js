@@ -241,6 +241,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkCarSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
+					uid:window.user.id,
 					title:$scope.title,
 					codeLave1:$scope.codeLave11,
 					codeLave2:$scope.codeLave22,
@@ -298,6 +299,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkGoodsSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
+					uid:window.user.id,
 					title:$scope.title,
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
@@ -354,6 +356,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkStorageSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
+					uid:window.user.id,
 					title:$scope.title,
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
