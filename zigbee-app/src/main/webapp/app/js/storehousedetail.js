@@ -78,5 +78,7 @@
     } ; 
 	$scope.initdata();
 	$scope.initevg();
+	$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {/*alert("33");*/ baguetteBox.run('.baguetteBoxOne', {buttons:true});});
 	$('body').show();
 });
+ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
