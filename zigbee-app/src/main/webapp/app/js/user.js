@@ -6,7 +6,6 @@ var app = angular.module('app', []);
 		 $http.get(ER.root+"/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
 			 if(data.id!=0){$scope.userinfo=window.user= data; 
 				window.localStorage.lkuser=JSON.stringify(data);
-				window.sessionStorage.lkuser=window.localStorage.lkuser; 
 			 }
 		 }); 
 	 };

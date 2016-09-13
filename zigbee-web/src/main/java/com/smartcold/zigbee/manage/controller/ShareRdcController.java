@@ -202,18 +202,21 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value = "/getSEListByUID")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getSEListByUID(HttpServletRequest request,Integer userID) {
-		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user!=null&&userID!=null&&userID!=0&&user.getId()==userID){
-			this.getPageInfo(request);
-			HashMap<String, Object> filter=new HashMap<String, Object>();
-			filter.put("sstauts", 1);//必须
-			filter.put("releaseID", userID);//必须
-			PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
-			return ResponseData.newSuccess(data);
-		}else{
-			return ResponseData.newFailure();
+	public ResponseData<RdcShareDTO> getSEListByUID(HttpServletRequest request,Integer uid) {
+		if(uid==null||uid==0){
+		    UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+			if(user!=null&&user.getId()!=0){
+				uid=user.getId();
+			}else{
+				return ResponseData.newFailure("会话超时，请重新登录！~");
+			}
 		}
+		this.getPageInfo(request);
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("sstauts", 1);//必须
+		filter.put("releaseID", uid);//必须
+		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
+		return ResponseData.newSuccess(data);
 	}
 	
 	
@@ -360,17 +363,16 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="getRdcByUid")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request){
+	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request,Integer uid){
 		this.getPageInfo(request);//
-		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user!=null&&user.getId()!=0 ){
-			HashMap<String, Object> parameters=new HashMap<String, Object>();
-			parameters.put("userid",user.getId());// 
-			parameters.put("audit",2);//
-			PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
-			return ResponseData.newSuccess(rdcList);
+		if(uid==null||uid==0){
+		    UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");if(user!=null&&user.getId()!=0){uid=user.getId();}else{return ResponseData.newFailure("回话超时，请重新登录！~");}
 		}
-	    return ResponseData.newFailure();
+		HashMap<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("userid",uid);// 
+		parameters.put("audit",2);//
+		PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);
+		return ResponseData.newSuccess(rdcList);
 	}
 	/**
 	 * 删除用户关联的信息
@@ -381,12 +383,11 @@ public class ShareRdcController  {
 	@RequestMapping(value="delShareInfoByUid")
 	@ResponseBody
 	public ResponseData<String> delShareInfoByUid(HttpServletRequest request,Integer id,Integer uid){
-		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user!=null&&user.getId()!=0&&id!=null &&uid!=null&&uid==user.getId()){//三级验证 防止非法操作 
-			this.rdcShareService.delShareInfoByid(id, user.getId());
+//		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		if(uid!=null&&uid!=0){
+			this.rdcShareService.delShareInfoByid(id, uid);
 			return ResponseData.newSuccess();
 		}else{
-			if (user==null) {logger.error("非法删除操作：->未登录，数据id->"+id);} 
 			return ResponseData.newFailure("非法操作~");
 		}
 	    
@@ -402,24 +403,28 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="shareFreeRelease")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data){
+	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data,Integer uid){
 		try {
-			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");
-			if(StringUtil.isnotNull(data)&&user!=null&&user.getId()!=0){//
-				RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
-				if(rdcShareDTO.getId()==0){
-					rdcShareDTO.setReleaseID(user.getId());//设置发布消id//user.getId()
-					rdcShareDTO.setStauts(1);
-		            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
+			if(uid==null||uid==0){
+			    UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+				if(user!=null&&user.getId()!=0){
+					uid=user.getId();
 				}else{
-					rdcShareDTO.setUpdatetime(TimeUtil.getDateTime());
-					this.rdcShareService.updateshareInfo(rdcShareDTO);//修改发布消息
+					return ResponseData.newFailure("会话超时，请重新登录！~");
 				}
-				this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, user, request);
-			    return ResponseData.newSuccess("发布成功~");
-			}else{
-				return ResponseData.newFailure("当前用户没有执行登录操作~");
 			}
+			RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+			if(rdcShareDTO.getId()==0){
+				rdcShareDTO.setReleaseID(uid);//设置发布消id//user.getId()
+				rdcShareDTO.setStauts(1);
+	            this.rdcShareService.addShareMsg(rdcShareDTO);//免费发布消息
+			}else{
+				rdcShareDTO.setUpdatetime(TimeUtil.getDateTime());
+				this.rdcShareService.updateshareInfo(rdcShareDTO);//修改发布消息
+			}
+			this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, null, request);
+		    return ResponseData.newSuccess("发布成功~");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -5,7 +5,6 @@
            	$scope.user=window.user  = null;
            	util.delCookie("token");
            	window.localStorage.removeItem("lkuser");
-           	window.sessionStorage.removeItem("lkuser");
            	gohome();
      };
 	$scope.initdata=function(){
