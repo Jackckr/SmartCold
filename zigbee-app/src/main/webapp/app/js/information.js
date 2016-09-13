@@ -2,6 +2,12 @@
 /**
  * 冷库列表
  */
+function changmode(i){
+	var bd = document.getElementById("tabBox1-bd");
+	bd.parentNode.style.height = bd.children[i].children[0].offsetHeight+"px";
+	if(i>0)bd.parentNode.style.transition="200ms";//添加动画效果
+	if($("#ul_newsL_list"+(i+1)+" li").length==0){ $(".nodata").show();}else{$(".nodata").hide();}
+}
 $().ready(function() { 
 	  var maxSize=10;
       var totalPages=  currentPage=  1;  // 当前页
@@ -83,6 +89,7 @@ $().ready(function() {
 	   	     isLoadRB=false;
 		    });
 	};
+	
   	getPageData1();
   	getPageData2();
   	getPageData3();

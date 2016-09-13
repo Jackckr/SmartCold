@@ -57,17 +57,7 @@
 
 			</div>
 		</div>
-		<script type="text/javascript">
-		TouchSlide({ slideCell:"#tabBox1",
-			endFun:function(i){ //高度自适应
-			//alert(i);
-				var bd = document.getElementById("tabBox1-bd");
-				bd.parentNode.style.height = bd.children[i].children[0].offsetHeight+"px";
-				if(i>0)bd.parentNode.style.transition="200ms";//添加动画效果
-				if($("#ul_newsL_list"+(i+1)+" li").length==0){  $(".nodata").show();}else{$(".nodata").hide();}
-			}
-		});
-		</script>
+		<script type="text/javascript">TouchSlide({ slideCell:"#tabBox1",endFun:changmode});</script>
 		<!-- TAB主要代码 End ================================ -->
     </article>
     <div class="nodata">
