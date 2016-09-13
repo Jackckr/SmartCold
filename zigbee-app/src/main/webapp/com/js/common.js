@@ -34,7 +34,16 @@ window.onload = function(){
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 };
-
+/*
+ * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
+ * 引入 dist/vconsole.min.js 到项目中：
+ * <script type="text/javascript" src="../com/js/vConsole-2.4.0/dist/vconsole.min.js" ></script> 
+ * <script>
+	console.log('Hello world');
+	// 然后点击右下角 vConsole 按钮即可查看到 log
+	</script>
+ * 
+*/
 
 
 
