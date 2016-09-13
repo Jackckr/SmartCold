@@ -24,10 +24,12 @@ import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.entity.MessageEntity;
 import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
+import com.smartcold.zigbee.manage.util.CometUtil;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.SetUtil;
@@ -164,6 +166,11 @@ public class OrdersController extends BaseController {
 			ordersDTO.setUseraddress(address);
 			ordersDTO.setOwneraddress(owner.getAddress());
 			orderDao.insertOrder(order);
+			MessageEntity message = new MessageEntity();
+			message.setUserid(order.getUserid());
+			message.setMsgdata("ceshi");
+			message.setMsgcount(1);
+			new CometUtil().pushTo(message);
 			// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

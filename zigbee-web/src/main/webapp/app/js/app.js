@@ -220,6 +220,21 @@ coldWeb.filter('sizeformat', function () {
 });
 
 
+JS.Engine.start('conn');
+JS.Engine.on(
+        { 
+          /* // 对应服务端 “频道1” 的值 msgCount
+           msgCount : function(msgCount){
+               alert(msgCount);
+           },*/
+           // 对应服务端 “频道2” 的值 msgData
+           msgData : function(msgData){
+        	   alert(msgData);
+           },
+       }
+   );
+
+
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/home");
     //index
