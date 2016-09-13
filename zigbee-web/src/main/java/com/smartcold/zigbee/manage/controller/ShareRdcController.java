@@ -7,9 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.net.time.TimeUDPClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +22,6 @@ import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
-import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 import com.smartcold.zigbee.manage.util.TimeUtil;
@@ -46,7 +42,6 @@ public class ShareRdcController  {
 	@Resource(name="docLibraryService")
 	private DocLibraryService docLibraryService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(ShareRdcController.class);
 
 	/**
 	 * @author MaQiang
