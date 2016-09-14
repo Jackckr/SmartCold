@@ -179,6 +179,9 @@
                 };
 
                 scope.closeGallery = function () {
+                	 scope.showNext();
+                     scope.showPrev();
+                	
                     scope.opened = false;
                     if (scope.hideOverflow) {
                         $('body').css({overflow: ''});
