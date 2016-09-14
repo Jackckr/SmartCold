@@ -21,7 +21,14 @@ $().ready(function() {
      };
 
      function gethtml(msg){
-   	  var news=['<li><a href="msgdetail.html?id='+msg.id+'"class="clearfix"><div class="imgFl fl"><img  src="'+news.coverpic+'"></div> <div class="newsTxt"><p class="newsTitle">'+news.title+'</p><p class="newsDate">'+news.posttime+'</p></div></a></li>'];
+      var title = "";
+      if(msg.msgcategory==1){
+    	   title = "订单通知";
+      }
+      else if(msg.msgcategory==2){
+    	  title = "冷库360报警";
+      }
+   	  var news=['<li class="messageList clearfix"><a href="'+msg.url+'"><div class="messageImg fl"><img  src="message'+msg.msgcategory+'"></div> <div class="messageInfo"><p class="newsTitle">'+title+'</p><p class="newsTitle">'+msg.msgdata+'</p><p class="newsDate">'+msg.informtime+'</p></div></a></li>'];
    	  return news.join("");
    }
   	function getPageData(){//启用无限加载
