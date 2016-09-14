@@ -178,23 +178,28 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
      $("#myText1,#myText2,#myText3").bind("keyup", function(event) { if (event.keyCode == "13") { $scope.changDataMode(); } });//数据搜索事件
      $("#_sh_conner_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active_rdc"); $(this).addClass("active_rdc");$scope.changDataMode();});//业务类型
      $scope.gosharedile=function(sharid){
+    	
     		$scope.datatype=1;
     		$scope._dataid =sharid;//当前数据类型
     		$($scope._dataid?"#release_main":"#nodata_div").removeClass("hide");
     		if(!$scope._dataid){return;}
     		
+    		
         	$http.get('/i/ShareRdcController/getSEByID', { params: {"id": $scope._dataid}  }).success(function(data) {
+        		$scope.vo=null;
         		 $scope.vo=data.entity;
         		 $scope.dgfiles=data.entity.files;
         		 $scope.dgdatatype=data.entity.dataType;
         		 $scope.storageGallery = new Array();
-        		 if($scope.dgfiles!=null&&$scope.dgfiles.length>0){
-	                  for(var j=0; j<$scope.dgfiles.length; j++){
-	                  	$scope.storageGallery.push({thumb:$scope.dgfiles[j] ,img:$scope.dgfiles[j]});
-	                  }
-	        	 }
+	        		 $scope.storageGallery.length=0;
+	        		 if($scope.dgfiles!=null&&$scope.dgfiles.length>0){
+		                  for(var j=0; j<$scope.dgfiles.length; j++){
+		                  	$scope.storageGallery.push({thumb:$scope.dgfiles[j] ,img:$scope.dgfiles[j]});
+		                  }
+		        	 }
         		 $("#shaerdailModal").modal('show');
         	}); 
+//        	  $scope.$apply(function () { $("#dg_imglist").html('<ng-gallery images="storageGallery" thumbs-num="10" ></ng-gallery>'); });
 	 };
 	 $scope.getOrder=function () {  
 		    $("#shaerdailModal").modal("hide");
