@@ -17,6 +17,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
+import com.smartcold.zigbee.manage.dao.MessageMapper;
 import com.smartcold.zigbee.manage.dao.OrdersMapper;
 import com.smartcold.zigbee.manage.dao.RdcShareMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
@@ -46,6 +47,8 @@ public class OrdersController extends BaseController {
 	private UserMapper userDao;
 	@Autowired
 	private RdcShareMapper rsmDao;
+	@Autowired
+	private MessageMapper msgDao;
     @Autowired
 	private FileDataMapper fileDataDao;
     @Autowired
@@ -173,7 +176,9 @@ public class OrdersController extends BaseController {
 			MessageEntity message = new MessageEntity();
 			message.setUserid(order.getUserid());
 			message.setMsgdata(order.getOrdername()+":您已经抢到来自"+order.getOwnername()+"的订单");
+			message.setMsgcategory(1);
 			message.setMsgcount(1);
+			msgDao.insertMessage(message);
 			new CometUtil().pushTo(message);
 			// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
 		} catch (Exception e) {
