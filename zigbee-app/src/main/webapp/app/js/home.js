@@ -1,9 +1,8 @@
-checktoken();
 function gordcdile(sharid){window.location.href ="view/colddetail.html?id="+sharid; };
 function goshadile(sharid){window.location.href ="view/storehousedetail.html?id="+sharid; };
-function gordclist() {var key=$("#searchdiv").val();   window.sessionStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;};
-function gosharlist(){var key=$("#searchdiv").val();   window.sessionStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;   };
-function goshkeylist(em){var key=$(em).attr("value");  window.sessionStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/searchList.html?key="+key;};
+function gordclist() {var key=$("#searchdiv").val();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;};
+function gosharlist(){var key=$("#searchdiv").val();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;   };
+function goshkeylist(em){var key=$(em).attr("value");  window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/searchList.html?key="+key;};
 $().ready(function() { 
 	var province=null,sccsize=0,shear=false;
 	function initdata(){
@@ -28,7 +27,7 @@ $().ready(function() {
 		histjson.unshift({'key':key,'sccsize':sccsize});
 	    var	histdata=JSON.stringify(histjson);
 	    util.setCookie("mianshdt",histdata,"d7");//保存7天
-	    window.sessionStorage.setItem("shdatakey", key);
+	    window.localStorage.setItem("shdatakey", key);
 	}
 	function initevg(){
 		 $("#searchdiv").keyup(function(event){seachList(this);});

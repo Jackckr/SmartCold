@@ -48,6 +48,7 @@ import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.BaiduMapUtil;
 import com.smartcold.zigbee.manage.util.MathUtil;
+import com.smartcold.zigbee.manage.util.StringUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:14)
@@ -246,24 +247,27 @@ public class RdcServiceImpl implements RdcService {
                     }
                 }
             }
-            
-            String[] capacityheight = rdcExtEntity.getStoragecapacityheight().split(",");// 1:2,2:2,3:2,4:1,5:1
-            if (capacityheight.length > 0){
-                for (int i = 0; i < capacityheight.length; i++) {
-                    String[] capacityheightItem = capacityheight[i].split(":");
-                    if (capacityheightItem[0].equalsIgnoreCase("1")) {
-                        rdcAddDTO.setHeight1(Integer.parseInt(capacityheightItem[1]));
-                    } else if (capacityheightItem[0].equalsIgnoreCase("2")) {
-                        rdcAddDTO.setHeight2(Integer.parseInt(capacityheightItem[1]));
-                    } else if (capacityheightItem[0].equalsIgnoreCase("3")) {
-                        rdcAddDTO.setHeight3(Integer.parseInt(capacityheightItem[1]));
-                    } else if (capacityheightItem[0].equalsIgnoreCase("4")) {
-                        rdcAddDTO.setHeight4(Integer.parseInt(capacityheightItem[1]));
-                    } else if (capacityheightItem[0].equalsIgnoreCase("5")) {
-                        rdcAddDTO.setHeight5(Integer.parseInt(capacityheightItem[1]));
-                    }
-                }
+            String stdata = rdcExtEntity.getStoragecapacityheight();
+            if(StringUtil.isnotNull(stdata)){
+            	   String[] capacityheight =stdata.split(",");// 1:2,2:2,3:2,4:1,5:1
+                   if (capacityheight.length > 0){
+                       for (int i = 0; i < capacityheight.length; i++) {
+                           String[] capacityheightItem = capacityheight[i].split(":");
+                           if (capacityheightItem[0].equalsIgnoreCase("1")) {
+                               rdcAddDTO.setHeight1(Integer.parseInt(capacityheightItem[1]));
+                           } else if (capacityheightItem[0].equalsIgnoreCase("2")) {
+                               rdcAddDTO.setHeight2(Integer.parseInt(capacityheightItem[1]));
+                           } else if (capacityheightItem[0].equalsIgnoreCase("3")) {
+                               rdcAddDTO.setHeight3(Integer.parseInt(capacityheightItem[1]));
+                           } else if (capacityheightItem[0].equalsIgnoreCase("4")) {
+                               rdcAddDTO.setHeight4(Integer.parseInt(capacityheightItem[1]));
+                           } else if (capacityheightItem[0].equalsIgnoreCase("5")) {
+                               rdcAddDTO.setHeight5(Integer.parseInt(capacityheightItem[1]));
+                           }
+                       }
+                   }
             }
+         
 
             if (!StringUtils.isEmpty(rdcExtEntity.getHonorpiclocation())) {
                 String[] honorpiclocation = rdcExtEntity.getHonorpiclocation().split(",");

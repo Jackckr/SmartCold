@@ -14,7 +14,7 @@
 		$().ready(function() { 
 			  var ul_select=$("#ul_rdcsL_list");
 			  var maxSize=10,totalPages=  currentPage=  1,isLoadRB=false;  
-			  $("#searchDara_div input").val(window.sessionStorage.getItem("shdatakey"));window.sessionStorage.removeItem("shdatakey");
+			  $("#searchDara_div input").val(window.localStorage.getItem("shdatakey"));window.localStorage.removeItem("shdatakey");
 		      gosharedile=function(sharid){window.location.href ="colddetail.html?id="+sharid;};
 		      initevg=function(){
 		   		$(".droplist a").click(function(e){//条件过滤

@@ -9,20 +9,22 @@
         <param-value>/WEB-INF/classes/log4j.properties</param-value>  
     </context-param>  
     
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
     
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-            <!--classpath*:config/spring/common/appcontext-*.xml,-->
             classpath*:config/spring/local/appcontext-*.xml,
         </param-value>
 	</context-param>
 	
-	<listener>
+    <listener><!-- log4监听 -->
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+	<listener><!-- srping mvc监听 -->
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener><!-- 防止内存泄露        --> 
+	   <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>   
 	</listener>
 
 	<servlet>
@@ -34,6 +36,26 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	
+	<listener>
+        <description>Comet4J容器侦听</description>
+        <listener-class>org.comet4j.core.CometAppListener</listener-class>
+    </listener>
+    
+    <listener>
+        <description>监听我们自己的推送类</description>
+        <listener-class>com.smartcold.zigbee.manage.util.CometUtil</listener-class>
+    </listener>
+    <servlet>
+        <description>客户端访问入口</description>
+        <servlet-name>CometServlet</servlet-name>
+        <servlet-class>org.comet4j.core.CometServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CometServlet</servlet-name>
+        <url-pattern>/conn</url-pattern>
+    </servlet-mapping> 
 
 	<filter>  
 	  <filter-name>characterEncodingFilter</filter-name>  
@@ -66,6 +88,8 @@
 		<url-pattern>/a/*</url-pattern>
 		<url-pattern>/i/*</url-pattern>
 	</servlet-mapping>
+	
+	
 	<welcome-file-list>
 	    <welcome-file>index.html</welcome-file>
 	</welcome-file-list>

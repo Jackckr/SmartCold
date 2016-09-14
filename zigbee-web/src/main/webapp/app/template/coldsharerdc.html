@@ -82,7 +82,7 @@
 			         <td>{{rdc.sqm}}吨</td>
 			         <td>{{rdc.validStartTime}}  至 {{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary"  ng-click="gosharedile(rdc.id);">详情</button>
+			         	<button class="btn btn-primary"  >详情</button>
 			         </td>
 			      </tr>
 			   </tbody>
@@ -185,7 +185,7 @@
 			         <td>{{rdc.codeLave1}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary" ng-click="gosharedile(rdc.id);">详情</button>
+			         	<button class="btn btn-primary" >详情</button>
 			         </td>
 			      </tr>
 			   </tbody>
@@ -270,7 +270,7 @@
 			         <td>{{rdc.codeLave2}}</td>
 			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
 			         <td>
-			         	<button class="btn btn-primary"  data-toggle="modal" value="{{rdc.id}}" ng-click="gosharedile(rdc.id)">详情</button>
+			         	<button class="btn btn-primary"  data-toggle="modal" value="{{rdc.id}}" >详情</button>
 			         </td>
 			      </tr>
 			   </tbody>
@@ -297,7 +297,7 @@
              <!-- 主体开始 -->
              <div id="release_main" class=" shar_none" style="margin-top: 0px;">
 					<div class="main"  >
-							<div id="dg_imglist" ng-if="vo.files.length" class="lists" style="width: 630px;">
+							<div id="dg_imglist" ng-if="storageGallery.length" class="lists" style="width: 630px;">
                                     <ng-gallery images="storageGallery" thumbs-num="10" ng-if="storageGallery.length"></ng-gallery>
 							</div>
 							<p class="h4" val="{{dgdatatype}}">{{appmode[0].title[dgdatatype]}}详情</p>

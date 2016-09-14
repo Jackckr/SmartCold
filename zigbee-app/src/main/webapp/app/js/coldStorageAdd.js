@@ -1,21 +1,8 @@
 checkLogin();
 angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldStorageAdd', function($scope,$http, Upload){
-    $scope.haveOrNots = [];
-    
-     $.ajax({type:"GET", cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",
-	        success:function(data) {
-	        	$scope.phoneNum = data.telephone;
-	        }
-	    });
-    
-    $scope.haveOrNots.push({
-        id: 0,
-        name: "无",
-    });
-    $scope.haveOrNots.push({
-        id: 1,
-        name: "有",
-    });
+	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+	$scope.phoneNum = window.user.telephone;
+	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 0,name: "无"}];
     // 获取省列表
     $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;

@@ -4,11 +4,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var url=window.location.href;
 	var arrurl=url.split("?id=");
-	  $.ajax({type:"GET", cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",
-	        success:function(data) {
-	        	$scope.telephone = data.telephone;
-	        }
-	    });
+//	  $.ajax({type:"GET", cache:false,timeout : 5000,dataType:"json",data:{token:util.getCookie('token')}, url:ER.root + "/i/user/findUser",
+//	        success:function(data) {
+	        	$scope.telephone =  window.user.telephone;
+//	        }
+//	    });
 	if(arrurl[1]!=''&&arrurl[1]!=undefined){
 	 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
          params: {
@@ -237,6 +237,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkCarSubmit()){
 			var simdata = {
 					title:$scope.title,
+					uid:window.user.id,
 					codeLave1:$scope.codeLave11,
 					codeLave2:$scope.codeLave22,
 					codeLave3:$scope.codeLave33,
@@ -306,6 +307,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkGoodsSubmit()){
 			var simdata = {
 					title:$scope.title,
+					uid:window.user.id,
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
 					codeLave1:$scope.codeLave11,
@@ -369,6 +371,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkStorageSubmit()){
 			var simdata = {
 					title:$scope.title,
+					uid:window.user.id,
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
 					codeLave2 : $scope.temperType,

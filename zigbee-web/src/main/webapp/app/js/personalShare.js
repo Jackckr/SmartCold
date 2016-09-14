@@ -18,7 +18,7 @@ coldWeb.controller('personalShare', function ($rootScope, $scope, $state, $cooki
 	$scope.getShares = function() {
     	$http.get('/i/ShareRdcController/getSEListByUID', {
             params: {
-                "userID": $rootScope.user.id
+                "uid": $rootScope.user.id
             }
         }).success(function (data) {
         	$scope.sharesDto = data.data;

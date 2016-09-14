@@ -24,10 +24,12 @@ import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.OrdersDTO;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.entity.MessageEntity;
 import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
+import com.smartcold.zigbee.manage.util.CometUtil;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.SetUtil;
@@ -92,11 +94,15 @@ public class OrdersController extends BaseController {
 	 */
 	@RequestMapping(value = "/findOrderByOrderId")
 	@ResponseBody
-	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id) {
+	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id,Integer uid) {
 		HashMap<String, Object> dataMap=new HashMap<String, Object>();
-		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
-		if(user==null||user.getId()==0){return ResponseData.newFailure("请登录后查看信息");}
-		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id),user.getId());	
+		if(uid==null||uid==0){
+			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+			if(user==null||user.getId()==0){return ResponseData.newFailure("请登录后查看信息");}else{
+				uid=user.getId();
+			}
+		}
+		OrdersEntity oEntity = this.orderDao.findOrderByOrderId(Integer.parseInt(id),uid);	
 		if(oEntity!=null){
 		    UserEntity ownerUser = this.userDao.findUserById( oEntity.getOwnerid());
 		    UserEntity orderUser = this.userDao.findUserById( oEntity.getUserid());
@@ -164,6 +170,11 @@ public class OrdersController extends BaseController {
 			ordersDTO.setUseraddress(address);
 			ordersDTO.setOwneraddress(owner.getAddress());
 			orderDao.insertOrder(order);
+			MessageEntity message = new MessageEntity();
+			message.setUserid(order.getUserid());
+			message.setMsgdata(order.getOrdername()+":您已经抢到来自"+order.getOwnername()+"的订单");
+			message.setMsgcount(1);
+			new CometUtil().pushTo(message);
 			// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

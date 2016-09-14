@@ -9,6 +9,7 @@ var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
 var editinfo = function(id) {
 	location.href = urlset[type][0] + id;
 };
+/*alert(window.user.id);*/
 var editshareinfo = function(id,dataType) {
 	if(dataType==1)
 	       location.href = "editgoodsinfo.html?id=" + id;
@@ -23,7 +24,7 @@ var detailinfo = function(id) {
 };
 var delrdc = function(id, em) {
 	if (confirm(mode[1][type])) {
-		var data = {"rdcID" : id,"orderID" : id,id:id,commentID:id,uid : window.user.id};
+		var data = {"rdcID" : id,"orderID" : id,id:id,commentID:id,uid:window.user.id};
 		$.ajax({
 			url : ER.root + urlset[type][1],
 			type : "post",//DELETE
@@ -112,7 +113,7 @@ var gethtml = function(obj) {
 };
 var getPageData = function() {// 启用无限加载
 	isLoadRB = true;//
-	var _filter = {pageNum : currentPage,pageSize : maxSize,userID : window.user.id};
+	var _filter = {pageNum : currentPage,pageSize : maxSize,userID : window.user.id,uid: window.user.id};
 	$.get(ER.root + urlset[type][2], _filter, function(data) {
 		if (data.success && data.data.length > 0) {
 			totalPages = data.totalPages;

@@ -43,7 +43,7 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
 	  };
 	  $scope.pageChanged = function () {
 		  if(user==null||(user!=null&&user.id==0)){return;}
-		  $.post("/i/ShareRdcController/getRdcByUid",   {pageNum : $scope.page.bigCurrentPage,pageSize : $scope.maxSize}, function(data) { $scope.$apply(function () {
+		  $.post("/i/ShareRdcController/getRdcByUid",   {pageNum : $scope.page.bigCurrentPage,pageSize : $scope.maxSize,uid:window.user.id}, function(data) { $scope.$apply(function () {
 	    	   $scope.rdclist = data.data;//
 			   $scope.bigTotalItems = data.total;
 			   if(data.total==0){
