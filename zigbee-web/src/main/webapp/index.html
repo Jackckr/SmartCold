@@ -35,6 +35,9 @@
 	<link rel="stylesheet" type="text/css" href="app/css/coldsharerdc.css">
      <link rel="stylesheet" type="text/css" href="app/css/share_item_info.css">
     <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
+    
+    <link rel="stylesheet" type="text/css" href="app/css/share_goods.css">
+	<link rel="stylesheet" type="text/css" href="app/css/share_item_info.css">
 <!-- ------------------------------------------------------------------------------------------------- -->
     <!-- <link rel="stylesheet" href="assets/css/reponstive.css"/> -->
 <script type="text/javascript">!function(a,b){if(!b.__SV){var c,d,e,f;window.dplus=b,b._i=[],b.init=function(a,c,d){function g(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]),a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var h=b;for("undefined"!=typeof d?h=b[d]=[]:d="dplus",h.people=h.people||[],h.toString=function(a){var b="dplus";return"dplus"!==d&&(b+="."+d),a||(b+=" (stub)"),b},h.people.toString=function(){return h.toString(1)+".people (stub)"},e="disable track track_links track_forms register unregister get_property identify clear set_config get_config get_distinct_id track_pageview register_once track_with_tag time_event people.set people.unset people.delete_user".split(" "),f=0;f<e.length;f++)g(h,e[f]);b._i.push([a,c,d])},b.__SV=1.1,c=a.createElement("script"),c.type="text/javascript",c.charset="utf-8",c.async=!0,c.src="//w.cnzz.com/dplus.php?token=6f151994c54e5456a96a",d=a.getElementsByTagName("script")[0],d.parentNode.insertBefore(c,d)}}(document,window.dplus||[]),dplus.init("6f151994c54e5456a96a");</script>
@@ -121,7 +124,16 @@
 			</ul>
 		</div>
 	</header>
-
+	<!-- 消息推送 -->
+	<div class="msgPush">
+		<span class="topTrl"></span>
+		<span class="pushClose" onclick="pushClose()">&times;</span>
+		<div class="pushContent">
+			<h5>推送内容标题</h5>
+			<p>离开酒店管理会计，手机的管理会计老师打个，开始电话过来开会，就好打了快干活厉害</p>
+		</div>
+	</div>
+	<!-- 消息推送 end -->
 	<div class="modalx">
 		<a href="javascript:void(0);" class="close"></a>
 		<div class="content"></div>
@@ -240,12 +252,14 @@
 	   });
 	   //解决移动端点击下拉列表之后下拉框不消失bug
 	   var $menu = $('.navShow').find('ol').children('li').children('a');
-	$(document).click(function(e) {
-		if(!(e.target == $menu[0])) {
-			$menu.find('ol').hide();
+		$(document).click(function(e) {
+			if(!(e.target == $menu[0])) {
+				$menu.find('ol').hide();
+			}
+		})	
+		function pushClose(){
+			$(".msgPush").hide()
 		}
-	})
-	
 	</script>
 </body>
 </html>

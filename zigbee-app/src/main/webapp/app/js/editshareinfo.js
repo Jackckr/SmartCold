@@ -4,6 +4,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var url=window.location.href;
 	var arrurl=url.split("?id=");
+	$scope.totalfiles = [];
 	if(arrurl[1]!=''&&arrurl[1]!=undefined){
 	 $http.get(ER.root+'/i/ShareRdcController/getSEByIDForEdit', {
          params: {
@@ -33,6 +34,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	 $scope.manageType = $scope.rdcsharedto.codeLave1;
     	 $scope.unit = $scope.rdcsharedto.unit;
     	 $scope.totalfiles = $scope.rdcsharedto.files;
+    	 if($scope.totalfiles==undefined)
+    		 $scope.totalfiles = [];
     	 $scope.provinceSelected();
     	 $scope.stprovinceSelected();
     	 $scope.toprovinceSelected();

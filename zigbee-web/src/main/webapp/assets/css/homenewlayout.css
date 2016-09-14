@@ -994,3 +994,46 @@ section.content{
 .btn-group.omg{
 	max-width:120px;
 }
+/*pushMsg*/
+.msgPush{
+	position:fixed;
+	z-index:199999;
+	top:76px;
+	right:50px;
+	background: orange;
+	box-shadow:0 2px 5px #333;
+	width:280px;
+	min-height:80px;
+	padding:10px 18px;
+	border:1px solid #eee;
+	border-top:0;
+	display: none;
+}
+.topTrl{
+	position:absolute;
+	top:-40px;
+	right:60px;
+	border-bottom:20px solid orange;
+	border-top:20px solid transparent;
+	border-right:20px solid transparent;
+	border-left:20px solid transparent;
+}
+.pushClose{
+	position:absolute;
+	top:0;
+	right:0;
+	width:20px;
+	height:20px;
+	text-align:center;
+	line-height:20px;
+	font-size:20px;
+	color:#333;
+	cursor: pointer;	
+}
+.pushClose:hover{
+	color:red;
+}
+.pushContent{
+	color:#333;
+	line-height: 1.75;
+}
