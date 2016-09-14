@@ -172,7 +172,7 @@ public class OrdersController extends BaseController {
 			orderDao.insertOrder(order);
 			MessageEntity message = new MessageEntity();
 			message.setUserid(order.getUserid());
-			message.setMsgdata("ceshi");
+			message.setMsgdata(order.getOrdername()+":您已经抢到来自"+order.getOwnername()+"的订单");
 			message.setMsgcount(1);
 			new CometUtil().pushTo(message);
 			// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");

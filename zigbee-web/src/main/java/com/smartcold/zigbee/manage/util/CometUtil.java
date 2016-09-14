@@ -35,7 +35,9 @@ public class CometUtil extends ConnectListener implements ServletContextListener
         // TODO Auto-generated method stub
         final CometConnection conn = connEvent.getConn();
         UserEntity user = (UserEntity)conn.getRequest().getSession().getAttribute("user");
-        CacheManager.putContent(user.getId()+"", connEvent);
+        if (user!=null) {
+        	  CacheManager.putContent(user.getId()+"", connEvent);
+		}
         return true;
     }
     private void doCache(final CometConnection conn,String userId) {  
