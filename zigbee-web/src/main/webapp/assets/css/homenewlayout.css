@@ -1038,6 +1038,9 @@ section.content{
 	line-height: 1.75;
 }
 /*app 下载css*/
+html, body {
+    -ms-overflow-style: scrollbar;
+}
 .downloadApp{
 	position: fixed;
 	bottom:20px;
