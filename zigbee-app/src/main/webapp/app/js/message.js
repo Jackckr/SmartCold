@@ -28,7 +28,7 @@ $().ready(function() {
       else if(msg.msgcategory==2){
     	  title = "冷库360报警";
       }
-   	  var news=['<li class="messageList clearfix"><a href="'+msg.url+'"><div class="messageImg fl"><img  src="message'+msg.msgcategory+'"></div> <div class="messageInfo"><p class="newsTitle">'+title+'</p><p class="newsTitle">'+msg.msgdata+'</p><p class="newsDate">'+msg.informtime+'</p></div></a></li>'];
+   	  var news=['<li class="messageList clearfix"><a href="'+msg.url+'"><div class="messageImg fl"><img  src="../com/img/message'+msg.msgcategory+'.png"></div> <div class="messageInfo"><p class="fr">'+msg.informtime+'</p><p class="newsTitle">'+title+'</p><p class="newsTitle">'+msg.msgdata+'</p></div></a></li>'];
    	  return news.join("");
    }
   	function getPageData(){//启用无限加载

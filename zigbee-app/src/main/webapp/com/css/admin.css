@@ -458,6 +458,13 @@ html,body{
 	border-bottom: 1px solid #eee;
 	padding:.7rem 0;
 }
+#ul_msgsL_list .messageList{
+	padding:0;
+}
+#ul_msgsL_list .messageList>a{
+	display: block;
+	padding:.7rem 0;
+}
 .messageImg{
 	width: 2rem;
 	height: 2rem;
@@ -475,6 +482,12 @@ html,body{
 .messageInfo{
 	color: #999;
 	font-size: .7rem;
+	position: relative;
+}
+.messageInfo p.fr{
+	font-size:.7rem;
+	color:#999;
+	line-height:1.5;
 }
 .messageInfo strong{
 	color: #333;
