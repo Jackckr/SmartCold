@@ -153,8 +153,8 @@ div.select_2 select{
     text-align: center!important;
     color: #fff!important;
 }
-.active{
-    background-color: #448BC9;
+label.active{
+    background-color: #448BC9!important;
     color: #fff;
     border-radius: 2px;
     text-align: center!important;

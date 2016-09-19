@@ -44,8 +44,8 @@ public class MessageController extends BaseController {
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
-		PageInfo<MessageEntity> pageInfo= new PageInfo<MessageEntity>(messageDao.findMessageByUserID(userID));
-	    return pageInfo;
+		PageInfo<MessageEntity> data= new PageInfo<MessageEntity>(messageDao.findMessageByUserID(userID));
+		return ResponseData.newSuccess(data);
 	}
 	
 	/**

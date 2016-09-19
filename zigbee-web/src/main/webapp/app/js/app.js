@@ -229,7 +229,10 @@ JS.Engine.on(
            },*/
            // 对应服务端 “频道2” 的值 msgData
            msgData : function(msgData){
-        	   alert(msgData);
+        	   //alert(msgData);
+        	   $(".msgPush").fadeIn();
+        	   $(".pushContent p").html(msgData)
+        	   setTimeout(function(){$(".msgPush").fadeOut()}, 4000);
            },
        }
    );
