@@ -233,7 +233,7 @@ public class BaseInfoController extends BaseController {
 			 List<List>  alldata=new ArrayList<List>();
 			 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 		     Date sttime=sdf.parse(startTime);    Date edTime=sdf.parse(endTime);  
-			 String mode[][]={{"id","key","值","时间"},{"id","key","value","addtime"},{"2","2","5","5","5","5"}} ;//标题（必须），对应属性（必须），宽度
+			 String mode[][]={{"数据id","对象","值","时间"},{"id","key","value","addtime"},{"5","5","10","10","10","10"}} ;//标题（必须），对应属性（必须），宽度
 			 for (int i = 0; i < oids.length; i++) {
 				  int oid=	oids[i];
 				 List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);

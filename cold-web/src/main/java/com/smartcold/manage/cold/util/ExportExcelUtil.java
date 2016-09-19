@@ -227,6 +227,7 @@ public class ExportExcelUtil {
 			}
 		}
 		if(SetUtil.isnotNullList(list)){
+			if( list.size()>60000){ list.subList(0, 59999);}//防止数据溢出
 			for (int i = 0; i < list.size(); i++) { // 65536
 				Object object = list.get(i);
 				row = sheet.createRow(i + 2);
