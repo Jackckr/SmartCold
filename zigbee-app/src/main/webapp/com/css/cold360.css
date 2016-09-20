@@ -69,6 +69,15 @@ section{
 .tempture>i{
 	color: #EB5A4A;
 }
+.light>i{
+	color: #5BB789;
+}
+.door>i{
+	color: #448BCB;
+}
+.tempture.other>i{
+	color: #EB5A4A;
+}
 .light.other>i{
 	color: #5BB789;
 }
@@ -82,6 +91,18 @@ section{
 	color: #F39826;
 }
 .tempture.current{
+	color: #EB5A4A;
+	border-bottom: 3px solid #438BCB;
+}
+.light.current{
+	color: #5BB789;
+	border-bottom: 3px solid #438BCB;
+}
+.door.current{
+	color: #448BCB;
+	border-bottom: 3px solid #438BCB;
+}
+.tempture.other.current{
 	color: #EB5A4A;
 	border-bottom: 3px solid #438BCB;
 }
