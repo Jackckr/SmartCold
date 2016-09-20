@@ -13,12 +13,12 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 			victdata.victtl=true;
 			$.post( ER.root+"/i/user/existenceUserName", {userName: $scope.telephone}, function(data) {
                 victdata.extname=!data;
-                $("#mention1").html(data?"该手机已经注册!":"");
+                $("#mention1").html(data?"该手机已经注册~":"");
                 $("#but_vercode").attr("disabled", data).css("background-color", data ?  "#cccccc":"#438BCB" );
 			});//
 		}else{
 			 victdata.victtl=false;
-			 $("#mention1").html("请输入正确手机号码！");
+			 $("#mention1").html("请输入正确手机号码~");
 			 $("#but_vercode").attr("disabled", false).css("background-color",  "#cccccc");
 		}
 	};
@@ -44,14 +44,14 @@ var app = angular.module('app', []).controller('register',function($http, $locat
    };
    $scope.checkData=function (){ 
 	     $("#mention1").html();
-	      if(!victdata.victtl){ $("#mention1").html("请输入正确手机号码！");return false; }
-	      if(!victdata.extname){ $("#mention1").html("该手机已经注册！");return false; }
-	      if(!victdata.victyzm){ $("#mention1").html("验证码错误！请重新输入！");return false; }
+	      if(!victdata.victtl){ $("#mention1").html("请输入正确手机号码~");return false; }
+	      if(!victdata.extname){ $("#mention1").html("该手机已经注册~");return false; }
+	      if(!victdata.victyzm){ $("#mention1").html("验证码错误~请重新输入~");return false; }
   	       var password = $("#txt_password").val(); 
            var repsword = $("#txt_repsword").val(); 
            if (password.length!=0 && repsword.length!=0) {
         	   if(password.length<6){
-        		   $("#mention1").html("密码长度不能小于6位！");
+        		   $("#mention1").html("密码长度不能小于6位~");
         		    return false;
         	   }
            	   if(password != repsword) {

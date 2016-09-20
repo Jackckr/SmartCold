@@ -193,9 +193,9 @@ section{
 .grab{
 	width: 4rem;
 	height: 1.2rem;
-	font-size: 0.75rem;
+	font-size: 0.7rem;
 	text-align: center;
-	line-height: 0.9rem;
+	line-height: 1.2rem;
 	color: #fff;
 	background-color: #428BCA;
 	border-radius: 3px;

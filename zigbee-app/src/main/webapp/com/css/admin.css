@@ -238,12 +238,12 @@ section.show{
 	height: auto;
 }
 .tel .contact{
-	font-size: 0.8rem;
+	font-size: 0.75rem;
 	color: #438BCB;
 	margin-top:.8rem;
 }
 .tel .contact+p{
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	color: #555;
 	line-height: 1.75;
 }
@@ -261,6 +261,9 @@ section.show{
 .contact~.fl{
 	text-align: center;
 	width:50%;
+}
+.contact~.fl a{
+	display: block;
 }
 .contact~.fl img{
 	width:100px;
