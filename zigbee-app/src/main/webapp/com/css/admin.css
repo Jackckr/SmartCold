@@ -240,12 +240,12 @@ section.show{
 .tel .contact{
 	font-size: 0.8rem;
 	color: #438BCB;
+	margin-top:.8rem;
 }
 .tel .contact+p{
 	font-size: 0.8rem;
 	color: #555;
-	line-height: 2rem;
-	margin-bottom: 1rem;
+	line-height: 1.75;
 }
 .tel p:last-child{
 	margin-bottom:2.6rem;
@@ -254,6 +254,16 @@ section.show{
 	display: block;
 	color: #f60;
 	text-decoration: underline;
+}
+.tel p:nth-last-child(3){
+	margin-bottom: .3rem;
+}
+.contact~.fl{
+	text-align: center;
+	width:50%;
+}
+.contact~.fl img{
+	width:100px;
 }
 #headImg{
 	position: absolute;
