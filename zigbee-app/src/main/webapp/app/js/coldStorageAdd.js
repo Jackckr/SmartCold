@@ -201,6 +201,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 //alert("添加成功");
                 $('.mybtn').attr('disabled',true);
             	$('.mybtn').css('backgroundColor','gray');
+            	layer.closeAll();
                 layer.open({
 	                content: '添加成功'
 	                ,btn: '确定' 

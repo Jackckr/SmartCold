@@ -275,6 +275,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
 		    	//layer.open({content: resp.data.message,btn: '确定'});
+		    	layer.closeAll();
 		    	 layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -337,6 +338,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    	//alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="goodslist.html";
+		    	layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -399,6 +401,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    	//alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="user-myrelease.html"; 
+		    	layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
