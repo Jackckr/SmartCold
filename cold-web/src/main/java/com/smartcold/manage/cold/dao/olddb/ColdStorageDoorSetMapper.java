@@ -16,4 +16,6 @@ public interface ColdStorageDoorSetMapper {
     List<ColdStorageDoorSetEntity> findByStorageId(int storageID);
     
     List<ColdStorageDoorSetEntity> findByRdcId(int rdcId);
+    
+    List<ColdStorageDoorSetEntity> findValidByRdcId(int rdcId);
 }

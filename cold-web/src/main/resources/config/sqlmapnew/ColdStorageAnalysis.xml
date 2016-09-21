@@ -10,4 +10,13 @@
 		AND `date` >= #{startTime} AND `date` <![CDATA[ <= ]]> #{endTime}
         order by `date` desc
 	</select>
+	<select id="findValueByFilter" parameterType="map" resultType="ColdStorageAnalysisEntity">
+		select * from `coldstorageanalysis`
+		where 1=1
+		<if test="type!=null">AND `type` = #{type} </if>
+		<if test="key !=null">AND `key`in (${key})</if>
+		<if test="oid !=null">AND `oid` in (${oid}) </if>
+		<if test="startTime != null and endTime!=null" >  AND `date` >= #{startTime} AND `date` <![CDATA[ <= ]]> #{endTime}  </if>
+		<if test="desc!=null"> order by `date`,`oid`  ${desc}</if>;
+	</select>
 </mapper>

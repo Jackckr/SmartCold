@@ -29,4 +29,9 @@ public class ColdStorageAnalysisServiceImpl implements ColdStorageAnalysisServic
 		return result;
 	}
 
+	@Override
+	public List<ColdStorageAnalysisEntity> findValueByFilter( HashMap<String, Object> filter) {
+		return this.analysisDao.findValueByFilter(filter);
+	}
+
 }

@@ -16,21 +16,19 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 		$("#ul_key_list li").removeClass("select");$("#li_key_"+key).addClass("select");$("#val_list_div ul").addClass("hide");$("#"+key+"_ul_val").removeClass("hide");
 	};
 	$scope.slgroupsl=function(e){//点击下拉框事件
-		if($("#ul_key_list li.select").length==0){  var slkeyem=$("#ul_key_list li").first();$("#"+slkeyem.attr("value")+"_ul_val").removeClass("hide"); slkeyem.addClass("select");;}
+		if($("#ul_key_list li.select").length==0){  var slkeyem=$("#ul_key_list li").first();$("#"+slkeyem.attr("kval")+"_ul_val").removeClass("hide"); slkeyem.addClass("select");;}
 		$scope.showobjgroup=!$scope.showobjgroup;
 	};
 	$scope.initData=function(){//初始化数据
-		if($("#ul_key_list li.select").length==0){  var slkeyem=$("#ul_key_list li").first();$("#"+slkeyem.attr("value")+"_ul_val").removeClass("hide"); slkeyem.addClass("select");;}
+		if($("#ul_key_list li.select").length==0){  var slkeyem=$("#ul_key_list li").first();$("#"+slkeyem.attr("kval")+"_ul_val").removeClass("hide"); slkeyem.addClass("select");;}
 		$scope.gettit();
 	};
 	$scope.expdata=function(){//导出数据
+		$scope.hidefilter();
 //	     if ($("#but_expdata").data('isLoading') === true) return; $("#but_expdata").text('导出中。。。').data('isLoading',true);   $("#but_expdata").delay(1000000000).data('isLoading',false).text("导出11");
 		if($scope.sl_type&&$scope.sl_key&&$scope.oidlist&&$scope.oidlist.length>0){
-			
 	        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/baseInfo/expHistoryData').attr('id', "expdataform");
-//	        expfrom.attr("accept-charset","UTF-8");//.attr("onsubmit","document.charset='utf-8'");
-//	        expfrom.attr("charset","UTF-8");//.attr("onsubmit","document.charset='utf-8'");
-	        expfrom.attr("Content-Type","application/json;charset=UTF-8");//.attr("onsubmit","document.charset='utf-8'");
+	        expfrom.attr("Content-Type","application/json;charset=UTF-8");
 	        expfrom.append($("<input>").attr("name","rdcid").attr("value",rdcid));
 	        expfrom.append($("<input>").attr("name","filename").attr("value","历史数据"));
 	        expfrom.append($("<input>").attr("name","title").attr("value",$scope.slgptit));
@@ -48,7 +46,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
    };
    $scope.gettit=function(){
 	   var keem=$("#ul_key_list li.select");
-	   var key=keem.attr("value");
+	   var key=keem.attr("kval");
 	   var vlem= $("#"+key+"_ul_val");
 	   $scope.sl_type=vlem.attr("sl_type"),$scope.sl_key=vlem.attr("sl_key");
 	   $scope.sl_unit=vlem.attr("sl_unit")?vlem.attr("sl_unit"):"";
@@ -63,6 +61,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 	 * 搜索数据
 	 */
 	$scope.search = function(){
+		$scope.hidefilter();
 		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}
 		if($scope.sl_type&&$scope.sl_key&&$scope.oidlist&&$scope.oidlist.length>0){
 			lineChart.showLoading({text: '数据加载中。。。。' }); 
@@ -90,7 +89,6 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 		xData=chardata.xdata,ydata=chardata.ydata;
 		xData = xData.length > 0? xData : [1,2,3,4];
 		ydata = ydata.length > 0 ? ydata : [ { name:$scope.slgptit, type:'line', data:[34,35,34,21] }] ;
-		var dataView = {show: true, readOnly: true, textareaColor:'#fff'};
 		option = {
 				calculable : true,
 				title: {text: $scope.slgptit},
@@ -104,6 +102,12 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 		lineChart.setOption(option);
 		lineChart.hideLoading();  
 	};
+	$scope.hidefilter=function(){
+		if($scope.showobjgroup){
+			$scope.gettit();
+			$scope.showobjgroup=false;
+		};
+	};
 	$(document).bind('click',function(e){ 
 		if($scope.showobjgroup){
 			var e = e || window.event; //浏览器兼容性 
@@ -114,11 +118,11 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 			 } 
 			 elem = elem.parentNode; 
 			}
-			$scope.$apply(function () {
-				$scope.gettit();
-				$scope.showobjgroup=false;
-			});
-		}
+			 $scope.$apply(function () {
+			   $scope.hidefilter();
+			 });
+		};
 	});
+	
 //	$scope.initData();
 });
