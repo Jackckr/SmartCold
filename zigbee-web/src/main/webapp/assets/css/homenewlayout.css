@@ -1037,3 +1037,56 @@ section.content{
 	color:#333;
 	line-height: 1.75;
 }
+/*app 下载css*/
+html, body {
+    -ms-overflow-style: scrollbar;
+}
+.downloadApp{
+	position: fixed;
+	bottom:20px;
+	right: 0;
+	z-index:99999;
+	background: #fff;
+	text-align: center;
+	box-shadow:-1px 5px 8px #999;
+}
+.downloadApp b{
+	font-size:14px;
+	line-height: 1.75;
+	display:inline-block;
+	width:110px;
+	color:#333;
+	margin-top:10px;
+}
+.imgLoad{
+	padding:0;
+}
+.imgLoad li{
+	width:110px;
+	padding:5px;
+}
+.imgLoad li p{
+	margin: 0;
+	color: #0284C3;
+}
+.imgLoad li img{
+	width:100%;
+	height:auto;
+}
+.closeApp{
+	position:absolute;
+	top:-10PX;
+	right:0;
+	width:20px;
+	height:20px;
+	color:#333;
+	text-align: center;
+	line-height: 18px;
+	border-radius:50%;
+	background: #FFF;
+	border:1px solid #ccc;
+	cursor: pointer;
+}
+.closeApp:hover{
+	color:#f00;
+}

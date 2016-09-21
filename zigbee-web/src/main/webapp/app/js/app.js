@@ -334,6 +334,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/personalShare',
         controller: 'personalShare',
         templateUrl: 'app/template/personalShare.html'
+    }).state('personalConnect', {
+        url: '/personalConnect',
+        controller: 'personalShare',
+        templateUrl: 'app/template/personal_connect.html'
     }).state('orderGenerate', {
         url: '/orderGenerate',
         params:{data:null},

@@ -307,13 +307,15 @@ input[type='radio'].blue{
 .nowrap{
 	white-space: nowrap;
 	width:2.5rem!important;
+    font-size: .7rem!important;
+    line-height: 1.7rem!important;
 }
 .nowrap+input{
-	width:3.16rem!important;
+	width:3rem!important;
 	text-align: center;
 }
 .number>div span.nowrap:first-child{
-	width:3.5rem!important;
+	width:3.6rem!important;
 }
 .number>div span.nowrap:last-child{
 	background-color: #DDDDDD;
@@ -447,14 +449,14 @@ form+.mybtn,.next+.mybtn{
 }
 .imgCell a>img+div{
 	font-size: 0.5rem;
-	text-indent: 0.25rem;
+	padding-left:3.4rem;
 }
 .grab{
 	width: 4rem;
 	height: 1.2rem;
-	font-size: 0.75rem;
+	font-size: 0.7rem;
 	text-align: center;
-	line-height: 0.9rem;
+	line-height: 1.2rem;
 	color: #fff;
 	background-color: #428BCA;
 	border-radius: 3px;
@@ -530,17 +532,17 @@ form+.mybtn,.next+.mybtn{
 }
 .pic{
 	display: inline-block;
-	width: 3rem;
-	height: 3rem;
+	width: 2.5rem;
+	height: 2.5rem;
 	margin-top:0.3rem;
 	border: 3px dotted #ccc;
 	background: url(../img/plus.png) no-repeat center;
 }
 .pic+span{
-	position:relative;
+	display: inline-block;
+	vertical-align: middle;
 	font-size:0.8rem;
 	color:#aaa;
-	top:0.5rem;
 }
 .pic input{
 	width: 0;
@@ -635,12 +637,11 @@ em{
 	background-size: cover;
 }
 .newsTitle{
-	font-size: 0.7rem;
+	font-size: 0.72rem;
 	line-height: 1.525;
 	overflow : hidden;
     text-overflow: ellipsis;
   	display: -webkit-box;
-  	font-size:.75rem;
 	color:#333;
   	-webkit-line-clamp: 2;
   	-webkit-box-orient: vertical;
@@ -655,7 +656,7 @@ em{
 	bottom: 0;
 	left: 4.3rem;
 	font-size:.7rem;
-	color:#666;
+	color:#999;
 }
 .newsTxt .newsBd{
 	color: #BB2626;
