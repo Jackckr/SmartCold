@@ -235,6 +235,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				}
 			var vo = {}; 
 			if(checkCarSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,
@@ -305,6 +310,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				}
 			var vo = {}; 
 			if(checkGoodsSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,
@@ -369,6 +379,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			var vo = {}; 
 			if(checkStorageSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,

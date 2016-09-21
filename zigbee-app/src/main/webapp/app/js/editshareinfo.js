@@ -242,6 +242,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
 			if(checkCarSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -300,6 +305,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkGoodsSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -357,6 +367,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkStorageSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,

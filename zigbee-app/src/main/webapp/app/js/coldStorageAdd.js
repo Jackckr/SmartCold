@@ -129,6 +129,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     }
     $scope.submit = function(){
         if (checkInput()){
+        	layer.open({
+        		type: 2
+        		,content: '努力加载中~~~'
+        		,shadeClose:false
+		    });
             $scope.isDisabled = true;
             data = {
                 file0: null,
