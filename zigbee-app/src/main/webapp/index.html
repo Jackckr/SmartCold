@@ -10,8 +10,11 @@
     <link rel="stylesheet" type="text/css" href="com/css/index.css">
     <script type="text/javascript" src="com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="com/js/TouchSlide.1.1.source.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../app/js/index.js"></script>
 </head>
-<body >
+<body ng-app="app" ng-controller="ctrl">
 <!-- header -->
     <div class="header navbar">   
     	<!--有需要的时候解开注释-->
@@ -154,7 +157,7 @@
             <a href="view/messages.html">
                 <i class="iconfont">&#xe71c;</i>
                 <p class="info">消息</p>
-                <span class="countNum">66</span>
+                <span class="countNum">{{msgTotalNum}}</span>
             </a>
         </li>
         <li>            

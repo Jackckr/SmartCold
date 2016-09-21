@@ -6,9 +6,9 @@
 				<li><a href="#/personalDetail"><font color="black">个人信息</font></a></li>
 				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
 				<li><a href="#/personalShare"><font color="black">我的发布</font></a></li>
-				<li><a href="#/personalOrder"><font color="#418ACA">我的联络单</font></a></li>
+				<li><a href="#/personalOrder"><font color="black">我的联络单</font></a></li>
 				<li><a href="#/personalComment"><font color="black">我的点评</font></a></li>
-				<li><a href="#/personalMessage"><font color="black">我的消息</font></a></li>
+				<li><a href="#/personalMessage"><font color="#418ACA">我的消息</font></a></li>
 				<li><a onclick="alert('开发中，敬请期待...')"><font color="black">金融贷</font></a></li>				
 				<li><a onclick="alert('开发中，敬请期待...')"><font color="black">冷链保险</font></a></li>
 				<li><a href="#/personalConnect"><font color="black">联系客服</font></a></li>
@@ -17,42 +17,17 @@
 	<!-- sidebar end -->
 	<!-- content -->
 		<div class="content">
-		   <form class="bs-example bs-example-form" role="form">
-		      <div class="input-group">
-		         <input type="text" ng-model="keyword"  class="form-control" placeholder="输入联络单号">
-		           <button class="btn btn-default" ng-click="goSearch()">联络单搜索</button>
-		      </div>
-		   </form>
 		<!-- 图文列表区域 -->
 			<ul class="imgList clearfix">
-				<li ng-repeat="orderdto in ordersDto">
-					<div class="img pull-left"><img src={{orderdto.logo}}></div>
-					<p class="company">{{orderdto.orders.orderid}}</p>
-					<p class="area omg" >{{orderdto.orders.ordername}}</p>
-					
-					<div ng-if="orderdto.rsd.dataType==3">
+				<li ng-repeat="msg in msgs">
+					<div class="img pull-left">
+					<img src="app/img/message/message{{msg.msgcategory}}.png"></div>
+					<p class="company" ng-if="msg.msgcategory==1">订单通知</p>
+					<p class="company" ng-if="msg.msgcategory==2">告警通知</p>
+					<p class="area omg">{{msg.msgdata}}</p>
 					<p class="area">
-						<span>联络单类型:</span> <span>[冷库]{{orderdto.rsd.typeText}}</span>
-					</p>
-				</div>
-
-				<div ng-if="orderdto.rsd.dataType==2">
-					<p class="area">
-						<span>联络单类型:</span> <span>[配送]{{orderdto.rsd.typeText}}</span>
-					</p>
-				</div>
-
-				<div ng-if="orderdto.rsd.dataType==1">
-					<p class="area">
-						<i></i> <span>联络单类型:</span> <span>[货品]{{orderdto.rsd.typeText}}</span>
-					</p>
-				</div>
-					
-					
-					<p class="area">
-						{{orderdto.orders.generatetime}}
-							<span class="delete"  ng-click="goShowOrder(orderdto)">详情</span>
-					<span class="delete"  ng-click="goDeleteOrder(orderdto.orders.id)">删除</span>
+						{{msg.informtime}}
+						<span class="delete" ng-click="deleteMsg(msg.id)">删除</span>
 					</p>
 				</li>
 			</ul>
