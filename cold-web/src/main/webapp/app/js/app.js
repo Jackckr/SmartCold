@@ -395,6 +395,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/light/:storageID',
     	controller: 'light',
         templateUrl: 'app/template/light.html'
+    }).state('reportsAnalysis',{//分析报表 -参数 rdcID
+    	url: '/reportsAnalysis/{rdcId}',
+    	controller: 'reportsAnalysis',
+        templateUrl: 'app/template/reportsAnalysis.html'
     }).state('coolingAnalysis',{//制冷系统分析  -参数 rdcID
     	url: '/coolingAnalysis/{rdcId}',
     	controller: 'coolingAnalysis',

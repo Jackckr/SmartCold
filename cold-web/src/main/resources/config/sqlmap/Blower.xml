@@ -13,5 +13,11 @@
         SELECT *
         FROM `Blower` WHERE `blowerId` = #{blowerId} ORDER by `addTime`
     </select>
+    <select id="findBlowerByRdcID" parameterType="map" resultType="BlowerEntity">
+        select * from blowerset where coldstorageid in (select id from coldstorageset where rdcid=#{rdcId});
+    </select>
+    
+    
+    
 
 </mapper>

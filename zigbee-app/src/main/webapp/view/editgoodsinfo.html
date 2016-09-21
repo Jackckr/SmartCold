@@ -22,6 +22,12 @@
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/editshareinfo.js"></script>
+<script type="text/javascript">
+$(function() {			
+	$('#sttime').date();
+	$('#endtime').date();
+});
+</script>
 </head>
 <body ng-app="app" ng-controller="ctrl">
 	<!-- header -->
@@ -37,8 +43,9 @@
 	<section class="main maindetail" style="margin-top:2.5rem">
 	<div class="coldlist" style="margin-bottom: 0" ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
       <ul class="imgTable">
-			<li class="imgCell"><a href="javascript:;"> <img class="fl"
-					src="{{rdcdto.logo}}">
+			<li class="imgCell">
+				<a href="javascript:;">
+					<img class="fl" src="{{rdcdto.logo}}">
 					<div class="">
 						<p class='ellipsis'>{{rdcdto.name}}</p>
 						<p class='position'>
@@ -51,7 +58,9 @@
 							<li class="filled">★</li>
 							<li>★</li>
 						</ul>
-					</div> </a></li>
+					</div>
+				</a>
+			</li>
 		</ul>
     </div>
 			<form id="release_item_from" name="itemform" >

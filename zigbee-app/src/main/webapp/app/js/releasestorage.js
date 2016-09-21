@@ -235,6 +235,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				}
 			var vo = {}; 
 			if(checkCarSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,
@@ -267,6 +272,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        data: data
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
+		    	layer.closeAll();
 		    	layer.open({
 		    		content: resp.data.message
 		    		,btn: '确定'
@@ -305,6 +311,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				}
 			var vo = {}; 
 			if(checkGoodsSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,
@@ -334,6 +345,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
 		    	//layer.open({content: resp.data.message,btn: '确定'});
+		    	layer.closeAll();
 		    	layer.open({
 		    		content: resp.data.message
 		    		,btn: '确定'
@@ -369,6 +381,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			var vo = {}; 
 			if(checkStorageSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,
@@ -399,6 +416,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    	//alert(resp.data.message);
 		    	//layer.open({content: resp.data.message,btn: '确定'});
 		    	//window.location.href ="releasesuccess.html";
+		    	layer.closeAll();
 		    	layer.open({
 		    		content: resp.data.message
 		    		,btn: '确定'

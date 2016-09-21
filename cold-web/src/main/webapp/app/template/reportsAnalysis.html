@@ -1,0 +1,76 @@
+<style type="text/css">
+        .groupobj .sl_group_obj {width: 250px;border-radius: 3px;background-color: #f4f4f4;cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;    text-align: center;}
+		.groupobj .sl_drop {float: right;position: relative;margin: -24px 10px 0px 0px;color: #000000;font-size: 10px;}
+		.groupobj .sl_drop_data {position: absolute;z-index: 2;background: white;border: 1px solid #ccc;color: black;border-radius: 5px;}
+		#filter_div ul {padding: 0px;}
+		#filter_div li{list-style-type:none;display:block;border:2px solid #ccc;margin-top:5px;cursor:pointer;padding:3px 20px;border-radius:3px}
+		.ul_key_list li{margin:5px 2px;padding:5px 5px;width: 245px;text-align: center;}#filter_div li.select{border-color:#0095ff!important;padding:3px 20px;position:relative}#filter_div li.select:after{content:"";position:absolute;bottom:0;right:0;width:20px;height:20px;background:url("../assets/img/icon-right.png")}#val_list_div ul{float:left;width:100%;height:100%;overflow:hidden;display:block}.ng-hide{height:0;width:0;background-color:transparent;left:-200px;height:100px}
+		
+		
+		#rpt_asistb_thead td{height: 50px;}
+</style>
+<script src="assets/js/printThis.js"></script>
+<div>
+	<section class="content-header">
+		<h1 class="page-header">分析报表</h1>
+	</section>
+	<section class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- 查询数据展示  -->
+				<div class="col-lg-12">
+					<div class="col-lg-12">
+						<div id="filter_sl_div" class="pull-left groupobj" ng-cloak>
+						  <span><span class="form-control sl_group_obj" ng-click='slgroupsl()'>{{sltit}}</span><i class="sl_drop" ng-click='slgroupsl()'>▼</i></span>
+						  <div id="filter_div" class="pull-left sl_drop_data" ng-show="showobjgroup">
+						     <ul id="ul_key_list" class="ul_key_list">
+						       <li class="select" ng-click="showkeyli($event,0,0)">日耗电量</li>
+						       <li ng-click="showkeyli($event,1,0)">日耗水量</li>
+						       <li ng-click="showkeyli($event,2,1)">开　　关</li>
+						       <li ng-click="showkeyli($event,3,1)">温度分析</li>
+						       <li ng-click="showkeyli($event,4,0)">热　　量</li>
+						       <li ng-click="showkeyli($event,5,1)">冷风机</li>
+						       <li ng-click="showkeyli($event,6,0)">系统效率</li>
+						     </ul>
+						  </div>
+						</div>
+						<form class="navbar-form navbar-left " style="margin-top: 0px;" >
+							&nbsp;&nbsp;
+							<div class="form-group">
+								<label>时间范围：</label>
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="fa fa-clock-o"></i>
+									</div>
+									<input type="text" class="form-control pull-right"
+										style="width: 270px;" id="reservationtime" ng-model="picktime">
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-default" ng-click="search()">查询</button>
+								<button type="button" class="btn btn-success" ng-click="expdata()">导出</button>
+								<button type="button" class="btn btn-warning" ng-click="Preview()">预览/打印</button>
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-12 box bg-gray">
+		                    <div class="box-header with-border">
+		                        <h3 class="box-title" id="rpt_asistb_tit"> </h3>
+		                    </div>
+		                    <div id="rpt_asis_coment" class="box-body box  bg-gray box-gray" style="min-height: 600px;"  ng-show="!rs_msg">
+								<table id="rpt_asis_table" class="table table-bordered " style="    text-align: center;">
+								  <thead id="rpt_asistb_thead">
+								  </thead>
+								  <tbody id="rpt_asistb_tbody">
+								  </tbody>
+								</table>
+		                    </div>
+		                    <div ng-show="rs_msg" >
+		                       <div class="alert alert-warning">{{rs_msg}}</div>
+		                    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

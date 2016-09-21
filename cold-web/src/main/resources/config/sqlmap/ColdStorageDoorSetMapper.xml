@@ -18,4 +18,7 @@
         SELECT *
         FROM `ColdStorageDoorSet` WHERE `rdcid` = #{rdcId}
     </select>
+     <select id="findValidByRdcId" parameterType="map" resultType="ColdStorageDoorSetEntity">
+       select * from coldstoragedoorset where rdcid=#{rdcId} and coldstorageid in (select id from coldstorageset where rdcid=#{rdcId});
+    </select>
 </mapper>

@@ -129,6 +129,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     }
     $scope.submit = function(){
         if (checkInput()){
+        	layer.open({
+        		type: 2
+        		,content: '努力加载中~~~'
+        		,shadeClose:false
+		    });
             $scope.isDisabled = true;
             data = {
                 file0: null,
@@ -196,6 +201,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 //alert("添加成功");
                 $('.mybtn').attr('disabled',true);
             	$('.mybtn').css('backgroundColor','gray');
+            	layer.closeAll();
                 layer.open({
 	                content: '添加成功'
 	                ,btn: '确定' 

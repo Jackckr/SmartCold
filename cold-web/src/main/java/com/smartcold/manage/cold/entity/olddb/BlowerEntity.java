@@ -9,6 +9,8 @@ import java.util.Date;
 public class BlowerEntity {
 
     private int id;
+    
+    private String name;
 
     private int blowerId;
 
@@ -30,7 +32,16 @@ public class BlowerEntity {
         this.id = id;
     }
 
-    public int getBlowerId() {
+    
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getBlowerId() {
         return blowerId;
     }
 
