@@ -7,7 +7,9 @@
 		.ul_key_list li{margin:5px 2px;padding:5px 5px;width: 245px;text-align: center;}#filter_div li.select{border-color:#0095ff!important;padding:3px 20px;position:relative}#filter_div li.select:after{content:"";position:absolute;bottom:0;right:0;width:20px;height:20px;background:url("../assets/img/icon-right.png")}#val_list_div ul{float:left;width:100%;height:100%;overflow:hidden;display:block}.ng-hide{height:0;width:0;background-color:transparent;left:-200px;height:100px}
 		
 		
-		#rpt_asistb_thead td{height: 50px;}
+		#rpt_asistb_thead td{height: 40px;line-height:40px;}
+		#rpt_asistb_thead td:nth-child(1),#rpt_asistb_tbody tr td:nth-child(1){width:150px!important;}
+		#rpt_asis_table td{border:2px solid #337ab7;}
 </style>
 <script src="assets/js/printThis.js"></script>
 <div>
@@ -57,7 +59,7 @@
 		                        <h3 class="box-title" id="rpt_asistb_tit"> </h3>
 		                    </div>
 		                    <div id="rpt_asis_coment" class="box-body box  bg-gray box-gray" style="min-height: 600px;"  ng-show="!rs_msg">
-								<table id="rpt_asis_table" class="table table-bordered " style="    text-align: center;">
+								<table id="rpt_asis_table" class="table table-bordered " style="border:2px solid #337ab7;text-align: center;">
 								  <thead id="rpt_asistb_thead">
 								  </thead>
 								  <tbody id="rpt_asistb_tbody">
