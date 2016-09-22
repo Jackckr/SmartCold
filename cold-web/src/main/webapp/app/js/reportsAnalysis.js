@@ -2,14 +2,13 @@
  * 分析报表
  */
 coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$rootScope) {
-	$scope.isLoaddata=false,isSuccess=false;
 	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
 	$scope.begin = $scope.getDateTimeStringBefore(3).substr(0,10);
 	$scope.end =$scope.getDateTimeStringBefore(0).substr(0,10);
 	$scope.picktime = $scope.begin + ' - ' + $scope.end  ; 
 	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 
 	$scope.coldstoragedoor=undefined,$scope.StorageBlower=undefined;//冷库门
-	$scope.slindex=0,$scope.urlid=0,$scope.sltit="日耗电量",$scope.tabletit=null,$scope.rs_msg=null;
+	$scope.slindex=0,$scope.urlid=0,$scope.sltit="日耗电量",$scope.tabletit=null,$scope.rs_msg=null,isSuccess=false;
 	$('#reservationtime').daterangepicker({startDate:$scope.begin,endDate:$scope.end , timePicker: false, timePickerIncrement: 1, format: 'YYYY-MM-DD'});
 	var typemode={title:["电量","水耗","开门","温度分析","热量","冷风机","系统效率"],key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime';次数,时长（min）","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长（min）,最高温度（℃）,超温因子（ε）,保温因子（τ ）","-1这是站位","'RunningTime','DefrosingTime';制冷时间（min）,化霜时间（min）","-1这是站位"] ,type:[10,3,2,1,-1,4,-1]};
 	$scope.slgroupsl=function(e){$scope.showobjgroup=!$scope.showobjgroup;};
@@ -61,14 +60,12 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	/**
 	 * 搜索数据
 	 */
-	$scope.search = function(isexpt,$event){
-		var em=$($event.target); 
-		if(	$scope.isLoaddata){return;}
+	$scope.search = function(isexpt){
 		isSuccess=false;
-		$scope.rs_msg=null;$scope.isLoaddata=true; em.attr("disabled",$scope.isLoaddata);
+		$scope.rs_msg=null;$scope.isLoaddata=true; 
 	    var datainfo=getcofinData();
 	    $("#rpt_asistb_tit").html($scope.sltit);
-	   if(datainfo==null||datainfo=="[]"){$scope.rs_msg="当前冷库的没有"+typemode.title[$scope.slindex]+"相关的配置！";return;}
+	   if(datainfo==null||datainfo=="[]"){$scope.rs_msg="当前冷库的没有"+typemode.title[$scope.slindex]+"相关的配置！"; $("#rpt_print").attr("disabled",!isSuccess);return;}
 	   var stentime=$scope.picktime .split(" - ");
 		$.ajax({
             type: "POST",
@@ -78,12 +75,11 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
                 if(data.success){
                 	isSuccess=true;
                 	if(isexpt){$scope.subform(data.message);}else{
-                	  em.attr("disabled",false);if($scope.urlid==0){  $scope.dldata(data);}else{ $scope.cldata(data); }
+                	  if($scope.urlid==0){  $scope.dldata(data);}else{ $scope.cldata(data); }
                 	 }
 	               }else{
-	            	   if(isexpt){ alert("导出失败！"+data.message);  }else{ $scope.rs_msg=data.message; } em.attr("disabled",false);
+	            	   if(isexpt){ alert("导出失败！"+data.message);  }else{ $scope.rs_msg=data.message; } //em.attr("disabled",false);
 	               }
-	               $scope.isLoaddata=false;
 	               $("#rpt_print").attr("disabled",!isSuccess);
             }
         });

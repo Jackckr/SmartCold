@@ -46,8 +46,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<button type="submit" class="btn btn-default" ng-click="search(false,$event)">查询</button>
-								<button id="rpt_expxls" type="button" class="btn btn-success" ng-click="search(true,$event)" >导出</button>
+								<button type="submit" class="btn btn-default" ng-click="search(false)">查询</button>
+								<button id="rpt_expxls" type="button" class="btn btn-success" ng-click="search(true)" >导出</button>
 								<button id="rpt_print" type="button" class="btn btn-warning" ng-click="Preview()" disabled="disabled">预览/打印</button>
 							</div>
 						</form>
@@ -65,7 +65,7 @@
 								</table>
 		                    </div>
 		                    <div ng-show="rs_msg" >
-		                       <div class="alert alert-warning">{{rs_msg}}</div>
+		                       <div class="alert alert-warning text-center">{{rs_msg}}</div>
 		                    </div>
 					</div>
 				</div>
