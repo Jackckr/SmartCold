@@ -142,11 +142,11 @@ coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $htt
 					var chartId = "#" + key + "Chart"
 					var chart = echarts.init($(chartId).get(0));
 					angular.forEach(storage['BaoWenYinZi'],function(item){
-						xData.unshift(item['date'])
-						yData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
+						yData.unshift(item['value'])
+						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData, "", "", "τ", "bar"));
+							xData, yData, "保温因子", "τ", "τ", "bar"));
 				},0)
 			})
 		})
