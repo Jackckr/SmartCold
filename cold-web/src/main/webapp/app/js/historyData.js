@@ -38,8 +38,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 	        expfrom.append($("<input>").attr("name","key").attr("value",$scope.sl_key));
 	        expfrom.append($("<input>").attr("name","startTime").attr("value",$scope.begin));
 	        expfrom.append($("<input>").attr("name","endTime").attr("value",$scope.end));
-	        expfrom.appendTo('body').submit();
-	        //.remove();
+	        expfrom.appendTo('body').submit().remove();
 		}else{
 			 alert("没有设置查询对象！");
 		}
