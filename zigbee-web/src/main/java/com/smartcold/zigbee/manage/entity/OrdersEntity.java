@@ -16,6 +16,7 @@ public class OrdersEntity {
 	private int shareinfoid;
 	private int state;
 	private int number;
+	private int teletimes;
 	private Date generatetime;
 	
 	public int getId() {
@@ -89,6 +90,13 @@ public class OrdersEntity {
 	}
 	public void setNumber(int number) {
 		this.number = number;
+	}
+	
+	public int getTeletimes() {
+		return teletimes;
+	}
+	public void setTeletimes(int teletimes) {
+		this.teletimes = teletimes;
 	}
 	public Date getGeneratetime() {
 		return generatetime;

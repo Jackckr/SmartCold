@@ -203,15 +203,28 @@ public class OrdersController extends BaseController {
 	
 	@RequestMapping(value = "/getTelephone")
 	@ResponseBody
-	public boolean getTelephone(@RequestParam String ownerTele,@RequestParam String userTele,@RequestParam String ownerName,@RequestParam String userName)  {
-		try {
-			TelephoneVerifyUtil tVerifyUtil = new TelephoneVerifyUtil();
-			tVerifyUtil.callUser(userTele, userName, ownerTele, ownerName);
-			tVerifyUtil.callOwner(userTele, userName, ownerTele, ownerName);
-			return true;
-		} catch (ApiException e) {
-			e.printStackTrace();
-			return false;
+	public Object getTelephone(@RequestParam int orderid,@RequestParam String ownerTele,@RequestParam String userTele,@RequestParam String ownerName,@RequestParam String userName)  {
+		OrdersEntity order = orderDao.findOrderById(orderid);
+		if (order!=null) {
+			if (order.getTeletimes()<2) {
+				TelephoneVerifyUtil tVerifyUtil = new TelephoneVerifyUtil();
+				try {
+					tVerifyUtil.callUser(userTele, userName, ownerTele, ownerName);
+					tVerifyUtil.callOwner(userTele, userName, ownerTele, ownerName);
+				} catch (ApiException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				order.setTeletimes(order.getTeletimes()+1);
+				orderDao.updateOrderTimes(order);
+				return ResponseData.newSuccess("对方联系人的手机号已经发送到您的手机，请及时联系！");
+			}
+			else {
+				return ResponseData.newFailure("您已经获得过联系方式，不可重复获取，请查看手机短信！");
+			}
+		}
+		else {
+			return ResponseData.newFailure("获取联系方式失败！");
 		}
 	}
 

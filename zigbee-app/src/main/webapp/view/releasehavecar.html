@@ -25,9 +25,9 @@
 			$('.toggle').children('div').click(function(){
 				$(this).addClass('current').siblings().removeClass('current');
 				if($(this).index()==1){
-                    window.flag = 1;
+                    window.flag1 = 1;
 				}else{
-                     window.flag = 0;
+                     window.flag1 = 0;
 				}
 			});
 			/*date*/
@@ -75,7 +75,7 @@
     </div>
       <section class="main maindetail">
       <form id="release_item_from" name="itemform" >
-         <input type="hidden" id="dataType" ng-model="dataType" value="2">
+       <input type="hidden" id="dataType" ng-model="dataType" value="2">
 			      <input type="hidden" id="typeCode" ng-model="typeCode" value="1">
 			      <input type="hidden" id="typeText" ng-model="typeText" value="找货">
 			       <input type="hidden" id="rdcflag" ng-model="rdcflag" value="1">
