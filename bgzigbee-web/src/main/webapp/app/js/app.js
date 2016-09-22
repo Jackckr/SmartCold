@@ -327,5 +327,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageAuthAudit/:rdcId',
         controller: 'coldStorageAuthAudit',
         templateUrl: 'app/template/coldStorageAuth.html'
+    }).state('companylist', {
+        url: '/companylist',
+        controller: 'companylist',
+        templateUrl: 'app/template/companyManage.html'
     });
 });
