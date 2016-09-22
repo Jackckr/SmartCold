@@ -334,6 +334,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/personalShare',
         controller: 'personalShare',
         templateUrl: 'app/template/personalShare.html'
+    }).state('personalMessage', {
+        url: '/personalMessage',
+        controller: 'personalMessage',
+        templateUrl: 'app/template/personalMessage.html'
     }).state('personalConnect', {
         url: '/personalConnect',
         controller: 'personalShare',

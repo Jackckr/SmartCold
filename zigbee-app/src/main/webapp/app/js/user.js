@@ -9,6 +9,7 @@ var app = angular.module('app', []);
 			 }
 		 }); 
 	 };
+	 $scope.msgTotalNum = window.msgTotalNum;
 	 $scope.initdata();
  });
 	

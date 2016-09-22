@@ -6,6 +6,7 @@ import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -194,6 +195,7 @@ public class RdcController {
 					  @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 					  @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
 					  @RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
+
 		MultipartFile[] files = {file4, file3, file2, file1, file0};
 		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
 		MultipartFile arrangePic = arrangePics;

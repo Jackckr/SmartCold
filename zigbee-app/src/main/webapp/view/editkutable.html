@@ -558,6 +558,11 @@ checkLogin();
     if( $scope.issubmit)return; $scope.issubmit=true;$("#but_savedata").text("提交中……");
     if(checkCommit()){
         if (checkInput()){
+        	layer.open({
+        		type: 2
+        		,content: '努力加载中~~~'
+        		,shadeClose:false
+		    });
             $scope.isDisabled = true;
             data = {
                 file0: null,
@@ -628,6 +633,7 @@ checkLogin();
                 $('.mybtn').attr('disabled',true);
             	$('.mybtn').css('backgroundColor','gray');
                // alert("修改成功");
+                layer.closeAll();
                 layer.open({
 				    content: '修改成功'
 				    ,btn: '确定'

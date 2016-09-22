@@ -242,6 +242,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
 			if(checkCarSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -270,6 +275,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	//alert(resp.data.message);
 		    	//layer.open({content: resp.data.message,btn: '确定'});
+		    	layer.closeAll();
 		    	 layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -300,6 +306,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkGoodsSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -327,6 +338,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    	//alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="goodslist.html";
+		    	layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -357,6 +369,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkStorageSubmit()){
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -384,6 +401,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    	//alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="user-myrelease.html"; 
+		    	layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'

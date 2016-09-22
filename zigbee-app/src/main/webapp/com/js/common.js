@@ -4,10 +4,21 @@ var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-//var ER = {root:"http://192.168.1.117:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+//var ER = {root:"http://192.168.1.106:8989",coldroot:"http://www.smartcold.org.cn",isdebug:true};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;}}
+if(window.user!=undefined ||window.user!=null)
+{
+ $.post(ER.root+"/i/message/findMessageByUserId", {
+     pageNum: null,
+     pageSize:null,
+     userID:window.user.id},  function(data) {	
+	          if(data.success&&data.data.length>0){
+	        	window.msgTotalNum = data.total;
+	          }
+    });
+}
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
@@ -30,10 +41,13 @@ var util = {
  * 事件
  */
 window.onload = function(){
+	var shortCut = '<link rel="shortcut icon" href="../com/img/favicon.ico" />';
+	$("head").append(shortCut);
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 };
+
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
  * 引入 dist/vconsole.min.js 到项目中：

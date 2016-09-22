@@ -15,7 +15,7 @@ public class InformationEntity {
 	private int browsenum;//浏览量
 	private String content;//内容
 	private Date posttime;//发布时间
-	private String coverpic = "app/img/food.jpg";
+	private String coverpic = "app/img/rdcHeader.jpg";
 	public int getId() {
 		return id;
 	}
