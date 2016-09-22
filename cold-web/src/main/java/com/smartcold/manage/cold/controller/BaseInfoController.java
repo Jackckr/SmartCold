@@ -239,7 +239,7 @@ public class BaseInfoController extends BaseController {
 				 List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
 				 alldata.add(datalist);
 			 }
-			  ExportExcelUtil.expExcel(response,filename+"_"+title+".xls",title,mode,onames, alldata);
+			  ExportExcelUtil.expExcel(response,filename+"_"+title+".xls",title,mode,null,onames, alldata);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

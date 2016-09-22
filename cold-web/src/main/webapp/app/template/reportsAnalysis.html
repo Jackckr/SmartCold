@@ -42,14 +42,13 @@
 									<div class="input-group-addon">
 										<i class="fa fa-clock-o"></i>
 									</div>
-									<input type="text" class="form-control pull-right"
-										style="width: 270px;" id="reservationtime" ng-model="picktime">
+									<input  type="text" class="form-control pull-right" style="width: 270px;" id="reservationtime" ng-model="picktime">
 								</div>
 							</div>
 							<div class="form-group">
-								<button type="submit" class="btn btn-default" ng-click="search()">查询</button>
-								<button type="button" class="btn btn-success" ng-click="expdata()">导出</button>
-								<button type="button" class="btn btn-warning" ng-click="Preview()">预览/打印</button>
+								<button type="submit" class="btn btn-default" ng-click="search(false,$event)">查询</button>
+								<button id="rpt_expxls" type="button" class="btn btn-success" ng-click="search(true,$event)" >导出</button>
+								<button id="rpt_print" type="button" class="btn btn-warning" ng-click="Preview()" disabled="disabled">预览/打印</button>
 							</div>
 						</form>
 					</div>
