@@ -69,10 +69,11 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	    var datainfo=getcofinData();
 	    $("#rpt_asistb_tit").html($scope.sltit);
 	   if(datainfo==null||datainfo=="[]"){$scope.rs_msg="当前冷库的没有"+typemode.title[$scope.slindex]+"相关的配置！";return;}
+	   var stentime=$scope.picktime .split(" - ");
 		$.ajax({
             type: "POST",
             url:'i/AnalysisController/getCasesTotalSISAnalysis',
-            data:{index:$scope.urlid,isexpt:isexpt,type:typemode.type[$scope.slindex],confdata:datainfo, key:typemode.key[$scope.slindex], startTime:$scope.begin,endTime:$scope.end},//
+            data:{index:$scope.urlid,isexpt:isexpt,type:typemode.type[$scope.slindex],confdata:datainfo, key:typemode.key[$scope.slindex], startTime:stentime[0],endTime:stentime[1]},//
             success: function(data) {
                 if(data.success){
                 	isSuccess=true;

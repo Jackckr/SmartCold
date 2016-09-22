@@ -173,6 +173,8 @@ public class AnalysisController {
 			fileter.put("oid", oid);
 			fileter.put("key", index==0?key:keys[0]);
 			fileter.put("desc", "asc");
+			fileter.put("startTime",startTime);
+			fileter.put("endTime", endTime);
 			List<ColdStorageAnalysisEntity> datalist= this.coldStorageAnalysisService.findValueByFilter(fileter);
 			HashMap<String, Object> restMap=new HashMap<String, Object>();
 			if(SetUtil.isnotNullList(datalist)){
