@@ -41,10 +41,13 @@ var util = {
  * 事件
  */
 window.onload = function(){
+	var shortCut = '<link rel="shortcut icon" href="../com/img/favicon.ico" />';
+	$("head").append(shortCut);
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 };
+
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
  * 引入 dist/vconsole.min.js 到项目中：

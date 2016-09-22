@@ -4,9 +4,14 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +24,12 @@ import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.CompressorGroupService;
+import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -52,6 +59,8 @@ public class AnalysisController {
 	
 	@Autowired
 	private ColdStorageAnalysisService  coldStorageAnalysisService;
+	
+	private static HashMap<String,LinkedHashMap<String, Object[]>> expData=new HashMap<String,LinkedHashMap<String, Object[]>>();
 	/**
 	 * 获得有效冷库门
 	 * @param recId
@@ -62,7 +71,7 @@ public class AnalysisController {
 	public Object getColdStorageDoor(Integer rdcId){
 		return coldStorageDoorSetDao.findValidByRdcId(rdcId);
 	}
-	
+
 	/**
 	 * 获得风机
 	 * @param recId
@@ -123,8 +132,7 @@ public class AnalysisController {
 
 
 	
-	/**
-	 * 支持多key
+	/**报表分析 支持多key
 	 * @param index:当前功能模块 ->0  单key  1 :多key
 	 * @param rdcId:冷库id ->暂时无用
 	 * @param type:数据类型->StorageType->type
@@ -136,25 +144,27 @@ public class AnalysisController {
 	 */
 	@RequestMapping(value = "/getCasesTotalSISAnalysis")
 	@ResponseBody
-	public ResponseData<HashMap<String, Object>> getCasesTotalSISAnalysis(int index,Integer rdcId,Integer type,String confdata, String key, String startTime,String endTime) {
+	public ResponseData<HashMap<String, Object>> getCasesTotalSISAnalysis(HttpServletRequest request,HttpServletResponse response,Boolean isexpt,int index,Integer type,String confdata, String key, String startTime,String endTime) {
 		try {
 			if(StringUtil.isNull(confdata)||StringUtil.isNull(key)){return ResponseData.newFailure("非法请求！");}
 			String [] keys={};String [] keyts={};String [] titls={};
 			HashMap<Integer, Integer> oidsymap=new HashMap<Integer, Integer>();
 			HashMap<String, Integer> keymap=new HashMap<String, Integer>();
+			LinkedHashMap<String, Object[]> tempData=new LinkedHashMap<String, Object[]>();
 			if(index==1){
 				keys=StringUtil.splitString(key);
 				if(keys.length!=2){return ResponseData.newFailure("非法请求！key参数不完整");}
 				 keyts=StringUtil.splitfhString(keys[0]);//主key
-				 titls=StringUtil.splitfhString(keys[1]);//主key
+				 titls=StringUtil.splitfhString(keys[1]);//key标题
 				if(keyts.length!=titls.length){return ResponseData.newFailure("非法请求！key参数不完整");}
 				for (int i = 0; i < keyts.length; i++) {keymap.put(keyts[i].replace("'", ""), i);}
 			 }
 			List<PowerSetEntity> powerList  = JSON.parseArray(confdata, PowerSetEntity.class);
 			if(SetUtil.isNullList(powerList)){return ResponseData.newFailure("非法请求！");}
-			String oid="";int[] oids=new int[powerList.size()];
+			String oid="";int[] oids=new int[powerList.size()];String [] names=new String[powerList.size()];
 			for (PowerSetEntity powst : powerList) {
 				 oids[powst.getId()]=powst.getRdcid();
+				 names[powst.getId()]=powst.getName();
 				 if(!oid.equals("")){oid+=","+ powst.getRdcid();}else{oid=powst.getRdcid()+"";}
 				 oidsymap.put( powst.getRdcid(),powst.getId());
 			}
@@ -163,11 +173,12 @@ public class AnalysisController {
 			fileter.put("oid", oid);
 			fileter.put("key", index==0?key:keys[0]);
 			fileter.put("desc", "asc");
+			fileter.put("startTime",startTime);
+			fileter.put("endTime", endTime);
 			List<ColdStorageAnalysisEntity> datalist= this.coldStorageAnalysisService.findValueByFilter(fileter);
 			HashMap<String, Object> restMap=new HashMap<String, Object>();
 			if(SetUtil.isnotNullList(datalist)){
 				Object[] objects ={};
-				LinkedHashMap<String, Object[]> tempData=new LinkedHashMap<String, Object[]>();
 				for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : datalist) {
 					String data=TimeUtil.getFormatDate( coldStorageAnalysisEntity.getDate());
 					int oidindex= oidsymap.get(coldStorageAnalysisEntity.getOid());
@@ -182,15 +193,116 @@ public class AnalysisController {
 				}
 				restMap.put("tbdata", tempData);
 			}
-			restMap.put("titls", titls);
-			restMap.put("keyts", keyts);
-			return ResponseData.newSuccess(restMap);
+			if(isexpt!=null&&isexpt){
+				 String  sid=	request.getSession().getId();
+				 expData.put(sid, tempData);
+				 request.getSession().setAttribute(sid+"name", names);
+				 request.getSession().setAttribute(sid+"titls", titls);
+				return ResponseData.newSuccess(sid);
+			}else{
+				restMap.put("titls", titls);
+				restMap.put("keyts", keyts);
+				return ResponseData.newSuccess(restMap);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseData.newFailure("查询失败！请稍后重试！");
+			return ResponseData.newFailure("查询数据失败！请稍后重试！");
 		}
 	}
 	
-
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @param fileName
+	 * @param title
+	 * @param sid
+	 * @param index
+	 * @param type
+	 */
+	@RequestMapping(value = "/expSISAnalysisData")
+	@ResponseBody
+	public void expSISAnalysisData(HttpServletRequest request,HttpServletResponse response,String fileName,String title,String sid) {
+			 try {
+				if(StringUtil.isnotNull(fileName)&&StringUtil.isnotNull(sid)){
+					 LinkedHashMap<String, Object[]> tempData= expData.get(sid);
+				    String[] names=	 (String[]) request.getSession().getAttribute(sid+"name");
+					String []titls= (String[]) request.getSession().getAttribute(sid+"titls");
+					expData.remove(sid);request.getSession().removeAttribute(sid+"name");request.getSession().removeAttribute(sid+"titls");
+					experrDataTool(request, response, fileName, title,names, titls,false, tempData);//导出数据
+				  }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
+	/**
+	 * 导出辅助工具
+	 * @param request
+	 * @param response
+	 * @param index
+	 * @param filename
+	 * @param title
+	 * @param toptit :第一栏位名称
+	 * @param subtit :
+	 * @param iserr
+	 * @param alldata
+	 */
+	@SuppressWarnings("rawtypes")
+	private  void experrDataTool(HttpServletRequest request,HttpServletResponse response,String fileName,String title,String[] toptit,String[] subtit,boolean iserr, LinkedHashMap<String, Object[]> alldata){
+		  String [] shelName={title};
+		  List<String> newtitlist=new ArrayList<String>(); 
+          List<String> subtitlist=new ArrayList<String>(); 
+          List<String> colmwith=new ArrayList<String>(); 
+          newtitlist.add("日期"); subtitlist.add("-");colmwith.add("5");
+          int colmode[][]=null;
+          if(subtit!=null&&subtit.length>0){
+        	  colmode=new int[toptit.length+1][];//初始化跨列集合
+        	  colmode[0]=new int[]{1,2,0,0};
+			  for (int i = 0; i < toptit.length; i++) {
+				for (int j = 0; j < subtit.length; j++) {
+					if(j==0){ 
+						newtitlist.add(toptit[i]);
+						colmode[i+1]=new int[]{1,1,i*subtit.length+1,i*subtit.length+subtit.length};
+					}else{
+						newtitlist.add("");
+					}
+					subtitlist.add(subtit[j]);
+					 colmwith.add("5");
+				}
+			  }
+          }else{
+        	  for (String tit : toptit) {
+        		  newtitlist.add(tit);
+        		  colmwith.add("5");
+        	   }
+          }
+          List<String[]> modeList=new ArrayList<String[]>();
+          modeList.add(newtitlist.toArray(new String[newtitlist.size()]));//;
+          modeList.add(new String[]{});
+          modeList.add(colmwith.toArray(new String[colmwith.size()]));//;
+          if(subtit!=null&&subtit.length>0){
+            modeList.add(subtitlist.toArray(new String[subtitlist.size()]));//;
+          }
+          List<List> expdata=new ArrayList<List>();
+          LinkedList<Object> temp=null;
+          if(alldata!=null&&alldata.size()>0){
+	          for (String key : alldata.keySet()) {
+	        	  temp=new LinkedList<Object>();
+	        	  temp.add(key);
+	        	  Object[] objects = alldata.get(key);
+	        	  for (Object object : objects) {
+					if(object==null){
+						temp.add("0.0");
+					}else{
+						temp.add(object);
+					}
+				  }
+	        	  expdata.add(temp);
+			  }
+          }
+          String mode[][]=modeList.toArray(new String[modeList.size()][]);
+          ExportExcelUtil.expExcel(response, fileName, title, mode, colmode, shelName, expdata);
+	}
+	
 
 }

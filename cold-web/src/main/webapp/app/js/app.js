@@ -319,6 +319,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/warn/:rdcId',
         controller: 'warn',
         templateUrl: 'app/template/warn.html'
+    }).state('warncoldAnalysis', {//制冷告警统计
+        url: '/warncoldAnalysis/{rdcId}',
+        controller: 'warncoldAnalysis',
+        templateUrl: 'app/template/warncoldAnalysis.html'
     }).state('myColdStorage',{
     	url:'/myColdStorage/:storageID',
     	controller: 'myColdStorage',

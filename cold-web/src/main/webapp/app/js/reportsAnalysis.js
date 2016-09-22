@@ -8,7 +8,7 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	$scope.picktime = $scope.begin + ' - ' + $scope.end  ; 
 	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 
 	$scope.coldstoragedoor=undefined,$scope.StorageBlower=undefined;//冷库门
-	$scope.slindex=0,$scope.urlid=0,$scope.sltit="日耗电量",$scope.tabletit=null,$scope.rs_msg=null;
+	$scope.slindex=0,$scope.urlid=0,$scope.sltit="日耗电量",$scope.tabletit=null,$scope.rs_msg=null,isSuccess=false;
 	$('#reservationtime').daterangepicker({startDate:$scope.begin,endDate:$scope.end , timePicker: false, timePickerIncrement: 1, format: 'YYYY-MM-DD'});
 	var typemode={title:["电量","水耗","开门","温度分析","热量","冷风机","系统效率"],key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime';次数,时长（min）","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长（min）,最高温度（℃）,超温因子（ε）,保温因子（τ ）","-1这是站位","'RunningTime','DefrosingTime';制冷时间（min）,化霜时间（min）","-1这是站位"] ,type:[10,3,2,1,-1,4,-1]};
 	$scope.slgroupsl=function(e){$scope.showobjgroup=!$scope.showobjgroup;};
@@ -20,12 +20,8 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 		$scope.showobjgroup=false; 
 		$scope.getsldata();
 	};
-
-	$scope.expdata=function(){//导出数据
-    
-    };
     $scope.Preview=function(){ //打印预览
-           $("#rpt_asis_coment").printThis({ importCSS: true,importStyle: true, printContainer: true,  pageTitle: $scope.sltit, removeInline: false, formValues: true  });//  loadCSS: "/Content/Themes/Default/style.css",
+          $("#rpt_asis_coment").printThis({ importCSS: true,importStyle: true,  pageTitle: $scope.sltit,printContainer: true,  removeInline: false, formValues: true  });//  loadCSS: "/Content/Themes/Default/style.css",
     };
     $scope.getsldata=function(){//拦截未加载数据
     	if($scope.slindex==2){
@@ -64,37 +60,47 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	/**
 	 * 搜索数据
 	 */
-	$scope.search = function(){
-		$scope.rs_msg=null;
+	$scope.search = function(isexpt){
+		isSuccess=false;
+		$scope.rs_msg=null;$scope.isLoaddata=true; 
 	    var datainfo=getcofinData();
 	    $("#rpt_asistb_tit").html($scope.sltit);
-	   if(datainfo==null||datainfo=="[]"){$scope.rs_msg="当前冷库的没有"+typemode.title[$scope.slindex]+"相关的配置！";return;}
+	   if(datainfo==null||datainfo=="[]"){$scope.rs_msg="当前冷库的没有"+typemode.title[$scope.slindex]+"相关的配置！"; $("#rpt_print").attr("disabled",!isSuccess);return;}
+	   var stentime=$scope.picktime .split(" - ");
 		$.ajax({
             type: "POST",
             url:'i/AnalysisController/getCasesTotalSISAnalysis',
-            data:{index:$scope.urlid, rdcId:$scope.rdcid,type:typemode.type[$scope.slindex],confdata:datainfo, key:typemode.key[$scope.slindex], startTime:$scope.begin,endTime:$scope.end},//
+            data:{index:$scope.urlid,isexpt:isexpt,type:typemode.type[$scope.slindex],confdata:datainfo, key:typemode.key[$scope.slindex], startTime:stentime[0],endTime:stentime[1]},//
             success: function(data) {
                 if(data.success){
-	               if($scope.urlid==0){
-	            	   $scope.dldata(data);
+                	isSuccess=true;
+                	if(isexpt){$scope.subform(data.message);}else{
+                	  if($scope.urlid==0){  $scope.dldata(data);}else{ $scope.cldata(data); }
+                	 }
 	               }else{
-	            	   $scope.cldata(data);
+	            	   if(isexpt){ alert("导出失败！"+data.message);  }else{ $scope.rs_msg=data.message; } //em.attr("disabled",false);
 	               }
-               }else{
-            	   $("#rpt_asis_table").addClass("hide");
-            	   alert("err!");
-               }
+	               $("#rpt_print").attr("disabled",!isSuccess);
             }
         });
 		
 	};
+	$scope.subform=function(sid){//创建下载表单
+		$("#rpt_expxls").attr("disabled",true);
+        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/AnalysisController/expSISAnalysisData').attr('id', "expdataform");
+        expfrom.attr("Content-Type","application/json;charset=UTF-8");
+        expfrom.append($("<input>").attr("name","sid").attr("value",sid));
+        expfrom.append($("<input>").attr("name","fileName").attr("value",$scope.sltit+"分析.xls"));
+        expfrom.append($("<input>").attr("name","title").attr("value",$scope.sltit));
+        expfrom.appendTo('body').submit().remove();
+        setTimeout(function () {$("#rpt_expxls").attr("disabled",false); }, 3000);
+   };
 	
 	function getbdltit(value){
 	    if(value==null||value==''||value=='null')return '<td>0</td>';else return "<td>"+value+"</td>";
     }
-	
 	function gettbcltit(value,cl){
-	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'"></td>';else return '<td colspan="'+cl+'">'+value+'</td>';
+	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';
     }
 	$scope.dldata=function(data){//处理单key
          var tbdata=data.entity.tbdata;
@@ -114,7 +120,7 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 		var tbdata=data.entity.tbdata;
 		var titls=data.entity.titls;
 		var keyts=data.entity.keyts;
-		var tit=["<tr><td rowspan='2'>日期</td>"], subtit=["<tr>"],tboy=[]; 
+		var tit=["<tr><td rowspan='2' style='line-height:5;'>日期</td>"], subtit=["<tr>"],tboy=[]; 
 		$.each($scope.tabletit, function(i, vo){
 			tit.push(gettbcltit(vo.name,keyts.length));
 			$.each(titls, function(j, po){subtit.push(getbdltit(po));});//第二栏位标题
@@ -133,7 +139,6 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 		$("#rpt_asistb_thead").html(tit.join("")+subtit.join(""));
 		$("#rpt_asistb_tbody").html(tboy.join(""));
 	};	
-	
 	$(document).bind('click',function(e){ 
 		if($scope.showobjgroup){
 			var e = e || window.event; //浏览器兼容性 

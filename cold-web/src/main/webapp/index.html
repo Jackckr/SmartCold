@@ -13,6 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 <!-- Bootstrap 3.3.5 -->
+<link rel="shortcut icon" href="assets/img/favicon.ico" />
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -369,19 +370,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
             </ul>
             <ul class="sidebar-menu text-white">
-            <li class="treeview"><a href="#" ng-click="openWarn()"><i class="icon iconfont" style="color:#ffffff">&#xe680;</i>
-            <span class="menu-title text-white" style="font-size: large">报警</span></a></li>
+	            <li class="treeview">
+	              <a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe6bb;</i>
+	              <span class="menu-title text-white" style="font-size: large">报警</span></a>
+	              <ul class="treeview-menu">
+<!-- 	               <li><a href="#/about"><i class="fa fa-circle-o" ng-click="openWarn()"></i>报警预览</a></li> -->
+	               <li><a href="#/warncoldAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>制冷告警统计</a></li>
+	               
+	              </ul>
+	            </li>
             </ul>
             <ul class="sidebar-menu text-white">
-            <li class="treeview">
-              <a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe6bb;</i>
-              <span class="menu-title text-white" style="font-size: large">维护管理</span></a>
-              <ul class="treeview-menu">
-               <li><a href="#/about"><i class="fa fa-circle-o"></i>定期保养维护提醒</a></li>
-               <li><a href="#/about"><i class="fa fa-circle-o"></i>故障维修记录</a></li>
-               <li><a href="#/about"><i class="fa fa-circle-o"></i>维修服务评价</a></li>
-              </ul>
-            </li>
+	            <li class="treeview">
+	              <a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe6bb;</i>
+	              <span class="menu-title text-white" style="font-size: large">维护管理</span></a>
+	              <ul class="treeview-menu">
+	               <li><a href="#/about"><i class="fa fa-circle-o"></i>定期保养维护提醒</a></li>
+	               <li><a href="#/about"><i class="fa fa-circle-o"></i>故障维修记录</a></li>
+	               <li><a href="#/about"><i class="fa fa-circle-o"></i>维修服务评价</a></li>
+	              </ul>
+	            </li>
             </ul>
             <ul class="sidebar-menu text-white">
             <li class="treeview"><a href="#designStorage"><i class="icon iconfont" style="color:#ffffff">&#xe6ba;</i>
@@ -487,6 +495,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/light.js"></script>
 <script src="app/js/power.js"></script>
 <script src="app/js/waterCost.js"></script>
+<script src="app/js/warncoldAnalysis.js"></script>
 <script src="app/js/platformDoor.js"></script>
 <script src="app/js/other.js"></script>
 <script src="app/js/coolingAnalysis.js"></script>
