@@ -178,9 +178,7 @@ public class CompanyController extends BaseController {
         // 升级账号 并绑定
         RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId);
         if (roleUserByUserId != null) {
-            if (roleUserByUserId.getRoleid() == 2) {
-                return new BaseDto(0);
-            } else {
+            if (roleUserByUserId.getRoleid() != 2) {
                 roleUserByUserId.setRoleid(2);
                 roleUserDao.updateByPrimaryKeySelective(roleUserByUserId);
             }
