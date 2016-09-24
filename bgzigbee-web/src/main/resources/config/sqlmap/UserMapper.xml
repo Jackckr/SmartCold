@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.UserMapper">
 
-    <insert id="insertUser" parameterType="UserEntity">
+    <insert id="insertUser" parameterType="com.smartcold.bgzigbee.manage.entity.UserEntity">
         INSERT INTO `user`(
 		`username`,
 		`password`,
@@ -22,12 +22,12 @@
 		)
     </insert>
 
-    <select id="findUser" parameterType="map" resultType="UserEntity">
+    <select id="findUser" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
 		SELECT *
 		FROM `user` WHERE `username` = #{username} AND `password` = #{password}
 	</select>
 	
-	 <select id="findAllUser" parameterType="int" resultType="UserEntity">
+	 <select id="findAllUser" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
          SELECT * FROM `user`
 		 <where> 
 			<if test="audit != null">
@@ -40,12 +40,12 @@
          order by `addTime` desc
     </select>
 	
-	<select id="findUserByName" parameterType="map" resultType="UserEntity">
+	<select id="findUserByName" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
 		SELECT *
 		FROM `user` WHERE `username` = #{username}
 	</select>
 
-    <select id="findUserById" parameterType="map" resultType="UserEntity">
+    <select id="findUserById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
 		SELECT *
 		FROM `user` WHERE `id` = #{id}
 	</select>

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.StorageStructureTypeMapper">
 
-	<select id="findAll" parameterType="map" resultType="StorageStructureTypeEntity">
+	<select id="findAll" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageStructureTypeEntity">
 		SELECT *
 		FROM `storagestruct` order by `id` ASC
 	</select>

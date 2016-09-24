@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.InformationMapper">
 
-    <insert id="insertInformation" parameterType="InformationEntity">
+    <insert id="insertInformation" parameterType="com.smartcold.bgzigbee.manage.entity.InformationEntity">
         INSERT INTO `information`(
 		`title`,
 		`keywords`,
@@ -28,7 +28,7 @@
 		)
     </insert>
     
-    <update id="updateInformation" parameterType="InformationEntity" >
+    <update id="updateInformation" parameterType="com.smartcold.bgzigbee.manage.entity.InformationEntity" >
         update information
         <set >
             <if test="title != null" >
@@ -56,7 +56,7 @@
         where id = #{id}
     </update>
 	
-	<select id="findAllInformation" parameterType="map" resultType="InformationEntity">
+	<select id="findAllInformation" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.InformationEntity">
          SELECT * FROM `information`
 		 <where> 1=1
 		    <if test="keyword != null">
@@ -66,12 +66,12 @@
          order by `posttime` desc
     </select>
     
-     <select id="findInformationByID" parameterType="map" resultType="InformationEntity">
+     <select id="findInformationByID" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.InformationEntity">
 		SELECT *
 		FROM `information` WHERE `id` = #{inforID}
 	</select>
 	
-	<select id="findInformationByPosterID" parameterType="map" resultType="InformationEntity">
+	<select id="findInformationByPosterID" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.InformationEntity">
 		SELECT *
 		FROM `information`
 		<where> `posterid` = #{posterID}
@@ -82,7 +82,7 @@
          order by `posttime` desc 
 	</select>
 	
-	<select id="findInformationByCategory" parameterType="map" resultType="InformationEntity">
+	<select id="findInformationByCategory" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.InformationEntity">
 		SELECT *
 		FROM `information` WHERE `category` = #{categoryID}
 	</select>

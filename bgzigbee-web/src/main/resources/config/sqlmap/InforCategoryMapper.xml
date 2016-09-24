@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.InforCategoryMapper">
 
-    <insert id="insertInforCategory" parameterType="InforCategoryEntity">
+    <insert id="insertInforCategory" parameterType="com.smartcold.bgzigbee.manage.entity.InforCategoryEntity">
         INSERT INTO `inforcategory`(
 		`categoryname`,
 		`orderid`,
@@ -18,7 +18,7 @@
 		)
     </insert>
     
-    <update id="updateInforCategory" parameterType="InforCategoryEntity" >
+    <update id="updateInforCategory" parameterType="com.smartcold.bgzigbee.manage.entity.InforCategoryEntity" >
         update inforcategory
         <set >
             <if test="categoryname != null" >
@@ -31,11 +31,11 @@
         where id = #{id}
     </update>
 	
-	<select id="findAllInforCategory" parameterType="map" resultType="InforCategoryEntity">
+	<select id="findAllInforCategory" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.InforCategoryEntity">
          SELECT * FROM `inforcategory` order by `inserttime` desc
     </select>
     
-     <select id="findInforCategoryByID" parameterType="map" resultType="InforCategoryEntity">
+     <select id="findInforCategoryByID" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.InforCategoryEntity">
 		SELECT *
 		FROM `inforcategory` WHERE `id` = #{categoryID}
 	</select>

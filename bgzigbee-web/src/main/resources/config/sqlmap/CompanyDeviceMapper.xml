@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper">
 
-	<select id="findAll" parameterType="map" resultType="CompanyDeviceEntity">
+	<select id="findAll" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CompanyDeviceEntity">
 		SELECT *
 		FROM `companydevice` order by `id` ASC
 	</select>

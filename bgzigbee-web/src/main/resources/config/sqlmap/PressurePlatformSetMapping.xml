@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.PressurePlatformSetMapping">
-    <select id="findById" parameterType="map" resultType="PressurePlatformSetEntity">
+    <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.PressurePlatformSetEntity">
         SELECT *
         FROM `pressureplatformset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByRdcId" parameterType="map" resultType="PressurePlatformSetEntity">
+    <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.PressurePlatformSetEntity">
         SELECT *
         FROM `pressureplatformset` WHERE `rdcId` = #{rdcId}
     </select>

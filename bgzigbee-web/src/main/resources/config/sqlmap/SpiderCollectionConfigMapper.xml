@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper">
 
-    <insert id="addConfig" parameterType="SpiderCollectionConfigEntity">
+    <insert id="addConfig" parameterType="com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity">
         INSERT INTO `spidercollectionconfig`(
 		`username`,
 		`password`,
@@ -20,7 +20,7 @@
 		)
     </insert>
     
-    <update id="updateConfig" parameterType="SpiderCollectionConfigEntity">
+    <update id="updateConfig" parameterType="com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity">
         UPDATE `spidercollectionconfig`
         SET
         `username` = #{username},
@@ -28,7 +28,7 @@
         WHERE rdcid = #{rdcid}
     </update>
 
-    <select id="findConfigByRdcid" parameterType="map" resultType="SpiderCollectionConfigEntity">
+    <select id="findConfigByRdcid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity">
 		SELECT *
 		FROM `spidercollectionconfig` WHERE `rdcid` = #{rdcid}
 	</select>

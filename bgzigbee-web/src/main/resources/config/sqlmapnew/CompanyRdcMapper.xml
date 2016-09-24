@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.smartcold.bgzigbee.manage.dao.CompanyRdcMapper" >
-  <resultMap id="BaseResultMap" type="com.smartcold.bgzigbee.manage.entity.CompanyRdc" >
+<mapper namespace="com.smartcold.bgzigbee.manage.sc360.dao.CompanyRdcMapper" >
+  <resultMap id="BaseResultMap" type="com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="companyid" property="companyid" jdbcType="INTEGER" />
     <result column="rdcid" property="rdcid" jdbcType="INTEGER" />
@@ -21,13 +21,13 @@
     delete from CompanyRdc
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyRdc" >
+  <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc" >
     insert into CompanyRdc (id, companyid, rdcid, 
       imgurl, addtime)
     values (#{id,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER}, 
       #{imgurl,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyRdc" >
+  <insert id="insertSelective" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc" >
     insert into CompanyRdc
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyRdc" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc" >
     update CompanyRdc
     <set >
       <if test="companyid != null" >
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyRdc" >
+  <update id="updateByPrimaryKey" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc" >
     update CompanyRdc
     set companyid = #{companyid,jdbcType=INTEGER},
       rdcid = #{rdcid,jdbcType=INTEGER},

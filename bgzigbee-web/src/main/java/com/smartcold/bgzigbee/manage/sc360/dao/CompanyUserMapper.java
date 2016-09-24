@@ -1,7 +1,7 @@
-package com.smartcold.bgzigbee.manage.dao;
+package com.smartcold.bgzigbee.manage.sc360.dao;
 
 
-import com.smartcold.bgzigbee.manage.entity.CompanyUser;
+import com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser;
 
 import java.util.List;
 

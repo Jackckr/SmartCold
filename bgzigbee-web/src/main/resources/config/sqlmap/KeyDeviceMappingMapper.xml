@@ -4,20 +4,20 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.KeyDeviceMappingMapper">
 
-	<select id="findByKey" parameterType="map" resultType="KeyDeviceMappingEntity">
+	<select id="findByKey" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.KeyDeviceMappingEntity">
 		SELECT *
 		FROM `keyDeviceMapping` 
 		WHERE `key` = #{key}
 	</select>
 	
-	<select id="findByKeypre" parameterType="map" resultType="KeyDeviceMappingEntity">
+	<select id="findByKeypre" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.KeyDeviceMappingEntity">
 		SELECT *
 		FROM `keyDeviceMapping` 
 		WHERE `key` like '${keypre}%'
 	</select>
 
 	<select id="findByDevice" parameterType="map"
-		resultType="KeyDeviceMappingEntity">
+		resultType="com.smartcold.bgzigbee.manage.entity.KeyDeviceMappingEntity">
 		SELECT *
 		FROM `KeyDeviceMapping` 
 		WHERE `deviceid` = #{deviceid} AND `key` = #{key}
