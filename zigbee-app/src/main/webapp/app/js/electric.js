@@ -96,7 +96,8 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         if ($scope.swiper < $scope.powers.length) {
             var innerHTML = '<div class="swiper-slide">' +
                 '<p class="actually">' + powerSet.name + '</p>' +
-                '<div id=' + mainId + ' style="height: 18rem;width: 18rem;position: relative;left: 1rem"></div> ';
+                '<p class="temperaturenum">' + 2 + 'kW.h</p>' +
+                '<div id=' + mainId + ' style="min-height: 15rem;"></div> ';
             $("#chartView").last().append(innerHTML);
             $scope.swiper += 1;
         }
@@ -139,7 +140,9 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
 
         var mainId = 'water';
         var innerHTML = '<div class="swiper-slide">' +
-            '<div id=' + mainId + ' style="height: 18rem;width: 18rem;position: relative;left: 1rem"></div> ';
+        	'<p class="actually">水表1</p>' +
+        	'<p class="temperaturenum">' + 2 + 't</p>' +        
+            '<div id=' + mainId + ' style="height: 18rem;"></div> ';
         $("#chartView").last().append(innerHTML);
 
         var barCharts = echarts.init($('#' + mainId)[0]);
@@ -152,7 +155,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
                     xData.push(item.compressorGroupName);
                     yData.push(item.waterCost);
                 })
-                var option = $scope.creatOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'bar');
+                var option = $scope.creatOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'line');
                 barCharts.setOption(option);
             })
     }
@@ -171,6 +174,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
+        	backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis'
             },
