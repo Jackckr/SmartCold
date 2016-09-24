@@ -50,8 +50,9 @@ public class ReviewController {
 		CommentEntity commentEntity = new CommentEntity();
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
 		String dir = String.format("%s/review/%s", basedir, commentDto.getRdcID());
-
+		if(user!=null){
 		commentEntity.setCommerID(user.getId());
+		}
 		commentEntity.setContent(URLDecoder.decode(commentDto.getContent(), "UTF-8"));
 		commentEntity.setGrade(commentDto.getGrade());
 		commentEntity.setFacilityGrade(commentDto.getFacilityGrade());

@@ -8,10 +8,14 @@
     <title>冷库评价详情</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
-    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+         <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+    <script type="text/javascript" src="../app/js/commentdetail.js"></script>
 </head>
-<body>
+<body ng-app="app" ng-controller="ctrl">
     <header>
     	<div class="area fl">
     		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
@@ -24,7 +28,7 @@
     	</div>
     </header>
     <section class="comment">
-    	<p class="total">
+    	<p class="total" onclick="starNum(this)">
     		总体
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -32,7 +36,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="tempture">
+    	<p class="tempture" onclick="starNum(this)">
     		温度
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -40,7 +44,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="device">
+    	<p class="device" onclick="starNum(this)">
     		设施
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -48,7 +52,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="sevice">
+    	<p class="sevice" onclick="starNum(this)">
     		服务
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -56,7 +60,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="health">
+    	<p class="health" onclick="starNum(this)">
     		卫生
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -65,17 +69,13 @@
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
     	<form class="commentInfo">
-    		<textarea placeholder="跟大家分享一下您对我们冷库的感受吧~"></textarea>
-    		<label class="pic">
-    			<!--<input type="file" multiple/> -->
-    			<input type="file" id="files" name="files[]" multiple />
-    		</label>
-    		<span id="">上传图片</span>
-    		
-   			<output id="list"></output>
+    		<textarea ng-model="commentinfo" placeholder="跟大家分享一下您对我们冷库的感受吧~"></textarea>
+    		<label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
+				 </label> <span id="">上传图片<small class="text-warning">*最多5张</small></span><br>
+	              <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
     	</form>    	
     </section>
-    <button type="submit" class="mybtn" onclick="location.href='comment.html'">提交</button>
+    <button type="submit" class="mybtn" ng-click="submit()">提交</button>
     <script type="text/javascript" src="../com/js/file_upload.js" ></script>
 	<script>
 		$(document).ready(function(){
@@ -88,8 +88,13 @@
 				}
 												
 			})
-			
 		})
+			
+		/*星级评价*/
+		function starNum(ops){
+			var starLength = $(ops).children('.current').length;
+			alert(starLength)
+		}
 	</script>
 </body>
 </html>

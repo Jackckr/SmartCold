@@ -89,4 +89,10 @@
     from CompanyUser
     where userid = #{userid,jdbcType=INTEGER}
   </select>
+  <select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from CompanyUser
+    where companyid = #{companyid,jdbcType=INTEGER}
+  </select>
 </mapper>

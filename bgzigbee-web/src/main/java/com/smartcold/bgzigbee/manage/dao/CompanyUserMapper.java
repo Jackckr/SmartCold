@@ -3,6 +3,8 @@ package com.smartcold.bgzigbee.manage.dao;
 
 import com.smartcold.bgzigbee.manage.entity.CompanyUser;
 
+import java.util.List;
+
 public interface CompanyUserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,4 +19,6 @@ public interface CompanyUserMapper {
     int updateByPrimaryKey(CompanyUser record);
     
     CompanyUser selectByUserId(Integer userid);
+
+    List<CompanyUser> selectByCompanyId(Integer companyid);
 }
