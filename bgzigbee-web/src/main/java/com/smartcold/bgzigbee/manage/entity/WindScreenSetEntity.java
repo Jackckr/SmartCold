@@ -8,6 +8,8 @@ public class WindScreenSetEntity {
 
 	private String name;
 
+	private double power;
+
 	private int coldStorageId;
 
 	private String mapping;
@@ -28,6 +30,14 @@ public class WindScreenSetEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
 	}
 
 	public int getColdStorageId() {
