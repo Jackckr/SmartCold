@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.ApInfoMapper">
 
-	<select id="findInfoByApid" parameterType="map" resultType="ApInfoEntity">
+	<select id="findInfoByApid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ApInfoEntity">
 		SELECT *
 		FROM `apInfo` WHERE `apid` = #{apid}
 	</select>

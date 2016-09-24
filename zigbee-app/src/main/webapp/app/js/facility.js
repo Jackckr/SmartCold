@@ -442,6 +442,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
+            backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis'
             },

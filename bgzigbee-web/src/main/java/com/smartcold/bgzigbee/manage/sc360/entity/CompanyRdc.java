@@ -1,14 +1,16 @@
-package com.smartcold.bgzigbee.manage.entity;
+package com.smartcold.bgzigbee.manage.sc360.entity;
 
 import java.util.Date;
 
-public class CompanyUser {
+public class CompanyRdc {
     private Integer id;
 
     private Integer companyid;
 
-    private Integer userid;
+    private Integer rdcid;
 
+    private String imgurl;
+    
     private Date addtime;
 
     public Integer getId() {
@@ -27,12 +29,12 @@ public class CompanyUser {
         this.companyid = companyid;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getRdcid() {
+        return rdcid;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setRdcid(Integer rdcid) {
+        this.rdcid = rdcid;
     }
 
     public Date getAddtime() {
@@ -42,4 +44,14 @@ public class CompanyUser {
     public void setAddtime(Date addtime) {
         this.addtime = addtime;
     }
+
+	public String getImgurl()
+	{
+		return imgurl;
+	}
+
+	public void setImgurl(String imgurl)
+	{
+		this.imgurl = imgurl;
+	}
 }

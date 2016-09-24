@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CompressorGroupSetMapper">
 
-    <select id="findByRdcId" parameterType="map" resultType="CompressorGroupSetEntity">
+    <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CompressorGroupSetEntity">
         SELECT *
         FROM `CompressorGroupSet` WHERE `rdcId` = #{rdcId}
         order by `addTime` asc
@@ -27,7 +27,7 @@
         WHERE id = #{id}
 	</update>
 
-	<insert id="insertCompressorGroup" parameterType="CompressorGroupSetEntity">
+	<insert id="insertCompressorGroup" parameterType="com.smartcold.bgzigbee.manage.entity.CompressorGroupSetEntity">
 	  INSERT INTO `compressorgroupset` 
 	  (
 	  `name`,

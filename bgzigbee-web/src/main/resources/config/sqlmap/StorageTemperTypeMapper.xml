@@ -4,11 +4,11 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.StorageTemperTypeMapper">
 
-	<select id="findAll" parameterType="map" resultType="StorageTemperTypeEntity">
+	<select id="findAll" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageTemperTypeEntity">
 		SELECT *
 		FROM `storagetempertype` order by `id` ASC
 	</select>
-   <insert id="addStorageTemperType" parameterType="StorageTemperTypeEntity"
+   <insert id="addStorageTemperType" parameterType="com.smartcold.bgzigbee.manage.entity.StorageTemperTypeEntity"
     useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `storagetempertype`(
 		`type`,

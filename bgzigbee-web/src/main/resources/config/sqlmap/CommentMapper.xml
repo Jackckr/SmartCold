@@ -4,14 +4,14 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CommentMapper">
 
-<select id="findLastNComment" parameterType="map" resultType="CommentEntity">
+<select id="findLastNComment" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CommentEntity">
 	SELECT *
 	FROM `ColdStorageComment` WHERE `rdcID` = #{rdcID}
 	order by `addTime` desc
 	limit #{npoint}
 </select>
 
-<insert id="insertComment" parameterType="CommentEntity" 
+<insert id="insertComment" parameterType="com.smartcold.bgzigbee.manage.entity.CommentEntity"
   useGeneratedKeys="true" keyProperty="id">
 	INSERT INTO `ColdStorageComment` (
 	`rdcid`, 
@@ -41,7 +41,7 @@
 
 </insert>
 
-	<select id="findCommentsByRdcId" parameterType="map" resultType="CommentEntity">
+	<select id="findCommentsByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CommentEntity">
 		SELECT *
 		FROM `ColdStorageComment` WHERE `rdcID` = #{rdcID}
 		order by `addTime` desc

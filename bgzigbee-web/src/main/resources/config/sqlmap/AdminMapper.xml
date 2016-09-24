@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.AdminMapper">
 
-    <insert id="insertAdmin" parameterType="AdminEntity">
+    <insert id="insertAdmin" parameterType="com.smartcold.bgzigbee.manage.entity.AdminEntity">
         INSERT INTO `admin`(
 		`adminname`,
 		`adminpwd`,
@@ -22,13 +22,13 @@
 		)
     </insert>
 
-    <select id="findAdmin" parameterType="map" resultType="AdminEntity">
+    <select id="findAdmin" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.AdminEntity">
 		SELECT *
 		FROM `admin` WHERE `adminname` = #{adminname} AND `adminpwd` = #{adminpwd} AND `role` = #{adminRole}
 	</select>
 	
 	
-	<select id="findAllAdmin" parameterType="int" resultType="AdminEntity">
+	<select id="findAllAdmin" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.AdminEntity">
          SELECT * FROM `admin`
 		 <where> 
 		    `role` = '0'
@@ -40,12 +40,12 @@
     </select>
 	
 	
-	<select id="findAdminByName" parameterType="map" resultType="AdminEntity">
+	<select id="findAdminByName" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.AdminEntity">
 		SELECT *
 		FROM `admin` WHERE `adminname` = #{adminname}
 	</select>
 
-    <select id="findAdminById" parameterType="map" resultType="AdminEntity">
+    <select id="findAdminById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.AdminEntity">
 		SELECT *
 		FROM `admin` WHERE `id` = #{id}
 	</select>

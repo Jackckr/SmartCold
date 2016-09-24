@@ -5,7 +5,7 @@
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.ColdStorageDoorSetMapper">
 
 	<select id="findDoorByStorageId" parameterType="map"
-		resultType="ColdStorageDoorSetEntity">
+		resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageDoorSetEntity">
 		SELECT *
 		FROM `ColdStorageDoorSet` WHERE `coldStorageId` = #{coldStorageId}
 	</select>
@@ -23,7 +23,7 @@
 		WHERE id=#{id}
 	</update>
 
-	<insert id="insertDoor" parameterType="ColdStorageDoorSetEntity">
+	<insert id="insertDoor" parameterType="com.smartcold.bgzigbee.manage.entity.ColdStorageDoorSetEntity">
 	  INSERT INTO `coldstoragedoorset` 
 	  (
 	  `name`,

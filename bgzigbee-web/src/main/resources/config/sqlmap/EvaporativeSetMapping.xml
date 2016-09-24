@@ -5,12 +5,12 @@
         INSERT INTO `evaporativeset` (`rdcid`, `name`)
         VALUES (#{rdcid}, #{name})
     </insert>
-    <select id="findById" parameterType="map" resultType="EvaporativeSetEntity">
+    <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.EvaporativeSetEntity">
         SELECT *
         FROM `evaporativeset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByRdcId" parameterType="map" resultType="EvaporativeSetEntity">
+    <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.EvaporativeSetEntity">
         SELECT *
         FROM `evaporativeset` WHERE `rdcId` = #{rdcId}
     </select>

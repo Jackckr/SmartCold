@@ -372,7 +372,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 var evaporative = data;
                 var img = '';
                 if (evaporative.evaWater && evaporative.evaWater.isRunning) {
-                    img = '<img alt="" src="../com/img/evawater_run.png" class="myImg1">';
+                    img = '<img alt="" src="../com/img/evawater_run1.png" class="myImg1">';
                 }
                 if (!evaporative.evaWater || !evaporative.evaWater.isRunning) {
                     img = '<img alt="" src="../com/img/evawater_stop.png" class="myImg1">';
@@ -382,7 +382,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     for (var i = 0; i < evaporative.evaBlowers.length; i++) {
                         evaBlowersImg += '<div style="margin-top:10px;float:left;width:33%;">';
                         if (evaporative.evaBlowers[i].isRunning == 1) {
-                            evaBlowersImg += '<img src="../com/img/evablower_run.png" class="myImg2">';
+                            evaBlowersImg += '<img src="../com/img/evablower_run1.png" class="myImg2">';
                         }
                         if (evaporative.evaBlowers[i].isRunning == 0) {
                             evaBlowersImg += '<img src="../com/img/evablower_stop.png" class="myImg2">';
@@ -391,7 +391,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                     }
                 }
                 if ($scope.swiper < $scope.compressorGroups.length) {
-                    var title = '<p class="evawaterP"><img src="../com/img/eva_run.png"/> 运行 <img src="../com/img/stop.png"/> 停止</p>';
+                    var title = '<p class="evawaterP"><img src="../com/img/run.png"/> 运行 <img src="../com/img/stop.png"/> 停止</p>';
                     var innerHTML = '<div class="swiper-slide evawater">' +
                         '<p class="actually">' + compressor.name + '</p>' +
                         img +

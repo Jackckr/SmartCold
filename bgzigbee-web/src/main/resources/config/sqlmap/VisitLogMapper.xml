@@ -4,12 +4,12 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.VisitLogMapper">
 
-	<select id="findLastLog" parameterType="map" resultType="VisitLogEntity">
+	<select id="findLastLog" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.VisitLogEntity">
 		SELECT *
 		FROM visitlog order by addtime desc limit 1
 	</select>
 
-	<select id="insertNewLog" parameterType="map" resultType="UserEntity">
+	<select id="insertNewLog" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
 		INSERT
 		INTO visitlog
 		(

@@ -19,12 +19,12 @@
 	</delete>
 
 
-	<select id="findById" parameterType="map" resultType="CompressorSetEntity">
+	<select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CompressorSetEntity">
 		SELECT *
 		FROM `compressorset` WHERE `id` = #{id}
 	</select>
 	
-	<select id="findCompressorByGroupid" parameterType="map" resultType="CompressorSetEntity">
+	<select id="findCompressorByGroupid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CompressorSetEntity">
 		SELECT *
 		FROM `compressorset` WHERE `compressorgroupid` = #{groupId}
 	</select>

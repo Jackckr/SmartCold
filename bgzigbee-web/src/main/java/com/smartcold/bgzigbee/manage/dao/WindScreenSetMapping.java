@@ -12,4 +12,8 @@ public interface WindScreenSetMapping {
 	List<WindScreenSetEntity> findByStorageId(@Param("storageid") int storageid);
 
 	boolean insert(WindScreenSetEntity windScreenSetEntity);
+
+	void delete(@Param("id") int id);
+
+	void update(WindScreenSetEntity windScreenSetEntity);
 }

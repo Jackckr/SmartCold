@@ -91,18 +91,6 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
     $scope.swiper = 0;
     $scope.load = function (powerSet) {
         var powerid = powerSet.id;
-
-        var mainId = 'power' + powerid;
-        if ($scope.swiper < $scope.powers.length) {
-            var innerHTML = '<div class="swiper-slide">' +
-                '<p class="actually">' + powerSet.name + '</p>' +
-                '<p class="temperaturenum">' + 2 + 'kW.h</p>' +
-                '<div id=' + mainId + ' style="min-height: 15rem;"></div> ';
-            $("#chartView").last().append(innerHTML);
-            $scope.swiper += 1;
-        }
-
-        var lineChart = echarts.init($('#' + mainId)[0]);
         var endTime = getFormatTimeString();
         var startTime = getFormatTimeString(-1 * 60 * 60 * 1000);
         url = ER.coldroot + "/i/baseInfo/getKeyValueDataByTime?type=" + 10 + "&oid=" + powerid
@@ -115,6 +103,21 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
                 xData.unshift(formatTime(item.addtime))
                 yData.unshift(item.value * powerSet.radio)
             })
+
+            var currentPower = '';
+            if (data.length > 0) {
+                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value  * powerSet.radio).toFixed(1) : '';
+            }
+            var mainId = 'power' + powerid;
+            if ($scope.swiper < $scope.powers.length) {
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">' + powerSet.name + '</p>' +
+                    '<p class="temperaturenum">' + currentPower + 'kW.h</p>' +
+                    '<div id=' + mainId + ' style="min-height: 15rem;"></div> ';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper += 1;
+            }
+            var lineChart = echarts.init($('#' + mainId)[0]);
             var option = $scope.creatOption('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line');
             lineChart.setOption(option);
         })
@@ -137,18 +140,13 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
     $scope.waterEnergy = function () {
         clearSwiper();
         $scope.activeEnergy = 'water';
-
-        var mainId = 'water';
-        var innerHTML = '<div class="swiper-slide">' +
-        	'<p class="actually">水表1</p>' +
-        	'<p class="temperaturenum">' + 2 + 't</p>' +        
-            '<div id=' + mainId + ' style="height: 18rem;"></div> ';
-        $("#chartView").last().append(innerHTML);
-
-        var barCharts = echarts.init($('#' + mainId)[0]);
         $http.get(ER.coldroot + "/i/compressorGroup/getAllWaterCostByRdcId?rdcId=" + $scope.rdcId).success(
             function (data) {
                 $scope.waterCosts = data;
+                var currentWaterCost = '';
+                if (data.length > 0) {
+                    currentWaterCost = data[data.length - 1] ? parseFloat(data[data.length - 1].waterCost).toFixed(1) : '';
+                }
                 var xData = []
                 var yData = []
                 angular.forEach($scope.waterCosts, function (item) {
@@ -156,6 +154,14 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
                     yData.push(item.waterCost);
                 })
                 var option = $scope.creatOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'line');
+                var mainId = 'water';
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">水表1</p>' +
+                    '<p class="temperaturenum">' + currentWaterCost + 't</p>' +
+                    '<div id=' + mainId + ' style="height: 18rem;"></div> ';
+                $("#chartView").last().append(innerHTML);
+
+                var barCharts = echarts.init($('#' + mainId)[0]);
                 barCharts.setOption(option);
             })
     }

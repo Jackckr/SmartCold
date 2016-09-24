@@ -3,7 +3,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcMapper">
 
-    <select id="findRdcList" parameterType="int" resultType="RdcEntity">
+    <select id="findRdcList" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
          SELECT r.*,u.username as username
          FROM `Rdc` as r LEFT JOIN user u on r.userid=u.id
 		 <where> 
@@ -17,7 +17,7 @@
          order by `addTime` desc
     </select>
 
-    <select id="findRDCByRDCId" parameterType="map" resultType="RdcEntity">
+    <select id="findRDCByRDCId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
         SELECT * FROM `Rdc` WHERE `id` = #{rdcID}
     </select>
 	
@@ -29,7 +29,7 @@
 		SELECT count(cellphone) FROM `Rdc` WHERE `cellphone` = #{cellphone}
 	</select>
 	
-    <insert id="insertRdc" parameterType="RdcEntity"
+    <insert id="insertRdc" parameterType="com.smartcold.bgzigbee.manage.entity.RdcEntity"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `Rdc` (
         `name`,
