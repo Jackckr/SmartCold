@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.net.URLDecoder;
 import java.util.*;
 
@@ -156,6 +157,28 @@ public class RdcController {
 	@ResponseBody
 	public Object findAllStorageStructureType() {
 		return storageStructureDao.findAll();
+	}
+	
+	@RequestMapping(value = "/findrdcMaagerConfig")
+	@ResponseBody
+	public Object findrdcMaagerConfig(Integer rdcid) {
+		if(rdcid==null){return null;}
+		return this.rdcDao.getRdcMangConfig(rdcid);
+	}
+	@RequestMapping(value = "/adupRdcMangConfig")
+	@ResponseBody
+	public boolean adupRdcMangConfig(Integer id ,Integer rdcid ,String muid,String uuid,String mtelephone,String uTelephone,String aTelephone) {
+		try {
+			if(id==null){
+				 this.rdcDao.addRdcMangConfig( rdcid , muid, uuid, mtelephone, uTelephone, aTelephone);
+			}else{
+				 this.rdcDao.upRdcMangConfig( id,rdcid , muid, uuid, mtelephone, uTelephone, aTelephone);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)

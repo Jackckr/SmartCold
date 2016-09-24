@@ -1,5 +1,6 @@
 package com.smartcold.bgzigbee.manage.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -26,4 +27,11 @@ public interface RdcMapper {
 	int deleteByRdcID(int rdcID);
 	
 	int changeAudit(@Param("rdcID") int rdcID,@Param("audit") int audit);
+	
+	List<HashMap<String, String>> getRdcMangConfig(@Param("rdcid")Integer rdcid );
+	
+	void addRdcMangConfig(@Param("rdcid")Integer rdcid ,@Param("muid")String muid,@Param("uuid")String uuid,@Param("mtelephone")String mtelephone,@Param("uTelephone")String uTelephone,@Param("aTelephone")String aTelephone);
+	
+	void upRdcMangConfig(@Param("id")Integer id ,@Param("rdcid")Integer rdcid ,@Param("muid")String muid,@Param("uuid")String uuid,@Param("mtelephone")String mtelephone,@Param("uTelephone")String uTelephone,@Param("aTelephone")String aTelephone);
+	
 }

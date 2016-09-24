@@ -256,7 +256,12 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         $http.get("/i/spiderConfig/findByRdcid?table=circulatingpumpset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.circulatingPumpSets = resp.data;
             $scope.mapping2Object($scope.circulatingPumpSets);
-        })
+        });
+		//获得冷库管理人员
+		$http.get("/i/rdc/findrdcMaagerConfig?rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+			$scope.mg = resp.data;
+		});
+		
         $scope.tag.type = {};
         $scope.tagTypeChanged();
     }
@@ -591,6 +596,19 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			rdcid: $scope.vm.choseRdc.id,
 			username: $scope.vm.username,
 			password: $scope.vm.password}).success(function(data,status,config,headers){
+				alert(data.message);
+			})
+	}
+	$scope.savemg = function(){//保存rdcmanger配置
+		$http.post('/i/rdc/adupRdcMangConfig',{
+			id           :$scope.mg.id            ,
+			rdcid        :$scope.vm.choseRdc.id        ,
+			muid         :$scope.mg.muid          ,
+			uuid         :$scope.mg.uuid          ,
+			mtelephone   :$scope.mg.mtelephone    ,
+			uTelephone   :$scope.mg.uTelephone    ,
+			aTelephone   :$scope.mg.aTelephone    
+		}).success(function(data,status,config,headers){
 				alert(data.message);
 			})
 	}

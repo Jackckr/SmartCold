@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningsSetMapper;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
+import com.smartcold.manage.cold.util.ResponseData;
+import com.smartcold.manage.cold.util.SetUtil;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 @Controller
 @RequestMapping(value = "/warn")
@@ -50,4 +53,46 @@ public class WarningController extends BaseController {
 			}
 		return allInfoList;
 	}
+	
+	
+	/**
+	 * @param rdcId:冷库ID
+	 * @return
+	 */
+	@RequestMapping(value = "/getWarncoldAnalysis")
+	@ResponseBody
+	public ResponseData<HashMap<String, Object>> getWarncoldAnalysis(Integer rdcId) {
+		try {
+			System.out.println(TimeUtil.getDateTime());
+			if(rdcId==null){return ResponseData.newFailure("非法访问！");}
+			HashMap<String,Object> allDataMap=new HashMap<String, Object>();
+			HashMap<String,Object> resMap=new HashMap<String, Object>();
+			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);//查询上个月的
+			if(SetUtil.isnotNullList(wrnType)&&wrnType.size()>0){
+				for (WarningsInfo warningsInfo : wrnType) {
+					resMap.put(warningsInfo.getWarningname(), this.warningsInfoDao.getWarCountByType(rdcId, 1, 30, warningsInfo.getWarningname()));
+				}
+			}
+			HashMap<String,Object> rescuMap=new HashMap<String, Object>();
+			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);//查询当前月份的
+			if(SetUtil.isnotNullList(wrncuType)&&wrncuType.size()>0){
+				for (WarningsInfo warningsInfo : wrncuType) {
+					rescuMap.put(warningsInfo.getWarningname(), this.warningsInfoDao.getWarCountByType(rdcId, 0, 30, warningsInfo.getWarningname()));
+				}
+			}
+			allDataMap.put("cuttdata", rescuMap);
+			allDataMap.put("lsttdata", resMap);
+			return ResponseData.newSuccess(allDataMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseData.newFailure("查询错误！请稍后重试！");
+		}
+		
+	}
+	
+  
+	
+
+	
+	
 }

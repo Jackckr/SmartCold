@@ -4,11 +4,11 @@
  */
 coldWeb.controller('coolingAnalysis', function ($scope, $location, $stateParams, $http,$rootScope) {
 	$scope.rdcid = $stateParams.rdcId;
+	Highcharts.setOptions({  colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] }); 
 	$scope.initdata=function(){
-		Highcharts.setOptions({  colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] }); 
-		$http.get('/i/AnalysisController/getCoolingAnalysis',{params: {rdcId:$scope.rdcid}} ).success(function(data,status,headers,config){
-			if(data.success){$scope.createhech("#temperatureChart",data.entity);}else{alert(data.message);}
-		});
+			$http.get('/i/AnalysisController/getCoolingAnalysis',{params: {rdcId:$scope.rdcid}} ).success(function(data,status,headers,config){
+				if(data.success){$scope.createhech("#temperatureChart",data.entity);}else{alert(data.message);}
+			});
 	};
     $scope.createhech=function(id,chardata){
     	$(id).highcharts({
