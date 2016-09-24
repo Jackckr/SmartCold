@@ -712,7 +712,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         var obj = {
             deviceid:$scope.tag.deviceid,
             type:$scope.tag.type.type,
-            oid:$scope.tag.oid.id
+            oid:$scope.tag.oid.id,
+            rdcid:$scope.vm.choseRdc.id
         }
         $http.post("/i/spiderConfig/add/deviceObjectMapping", obj).then(function (resp) {
             alert(resp.data.message)
