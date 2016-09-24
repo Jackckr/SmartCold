@@ -1,7 +1,7 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('storageRelate', function ($rootScope, $scope, $state, $cookies, $http, $location, $stateParams) {
+coldWeb.controller('userRelate', function ($rootScope, $scope, $state, $cookies, $http, $location, $stateParams) {
 	$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
 	$scope.companyId = $stateParams.companyId;
@@ -14,23 +14,33 @@ coldWeb.controller('storageRelate', function ($rootScope, $scope, $state, $cooki
     // 当前页
     $scope.bigCurrentPage = 1;
 	$scope.rdcs = [];
-	$scope.getRdcs = function(){
-		$scope.selected = [];
-		var data = {
-	    		pageNum : $scope.bigCurrentPage,
-	    		pageSize : $scope.maxSize, 
-	    		audit:$scope.optAudit,
-	    		keyword:$scope.keyword
-	    	};
-		var serData = $.param(data);
-	    $http({
-	    	method:'POST',
-	    	url:'/i/rdc/findRdcDTOByPage',
-	    	data:$.param(data)
-	    }).success(function (data) {
-	    	 $scope.bigTotalItems = data.total;
-		     $scope.rdcs = data.list;
-	    });
+	$scope.getUsers = function() {
+		$http({
+			method : 'POST',
+			url : '/i/user/findUserList',
+			params : {
+				pageNum : $scope.bigCurrentPage,
+				pageSize : $scope.maxSize,
+				audit : $scope.optAudit,
+				keyword : encodeURI($scope.keyword,"UTF-8"),
+			}
+		}).success(function(data) {
+			$scope.bigTotalItems = data.total;
+			$scope.Allusers = data.list;
+		});
+	}
+
+	$scope.pageChanged = function() {
+		$scope.getUsers();
+	}
+	$scope.getUsers();
+	// 获取当前冷库的列表
+	$scope.auditChanged = function(optAudiet) {
+		$scope.getUsers();
+	}
+
+	$scope.goSearch = function () {
+		$scope.getUsers();
 	}
 
 	$scope.findCompanyById = function () {
@@ -46,23 +56,6 @@ coldWeb.controller('storageRelate', function ($rootScope, $scope, $state, $cooki
 		});
 	}
 	$scope.findCompanyById();
-    
-    $scope.pageChanged = function () {
-    	 $scope.getRdcs();
-    }
-    $scope.getRdcs();
-    // 获取当前冷库的列表
-    $scope.auditChanged = function(optAudiet){
-    	$scope.getRdcs();
-    }
-
-    $http.get('/i/city/findProvinceList').success(function (data) {
-        $scope.provinces = data;
-    });
-
-    $scope.goSearch = function () {
-        $scope.getRdcs();
-    }
 
 	$scope.getAudit = function (i) {
 		if (i == 0)
@@ -76,46 +69,47 @@ coldWeb.controller('storageRelate', function ($rootScope, $scope, $state, $cooki
 		}
 	}
 
-	$scope.addCompanyRdc = function(rdc) {
+	$scope.addCompanyUser = function(user) {
 		var data = {
-			rdcId : rdc.id,
+			userId : user.id,
 			companyId : $scope.companyId
 		};
 		$http({
 			method:'POST',
-			url:'/i/company/addCompanyRdc',
+			url:'/i/company/addCompanyUser',
 			data:$.param(data)
 		}).success(function (data) {
 			alert("绑定成功");
-			$scope.findRelatedRdcs();
+			$scope.findRelatedUsers();
 		});
 	}
 
-	$scope.findRelatedRdcs = function() {
+	$scope.findRelatedUsers = function() {
 		var data = {
 			companyId : $scope.companyId
 		};
 		$http({
 			method:'POST',
-			url:'/i/company/findRelatedRdcs',
+			url:'/i/company/findRelatedUsers',
 			data:$.param(data)
 		}).success(function (data) {
-			$scope.relatedRdcs = data;
+			$scope.relatedUsers = data;
 		});
 	}
-	$scope.findRelatedRdcs();
-	$scope.delCompanyRdc = function(rdc) {
+	$scope.findRelatedUsers();
+
+	$scope.delCompanyUser = function(user) {
 		var data = {
-			rdcId : rdc.id,
+			userId : user.id,
 			companyId : $scope.companyId
 		};
 		$http({
 			method:'POST',
-			url:'/i/company/delCompanyRdc',
+			url:'/i/company/delCompanyUser',
 			data:$.param(data)
 		}).success(function (data) {
 			alert("解绑成功");
-			$scope.findRelatedRdcs();
+			$scope.findRelatedUsers();
 		});
 	}
 });
