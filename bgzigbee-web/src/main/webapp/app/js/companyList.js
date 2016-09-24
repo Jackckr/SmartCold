@@ -153,6 +153,6 @@ coldWeb.controller('companylist', function ($rootScope, $scope, $state, $cookies
     }
 
     $scope.goRelateUser = function (company) {
-        alert(company.name);
+        $state.go('userRelate', {"companyId": company.id});
     }
 });

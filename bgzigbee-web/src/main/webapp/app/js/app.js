@@ -335,5 +335,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/storageRelate/:companyId',
         controller: 'storageRelate',
         templateUrl: 'app/template/storageRelate.html'
+    }).state('userRelate', {
+        url: '/userRelate/:companyId',
+        controller: 'userRelate',
+        templateUrl: 'app/template/userRelate.html'
     });
 });

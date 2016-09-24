@@ -4,15 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.smartcold.bgzigbee.manage.dao.CompanyMapper;
-import com.smartcold.bgzigbee.manage.dao.CompanyRdcMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcMapper;
+import com.smartcold.bgzigbee.manage.dao.*;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
-import com.smartcold.bgzigbee.manage.entity.Company;
-import com.smartcold.bgzigbee.manage.entity.CompanyRdc;
-import com.smartcold.bgzigbee.manage.entity.RdcEntity;
+import com.smartcold.bgzigbee.manage.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -38,7 +34,16 @@ public class CompanyController extends BaseController {
     private CompanyRdcMapper companyRdcDao;
 
     @Autowired
+    private CompanyUserMapper companyUserDao;
+
+    @Autowired
+    private RoleUserMapper roleUserDao;
+
+    @Autowired
     private RdcMapper rdcDao;
+
+    @Autowired
+    private UserMapper userDao;
 
     @RequestMapping(value = "/findCompanyList", method = RequestMethod.POST)
     @ResponseBody
@@ -133,7 +138,6 @@ public class CompanyController extends BaseController {
         return new BaseDto(0);
     }
 
-
     @RequestMapping(value = "/findRelatedRdcs", method = RequestMethod.POST)
     @ResponseBody
     public Object findRelatedRdcs(@RequestParam(value = "companyId", required = false) Integer companyId) {
@@ -150,6 +154,82 @@ public class CompanyController extends BaseController {
                 List<RdcEntity> rdcByRDCId = rdcDao.findRDCByRDCId(rdcId);
                 if (!CollectionUtils.isEmpty(rdcByRDCId)) {
                     result.add(rdcByRDCId.get(0));
+                }
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/addCompanyUser", method = RequestMethod.POST)
+    @ResponseBody
+    public Object addCompanyUser(@RequestParam(value = "userId", required = false) Integer userId, @RequestParam(value = "companyId", required = false) Integer companyId) {
+        List<CompanyUser> companyUsers = companyUserDao.selectByCompanyId(companyId);
+        if (!CollectionUtils.isEmpty(companyUsers)) {
+            List<Integer> userIds = Lists.transform(companyUsers, new Function<CompanyUser, Integer>() {
+                @Override
+                public Integer apply(CompanyUser companyUser) {
+                    return companyUser.getUserid();
+                }
+            });
+            if (userIds.contains(userId)) {
+                return new BaseDto(0);
+            }
+        }
+        // 升级账号 并绑定
+        RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId);
+        if (roleUserByUserId != null) {
+            if (roleUserByUserId.getRoleid() == 2) {
+                return new BaseDto(0);
+            } else {
+                roleUserByUserId.setRoleid(2);
+                roleUserDao.updateByPrimaryKeySelective(roleUserByUserId);
+            }
+        } else {
+            RoleUser roleUser = new RoleUser();
+            roleUser.setUserid(userId);
+            roleUser.setRoleid(2); // 集团账号
+            roleUser.setAddtime(new Date());
+            roleUserDao.insertSelective(roleUser);
+        }
+
+        CompanyUser companyuser = new CompanyUser();
+        companyuser.setCompanyid(companyId);
+        companyuser.setUserid(userId);
+        companyuser.setAddtime(new Date());
+        companyUserDao.insertSelective(companyuser);
+        return new BaseDto(0);
+    }
+
+    @RequestMapping(value = "/delCompanyUser", method = RequestMethod.POST)
+    @ResponseBody
+    public Object delCompanyUser(@RequestParam(value = "userId", required = false) Integer userId, @RequestParam(value = "companyId", required = false) Integer companyId) {
+        List<CompanyUser> companyUsers = companyUserDao.selectByCompanyId(companyId);
+        if (!CollectionUtils.isEmpty(companyUsers)) {
+            for (CompanyUser companyUser : companyUsers) {
+                if (companyUser.getUserid().equals(userId)) {
+                    companyUserDao.deleteByPrimaryKey(companyUser.getId());
+                }
+            }
+        }
+        return new BaseDto(0);
+    }
+
+    @RequestMapping(value = "/findRelatedUsers", method = RequestMethod.POST)
+    @ResponseBody
+    public Object findRelatedUsers(@RequestParam(value = "companyId", required = false) Integer companyId) {
+        List<UserEntity> result = Lists.newArrayList();
+        List<CompanyUser> companyUsers = companyUserDao.selectByCompanyId(companyId);
+        if (!CollectionUtils.isEmpty(companyUsers)) {
+            List<Integer> userIds = Lists.transform(companyUsers, new Function<CompanyUser, Integer>() {
+                @Override
+                public Integer apply(CompanyUser companyUser) {
+                    return companyUser.getUserid();
+                }
+            });
+            for (Integer userId : userIds) {
+                UserEntity userById = userDao.findUserById(userId);
+                if (userById != null) {
+                    result.add(userById);
                 }
             }
         }
