@@ -351,13 +351,13 @@ b{
 }
 .myImg1{
 	margin-top:10px;
-	width:13.6rem;
-	height:8rem;
+	width:10.2rem;
+	height:6rem;
 }
 .myImg2{
 	float:left;
-	width: 50px;
-	height: 50px;
+	width: 3rem;
+	height: 3rem;
 }
 /*告警*/
 .warn_sec{
