@@ -331,5 +331,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/companylist',
         controller: 'companylist',
         templateUrl: 'app/template/companyManage.html'
+    }).state('storageRelate', {
+        url: '/storageRelate/:companyId',
+        controller: 'storageRelate',
+        templateUrl: 'app/template/storageRelate.html'
     });
 });

@@ -359,3 +359,39 @@ b{
 	width: 50px;
 	height: 50px;
 }
+/*告警*/
+.warn_sec{
+	background: #fff;
+	padding-bottom: 3rem;
+	padding-top: 1rem;
+}
+.warn_sec .actually{
+	line-height: 2rem;
+}
+.cold_warn{
+	width:100%;
+	border-collapse: collapse;
+	border:1px solid #337ab7;
+}
+.cold_warn td,.cold_warn th{
+	border:1px solid #337ab7;
+	text-align: center;
+	font-size: .75rem;
+	line-height: 2rem;
+}
+.cold_warn th[colspan="3"]{
+	height:2.5rem;
+	line-height:2.5rem;
+}
+.cold_warn td>i{
+	display:inline-block;
+	vertical-align:middle;
+	width:4rem;
+	color:#fff;
+	height:1.5rem;
+	line-height:1.5rem;
+	text-align:center;
+	background:#00acd6;
+	border-radius:3px;
+	font-style: italic;
+}
