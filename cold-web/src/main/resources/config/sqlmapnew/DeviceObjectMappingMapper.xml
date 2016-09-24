@@ -17,8 +17,8 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `deviceObjectMapping` (`deviceid`, `oid`, `type`)
-        VALUES (#{deviceid}, #{oid}, #{type})
+        INSERT INTO `deviceObjectMapping` (`deviceid`, `oid`, `type`,`rdcid`)
+        VALUES (#{deviceid}, #{oid}, #{type},#{rdcid})
     </insert>
 
     <delete id="delById">

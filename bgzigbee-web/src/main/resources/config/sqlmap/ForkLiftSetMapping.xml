@@ -6,12 +6,12 @@
         VALUES (#{rdcid}, #{name}, #{power})
     </insert>
 
-    <select id="findById" parameterType="map" resultType="ForkLiftSetEntity">
+    <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity">
         SELECT *
         FROM `forkliftset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByRdcId" parameterType="map" resultType="ForkLiftSetEntity">
+    <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity">
         SELECT *
         FROM `forkliftset` WHERE `rdcId` = #{rdcId}
     </select>

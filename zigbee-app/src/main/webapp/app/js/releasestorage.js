@@ -111,7 +111,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	            }
 	        });
 	    };
-		$scope.dataType = document.getElementById('dataType').value;
 		$scope.typeCode = document.getElementById('typeCode').value;
 		$scope.typeText = document.getElementById('typeText').value;
 	    $scope.rdcflag = document.getElementById('rdcflag').value;
@@ -224,7 +223,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			$scope.rdcAddress = '';
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
-			if(window.flag==1){
+			if(window.flag1==1){
 				$scope.typeCode = 2;
 				$scope.typeText = "找车";
 			}
@@ -257,7 +256,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					validEndTime : $scope.arriveTime,
 					telephone:$scope.telephone,
 					note : $scope.note,
-					dataType : $scope.dataType,
+					dataType : 2,
 					typeCode : $scope.typeCode,
 					typeText : $scope.typeText,
 					rdcID : $scope.rdcID,
@@ -300,7 +299,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			$scope.validStartTime = $("#sttime").val();
 			$scope.validEndTime = $("#endtime").val();
 			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
-			if( $scope.unit1==""||$scope.unit1==undefined){
+			if(window.flag2==1){
 				$scope.typeCode = 2;
 				$scope.typeText = "求购";
 			}
@@ -329,7 +328,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					sqm:$scope.sqm,
 					telephone:$scope.telephone,
 					note : $scope.note,
-					dataType : $scope.dataType,
+					dataType : 1,
 					typeCode : $scope.typeCode,
 					typeText : $scope.typeText,
 					rdcID : $scope.rdcID,
@@ -351,7 +350,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    		,btn: '确定'
 	    			,shadeClose:false
 	                ,yes:function(){
-	    		    	window.location.href ="releasesuccess.html?id=2"; 
+	                	if(data!=null&&data!=undefined)
+	    		    	   window.location.href ="releasesuccess.html?id=2"; 
 	                }
 		    	});
 		    	//window.location.href ="releasesuccess.html"; 
@@ -400,7 +400,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					validEndTime : $scope.validEndTime,
 					telephone:$scope.telephone,
 					note : $scope.note,
-					dataType : $scope.dataType,
+					dataType : 3,
 					typeCode : $scope.typeCode,
 					typeText : $scope.typeText,
 					rdcID : $scope.rdcID,

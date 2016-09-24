@@ -38,6 +38,18 @@
 		now()
 		)
     </insert>
+    
+    
+     <update id="updateOrderTimes" parameterType="OrdersEntity" >
+        update orders
+        <set>
+            <if test="teletimes != null" >
+                teletimes = #{teletimes},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
     <delete id="deleteByOrderID">
 		delete from orders where id = #{orderID}
 	</delete>
@@ -62,6 +74,10 @@
 	
 	<select id="findOrderByOrderId" parameterType="map" resultType="OrdersEntity">
 		SELECT * FROM `orders` WHERE `id` = #{orderid} and (ownerid=#{userid} or userid=#{userid}) ORDER BY generatetime DESC
+	</select>
+	
+	<select id="findOrderById" parameterType="map" resultType="OrdersEntity">
+		SELECT * FROM `orders` WHERE `id` = #{orderid} ORDER BY generatetime DESC
 	</select>
 	
 	<select id="findOrdersByOrderName" parameterType="map" resultType="OrdersEntity">

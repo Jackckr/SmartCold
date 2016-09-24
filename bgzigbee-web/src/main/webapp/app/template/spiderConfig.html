@@ -198,12 +198,6 @@
                                         <input style="width:250px;" ng-model="doorEntity.width" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4">风幕机功率(kW):</label>
-                                    <div class="col-lg-4">
-                                        <input style="width:250px;" ng-model="doorEntity.blowerpower" class="form-control" />
-                                    </div>
-                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addDoor()" ng-disabled="!doorEntity.name">添加</a>
                                 </div>
@@ -213,8 +207,8 @@
                                 <ajax-table array-objects="doors"
                                             delete-url="/i/coldStorageDoor/deleteDoor"
                                             update-url="/i/coldStorageDoor/updateDoor"
-                                            colums-th="名字,门长度(M),门宽度(M),风幕机功率(kW)"
-                                            colums="name,length,width,blowerpower"></ajax-table>
+                                            colums-th="名字,门长度(M),门宽度(M)"
+                                            colums="name,length,width"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -361,26 +355,23 @@
                                         <input style="width:250px;" ng-model="windScreenSet.name" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">风幕机功率(kW):</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="windScreenSet.power" class="form-control" />
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addWindScreen()" ng-disabled="!windScreenSet.name">添加</a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <label>已有单体压缩机：</label>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                    <tr>
-                                        <th>名字</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="item in windScreenSets">
-                                        <td>{{item.name}}</td>
-                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, windScreenSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <label>已有风幕机：</label>
+                                <ajax-table array-objects="windScreenSets"
+                                            delete-url="/i/spiderConfig/delete/windscreenset"
+                                            update-url="/i/spiderConfig//update/windscreenset"
+                                            colums-th="名字,功率(kW)"
+                                            colums="name,power"></ajax-table>
                             </div>
                         </form>
                         <!--添加蒸发冷系统-->
@@ -1135,7 +1126,7 @@
                         <form class="navbar-form">
                             <div class="navbar-form">
                                 <a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="deleteAccount()">删除</a>
-                                <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="saveAccount()">修改</a>
+                                <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="saveAccount()">保存</a>
                             </div>
                         </form>
                     </div>

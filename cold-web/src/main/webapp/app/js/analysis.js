@@ -23,7 +23,7 @@ coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $loc
 						yData.unshift(item['value'] / 60)
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData, "时间", "m", "超温时间", "bar"));
+							xData, yData, "时间", "m", "超温时间", "bar",0,1500));
 				},0)
 			})
 		})
@@ -86,6 +86,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 	                    {
 	                        type : 'value',
 	                        name : '超温因子',
+	                        max : 100,
 	                        axisLabel : {
 	                            formatter: '{value} %'
 	                        }
@@ -142,11 +143,11 @@ coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $htt
 					var chartId = "#" + key + "Chart"
 					var chart = echarts.init($(chartId).get(0));
 					angular.forEach(storage['BaoWenYinZi'],function(item){
-						xData.unshift(item['date'])
-						yData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
+						yData.unshift(item['value'])
+						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData, "", "", "τ", "bar"));
+							xData, yData, "保温因子", "τ", "τ", "bar"));
 				},0)
 			})
 		})
@@ -271,7 +272,7 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 						yData.unshift(item['value'] / 60)
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData, "时间", "m", "开门时间", "bar"));
+							xData, yData, "时间", "m", "开门时间", "bar",0,1500));
 				},0)
 			})
 		})

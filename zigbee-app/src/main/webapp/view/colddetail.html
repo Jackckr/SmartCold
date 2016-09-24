@@ -134,10 +134,11 @@
             </div>
         </section>
         <!--用户点评-->
+        
         <section class="more" ng-if="evatotal">
-            <ul class="listDad clearfix" onclick="location.href='usercommentlist.html'">
+            <ul class="listDad clearfix">
                 <li class="fl">用户点评&nbsp;(<span id="num">{{evatotal}}</span>)</li>
-                <li class="fr"><a><i class="iconfont">&#xe60d;</i></a></li>
+                <li class="fr"><a href="comment_list.html?id={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
             </ul>
              <ul class="borderlist clearfix black" >
                 <li><span>全部</span>&nbsp;(<span id="num">642</span>)</li>
@@ -159,12 +160,13 @@
                             <li class="{{eva.grade>=1?'filled':''}}">★</li><li class="{{eva.grade>=2?'filled':''}}">★</li><li class="{{eva.grade>=3?'filled':''}}">★</li><li class="{{eva.grade>=4?'filled':''}}">★</li><li class="{{eva.grade>=5?'filled':''}}">★</li>
                         </ul>
                     </div>
-                    <p class="commentTxt">服务好，地理位置好，服务好，地理位置好。</p>
+                    <p class="commentTxt">{{eva.content}}</p>
                     <div class="baguetteBoxOne gallery" ng-if="eva.reviewPics">
                         <a  ng-repeat="fl in eva.reviewPics" href="{{fl.location}}"  ><img ng-src="{{fl.location}}" alt="" /></a>
                     </div>
                 </li>
              </ul>
         </section>
+        <div class="commentFix"><a href="commentdetail.html?id={{rdcid}}">立即评价</a></div>
     </body>
 </html>

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.BlowerSetMapper">
 
-    <select id="findByStorageId" parameterType="map" resultType="BlowerSetEntity">
+    <select id="findByStorageId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.BlowerSetEntity">
 		SELECT *
 		FROM `BlowerSet` WHERE `coldStorageId` = #{coldStorageId}
 	</select>

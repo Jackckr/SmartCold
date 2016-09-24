@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CookieMapper">
 
-	<insert id="insertCookie" parameterType="CookieEntity">
+	<insert id="insertCookie" parameterType="com.smartcold.bgzigbee.manage.entity.CookieEntity">
 		INSERT INTO `cookies`
 		(
 		`cookie`,
@@ -21,7 +21,7 @@
 		)
 	</insert>
 	
-	<select id="findEffectiveCookie" parameterType="map" resultType="CookieEntity">
+	<select id="findEffectiveCookie" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CookieEntity">
 	    SELECT * FROM `cookies`
 	    WHERE cookie = #{cookie} 
 	    AND updateTime + INTERVAL expireTime MINUTE >= now()

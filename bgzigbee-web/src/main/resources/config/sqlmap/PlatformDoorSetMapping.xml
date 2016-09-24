@@ -13,12 +13,12 @@
         WHERE id = #{id}
     </update>
 
-    <select id="findById" parameterType="map" resultType="PlatformDoorSetEntity">
+    <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity">
         SELECT *
         FROM `platformdoorset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByRdcId" parameterType="map" resultType="PlatformDoorSetEntity">
+    <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity">
         SELECT *
         FROM `platformdoorset` WHERE `rdcId` = #{rdcId}
     </select>

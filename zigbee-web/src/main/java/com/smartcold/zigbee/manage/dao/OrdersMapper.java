@@ -19,9 +19,13 @@ public interface OrdersMapper {
 	
 	OrdersEntity findOrderByOrderId(@Param("orderid")int orderid,@Param("userid")int userid);
 	
+	OrdersEntity findOrderById(@Param("orderid")int orderid);
+	
 	List<OrdersEntity> findOrdersByOrderName(String ordername); 
 	
 	void insertOrder(OrdersEntity ordersEntity);
 	
-	 int deleteByOrderID(int orderID);
+	void updateOrderTimes(OrdersEntity ordersEntity);
+	
+	int deleteByOrderID(int orderID);
 }

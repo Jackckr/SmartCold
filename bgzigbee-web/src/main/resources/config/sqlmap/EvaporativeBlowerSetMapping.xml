@@ -5,12 +5,12 @@
         INSERT INTO `evaporativeblowerset` (`groupid`, `name`)
         VALUES (#{groupid}, #{name})
     </insert>
-    <select id="findById" parameterType="map" resultType="EvaporativeBlowerSetEntity">
+    <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity">
         SELECT *
         FROM `evaporativeblowerset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByGroupid" parameterType="map" resultType="EvaporativeBlowerSetEntity">
+    <select id="findByGroupid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity">
         SELECT *
         FROM `evaporativeblowerset` WHERE `groupid` = #{groupid}
     </select>

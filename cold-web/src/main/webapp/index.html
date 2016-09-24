@@ -61,6 +61,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	    .page-header{
 	    margin:0 0 20px 0;
 	    }
+	    .omg{
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
     </style>
   </head>
   <!--
@@ -266,7 +271,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
           <ul class="sidebar-menu text-white">
           <li ng-if="user.role == 3 || user.role == 1">
-             <a class="text-white" style="font-family: cursive;">{{vm.choserdc.name}}</a>
+             <a class="text-white omg" style="font-family: cursive;" title="{{vm.choserdc.name}}" ng-bind="vm.choserdc.name"></a>
           </li>
             <li class="treeview">
             <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
@@ -396,15 +401,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <span class="menu-title text-white" style="font-size: large">选型</span></a></li>
             </ul>
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu" ng-if="user.role == 3">
-            <li class="header">导航</li>
-            <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>
-            <li class="active"><a href="" ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>
-            <li class="active"><a href=""><i class="fa fa-link"></i> <span>分析</span></a></li>
-            <li class="active"><a href=""><i class="fa fa-link"></i> <span>设置</span></a></li>
-          </ul><!-- /.sidebar-menu -->
-
+          <!--<ul class="sidebar-menu" ng-if="user.role == 3">-->
+            <!--<li class="header">导航</li>-->
+            <!--&lt;!&ndash; Optionally, you can add icons to the links &ndash;&gt;-->
+            <!--<li class="active"><a href="" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>-->
+            <!--<li class="active"><a href="" ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>-->
+            <!--<li class="active"><a href=""><i class="fa fa-link"></i> <span>分析</span></a></li>-->
+            <!--<li class="active"><a href=""><i class="fa fa-link"></i> <span>设置</span></a></li>-->
+          <!--</ul>&lt;!&ndash; /.sidebar-menu &ndash;&gt;-->
 			</section>
 			<!-- /.sidebar -->
 		</aside>

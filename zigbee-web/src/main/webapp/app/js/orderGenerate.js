@@ -8,23 +8,20 @@ coldWeb.controller('orderGenerate', function ($rootScope, $scope, $state, $state
 				window.location.href = url;
 			}
 	    });
-    }
+    };
     $scope.load();
     $scope.getTeleNum = function () {
     	$http.get('/i/orders/getTelephone', {
     	    params: {
+    	    	orderid : $scope.orderDto.orders.id,
     	    	ownerTele: $scope.orderDto.orders.ownertele,
     	    	userTele : $scope.orderDto.orders.usertele,
     	    	ownerName : $scope.orderDto.orders.ownername,
     	    	userName : $scope.orderDto.orders.username
     	    }
     	}).success(function (data) {
-    		if(data){
-    			alert("对方联系人的手机号已经发送到您的手机，请及时联系");
-    		}else{
-    			alert("发送消息失败！");
-    		}
+    			alert(data.message);
     	});
-    }
+    };
 });
 

@@ -4,12 +4,12 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.ColdStorageSetMapper">
 
-    <select id="findLastNPoint" parameterType="map" resultType="ColdStorageSetEntity">
+    <select id="findLastNPoint" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageSetEntity">
         SELECT *
         FROM `ColdStorageSet` WHERE `coldStorageID` = #{storageID} limit #{npoint}
     </select>
 
-    <select id="findByRdcId" parameterType="map" resultType="ColdStorageSetEntity">
+    <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageSetEntity">
         SELECT *
         FROM `ColdStorageSet` WHERE `rdcId` = #{rdcId}
     </select>
@@ -29,7 +29,7 @@
 		WHERE id=#{id}
 	</update>
 
-	<insert id="insertColdStorage" parameterType="ColdStorageSetEntity">
+	<insert id="insertColdStorage" parameterType="com.smartcold.bgzigbee.manage.entity.ColdStorageSetEntity">
 	    INSERT INTO `coldstorageset` 
 	    (
 	    `RDCID`, 

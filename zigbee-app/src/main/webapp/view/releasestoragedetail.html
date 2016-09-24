@@ -86,10 +86,10 @@
 	</div>
 	<section class="main maindetail">
 	<form id="release_item_from" name="itemform" >
-		          <input type="hidden" id="dataType" ng-model="dataType" value="3">
+	<input type="hidden" id="dataType" ng-model="dataType" value="3">
 			      <input type="hidden" id="typeCode" ng-model="typeCode" value="2">
 			      <input type="hidden" id="typeText" ng-model="typeText" value="求租">
-			       <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
+			        <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
 			<ul class="houseinfo">
 				<li><label for="name">描述</label><em>*</em> <input type="text" id="name"
 					placeholder="仓位出租" ng-model="title"/></li>
@@ -152,6 +152,7 @@
 				<li><label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
 				 </label> <span id="">上传图片<small class="text-warning">*最多十张</small></span><br>
 	              <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
+			</li>
 			</ul>
 		</form>
 	<button class="mybtn" ng-click="submit()">确认发布</button>

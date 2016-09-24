@@ -70,7 +70,10 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 				return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
 			}
 		},
-		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type,yMin){
+		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type,yMin,yMax){
+			angular.forEach(yData,function(item,index){
+				yData[index] = yData[index].toFixed(2);
+			})
 			option = {
 				    tooltip : {
 				        trigger: 'axis'
@@ -89,10 +92,8 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 					        {
 					            type : 'value',
 					            name : yName + "(" + yUnit + ")",
-					            min : yMin ? yMin : 0
-//					            axisLabel : {
-//					                formatter: '{value} ' + yUnit
-//					            }
+					            min : yMin ? yMin : 'auto',
+					            max : yMax ? yMax : 'auto'
 					        }
 					    ],
 				    series : [

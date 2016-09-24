@@ -45,6 +45,7 @@
 	 $scope.getTeleNum = function () {
     	$http.get(ER.root+"/i/orders/getTelephone", {
     	    params: {
+    	        orderid : $scope.orders.id,
     	    	ownerTele: $scope.orders.ownertele,
     	    	userTele : $scope.orders.usertele,
     	    	ownerName : $scope.orders.ownername,
@@ -52,7 +53,7 @@
     	    }
     	}).success(function (data) {
 //     		alert("对方联系人的手机号已经发送到您的手机，请及时联系");
-			layer.open({content: '对方联系人的手机号已经发送到您的手机，请及时联系~',btn: '确定'});
+			layer.open({content: data.message,btn: '确定'});
     	});
     };
 	$scope.initevg=function(){
@@ -156,7 +157,7 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
             <a href="messages.html">
                 <i class="iconfont">&#xe71c;</i>
                 <p class="info">消息</p>
-                 <span class="countNum">{{msgTotalNum}}</span>
+                 <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=''" class="countNum">{{msgTotalNum}}</span>
             </a>
         </li>
         <li class="active">            

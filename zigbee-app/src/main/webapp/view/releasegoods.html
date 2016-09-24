@@ -27,10 +27,15 @@
 			$('.toggle').children('div').click(function(){
 				$(this).addClass('current').siblings().removeClass('current');
 				if($(this).index()==1){
+				    window.flag2 = 1;
+				    $('#name').attr('placeholder','货品求货')
                     $(".bossToggle").hide();
+                    
 					/*$(".main").show();
 					$('.coldlist').hide();*/
 				}else{
+				window.flag2 = 0;
+				$('#name').attr('placeholder','货品出货')
                     $(".bossToggle").show();
 					/*$(".main").hide();
 					$('.coldlist').show();*/
@@ -79,7 +84,7 @@
     </div>
     <section class="main maindetail black">
        	<form id="release_item_from" name="itemform" >
-        <input type="hidden" id="dataType" ng-model="dataType" value="1">
+       	 <input type="hidden" id="dataType" ng-model="dataType" value="1">
 			      <input type="hidden" id="typeCode" ng-model="typeCode" value="1">
 			      <input type="hidden" id="typeText" ng-model="typeText" value="出售">
 			      <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
