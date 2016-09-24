@@ -18,6 +18,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	            }
 	        });
 	    };
+	    
+	    
 	    function checkCommentSubmit(){
 	        var flag = true;
 	        // 检查必须填写项
@@ -35,13 +37,14 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					file2: null,
 					file3: null,
 					file4: null,
+					commerID:window.user.id,
 					rdcID : rdcid,
 					content : encodeURI($scope.commentinfo,"UTF-8"),
-					grade : 1,
-					locationGrade : 2,
-					facilityGrade : 1,
-					serviceGrade : 1,
-					sanitaryGrade : 1,
+					grade : window.grade,
+					locationGrade : window.locationGrade,
+					facilityGrade : window.facilityGrade,
+					serviceGrade : window.serviceGrade,
+					sanitaryGrade : window.sanitaryGrade,
 			};
 			for(i = 0; i < $scope.totalfiles.length; i++){
 				data["file" + i] = $scope.totalfiles[i];
