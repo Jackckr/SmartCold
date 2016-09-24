@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.SpiderItemConfigMapper">
 
-    <insert id="addItem" parameterType="SpiderItemConfigEntity">
+    <insert id="addItem" parameterType="com.smartcold.bgzigbee.manage.entity.SpiderItemConfigEntity">
         INSERT INTO `spideritemconfig` 
         (
         `type`, 
@@ -20,7 +20,7 @@
         );
     </insert>
 
-    <select id="findItemByType" parameterType="map" resultType="SpiderItemConfigEntity">
+    <select id="findItemByType" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.SpiderItemConfigEntity">
 		SELECT *
 		FROM `spideritemconfig` WHERE `type` = #{type}
 	</select>

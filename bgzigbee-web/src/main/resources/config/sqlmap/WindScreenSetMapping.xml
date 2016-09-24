@@ -5,12 +5,12 @@
         INSERT INTO `windscreenset` (`coldStorageId`,`name`)
         VALUES (#{coldStorageId}, #{name})
     </insert>
-    <select id="findById" parameterType="map" resultType="WindScreenSetEntity">
+    <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity">
         SELECT *
         FROM `windscreenset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByStorageId" parameterType="map" resultType="WindScreenSetEntity">
+    <select id="findByStorageId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity">
         SELECT *
         FROM `windscreenset` WHERE `coldstorageid` = #{storageid}
     </select>

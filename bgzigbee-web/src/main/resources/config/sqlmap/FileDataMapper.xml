@@ -6,13 +6,13 @@
 
 
 
-    <select id="findByBelongIdAndCategory" resultType="FileDataEntity">
+    <select id="findByBelongIdAndCategory" resultType="com.smartcold.bgzigbee.manage.entity.FileDataEntity">
 		SELECT *
 		FROM `filedata` WHERE `belongid` = #{belongid} AND `category` = #{category}
 		ORDER BY id DESC
 	</select>
 	
-	<insert id="saveFileData" parameterType="FileDataEntity">
+	<insert id="saveFileData" parameterType="com.smartcold.bgzigbee.manage.entity.FileDataEntity">
 		INSERT into `filedata`(`type`, `location`, `category`, `belongid`, `name`, `description`) values
 		(#{type}, #{location}, #{category}, #{belongid}, #{name}, #{description})
 	</insert>

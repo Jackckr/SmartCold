@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.StorageRefregMapper">
 
-	<select id="findAll" parameterType="map" resultType="StorageRefregEntity">
+	<select id="findAll" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageRefregEntity">
 		SELECT *
 		FROM `storagerefreg` order by `id` ASC
 	</select>

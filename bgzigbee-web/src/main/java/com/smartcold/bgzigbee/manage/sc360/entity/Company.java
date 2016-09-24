@@ -1,4 +1,4 @@
-package com.smartcold.bgzigbee.manage.entity;
+package com.smartcold.bgzigbee.manage.sc360.entity;
 
 import java.util.Date;
 

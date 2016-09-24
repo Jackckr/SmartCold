@@ -1,7 +1,7 @@
-package com.smartcold.bgzigbee.manage.dao;
+package com.smartcold.bgzigbee.manage.sc360.dao;
 
 import com.github.pagehelper.Page;
-import com.smartcold.bgzigbee.manage.entity.Company;
+import com.smartcold.bgzigbee.manage.sc360.entity.Company;
 import org.apache.ibatis.annotations.Param;
 
 public interface CompanyMapper {
@@ -19,7 +19,7 @@ public interface CompanyMapper {
 
     Company findCompanyByName(@Param("name") String name);
 
-    Page<Company> findAllCompany(@Param("keyword")String keyword);
+    Page<Company> findAllCompany(@Param("keyword") String keyword);
 
     void deleteCompany(@Param("id") int id);
 }

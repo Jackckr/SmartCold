@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CompleteInfoMapper">
 
-	<select id="findInfoByKey" parameterType="map" resultType="CompleteInfoEntity">
+	<select id="findInfoByKey" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CompleteInfoEntity">
 		SELECT k.`key`,k.`deviceid`,a.`apid`,d.`TIME`,d.`temperature`,a.`location` 
 		FROM dataCollection d 
 		LEFT JOIN keyDeviceMapping k 

@@ -3,15 +3,15 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcExtMapper">
 
-    <select id="findRdcExtList" parameterType="map" resultType="RdcExtEntity">
+    <select id="findRdcExtList" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.RdcExtEntity">
          SELECT * FROM `RdcExt`
     </select>
 
-    <select id="findRDCExtByRDCId" parameterType="map" resultType="RdcExtEntity">
+    <select id="findRDCExtByRDCId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.RdcExtEntity">
         SELECT * FROM `RdcExt` WHERE `rdcId` = #{rdcID}
     </select>
 
-    <insert id="insertRdcExt" parameterType="RdcExtEntity"
+    <insert id="insertRdcExt" parameterType="com.smartcold.bgzigbee.manage.entity.RdcExtEntity"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `RdcExt` (
         `RDCID`,

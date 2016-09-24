@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.smartcold.bgzigbee.manage.dao.CompanyUserMapper" >
-  <resultMap id="BaseResultMap" type="com.smartcold.bgzigbee.manage.entity.CompanyUser" >
+<mapper namespace="com.smartcold.bgzigbee.manage.sc360.dao.CompanyUserMapper" >
+  <resultMap id="BaseResultMap" type="com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="companyid" property="companyid" jdbcType="INTEGER" />
     <result column="userid" property="userid" jdbcType="INTEGER" />
@@ -20,13 +20,13 @@
     delete from CompanyUser
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyUser" >
+  <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser" >
     insert into CompanyUser (id, companyid, userid, 
       addtime)
     values (#{id,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
       #{addtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyUser" >
+  <insert id="insertSelective" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser" >
     insert into CompanyUser
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyUser" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser" >
     update CompanyUser
     <set >
       <if test="companyid != null" >
@@ -72,7 +72,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smartcold.bgzigbee.manage.entity.CompanyUser" >
+  <update id="updateByPrimaryKey" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser" >
     update CompanyUser
     set companyid = #{companyid,jdbcType=INTEGER},
       userid = #{userid,jdbcType=INTEGER},

@@ -5,12 +5,12 @@
         INSERT INTO `coldstoragelightset` (`rdcid`, `name`, `power`)
         VALUES (#{rdcid}, #{name}, #{power})
     </insert>
-    <select id="findById" parameterType="map" resultType="ColdStorageLightSetEntity">
+    <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity">
         SELECT *
         FROM `coldstoragelightset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByRdcId" parameterType="map" resultType="ColdStorageLightSetEntity">
+    <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity">
         SELECT *
         FROM `coldstoragelightset` WHERE `rdcId` = #{rdcId}
     </select>

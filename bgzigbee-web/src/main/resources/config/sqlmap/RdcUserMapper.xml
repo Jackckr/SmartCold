@@ -20,7 +20,7 @@
     delete from RdcUser
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="RdcUser" >
+  <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.entity.RdcUser" >
     insert into RdcUser (id, rdcid, userid, 
       addtime)
     values (#{id,jdbcType=INTEGER}, #{rdcid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 

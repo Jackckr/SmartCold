@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.ProvinceListMapper">
 
-    <select id="findProvinceList" parameterType="map" resultType="ProvinceListEntity">
+    <select id="findProvinceList" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ProvinceListEntity">
         SELECT *
         FROM `provincelist` WHERE `ProvinceID` &lt;= 34
     </select>

@@ -4,12 +4,12 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CityListMapper">
 
-    <select id="findCitysByProvinceId" parameterType="map" resultType="CityListEntity">
+    <select id="findCitysByProvinceId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CityListEntity">
         SELECT *
         FROM `citylist` WHERE `ProvinceID` = #{provinceID}
     </select>
 
-    <select id="findCityById" parameterType="map" resultType="CityListEntity">
+    <select id="findCityById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.CityListEntity">
         SELECT *
         FROM `citylist` WHERE `CityID` = #{CityID}
     </select>
