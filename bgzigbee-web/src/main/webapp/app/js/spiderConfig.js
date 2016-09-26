@@ -259,7 +259,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         });
 		//获得冷库管理人员
 		$http.get("/i/rdc/findrdcMaagerConfig?rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
-			$scope.mg = resp.data;
+			$scope.mg = resp.data[0];
+			$scope.oldmg = resp.data[0];
 		});
 		
         $scope.tag.type = {};
@@ -599,18 +600,38 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 				alert(data.message);
 			})
 	}
+	
+	//验证电话号码
+	$scope.vertelephone=function(telephone){//验证手机号码
+		var length = (telephone+'').length; 
+		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		return telephone&&length == 11 && mobile.test(telephone);
+	};
+	$scope.vccheckalltp=function(){
+		var em=$("#maintaincform input[name=aTelephone]");
+		if($scope.checkalltp()){em.parent().removeClass("has-error");}else{em.parent().addClass("has-error");};
+	};
+	$scope.checkalltp=function(){//验证手机号码
+		var isllok=true;
+		var atphone=$scope.mg.aTelephone;
+		var newth= atphone.split(";");
+		if(newth&&newth!=""&&newth.length>0){
+			$.each(newth, function(index, item) {
+			var isok=	$scope.vertelephone(item);
+			if(!isok){isllok=false;return isllok;}});return isllok;}isllok=false;return isllok;
+	};
 	$scope.savemg = function(){//保存rdcmanger配置
-		$http.post('/i/rdc/adupRdcMangConfig',{
-			id           :$scope.mg.id            ,
-			rdcid        :$scope.vm.choseRdc.id        ,
-			muid         :$scope.mg.muid          ,
-			uuid         :$scope.mg.uuid          ,
-			mtelephone   :$scope.mg.mtelephone    ,
-			uTelephone   :$scope.mg.uTelephone    ,
-			aTelephone   :$scope.mg.aTelephone    
-		}).success(function(data,status,config,headers){
-				alert(data.message);
-			})
+		if($scope.checkalltp()){
+			$("#maintaincform input[name=aTelephone]").parent().removeClass("has-error");
+			 $.ajax({ url: '/i/rdc/adupRdcMangConfig',type: 'POST',data :$("#maintaincform").serialize(), success: function(data){
+				 alert(data.message);
+			 }});
+		}else{
+			$("#maintaincform input[name=aTelephone]").parent().addClass("has-error");
+		}
+	}
+	$scope.resetmg = function(){//保存rdcmanger配置
+		$scope.mg = $scope.oldmg ;
 	}
 	
 	$scope.deleteAccount = function(){
@@ -618,7 +639,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			alert(data.message);
 			$scope.vm.username = "";
 			$scope.vm.password = "";
-		})
+		});
 	}
 	
 	$scope.addWaringValue = function(){

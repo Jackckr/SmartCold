@@ -1194,31 +1194,32 @@
                         <i class="fa fa-table"></i>维护设置
                     </uib-tab-heading>
                     <div class="row" style="margin-top: 20px;">
-                        <form class="  form-horizontal" >
+                        <form id="maintaincform" class="  form-horizontal" >
 							<div class="form-group">
 								<label class="col-sm-1 control-label">超级管理人员：</label>
 								<div class="col-sm-5">
-									<input class="form-control" ng-model="mg.muid"  type="text"  >
-									<input ng-model="mg.id"  type="hidden"  >
-									<input type="hidden" ng-model="mg.mtelephone"   >
+									<input class="form-control" name="muid" ng-model="mg.muid"  type="text" disabled="disabled" >
+									<input name="id" value={{mg.id}} type="hidden"  >
+									<input value="{{vm.choseRdc.id}}"  name="rdcid" type="hidden"  >
+									<input type="hidden" name="mtelephone" ng-model="mg.mtelephone"   >
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">普通管理人员：</label>
 								<div class="col-sm-5">
-									<input class="form-control" ng-model="mg.uuid"  type="text"  >
-									<input type="hidden" ng-model="mg.uTelephone"   >
+									<input class="form-control" name="uuid" ng-model="mg.uuid"  type="text" disabled="disabled" >
+									<input type="hidden" name="uTelephone" ng-model="mg.uTelephone"   >
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label" >备用通知电话：</label>
 								<div class="col-sm-5">
-									<input class="form-control"  type="text" ng-model="mg.aTelephone" placeholder="多个请使用;隔开！" >
+									<input class="form-control" name="aTelephone" type="text" ng-model="mg.aTelephone" ng-blur="vccheckalltp()" title="多个请使用;隔开！" placeholder="多个请使用;隔开！" >
 								</div>
 							</div>
 							<div class="form-group ">
 								<div class="col-sm-3 " >
-								  <a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="deletemg()">取消</a>
+								  <a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="resetmg()">取消</a>
                                   <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="savemg()">修改</a>
                                  </div>
 							</div>

@@ -8,6 +8,7 @@ import com.smartcold.bgzigbee.manage.dto.*;
 import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
+import com.smartcold.bgzigbee.manage.util.ResponseData;
 import com.smartcold.bgzigbee.manage.util.SetUtil;
 
 import org.slf4j.Logger;
@@ -167,18 +168,19 @@ public class RdcController {
 	}
 	@RequestMapping(value = "/adupRdcMangConfig")
 	@ResponseBody
-	public boolean adupRdcMangConfig(Integer id ,Integer rdcid ,String muid,String uuid,String mtelephone,String uTelephone,String aTelephone) {
+	public ResponseData<String> adupRdcMangConfig(Integer id ,Integer rdcid ,String muid,String uuid,String mtelephone,String uTelephone,String aTelephone) {
 		try {
+		    if(rdcid==null){return ResponseData.newFailure("必要参数不能为空！");}
 			if(id==null){
 				 this.rdcDao.addRdcMangConfig( rdcid , muid, uuid, mtelephone, uTelephone, aTelephone);
 			}else{
 				 this.rdcDao.upRdcMangConfig( id,rdcid , muid, uuid, mtelephone, uTelephone, aTelephone);
 			}
-			return true;
+			return ResponseData.newSuccess("修改成功！");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return ResponseData.newFailure("修改失败！请稍后重试！");
 	}
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)

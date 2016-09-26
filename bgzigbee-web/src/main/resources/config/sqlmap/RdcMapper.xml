@@ -29,6 +29,9 @@
 		SELECT count(cellphone) FROM `Rdc` WHERE `cellphone` = #{cellphone}
 	</select>
 	<select id="getRdcMangConfig" parameterType="map" resultType="map">
+           select * from rdcmanageinfo m where rdcid=#{rdcid};
+	</select>
+	<select id="getRdcMangtlConfig" parameterType="map" resultType="map">
            select m.rdcid, concat_ws(";",m.mtelephone,m.uTelephone,m.aTelephone) as telephone from rdcmanageinfo m where rdcid=#{rdcid};
 	</select>
 	 <insert id="addRdcMangConfig" parameterType="map" >

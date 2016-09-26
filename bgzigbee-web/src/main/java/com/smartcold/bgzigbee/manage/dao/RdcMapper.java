@@ -30,6 +30,8 @@ public interface RdcMapper {
 	
 	List<HashMap<String, String>> getRdcMangConfig(@Param("rdcid")Integer rdcid );
 	
+	List<HashMap<String, String>> getRdcMangtlConfig(@Param("rdcid")Integer rdcid );
+	
 	void addRdcMangConfig(@Param("rdcid")Integer rdcid ,@Param("muid")String muid,@Param("uuid")String uuid,@Param("mtelephone")String mtelephone,@Param("uTelephone")String uTelephone,@Param("aTelephone")String aTelephone);
 	
 	void upRdcMangConfig(@Param("id")Integer id ,@Param("rdcid")Integer rdcid ,@Param("muid")String muid,@Param("uuid")String uuid,@Param("mtelephone")String mtelephone,@Param("uTelephone")String uTelephone,@Param("aTelephone")String aTelephone);
