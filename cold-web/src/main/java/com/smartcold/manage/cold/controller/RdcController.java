@@ -18,6 +18,7 @@ import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.olddb.WarningMsgEntity;
+import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.RdcService;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.RemoteUtil;
@@ -76,7 +77,8 @@ public class RdcController {
 		return rdcService.findRdcByUserid(userid);
 	}
 	
-	@RequestMapping(value = "/checkAPStatus", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkAPStatus")
+	@ResponseBody
 	public ResponseData<String> checkAPStatus() {
 		System.err.println(TimeUtil.getDateTime()+"*************时间到了。。。我要开始工作了");
 		List<Map<String, Object>> findRdcManger = this.rdcMapper.findRdcManger();//查找监听保护对象
@@ -103,7 +105,6 @@ public class RdcController {
 	 * @param telMap
 	 */
 	private ResponseData<String> sendMsg(List<DeviceObjectMappingEntity> devciceList,Map<Integer,String> telMap ){
-		
 		long currentTime = System.currentTimeMillis() +1800000;
 		Date startTime = new Date();
 		Date endTime = new Date(currentTime);
@@ -114,12 +115,19 @@ public class RdcController {
 				resMap=new HashMap<String, Object>();
 				Integer size=storageService.findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(),"", startTime, endTime);
 				if(size!=null&&size==0){
+					String oidname="";
+					   List<HashMap<String, Object>> oidobj =this.megMapper.findObjsetByOid(StorageType.getStorageType(obj.getType()).getTable(), obj.getOid());
+					   if(SetUtil.isnotNullList(oidobj)){
+						   oidname=  (String) oidobj.get(0).get("name");
+					   }
 						if(tempData.containsKey(obj.getRdcid())){
 							resMap = tempData.get(obj.getRdcid());
+							resMap.put("devicetype",resMap.get("devicetype")+","+oidname); 
 							resMap.put("deviceid",resMap.get("deviceid")+","+obj.getDeviceid()); 
 						}else{
 							resMap.put("rdcname", this.rdcMapper.selectByPrimaryKey(obj.getRdcid()).getName());
 							resMap.put("deviceid", obj.getDeviceid());
+							resMap.put("devicetype",oidname); 
 						}
 						tempData.put(obj.getRdcid(), resMap);
 				}
@@ -129,23 +137,26 @@ public class RdcController {
 			  String runmsg="";
 			  WarningMsgEntity info=null;
 			  HashMap<String, Object> updata=null;
-			  for (int rdcid : tempData.keySet()) {
+		  for (int rdcid : tempData.keySet()) {
 				  Map<String, Object> map = tempData.get(rdcid);
 				  String tels = telMap.get(rdcid);
 				  System.out.println("向"+tels+"发送通知信息:");
-				  String msg="【Warning】{RDC="+map.get("rdcname")+"}{Dev="+map.get("deviceid")+"}已经超过30分钟未上报数据，请注意检查";
-				  System.out.println(msg);
+				  String msg="【Warning】{RDC="+map.get("rdcname")+"},devicetype={"+map.get("devicetype")+"},Dev={"+map.get("deviceid")+"}已经超过30分钟未上报数据，请注意检查";
+				  System.err.println(msg);
 				  info=new WarningMsgEntity(rdcid,0,"告警通知",tels,msg);
 				  this.megMapper.addwarningmessage(info);
 				  updata=new HashMap<String, Object>();
-				  updata.put("rdcid", rdcid);//  update deviceobjectmapping set `status`=#{status} where rdcid=#{rdcid} and deviceid in(${deviceids});
+				  updata.put("rdcid", rdcid);// 
 				  updata.put("status", 0);
 				  updata.put("deviceids", map.get("deviceid"));
 				  runmsg+=msg;
 				  this.deviceMapper.upDeviceObjectStatus(updata);
-				  updata.remove("status");
-				  updata.put("rdcname", map.get("rdcname"));
-//				  RemoteUtil.httpPost("http://1920.68.1.", updata);
+				  updata.clear();
+				  updata.put("rdc", "\nRDC={"+map.get("rdcname")+"}");
+				  updata.put("rdctype", "devicetype={"+map.get("devicetype")+"}");
+				  updata.put("dev", "device={"+map.get("deviceid")+"}");
+				  updata.put("telephone", tels);
+				  RemoteUtil.httpPost("http://192.168.1.106:8989/i/warning/warningTele", updata);
 			  }
 			  System.err.println("==========================================开始发送短信通知=========================");	
 			   return ResponseData.newFailure("数据异常！"+runmsg);
