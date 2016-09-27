@@ -28,6 +28,32 @@ public class TelephoneVerifyUtil {
 		 * "23403710", "bc0977e92f79fa23c1d5f1cc28ef8953");
 		 */
 		
+		/**
+		 * 告警通知
+		 * @param rdc
+		 * @param rdctype
+		 * @param dev
+		 * @throws ApiException 
+		 */
+		public String warninginform(String rdc,String rdctype,String dev,String telephone) throws ApiException {
+			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+			req.setExtend("123456");
+			req.setSmsType("normal");
+			req.setSmsFreeSignName("链库网");
+			req.setSmsParamString("{ \"rdc\":" + "\"" + rdc + "\"" + ",\"rdctype\":" + "\"" + rdctype+ "\"" + ",\"dev\":" + "\"" + dev+ "\"}");
+			req.setRecNum(telephone);
+			req.setSmsTemplateCode("SMS_16370250");//Warning: ${rdc}-${rdctype}-${dev}已经超过30分钟未上报数据，请注意检查。
+			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+			System.out.println(rsp.getBody());
+			return rsp.getMsg();
+		}
+		
+		/**
+		 * 身份验证
+		 * @param telephone
+		 * @return
+		 * @throws ApiException
+		 */
 		public String identityVerify(String telephone) throws ApiException {
 			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 			req.setExtend("123456");
@@ -44,6 +70,12 @@ public class TelephoneVerifyUtil {
 			return code;
 		}
 		
+		/**
+		 * 注册验证
+		 * @param telephone
+		 * @return
+		 * @throws ApiException
+		 */
 		public String signUpVerify(String telephone) throws ApiException {
 			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 			req.setExtend("123456");
@@ -61,7 +93,7 @@ public class TelephoneVerifyUtil {
 		}
 		
 		/**
-		 * 
+		 * 向下单者发送订单通知
 		 * @param userTele
 		 * @param username
 		 * @param ownerTele
@@ -81,7 +113,7 @@ public class TelephoneVerifyUtil {
 		}
 		
 		/**
-		 * 
+		 * 向冷库所有者发送订单通知
 		 * @param userTele
 		 * @param username
 		 * @param ownerTele
@@ -100,7 +132,10 @@ public class TelephoneVerifyUtil {
 			System.out.println(rsp.getBody());
 		}
 		
-		
+		/**
+		 * 产生验证码
+		 * @return
+		 */
 		public String generateCode() {
 			String[] beforeShuffle = new String[] { "2", "3", "4", "5", "6", "7",
 					"8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",

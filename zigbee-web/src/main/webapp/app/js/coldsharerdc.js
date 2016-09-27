@@ -202,11 +202,11 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 //        	  $scope.$apply(function () { $("#dg_imglist").html('<ng-gallery images="storageGallery" thumbs-num="10" ></ng-gallery>'); });
 	 };
 	 $scope.getOrder=function () {  
-		    $("#shaerdailModal").modal("hide");
+		   $("#shaerdailModal").modal("hide");
 		    $(".modal-backdrop").remove();
 	    	if(user!="undefined"&&user.id!=0){
 	    		if(user.telephone!=''&&user.telephone!=undefined){
-	    	  $.ajax({ url: "/i/orders/generateOrder", data: {
+	    	 $.ajax({ url: "/i/orders/generateOrder", data: {
 	    		  userid:user.id,
 	    		  username:user.username,
 	    		  telephone:user.telephone,
@@ -233,7 +233,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	    	else{
 	    		alert("登陆之后才可以抢单");
 	    	}
-       } ; 
+       }; 
      $scope.changDataMode=function(){
     	 if(rdcconfig._cuttid==1){ $scope.pageChanged1(); }else if(rdcconfig._cuttid==2){$scope.pageChanged2();}else if(rdcconfig._cuttid==3){ $scope.pageChanged3(); }
      };
