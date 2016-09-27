@@ -156,7 +156,7 @@ public class RdcController {
 				  updata.put("rdctype", "devicetype={"+map.get("devicetype")+"}");
 				  updata.put("dev", "device={"+map.get("deviceid")+"}");
 				  updata.put("telephone", tels);
-				  RemoteUtil.httpPost("http://192.168.1.106:8989/i/warning/warningTele", updata);
+				  RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele", updata);
 			  }
 			  System.err.println("==========================================开始发送短信通知=========================");	
 			   return ResponseData.newFailure("数据异常！"+runmsg);
