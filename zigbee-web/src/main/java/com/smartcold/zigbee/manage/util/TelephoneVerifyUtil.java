@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -35,17 +36,25 @@ public class TelephoneVerifyUtil {
 		 * @param dev
 		 * @throws ApiException 
 		 */
-		public String warninginform(String rdc,String rdctype,String dev,String telephone) throws ApiException {
-			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-			req.setExtend("123456");
-			req.setSmsType("normal");
-			req.setSmsFreeSignName("链库网");
-			req.setSmsParamString("{ \"rdc\":" + "\"" + rdc + "\"" + ",\"rdctype\":" + "\"" + rdctype+ "\"" + ",\"dev\":" + "\"" + dev+ "\"}");
-			req.setRecNum(telephone);
-			req.setSmsTemplateCode("SMS_16370250");//Warning: ${rdc}-${rdctype}-${dev}已经超过30分钟未上报数据，请注意检查。
-			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-			System.out.println(rsp.getBody());
-			return rsp.getMsg();
+		public List<String> warninginform(String rdc,String rdctype,String dev,String telephone) throws ApiException {
+			List<String> msglist=new ArrayList<String>();
+			if (StringUtil.isnotNull(telephone)) {
+				AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+				req.setExtend("123456");
+				req.setSmsType("normal");
+				req.setSmsFreeSignName("链库网");
+				req.setSmsParamString("{ \"rdc\":" + "\"" + rdc + "\"" + ",\"rdctype\":" + "\"" + rdctype+ "\"" + ",\"dev\":" + "\"" + dev+ "\"}");
+			 	req.setSmsTemplateCode("SMS_16370250");//Warning: ${rdc}-${rdctype}-${dev}已经超过30分钟未上报数据，请注意检查。
+			    String[] telephoness = StringUtil.splitString(telephone);
+			    for (String sutelephone : telephoness) {
+				if(StringUtil.isnotNull(sutelephone)){
+					req.setRecNum(sutelephone);
+					AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+					msglist.add(rsp.getMsg());
+				}
+			  }
+			}
+			return msglist;
 		}
 		
 		/**

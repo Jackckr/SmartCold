@@ -209,7 +209,7 @@ public class AnalysisController {
 	}
 	
 	/**
-	 * 
+	 * 导出请求。。。
 	 * @param request
 	 * @param response
 	 * @param fileName
@@ -254,7 +254,7 @@ public class AnalysisController {
           newtitlist.add("日期"); subtitlist.add("-");colmwith.add("5");
           int colmode[][]=null;
           if(subtit!=null&&subtit.length>0){
-        	  colmode=new int[toptit.length+1][];//初始化跨列集合
+        	  colmode=new int[toptit.length+1][];//初始化跨列集合,进行跨列跨行计算
         	  colmode[0]=new int[]{1,2,0,0};
 			  for (int i = 0; i < toptit.length; i++) {
 				for (int j = 0; j < subtit.length; j++) {

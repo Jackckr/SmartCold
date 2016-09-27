@@ -37,14 +37,12 @@ public class WarningController {
 			@RequestParam(value="dev", required=false) String dev,
 			@RequestParam(value="telephone", required=false) String telephone) {
 		TelephoneVerifyUtil telephoneVerify = new TelephoneVerifyUtil();
-		String rep = "";
 		try {
-			rep = telephoneVerify.warninginform(rdc, rdctype, dev, telephone);
+			return ResponseData.newSuccess(telephoneVerify.warninginform(rdc, rdctype, dev, telephone));
 		} catch (ApiException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return ResponseData.newSuccess(rep);
+		return ResponseData.newFailure();
 	}
 	/**
 	 * 

@@ -22,7 +22,7 @@ public interface RdcMapper {
 
 	List<Rdc> findRdcList();
 	
-	List<Map<String, String>> findRdcManger();
+	List<Map<String, Object>> findRdcManger();
 
 	List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);
 
