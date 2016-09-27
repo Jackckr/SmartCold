@@ -12,4 +12,31 @@
     select * from `warningsinfo` where rdcid=#{rdcId} order by addtime desc limit #{point}
 </select>
 
+
+<!-- 查询当前错误种类 -->
+<select id="getWrnType" parameterType="map" resultType="WarningsInfo">
+    SELECT * FROM  warningsinfo   WHERE `rdcid` =#{rdcId}  
+    <if test="month==0"> and DATE_FORMAT( `addtime`, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) </if> 
+    <if test="month!=1"> and PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( `addtime`, '%Y%m' ) ) =#{month} </if> 
+	 GROUP BY `warningname` ;
+</select>
+<!-- 获得错误消息汇总 -->
+<select id="getWarCountByType" parameterType="map" resultType="WarningsInfo">
+	set @sm = 1;
+	SET @tp = '2016-09-22 18:09:54';
+	SELECT
+	 (@sm := @sm +IF (TIMESTAMPDIFF(SECOND ,@tp, w.`addtime`) > #{jtime},1,0)) AS id,
+	  @tp := w.`addtime` as addtime,
+	 `warningname` 
+	FROM
+		`warningsinfo` w
+	WHERE `rdcid` =#{rdcId}  
+	 <if test="month==0"> and DATE_FORMAT( `addtime`, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) </if> 
+     <if test="month!=1"> and PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( `addtime`, '%Y%m' ) ) =#{month} </if> 
+	  and  `warningname` =#{wartype}
+	ORDER BY
+		id DESC
+	LIMIT 1;
+</select>
+
 </mapper>

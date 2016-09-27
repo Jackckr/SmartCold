@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -24,7 +23,6 @@ import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
-import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
@@ -91,7 +89,7 @@ public class AnalysisController {
 	 */
 	@RequestMapping(value = "/getCoolingAnalysis")
 	@ResponseBody
-	public ResponseData<HashMap<String, Object>> getCoolingAnalysis(Integer rdcId,Integer[] compressorsId) {
+	public ResponseData<HashMap<String, Object>> getCoolingAnalysis(Integer rdcId,Integer[] compressorsId,String [] compressorsName) {
 		try {
 			if(rdcId==null){return ResponseData.newFailure("非法请求！");}
 			List<CompressorGroupSetEntity> compressList = this.compressorGroupSetDao.findByRdcId(rdcId);
