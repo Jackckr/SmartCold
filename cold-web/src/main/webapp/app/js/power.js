@@ -24,6 +24,11 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 				xData.unshift(baseTools.formatTime(item.addtime))
 				yData.unshift(item.value * powerSet.radio)
 			})
+			var currentPower = '';
+            if (data.length > 0) {
+                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value  * powerSet.radio).toFixed(1) : '';
+            };
+            $scope.currentPower = currentPower;
 			option = baseTools.getEchartSingleOption('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line', parseInt(yData[0]));
 			lineChart.setOption(option);
 		})
