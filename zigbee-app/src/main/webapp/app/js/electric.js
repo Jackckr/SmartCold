@@ -145,7 +145,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
                 $scope.waterCosts = data;
                 var currentWaterCost = '';
                 if (data.length > 0) {
-                    currentWaterCost = data[data.length - 1] ? parseFloat(data[data.length - 1].waterCost).toFixed(1) : '';
+                    currentWaterCost = data[data.length - 1] ? parseFloat(data[data.length - 1].waterCost).toFixed(2) : '';
                 }
                 var xData = []
                 var yData = []
