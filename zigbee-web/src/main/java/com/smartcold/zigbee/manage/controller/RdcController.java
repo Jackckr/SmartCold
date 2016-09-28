@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -184,6 +185,17 @@ public class RdcController {
 	}
 	
 
+	 @RequestMapping(value = "/addRdcForIos",method = RequestMethod.POST)
+	    @ResponseBody
+	    public void upload(MultipartHttpServletRequest muiltRequest,HttpServletRequest servletRequest) throws Exception{
+		 System.out.println("enter");
+	        add(servletRequest, muiltRequest.getFile("honor0"), muiltRequest.getFile("honor1"), muiltRequest.getFile("honor2"),
+	        		muiltRequest.getFile("honor3"),muiltRequest.getFile("honor4"), muiltRequest.getFile("honor5"), 
+	        		muiltRequest.getFile("honor6"),muiltRequest.getFile("honor7"),muiltRequest.getFile("file0"),
+	        		muiltRequest.getFile("file1"), muiltRequest.getFile("file2"),muiltRequest.getFile("file3"), muiltRequest.getFile("file4"),
+	        		muiltRequest.getFile("arrangePics"), null);
+	 }
+	
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
 	public Object add(HttpServletRequest request,

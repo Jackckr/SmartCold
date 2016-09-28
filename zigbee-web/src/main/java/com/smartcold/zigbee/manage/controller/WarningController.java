@@ -26,7 +26,7 @@ public class WarningController {
 	 * @param rdc：报警的冷库
 	 * @param rdctype：报警的二级冷库
 	 * @param dev：报警的设备
-	 * @param telephone：短信接受的手机号，一般是冷库所有者
+	 * @param telephone：短信接受的手机号（多个），一般是冷库所有者
 	 * @return
 	 */
 	@RequestMapping(value = "/warningTele")
@@ -42,6 +42,7 @@ public class WarningController {
 		} catch (ApiException e) {
 			e.printStackTrace();
 		}
+		//System.out.println(telephone+":"+rdc+"-"+rdctype+"-"+dev+"已经超过30分钟未上报数据，请注意检查。");
 		return ResponseData.newFailure();
 	}
 	/**
@@ -50,7 +51,7 @@ public class WarningController {
 	 * @param rdctype：报警的二级冷库
 	 * @param dev：报警的设备
 	 * @param msgurl:通知发出地址，即当用户点击这条通知时，需要跳出的界面链接
-	 * @param userid:需要通知的用户，一般是冷库所有者
+	 * @param userid:需要通知的用户(多个)，一般是冷库所有者
 	 * @return
 	 */
 	@RequestMapping(value = "warningMsg")
@@ -60,15 +61,18 @@ public class WarningController {
 			@RequestParam(value="rdctype") String rdctype, 
 			@RequestParam(value="dev", required=false) String dev,
 			@RequestParam(value="msgurl", required=false) String msgurl,
-			@RequestParam(value="userid", required=false) Integer userid) {
+			@RequestParam(value="userid", required=false) String userid) {
+		String[] userids = userid.split(",");
 		MessageEntity msg = new MessageEntity();
 		msg.setMsgcategory(2);
 		msg.setMsgdata(rdc+"-"+rdctype+"-"+dev+"已经超过30分钟未上报数据，请注意检查。");//
 		msg.setMsgurl(msgurl);
-		msg.setUserid(userid);
-		CometUtil cometUtil = new CometUtil();
-		cometUtil.pushTo(msg);
-		messageDao.insertMessage(msg);
+		for (int i = 0; i < userids.length; i++) {
+			msg.setUserid(Integer.parseInt(userids[i]));
+			CometUtil cometUtil = new CometUtil();
+			cometUtil.pushTo(msg);
+			messageDao.insertMessage(msg);
+		}
 		return ResponseData.newSuccess();
 	}
 }
