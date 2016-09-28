@@ -153,7 +153,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
                     xData.push(item.compressorGroupName);
                     yData.push(item.waterCost);
                 })
-                var option = $scope.creatOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'line');
+                var option = $scope.creatOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'bar');
                 var mainId = 'water';
                 var innerHTML = '<div class="swiper-slide">' +
                     '<p class="actually">水表1</p>' +
