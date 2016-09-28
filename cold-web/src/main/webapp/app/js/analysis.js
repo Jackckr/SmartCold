@@ -58,7 +58,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 						yData2.unshift(storage['MaxTemp'][index]['value'])
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 					})
-					Option = {
+					option = {
 	                tooltip : {
 	                    trigger: 'axis'
 	                },
@@ -280,7 +280,7 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 									item['value'] / storage['DoorOpenTimes'][index].value / 60
 									)
 					})
-					Option = {
+					option = {
 		                tooltip : {
 		                    trigger: 'axis'
 		                },
