@@ -91,4 +91,7 @@
   <select id="searchRdc" parameterType="map" resultType="Rdc">
     SELECT * FROM `Rdc` WHERE name like #{filter}
   </select>
+  <select id="findRdcManger" parameterType="map" resultType="map">
+      select m.rdcid, concat_ws(";",m.mtelephone,m.uTelephone,m.aTelephone) as telephone from rdcmanageinfo m ;
+  </select>
 </mapper>

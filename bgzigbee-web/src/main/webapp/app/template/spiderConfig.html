@@ -1187,6 +1187,72 @@
                         </table>
                     </div>
                 </uib-tab>
+                
+                
+                <uib-tab>
+                    <uib-tab-heading>
+                        <i class="fa fa-table"></i>告警设置
+                    </uib-tab-heading>
+                    <div class="row" style="margin-top: 20px;">
+                        <form id="maintaincform" class="  form-horizontal" >
+							<div class="form-group">
+								<label class="col-sm-1 control-label">超级管理人员：</label>
+								<div class="col-sm-5">
+									<input class="form-control" name="muid" ng-model="mg.muid"  type="text" disabled="disabled" >
+									<input name="id" value={{mg.id}} type="hidden"  >
+									<input value="{{vm.choseRdc.id}}"  name="rdcid" type="hidden"  >
+									<input type="hidden" name="mtelephone" ng-model="mg.mtelephone"   >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">普通管理人员：</label>
+								<div class="col-sm-5">
+									<input class="form-control" name="uuid" ng-model="mg.uuid"  type="text" disabled="disabled" >
+									<input type="hidden" name="uTelephone" ng-model="mg.uTelephone"   >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label" >备用通知电话：</label>
+								<div class="col-sm-5">
+									<input class="form-control" name="aTelephone" type="text" ng-model="mg.aTelephone" ng-blur="vccheckalltp()" title="多个请使用;隔开！" placeholder="多个请使用;隔开！" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label" >间隔时间：</label>
+								<div class="col-sm-5">
+									<input class="form-control" value="30" disabled="disabled" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label" >监听对象：</label>
+								<div class="col-sm-5">
+									<span class="btn btn-info" value="1">"冷库"</span>
+									<span class="btn btn-info" value="2">冷库门</span>
+									<span class="btn btn-info" value="3">压缩机组</span>
+									<span class="btn btn-info" value="4">风机</span>
+									<span class="btn btn-info" value="5">单体压缩机</span>
+									<span class="btn btn-info" value="6">风幕机</span>
+									<span class="btn btn-info" value="7">冷凝系统</span>
+									<span class="btn btn-info" value="8">冷凝系统水泵</span>
+									<span class="btn btn-info" value="9">冷凝系统风机</span>
+									<span class="btn btn-info" value="10">电表</span>
+									<span class="btn btn-info" value="11">月台门</span>
+									<span class="btn btn-info" value="12">液压平台</span>
+									<span class="btn btn-info" value="13">充电桩</span>
+									<span class="btn btn-info" value="14">叉车</span>
+									<span class="btn btn-info" value="15">灯组</span>
+									<span class="btn btn-info" value="16">防冻循环泵</span>
+								</div>
+							</div>
+							<div class="form-group ">
+								<div class="col-sm-3 " >
+								  <a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="resetmg()">取消</a>
+                                  <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="savemg()">修改</a>
+                                 </div>
+							</div>
+						</form>
+                    </div>
+                </uib-tab>
             </uib-tabset>
         </div>
     </div>

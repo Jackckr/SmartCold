@@ -19,6 +19,7 @@ public class TimeUtil {
 	public static SimpleDateFormat	dateFormat	= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
 	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
+	public static String  getDateTime(Date date){return	TimeUtil.dateFormat.format(date);}
 	public static String  getFormatDate(Date date){return	TimeUtil.datefm.format(date);}
     /**
      * Date转String

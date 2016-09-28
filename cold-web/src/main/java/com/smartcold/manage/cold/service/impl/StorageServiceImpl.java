@@ -83,6 +83,11 @@ public class StorageServiceImpl implements StorageService {
 		}
 	}
 	
+	@Override
+	public Integer findCounSizeByTime(int type, int oid, String deviceid,String key, Date startTime, Date endTime){
+		return storageDataCollectionDao.findCounSizeByTime(null, deviceid, key, startTime, endTime);
+	}
+	
 
 	@Override
 	public Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findAnalysisByRdcidKeyDate(int rdcid,

@@ -232,6 +232,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 title: {
                     text: '液位',
                     itemGap: 20,
+                    y: 15,
                     style: {
                         color: 'rgba(30,144,255,0.8)',
                         fontFamily: '微软雅黑',
@@ -247,7 +248,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Level (mL)'
+                        text: 'Level (mm)'
                     }
                 },
                 legend: {

@@ -28,7 +28,7 @@
     	</div>
     </header>
     <section class="comment">
-    	<p class="total" onclick="starNum(this)">
+    	<p class="total" onclick="starNum(this,1)">
     		总体
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -36,7 +36,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="tempture" onclick="starNum(this)">
+    	<p class="tempture" onclick="starNum(this,2)">
     		温度
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -44,7 +44,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="device" onclick="starNum(this)">
+    	<p class="device" onclick="starNum(this,3)">
     		设施
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -52,7 +52,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="sevice" onclick="starNum(this)">
+    	<p class="sevice" onclick="starNum(this,4)">
     		服务
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -60,7 +60,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
-    	<p class="health" onclick="starNum(this)">
+    	<p class="health" onclick="starNum(this,5)">
     		卫生
     		<i class="iconfont">&#xe6e1;</i>
     		<i class="iconfont">&#xe6e1;</i>
@@ -87,14 +87,22 @@
 					$(this).nextAll('i').removeClass('current');
 				}
 												
-			})
-		})
-			
+			});
+		});
 		/*星级评价*/
-		function starNum(ops){
-			var starLength = $(ops).children('.current').length;
-			alert(starLength)
+		function starNum(ops,num){
+			if(num==1)
+				window.grade = $(ops).children('.current').length;
+			else if(num==2)
+				window.locationGrade = $(ops).children('.current').length;
+			else if(num==3)
+				window.facilityGrade = $(ops).children('.current').length;
+			else if(num==4)
+				window.serviceGrade = $(ops).children('.current').length;
+			else if(num==5)
+				window.sanitaryGrade = $(ops).children('.current').length;
 		}
+			
 	</script>
 </body>
 </html>

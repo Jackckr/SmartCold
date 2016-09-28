@@ -50,8 +50,10 @@ $().ready(function() {
   	   	         	  currentPage++; var html=[];var   msgsList = data.data;//
   	   	              $.each(msgsList, function(index, item) {html.push( gethtml(item)); });
   	   	              ul_select.append(html.join(""));
+  	   	              $('.body').show();
   	   	              $(".nodata").hide();
   	   	          }else{
+  	   	        	  $('.body').hide();
   	   	              $(".nodata").show();
   	   	          }
   	   	     isLoadRB=false;

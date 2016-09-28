@@ -47,7 +47,7 @@
                             <li class="{{eva.grade>=1?'filled':''}}">★</li><li class="{{eva.grade>=2?'filled':''}}">★</li><li class="{{eva.grade>=3?'filled':''}}">★</li><li class="{{eva.grade>=4?'filled':''}}">★</li><li class="{{eva.grade>=5?'filled':''}}">★</li>
                         </ul>
                     </div>
-                    <p class="commentTxt">服务好，地理位置好，服务好，地理位置好。</p>
+                    <p class="commentTxt">{{eva.content}}</p>
                     <div class="baguetteBoxOne gallery" ng-if="eva.reviewPics">
                         <a  ng-repeat="fl in eva.reviewPics" href="{{fl.location}}"  ><img ng-src="{{fl.location}}" alt="" /></a>
                     </div>

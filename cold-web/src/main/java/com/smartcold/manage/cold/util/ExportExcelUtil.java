@@ -6,10 +6,8 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -27,7 +25,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
  */
 public class ExportExcelUtil {
 
-	private static SimpleDateFormat timeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 
 	/**
 	 * 
@@ -106,7 +103,7 @@ public class ExportExcelUtil {
 			Method method = o.getClass().getMethod(getter, new Class[] {});
 			Object value = method.invoke(o, new Object[] {});
 			if(value instanceof Date ){
-				return timeFormat.format(value);
+				return TimeUtil.getDateTime((Date) value);
 			}
 			return value.toString();
 		} catch (Exception e) {

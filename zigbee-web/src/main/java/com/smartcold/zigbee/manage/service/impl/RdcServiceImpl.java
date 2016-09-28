@@ -38,6 +38,7 @@ import com.smartcold.zigbee.manage.dto.RdcScoreDTO;
 import com.smartcold.zigbee.manage.entity.CityListEntity;
 import com.smartcold.zigbee.manage.entity.CommentEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.entity.MessageEntity;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 import com.smartcold.zigbee.manage.entity.RdcExtEntity;
 import com.smartcold.zigbee.manage.entity.StorageHonorEntity;
@@ -47,6 +48,7 @@ import com.smartcold.zigbee.manage.entity.StorageTypeEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.BaiduMapUtil;
+import com.smartcold.zigbee.manage.util.CometUtil;
 import com.smartcold.zigbee.manage.util.MathUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 

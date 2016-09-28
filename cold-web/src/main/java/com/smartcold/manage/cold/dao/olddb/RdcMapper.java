@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import com.smartcold.manage.cold.entity.olddb.Rdc;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RdcMapper {
 	int deleteByPrimaryKey(Integer id);
@@ -20,6 +21,8 @@ public interface RdcMapper {
 	int updateByPrimaryKey(Rdc record);
 
 	List<Rdc> findRdcList();
+	
+	List<Map<String, Object>> findRdcManger();
 
 	List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);
 

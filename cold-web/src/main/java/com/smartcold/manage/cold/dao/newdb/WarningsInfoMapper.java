@@ -10,5 +10,10 @@ public interface WarningsInfoMapper {
 
 	public List<WarningsInfo> findAllWarningInfo(int rdcId);
 
+	public List<WarningsInfo> getWrnType( @Param("rdcId")int rdcId,@Param("month") int month);
+	
 	public List<WarningsInfo> findLastNWarningInfo(@Param("rdcId") int rdcId, @Param("point") int point);
+	
+	
+	public List<WarningsInfo> getWarCountByType(@Param("rdcId")int rdcId, @Param("month")int month, @Param("jtime")int jtime,@Param("wartype") String wartype);
 }

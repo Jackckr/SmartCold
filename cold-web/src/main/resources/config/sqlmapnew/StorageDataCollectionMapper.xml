@@ -67,7 +67,22 @@
 	    ORDER BY `time` DESC
 	
 	</select>
-
-
-
+	
+	<resultMap id="ResultOfInteger" type="java.lang.Integer">  
+     <result column="cou" property="cou" jdbcType="INTEGER" />  
+    </resultMap>
+	<select id="findCounSizeByTime" parameterType="map" resultMap="ResultOfInteger"> 
+	    SELECT count(*) cou FROM storagedatacollection 
+	    WHERE 1 =1 
+	    <if test="apid != null"> 
+		    AND `apid` = #{apid} 
+	    </if> 
+	    <if test="deviceid != null"> 
+		    AND `deviceid` = #{deviceid}  
+	    </if> 
+	    <if test="key != null"> 
+		    AND `key` = #{key}  
+	    </if> 
+	    AND time > #{startTime} AND time &lt; #{endTime}; 
+	</select> 
 </mapper>

@@ -13,6 +13,8 @@ public class DeviceObjectMappingEntity {
 	private int oid;
 
 	private int rdcid;
+	
+	private int status;
 
 	private Date addtime;
 
@@ -54,6 +56,14 @@ public class DeviceObjectMappingEntity {
 
 	public void setRdcid(int rdcid) {
 		this.rdcid = rdcid;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public Date getAddtime() {
