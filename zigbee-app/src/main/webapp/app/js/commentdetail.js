@@ -31,6 +31,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 	    $scope.submit = function(){
 	    	if(checkCommentSubmit){
+	    		layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
 			data = {
 					file0: null,
 					file1: null,
