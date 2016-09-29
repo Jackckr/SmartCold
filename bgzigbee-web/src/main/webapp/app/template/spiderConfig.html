@@ -1,4 +1,7 @@
 <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;min-height:700px;">
+<style>
+	.btn_group button{margin-bottom:10px;}
+</style>
     <div>
         <form class="navbar-form">
             <div class="form-group">
@@ -1225,29 +1228,29 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label" >监听对象：</label>
-								<div class="col-sm-5">
-									<span class="btn btn-info" value="1">"冷库"</span>
-									<span class="btn btn-info" value="2">冷库门</span>
-									<span class="btn btn-info" value="3">压缩机组</span>
-									<span class="btn btn-info" value="4">风机</span>
-									<span class="btn btn-info" value="5">单体压缩机</span>
-									<span class="btn btn-info" value="6">风幕机</span>
-									<span class="btn btn-info" value="7">冷凝系统</span>
-									<span class="btn btn-info" value="8">冷凝系统水泵</span>
-									<span class="btn btn-info" value="9">冷凝系统风机</span>
-									<span class="btn btn-info" value="10">电表</span>
-									<span class="btn btn-info" value="11">月台门</span>
-									<span class="btn btn-info" value="12">液压平台</span>
-									<span class="btn btn-info" value="13">充电桩</span>
-									<span class="btn btn-info" value="14">叉车</span>
-									<span class="btn btn-info" value="15">灯组</span>
-									<span class="btn btn-info" value="16">防冻循环泵</span>
+								<div class="col-sm-10 btn_group">
+									<button class="btn btn-info" value="1">冷库</button>
+									<button class="btn btn-info" value="2">冷库门</button>
+									<button class="btn btn-info" value="3">压缩机组</button>
+									<button class="btn btn-info" value="4">风机</button>
+									<button class="btn btn-info" value="5">单体压缩机</button>
+									<button class="btn btn-info" value="6">风幕机</button>
+									<button class="btn btn-info" value="7">冷凝系统</button>
+									<button class="btn btn-info" value="8">冷凝系统水泵</button>
+									<button class="btn btn-info" value="9">冷凝系统风机</button>
+									<button class="btn btn-info" value="10">电表</button>
+									<button class="btn btn-info" value="11">月台门</button>
+									<button class="btn btn-info" value="12">液压平台</button>
+									<button class="btn btn-info" value="13">充电桩</button>
+									<button class="btn btn-info" value="14">叉车</button>
+									<button class="btn btn-info" value="15">灯组</button>
+									<button class="btn btn-info" value="16">防冻循环泵</button>
 								</div>
 							</div>
 							<div class="form-group ">
 								<div class="col-sm-3 " >
-								  <a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="resetmg()">取消</a>
-                                  <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="savemg()">修改</a>
+								  <button class="btn btn-sm btn-danger pull-right" style="margin-left:20px;" type='submit' ng-click="resetmg()">取消</button>
+                                  <button class="btn btn-sm btn-primary pull-right" type='submit' ng-click="savemg()">修改</button>
                                  </div>
 							</div>
 						</form>

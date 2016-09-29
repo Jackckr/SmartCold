@@ -428,5 +428,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/doorAnalysis/{rdcId}',
     	controller: 'doorAnalysis',
         templateUrl: 'app/template/doorAnalysis.html'
+    }).state('baoyangReminder',{
+    	url:'/baoyangReminder',
+    	controller: 'baoyangReminder',
+        templateUrl: 'app/template/baoyangReminder.html'
     });
 });
