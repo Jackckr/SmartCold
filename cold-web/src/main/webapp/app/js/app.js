@@ -305,12 +305,20 @@ coldWeb.filter('sizeformat',function(){
 });
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/about");
+    $urlRouterProvider.otherwise("/cold360Physical");
 
     //index
-    $stateProvider.state('about',{
-    	url:'/about',
+    $stateProvider.state('cold360Physical',{
+    	url:'/cold360Physical',
     	controller: 'base',
+        templateUrl: 'app/template/cold360Physical.html'
+    }).state('cold360PhysicalDetail',{
+    	url:'/cold360PhysicalDetail',
+    	controller: 'cold360PhysicalDetail',
+        templateUrl: 'app/template/cold360PhysicalDetail.html'
+    }).state('about',{
+    	url:'/about',
+    	controller: 'base0',
         templateUrl: 'app/template/about.html'
     }).state('login',{
     	url:'/login',

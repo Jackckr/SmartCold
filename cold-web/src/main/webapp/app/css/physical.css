@@ -1,0 +1,114 @@
+/*cold360Physical.html css*/
+.cold_bg{
+	width:100%;
+	height:100%;
+	background: #528EC8;
+	position: relative;
+	padding-top:70px;
+	text-align: center;
+	padding-top:120px;
+	box-sizing:border-box;
+}
+.cold_bg h1{
+	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif;
+}
+.cold_bg:before{
+	content: "";
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 177px;
+	height: 68px;
+	background-image: url(assets/img/leftTop.png);
+}
+.radius_bg{
+	margin:0 auto;
+	width:240px;
+	height:80px;
+	background: #fff;
+	border-radius:40px;
+	box-shadow:0 2px 4px #484747;
+	line-height: 80px;
+	margin-top:12%;
+}
+.radius_bg a i{
+	position:absolute;
+	top:50%;
+	left:20px;
+	margin-top:-15px;
+	font-size: 30px;
+	width:30px;
+	height:30px;
+	line-height: 30px;
+	color:#227ed2;
+}
+.radius_bg a{
+	display:block;
+	position: relative;
+	width:100%;
+	height:100%;
+	font-size: 28px;
+	color:#227ed2;
+	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif;
+}
+/*cold360PhysicalDetail.html css*/
+.sys_group{
+	text-align: center;
+	padding-top:40px;
+}
+.sys_group .btn{
+	padding: 6px 75px;
+	font-size: 20px;
+	color:#fff;
+	margin-top: 30px;
+	border-radius:6px;
+}
+.sys_group .box{
+	width:30%;
+	display:inline-block;
+	margin-right:10px; 
+	height:400px;
+	overflow: hidden;
+}
+.sys_group .box-title{
+	color:#000;
+}
+.haveDevice .circle{
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	line-height:200px;
+	background-color: #F0F;
+	margin: 0 auto;
+	font-size: 80px;
+}
+.haveDevice .circle b{
+	font-size: 14px;
+}
+.bgBlue{
+	background-color: #0065C1;
+}
+.bgGold{
+	background-color: #FF5001;
+}
+.bgGreen{
+	background-color: #2A972C;
+}
+.fontBlue{
+	color: #0065C1;
+}
+.fontGold{
+	color: #FF5001;
+}
+.fontGreen{
+	color: #2A972C;
+}
+.haveDevice .circle.fontBlue{
+	background: url(../../assets/img/blue_circle.png) no-repeat center;
+}
+.haveDevice .circle.fontGold{
+	background: url(../../assets/img/yellow_circle.png) no-repeat center;
+}
+.haveDevice .circle.fontGreen{
+	background: url(../../assets/img/green_circle.png) no-repeat center;
+}
