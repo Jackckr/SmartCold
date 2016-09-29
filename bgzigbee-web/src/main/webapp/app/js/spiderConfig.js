@@ -1,5 +1,4 @@
 coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload, coldWebUrl) {
-
 	$http.get("/i/spiderConfig/getSetTables").success(function(data,status,config,headers){
 		$scope.storageTypes = data;
 		$scope.devices = [];
@@ -259,6 +258,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         });
 		//获得冷库管理人员
 		$http.get("/i/rdc/findrdcMaagerConfig?rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+			if(resp.data.length==0){resp.data[0]={aTelephone:""}};
 			$scope.mg = resp.data[0];
 			$scope.oldmg = resp.data[0];
 		});
@@ -613,15 +613,18 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	};
 	$scope.checkalltp=function(){//验证手机号码
 		var isllok=true;
-		var atphone=$scope.mg.aTelephone;
-		var newth= atphone.split(";");
-		if(newth&&newth!=""&&newth.length>0){
-			$.each(newth, function(index, item) {
-			var isok=	$scope.vertelephone(item);
-			if(!isok){isllok=false;return isllok;}});return isllok;}isllok=false;return isllok;
+		var atphone=$("#maintaincform input[name=aTelephone]").val();
+		if(atphone!=""){
+			var newth= atphone.split(";");
+			$.each(newth, function(index, item) {if(!$scope.vertelephone(item)){isllok=false;}});
+			return isllok;
+		}else{
+			return isllok;
+		}
 	};
 	$scope.savemg = function(){//保存rdcmanger配置
-		if($scope.checkalltp()){
+		var ckisok=$scope.checkalltp();
+		if(ckisok){
 			$("#maintaincform input[name=aTelephone]").parent().removeClass("has-error");
 			 $.ajax({ url: '/i/rdc/adupRdcMangConfig',type: 'POST',data :$("#maintaincform").serialize(), success: function(data){
 				 alert(data.message);
