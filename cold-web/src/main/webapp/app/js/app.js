@@ -70,6 +70,15 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 				return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
 			}
 		},
+		formatTimeToMinute: function(timeString){
+			return this.formatTime(timeString).substring(0,16)
+		},
+		formatTimeToHour: function(timeString){
+			return this.formatTime(timeString).substring(0,13)
+		},
+		formatTimeToDay: function(timeString){
+			return this.formatTime(timeString).substring(0,10)
+		},
 		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type,yMin,yMax){
 			angular.forEach(yData,function(item,index){
 				yData[index] = yData[index].toFixed(2);
@@ -93,7 +102,8 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 					            type : 'value',
 					            name : yName + "(" + yUnit + ")",
 					            min : yMin ? yMin : 'auto',
-					            max : yMax ? yMax : 'auto'
+					            max : yMax ? yMax : 'auto',
+					            minInterval : 1
 					        }
 					    ],
 				    series : [

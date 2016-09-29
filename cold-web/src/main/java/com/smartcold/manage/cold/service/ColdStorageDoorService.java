@@ -3,7 +3,6 @@ package com.smartcold.manage.cold.service;
 import java.util.Date;
 import java.util.List;
 
-import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 
@@ -16,5 +15,5 @@ public interface ColdStorageDoorService {
 	List<ColdStorageDoorEntity> findOpenTimeByStorageId(int storageID, Date startTime, Date endTime);
 
 	List<ColdStorageDoorEntity> findOpenTimesByStorageId(int storageID, Date startTime, Date endTime);
-	
+
 }

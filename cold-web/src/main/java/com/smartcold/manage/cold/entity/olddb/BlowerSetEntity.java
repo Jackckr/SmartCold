@@ -1,7 +1,5 @@
 package com.smartcold.manage.cold.entity.olddb;
 
-import java.util.Date;
-
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-03-19 11:53)
  */

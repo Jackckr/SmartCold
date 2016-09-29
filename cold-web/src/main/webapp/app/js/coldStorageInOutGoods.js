@@ -24,7 +24,7 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
         		freshOut.push(item.freshOutputQuantity);
         		frozenTemp.push(item.frozenInputTemperature);
         		freshTemp.push(item.freshInputTemperature);
-        		time.push(baseTools.formatTime(item.collectionTime));
+        		time.push(baseTools.formatTimeToDay(item.collectionTime));
         	})
         	barOption = {
                 tooltip : {

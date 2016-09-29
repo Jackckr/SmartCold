@@ -49,6 +49,7 @@ public class GoodsServiceTest {
 	@Rollback(true)
 	public void compressorGroup_test() {
 		List<CompressorGroupSetEntity> list = compressorGroupService.findByUserId(5);
+		System.out.println(list);
 	}
 
 	@Test

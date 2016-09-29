@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
-import com.smartcold.manage.cold.dao.newdb.WarningsSetMapper;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -24,10 +23,7 @@ public class WarningController extends BaseController {
 
 	@Autowired
 	private WarningsInfoMapper warningsInfoDao;
-	
-	@Autowired
-	private WarningsSetMapper warningsSetDao;
-	
+
 	@RequestMapping(value = "/findAllWarningsInfoByRdcId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllWarningsInfo(int rdcId) {
@@ -41,20 +37,21 @@ public class WarningController extends BaseController {
 	public Object findLastNWarningsInfoByRdcId(int rdcId, int point) {
 		List<WarningsInfo> warningsInfoList = warningsInfoDao.findLastNWarningInfo(rdcId, point);
 		List allInfoList = new ArrayList();
-		for(WarningsInfo warningInfo : warningsInfoList){
-//			String warningName = warningsSetDao.findWarningSetById(warningInfo.getObjId()).getName();
-//			String warningName = warningsSetDao.findWarningSetById(1).getName();
+		for (WarningsInfo warningInfo : warningsInfoList) {
+			// String warningName =
+			// warningsSetDao.findWarningSetById(warningInfo.getObjId()).getName();
+			// String warningName =
+			// warningsSetDao.findWarningSetById(1).getName();
 			Map map = new HashMap();
 			map.put("addtime", warningInfo.getAddtime());
-//			map.put("warningName", warningName);
+			// map.put("warningName", warningName);
 			map.put("level", warningInfo.getLevel());
 			map.put("id", warningInfo.getId());
 			allInfoList.add(map);
-			}
+		}
 		return allInfoList;
 	}
-	
-	
+
 	/**
 	 * @param rdcId:冷库ID
 	 * @return
@@ -64,20 +61,24 @@ public class WarningController extends BaseController {
 	public ResponseData<HashMap<String, Object>> getWarncoldAnalysis(Integer rdcId) {
 		try {
 			System.out.println(TimeUtil.getDateTime());
-			if(rdcId==null){return ResponseData.newFailure("非法访问！");}
-			HashMap<String,Object> allDataMap=new HashMap<String, Object>();
-			HashMap<String,Object> resMap=new HashMap<String, Object>();
-			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);//查询上个月的
-			if(SetUtil.isnotNullList(wrnType)&&wrnType.size()>0){
+			if (rdcId == null) {
+				return ResponseData.newFailure("非法访问！");
+			}
+			HashMap<String, Object> allDataMap = new HashMap<String, Object>();
+			HashMap<String, Object> resMap = new HashMap<String, Object>();
+			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);// 查询上个月的
+			if (SetUtil.isnotNullList(wrnType) && wrnType.size() > 0) {
 				for (WarningsInfo warningsInfo : wrnType) {
-					resMap.put(warningsInfo.getWarningname(), this.warningsInfoDao.getWarCountByType(rdcId, 1, 30, warningsInfo.getWarningname()));
+					resMap.put(warningsInfo.getWarningname(),
+							this.warningsInfoDao.getWarCountByType(rdcId, 1, 30, warningsInfo.getWarningname()));
 				}
 			}
-			HashMap<String,Object> rescuMap=new HashMap<String, Object>();
-			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);//查询当前月份的
-			if(SetUtil.isnotNullList(wrncuType)&&wrncuType.size()>0){
+			HashMap<String, Object> rescuMap = new HashMap<String, Object>();
+			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);// 查询当前月份的
+			if (SetUtil.isnotNullList(wrncuType) && wrncuType.size() > 0) {
 				for (WarningsInfo warningsInfo : wrncuType) {
-					rescuMap.put(warningsInfo.getWarningname(), this.warningsInfoDao.getWarCountByType(rdcId, 0, 30, warningsInfo.getWarningname()));
+					rescuMap.put(warningsInfo.getWarningname(),
+							this.warningsInfoDao.getWarCountByType(rdcId, 0, 30, warningsInfo.getWarningname()));
 				}
 			}
 			allDataMap.put("cuttdata", rescuMap);
@@ -87,12 +88,7 @@ public class WarningController extends BaseController {
 			e.printStackTrace();
 			return ResponseData.newFailure("查询错误！请稍后重试！");
 		}
-		
-	}
-	
-  
-	
 
-	
-	
+	}
+
 }

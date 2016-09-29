@@ -62,7 +62,7 @@ public class CompressorGroupController {
 				"lowPress", nums);
 		List<StorageKeyValue> highPress = storageService.findByNums(StorageType.COMPRESSORGROUP, compressorID,
 				"highPress", nums);
-		Map result = new HashMap<String, List<StorageKeyValue>>(2);
+		Map<String, List<StorageKeyValue>> result = new HashMap<String, List<StorageKeyValue>>(2);
 		result.put("lowPress", lowPress);
 		result.put("highPress", highPress);
 		return result;

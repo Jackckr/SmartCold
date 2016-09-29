@@ -1,7 +1,12 @@
 package com.smartcold.manage.cold.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.smartcold.manage.cold.dao.olddb.EvaporativeBlowerSetMapping;
-import com.smartcold.manage.cold.dao.olddb.EvaporativeSetMapping;
 import com.smartcold.manage.cold.dao.olddb.EvaporativeWaterSetMapping;
 import com.smartcold.manage.cold.dto.EvaporativeBlowerDto;
 import com.smartcold.manage.cold.dto.EvaporativeDto;
@@ -12,11 +17,6 @@ import com.smartcold.manage.cold.entity.olddb.EvaporativeWaterSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.EvaporativeSetService;
 import com.smartcold.manage.cold.service.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class EvaporativeSetServiceImpl implements EvaporativeSetService {
@@ -30,14 +30,10 @@ public class EvaporativeSetServiceImpl implements EvaporativeSetService {
 	@Autowired
 	private EvaporativeWaterSetMapping evaWaterDao;
 
-	@Autowired
-	private EvaporativeSetMapping evaDao;
-
 	@Override
 	public EvaporativeDto getInfoByGroupId(int groupid) {
 		EvaporativeDto result = new EvaporativeDto();
 		ArrayList<EvaporativeBlowerDto> blowers = new ArrayList<EvaporativeBlowerDto>();
-
 
 		List<EvaporativeBlowerSetEntity> evaBlowers = evaBlowerDao.findByGroupid(groupid);
 

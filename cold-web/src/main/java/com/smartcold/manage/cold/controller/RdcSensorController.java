@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.newdb.CompanyRdcMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.FileDataMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcSensorMapper;
@@ -34,9 +33,6 @@ public class RdcSensorController {
 
 	@Autowired
 	ColdStorageSetMapper coldSttorageSetDao;
-
-	@Autowired
-	private CompanyRdcMapper compRdcDao;
 
 	@Autowired
 	private FileDataMapper fileDataDao;
@@ -92,8 +88,8 @@ public class RdcSensorController {
 			Map map = new HashMap();
 			map.put("storageID", sensor.getOid());
 			map.put("temperature", infos.size() > 0 ? Math.round(infos.get(0).getValue() * 10 / 10) : 0);
-			map.put("div_x", sensor.getSx()==null?"":sensor.getSx());
-			map.put("div_y", sensor.getSy()==null?"":sensor.getSy());
+			map.put("div_x", sensor.getSx() == null ? "" : sensor.getSx());
+			map.put("div_y", sensor.getSy() == null ? "" : sensor.getSy());
 			allInfoList.add(map);
 		}
 		// for (ColdStorageSetEntity storageSet :

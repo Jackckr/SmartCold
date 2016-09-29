@@ -21,7 +21,7 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 			var xData = [];
 			var yData = [];
 			angular.forEach($scope.powerData,function(item){
-				xData.unshift(baseTools.formatTime(item.addtime))
+				xData.unshift(baseTools.formatTimeToMinute(item.addtime))
 				yData.unshift(item.value * powerSet.radio)
 			})
 			var currentPower = '';
