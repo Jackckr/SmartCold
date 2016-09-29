@@ -25,7 +25,8 @@
 			`energyCost` = #{energyCost},
 	    	`longitude`=#{longitude},
 	   	 	`latitude`=#{latitude},
-	    	`location`= #{location}
+	    	`location`= #{location},
+	    	`tempdiff`= #{tempdiff}
 		WHERE id=#{id}
 	</update>
 

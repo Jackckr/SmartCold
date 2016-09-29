@@ -20,11 +20,32 @@
 						  <span><span class="form-control sl_group_obj" ng-click='slgroupsl()'>{{sltit}}</span><i class="sl_drop" ng-click='slgroupsl()'>▼</i></span>
 						  <div id="filter_div" class="pull-left sl_drop_data" ng-show="showobjgroup">
 						     <ul id="ul_key_list" class="ul_key_list">
-						       <li ng-repeat="(key,value) in  keylist" id="li_key_{{key}}" kval="{{key}}"  ng-click="showkeyli(key)">{{value}}</li>
+						       <li  kval="0"  ng-click="showkeyli($event)" class="select">冷库温度</li>
+						       <li  kval="1"  ng-click="showkeyli($event)">冷库电量</li>
+						       <li  kval="2"  ng-click="showkeyli($event)">冷　库　门</li>
+						       <li  kval="3"  ng-click="showkeyli($event)">月　台　门</li>
+						       <li  kval="4"  ng-click="showkeyli($event)" class="hide">压　缩　 机</li>
 						     </ul>
 						     <div id="val_list_div">
-						        <ul  ng-repeat="(key,value) in  keydata"  id="{{key}}_ul_val" sl_type="{{value[0].type}}" sl_unit="{{value[0].unit}}" sl_key="{{value[0].key}}" kval="{{key}}" class="hide">
-						         <li ng-repeat="obj in  value" value="{{obj.oid}}" oid="{{obj.oid}}" ng-click="selkeyvl($event)" class="select">{{obj.oidDesc}}</li>
+					            <ul id="Temp_ul_0" > <!-- 	初始化冷库 -->
+						          <li ng-repeat="obj in mystorages" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						        </ul>
+					            <ul id="Temp_ul_1"   class="hide"><!--  初始化电量 -->
+						          <li ng-repeat="obj in powers"     oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						        </ul>
+					            <ul id="Temp_ul_2"   class="hide"><!--  冷库门 -->
+						          <li ng-repeat="obj in coldstoragedoor"     oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{prove[obj.coldStorageId]+"-"+obj.name}}</li>
+						        </ul>
+						        <ul id="Temp_ul_3"   class="hide"> <!-- 初始化月台门 -->
+						          <li ng-repeat="obj in platformDoors" oid="{{obj.id}}"  ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						       </ul>
+						        <ul id="Temp_ul_4"   class="hide"> <!-- 初始化压缩机组-->
+							        <ul id="Temp_ul_5"   > <!-- 初始化压缩机组-->
+							          <li class="select">高压</li>
+							          <li class="select">低压</li>
+							          <li class="select">排气温度</li>
+							       </ul>
+						          <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
 						       </ul>
 						     </div>
 						  </div>

@@ -6,7 +6,7 @@ coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools,$ti
 					$scope.waterCosts = data;
 					var currentWaterCost = '';
 	                if (data.length > 0) {
-	                    currentWaterCost = data[data.length - 1] ? parseFloat(data[data.length - 1].waterCost).toFixed(1) : '';
+	                    currentWaterCost = data[data.length - 1] ? parseFloat(data[data.length - 1].waterCost).toFixed(2) : '';
 	                };
 	                $scope.currentWaterCost = currentWaterCost;
 					var xData = [];

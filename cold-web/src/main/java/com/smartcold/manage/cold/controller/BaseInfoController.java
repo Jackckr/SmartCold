@@ -159,7 +159,7 @@ public class BaseInfoController extends BaseController {
 	 */
 	@RequestMapping("/getKeyValueDataByFilter")
 	@ResponseBody
-	public ResponseData<HashMap<String, Object>> getKeyValueDataByFilter(Integer type,String key,Integer[] oids,String[] onames, String startTime,String endTime){
+	public ResponseData<HashMap<String, Object>> getKeyValueDataByFilter(Integer type,Boolean ismklin, String key,Integer[] oids,String[] onames, String startTime,String endTime){
 		try {
 			System.err.println(type+"/"+key+"/"+oids+"/"+onames+"/"+startTime+"/"+endTime);
 			if(key!=null&&key!=""&&oids!=null&&oids.length>0){
@@ -175,6 +175,7 @@ public class BaseInfoController extends BaseController {
 			        int maxsize=0,index=-1;
 			        HashMap<String, Object> temp=new LinkedHashMap<String, Object>();
 			    	List<Object> maklist=new ArrayList<Object>();
+			    	
 			    	HashMap<String, Object> dttemp=new LinkedHashMap<String, Object>();
 			    	temp.put("type", "average");
 			    	temp.put("name", "平均值");
@@ -188,6 +189,7 @@ public class BaseInfoController extends BaseController {
 			    	mttemp.put("name", "最大值");
 			    	mtklist.add(mttemp);
 			    	rttemp.put("data", mtklist);
+			    	
 			        for (int i = 0; i < oids.length; i++) {
 			        	HashMap<String, Object> linmap=new HashMap<String, Object>();
 			             int oid=	oids[i];String oname=onames[i];		        
@@ -196,8 +198,10 @@ public class BaseInfoController extends BaseController {
 			        	 linmap.put("type", "line");
 			        	 linmap.put("data", datalist);
 			        	 linmap.put("name", oname);
-			        	 linmap.put("markLine",dttemp);
-			        	 linmap.put("markPoint",rttemp);
+			        	 if(ismklin!=null&&ismklin){
+			        		 linmap.put("markLine",dttemp);
+			        	     linmap.put("markPoint",rttemp);
+			        	 }
 			        	 xtemp.add(datalist);
 			        	 restList.add(linmap);
 					}

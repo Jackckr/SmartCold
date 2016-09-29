@@ -255,7 +255,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     enabled: false
                 },
                 tooltip: {
-                    pointFormat: 'Level is: <b>{point.y:.1f} mL</b>',
+                    pointFormat: 'Level is: <b>{point.y:.1f} mm</b>',
                 },
                 credits: {
                     enabled: false // 禁用版权信息

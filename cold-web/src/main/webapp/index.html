@@ -7,6 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
 <title>SmartCold</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
@@ -65,6 +66,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+		}
+		.tooltip-inner{
+			text-align: left;
+			color:#fff;
+			background:rgba(0,0,0,.8);
 		}
     </style>
   </head>
@@ -270,9 +276,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             ng-change="initAllByRdcId(vm.choserdc.id)"></select>
           </div>
           <ul class="sidebar-menu text-white">
-          <li ng-if="user.role == 3 || user.role == 1">
-             <a class="text-white omg" style="font-family: cursive;" title="{{vm.choserdc.name}}" ng-bind="vm.choserdc.name"></a>
-          </li>
+	          <li ng-if="user.role == 3 || user.role == 1">
+	             <a class="text-white omg" style="font-family: cursive;" title="{{vm.choserdc.name}}" ng-bind="vm.choserdc.name"></a>
+	          </li>
             <li class="treeview">
             <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
             <span class="menu-title text-white" style="font-size: large">监控</span></a>
@@ -358,8 +364,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
             </ul>
             </li>
-            </ul>
-            <ul class="sidebar-menu text-white">
             <li class="treeview">
               <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe682;</i>
               <span class="menu-title text-white" style="font-size: large">分析及报告</span></a>
@@ -381,8 +385,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li><a href="#/report-daily-"><i class="fa fa-circle-o"></i>分析报告</a></li>
               </ul>
             </li>
-            </ul>
-            <ul class="sidebar-menu text-white">
 	            <li class="treeview">
 	              <a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe6bb;</i>
 	              <span class="menu-title text-white" style="font-size: large">报警</span></a>
@@ -392,19 +394,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	               
 	              </ul>
 	            </li>
-            </ul>
-            <ul class="sidebar-menu text-white">
 	            <li class="treeview">
 	              <a href="#/about"><i class="icon iconfont" style="color:#ffffff">&#xe6bb;</i>
 	              <span class="menu-title text-white" style="font-size: large">维护管理</span></a>
 	              <ul class="treeview-menu">
-	               <li><a href="#/about"><i class="fa fa-circle-o"></i>定期保养维护提醒</a></li>
+	               <li><a href="#/baoyangReminder"><i class="fa fa-circle-o"></i>定期保养维护提醒</a></li>
 	               <li><a href="#/about"><i class="fa fa-circle-o"></i>故障维修记录</a></li>
-	               <li><a href="#/about"><i class="fa fa-circle-o"></i>维修服务评价</a></li>
+	               <!-- <li><a href="#/about"><i class="fa fa-circle-o"></i>维修服务评价</a></li> -->
 	              </ul>
 	            </li>
-            </ul>
-            <ul class="sidebar-menu text-white">
             <li class="treeview"><a href="#designStorage"><i class="icon iconfont" style="color:#ffffff">&#xe6ba;</i>
             <span class="menu-title text-white" style="font-size: large">选型</span></a></li>
             </ul>

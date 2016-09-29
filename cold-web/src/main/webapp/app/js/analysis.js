@@ -58,7 +58,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 						yData2.unshift(storage['MaxTemp'][index]['value'])
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 					})
-					Option = {
+					option = {
 	                tooltip : {
 	                    trigger: 'axis'
 	                },
@@ -257,22 +257,87 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
             	"startTime": baseTools.formatTime(startTime),
             	"endTime": baseTools.formatTime(endTime),
                 "rdcid": $scope.rdcId,
-                'keys':'DoorTotalTime'
+                'keys':'DoorTotalTime,DoorOpenTimes'
             } 
 		}).success(function(data,status,config,header){
 			$scope.data = data;
 			angular.forEach(data,function(storage,key){
 				$timeout(function(){					
 					xData = []
-					yData = []
+					yData1 = []
+					yData2 = []
+					yData3 = []
 					var chartId = "#" + key + "Chart"
-					var chart = echarts.init($(chartId).get(0));
-					angular.forEach(storage['DoorTotalTime'],function(item){
+					var chart1 = echarts.init($(chartId + "1").get(0));
+					var chart2 = echarts.init($(chartId + "2").get(0));
+					angular.forEach(storage['DoorTotalTime'],function(item,index){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
-						yData.unshift(item['value'] / 60)
+						yData1.unshift((item['value'] / 60).toFixed(2))
+						yData2.unshift(storage['DoorOpenTimes'][index].value)
+						yData3.unshift(
+								storage['DoorOpenTimes'][index].value == 0
+								? 0 : 
+									item['value'] / storage['DoorOpenTimes'][index].value / 60
+									)
 					})
-					chart.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData, "时间", "m", "开门时间", "bar",0,1500));
+					option = {
+		                tooltip : {
+		                    trigger: 'axis'
+		                },
+		                toolbox: {
+		                    show : false,
+		                    feature : {
+		                        mark : {show: true},
+		                        dataView : {show: true, readOnly: false},
+		                        magicType: {show: true, type: ['line', 'bar']},
+		                        restore : {show: true},
+		                        saveAsImage : {show: true}
+		                    }
+		                },
+		                calculable : true,
+		                legend: {
+		                    data:['开门时长','开门次数']
+		                },
+		                xAxis : [
+		                    {
+		                        type : 'category',
+		                        data : xData
+		                    }
+		                ],
+		                yAxis : [
+		                    {
+		                        type : 'value',
+		                        name : '开门时长',
+		                        max : 1500,
+		                        axisLabel : {
+		                            formatter: '{value} m'
+		                        }
+		                    },
+		                    {
+		                        type : 'value',
+		                        name : '开门次数',
+		                        axisLabel : {
+		                            formatter: '{value}'
+		                        }
+		                    }
+		                ],
+		                series : [
+		                    {
+		                        name:'开门时长',
+		                        type:'bar',
+		                        data:yData1
+		                    },
+		                    {
+		                        name:'开门次数',
+		                        type:'line',
+		                        yAxisIndex: 1,
+		                        data:yData2
+		                    }
+		                ]
+		            };
+					chart1.setOption(Option)
+					chart2.setOption(baseTools.getEchartSingleOption("", 
+							xData, yData3, "平均开门时间", "m", "m", "bar"))
 				},0)
 			})
 		})

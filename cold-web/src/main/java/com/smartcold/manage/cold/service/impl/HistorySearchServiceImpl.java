@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.DirtiesContext;
 
 import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageKeysMapper;
@@ -91,14 +92,14 @@ public class HistorySearchServiceImpl implements HistorySearchService {
 	 * 历史数据查询
 	 * 
 	 */
+	@Deprecated
 	@Override
 	public LinkedHashMap<String, Object> getSearchItems(int rdcId, String types) {
 		SearchMeta searchMeta = null;
 		LinkedHashMap<String, Object> allresult = new LinkedHashMap<String, Object>();
 		LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>();
 		LinkedHashMap<String, Object> reskey = new LinkedHashMap<String, Object>();
-		List<StorageKeysEntity> storageKeys = this.storageKeysDao.findbyFilter("1,2",
-				" 'Temp','powerConsume','Switch' ");
+		List<StorageKeysEntity> storageKeys = this.storageKeysDao.findbyFilter("1,2"," 'Temp','powerConsume','Switch' ");
 		for (StorageKeysEntity storageKey : storageKeys) {
 			StorageType stype = StorageType.getStorageType(storageKey.getType());
 			switch (stype) {

@@ -23,6 +23,8 @@ public class BlowerEntity {
     private int isRunning;
 
     private int isDefrosting;
+    
+    private int coldStorageId	;
 
     public int getId() {
         return id;
@@ -88,4 +90,14 @@ public class BlowerEntity {
     public void setIsDefrosting(int isDefrosting) {
         this.isDefrosting = isDefrosting;
     }
+
+	public int getColdStorageId() {
+		return coldStorageId;
+	}
+
+	public void setColdStorageId(int coldStorageId) {
+		this.coldStorageId = coldStorageId;
+	}
+    
+    
 }

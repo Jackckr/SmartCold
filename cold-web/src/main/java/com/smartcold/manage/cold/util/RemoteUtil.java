@@ -22,7 +22,7 @@ public class RemoteUtil {
 	     * 发送Http协议 通过post传参数到接口并返回数据 
 	     *  
 	     */  
-	    public static String httpPost(String urlStr,Map<String,String> params){  
+	    public static String httpPost(String urlStr,Map<String,Object> params){  
 	         URL connect;  
 	         StringBuffer data = new StringBuffer();    
 	        try {    
@@ -36,8 +36,7 @@ public class RemoteUtil {
 	            connection.setRequestProperty("accept", "*/*");  
 	            connection.setRequestProperty("connection", "Keep-Alive");  
 	            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");  
-	            OutputStreamWriter paramout = new OutputStreamWriter(    
-	                    connection.getOutputStream(),"UTF-8");   
+	            OutputStreamWriter paramout = new OutputStreamWriter( connection.getOutputStream(),"UTF-8");   
 	            String paramsStr = "";   //拼接Post 请求的参数  
 	           for(String param : params.keySet()){  
 	               paramsStr += "&" + param + "=" + params.get(param);  
@@ -47,17 +46,12 @@ public class RemoteUtil {
 	           }  
 	            paramout.write(paramsStr);    
 	            paramout.flush();    
-	            BufferedReader reader = new BufferedReader(new InputStreamReader(    
-	                    connection.getInputStream(), "UTF-8"));    
+	            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));    
 	            String line;                
-	            while ((line = reader.readLine()) != null) {            
-	                data.append(line);              
-	            }    
-	            
+	            while ((line = reader.readLine()) != null) {   data.append(line);   }    
 	            paramout.close();    
 	            reader.close();    
 	        } catch (Exception e) {    
-	            // TODO Auto-generated catch block    
 	            e.printStackTrace();    
 	        }    
 	       return data.toString();  
