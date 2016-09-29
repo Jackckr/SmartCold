@@ -59,7 +59,11 @@
             	    content: '修改失败咯，请稍后重试吧~'
             	    ,btn: '确定'
             	  });
-            } }
+            }
+            else{
+            	window.localStorage.lkuser=JSON.stringify(data);
+            }
+            }
           });
 	};
 	$scope.initdata();

@@ -48,6 +48,7 @@
 		            data: formdata,processData: false, contentType: false,
 		            success: function(data){
 		                 if(!data){/* alert("修改失败哟~请稍后重试~"); */layer.open({content: '修改失败哟~请稍后重试~',btn: '确定'});}else{
+		                 window.localStorage.lkuser=JSON.stringify(data);
 		                   window.location.href="personal.html";
 		                 }}
 		          });

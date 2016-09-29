@@ -72,11 +72,11 @@
      </div>
     <!--coldlist-->
     <div class="coldlist" style="margin-bottom: 3rem;">
-      <!--    <div ng-show="rdcsList.length<=0">
-			<p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需关联冷库发布请先添加冷库！</p>
+      <div class="nodata" style="background:#F6F5FA;">
+			<p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
 			<p class="sorry">
-				<button class="mybtn" ng-click="goaddrdcpag();">添加冷库信息</button>
-		</div> -->
+				<button class="mybtn" onclick="location.href='releasekutable.html'">添加冷库信息</button>
+		</div>
        <div>
 			<ul id="ul_rdcsL_list" class="imgTable"></ul>
 			<a id="loading" href="javascript:;" onclick="getPageData();"></a>
