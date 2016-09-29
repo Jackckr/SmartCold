@@ -80,9 +80,13 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 			return this.formatTime(timeString).substring(0,10)
 		},
 		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type,yMin,yMax){
+			min = max = yData.length > 0?yData[0]:0
 			angular.forEach(yData,function(item,index){
 				yData[index] = yData[index].toFixed(2);
+				min = Math.min(min,yData[index])
+                max = Math.max(max,yData[index])
 			})
+			yMin = max - min < 1 && type == 'line' ?min - 10:yMin
 			option = {
 				    tooltip : {
 				        trigger: 'axis'
