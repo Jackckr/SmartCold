@@ -172,7 +172,14 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                 return [];
         }
     }
-	
+    $scope.getmginf=function(){
+		//获得冷库管理人员
+		$http.get("/i/rdc/findrdcMaagerConfig?rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+			if(resp.data.length==0){resp.data[0]={aTelephone:""}};
+			$scope.mg = resp.data[0];
+			$scope.oldmg = resp.data[0];
+		});
+	}
 	$scope.changeRdc = function(){
 		$scope.vm.choseRdc = $scope.vm.choseRdcs?$scope.vm.choseRdcs[0]:$scope.vm.choseRdc;
 		$scope.vm.choseRdc.mapping = typeof($scope.vm.choseRdc.mapping) == "string"?
@@ -256,13 +263,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             $scope.circulatingPumpSets = resp.data;
             $scope.mapping2Object($scope.circulatingPumpSets);
         });
-		//获得冷库管理人员
-		$http.get("/i/rdc/findrdcMaagerConfig?rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
-			if(resp.data.length==0){resp.data[0]={aTelephone:""}};
-			$scope.mg = resp.data[0];
-			$scope.oldmg = resp.data[0];
-		});
 		
+		$scope.getmginf();
         $scope.tag.type = {};
         $scope.tagTypeChanged();
     }
@@ -622,14 +624,19 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			return isllok;
 		}
 	};
+	var issavemg=false;
 	$scope.savemg = function(){//保存rdcmanger配置
+		if(issavemg){return;}issavemg=true;
 		var ckisok=$scope.checkalltp();
 		if(ckisok){
 			$("#maintaincform input[name=aTelephone]").parent().removeClass("has-error");
 			 $.ajax({ url: '/i/rdc/adupRdcMangConfig',type: 'POST',data :$("#maintaincform").serialize(), success: function(data){
+				 $scope.getmginf();
 				 alert(data.message);
+				 issavemg=false;
 			 }});
 		}else{
+			 issavemg=false;
 			$("#maintaincform input[name=aTelephone]").parent().addClass("has-error");
 		}
 	}
