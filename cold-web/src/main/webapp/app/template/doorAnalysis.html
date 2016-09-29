@@ -11,15 +11,21 @@
                 <!-- Storage CHART -->
                 <div class="box bg-gray">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;30日冷库门累积开启时间</h3>
-                        <div class="box-tools pull-right">
-			                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			             </div>
+                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;近30日冷库日累积开门总时长及日累积开门次数</h3>
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <div id="{{key}}Chart" style="height:300px;"></div>
+                            <div id="{{key}}Chart1" style="height:300px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;近30日冷库日平均开门时长</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <div id="{{key}}Chart2" style="height:300px;"></div>
                         </div>
                     </div>
                 </div><!-- 2 -->
