@@ -4,8 +4,13 @@ coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools,$ti
 		$http.get("/i/compressorGroup/getAllWaterCostByRdcId?rdcId=" + $rootScope.rdcId).success(
 				function(data,status,headers,config){
 					$scope.waterCosts = data;
-					var xData = []
-					var yData = []
+					var currentWaterCost = '';
+	                if (data.length > 0) {
+	                    currentWaterCost = data[data.length - 1] ? parseFloat(data[data.length - 1].waterCost).toFixed(1) : '';
+	                };
+	                $scope.currentWaterCost = currentWaterCost;
+					var xData = [];
+					var yData = [];
 					angular.forEach($scope.waterCosts,function(item){
 						xData.push(item.compressorGroupName);
 						yData.push(item.waterCost);

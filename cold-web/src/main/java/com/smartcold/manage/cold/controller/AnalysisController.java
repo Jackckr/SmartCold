@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -142,20 +144,23 @@ public class AnalysisController {
 	 */
 	@RequestMapping(value = "/getCasesTotalSISAnalysis")
 	@ResponseBody
-	public ResponseData<HashMap<String, Object>> getCasesTotalSISAnalysis(HttpServletRequest request,HttpServletResponse response,Boolean isexpt,int index,Integer type,String confdata, String key, String startTime,String endTime) {
+	public ResponseData<HashMap<String, Object>> getCasesTotalSISAnalysis(HttpServletRequest request,HttpServletResponse response,Boolean isexpt,int index,Integer type,String confdata, String key, @RequestParam(value="unit[]",required=false) Integer[] unit, String startTime,String endTime) {
 		try {
 			if(StringUtil.isNull(confdata)||StringUtil.isNull(key)){return ResponseData.newFailure("非法请求！");}
+			boolean isunit=false;
 			String [] keys={};String [] keyts={};String [] titls={};
 			HashMap<Integer, Integer> oidsymap=new HashMap<Integer, Integer>();
 			HashMap<String, Integer> keymap=new HashMap<String, Integer>();
 			LinkedHashMap<String, Object[]> tempData=new LinkedHashMap<String, Object[]>();
+			System.err.println(unit);
 			if(index==1){
 				keys=StringUtil.splitString(key);
 				if(keys.length!=2){return ResponseData.newFailure("非法请求！key参数不完整");}
-				 keyts=StringUtil.splitfhString(keys[0]);//主key
-				 titls=StringUtil.splitfhString(keys[1]);//key标题
+				keyts=StringUtil.splitfhString(keys[0]);//主key
+			    titls=StringUtil.splitfhString(keys[1]);//key标题
 				if(keyts.length!=titls.length){return ResponseData.newFailure("非法请求！key参数不完整");}
 				for (int i = 0; i < keyts.length; i++) {keymap.put(keyts[i].replace("'", ""), i);}
+				if(unit!=null&&unit.length==keyts.length){isunit=true;}
 			 }
 			List<PowerSetEntity> powerList  = JSON.parseArray(confdata, PowerSetEntity.class);
 			if(SetUtil.isNullList(powerList)){return ResponseData.newFailure("非法请求！");}
@@ -177,16 +182,21 @@ public class AnalysisController {
 			HashMap<String, Object> restMap=new HashMap<String, Object>();
 			if(SetUtil.isnotNullList(datalist)){
 				Object[] objects ={};
-				for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : datalist) {
-					String data=TimeUtil.getFormatDate( coldStorageAnalysisEntity.getDate());
-					int oidindex= oidsymap.get(coldStorageAnalysisEntity.getOid());
-					int keyindex=index==0?0:keymap.get(coldStorageAnalysisEntity.getKey());
+				DecimalFormat    dfformat   = new DecimalFormat("######0.00");   
+				for (ColdStorageAnalysisEntity coldsis : datalist) {//2
+					String data=TimeUtil.getFormatDate( coldsis.getDate());
+					int oidindex= oidsymap.get(coldsis.getOid());
+					int keyindex=index==0?0:keymap.get(coldsis.getKey());
 					if(tempData.containsKey(data)){
-						 objects = tempData.get(data);
-					}else{
-						 objects =new Object[index==0? oids.length:  oids.length*keyts.length];
-					}
-					objects[index==0? oidindex:  oidindex*keyts.length+keyindex]=coldStorageAnalysisEntity.getValue();//计算偏移量
+						objects = tempData.get(data);
+						}else{
+							objects =new Object[index==0? oids.length:  oids.length*keyts.length];
+						}
+					double value = coldsis.getValue();//计算偏移量
+					if(isunit){
+						value=Double.parseDouble(dfformat.format(value/unit[keyindex]));
+					}//单位转换
+					objects[index==0? oidindex:  oidindex*keyts.length+keyindex]=value;
 					tempData.put(data, objects);
 				}
 				restMap.put("tbdata", tempData);

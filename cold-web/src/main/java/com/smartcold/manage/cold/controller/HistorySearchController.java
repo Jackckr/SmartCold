@@ -20,6 +20,7 @@ public class HistorySearchController {
 		return historySearchService.getSearchItems(rdcId);
 	}
 	
+	@Deprecated
 	@RequestMapping("/findStorageKeysByFilter")
 	public Object findStorageKeysByFilter(int rdcId,String types){
 		return historySearchService.getSearchItems(rdcId,types);

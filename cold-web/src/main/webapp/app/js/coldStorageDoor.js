@@ -8,10 +8,10 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
         $http.get('/i/coldStorageDoor/findByStorageId?storageID=' + $stateParams.storageID).success(
         		function(data,status,config,header){
         			if(data.length > 0){
-        				$scope.drawDoor(data[0].id)
+        				$scope.drawDoor(data[0].id);
         			}
-        		})
-    }
+        		});
+    };
     
     $scope.drawDoor = function(doorid){
     	$http.get('/i/baseInfo/getKeyValueData', {
