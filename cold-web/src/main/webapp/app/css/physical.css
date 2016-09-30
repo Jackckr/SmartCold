@@ -1,4 +1,7 @@
 /*cold360Physical.html css*/
+.black{
+	display: none;
+}
 .cold_bg{
 	width:100%;
 	height:100%;
@@ -9,9 +12,6 @@
 	padding-top:120px;
 	box-sizing:border-box;
 }
-.cold_bg h1{
-	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif;
-}
 .cold_bg:before{
 	content: "";
 	position: absolute;
@@ -19,7 +19,7 @@
 	left: 0;
 	width: 177px;
 	height: 68px;
-	background-image: url(assets/img/leftTop.png);
+	background-image: url(../../assets/img/leftTop.png);
 }
 .radius_bg{
 	margin:0 auto;
@@ -30,6 +30,13 @@
 	box-shadow:0 2px 4px #484747;
 	line-height: 80px;
 	margin-top:12%;
+}
+.cold_bg h1,
+.radius_bg a,
+.sys_group,
+.sys_group .box-title
+{
+	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif!important;
 }
 .radius_bg a i{
 	position:absolute;
@@ -49,7 +56,6 @@
 	height:100%;
 	font-size: 28px;
 	color:#227ed2;
-	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif;
 }
 /*cold360PhysicalDetail.html css*/
 .sys_group{
@@ -63,6 +69,9 @@
 	margin-top: 30px;
 	border-radius:6px;
 }
+.noDevice .btn{
+	padding: 6px 45px;
+}
 .sys_group .box{
 	width:30%;
 	display:inline-block;
@@ -73,16 +82,15 @@
 .sys_group .box-title{
 	color:#000;
 }
-.haveDevice .circle{
+.circle{
 	width: 200px;
 	height: 200px;
 	border-radius: 50%;
 	line-height:200px;
-	background-color: #F0F;
 	margin: 0 auto;
-	font-size: 80px;
+	font-size: 70px;
 }
-.haveDevice .circle b{
+.haveDevice .circle span{
 	font-size: 14px;
 }
 .bgBlue{
@@ -105,10 +113,25 @@
 }
 .haveDevice .circle.fontBlue{
 	background: url(../../assets/img/blue_circle.png) no-repeat center;
+	background-size:cover;
 }
 .haveDevice .circle.fontGold{
-	background: url(../../assets/img/yellow_circle.png) no-repeat center;
+	background: url(../../assets/img/gold_circle.png) no-repeat center;
+	background-size:cover;
 }
 .haveDevice .circle.fontGreen{
-	background: url(../../assets/img/green_circle.png) no-repeat center;
+	background: url(../../assets/img/green_plus.png) no-repeat center;
+	background-size:cover;
+}
+.noDevice .circle.bluePlus{
+	background: url(../../assets/img/blue_plus.png) no-repeat center;
+	background-size:cover;
+}
+.noDevice .circle.goldPlus{
+	background: url(../../assets/img/gold_plus.png) no-repeat center;
+	background-size:cover;
+}
+.noDevice .circle.greenPlus{
+	background: url(../../assets/img/green_plus.png) no-repeat center;
+	background-size:cover;
 }
