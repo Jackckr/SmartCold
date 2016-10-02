@@ -63,14 +63,14 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
     }
 
     //TODO 替换为分析的跳转
-    $scope.goTempture = function () {
-        window.location.href = 'cold360.html?storageID=' + $scope.rdcId;
+    $scope.goDoor = function () {
+        window.location.href = 'analysisDoor.html?storageID=' + $scope.rdcId;
     }
-    $scope.goElectric = function () {
-        window.location.href = 'electric.html?storageID=' + $scope.rdcId;
+    $scope.goLight = function () {
+        //window.location.href = 'analusisLight.html?storageID=' + $scope.rdcId;
     }
-    $scope.goOtherMonitor = function () {
-        window.location.href = 'other.html?storageID=' + $scope.rdcId;
+    $scope.goOther = function () {
+        //window.location.href = 'analysiOther.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
