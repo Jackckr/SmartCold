@@ -323,9 +323,13 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 
     //index
     $stateProvider.state('cold360Physical',{
-    	url:'/cold360Physical',
-    	controller: 'base',
-        templateUrl: 'app/template/cold360Physical.html'
+		url:'/cold360Physical',
+		controller: 'base',
+	    templateUrl: 'app/template/cold360Physical.html'
+    }).state('cold360PhysicalList',{
+    	url:'/cold360PhysicalList',
+    	controller: 'cold360PhysicalList',
+        templateUrl: 'app/template/cold360PhysicalList.html'
     }).state('cold360PhysicalDetail',{
     	url:'/cold360PhysicalDetail',
     	controller: 'cold360PhysicalDetail',
