@@ -12,13 +12,12 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-    <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 	<script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
-    <script type="text/javascript" src="../app/js/analysisDoor.js" ></script>
+    <script type="text/javascript" src="../app/js/analysisOther.js" ></script>
 </head>
-<body ng-app="app" ng-controller="analysisDoor" ng-cloak>
+<body ng-app="app" ng-controller="analysisOther" ng-cloak>
     <!-- header -->
          <header class="one">
             <div class="area fl">
@@ -46,28 +45,28 @@
 	    </header>
     <!-- header end-->
     <section class="toggle">
-    	<div class="tempture other" id="temperature" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
+    	<div class="tempture other"  id="temperature" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
     		<span class="dropNext">
     			<b>温度</b><i class="iconfont">&#xe6f7;</i>
     		</span>
             <ul class="otherList black">
                 <li><a href="javascript:;">超温时长统计</a></li>
-                <li><a href="javascript:;">超温因子统计</a></li>
-                <li><a href="javascript:;">保温因子统计</a></li>
-                <li><a href="javascript:;">温度周期因子统计</a></li>
+                <li><a href="javascript:;" id="overTemperatureYZ" ng-click="overTemperatureYZTemper()">超温因子统计</a></li>
+                <li><a href="javascript:;" id="BWYZ" ng-click="BWYZTemper()">保温因子统计</a></li>
+                <li><a href="javascript:;" id="WDZQYZ" ng-click="WDZQYZTemper()">温度周期因子统计</a></li>
             </ul>
     	</div>
-    	<div class="light current"><i class="iconfont">&#xe76b;</i>门运行</div>
-    	<div class="door"  id="light" ng-click="goLight()"><i class="iconfont">&#xe76e;</i>日热量</div>
-    	<div class="other"  id="other" ng-click="goOther()"><i class="iconfont">&#xe69f;</i>
+    	<div class="light" id="door" ng-click="goDoor()"><i class="iconfont">&#xe76b;</i>门运行</div>
+    	<div class="door" id="light" ng-click="goLight()"><i class="iconfont">&#xe76e;</i>日热量</div>
+    	<div class="current other"><i class="iconfont">&#xe69f;</i>
     		<span class="dropNext">
     			<b>其它</b><i class="iconfont">&#xe6f7;</i>
     		</span>
     		<ul class="otherList black">
-    			<li><a href="javascript:;">制冷系统分析</a></li>
-                <li><a href="javascript:;">历史数据查询</a></li>
-    			<li><a href="javascript:;">报表功能</a></li>
-                <li><a href="javascript:;">分析报告</a></li>
+    			<li><a href="javascript:;" id="coolingAnalysis" ng-click="coolingAnalysisOther()">制冷系统分析</a></li>
+                <li><a href="javascript:;" id="historyData" ng-click="historyDataOther()">历史数据查询</a></li>
+    			<li><a href="javascript:;" id="report" ng-click="reportOther()">报表功能</a></li>
+                <li><a href="javascript:;" id="analysisReport" ng-click="analysisReportOther()">分析报告</a></li>
     		</ul>    		
     	</div>
     </section>

@@ -70,7 +70,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
         //window.location.href = 'analusisLight.html?storageID=' + $scope.rdcId;
     }
     $scope.goOther = function () {
-        //window.location.href = 'analysiOther.html?storageID=' + $scope.rdcId;
+        window.location.href = 'analysisOther.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;

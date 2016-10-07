@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $timeout) {
+app.controller('analysisOther', function ($scope, $location, $http, $rootScope, $timeout) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -36,7 +36,7 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
-                $scope.drawDoor();
+                $scope.drawCoolingAnalysis();
             }
         });
         $(".one").show();
@@ -66,121 +66,72 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
     $scope.goTemperature = function () {
         window.location.href = 'analysis.html?storageID=' + $scope.rdcId;
     }
+    $scope.goDoor = function () {
+        window.location.href = 'analysisDoor.html?storageID=' + $scope.rdcId;
+    }
     $scope.goLight = function () {
         //window.location.href = 'analusisLight.html?storageID=' + $scope.rdcId;
-    }
-    $scope.goOther = function () {
-        window.location.href = 'analysisOther.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
     $scope.defaltswiper = 0;
 
-    $scope.drawDoor = function () {
-        var endTime = new Date();
-        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
-        $http.get(ER.coldroot + '/i/coldStorage/findAnalysisByRdcidKeysDate', {
-            params: {
-                "startTime": formatTime(startTime),
-                "endTime": formatTime(endTime),
-                "rdcid": $scope.rdcId,
-                'keys': 'DoorTotalTime,DoorOpenTimes'
-            }
-        }).success(function (data) {
-            $scope.data = data;
-            angular.forEach(data, function (storage, key) {
-                xData = []
-                yData1 = []
-                yData2 = []
-                yData3 = []
+    $scope.drawCoolingAnalysis = function () {
+        $http.get(ER.coldroot + '/i/AnalysisController/getCoolingAnalysis', {params: {rdcId: $scope.rdcId}}).success(function (data) {
+            if (data.success) {
+                Highcharts.setOptions({colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']});
+                var mainId = 'coolingSys';
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">制冷系统运行效率趋势</p>' +
+                    '<div id=' + mainId + ' style="height:350px"></div> ';
+                $("#chartView").last().append(innerHTML);
 
-                var mainIdAll = 'doorAll' + key;
-                var mainIdAvg = 'doorAvg' + key;
-                if ($scope.swiper < $scope.mystorages.length) {
-                    var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">' + key + '</p>' +
-                        '<div id=' + mainIdAll + ' style="min-height:10rem;"></div> ' +
-                        '<div id=' + mainIdAvg + ' style="height: 10rem;"></div>' +
-                        '</div>';
-                    $("#chartView").last().append(innerHTML);
-                    $scope.swiper += 1;
-                }
-                var chart1 = echarts.init($('#' + mainIdAll).get(0));
-                var chart2 = echarts.init($('#' + mainIdAvg).get(0));
-                angular.forEach(storage['DoorTotalTime'], function (item, index) {
-                    xData.unshift(formatTime(item['date']).split(" ")[0])
-                    yData1.unshift((item['value'] / 60).toFixed(2))
-                    yData2.unshift(storage['DoorOpenTimes'][index].value)
-                    yData3.unshift(
-                        storage['DoorOpenTimes'][index].value == 0
-                            ? 0 :
-                        item['value'] / storage['DoorOpenTimes'][index].value / 60
-                    )
-                })
-                var option = {
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    toolbox: {
-                        show: false,
-                        feature: {
-                            mark: {show: true},
-                            dataView: {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line', 'bar']},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    calculable: true,
-                    legend: {
-                        data: ['开门时长', '开门次数']
-                    },
-                    xAxis: [
-                        {
-                            type: 'category',
-                            data: xData
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: '开门时长',
-                            max: 1500,
-                            axisLabel: {
-                                formatter: '{value} m'
-                            }
-                        },
-                        {
-                            type: 'value',
-                            name: '开门次数',
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        }
-                    ],
-                    series: [
-                        {
-                            name: '开门时长',
-                            type: 'bar',
-                            data: yData1
-                        },
-                        {
-                            name: '开门次数',
-                            type: 'line',
-                            yAxisIndex: 1,
-                            data: yData2
-                        }
-                    ]
-                };
-                chart1.setOption(Option);
-                chart2.setOption($scope.getEchartSingleOption("", xData, yData3, "平均开门时间", "m", "m", "bar"));
-            })
-        })
+                $('#' + mainId).highcharts({
+                    title: {text: '', x: -20}, credits: {enabled: false},
+                    xAxis: {categories: data.entity.xdata},
+                    yAxis: {title: {text: ''}, plotLines: [{value: 0, width: 1, color: '#808080'}]},
+                    legend: {layout: 'horizontal', align: 'center', borderWidth: 0},
+                    series: data.entity.chdata
+                });
+            } else {
+                alert(data.message);
+            }
+        });
     }
 
-    $scope.goDoor = function () {
+    $scope.drawHistoryData = function () {
+
+    }
+
+    $scope.drawReport = function () {
+
+    }
+
+    $scope.drawAnalysisReport = function () {
+
+    }
+
+    $scope.coolingAnalysisOther = function () {
         clearSwiper();
-        $scope.drawDoor();
+        $scope.drawCoolingAnalysis();
+    }
+
+    $scope.historyDataOther = function () {
+        clearSwiper();
+        $scope.swiper = 0;
+        $scope.drawHistoryData();
+    }
+
+    $scope.reportOther = function () {
+        clearSwiper();
+        $scope.swiper = 0;
+        $scope.drawReport();
+    }
+
+    $scope.analysisReportOther = function () {
+        clearSwiper();
+        $scope.swiper = 0;
+        $scope.drawAnalysisReport();
     }
 
     function clearSwiper() {
