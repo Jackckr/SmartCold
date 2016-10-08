@@ -1,0 +1,276 @@
+/*cold360Physical.html css*/
+.black {
+	display: none;
+}
+
+.cold_bg {
+	width: 100%;
+	height: 100%;
+	background: #528EC8;
+	position: relative;
+	padding-top: 70px;
+	text-align: center;
+	padding-top: 120px;
+	box-sizing: border-box;
+}
+
+.cold_bg:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 177px;
+	height: 68px;
+	background-image: url(../../assets/img/leftTop.png);
+}
+
+.radius_bg {
+	margin: 0 auto;
+	width: 240px;
+	height: 80px;
+	background: #fff;
+	border-radius: 40px;
+	box-shadow: 0 2px 4px #484747;
+	line-height: 80px;
+	margin-top: 12%;
+}
+
+.cold_bg h1,.radius_bg a,.sys_group,.sys_group .box-title {
+	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体', Tahoma, Arial,
+		sans-serif !important;
+}
+
+.radius_bg a i {
+	position: absolute;
+	top: 50%;
+	left: 20px;
+	margin-top: -15px;
+	font-size: 30px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	color: #227ed2;
+}
+
+.radius_bg a {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	font-size: 28px;
+	color: #227ed2;
+}
+/*cold360PhysicalList.html css*/
+/* @media (min-width: 1200px) {
+	.sys_group .col-lg-4{
+		 width: 33.33333333%
+	}
+}
+@media (min-width: 992px) { {
+	.sys_group .col-md-4{
+		 width: 33.33333333%
+	}
+}@media (min-width: 768px) {
+	.sys_group .col-sm-12{
+		 width: 100%
+	}
+} */
+.sys_group {
+	text-align: center;
+	padding-top: 40px;
+	margin: 0;
+}
+
+.sys_group .btn {
+	padding: 6px 75px;
+	color: #fff;	
+	border-radius: 6px;
+}
+
+.circle+a {
+	margin-top: 30px;
+	display: block;
+}
+
+.noDevice .btn {
+	padding: 6px 45px;
+}
+.sys_group .box {
+	width:30%;
+	display:inline-block;
+	margin-right:10px; 
+	height:400px;
+	overflow: hidden;
+}
+.sys_group .box-title {
+	color: #000;
+}
+
+.circle {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	line-height: 200px;
+	margin: 0 auto;
+	font-size: 70px;
+}
+
+.haveDevice .circle span {
+	font-size: 14px;
+}
+
+.bgBlue {
+	background-color: #0065C1;
+}
+
+.bgGold {
+	background-color: #FF5001;
+}
+
+.bgGreen {
+	background-color: #2A972C;
+}
+
+.fontBlue {
+	color: #0065C1;
+}
+
+.fontGold {
+	color: #FF5001;
+}
+
+.fontGreen {
+	color: #2A972C;
+}
+
+.haveDevice .circle.fontBlue {
+	background: url(../../assets/img/blue_circle.png) no-repeat center;
+	background-size: cover;
+}
+
+.haveDevice .circle.fontGold {
+	background: url(../../assets/img/gold_circle.png) no-repeat center;
+	background-size: cover;
+}
+
+.haveDevice .circle.fontGreen {
+	background: url(../../assets/img/green_plus.png) no-repeat center;
+	background-size: cover;
+}
+
+.noDevice .circle.bluePlus {
+	background: url(../../assets/img/blue_plus.png) no-repeat center;
+	background-size: cover;
+}
+
+.noDevice .circle.goldPlus {
+	background: url(../../assets/img/gold_plus.png) no-repeat center;
+	background-size: cover;
+}
+
+.noDevice .circle.greenPlus {
+	background: url(../../assets/img/green_plus.png) no-repeat center;
+	background-size: cover;
+}
+/*cold360PhysicalDetail.html css*/
+.coldName {
+	text-align: center;
+}
+.coldName a{
+	width:120px;
+	display:inline-block;
+	line-height: 24px;
+	border:1px solid #0172db;
+	color:#0172db;
+	border-radius:3px;
+}
+.progress,.progress-bar {
+	padding: 0;
+	border-radius: 10px !important
+}
+.score_list ul{
+	padding:0;
+}
+ul,li {
+	list-style: none;
+}
+
+.coldName-60 {
+	color: #F90001;
+}
+
+.coldName-70 {
+	color: #01B7CE;
+}
+
+.coldName-80 {
+	color: #990085;
+}
+
+.coldName-90 {
+	color: #6AC83B;
+}
+
+.coldName-100 {
+	color: #00B347;
+}
+
+.progress-bar-60 {
+	background-color: #F90001;
+}
+
+.progress-bar-70 {
+	background-color: #01B7CE;
+}
+
+.progress-bar-80 {
+	background-color: #990085;
+}
+
+.progress-bar-90 {
+	background-color: #6AC83B;
+}
+
+.progress-bar-100 {
+	background-color: #00B347;
+}
+/*baoyangReminder.html css*/
+.baoyang_bg{
+	margin:15px;
+	background: #D1D5DE;
+	padding: 15px;
+}
+.baoyang_bg .row{
+	margin: 0;
+}
+.binglian{
+	margin-bottom: 60px;
+}
+.blysj{
+	display: inline-block;
+	width: 120px;
+	line-height: 24px;
+	text-align: center;
+	font-size: 14px;
+	color: #2b3046;
+	border: 1px solid #2b3046;
+	border-radius: 3px;
+}
+.alarm_bg{
+	width: 270px;
+	height: 100px;
+	background: url(../../assets/img/alarm.png);
+	background-size: cover;
+	margin: 0 20px 50px;
+}
+.remain{
+	display: inline-block;
+	width: 270px;
+	line-height: 120px;
+	text-align: center;
+	font-size: 28px;
+}
+.remain+p{
+	font-size: 14px;
+	color: #2b3046;
+}

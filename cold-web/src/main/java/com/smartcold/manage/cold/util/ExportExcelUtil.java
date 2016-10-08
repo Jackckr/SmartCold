@@ -3,7 +3,6 @@ package com.smartcold.manage.cold.util;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,28 +24,34 @@ import org.apache.poi.ss.util.CellRangeAddress;
  */
 public class ExportExcelUtil {
 
-
 	/**
 	 * 
 	 * @param response
 	 * @param fileName：导出文件名称
-	 * @param title xls:标题
-	 * @param mode 数据模型 ：demo{{"id","角色","用户名","密码","电话","邮箱"},{"id","role","username" ,"password","telephone","email"},{"1","1","5","5","5","5"}};//标题（必须），对应属性（必须），宽度
-	 * @param list //数据集合
+	 * @param title
+	 *            xls:标题
+	 * @param mode
+	 *            数据模型
+	 *            ：demo{{"id","角色","用户名","密码","电话","邮箱"},{"id","role","username"
+	 *            ,"password","telephone","email"},{"1","1","5","5","5","5"}};//
+	 *            标题（必须），对应属性（必须），宽度
+	 * @param list
+	 *            //数据集合
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void expExcel(HttpServletResponse response, String fileName,String title, String mode[][], List list) {
+	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],
+			List list) {
 		try {
 
 			ExportExcelUtil.setResponse(response, fileName);// 创建工作博
 			HSSFWorkbook wb = new HSSFWorkbook();
 			// 创建单元格样式
 			// ------------------------------------------------------------------
-			HSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb,null);
-			HSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb,null);
+			HSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
+			HSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
-			ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle,"shell1", title, mode,null, list);
+			ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, "shell1", title, mode, null, list);
 			bufferedOutPut.flush();
 			wb.write(bufferedOutPut);
 			bufferedOutPut.close();
@@ -57,26 +62,30 @@ public class ExportExcelUtil {
 			System.gc();
 		}
 	}
+
 	@SuppressWarnings("rawtypes")
-	public static void expExcel(HttpServletResponse response, String fileName,String title, String mode[][],int [][]colmode, String[] shelName,List<List> datalist) {
+	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],
+			int[][] colmode, String[] shelName, List<List> datalist) {
 		try {
 
 			ExportExcelUtil.setResponse(response, fileName);// 创建工作博
 			HSSFWorkbook wb = new HSSFWorkbook();
 			// 创建单元格样式
 			// ------------------------------------------------------------------
-			HSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb,null);
-			HSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb,null);
+			HSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
+			HSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
-			if(shelName.length>1){
-				List list=null;
+			if (shelName.length > 1) {
+				List list = null;
 				for (int i = 0; i < datalist.size(); i++) {
-					list=datalist.get(i);
-					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle,shelName[i], title, mode,colmode, list);
+					list = datalist.get(i);
+					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode,
+							list);
 				}
-			}else{
-				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle,shelName[0], title, mode,colmode, datalist);
+			} else {
+				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,
+						datalist);
 			}
 			bufferedOutPut.flush();
 			wb.write(bufferedOutPut);
@@ -88,7 +97,7 @@ public class ExportExcelUtil {
 			System.gc();
 		}
 	}
-  
+
 	/**
 	 * 根据属性获得对象属性值
 	 * 
@@ -102,7 +111,7 @@ public class ExportExcelUtil {
 			String getter = "get" + firstLetter + fieldName.substring(1);
 			Method method = o.getClass().getMethod(getter, new Class[] {});
 			Object value = method.invoke(o, new Object[] {});
-			if(value instanceof Date ){
+			if (value instanceof Date) {
 				return TimeUtil.getDateTime((Date) value);
 			}
 			return value.toString();
@@ -110,17 +119,21 @@ public class ExportExcelUtil {
 			return null;
 		}
 	}
-    /**
-     * 设置下载编码
-     * @param response
-     * @param fileName
-     * @throws Exception
-     */
-	public static void setResponse(HttpServletResponse response, String fileName)throws Exception {
+
+	/**
+	 * 设置下载编码
+	 * 
+	 * @param response
+	 * @param fileName
+	 * @throws Exception
+	 */
+	public static void setResponse(HttpServletResponse response, String fileName) throws Exception {
 		response.reset();
-		if(StringUtil.isNull(fileName)){fileName="导出数据.xls";}
+		if (StringUtil.isNull(fileName)) {
+			fileName = "导出数据.xls";
+		}
 		fileName = new String(fileName.getBytes("GBK"), "iso8859-1");
-		response.setHeader("Content-Disposition", "attachment;filename="+ fileName);// 指定下载的文件名
+		response.setHeader("Content-Disposition", "attachment;filename=" + fileName);// 指定下载的文件名
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control", "no-cache");
@@ -135,12 +148,12 @@ public class ExportExcelUtil {
 	 * @param colSum
 	 *            该报表的列数
 	 */
-	public static void createNormalHead(HSSFSheet sheet, HSSFWorkbook wb,String headString, int colSum) {
+	public static void createNormalHead(HSSFSheet sheet, HSSFWorkbook wb, String headString, int colSum) {
 		HSSFRow row = sheet.createRow(0);
 		HSSFCell cell = row.createCell(0);// 设置第一行
 		cell.setCellType(HSSFCell.ENCODING_UTF_16);// 中文处理
 		cell.setCellValue(new HSSFRichTextString(headString));
-		sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0,(short) colSum));
+		sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) colSum));
 		HSSFCellStyle cellStyle = wb.createCellStyle();
 		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 指定单元格居中对齐
 		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 指定单元格垂直居中对齐
@@ -148,16 +161,20 @@ public class ExportExcelUtil {
 		// 设置单元格字体
 		cell.setCellStyle(cellStyle);
 	}
-	  /**
-     * 设置内容样式
-     * @param wb
-     * @param cellStyle
-     * @return
-     */
-	private static HSSFCellStyle getbodyHSSFCellStyle(HSSFWorkbook wb,HSSFCellStyle cellStyle) {
-		if (cellStyle != null){return cellStyle;}
+
+	/**
+	 * 设置内容样式
+	 * 
+	 * @param wb
+	 * @param cellStyle
+	 * @return
+	 */
+	private static HSSFCellStyle getbodyHSSFCellStyle(HSSFWorkbook wb, HSSFCellStyle cellStyle) {
+		if (cellStyle != null) {
+			return cellStyle;
+		}
 		cellStyle = wb.createCellStyle();
-		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);	// 指定单元格居中对齐
+		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 指定单元格居中对齐
 		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 指定单元格垂直居中对齐
 		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框
 		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);// 左边框
@@ -166,15 +183,19 @@ public class ExportExcelUtil {
 		cellStyle.setWrapText(true);// 指定当单元格内容显示不下时自动换行
 		return cellStyle;
 	}
-    /**
-     * 设置主标题样式
-     * @param wb
-     * @param cellStyleTitle
-     * @return
-     */
-	private static HSSFCellStyle getHSSFCellStyle(HSSFWorkbook wb,HSSFCellStyle cellStyleTitle) {
+
+	/**
+	 * 设置主标题样式
+	 * 
+	 * @param wb
+	 * @param cellStyleTitle
+	 * @return
+	 */
+	private static HSSFCellStyle getHSSFCellStyle(HSSFWorkbook wb, HSSFCellStyle cellStyleTitle) {
 		// 设置单元格字体
-		if (cellStyleTitle != null) {return cellStyleTitle;}
+		if (cellStyleTitle != null) {
+			return cellStyleTitle;
+		}
 		HSSFFont font = wb.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		font.setFontName("宋体");
@@ -194,27 +215,35 @@ public class ExportExcelUtil {
 		cellStyleTitle.setFont(font);
 		return cellStyleTitle;
 	}
-	  /**
-     * 创建数据
-     * @param wb
-     * @param cellStyleTitle
-     * @param cellStyle
-     * @param title
-     * @param shetName
-     * @param mode
-     * @param list
-     */
+
+	/**
+	 * 创建数据
+	 * 
+	 * @param wb
+	 * @param cellStyleTitle
+	 * @param cellStyle
+	 * @param title
+	 * @param shetName
+	 * @param mode
+	 * @param list
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void createHSSFSheet(HSSFWorkbook wb,HSSFCellStyle cellStyleTitle, HSSFCellStyle cellStyle,String title, String shetName, String mode[][],int [][]colmode, List list) {
-		 int rowinxe=1;
+	public static void createHSSFSheet(HSSFWorkbook wb, HSSFCellStyle cellStyleTitle, HSSFCellStyle cellStyle,
+			String title, String shetName, String mode[][], int[][] colmode, List list) {
+		int rowinxe = 1;
 		HSSFSheet sheet = wb.createSheet(title); // 创建报表头部
-		ExportExcelUtil.createNormalHead(sheet, wb, title, mode[0].length - 1); // 定义第一行  ->标题  rowinxe=0
-		if (mode.length >= 3) {//设定每列宽度
-			for (int i = 0; i < mode[2].length; i++) {sheet.setColumnWidth(i, Integer.parseInt(mode[2][i]) * 1000);}
+		ExportExcelUtil.createNormalHead(sheet, wb, title, mode[0].length - 1); // 定义第一行
+																				// ->标题
+																				// rowinxe=0
+		if (mode.length >= 3) {// 设定每列宽度
+			for (int i = 0; i < mode[2].length; i++) {
+				sheet.setColumnWidth(i, Integer.parseInt(mode[2][i]) * 1000);
+			}
 		}
-		HSSFRow newrow = sheet.createRow(rowinxe);//创建第一行 rowinxe=1; 
+		HSSFRow newrow = sheet.createRow(rowinxe);// 创建第一行 rowinxe=1;
 		HSSFCell cell1 = newrow.createCell(0);
-		// 第一行第一列  ->什么鬼   -------------------------------------------------------------
+		// 第一行第一列 ->什么鬼
+		// -------------------------------------------------------------
 		String titmode[] = mode[0];
 		cell1.setCellStyle(cellStyleTitle);
 		cell1.setCellValue(new HSSFRichTextString(titmode[0]));
@@ -223,45 +252,49 @@ public class ExportExcelUtil {
 			cell1.setCellStyle(cellStyleTitle);
 			cell1.setCellValue(new HSSFRichTextString(titmode[i]));
 		}
-		if(colmode!=null&&mode.length>=4){//支持子标题 
+		if (colmode != null && mode.length >= 4) {// 支持子标题
 			++rowinxe;
-		    titmode = mode[3];//获得子标题
-		    newrow = sheet.createRow(rowinxe);//创建第一行 rowinxe=1; 
+			titmode = mode[3];// 获得子标题
+			newrow = sheet.createRow(rowinxe);// 创建第一行 rowinxe=1;
 			for (int i = 0; i < titmode.length; i++) {
 				cell1 = newrow.createCell(i);
 				cell1.setCellStyle(cellStyleTitle);
 				cell1.setCellValue(new HSSFRichTextString(titmode[i]));
-		    }
-			for (int [] climod : colmode) {//进行跨行跨列操作
-				sheet.addMergedRegion(new CellRangeAddress((short)climod[0], (short)climod[1], (short)climod[2],(short)climod[3]));
+			}
+			for (int[] climod : colmode) {// 进行跨行跨列操作
+				sheet.addMergedRegion(new CellRangeAddress((short) climod[0], (short) climod[1], (short) climod[2],
+						(short) climod[3]));
 			}
 		}
 		++rowinxe;
 		// 定义第二行
 		HSSFRow row = sheet.createRow(rowinxe);
 		HSSFCell cell = row.createCell(1);
-		if(SetUtil.isnotNullList(list)){
+		if (SetUtil.isnotNullList(list)) {
 			String datamode[] = mode[1];
-			if( list.size()>60000){ list.subList(0, 59999);}//防止数据溢出
+			if (list.size() > 60000) {
+				list.subList(0, 59999);
+			} // 防止数据溢出
 			for (int i = 0; i < list.size(); i++) { // 65536
 				Object object = list.get(i);
-				row = sheet.createRow(i +rowinxe);
-				if(object instanceof List){
-					List<String> data=(List<String>) object;
+				row = sheet.createRow(i + rowinxe);
+				if (object instanceof List) {
+					List<String> data = (List<String>) object;
 					for (int j = 0; j < data.size(); j++) {
 						cell = row.createCell(j);
 						cell.setCellStyle(cellStyle);
-						Object da=data.get(j);
-						String val="";
-						if(da!=null){
-						if(da instanceof Double){
-							val=	Double.toString((Double)da);
-						}else{
-							val=da.toString();}
+						Object da = data.get(j);
+						String val = "";
+						if (da != null) {
+							if (da instanceof Double) {
+								val = Double.toString((Double) da);
+							} else {
+								val = da.toString();
+							}
 						}
 						cell.setCellValue(new HSSFRichTextString(val));
 					}
-				}else{
+				} else {
 					for (int j = 0; j < datamode.length; j++) {
 						cell = row.createCell(j);
 						cell.setCellStyle(cellStyle);
@@ -269,7 +302,7 @@ public class ExportExcelUtil {
 					}
 				}
 			}
-		}else{
+		} else {
 			row = sheet.createRow(rowinxe);
 			cell = row.createCell(0);
 			cell.setCellStyle(cellStyleTitle);
@@ -278,8 +311,8 @@ public class ExportExcelUtil {
 				cell1 = row.createCell(i);
 				cell1.setCellStyle(cellStyleTitle);
 				cell1.setCellValue(new HSSFRichTextString(""));
-		    }
-			sheet.addMergedRegion(new CellRangeAddress( rowinxe, rowinxe, 0, mode[0].length-1));
+			}
+			sheet.addMergedRegion(new CellRangeAddress(rowinxe, rowinxe, 0, mode[0].length - 1));
 		}
 	}
 

@@ -70,10 +70,23 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 				return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
 			}
 		},
+		formatTimeToMinute: function(timeString){
+			return this.formatTime(timeString).substring(0,16)
+		},
+		formatTimeToHour: function(timeString){
+			return this.formatTime(timeString).substring(0,13)
+		},
+		formatTimeToDay: function(timeString){
+			return this.formatTime(timeString).substring(0,10)
+		},
 		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type,yMin,yMax){
+			min = max = yData.length > 0?yData[0]:0
 			angular.forEach(yData,function(item,index){
 				yData[index] = yData[index].toFixed(2);
+				min = Math.min(min,yData[index])
+                max = Math.max(max,yData[index])
 			})
+			yMin = max - min < 1 && type == 'line' ?min - 10:yMin
 			option = {
 				    tooltip : {
 				        trigger: 'axis'
@@ -93,7 +106,8 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 					            type : 'value',
 					            name : yName + "(" + yUnit + ")",
 					            min : yMin ? yMin : 'auto',
-					            max : yMax ? yMax : 'auto'
+					            max : yMax ? yMax : 'auto',
+					            minInterval : 1
 					        }
 					    ],
 				    series : [
@@ -305,12 +319,24 @@ coldWeb.filter('sizeformat',function(){
 });
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/about");
+    $urlRouterProvider.otherwise("/cold360Physical");
 
     //index
-    $stateProvider.state('about',{
+    $stateProvider.state('cold360Physical',{
+		url:'/cold360Physical',
+		controller: 'base',
+	    templateUrl: 'app/template/cold360Physical.html'
+    }).state('cold360PhysicalList',{
+    	url:'/cold360PhysicalList',
+    	controller: 'cold360PhysicalList',
+        templateUrl: 'app/template/cold360PhysicalList.html'
+    }).state('cold360PhysicalDetail',{
+    	url:'/cold360PhysicalDetail',
+    	controller: 'cold360PhysicalDetail',
+        templateUrl: 'app/template/cold360PhysicalDetail.html'
+    }).state('about',{
     	url:'/about',
-    	controller: 'base',
+    	controller: 'base0',
         templateUrl: 'app/template/about.html'
     }).state('login',{
     	url:'/login',

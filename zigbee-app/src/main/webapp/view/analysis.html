@@ -16,9 +16,9 @@
 	<script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
-    <script type="text/javascript" src="../app/js/cold360.js" ></script>
+    <script type="text/javascript" src="../app/js/analysisTemperature.js" ></script>
 </head>
-<body ng-app="app" ng-controller="cold360" ng-cloak>
+<body ng-app="app" ng-controller="analysisTemperature" ng-cloak>
     <!-- header -->
          <header class="one">
             <div class="area fl">
@@ -51,15 +51,15 @@
     			<b>温度</b><i class="iconfont">&#xe6f7;</i>
     		</span>
             <ul class="otherList black">
-                <li><a href="javascript:;">超温时长统计</a></li>
-                <li><a href="javascript:;">超温因子统计</a></li>
-                <li><a href="javascript:;">保温因子统计</a></li>
-                <li><a href="javascript:;">温度周期因子统计</a></li>
+                <li><a href="javascript:;" id="overTemperature" ng-click="overTemperatureTemper()">超温时长统计</a></li>
+                <li><a href="javascript:;" id="overTemperatureYZ" ng-click="overTemperatureYZTemper()">超温因子统计</a></li>
+                <li><a href="javascript:;" id="BWYZ" ng-click="BWYZTemper()">保温因子统计</a></li>
+                <li><a href="javascript:;" id="WDZQYZ" ng-click="WDZQYZTemper()">温度周期因子统计</a></li>
             </ul>
     	</div>
-    	<div class="light"><i class="iconfont">&#xe76b;</i>门运行</div>
-    	<div class="door"><i class="iconfont">&#xe76e;</i>日热量</div>
-    	<div class="other" id="other"><i class="iconfont">&#xe69f;</i>
+    	<div class="light" id="door" ng-click="goDoor()"><i class="iconfont">&#xe76b;</i>门运行</div>
+    	<div class="door" id="light" ng-click="goLight()"><i class="iconfont">&#xe76e;</i>日热量</div>
+    	<div class="other" id="other" ng-click="goOther()"><i class="iconfont">&#xe69f;</i>
     		<span class="dropNext">
     			<b>其它</b><i class="iconfont">&#xe6f7;</i>
     		</span>

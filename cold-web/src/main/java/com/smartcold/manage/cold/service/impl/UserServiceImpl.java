@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.entity.olddb.UserEntity;
 import com.smartcold.manage.cold.service.UserService;
@@ -15,7 +14,7 @@ import com.smartcold.manage.cold.service.UserService;
  * @ClassName UserService.java
  * @Package: com.smartcold.manage.cold.service
  * @Description: TODO
- * @createDate:2016/3.19    
+ * @createDate:2016/3.19
  * @email:xuyanan03@meituan.com
  * @phone:15228355992
  * @Address:yunwei of DP
@@ -26,22 +25,19 @@ public class UserServiceImpl implements UserService {
 
 	private UserMapper userDao;
 
-	@Autowired
-	private RdcUserMapper rdcUserDao;
-	
 	public UserMapper getUserDao() {
 		return userDao;
 	}
+
 	@Autowired
 	public void setUserDao(UserMapper userDao) {
 		this.userDao = userDao;
 	}
-	
+
 	/**
 	 * 
-	 * @see
-	 * com.smartcold.manage.cold.service.UserService#getUserByNAndP(java.lang.String
-	 * , java.lang.String)
+	 * @see com.smartcold.manage.cold.service.UserService#getUserByNAndP(java.lang.String
+	 *      , java.lang.String)
 	 */
 	@SuppressWarnings("finally")
 	public UserEntity getUserByNAndP(String username, String password) {
@@ -61,16 +57,16 @@ public class UserServiceImpl implements UserService {
 			return user;
 		}
 	}
-	
+
 	@SuppressWarnings("finally")
 	public UserEntity findUserById(int id) throws Exception {
 		// TODO Auto-generated method stub
 		UserEntity user = new UserEntity();
-		try{
+		try {
 			user = userDao.selectByPrimaryKey(id);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			return user;
 		}
 	}
@@ -95,7 +91,8 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	public UserEntity modifyUser(int userId, String username, String password, String telephone, String email, int role) {
+	public UserEntity modifyUser(int userId, String username, String password, String telephone, String email,
+			int role) {
 		// TODO Auto-generated method stub
 		return null;
 	}

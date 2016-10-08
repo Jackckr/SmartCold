@@ -185,7 +185,7 @@ public class UserController extends BaseController {
 				UserEntity	ol_user=this.userDao.findUserById(user.getId());
 				ol_user.setPassword("********");
 				request.getSession().setAttribute("user",ol_user);
-				return true;
+				return ol_user;
 			}
 			return false;
 		} catch (IOException e) {
