@@ -8,6 +8,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/fonts/iconfont.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -23,42 +24,149 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+    	body{overflow: hidden;}    	
+	    .iconfont{
+		    font-family:"iconfont" !important;
+		    font-size:16px;font-style:normal;
+		    -webkit-font-smoothing: antialiased;
+		    -webkit-text-stroke-width: 0.2px;
+		    -moz-osx-font-smoothing: grayscale;
+		}
+    	.login_new{
+    		background: #fff;
+    	}
+    	.loginDiv{
+    		width:100%;
+    		text-align:left;
+    		border-bottom:3px solid #428CCB;
+    	}
+    	.loginDiv h2,.loginBody,.loginCopyR{
+    		width:90%;
+    		margin:0 auto;
+    	}
+    	.loginDiv h2{
+    		height:75px;
+    		line-height: 75px;
+    	}
+    	.loginBody{
+    		margin:20px auto;  
+    		background: url(assets/img/login_bg.png) no-repeat center;	
+    		background-size:cover;	
+    		text-align: right;
+    	}
+    	.loginCopyR{
+    		text-align: right;
+    	}
+    	.loginArea{
+    		display:inline-block;
+    		width: 365px;
+    		height: 380px;
+    		border:1px solid #dbdbdb;
+    		background: rgba(255,255,255,.6);
+    		margin: 20px 100px 80px 0;
+    		padding: 30px 20px;
+    		box-sizing:border-box;
+    	}
+    	.userinfo{
+    		position: relative; 
+    		margin-bottom: 20px;   		
+    	}
+    	.userinfo input{
+    		text-indent: 2em;
+    		border-radius:3px;
+    		height: 40px;
+    		line-height: 40px;
+    		font-size:16px;
+    	}
+    	.userinfo .icon{
+    		position: absolute;
+    		top:50%;
+    		left:10px;
+    		font-size:20px;
+    		color: #999;
+    		-webkit-transform:translateY(-50%);
+    		-moz-transform:translateY(-50%);
+    		-ms-transform:translateY(-50%);
+    		-o-transform:translateY(-50%);
+    		transform:translateY(-50%);
+    	}
+    	.loginArea .clearfix{
+    		margin: 60px 0 0;
+    	}
+    	.loginArea .clearfix a{
+    		color:#666;
+    	}
+    	.noM{
+    		margin: 0;
+    	}
+    	.loginBtn{
+    		padding: 0;
+    	}
+    	.loginBtn .btn{
+    		padding-top:8px;
+    		padding-bottom:8px;
+    		border-radius:3px;
+    	}
+    	@media screen and (min-width: 1367px) { 
+			.loginBody{ 
+	    		height:657px;
+	    	}
+	    	.loginArea{
+	    		height: 430px;
+	    		margin: 110px 130px 0 0;
+	    		padding: 30px 20px;
+	    		box-sizing:border-box;
+	    	}
+		 }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
-  <body class="hold-transition login-page">
-	 <div class="login-box">
-	   <div class="login-logo">
-	     <label href=""><b>冷库360·</b>SmartCold</label>
-	   </div>
-	   <div class="login-box-body">
-	     <p class="login-box-msg">登录系统</p>
-<!-- 	     <form action="" method="post"> -->
-	       <div class="form-group has-feedback">
-	         <input type="text" id="username" class="form-control" placeholder="用户名">
-	       </div>
-	       <div class="form-group has-feedback">
-	         <input type="password" id="password" class="form-control" placeholder="密码">
-	       </div>
-         <div class="row">
-	         <div class="col-xs-8">
-	           <a style="color:red" hidden=true id="mention"></a>
+  <body class="hold-transition login-page login_new">
+  <!-- new login -->
+  	<div class="loginDiv">
+  		<h2>冷库360在线管理系统</h2>
+  	</div>
+  	<div class="loginBody login-box">
+  		<div class="loginArea">
+	        <div class="userinfo">
+	        	<i class="icon iconfont">&#xe6be;</i>
+				<input type="text" id="username" class="form-control" placeholder="用户名">
+	        </div>
+	        <div class="userinfo">
+	        	<i class="icon iconfont">&#xe6c1;</i>
+	            <input type="password" id="password" class="form-control" placeholder="密码">
+	        </div>
+	        <div class="row">
+		         <div class="col-xs-8" style="text-align: left;height: 30px;">
+		           <a style="color:red" hidden=true id="mention"></a>
+		         </div>
 	         </div>
-         </div>
-	       <div class="row">
-	         <div class="col-xs-8">
-	           <div class="checkbox icheck">
-	           </div>
-	         </div><!-- /.col -->
-	         <div class="col-xs-4">
-	           <button  id="submit" onclick="login();"  class="btn btn-primary btn-block btn-flat">登录</button>
-	         </div><!-- /.col -->
-	       </div>
-<!-- 	     </form> -->
-	
-	     <a href="#">忘记密码</a><br>
-	     <a href="register.html" class="text-center">注册</a>
-	
-	   </div><!-- /.login-box-body -->
-	 </div><!-- /.login-box -->
+	        <div class="clearfix">
+	        	<p class="pull-left"><a href="#">忘记密码</a></p>
+	        	<p class="pull-right"><a href="register.html">免费注册</a></p>
+	        </div>
+	        <div class="row noM">
+		         <div class="col-xs-8 col-lg-12">
+		           <div class="checkbox icheck">
+		           </div>
+		         </div>
+		         <div class="col-lg-12 loginBtn">
+		           <button  id="submit" onclick="login();" class="btn btn-primary btn-block btn-flat">登录</button>
+		         </div>
+		     </div>
+  		</div>
+  	</div>
+  	<div class="loginCopyR">
+  		<p>&copy;2016&nbsp;Smartcold&nbsp;&nbsp;&nbsp;&nbsp;沪ICP备 16004753&nbsp;&nbsp;&nbsp;&nbsp;中物联冷链委智慧支持</p>
+  	</div>
+  <!-- new login end -->
 	
 <!-- jQuery 2.1.4 -->
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
