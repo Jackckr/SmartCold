@@ -61,20 +61,6 @@
 	color: #227ed2;
 }
 /*cold360PhysicalList.html css*/
-/* @media (min-width: 1200px) {
-	.sys_group .col-lg-4{
-		 width: 33.33333333%
-	}
-}
-@media (min-width: 992px) { {
-	.sys_group .col-md-4{
-		 width: 33.33333333%
-	}
-}@media (min-width: 768px) {
-	.sys_group .col-sm-12{
-		 width: 100%
-	}
-} */
 .sys_group {
 	text-align: center;
 	padding-top: 40px;
@@ -98,7 +84,7 @@
 .sys_group .box {
 	width:30%;
 	display:inline-block;
-	margin-right:10px; 
+	margin-left:2%; 
 	height:400px;
 	overflow: hidden;
 }
@@ -171,6 +157,11 @@
 .noDevice .circle.greenPlus {
 	background: url(../../assets/img/green_plus.png) no-repeat center;
 	background-size: cover;
+}
+@media screen and (max-width: 780px) {
+	.sys_group .box{
+		width:100%;margin: 0;
+	}
 }
 /*cold360PhysicalDetail.html css*/
 .coldName {

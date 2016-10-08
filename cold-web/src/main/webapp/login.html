@@ -41,7 +41,7 @@
     		text-align:left;
     		border-bottom:3px solid #428CCB;
     	}
-    	.loginDiv h2,.loginBody,.loginCopyR{
+    	.loginDiv h2,.loginCopyR{
     		width:90%;
     		margin:0 auto;
     	}
@@ -50,7 +50,9 @@
     		line-height: 75px;
     	}
     	.loginBody{
-    		margin:20px auto;  
+    		width:100%;
+    		min-height:500px;
+    		margin:0 auto 20px;  
     		background: url(assets/img/login_bg.png) no-repeat center;	
     		background-size:cover;	
     		text-align: right;
@@ -61,11 +63,11 @@
     	.loginArea{
     		display:inline-block;
     		width: 325px;
-    		height: 380px;
+    		height: 360px;
     		border:1px solid #dbdbdb;
     		background: rgba(255,255,255,.6);
-    		margin: 20px 100px 80px 0;
-    		padding: 30px 20px;
+    		margin: 130px 90px 0 0;
+    		padding: 50px 20px 0;
     		box-sizing:border-box;
     	}
     	.userinfo{
@@ -87,6 +89,10 @@
 		    -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,.1) inset;
 		    -moz-box-shadow: 0 2px 3px 0 rgba(0,0,0,.1) inset;
 		    -ms-box-shadow: 0 2px 3px 0 rgba(0,0,0,.1) inset;
+		    outline: none;
+    	}
+    	.userinfo input:focus{
+    		border: 2px solid #428CCB;
     	}
     	.userinfo .icon{
     		position: absolute;
@@ -101,7 +107,7 @@
     		transform:translateY(-50%);
     	}
     	.loginArea .clearfix{
-    		margin: 60px 0 0;
+    		margin: 40px 0 0;
     	}
     	.loginArea .clearfix a{
     		color:#666;
@@ -119,8 +125,12 @@
     	}
     	@media screen and (min-width: 1367px) { 
 	    	.loginArea{
+	    		width:360px;
 	    		height: 430px;
-	    		margin: 110px 130px 0 0;
+	    		margin: 160px 280px 0 0;
+	    	}
+	    	.loginArea .clearfix{
+	    		margin: 80px 0 0;
 	    	}
 		 }
     </style>
@@ -176,7 +186,11 @@
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	var mainHeight = $(window).height();
-    $(".loginBody").height(mainHeight-160);
+	$(".loginBody").height(mainHeight-160);
+    window.onresize = function(){
+    	var mainHeight = $(window).height();
+    	$(".loginBody").height(mainHeight-160);
+    }
 	function showErrorInfo(msg) {
 	    var msgEl = $("#mention");
 	    if (msg == null || msg == '') {
