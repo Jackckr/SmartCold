@@ -113,7 +113,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 	                    }
 	                ]
 	            };
-					chart.setOption(Option);
+					chart.setOption(option);
 				})
 			},0)
 		})
@@ -335,7 +335,7 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 		                    }
 		                ]
 		            };
-					chart1.setOption(Option)
+					chart1.setOption(option)
 					chart2.setOption(baseTools.getEchartSingleOption("", 
 							xData, yData3, "平均开门时间", "m", "m", "bar"))
 				},0)
