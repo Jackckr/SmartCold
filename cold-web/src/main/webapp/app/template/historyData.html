@@ -24,7 +24,8 @@
 						       <li  kval="1"  ng-click="showkeyli($event)">冷库电量</li>
 						       <li  kval="2"  ng-click="showkeyli($event)">冷　库　门</li>
 						       <li  kval="3"  ng-click="showkeyli($event)">月　台　门</li>
-						       <li  kval="4"  ng-click="showkeyli($event)" class="hide">压　缩　 机</li>
+						       <li  kval="4"  ng-click="showkeyli($event)">压缩 机组</li>
+						       <li  kval="5"  ng-click="showkeyli($event)">压缩 机-排气温度</li>
 						     </ul>
 						     <div id="val_list_div">
 					            <ul id="Temp_ul_0" > <!-- 	初始化冷库 -->
@@ -39,13 +40,20 @@
 						        <ul id="Temp_ul_3"   class="hide"> <!-- 初始化月台门 -->
 						          <li ng-repeat="obj in platformDoors" oid="{{obj.id}}"  ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
 						       </ul>
-						        <ul id="Temp_ul_4"   class="hide"> <!-- 初始化压缩机组-->
-							        <ul id="Temp_ul_5"   > <!-- 初始化压缩机组-->
-							          <li class="select">高压</li>
-							          <li class="select">低压</li>
-							          <li class="select">排气温度</li>
-							       </ul>
-						          <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						       <ul id="Temp_ul_4"  class="hide"> <!-- 初始化压缩机组-->
+							         <div>
+										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('highPress')" checked >高压</label>
+										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('lowPress' )">低压</label>
+							        </div>
+						           <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						       </ul>
+						       <ul id="Temp_ul_5" class="hide" key="exTemp"> <!-- 初始化压缩机-->
+							        <div>
+										   <label class="checkbox-inline" ng-repeat="obj in compressorGroups"><input type="radio"  name="cmptkey" value="{{obj.id}}"  ng-click="chexTemp($event)">{{obj.name}}</label>
+							        </div>
+							        <span  ng-repeat="(key,value) in  compressorGroups" id="Temp_ul_5_key_span_{{value.id}}" class="hide"> 
+						                <li ng-repeat="obj in  value.compressors"  ng-click="selkeyvl($event)" oid="{{obj.id}}"  class="select">{{obj.name}}</li>
+                					</span> 
 						       </ul>
 						     </div>
 						  </div>
