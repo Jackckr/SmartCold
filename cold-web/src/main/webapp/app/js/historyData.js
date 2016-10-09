@@ -1,21 +1,13 @@
-coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
+coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,baseTools) {
 	var lineChart =null;
 	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 
 	$scope.showobjgroup=false,$scope.coldstoragedoor=null;
-	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
-	$scope.begin = $scope.getDateTimeStringBefore(1),$scope.end = $scope.getDateTimeStringBefore(0),$scope.picktime = $scope.begin + ' - ' + $scope.end; 
+	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= $scope.end.substr(0,10)+" 00:00:01",$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
 	//开始核心内容
 	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],type:[1,10,2,11,3,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,false,false,false]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
-    $scope.inintcoldoot=function(newValue,oldValue){//初始化冷库门
-	   if($rootScope.mystorages!=undefined){
-		   $scope.prove={};
-		   $.each($rootScope.mystorages, function(i, vo){  $scope.prove[vo.id]=vo.name;});
-		   $http.get("/i/AnalysisController/getColdStorageDoor",{params:{'rdcId':$scope.rdcid}}).success(function(data){$scope.coldstoragedoor=data;});
-	   }
-   };
-   $scope.$watch('mystorages',$scope.inintcoldoot,true);//监听冷库变化
+ 
    //设置数据模型
    $scope.gettit=function(){//自动设置标题
 	       $scope.oids=[];$scope.oldnames=[],keem=$("#ul_key_list li.select"),slemkey="#Temp_ul_"+ $scope.sl_index+" li.select",subtit="";
@@ -112,9 +104,9 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 	 $scope.slgroupsl=function(e){//点击下拉框事件
 		 $scope.showobjgroup=!$scope.showobjgroup;}
 	 ;
-	 $scope.chPress=function(vl){//切换高低压
+	 $scope.chPress=function(vl,vtxt){//切换高低压
 		 $scope.typemode.key[$scope.sl_index]=vl;
-		 $scope.typemode.tit[$scope.sl_index]=vl;
+		 $scope.typemode.tit[$scope.sl_index]=vtxt;
 	 };
 	 $scope.chexTemp=function($event){//切换排气温度
 		 var em=$($event.target),oid=em.attr("value");
@@ -144,8 +136,19 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope) {
 			$("#Temp_ul_5_key_span_"+chptkey).removeClass("hide");
 		}
 	 };
+	 $scope.inintselect=function(){
+		 $scope.gettit();
+	 };
+	 $scope.inintcoldoot=function(newValue,oldValue){//初始化冷库门
+		   if($rootScope.mystorages!=undefined){
+			   $scope.prove={};
+			   $.each($rootScope.mystorages, function(i, vo){  $scope.prove[vo.id]=vo.name;});
+			   $http.get("/i/AnalysisController/getColdStorageDoor",{params:{'rdcId':$scope.rdcid}}).success(function(data){$scope.coldstoragedoor=data;});
+			   $timeout($scope.inintselect,200);
+		   }
+	  };
+	  $scope.$watch('mystorages',$scope.inintcoldoot,true);//监听冷库变化
 	 
-	
 	 //windows事件
 	 $(document).bind('click',function(e){ 
 			if($scope.showobjgroup){
