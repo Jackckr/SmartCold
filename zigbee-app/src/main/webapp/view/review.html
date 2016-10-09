@@ -19,47 +19,43 @@
 	        		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
 	        	</div>
 	        	
-	        	<div class="search">
-	        		<input type="text" placeholder="请输入货物编号"/>
+	        	<div class="search review_s">
+	        		<input type="text" onclick="inputFocus(this)" placeholder="请输入订单号号或商品编号"/>
 	        		<i class="iconfont">&#xe62f;</i>
+	        		<ul class="searchList">
+	        			<li><a href="javaScript:;" onclick="tapA (this)">按订单号或商品编号搜索</a></li>
+	        			<li><a href="javaScript:;" onclick="tapA (this)">按车辆编号、冷库/冷柜编号搜索</a></li>
+	        		</ul>
 	        	</div>
 		    </header>
 		<!-- header end-->
 		<section class="main codeMain">
 			<img src="../com/img/code.jpg"/>
 		</section>
-	<!--<ul class="footer">
-        <li>           
-            <a href="../index.html">
-                <i class="iconfont">&#xe65a;</i>
-                <p class="info">首页</p>
-            </a>
-        </li>
-        <li>          
-            <a href="share.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p>
-            </a>
-        </li>
-        <li>            
-            <a href="release.html">
-                <i class="iconfont">&#xe6ff;</i>
-                <p class="info">发布</p>
-            </a>
-        </li>
-        <li class="active">          
-            <a href="review.html">
-                <i class="iconfont">&#xe642;</i>
-                <p class="info">追溯</p>
-            </a>
-        </li>
-        <li>            
-            <a href="user.html">
-                <i class="iconfont">&#xe6fd;</i>
-                <p class="info">我的</p>
-            </a>
-        </li>
-    </ul>	-->
+		<script>
+			function inputFocus (ops) {
+				$(".searchList").show()
+				event.stopPropagation();
+			};
+			function tapA (ops){
+				var $val = $(ops).html();
+				$(".search input").attr("placeholder",$val);
+				$(".search input").val("");
+				$(".search input").focus()
+				$(".searchList").hide();
+			}
+
+			$(function() {
+				$(document).click(function(){
+					$(".searchList").hide();
+					event.stopPropagation();
+				})
+				$(".search i").click(function(event) {
+					$(".searchList").hide();
+					event.stopPropagation();
+				});
+			});
+		</script>
 	</body>
 </html>
 
