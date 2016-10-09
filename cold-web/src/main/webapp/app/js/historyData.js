@@ -2,10 +2,10 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	var lineChart =null;
 	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 
 	$scope.showobjgroup=false,$scope.coldstoragedoor=null;
-	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= $scope.end.substr(0,10)+" 00:00:01",$scope.picktime = $scope.begin + ' - ' + $scope.end;
+	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= $scope.end.substr(0,10)+" 00:00:00",$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
 	//开始核心内容
-	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],type:[1,10,2,11,3,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,false,false,false]};
+	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],type:[1,10,2,11,3,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
  
    //设置数据模型
