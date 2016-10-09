@@ -107,7 +107,7 @@ public class MsgServiceimp implements MsgService {
 						String tels = telMap.get(rdcid);
 						String msg = "【Warning】{RDC=" + map.get("rdcname") + "}{" + map.get("devicetype") + "}{Dev="
 								+ map.get("deviceid") + "}已经超过30分钟未上报数据，请注意检查";
-						info = new WarningMsgEntity(rdcid, 0, "告警通知", tels, msg);
+						info = new WarningMsgEntity( 0,rdcid, "告警通知", tels, msg);
 						this.megMapper.addwarningmessage(info);
 						updata = new HashMap<String, Object>();
 						updata.put("rdcid", rdcid);//
