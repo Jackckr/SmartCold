@@ -93,14 +93,13 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                 yData1 = []
                 yData2 = []
                 yData3 = []
-
                 var mainIdAll = 'doorAll' + key;
                 var mainIdAvg = 'doorAvg' + key;
                 if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">' + key + '</p>' +
-                        '<div id=' + mainIdAll + ' style="min-height:10rem;"></div> ' +
-                        '<div id=' + mainIdAvg + ' style="height: 10rem;"></div>' +
+                        '<div id=' + mainIdAll + ' style="min-height:12rem;margin-bottom:.3rem;"></div> ' +
+                        '<div id=' + mainIdAvg + ' style="height: 12rem;"></div>' +
                         '</div>';
                     $("#chartView").last().append(innerHTML);
                     $scope.swiper += 1;
@@ -118,6 +117,14 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                     )
                 })
                 var option = {
+                	backgroundColor: '#D2D6DE',
+                	 title: {
+            	        text: '近30日冷库日累积开门总时长及日累积开门次数',
+            	        textStyle: {
+                            fontSize: 13 ,
+                            fontWeight: 'normal'
+                        },
+            	    },
                     tooltip: {
                         trigger: 'axis',                        
                         textStyle: {
@@ -136,7 +143,8 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                     },
                     calculable: true,
                     legend: {
-                        data: ['开门时长', '开门次数']
+                        data: ['开门时长', '开门次数'],
+                        y:'bottom'
                     },
                     xAxis: [
                         {
@@ -147,10 +155,10 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                     yAxis: [
                         {
                             type: 'value',
-                            name: '开门时长',
+                            name: '开门时长(m)',
                             max: 1500,
                             axisLabel: {
-                                formatter: '{value} m'
+                                formatter: '{value}'
                             }
                         },
                         {
@@ -203,9 +211,12 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
-            backgroundColor: '#D2D6DE',
+    		backgroundColor: '#D2D6DE',
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',                   
+                textStyle: {
+                    fontSize: 12      // 主标题文字颜色
+                }
             },
             title: {
                 text: title,
@@ -248,14 +259,20 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
 
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
         var option = {
+    		backgroundColor: '#D2D6DE',
+    		 title: {
+	 	       text: '近30日冷库日平均单次开门时长',
+	 	       textStyle: {
+	                fontSize: 13,
+	                fontWeight: 'normal'
+	            }	     	        
+	 	    },
             tooltip: {
                 trigger: 'axis',                   
                 textStyle: {
-                    fontSize: 12      // 主标题文字颜色
+                    fontSize: 12 ,
+                    fontWeight: 'normal'
                 },
-            },
-            title: {
-                text: title
             },
             calculable: true,
             xAxis: [

@@ -139,8 +139,12 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     xData.unshift(formatTime(item['date']).split(" ")[0])
                 })
                 var option = {
+                	backgroundColor: '#D2D6DE',
                     tooltip: {
-                        trigger: 'axis'
+                        trigger: 'axis',
+                        textStyle: {
+                            fontSize: 12          
+                        }
                     },
                     toolbox: {
                         show: false,
@@ -262,8 +266,12 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     yData2.unshift(storage['ShengWenYinZi'][index]['value'])
                 })
                 var option = {
+                	backgroundColor: '#D2D6DE',
                     tooltip: {
-                        trigger: 'axis'
+                        trigger: 'axis',
+                        textStyle: {
+                            fontSize: 12          
+                        }
                     },
                     toolbox: {
                         show: false,
@@ -363,7 +371,10 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
         var option = {
             backgroundColor: '#D2D6DE',
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                textStyle: {
+                    fontSize: 12          
+                }
             },
             title: {
                 text: title,
@@ -406,8 +417,12 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
 
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
         var option = {
+    		backgroundColor: '#D2D6DE',
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                textStyle: {
+                    fontSize: 12          
+                }
             },
             title: {
                 text: title
