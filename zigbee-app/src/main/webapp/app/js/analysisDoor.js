@@ -119,7 +119,10 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                 })
                 var option = {
                     tooltip: {
-                        trigger: 'axis'
+                        trigger: 'axis',                        
+                        textStyle: {
+                            fontSize: 12      // 主标题文字颜色
+                        },
                     },
                     toolbox: {
                         show: false,
@@ -172,7 +175,8 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                         }
                     ]
                 };
-                chart1.setOption(Option);
+                //chart1.setOption(Option);
+                chart1.setOption(option);
                 chart2.setOption($scope.getEchartSingleOption("", xData, yData3, "平均开门时间", "m", "m", "bar"));
             })
         })
@@ -245,7 +249,10 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
         var option = {
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',                   
+                textStyle: {
+                    fontSize: 12      // 主标题文字颜色
+                },
             },
             title: {
                 text: title
