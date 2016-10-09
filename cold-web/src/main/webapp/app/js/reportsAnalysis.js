@@ -84,7 +84,12 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
    };
 	
 	function getbdltit(value){
-	    if(value==null||value==''||value=='null')return '<td>0</td>';else return "<td>"+value+"</td>";
+	    if(value==null||value==''||value=='null'){
+	    	return '<td>0</td>';
+	    }else{
+	    	if( typeof value=="number"&& ($scope.slindex==0||$scope.slindex==1))
+	    	return "<td>"+value+"</td>";
+	    }
     }
 	function gettbcltit(value,cl){
 	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';

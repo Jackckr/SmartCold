@@ -61,7 +61,6 @@ public class ColdStorageController {
 	@ResponseBody
 	public Object insertStorage(@RequestBody ColdStorageSetEntity coldStorageSetEntity) {
 		coldStorageSetDao.insertColdStorage(coldStorageSetEntity);
-
 		return new ResultDto(0, "添加成功");
 	}
 
