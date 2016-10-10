@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.SetTableMapper">
     <insert id="insert">
-        INSERT INTO ${table} (`rdcid`,`name`)
-        VALUES (#{rdcid}, #{name})
+        INSERT into ${table} set name=#{name},rdcid=#{rdcid}
+         <if test="mapping !=null and mapping!=''">,mapping=#{mapping}</if>
+         <if test="power !=null and power!=''">,power=#{power}</if>;
     </insert>
 
     <update id="updateMapping">

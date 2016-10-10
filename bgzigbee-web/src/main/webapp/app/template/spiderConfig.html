@@ -229,26 +229,30 @@
                                         <input style="width:250px;" ng-model="blowerEntity.defrostingTemperature" class="form-control" />
                                     </div>
                                 </div>
+                               
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">冷风机风扇功率(kW):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="blowerEntity.fanPower" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">冷风机化霜功率(kW):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="blowerEntity.frostPower" class="form-control" />
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addBlower()" ng-disabled="!blowerEntity.name">添加</a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <label>已有风机：</label>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                        <tr>
-                                            <th>风机名字</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="blower in blowers">
-                                            <td>{{blower.name}}</td>
-                                            <td><a class="btn btn-danger btn-xs" ng-click="deleteBlower(blower.id)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                               <ajax-table array-objects="blowers"
+                                            update-url="i/blower/updateBlower"
+                                            delete-url="/i/blower/deleteBlower"
+                                            colums-th="风机名字,化霜温度(°C),冷风机风扇功率(kW),冷风机化霜功率(kW)"
+                                            colums="name,defrostingTemperature,fanPower,frostPower"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -614,12 +618,14 @@
                                     <thead>
                                     <tr>
                                         <th>名字</th>
+                                        <th>功率</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="item in forkliftSets">
                                         <td>{{item.name}}</td>
+                                        <td>{{item.power}}</td>
                                         <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, forkliftSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
                                     </tr>
                                     </tbody>
