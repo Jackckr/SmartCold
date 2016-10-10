@@ -18,6 +18,12 @@ public class BlowerSetEntity {
 	private float defrostingTemperature;
 
 	private String mapping;
+	
+	private double power;//总机功率 备用
+	    
+	private double fanPower;//冷风机功率
+	    
+	private double frostPower;//化霜功率
 
 	public int getId() {
 		return id;
@@ -74,4 +80,30 @@ public class BlowerSetEntity {
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
 	}
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
+	}
+
+	public double getFanPower() {
+		return fanPower;
+	}
+
+	public void setFanPower(double fanPower) {
+		this.fanPower = fanPower;
+	}
+
+	public double getFrostPower() {
+		return frostPower;
+	}
+
+	public void setFrostPower(double frostPower) {
+		this.frostPower = frostPower;
+	}
+	
+	
 }

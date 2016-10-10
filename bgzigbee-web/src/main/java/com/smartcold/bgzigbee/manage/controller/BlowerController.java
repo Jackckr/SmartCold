@@ -56,20 +56,26 @@ public class BlowerController {
 	public Object findItem() {
 		return spiderItemConfigDao.findItemByType(SpiderItemType.BLOWER.getType());
 	}
-
+	
+	@RequestMapping(value = "/updateBlower", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateBlower(@RequestBody BlowerSetEntity entity) {
+		blowerDao.updateBlower(entity);
+		return new ResultDto(0, "修改成功");
+	}
+	
 	@RequestMapping(value = "/insertBlower", method = RequestMethod.POST)
 	@ResponseBody
 	public Object insertBlower(@RequestBody BlowerSetEntity entity) {
 		blowerDao.insertBlower(entity);
-
 		return new ResultDto(0, "添加成功");
 	}
 
-	@RequestMapping(value = "/deleteBlower", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteBlower",  method = RequestMethod.DELETE)
 	@ResponseBody
 	public Object deleteBlower(int id) {
 		blowerDao.deleteBlower(id);
-
 		return new ResultDto(0, "删除成功");
 	}
+	
 }
