@@ -70,6 +70,39 @@ public class RdcAddDTO {
 	private int height3;
 	private int height4;
 	private int height5;
+	private String facility;
+
+	private float score;
+
+	private int userRecommendPercent;
+
+	private int userCommentCount;
+
+	private int recommentCount;
+
+	private float rdcPositionScore;
+
+	private float rdcFacilityScore;
+
+	private float rdcServiceScore;
+
+	private float rdcHealthScore;
+	
+	private FileDataEntity arrangePic;
+
+	private List<FileDataEntity> storagePics;
+	
+	private int userid;//关联用户id
+	//浏览量
+	private int pageview;
+
+	private File honorfile0;
+
+	private List<StorageHonorEntity> storageHonorPics;
+
+	private List<FileDataEntity> honorPics;
+
+	private Integer audit;
 
 	public int getHeight1() {
 		return height1;
@@ -111,40 +144,6 @@ public class RdcAddDTO {
 		this.height5 = height5;
 	}
 
-	private String facility;
-
-	private float score;
-
-	private int userRecommendPercent;
-
-	private int userCommentCount;
-
-	private int recommentCount;
-
-	private float rdcPositionScore;
-
-	private float rdcFacilityScore;
-
-	private float rdcServiceScore;
-
-	private float rdcHealthScore;
-	
-	private FileDataEntity arrangePic;
-
-	private List<FileDataEntity> storagePics;
-	
-	private int userid;//关联用户id
-	//浏览量
-	private int pageview;
-
-	private File honorfile0;
-
-	private List<StorageHonorEntity> storageHonorPics;
-
-	private List<FileDataEntity> honorPics;
-
-	private Integer audit;
-	
 	public int getPageview() {
 		return pageview;
 	}
