@@ -114,8 +114,8 @@ public class AdminController extends BaseController {
 					CookieEntity effectiveCookie = cookieService
 							.findEffectiveCookie(cookie.getValue());
 					if (effectiveCookie != null) {
-						admin = adminDao.findAdminByName(effectiveCookie
-								.getUsername());
+						admin = adminDao.findAdminByName(effectiveCookie.getUsername());
+						if(admin==null)return ResponseData.newSuccess(new AdminEntity());
 						admin.setAdminpwd("******");
 						request.getSession().setAttribute("admin", admin);
 						return ResponseData.newSuccess(admin);
