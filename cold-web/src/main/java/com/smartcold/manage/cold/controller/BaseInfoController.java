@@ -166,7 +166,7 @@ public class BaseInfoController extends BaseController {
 				Date sttime = sdf.parse(startTime);
 				Date edTime = sdf.parse(endTime);
 				int daysBetween = daysBetween(sttime, edTime);
-				String groupfm = getDateFormat(daysBetween);
+				String groupfm = getDateFormat(daysBetween);//用于后期优化
 				System.err.println(groupfm);
 				HashMap<String, Object> restData = new HashMap<String, Object>();
 				LinkedList<HashMap<String, Object>> restList = new LinkedList<HashMap<String, Object>>();
@@ -193,7 +193,7 @@ public class BaseInfoController extends BaseController {
 					HashMap<String, Object> linmap = new HashMap<String, Object>();
 					int oid = oids[i];
 					String oname = onames[i];
-					List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
+					List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime,groupfm," asc ");//
 					if (datalist.size() > maxsize) {
 						index = i;
 					}

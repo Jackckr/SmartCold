@@ -7,6 +7,12 @@
 		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime}
         order by `addtime` desc
 	</select>
+	<select id="findByTimeFormat" resultType="StorageKeyValue">
+		select * from ${table}
+		where `key`=#{key} AND oid=#{oid} AND
+		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime}
+        order by `addtime` ${orderBy}
+	</select>
  
  	<select id="findByNums" resultType="StorageKeyValue" >
 		select * from ${table}
