@@ -111,16 +111,21 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>冷藏车数量</td>
+                                        
+                                         <tr ng-hide="capacity1 == 0 && capacity2 == 0 && capacity3 == 0 && capacity4 == 0 && capacity5 == 0||
+                                         (height1 == 0 && height2 == 0 && height3 == 0 && height4 == 0 && height5 == 0)">
+                                            <td>冷库容积</td>
                                             <td>
                                                 <ul>
                                                     <li>
-                                                        ●＜1.8T:{{coldTruck1}}辆&nbsp;&nbsp;&nbsp;●1.8～6T:{{coldTruck2}}辆&nbsp;&nbsp;&nbsp;●6～14T:{{coldTruck3}}辆&nbsp;&nbsp;&nbsp;●＞14T:{{coldTruck4}}辆
+                                                        12度至25度:{{capacity1 * height1}}立方米&nbsp;&nbsp;&nbsp;12度至-2度:{{capacity2 * height2}}立方米&nbsp;&nbsp;&nbsp;
+                                                        -18度至-22度:{{capacity3 * height3}}立方米&nbsp;&nbsp;&nbsp;
+                                                        -22至-30度:{{capacity4 * height4}}立方米&nbsp;&nbsp;&nbsp;-30度以下:{{capacity5 * height5}}立方米
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
+                                        
                                         <tr>
                                             <td>联系电话</td>
                                             <td>
@@ -148,7 +153,7 @@
                                     <h3 style="color: #00a7d0">其他信息</h3>
                                     <table class="commentinfo">
                                         <tbody>
-                                        <!-- <tr ng-hide="tonnage === undefined || tonnage === 0">
+                                        <!-- <tr ng-hide="tonnage == undefined || tonnage == 0">
                                             <td>冷库吨位</td>
                                             <td>
                                                 <ul>
@@ -158,7 +163,7 @@
                                                 </ul>
                                             </td>
                                         </tr> -->
-                                        <tr ng-hide="structure === undefined || structure === '' || structure === null">
+                                        <tr ng-hide="structure == undefined || structure == '' || structure == null">
                                             <td>建筑结构</td>
                                             <td>
                                                 <ul>
@@ -178,7 +183,7 @@
                                                 </ul>
                                             </td>
                                         </tr> -->
-                                        <tr ng-hide="platform === undefined">
+                                        <tr ng-hide="platform == undefined">
                                             <td>是否有封闭月台</td>
                                             <td>
                                                 <ul>
@@ -188,7 +193,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="lihuoRoom === undefined">
+                                        <tr ng-hide="lihuoRoom == undefined">
                                             <td>是否有理货区</td>
                                             <td>
                                                 <ul>
@@ -198,7 +203,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="hasLihuoRoom || lihuoArea === undefined || lihuoArea === 0">
+                                        <tr ng-hide="hasLihuoRoom || lihuoArea == undefined || lihuoArea == 0">
                                             <td>理货区面积</td>
                                             <td>
                                                 <ul>
@@ -208,7 +213,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="hasLihuoRoom || lihuoTemperCtr === undefined">
+                                        <tr ng-hide="hasLihuoRoom || lihuoTemperCtr == undefined">
                                             <td>理货区有无温控</td>
                                             <td>
                                                 <ul>
@@ -218,7 +223,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="storageRefreg === undefined || storageRefreg === 0">
+                                        <tr ng-hide="storageRefreg == undefined || storageRefreg == 0">
                                             <td>制冷剂类型</td>
                                             <td>
                                                 <ul>
@@ -228,7 +233,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="temperRecord === undefined">
+                                        <tr ng-hide="temperRecord == undefined">
                                             <td>有无温度记录</td>
                                             <td>
                                                 <ul>
@@ -238,18 +243,17 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="capacity1 === undefined || capacity2 === undefined || capacity3 === undefined || capacity4 === undefined || capacity5 === undefined || (capacity1 === 0 && capacity2 === 0 && capacity3 === 0 && capacity4 === 0 && capacity5 === 0)">
-                                            <td>冷库容积</td>
+                                        <tr>
+                                            <td>冷藏车数量</td>
                                             <td>
                                                 <ul>
                                                     <li>
-                                                        12度至25度:{{capacity1}}平方{{height1}}米&nbsp;&nbsp;&nbsp;12度至-2度:{{capacity2}}平方{{height2}}米&nbsp;&nbsp;&nbsp;-18度至-22度:{{capacity3}}平方{{height3}}米&nbsp;&nbsp;&nbsp;
-                                                        -22至-30度:{{capacity4}}平方{{height4}}米&nbsp;&nbsp;&nbsp;-30度以下:{{capacity5}}平方{{height5}}米
+                                                        ●＜1.8T:{{coldTruck1}}辆&nbsp;&nbsp;&nbsp;●1.8～6T:{{coldTruck2}}辆&nbsp;&nbsp;&nbsp;●6～14T:{{coldTruck3}}辆&nbsp;&nbsp;&nbsp;●＞14T:{{coldTruck4}}辆
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="facility === undefined || facility === '' || facility === null">
+                                        <tr ng-hide="facility == 'undefined' || facility == '' || facility == null">
                                             <td>周边设施</td>
                                             <td>
                                                 <ul>
@@ -259,7 +263,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr ng-hide="remark == 'undefined' || remark === '' || remark === null">
+                                        <tr ng-hide="remark == 'undefined' || remark == '' || remark == null">
                                             <td>备注</td>
                                             <td style="word-break : break-all; float: left; padding:2px 0 2px 60px; margin-right: 10px; width: 88%;overflow:hidden;text-overflow:ellipsis;">
                                              {{remark}}
