@@ -139,6 +139,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         					$rootScope.mystorages = data;
         					$rootScope.storageModal = data[0];
         				});
+        		$http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(
+        				function(data,status,headers,config){
+        					$rootScope.hasDoorStorages = data;
+        				});
         		// 初始化压缩机组
         		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(
         				function(data,status,headers,config){

@@ -322,7 +322,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li>
                  <a><i class="fa fa-circle-o"></i>冷库门<i class="fa fa-angle-left pull-right"></i></a>
                  <ul class="treeview-menu">
-	               <li ng-repeat="storage in mystorages"><a ng-click="toMyStorageDoor(storage.id)">
+	               <li ng-repeat="storage in hasDoorStorages"><a ng-click="toMyStorageDoor(storage.id)">
 	                 <i class="fa fa-circle-o"></i>{{storage.name}}</a>
 	               </li>
 	              </ul>
