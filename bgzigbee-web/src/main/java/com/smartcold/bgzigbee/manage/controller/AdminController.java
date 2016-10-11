@@ -45,15 +45,20 @@ public class AdminController extends BaseController {
 	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Object login(HttpServletRequest request, String adminName, String adminPwd, Integer adminRole) {
-		adminPwd = EncodeUtil.encodeByMD5(adminPwd);
-		AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
-		if (admin != null) {
-			String cookie = cookieService.insertCookie(adminName);
-		    admin.setAdminpwd("******");
-			request.getSession().setAttribute("admin", admin);
-	    	return	ResponseData.newSuccess(String.format("token=%s", cookie));
+		try {
+			adminPwd = EncodeUtil.encodeByMD5(adminPwd);
+			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
+			if (admin != null) {
+				String cookie = cookieService.insertCookie(adminName);
+			    admin.setAdminpwd("******");
+				request.getSession().setAttribute("admin", admin);
+				return	ResponseData.newSuccess(String.format("token=%s", cookie));
+			}
+			return ResponseData.newFailure("用户名或者密码不正确！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseData.newFailure("数据连接异常！请稍后重试！");
 		}
-	  	return ResponseData.newFailure();
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -109,8 +114,8 @@ public class AdminController extends BaseController {
 					CookieEntity effectiveCookie = cookieService
 							.findEffectiveCookie(cookie.getValue());
 					if (effectiveCookie != null) {
-						admin = adminDao.findAdminByName(effectiveCookie
-								.getUsername());
+						admin = adminDao.findAdminByName(effectiveCookie.getUsername());
+						if(admin==null)return ResponseData.newSuccess(new AdminEntity());
 						admin.setAdminpwd("******");
 						request.getSession().setAttribute("admin", admin);
 						return ResponseData.newSuccess(admin);

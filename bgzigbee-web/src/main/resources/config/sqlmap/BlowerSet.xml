@@ -13,12 +13,30 @@
 	    UPDATE `BlowerSet` SET mapping=#{mapping}
 	    WHERE `id` = #{id}
 	</update>
+	<update id="updateBlower" parameterType="map">
+	    UPDATE `BlowerSet` 
+	   <set >
+			<if test="blowerId                !=0">blowerId               =#{blowerId               },</if>
+			<if test="compressorGroupId       !=0">compressorGroupId      =#{compressorGroupId      },</if>
+			<if test="coldStorageId           !=0">coldStorageId          =#{coldStorageId          },</if>
+			<if test="defrostingTemperature   !=0">defrostingTemperature  =#{defrostingTemperature  },</if>
+			<if test="mapping                 !=null">mapping                =#{mapping                },</if>
+			<if test="name                    !=null">name                   =#{name                   },</if>
+			<if test="power                   !=0">power                  =#{power                  },</if>
+			<if test="fanPower                !=0">fanPower               =#{fanPower               },</if>
+			<if test="frostPower              !=0">frostPower             =#{frostPower             }</if>
+        </set>
+	    WHERE `id` = #{id}
+	</update>
 	
 	<insert id="insertBlower">
 	    INSERT INTO `blowerset` 
 	    (
 	    `name`, 
 	    `blowerId`, 
+	    `power`, 
+	    `fanPower`, 
+	    `frostPower`, 
 	    `compressorGroupId`, 
 	    `coldStorageId`, 
 	    `defrostingTemperature`
@@ -27,6 +45,9 @@
 	    (
 	    #{name},
 	    #{blowerId}, 
+	    #{power     },
+	    #{fanPower  },
+	    #{frostPower},
 	    #{compressorGroupId}, 
 	    #{coldStorageId},
 	    #{defrostingTemperature}

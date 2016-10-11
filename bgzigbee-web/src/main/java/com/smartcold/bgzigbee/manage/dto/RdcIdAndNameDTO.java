@@ -4,9 +4,12 @@ package com.smartcold.bgzigbee.manage.dto;
  * Created by corly on 16-8-17.
  */
 public class RdcIdAndNameDTO {
-    private String table;
     private int rdcid;
+    private String table;
     private String name;
+    private double power;
+    private String mapping;
+    
 
     public String getTable() {
         return table;
@@ -31,4 +34,22 @@ public class RdcIdAndNameDTO {
     public void setName(String name) {
         this.name = name;
     }
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
+	}
+
+	public String getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(String mapping) {
+		this.mapping = mapping;
+	}
+    
+    
 }

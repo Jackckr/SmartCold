@@ -338,13 +338,16 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	    if (sets.length <1)
 	        return;
         angular.forEach(sets, function (item, index) {
-            sets[index].mapping = JSON.parse(sets[index].mapping);
+        	if(item.mapping!=""){
+              sets[index].mapping = JSON.parse(item.mapping);
+        	}
         })
     }
 
 	$scope.compressorSet={};
 	$scope.addCompress = function () {
 		var object = $scope.compressorSet;
+		if($scope.vm.choseCompressGroup==undefined){alert("请设置压缩机组对象！");return;}
 		object.compressorgroupid=$scope.vm.choseCompressGroup.id;
 		$http.post("/i/compressorGroup/saveCompressor", object).then(function (resp) {
 			alert(resp.data.message);
@@ -356,6 +359,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.windScreenSet = {}
 	$scope.addWindScreen = function () {
 		var object = $scope.windScreenSet;
+		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		object.coldStorageId = $scope.vm.choseStorage.id;
 		$http.post("/i/spiderConfig/add/windscreenset", object).then(function (resp) {
 			alert(resp.data.message);
@@ -433,10 +437,12 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 
     $scope.addRdcIdAndName = function (obj, table) {
         obj.rdcid = $scope.vm.choseRdc.id;
-        obj.table = table+'set';
+        obj.table = table;
+        debugger;
         $http.post("/i/spiderConfig/add/rdcidAndName", obj).then(function (resp) {
             alert(resp.data.message);
             obj.name = '';
+            obj.power = '';
             $scope.changeRdc();
         })
     }
@@ -695,6 +701,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.addBlower = function(){
+		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		$scope.blowerEntity.coldStorageId = $scope.vm.choseStorage.id;
 		$http.post("/i/blower/insertBlower",$scope.blowerEntity).success(function(data,status,config,headers){
 			alert(data.message);
@@ -718,16 +725,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$http.post(url).success(function(data,status,headers,config){
 				alert(data.message);
 				$scope.changeRdc();
-			});
-		}
-	}
-	
-	$scope.deleteBlower = function(id){
-		if(confirm("确定删除?")){
-			url = '/i/blower/deleteBlower?id=' + id;
-			$http.post(url).success(function(data,status,headers,config){
-				alert(data.message);
-				$scope.changeStorage();
 			});
 		}
 	}

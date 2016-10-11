@@ -391,7 +391,7 @@ public class RdcController {
 		rdcExtEntity.setStoragerefreg((byte) rdcAddDTO.getStorageRefreg());
 		rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
 		String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
-				+ rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity4();
+				+ rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity5();
 		String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
 				+ rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
 		rdcExtEntity.setStoragecapacity(capacity);

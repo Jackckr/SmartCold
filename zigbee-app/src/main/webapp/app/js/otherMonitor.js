@@ -111,6 +111,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 time.push(formatTime(item.collectionTime));
             })
             barOption = {
+            	backgroundColor: '#D2D6DE',
                 tooltip: {
                     trigger: 'axis',
                     textStyle: {
@@ -505,7 +506,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 if ($scope.swiper < $scope.compressorGroups.length) {
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">' + compressor.name + '</p>' +
-                        '<div id=' + mainfloatId + ' style="min-height:10rem;"></div>' +
+                        '<div id=' + mainfloatId + ' style="min-height:10rem;margin-bottom:0.3rem;"></div>' +
                         '<div id=' + mainexTempId + ' style="height: 10rem;"></div>' +
                         '</div>';
                     $("#chartView").last().append(innerHTML);
@@ -605,6 +606,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 })
 
                 var option = {
+                	backgroundColor: '#D2D6DE',
                     legend: {
                         data: ['高温警戒线', '低温警戒线', '当前温度'],
                         align: 'left',

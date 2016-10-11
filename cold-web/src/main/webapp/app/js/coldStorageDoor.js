@@ -132,7 +132,7 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
                             groupPadding: 0, //分组之间的距离值
                             borderWidth: 0,
                             shadow: false,
-                            pointWidth:48, //柱子之间的距离值
+                            pointWidth:5, //柱子之间的距离值
                             data: (function () {
                                /* // generate an array of random data
                                 var data = [],

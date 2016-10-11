@@ -555,6 +555,9 @@ section{
 	position: relative;
 	line-height: 1.9rem;
 }
+.review_s{
+	margin-right:0;
+}
 .search input{
 	position: absolute;
 	top:0;
@@ -577,6 +580,30 @@ section{
 	right: 0.5rem;
 	z-index: 1;
 	background-size: cover;
+}
+.searchList{
+	position: absolute;
+	top:101%;
+	left: 0;
+	width:100%;
+	border:1px solid #ccc;
+	border-bottom:0;
+	background: #fff;
+	border-radius:.2rem;
+	box-sizing:border-box;
+	display: none;
+}
+.searchList li{
+	width:100%;
+	border-bottom:1px solid #ccc;
+	font-size: .7rem;
+	text-align: left;
+	text-indent: .34rem;
+}
+.searchList li a{
+	display: block;
+	color:#666;
+	line-height: 1.75rem;
 }
 .delete{
 	text-align: center;

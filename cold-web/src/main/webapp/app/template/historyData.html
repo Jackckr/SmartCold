@@ -3,6 +3,7 @@
 		.groupobj .sl_drop {float: right;position: relative;margin: -24px 10px 0px 0px;color: #000000;font-size: 10px;}
 		.groupobj .sl_drop_data {position: absolute;z-index: 2;background: white;border: 1px solid #ccc;color: black;}
 		#filter_div ul {padding: 0px;}
+		#val_list_div label{padding: 10px 10px 5px 10px;}
 		#filter_div li{list-style-type:none;display:block;border:2px solid #ccc;margin-top:5px;cursor:pointer;padding:3px 20px;border-radius:3px}
 		.ul_key_list{margin-bottom:20px}.ul_key_list li{float:left;margin:5px 2px;padding:5px 5px}#filter_div li.select{border-color:#0095ff!important;padding:3px 20px;position:relative}#filter_div li.select:after{content:"";position:absolute;bottom:0;right:0;width:20px;height:20px;background:url("../assets/img/icon-right.png")}#val_list_div ul{float:left;width:100%;height:100%;overflow:hidden;display:block}.ng-hide{height:0;width:0;background-color:transparent;left:-200px;height:100px}
 </style>
@@ -15,7 +16,7 @@
 			<div class="col-md-12">
 				<!-- 查询数据展示  -->
 				<div class="col-lg-12">
-					<div class="col-lg-12">
+					<div class="col-lg-12  clearfix">
 						<div id="filter_sl_div" class="pull-left groupobj" ng-cloak>
 						  <span><span class="form-control sl_group_obj" ng-click='slgroupsl()'>{{sltit}}</span><i class="sl_drop" ng-click='slgroupsl()'>▼</i></span>
 						  <div id="filter_div" class="pull-left sl_drop_data" ng-show="showobjgroup">
@@ -24,7 +25,8 @@
 						       <li  kval="1"  ng-click="showkeyli($event)">冷库电量</li>
 						       <li  kval="2"  ng-click="showkeyli($event)">冷　库　门</li>
 						       <li  kval="3"  ng-click="showkeyli($event)">月　台　门</li>
-						       <li  kval="4"  ng-click="showkeyli($event)" class="hide">压　缩　 机</li>
+						       <li  kval="4"  ng-click="showkeyli($event)">压缩 机组</li>
+						       <li  kval="5"  ng-click="showkeyli($event)">压缩 机-排气温度</li>
 						     </ul>
 						     <div id="val_list_div">
 					            <ul id="Temp_ul_0" > <!-- 	初始化冷库 -->
@@ -39,22 +41,29 @@
 						        <ul id="Temp_ul_3"   class="hide"> <!-- 初始化月台门 -->
 						          <li ng-repeat="obj in platformDoors" oid="{{obj.id}}"  ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
 						       </ul>
-						        <ul id="Temp_ul_4"   class="hide"> <!-- 初始化压缩机组-->
-							        <ul id="Temp_ul_5"   > <!-- 初始化压缩机组-->
-							          <li class="select">高压</li>
-							          <li class="select">低压</li>
-							          <li class="select">排气温度</li>
-							       </ul>
-						          <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						       <ul id="Temp_ul_4"  class="hide"> <!-- 初始化压缩机组-->
+							         <div>
+										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('highPress','高压')" checked >高压</label>
+										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('lowPress','低压' )">低压</label>
+							        </div>
+						           <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						       </ul>
+						       <ul id="Temp_ul_5" class="hide" key="exTemp"> <!-- 初始化压缩机-->
+							        <div>
+										   <label class="checkbox-inline" ng-repeat="obj in compressorGroups"><input type="radio"  name="cmptkey" value="{{obj.id}}"  ng-click="chexTemp($event)">{{obj.name}}</label>
+							        </div>
+							        <span  ng-repeat="(key,value) in  compressorGroups" id="Temp_ul_5_key_span_{{value.id}}" class="hide"> 
+						                <li ng-repeat="obj in  value.compressors"  ng-click="selkeyvl($event)" oid="{{obj.id}}"  class="select">{{obj.name}}</li>
+                					</span> 
 						       </ul>
 						     </div>
 						  </div>
 						</div>
-						<form class="navbar-form navbar-left " style="margin-top: 0px;" >
+						<form class="navbar-form navbar-left" style="margin-top: 0px;padding:0;" >
 							&nbsp;&nbsp;
 							<div class="form-group">
 								<label>时间范围：</label>
-								<div class="input-group">
+								<div class="input-group" style="z-index: 0;">
 									<div class="input-group-addon">
 										<i class="fa fa-clock-o"></i>
 									</div>

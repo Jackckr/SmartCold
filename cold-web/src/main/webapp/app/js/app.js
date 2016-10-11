@@ -462,5 +462,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/baoyangReminder',
     	controller: 'baoyangReminder',
         templateUrl: 'app/template/baoyangReminder.html'
+    }).state('hotAnalysis',{
+    	url:'/hotAnalysis',
+    	controller: 'hotAnalysis',
+        templateUrl: 'app/template/hotAnalysis.html'
     });
 });
