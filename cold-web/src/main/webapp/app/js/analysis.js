@@ -1,6 +1,7 @@
 coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
 	$scope.load = function(){
 		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
 		var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
 		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
@@ -16,8 +17,9 @@ coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $loc
 				$timeout(function(){					
 					xData = []
 					yData = []
-					var chartId = "#" + key + "Chart"
-					var chart = echarts.init($(chartId).get(0));
+					var chartId = key + "Chart"
+					var chart = echarts.init(document.getElementById(chartId));
+					$scope.showMap[chartId] = storage['ChaoWenShiJian'].length
 					angular.forEach(storage['ChaoWenShiJian'],function(item){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData.unshift(item['value'] / 60)
@@ -35,6 +37,7 @@ coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $loc
 coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
 	$scope.load = function(){
 		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
 		var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
 		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
@@ -51,8 +54,9 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 					yData1 = []
 					yData2 = []
 					xData = []
-					var chartId = "#" + key + "Chart"
-					var chart = echarts.init($(chartId).get(0));
+					var chartId = key + "Chart"
+					var chart = echarts.init(document.getElementById(chartId));
+					$scope.showMap[chartId] = storage['ChaoWenYinZi'].length || storage['MaxTemp'].length
 					angular.forEach(storage['ChaoWenYinZi'],function(item,index){
 						yData1.unshift(storage['ChaoWenYinZi'][index]['value'])
 						yData2.unshift(storage['MaxTemp'][index]['value'])
@@ -125,6 +129,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
 	$scope.load = function(){
 		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
 		var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
 		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
@@ -140,8 +145,9 @@ coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $htt
 				$timeout(function(){					
 					xData = []
 					yData = []
-					var chartId = "#" + key + "Chart"
-					var chart = echarts.init($(chartId).get(0));
+					var chartId = key + "Chart"
+					var chart = echarts.init(document.getElementById(chartId));
+					$scope.showMap[chartId] = storage['BaoWenYinZi'].length
 					angular.forEach(storage['BaoWenYinZi'],function(item){
 						yData.unshift(item['value'])
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
@@ -159,6 +165,7 @@ coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $htt
 coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
 	$scope.load = function(){
 		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
 		var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
 		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
@@ -175,8 +182,9 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 					xData = []
 					yData1 = []
 					yData2 = []
-					var chartId = "#" + key + "Chart"
-					var chart = echarts.init($(chartId).get(0));
+					var chartId = key + "Chart"
+					var chart = echarts.init(document.getElementById(chartId));
+					$scope.showMap[chartId] = storage['JiangWenYinZi'].length || storage['ShengWenYinZi'].length
 					angular.forEach(storage['JiangWenYinZi'],function(item,index){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData1.unshift(0 - storage['JiangWenYinZi'][index]['value'])
@@ -250,6 +258,7 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
 	$scope.load = function(){
 		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
 		var endTime = new Date();
         var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
 		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
@@ -267,9 +276,11 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 					yData1 = []
 					yData2 = []
 					yData3 = []
-					var chartId = "#" + key + "Chart"
-					var chart1 = echarts.init($(chartId + "1").get(0));
-					var chart2 = echarts.init($(chartId + "2").get(0));
+					var chartId = key + "Chart"
+					var chart1 = echarts.init(document.getElementById(chartId + "1"));
+					var chart2 = echarts.init(document.getElementById(chartId + "2"));
+					$scope.showMap[chartId + '1'] = storage['DoorTotalTime'].length
+					$scope.showMap[chartId + '2'] = storage['DoorTotalTime'].length
 					angular.forEach(storage['DoorTotalTime'],function(item,index){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData1.unshift((item['value'] / 60).toFixed(2))

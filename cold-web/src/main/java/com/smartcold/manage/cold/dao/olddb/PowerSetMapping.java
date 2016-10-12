@@ -9,6 +9,9 @@ import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 public interface PowerSetMapping {
 
 	PowerSetEntity findById(@Param("id") int id);
-
+	
 	List<PowerSetEntity> findByRdcId(@Param("rdcId") int rdcId);
+	
+	List<PowerSetEntity> findByFilter( @Param("iunbalance")Integer iunbalance,   @Param("oid") String  oid);
+	
 }

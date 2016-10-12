@@ -265,3 +265,23 @@ ul,li {
 	font-size: 14px;
 	color: #2b3046;
 }
+/*优化部分css*/
+.tNum,.tUiit{
+	color: coral
+}
+@media (min-width: 768px){
+	.tNum{font-size:2em;}
+	.tUiit{font-size:1em;}
+}
+@media (max-width: 768px){
+	.tNum{font-size:2em;}
+	.tUiit{font-size:1em;}
+}
+@media (min-width: 992px){
+	.tNum{font-size:3em;}
+	.tUiit{font-size:2em;}
+}
+ @media (min-width: 1200px){
+	.tNum{font-size:5em;}
+	.tUiit{font-size:2.5em;}
+} 

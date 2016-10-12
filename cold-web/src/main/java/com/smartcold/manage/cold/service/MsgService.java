@@ -7,9 +7,15 @@ package com.smartcold.manage.cold.service;
  *
  */
 public interface MsgService {
+    /**
+	 * 检查异常数据
+     */
+    public void checkData();
 	 /**
      * 检查AP任务
      */
     public void checkAPStatus();
+    
+   
 
 }

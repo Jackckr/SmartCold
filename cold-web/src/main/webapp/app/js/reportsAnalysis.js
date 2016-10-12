@@ -7,31 +7,26 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	$scope.begin = $scope.getDateTimeStringBefore(3).substr(0,10),$scope.end =$scope.getDateTimeStringBefore(0).substr(0,10),$scope.picktime = $scope.begin + ' - ' + $scope.end  ; 
 	$scope.slindex=0,$scope.urlid=0,$scope.sltit="日耗电量",$scope.tabletit=null,$scope.rs_msg=null,isSuccess=false,$scope.coldstoragedoor=undefined,$scope.StorageBlower=undefined, $scope.prove=undefined;//冷库门
 	$('#reservationtime').daterangepicker({startDate:$scope.begin,endDate:$scope.end , timePicker: false, timePickerIncrement: 1, format: 'YYYY-MM-DD'});
-	//
+	//key
 	var typemode={
 			      type:[10,3,2,1,-1,4,-1],
 			      unit:[null,null,[1,60],[60,1,1,1],null,[3600,3600],null],//换算单位
 			      unite:["　(kW·h)","　(T)","","","","",""],
 			      title:["电量","水耗","冷库门","温度分析","热量","冷风机","系统效率"],
-			      key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime';次数,时长(min)","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)","","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)",""] };
-
-    $scope.getsldata=function(){//拦截未加载数据
-    	if(($scope.slindex==2&&$scope.coldstoragedoor==undefined)||($scope.slindex==5&&$scope.StorageBlower==undefined)){
-	    	if($scope.prove==undefined){$scope.prove={};$.each($rootScope.mystorages, function(i, vo){ $scope.prove[vo.id]=vo.name;});}
-	    	if($scope.slindex==2){
-	    		if($scope.coldstoragedoor==undefined){//冷库门->开门
-	    			$http.get("/i/AnalysisController/getColdStorageDoor",{params:{'rdcId':$scope.rdcid}}).success(function(data){
-	    				$.each(data, function(i, vo){vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; });$scope.coldstoragedoor=data;
-	    			});
-	    		};
-	    	}else if($scope.slindex==5){
-	    		if($scope.StorageBlower==undefined){//blower->冷风机
-	    			$http.get("/i/AnalysisController/getColdStorageBlower",{params:{'rdcId':$scope.rdcid}}).success(function(data){
-	    				 $.each(data, function(i, vo){vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; }); $scope.StorageBlower=data;
-	    			});
-	    		};
-	    	}}
-    };
+			      key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime';次数,时长(min)","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)","","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)",""] 
+	};
+    function gettbcltit(value,cl){//获取标题1
+	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';
+    }
+	function getbdltit(value){//获取标题2
+	    if(value==null||value==''||value=='null'){
+	    	return '<td>0</td>';
+	    }else{
+	    	if( typeof value=="number"&& $scope.slindex!=3){return "<td>"+value.toFixed(2)+"</td>";}//排除温度因子
+	    	return "<td>"+value+"</td>";
+	    }
+	 }
+    //获得配置数据
     function getcofinData(){
     	var data=null, datainf=[];
     	switch($scope.slindex)
@@ -51,6 +46,19 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
     	$scope.tabletit=datainf;
     	return JSON.stringify(datainf);
     }
+    $scope.getsldata=function(){//拦截未加载数据
+    	if($scope.slindex==2&&$scope.coldstoragedoor==undefined||$scope.slindex==5&&$scope.StorageBlower==undefined){
+	    	if($scope.prove==undefined){$scope.prove={};$.each($rootScope.mystorages, function(i, vo){ $scope.prove[vo.id]=vo.name;});}
+	    	if($scope.slindex==2){//冷库门->开门
+	    			$http.get("/i/AnalysisController/getColdStorageDoor",{params:{'rdcId':$scope.rdcid}}).success(function(data){
+	    				$.each(data, function(i, vo){vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; });$scope.coldstoragedoor=data;
+	    			});
+	    	}else if($scope.slindex==5){//blower->冷风机
+	    			$http.get("/i/AnalysisController/getColdStorageBlower",{params:{'rdcId':$scope.rdcid}}).success(function(data){
+	    				 $.each(data, function(i, vo){vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; }); $scope.StorageBlower=data;
+	    			});
+	    	}}
+    };
 	$scope.search = function(isexpt){//查询数据
 		isSuccess=false,$scope.rs_msg=null;$scope.isLoaddata=true; 
 	    var datainfo=getcofinData();
@@ -72,7 +80,7 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
             }
         });
 	};
-	$scope.subform=function(sid){//创建下载表单
+	$scope.subform=function(sid){//创建无刷新下载表单
 		$("#rpt_expxls").attr("disabled",true);
         var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/AnalysisController/expSISAnalysisData').attr('id', "expdataform");
         expfrom.attr("Content-Type","application/json;charset=UTF-8");
@@ -83,17 +91,7 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
         setTimeout(function () {$("#rpt_expxls").attr("disabled",false); }, 3000);
    };
 	
-	function getbdltit(value){
-	    if(value==null||value==''||value=='null'){
-	    	return '<td>0</td>';
-	    }else{
-	    	if( typeof value=="number"&& ($scope.slindex==0||$scope.slindex==1))
-	    	return "<td>"+value+"</td>";
-	    }
-    }
-	function gettbcltit(value,cl){
-	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';
-    }
+	//开始绘制表格
 	$scope.dldata=function(data){//处理单key
          var tbdata=data.entity.tbdata;
          var tit=[],tboy=[]; 
@@ -120,10 +118,8 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 		subtit.push("</tr>");tit.push("</tr>");
 		if(tbdata){//有数据
 			$.each(tbdata, function(i, vo){
-				var tr="<tr><td>"+i+"</td>"; 
-			   $.each(vo, function(j, jvo){  tr+=getbdltit(jvo);  }); 
-			   tr+="</tr>";
-			   tboy.push(tr);
+				var tr="<tr><td>"+i+"</td>";  $.each(vo, function(j, jvo){  tr+=getbdltit(jvo);  });  tr+="</tr>";
+			    tboy.push(tr);
 			 });
 		}else{//没有数据
 			tboy.push("<tr><td  colspan='"+(subtit.length-1)+"'><div class='alert alert-info  text-center'>没有查询到数据！</div></td></tr>"); 

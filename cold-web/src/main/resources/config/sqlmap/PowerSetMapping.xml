@@ -13,5 +13,11 @@
 		SELECT *
 		FROM `powerset` WHERE `rdcId` = #{rdcId}
 	</select>
+	
+	<select id="findByFilter" parameterType="map" resultType="PowerSetEntity">
+		SELECT * FROM `powerset` where 1=1  
+		<if test="oid!=null and oid!=''"> and id in(${oid})</if>  
+		<if test="iunbalance!=null"> and iunbalance>${iunbalance}</if> 
+	</select>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -38,13 +40,8 @@ public class WarningController extends BaseController {
 		List<WarningsInfo> warningsInfoList = warningsInfoDao.findLastNWarningInfo(rdcId, point);
 		List allInfoList = new ArrayList();
 		for (WarningsInfo warningInfo : warningsInfoList) {
-			// String warningName =
-			// warningsSetDao.findWarningSetById(warningInfo.getObjId()).getName();
-			// String warningName =
-			// warningsSetDao.findWarningSetById(1).getName();
 			Map map = new HashMap();
 			map.put("addtime", warningInfo.getAddtime());
-			// map.put("warningName", warningName);
 			map.put("level", warningInfo.getLevel());
 			map.put("id", warningInfo.getId());
 			allInfoList.add(map);
@@ -90,5 +87,22 @@ public class WarningController extends BaseController {
 		}
 
 	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@ResponseBody
+	public void test() {
+		String dataMode[][]={{"apid1","apid2","apid3","apid4"},{"1","2","3","4"},{"AU","BU","CU","AI","BI","CI","Temp","WaterCost","isRunning","exTemp"}};
+		StorageDataCollectionEntity obj=null;
+		List<StorageDataCollectionEntity> arrayList =new ArrayList<StorageDataCollectionEntity>();
+		for (int i = 0; i < dataMode[0].length; i++) {
+			for (int j = 0; j <dataMode[2].length; j++) {
+				obj=new StorageDataCollectionEntity(dataMode[0][i],dataMode[1][i],dataMode[2][j],(i*j+2)+"",new Date());
+				arrayList.add(obj);
+			}
+		}
+		WarLogController.addextTask(arrayList);
+	}
+	
+	
 
 }

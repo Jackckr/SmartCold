@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.manage.cold.dao.newdb.PowerMapper">
+
+     <select id="findUBlowerByTime" parameterType="map" resultType="PowerEntity">
+       SELECT *  FROM `power`  where  `value` =0 and `key` LIKE  '_U' and `addtime` >#{startTime};
+     </select>
+     
+     <select id="findIBlowerByTime" parameterType="map" resultType="PowerEntity">
+            SELECT *  from
+	(
+		SELECT id,
+			`key`,
+			`value`,
+			CASE
+		WHEN (
+			(MAX(`value`) - MIN(`value`)) / MAX(`value`) * 100
+		) > #{iunbalance} THEN
+			1
+		ELSE
+			0
+		END AS vl
+		FROM
+			`power`
+		WHERE
+		  oid=#{oid}  
+		AND	`key` LIKE '_I'
+		AND `value` > 10
+		AND `addtime` > #{startTime}
+		GROUP BY
+			`addtime`,
+			`oid`
+		ORDER BY
+			`addtime` ASC
+	) as c WHERE c.vl = 1
+     </select>
+		
+
+</mapper>

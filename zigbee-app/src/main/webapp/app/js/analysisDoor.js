@@ -169,6 +169,11 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                             }
                         }
                     ],
+                    grid: {
+                        x: 40,
+                        y: 50,
+                        width: '80%'
+                    },
                     series: [
                         {
                             name: '开门时长',
@@ -288,6 +293,11 @@ app.controller('analysisDoor', function ($scope, $location, $http, $rootScope, $
                     min: yMin ? yMin : 0
                 }
             ],
+            grid: {
+                x: 45,
+                y: 50,
+                width: '80%'
+            },
             series: [
                 {
                     name: lineName,

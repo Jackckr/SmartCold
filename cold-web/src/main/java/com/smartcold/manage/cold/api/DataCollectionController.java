@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.controller.BaseController;
+import com.smartcold.manage.cold.controller.WarLogController;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
@@ -36,8 +37,7 @@ public class DataCollectionController extends BaseController {
 	@ResponseBody
 	public Object storageDataCollection(@RequestBody String data, HttpServletResponse response) {
 		try {
-			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {
-			}.getType());
+			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String apID = dataCollectionBatchEntity.get("apID").toString();
 			ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
 			for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
@@ -49,6 +49,7 @@ public class DataCollectionController extends BaseController {
 				}
 			}
 			storageDataCollectionDao.batchInsert(arrayList);
+			//WarLogController.addextTask(arrayList);//放入线程池 检查是否报警
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new DataResultDto(500);
@@ -71,5 +72,7 @@ public class DataCollectionController extends BaseController {
 
 		return storageDataCollectionDao.findByTime(apid, deviceid, key, startTime, endTime);
 	}
+	
+
 
 }
