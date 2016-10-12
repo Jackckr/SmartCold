@@ -1,16 +1,22 @@
 package com.smartcold.manage.cold.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.util.SetUtil;
 
 /**
@@ -21,6 +27,7 @@ import com.smartcold.manage.cold.util.SetUtil;
 @Controller
 @RequestMapping(value = "/warlog")
 public class WarLogController extends BaseController {
+	
 	private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 	private static final ExecutorService executorService = Executors.newFixedThreadPool(10, threadFactory);
 	
@@ -35,15 +42,31 @@ public class WarLogController extends BaseController {
 }
 
 class SubTask implements Runnable {
+	@Autowired
+	private DeviceObjectMappingMapper deviceObjectMappingMapper;
+	@Autowired
+	private ColdStorageSetMapper coldStorageSetMapper;
 	List<StorageDataCollectionEntity> arrayList;
     public SubTask(List<StorageDataCollectionEntity> data) { this.arrayList = data;  }
 	@Override
     public void run() {
       if(SetUtil.isNullList(arrayList))return;
       try {
+    	  List<WarningsInfo> errInfoList=new ArrayList<WarningsInfo>();
 	       for (StorageDataCollectionEntity sdet : arrayList) {
-				System.err.println(sdet.getKey());
-	       }
+	    	   if (sdet.getKey().equals("Temp")) {
+	    		  List<DeviceObjectMappingEntity> deviceObjectMappingList =  deviceObjectMappingMapper.findByTypeDeviceId(1, sdet.getDeviceid());
+	    		  for (DeviceObjectMappingEntity deviceObjectMappingEntity : deviceObjectMappingList) {
+	    			  ColdStorageSetEntity coldStorageSetEntity =  coldStorageSetMapper.findById(deviceObjectMappingEntity.getOid());
+	    			  if (Double.parseDouble(sdet.getValue())>(coldStorageSetEntity.getStartTemperature()+coldStorageSetEntity.getOvertempalarm())) {
+	    				  WarningsInfo warningsInfo = new WarningsInfo();
+	    				  warningsInfo.setRdcId(coldStorageSetEntity.getRdcId());
+	    				  warningsInfo.setWarningname(coldStorageSetEntity.getName()+sdet.getKey()+"温度异常");
+	    				  errInfoList.add(warningsInfo);
+					}
+				}
+			  }
+	      }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

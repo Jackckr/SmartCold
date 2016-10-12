@@ -8,18 +8,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.PowerMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
+import com.smartcold.manage.cold.dao.newdb.NewColdStorageMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.PowerEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.entity.olddb.WarningMsgEntity;
 import com.smartcold.manage.cold.enums.StorageType;
@@ -28,6 +30,7 @@ import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
+import com.smartcold.manage.cold.entity.newdb.NewColdStorageEntity;
 
 /**
  * Copyright (C) DCIS 版权所有 功能描述: MsgServiceimp Create on MaQiang
@@ -42,6 +45,10 @@ public class MsgServiceimp implements MsgService {
 	private MessageMapper megMapper;
 	@Autowired
 	private PowerMapper powerMapper;
+	@Autowired
+	private ColdStorageSetMapper coldStorageSetMapper;
+	@Autowired
+	private NewColdStorageMapper newColdStorageMapper;
 	@Autowired
 	private PowerSetMapping powerSetMapping;
 	@Autowired
@@ -147,7 +154,7 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 检查数据是否执行报警
 	 */
-	@Scheduled(cron = "0 0/1 * * * ?")
+//	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData(){
 		System.err.println("开始工作。。。。。。。");
 		WarningsInfo waInfo=null;
@@ -198,7 +205,21 @@ public class MsgServiceimp implements MsgService {
 		}	
 		
 		//溫度報警
-		
+		List<ColdStorageSetEntity> coldStorageSetList = this.coldStorageSetMapper.findByFilter(0);
+		if (SetUtil.isnotNullList(coldStorageSetList)) {
+			for (ColdStorageSetEntity coldStorageSetEntity : coldStorageSetList) {
+				List<NewColdStorageEntity> iBlowerList = this.newColdStorageMapper.findIBlowerByTime(coldStorageSetEntity.getId(), 
+						coldStorageSetEntity.getStartTemperature()+coldStorageSetEntity.getOvertempalarm(), coldStorageSetEntity.getOvertempdelay(),"Temp", startTime);
+				if (SetUtil.isnotNullList(iBlowerList)) {
+					for (NewColdStorageEntity newColdStorageEntity : iBlowerList) {
+						waInfo=new WarningsInfo();
+						waInfo.setRdcId(coldStorageSetEntity.getRdcId());
+						waInfo.setWarningname(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");
+					}
+				}
+				
+			}
+		}
 		
 		
 		

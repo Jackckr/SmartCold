@@ -24,6 +24,10 @@ public class ColdStorageSetEntity {
 	private String location;
 
 	private float tempdiff;
+	
+	private float overtempalarm;
+	
+	private float overtempdelay;
 
 	public float getTempdiff() {
 		return tempdiff;
@@ -104,4 +108,21 @@ public class ColdStorageSetEntity {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	public float getOvertempalarm() {
+		return overtempalarm;
+	}
+
+	public void setOvertempalarm(float overtempalarm) {
+		this.overtempalarm = overtempalarm;
+	}
+
+	public float getOvertempdelay() {
+		return overtempdelay;
+	}
+
+	public void setOvertempdelay(float overtempdelay) {
+		this.overtempdelay = overtempdelay;
+	}
+	
 }
