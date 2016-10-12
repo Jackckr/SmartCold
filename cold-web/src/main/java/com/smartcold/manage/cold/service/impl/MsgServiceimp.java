@@ -8,13 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.PowerMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
 import com.smartcold.manage.cold.dao.newdb.NewColdStorageMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.BlowerSetMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
@@ -22,6 +25,7 @@ import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.PowerEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
+import com.smartcold.manage.cold.entity.olddb.BlowerSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.entity.olddb.WarningMsgEntity;
 import com.smartcold.manage.cold.enums.StorageType;
@@ -57,15 +61,20 @@ public class MsgServiceimp implements MsgService {
 	private WarningsInfoMapper warningsInfoMapper;
 	@Autowired
 	private DeviceObjectMappingMapper deviceMapper;
-
 	
-
+	/**
+	 * 计算Q
+	 */
+	@Autowired
+	private BlowerSetMapper blowerSetMapper;
+	@Autowired
+	private ColdStorageAnalysisMapper  sisMapper;
 	/**
 	 * stupe 1.检查哪些库进行关联配置 2.将配置对象放进线程池进行监听保护 StorageService-》findByTime
 	 * 3.超过系统规定时间 ，发送短信通知。。
 	 * 
 	 */
-//	@Scheduled(cron = "0 0/30 * * * ?")
+	//@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkAPStatus() {
 		List<Map<String, Object>> findRdcManger = this.rdcMapper.findRdcManger();// 查找监听保护对象
 		Map<Integer, String> telMap = new HashMap<Integer, String>();
@@ -224,6 +233,23 @@ public class MsgServiceimp implements MsgService {
 		
 		
 	}
+	
+	/**
+	 * 计算热量
+	 * 每天凌晨两点触发 
+	 */
+//	@Scheduled(cron = "0 15 02 * * ?")
+	public void reckonQuantity(){
+//		List<BlowerSetEntity> findByFilter = this.blowerSetMapper.findByFilter(null, null, new Double(0));//Q风	
+//		
+		
+//		this.sisMapper.findValueByFilter(filter)
+		
+		
+		
+		
+	}
+	
 	public static void main(String[] args) {
 		
 	}

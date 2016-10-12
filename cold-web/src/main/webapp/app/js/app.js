@@ -466,5 +466,16 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/hotAnalysis',
     	controller: 'hotAnalysis',
         templateUrl: 'app/template/hotAnalysis.html'
+    }).state('alarmLog',{
+    	url:'/alarmLog',
+    	controller: 'alarmLog',
+        templateUrl: 'app/template/alarmLog.html'
     });
 });
+
+
+//导航栏选中的高亮显示
+function activeLi(ops){
+	$('.my_sidebar li').removeClass('active');
+	$(ops).addClass('active');
+}

@@ -1,6 +1,7 @@
 <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;min-height:700px;">
 <style>
 	.btn_group button{margin-bottom:10px;}
+	.nav>li>a{padding:10px;}
 </style>
     <div>
         <form class="navbar-form">
@@ -17,6 +18,7 @@
                     <uib-tab-heading>
                         <i class="fa fa-table"></i>添加监控属性
                     </uib-tab-heading>
+                    <br/>
                     <div class="col-lg-12">
                         <div class="col-lg-5">
                             <form class="form-horizontal">
@@ -112,20 +114,20 @@
                         </form>
                         <!--  -->
                         <form id="addStorage" ng-show="choseDevice.name == '添加冷库'" class="col-lg-12 form-horizontal">
-                            <div style="margin-top:30px;" class="col-lg-5">
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4"><em style="color:red">*</em>冷库名:</label>
-                                    <div class="col-lg-8">
+                            <div style="margin-top:30px;" class="col-lg-12 row">
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6"><em style="color:red">*</em>冷库名:</label>
+                                    <div class="col-lg-4">
                                         <input style="width:250px;" ng-model="storageEntity.name" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4">理论能耗(KJ/h):</label>
-                                    <div class="col-lg-8">
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">理论能耗(KJ/h):</label>
+                                    <div class="col-lg-4">
                                         <input style="width:250px;" ng-model="storageEntity.energyCost" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                               <!--  <div class="form-group">
                                     <label class="control-label col-lg-4">冷库经度(°):</label>
                                     <div class="col-lg-8">
                                         <input style="width:250px;" ng-model="storageEntity.longitude" class="form-control" />
@@ -142,42 +144,84 @@
                                     <div class="col-lg-8">
                                         <input style="width:250px;" ng-model="storageEntity.location" class="form-control" />
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4">起始温度(℃):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-8">
+                                </div> -->
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">起始温度(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
                                         <input style="width:250px;" ng-model="storageEntity.startTemperature" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4">温度差(℃):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-8">
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">温度差(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
                                         <input style="width:250px;" ng-model="storageEntity.tempdiff" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4">超温报警值(℃):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-8">
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">超温报警值(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
                                         <input style="width:250px;" ng-model="storageEntity.overtempalarm" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4">超温报警延时(s):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-8">
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">超温报警延时(s):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
                                         <input style="width:250px;" ng-model="storageEntity.overtempdelay" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-8">
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">冷库长(m):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="storageEntity.length" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">冷库宽(m):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="storageEntity.width" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">冷库高(m):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="storageEntity.height" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">冷库内部湿度(%RH):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="storageEntity.inhumidity" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">冷库外部湿度(%RH)：&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="storageEntity.outhumidity" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">冷库内部温度(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="storageEntity.intempe" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="control-label col-lg-6">冷库外部温度(℃):&nbsp;&nbsp;</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="storageEntity.outtempe" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-12">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addStorage()" ng-disabled="!storageEntity.name">添加</a>
                                 </div>
                             </div>
-                            <div class="col-lg-7">
+                            <div class="col-lg-12">
                                 <label>已有冷库：</label>
                                 <ajax-table array-objects="storages"
                                             delete-url="/i/coldStorage/deleteStorage"
                                             update-url="/i/coldStorage/updateStorage"
-                                            colums-th="冷库名,理论能耗(KJ/h),冷库经度(°),冷库维度(°),冷库位置,起始温度(℃),温度差(℃),超温报警值(℃),超温报警延时(s)"
-                                            colums="name,energyCost,longitude,latitude,location,startTemperature,tempdiff,overtempalarm,overtempdelay"></ajax-table>
+                                            colums-th="冷库名,理论能耗(KJ/h),起始温度(℃),温度差(℃),超温报警值(℃),超温报警延时(s),冷库长(m),冷库宽(m),冷库高(m),冷库内部湿度(%RH),冷库外部湿度(%RH),冷库内部温度(℃),冷库外部温度(℃)"
+                                            colums="name,energyCost,startTemperature,tempdiff,overtempalarm,overtempdelay,length,width,height,inhumidity,outhumidity,intempe,outtempe"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -206,6 +250,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <label>已有门：</label>
                                 <ajax-table array-objects="doors"
                                             delete-url="/i/coldStorageDoor/deleteDoor"
@@ -247,6 +292,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <label>已有风机：</label>
                                <ajax-table array-objects="blowers"
                                             update-url="i/blower/updateBlower"
@@ -311,6 +357,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <label>已有压缩机组：</label>
                                 <ajax-table array-objects="compressGroups"
                                             delete-url="/i/compressorGroup/deleteCompressGroup"
@@ -345,6 +392,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <label>已有单体压缩机：</label>
                                 <ajax-table array-objects="compressorSets"
                                             delete-url="/i/compressorGroup/deleteCompressor"
@@ -373,6 +421,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <label>已有风幕机：</label>
                                 <ajax-table array-objects="windScreenSets"
                                             delete-url="/i/spiderConfig/delete/windscreenset"
@@ -395,6 +444,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -425,6 +475,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -455,6 +506,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -480,21 +532,30 @@
                                         <input style="width:250px;" ng-model="powerSet.name" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">电流不平衡值:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="powerSet.iunbalance" class="form-control" />
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addRdcIdAndName(powerSet, choseDevice.table)" ng-disabled="!powerSet.name">添加</a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
                                         <th>名字</th>
+                                        <th>电流不平衡值</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="item in powerSets">
                                         <td>{{item.name}}</td>
+                                        <td>{{item.iunbalance}}</td>
                                         <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, powerSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
                                     </tr>
                                     </tbody>
@@ -527,6 +588,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <ajax-table array-objects="platformDoorSets"
                                             delete-url="/i/spiderConfig/delete/plateformDoor"
                                             update-url="/i/spiderConfig/update/plateformDoor"
@@ -548,6 +610,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -578,6 +641,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -614,6 +678,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -652,6 +717,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -682,6 +748,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -1008,7 +1075,7 @@
                 <uib-tab>
                     <uib-tab-heading>
                         <i class="fa fa-table"></i>电表配置
-                    </uib-tab-heading>
+                    </uib-tab-heading><br/>
                     <div class="row">
                         <div class="col-lg-6">
                             <mapping-table data-name="电表名" data-table="powerset" object-keys="powerKeys" object-sets="powerSets"></mapping-table>
@@ -1018,7 +1085,7 @@
                 <uib-tab>
                     <uib-tab-heading>
                         <i class="fa fa-table"></i>其他配置
-                    </uib-tab-heading>
+                    </uib-tab-heading><br/>
                     <div class="row">
                         <div class="col-lg-6">
                             <mapping-table data-name="月台门" data-table="platformdoorset" object-sets="platformDoorSets" object-keys="platformdoorKeys"></mapping-table>
@@ -1081,7 +1148,7 @@
                 <uib-tab>
                     <uib-tab-heading>
                         <i class="fa fa-table"></i>告警配置
-                    </uib-tab-heading>
+                    </uib-tab-heading><br/>
                     <div class="col-lg-7">
                         <table class="table table-striped table-bordered ng-pristine ng-untouched">
                             <thead>
@@ -1133,9 +1200,9 @@
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="navbar-form">
-                                <a class="btn btn-sm btn-danger pull-right" type='submit' ng-click="deleteAccount()">删除</a>
-                                <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="saveAccount()">保存</a>
+                            <div class="navbar-form" style="text-align: center;"> 
+                                <a class="btn btn-sm btn-danger" type='submit' ng-click="deleteAccount()">删除</a>
+                                <a class="btn btn-sm btn-primary" type='submit' style="margin: 0 10px;" ng-click="saveAccount()">保存</a>
                             </div>
                         </form>
                     </div>
@@ -1143,7 +1210,7 @@
                 <uib-tab>
                     <uib-tab-heading>
                         <i class="fa fa-table"></i>标签采集配置
-                    </uib-tab-heading>
+                    </uib-tab-heading><br/>
                     <div class="row">
                         <form class="navbar-form">
                             <div class="form-group">
@@ -1205,7 +1272,7 @@
                     <div class="row" style="margin-top: 20px;">
                         <form id="maintaincform" class="  form-horizontal" >
 							<div class="form-group">
-								<label class="col-sm-1 control-label">超级管理人员：</label>
+								<label class="col-sm-2 control-label">超级管理人员：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="muid" ng-model="mg.muid"  type="text" disabled="disabled" >
 									<input name="id" value={{mg.id}} type="hidden"  >
@@ -1214,26 +1281,26 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-1 control-label">普通管理人员：</label>
+								<label class="col-sm-2 control-label">普通管理人员：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="uuid" ng-model="mg.uuid"  type="text" disabled="disabled" >
 									<input type="hidden" name="uTelephone" ng-model="mg.uTelephone"   >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-1 control-label" >备用通知电话：</label>
+								<label class="col-sm-2 control-label" >备用通知电话：</label>
 								<div class="col-sm-5">
 									<input class="form-control" name="aTelephone" type="text" ng-model="mg.aTelephone" ng-blur="vccheckalltp()" title="多个请使用;隔开！" placeholder="多个请使用;隔开！" >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-1 control-label" >间隔时间：</label>
+								<label class="col-sm-2 control-label" >间隔时间：</label>
 								<div class="col-sm-5">
 									<input class="form-control" value="30" disabled="disabled" >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-1 control-label" >监听对象：</label>
+								<label class="col-sm-2 control-label" >监听对象：</label>
 								<div class="col-sm-10 btn_group">
 									<button class="btn" value="1">冷库</button>
 									<button class="btn" value="2">冷库门</button>
