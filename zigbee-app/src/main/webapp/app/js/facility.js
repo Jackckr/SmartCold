@@ -194,7 +194,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                     groupPadding: 0, //分组之间的距离值
                                     borderWidth: 0,
                                     shadow: false,
-                                    pointWidth: 48, //柱子之间的距离值
+                                    pointWidth: 1, //柱子之间的距离值
                                     data: (function () {
                                         return data;
                                     })()
@@ -336,7 +336,7 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                                     groupPadding: 0, //分组之间的距离值
                                     borderWidth: 0,
                                     shadow: false,
-                                    pointWidth: 48, //柱子之间的距离值
+                                    pointWidth: 1, //柱子之间的距离值
                                     data: (function () {
                                         return data;
                                     })()

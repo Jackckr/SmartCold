@@ -20,5 +20,12 @@
         SELECT *
         FROM `ColdStorageSet`
     </select>
+    
+    <select id="findHasDoorStorage" resultType="ColdStorageSetEntity">
+        select distinct c.*  
+        FROM rdc r LEFT JOIN `coldstorageset` c on r.`id` =c.`RDCID` 
+        LEFT JOIN `coldstoragedoorset`  d on c.`id` =d.`coldstorageid` 
+        where r.`id`  = #{rdcId} AND d.id IS NOT null
+    </select>
 
 </mapper>

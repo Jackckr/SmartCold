@@ -169,17 +169,17 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     yAxis: [
                         {
                             type: 'value',
-                            name: '超温因子',
+                            name: '超温因子(%)',
                             max: 100,
                             axisLabel: {
-                                formatter: '{value} %'
+                                formatter: '{value}'
                             }
                         },
                         {
                             type: 'value',
-                            name: '最高温度',
+                            name: '最高温度(°C)',
                             axisLabel: {
-                                formatter: '{value} °C'
+                                formatter: '{value}'
                             }
                         }
                     ],
@@ -197,7 +197,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                         }
                     ]
                 };
-                chart.setOption(Option);
+                chart.setOption(option);
             })
         })
     }
@@ -302,6 +302,9 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                             }
                         }
                     ],
+                    grid: {
+                    	x: 50
+                    },
                     series: [
                         {
                             name: '升温因子',
@@ -441,6 +444,9 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     min: yMin ? yMin : 0
                 }
             ],
+            grid: {
+            	x:50
+            },
             series: [
                 {
                     name: lineName,

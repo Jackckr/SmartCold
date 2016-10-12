@@ -7,14 +7,15 @@ import org.apache.ibatis.annotations.Param;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-05-01 23:23)
+ * Author: qiunian.sun Date: qiunian.sun(2016-05-01 23:23)
  */
 public interface ColdStorageSetMapper {
-    
-    List<ColdStorageSetEntity> findAllColdStorage();
-    
-    List<ColdStorageSetEntity> findByRdcId(@Param("rdcId") int rdcId);
-    
-    List<ColdStorageSetEntity> findLastNPoint(@Param("id") int id, @Param("npoint") int npoint);
+
+	List<ColdStorageSetEntity> findAllColdStorage();
+
+	List<ColdStorageSetEntity> findByRdcId(@Param("rdcId") int rdcId);
+
+	List<ColdStorageSetEntity> findLastNPoint(@Param("id") int id, @Param("npoint") int npoint);
+
+	List<ColdStorageSetEntity> findHasDoorStorage(@Param("rdcId") int rdcId);
 }

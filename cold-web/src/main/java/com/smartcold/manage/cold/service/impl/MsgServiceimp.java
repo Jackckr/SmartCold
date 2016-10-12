@@ -52,7 +52,6 @@ public class MsgServiceimp implements MsgService {
 	private DeviceObjectMappingMapper deviceMapper;
 
 	
-	private static int iunbalance=15;//
 
 	/**
 	 * stupe 1.检查哪些库进行关联配置 2.将配置对象放进线程池进行监听保护 StorageService-》findByTime
@@ -148,7 +147,7 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 检查数据是否执行报警
 	 */
-//	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	public void checkData(){
 		System.err.println("开始工作。。。。。。。");
 		WarningsInfo waInfo=null;

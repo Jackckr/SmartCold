@@ -31,6 +31,12 @@ public class ColdStorageSetController {
 		return coldStorageSetDao.findByRdcId(rdcID);
 	}
 
+	@RequestMapping(value = "/findHasDoorStorageSetByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findHasDoorStorageSetByRdcId(int rdcID) {
+		return coldStorageSetDao.findHasDoorStorage(rdcID);
+	}
+
 	@RequestMapping(value = "/findAllColdStorage", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllColdStorage() {
