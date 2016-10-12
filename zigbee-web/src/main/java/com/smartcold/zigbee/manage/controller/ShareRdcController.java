@@ -388,6 +388,13 @@ public class ShareRdcController  {
 	    
 	}
 	
+	@RequestMapping(value="shareFreeReleaseForIos")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> shareFreeReleaseForIos(HttpServletRequest request, RdcShareDTO	rdcShareDTO,Integer uid){
+		 String data = JSON.toJSONString(rdcShareDTO);
+		 return shareFreeRelease(request, data, uid);
+	}
+	
 	/**
 	 * 免费发布消息
 	 * @param request

@@ -53,6 +53,14 @@ public class OrdersController extends BaseController {
 	private FileDataMapper fileDataDao;
     @Autowired
     private RdcShareService rdcShareService;
+    /**
+     * 根据用户id查询该用户所有的订单
+     * @param userID 用户id
+     * @param pageNum 
+     * @param pageSize
+     * @param keyword 关键字，可为空
+     * @return
+     */
 	@RequestMapping(value = "/findOrdersByUserId")
 	@ResponseBody
 	public Object findOrdersByUserId(@RequestParam int userID,
@@ -91,8 +99,10 @@ public class OrdersController extends BaseController {
 	}
 	
 	/**
-	 * 
-	 * @param orderID
+	 * 根据order的id查询唯一的order
+	 * @param request
+	 * @param id 订单id
+	 * @param uid 拥有该订单的用户id
 	 * @return
 	 */
 	@RequestMapping(value = "/findOrderByOrderId")
@@ -123,10 +133,17 @@ public class OrdersController extends BaseController {
 	}
 	
 	/**
-	 * 
+	 * 用户下单，产生一个订单
 	 * @param request
-	 * @param user
-	 * @param vo
+	 * @param userid 下单用户（当前登录的用户）的id
+	 * @param username 下单用户的name
+	 * @param telephone 下单用户的手机号
+	 * @param address 下单用户的地址
+	 * @param rsdid 共享信息的id
+	 * @param dataType 共享信息的类型（货品 冷库 冷运）
+	 * @param typeText 共享信息的类别（出货 找货）
+	 * @param releaseID 共享信息的发布者的id
+	 * @param title 订单的标题，可用共享信息的标题
 	 * @return
 	 */
 	@RequestMapping(value = "/generateOrder")
@@ -190,6 +207,11 @@ public class OrdersController extends BaseController {
 		return ResponseData.newSuccess(data);
 	}
 	
+	/**
+	 * 根据order的id删除order
+	 * @param orderID order的id非orderid
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteByOrderID")
 	public Object deleteByOrderID(Integer orderID) {
@@ -200,7 +222,15 @@ public class OrdersController extends BaseController {
 		return new BaseDto(0);
 	}
 
-	
+	/**
+	 * 给下单者及共享信息发布者发送短信
+	 * @param orderid 订单的id
+	 * @param ownerTele 共享信息发布者的手机号
+	 * @param userTele 下单者的手机号
+	 * @param ownerName 共享信息发布者的name
+	 * @param userName 下单者的name
+	 * @return
+	 */
 	@RequestMapping(value = "/getTelephone")
 	@ResponseBody
 	public Object getTelephone(@RequestParam int orderid,@RequestParam String ownerTele,@RequestParam String userTele,@RequestParam String ownerName,@RequestParam String userName)  {

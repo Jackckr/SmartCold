@@ -191,8 +191,8 @@ public class RdcController {
 	    public void addRdcForIos(MultipartHttpServletRequest muiltRequest,RdcAddDTO rdcAddDTO,HttpServletRequest request) throws Exception{
 		 System.out.println(rdcAddDTO.getAddress());
 		 System.out.println(rdcAddDTO.getName());
-/*		 System.out.println("enter");
 		 System.out.println(muiltRequest.getFileMap());
+/*		 System.out.println("enter");
 		 System.out.println(muiltRequest.getFile("honor1").getSize());*/
 		/* List<MultipartFile> mulFileList = new ArrayList<MultipartFile>();
 		 for (int i = 0; i < muiltRequest.getFiles(muiltRequest.getFileNames().next()).size(); i++) {
