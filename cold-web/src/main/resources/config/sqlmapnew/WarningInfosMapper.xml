@@ -12,6 +12,10 @@
     select * from `warningsinfo` where rdcid=#{rdcId} order by addtime desc limit #{point}
 </select>
 
+<select id="findErrWarningByTime" parameterType="map" resultType="WarningsInfo">
+   SELECT * FROM `warningsinfo`  where `level`!=0 and `addtime` >#{startTime};
+</select>
+
 
 <!-- 查询当前错误种类 -->
 <select id="getWrnType" parameterType="map" resultType="WarningsInfo">
@@ -20,6 +24,7 @@
     <if test="month!=1"> and PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( `addtime`, '%Y%m' ) ) =#{month} </if> 
 	 GROUP BY `warningname` ;
 </select>
+
 <!-- 获得错误消息汇总 -->
 <select id="getWarCountByType" parameterType="map" resultType="WarningsInfo">
 	set @sm = 1;

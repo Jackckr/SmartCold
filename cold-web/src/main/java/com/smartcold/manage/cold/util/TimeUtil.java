@@ -82,10 +82,27 @@ public class TimeUtil {
         calendar.setTime(date);
         return calendar.get(Calendar.HOUR_OF_DAY);
     }
-
-    public static void main(String[] args) {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        System.out.print(sdf.format(date));
+    
+    /**
+     * 获得指定分钟前的时间
+     * @param date
+     * @return
+     */
+    public static Date getBeforeMinute(int MINUTE) {
+    	Calendar beforeTime = Calendar.getInstance();
+        beforeTime.add(Calendar.MINUTE, -MINUTE);// 
+        return beforeTime.getTime();
     }
+    
+    /**
+     * 获得指定小时前的时间
+     * @param date
+     * @return
+     */
+    public static Date getBeforeHOUR(int HOUR) {
+    	Calendar beforeTime = Calendar.getInstance();
+    	beforeTime.add(Calendar.HOUR, -HOUR);// 
+    	return beforeTime.getTime();
+    }
+
 }

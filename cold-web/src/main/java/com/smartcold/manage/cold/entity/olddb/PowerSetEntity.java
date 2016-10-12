@@ -13,6 +13,8 @@ public class PowerSetEntity {
 	private int rdcid;
 
 	private String mapping;
+	
+	private double iunbalance;
 
 	private Date addTime;
 
@@ -54,6 +56,14 @@ public class PowerSetEntity {
 
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	public double getIunbalance() {
+		return iunbalance;
+	}
+
+	public void setIunbalance(double iunbalance) {
+		this.iunbalance = iunbalance;
 	}
 
 	public Date getAddTime() {
