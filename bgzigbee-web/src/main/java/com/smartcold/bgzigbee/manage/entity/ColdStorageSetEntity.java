@@ -27,33 +27,18 @@ public class ColdStorageSetEntity {
 
 	private float tempdiff;
 
-	private float overtempalarm;
-
-	private float overtempdelay;
-
-	public float getTempdiff() {
-		return tempdiff;
-	}
-
-	public void setTempdiff(float tempdiff) {
-		this.tempdiff = tempdiff;
-	}
-
-	public float getOvertempalarm() {
-		return overtempalarm;
-	}
-
-	public void setOvertempalarm(float overtempalarm) {
-		this.overtempalarm = overtempalarm;
-	}
-
-	public float getOvertempdelay() {
-		return overtempdelay;
-	}
-
-	public void setOvertempdelay(float overtempdelay) {
-		this.overtempdelay = overtempdelay;
-	}
+	private Double overtempalarm;
+	private Double overtempdelay;
+	private Double length       ;
+	private Double width        ;
+	private Double height       ;
+	private Double inhumidity   ;
+	private Double outhumidity  ;
+	private Double intempe      ;
+    private Double outtempe     ;
+	
+    
+    
 
 	public int getId() {
 		return id;
@@ -134,4 +119,86 @@ public class ColdStorageSetEntity {
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
 	}
+
+	public float getTempdiff() {
+		return tempdiff;
+	}
+
+	public void setTempdiff(float tempdiff) {
+		this.tempdiff = tempdiff;
+	}
+
+	public Double getOvertempalarm() {
+		return overtempalarm;
+	}
+
+	public void setOvertempalarm(Double overtempalarm) {
+		this.overtempalarm = overtempalarm;
+	}
+
+	public Double getOvertempdelay() {
+		return overtempdelay;
+	}
+
+	public void setOvertempdelay(Double overtempdelay) {
+		this.overtempdelay = overtempdelay;
+	}
+
+	public Double getLength() {
+		return length;
+	}
+
+	public void setLength(Double length) {
+		this.length = length;
+	}
+
+	public Double getWidth() {
+		return width;
+	}
+
+	public void setWidth(Double width) {
+		this.width = width;
+	}
+
+	public Double getHeight() {
+		return height;
+	}
+
+	public void setHeight(Double height) {
+		this.height = height;
+	}
+
+	public Double getInhumidity() {
+		return inhumidity;
+	}
+
+	public void setInhumidity(Double inhumidity) {
+		this.inhumidity = inhumidity;
+	}
+
+	public Double getOuthumidity() {
+		return outhumidity;
+	}
+
+	public void setOuthumidity(Double outhumidity) {
+		this.outhumidity = outhumidity;
+	}
+
+	public Double getIntempe() {
+		return intempe;
+	}
+
+	public void setIntempe(Double intempe) {
+		this.intempe = intempe;
+	}
+
+	public Double getOuttempe() {
+		return outtempe;
+	}
+
+	public void setOuttempe(Double outtempe) {
+		this.outtempe = outtempe;
+	}
+	
+	
 }
