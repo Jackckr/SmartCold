@@ -1,91 +1,34 @@
 <link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css">
 <style>
-	#alarmLog th:first-child,#alarmLog tr td:first-child{width:80px!important;text-align: center;padding:8px;}
+  #alarmLog th:first-child,#alarmLog th:last-child,#alarmLog tr td:first-child{width:160px!important;text-align: center;padding:8px;}
 </style>
 <div class="page-header">
-	报警日志
-   </div>
+  &nbsp;&nbsp;报警日志
+</div>
 <div class="box baoyang_bg" style="color:#333">
-	<div class="box-body">
-		<table id="alarmLog" class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>序号</th>
-					<th>错误消息</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>6</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>7</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>8</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>9</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>10</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>11</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>12</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>13</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>14</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>15</td>
-					<td>dfsa</td>
-				</tr>
-				<tr>
-					<td>16</td>
-					<td>dfsa</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<!-- /.box-body -->
+  <div class="box-body">
+    <table id="alarmLog" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>报警信息</th>
+          <th>报警时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="alarmMsg in alarmMsgs">
+          <td>{{$index+1}}</td>
+          <td>{{alarmMsg.Msg}}</td>
+          <td>{{alarmMsg.addTime}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.box-body -->
 </div>
 <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
 <!-- SlimScroll -->
 <!-- <script src="assets/plugins/slimScroll/jquery.slimscroll.min.js"></script> -->
 <!-- FastClick -->
@@ -93,5 +36,5 @@
 <script>
   /* $(function () {
     $("#alarmLog").DataTable();
-  }); */
+  }); */  
 </script>
