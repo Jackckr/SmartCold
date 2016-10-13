@@ -1,25 +1,22 @@
 <link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css">
-<style>
-  #alarmLog th:first-child,#alarmLog th:last-child,#alarmLog tr td:first-child{width:160px!important;text-align: center;padding:8px;}
-</style>
 <div class="page-header">
   &nbsp;&nbsp;报警日志
 </div>
 <div class="box baoyang_bg" style="color:#333">
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table id="alarmLog" class="table table-bordered table-striped">
       <thead>
-        <tr>
-          <th>序号</th>
-          <th>报警信息</th>
-          <th>报警时间</th>
+        <tr class="row">
+          <th class="col-lg-1 col-md-1 col-sm-1 text-center">序号</th>
+          <th class="col-lg-9 col-md-8 col-sm-7">报警信息</th>
+          <th class="col-lg-2 col-md-3 col-sm-4 text-center">报警时间</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="alarmMsg in alarmMsgs">
-          <td>{{$index+1}}</td>
-          <td>{{alarmMsg.Msg}}</td>
-          <td>{{alarmMsg.addTime}}</td>
+        <tr class="row" ng-repeat="alarmMsg in alarmMsgs">
+          <td class="col-lg-1 col-md-1 col-sm-1 text-center">{{$index+1}}</td>
+          <td class="col-lg-9 col-md-8 col-sm-7">{{alarmMsg.Msg}}</td>
+          <td class="col-lg-2 col-md-3 col-sm-4 text-center">{{alarmMsg.addTime}}</td>
         </tr>
       </tbody>
     </table>
