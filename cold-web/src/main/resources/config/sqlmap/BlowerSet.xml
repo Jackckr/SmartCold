@@ -8,11 +8,6 @@
 		SELECT *
 		FROM `BlowerSet` WHERE `coldStorageId` = #{coldStorageId}
 	</select>
-    <select id="findByFilter" parameterType="map" resultType="BlowerSetEntity">
-		SELECT id,`name`,`fanPower` ,`frostPower`  FROM `blowerset` where 1=1
-		<if test="fanPower!=null"> and `fanPower`>#{fanPower} </if>
-		<if test="frostPower!=null"> and `frostPower`>#{frostPower} </if>
-		<if test="rdcId!=null"> and  `coldStorageId` IN (select id from `coldstorageset` cs where cs.`RDCID` =#{rdcId}) </if>
-	</select>
+	
 
 </mapper>

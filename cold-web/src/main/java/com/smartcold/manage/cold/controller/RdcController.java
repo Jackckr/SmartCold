@@ -65,6 +65,8 @@ public class RdcController {
 		return rdcService.findRdcByUserid(userid);
 	}
 	
+	
+	//====================================================以下提供测试API====================================================
 	@RequestMapping(value = "/checkAPStatus")
 	@ResponseBody
 	public ResponseData<String> checkAPStatus() {
@@ -78,5 +80,11 @@ public class RdcController {
 		return ResponseData.newSuccess("检查数据状态成功！");
 	}
 	
+	@RequestMapping(value = "/reckonQuantity")
+	@ResponseBody
+	public ResponseData<String> reckonQuantity() {
+		this.msgService.reckonQuantity();
+		return ResponseData.newSuccess("检查数据状态成功！");
+	}
 	
 }

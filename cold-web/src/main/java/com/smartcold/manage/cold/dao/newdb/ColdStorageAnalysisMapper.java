@@ -10,6 +10,8 @@ import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 
 public interface ColdStorageAnalysisMapper {
 	
+	public void addColdStorageAnalysis(List<ColdStorageAnalysisEntity> coldStorageAnalysisList);
+	
 	public List<ColdStorageAnalysisEntity> findValueByFilter(HashMap<String, Object> filter);
 	
 	public List<ColdStorageAnalysisEntity> findValueByDate(@Param("type") int type, @Param("oid") int oid, 	@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime);

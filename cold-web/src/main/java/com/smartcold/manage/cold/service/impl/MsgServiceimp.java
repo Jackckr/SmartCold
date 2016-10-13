@@ -14,15 +14,17 @@ import org.springframework.stereotype.Service;
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.PowerMapper;
+import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
-import com.smartcold.manage.cold.dao.olddb.BlowerSetMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
+import com.smartcold.manage.cold.dao.olddb.QuantitySetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
+import com.smartcold.manage.cold.entity.newdb.ForkLiftEntity;
 import com.smartcold.manage.cold.entity.newdb.PowerEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
-import com.smartcold.manage.cold.entity.olddb.BlowerSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.entity.olddb.WarningMsgEntity;
 import com.smartcold.manage.cold.enums.StorageType;
@@ -30,6 +32,7 @@ import com.smartcold.manage.cold.service.MsgService;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.SetUtil;
+import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
@@ -53,22 +56,27 @@ public class MsgServiceimp implements MsgService {
 	private WarningsInfoMapper warningsInfoMapper;
 	@Autowired
 	private DeviceObjectMappingMapper deviceMapper;
-	
+	@Autowired
+	private ColdStorageAnalysisMapper storageAnalysisMapper;
 	/**
 	 * 计算Q
 	 */
 	@Autowired
-	private BlowerSetMapper blowerSetMapper;
+	private QuantityMapper quantityMapper;
 	@Autowired
-	private ColdStorageAnalysisMapper  sisMapper;
+	private QuantitySetMapper quantitySetMapper;
+	@Autowired
+	private ColdStorageAnalysisMapper sisMapper;
+
 	/**
 	 * stupe 1.检查哪些库进行关联配置 2.将配置对象放进线程池进行监听保护 StorageService-》findByTime
 	 * 3.超过系统规定时间 ，发送短信通知。。
 	 * 
 	 */
-	@Scheduled(cron = "0 0/30 * * * ?")
+//	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkAPStatus() {
-		List<Map<String, Object>> findRdcManger = this.rdcMapper.findRdcManger();// 查找监听保护对象
+		List<Map<String, Object>> findRdcManger = this.rdcMapper
+				.findRdcManger();// 查找监听保护对象
 		Map<Integer, String> telMap = new HashMap<Integer, String>();
 		if (SetUtil.isnotNullList(findRdcManger)) {
 			HashMap<String, Object> filter = new HashMap<String, Object>();
@@ -80,10 +88,90 @@ public class MsgServiceimp implements MsgService {
 			}
 			filter.put("status", 1);// 检查正常的devcice是否正常工作
 			filter.put("rdcid", rdcidlist.substring(0, rdcidlist.length() - 1));
-			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
+			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper
+					.findInfoByfilter(filter);
 			sendMsg(devciceList, telMap);
 		}
 	}
+
+	/**
+	 * 计算热量 每天凌晨两点触发
+	 */
+	// @Scheduled(cron = "0 15 02 * * ?")
+	public void reckonQuantity() {
+		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
+		Date dateTime = TimeUtil.parseYMD(time);
+		 this.setQFrost(time,dateTime);
+		 this.setQForklift(time,dateTime);
+	}
+	
+	/**
+	 * 检查数据是否执行报警
+	 */
+//	@Scheduled(cron = "0 0/5 * * * ?")
+	public void checkData() {
+		System.err.println("开始工作。。。。。。。");
+		WarningsInfo waInfo = null;
+		List<WarningsInfo> errInfoList = new ArrayList<WarningsInfo>();
+		Date startTime = TimeUtil.getBeforeMinute(5);//
+		System.err.println("查询时间" + TimeUtil.getDateTime(startTime));
+		List<WarningsInfo> fErrWarningList = this.warningsInfoMapper
+				.findErrWarningByTime(startTime);// PLC报警
+		if (SetUtil.isnotNullList(fErrWarningList)) {//
+			errInfoList.addAll(errInfoList);
+		}
+		List<PowerEntity> ublowerlist = this.powerMapper
+				.findUBlowerByTime(startTime);// 电压缺相报警-
+		if (SetUtil.isnotNullList(ublowerlist)) {
+			List<Integer> poweid = new ArrayList<Integer>();
+			for (PowerEntity pow : ublowerlist) {
+				poweid.add(pow.getId());
+			}
+			String powids = poweid.toString();
+			powids = powids.substring(1, powids.length() - 1);
+			List<PowerSetEntity> powerSetList = this.powerSetMapping
+					.findByFilter(null, powids);
+			HashMap<Integer, PowerSetEntity> powerSetMap = new HashMap<Integer, PowerSetEntity>();
+			if (SetUtil.isnotNullList(powerSetList)) {
+				for (PowerSetEntity powerSet : powerSetList) {
+					powerSetMap.put(powerSet.getId(), powerSet);
+				}
+			}
+			for (PowerEntity power : ublowerlist) {
+				waInfo = new WarningsInfo();
+				PowerSetEntity powerSetEntity = powerSetMap.get(power.getOid());
+				if (powerSetEntity != null) {
+					waInfo.setRdcId(powerSetEntity.getRdcid());
+					waInfo.setWarningname(powerSetEntity.getName()
+							+ power.getKey() + "相电压缺相");
+					errInfoList.add(waInfo);
+				}
+			}
+		}
+		List<PowerSetEntity> powerSetList = this.powerSetMapping.findByFilter(
+				0, null);// 检查有配置的电表电流->需多线程处理
+		if (SetUtil.isnotNullList(powerSetList)) {
+			for (PowerSetEntity powerSetEntity : powerSetList) {
+				List<PowerEntity> iBlowerList = this.powerMapper
+						.findIBlowerByTime(powerSetEntity.getId(),
+								powerSetEntity.getIunbalance(), startTime);// 电流异常报警
+				if (SetUtil.isnotNullList(iBlowerList)) {
+					for (PowerEntity power : iBlowerList) {
+						waInfo = new WarningsInfo();
+						waInfo.setRdcId(powerSetEntity.getRdcid());
+						waInfo.setWarningname(powerSetEntity.getName()
+								+ power.getKey() + "电流不平衡");
+						errInfoList.add(waInfo);
+					}
+				}
+			}
+
+		}
+
+		// 溫度報警
+
+	}
+	
 
 	/**
 	 * 定义消息组件
@@ -91,7 +179,8 @@ public class MsgServiceimp implements MsgService {
 	 * @param devciceList
 	 * @param telMap
 	 */
-	private void sendMsg(List<DeviceObjectMappingEntity> devciceList, Map<Integer, String> telMap) {
+	private void sendMsg(List<DeviceObjectMappingEntity> devciceList,
+			Map<Integer, String> telMap) {
 		long currentTime = System.currentTimeMillis() + 1800000;
 		Date startTime = new Date();
 		Date endTime = new Date(currentTime);
@@ -100,21 +189,27 @@ public class MsgServiceimp implements MsgService {
 			LinkedHashMap<Integer, Map<String, Object>> tempData = new LinkedHashMap<Integer, Map<String, Object>>();
 			for (DeviceObjectMappingEntity obj : devciceList) {
 				resMap = new HashMap<String, Object>();
-				Integer size = storageService.findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "",
-						startTime, endTime);
+				Integer size = storageService
+						.findCounSizeByTime(obj.getType(), obj.getOid(),
+								obj.getDeviceid(), "", startTime, endTime);
 				if (size != null && size == 0) {
 					String oidname = "";
 					List<HashMap<String, Object>> oidobj = this.megMapper
-							.findObjsetByOid(StorageType.getStorageType(obj.getType()).getTable(), obj.getOid());
+							.findObjsetByOid(
+									StorageType.getStorageType(obj.getType())
+											.getTable(), obj.getOid());
 					if (SetUtil.isnotNullList(oidobj)) {
 						oidname = (String) oidobj.get(0).get("name");
 					}
 					if (tempData.containsKey(obj.getRdcid())) {
 						resMap = tempData.get(obj.getRdcid());
-						resMap.put("devicetype", resMap.get("devicetype") + "," + oidname);
-						resMap.put("deviceid", resMap.get("deviceid") + "," + obj.getDeviceid());
+						resMap.put("devicetype", resMap.get("devicetype") + ","
+								+ oidname);
+						resMap.put("deviceid", resMap.get("deviceid") + ","
+								+ obj.getDeviceid());
 					} else {
-						resMap.put("rdcname", this.rdcMapper.selectByPrimaryKey(obj.getRdcid()).getName());
+						resMap.put("rdcname", this.rdcMapper
+								.selectByPrimaryKey(obj.getRdcid()).getName());
 						resMap.put("deviceid", obj.getDeviceid());
 						resMap.put("devicetype", oidname);
 					}
@@ -128,8 +223,10 @@ public class MsgServiceimp implements MsgService {
 					for (int rdcid : tempData.keySet()) {
 						Map<String, Object> map = tempData.get(rdcid);
 						String tels = telMap.get(rdcid);
-						String msg = "【Warning】{RDC=" + map.get("rdcname") + "}{" + map.get("devicetype") + "}{Dev="+ map.get("deviceid") + "}已经超过30分钟未上报数据，请注意检查";
-						info = new WarningMsgEntity( 0,rdcid, "告警通知", tels, msg);
+						String msg = "【Warning】{RDC=" + map.get("rdcname")
+								+ "}{" + map.get("devicetype") + "}{Dev="
+								+ map.get("deviceid") + "}已经超过30分钟未上报数据，请注意检查";
+						info = new WarningMsgEntity(0, rdcid, "告警通知", tels, msg);
 						this.megMapper.addwarningmessage(info);
 						updata = new HashMap<String, Object>();
 						updata.put("rdcid", rdcid);//
@@ -138,10 +235,14 @@ public class MsgServiceimp implements MsgService {
 						this.deviceMapper.upDeviceObjectStatus(updata);
 						updata.clear();
 						updata.put("rdc", "\nRDC={" + map.get("rdcname") + "}");
-						updata.put("rdctype", "deviceidtyoe={" + map.get("devicetype") + "}");
-						updata.put("dev", "deviceid={" + map.get("deviceid") + "}");
+						updata.put("rdctype",
+								"deviceidtyoe={" + map.get("devicetype") + "}");
+						updata.put("dev", "deviceid={" + map.get("deviceid")
+								+ "}");
 						updata.put("telephone", tels);
-						RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele", updata);
+						RemoteUtil.httpPost(
+								"http://liankur.com/i/warning/warningTele",
+								updata);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -150,85 +251,109 @@ public class MsgServiceimp implements MsgService {
 		}
 	}
 
-	
-	
+
+
+
 	/**
-	 * 检查数据是否执行报警
+	 * 2 Q霜=Σ（P霜*t霜累积）
 	 */
-	@Scheduled(cron = "0 0/5 * * * ?")
-	public void checkData(){
-		System.err.println("开始工作。。。。。。。");
-		WarningsInfo waInfo=null;
-		List<WarningsInfo> errInfoList=new ArrayList<WarningsInfo>();
-		Date startTime = TimeUtil.getBeforeMinute(5);//
-		System.err.println("查询时间"+TimeUtil.getDateTime(startTime));
-		List<WarningsInfo> fErrWarningList = this.warningsInfoMapper.findErrWarningByTime(startTime);//PLC报警
-		if(SetUtil.isnotNullList(fErrWarningList)){//
-			errInfoList.addAll(errInfoList);
-		}
-		List<PowerEntity> ublowerlist = this.powerMapper.findUBlowerByTime(startTime);//电压缺相报警-
-		if(SetUtil.isnotNullList(ublowerlist)){
-			List<Integer> poweid=new ArrayList<Integer>();
-			for (PowerEntity pow : ublowerlist) {poweid.add(pow.getId());}
-			String powids = poweid.toString();
-			powids=powids.substring(1, powids.length()-1);
-			List<PowerSetEntity> powerSetList = this.powerSetMapping.findByFilter(null,powids);
-			HashMap<Integer, PowerSetEntity> powerSetMap=new HashMap<Integer, PowerSetEntity>();
-			if(SetUtil.isnotNullList(powerSetList)){
-				for (PowerSetEntity powerSet : powerSetList) {
-					powerSetMap.put(powerSet.getId(), powerSet);
+	private void setQFrost(String time, Date dateTime) {
+		try {
+			HashMap<Integer, Double> tempMap = null;
+			ColdStorageAnalysisEntity sis = null;
+			List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
+			List<HashMap<String, String>> blowerList = this.quantitySetMapper .findBlowerData(null);// 按冷库分组查询
+			if (SetUtil.isnotNullList(blowerList)) {
+				HashMap<String, Object> fileter = new HashMap<String, Object>();
+				fileter.put("type", 4);
+				fileter.put("time", time);
+				fileter.put("key", "'DefrosingTime'");
+				for (HashMap<String, String> blowerinf : blowerList) {
+					String blids = blowerinf.get("ids");
+					String blfrostPowers = blowerinf.get("frostPowers");
+					tempMap = getValueMap(blids, blfrostPowers);
+					fileter.put("oid", blids);
+					List<ColdStorageAnalysisEntity> blowersisdata = storageAnalysisMapper .findValueByFilter(fileter);
+					if (SetUtil.isnotNullList(blowersisdata)) {
+						for (ColdStorageAnalysisEntity clsis : blowersisdata) {
+							double qfrost = tempMap.get(clsis.getOid()) * clsis.getValue();
+							sis = new ColdStorageAnalysisEntity(4, clsis.getOid(), "Qblower", qfrost, dateTime);
+							sisList.add(sis);
+						}
+					} 
+				}
+				if(SetUtil.isnotNullList(sisList)){
+					this.storageAnalysisMapper.addColdStorageAnalysis(sisList);//批處理1
 				}
 			}
-			for (PowerEntity power : ublowerlist) {
-				waInfo=new WarningsInfo();
-				PowerSetEntity powerSetEntity = powerSetMap.get(power.getOid());
-				if(powerSetEntity!=null){
-					waInfo.setRdcId(powerSetEntity.getRdcid());
-					waInfo.setWarningname(powerSetEntity.getName()+power.getKey()+"相电压缺相");
-					errInfoList.add(waInfo);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		List<PowerSetEntity> powerSetList = this.powerSetMapping.findByFilter(0,null);//检查有配置的电表电流->需多线程处理
-		if(SetUtil.isnotNullList(powerSetList)){
-			for (PowerSetEntity powerSetEntity : powerSetList) {
-				List<PowerEntity> iBlowerList = this.powerMapper.findIBlowerByTime(powerSetEntity.getId(),powerSetEntity.getIunbalance(),startTime);//电流异常报警
-				if(SetUtil.isnotNullList(iBlowerList)){
-					for (PowerEntity power : iBlowerList) {
-						waInfo=new WarningsInfo();
-						waInfo.setRdcId(powerSetEntity.getRdcid());
-						waInfo.setWarningname(powerSetEntity.getName()+power.getKey()+"电流不平衡");
-						errInfoList.add(waInfo);
+	}
+
+	/**
+	 * 3 Q叉=Σ（P叉*t叉累积）
+	 */
+	private void setQForklift(String time, Date dateTime) {
+		try {
+			ColdStorageAnalysisEntity sis = null;
+			List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
+			List<HashMap<String, String>> forkliftsetList = this.quantitySetMapper .getCountforkliftset();
+			if (SetUtil.isnotNullList(forkliftsetList)) {
+				for (HashMap<String, String> forklifsetinfo : forkliftsetList) {
+					String oid = forklifsetinfo.get("ids");
+					String power = forklifsetinfo.get("powers");
+					HashMap<Integer, Double> tempMap =this.getValueMap(oid, power);
+					List<ForkLiftEntity> forkLiftList = this.quantityMapper .findForkliftByTime(oid, time + " 00:00:00", time + " 23:59:59");
+					if (SetUtil.isnotNullList(forkLiftList)) {
+						for (ForkLiftEntity forkLift : forkLiftList) {
+							sis = new ColdStorageAnalysisEntity(4, forkLift.getOid(), "QForklift", forkLift.getValue()*tempMap.get(forkLift.getOid()), dateTime);
+							sisList.add(sis);
+						}
 					}
 				}
+				if(SetUtil.isnotNullList(sisList)){
+					this.storageAnalysisMapper.addColdStorageAnalysis(sisList);//批處理
+				}
 			}
-			
-		}	
-		
-		//溫度報警
-		
-		
-		
-		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
-	
+
 	/**
-	 * 计算热量
-	 * 每天凌晨两点触发 
+	 * 4 Q照=Σ（P照*t照累积）
 	 */
-//	@Scheduled(cron = "0 15 02 * * ?")
-	public void reckonQuantity(){
-//		List<BlowerSetEntity> findByFilter = this.blowerSetMapper.findByFilter(null, null, new Double(0));//Q风	
-//		
-		
-//		this.sisMapper.findValueByFilter(filter)
-		
-		
-		
-		
+	private void setQlighting(String time) {
+
+	}
+
+	/**
+	 * 6 Q风=Σ（P风*t风累积）
+	 */
+	private void setQblower(String time) {
+
+	}
+
+	/**
+	 * 7 Q门=0.675*(Wq*Lq*Hq）*n*（Hw-Hn）
+	 */
+	private void setQctdoor(String time) {
+
+	}
+
+	public static void main(String[] args) {
 	}
 	
-	public static void main(String[] args) {
-		
+	
+	private HashMap<Integer, Double> getValueMap(String blids, String blfrostPowers) {
+		String[] blidarr = StringUtil.splitfhString(blids);
+		String[] blfrossrr = StringUtil.splitfhString(blfrostPowers);
+		HashMap<Integer, Double> tempMap = new HashMap<Integer, Double>();
+		for (int i = 0; i < blidarr.length; i++) {
+			tempMap.put(Integer.parseInt(blidarr[i]), 	Double.parseDouble(blfrossrr[i]));
+		}
+		return tempMap;
 	}
 }

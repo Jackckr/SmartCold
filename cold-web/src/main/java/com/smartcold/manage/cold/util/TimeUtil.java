@@ -14,9 +14,9 @@ import java.util.Date;
 public class TimeUtil {
 
     private static Logger logger = LoggerFactory.getLogger(TimeUtil.class);
-	public static SimpleDateFormat	datefm	= new java.text.SimpleDateFormat("yyyy-MM-dd");
-	public static SimpleDateFormat	datefmnyr	= new java.text.SimpleDateFormat("yyyy年MM月dd日");
-	public static SimpleDateFormat	dateFormat	= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat	datefm	    = new SimpleDateFormat("yyyy-MM-dd");
+	public static SimpleDateFormat	datefmnyr	= new SimpleDateFormat("yyyy年MM月dd日");
+	public static SimpleDateFormat	dateFormat	= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
 	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
 	public static String  getDateTime(Date date){return	TimeUtil.dateFormat.format(date);}
@@ -41,7 +41,7 @@ public class TimeUtil {
         }
         return result;
     }
-
+   
     /**
      * 获取指定日期的 23：59：59
      *
@@ -53,6 +53,18 @@ public class TimeUtil {
         return stringToDate(newDateStr, "yyyy-MM-dd HH:mm:ss");
     }
 
+    /** 
+     * 使用参数Format将字符串转为Date 
+     */  
+    public static Date parseYMD(String strDate)  
+    {  
+        try {
+			return datefm.parse(strDate);
+		} catch (ParseException e) {
+			 logger.error("日期转换出错", e);
+		}  
+        return null;
+    } 
     /**
      * String转Date
      *
@@ -71,6 +83,7 @@ public class TimeUtil {
         return date;
     }
 
+  
     /**
      * 获取日期的小时
      *
@@ -89,9 +102,7 @@ public class TimeUtil {
      * @return
      */
     public static Date getBeforeMinute(int MINUTE) {
-    	Calendar beforeTime = Calendar.getInstance();
-        beforeTime.add(Calendar.MINUTE, -MINUTE);// 
-        return beforeTime.getTime();
+    	return getBeforeByTemp(Calendar.MINUTE, -MINUTE);// 
     }
     
     /**
@@ -100,9 +111,55 @@ public class TimeUtil {
      * @return
      */
     public static Date getBeforeHOUR(int HOUR) {
+    	return getBeforeByTemp(Calendar.HOUR, -HOUR);// 
+    }
+    /**
+     * 获得之前的日期
+     * @param date
+     * @return
+     */
+    public static Date getBeforeDay(int DAY) {
+    	return getBeforeByTemp(Calendar.DAY_OF_MONTH,  -DAY);
+    }
+    
+    /**
+     * 
+     * @param type
+     * @param time
+     * @return
+     */
+    public static Date getBeforeByTemp(int type,int time) {
     	Calendar beforeTime = Calendar.getInstance();
-    	beforeTime.add(Calendar.HOUR, -HOUR);// 
+    	beforeTime.add(type, time);
     	return beforeTime.getTime();
     }
 
+    
+    /**
+	 * 获取每月第一天
+	 * 
+	 * @return 返回时间(字符串格式)
+	 */
+	public static String getBeginDay() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DAY_OF_MONTH, 1);
+		Date endTime = c.getTime();
+		String timeBefore = datefm.format(endTime);
+		return timeBefore;
+	}
+
+	/**
+	 * 获取每月最后一天
+	 * 
+	 * @return 返回时间(字符串格式)
+	 */
+	public static String getEndDay() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DATE, 1);
+		c.roll(Calendar.DATE, -1);
+		Date endTime = c.getTime();
+		String timeBefore = datefm.format(endTime);
+		return timeBefore;
+	}
+	
 }

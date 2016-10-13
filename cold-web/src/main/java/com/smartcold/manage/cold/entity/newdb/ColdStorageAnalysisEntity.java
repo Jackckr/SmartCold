@@ -18,6 +18,22 @@ public class ColdStorageAnalysisEntity {
 	  
 	private Date updatetime;
 
+	public ColdStorageAnalysisEntity(){
+		
+	}
+	
+	public ColdStorageAnalysisEntity(int type, int oid, String key,
+			double value, Date date) {
+		super();
+		this.type = type;
+		this.oid = oid;
+		this.key = key;
+		this.value = value;
+		this.date = date;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
