@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
+import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
@@ -46,6 +47,8 @@ class SubTask implements Runnable {
 	private DeviceObjectMappingMapper deviceObjectMappingMapper;
 	@Autowired
 	private ColdStorageSetMapper coldStorageSetMapper;
+	@Autowired
+	private WarningLogMapper warningLogMapper;
 	List<StorageDataCollectionEntity> arrayList;
     public SubTask(List<StorageDataCollectionEntity> data) { this.arrayList = data;  }
 	@Override
@@ -67,6 +70,7 @@ class SubTask implements Runnable {
 				}
 			  }
 	      }
+	       warningLogMapper.addWarningLog(errInfoList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

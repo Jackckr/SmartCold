@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.PowerMapper;
+import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
 import com.smartcold.manage.cold.dao.newdb.NewColdStorageMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
@@ -59,6 +60,8 @@ public class MsgServiceimp implements MsgService {
 	private StorageService storageService;
 	@Autowired
 	private WarningsInfoMapper warningsInfoMapper;
+	@Autowired
+	private WarningLogMapper warningLogMapper;
 	@Autowired
 	private DeviceObjectMappingMapper deviceMapper;
 	
@@ -224,13 +227,14 @@ public class MsgServiceimp implements MsgService {
 						waInfo=new WarningsInfo();
 						waInfo.setRdcId(coldStorageSetEntity.getRdcId());
 						waInfo.setWarningname(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");
+						errInfoList.add(waInfo);
 					}
 				}
 				
 			}
 		}
 		
-		
+		warningLogMapper.addWarningLog(errInfoList);
 		
 	}
 	
