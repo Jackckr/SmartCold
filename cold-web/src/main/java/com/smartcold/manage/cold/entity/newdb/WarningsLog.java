@@ -9,6 +9,16 @@ public class WarningsLog {
 	private int oid;
 	private String msg;
 	private Date addtime;
+	
+	public WarningsLog() {
+		super();
+	}
+	public WarningsLog(int rdcid, int oid, String msg) {
+		super();
+		this.rdcid = rdcid;
+		this.oid = oid;
+		this.msg = msg;
+	}
 	public int getId() {
 		return id;
 	}

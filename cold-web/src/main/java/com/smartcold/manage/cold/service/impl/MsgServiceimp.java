@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
@@ -119,7 +118,7 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 检查数据是否执行报警
 	 */
-	@Scheduled(cron = "0 0/5 * * * ?")
+//	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData() {
 		System.err.println("开始工作。。。。。。。");
 		WarningsLog waLog = null;
@@ -370,7 +369,7 @@ public class MsgServiceimp implements MsgService {
 					String oid = forklifsetinfo.get("ids");
 					String power = forklifsetinfo.get("powers");
 					HashMap<Integer, Double> tempMap =this.getValueMap(oid, power);
-					 this.quantityMapper .findForkliftByTime(oid, startTime,endTime);
+					// this.quantityMapper .findForkliftByTime(oid, startTime,endTime);
 					
 				}
 				if(SetUtil.isnotNullList(sisList)){
@@ -421,13 +420,13 @@ public class MsgServiceimp implements MsgService {
 
 	/**
 	 * 7 Q门=0.675*(Wq*Lq*Hq）*n*（Hw-Hn）
+	 * Q门=0.675*(Wq*Lq*Hq）*n*（Hw-Hn）
 	 */
 	private void setQctdoor(String time) {
 
 	}
 
-	public static void main(String[] args) {
-	}
+	
 	
 	
 }

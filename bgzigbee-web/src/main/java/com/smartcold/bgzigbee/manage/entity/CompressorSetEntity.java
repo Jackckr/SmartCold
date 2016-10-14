@@ -2,6 +2,8 @@ package com.smartcold.bgzigbee.manage.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class CompressorSetEntity {
 	private int id;
 
@@ -13,7 +15,12 @@ public class CompressorSetEntity {
 
 	private float waterRatio;
 
+	private int type;
+
 	private String mapping;
+
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date maintenancetime;
 
 	private Date addTime;
 
@@ -65,12 +72,28 @@ public class CompressorSetEntity {
 		this.mapping = mapping;
 	}
 
+	public Date getMaintenancetime() {
+		return maintenancetime;
+	}
+
+	public void setMaintenancetime(Date maintenancetime) {
+		this.maintenancetime = maintenancetime;
+	}
+
 	public Date getAddTime() {
 		return addTime;
 	}
 
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 }

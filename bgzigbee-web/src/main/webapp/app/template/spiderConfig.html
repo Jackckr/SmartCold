@@ -387,6 +387,19 @@
                                         <input style="width:250px;" ng-model="compressorSet.waterRatio" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">压缩机类型系数:</label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control" ng-model="vm.compressorType"
+                                        ng-options="type.name for type in [{name:'螺杆压缩机',type:1},{name:'活塞压缩机',type:2}]"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">压缩机维护时间:</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" placeholder="格式yyyy-MM-dd HH:mm:ss" ng-model="compressorSet.maintenancetime" />
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompress()" ng-disabled="!compressorSet.name">添加</a>
                                 </div>
@@ -394,11 +407,13 @@
                             <div class="col-lg-6">
                             	<div><label>&nbsp;</label></div>
                                 <label>已有单体压缩机：</label>
+                                <br>
+                                <label>(压缩机类型：1：螺杆,2：活塞)</label>
                                 <ajax-table array-objects="compressorSets"
                                             delete-url="/i/compressorGroup/deleteCompressor"
                                             update-url="/i/compressorGroup/updateCompressor"
-                                            colums-th="名字,匹数,水耗系数"
-                                            colums="name,power,waterRatio"></ajax-table>
+                                            colums-th="名字,匹数,水耗系数,类型,维护时间"
+                                            colums="name,power,waterRatio,type,maintenancetime"></ajax-table>
                             </div>
                         </form>
                         <!--风幕机-->

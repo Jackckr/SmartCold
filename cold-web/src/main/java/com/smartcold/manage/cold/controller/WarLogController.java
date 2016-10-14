@@ -21,7 +21,6 @@ import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
-import com.smartcold.manage.cold.service.ColdStorageDoorService;
 import com.smartcold.manage.cold.util.SetUtil;
 
 /**
