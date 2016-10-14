@@ -83,7 +83,7 @@ public class RdcController {
 	@RequestMapping(value = "/reckonQuantity")
 	@ResponseBody
 	public ResponseData<String> reckonQuantity() {
-		this.msgService.reckonQuantity();
+		
 		return ResponseData.newSuccess("检查数据状态成功！");
 	}
 	

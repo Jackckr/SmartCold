@@ -366,7 +366,7 @@ public class MsgServiceimp implements MsgService {
 					String oid = forklifsetinfo.get("ids");
 					String power = forklifsetinfo.get("powers");
 					HashMap<Integer, Double> tempMap =this.getValueMap(oid, power);
-					 this.quantityMapper .findForkliftByTime(oid, startTime,endTime);
+					// this.quantityMapper .findForkliftByTime(oid, startTime,endTime);
 					
 				}
 				if(SetUtil.isnotNullList(sisList)){
@@ -417,13 +417,13 @@ public class MsgServiceimp implements MsgService {
 
 	/**
 	 * 7 Q门=0.675*(Wq*Lq*Hq）*n*（Hw-Hn）
+	 * Q门=0.675*(Wq*Lq*Hq）*n*（Hw-Hn）
 	 */
 	private void setQctdoor(String time) {
 
 	}
 
-	public static void main(String[] args) {
-	}
+	
 	
 	
 }
