@@ -309,12 +309,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!--                <li><a href="#/waterCost"><i class="icon iconfont">&#xe624;</i> -->
 <!--                <span class="menu-title">耗水量</span></a></li> -->
 				<!-- 耗水量二级菜单 -->
-				<li onclick="activeLi(this)"><a href="#/waterCost"><i class="icon iconfont">&#xe624;</i><span class="menu-title">耗水量</span><!-- <i class="fa fa-angle-left pull-right"></i> --></a>
-               		<!-- <ul class="treeview-menu">
-	                  		<li><a href="#/waterCost"><i class="fa fa-circle-o"></i>机组1</a>
-	                  		<li><a href="#/waterCost"><i class="fa fa-circle-o"></i>机组2</a>
-	                  	</li>
-	                 </ul> -->
+				<li ><a href="#"><i class="icon iconfont">&#xe624;</i><span class="menu-title">耗水量</span><!-- <i class="fa fa-angle-left pull-right"></i> --></a>
+	                  <ul class="treeview-menu" >
+                        <li ng-repeat="compressorGroup in compressorGroups" ><a href="#/cpswaterCost/{{compressorGroup.id}}" ><i class="fa fa-circle-o"></i> {{compressorGroup.name}}</a></li>
+                    </ul>
                </li>
               </ul>
             </li>
@@ -534,6 +532,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/reportsAnalysis.js"></script>
 <script src="app/js/analysis.js"></script>
 <script src="app/js/alarmLog.js"></script>
+<script src="app/js/waterCostGroup.js"></script>
 <!--  -->
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
 <script src="assets/plugins/fastclick/fastclick.min.js"></script>

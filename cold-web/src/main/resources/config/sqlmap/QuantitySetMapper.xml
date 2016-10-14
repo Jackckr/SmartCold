@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.manage.cold.dao.olddb.QuantitySetMapper">
+	
+    <!-- 计算Q  需优化 -->
+    <select id="findColdstorages" parameterType="map" resultType="map">
+		 SELECT `RDCID` rdcid, group_concat(id) ids  FROM `coldstorageset` GROUP BY rdcid;
+	</select>
+	
+	<select id="findFanPower" parameterType="map" resultType="map">
+		select group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from blowerset where  `frostPower` >0 
+		<if test="ids!=null"> and coldStorageId in(${ids}) </if> 
+		<if test="ids==null"> GROUP BY `coldStorageId` </if> 
+	</select>
+    <select id="findFrostPower" parameterType="map" resultType="map">
+		select group_concat(`id`) ids ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0 
+		<if test="ids!=null"> and coldStorageId in(${ids}) </if> 
+		<if test="ids==null"> GROUP BY `coldStorageId` </if> 
+	</select>
+    <select id="getCountforkliftset" parameterType="map" resultType="map">
+		SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers FROM `${talbe}` where `power` >0 GROUP BY rdcid;
+	</select>
+	
+	
+	
+
+</mapper>

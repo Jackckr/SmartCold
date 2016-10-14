@@ -1,5 +1,8 @@
 package com.smartcold.manage.cold.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
+import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.service.MsgService;
 import com.smartcold.manage.cold.service.RdcService;
 import com.smartcold.manage.cold.service.StorageService;
@@ -32,6 +37,9 @@ public class RdcController {
 	private MsgService msgService;
 	@Autowired
 	private DeviceObjectMappingMapper deviceMapper;
+	
+	@Autowired
+	private WarningLogMapper w;
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
@@ -65,6 +73,8 @@ public class RdcController {
 		return rdcService.findRdcByUserid(userid);
 	}
 	
+	
+	//====================================================以下提供测试API====================================================
 	@RequestMapping(value = "/checkAPStatus")
 	@ResponseBody
 	public ResponseData<String> checkAPStatus() {
@@ -78,5 +88,17 @@ public class RdcController {
 		return ResponseData.newSuccess("检查数据状态成功！");
 	}
 	
+	@RequestMapping(value = "/reckonQuantity")
+	@ResponseBody
+	public ResponseData<String> reckonQuantity() {
+		WarningsLog log=null;
+		List<WarningsLog> warningsLogList =new ArrayList<WarningsLog>();
+		for (int i = 0; i < 5; i++) {
+			 log=new WarningsLog(1,1,"22");
+			warningsLogList.add(log);
+		}
+		w.addWarningLog(warningsLogList);
+		return ResponseData.newSuccess("检查数据状态成功！");
+	}
 	
 }

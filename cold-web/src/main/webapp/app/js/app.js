@@ -438,6 +438,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/coolingAnalysis/{rdcId}',
     	controller: 'coolingAnalysis',
         templateUrl: 'app/template/coolingAnalysis.html'
+    }).state('cpswaterCost',{//
+    	url: '/cpswaterCost/{groupID}',
+    	controller: 'cpswaterCost',
+        templateUrl: 'app/template/waterCostGroup.html'
     }).state('overTemperature',{
     	url:'/overTemperature/{rdcId}',
     	controller: 'overTemperature',

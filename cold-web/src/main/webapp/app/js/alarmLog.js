@@ -1,5 +1,5 @@
 coldWeb.controller('alarmLog', function($rootScope, $scope, $http,baseTools,$timeout) {
-	$scope.alarmMsgs = [ {
+	/*$scope.alarmMsgs = [ {
 		Msg : '电流不平衡度报警值1',
 		addTime : '2016-10-11 13:29:36'
 	}, {
@@ -11,5 +11,13 @@ coldWeb.controller('alarmLog', function($rootScope, $scope, $http,baseTools,$tim
 	}, {
 		Msg : '电流不平衡度报警值4',
 		addTime : '2016-10-12 18:20:05'
-	} ];
+	} ];*/
+	 //根据rdcid查询该rdc的报警信息
+        $http.get('/i/warlog/findWarningLogsByRdcID', {
+            params: {
+                "rdcId": window.sessionStorage.smrdcId
+            }
+        }).success(function (data) {
+            $scope.alarmMsgs = data;
+        });
 });

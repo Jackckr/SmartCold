@@ -16,7 +16,31 @@
 		<if test="type!=null">AND `type` = #{type} </if>
 		<if test="key !=null">AND `key`in (${key})</if>
 		<if test="oid !=null">AND `oid` in (${oid}) </if>
+		<if test="time !=null">AND `date` = #{time} </if>
 		<if test="startTime != null and endTime!=null" >  AND `date` >= #{startTime} AND `date` <![CDATA[ <= ]]> #{endTime}  </if>
 		<if test="desc!=null"> order by `date`,`oid`  ${desc}</if>;
 	</select>
+	
+	<insert id="addColdStorageAnalysis" parameterType="ColdStorageAnalysisEntity">
+		INSERT INTO `coldstorageanalysis`
+		(
+		type ,
+		oid  ,
+		key  ,
+		value,
+		date
+		)
+		VALUES
+		<foreach collection="list" item="model" separator=","> 
+        (           
+            #{model.type}, 
+            #{model.oid}, 
+            #{model.key}, 
+            #{model.value}, 
+            #{model.date}, 
+        )
+    </foreach>
+	</insert>
+	
+	
 </mapper>

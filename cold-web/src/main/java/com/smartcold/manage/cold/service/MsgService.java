@@ -15,7 +15,9 @@ public interface MsgService {
      * 检查AP任务
      */
     public void checkAPStatus();
-    
-   
+    /*
+     * Q2
+     */
+    public void reckonQuantity();
 
 }
