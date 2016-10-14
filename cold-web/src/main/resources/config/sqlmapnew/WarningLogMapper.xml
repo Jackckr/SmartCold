@@ -8,11 +8,11 @@
 	<insert id="addWarningLog">
 		INSERT INTO `warninglog` (`rdcid`,`oid`,`Msg`)VALUES
 		 <foreach collection="list" item="model" index="index"  separator="," >  
-		  (#{model.rdcid}, #{model.oid},  #{model.msg})
+		  (#{model.rdcid}, #{model.oid}, #{model.msg})
 		 </foreach>
 	</insert>
 	
 	<select id="findAllWarningLog" parameterType="map" resultType="WarningsLog">
-    select * from `warninglog` where rdcid=#{rdcId} order by addtime desc
-</select>
+      select * from `warninglog` where rdcid=#{rdcId} order by addtime desc
+    </select>
 </mapper>
