@@ -9,9 +9,17 @@ public class RdcIdAndNameDTO {
     private String name;
     private double power;
     private String mapping;
-    
+    private double iunbalance;
 
-    public String getTable() {
+    public double getIunbalance() {
+		return iunbalance;
+	}
+
+	public void setIunbalance(double iunbalance) {
+		this.iunbalance = iunbalance;
+	}
+
+	public String getTable() {
         return table;
     }
 

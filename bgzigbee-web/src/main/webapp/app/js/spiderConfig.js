@@ -436,15 +436,21 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     }
 
     $scope.addRdcIdAndName = function (obj, table) {
+    	if(obj.power!=undefined&&isNaN(obj.power))
+    		alert("输入的功率需要为数字");
+    	else if(obj.iunbalance!=undefined&&isNaN(obj.iunbalance))
+    		alert("输入的不平衡值需要为数字");
+    	else{
         obj.rdcid = $scope.vm.choseRdc.id;
         obj.table = table;
         debugger;
         $http.post("/i/spiderConfig/add/rdcidAndName", obj).then(function (resp) {
             alert(resp.data.message);
-            obj.name = '';
-            obj.power = '';
+/*            obj.name = '';
+            obj.power = '';*/
             $scope.changeRdc();
         })
+    	}
     }
 
     $scope.delById = function(table,item, arrayData){
