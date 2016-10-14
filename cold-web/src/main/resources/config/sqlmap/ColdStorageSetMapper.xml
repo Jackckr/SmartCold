@@ -28,7 +28,7 @@
     
     <select id="findByFilter" parameterType="map" resultType="ColdStorageSetEntity">
 		SELECT * FROM `ColdStorageSet` where 1=1  
-		<if test="iunbalance!=null"> and iunbalance>${iunbalance}</if> 
+		<if test="iunbalance!=null"> and overtempalarm>${iunbalance}</if> 
 	</select>
     
     <select id="findHasDoorStorage" resultType="ColdStorageSetEntity">
