@@ -190,18 +190,20 @@ public class RdcController {
 	    @ResponseBody
 	    public void addRdcForIos(MultipartHttpServletRequest muiltRequest,RdcAddDTO rdcAddDTO,HttpServletRequest request) throws Exception{
 		 System.out.println(rdcAddDTO.getAddress());
-		 System.out.println("enter");
-		 System.out.println(muiltRequest.getFile("honor0").getSize());
+		 System.out.println(rdcAddDTO.getName());
+		 System.out.println(muiltRequest.getFileMap());
+/*		 System.out.println("enter");
+		 System.out.println(muiltRequest.getFile("honor1").getSize());*/
 		/* List<MultipartFile> mulFileList = new ArrayList<MultipartFile>();
 		 for (int i = 0; i < muiltRequest.getFiles(muiltRequest.getFileNames().next()).size(); i++) {
 			 mulFileList.add(muiltRequest.getFiles(muiltRequest.getFileNames().next()).get(i));
 		}
 		 System.out.println(muiltRequest.getFiles(muiltRequest.getFileNames().next()));*/
-		 add(request, muiltRequest.getFile("honor0"), muiltRequest.getFile("honor0"), muiltRequest.getFile("honor0"),
-				 muiltRequest.getFile("honor0"),muiltRequest.getFile("honor0") ,muiltRequest.getFile("honor0"), 
-				 muiltRequest.getFile("honor0"),muiltRequest.getFile("honor0"),muiltRequest.getFile("honor0"),
-				 muiltRequest.getFile("honor0"), muiltRequest.getFile("honor0"),muiltRequest.getFile("honor0"), muiltRequest.getFile("honor0"),
-				 muiltRequest.getFile("honor0"),  rdcAddDTO);
+		 add(request, muiltRequest.getFile("honor0"), muiltRequest.getFile("honor1"), muiltRequest.getFile("honor2"),
+				 muiltRequest.getFile("honor3"),muiltRequest.getFile("honor4") ,muiltRequest.getFile("honor5"), 
+				 muiltRequest.getFile("honor6"),muiltRequest.getFile("honor7"),muiltRequest.getFile("file0"),
+				 muiltRequest.getFile("file1"), muiltRequest.getFile("file2"),muiltRequest.getFile("file3"), muiltRequest.getFile("file4"),
+				 muiltRequest.getFile("arrangePics"),  rdcAddDTO);
 		/* add(request, mulFileList.get(0), mulFileList.get(1), mulFileList.get(2),
 				 mulFileList.get(3),mulFileList.get(4) ,mulFileList.get(5), 
 				 mulFileList.get(6),mulFileList.get(7),muiltRequest.getFile("file0"),
@@ -230,9 +232,12 @@ public class RdcController {
 		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
-		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
-		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
-		rdcEntity.setAddress(address);
+		if (rdcAddDTO.getName()!=null) {
+			rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
+		}
+		if (rdcAddDTO.getAddress()!=null) {
+			rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
+		}
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());

@@ -52,7 +52,7 @@ public class MessageController extends BaseController {
 	 * 根据分类查询消息
 	 * @param pageNum
 	 * @param pageSize
-	 * @param categoryID
+	 * @param categoryID 消息分类
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */

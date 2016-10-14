@@ -175,6 +175,26 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.height3 = data[0].height3;
             $scope.height4 = data[0].height4;
             $scope.height5 = data[0].height5;
+            if($scope.capacity1==undefined)
+            	$scope.capacity1 = 0;
+            if($scope.capacity2==undefined)
+            	$scope.capacity2 = 0;
+            if($scope.capacity3==undefined)
+            	$scope.capacity3 = 0;
+            if($scope.capacity4==undefined)
+            	$scope.capacity4 = 0;
+            if($scope.capacity5==undefined)
+            	$scope.capacity5 = 0;
+            if($scope.height1==undefined)
+            	$scope.height1 = 0;
+            if($scope.height2==undefined)
+            	$scope.height2 = 0;
+            if($scope.height3==undefined)
+            	$scope.height3 = 0;
+            if($scope.height4==undefined)
+            	$scope.height4 = 0;
+            if($scope.height5==undefined)
+            	$scope.height5 = 0;
             $scope.coldTruck1 = data[0].coldTruck1;
             $scope.coldTruck2 = data[0].coldTruck2;
             $scope.coldTruck3 = data[0].coldTruck3;

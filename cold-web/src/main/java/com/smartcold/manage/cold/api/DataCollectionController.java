@@ -49,14 +49,14 @@ public class DataCollectionController extends BaseController {
 				}
 			}
 			storageDataCollectionDao.batchInsert(arrayList);
-			//WarLogController.addextTask(arrayList);//放入线程池 检查是否报警
+			WarLogController.addextTask(arrayList);//放入线程池 检查是否报警
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new DataResultDto(500);
 		}
 
 		return new DataResultDto(200);
-	}
+	}     
 
 	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
 	@ResponseBody

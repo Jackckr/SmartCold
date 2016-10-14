@@ -7,7 +7,7 @@ public class ColdStorageEntity {
     private int id;
 
     private int storageID;
-
+    
     private float temperature;
 
     private Date time;
