@@ -1,5 +1,4 @@
 coldWeb.controller('cpswaterCost', function ($scope,$http, $location,$stateParams,baseTools,$rootScope) {
-	$scope.radio = 1;
 	$scope.groupID =  $stateParams.groupID;
  	/*$scope.preLoad = function(){
  		url = '/i/compressor/findById?id=' + $scope.groupID;
@@ -27,7 +26,7 @@ coldWeb.controller('cpswaterCost', function ($scope,$http, $location,$stateParam
 			var yData = [];
 			angular.forEach($scope.waterData,function(item){
 				xData.unshift(baseTools.formatTimeToMinute(item.addtime));
-				yData.unshift(item.value*$scope.radio );
+				yData.unshift(item.value);
 			});
 			var currentWater = '';
             if (data.length > 0) {
