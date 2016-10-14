@@ -4,14 +4,15 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CompressorSetMapper">
 	<insert id="insert">
-		INSERT INTO `compressorset` (`compressorgroupid`, `name`,`power`, `waterRatio`)
-		VALUES (#{compressorgroupid}, #{name}, #{power}, #{waterRatio})
+		INSERT INTO `compressorset` (`compressorgroupid`, `name`,`power`, `waterRatio`,`type`,`maintenancetime`)
+		VALUES (#{compressorgroupid}, #{name}, #{power}, #{waterRatio},#{type},#{maintenancetime})
 	</insert>
 	<update id="updateById">
 		UPDATE `compressorset` SET
 		`name` = #{name},
 		`power` = #{power},
-		`waterRatio` = #{waterRatio}
+		`waterRatio` = #{waterRatio},
+		`maintenancetime` =#{maintenancetime}
 		WHERE `id` = #{id}
 	</update>
 	<delete id="deleteById">

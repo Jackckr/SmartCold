@@ -1,4 +1,4 @@
-coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload, coldWebUrl) {
+coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookies, $http, Upload, coldWebUrl,baseTools) {
 	$http.get("/i/spiderConfig/getSetTables").success(function(data,status,config,headers){
 		$scope.storageTypes = data;
 		$scope.devices = [];
@@ -312,6 +312,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$http.get('i/compressorGroup/findCompressorByGid?groupId='+$scope.vm.choseCompressGroup.id)
 			.then(function (resp) {
 				$scope.compressorSets = resp.data;
+				angular.forEach($scope.compressorSets,function(item){
+					item.maintenancetime = item.maintenancetime?baseTools.formatTime(item.maintenancetime):item.maintenancetime
+				})
                 angular.forEach($scope.compressorSets, function (item,index) {
                     $scope.compressorSets[index].mapping = JSON.parse($scope.compressorSets[index].mapping);
                 })
@@ -349,6 +352,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		var object = $scope.compressorSet;
 		if($scope.vm.choseCompressGroup==undefined){alert("请设置压缩机组对象！");return;}
 		object.compressorgroupid=$scope.vm.choseCompressGroup.id;
+		object.type = $scope.vm.compressorType.type
 		$http.post("/i/compressorGroup/saveCompressor", object).then(function (resp) {
 			alert(resp.data.message);
 			$scope.compressorSet = {};

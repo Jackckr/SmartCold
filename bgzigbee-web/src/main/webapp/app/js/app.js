@@ -83,6 +83,31 @@ coldWeb.factory('naviService', ['$rootScope', '$state', function ($rootScope, $s
     };
 }]);
 
+coldWeb.factory('baseTools',['$rootScope',function(){
+	return {
+		getFormatTimeString: function(delta){
+			delta = delta ? delta + 8 * 60 * 60 * 1000: 8 * 60 * 60 * 1000;
+			return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/,"")
+		},
+		formatTime: function(timeString){
+			if (typeof(timeString) == "string"){				
+				return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+			}else{
+				return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
+			}
+		},
+		formatTimeToMinute: function(timeString){
+			return this.formatTime(timeString).substring(0,16)
+		},
+		formatTimeToHour: function(timeString){
+			return this.formatTime(timeString).substring(0,13)
+		},
+		formatTimeToDay: function(timeString){
+			return this.formatTime(timeString).substring(0,10)
+		}
+	}
+}]);
+
 coldWeb.filter('objectCount', function () {
     return function (input) {
         var size = 0, key;
