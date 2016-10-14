@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
@@ -28,6 +29,7 @@ import com.smartcold.manage.cold.entity.newdb.ForkLiftEntity;
 import com.smartcold.manage.cold.entity.newdb.NewColdStorageEntity;
 import com.smartcold.manage.cold.entity.newdb.PowerEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
+import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.entity.olddb.WarningMsgEntity;
@@ -117,11 +119,11 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 检查数据是否执行报警
 	 */
-//	@Scheduled(cron = "0 0/5 * * * ?")
+	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData() {
 		System.err.println("开始工作。。。。。。。");
-		WarningsInfo waInfo = null;
-		List<WarningsInfo> errInfoList = new ArrayList<WarningsInfo>();
+		WarningsLog waLog = null;
+		List<WarningsLog> errInfoList = new ArrayList<WarningsLog>();
 		Date startTime = TimeUtil.getBeforeMinute(5);//
 		System.err.println("查询时间" + TimeUtil.getDateTime(startTime));
 		List<WarningsInfo> fErrWarningList = this.warningsInfoMapper
@@ -147,13 +149,13 @@ public class MsgServiceimp implements MsgService {
 				}
 			}
 			for (PowerEntity power : ublowerlist) {
-				waInfo = new WarningsInfo();
+				waLog = new WarningsLog();
 				PowerSetEntity powerSetEntity = powerSetMap.get(power.getOid());
 				if (powerSetEntity != null) {
-					waInfo.setRdcId(powerSetEntity.getRdcid());
-					waInfo.setWarningname(powerSetEntity.getName()
+					waLog.setRdcid(powerSetEntity.getRdcid());
+					waLog.setMsg(powerSetEntity.getName()
 							+ power.getKey() + "相电压缺相");
-					errInfoList.add(waInfo);
+					errInfoList.add(waLog);
 				}
 			}
 		}
@@ -166,11 +168,11 @@ public class MsgServiceimp implements MsgService {
 								powerSetEntity.getIunbalance(), startTime);// 电流异常报警
 				if (SetUtil.isnotNullList(iBlowerList)) {
 					for (PowerEntity power : iBlowerList) {
-						waInfo = new WarningsInfo();
-						waInfo.setRdcId(powerSetEntity.getRdcid());
-						waInfo.setWarningname(powerSetEntity.getName()
+						waLog = new WarningsLog();
+						waLog.setRdcid(powerSetEntity.getRdcid());
+						waLog.setMsg(powerSetEntity.getName()
 								+ power.getKey() + "电流不平衡");
-						errInfoList.add(waInfo);
+						errInfoList.add(waLog);
 					}
 				}
 			}
@@ -184,10 +186,12 @@ public class MsgServiceimp implements MsgService {
 						coldStorageSetEntity.getStartTemperature()+coldStorageSetEntity.getOvertempalarm(), coldStorageSetEntity.getOvertempdelay(),"Temp", startTime);
 				if (SetUtil.isnotNullList(iBlowerList)) {
 					for (NewColdStorageEntity newColdStorageEntity : iBlowerList) {
-						waInfo=new WarningsInfo();
-						waInfo.setRdcId(coldStorageSetEntity.getRdcId());
-						waInfo.setWarningname(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");
-						errInfoList.add(waInfo);
+						waLog=new WarningsLog();
+					/*	System.out.println(coldStorageSetEntity.getRdcId());
+						System.out.println(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");*/
+						waLog.setRdcid(coldStorageSetEntity.getRdcId());
+						waLog.setMsg(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");
+						errInfoList.add(waLog);
 					}
 				}
 				
