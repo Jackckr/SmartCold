@@ -1,5 +1,20 @@
 coldWeb.controller('cpswaterCost', function ($scope,$http, $location,$stateParams,baseTools,$rootScope) {
+	$scope.radio = 1;
 	$scope.groupID =  $stateParams.groupID;
+ 	/*$scope.preLoad = function(){
+ 		url = '/i/compressor/findById?id=' + $scope.groupID;
+ 		$http.get(url).success(function(data,status,config,header){
+ 			//debugger;
+ 			if(data==""||data.waterRatio == undefined || data.waterRatio == 0){
+ 				data.waterRatio = 1;
+ 			}
+ 			$scope.radio=data.waterRatio;
+ 			
+ 			
+ 			$scope.load();
+ 		});
+ 	};*/
+	
 	$scope.load = function(){	
 		lineChart = echarts.init($('#line')[0]);
 		endTime = baseTools.getFormatTimeString();
@@ -12,14 +27,14 @@ coldWeb.controller('cpswaterCost', function ($scope,$http, $location,$stateParam
 			var yData = [];
 			angular.forEach($scope.waterData,function(item){
 				xData.unshift(baseTools.formatTimeToMinute(item.addtime));
-				yData.unshift(item.value * powerSet.radio);
+				yData.unshift(item.value*$scope.radio );
 			});
-			var currentPower = '';
+			var currentWater = '';
             if (data.length > 0) {
-                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value  * powerSet.radio).toFixed(1) : '';//
+            	currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value  ).toFixed(1) : '';//
             };
-            $scope.currentPower = currentPower;
-			option = baseTools.getEchartSingleOption('累积水耗实时监控', xData, yData, '电量', 'kW.h', '电量', 'line', parseInt(yData[0]));
+            $scope.currentWater = currentWater;
+			option = baseTools.getEchartSingleOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'line', parseInt(yData[0]));
 			lineChart.setOption(option);
 		});
 		

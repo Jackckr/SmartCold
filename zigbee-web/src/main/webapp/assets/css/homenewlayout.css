@@ -1000,20 +1000,20 @@ section.content{
 	z-index:199999;
 	top:76px;
 	right:50px;
-	background: orange;
+	background: #43BBEA;
 	box-shadow:0 2px 5px #333;
 	width:280px;
 	min-height:80px;
 	padding:10px 18px;
-	border:1px solid #eee;
+	/* border:1px solid #eee; */
 	border-top:0;
 	display: none;
 }
 .topTrl{
 	position:absolute;
 	top:-40px;
-	right:60px;
-	border-bottom:20px solid orange;
+	right:75px;
+	border-bottom:20px solid #43BBEA;
 	border-top:20px solid transparent;
 	border-right:20px solid transparent;
 	border-left:20px solid transparent;
@@ -1034,7 +1034,7 @@ section.content{
 	color:red;
 }
 .pushContent{
-	color:#333;
+	color:#fff;
 	line-height: 1.75;
 }
 /*app 下载css*/

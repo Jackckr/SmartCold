@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.CompressorSetMapping">
 
-    <select id="findById" parameterType="map" resultType="CompressorSetEntity">
+    <select id="findCompressorByid" parameterType="map" resultType="CompressorSetEntity">
 		SELECT *
 		FROM `compressorset` WHERE `id` = #{id}
 	</select>
