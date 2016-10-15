@@ -131,7 +131,6 @@ public class MsgServiceimp implements MsgService {
 	 @Scheduled(cron="0/1 * *  * * ? ")   
 	public void checkData() {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
-	    System.err.println("=================================================================================="+taskStatus);
 		if(taskStatus){
 			System.err.println("时间："+TimeUtil.getDateTime()+" IP:"+RemoteUtil.getServerIP()+" ：checkData：开始执行-----------------------------------------------");
 		}
