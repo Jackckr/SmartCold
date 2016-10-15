@@ -270,18 +270,18 @@ ul,li {
 	color: coral
 }
 @media (min-width: 768px){
-	.tNum{font-size:2em;}
-	.tUiit{font-size:1em;}
+	.tNum{font-size:6em;}
+	.tUiit{font-size:4em;}
 }
 @media (max-width: 768px){
-	.tNum{font-size:2em;}
-	.tUiit{font-size:1em;}
+	.tNum{font-size:5em;}
+	.tUiit{font-size:4em;}
 }
 @media (min-width: 992px){
-	.tNum{font-size:3em;}
-	.tUiit{font-size:2em;}
+	.tNum{font-size:5em;}
+	.tUiit{font-size:3em;}
 }
  @media (min-width: 1200px){
-	.tNum{font-size:5em;}
-	.tUiit{font-size:2.5em;}
+	.tNum{font-size:6em;}
+	.tUiit{font-size:4.5em;}
 } 
