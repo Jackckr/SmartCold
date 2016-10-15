@@ -1,7 +1,11 @@
 package com.smartcold.manage.cold.controller;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
-import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.service.MsgService;
 import com.smartcold.manage.cold.service.RdcService;
 import com.smartcold.manage.cold.service.StorageService;
@@ -91,14 +94,25 @@ public class RdcController {
 	@RequestMapping(value = "/reckonQuantity")
 	@ResponseBody
 	public ResponseData<String> reckonQuantity() {
-		WarningsLog log=null;
-		List<WarningsLog> warningsLogList =new ArrayList<WarningsLog>();
-		for (int i = 0; i < 5; i++) {
-			 log=new WarningsLog(1,1,"22");
-			warningsLogList.add(log);
-		}
-		w.addWarningLog(warningsLogList);
-		return ResponseData.newSuccess("检查数据状态成功！");
+		
+		return ResponseData.newSuccess("！");
+	}
+	
+	@RequestMapping(value = "/getServerIP")
+	@ResponseBody
+	public ResponseData<HashMap<String, Object>> getServerIP() {
+		HashMap<String, Object> sysInfo=new HashMap<String, Object>();
+		try {  
+			  Runtime r = Runtime.getRuntime();
+			 InetAddress addr = InetAddress.getLocalHost();
+			 sysInfo.put("IP", addr.getHostAddress());
+			 sysInfo.put("JVM可以使用的总内存:", r.totalMemory()/1048576);
+			 sysInfo.put("JVM可以使用的剩余内存:", r.freeMemory()/1048576);
+			 sysInfo.put("JVM可以使用的处理器个数:", r.availableProcessors());
+	    } catch (Exception e) {  
+	        e.printStackTrace();  
+	    }  
+		return ResponseData.newSuccess(sysInfo);
 	}
 	
 }

@@ -89,3 +89,6 @@ bin/
 cold-web/src/main/resources/config/spring/local/appcontext-db.xml
 zigbee-web/src/main/resources/config/spring/local/appcontext-db.xml
 bgzigbee-web/src/main/resources/config/spring/local/appcontext-db.xml
+cold-web/src/main/resources/log4j.properties
+zigbee-web/src/main/resources/log4j.properties
+bgzigbee-web/src/main/resources/log4j.properties
