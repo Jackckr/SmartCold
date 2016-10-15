@@ -134,8 +134,6 @@ public class MsgServiceimp implements MsgService {
 	    System.err.println("=================================================================================="+taskStatus);
 		if(taskStatus){
 			System.err.println("时间："+TimeUtil.getDateTime()+" IP:"+RemoteUtil.getServerIP()+" ：checkData：开始执行-----------------------------------------------");
-		}else{
-			System.err.println(TimeUtil.getDateTime()+":checkData：跳过执行！");
 		}
 	}
 	
