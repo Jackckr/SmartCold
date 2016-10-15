@@ -395,3 +395,11 @@ b{
 	border-radius:3px;
 	font-style: italic;
 }
+/*alarmLog*/
+.alarmLog td{
+	color:#333;
+	font-size: .7rem
+}
+.alarmLog th{
+	font-size: .7rem
+}
