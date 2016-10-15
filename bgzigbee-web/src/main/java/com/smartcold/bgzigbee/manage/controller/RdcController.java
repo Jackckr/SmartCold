@@ -1,15 +1,13 @@
 package com.smartcold.bgzigbee.manage.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import com.smartcold.bgzigbee.manage.dao.*;
-import com.smartcold.bgzigbee.manage.dto.*;
-import com.smartcold.bgzigbee.manage.entity.*;
-import com.smartcold.bgzigbee.manage.service.FtpService;
-import com.smartcold.bgzigbee.manage.service.RdcService;
-import com.smartcold.bgzigbee.manage.util.ResponseData;
-import com.smartcold.bgzigbee.manage.util.SetUtil;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +15,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-
-import java.net.URLDecoder;
-import java.util.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
+import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
+import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
+import com.smartcold.bgzigbee.manage.dao.RdcAuthLogMapper;
+import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
+import com.smartcold.bgzigbee.manage.dao.RdcMapper;
+import com.smartcold.bgzigbee.manage.dao.RdcUserMapper;
+import com.smartcold.bgzigbee.manage.dao.RoleUserMapper;
+import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
+import com.smartcold.bgzigbee.manage.dao.StorageHonorMapper;
+import com.smartcold.bgzigbee.manage.dao.StorageManageTypeMapper;
+import com.smartcold.bgzigbee.manage.dao.StorageRefregMapper;
+import com.smartcold.bgzigbee.manage.dao.StorageStructureTypeMapper;
+import com.smartcold.bgzigbee.manage.dao.StorageTemperTypeMapper;
+import com.smartcold.bgzigbee.manage.dao.StorageTypeMapper;
+import com.smartcold.bgzigbee.manage.dto.BaseDto;
+import com.smartcold.bgzigbee.manage.dto.MappingDto;
+import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
+import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
+import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
+import com.smartcold.bgzigbee.manage.entity.AdminEntity;
+import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
+import com.smartcold.bgzigbee.manage.entity.RdcAuthLogEntity;
+import com.smartcold.bgzigbee.manage.entity.RdcEntity;
+import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
+import com.smartcold.bgzigbee.manage.entity.RdcUser;
+import com.smartcold.bgzigbee.manage.entity.RoleUser;
+import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
+import com.smartcold.bgzigbee.manage.service.FtpService;
+import com.smartcold.bgzigbee.manage.service.RdcService;
+import com.smartcold.bgzigbee.manage.util.ResponseData;
+import com.smartcold.bgzigbee.manage.util.SetUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -44,7 +77,7 @@ public class RdcController {
 
 	@Autowired
 	private StorageStructureTypeMapper storageStructureDao;
-	
+
 	@Autowired
 	private RdcService rdcService;
 
@@ -84,7 +117,6 @@ public class RdcController {
 	@Autowired
 	private RoleUserMapper roleUserDao;
 
-
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
@@ -94,16 +126,16 @@ public class RdcController {
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findRdcDTOByPage(@RequestParam(value = "pageNum", required = false) Integer pageNum,
-			@RequestParam(value = "pageSize", required=false) Integer pageSize,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			@RequestParam(value = "audit", required = false) Integer audit,
 			@RequestParam(value = "keyword", required = false) String keyword) {
-		if (audit !=null && !(audit == -1 || audit == 1 || audit == 0 || audit == 2)) {
+		if (audit != null && !(audit == -1 || audit == 1 || audit == 0 || audit == 2)) {
 			audit = null;
 		}
-//		System.out.println(keyword);
+		// System.out.println(keyword);
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
-		keyword = keyword.equals("")? null:keyword ;
+		keyword = keyword.equals("") ? null : keyword;
 		return rdcService.findRdcDTOByPage(pageNum, pageSize, audit, keyword);
 	}
 
@@ -154,27 +186,34 @@ public class RdcController {
 	public Object findAllCompanyDevice() {
 		return companyDeviceDao.findAll();
 	}
+
 	@RequestMapping(value = "/findAllStorageStructureType", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllStorageStructureType() {
 		return storageStructureDao.findAll();
 	}
-	
+
 	@RequestMapping(value = "/findrdcMaagerConfig")
 	@ResponseBody
 	public Object findrdcMaagerConfig(Integer rdcid) {
-		if(rdcid==null){return null;}
+		if (rdcid == null) {
+			return null;
+		}
 		return this.rdcDao.getRdcMangConfig(rdcid);
 	}
+
 	@RequestMapping(value = "/adupRdcMangConfig")
 	@ResponseBody
-	public ResponseData<String> adupRdcMangConfig(Integer id ,Integer rdcid ,String muid,String uuid,String mtelephone,String uTelephone,String aTelephone) {
+	public ResponseData<String> adupRdcMangConfig(Integer id, Integer rdcid, String muid, String uuid,
+			String mtelephone, String uTelephone, String aTelephone) {
 		try {
-		    if(rdcid==null){return ResponseData.newFailure("必要参数不能为空！");}
-			if(id==null){
-				 this.rdcDao.addRdcMangConfig( rdcid , muid, uuid, mtelephone, uTelephone, aTelephone);
-			}else{
-				 this.rdcDao.upRdcMangConfig( id,rdcid , muid, uuid, mtelephone, uTelephone, aTelephone);
+			if (rdcid == null) {
+				return ResponseData.newFailure("必要参数不能为空！");
+			}
+			if (id == null) {
+				this.rdcDao.addRdcMangConfig(rdcid, muid, uuid, mtelephone, uTelephone, aTelephone);
+			} else {
+				this.rdcDao.upRdcMangConfig(id, rdcid, muid, uuid, mtelephone, uTelephone, aTelephone);
 			}
 			return ResponseData.newSuccess("修改成功！");
 		} catch (Exception e) {
@@ -185,17 +224,16 @@ public class RdcController {
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object add(HttpServletRequest request,
-					  @RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
-					  @RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
-					  @RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
-					  @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7,
-					  @RequestParam(required = false) MultipartFile file0,
-					  @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
-					  @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-					  @RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
+	public Object add(HttpServletRequest request, @RequestParam(required = false) MultipartFile honor0,
+			@RequestParam(required = false) MultipartFile honor1, @RequestParam(required = false) MultipartFile honor2,
+			@RequestParam(required = false) MultipartFile honor3, @RequestParam(required = false) MultipartFile honor4,
+			@RequestParam(required = false) MultipartFile honor5, @RequestParam(required = false) MultipartFile honor6,
+			@RequestParam(required = false) MultipartFile honor7, @RequestParam(required = false) MultipartFile file0,
+			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
+			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
+			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
-		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
+		MultipartFile[] honorfiles = { honor7, honor6, honor5, honor4, honor3, honor2, honor1, honor0 };
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
@@ -219,9 +257,9 @@ public class RdcController {
 		rdcEntity.setPosition("");
 		rdcEntity.setPowerConsume(0);
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
-		if(!SetUtil.isNullMap(lngLatMap)){
-		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
-		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		if (!SetUtil.isNullMap(lngLatMap)) {
+			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+			rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
 		}
 		rdcDao.insertRdc(rdcEntity);
 
@@ -230,7 +268,7 @@ public class RdcController {
 		rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
-		rdcExtEntity.setStoragestruct((byte)rdcAddDTO.getStructure());
+		rdcExtEntity.setStoragestruct((byte) rdcAddDTO.getStructure());
 		rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
 		rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
 		rdcExtEntity.setStorageislihuo((byte) rdcAddDTO.getLihuoRoom());
@@ -271,7 +309,7 @@ public class RdcController {
 		if (!storageFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(storageFiles);
 		}
-        // save honorPic
+		// save honorPic
 		List<FileDataEntity> honorFiles = new ArrayList<FileDataEntity>();
 		for (MultipartFile file : honorfiles) {
 			if (file == null) {
@@ -299,23 +337,24 @@ public class RdcController {
 		}
 
 		rdcExtDao.insertRdcExt(rdcExtEntity);
-		
+
 		return new BaseDto(0);
 	}
 
 	@RequestMapping(value = "/updateRdc", method = RequestMethod.POST)
 	@ResponseBody
 	public Object update(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
-						 @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
-						 @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-						 @RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO,
-						 @RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
-						 @RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
-						 @RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
-						 @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7) throws Exception {
+			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
+			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
+			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO,
+			@RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
+			@RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
+			@RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
+			@RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7)
+					throws Exception {
 
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
-		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
+		MultipartFile[] honorfiles = { honor7, honor6, honor5, honor4, honor3, honor2, honor1, honor0 };
 		MultipartFile arrangePic = arrangePics;
 
 		int rdcId = rdcAddDTO.getRdcId();
@@ -331,9 +370,9 @@ public class RdcController {
 		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
-		if(SetUtil.isNotNullMap(lngLatMap)){
-		rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
-		rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		if (SetUtil.isNotNullMap(lngLatMap)) {
+			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+			rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
 		}
 		rdcDao.updateRdc(rdcEntity);
 		RdcExtEntity rdcExtEntity = null;
@@ -349,7 +388,7 @@ public class RdcController {
 		// 插入rdc表,返回对应的ID
 		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
 		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
-		rdcExtEntity.setStoragestruct((byte)rdcAddDTO.getStructure());
+		rdcExtEntity.setStoragestruct((byte) rdcAddDTO.getStructure());
 		rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
 		rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
 		rdcExtEntity.setStorageislihuo((byte) rdcAddDTO.getLihuoRoom());
@@ -448,15 +487,15 @@ public class RdcController {
 
 	@RequestMapping(value = "/updateMapping", method = RequestMethod.POST)
 	@ResponseBody
-	public Object updateMapping(int rdcId, String mapping) {
+	public Object updateMapping(@RequestBody MappingDto dto) {
 		try {
-			gson.fromJson(mapping, new TypeToken<Map<String, Object>>() {
+			gson.fromJson(dto.getMapping(), new TypeToken<Map<String, Object>>() {
 			}.getType());
 		} catch (JsonParseException e) {
 			return new ResultDto(-1, "参数不是合法的json map");
 		}
 
-		rdcDao.updateMappingById(rdcId, mapping);
+		rdcDao.updateMappingById(dto.getId(), dto.getMapping());
 
 		return new ResultDto(0, "修改成功");
 	}
@@ -537,7 +576,8 @@ public class RdcController {
 			if (honorPic != null && honorPic.length > 0) {
 				for (int i = 0, size = honorPic.length; i < size; i++) {
 					honorPics = honorPics + honorPic[i];
-					if (i != size - 1) honorPics = honorPics + ",";
+					if (i != size - 1)
+						honorPics = honorPics + ",";
 				}
 			}
 			rdcExtByRDCId.get(0).setHonorpiclocation(honorPics);
@@ -555,7 +595,7 @@ public class RdcController {
 		rdcDao.updateRdc(rdcEntity);
 
 		RdcAuthLogEntity rdcAuthLogEntity = new RdcAuthLogEntity();
-		AdminEntity admin = (AdminEntity)request.getSession().getAttribute("admin");
+		AdminEntity admin = (AdminEntity) request.getSession().getAttribute("admin");
 		rdcAuthLogEntity.setType("认证审核");
 		rdcAuthLogEntity.setAuthuserid(admin.getId()); // 审核人
 		rdcAuthLogEntity.setApplyuserid(authUserId); // 申请人

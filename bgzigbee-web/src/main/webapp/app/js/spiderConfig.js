@@ -684,9 +684,11 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.realSaveWarning = function(){
 		$scope.vm.choseRdc.mapping.warnings = $scope.vm.warnings;
-		url = '/i/rdc/updateMapping?rdcId=' + $scope.vm.choseRdc.id 
-		+ '&mapping=' + JSON.stringify($scope.vm.choseRdc.mapping);
-		$http.post(url).success(function(data,status,config,headers){
+		url = '/i/rdc/updateMapping'
+		$http.post(url,{
+			id:$scope.vm.choseRdc.id,
+			mapping:JSON.stringify($scope.vm.choseRdc.mapping)
+		}).success(function(data,status,config,headers){
 			alert(data.message);
 		})
 	}
