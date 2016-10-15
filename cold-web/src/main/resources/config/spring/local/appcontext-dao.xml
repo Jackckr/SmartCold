@@ -26,5 +26,6 @@
 		<property name="mapperLocations" value="classpath*:config/sqlmapnew/*.xml"/>  
 		<property name="typeAliasesPackage" value="com.smartcold.manage.cold.entity.newdb" />  
 		<property name="configLocation"  value="classpath:config/mybatis/mybatis-config.xml" />
+		
     </bean>
 </beans>

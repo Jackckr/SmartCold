@@ -91,28 +91,4 @@ public class RdcController {
 		return ResponseData.newSuccess("检查数据状态成功！");
 	}
 	
-	@RequestMapping(value = "/reckonQuantity")
-	@ResponseBody
-	public ResponseData<String> reckonQuantity() {
-		
-		return ResponseData.newSuccess("！");
-	}
-	
-	@RequestMapping(value = "/getServerIP")
-	@ResponseBody
-	public ResponseData<HashMap<String, Object>> getServerIP() {
-		HashMap<String, Object> sysInfo=new HashMap<String, Object>();
-		try {  
-			  Runtime r = Runtime.getRuntime();
-			 InetAddress addr = InetAddress.getLocalHost();
-			 sysInfo.put("IP", addr.getHostAddress());
-			 sysInfo.put("JVM可以使用的总内存:", r.totalMemory()/1048576);
-			 sysInfo.put("JVM可以使用的剩余内存:", r.freeMemory()/1048576);
-			 sysInfo.put("JVM可以使用的处理器个数:", r.availableProcessors());
-	    } catch (Exception e) {  
-	        e.printStackTrace();  
-	    }  
-		return ResponseData.newSuccess(sysInfo);
-	}
-	
 }
