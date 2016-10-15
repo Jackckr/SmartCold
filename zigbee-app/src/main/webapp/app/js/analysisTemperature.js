@@ -62,12 +62,11 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
         $scope.viewStorage(rdc.id);
     }
 
-    //TODO 替换为分析的跳转
     $scope.goDoor = function () {
         window.location.href = 'analysisDoor.html?storageID=' + $scope.rdcId;
     }
     $scope.goLight = function () {
-        //window.location.href = 'analusisLight.html?storageID=' + $scope.rdcId;
+        window.location.href = 'analysisLight.html?storageID=' + $scope.rdcId;
     }
     $scope.goOther = function () {
         window.location.href = 'analysisOther.html?storageID=' + $scope.rdcId;
