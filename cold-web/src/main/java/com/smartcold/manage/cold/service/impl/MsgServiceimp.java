@@ -86,6 +86,17 @@ public class MsgServiceimp implements MsgService {
 	 */
 //	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkAPStatus() {
+		long currentTime = System.currentTimeMillis() + 1800000;
+		Date startTime = new Date();
+		Date endTime = new Date(currentTime);
+		boolean taskStatus = quantityMapper.getTaskStatus("checkAPStatus", null, endTime);
+		if(taskStatus){
+			quantityMapper.updateTakststatus(true, "checkAPStatus");
+			System.err.println("checkAPStatus:已被被执行");
+		}else{
+			System.err.println("checkAPStatus:已被被执行");
+			return ;
+		}
 		List<Map<String, Object>> findRdcManger = this.rdcMapper.findRdcManger();// 查找监听保护对象
 		Map<Integer, String> telMap = new HashMap<Integer, String>();
 		if (SetUtil.isnotNullList(findRdcManger)) {
@@ -99,7 +110,7 @@ public class MsgServiceimp implements MsgService {
 			filter.put("status", 1);// 检查正常的devcice是否正常工作
 			filter.put("rdcid", rdcidlist.substring(0, rdcidlist.length() - 1));
 			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
-			sendMsg(devciceList, telMap);
+			sendMsg(devciceList, telMap,startTime,endTime);
 		}
 	}
 
@@ -206,10 +217,9 @@ public class MsgServiceimp implements MsgService {
 	 * @param devciceList
 	 * @param telMap
 	 */
-	private void sendMsg(List<DeviceObjectMappingEntity> devciceList, Map<Integer, String> telMap) {
-		long currentTime = System.currentTimeMillis() + 1800000;
-		Date startTime = new Date();
-		Date endTime = new Date(currentTime);
+	private void sendMsg(List<DeviceObjectMappingEntity> devciceList, Map<Integer, String> telMap,Date startTime,Date endTime) {
+		
+		
 		if (SetUtil.isnotNullList(devciceList)) {
 			Map<String, Object> resMap = null;
 			LinkedHashMap<Integer, Map<String, Object>> tempData = new LinkedHashMap<Integer, Map<String, Object>>();
