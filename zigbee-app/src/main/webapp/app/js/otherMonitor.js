@@ -108,7 +108,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 freshOut.push(item.freshOutputQuantity);
                 frozenTemp.push(item.frozenInputTemperature);
                 freshTemp.push(item.freshInputTemperature);
-                time.push(formatTime(item.collectionTime));
+                time.push(formatTimeToDay(item.collectionTime));
             })
             barOption = {
             	backgroundColor: '#D2D6DE',
@@ -711,12 +711,16 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
         return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
     }
 
-    var formatTime = function (timeString) {
+    function formatTime(timeString) {
         if (typeof(timeString) == "string") {
             return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
         } else {
             return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
         }
+    }
+
+    function formatTimeToDay(timeString){
+        return formatTime(timeString).substring(0,10)
     }
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
