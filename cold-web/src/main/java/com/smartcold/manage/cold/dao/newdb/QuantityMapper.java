@@ -1,12 +1,11 @@
 package com.smartcold.manage.cold.dao.newdb;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.smartcold.manage.cold.entity.newdb.Company;
 import com.smartcold.manage.cold.entity.newdb.ForkLiftEntity;
-import com.smartcold.manage.cold.entity.newdb.QuantityTask;
 
 /**
  * 计算Q
@@ -15,13 +14,8 @@ import com.smartcold.manage.cold.entity.newdb.QuantityTask;
  */
 public interface QuantityMapper {
 	
-	List<QuantityTask> getTaskByIP(@Param("ip")String ip);//获得任务状态 根据IP获得可分配的任务
 	
-	void updateTakststatus(@Param("state")Boolean  state,@Param("key")String key);//获得任务状态
-	
-	boolean getTaskStatus(@Param("methodName")String methodName,@Param("ip")String ip,@Param("time")Date time);//获得任务状态
-	
-	
+	public boolean updateTaskStatus(Integer id);//获得任务状态
     //======================================================Q2======================================================
    
 	

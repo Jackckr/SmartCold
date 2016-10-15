@@ -4,15 +4,30 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Map;
 
 /**
- * EXCEL报表工具类.
+ * 远程url工具类.
  * 
  * @author Maqiang34
  */
 public class RemoteUtil {
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getServerIP(){
+		try {
+			InetAddress addr = InetAddress.getLocalHost();
+			 return addr.getHostAddress();
+		} catch (UnknownHostException e) {
+			return "127.0.0.1";
+		}
+	}
 
 	/**
 	 * 发送Http协议 通过post传参数到接口并返回数据

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
@@ -23,6 +24,7 @@ import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
 import com.smartcold.manage.cold.dao.olddb.QuantitySetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
+import com.smartcold.manage.cold.entity.newdb.Company;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.ForkLiftEntity;
 import com.smartcold.manage.cold.entity.newdb.NewColdStorageEntity;
@@ -45,6 +47,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 2016年9月27日11:55:45
  **/
 @Service
+
 public class MsgServiceimp implements MsgService {
 
 	@Autowired
@@ -89,12 +92,9 @@ public class MsgServiceimp implements MsgService {
 		long currentTime = System.currentTimeMillis() + 1800000;
 		Date startTime = new Date();
 		Date endTime = new Date(currentTime);
-		boolean taskStatus = quantityMapper.getTaskStatus("checkAPStatus", null, endTime);
-		if(taskStatus){
-			quantityMapper.updateTakststatus(true, "checkAPStatus");
-			System.err.println("checkAPStatus:已被被执行");
-		}else{
-			System.err.println("checkAPStatus:已被被执行");
+		boolean taskStatus = quantityMapper.updateTaskStatus(3);
+		if(!taskStatus){
+			System.err.println("checkAPStatus:已被被执行+++++++++++++++++++++++++++++++++++++++++++++");
 			return ;
 		}
 		List<Map<String, Object>> findRdcManger = this.rdcMapper.findRdcManger();// 查找监听保护对象
@@ -113,7 +113,6 @@ public class MsgServiceimp implements MsgService {
 			sendMsg(devciceList, telMap,startTime,endTime);
 		}
 	}
-
 	/**
 	 * 计算热量 每天凌晨两点触发
 	 */
@@ -129,15 +128,22 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 检查数据是否执行报警
 	 */
-//	@Scheduled(cron = "0 0/5 * * * ?")
+	 @Scheduled(cron="0/1 * *  * * ? ")   
 	public void checkData() {
-		System.err.println("开始工作。。。。。。。");
+	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
+		if(taskStatus){
+			System.err.println("时间："+TimeUtil.getDateTime()+" IP:"+RemoteUtil.getServerIP()+" ：checkData：开始执行-----------------------------------------------");
+		}
+	}
+	
+	/**
+	 * 检查数据是否正常
+	 * @param startTime
+	 */
+	public void getERRinfo(Date startTime){
 		WarningsLog waLog = null;
 		List<WarningsLog> errInfoList = new ArrayList<WarningsLog>();
-		Date startTime = TimeUtil.getBeforeMinute(5);//
-		System.err.println("查询时间" + TimeUtil.getDateTime(startTime));
-		List<WarningsInfo> fErrWarningList = this.warningsInfoMapper
-				.findErrWarningByTime(startTime);// PLC报警
+		List<WarningsInfo> fErrWarningList = this.warningsInfoMapper.findErrWarningByTime(startTime);// PLC报警
 		if (SetUtil.isnotNullList(fErrWarningList)) {//
 			errInfoList.addAll(errInfoList);
 		}
@@ -209,7 +215,6 @@ public class MsgServiceimp implements MsgService {
 		}
 		warningLogMapper.addWarningLog(errInfoList);
 	}
-	
 
 	/**
 	 * 定义消息组件
@@ -218,8 +223,6 @@ public class MsgServiceimp implements MsgService {
 	 * @param telMap
 	 */
 	private void sendMsg(List<DeviceObjectMappingEntity> devciceList, Map<Integer, String> telMap,Date startTime,Date endTime) {
-		
-		
 		if (SetUtil.isnotNullList(devciceList)) {
 			Map<String, Object> resMap = null;
 			LinkedHashMap<Integer, Map<String, Object>> tempData = new LinkedHashMap<Integer, Map<String, Object>>();

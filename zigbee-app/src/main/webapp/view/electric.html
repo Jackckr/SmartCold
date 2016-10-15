@@ -57,31 +57,24 @@
     	</div>
     	<div class="door other" id="opendoor" ng-click="goFacility()"><i class="iconfont">&#xe6ed;</i>
     		<span class="dropNext">
-    			<b>设施</b><i class="iconfont">&#xe6f7;</i>
+    			<b>运管</b><i class="iconfont">&#xe6f7;</i>
     		</span>
 			<ul class="otherList black">
 				<li><a href="javascript:;" id="storageDoor" ng-click="storageDoorFacility()">冷库门</a></li>
 				<li><a href="javascript:;" id="platformDoor" ng-click="platformDoorFacility()">月台门</a></li>
-				<!--<li><a href="javascript:;" id="lightSys" ng-click="lightSysFacility()">照明系统</a></li>-->
+				<li><a href="javascript:;" id="" ng-click="">货物</a></li>
 				<li><a href="javascript:;" id="otherFacility" ng-click="otherFacilityFacility()">其他设施</a></li>
 			</ul>
     	</div>
-    	<div class="other" id="other"  ng-click="goOtherMonitor()"><i class="iconfont">&#xe69f;</i>
+    	<div class="other" id="other"  ng-click="goOtherMonitor()"><i class="iconfont">&#xe7b6;</i>
     		<span class="dropNext">
-    			<b>其它</b><i class="iconfont">&#xe6f7;</i>
+    			<b>制冷</b><i class="iconfont">&#xe6f7;</i>
     		</span>
     		<ul class="otherList black">
-    			<li><a href="javascript:;" id="hwlt">货物流通</a></li>
-    			<li>
-    				<a href="javascript:;" id="zlxt">
-    					制冷系统
-    				</a>
-    					<ul class="inner">
-	    					<li><a href="javascript:;">制冷机组</a></li>
-							<li><a href="javascript:;">排气温度</a></li>
-	    					<li><a href="javascript:;">冷凝系统</a></li>
-	    				</ul>
-    			</li>
+    			<!-- <li><a href="javascript:;" id="hwlt">货物流通</a></li> -->
+				<li><a href="javascript:;">制冷机组</a></li>
+				<li><a href="javascript:;">排气温度</a></li>
+				<li><a href="javascript:;">冷凝系统</a></li>
 				<li><a href="javascript:;" id="zfxt">蒸发系统</a></li>
     		</ul>    		
     	</div>
@@ -117,7 +110,7 @@
             </a>
         </li>
         <li>          
-            <a href="warning.html">
+            <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
             </a>
@@ -125,7 +118,7 @@
         <li>            
             <a href="">
                 <i class="iconfont">&#xe6a5;</i>
-                <p class="info">配置</p>
+                <p class="info">维护</p>
             </a>
         </li>
     </ul>

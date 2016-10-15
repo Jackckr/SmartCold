@@ -11,7 +11,8 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
     $.getUrlParam = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+        if (r != null) return unescape(r[2]);
+        return null;
     }
     var rootRdcId = $.getUrlParam('storageID');
 
@@ -26,8 +27,8 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
             } else {
                 $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
                     $scope.currentRdc = data[0];
-                    $scope.rdcName =  data[0].name;
-                    $scope.rdcId =  data[0].id;
+                    $scope.rdcName = data[0].name;
+                    $scope.rdcId = data[0].id;
                     $scope.viewStorage($scope.rdcId);
                 });
             }
@@ -66,26 +67,18 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         $scope.viewStorage(rdc.id);
     }
     $scope.goTempture = function () {
-        window.location.href='cold360.html?storageID=' + $scope.rdcId;
+        window.location.href = 'cold360.html?storageID=' + $scope.rdcId;
     }
     $scope.goFacility = function () {
-        window.location.href='facility.html?storageID=' + $scope.rdcId;
+        window.location.href = 'facility.html?storageID=' + $scope.rdcId;
     }
     $scope.goOtherMonitor = function () {
-        window.location.href='other.html?storageID=' + $scope.rdcId;
+        window.location.href = 'other.html?storageID=' + $scope.rdcId;
     }
 
     var getFormatTimeString = function (delta) {
         delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
         return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
-    }
-
-    var formatTime = function (timeString) {
-        if (typeof(timeString) == "string") {
-            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
-        } else {
-            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
-        }
     }
 
     $scope.swiper = 0;
@@ -100,13 +93,13 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
             var xData = [];
             var yData = [];
             angular.forEach(powerData, function (item) {
-                xData.unshift(formatTime(item.addtime))
+                xData.unshift(formatTimeToMinute(item.addtime))
                 yData.unshift(item.value * powerSet.radio)
             })
 
             var currentPower = '';
             if (data.length > 0) {
-                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value  * powerSet.radio).toFixed(1) : '';
+                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value * powerSet.radio).toFixed(1) : '';
             }
             var mainId = 'power' + powerid;
             if ($scope.swiper < $scope.powers.length) {
@@ -140,29 +133,44 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
     $scope.waterEnergy = function () {
         clearSwiper();
         $scope.activeEnergy = 'water';
-        $http.get(ER.coldroot + "/i/compressorGroup/getAllWaterCostByRdcId?rdcId=" + $scope.rdcId).success(
+        $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + $scope.rdcId).success(
             function (data) {
-                $scope.waterCosts = data;
-                var currentWaterCost = '';
-                if (data.length > 0) {
-                    currentWaterCost = data[data.length - 1] ? parseFloat(data[data.length - 1].waterCost).toFixed(2) : '';
-                }
-                var xData = []
-                var yData = []
-                angular.forEach($scope.waterCosts, function (item) {
-                    xData.push(item.compressorGroupName);
-                    yData.push(item.waterCost);
-                })
-                var option = $scope.creatOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'bar');
-                var mainId = 'water';
-                var innerHTML = '<div class="swiper-slide">' +
-                    '<p class="actually">水表1</p>' +
-                    '<p class="temperaturenum">' + currentWaterCost + 't</p>' +
-                    '<div id=' + mainId + ' style="height: 18rem;"></div> ';
-                $("#chartView").last().append(innerHTML);
+                $scope.compressorGroups = data;
+                angular.forEach($scope.compressorGroups, function (item) {
+                    endTime = getFormatTimeString();
+                    startTime = getFormatTimeString(-4 * 60 * 60 * 1000);
+                    url = ER.coldroot + "/i/baseInfo/getKeyValueDataByTime?type=3&oid=" + item.id
+                        + "&key=WaterCost" + "&startTime=" + startTime + "&endTime=" + endTime;
+                    $http.get(url).success(function (data) {
+                        $scope.waterData = data;
+                        var xData = [];
+                        var yData = [];
+                        angular.forEach($scope.waterData, function (item) {
+                            xData.unshift(formatTimeToMinute(item.addtime));
+                            yData.unshift(item.value);
+                        });
+                        var currentWater = '';
+                        if (data.length > 0) {
+                            currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value).toFixed(1) : '';//
+                        }
+                        ;
+                        $scope.currentWater = currentWater;
 
-                var barCharts = echarts.init($('#' + mainId)[0]);
-                barCharts.setOption(option);
+                        var mainId = 'water' + item.id;
+                        if ($scope.swiper < $scope.compressorGroups.length) {
+                            var innerHTML = '<div class="swiper-slide">' +
+                                '<p class="actually">' + item.name + '</p>' +
+                                '<p class="temperaturenum">' + currentWater + 't</p>' +
+                                '<div id=' + mainId + ' style="min-height: 15rem;"></div> ';
+                            $("#chartView").last().append(innerHTML);
+                            $scope.swiper += 1;
+                        }
+                        var lineChart = echarts.init($('#' + mainId).get(0));
+
+                        option = getEchartSingleOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'line', parseInt(yData[0]));
+                        lineChart.setOption(option);
+                    });
+                })
             })
     }
 
@@ -180,7 +188,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
-        	backgroundColor: '#D2D6DE',
+            backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis'
             },
@@ -223,4 +231,57 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         return option
     }
 
+    function formatTimeToMinute(timeString) {
+        return formatTime(timeString).substring(0, 16);
+    }
+
+    function formatTime(timeString) {
+        if (typeof(timeString) == "string") {
+            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        } else {
+            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        }
+    }
+
+    function getEchartSingleOption(title, xData, yData, yName, yUnit, lineName, type, yMin, yMax) {
+        min = max = yData.length > 0 ? yData[0] : 0
+        angular.forEach(yData, function (item, index) {
+            yData[index] = yData[index].toFixed(2);
+            min = Math.min(min, yData[index])
+            max = Math.max(max, yData[index])
+        })
+        yMin = max - min < 1 && type == 'line' ? min - 10 : yMin
+        option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            title: {
+                text: title
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xData
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: yName + "(" + yUnit + ")",
+                    min: yMin ? yMin : 'auto',
+                    max: yMax ? yMax : 'auto',
+                    minInterval: 1
+                }
+            ],
+            series: [
+                {
+                    name: lineName,
+                    type: type,
+                    data: yData,
+                }
+            ]
+        };
+        return option
+    }
 });

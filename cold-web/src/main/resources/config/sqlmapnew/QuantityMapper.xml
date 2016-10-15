@@ -8,19 +8,10 @@
 		SELECT oid ,SUM(`value`)power  FROM `forklift` where `oid` in(${oid}) and (`addtime` between  #{stTime} and #{edTime})  ;
 	</select>
 	
-	
-	
-	
-	<select id="getTaskStatus" resultType="boolean">
-		select if(TIMESTAMPDIFF(MINUTE,sk.LastRunTim,#{time})>intervalTime,1,0) isRuan from queue_task sk  where sk.methodName=#{methodName} for update;
-	</select>
-	<update id="updateTakststatus" parameterType="String">
-	    update queue_task set state=#{state} WHERE key=#{key};
+	<update id="updateTaskStatus" parameterType="Integer" flushCache="true">
+		update queue_task sk set LastRunTim=now() where id=#{id} and LastRunTim + interval intervalTime MINUTE &lt; now() ;
 	</update>
 	
-	<select id="getTaskByIP" parameterType="map" resultType="ForkLiftEntity">
-		select id,state,intervalTime, LastRunTim,updateTime from queue_task t where ip=#{ip};
-	</select>
 	
 	
 </mapper>

@@ -201,18 +201,10 @@ div[id^="main"],.actually+div[id]{
 .inner>li:last-child{
 	border: 0;
 }
-/*.inner>li>a:before{
-	content: "";
-	width: 8px;
-	height: 8px;
-	background: #999;
-	border-radius: 50%;
-	position: absolute;
-	top: 48%;
-	left: 0.5rem;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
-}*/
+
+.echarts-tooltip{
+	text-align: left;
+}
 .inner>li>a{
 	color: #333;
 	font-size: 0.75rem;
