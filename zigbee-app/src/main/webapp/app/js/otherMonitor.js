@@ -553,14 +553,14 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                         yAxis: {
                             min: 0,
                             title: {
-                                text: 'Level (mL)'
+                                text: 'Level (mm)'
                             }
                         },
                         legend: {
                             enabled: false
                         },
                         tooltip: {
-                            pointFormat: 'Level is: <b>{point.y:.1f} mL</b>',
+                            pointFormat: 'Level is: <b>{point.y:.1f} mm</b>',
                             textStyle: {
                             	fontSize: 12
                             }

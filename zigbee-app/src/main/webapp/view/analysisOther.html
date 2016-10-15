@@ -56,17 +56,37 @@
                 <li><a href="javascript:;" id="WDZQYZ" ng-click="WDZQYZTemper()">温度周期因子统计</a></li>
             </ul>
     	</div>
-    	<div class="light" id="door" ng-click="goDoor()"><i class="iconfont">&#xe76b;</i>门运行</div>
-    	<div class="door" id="light" ng-click="goLight()"><i class="iconfont">&#xe76e;</i>日热量</div>
-    	<div class="current other"><i class="iconfont">&#xe69f;</i>
+    	<!-- ================== -->
+        <div class="light other" id="runDoor" ng-click="goLight()"><i class="iconfont">&#xe76b;</i>
+            <span class="dropNext">
+                <b>运管</b><i class="iconfont">&#xe6f7;</i>
+            </span>
+            <ul class="otherList black">
+                <li><a href="javascript:;"  id="light" ng-click="goLight()">冷库门运行分析</a></li>
+                <li><a href="javascript:;" id="goods">货物因子分析</a></li>
+                <li><a href="javascript:;" id="hot">冷库日热量分析</a></li>
+            </ul>
+        </div>
+        <div class="door current other" id="makeCold" ng-click="goOther()"><i class="iconfont">&#xe7b6;</i>
+            <span class="dropNext">
+                <b>制冷</b><i class="iconfont">&#xe6f7;</i>
+            </span>
+            <ul class="otherList black">
+                <li><a href="javascript:;"  id="efficiency" ng-click="goOther()">效率分析</a></li>
+                <li><a href="warning.html" id="warn">告警统计</a></li>
+                <li><a href="javascript:;" id="running">运行分析</a></li>
+            </ul>
+        </div>
+        <!-- =================== -->
+<!--     	<div class="light" id="door" ng-click="goDoor()"><i class="iconfont">&#xe76b;</i>门运行</div> -->
+<!--     	<div class="door" id="light" ng-click="goLight()"><i class="iconfont">&#xe76e;</i>日热量</div> -->
+    	<div class="other"><i class="iconfont">&#xe7a2;</i>
     		<span class="dropNext">
-    			<b>其它</b><i class="iconfont">&#xe6f7;</i>
+    			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>
     		<ul class="otherList black">
-    			<li><a href="javascript:;" id="coolingAnalysis" ng-click="coolingAnalysisOther()">制冷系统分析</a></li>
-                <li><a href="javascript:;" id="historyData" ng-click="historyDataOther()">历史数据查询</a></li>
-    			<li><a href="javascript:;" id="report" ng-click="reportOther()">报表功能</a></li>
-                <li><a href="javascript:;" id="analysisReport" ng-click="analysisReportOther()">分析报告</a></li>
+                <li><a href="javascript:;">历史数据查询</a></li>
+    			<li><a href="javascript:;">报表功能</a></li>
     		</ul>    		
     	</div>
     </section>
@@ -101,16 +121,16 @@
             </a>
         </li>
         <li>          
-            <a href="warning.html">
+            <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
                 <span class="countNum">99</span>
             </a>
         </li>
         <li>            
-            <a href="">
+             <a href="">
                 <i class="iconfont">&#xe6a5;</i>
-                <p class="info">配置</p>
+                <p class="info">维护</p>
             </a>
         </li>
     </ul>
