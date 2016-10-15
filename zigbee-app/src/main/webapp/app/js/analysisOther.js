@@ -87,10 +87,14 @@ app.controller('analysisOther', function ($scope, $location, $http, $rootScope, 
                 $("#chartView").last().append(innerHTML);
 
                 $('#' + mainId).highcharts({
-                	chart: {backgroundColor: '#D2D6DE',plotBackgroundColor:"#fff"},
+                    chart: {backgroundColor: '#D2D6DE', plotBackgroundColor: "#D2D6DE"},
                     title: {text: '', x: -20}, credits: {enabled: false},
                     xAxis: {categories: data.entity.xdata},
-                    yAxis: {title: {text: ''}, plotLines: [{value: 0, width: 1, color: '#808080'}]},
+                    yAxis: {
+                        title: {text: ''},
+                        gridLineColor: '#808080',
+                        plotLines: [{value: 0, width: 1, color: '#808080'}]
+                    },
                     legend: {layout: 'horizontal', align: 'center', borderWidth: 0},
                     series: data.entity.chdata
                 });
@@ -155,7 +159,7 @@ app.controller('analysisOther', function ($scope, $location, $http, $rootScope, 
             tooltip: {
                 trigger: 'axis',
                 textStyle: {
-                    fontSize: 12        
+                    fontSize: 12
                 }
             },
             title: {
@@ -199,11 +203,11 @@ app.controller('analysisOther', function ($scope, $location, $http, $rootScope, 
 
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
         var option = {
-    		backgroundColor: '#D2D6DE',
+            backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis',
                 textStyle: {
-                    fontSize: 12        
+                    fontSize: 12
                 }
             },
             title: {
