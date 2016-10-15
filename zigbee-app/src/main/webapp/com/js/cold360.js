@@ -47,7 +47,7 @@ $(function() {
 			//$('.rdcDropList').hide();
 		})
 	$('.otherList').click(function(e){
-		swiper.activeIndex = 0; // 回归第一个位置
+		swiper.activeIndex = 0; // 回归滑动第一个位置
 		var e = e || window.event;
 		var target = e.target || e.srcElement;
 		if ($(target).next().hasClass('inner')) {
