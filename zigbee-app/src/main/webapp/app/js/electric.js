@@ -11,7 +11,8 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
     $.getUrlParam = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+        if (r != null) return unescape(r[2]);
+        return null;
     }
     var rootRdcId = $.getUrlParam('storageID');
 
@@ -26,8 +27,8 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
             } else {
                 $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
                     $scope.currentRdc = data[0];
-                    $scope.rdcName =  data[0].name;
-                    $scope.rdcId =  data[0].id;
+                    $scope.rdcName = data[0].name;
+                    $scope.rdcId = data[0].id;
                     $scope.viewStorage($scope.rdcId);
                 });
             }
@@ -66,26 +67,18 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         $scope.viewStorage(rdc.id);
     }
     $scope.goTempture = function () {
-        window.location.href='cold360.html?storageID=' + $scope.rdcId;
+        window.location.href = 'cold360.html?storageID=' + $scope.rdcId;
     }
     $scope.goFacility = function () {
-        window.location.href='facility.html?storageID=' + $scope.rdcId;
+        window.location.href = 'facility.html?storageID=' + $scope.rdcId;
     }
     $scope.goOtherMonitor = function () {
-        window.location.href='other.html?storageID=' + $scope.rdcId;
+        window.location.href = 'other.html?storageID=' + $scope.rdcId;
     }
 
     var getFormatTimeString = function (delta) {
         delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
         return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
-    }
-
-    var formatTime = function (timeString) {
-        if (typeof(timeString) == "string") {
-            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
-        } else {
-            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
-        }
     }
 
     $scope.swiper = 0;
@@ -100,13 +93,13 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
             var xData = [];
             var yData = [];
             angular.forEach(powerData, function (item) {
-                xData.unshift(formatTime(item.addtime))
+                xData.unshift(formatTimeToMinute(item.addtime))
                 yData.unshift(item.value * powerSet.radio)
             })
 
             var currentPower = '';
             if (data.length > 0) {
-                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value  * powerSet.radio).toFixed(1) : '';
+                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value * powerSet.radio).toFixed(1) : '';
             }
             var mainId = 'power' + powerid;
             if ($scope.swiper < $scope.powers.length) {
@@ -180,7 +173,7 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
-        	backgroundColor: '#D2D6DE',
+            backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis'
             },
@@ -223,4 +216,15 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         return option
     }
 
+    function formatTimeToMinute(timeString) {
+        return formatTime(timeString).substring(0, 16);
+    }
+
+    function formatTime(timeString) {
+        if (typeof(timeString) == "string") {
+            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        } else {
+            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        }
+    }
 });
