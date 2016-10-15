@@ -6,26 +6,23 @@ import java.util.Date;
  * Author: qiunian.sun Date: qiunian.sun(2016-03-19 11:54)
  */
 public class GoodsColdStorageEntity {
-
 	private int id;
 
 	private int coldstorageid;
 
-	private float frozenInputQuantity;
+	private String goodsname;
 
-	private float forzenOutputQuantity;
+	private int type;
 
-	private float freshIutputQuantity;
+	private float inputQuantity;
 
-	private float freshOutputQuantity;
+	private float outputQUantity;
 
-	private float frozenInputTemperature;
+	private float inputTemperature;
 
-	private float freshInputTemperature;
+	private Date date;
 
-	private Date collectionTime;
-
-	private Date addTime;
+	private Date addtime;
 
 	public int getId() {
 		return id;
@@ -43,67 +40,60 @@ public class GoodsColdStorageEntity {
 		this.coldstorageid = coldstorageid;
 	}
 
-	public float getFrozenInputQuantity() {
-		return frozenInputQuantity;
+	public String getGoodsname() {
+		return goodsname;
 	}
 
-	public void setFrozenInputQuantity(float frozenInputQuantity) {
-		this.frozenInputQuantity = frozenInputQuantity;
+	public void setGoodsname(String goodsname) {
+		this.goodsname = goodsname;
 	}
 
-	public float getForzenOutputQuantity() {
-		return forzenOutputQuantity;
+	public int getType() {
+		return type;
 	}
 
-	public void setForzenOutputQuantity(float forzenOutputQuantity) {
-		this.forzenOutputQuantity = forzenOutputQuantity;
+	public void setType(int type) {
+		this.type = type;
 	}
 
-	public float getFreshIutputQuantity() {
-		return freshIutputQuantity;
+	public float getInputQuantity() {
+		return inputQuantity;
 	}
 
-	public void setFreshIutputQuantity(float freshIutputQuantity) {
-		this.freshIutputQuantity = freshIutputQuantity;
+	public void setInputQuantity(float inputQuantity) {
+		this.inputQuantity = inputQuantity;
 	}
 
-	public float getFreshOutputQuantity() {
-		return freshOutputQuantity;
+	public float getOutputQUantity() {
+		return outputQUantity;
 	}
 
-	public void setFreshOutputQuantity(float freshOutputQuantity) {
-		this.freshOutputQuantity = freshOutputQuantity;
+	public void setOutputQUantity(float outputQUantity) {
+		this.outputQUantity = outputQUantity;
 	}
 
-	public float getFrozenInputTemperature() {
-		return frozenInputTemperature;
+	public float getInputTemperature() {
+		return inputTemperature;
 	}
 
-	public void setFrozenInputTemperature(float frozenInputTemperature) {
-		this.frozenInputTemperature = frozenInputTemperature;
+	public void setInputTemperature(float inputTemperature) {
+		this.inputTemperature = inputTemperature;
 	}
 
-	public float getFreshInputTemperature() {
-		return freshInputTemperature;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setFreshInputTemperature(float freshInputTemperature) {
-		this.freshInputTemperature = freshInputTemperature;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public Date getCollectionTime() {
-		return collectionTime;
+	public Date getAddtime() {
+		return addtime;
 	}
 
-	public void setCollectionTime(Date collectionTime) {
-		this.collectionTime = collectionTime;
+	public void setAddtime(Date addtime) {
+		this.addtime = addtime;
 	}
 
-	public Date getAddTime() {
-		return addTime;
-	}
-
-	public void setAddTime(Date addTime) {
-		this.addTime = addTime;
-	}
 }

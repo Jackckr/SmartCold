@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.newdb.GoodsColdStorageMapper;
+import com.smartcold.manage.cold.service.GoodsColdStorageService;
 import com.smartcold.manage.cold.service.OtherDeviceService;
 
 @Controller
@@ -20,15 +21,18 @@ public class OtherObjectController {
 	GoodsColdStorageMapper goodsColdStorageDao;
 
 	@Autowired
+	private GoodsColdStorageService goodsColdStorageService;
+
+	@Autowired
 	private OtherDeviceService otherDeviceService;
 
 	@RequestMapping(value = "/findGoodsByDate", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllStorageKeys(int coldstorageId,
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startCollectionTime,
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endCollectionTime) {
+			@DateTimeFormat(pattern = "yyyy-MM-dd") Date startCollectionTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") Date endCollectionTime) {
 
-		return goodsColdStorageDao.findByDate(coldstorageId, startCollectionTime, endCollectionTime);
+		return goodsColdStorageService.findGoodsByDate(coldstorageId, startCollectionTime, endCollectionTime);
 	}
 
 	@RequestMapping(value = "/findOtherDeviceCosts", method = RequestMethod.GET)

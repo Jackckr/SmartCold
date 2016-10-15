@@ -7,8 +7,9 @@
 	<select id="findByDate" parameterType="map" resultType="GoodsColdStorageEntity">
 		SELECT *
 		FROM `goodscoldstorage` WHERE `coldstorageid` = #{coldstorageId} 
-		AND `collectionTime` >= #{startCollectionTime} 
-		AND `collectionTime` &lt;= #{endCollectionTime}
+		AND `date` >= #{startCollectionTime} 
+		AND `date` &lt;= #{endCollectionTime}
+		order by goodsname,date ASC
 	</select>
 
 </mapper>

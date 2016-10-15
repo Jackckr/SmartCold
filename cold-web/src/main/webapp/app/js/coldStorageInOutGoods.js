@@ -5,26 +5,36 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
     console.log($stateParams.storageID);
 
     $scope.drawInOutChart = function(storageId){
+    	$scope.showMap = {}
     	var barId = "#barChart" + storageId;
     	var barChart = echarts.init($(barId).get(0));
-        var frozenIn = [];
-        var frozenOut = [];
-        var freshIn = [];
-        var freshOut = [];
-        var frozenTemp = [];
-        var freshTemp = [];
-        var time = [];
+        var totalTime = 10
+        var series = []
+        var time = []
+        var timeMap = {}
+        var legend = []
+        for(i=0; i< totalTime;i++){
+        	xTime = baseTools.formatTimeToDay(baseTools.getFormatTimeString(0-i* 24 * 60 * 60 * 1000))
+        	time.unshift(xTime)
+        	timeMap[xTime] = totalTime - i - 1
+        }
+        startDate = baseTools.formatTimeToDay(baseTools.getFormatTimeString(-10 * 24 * 60 * 60 * 1000))
+        endDate = baseTools.getFormatTimeString()
         url = "/i/other/findGoodsByDate?coldstorageId=" + storageId + 
-        "&startCollectionTime=" + baseTools.getFormatTimeString(-10 * 24 * 60 * 60 * 1000) + "&endCollectionTime=" + baseTools.getFormatTimeString()  
+        "&startCollectionTime=" + startDate + "&endCollectionTime=" +  endDate
         $http.get(url).success(function(data,status,config,header){
-        	angular.forEach(data,function(item){
-        		frozenIn.push(item.frozenInputQuantity);
-        		frozenOut.push(item.forzenOutputQuantity);
-        		freshIn.push(item.freshIutputQuantity);
-        		freshOut.push(item.freshOutputQuantity);
-        		frozenTemp.push(item.frozenInputTemperature);
-        		freshTemp.push(item.freshInputTemperature);
-        		time.push(baseTools.formatTimeToDay(item.collectionTime));
+        	$scope.showMap[barId] = Object.keys(data).length
+        	angular.forEach(data,function(yData,key){
+        		outData = {name:key+'出货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}
+        		inData = {name:key+'进货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}
+        		inTemp = {name:key+'进货温度',type:'line',yAxisIndex: 1,data:new Array(totalTime+1).join("-").split("")}
+        		legend.push(key+'出货量',key+'进货量',key+'进货温度')
+        		angular.forEach(yData,function(item){
+        			outData.data[timeMap[baseTools.formatTimeToDay(item.date)]] = item['outputQUantity']
+        			inData.data[timeMap[baseTools.formatTimeToDay(item.date)]] = item['inputQuantity']
+        			inTemp.data[timeMap[baseTools.formatTimeToDay(item.date)]] = item['inputTemperature']
+        		})
+        		series.push(outData,inData,inTemp)
         	})
         	barOption = {
                 tooltip : {
@@ -42,7 +52,7 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
                 },
                 calculable : true,
                 legend: {
-                    data:['冻品进货量','冻品发货量','鲜品进货量','鲜品发货量','冻品进货温度','鲜品进货温度']
+                    data:legend
                 },
                 xAxis : [
                     {
@@ -66,40 +76,7 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
                         }
                     }
                 ],
-                series : [
-                    {
-                        name:'冻品进货量',
-                        type:'bar',
-                        data:frozenIn
-                    },
-                    {
-                        name:'冻品发货量',
-                        type:'bar',
-                        data:frozenOut
-                    },
-                    {
-                        name:'鲜品进货量',
-                        type:'bar',
-                        data:freshIn
-                    },
-                    {
-                        name:'鲜品发货量',
-                        type:'bar',
-                        data:freshOut
-                    },
-                    {
-                        name:'冻品进货温度',
-                        type:'line',
-                        yAxisIndex: 1,
-                        data:frozenTemp
-                    },
-                    {
-                        name:'鲜品进货温度',
-                        type:'line',
-                        yAxisIndex: 1,
-                        data:freshTemp
-                    }
-                ]
+                series : series
             };
             barChart.setOption(barOption);
         })
