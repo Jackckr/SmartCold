@@ -12,7 +12,8 @@
 		`name` = #{name},
 		`power` = #{power},
 		`waterRatio` = #{waterRatio},
-		`maintenancetime` =#{maintenancetime}
+		`maintenancetime` =#{maintenancetime},
+		`type` = #{type}
 		WHERE `id` = #{id}
 	</update>
 	<delete id="deleteById">
