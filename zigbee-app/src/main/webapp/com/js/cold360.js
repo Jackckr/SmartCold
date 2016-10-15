@@ -47,6 +47,7 @@ $(function() {
 			//$('.rdcDropList').hide();
 		})
 	$('.otherList').click(function(e){
+		swiper.activeIndex = 0;
 		var e = e || window.event;
 		var target = e.target || e.srcElement;
 		if ($(target).next().hasClass('inner')) {
