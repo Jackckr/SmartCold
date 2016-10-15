@@ -5,9 +5,9 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= $scope.end.substr(0,10)+" 00:00:00",$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
 	//开始核心内容
-	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['°C','','','','kPa','°C'],type:[1,10,2,11,3,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
+	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['(°C)','(kWh)','','','(kPa)','(°C)'],type:[1,10,2,11,3,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
- //$scope.typemode.unit[$scope.sl_index]
+ //
    //设置数据模型
    $scope.gettit=function(){//自动设置标题
 	       $scope.oids=[];$scope.oldnames=[],keem=$("#ul_key_list li.select"),slemkey="#Temp_ul_"+ $scope.sl_index+" li.select",subtit="";
@@ -87,7 +87,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		option = {
 				calculable : true,
 				legend: {data:s},
-				title: {text: $scope.slgptit+'(kPa)'},
+				title: {text: $scope.slgptit+$scope.typemode.unit[$scope.sl_index]},
 			    tooltip :tooltipmd,
 			    legend: {  data:[$scope.slgptit]},
 			    xAxis : [{type : 'category',data : xData} ],
