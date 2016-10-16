@@ -119,7 +119,7 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
             '</tbody></table>' +
             '</div> ';
         $("#chartView").last().append(innerHTML);
-        $http.get('/i/warn/getWarncoldAnalysis', {params: {rdcId: $scope.rdcId}}).success(function (data) {
+        $http.get(ER.coldroot + '/i/warn/getWarncoldAnalysis', {params: {rdcId: $scope.rdcId}}).success(function (data) {
             if (data.success) {
 
             } else {
