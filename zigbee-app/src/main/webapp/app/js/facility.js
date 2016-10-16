@@ -362,16 +362,6 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
     }
 
     $scope.drawInOutGoods = function (storage) {
-        var mainId = "barChart" + storage.id;
-        var barId = "#" + mainId;
-        if ($scope.swiper < $scope.mystorages.length) {
-            var innerHTML = '<div class="swiper-slide">' +
-                '<p class="actually">' + storage.name + '</p>' +
-                '<div id=' + mainId + '></div> ';
-            $("#chartView").last().append(innerHTML);
-            $scope.swiper += 1;
-        }
-        var barChart = echarts.init($(barId).get(0));
         var frozenIn = [];
         var frozenOut = [];
         var freshIn = [];
@@ -479,6 +469,16 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
                     }
                 ]
             };
+            var mainId = "barChart" + storage.id;
+            var barId = "#" + mainId;
+            if ($scope.swiper < $scope.mystorages.length) {
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">' + storage.name + '</p>' +
+                    '<div id=' + mainId + '></div> ';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper += 1;
+            }
+            var barChart = echarts.init($(barId).get(0));
             barChart.setOption(barOption);
         })
     }
