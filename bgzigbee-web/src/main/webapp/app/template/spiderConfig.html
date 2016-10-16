@@ -95,7 +95,7 @@
                         </form>
                         <form class="navbar-form">
                             <div class="col-lg-4 form-group" style="margin-top:20px;"
-                                 ng-show="choseDevice.name == '添加冷库门' || choseDevice.name == '添加冷风机' || choseDevice.table=='windscreenset' ">
+                                 ng-show="choseDevice.name == '添加冷库墙' ||choseDevice.name == '添加冷库门' || choseDevice.name == '添加冷风机' || choseDevice.table=='windscreenset' ">
                                 <label>冷库：</label>
                                 <select ng-options="storage.name for storage in storages" class="form-control" ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
                             </div>
@@ -257,6 +257,76 @@
                                             update-url="/i/coldStorageDoor/updateDoor"
                                             colums-th="名字,门长度(M),门宽度(M)"
                                             colums="name,length,width"></ajax-table>
+                            </div>
+                        </form>
+                        <form id="addWall" ng-show="choseDevice.name == '添加冷库墙'" class="col-lg-12 form-horizontal">
+                            <div style="margin-top:30px;" class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>墙名字:</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="wallEntity.name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">墙长度(M):</label>
+                                    <div class="col-lg-8">
+                                        <input style="width:250px;" ng-model="wallEntity.length" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">墙高度(M):</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="wallEntity.width" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">修正系数a:</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="wallEntity.a" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">外侧放热系数:</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="wallEntity.aw" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">内侧放热系数:</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="wallEntity.an" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">保温材料厚度:</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="wallEntity.thick" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">导热系数:</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="wallEntity.daorexishu" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">包装材料修正值b:</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" ng-model="wallEntity.b" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-8">
+                                    <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addWall()" ng-disabled="!wallEntity.name">添加</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                            	<div><label>&nbsp;</label></div>
+                                <label>已有墙：</label>
+                                <ajax-table array-objects="walls"
+                                            delete-url="/i/spiderConfig//delete/id"
+                                            update-url="/i/spiderConfig/update/wallSet"
+                                            colums-th="名字,墙长度(M),墙高度(M),系数a,外侧系数,内侧系数,厚度,导热系数,修正值b"
+                                            colums="name,length,width,a,aw,an,thick,daorexishu,b"></ajax-table>
                             </div>
                         </form>
                         <!--  -->

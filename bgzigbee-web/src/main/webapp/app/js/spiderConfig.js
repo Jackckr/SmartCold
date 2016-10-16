@@ -23,6 +23,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$scope.doorEntity = {}
 		$scope.blowerEntity = {}
 		$scope.compressGroupEntity = {}
+		$scope.wallEntity = {}
 
 		$http.get('/i/rdc/findRdcList').success(function(data,status,config,headers){
 			$scope.rdclist = data;
@@ -296,6 +297,15 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 					$scope.vm.choseDoor = data.length>0?data[0]:[];
                     $scope.tagTypeChanged();
 				})
+		$http.get('/i/spiderConfig/find/wallSet?storageId=' + $scope.vm.choseStorage.id
+				).success(function(data,status,config,headers){
+					angular.forEach(data,function(item,index){
+						data[index].mapping = JSON.parse(data[index].mapping)
+					})
+					$scope.walls = data;
+					$scope.vm.choseWall = data.length>0?data[0]:[];
+                    $scope.tagTypeChanged();
+				})
 		$http.get('/i/blower/getBlowerByColdStorageId?coldStorageId=' + $scope.vm.choseStorage.id
 				).success(function(data,status,config,headers){
 					angular.forEach(data,function(item,index){
@@ -533,6 +543,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                 return $scope.coldStorageLightSets;
             case 16:
                 return $scope.circulatingPumpSets;
+            case 17:
+            	return $scope.walls;
             default:
         }
 	}
@@ -723,6 +735,15 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$http.post("/i/coldStorageDoor/insertDoor",$scope.doorEntity).success(function(data,status,config,headers){
 			alert(data.message);
 			$scope.doorEntity = {};
+			$scope.changeStorage();
+		})
+	}
+	
+	$scope.addWall = function(){
+		$scope.wallEntity.coldStorageid = $scope.vm.choseStorage.id;
+		$http.post("/i/spiderConfig/add/wallSet",$scope.wallEntity).success(function(data,status,config,headers){
+			alert(data.message);
+			$scope.wallEntity = {};
 			$scope.changeStorage();
 		})
 	}

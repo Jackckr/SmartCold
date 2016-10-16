@@ -16,6 +16,7 @@ import com.smartcold.bgzigbee.manage.dao.EvaporativeWaterSetMapping;
 import com.smartcold.bgzigbee.manage.dao.ForkLiftSetMapping;
 import com.smartcold.bgzigbee.manage.dao.PlatformDoorSetMapping;
 import com.smartcold.bgzigbee.manage.dao.SetTableMapper;
+import com.smartcold.bgzigbee.manage.dao.WallSetMapper;
 import com.smartcold.bgzigbee.manage.dao.WindScreenSetMapping;
 import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
@@ -27,6 +28,7 @@ import com.smartcold.bgzigbee.manage.entity.EvaporativeSetEntity;
 import com.smartcold.bgzigbee.manage.entity.EvaporativeWaterSetEntity;
 import com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity;
+import com.smartcold.bgzigbee.manage.entity.WallSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SetTables;
 import com.smartcold.bgzigbee.manage.service.RemoteService;
@@ -66,6 +68,9 @@ public class SpiderConfigController {
 
 	@Autowired
 	private ForkLiftSetMapping forkLiftSetMapping;
+
+	@Autowired
+	private WallSetMapper wallSetDao;
 
 	@Autowired
 	private RemoteService remoteService;
@@ -228,6 +233,26 @@ public class SpiderConfigController {
 			return new ResultDto(0, "添加成功");
 		}
 		return new ResultDto(-1, "添加失败");
+	}
+
+	@RequestMapping(value = "/add/wallSet", method = RequestMethod.POST)
+	public Object addWallSet(@RequestBody WallSetEntity wallSet) {
+		wallSetDao.insert(wallSet);
+
+		return new ResultDto(0, "添加成功");
+	}
+
+	@RequestMapping(value = "/update/wallSet", method = RequestMethod.POST)
+	public Object updateWallSet(@RequestBody WallSetEntity wallSet) {
+		wallSetDao.update(wallSet);
+
+		return new ResultDto(0, "添加成功");
+	}
+
+	@RequestMapping(value = "/find/wallSet", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findWallSet(int storageId) {
+		return wallSetDao.findByStorageId(storageId);
 	}
 
 	@RequestMapping(value = "/add/deviceObjectMapping", method = RequestMethod.POST)
