@@ -11,7 +11,7 @@ public class CompressorGroupSetEntity {
 
 	private String name;
 
-	private int groupId;
+	private int evaporativeid;
 
 	private int rdcId;
 
@@ -81,12 +81,12 @@ public class CompressorGroupSetEntity {
 		this.name = name;
 	}
 
-	public int getGroupId() {
-		return groupId;
+	public int getEvaporativeid() {
+		return evaporativeid;
 	}
 
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
+	public void setEvaporativeid(int evaporativeid) {
+		this.evaporativeid = evaporativeid;
 	}
 
 	public int getRdcId() {

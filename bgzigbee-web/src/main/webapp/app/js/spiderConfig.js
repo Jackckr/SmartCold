@@ -227,6 +227,20 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             })
             $scope.vm.choseEvaporative = resp.data[0];
             $scope.vm.choseEvaporative?$scope.changeEvaporative():null;
+            $http.get("/i/spiderConfig/find/evaporativeWaterSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+    			$scope.evaporativeWaterSets = resp.data;
+    			angular.forEach($scope.evaporativeWaterSets, function (item, index) {
+    				$scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
+    			})
+    			$scope.tagTypeChanged();
+    		})
+    		$http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+    			$scope.evaporativeBlowerSets = resp.data;
+    			angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
+    				$scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
+    			})
+    			$scope.tagTypeChanged();
+    		})
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=powerset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
@@ -321,20 +335,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                 $scope.vm.choseCompressor = $scope.compressorSets?$scope.compressorSets[0]:{};
                 $scope.tagTypeChanged();
 			});
-		$http.get("/i/spiderConfig/find/evaporativeWaterSet?groupid="+$scope.vm.choseCompressGroup.id).then(function (resp) {
-			$scope.evaporativeWaterSets = resp.data;
-			angular.forEach($scope.evaporativeWaterSets, function (item, index) {
-				$scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
-			})
-			$scope.tagTypeChanged();
-		})
-		$http.get("/i/spiderConfig/find/evaporativeBlowerSet?groupid="+$scope.vm.choseCompressGroup.id).then(function (resp) {
-			$scope.evaporativeBlowerSets = resp.data;
-			angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
-				$scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
-			})
-			$scope.tagTypeChanged();
-		})
 	}
 
 	$scope.mapping2Object = function (sets) {
@@ -382,15 +382,29 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         })
     }
     $scope.changeEvaporative = function () {
-
+    	$http.get("/i/spiderConfig/find/evaporativeWaterSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+			$scope.evaporativeWaterSets = resp.data;
+			angular.forEach($scope.evaporativeWaterSets, function (item, index) {
+				$scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
+			})
+			$scope.tagTypeChanged();
+		})
+		$http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+			$scope.evaporativeBlowerSets = resp.data;
+			angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
+				$scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
+			})
+			$scope.tagTypeChanged();
+		})
     }
     $scope.evaporativeWaterSet = {};
     $scope.addEvaporativeWaterSet = function () {
         var object = $scope.evaporativeWaterSet;
         object.groupid= $scope.vm.choseCompressGroup.id;
+        object.evaporativeid = $scope.vm.choseEvaporative.id
         $http.post("/i/spiderConfig/add/evaporativeWaterSet", object).then(function (resp) {
             alert(resp.data.message);
-            $scope.changeCompressGroup();
+            $scope.changeEvaporative();
             $scope.evaporativeWaterSet = {};
         })
     }
@@ -399,9 +413,10 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.addEvaporativeBlowerSet = function () {
         var obj = $scope.evaporativeBlowerSet;
         obj.groupid = $scope.vm.choseCompressGroup.id;
+        obj.evaporativeid = $scope.vm.choseEvaporative.id
         $http.post("/i/spiderConfig/add/evaporativeBlowerSet", obj).then(function (resp) {
             alert(resp.data.message);
-            $scope.changeCompressGroup();
+            $scope.changeEvaporative();
             $scope.evaporativeBlowerSet = {};
         })
     }
@@ -724,6 +739,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.addCompressGroup = function(){
 		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
+		$scope.compressGroupEntity.evaporativeid = $scope.vm.choseEvaporative.id;
 		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
 			alert(data.message);
 			$scope.compressGroupEntity = {};

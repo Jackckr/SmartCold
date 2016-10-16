@@ -1,21 +1,36 @@
 package com.smartcold.bgzigbee.manage.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.smartcold.bgzigbee.manage.dao.*;
-import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
-import com.smartcold.bgzigbee.manage.dto.ResultDto;
-import com.smartcold.bgzigbee.manage.dto.UpdateMappingDTO;
-import com.smartcold.bgzigbee.manage.entity.*;
-import com.smartcold.bgzigbee.manage.enums.SetTables;
-import com.smartcold.bgzigbee.manage.service.RemoteService;
-import com.smartcold.bgzigbee.manage.service.SpiderConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.smartcold.bgzigbee.manage.dao.ColdstorageLightSetMapping;
+import com.smartcold.bgzigbee.manage.dao.EvaporativeBlowerSetMapping;
+import com.smartcold.bgzigbee.manage.dao.EvaporativeSetMapping;
+import com.smartcold.bgzigbee.manage.dao.EvaporativeWaterSetMapping;
+import com.smartcold.bgzigbee.manage.dao.ForkLiftSetMapping;
+import com.smartcold.bgzigbee.manage.dao.PlatformDoorSetMapping;
+import com.smartcold.bgzigbee.manage.dao.SetTableMapper;
+import com.smartcold.bgzigbee.manage.dao.WindScreenSetMapping;
+import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
+import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.dto.UpdateMappingDTO;
+import com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity;
+import com.smartcold.bgzigbee.manage.entity.DeviceObjectMappingEntity;
+import com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity;
+import com.smartcold.bgzigbee.manage.entity.EvaporativeSetEntity;
+import com.smartcold.bgzigbee.manage.entity.EvaporativeWaterSetEntity;
+import com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity;
+import com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity;
+import com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity;
+import com.smartcold.bgzigbee.manage.enums.SetTables;
+import com.smartcold.bgzigbee.manage.service.RemoteService;
+import com.smartcold.bgzigbee.manage.service.SpiderConfigService;
 
 /**
  * Created by corly on 16-8-13.
@@ -89,13 +104,13 @@ public class SpiderConfigController {
 	}
 
 	@RequestMapping("/find/evaporativeWaterSet")
-	public Object findEvaporativeWaterSet(int groupid) {
-		return evaporativeWaterSetMapping.findByGroupid(groupid);
+	public Object findEvaporativeWaterSet(int evaporativeid) {
+		return evaporativeWaterSetMapping.findByEvaporativeId(evaporativeid);
 	}
 
 	@RequestMapping("/find/evaporativeBlowerSet")
-	public Object findEvaporativeBloeSet(int groupid) {
-		return evaporativeBlowerSetMapping.findByGroupid(groupid);
+	public Object findEvaporativeBloeSet(int evaporativeid) {
+		return evaporativeBlowerSetMapping.findByEvaporativeId(evaporativeid);
 	}
 
 	@RequestMapping("/findByRdcid")

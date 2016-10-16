@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.EvaporativeBlowerSetMapping">
     <insert id="insert">
-        INSERT INTO `evaporativeblowerset` (`groupid`, `name`)
-        VALUES (#{groupid}, #{name})
+        INSERT INTO `evaporativeblowerset` (`evaporativeid`, `name`)
+        VALUES (#{evaporativeid}, #{name})
     </insert>
     <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity">
         SELECT *
         FROM `evaporativeblowerset` WHERE `id` = #{id}
     </select>
 
-    <select id="findByGroupid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity">
+    <select id="findByEvaporativeId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity">
         SELECT *
-        FROM `evaporativeblowerset` WHERE `groupid` = #{groupid}
+        FROM `evaporativeblowerset` WHERE `evaporativeid` = #{evaporativeid}
     </select>
 </mapper>

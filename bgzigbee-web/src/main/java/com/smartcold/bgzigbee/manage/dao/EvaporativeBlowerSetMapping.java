@@ -9,7 +9,7 @@ public interface EvaporativeBlowerSetMapping {
 
 	EvaporativeBlowerSetEntity findById(@Param("id") int id);
 
-	List<EvaporativeBlowerSetEntity> findByGroupid(@Param("groupid") int groupid);
+	List<EvaporativeBlowerSetEntity> findByEvaporativeId(@Param("evaporativeid") int evaporativeid);
 
 	boolean insert(EvaporativeBlowerSetEntity evaporativeBlowerSetEntity);
 }

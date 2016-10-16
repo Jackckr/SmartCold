@@ -101,14 +101,14 @@
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressorset' || choseDevice.table == 'evaporativewaterset' || choseDevice.table =='evaporativeblowerset' ">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressorset'">
                                 <label>压缩机组：</label>
                                 <select ng-options="item.name for item in compressGroups" class="form-control" ng-model="vm.choseCompressGroup" ng-change="changeCompressGroup()"></select>
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="false">
-                                <label>蒸发冷系统：</label>
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressorgroupset' ||choseDevice.table == 'evaporativewaterset' || choseDevice.table =='evaporativeblowerset'">
+                                <label>冷凝系统：</label>
                                 <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
                             </div>
                         </form>

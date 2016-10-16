@@ -31,7 +31,8 @@
 	  INSERT INTO `compressorgroupset` 
 	  (
 	  `name`,
-	  `rdcid`, 
+	  `rdcid`,
+	  `evaporativeid`, 
 	  `lowPress`, 
 	  `pressDiff`, 
 	  `meltFrostTemperature`,
@@ -44,7 +45,8 @@
 	  VALUES
 	  (
 	  #{name},
-	  #{rdcId}, 
+	  #{rdcId},
+	  #{evaporativeid}, 
 	  #{lowPress}, 
 	  #{pressDiff}, 
 	  #{meltFrostTemperature},
