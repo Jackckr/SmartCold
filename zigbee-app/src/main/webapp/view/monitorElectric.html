@@ -9,49 +9,15 @@
 	<link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	<link rel="stylesheet" href="../com/css/swiper.min.css" />
 	<link rel="stylesheet" href="../com/css/cold360.css" />
-	<link rel="stylesheet" href="../com/css/AdminLTE.min.css" />
-	<link rel="stylesheet" href="../com/css/font-awesome.min.css" />
 	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
 	<script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-	<script type="text/javascript" src="../com/js/echarts-all.js" ></script>
-	<script type="text/javascript" src="../com/js/highcharts.js"></script>
+	<script type="text/javascript" src="../com/js/echarts.min.js" ></script>
 	<script type="text/javascript" src="../com/js/common.js"></script>
 	<script type="text/javascript" src="../com/js/cold360.js" ></script>
-	<script type="text/javascript" src="../app/js/otherMonitor.js" ></script>
-	<style type="text/css">
-		.border{
-			border-color: orange;
-			border-width: 1px;
-			border-style: solid;
-		}
-		.hr{
-			color: orange;
-			border-width: 1px;
-			border-style: solid;
-			border-top-color:orange;
-		}
-		.font{
-			color:rgba(30,144,255,0.8);
-			font-size:25px;
-			font-family:微软雅黑;
-			font-weight:bolder;
-			fill:rgba(30,144,255,0.8);
-		}
-		@media screen and (max-width: 1366px) {
-			.myImg{
-				width:100%;
-			}
-
-		}
-		@media screen and (min-width: 1367px) {
-			.myImg{
-				width:75%;
-			}
-		}
-	</style>
+	<script type="text/javascript" src="../app/js/monitorElectric.js" ></script>
 </head>
-<body ng-app="app" ng-controller="otherMonitor" ng-cloak>
+<body ng-app="app" ng-controller="monitorElectric" ng-cloak>
      <!-- header -->
         <header class="one">        	
             <div class="area fl">
@@ -63,31 +29,31 @@
             <div class="txt omg">
 				{{rdcName}}
             </div>
-			<ul class="rdcDropList" ng-repeat="storage in storages">
+            <ul class="rdcDropList" ng-repeat="storage in storages">
 				<li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
-			</ul>
+            </ul>
         </header>
         <header class="two">
         	<div class="area fl">
         		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
         	</div>
-
-			<div id="searchDara_div" class="search">
+        	
+        	<div id="searchDara_div" class="search">
 				<input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
-				<i class="iconfont" >&#xe62f;</i>
-			</div>
+        		<i class="iconfont" >&#xe62f;</i>
+        	</div>
 	    </header>
     <!-- header end-->
     <section class="toggle">
     	<div class="tempture" id="temperature" ng-click="goTempture()"><i class="iconfont">&#xe67f;</i>温度</div>
-    	<div class="light other" id="electric" ng-click="goElectric()"><i class="iconfont">&#xe6f1;</i>
+    	<div class="light other current" id="electric"><i class="iconfont">&#xe6f1;</i>
     		<span class="dropNext">
     			<b>能耗</b><i class="iconfont">&#xe6f7;</i>
     		</span>
-			<ul class="otherList black">
-				<li><a href="javascript:;" id="powerEnergy" ng-click="powerEnergy()">电耗</a></li>
-				<li><a href="javascript:;" id="waterEnergy" ng-click="waterEnergy()">水耗</a></li>
-			</ul>
+    		 <ul class="otherList black">
+    			<li><a href="javascript:;" id="powerEnergy" ng-click="powerEnergy()">电耗</a></li>
+    			<li><a href="javascript:;" id="waterEnergy" ng-click="waterEnergy()">水耗</a></li>
+    		</ul> 
     	</div>
     	<div class="door other" id="opendoor" ng-click="goFacility()"><i class="iconfont">&#xe6ed;</i>
     		<span class="dropNext">
@@ -96,18 +62,18 @@
 			<ul class="otherList black">
 				<li><a href="javascript:;" id="storageDoor" ng-click="storageDoorFacility()">冷库门</a></li>
 				<li><a href="javascript:;" id="platformDoor" ng-click="platformDoorFacility()">月台门</a></li>
-				<li><a href="javascript:;" id="" ng-click="">货物</a></li>
+				<li><a href="javascript:;" id="hwlt" ng-click="goodsInOutOther()">货物</a></li>
 				<li><a href="javascript:;" id="otherFacility" ng-click="otherFacilityFacility()">其他设施</a></li>
 			</ul>
     	</div>
-    	<div class="other current" id="other"><i class="iconfont">&#xe7b6;</i>
+    	<div class="other" id="other"  ng-click="goOtherMonitor()"><i class="iconfont">&#xe7b6;</i>
     		<span class="dropNext">
     			<b>制冷</b><i class="iconfont">&#xe6f7;</i>
     		</span>
     		<ul class="otherList black">
-				<li><a href="javascript:;" ng-click="compressorPressureOther()">制冷机组</a></li>
-				<li><a href="javascript:;" ng-click="exhaustTemperOther()">排气温度</a></li>
-				<li><a href="javascript:;" ng-click="condensationOther()">冷凝系统</a></li>
+				<li><a href="javascript:;" id="zljz" ng-click="compressorPressureOther()">制冷机组</a></li>
+				<li><a href="javascript:;" id="pqwd" ng-click="exhaustTemperOther()">排气温度</a></li>
+				<li><a href="javascript:;" id="lnxt" ng-click="condensationOther()">冷凝系统</a></li>
 				<li><a href="javascript:;" id="zfxt" ng-click="compressorBlowerOther()">蒸发系统</a></li>
     		</ul>    		
     	</div>

@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('facility', function ($scope, $location, $http, $rootScope, $sce) {
+app.controller('monitorFacility', function ($scope, $location, $http, $rootScope, $sce) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -64,13 +64,13 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
     }
 
     $scope.goTempture = function () {
-        window.location.href='cold360.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorTemperature.html?storageID=' + $scope.rdcId;
     }
     $scope.goElectric = function () {
-        window.location.href='electric.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorElectric.html?storageID=' + $scope.rdcId;
     }
     $scope.goOtherMonitor = function () {
-        window.location.href='other.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorCooling.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
@@ -361,6 +361,128 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
         })
     }
 
+    $scope.drawInOutGoods = function (storage) {
+        var frozenIn = [];
+        var frozenOut = [];
+        var freshIn = [];
+        var freshOut = [];
+        var frozenTemp = [];
+        var freshTemp = [];
+        var time = [];
+        var url = ER.coldroot + "/i/other/findGoodsByDate?coldstorageId=" + storage.id +
+            "&startCollectionTime=" + getFormatTimeString(-10 * 24 * 60 * 60 * 1000) + "&endCollectionTime=" + getFormatTimeString()
+        $http.get(url).success(function (data) {
+            angular.forEach(data, function (item) {
+                frozenIn.push(item.frozenInputQuantity);
+                frozenOut.push(item.forzenOutputQuantity);
+                freshIn.push(item.freshIutputQuantity);
+                freshOut.push(item.freshOutputQuantity);
+                frozenTemp.push(item.frozenInputTemperature);
+                freshTemp.push(item.freshInputTemperature);
+                time.push(formatTimeToDay(item.collectionTime));
+            })
+            barOption = {
+                backgroundColor: '#D2D6DE',
+                tooltip: {
+                    trigger: 'axis',
+                    textStyle: {
+                        fontSize: 12
+                    }
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                legend: {
+                    textStyle: {
+                        fontSize: 12
+                    },
+                    data: ['冻品进货量', '冻品发货量', '鲜品进货量', '鲜品发货量', '冻品进货温度', '鲜品进货温度']
+                },
+                grid: {
+                    x:45,
+                    y:100,
+                    width: '75%',
+                    height:'50%'
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: time
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '货物量/kg',
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '温度/°C',
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: '冻品进货量',
+                        type: 'bar',
+                        data: frozenIn
+                    },
+                    {
+                        name: '冻品发货量',
+                        type: 'bar',
+                        data: frozenOut
+                    },
+                    {
+                        name: '鲜品进货量',
+                        type: 'bar',
+                        data: freshIn
+                    },
+                    {
+                        name: '鲜品发货量',
+                        type: 'bar',
+                        data: freshOut
+                    },
+                    {
+                        name: '冻品进货温度',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        data: frozenTemp
+                    },
+                    {
+                        name: '鲜品进货温度',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        data: freshTemp
+                    }
+                ]
+            };
+            var mainId = "barChart" + storage.id;
+            var barId = "#" + mainId;
+            if ($scope.swiper < $scope.mystorages.length) {
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">' + storage.name + '</p>' +
+                    '<div id=' + mainId + '></div> ';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper += 1;
+            }
+            var barChart = echarts.init($(barId).get(0));
+            barChart.setOption(barOption);
+        })
+    }
+
     $scope.drawOther = function () {
 
         var keyDescribleMap = {
@@ -407,16 +529,22 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
 
     $scope.platformDoorFacility = function () {
         clearSwiper();
-        $scope.swiper = 0;
         $scope.activeEnergy = 'platformDoor';
         for (var i = 0; i < $scope.mystorages.length; i++) {
             $scope.drawFlatform($scope.mystorages[i]);
         }
     }
 
+    $scope.goodsInOutOther = function () {
+        clearSwiper();
+        $scope.activeEnergy = 'drawInOutGoods';
+        for (var i = 0; i < $scope.mystorages.length; i++) {
+            $scope.drawInOutGoods($scope.mystorages[i]);
+        }
+    }
+
     $scope.otherFacilityFacility = function () {
         clearSwiper();
-        $scope.swiper = 0;
         $scope.activeEnergy = 'otherFacility';
         $scope.drawOther();
     }
@@ -438,6 +566,10 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
         } else {
             return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
         }
+    }
+
+    function formatTimeToDay(timeString){
+        return formatTime(timeString).substring(0,10)
     }
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
@@ -495,6 +627,11 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
         if ($scope.activeEnergy == 'platformDoor') {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawFlatform($scope.mystorages[i]);
+            }
+        }
+        if ($scope.activeEnergy == 'drawInOutGoods') {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawInOutGoods($scope.mystorages[i]);
             }
         }
         if ($scope.activeEnergy == 'otherFacility') {

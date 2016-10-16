@@ -57,8 +57,7 @@
                 <li><a href="javascript:;" id="WDZQYZ" ng-click="WDZQYZTemper()">温度周期因子统计</a></li>
             </ul>
     	</div>
-        <!-- ================== -->
-        <div class="light" id="runDoor" ng-click="goDoor()"><i class="iconfont">&#xe76b;</i>
+        <div class="light" id="runCooling" ng-click="goTransport()"><i class="iconfont">&#xe76b;</i>
             <span class="dropNext">
                 <b>运管</b><i class="iconfont">&#xe6f7;</i>
             </span>
@@ -68,21 +67,17 @@
                 <li><a href="javascript:;" id="hot">冷库日热量分析</a></li>
             </ul>
         </div>
-        <div class="door" id="makeCold" ng-click="goOther()"><i class="iconfont">&#xe7b6;</i>
+        <div class="door" id="makeCold" ng-click="goCooling()"><i class="iconfont">&#xe7b6;</i>
             <span class="dropNext">
                 <b>制冷</b><i class="iconfont">&#xe6f7;</i>
             </span>
             <ul class="otherList black">
                 <li><a href="javascript:;"  id="efficiency" ng-click="goDoor()">效率分析</a></li>
-                <li><a href="warning.html" id="warn">告警统计</a></li>
+                <li><a href="javascript:;" id="warn" ng-click="goWarnCount()">告警统计</a></li>
                 <li><a href="javascript:;" id="running">运行分析</a></li>
             </ul>
         </div>
-        <!-- =================== -->
-
-    	<!-- <div class="light" id="door" ng-click="goDoor()"><i class="iconfont">&#xe76b;</i>门运行</div>
-        <div class="door" id="light" ng-click="goLight()"><i class="iconfont">&#xe76e;</i>日热量</div> -->
-    	<div class="other"><i class="iconfont">&#xe7a2;</i>
+    	<div class="other" id="runQuery" ng-click="goQuery()"><i class="iconfont">&#xe7a2;</i>
     		<span class="dropNext">
     			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>

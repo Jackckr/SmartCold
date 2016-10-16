@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('analysisOther', function ($scope, $location, $http, $rootScope, $timeout) {
+app.controller('analysisCooling', function ($scope, $location, $http, $rootScope, $timeout) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -65,11 +65,11 @@ app.controller('analysisOther', function ($scope, $location, $http, $rootScope, 
     $scope.goTemperature = function () {
         window.location.href = 'analysis.html?storageID=' + $scope.rdcId;
     }
-    $scope.goDoor = function () {
-        window.location.href = 'analysisDoor.html?storageID=' + $scope.rdcId;
+    $scope.goTransport = function () {
+        window.location.href = 'analysisTransport.html?storageID=' + $scope.rdcId;
     }
-    $scope.goLight = function () {
-        window.location.href = 'analysisLight.html?storageID=' + $scope.rdcId;
+    $scope.goQuery = function () {
+        window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
@@ -103,39 +103,50 @@ app.controller('analysisOther', function ($scope, $location, $http, $rootScope, 
         });
     }
 
-    $scope.drawHistoryData = function () {
+    $scope.drawWarnCount = function () {
+        var innerHTML = '<div class="swiper-slide">' +
+            '<p class="actually">制冷告警统计</p>' +
+            '<table class="cold_warn">' +
+            '<tbody>' +
+            '<tr><th colspan="3">高危报警统计</th> </tr>' +
+            '<tr> <td></td> <td>上月累计次数</td> <td>本月累计次数</td> </tr>' +
+            '<tr> <td>高压报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr> <tr>' +
+            '<td>电源报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr>' +
+            '<tr> <td>缺油报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr>' +
+            '<tr><th colspan="3">常规报警统计</th></tr>' +
+            '<tr> <td></td> <td>上月累计次数</td> <td>本月累计次数</td>' +
+            '</tr> <tr> <td>常规报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr>' +
+            '</tbody></table>' +
+            '</div> ';
+        $("#chartView").last().append(innerHTML);
+        $http.get(ER.coldroot + '/i/warn/getWarncoldAnalysis', {params: {rdcId: $scope.rdcId}}).success(function (data) {
+            if (data.success) {
+
+            } else {
+                //alert(data.message);
+            }
+        });
+    }
+
+    $scope.drawRunAnalysis = function () {
 
     }
 
-    $scope.drawReport = function () {
-
-    }
-
-    $scope.drawAnalysisReport = function () {
-
-    }
-
-    $scope.coolingAnalysisOther = function () {
+    $scope.goEffectAnalysis = function () {
         clearSwiper();
         $scope.drawCoolingAnalysis();
     }
 
-    $scope.historyDataOther = function () {
+    $scope.goWarnCount = function () {
         clearSwiper();
         $scope.swiper = 0;
-        $scope.drawHistoryData();
+        $scope.drawWarnCount();
     }
 
-    $scope.reportOther = function () {
+    $scope.goRunAnalysis = function () {
         clearSwiper();
         $scope.swiper = 0;
-        $scope.drawReport();
-    }
-
-    $scope.analysisReportOther = function () {
-        clearSwiper();
-        $scope.swiper = 0;
-        $scope.drawAnalysisReport();
+        $scope.drawRunAnalysis();
     }
 
     function clearSwiper() {

@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $sce) {
+app.controller('monitorCooling', function ($scope, $location, $http, $rootScope, $sce) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -20,29 +20,22 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
                 $scope.currentRdc = $scope.storages[0];
                 $scope.rdcId = $scope.storages[0].id;
                 $scope.rdcName = $scope.storages[0].name;
-                $scope.viewStorage($scope.storages[0].id);
                 $scope.initCompressorPressure($scope.rdcId);
             } else {
                 $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
                     $scope.currentRdc = data[0];
                     $scope.rdcName =  data[0].name;
                     $scope.rdcId =  data[0].id;
-                    $scope.viewStorage($scope.rdcId);
                     $scope.initCompressorPressure($scope.rdcId);
                 });
             }
         }
     });
 
-    $scope.viewStorage = function (rdcId) {
-        $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.mystorages = data;
-                for (var i = 0; i < $scope.mystorages.length; i++) {
-                    $scope.drawInOutGoods($scope.mystorages[i]);
-                }
-            }
-        });
+    $scope.viewStorage = function () {
+        for (var i = 0; i < $scope.compressorGroups.length; i++) {
+            $scope.drawCompressorPressure($scope.compressorGroups[i]);
+        }
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -63,150 +56,28 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
-        $scope.viewStorage(rdc.id);
         $scope.initCompressorPressure(rdc.id);
     }
 
     $scope.goTempture = function () {
-        window.location.href='cold360.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorTemperature.html?storageID=' + $scope.rdcId;
     }
     $scope.goElectric = function () {
-        window.location.href='electric.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorElectric.html?storageID=' + $scope.rdcId;
     }
     $scope.goFacility = function () {
-        window.location.href='facility.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorFacility.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
     $scope.defaltswiper = 0;
-
-    $scope.drawInOutGoods = function (storage) {
-        var mainId = "barChart" + storage.id;
-        var barId = "#" + mainId;
-        if ($scope.swiper < $scope.mystorages.length) {
-            var innerHTML = '<div class="swiper-slide">' +
-                '<p class="actually">' + storage.name + '</p>' +
-                '<div id=' + mainId + '></div> ';
-            $("#chartView").last().append(innerHTML);
-            $scope.swiper += 1;
-        }
-        var barChart = echarts.init($(barId).get(0));
-        var frozenIn = [];
-        var frozenOut = [];
-        var freshIn = [];
-        var freshOut = [];
-        var frozenTemp = [];
-        var freshTemp = [];
-        var time = [];
-        var url = ER.coldroot + "/i/other/findGoodsByDate?coldstorageId=" + storage.id +
-            "&startCollectionTime=" + getFormatTimeString(-10 * 24 * 60 * 60 * 1000) + "&endCollectionTime=" + getFormatTimeString()
-        $http.get(url).success(function (data) {
-            angular.forEach(data, function (item) {
-                frozenIn.push(item.frozenInputQuantity);
-                frozenOut.push(item.forzenOutputQuantity);
-                freshIn.push(item.freshIutputQuantity);
-                freshOut.push(item.freshOutputQuantity);
-                frozenTemp.push(item.frozenInputTemperature);
-                freshTemp.push(item.freshInputTemperature);
-                time.push(formatTimeToDay(item.collectionTime));
-            })
-            barOption = {
-            	backgroundColor: '#D2D6DE',
-                tooltip: {
-                    trigger: 'axis',
-                    textStyle: {
-                    	fontSize: 12
-                    }
-                },
-                toolbox: {
-                    show: false,
-                    feature: {
-                        mark: {show: true},
-                        dataView: {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line', 'bar']},
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
-                calculable: true,
-                legend: {
-                	 textStyle: {
-                     	fontSize: 12
-                     },
-                    data: ['冻品进货量', '冻品发货量', '鲜品进货量', '鲜品发货量', '冻品进货温度', '鲜品进货温度']
-                },
-                grid: {
-                	x:45,
-                	y:100,
-                	width: '75%',
-                	height:'50%'
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: time
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: '货物量/kg',
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    },
-                    {
-                        type: 'value',
-                        name: '温度/°C',
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    }
-                ],
-                series: [
-                    {
-                        name: '冻品进货量',
-                        type: 'bar',
-                        data: frozenIn
-                    },
-                    {
-                        name: '冻品发货量',
-                        type: 'bar',
-                        data: frozenOut
-                    },
-                    {
-                        name: '鲜品进货量',
-                        type: 'bar',
-                        data: freshIn
-                    },
-                    {
-                        name: '鲜品发货量',
-                        type: 'bar',
-                        data: freshOut
-                    },
-                    {
-                        name: '冻品进货温度',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        data: frozenTemp
-                    },
-                    {
-                        name: '鲜品进货温度',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        data: freshTemp
-                    }
-                ]
-            };
-            barChart.setOption(barOption);
-        })
-    }
 
     $scope.initCompressorPressure = function (rdcId) {
         // 初始化压缩机组
         $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(
             function (data) {
                 $scope.compressorGroups = data;
+                $scope.viewStorage();
                 angular.forEach($scope.compressorGroups, function (item) {
                     $http.get(ER.coldroot + '/i/compressor/findBygroupId?groupId=' + item.id).success(
                         function (data) {
@@ -657,15 +528,7 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
         })
     }
 
-    $scope.activeEnergy = 'drawInOutGoods';
-    $scope.goodsInOutOther = function () {
-        clearSwiper();
-        $scope.activeEnergy = 'drawInOutGoods';
-        for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.drawInOutGoods($scope.mystorages[i]);
-        }
-    }
-
+    $scope.activeEnergy = 'compressorPressure';
     $scope.compressorPressureOther = function () {
         clearSwiper();
         $scope.swiper = 0;
@@ -772,11 +635,6 @@ app.controller('otherMonitor', function ($scope, $location, $http, $rootScope, $
 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        if ($scope.activeEnergy == 'drawInOutGoods') {
-            for (var i = 0; i < $scope.mystorages.length; i++) {
-                $scope.drawInOutGoods($scope.mystorages[i]);
-            }
-        }
         if ($scope.activeEnergy == 'compressorPressure') {
             for (var i = 0; i < $scope.compressorGroups.length; i++) {
                 $scope.drawCompressorPressure($scope.compressorGroups[i]);

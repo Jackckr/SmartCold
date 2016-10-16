@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('analysisLight', function ($scope, $location, $http, $rootScope, $timeout) {
+app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, $timeout) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -65,11 +65,11 @@ app.controller('analysisLight', function ($scope, $location, $http, $rootScope, 
     $scope.goTemperature = function () {
         window.location.href = 'analysis.html?storageID=' + $scope.rdcId;
     }
-    $scope.goDoor = function () {
-        window.location.href = 'analysisDoor.html?storageID=' + $scope.rdcId;
+    $scope.goTransport = function () {
+        window.location.href = 'analysisTransport.html?storageID=' + $scope.rdcId;
     }
-    $scope.goOther = function () {
-        window.location.href = 'analysisOther.html?storageID=' + $scope.rdcId;
+    $scope.goCooling = function () {
+        window.location.href = 'analysisCooling.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
