@@ -76,7 +76,7 @@ fill:rgba(30,144,255,0.8);
                              style="height:220px;margin-top:10px;">
                               <label class="font">冷凝系统水泵</label>
 	                          <img ng-if="evaporative.evaWater && evaporative.evaWater.isRunning" alt="" src="assets/img/evawater_run.png" style="margin-top:10px;" class="myImg">
-	                          <img ng-if="!evaporative.evaWater || !evaporative.evaWater.isRunning" alt="" src="assets/img/evawater_stop.png" style="margin-top:10px;" class="myImg">
+	                          <img ng-if="evaporative.evaWater && !evaporative.evaWater.isRunning" alt="" src="assets/img/evawater_stop.png" style="margin-top:10px;" class="myImg">
                              </div>
                              <div id="runChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9">
                              <div class="col-lg-12 text-center">
