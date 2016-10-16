@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('facility', function ($scope, $location, $http, $rootScope, $sce) {
+app.controller('monitorFacility', function ($scope, $location, $http, $rootScope, $sce) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -64,13 +64,13 @@ app.controller('facility', function ($scope, $location, $http, $rootScope, $sce)
     }
 
     $scope.goTempture = function () {
-        window.location.href='cold360.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorTemperature.html?storageID=' + $scope.rdcId;
     }
     $scope.goElectric = function () {
-        window.location.href='electric.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorElectric.html?storageID=' + $scope.rdcId;
     }
     $scope.goOtherMonitor = function () {
-        window.location.href='other.html?storageID=' + $scope.rdcId;
+        window.location.href='monitorCooling.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;

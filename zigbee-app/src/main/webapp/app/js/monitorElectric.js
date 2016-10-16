@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('electric', function ($scope, $location, $http, $rootScope) {
+app.controller('monitorElectric', function ($scope, $location, $http, $rootScope) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -67,13 +67,13 @@ app.controller('electric', function ($scope, $location, $http, $rootScope) {
         $scope.viewStorage(rdc.id);
     }
     $scope.goTempture = function () {
-        window.location.href = 'cold360.html?storageID=' + $scope.rdcId;
+        window.location.href = 'monitorTemperature.html?storageID=' + $scope.rdcId;
     }
     $scope.goFacility = function () {
-        window.location.href = 'facility.html?storageID=' + $scope.rdcId;
+        window.location.href = 'monitorFacility.html?storageID=' + $scope.rdcId;
     }
     $scope.goOtherMonitor = function () {
-        window.location.href = 'other.html?storageID=' + $scope.rdcId;
+        window.location.href = 'monitorCooling.html?storageID=' + $scope.rdcId;
     }
 
     var getFormatTimeString = function (delta) {
