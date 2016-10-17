@@ -252,6 +252,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
         })
         yMin = max - min < 1 && type == 'line' ? min - 10 : yMin
         option = {
+        	backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis'
             },
