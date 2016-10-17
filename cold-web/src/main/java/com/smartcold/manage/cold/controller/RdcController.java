@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,9 +88,10 @@ public class RdcController {
 	}
 	@RequestMapping(value = "/checkDataStatus")
 	@ResponseBody
-	public ResponseData<String> checkDataStatus() {
+	public ResponseData<String> checkDataStatus(HttpServletRequest request) {
+	   String ip=	request.getRemoteAddr();
 		this.msgService.checkData();
-		return ResponseData.newSuccess("检查数据状态成功！");
+		return ResponseData.newSuccess(ip+"检查数据状态成功！");
 	}
 	
 }
