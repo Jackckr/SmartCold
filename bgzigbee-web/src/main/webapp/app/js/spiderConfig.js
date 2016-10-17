@@ -362,6 +362,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		var object = $scope.compressorSet;
 		if($scope.vm.choseCompressGroup==undefined){alert("请设置压缩机组对象！");return;}
 		if($scope.vm.compressorType==undefined){alert("请选择压缩机类型系数！");return;}
+		object.maintenancetime = $('#compressordate').val();
 		object.compressorgroupid=$scope.vm.choseCompressGroup.id;
 		object.type = $scope.vm.compressorType.type;
 		$http.post("/i/compressorGroup/saveCompressor", object).then(function (resp) {
