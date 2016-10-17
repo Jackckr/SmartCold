@@ -361,8 +361,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.addCompress = function () {
 		var object = $scope.compressorSet;
 		if($scope.vm.choseCompressGroup==undefined){alert("请设置压缩机组对象！");return;}
+		if($scope.vm.compressorType==undefined){alert("请选择压缩机类型系数！");return;}
 		object.compressorgroupid=$scope.vm.choseCompressGroup.id;
-		object.type = $scope.vm.compressorType.type
+		object.type = $scope.vm.compressorType.type;
 		$http.post("/i/compressorGroup/saveCompressor", object).then(function (resp) {
 			alert(resp.data.message);
 			$scope.compressorSet = {};
@@ -409,6 +410,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     }
     $scope.evaporativeWaterSet = {};
     $scope.addEvaporativeWaterSet = function () {
+    	if( $scope.vm.choseEvaporative==undefined){alert("请设置冷凝系统对象！");return;}
         var object = $scope.evaporativeWaterSet;
         object.groupid= $scope.vm.choseCompressGroup.id;
         object.evaporativeid = $scope.vm.choseEvaporative.id
@@ -421,6 +423,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 
     $scope.evaporativeBlowerSet = {}
     $scope.addEvaporativeBlowerSet = function () {
+    	if( $scope.vm.choseEvaporative==undefined){alert("请设置冷凝系统对象！");return;}
         var obj = $scope.evaporativeBlowerSet;
         obj.groupid = $scope.vm.choseCompressGroup.id;
         obj.evaporativeid = $scope.vm.choseEvaporative.id
@@ -444,8 +447,10 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 
     $scope.coldStorageLightSet = {}
     $scope.addColdStorageLightSet = function () {
+    	if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
         var obj = $scope.coldStorageLightSet;
         obj.rdcid = $scope.vm.choseRdc.id;
+		obj.coldStorageId = $scope.vm.choseStorage.id;
         $http.post("/i/spiderConfig/add/coldStorageLightSet", obj).then(function (resp) {
             alert(resp.data.message);
             $scope.changeRdc();
@@ -730,6 +735,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.addDoor = function(){
+		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		$scope.doorEntity.rdcId = $scope.vm.choseRdc.id;
 		$scope.doorEntity.coldStorageId = $scope.vm.choseStorage.id;
 		$http.post("/i/coldStorageDoor/insertDoor",$scope.doorEntity).success(function(data,status,config,headers){
@@ -740,7 +746,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.addWall = function(){
-		$scope.wallEntity.coldStorageid = $scope.vm.choseStorage.id;
+		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
+		$scope.wallEntity.coldstorageid = $scope.vm.choseStorage.id;
 		$http.post("/i/spiderConfig/add/wallSet",$scope.wallEntity).success(function(data,status,config,headers){
 			alert(data.message);
 			$scope.wallEntity = {};
@@ -760,7 +767,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.addCompressGroup = function(){
 		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
-		$scope.compressGroupEntity.evaporativeid = $scope.vm.choseEvaporative.id;
 		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
 			alert(data.message);
 			$scope.compressGroupEntity = {};

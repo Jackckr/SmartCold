@@ -28,7 +28,16 @@
 	    	`location`= #{location},
 	    	`tempdiff`= #{tempdiff},
 	    	`overtempalarm`= #{overtempalarm},
-	    	`overtempdelay`= #{overtempdelay}
+	    	`overtempdelay`= #{overtempdelay},
+	    	
+	    	`length`=#{length},
+			`width` = #{width},
+	    	`height`=#{height},
+	   	 	`inhumidity`=#{inhumidity},
+	    	`outhumidity`= #{outhumidity},
+	    	`intempe`= #{intempe},
+	    	`outtempe`= #{outtempe}
+	    	
 		WHERE id=#{id}
 	</update>
 

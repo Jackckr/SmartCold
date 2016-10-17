@@ -10,4 +10,16 @@
         SELECT *
         FROM `powerset` WHERE `rdcId` = #{rdcId}
     </select>
+    
+      <delete id="delete" parameterType="map">
+        DELETE FROM `powerset` WHERE `id` = #{id}
+    </delete>
+    
+    <update id="update" parameterType="PowerSetEntity">
+        UPDATE `powerset`
+        SET
+            `name` = #{name},
+            `iunbalance` = #{iunbalance}
+        WHERE `id` = #{id}
+    </update>
 </mapper>
