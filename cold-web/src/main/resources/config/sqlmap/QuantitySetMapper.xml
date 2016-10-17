@@ -4,9 +4,9 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.QuantitySetMapper">
 	
-    <!-- 计算Q  需优化 -->
+    <!-- 计算Q  根据rdcid 汇总 -->
     <select id="findColdstorages" parameterType="map" resultType="map">
-		 SELECT `RDCID` rdcid, group_concat(id) ids  FROM `coldstorageset` GROUP BY rdcid;
+		 SELECT `RDCID` rdcid, group_concat(id) ids  FROM `${talbe}` GROUP BY rdcid;
 	</select>
 	
 	<select id="findFanPower" parameterType="map" resultType="map">
@@ -19,8 +19,30 @@
 		<if test="ids!=null"> and coldStorageId in(${ids}) </if> 
 		<if test="ids==null"> GROUP BY `coldStorageId` </if> 
 	</select>
-    <select id="getCountforkliftset" parameterType="map" resultType="map">
-		SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers FROM `${talbe}` where `power` >0 GROUP BY rdcid;
+	
+    <select id="getPowerGroupByRDC" parameterType="map" resultType="map">
+		SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers
+	    <if test="rdcids!=null">,sum(power)/COUNT(*) avgpower </if> 
+	    FROM `${talbe}` where `power` >0 
+		<if test="rdcids!=null"> and rdcid in(${rdcids}) </if> 
+		GROUP BY rdcid;
+	</select>
+	
+    <select id="getColdstorageset" parameterType="map" resultType="map">
+		SELECT
+			cgst.id,
+			cgst.`name`,
+			cgst.`RDCID` rdcid,
+			group_concat(drst.id) doroid,
+			cgst.`length` * cgst.`width` * cgst.`height` AS cgvolume,
+			group_concat(drst.`length` * drst.`width`) drvolume,
+		   (select MAX(`value`)  from `ventilationset`  where abs(`volume`-cgvolume) =(select min(abs(`volume`-cgvolume)) from ventilationset)  )as vvalue
+		FROM
+			`coldstorageset` cgst
+		LEFT JOIN coldstoragedoorset drst ON drst.`coldstorageid` = cgst.`id`
+		WHERE
+			cgst.`length` * cgst.`width` * cgst.`height` > 0
+		    AND drst.`length` * drst.`width` > 0;
 	</select>
 	
 	

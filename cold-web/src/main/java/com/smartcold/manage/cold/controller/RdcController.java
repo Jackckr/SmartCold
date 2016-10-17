@@ -80,18 +80,11 @@ public class RdcController {
 	
 	
 	//====================================================以下提供测试API====================================================
-	@RequestMapping(value = "/checkAPStatus")
-	@ResponseBody
-	public ResponseData<String> checkAPStatus() {
-		this.msgService.checkAPStatus();
-		return ResponseData.newSuccess("检查AP状态成功！");
-	}
 	@RequestMapping(value = "/checkDataStatus")
 	@ResponseBody
 	public ResponseData<String> checkDataStatus(HttpServletRequest request) {
-	   String ip=	request.getRemoteAddr();
-		this.msgService.checkData();
-		return ResponseData.newSuccess(ip+"检查数据状态成功！");
+		this.msgService.initReckonQuantity();
+		return ResponseData.newSuccess("初始化30日Q成功！");
 	}
 	
 }

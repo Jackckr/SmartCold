@@ -7,18 +7,8 @@ package com.smartcold.manage.cold.service;
  *
  */
 public interface MsgService {
-    /**
-	 * 检查异常数据
-     */
-    public void checkData();
-	 /**
-     * 检查AP任务
-     */
-    public void checkAPStatus();
-    /*
-     * Q2
-     */
-    public void reckonQuantity();
-    
-
+      /**
+       * 初始化30日数据
+       */
+	  public void initReckonQuantity() ;
 }

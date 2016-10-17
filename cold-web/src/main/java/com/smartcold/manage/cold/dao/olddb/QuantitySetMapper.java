@@ -11,18 +11,17 @@ import org.apache.ibatis.annotations.Param;
  *
  */
 public interface QuantitySetMapper {
-    //======================================================Q2======================================================
-   
-	@Deprecated
-    List<HashMap<String, Object>> findColdstorages();// //压缩机有效值：rdcid->rdcid, ids->映射oid
-	List<HashMap<String, String>> findFanPower(@Param("ids")String ids);//有效值：ids->BlowerSet id集合, frostPowers->风扇功率集合
-    List<HashMap<String, String>> findFrostPower(@Param("ids")String ids);//有效值：ids->BlowerSet id集合, frostPowers->化霜功率集合
-    //======================================================Q3======================================================
-    List<HashMap<String, String>> getCountforkliftset(@Param("talbe")String talbe);//获得指定配置功率信息
-    
-    //======================================================Q4======================================================
-    //======================================================Q5======================================================
-    //======================================================Q6======================================================
-    //======================================================Q7======================================================
+    //======================================================Q======================================================
+	//Q7 获得门配置方法
+	List<HashMap<String, String>>  getColdstorageset();//根据冷库分组 获得门配置集合
+    //有效值：ids->BlowerSet id集合, frostPowers->风扇功率集合
+	List<HashMap<String, String>> findFanPower(@Param("ids")String ids);
+	//有效值：ids->BlowerSet id集合, frostPowers->化霜功率集合
+    List<HashMap<String, String>> findFrostPower(@Param("ids")String ids);
+    //获得配置表集合
+    List<HashMap<String, Object>> findColdstorages(@Param("talbe")String talbe);//根据rdc分组排序
+    //获得指定配置信息功率信息
+    List<HashMap<String, String>> getPowerGroupByRDC(@Param("talbe")String talbe,@Param("rdcid")Object rdcids);
+    //======================================================Q======================================================
 
 }
