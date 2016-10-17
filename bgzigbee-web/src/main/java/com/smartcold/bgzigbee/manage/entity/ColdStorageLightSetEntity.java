@@ -11,6 +11,8 @@ public class ColdStorageLightSetEntity {
 	private int id;
 	  
 	private int rdcid;
+	
+	private int coldStorageId;
 
 	private String name;
 	  
@@ -19,6 +21,15 @@ public class ColdStorageLightSetEntity {
 	private String mapping;
 	  
 	private Date addTime;
+
+	
+	public int getColdStorageId() {
+		return coldStorageId;
+	}
+
+	public void setColdStorageId(int coldStorageId) {
+		this.coldStorageId = coldStorageId;
+	}
 
 	public String getName() {
 		return name;

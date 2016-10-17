@@ -95,7 +95,7 @@
                         </form>
                         <form class="navbar-form">
                             <div class="col-lg-4 form-group" style="margin-top:20px;"
-                                 ng-show="choseDevice.name == '添加冷库墙' ||choseDevice.name == '添加冷库门' || choseDevice.name == '添加冷风机' || choseDevice.table=='windscreenset' ">
+                                 ng-show="choseDevice.name == '添加冷库墙' ||choseDevice.name == '添加冷库门' || choseDevice.name == '添加冷风机' ||choseDevice.name == '添加灯组' || choseDevice.table=='windscreenset' ">
                                 <label>冷库：</label>
                                 <select ng-options="storage.name for storage in storages" class="form-control" ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
                             </div>
@@ -107,7 +107,7 @@
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressorgroupset' ||choseDevice.table == 'evaporativewaterset' || choseDevice.table =='evaporativeblowerset'">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'evaporativewaterset' || choseDevice.table =='evaporativeblowerset'">
                                 <label>冷凝系统：</label>
                                 <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
                             </div>
@@ -323,7 +323,7 @@
                             	<div><label>&nbsp;</label></div>
                                 <label>已有墙：</label>
                                 <ajax-table array-objects="walls"
-                                            delete-url="/i/spiderConfig//delete/id"
+                                            delete-url="/i/spiderConfig/delete/id"
                                             update-url="/i/spiderConfig/update/wallSet"
                                             colums-th="名字,墙长度(M),墙高度(M),系数a,外侧系数,内侧系数,厚度,导热系数,修正值b"
                                             colums="name,length,width,a,aw,an,thick,daorexishu,b"></ajax-table>
@@ -510,7 +510,7 @@
                                 <label>已有风幕机：</label>
                                 <ajax-table array-objects="windScreenSets"
                                             delete-url="/i/spiderConfig/delete/windscreenset"
-                                            update-url="/i/spiderConfig//update/windscreenset"
+                                            update-url="/i/spiderConfig/update/windscreenset"
                                             colums-th="名字,功率(kW)"
                                             colums="name,power"></ajax-table>
                             </div>
@@ -529,7 +529,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
+                            	<div><label>已有冷凝系统：</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -560,7 +560,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
+                            	<div><br><label>已有冷水泵：</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -591,7 +591,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
+                            	<div><br><label>已有冷风机：</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -628,23 +628,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                    <tr>
-                                        <th>名字</th>
-                                        <th>电流不平衡值</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="item in powerSets">
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.iunbalance}}</td>
-                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, powerSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                 <label>已有电表：</label>
+                                <ajax-table array-objects="powerSets"
+                                            delete-url="/i/spiderConfig/delete/powerSet"
+                                            update-url="/i/spiderConfig/update/powerSet"
+                                            colums-th="名字,电流不平衡值"
+                                            colums="name,iunbalance"></ajax-table>
                             </div>
                         </form>
                         <!--月台门-->
@@ -673,7 +662,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
+                            	<div><label>已有月台门：</label></div>
                                 <ajax-table array-objects="platformDoorSets"
                                             delete-url="/i/spiderConfig/delete/plateformDoor"
                                             update-url="/i/spiderConfig/update/plateformDoor"
@@ -695,7 +684,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
+                            	<div><label>已有液压平台：</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -726,7 +715,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
+                            	<div><label>已有充电桩：</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>
@@ -763,23 +752,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                    <tr>
-                                        <th>名字</th>
-                                        <th>功率</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="item in forkliftSets">
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.power}}</td>
-                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, forkliftSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                              <label>已有叉车：</label>
+                              <ajax-table array-objects="forkliftSets"
+                                            delete-url="/i/spiderConfig/delete/forkliftSet"
+                                            update-url="/i/spiderConfig/update/forkliftSet	"
+                                            colums-th="名字,功率"
+                                            colums="name,power"></ajax-table>
                             </div>
                         </form>
                         <!--灯组-->
@@ -802,21 +780,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
-                                <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
-                                    <thead>
-                                    <tr>
-                                        <th>名字</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="item in coldStorageLightSets">
-                                        <td>{{item.name}}</td>
-                                        <td><a class="btn btn-danger btn-xs" ng-click="delById(choseDevice.table, item, coldStorageLightSets)"><span class="glyphicon glyphicon-minus"></span></a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                          <label>已有灯组：</label>
+                              <ajax-table array-objects="coldStorageLightSets"
+                                            delete-url="/i/spiderConfig/delete/coldStorageLightSet"
+                                            update-url="/i/spiderConfig/update/coldStorageLightSet"
+                                            colums-th="名字,功率"
+                                            colums="name,power"></ajax-table>
                             </div>
                         </form>
                         <!--防冻循环-->
@@ -833,7 +802,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                            	<div><label>&nbsp;</label></div>
+                            	<div><label>已有防冻循环：</label></div>
                                 <table class="table table-striped table-bordered ng-pristine ng-untouched" style="margin-top:5px;">
                                     <thead>
                                     <tr>

@@ -12,4 +12,8 @@ public interface ColdstorageLightSetMapping {
 	List<ColdStorageLightSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 
 	boolean insert(ColdStorageLightSetEntity coldStorageLightSetEntity);
+	
+	void delete(@Param("id") int id);
+
+	void update(ColdStorageLightSetEntity coldStorageLightSetEntity);
 }

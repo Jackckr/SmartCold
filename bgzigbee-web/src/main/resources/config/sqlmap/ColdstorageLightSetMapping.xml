@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.ColdstorageLightSetMapping">
     <insert id="insert">
-        INSERT INTO `coldstoragelightset` (`rdcid`, `name`, `power`)
-        VALUES (#{rdcid}, #{name}, #{power})
+        INSERT INTO `coldstoragelightset` (`rdcid`, `name`, `power`, `coldStorageId`)
+        VALUES (#{rdcid}, #{name}, #{power}, #{coldStorageId})
     </insert>
     <select id="findById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity">
         SELECT *
@@ -15,5 +15,16 @@
         FROM `coldstoragelightset` WHERE `rdcId` = #{rdcId}
     </select>
 
+<delete id="delete" parameterType="map">
+        DELETE FROM `coldstoragelightset` WHERE `id` = #{id}
+    </delete>
+    
+    <update id="update" parameterType="com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity">
+        UPDATE `coldstoragelightset`
+        SET
+            `name` = #{name},
+            `power` = #{power}
+        WHERE `id` = #{id}
+    </update>
 
 </mapper>

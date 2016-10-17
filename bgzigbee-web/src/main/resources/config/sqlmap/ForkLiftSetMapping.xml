@@ -15,4 +15,17 @@
         SELECT *
         FROM `forkliftset` WHERE `rdcId` = #{rdcId}
     </select>
+    
+     <delete id="delete" parameterType="map">
+        DELETE FROM `forkliftset` WHERE `id` = #{id}
+    </delete>
+    
+    <update id="update" parameterType="com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity">
+        UPDATE `forkliftset`
+        SET
+            `name` = #{name},
+            `power` = #{power}
+        WHERE `id` = #{id}
+    </update>
+    
 </mapper>

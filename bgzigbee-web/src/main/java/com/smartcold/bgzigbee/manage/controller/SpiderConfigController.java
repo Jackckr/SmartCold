@@ -15,6 +15,7 @@ import com.smartcold.bgzigbee.manage.dao.EvaporativeSetMapping;
 import com.smartcold.bgzigbee.manage.dao.EvaporativeWaterSetMapping;
 import com.smartcold.bgzigbee.manage.dao.ForkLiftSetMapping;
 import com.smartcold.bgzigbee.manage.dao.PlatformDoorSetMapping;
+import com.smartcold.bgzigbee.manage.dao.PowerSetMapping;
 import com.smartcold.bgzigbee.manage.dao.SetTableMapper;
 import com.smartcold.bgzigbee.manage.dao.WallSetMapper;
 import com.smartcold.bgzigbee.manage.dao.WindScreenSetMapping;
@@ -28,6 +29,7 @@ import com.smartcold.bgzigbee.manage.entity.EvaporativeSetEntity;
 import com.smartcold.bgzigbee.manage.entity.EvaporativeWaterSetEntity;
 import com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity;
+import com.smartcold.bgzigbee.manage.entity.PowerSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WallSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SetTables;
@@ -50,6 +52,11 @@ public class SpiderConfigController {
 
 	@Autowired
 	private WindScreenSetMapping windScreenSetMapping;
+	
+
+	@Autowired
+	private PowerSetMapping powerSetMapping;
+
 
 	@Autowired
 	private EvaporativeSetMapping evaporativeSetMapping;
@@ -152,6 +159,68 @@ public class SpiderConfigController {
 		return new ResultDto(-1, "添加失败");
 	}
 
+	
+	@RequestMapping(value = "/delete/coldStorageLightSet", method = RequestMethod.DELETE)
+	public Object deletecoldStorageLightSet(int id) {
+		try {
+			coldstorageLightSetMapping.delete(id);
+			return new ResultDto(0, "删除成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "删除失败");
+		}
+	}
+
+	@RequestMapping(value = "/update/coldStorageLightSet", method = RequestMethod.POST)
+	public Object updatecoldStorageLightSet(@RequestBody ColdStorageLightSetEntity coldStorageLightSetEntity) {
+		try {
+			coldstorageLightSetMapping.update(coldStorageLightSetEntity);
+			return new ResultDto(0, "更新成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "更新失败");
+		}
+	}
+	
+	
+	@RequestMapping(value = "/delete/forkliftSet", method = RequestMethod.DELETE)
+	public Object deleteforkliftSet(int id) {
+		try {
+			forkLiftSetMapping.delete(id);
+			return new ResultDto(0, "删除成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "删除失败");
+		}
+	}
+
+	@RequestMapping(value = "/update/forkliftSet", method = RequestMethod.POST)
+	public Object updateforkliftSet(@RequestBody ForkLiftSetEntity forkliftSetEntity) {
+		try {
+			forkLiftSetMapping.update(forkliftSetEntity);
+			return new ResultDto(0, "更新成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "更新失败");
+		}
+	}
+	
+	@RequestMapping(value = "/delete/powerSet", method = RequestMethod.DELETE)
+	public Object deletepowerSet(int id) {
+		try {
+			powerSetMapping.delete(id);
+			return new ResultDto(0, "删除成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "删除失败");
+		}
+	}
+
+	@RequestMapping(value = "/update/powerSet", method = RequestMethod.POST)
+	public Object updatepowerSet(@RequestBody PowerSetEntity powerSetEntity) {
+		try {
+			powerSetMapping.update(powerSetEntity);
+			return new ResultDto(0, "更新成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "更新失败");
+		}
+	}
+	
 	@RequestMapping(value = "/delete/windscreenset", method = RequestMethod.DELETE)
 	public Object deleteWindScreenSet(int id) {
 		try {
