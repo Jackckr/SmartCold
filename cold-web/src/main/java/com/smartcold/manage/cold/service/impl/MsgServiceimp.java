@@ -133,6 +133,8 @@ public class MsgServiceimp implements MsgService {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
 		if(taskStatus){
 			System.err.println("时间："+TimeUtil.getDateTime()+" IP:"+RemoteUtil.getServerIP()+" ：checkData：开始执行-----------------------------------------------");
+		}else{
+//			System.err.println("时间："+TimeUtil.getDateTime()+" IP:"+RemoteUtil.getServerIP()+" ：checkData：跳过执行++++++++++++++++++++++++++++++++++++++++++++++++");
 		}
 	}
 	

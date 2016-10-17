@@ -102,7 +102,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     xData.unshift(formatTime(item['date']).split(" ")[0])
                     yData.unshift(item['value'] / 60)
                 })
-                chart.setOption($scope.getEchartSingleOption("", xData, yData, "时间", "m", "超温时间", "bar"));
+                chart.setOption($scope.getEchartSingleOption("30日超温时间", xData, yData, "时间", "m", "超温时间", "bar"));
             })
         });
     }
@@ -145,6 +145,13 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                             fontSize: 12          
                         }
                     },
+                    title: {
+                    	text: '30日超温时间因子',
+                    	textStyle: {
+                    		fontSize: 13,
+                    		fontWeight: '400'
+                    	}
+                    },
                     toolbox: {
                         show: false,
                         feature: {
@@ -157,7 +164,8 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     },
                     calculable: true,
                     legend: {
-                        data: ['超温因子', '最高温度']
+                        data: ['超温因子', '最高温度'],
+                        y: 'bottom'
                     },
                     xAxis: [
                         {
@@ -229,7 +237,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     yData.unshift(item['value'])
                     xData.unshift(formatTime(item['date']).split(" ")[0])
                 })
-                chart.setOption($scope.getEchartSingleOption("", xData, yData, "保温因子", "τ", "τ", "bar"));
+                chart.setOption($scope.getEchartSingleOption("30日保温因子τ趋势图", xData, yData, "保温因子", "τ", "τ", "bar"));
             })
         })
     }
@@ -272,6 +280,13 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                             fontSize: 12          
                         }
                     },
+                    title: {
+                    	text: '30日温度周期因子趋势图',
+                    	textStyle: {
+                    		fontSize: 13,
+                    		fontWeight: '400'         
+                        }
+                    },
                     toolbox: {
                         show: false,
                         feature: {
@@ -284,7 +299,8 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                     },
                     calculable: true,
                     legend: {
-                        data: ['降温因子', '升温因子']
+                        data: ['降温因子', '升温因子'],
+                        y:'bottom'
                     },
                     xAxis: [
                         {
@@ -427,7 +443,11 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                 }
             },
             title: {
-                text: title
+                text: title,
+            	textStyle: {
+            		fontSize: 13,
+            		fontWeight: '400'
+            	}
             },
             calculable: true,
             xAxis: [
