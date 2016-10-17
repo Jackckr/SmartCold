@@ -83,8 +83,9 @@ public class MsgServiceimp implements MsgService {
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
 	 */
-     @Scheduled(cron="0/5 * *  * * ? ")  
+     @Scheduled(cron="0 0/5 * * * ?")  
 	public void checkData() {
+    	 System.err.println("开始执行checkData：--------------");
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
 		if(taskStatus){
 			this.getERRinfo();
@@ -241,7 +242,9 @@ public class MsgServiceimp implements MsgService {
 				
 			}
 		}
-		warningLogMapper.addWarningLog(errInfoList);
+		if (SetUtil.isnotNullList(errInfoList)) {
+			this.warningLogMapper.addWarningLog(errInfoList);
+		}
 	}
 
 	/**
