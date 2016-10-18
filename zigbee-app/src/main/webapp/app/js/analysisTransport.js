@@ -198,6 +198,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         var mainId = 'goodsYz';
         if ($scope.swiper < $scope.mystorages.length) {
             var innerHTML = '<div class="swiper-slide">' +
+                '<p class="actually">货物因子</p>' +
                 '<div id=' + mainId + ' style="height:300px"></div> ';
             $("#chartView").last().append(innerHTML);
             $scope.swiper += 1;
