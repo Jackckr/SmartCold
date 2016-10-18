@@ -442,6 +442,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/runningAnalysis/{rdcId}',
     	controller: 'runningAnalysis',
         templateUrl: 'app/template/runningAnalysis.html'
+    }).state('goodsYzAnalysis',{//运管分析  -货物因子分析--jhy
+    	url: '/goodsYzAnalysis',
+    	controller: 'goodsYzAnalysis',
+        templateUrl: 'app/template/goodsYzAnalysis.html'
     }).state('cpswaterCost',{//
     	url: '/cpswaterCost/{groupID}',
     	controller: 'cpswaterCost',
