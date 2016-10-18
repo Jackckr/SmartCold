@@ -116,16 +116,16 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     )
                 })
                 var option = {
-                	backgroundColor: '#D2D6DE',
-                	 title: {
-            	        text: '近30日冷库日累积开门总时长及日累积开门次数',
-            	        textStyle: {
-                            fontSize: 13 ,
+                    backgroundColor: '#D2D6DE',
+                    title: {
+                        text: '近30日冷库日累积开门总时长及日累积开门次数',
+                        textStyle: {
+                            fontSize: 13,
                             fontWeight: 'normal'
                         },
-            	    },
+                    },
                     tooltip: {
-                        trigger: 'axis',                        
+                        trigger: 'axis',
                         textStyle: {
                             fontSize: 12      // 主标题文字颜色
                         },
@@ -143,7 +143,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     calculable: true,
                     legend: {
                         data: ['开门时长', '开门次数'],
-                        y:'bottom'
+                        y: 'bottom'
                     },
                     xAxis: [
                         {
@@ -187,16 +187,166 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                         }
                     ]
                 };
-                //chart1.setOption(Option);
                 chart1.setOption(option);
                 chart2.setOption($scope.getEchartSingleOption("", xData, yData3, "平均开门时间", "m", "m", "bar"));
             })
         })
     }
 
-    $scope.goDoor = function () {
+    $scope.drawGoodsYZAnalysis = function () {
+
+        var mainId = 'goodsYz';
+        if ($scope.swiper < $scope.mystorages.length) {
+            var innerHTML = '<div class="swiper-slide">' +
+                '<div id=' + mainId + ' style="height:300px"></div> ';
+            $("#chartView").last().append(innerHTML);
+            $scope.swiper += 1;
+        }
+
+        var myChart = echarts.init($('#' + mainId).get(0));
+        var option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['2016-09-18', '2016-09-19', '2016-09-20', '2016-09-21', '2016-09-22', '2016-09-23', '2016-09-24', '2016-09-25', '2016-09-26', '2016-09-27', '2016-09-28', '2016-09-29', '2016-09-30', '2016-10-01', '2016-10-02', '2016-10-03', '2016-10-04', '2016-10-05', '2016-10-06', '2016-10-07', '2016-10-08', '2016-10-09', '2016-10-10', '2016-10-11', '2016-10-12', '2016-10-13', '2016-10-14', '2016-10-15', '2016-10-16', '2016-10-17', '2016-10-18']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '货物因子'
+                }
+            ],
+            series: [
+                {
+                    name: '货物因子',
+                    type: 'bar',
+                    data: [502.0, 534.9, 487.0, 523.2, 425.6, 576.7, 635.6, 562.2, 332.6, 420.0, 526.4, 533.3, 502.0, 534.9, 487.0, 523.2, 425.6, 576.7, 635.6, 562.2, 332.6, 420.0, 526.4, 533.3, 502.0, 534.9, 487.0, 523.2, 425.6, 576.7]
+                }
+            ]
+        };
+        myChart.setOption(option);
+    }
+
+    $scope.drawHotAnalysis = function () {
+        var mainId1 = 'hotPie';
+        var mainId2 = 'hotColumn';
+        if ($scope.swiper < $scope.mystorages.length) {
+            var innerHTML = '<div class="swiper-slide">' +
+                '<div id=' + mainId1 + ' style="height:250px"></div> ' +
+                '<div id=' + mainId2 + ' style="height:250px"></div> ';
+            $("#chartView").last().append(innerHTML);
+            $scope.swiper += 1;
+        }
+        $('#' + mainId1).highcharts({
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
+            },
+            title: {
+                text: '最新热量分布图'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            legend: {
+                itemDistance: 10
+            },
+            plotOptions: {
+                pie: {
+                    depth: 40,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    },
+                    showInLegend: true
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                type: 'pie',
+                name: '占比',
+                data: [['货物', 20.0], ['化霜', 26.8], ['叉车', 12.8], ['照明', 8.5], ['开门', 6.9], ['保温', 10], ['冷风机风扇', 15.0]]
+            }]
+        });
+
+        $('#' + mainId2).highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '近30日热量分布图'
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',],
+                labels: {
+                    format: '{value} 日'
+                },
+                max: 30
+            },
+            yAxis: {
+                min: 0,
+                text: null
+            },
+            tooltip: {
+                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                shared: true
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'percent'
+                }
+            },
+            series: [{
+                name: '货物',
+                data: [2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 3, 1, 2, 2, 4, 2, 3, 6, 1]
+            }, {
+                name: '化霜',
+                data: [1, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 5, 3, 3, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 2, 2]
+            }, {
+                name: '叉车',
+                data: [1.5, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 3, 1, 2, 1.5, 4, 2, 5, 1]
+            }, {
+                name: '照明',
+                data: [1, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 2, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 2]
+            }, {
+                name: '开门',
+                data: [1.5, 2, 4, 2, 5, 6, 1, 2, 2, 4, 2, 3, 1, 1, 2, 2, 4, 2, 5, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 5, 2, 1]
+            }, {
+                name: '保温',
+                data: [2, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 3, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 1]
+            }, {
+                name: '冷风机风扇',
+                data: [1, 1, 4, 2, 5, 6, 1, 2, 1, 4, 2, 5, 1, 1, 2, 1, 4, 2, 5, 6, 1, 2, 1, 4, 2, 5, 2, 1, 2, 1, 4, 2, 5, 6, 1]
+            }]
+        });
+    }
+
+    $scope.goDoorRunAnalysis = function () {
         clearSwiper();
         $scope.drawDoor();
+    }
+
+    $scope.goGoodsYZAnalysis = function () {
+        clearSwiper();
+        $scope.drawGoodsYZAnalysis();
+    }
+
+    $scope.goHotAnalysis = function () {
+        clearSwiper();
+        $scope.drawHotAnalysis();
     }
 
     function clearSwiper() {
@@ -215,9 +365,9 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
         var option = {
-    		backgroundColor: '#D2D6DE',
+            backgroundColor: '#D2D6DE',
             tooltip: {
-                trigger: 'axis',                   
+                trigger: 'axis',
                 textStyle: {
                     fontSize: 12      // 主标题文字颜色
                 }
@@ -263,18 +413,18 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
 
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
         var option = {
-    		backgroundColor: '#D2D6DE',
-    		 title: {
-	 	       text: '近30日冷库日平均单次开门时长',
-	 	       textStyle: {
-	                fontSize: 13,
-	                fontWeight: 'normal'
-	            }	     	        
-	 	    },
-            tooltip: {
-                trigger: 'axis',                   
+            backgroundColor: '#D2D6DE',
+            title: {
+                text: '近30日冷库日平均单次开门时长',
                 textStyle: {
-                    fontSize: 12 ,
+                    fontSize: 13,
+                    fontWeight: 'normal'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                textStyle: {
+                    fontSize: 12,
                     fontWeight: 'normal'
                 },
             },
