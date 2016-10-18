@@ -171,79 +171,88 @@ public class MsgServiceimp implements MsgService {
 	 * @param startTime
 	 */
 	public void getERRinfo(){
-		WarningsLog waLog = null;
-		Date startTime = TimeUtil.getBeforeMinute(5);//
-		List<WarningsLog> errInfoList = new ArrayList<WarningsLog>();
-		List<WarningsInfo> fErrWarningList = this.warningsInfoMapper.findErrWarningByTime(startTime);// PLC报警
-		if (SetUtil.isnotNullList(fErrWarningList)) {//
-			errInfoList.addAll(errInfoList);
-		}
-		List<PowerEntity> ublowerlist = this.powerMapper
-				.findUBlowerByTime(startTime);// 电压缺相报警-
-		if (SetUtil.isnotNullList(ublowerlist)) {
-			List<Integer> poweid = new ArrayList<Integer>();
-			for (PowerEntity pow : ublowerlist) {
-				poweid.add(pow.getId());
+		try {
+			WarningsLog waLog = null;
+			Date startTime = TimeUtil.getBeforeMinute(5);//
+			List<WarningsLog> errInfoList = new ArrayList<WarningsLog>();
+			List<WarningsInfo> fErrWarningList = this.warningsInfoMapper.findErrWarningByTime(startTime);// PLC报警
+			if (SetUtil.isnotNullList(fErrWarningList)) {//
+				errInfoList.addAll(errInfoList);
 			}
-			String powids = poweid.toString();
-			powids = powids.substring(1, powids.length() - 1);
-			List<PowerSetEntity> powerSetList = this.powerSetMapping
-					.findByFilter(null, powids);
-			HashMap<Integer, PowerSetEntity> powerSetMap = new HashMap<Integer, PowerSetEntity>();
-			if (SetUtil.isnotNullList(powerSetList)) {
-				for (PowerSetEntity powerSet : powerSetList) {
-					powerSetMap.put(powerSet.getId(), powerSet);
+			List<PowerEntity> ublowerlist = this.powerMapper
+					.findUBlowerByTime(startTime);// 电压缺相报警-
+			if (SetUtil.isnotNullList(ublowerlist)) {
+				List<Integer> poweid = new ArrayList<Integer>();
+				for (PowerEntity pow : ublowerlist) {
+					poweid.add(pow.getId());
 				}
-			}
-			for (PowerEntity power : ublowerlist) {
-				waLog = new WarningsLog();
-				PowerSetEntity powerSetEntity = powerSetMap.get(power.getOid());
-				if (powerSetEntity != null) {
-					waLog.setRdcid(powerSetEntity.getRdcid());
-					waLog.setMsg(powerSetEntity.getName()
-							+ power.getKey() + "相电压缺相");
-					errInfoList.add(waLog);
+				String powids = poweid.toString();
+				powids = powids.substring(1, powids.length() - 1);
+				List<PowerSetEntity> powerSetList = this.powerSetMapping
+						.findByFilter(null, powids);
+				HashMap<Integer, PowerSetEntity> powerSetMap = new HashMap<Integer, PowerSetEntity>();
+				if (SetUtil.isnotNullList(powerSetList)) {
+					for (PowerSetEntity powerSet : powerSetList) {
+						powerSetMap.put(powerSet.getId(), powerSet);
+					}
 				}
-			}
-		}
-		List<PowerSetEntity> powerSetList = this.powerSetMapping.findByFilter(
-				0, null);// 检查有配置的电表电流->需多线程处理
-		if (SetUtil.isnotNullList(powerSetList)) {
-			for (PowerSetEntity powerSetEntity : powerSetList) {
-				List<PowerEntity> iBlowerList = this.powerMapper
-						.findIBlowerByTime(powerSetEntity.getId(),
-								powerSetEntity.getIunbalance(), startTime);// 电流异常报警
-				if (SetUtil.isnotNullList(iBlowerList)) {
-					for (PowerEntity power : iBlowerList) {
-						waLog = new WarningsLog();
+				for (PowerEntity power : ublowerlist) {
+					waLog = new WarningsLog();
+					PowerSetEntity powerSetEntity = powerSetMap.get(power.getOid());
+					if (powerSetEntity != null) {
 						waLog.setRdcid(powerSetEntity.getRdcid());
 						waLog.setMsg(powerSetEntity.getName()
-								+ power.getKey() + "电流不平衡");
+								+ power.getKey() + "相电压缺相");
 						errInfoList.add(waLog);
 					}
 				}
 			}
+			List<PowerSetEntity> powerSetList = this.powerSetMapping.findByFilter(
+					0, null);// 检查有配置的电表电流->需多线程处理
+			if (SetUtil.isnotNullList(powerSetList)) {
+				for (PowerSetEntity powerSetEntity : powerSetList) {
+					List<PowerEntity> iBlowerList = this.powerMapper
+							.findIBlowerByTime(powerSetEntity.getId(),
+									powerSetEntity.getIunbalance(), startTime);// 电流异常报警
+					if (SetUtil.isnotNullList(iBlowerList)) {
+						for (PowerEntity power : iBlowerList) {
+							waLog = new WarningsLog();
+							waLog.setRdcid(powerSetEntity.getRdcid());
+							waLog.setMsg(powerSetEntity.getName()
+									+ power.getKey() + "电流不平衡");
+							errInfoList.add(waLog);
+						}
+					}
+				}
 
-		}
-		//溫度報警
-		List<ColdStorageSetEntity> coldStorageSetList = this.coldStorageSetMapper.findByFilter(0);
-		if (SetUtil.isnotNullList(coldStorageSetList)) {
-			for (ColdStorageSetEntity coldStorageSetEntity : coldStorageSetList) {
-				List<NewColdStorageEntity> iBlowerList = this.newColdStorageMapper.findIBlowerByTime(coldStorageSetEntity.getId(), 
-						coldStorageSetEntity.getStartTemperature()+coldStorageSetEntity.getOvertempalarm(), coldStorageSetEntity.getOvertempdelay(),"Temp", startTime);
-				if (SetUtil.isnotNullList(iBlowerList)) {
-					for (NewColdStorageEntity newColdStorageEntity : iBlowerList) {
-						waLog=new WarningsLog();
-						waLog.setRdcid(coldStorageSetEntity.getRdcId());
-						waLog.setMsg(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");
-						errInfoList.add(waLog);
-					}
-				}
-				
 			}
-		}
-		if (SetUtil.isnotNullList(errInfoList)) {
-			this.warningLogMapper.addWarningLog(errInfoList);
+			//溫度報警
+			List<ColdStorageSetEntity> coldStorageSetList = this.coldStorageSetMapper.findByFilter(0);
+			if (SetUtil.isnotNullList(coldStorageSetList)) {
+				for (ColdStorageSetEntity coldStorageSetEntity : coldStorageSetList) {
+					List<NewColdStorageEntity> iBlowerList = this.newColdStorageMapper.findIBlowerByTime(coldStorageSetEntity.getId(), 
+							coldStorageSetEntity.getStartTemperature()+coldStorageSetEntity.getOvertempalarm(), coldStorageSetEntity.getOvertempdelay(),"Temp", startTime);
+					if (SetUtil.isnotNullList(iBlowerList)) {
+						for (NewColdStorageEntity newColdStorageEntity : iBlowerList) {
+							waLog=new WarningsLog();
+							waLog.setRdcid(coldStorageSetEntity.getRdcId());
+							waLog.setMsg(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");
+							errInfoList.add(waLog);
+						}
+					}
+					
+				}
+			}
+			if (SetUtil.isnotNullList(errInfoList)) {
+				this.warningLogMapper.addWarningLog(errInfoList);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+			errInfoList.clear();
+			errInfoList.add(new WarningsLog(-1,-1,"getERRinfo Err"+e.getMessage().substring(0, 200)));
+			warningLogMapper.addWarningLog(errInfoList);
 		}
 	}
 
@@ -310,6 +319,10 @@ public class MsgServiceimp implements MsgService {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
+					List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+					errInfoList.clear();
+					errInfoList.add(new WarningsLog(-1,-1,"sendMsg Err"+e.getMessage().substring(0, 200)));
+					warningLogMapper.addWarningLog(errInfoList);
 				}
 			}
 		}
@@ -367,6 +380,10 @@ public class MsgServiceimp implements MsgService {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+				errInfoList.clear();
+				errInfoList.add(new WarningsLog(-1,-1,"setQFrost Err"+e.getMessage().substring(0, 200)));
+				warningLogMapper.addWarningLog(errInfoList);
 			}
 	}
 	
@@ -407,6 +424,10 @@ public class MsgServiceimp implements MsgService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+			errInfoList.clear();
+			errInfoList.add(new WarningsLog(-1,-1,"setQblower Err"+e.getMessage().substring(0, 200)));
+			warningLogMapper.addWarningLog(errInfoList);
 		}
 	}
 
@@ -462,6 +483,10 @@ public class MsgServiceimp implements MsgService {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+				errInfoList.clear();
+				errInfoList.add(new WarningsLog(-1,-1,"setQForklift Err"+e.getMessage().substring(0, 200)));
+				warningLogMapper.addWarningLog(errInfoList);
 			}
 	}
 	
@@ -489,6 +514,10 @@ public class MsgServiceimp implements MsgService {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+			errInfoList.clear();
+			errInfoList.add(new WarningsLog(-1,-1,"setQctdoor Err"+e.getMessage().substring(0, 200)));
+			warningLogMapper.addWarningLog(errInfoList);
 		}
 		
 	}

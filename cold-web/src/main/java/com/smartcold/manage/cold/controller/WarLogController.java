@@ -63,8 +63,8 @@ class SubTask implements Runnable {
 	@Override
     public void run() {
       if(SetUtil.isNullList(arrayList))return;
+      List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
       try {
-    	  List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
 	       for (StorageDataCollectionEntity sdet : arrayList) {
 	    	   if (sdet.getKey().equals("Temp")) {
 	    		  List<DeviceObjectMappingEntity> deviceObjectMappingList =  deviceObjectMappingMapper.findByTypeDeviceId(1, sdet.getDeviceid());
@@ -82,6 +82,9 @@ class SubTask implements Runnable {
 	       warningLogMapper.addWarningLog(errInfoList);
 		} catch (Exception e) {
 			e.printStackTrace();
+			errInfoList.clear();
+			errInfoList.add(new WarningsLog(-1,-1,"threadFactory Err"));
+			warningLogMapper.addWarningLog(errInfoList);
 		}
     }
 }
