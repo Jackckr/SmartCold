@@ -72,8 +72,8 @@ section.show{
 }
 .myicon,.list .rightArrow{
 	width: 3rem;
-	height: 2.5rem;
-	line-height: 2.5rem;
+	height: 3rem;
+	line-height: 3rem;
 }
 .myicon span{
 	font-size: 0.8rem;
@@ -85,7 +85,7 @@ section.show{
 .list .name{
 	padding-left: 3rem;
 	margin: 0;
-	height: 2.5rem;
+	height: 3rem;
 }
 .list_icon .myicon{
 	width: 2rem;
@@ -104,7 +104,7 @@ section.show{
 	color: #333;
 	font-size: 0.8rem;
 	height:100%;
-	line-height: 2.5rem;
+	line-height: 3rem;
 	position:relative;
 }
 .adminInfo .list_name{

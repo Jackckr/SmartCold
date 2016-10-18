@@ -245,18 +245,6 @@ html{
 .grid_kid i{
 	font-size: 1.8rem;
 }
-.blueI{
-	color:#438BCA
-}
-.goldI{
-	color:#F39826; 
-}
-.redI{
-	color:#F1594B;
-}
-.greenI{
-	color:#0CB78A;
-}
 /*图文列表*/
 .coldlist{
 	background-color: #fff;

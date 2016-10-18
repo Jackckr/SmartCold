@@ -288,3 +288,16 @@ header>div>a>.iconfont{
 .layui-m-layercont{
 	font-size: .8rem!important;
 }
+/*icon color*/
+.blueI{
+	color:#438BCA
+}
+.goldI{
+	color:#F39826; 
+}
+.redI{
+	color:#F1594B;
+}
+.greenI{
+	color:#0CB78A;
+}

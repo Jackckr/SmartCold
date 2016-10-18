@@ -19,7 +19,7 @@ public class CompressorSetEntity {
 
 	private String mapping;
 
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-mm-dd hh:ii:ss")
 	private Date maintenancetime;
 
 	private Date addTime;

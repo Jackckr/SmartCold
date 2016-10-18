@@ -21,36 +21,49 @@ section{
 	box-sizing: border-box;
 }
 .grid_kid{
-	float: left;
-	width: 50%;
-	height: 6rem;
+	height: 8rem;
 	background-color: #fff;
 	box-sizing: border-box;
-	text-align: center;
 	font-size: 0.7rem;
 }
 .grid_kid a{
 	display: block;
 	width: 100%;
 	height: 100%;
-	padding-top: 1.2rem;
+	line-height:7.6rem;
 	box-sizing: border-box;
 	border:5px solid #F4F4F4;
 }
 .grid_kid .info{
-	margin-top: 0.5rem;
 	color: #222;
-	font-size: 0.8rem;
+	font-size: 1.2rem;
+	line-height:7.8rem;
+	display: inline-block;
+	width:30%;
+	text-align: center;
+	position: relative;
+	top: -.2rem;
 }
 .grid_kid i{
-	font-size: 1.5rem;
-	color:#438BCA;
+	font-size: 2rem;	
+	display: inline-block;
+	width:35%;
+	text-align: center;
 }
-.grid_kid:nth-child(2) i{
-	color:#F1594B;
+.grid_4 .grid_kid{
+	height: 6rem;
 }
-.grid_kid:nth-child(3) i{
-	color:#F39826;
+.grid_4 a{
+	line-height:5.6rem;
+	box-sizing: border-box;
+	border:5px solid #F4F4F4;
+}
+.grid_4 .info{
+	font-size: 1.2rem;
+	line-height:5.6rem;
+}
+.grid_4 i{
+	font-size: 2rem;
 }
 .left,.right{
 	width: 49%;
