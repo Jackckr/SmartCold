@@ -1,18 +1,6 @@
-/**
- * 　　报警信息
- */
-coldWeb.controller('alarmLog', function( $scope, $http) {
-	 //根据rdcid查询该rdc的报警信息
-        $http.get('/i/warlog/findWarningLogsByRdcID', {
-            params: {
-                "rdcId": window.sessionStorage.smrdcId
-            }
-        }).success(function (data) {
-            $scope.alarmMsgs = data;
-        });
-});
 
 /**
+ * Created by maqiang34 on 16/10/18.
  * 计算压缩机剩余时间
  */
 coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
@@ -30,3 +18,18 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
 			return  text;
       };
 });
+/**
+ * 
+ * 　　报警信息
+ */
+coldWeb.controller('alarmLog', function( $scope, $http) {
+	 //根据rdcid查询该rdc的报警信息
+        $http.get('/i/warlog/findWarningLogsByRdcID', {
+            params: {
+                "rdcId": window.sessionStorage.smrdcId
+            }
+        }).success(function (data) {
+            $scope.alarmMsgs = data;
+        });
+});
+

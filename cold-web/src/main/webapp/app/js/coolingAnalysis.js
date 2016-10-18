@@ -1,6 +1,6 @@
 /**
+ * Created by maqiang34 on 16/10/18.
  * 分析报告-2.4-制冷系统分析
- * 
  */
 coldWeb.controller('coolingAnalysis', function ($scope, $location, $stateParams, $http,$rootScope) {
 	$scope.rdcid = $stateParams.rdcId;

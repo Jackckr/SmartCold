@@ -1,4 +1,5 @@
 /**
+ * Created by maqiang34 on 16/10/18.
  * 制冷告警统计
  */
 coldWeb.controller('warncoldAnalysis', function ($scope, $stateParams, $http,$rootScope) {

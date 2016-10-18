@@ -1,3 +1,7 @@
+/**
+ * Created by maqiang34 on 16/10/18.
+ * 历史数据查询
+ */
 coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,baseTools) {
 	var lineChart =null;
 	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 

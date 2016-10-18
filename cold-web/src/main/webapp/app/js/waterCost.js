@@ -1,3 +1,6 @@
+/**
+ * 旧的水耗  准备在2016-11后去掉
+ */
 coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools,$timeout) {
 	$scope.load = function(){
 		barCharts = echarts.init($('#bar')[0]);

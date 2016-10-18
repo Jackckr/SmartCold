@@ -1,19 +1,9 @@
+/**
+ * Created by maqiang34 on 16/10/18.
+ * 水耗展示
+ */
 coldWeb.controller('cpswaterCost', function ($scope,$http, $location,$stateParams,baseTools,$rootScope) {
 	$scope.groupID =  $stateParams.groupID;
- 	/*$scope.preLoad = function(){
- 		url = '/i/compressor/findById?id=' + $scope.groupID;
- 		$http.get(url).success(function(data,status,config,header){
- 			//debugger;
- 			if(data==""||data.waterRatio == undefined || data.waterRatio == 0){
- 				data.waterRatio = 1;
- 			}
- 			$scope.radio=data.waterRatio;
- 			
- 			
- 			$scope.load();
- 		});
- 	};*/
-	
 	$scope.load = function(){	
 		lineChart = echarts.init($('#line')[0]);
 		endTime = baseTools.getFormatTimeString();
