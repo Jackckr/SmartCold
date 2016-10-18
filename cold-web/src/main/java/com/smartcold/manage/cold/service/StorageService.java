@@ -21,7 +21,7 @@ public interface StorageService {
 	
 	Integer findCounSizeByTime(int type, int oid, String deviceid,String key, Date startTime, Date endTime);
 	
-    List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,String dateFormat,String orderBy);
+    List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,int daysBetween,String dateFormat,String orderBy);
 //	
 	Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findAnalysisByRdcidKeyDate(int rdcid, List<String> keys, Date startTime, Date endTime);
 	

@@ -8,10 +8,16 @@
         order by `addtime` desc
 	</select>
 	<select id="findByTimeFormat" resultType="StorageKeyValue">
-		select * from ${table}
+		select `value`,`addtime` from ${table}
 		where `key`=#{key} AND oid=#{oid} AND
 		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime}
         order by `addtime` ${orderBy}
+	</select>
+	<select id="findByTimeFormat1" resultType="StorageKeyValue">
+		select avg(`value`) VALUE ,DATE_FORMAT(`addtime`,#{dateFormat}) as grouptime ,addtime  from ${table}
+		where `key`=#{key} AND oid=#{oid} AND `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime}
+		GROUP BY grouptime
+         ORDER BY grouptime  ${orderBy}
 	</select>
  
  	<select id="findByNums" resultType="StorageKeyValue" >

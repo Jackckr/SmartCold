@@ -127,14 +127,13 @@ public class BaseInfoController extends BaseController {
 	 */
 	public String getDateFormat(int day) {
 		System.err.println(day);
-		if (day <= 1 | day == -1)
-			return "yyyy-MM-dd HH:mm:ss";
-		else if (day <= 3)
-			return "yyyy-MM-dd HH:mm";
+		if (day <= 3)
+			return "%Y-%m-%d %H:%m:%s";
 		else if (day <= 5)
-			return "yyyy-MM-dd HH";
-		else
-			return "yyyy-MM-dd";
+			return "%Y-%m-%d %H";
+		else 
+			return "%Y-%m-%d";
+		
 	}
 
 	/**
@@ -167,7 +166,6 @@ public class BaseInfoController extends BaseController {
 				Date edTime = sdf.parse(endTime);
 				int daysBetween = daysBetween(sttime, edTime);
 				String groupfm = getDateFormat(daysBetween);//用于后期优化
-				System.err.println(groupfm);
 				HashMap<String, Object> restData = new HashMap<String, Object>();
 				LinkedList<HashMap<String, Object>> restList = new LinkedList<HashMap<String, Object>>();
 				LinkedList<List<StorageKeyValue>> xtemp = new LinkedList<List<StorageKeyValue>>();
@@ -193,11 +191,10 @@ public class BaseInfoController extends BaseController {
 					HashMap<String, Object> linmap = new HashMap<String, Object>();
 					int oid = oids[i];
 					String oname = onames[i];
-					List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime,groupfm," asc ");//
+					List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime, daysBetween,groupfm," asc ");//
 					if (datalist.size() > maxsize) {
 						index = i;
 					}
-					;
 					linmap.put("type", "line");
 					linmap.put("data", datalist);
 					linmap.put("name", oname);
@@ -242,8 +239,7 @@ public class BaseInfoController extends BaseController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date sttime = sdf.parse(startTime);
 			Date edTime = sdf.parse(endTime);
-			String mode[][] = { { "数据id", "对象", "值", "时间" }, { "id", "key", "value", "addtime" },
-					{ "5", "5", "10", "10", "10", "10" } };// 标题（必须），对应属性（必须），宽度
+			String mode[][] = { { "数据id", "对象", "值", "时间" }, { "id", "key", "value", "addtime" }, { "5", "5", "10", "10", "10", "10" } };// 标题（必须），对应属性（必须），宽度
 			for (int i = 0; i < oids.length; i++) {
 				int oid = oids[i];
 				List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);

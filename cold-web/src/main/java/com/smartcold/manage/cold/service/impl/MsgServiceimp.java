@@ -85,9 +85,9 @@ public class MsgServiceimp implements MsgService {
 	 */
      @Scheduled(cron="0 0/5 * * * ?")  
 	public void checkData() {
-    	 System.err.println("开始执行checkData：--------------");
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
 		if(taskStatus){
+			System.out.println("IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行checkData：--------------");
 			this.getERRinfo();
 		}
 	}
@@ -102,6 +102,7 @@ public class MsgServiceimp implements MsgService {
 	public void checkAPStatus() {
 		boolean taskStatus = quantityMapper.updateTaskStatus(2);
 		if(!taskStatus){return ;}
+		System.out.println("IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行checkAPStatus：--------------");
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
@@ -129,6 +130,7 @@ public class MsgServiceimp implements MsgService {
 	private void reckonQuantity() {
 	   boolean taskStatus = quantityMapper.updateTaskStatus(3);
 		if(!taskStatus){return ;}
+		System.out.println("IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行reckonQuantity：--------------");
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
 		Date dateTime = TimeUtil.parseYMD(time);
 		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
@@ -232,8 +234,6 @@ public class MsgServiceimp implements MsgService {
 				if (SetUtil.isnotNullList(iBlowerList)) {
 					for (NewColdStorageEntity newColdStorageEntity : iBlowerList) {
 						waLog=new WarningsLog();
-					/*	System.out.println(coldStorageSetEntity.getRdcId());
-						System.out.println(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");*/
 						waLog.setRdcid(coldStorageSetEntity.getRdcId());
 						waLog.setMsg(coldStorageSetEntity.getName()+newColdStorageEntity.getKey()+"温度不正常");
 						errInfoList.add(waLog);
@@ -472,22 +472,19 @@ public class MsgServiceimp implements MsgService {
 	 */
 	private void setQctdoor(String time, Date dateTime,String startTime,String endTime) {
 		try {
-			HashMap<Integer, Double> valueMap =null;
+			List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
 			List<HashMap<String, String>> coldstoragesetList = this.quantitySetMapper.getColdstorageset();
 			if (SetUtil.isnotNullList(coldstoragesetList)) {
-				HashMap<String, Object> fileter = new HashMap<String, Object>();
-				fileter.put("type", 2);
-				fileter.put("time", time);
-				fileter.put("key", "'OpenTimes'");//开门次数
 				for (HashMap<String, String> hashMap : coldstoragesetList) {
-					String doroid = hashMap.get("doroid");//door->oid
-					fileter.put("oid", doroid);
-//					    List<ColdStorageAnalysisEntity> doorTotalTime = storageAnalysisMapper.findValueByFilter(fileter);// n到底是开门次数还是换气次数
-					    double cgvolume=	Double.parseDouble(hashMap.get("cgvolume"));//冷库面积
-					    double vvalue=	Double.parseDouble(hashMap.get("vvalue"));//换气次数
-						double Q=0.675*cgvolume*vvalue*(8-4);//临时值
-						System.err.println(Q);
-				     }
+					int id = Integer.parseInt(hashMap.get("id"));//coldstorageset->id
+				    double cgvolume=Double.parseDouble(hashMap.get("cgvolume"));//冷库面积
+				    double vvalue=	Double.parseDouble(hashMap.get("vvalue"));//换气次数
+					double Q=0.675*cgvolume*vvalue*(8-4);//临时值
+					sisList.add(new ColdStorageAnalysisEntity(2, id, "Qctdoor"+ "", Q, dateTime));
+				 }
+				 if(SetUtil.isnotNullList(sisList)){
+					this.storageAnalysisMapper.addColdStorageAnalysis(sisList);//批處理
+				 }
 			}
 			
 		} catch (Exception e) {

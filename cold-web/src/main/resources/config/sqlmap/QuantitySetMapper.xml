@@ -27,25 +27,15 @@
 		<if test="rdcids!=null"> and rdcid in(${rdcids}) </if> 
 		GROUP BY rdcid;
 	</select>
-	
+	<!-- 计算开门次数 -->
     <select id="getColdstorageset" parameterType="map" resultType="map">
-		SELECT
+	  SELECT
 			cgst.id,
-			cgst.`name`,
-			cgst.`RDCID` rdcid,
-			group_concat(drst.id) doroid,
 			cgst.`length` * cgst.`width` * cgst.`height` AS cgvolume,
-			group_concat(drst.`length` * drst.`width`) drvolume,
-		   (select MAX(`value`)  from `ventilationset`  where abs(`volume`-cgvolume) =(select min(abs(`volume`-cgvolume)) from ventilationset)  )as vvalue
+            (select IF (MIN(`value`)=MAX(`value`),MIN(`value`),MIN(`value`) +(MAX(`value`)-MIN(`value`))*(6000-MIN(`volume`))/(MAX(`volume`)-MIN(`volume`)) )AS vvlue from `ventilationset`  where abs(`volume`-cgvolume) =(select min(abs(`volume`-cgvolume)) from ventilationset))as vvlue 
 		FROM
 			`coldstorageset` cgst
-		LEFT JOIN coldstoragedoorset drst ON drst.`coldstorageid` = cgst.`id`
 		WHERE
-			cgst.`length` * cgst.`width` * cgst.`height` > 0
-		    AND drst.`length` * drst.`width` > 0;
+			cgst.`length` * cgst.`width` * cgst.`height` > 0;
 	</select>
-	
-	
-	
-
 </mapper>

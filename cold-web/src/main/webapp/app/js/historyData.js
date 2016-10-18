@@ -81,7 +81,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 //		   tooltipmd.formatter=function () {var state = undefined; if (this.y === 1){ state = '冷库处于开门状态'; } else {state = '冷库处于关门状态';} return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +state; } ;
 	    }
 		var s=$scope.oldnames;
-		var xData=chardata.xdata.reverse(),ydata=chardata.ydata.reverse();
+		var xData=chardata.xdata,ydata=chardata.ydata;
 		xData = xData.length > 0? xData : [1,2,3,4];
 		ydata = ydata.length > 0 ? ydata : [ { name:$scope.slgptit, type:'line', data:[34,35,34,21] }] ;
 		option = {

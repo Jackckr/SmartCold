@@ -19,5 +19,6 @@ public interface StorageDataCollectionMapper {
 	Integer findCounSizeByTime(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 	
 	List<StorageKeyValue> findByTimeFormat(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime,@Param("dateFormat")String dateFormat,@Param("orderBy")String orderBy);
+	List<StorageKeyValue> findByTimeFormat1(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime,@Param("dateFormat")String dateFormat,@Param("orderBy")String orderBy);
 	
 }

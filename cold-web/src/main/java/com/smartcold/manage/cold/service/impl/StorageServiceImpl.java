@@ -84,12 +84,20 @@ public class StorageServiceImpl implements StorageService {
 	}
 	
 	@Override
-	public List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,String dateFormat,String orderBy) {
+	public List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,int daysBetween,String dateFormat,String orderBy) {
 		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
 		if (deviceEntity != null) {
-			return storageDataCollectionDao.findByTimeFormat(null, deviceEntity.getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
+			if(daysBetween<=3){
+				return storageDataCollectionDao.findByTimeFormat(null, deviceEntity.getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
+			}else{
+				return storageDataCollectionDao.findByTimeFormat1(null, deviceEntity.getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
+			}
 		} else {
-			return storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,dateFormat,orderBy);
+			if(daysBetween<=3){
+				return storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,dateFormat,orderBy);
+			}else{
+				return storageKeyValueDao.findByTimeFormat1(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,dateFormat,orderBy);
+			}
 		}
 	}
 	

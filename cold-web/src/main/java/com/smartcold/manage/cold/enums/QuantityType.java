@@ -12,7 +12,7 @@ public enum QuantityType implements Serializable{
 
 	QFrost(7, "QFrost", "Q霜"),
 	Qblower(7, "Qblower", "Q风"),
-	Qctdoor(7, "Qctdoor", "Q门"),//冷库门
+	Qctdoor(7, "Qctdoor", "Q门"),//换气
 	QForklift(7, "QForklift", "Q叉"),
 	Qlighting(7, "Qlighting", "Q照");
 	private int type;
