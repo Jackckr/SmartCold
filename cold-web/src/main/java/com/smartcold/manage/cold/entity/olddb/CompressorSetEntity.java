@@ -21,6 +21,8 @@ public class CompressorSetEntity {
 
 	private String mapping;
 
+	private Date maintenancetime;//压缩机维护时间
+	
 	private Date addTime;
 
 	public float getHighTemp() {
@@ -93,6 +95,14 @@ public class CompressorSetEntity {
 
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	public Date getMaintenancetime() {
+		return maintenancetime;
+	}
+
+	public void setMaintenancetime(Date maintenancetime) {
+		this.maintenancetime = maintenancetime;
 	}
 
 	public Date getAddTime() {
