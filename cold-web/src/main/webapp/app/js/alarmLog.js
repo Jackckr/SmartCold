@@ -7,7 +7,7 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
 	 $(".mainHeight").height( $(".content-wrapper").height());
 	 $scope.aredayTime = function(time) {
 		   if(time==null||time==""){ return "未设置保养信息";}
-		    var text="还剩";
+		    var text="还剩  ";
 		    var date1=new Date();    
 		    var date2=new Date(time);
 			var date3=date2.getTime()-date1.getTime();  //时间差的毫秒数  

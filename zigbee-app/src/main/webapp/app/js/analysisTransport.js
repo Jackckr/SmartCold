@@ -97,8 +97,8 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
                         '<p class="actually">' + key + '</p>' +
-                        '<div id=' + mainIdAll + ' style="min-height:12rem;margin-bottom:.3rem;"></div> ' +
-                        '<div id=' + mainIdAvg + ' style="height: 12rem;"></div>' +
+                        '<div id=' + mainIdAll + ' style="min-height:14rem;margin-bottom:.3rem;"></div> ' +
+                        '<div id=' + mainIdAvg + ' style="height: 14rem;"></div>' +
                         '</div>';
                     $("#chartView").last().append(innerHTML);
                     $scope.swiper += 1;

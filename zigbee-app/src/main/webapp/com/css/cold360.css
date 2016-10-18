@@ -395,3 +395,135 @@ b{
 .alarmLog th{
 	font-size: .7rem
 }
+/*查询*/
+.kbtn{
+	min-width:70%!important;
+	border:1px solid #ccc;
+	line-height: 1.75;
+	text-indent: 1em;
+	margin-left: .5rem;	
+	color:#555;
+	font-size: .75rem;
+}
+.historyData{
+	font-size: .75rem;
+}
+.historyData strong{
+	font-weight: 700;
+	font-size: .8rem;
+}
+.historyData p{
+	margin-bottom: .5rem;
+}
+.default{
+	float:left;
+	width:35%;
+	background:#f2f2f2;
+	padding:5px 10px;
+	margin: 0 5% .7rem 0;
+	border-radius:3px;
+}
+.defaultSelect{
+	background:#F39826;
+	color:#fff;
+}
+.my_list ul .selectLi{
+	background:#F39826;
+	color:#fff;
+}
+.selectInfo{
+	
+}
+.coverBg{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.7);
+	z-index:10000;
+	padding: 3rem .9rem;
+	display:none;
+}
+.my_list{
+	color:#000;
+	display:none;
+}
+.my_list ul li{
+	background:#f2f2f2;
+	display:inline-block;
+	width:30%;
+	padding:5px 20px;
+	margin:.3rem 0;	
+	border-radius:3px;
+	text-align: center;
+	font-size: .75rem;
+	color:#555;
+}
+.coverBg .bottomBtn{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width:100%;
+	background: red;
+	text-align: right;
+}
+.bottomBtn .mybtn{
+	width:100%;
+	font-size: .8rem;
+}
+.my_list input[type='radio']{
+	width: 0.8rem;
+	height: 0.8rem;
+	-webkit-appearance:none;
+	appearance:none;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	box-sizing: border-box;
+	border-radius: 50%;
+	position: relative;	
+}
+.my_list input[type='radio']:checked:after{
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	width: 70%;
+	height: 70%;
+	background-color: #438BCB;
+	border-radius: 50%;
+	border: 0;
+}
+.my_list input[type='radio'].blue{
+	border-color: #438BCB;
+}
+.my_list label{
+	display: inline-block;
+	width:40%;
+	text-align: center;
+	font-size: .75rem;
+	color:#555;
+	background:#f2f2f2;
+	padding:8px 0;
+	border-radius:4px;
+	
+}
+.ysjList ul li{
+	width:80%;
+	text-align: left;
+}
+.ysjPqList label{
+	width:90%;
+	margin-bottom: .5rem;
+	text-align: left;
+	text-indent: 1em;
+}
+.chaxun{
+	text-align: right;
+}
+.chaxun button{
+	width:100%;
+	display: inline-block;
+}

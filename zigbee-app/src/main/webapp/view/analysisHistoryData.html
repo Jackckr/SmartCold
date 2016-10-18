@@ -5,9 +5,10 @@
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <title>分析--运管</title>
+    <title>分析--报表功能</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
@@ -15,10 +16,18 @@
     <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 	<script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+	<script type="text/javascript" src="../com/datepicker/date.js"></script>
+	<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
-    <script type="text/javascript" src="../app/js/analysisTransport.js" ></script>
+    <script type="text/javascript" src="../app/js/analysisQuery.js" ></script>
+    <script>
+    $(function(){
+		$('#startTime').date({theme:"datetime"});
+		$('#endTime').date({theme:"datetime"});
+	})
+    </script>
 </head>
-<body ng-app="app" ng-controller="analysisTransport" ng-cloak>
+<body ng-app="app" ng-controller="analysisQuery" ng-cloak>
     <!-- header -->
          <header class="one">
             <div class="area fl">
@@ -57,12 +66,12 @@
                 <li><a href="javascript:;">温度周期因子统计</a></li>
             </ul>
     	</div>
-        <div class="light current other" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe76b;</i>
+        <div class="light" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe76b;</i>
             <span class="dropNext">
                 <b>运管</b><i class="iconfont">&#xe6f7;</i>
             </span>
             <ul class="otherList black">
-                <li><a href="javascript:;"  id="light" ng-click="goLight()">冷库门运行分析</a></li>
+                <li><a href="javascript:;"  id="door" ng-click="goDoor()">冷库门运行分析</a></li>
                 <li><a href="javascript:;" id="goods">货物因子分析</a></li>
                 <li><a href="javascript:;" id="hot">冷库日热量分析</a></li>
             </ul>
@@ -72,30 +81,105 @@
                 <b>制冷</b><i class="iconfont">&#xe6f7;</i>
             </span>
             <ul class="otherList black">
-                <li><a href="javascript:;"  id="efficiency" ng-click="goOther()">效率分析</a></li>
+                <li><a href="javascript:;"  id="efficiency" ng-click="goDoor()">效率分析</a></li>
                 <li><a href="javascript:;" id="warn" ng-click="goWarnCount()">告警统计</a></li>
                 <li><a href="javascript:;" id="running">运行分析</a></li>
             </ul>
         </div>
-    	<div class="other" id="runQuery" onclick="location.href='analysisHistoryData.html'"><i class="iconfont">&#xe7a2;</i>
+        <div class="other current" id="runQuery"><i class="iconfont">&#xe7a2;</i>
     		<span class="dropNext">
     			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>
             <ul class="otherList black">
-                <li><a href="javaScript:;">历史数据查询</a></li>
-                <li><a href="javaScript:;">报表功能</a></li>
+                <li><a href="analysisHistoryData.html">历史数据查询</a></li>
+                <li><a href="analysisReport.html">报表功能</a></li>
             </ul>
         </div>
     </section>
     <div class="backDrop"></div>
-	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper" id="chartView"></div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-        <!-- Add Arrows -->
-        <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
-        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
-  </div>
+    <div class="coverBg">
+    	<!-- 冷库温度list -->
+    	<div class="my_list temperatureList">
+    		<ul>
+    			<li>低温库</li>
+    			<li>变温库</li>
+    			<li>高温库</li>
+    			<li>预冷间</li>
+    			<li>理货间</li>
+    			<li>冰鲜库</li>
+    		</ul>    		
+    	</div>
+    	<!-- 冷库电量list -->
+    	<div class="my_list lightList">
+    		<ul>
+    			<li>电表1</li>
+    			<li>电表2</li>
+    			<li>电表3</li>
+    			<li>电表4</li>
+    		</ul>    		
+    	</div>
+    	<!-- 冷库门list -->
+    	<div class="my_list doorList">
+    		<ul>
+    			<li>低温库-门1</li>
+    			<li>变温库-门2</li>
+    			<li>高温库-门3</li>
+    			<li>预冷间-门5</li>
+    			<li>冰鲜库-门4</li>
+    		</ul>    		
+    	</div>
+    	
+    	<!-- 月台门list -->
+    	<div class="my_list platdoorList">
+    		<ul>
+    			<li>月台门1</li>
+    			<li>月台门2</li>
+    			<li>月台门3</li>
+    		</ul>    		
+    	</div>
+    	
+    	<!-- 压缩机list -->
+    	<div class="my_list ysjList">
+    		<label><input type="radio" name="press" checked>高压</label>
+    		<label><input type="radio" name="press">低压</label>
+    		<ul>
+    			<li>螺杆低温并联机组（2-120）</li>
+    			<li>活塞高温并联机组（4-35）</li>
+    			<li>活塞高温并联机组（3-35）</li>
+    		</ul>    		
+    	</div>
+    	
+    	<!-- 排气温度list -->
+    	<div class="my_list ysjPqList">
+    		<label><input type="radio" name="press" checked>螺杆低温并联机组（2-120）</label>
+    		<label><input type="radio" name="press">活塞高温并联机组（4-35）</label>
+    		<label><input type="radio" name="press">活塞高温并联机组（3-35）</label>
+    		<ul>
+    			<li>压缩机1</li>
+    			<li>压缩机2</li>
+    		</ul>    		
+    	</div>
+    	<div class="bottomBtn"><button class="mybtn">确定</button></div>
+    </div>
+	<div class="chart temperature historyData">
+		<div class="filter">
+			<p><strong>请选择需要查询的项目：</strong></p>
+			<div class="project clearfix">
+				<div class="default defaultSelect">冷库温度</div>
+				<div class="default">冷库电量</div>
+				<div class="default">冷库门</div>
+				<div class="default">月台门</div>
+				<div class="default">压缩机组</div>
+				<div class="default">压缩机-排气温度</div>
+			</div>			
+			<p><strong>您所选的项目是：</strong></p>
+			<p class="selectInfo">冷库温度温度-{低温库温度,变温库温度,高温库温度,预冷间温度,理货间温度,冰鲜库温度}</p>
+		</div>
+       	<p><strong>开始时间</strong><input type="text" placeholder="请选择开始时间" id="startTime" class="kbtn"/></p>
+       	<p><strong>结束时间</strong><input type="text" placeholder="请选择结束时间" id="endTime" class="kbtn"/></p>
+       	<p class="chaxun"><button class="mybtn">查询</button></p>
+ 	</div>
+ 	
 	<!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
 	 	<ul class="rdcList">
@@ -103,6 +187,7 @@
 	 	</ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
+	 <div id="datePlugin"></div>
 	 <!--rdc列表----------------------------------------------->
     <ul class="footer">
         <li>           
@@ -117,7 +202,7 @@
                 <p class="info">分析</p>
             </a>
         </li>
-        <li>          
+        <li>
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
@@ -132,4 +217,25 @@
         </li>
     </ul>
 </body>
+<script type="text/javascript">
+	$(function(){
+		var $index='';
+		/*选择一级项目*/
+		$(".project .default").click(function(){
+			$index = $(this).index();
+			$(this).addClass('defaultSelect').siblings().removeClass('defaultSelect');
+			$(".coverBg").fadeIn();
+			$(".coverBg").children('.my_list').eq($index).show().siblings().not('.bottomBtn').hide();		
+		})
+		/*选择二级项目*/
+		$(".my_list ul li").click(function(){
+			$(this).parents('.my_list').siblings().find('li').removeClass('selectLi');
+			$(this).toggleClass('selectLi');
+		})
+		/*点击确定隐藏遮罩*/
+		$('.bottomBtn .mybtn').click(function(){
+			$(".coverBg").hide();
+		})
+	})
+</script>
 </html>

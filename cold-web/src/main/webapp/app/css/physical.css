@@ -239,7 +239,7 @@ ul,li {
 }
 .blysj{
 	display: inline-block;
-	width: 120px;
+	padding:8px 10px;
 	line-height: 24px;
 	text-align: center;
 	font-size: 14px;
@@ -259,11 +259,12 @@ ul,li {
 	width: 270px;
 	line-height: 120px;
 	text-align: center;
-	font-size: 28px;
+	font-size: 18px;
 }
 .remain+p{
 	font-size: 14px;
 	color: #2b3046;
+	text-align: center;
 }
 /*优化部分css*/
 .tNum,.tUiit{
