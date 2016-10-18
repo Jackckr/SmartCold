@@ -237,8 +237,9 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         var mainId2 = 'hotColumn';
         if ($scope.swiper < $scope.mystorages.length) {
             var innerHTML = '<div class="swiper-slide">' +
-                '<div id=' + mainId1 + ' style="height:250px"></div> ' +
-                '<div id=' + mainId2 + ' style="height:250px"></div> ';
+                '<div id=' + mainId1 + ' style="height:250px"></div>' +
+                '<div id=' + mainId2 + ' style="height:250px"></div>' +
+                '</div>';
             $("#chartView").last().append(innerHTML);
             $scope.swiper += 1;
         }
