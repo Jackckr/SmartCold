@@ -159,8 +159,13 @@
     			<li>压缩机2</li>
     		</ul>    		
     	</div>
-    	<div class="bottomBtn"><button class="mybtn">确定</button></div>
+    	<span class="closeCover">&times;</span>
+    	<div class="bottomBtn"><button class="mybtn">确定</button></div>    	
     </div>
+    <!-- <div class="anotherCover">
+    	
+    	<span class="closeCover">&times;</span>
+    </div> -->
 	<div class="chart temperature historyData">
 		<div class="filter">
 			<p><strong>请选择需要查询的项目：</strong></p>
@@ -171,13 +176,16 @@
 				<div class="default">月台门</div>
 				<div class="default">压缩机组</div>
 				<div class="default">压缩机-排气温度</div>
-			</div>			
+			</div>	
 			<p><strong>您所选的项目是：</strong></p>
-			<p class="selectInfo">冷库温度温度-{低温库温度,变温库温度,高温库温度,预冷间温度,理货间温度,冰鲜库温度}</p>
-		</div>
-       	<p><strong>开始时间</strong><input type="text" placeholder="请选择开始时间" id="startTime" class="kbtn"/></p>
-       	<p><strong>结束时间</strong><input type="text" placeholder="请选择结束时间" id="endTime" class="kbtn"/></p>
-       	<p class="chaxun"><button class="mybtn">查询</button></p>
+			<p class="selectInfo br">冷库温度温度-{低温库温度,变温库温度,高温库温度,预冷间温度,理货间温度,冰鲜库温度}</p>
+			<p><strong>请选择时间范围</strong></p>
+       		<p>开始时间<input type="text" placeholder="请选择开始时间" id="startTime" class="kbtn"/></p>
+       		<p>结束时间<input type="text" placeholder="请选择结束时间" id="endTime" class="kbtn"/></p>
+		</div>		
+       	<p class="chaxun"><button class="mybtn">查询</button></p>    
+       	<!-- 图表区域 -->   	
+       	<div id="historyChart" style="height:18rem"></div>
  	</div>
  	
 	<!--rdc列表-------------------------------------------------->
@@ -225,17 +233,77 @@
 			$index = $(this).index();
 			$(this).addClass('defaultSelect').siblings().removeClass('defaultSelect');
 			$(".coverBg").fadeIn();
-			$(".coverBg").children('.my_list').eq($index).show().siblings().not('.bottomBtn').hide();		
+			$(".coverBg").children('.my_list').eq($index).show().siblings().not('.bottomBtn').not('.closeCover').hide();		
 		})
 		/*选择二级项目*/
 		$(".my_list ul li").click(function(){
 			$(this).parents('.my_list').siblings().find('li').removeClass('selectLi');
 			$(this).toggleClass('selectLi');
 		})
-		/*点击确定隐藏遮罩*/
-		$('.bottomBtn .mybtn').click(function(){
+		/*点击确定  + X 隐藏遮罩*/
+		$('.bottomBtn .mybtn,.closeCover').click(function(){
 			$(".coverBg").hide();
 		})
+		/*chart demo*/
+		var myChart = echarts.init(document.getElementById('historyChart'));
+		var option = {
+			backgroundColor: '#D2D6DE',
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    title:{
+		    	text:"冷库温度"
+		    },
+		    grid:{
+		    	x:40,
+		    	width:'80%'
+		    },
+		    xAxis : [
+		        {
+		            type : 'category',
+		            boundaryGap : false,
+		            data : ['周一','周二','周三','周四','周五','周六','周日']
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value'
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'邮件营销',
+		            type:'line',
+		            stack: '总量',
+		            data:[120, 132, 101, 134, 90, 230, 210]
+		        },
+		        {
+		            name:'联盟广告',
+		            type:'line',
+		            stack: '总量',
+		            data:[220, 182, 191, 234, 290, 330, 310]
+		        },
+		        {
+		            name:'视频广告',
+		            type:'line',
+		            stack: '总量',
+		            data:[150, 232, 201, 154, 190, 330, 410]
+		        },
+		        {
+		            name:'直接访问',
+		            type:'line',
+		            stack: '总量',
+		            data:[320, 332, 301, 334, 390, 330, 320]
+		        },
+		        {
+		            name:'搜索引擎',
+		            type:'line',
+		            stack: '总量',
+		            data:[820, 932, 901, 934, 1290, 1330, 1320]
+		        }
+		    ]
+		};
+		myChart.setOption(option);
 	})
 </script>
 </html>
