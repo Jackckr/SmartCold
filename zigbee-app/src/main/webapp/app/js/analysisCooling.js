@@ -129,7 +129,89 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
     }
 
     $scope.drawRunAnalysis = function () {
+        var mainId1 = 'runningAll';
+        var mainId2 = 'runningSingle';
+        if ($scope.swiper < $scope.mystorages.length) {
+            var innerHTML = '<div class="swiper-slide">' +
+                '<div id=' + mainId1 + ' style="height:12rem;"></div>' +
+                '<div id=' + mainId2 + ' style="height:12rem;"></div>' +
+                '</div>';
+            $("#chartView").last().append(innerHTML);
+            $scope.swiper += 1;
+        }
+        var myChart1 = echarts.init(document.getElementById('runningAll'));
+        var myChart2 = echarts.init(document.getElementById('runningSingle'));
+        var option1 = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            calculable: false,
+            legend: {
+                data: ['运行时长', '运行次数']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['2016-09-24', '2016-09-26', '2016-09-28', '2016-09-30', '2016-10-02', '2016-10-04', '2016-10-06', '2016-10-08', '2016-10-10', '2016-10-12', '2016-10-14', '2016-10-16']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '运行时长',
+                    axisLabel: {
+                        formatter: '{value} m'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '运行次数'
+                }
+            ],
+            series: [
 
+                {
+                    name: '运行时长',
+                    type: 'bar',
+                    data: [1012.0, 1014.9, 1017.0, 923.2, 1025.6, 976.7, 1035.6, 1062.2, 1032.6, 1020.0, 1016.4, 1013.3]
+                },
+                {
+                    name: '运行次数',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                }
+            ]
+        };
+        var option2 = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['2016-09-24', '2016-09-26', '2016-09-28', '2016-09-30', '2016-10-02', '2016-10-04', '2016-10-06', '2016-10-08', '2016-10-10', '2016-10-12', '2016-10-14', '2016-10-16']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '运行平均时长',
+                    axisLabel: {
+                        formatter: '{value} m'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '平均运行时长',
+                    type: 'bar',
+                    data: [502.0, 534.9, 487.0, 523.2, 425.6, 576.7, 635.6, 562.2, 332.6, 420.0, 526.4, 533.3]
+                }
+            ]
+        };
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
     }
 
     $scope.goEffectAnalysis = function () {

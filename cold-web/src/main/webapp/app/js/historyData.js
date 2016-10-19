@@ -27,7 +27,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	 		   $scope.oldnames.push(item.innerText);
 	 		    $scope.echnames.push(item.innerText+$scope.typemode.tit[$scope.sl_index]);
 	 		});
-	 	   $scope.slgptit=keem.text().replace(/\s/gi,'');//+;
+	 	   $scope.slgptit=keem.text().replace(/\s/gi,'');//+$scope.typemode.tit[$scope.sl_index];
 	 	   $scope.sltit=$scope.slgptit+subtit+ "-{"+ ($scope.oldnames.join(","))+"}";
    };
    
@@ -99,6 +99,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 			    legend: {  data:[$scope.slgptit]},
 			    xAxis : [{type : 'category',data : xData} ],
 			    yAxis :yAxismode,
+			    grid:{x:80,x2:80},
 			    series : ydata,
 			    toolbox: {show: true,feature: {dataZoom: {yAxisIndex: 'none'},dataView: {readOnly: false},magicType: {type: ['line', 'bar']},restore: {},saveAsImage: {}} }
 			 };

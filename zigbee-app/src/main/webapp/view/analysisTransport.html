@@ -12,8 +12,9 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-    <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
+    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
 	<script type="text/javascript" src="../com/js/highcharts.js"></script>
+	<script type="text/javascript" src="../com/js/highcharts-3d.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/analysisTransport.js" ></script>
@@ -62,9 +63,9 @@
                 <b>运管</b><i class="iconfont">&#xe6f7;</i>
             </span>
             <ul class="otherList black">
-                <li><a href="javascript:;"  id="light" ng-click="goLight()">冷库门运行分析</a></li>
-                <li><a href="javascript:;" id="goods">货物因子分析</a></li>
-                <li><a href="javascript:;" id="hot">冷库日热量分析</a></li>
+                <li><a href="javascript:;"  id="light" ng-click="goDoorRunAnalysis()">冷库门运行分析</a></li>
+                <li><a href="javascript:;" id="goods" ng-click="goGoodsYZAnalysis()">货物因子分析</a></li>
+                <li><a href="javascript:;" id="hot" ng-click="goHotAnalysis()">冷库日热量分析</a></li>
             </ul>
         </div>
         <div class="door" id="makeCold" ng-click="goCooling()"><i class="iconfont">&#xe7b6;</i>

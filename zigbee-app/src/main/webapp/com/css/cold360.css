@@ -413,14 +413,14 @@ b{
 	font-size: .8rem;
 }
 .historyData p{
-	margin-bottom: .5rem;
+	margin-bottom: .2rem;
 }
 .default{
 	float:left;
 	width:35%;
 	background:#f2f2f2;
 	padding:5px 10px;
-	margin: 0 5% .7rem 0;
+	margin: 0 5% .8rem 0;
 	border-radius:3px;
 }
 .defaultSelect{
@@ -522,8 +522,20 @@ b{
 }
 .chaxun{
 	text-align: right;
+	margin-top: .5rem
+	margin-bottom: .8rem
 }
 .chaxun button{
 	width:100%;
 	display: inline-block;
+}
+.closeCover{
+	position: fixed;
+	top:.3rem;
+	right:20px;
+	color:#fff;
+	font-size: 2rem;
+}
+.historyData .br{
+	margin-bottom: .8rem
 }
