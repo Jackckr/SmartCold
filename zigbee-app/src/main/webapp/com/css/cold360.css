@@ -82,13 +82,13 @@ section{
 	color: #5BB789;
 }
 .door.other>i{
-	color: #448BCB;
+	color: #F39826;
 }
 .other{
 	/*position: relative;*/
 }
 .other>i{
-	color: #F39826;
+	color: #448BCB;
 }
 .tempture.current{
 	color: #EB5A4A;
@@ -110,13 +110,28 @@ section{
 	color: #5BB789;
 	border-bottom: 3px solid #438BCB;
 }
+#runDoor.light.other.current,#runDoor.light.other>i,#runDoor.light>i,#runCooling.light>i{
+	color: #F39826;
+}
 .door.other.current{
+	color: #F39826;
+	border-bottom: 3px solid #438BCB;
+}
+#makeCold.door.other>i{
+	color: #448BCB;
+}
+#runQuery.other>i{
+	color: #5BB789;
+}
+#makeCold.door.other.current{
+	color: #448BCB;
+}
+.other.current{
 	color: #448BCB;
 	border-bottom: 3px solid #438BCB;
 }
-.other.current{
-	color: #F39826;
-	border-bottom: 3px solid #438BCB;
+#runQuery.other.current{
+	color: #5BB789;
 }
 .otherList{
 	background: #fff;
