@@ -63,10 +63,18 @@
 /*cold360PhysicalList.html css*/
 .sys_group {
 	text-align: center;
-	padding-top: 40px;
 	margin: 0;
 }
-
+.goback.page-header{
+	text-align: left;
+	margin: 0 0 20px 0;
+	padding: 15px;
+}
+.goback.page-header a{
+	color:#fff;
+	font-weight: 400;
+	font-family: '宋体', Tahoma, Arial,sans-serif !important;
+}
 .sys_group .btn {
 	padding: 6px 75px;
 	color: #fff;	
