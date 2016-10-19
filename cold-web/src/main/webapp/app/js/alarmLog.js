@@ -14,7 +14,7 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
 			var days=Math.floor(date3/(86400000)) ; 
 			var hours=Math.floor(date3%(86400000)/(3600000)) ; 
 			if(days>0){text+=days+"天 ";}
-			text+=hours+"小时 ";
+			if(hours>0){text+=hours+"小时 ";}else{ text="已过保养期"; };
 			return  text;
       };
 });

@@ -28,6 +28,6 @@
 	</bean>
 	<!-- 处理定时任务并发性操作。。 -->
 	<task:annotation-driven scheduler="myScheduler"/>   
-	<task:scheduler id="myScheduler" pool-size="10"/>  
+	<task:scheduler id="myScheduler" pool-size="20"/>  
 	
 </beans>

@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
 public interface QuantitySetMapper {
     //======================================================Q======================================================
 	//Q7 获得门配置方法
-	List<HashMap<String, String>>  getColdstorageset();//根据冷库分组 获得门配置集合
+	List<HashMap<String, Object>>  getColdstorageset();//根据冷库分组 获得门配置集合
     //有效值：ids->BlowerSet id集合, frostPowers->风扇功率集合
 	List<HashMap<String, String>> findFanPower(@Param("ids")String ids);
 	//有效值：ids->BlowerSet id集合, frostPowers->化霜功率集合

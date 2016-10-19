@@ -14,7 +14,8 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
  //
    //设置数据模型
    $scope.gettit=function(){//自动设置标题
-	       $scope.oids=[];$scope.oldnames=[],keem=$("#ul_key_list li.select"),slemkey="#Temp_ul_"+ $scope.sl_index+" li.select",subtit="";
+	       $scope.sltit=="";
+	       $scope.oids=[];$scope.oldnames=[],$scope.echnames=[],keem=$("#ul_key_list li.select"),slemkey="#Temp_ul_"+ $scope.sl_index+" li.select",subtit="";
 	       if($scope.sl_index==4){
 	    	   subtit="-"+$('#Temp_ul_4 input[name="cmsbkey"]:checked').parent()[0].innerText;
 	       }else  if( $scope.sl_index==5){
@@ -22,9 +23,11 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	       }
 	       var lilist= $(slemkey);
 	 	   $.each(lilist, function(index, item) {
-	 		   $scope.oids.push($(item).attr("oid"));  $scope.oldnames.push(item.innerText+$scope.typemode.tit[$scope.sl_index]);
+	 		   $scope.oids.push($(item).attr("oid"));  
+	 		   $scope.oldnames.push(item.innerText);
+	 		    $scope.echnames.push(item.innerText+$scope.typemode.tit[$scope.sl_index]);
 	 		});
-	 	   $scope.slgptit=keem.text().replace(/\s/gi,'')+$scope.typemode.tit[$scope.sl_index];
+	 	   $scope.slgptit=keem.text().replace(/\s/gi,'');//+;
 	 	   $scope.sltit=$scope.slgptit+subtit+ "-{"+ ($scope.oldnames.join(","))+"}";
    };
    
@@ -60,7 +63,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 			$.ajax({
                 type: "POST",
                 url:"i/baseInfo/getKeyValueDataByFilter",traditional:true,
-                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.oldnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
+                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.echnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
                 success: function(data) {
                     if(data.success){
                     	$scope.drawDataLine(data.entity);

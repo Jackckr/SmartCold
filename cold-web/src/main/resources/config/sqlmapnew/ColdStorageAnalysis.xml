@@ -24,11 +24,11 @@
 	<insert id="addColdStorageAnalysis" parameterType="ColdStorageAnalysisEntity">
 		INSERT INTO `coldstorageanalysis`
 		(
-		type ,
-		oid  ,
-		key  ,
-		value,
-		date
+		`type` ,
+		`oid`  ,
+		`key`  ,
+		`value`,
+		`date`
 		)
 		VALUES
 		<foreach collection="list" item="model" separator=","> 
@@ -37,7 +37,7 @@
             #{model.oid}, 
             #{model.key}, 
             #{model.value}, 
-            #{model.date}, 
+            #{model.date}
         )
     </foreach>
 	</insert>

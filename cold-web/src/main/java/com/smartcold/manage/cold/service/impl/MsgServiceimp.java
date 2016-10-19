@@ -87,8 +87,8 @@ public class MsgServiceimp implements MsgService {
 	public void checkData() {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
 		if(taskStatus){
-			System.out.println("IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行checkData：--------------");
 			this.getERRinfo();
+			addextMsg("checkData", null);//记录日志
 		}
 	}
 	/**
@@ -102,7 +102,7 @@ public class MsgServiceimp implements MsgService {
 	public void checkAPStatus() {
 		boolean taskStatus = quantityMapper.updateTaskStatus(2);
 		if(!taskStatus){return ;}
-		System.out.println("IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行checkAPStatus：--------------");
+		addextMsg("checkAPStatus", null);//记录日志
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
@@ -126,11 +126,11 @@ public class MsgServiceimp implements MsgService {
 	 * 每天凌晨3:30点触发
 	 * Task:计算热量
 	 */
-    @Scheduled(cron = "0 30 03 * * ?")
+	@Scheduled(cron = "0 30 03 * * ?")
 	private void reckonQuantity() {
 	   boolean taskStatus = quantityMapper.updateTaskStatus(3);
 		if(!taskStatus){return ;}
-		System.out.println("IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行reckonQuantity：--------------");
+		addextMsg("reckonQuantity", null);//记录日志
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
 		Date dateTime = TimeUtil.parseYMD(time);
 		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
@@ -247,12 +247,7 @@ public class MsgServiceimp implements MsgService {
 				this.warningLogMapper.addWarningLog(errInfoList);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-			errInfoList.clear();
-			errInfoList.add(new WarningsLog(-1,-1,"getERRinfo Err"+e.getMessage().substring(0, 200)));
-			warningLogMapper.addWarningLog(errInfoList);
+			addextMsg("getERRinfo", e.getMessage());//记录日志
 		}
 	}
 
@@ -318,11 +313,7 @@ public class MsgServiceimp implements MsgService {
 								updata);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
-					List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-					errInfoList.clear();
-					errInfoList.add(new WarningsLog(-1,-1,"sendMsg Err"+e.getMessage().substring(0, 200)));
-					warningLogMapper.addWarningLog(errInfoList);
+					addextMsg("sendMsg", e.getMessage());//记录日志
 				}
 			}
 		}
@@ -379,11 +370,7 @@ public class MsgServiceimp implements MsgService {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
-				List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-				errInfoList.clear();
-				errInfoList.add(new WarningsLog(-1,-1,"setQFrost Err"+e.getMessage().substring(0, 200)));
-				warningLogMapper.addWarningLog(errInfoList);
+				addextMsg("reckonQuantity", e.getMessage());//记录日志
 			}
 	}
 	
@@ -423,11 +410,7 @@ public class MsgServiceimp implements MsgService {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-			errInfoList.clear();
-			errInfoList.add(new WarningsLog(-1,-1,"setQblower Err"+e.getMessage().substring(0, 200)));
-			warningLogMapper.addWarningLog(errInfoList);
+			addextMsg("setQblower", e.getMessage());//记录日志
 		}
 	}
 
@@ -469,10 +452,10 @@ public class MsgServiceimp implements MsgService {
 							    	}
 							    	for (ColdStorageAnalysisEntity clsis : doorTotalTime) {
 							    		if(avgforkliftPower!=0){
-							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "QForklift"+ "", avgforkliftPower * clsis.getValue(), dateTime));
+							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "QForklift", avgforkliftPower * clsis.getValue(), dateTime));
 							    		}
 							    		if(avglightsetPower!=0){
-							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "Qlighting"+ "", avglightsetPower * clsis.getValue(), dateTime));
+							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "Qlighting", avglightsetPower * clsis.getValue(), dateTime));
 							    		}
 									 }
 							    }
@@ -482,11 +465,7 @@ public class MsgServiceimp implements MsgService {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
-				List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-				errInfoList.clear();
-				errInfoList.add(new WarningsLog(-1,-1,"setQForklift Err"+e.getMessage().substring(0, 200)));
-				warningLogMapper.addWarningLog(errInfoList);
+				addextMsg("setQForklift", e.getMessage());//记录日志
 			}
 	}
 	
@@ -498,30 +477,41 @@ public class MsgServiceimp implements MsgService {
 	private void setQctdoor(String time, Date dateTime,String startTime,String endTime) {
 		try {
 			List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
-			List<HashMap<String, String>> coldstoragesetList = this.quantitySetMapper.getColdstorageset();
+			List<HashMap<String, Object>> coldstoragesetList = this.quantitySetMapper.getColdstorageset();
 			if (SetUtil.isnotNullList(coldstoragesetList)) {
-				for (HashMap<String, String> hashMap : coldstoragesetList) {
-					int id = Integer.parseInt(hashMap.get("id"));//coldstorageset->id
-				    double cgvolume=Double.parseDouble(hashMap.get("cgvolume"));//冷库面积
-				    double vvalue=	Double.parseDouble(hashMap.get("vvalue"));//换气次数
-					double Q=0.675*cgvolume*vvalue*(8-4);//临时值
-					sisList.add(new ColdStorageAnalysisEntity(2, id, "Qctdoor"+ "", Q, dateTime));
+				for (HashMap<String, Object> hashMap : coldstoragesetList) {
+					if(hashMap.get("hn")!=null  &&hashMap.get("hw")!=null){
+						    int id = (Integer) hashMap.get("id");//coldstorageset->id
+						    Double cgvolume=(Double) hashMap.get("cgvolume");//冷库面积d
+						    Double vvalue=	(Double) hashMap.get("vvalue");//换气次数d
+						    Float hn=	(Float) hashMap.get("hn");//换气次数
+						    Float hw=	(Float) hashMap.get("hw");//换气次数
+						    Double Q=0.675*cgvolume*vvalue*(hw-hn);//临时值
+							sisList.add(new ColdStorageAnalysisEntity(2, id, "Qctdoor", Q, dateTime));
+					 }
 				 }
 				 if(SetUtil.isnotNullList(sisList)){
 					this.storageAnalysisMapper.addColdStorageAnalysis(sisList);//批處理
 				 }
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
-			List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-			errInfoList.clear();
-			errInfoList.add(new WarningsLog(-1,-1,"setQctdoor Err"+e.getMessage().substring(0, 200)));
-			warningLogMapper.addWarningLog(errInfoList);
+			addextMsg("setQctdoor", e.getMessage());//记录日志
 		}
-		
 	}
-
+    
+	private void addextMsg(String methodName,String errMsg){
+		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
+		if(StringUtil.isnotNull(errMsg)){
+//			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
+			 msg+=" 执行错误："+errMsg; 
+		   }
+		System.err.println(msg);
+		List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+		errInfoList.add(new WarningsLog(-1,-1,msg));
+		this.warningLogMapper.addWarningLog(errInfoList);
+	}
+	
 	public static void main(String[] args) {
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);

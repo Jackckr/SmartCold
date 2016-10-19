@@ -9,7 +9,7 @@
 	</select>
 	
 	<update id="updateTaskStatus" parameterType="Integer" flushCache="true">
-		update queue_task sk set LastRunTim=now() where id=#{id} and LastRunTim + interval intervalTime MINUTE &lt; now() ;
+		update queue_task sk set  LastRunTim=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:00') where id=#{id} and LastRunTim + interval intervalTime MINUTE &lt; now() ;
 	</update>
 	
 	
