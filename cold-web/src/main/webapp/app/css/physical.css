@@ -72,8 +72,14 @@
 }
 .goback.page-header a{
 	color:#fff;
+	display:inline-block;
+	width:200px;
+	height:100%;
 	font-weight: 400;
 	font-family: '宋体', Tahoma, Arial,sans-serif !important;
+}
+.goback.page-header a:hover{
+	color:#3C8DBC;
 }
 .sys_group .btn {
 	padding: 6px 75px;
