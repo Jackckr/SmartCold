@@ -1,10 +1,282 @@
-<div class="clearfix mainHeight">
+<div id="physicalstep1" class="clearfix mainHeight">
   <div class="cold_bg" style="height:100%;">
   		<h1>{{msg}}</h1>
   		<div class="radius_bg">  			
-  			<a href="#/cold360PhysicalList">一键检测<i class="icon iconfont">&#xe62f;</i></a>
+  			<a href="#cold360Physical" ng-click="physical()">一键检测<i class="icon iconfont">&#xe62f;</i></a>
   		</div>
-  		
   </div>
 </div>
+<div id="physicalstep2" class="sys_group black"  >
+	<div class="page-header goback">
+		<a href="#/cold360Physical"><i class="icon iconfont">&#xe64a;</i> 返回</a>
+    </div>
+	<!-- 温度系统 -->
+	<div class="box bg-gray">
+	    <div class="box-header with-border">
+	        <h3 class="box-title">温度系统</h3>
+	    </div>
+	    <div class="box-body">
+	   		<!-- 有设备 -->
+	   		<div class="haveDevice">
+	   			<div class="circle fontBlue">
+	   				78<span>分</span>
+	   			</div>
+	   			<a href="#/cold360PhysicalDetail"><button class="btn bgBlue">查看详情</button></a>
+	   		</div>
+	   		<!-- 建议安装设备 -->
+	   		<div class="noDevice black">
+	   			<div class="circle bluePlus"></div>
+	   			<a href="javascript:;"><button class="btn bgBlue disabled">建议安装监控设备</button></a>
+	   		</div>
+	    </div>
+	</div>
+	<!-- 运管系统 -->
+	<div class="box bg-gray">
+	    <div class="box-header with-border">
+	        <h3 class="box-title">运管系统</h3>
+	    </div>
+	    <div class="box-body">
+			<!-- 有设备 -->
+	   		<div class="haveDevice">
+	   			<div class="circle fontGold">
+	   				70<span>分</span>
+	   			</div>
+	   			<a href="#/cold360PhysicalDetail"><button class="btn bgGold">查看详情</button></a>
+	   		</div>
+	   		<!-- 建议安装设备 -->
+	   		<div class="noDevice black">
+	   			<div class="circle goldPlus"></div>
+	   			<a href="javascript:;"><button class="btn bgGold disabled">建议安装监控设备</button></a>
+	   		</div>
+	    </div>
+	</div>
+	<!-- 制冷系统 -->
+	<div class="box bg-gray">
+	    <div class="box-header with-border">
+	        <h3 class="box-title">制冷系统</h3>
+	    </div>
+	    <div class="box-body">
+   			<!-- 有设备 -->
+	   		<div class="haveDevice black">
+	   			<div class="circle fontGreen">
+	   				100<span>分</span>
+	   			</div>
+	   			<a href="#/cold360PhysicalDetail"><button class="btn bgGreen">查看详情</button></a>
+	   		</div>
+	   		<!-- 建议安装设备 -->
+	   		<div class="noDevice">
+	   			<div class="circle greenPlus"></div>
+	   			<a href="javascript:;"><button class="btn bgGreen disabled">建议安装监控设备</button></a>
+	   		</div>
+	    </div>
+	</div>
+	<!-- loading 遮罩html -->
+	<div class="cover_bg black">
+		<div class="loader">
+	        <div class="loader-inner line-scale">
+	          <div></div>
+	          <div></div>
+	          <div></div>
+	          <div></div>
+	          <div></div>
+	        </div>
+	        <br/>
+	        加载中，请稍后 ^_^……
+	      </div>
+	</div>
+</div>
+<div id="physicalstep3" class="score_list black" >
+	<div class="page-header goback">
+		<a href="#/cold360PhysicalList"><i class="icon iconfont">&#xe64a;</i> 返回</a>
+    </div>
+	<!-- 温度系统 -->
+	<div class="box bg-gray">
+	    <div class="box-header with-border">
+	        <h3 class="box-title">温度系统</h3>
+	         <div class="box-tools pull-right">
+	             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+	         </div>
+	    </div>
+	    <div class="box-body">
+	    	<ul>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库1</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					        <span class="sr-only">60% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-60"><b>60分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库2</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+					        <span class="sr-only">70% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-70"><b>70分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库2</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-80" role="progressbar"aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+					        <span class="sr-only">80% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-80"><b>80分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库4</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-90" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+					        <span class="sr-only">90% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-90"><b>90分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库5</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+					        <span class="sr-only">100% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-100"><b>100分</b></div>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 coldName coldName-100">
+						<a href="#/overTemperature">查看详情&gt;&gt;</a>
+					</div>
+	    		</li>
+	    	</ul>
+	    </div>
+	</div>
+	<!-- 运管系统 -->
+	<div class="box bg-gray">
+	    <div class="box-header with-border">
+	        <h3 class="box-title">运管系统</h3>
+	         <div class="box-tools pull-right">
+	             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+	         </div>
+	    </div>
+	    <div class="box-body">
+	    	<ul>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库1</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					        <span class="sr-only">60% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-60"><b>60分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库2</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+					        <span class="sr-only">70% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-70"><b>70分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库2</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-80" role="progressbar"aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+					        <span class="sr-only">80% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-80"><b>80分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库4</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-90" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+					        <span class="sr-only">90% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-90"><b>90分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">冷库5</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+					        <span class="sr-only">100% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-100"><b>100分</b></div>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 coldName coldName-100">
+						<a href="#/doorAnalysis">查看详情&gt;&gt;</a>
+					</div>
+	    		</li>
+	    	</ul>
+	    </div>
+	</div>
+	<!-- 制冷系统 -->
+	<div class="box bg-gray">
+	    <div class="box-header with-border">
+	        <h3 class="box-title">制冷系统</h3>
+	         <div class="box-tools pull-right">
+	             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+	         </div>
+	    </div>
+	    <div class="box-body">
+	    	<ul>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">机组1</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					        <span class="sr-only">60% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-60"><b>60分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">机组2</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+					        <span class="sr-only">70% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-70"><b>70分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">机组3</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-80" role="progressbar"aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+					        <span class="sr-only">80% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-80"><b>80分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">机组4</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-90" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+					        <span class="sr-only">90% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-90"><b>90分</b></div>
+	    		</li>
+	    		<li class="row">
+		    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">机组5</div>
+		    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
+					    <div class="progress-bar progress-bar-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+					        <span class="sr-only">100% 完成</span>
+					    </div>
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-100"><b>100分</b></div>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 coldName coldName-100">
+						<a href="#/coolingAnalysis">查看详情&gt;&gt;</a>
+					</div>
+	    		</li>
+	    	</ul>
+	    </div>
+	</div>
+</div>
+
+
+
 

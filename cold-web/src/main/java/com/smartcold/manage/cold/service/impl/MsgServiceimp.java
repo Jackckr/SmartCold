@@ -443,7 +443,7 @@ public class MsgServiceimp implements MsgService {
 							    List<ColdStorageAnalysisEntity> doorTotalTime = storageAnalysisMapper.findValueByFilter(fileter);
 							    if(SetUtil.isnotNullList(doorTotalTime)){
 							    	List<HashMap<String, String>> forkliftsetList = this.quantitySetMapper.getPowerGroupByRDC("forkliftset", rdcid);//获得叉车功率
-							    	List<HashMap<String, String>> lightsetList = this.quantitySetMapper.getPowerGroupByRDC("coldstoragelightset", rdcid);//获得叉车功率
+							    	List<HashMap<String, String>> lightsetList = this.quantitySetMapper.getPowerGroupByRDC("coldstoragelightset", rdcid);//获得照明功率
 							    	if(SetUtil.isnotNullList(forkliftsetList)){
 							    		avgforkliftPower =Double.parseDouble( forkliftsetList.get(0).get("avgpower")+"");
 							    	}

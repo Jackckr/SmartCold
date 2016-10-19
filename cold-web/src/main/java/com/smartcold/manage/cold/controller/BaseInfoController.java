@@ -128,7 +128,7 @@ public class BaseInfoController extends BaseController {
 	public String getDateFormat(int day) {
 		System.err.println(day);
 		if (day <= 3)
-			return "%Y-%m-%d %H:%m:%s";
+			return "%Y-%m-%d %H:%i:%s";
 		else if (day <= 5)
 			return "%Y-%m-%d %H";
 		else 
