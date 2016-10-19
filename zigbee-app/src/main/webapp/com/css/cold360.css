@@ -82,13 +82,13 @@ section{
 	color: #5BB789;
 }
 .door.other>i{
-	color: #448BCB;
+	color: #F39826;
 }
 .other{
 	/*position: relative;*/
 }
 .other>i{
-	color: #F39826;
+	color: #448BCB;
 }
 .tempture.current{
 	color: #EB5A4A;
@@ -110,13 +110,28 @@ section{
 	color: #5BB789;
 	border-bottom: 3px solid #438BCB;
 }
+#runDoor.light.other.current,#runDoor.light.other>i,#runDoor.light>i,#runCooling.light>i{
+	color: #F39826;
+}
 .door.other.current{
+	color: #F39826;
+	border-bottom: 3px solid #438BCB;
+}
+#makeCold.door.other>i{
+	color: #448BCB;
+}
+#runQuery.other>i{
+	color: #5BB789;
+}
+#makeCold.door.other.current{
+	color: #448BCB;
+}
+.other.current{
 	color: #448BCB;
 	border-bottom: 3px solid #438BCB;
 }
-.other.current{
-	color: #F39826;
-	border-bottom: 3px solid #438BCB;
+#runQuery.other.current{
+	color: #5BB789;
 }
 .otherList{
 	background: #fff;
@@ -369,7 +384,7 @@ b{
 	border:1px solid #337ab7;
 	text-align: center;
 	font-size: .75rem;
-	line-height: 2rem;
+	line-height: 2;
 }
 .cold_warn th[colspan="3"]{
 	height:2.5rem;
@@ -417,10 +432,11 @@ b{
 }
 .default{
 	float:left;
-	width:35%;
+	min-width:20%;
 	background:#f2f2f2;
-	padding:5px 10px;
-	margin: 0 5% .8rem 0;
+	padding:.2rem;
+	text-align:center;
+	margin: 0 2% .8rem 0;
 	border-radius:3px;
 }
 .defaultSelect{
@@ -538,4 +554,49 @@ b{
 }
 .historyData .br{
 	margin-bottom: .8rem
+}
+/*报表功能*/
+.analysis{
+	overflow-x: auto;
+	overflow-y: hidden;
+	width: 100%;
+	border: 1px solid #ddd;
+}
+.analysis caption{
+	text-align:left;
+	text-indent:2rem;
+}
+.analysis th,.analysis td{
+	white-space: nowrap;
+	padding:.1rem;
+}
+/*保养提醒*/
+.maintain{
+	text-align: left;
+}
+.maintain .actually{
+	margin-bottom: 1.2rem
+}
+.alarm_bg{
+	float:left;
+	width: 50%;
+	height: 2.96rem; 
+	background: url(../img/alarm.png);
+	background-size: cover;
+	margin-bottom:2.5rem;
+}
+.remain{
+	display: inline-block;
+	width: 7.2rem;
+	line-height: 3.5rem;
+	text-align: left;
+	text-indent:1.8rem;
+	font-size: .6rem;
+	color:#fff;
+	font-weight: 700
+}
+.remain+p{
+	font-size: .7rem;
+	color: #2b3046;
+	text-align: center;
 }

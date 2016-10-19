@@ -6,6 +6,7 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>分析--报表功能</title>
+<!--     <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
 	<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
@@ -66,7 +67,7 @@
                 <li><a href="javascript:;">温度周期因子统计</a></li>
             </ul>
     	</div>
-        <div class="light" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe76b;</i>
+        <div class="light" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe6ed;</i>
             <span class="dropNext">
                 <b>运管</b><i class="iconfont">&#xe6f7;</i>
             </span>
@@ -97,10 +98,207 @@
         </div>
     </section>
     <div class="backDrop"></div>
-	<div class="chart temperature">
-        报表功能<br/>
-        开始时间 <input type="text" placeholder="请选择结束时间" id="startTime" class="kbtn"/>
-       	 结束时间<input type="text" placeholder="请选择结束时间" id="endTime" class="kbtn"/>
+	<div class="chart temperature historyData">
+		<div class="filter">
+			<p><strong>请选择需要查询的项目：</strong></p>
+			<div class="project clearfix">
+				<div class="default defaultSelect">日耗电量</div>
+				<div class="default">日耗水量</div>
+				<div class="default">冷库门</div>
+				<div class="default">热量</div>
+				<div class="default">冷风机</div>
+				<div class="default">系统效率</div>
+				<div class="default">温度分析</div>
+			</div>	
+			<p><strong>请选择时间范围</strong></p>
+       		<p>开始时间<input type="text" placeholder="请选择开始时间" id="startTime" class="kbtn"/></p>
+       		<p>结束时间<input type="text" placeholder="请选择结束时间" id="endTime" class="kbtn"/></p>
+		</div>		
+       	<p class="chaxun"><button class="mybtn">查询</button></p>    
+       	<!-- 图表区域 -->   	
+<!--        	<div class="alarmLog table-responsive"> -->
+<!-- 	       	<table class="table table-condensed table-bordered cold_warn"> -->
+		<div class="analysis alarmLog">
+	       	<table class="cold_warn">
+	       	  <caption>日耗电量</caption>
+			  <tbody>
+				   <tr>
+					  <th>日期</th>
+					  <th>电表1(kW·h)</th>
+					  <th>电表2(kW·h)</th>
+					  <th>电表3(kW·h)</th>
+					  <th>电表4(kW·h)</th>
+					  <th>电表5(kW·h)</th>
+					  <th>电表6(kW·h)</th>
+					  <th>电表7(kW·h)</th>
+					  <th>电表8(kW·h)</th>
+					</tr>
+					<tr>
+				       <td>2016-09-02</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+					</tr>
+					<tr>
+				       <td>2016-09-02</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+					</tr><tr>
+				       <td>2016-09-02</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+					</tr><tr>
+				       <td>2016-09-02</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="cold_warn">
+	       	  <caption>温度分析</caption>
+			  <tbody>
+				   <tr>
+					  <th rowspan="2">日期</th>
+					  <th colspan="4">低温库</th>
+					  <th colspan="4">变温库</th>
+					  <th colspan="4">高温库</th>
+					  <th colspan="4">预冷间</th>
+					  <th colspan="4">理货间</th>
+					  <th colspan="4">冰鲜库</th>
+					</tr>
+					<tr>
+					  <th>超温时长(min)</th>
+					  <th>最高温度(℃)</th>
+					  <th>超温因子(ε)</th>
+					  <th>保温因子(τ)</th>
+					  <th>超温时长(min)</th>
+					  <th>最高温度(℃)</th>
+					  <th>超温因子(ε)</th>
+					  <th>保温因子(τ)</th>
+					  <th>超温时长(min)</th>
+					  <th>最高温度(℃)</th>
+					  <th>超温因子(ε)</th>
+					  <th>保温因子(τ)</th>
+					  <th>超温时长(min)</th>
+					  <th>最高温度(℃)</th>
+					  <th>超温因子(ε)</th>
+					  <th>保温因子(τ)</th>
+					  <th>超温时长(min)</th>
+					  <th>最高温度(℃)</th>
+					  <th>超温因子(ε)</th>
+					  <th>保温因子(τ)</th>
+					  <th>超温时长(min)</th>
+					  <th>最高温度(℃)</th>
+					  <th>超温因子(ε)</th>
+					  <th>保温因子(τ)</th>
+					</tr>
+					<tr>
+				       <td>2016-10-13</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+					</tr>
+					<tr>
+				       <td>2016-10-13</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+					</tr>
+					<tr>
+				       <td>2016-10-13</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>432</td>
+				       <td>fff</td>
+				       <td>324</td>
+				       <td>432</td>
+				       <td>fff</td>
+					</tr>
+				</tbody>
+			</table>
+       	</div>
  	</div>
 	<!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
@@ -132,14 +330,20 @@
             </a>
         </li>
         <li>            
-            <a href="">
+            <a href="maintain.html">
                 <i class="iconfont">&#xe6a5;</i>
                 <p class="info">维护</p>
             </a>
         </li>
     </ul>
 </body>
-<script>
-	
+<script type="text/javascript">
+	$(function(){
+		var $index='';
+		/*选择一级项目*/
+		$(".project .default").click(function(){
+			$(this).addClass('defaultSelect').siblings().removeClass('defaultSelect');
+		})
+	})
 </script>
 </html>

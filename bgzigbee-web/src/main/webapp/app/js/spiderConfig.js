@@ -111,7 +111,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                     params.id = resp.data.status;
                     $scope.type2Keys(params.type).push(params);
                 }
-                alert(resp.data.message);
+			    if(resp.data.status == -1){
+			    	alert(resp.data.message);
+			    }
 			})
 		}else{
 			alert("输入不完整");
@@ -366,7 +368,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		object.compressorgroupid=$scope.vm.choseCompressGroup.id;
 		object.type = $scope.vm.compressorType.type;
 		$http.post("/i/compressorGroup/saveCompressor", object).then(function (resp) {
-			alert(resp.data.message);
+			if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
 			$scope.compressorSet = {};
 			$scope.changeCompressGroup();
 		});
@@ -378,7 +382,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		object.coldStorageId = $scope.vm.choseStorage.id;
 		$http.post("/i/spiderConfig/add/windscreenset", object).then(function (resp) {
-			alert(resp.data.message);
+			if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
 			$scope.changeStorage();
 			$scope.windScreenSet = {};
 		})
@@ -388,7 +394,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         var object = $scope.evaporativeSet;
         object.rdcid = $scope.vm.choseRdc.id;
         $http.post("/i/spiderConfig/add/evaporativeSet", object).then(function (resp) {
-            alert(resp.data.message);
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
             $scope.changeRdc();
             $scope.evaporativeSet = {};
         })
@@ -416,7 +424,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         object.groupid= $scope.vm.choseCompressGroup.id;
         object.evaporativeid = $scope.vm.choseEvaporative.id
         $http.post("/i/spiderConfig/add/evaporativeWaterSet", object).then(function (resp) {
-            alert(resp.data.message);
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
             $scope.changeEvaporative();
             $scope.evaporativeWaterSet = {};
         })
@@ -429,7 +439,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         obj.groupid = $scope.vm.choseCompressGroup.id;
         obj.evaporativeid = $scope.vm.choseEvaporative.id
         $http.post("/i/spiderConfig/add/evaporativeBlowerSet", obj).then(function (resp) {
-            alert(resp.data.message);
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
             $scope.changeEvaporative();
             $scope.evaporativeBlowerSet = {};
         })
@@ -440,7 +452,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         var obj = $scope.platformDoorSet;
         obj.rdcid = $scope.vm.choseRdc.id;
         $http.post("/i/spiderConfig/add/platformDoorSet", obj).then(function (resp) {
-            alert(resp.data.message);
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
             $scope.changeRdc();
             $scope.platformDoorSet = {};
         })
@@ -453,7 +467,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         obj.rdcid = $scope.vm.choseRdc.id;
 		obj.coldStorageId = $scope.vm.choseStorage.id;
         $http.post("/i/spiderConfig/add/coldStorageLightSet", obj).then(function (resp) {
-            alert(resp.data.message);
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
             $scope.changeRdc();
             $scope.coldStorageLightSet = {};
         })
@@ -464,7 +480,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         var obj = $scope.forkliftSet;
         obj = $scope.vm.choseRdc.id;
         $http.post("/i/spiderConfig/add/forkliftSet", obj).then(function (resp) {
-            alert(resp.data.message);
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
             $scope.changeRdc();
             $scope.forkliftSet= {};
         })
@@ -478,9 +496,11 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     	else{
         obj.rdcid = $scope.vm.choseRdc.id;
         obj.table = table;
-        debugger;
+        //debugger;
         $http.post("/i/spiderConfig/add/rdcidAndName", obj).then(function (resp) {
-            alert(resp.data.message);
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
 /*            obj.name = '';
             obj.power = '';*/
             $scope.changeRdc();
@@ -494,7 +514,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$http.delete("/i/spiderConfig/delete/id", {
 				params: {"table": table, "id": item.id}
 			}).then(function (resp) {
-				alert(resp.data.message);
+				if(resp.data.status == -1){
+			    	alert(resp.data.message);
+			    }
 				var index =  arrayData.indexOf(item);
 				arrayData.splice(index, 1);
 			})
@@ -507,7 +529,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             $http.delete("/i/spiderConfig/delete/id", {
                 params: {"table": table, "id": item.id}
             }).then(function (resp) {
-                alert(resp.data.message);
+            	if(resp.data.status == -1){
+    		    	alert(resp.data.message);
+    		    }
                 var index =  arrayData.indexOf(item);
                 arrayData.splice(index, 1);
             })
@@ -574,7 +598,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		url = '/i/coldStorage/updateMapping?coldStorageId=' + $scope.vm.choseStorage.id 
 		+ '&mapping=' + JSON.stringify($scope.vm.choseStorage.mapping);
 		$http.post(url).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 		})
 		angular.forEach($scope.doors,function(item){
 			$scope.realSaveDoor(item);
@@ -625,7 +651,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		url = '/i/compressorGroup/updateMapping?id=' + $scope.vm.choseCompressGroup.id 
 		+ '&mapping=' + JSON.stringify($scope.vm.choseCompressGroup.mapping);
 		$http.post(url).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 		})
 
         angular.forEach($scope.compressorSets, function (item) {
@@ -648,7 +676,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			rdcid: $scope.vm.choseRdc.id,
 			username: $scope.vm.username,
 			password: $scope.vm.password}).success(function(data,status,config,headers){
-				alert(data.message);
+				if(data.status == -1){
+					alert(data.message);
+				}
 			})
 	}
 	
@@ -681,7 +711,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			$("#maintaincform input[name=aTelephone]").parent().removeClass("has-error");
 			 $.ajax({ url: '/i/rdc/adupRdcMangConfig',type: 'POST',data :$("#maintaincform").serialize(), success: function(data){
 				 $scope.getmginf();
-				 alert(data.message);
+				 if(data.status == -1){
+					alert(data.message);
+				 }
 				 issavemg=false;
 			 }});
 		}else{
@@ -695,7 +727,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.deleteAccount = function(){
 		$http.post('/i/rdc/deleteSpiderConfig?rdcid=' + $scope.vm.choseRdc.id).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 			$scope.vm.username = "";
 			$scope.vm.password = "";
 		});
@@ -722,14 +756,18 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			id:$scope.vm.choseRdc.id,
 			mapping:JSON.stringify($scope.vm.choseRdc.mapping)
 		}).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 		})
 	}
 	
 	$scope.addStorage = function(){
 		$scope.storageEntity.rdcId = $scope.vm.choseRdc.id;
 		$http.post("/i/coldStorage/insertStorage",$scope.storageEntity).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 			$scope.storageEntity = {};
 			$scope.changeRdc();
 		})
@@ -740,7 +778,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		$scope.doorEntity.rdcId = $scope.vm.choseRdc.id;
 		$scope.doorEntity.coldStorageId = $scope.vm.choseStorage.id;
 		$http.post("/i/coldStorageDoor/insertDoor",$scope.doorEntity).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 			$scope.doorEntity = {};
 			$scope.changeStorage();
 		})
@@ -750,7 +790,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		$scope.wallEntity.coldstorageid = $scope.vm.choseStorage.id;
 		$http.post("/i/spiderConfig/add/wallSet",$scope.wallEntity).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 			$scope.wallEntity = {};
 			$scope.changeStorage();
 		})
@@ -760,7 +802,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		$scope.blowerEntity.coldStorageId = $scope.vm.choseStorage.id;
 		$http.post("/i/blower/insertBlower",$scope.blowerEntity).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 			$scope.blowerEntity = {};
 			$scope.changeStorage()
 		})
@@ -769,7 +813,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.addCompressGroup = function(){
 		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
 		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
-			alert(data.message);
+			if(data.status == -1){
+				alert(data.message);
+			}
 			$scope.compressGroupEntity = {};
 			$scope.changeRdc();
 		})
@@ -779,7 +825,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		if(confirm("确定删除?")){
 			url = '/i/coldStorage/deleteStorage?id=' + id;
 			$http.post(url).success(function(data,status,headers,config){
-				alert(data.message);
+				if(data.status == -1){
+					alert(data.message);
+				}
 				$scope.changeRdc();
 			});
 		}
@@ -789,7 +837,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		if(confirm("确定删除?")){
 			url = '/i/coldStorageDoor/deleteDoor?id=' + id;
 			$http.post(url).success(function(data,status,headers,config){
-				alert(data.message);
+				if(data.status == -1){
+					alert(data.message);
+				}
 				$scope.changeStorage();
 			});
 		}		
@@ -799,7 +849,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		if(confirm("确定删除?")){
 			url = '/i/compressorGroup/deleteCompressGroup?id=' + id;
 			$http.post(url).success(function(data,status,headers,config){
-				alert(data.message);
+				if(data.status == -1){
+					alert(data.message);
+				}
 				$scope.changeRdc();
 			});
 		}		
@@ -818,7 +870,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             rdcid:$scope.vm.choseRdc.id
         }
         $http.post("/i/spiderConfig/add/deviceObjectMapping", obj).then(function (resp) {
-            alert(resp.data.message)
+        	if(resp.data.status == -1){
+		    	alert(resp.data.message);
+		    }
             obj.id = resp.data.status;
             $scope.deviceObjectMapping.push(obj);
             $scope.tag.deviceid = '';
@@ -844,7 +898,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             $http.delete("/i/spiderConfig/del/deviceObjectMapping", {
                 params: {"id": item.id}
             }).then(function (resp) {
-                alert(resp.data.message);
+            	if(resp.data.status == -1){
+    		    	alert(resp.data.message);
+    		    }
                 var index =  arrayData.indexOf(item);
                 arrayData.splice(index, 1);
             })
@@ -947,7 +1003,9 @@ coldWeb.directive("ajaxTable", function ($http) {
 				    	params[scope.colums[i]] = obj[scope.colums[i]];
 					}
 					$http.post(updateUrl, params).then(function (resp) {
-						alert(resp.data.message);
+						if(resp.data.status == -1){
+					    	alert(resp.data.message);
+					    }
 					})
 				}
                 obj.editable = false;
@@ -962,7 +1020,9 @@ coldWeb.directive("ajaxTable", function ($http) {
 					$http.delete(deleteUrl,{
 						params:params
 					}).success(function(data,status,headers,config){
-						alert(data.message);
+						if(data.status == -1){
+							alert(data.message);
+						}
 						var i = scope.arrayObjects.indexOf(obj);
 						scope.arrayObjects.splice(i, 1);
 					});
