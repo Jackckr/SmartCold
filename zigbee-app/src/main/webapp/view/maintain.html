@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
+    <script type="text/javascript" src="../app/js/maintain.js" ></script>
 </head>
-<body>
+<body ng-app="app" ng-controller="maintain" ng-cloak>
     <!-- header -->
          <header class="one">
             <div class="area fl">
@@ -47,65 +49,11 @@
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature maintain">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-            	 <p class="actually">螺杆低温并联机组(2-120)</p>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩  5天</strong>
-            	 	<p>压缩机1距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩  3天7小时</strong>
-            	 	<p>压缩机2距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 8天10小时</strong>
-            	 	<p>压缩机3距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 100天 12小时 </strong>
-            	 	<p>压缩机4距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 3天 8小时 </strong>
-            	 	<p>压缩机5距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 95天 3小时 </strong>
-            	 	<p>压缩机6距下次定期保养</p>
-            	 </div>
-            </div>
-            <div class="swiper-slide">
-            	<p class="actually">活塞高温并联机组(4-35)</p>
-            	<div class="alarm_bg">
-            	 	<strong class="remain">还剩  15天</strong>
-            	 	<p>压缩机1距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩  21天7小时</strong>
-            	 	<p>压缩机2距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 6天10小时</strong>
-            	 	<p>压缩机3距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 365天 12小时 </strong>
-            	 	<p>压缩机4距下次定期保养</p>
-            	 </div>
-            </div>
-            <div class="swiper-slide">
-            	<p class="actually">活塞高温并联机组(3-35)</p>
-            	<div class="alarm_bg">
-            	 	<strong class="remain">还剩12天</strong>
-            	 	<p>压缩机1距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 4天7小时</strong>
-            	 	<p>压缩机2距下次定期保养</p>
-            	 </div>
-            	 <div class="alarm_bg">
-            	 	<strong class="remain">还剩 2天10小时</strong>
-            	 	<p>压缩机3距下次定期保养</p>
+            <div class="swiper-slide" ng-repeat="(key,value) in  compressorGroups">
+            	 <p class="actually">{{value.name}}</p>
+            	 <div class="alarm_bg" ng-repeat="obj in  value.compressors">
+            	 	<strong class="remain" oid="{{obj.id}}">{{aredayTime(obj.maintenancetime)}}</strong>
+            	 	<p>{{obj.name}}距离下次定期保养</p>
             	 </div>
             </div>
         </div>

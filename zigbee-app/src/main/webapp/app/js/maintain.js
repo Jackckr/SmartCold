@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('alarmLog', function ($scope, $location, $http) {
+app.controller('maintain', function ($scope, $location, $http) {
     $scope.user = window.user;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -36,18 +36,37 @@ app.controller('alarmLog', function ($scope, $location, $http) {
     });
 
     $scope.viewStorage = function (rdcId) {
-        //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
-            params: {
-                "rdcId": rdcId
-            }
-        }).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.alarmTotalCnt = data.length;
-                $scope.alarmMsgs = data;
-            }
-        });
+        $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(function (data) {
+            $scope.compressorGroups = data;
+            angular.forEach($scope.compressorGroups, function (item) {
+                $http.get(ER.coldroot + '/i/compressor/findBygroupId?groupId=' + item.id).success(function (data) {
+                    item.compressors = data;
+                })
+            })
+        })
     }
+
+    $scope.aredayTime = function (time) {
+        if (time == null || time == "") {
+            return "未设置保养信息";
+        }
+        var text = "还剩  ";
+        var date1 = new Date();
+        var date2 = new Date(time);
+        var date3 = date2.getTime() - date1.getTime();  //时间差的毫秒数
+        var days = Math.floor(date3 / (86400000));
+        var hours = Math.floor(date3 % (86400000) / (3600000));
+        if (days > 0) {
+            text += days + "天 ";
+        }
+        if (hours > 0) {
+            text += hours + "小时 ";
+        } else {
+            text = "已过保养期";
+        }
+        return text;
+    };
+
     $scope.searchRdcs = function (searchContent) {
         // 超管特殊处理
         if ($scope.user.roleid == 3) {
