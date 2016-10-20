@@ -31,6 +31,7 @@ import com.smartcold.bgzigbee.manage.dao.RdcAuthLogMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcUserMapper;
+import com.smartcold.bgzigbee.manage.dao.RdcWeightSetMapper;
 import com.smartcold.bgzigbee.manage.dao.RoleUserMapper;
 import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageHonorMapper;
@@ -47,6 +48,8 @@ import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
+import com.smartcold.bgzigbee.manage.entity.PowerSetEntity;
+import com.smartcold.bgzigbee.manage.entity.RDCWeightSetEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcAuthLogEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
@@ -74,6 +77,7 @@ public class RdcController {
 
 	@Autowired
 	private RdcExtMapper rdcExtDao;
+	
 
 	@Autowired
 	private StorageStructureTypeMapper storageStructureDao;

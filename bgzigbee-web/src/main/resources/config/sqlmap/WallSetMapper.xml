@@ -43,7 +43,6 @@
         UPDATE `wallset`
         SET
 	        `name` = #{name},
-	        `coldstorageid` = #{coldstorageid},
 	        `length` = #{length},
 	        `width` = #{width},
 	        `a` = #{a},
