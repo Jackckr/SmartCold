@@ -43,7 +43,10 @@ app.controller('maintain', function ($scope, $location, $http) {
                     item.compressors = data;
                 })
             })
-        })
+        });
+        $(".one").show();
+        $(".two").hide();
+        $('.searchTop').hide();
     }
 
     $scope.aredayTime = function (time) {
