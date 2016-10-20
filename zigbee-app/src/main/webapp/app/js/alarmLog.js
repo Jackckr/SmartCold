@@ -47,6 +47,9 @@ app.controller('alarmLog', function ($scope, $location, $http) {
                 $scope.alarmMsgs = data;
             }
         });
+        $(".one").show();
+        $(".two").hide();
+        $('.searchTop').hide();
     }
     $scope.searchRdcs = function (searchContent) {
         // 超管特殊处理

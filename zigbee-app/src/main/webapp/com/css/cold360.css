@@ -600,3 +600,21 @@ b{
 	color: #2b3046;
 	text-align: center;
 }
+.goTop{
+	width:2rem;
+	height: 2rem;
+	position: fixed;
+	right: 1rem;
+	bottom: 4rem;
+	cursor: pointer;
+	display: none;
+	text-align: center;
+	line-height: 2rem;
+	z-index: 10;
+	background: #438BCB;
+	border-radius:4px;
+}
+.goTop i{
+	color: #fff;
+	font-size: 2rem;	
+}

@@ -644,16 +644,15 @@ em{
 	position: relative;
 }
 .imgFl{
-	width: 5rem;
+	width: 3.5rem;
 	height: 3.5rem;
 	margin-right: .3rem;
-	overflow: hidden;
+	background-size:cover;
 }
 .imgFl img{
 	width:100%;
-	min-height: 100%;
-    object-fit: cover;
-    vertical-align: top;
+	/* min-height: 100%*/
+	height: auto; 
 }
 .newsTitle{
 	font-size: 0.72rem;

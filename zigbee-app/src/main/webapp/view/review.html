@@ -11,7 +11,7 @@
 	    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
 	    <script type="text/javascript" src="../com/js/common.js"></script>
 	</head>
-	<body>
+	<body style="background: #fff">
 		<!-- header -->
 		    <header>
 		    	
@@ -29,8 +29,14 @@
 	        	</div>
 		    </header>
 		<!-- header end-->
-		<section class="main codeMain">
-			<img src="../com/img/code.jpg"/>
+<!-- 		<section class="main codeMain"> -->
+			<section class="main">
+<!-- 			<img src="../com/img/code.jpg"/> -->
+			<ul class="listDad clearfix">
+				<li class="fl" style="color:#666">最近查询</li>
+			</ul>
+			<p style="font-size: .75rem" class="delete">暂无查询记录</p>
+
 		</section>
 		<script>
 			function inputFocus (ops) {
@@ -52,6 +58,9 @@
 				})
 				$(".search i").click(function(event) {
 					$(".searchList").hide();
+					if($('.search input').val() != "" || $('.search input').val() != undefined){
+						alert('抱歉，没有查询到相关信息');
+					}
 					event.stopPropagation();
 				});
 			});
