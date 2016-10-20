@@ -648,6 +648,8 @@ em{
 	height: 3.5rem;
 	margin-right: .3rem;
 	background-size:cover;
+	overflow: hidden;
+	/* border:1px solid #eee */
 }
 .imgFl img{
 	width:100%;

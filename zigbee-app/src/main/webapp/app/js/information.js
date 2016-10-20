@@ -10,6 +10,7 @@ var cundex=0,maxSize=10, isLoadRB=false;
 var lilist=[{categoryID:1},{categoryID:2},{categoryID:3}];
 var pageinf=[{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1}];
 function gethtml(news){
+//	var news=['<li><a href="newsdetail.html?id='+news.id+'"class="clearfix"><div class="imgFl fl" style="background:url('+news.coverpic+') center no-repeat;background-size:cover;"></div> <div class="newsTxt"><p class="newsTitle">'+news.title+'</p><p class="newsDate">'+news.posttime+'</p></div></a></li>'];
 	  var news=['<li><a href="newsdetail.html?id='+news.id+'"class="clearfix"><div class="imgFl fl"><img  src="'+news.coverpic+'"></div> <div class="newsTxt"><p class="newsTitle">'+news.title+'</p><p class="newsDate">'+news.posttime+'</p></div></a></li>'];
 	  return news.join("");
 }
