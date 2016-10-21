@@ -95,24 +95,22 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.saveRdcWeight = function(){
 		var weight = $scope.weight;
 		if(weight.factor1 && weight.factor2 && weight.factor3 && weight.transport1 && weight.transport2
-				&& weight.transport3 && weight.crew1 && weight.crew2 && weight.crew3){
+				&&  weight.crew1 && weight.crew2 && weight.crew3){
 			$http.post('/i/spiderConfig/addRdcWeight',{
+				id:weight.id,
 				rdcid:$scope.vm.choseRdc.id,
 				factor1:weight.factor1,
 				factor2:weight.factor2,
 				factor3:weight.factor3,
+				factor4:weight.factor4,
 				transport1:weight.transport1,
 				transport2:weight.transport2,
-				transport3:weight.transport3,
+				transport3:0,
 				crew1:weight.crew1,
 				crew2:weight.crew2,
 				crew3:weight.crew3}).success(function(data){
-					if (data !=null && data!="") {
-	                    $scope.weightdisplay.push(data);
-	                    $scope.weight = {};
-	                }
-					else{
-						alert("添加失败");
+					 if(data.status == -1){
+							alert(data.message);
 					}
 				});
 		}else{
@@ -272,11 +270,11 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		// 	$scope.compressGroupItem.push($scope.handItem);
 		// })
        $http.get("/i/spiderConfig/findRdcWeight?rdcid="+$scope.vm.choseRdc.id).success(function(data){
-    	   $scope.weightdisplay = [];
-    	   if(data!=""&&data!=null)
-    		   $scope.weightdisplay.push(data);
-    	   else
-    		   $scope.weightdisplay = [];
+    	   if(data!=""&&data!=null){
+    		   $scope.weight=data;
+    	   } else{
+    		   $scope.weight={}; 
+    	   }
 		});
 
         $http.get('/i/spiderConfig/find/evaporativeSet?rdcId='+$scope.vm.choseRdc.id).then(function (resp) {

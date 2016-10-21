@@ -16,6 +16,7 @@ import com.smartcold.bgzigbee.manage.dao.EvaporativeWaterSetMapping;
 import com.smartcold.bgzigbee.manage.dao.ForkLiftSetMapping;
 import com.smartcold.bgzigbee.manage.dao.PlatformDoorSetMapping;
 import com.smartcold.bgzigbee.manage.dao.PowerSetMapping;
+import com.smartcold.bgzigbee.manage.dao.PressurePlatformSetMapping;
 import com.smartcold.bgzigbee.manage.dao.RdcWeightSetMapper;
 import com.smartcold.bgzigbee.manage.dao.SetTableMapper;
 import com.smartcold.bgzigbee.manage.dao.WallSetMapper;
@@ -23,6 +24,7 @@ import com.smartcold.bgzigbee.manage.dao.WindScreenSetMapping;
 import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UpdateMappingDTO;
+import com.smartcold.bgzigbee.manage.entity.ChargingPileSetEntity;
 import com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity;
 import com.smartcold.bgzigbee.manage.entity.DeviceObjectMappingEntity;
 import com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity;
@@ -31,6 +33,7 @@ import com.smartcold.bgzigbee.manage.entity.EvaporativeWaterSetEntity;
 import com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PowerSetEntity;
+import com.smartcold.bgzigbee.manage.entity.PressurePlatformSetEntity;
 import com.smartcold.bgzigbee.manage.entity.RDCWeightSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WallSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity;
@@ -88,10 +91,14 @@ public class SpiderConfigController {
 	@RequestMapping(value = "/addRdcWeight", method = RequestMethod.POST)
 	public Object addRdcWeight(@RequestBody RDCWeightSetEntity rdcWeightSetEntity) {
 		try {
-			rdcWeightSetMapper.insertRdcWeight(rdcWeightSetEntity);
-			return findRdcWeight(rdcWeightSetEntity.getId());
+			if(rdcWeightSetEntity.getId()==0){
+				rdcWeightSetMapper.insertRdcWeight(rdcWeightSetEntity);
+			}else{
+				rdcWeightSetMapper.updateWeight(rdcWeightSetEntity);
+			}
+			return new ResultDto(0, "保存成功");
 		} catch (Exception e) {
-			return new ResultDto(-1, "添加失败");
+			return new ResultDto(-1, "保存失败");
 		}
 	}
 	@RequestMapping("/findRdcWeight")
@@ -122,7 +129,50 @@ public class SpiderConfigController {
 		}
 		return new ResultDto(-1, "添加失败");
 	}
-
+    //删除液压平台
+	@RequestMapping(value = "/delete/deletePressureplfmById", method = RequestMethod.DELETE)
+	public Object deletePressureplfmById(Integer id) {
+		if(id==null)return new ResultDto(-1, "删除失败！");
+		if (setTableMapper.deleteById("pressureplatformset", id)) {
+			return new ResultDto(0, "删除成功");
+		}
+		return new ResultDto(-1, "删除失败");
+	}
+	 //更新液压平台
+	@RequestMapping(value = "/update/updatePressureplfmSet", method = RequestMethod.POST)
+	public Object updatePressureplfmSet(@RequestBody PressurePlatformSetEntity obj) {
+		try {
+			if(setTableMapper.updateObj("pressureplatformset", obj.getId(),obj.getName(),obj.getPower())){
+				return new ResultDto(0, "更新成功");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResultDto(-1, "更新失败");
+	}
+	 //删除充电桩
+	@RequestMapping(value = "/delete/deleteChargingpilesetById", method = RequestMethod.DELETE)
+	public Object deleteChargingpilesetById(Integer id) {
+		if(id==null)return new ResultDto(-1, "删除失败！");
+		if (setTableMapper.deleteById("chargingpileset", id)) {
+			return new ResultDto(0, "删除成功");
+		}
+		return new ResultDto(-1, "删除失败");
+	}
+	//更新充电桩
+	@RequestMapping(value = "/update/updateChargingpileset", method = RequestMethod.POST)
+	public Object updateChargingpileset(@RequestBody ChargingPileSetEntity obj) {
+		try {
+			if(setTableMapper.updateObj("chargingpileset", obj.getId(),obj.getName(),obj.getPower())){
+				return new ResultDto(0, "更新成功");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResultDto(-1, "更新失败");
+	}
+	
+	
 	@RequestMapping(value = "/delete/id", method = RequestMethod.DELETE)
 	public Object deleteById(String table, int id) {
 		if (!(table.equals("deviceobjectmapping") || SetTables.checkTable(table))) {

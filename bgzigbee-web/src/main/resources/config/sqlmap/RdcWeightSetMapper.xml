@@ -41,6 +41,21 @@
 	  );
 	  
 	</insert>
+<update id="updateWeight" parameterType="com.smartcold.bgzigbee.manage.entity.RDCWeightSetEntity" >
+  UPDATE `weightset` set
+     `rdcid`          =       #{rdcid},
+	  `factor1`       =     	  #{factor1},
+	  `factor2`       =     	  #{factor2},
+	  `factor3`       =     	  #{factor3},
+	  `factor4`       =     	  #{factor4},
+	  `transport1`    =     	  #{transport1},
+	  `transport2`    =     	  #{transport2},
+	  `transport3`   =     	  #{transport3},
+	  `crew1`         =     	  #{crew1},
+	  `crew2`         =     	  #{crew2},
+	  `crew3`          =     	  #{crew3}
+		WHERE `id` = #{id}
+</update>
 
     <delete id="deleteRdcWeight" parameterType="map">
       DELETE FROM `weightset`

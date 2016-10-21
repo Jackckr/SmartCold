@@ -10,6 +10,8 @@ public class ChargingPileSetEntity {
 	  
 	private int rdcid;
 	  
+	private double power;
+	
 	private String mapping;
 	  
 	private Date addTime;
@@ -36,6 +38,14 @@ public class ChargingPileSetEntity {
 
 	public void setRdcid(int rdcid) {
 		this.rdcid = rdcid;
+	}
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
 	}
 
 	public String getMapping() {
