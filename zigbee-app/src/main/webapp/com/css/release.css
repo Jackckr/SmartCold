@@ -644,16 +644,17 @@ em{
 	position: relative;
 }
 .imgFl{
-	width: 5rem;
+	width: 3.5rem;
 	height: 3.5rem;
 	margin-right: .3rem;
+	background-size:cover;
 	overflow: hidden;
+	/* border:1px solid #eee */
 }
 .imgFl img{
 	width:100%;
-	min-height: 100%;
-    object-fit: cover;
-    vertical-align: top;
+	/* min-height: 100%*/
+	height: auto; 
 }
 .newsTitle{
 	font-size: 0.72rem;
@@ -673,7 +674,7 @@ em{
 .newsDate{
 	position: absolute;
 	bottom: 0;
-	left: 5.3rem;
+	left: 3.8rem;
 	font-size:.7rem;
 	color:#999;
 }

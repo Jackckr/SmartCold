@@ -63,6 +63,14 @@
         <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
         <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
   </div>
+  <!--rdc列表-------------------------------------------------->
+	 <section class="searchTop">
+	 	<ul class="rdcList">
+	 		<li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+	 	</ul>
+	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
+	 </section>
+	 <!--rdc列表----------------------------------------------->
     <ul class="footer">
         <li>           
             <a href="cold360.html">

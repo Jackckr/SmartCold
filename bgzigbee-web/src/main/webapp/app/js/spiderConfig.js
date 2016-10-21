@@ -61,7 +61,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.forkliftKeys = [];
 	$scope.coldstoragelightKeys = [];
 	$scope.circulatingpumpKeys = [];
-
+	$scope.weightdisplay = [];
 	$scope.vm = {};
 	$scope.vm.choseStorage = {};
 	$scope.vm.choseStorage.mapping = [];
@@ -87,8 +87,58 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			}
 		}
 		return 'not correct type';
-	}
+	};
 	$scope.newKey = {};
+	$scope.weight = {};
+	
+	
+	$scope.saveRdcWeight = function(){
+		var weight = $scope.weight;
+		if(weight.factor1 && weight.factor2 && weight.factor3 && weight.transport1 && weight.transport2
+				&& weight.transport3 && weight.crew1 && weight.crew2 && weight.crew3){
+			$http.post('/i/spiderConfig/addRdcWeight',{
+				rdcid:$scope.vm.choseRdc.id,
+				factor1:weight.factor1,
+				factor2:weight.factor2,
+				factor3:weight.factor3,
+				transport1:weight.transport1,
+				transport2:weight.transport2,
+				transport3:weight.transport3,
+				crew1:weight.crew1,
+				crew2:weight.crew2,
+				crew3:weight.crew3}).success(function(data){
+					if (data !=null && data!="") {
+	                    $scope.weightdisplay.push(data);
+	                    $scope.weight = {};
+	                }
+					else{
+						alert("添加失败");
+					}
+				});
+		}else{
+			alert("输入不完整");
+		}
+	}
+	
+	$scope.delRdcWeight = function(item){
+		var flag = confirm("确认删除？");
+		if (flag) {
+		var req = {
+			method:'delete',
+			url:"/i/spiderConfig/delRdcWeight?id="+item.id
+		}
+		$http(req).then(function(resp){
+		    if (resp.status > -1) {
+		    	var index =  $scope.weightdisplay.indexOf(item);
+		    	$scope.weightdisplay.splice(index, 1);
+		    }
+		    if(resp.status == -1){
+					alert(data.message);
+			}
+		})
+		}
+	}
+	
 	$scope.saveNewKey = function(){
 		var newKey = $scope.newKey;
 		if(newKey.key && newKey.type && newKey.desc){
@@ -221,7 +271,13 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		// 	$scope.vm.choseCompressGroupItemKey = $scope.compressGroupItemKeys[0];
 		// 	$scope.compressGroupItem.push($scope.handItem);
 		// })
-
+       $http.get("/i/spiderConfig/findRdcWeight?rdcid="+$scope.vm.choseRdc.id).success(function(data){
+    	   $scope.weightdisplay = [];
+    	   if(data!=""&&data!=null)
+    		   $scope.weightdisplay.push(data);
+    	   else
+    		   $scope.weightdisplay = [];
+		});
 
         $http.get('/i/spiderConfig/find/evaporativeSet?rdcId='+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.evaporativeSets = resp.data;

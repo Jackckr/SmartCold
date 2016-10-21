@@ -16,6 +16,7 @@ import com.smartcold.bgzigbee.manage.dao.EvaporativeWaterSetMapping;
 import com.smartcold.bgzigbee.manage.dao.ForkLiftSetMapping;
 import com.smartcold.bgzigbee.manage.dao.PlatformDoorSetMapping;
 import com.smartcold.bgzigbee.manage.dao.PowerSetMapping;
+import com.smartcold.bgzigbee.manage.dao.RdcWeightSetMapper;
 import com.smartcold.bgzigbee.manage.dao.SetTableMapper;
 import com.smartcold.bgzigbee.manage.dao.WallSetMapper;
 import com.smartcold.bgzigbee.manage.dao.WindScreenSetMapping;
@@ -30,6 +31,7 @@ import com.smartcold.bgzigbee.manage.entity.EvaporativeWaterSetEntity;
 import com.smartcold.bgzigbee.manage.entity.ForkLiftSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PowerSetEntity;
+import com.smartcold.bgzigbee.manage.entity.RDCWeightSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WallSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SetTables;
@@ -78,10 +80,37 @@ public class SpiderConfigController {
 
 	@Autowired
 	private WallSetMapper wallSetDao;
-
+	@Autowired
+	private RdcWeightSetMapper rdcWeightSetMapper;
 	@Autowired
 	private RemoteService remoteService;
 
+	@RequestMapping(value = "/addRdcWeight", method = RequestMethod.POST)
+	public Object addRdcWeight(@RequestBody RDCWeightSetEntity rdcWeightSetEntity) {
+		try {
+			rdcWeightSetMapper.insertRdcWeight(rdcWeightSetEntity);
+			return findRdcWeight(rdcWeightSetEntity.getId());
+		} catch (Exception e) {
+			return new ResultDto(-1, "添加失败");
+		}
+	}
+	@RequestMapping("/findRdcWeight")
+	public Object findRdcWeight(int rdcid) {
+		RDCWeightSetEntity rdcWeightSetEntity = rdcWeightSetMapper.findRdcWeightSetByRdcId(rdcid);
+		System.out.println("---");
+		return rdcWeightSetEntity;
+	}
+	
+	@RequestMapping(value = "/delRdcWeight", method = RequestMethod.DELETE)
+	public Object delRdcWeight(int id) {
+		try {
+			rdcWeightSetMapper.deleteRdcWeight(id);
+			return new ResultDto(0, "删除成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "删除失败");
+		}
+	}
+	
 	@RequestMapping("/update/mapping")
 	public Object updateSetTableMapping(@RequestBody UpdateMappingDTO updateMappingDTO) {
 		if (updateMappingDTO.getTable().equals("rdc") || SetTables.checkTable(updateMappingDTO.getTable())) {
@@ -311,11 +340,21 @@ public class SpiderConfigController {
 		return new ResultDto(0, "添加成功");
 	}
 
+	@RequestMapping(value = "/delete/wallSet", method = RequestMethod.DELETE)
+	public Object deletewallSet(int id) {
+		try {
+			wallSetDao.delete(id);
+			return new ResultDto(0, "删除成功");
+		} catch (Exception e) {
+			return new ResultDto(-1, "删除失败");
+		}
+	}
+	
 	@RequestMapping(value = "/update/wallSet", method = RequestMethod.POST)
 	public Object updateWallSet(@RequestBody WallSetEntity wallSet) {
 		wallSetDao.update(wallSet);
 
-		return new ResultDto(0, "添加成功");
+		return new ResultDto(0, "更新成功");
 	}
 
 	@RequestMapping(value = "/find/wallSet", method = RequestMethod.GET)

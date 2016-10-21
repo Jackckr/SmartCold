@@ -30,11 +30,11 @@
     		<input id="searchdiv" type="text" placeholder="请输入搜索内容" />
     		<i id="searchdivi" class="iconfont">&#xe62f;</i>
     	</div>
-    	<div class="barCode">
+    	<!-- <div class="barCode">
     		<a href="view/review.html">
     			<i class="iconfont">&#xe63f;</i>
     		</a>
-    	</div>
+    	</div> -->
     </div>
 <!-- header end-->
 <!-- session -->
@@ -60,7 +60,9 @@
 					mainCell:".bd ul", 
 					effect:"leftLoop", 
 					autoPlay:true,//自动播放
-					autoPage:true //自动分页
+					autoPage:true,//自动分页
+					delayTime:2000,
+					interTime:4000
 					//switchLoad:"_src" //切换加载，真实图片路径为"_src" 
 				});
 			</script>

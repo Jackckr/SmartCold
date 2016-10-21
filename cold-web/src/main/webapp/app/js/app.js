@@ -443,7 +443,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'runningAnalysis',
         templateUrl: 'app/template/runningAnalysis.html'
     }).state('goodsYzAnalysis',{//运管分析  -货物因子分析--jhy
-    	url: '/goodsYzAnalysis',
+    	url: '/goodsYzAnalysis/{rdcId}',
     	controller: 'goodsYzAnalysis',
         templateUrl: 'app/template/goodsYzAnalysis.html'
     }).state('cpswaterCost',{//

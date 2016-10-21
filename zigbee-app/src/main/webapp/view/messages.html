@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script src="../bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="../app/js/message.js"></script>
+<!--     <script type="text/javascript" src="../app/js/message.js"></script> -->
 	</head>
 	<body  ng-app="app" ng-controller="ctrl">
 		<!-- header -->
@@ -27,18 +27,20 @@
     <!-- header end-->
 		<div class="body">
             <ul id="ul_msgsL_list"></ul>
-                <!--<div class="messageList clearfix"> 
-                <div class="messageImg fl">
-                    <i class="iconfont">&#xe73b;</i>
-                </div>
-                <div class="messageInfo">
-                    <strong>链库R管家</strong>
-                    <div class="time fr">
-                        2016/8/24&nbsp;&nbsp;15:12
-                    </div>
-                    <p class="detail omg">您有一笔订单正在进行中，点击查看详情！</p>
-                </div> 
-            </div>-->
+            <!-- 暂时解开10.20 -->
+                <div class="messageList clearfix" onclick="location.href='messagesDetail.html'"> 
+	                <div class="messageImg fl">
+	                    <i class="iconfont">&#xe73b;</i>
+	                </div>
+	                <div class="messageInfo">
+	                    <strong>链库R管家</strong>
+	                    <div class="time fr">
+	                        2016/10/20&nbsp;&nbsp;11:12
+	                    </div>
+	                    <p class="detail omg">敬请关注“第十届中国冷链产业大会”，期待这一天，链库将与您见面</p>
+	                </div> 
+	            </div>
+	            <!-- 暂时解开10.20 -->
         </div>
 		<!--消息列表无数据时显示下面图片-->
 		<div class="nodata">
@@ -63,7 +65,8 @@
             <a href="messages.html">
                 <i class="iconfont">&#xe71c;</i>
                 <p class="info">消息</p>
-                 <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=''" class="countNum">{{msgTotalNum}}</span>
+                <!-- 暂时隐藏 -->
+                 <!-- <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=''" class="countNum">{{msgTotalNum}}</span> -->
             </a>
         </li>
         <li>            
