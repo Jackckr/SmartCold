@@ -80,9 +80,9 @@ public class RdcController {
 	
 	
 	//====================================================以下提供测试API====================================================
-	@RequestMapping(value = "/checkDataStatus")
+	@RequestMapping(value = "/initReckonQuantity")
 	@ResponseBody
-	public ResponseData<String> checkDataStatus(HttpServletRequest request) {
+	public ResponseData<String> initReckonQuantity(HttpServletRequest request) {
 		this.msgService.initReckonQuantity();
 		return ResponseData.newSuccess("初始化30日Q成功！");
 	}
