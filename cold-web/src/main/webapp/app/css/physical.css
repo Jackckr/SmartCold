@@ -154,7 +154,7 @@
 }
 
 .haveDevice .circle.fontGreen {
-	background: url(../../assets/img/green_plus.png) no-repeat center;
+	background: url(../../assets/img/green_circle.png) no-repeat center;
 	background-size: cover;
 }
 

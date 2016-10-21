@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Deprecated
 public enum QuantityType implements Serializable{
-
+	GoodsHeat(1,"GoodsHeat","Q货"),
 	QFrost(4, "QFrost", "Q霜"),
 	Qblower(4, "Qblower", "Q风"),
 	Qctdoor(2, "Qctdoor", "Q门"),//2     换气

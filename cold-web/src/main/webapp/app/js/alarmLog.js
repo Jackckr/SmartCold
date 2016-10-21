@@ -4,7 +4,8 @@
  * 计算压缩机剩余时间
  */
 coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
-	 $(".mainHeight").height( $(".content-wrapper").height());
+	$("#alarmLog").DataTable(); 
+	$(".mainHeight").height( $(".content-wrapper").height());
 	 $scope.aredayTime = function(time) {
 		   if(time==null||time==""){ return "未设置保养信息";}
 		    var text="还剩  ";
