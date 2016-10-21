@@ -7,8 +7,13 @@ package com.smartcold.manage.cold.service;
  *
  */
 public interface MsgService {
+	 /**
+	 * 
+	 */
+	  public void reckonQuantity();
       /**
        * 初始化30日数据
        */
 	  public void initReckonQuantity() ;
+	  
 }

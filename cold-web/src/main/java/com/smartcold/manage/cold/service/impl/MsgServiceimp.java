@@ -127,7 +127,7 @@ public class MsgServiceimp implements MsgService {
 	 * Task:计算热量
 	 */
 	@Scheduled(cron = "0 30 3 * * ?")
-	private void reckonQuantity() {
+	public void reckonQuantity() {
 	   boolean taskStatus = quantityMapper.updateTaskStatus(3);
 		if(!taskStatus){return ;}
 		addextMsg("reckonQuantity",3, null);//记录日志
