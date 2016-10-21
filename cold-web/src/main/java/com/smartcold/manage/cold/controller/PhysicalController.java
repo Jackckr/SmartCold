@@ -175,6 +175,6 @@ public class PhysicalController {
 	 * GoodsHeat
 	 */
 	private int getColdStorageScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
-		return (int) Math.abs(45+obj.getColdStorageID()*2-obj.getTempdiff());
+		return (int) Math.abs(100-45-obj.getColdStorageID()*2-obj.getTempdiff());
 	}
 }
