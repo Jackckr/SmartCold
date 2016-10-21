@@ -4,7 +4,7 @@
  * 计算压缩机剩余时间
  */
 coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
-	$("#alarmLog").DataTable(); 
+	
 	$(".mainHeight").height( $(".content-wrapper").height());
 	 $scope.aredayTime = function(time) {
 		   if(time==null||time==""){ return "未设置保养信息";}
@@ -25,6 +25,7 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
  */
 coldWeb.controller('alarmLog', function( $scope, $http) {
 	 //根据rdcid查询该rdc的报警信息
+		$("#alarmLog").DataTable(); 
         $http.get('/i/warlog/findWarningLogsByRdcID', {
             params: {
                 "rdcId": window.sessionStorage.smrdcId
