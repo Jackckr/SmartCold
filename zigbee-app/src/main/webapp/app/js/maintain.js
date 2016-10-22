@@ -16,6 +16,16 @@ app.controller('maintain', function ($scope, $location, $http) {
     }
     var rootRdcId = $.getUrlParam('storageID');
 
+    //根据rdcid查询该rdc的报警信息
+    $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
+        "rdcId": rootRdcId
+    }
+    }).success(function (data) {
+        if (data && data.length > 0) {
+            $scope.alarmTotalCnt = data.length;
+        }
+    });
+
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
