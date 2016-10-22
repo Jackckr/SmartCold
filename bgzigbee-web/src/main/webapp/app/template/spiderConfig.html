@@ -465,29 +465,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-lg-4">压缩机维护时间:</label>
+                                    <label class="control-label col-lg-4">压缩机维护时间(H):</label>
                                     <div class="col-lg-8">
-                                        <!-- <input class="form-control" placeholder="格式yyyy-MM-dd HH:mm:ss" ng-model="compressorSet.maintenancetime" /> -->
-						                <div class="input-group date form_datetime col-lg-12" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
-						                    <input id="compressordate" value="" placeholder="请选择时间" class="form-control" size="16" type="text">
-						                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-											<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-						                </div>
-										<input type="hidden" id="dtp_input1" value="" /><br/>
+                                         <input class="form-control" placeholder="压缩机运行时间：单位小时" ng-model="compressorSet.maintenancetime" /> 
                                     </div>
                                 </div>
-                                <script type="text/javascript">
-	                                $('.form_datetime').datetimepicker({
-	                                	format: 'yyyy-mm-dd hh:ii:ss',
-	                                    weekStart: 1,
-	                                    todayBtn:  1,
-	                            		autoclose: 1,
-	                            		todayHighlight: 1,
-	                            		startView: 2,
-	                            		forceParse: 0,
-	                                    showMeridian: 1
-	                                });
-								</script>
+                               
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompress()" ng-disabled="!compressorSet.name">添加</a>
                                 </div>
@@ -499,9 +482,10 @@
                                 <label>(压缩机类型：1：螺杆,2：活塞)</label>
                                 <ajax-table array-objects="compressorSets"
                                             delete-url="/i/compressorGroup/deleteCompressor"
-                                            update-url="/i/compressorGroup/updateCompressor"
-                                            colums-th="名字,匹数,水耗系数,类型,维护时间"
-                                            colums="name,power,waterRatio,type,maintenancetime"></ajax-table>
+                                            update-url="/i/compressorGroup/updateCompressor" 
+                                            resttable-url="/i/compressorGroup/restlastMaintainTime" 
+                                            colums-th="名字,匹数,水耗系数,类型,维护时间,最后保养时间"
+                                            colums="name,power,waterRatio,type,maintenancetime,lastMaintainTime"></ajax-table>
                             </div>
                         </form>
                         <!--风幕机-->

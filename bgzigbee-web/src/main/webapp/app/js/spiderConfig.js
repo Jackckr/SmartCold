@@ -393,7 +393,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			.then(function (resp) {
 				$scope.compressorSets = resp.data;
 				angular.forEach($scope.compressorSets,function(item){
-					item.maintenancetime = item.maintenancetime?baseTools.formatTime(item.maintenancetime):item.maintenancetime
+					item.resttable=true;
+					item.lastMaintainTime = item.lastMaintainTime?baseTools.formatTime(item.lastMaintainTime):item.lastMaintainTime
 				})
                 angular.forEach($scope.compressorSets, function (item,index) {
                     $scope.compressorSets[index].mapping = JSON.parse($scope.compressorSets[index].mapping);
@@ -418,7 +419,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		var object = $scope.compressorSet;
 		if($scope.vm.choseCompressGroup==undefined){alert("请设置压缩机组对象！");return;}
 		if($scope.vm.compressorType==undefined){alert("请选择压缩机类型系数！");return;}
-		object.maintenancetime = $('#compressordate').val();
 		object.compressorgroupid=$scope.vm.choseCompressGroup.id;
 		object.type = $scope.vm.compressorType.type;
 		$http.post("/i/compressorGroup/saveCompressor", object).then(function (resp) {
@@ -1031,7 +1031,7 @@ coldWeb.directive("mappingTable", function ($http) {
  *  colums-th: table中的th，csv格式，与colums对应
  *
  */
-coldWeb.directive("ajaxTable", function ($http) {
+coldWeb.directive("ajaxTable", function ($http,baseTools) {
 	var defaults = {
 		deleteUrl : '/i/spiderConfig/delete/id'
 	}
@@ -1047,6 +1047,7 @@ coldWeb.directive("ajaxTable", function ($http) {
 
 			var updateUrl = attrs.updateUrl;
 			var deleteUrl = attrs.deleteUrl?attrs.deleteUrl:defaults.deleteUrl;
+			var resttableurl = attrs.resttableUrl;
 			var table = attrs.table;
 
             scope.update = function (obj) {
@@ -1081,6 +1082,15 @@ coldWeb.directive("ajaxTable", function ($http) {
 						scope.arrayObjects.splice(i, 1);
 					});
 				}
+            }
+            scope.resttable = function (obj) {
+            	$http.post(resttableurl,{id:obj.id}).then(function (resp) {
+					if(resp.data.status == -1){
+				    	alert(resp.data.message);
+				    }else{
+				    	obj.lastMaintainTime=baseTools.formatTime(new Date());
+				    }
+			});
             }
         }
     }

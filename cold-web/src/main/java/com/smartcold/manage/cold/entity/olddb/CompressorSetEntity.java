@@ -21,33 +21,11 @@ public class CompressorSetEntity {
 
 	private String mapping;
 
-	private Date maintenancetime;//压缩机维护时间
+	private Date lastMaintainTime;//最后保养时间
+	
+	private double maintenancetime;//压缩机维护时间
 	
 	private Date addTime;
-
-	public float getHighTemp() {
-		return highTemp;
-	}
-
-	public void setHighTemp(float highTemp) {
-		this.highTemp = highTemp;
-	}
-
-	public float getLowTemp() {
-		return lowTemp;
-	}
-
-	public void setLowTemp(float lowTemp) {
-		this.lowTemp = lowTemp;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
 
 	public int getId() {
 		return id;
@@ -89,6 +67,30 @@ public class CompressorSetEntity {
 		this.waterRatio = waterRatio;
 	}
 
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public float getHighTemp() {
+		return highTemp;
+	}
+
+	public void setHighTemp(float highTemp) {
+		this.highTemp = highTemp;
+	}
+
+	public float getLowTemp() {
+		return lowTemp;
+	}
+
+	public void setLowTemp(float lowTemp) {
+		this.lowTemp = lowTemp;
+	}
+
 	public String getMapping() {
 		return mapping;
 	}
@@ -97,11 +99,19 @@ public class CompressorSetEntity {
 		this.mapping = mapping;
 	}
 
-	public Date getMaintenancetime() {
+	public Date getLastMaintainTime() {
+		return lastMaintainTime;
+	}
+
+	public void setLastMaintainTime(Date lastMaintainTime) {
+		this.lastMaintainTime = lastMaintainTime;
+	}
+
+	public double getMaintenancetime() {
 		return maintenancetime;
 	}
 
-	public void setMaintenancetime(Date maintenancetime) {
+	public void setMaintenancetime(double maintenancetime) {
 		this.maintenancetime = maintenancetime;
 	}
 
@@ -112,5 +122,5 @@ public class CompressorSetEntity {
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
 	}
-
+	
 }
