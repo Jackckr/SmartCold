@@ -362,7 +362,7 @@ public class MsgServiceimp implements MsgService {
 						if (SetUtil.isnotNullList(blowersisdata)) {
 							for (ColdStorageAnalysisEntity clsis : blowersisdata) {
 								double qfrost = tempMap.get(clsis.getOid()) * clsis.getValue();
-								sis = new ColdStorageAnalysisEntity(4, clsis.getOid(), "QFrost", qfrost, dateTime);
+								sis = new ColdStorageAnalysisEntity(1, clsis.getOid(), "QFrost", qfrost, dateTime);
 								sisList.add(sis);
 							}
 						} 
@@ -402,7 +402,7 @@ public class MsgServiceimp implements MsgService {
 					if (SetUtil.isnotNullList(blowersisdata)) {
 						for (ColdStorageAnalysisEntity clsis : blowersisdata) {
 							double qfrost = tempMap.get(clsis.getOid()) * clsis.getValue();
-							sis = new ColdStorageAnalysisEntity(4, clsis.getOid(), "Qblower", qfrost, dateTime);
+							sis = new ColdStorageAnalysisEntity(1, clsis.getOid(), "Qblower", qfrost, dateTime);
 							sisList.add(sis);
 						}
 					} 
@@ -454,10 +454,10 @@ public class MsgServiceimp implements MsgService {
 							    	}
 							    	for (ColdStorageAnalysisEntity clsis : doorTotalTime) {
 							    		if(avgforkliftPower!=0){
-							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "QForklift", avgforkliftPower * clsis.getValue(), dateTime));
+							    			sisList.add(new ColdStorageAnalysisEntity(1, clsis.getOid(), "QForklift", avgforkliftPower * clsis.getValue(), dateTime));
 							    		}
 							    		if(avglightsetPower!=0){
-							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "Qlighting", avglightsetPower * clsis.getValue(), dateTime));
+							    			sisList.add(new ColdStorageAnalysisEntity(1, clsis.getOid(), "Qlighting", avglightsetPower * clsis.getValue(), dateTime));
 							    		}
 									 }
 							    }
@@ -489,7 +489,7 @@ public class MsgServiceimp implements MsgService {
 						    Float hn=	(Float) hashMap.get("hn");//换气次数
 						    Float hw=	(Float) hashMap.get("hw");//换气次数
 						    Double Q=0.675*cgvolume*vvalue*(hw-hn);//临时值
-							sisList.add(new ColdStorageAnalysisEntity(2, id, "Qctdoor", Q, dateTime));
+							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q, dateTime));
 					 }
 				 }
 				 if(SetUtil.isnotNullList(sisList)){
