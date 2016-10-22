@@ -14,7 +14,7 @@
 	
 	<!-- 检查是否有设备 -->
 	<select id="getCountBykey" parameterType="map" resultType="java.lang.Integer">
-		  SELECT  COUNT(*) FROM  ${table} where `oid`in (${oid}) and `key` =#{key} and `time` BETWEEN #{stTime} and #{edTime} GROUP BY mtime;  
+		  SELECT  COUNT(*) FROM  ${table} where `oid`in (${oid}) and `key` =#{key} and `time` BETWEEN #{stTime} and #{edTime} GROUP BY time;  
 	</select>
 	<select id="getCountBydevkey" parameterType="map" resultType="java.lang.Integer">
 		  select  COUNT(*)  FROM storagedatacollection where `deviceid`in (${deviceid}) and `key` =#{key} and `time` BETWEEN #{stTime} and #{edTime} GROUP BY mtime) as c
