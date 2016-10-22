@@ -10,11 +10,11 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	$('#reservationtime').daterangepicker({startDate:$scope.begin,endDate:$scope.end , timePicker: false, timePickerIncrement: 1, format: 'YYYY-MM-DD'});
 	//key
 	var typemode={
-			      type:[10,3,2,1,-1,4,-1,-1,-1],
+			      type:[10,3,2,1,1,4,-1,-1,-1],
 			      unit:[null,null,[1,60],[60,1,1,1],null,[3600,3600],null,null,null],//换算单位
 			      unite:["　(kW·h)","　(T)","","","","","","",""],
 			      title:["电量","水耗","冷库门","温度分析","热量","冷风机","系统效率","货物因子","制冷运行分析"],
-			      key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime','AvgTime';次数,时长(min),平均时长(min)","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)","货物热量,化霜热量,叉车热量,照明热量,保温热量,冷风机风扇热量,开门热量;GoodsHeat,QFrost,QForklift,Qlighting,WallHeat,Qblower,Qctdoor","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)","","",""] 
+			      key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime','AvgTime';次数,时长(min),平均时长(min)","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)","'GoodsHeat','QFrost','QForklift','Qlighting','WallHeat','Qblower','Qctdoor';Q货,Q霜,Q叉,Q照,Q保,Q风,Q门","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)","","",""] 
 	};
     function gettbcltit(value,cl){//获取标题1
 	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';
@@ -36,7 +36,7 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
     	case 1:data= $rootScope.compressorGroups;break;//压缩机组 -> 水耗->ok
     	case 2:data=$scope.coldstoragedoor; break;//冷库门->开门
     	case 3:data=$rootScope.mystorages; break;//冷库->温度分析
-    	case 4:data=null; break;//冷库->热　　量
+    	case 4:data=$rootScope.mystorages; break;//冷库->热　　量
     	case 5:data=$scope.StorageBlower; break;//blower->冷风机
     	case 6:data=null; break;//系统效率
     	case 7:data=null; break;//货物因子

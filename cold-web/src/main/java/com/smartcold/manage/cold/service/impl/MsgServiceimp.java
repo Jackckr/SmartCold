@@ -479,7 +479,7 @@ public class MsgServiceimp implements MsgService {
 	
 	/**
 	 * 7 Q门=0.675*(Wq*Lq*Hq）*n*（Hw-Hn）
-	 * 1:SELECT `RDCID` rdcid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY rdcid;
+	 * 1:见数据库
 	 * 
 	 */
 	private void setQctdoor(String time, Date dateTime,String startTime,String endTime) {
