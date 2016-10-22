@@ -444,7 +444,7 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 		                },
 		                calculable : true,
 		                legend: {
-		                    data:['开门时长','开门次数']
+		                    data:['运行时长','运行次数']
 		                },
 		                xAxis : [
 		                    {
@@ -455,7 +455,7 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 		                yAxis : [
 		                    {
 		                        type : 'value',
-		                        name : '开门时长',
+		                        name : '运行时长',
 		                        max : 1500,
 		                        axisLabel : {
 		                            formatter: '{value} m'
@@ -463,7 +463,7 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 		                    },
 		                    {
 		                        type : 'value',
-		                        name : '开门次数',
+		                        name : '运行次数',
 		                        axisLabel : {
 		                            formatter: '{value}'
 		                        }
@@ -471,12 +471,12 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 		                ],
 		                series : [
 		                    {
-		                        name:'开门时长',
+		                        name:'运行时长',
 		                        type:'bar',
 		                        data:yData1
 		                    },
 		                    {
-		                        name:'开门次数',
+		                        name:'运行次数',
 		                        type:'line',
 		                        yAxisIndex: 1,
 		                        data:yData2
@@ -485,7 +485,7 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 		            };
 					chart1.setOption(option)
 					chart2.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData3, "平均开门时间", "m", "m", "bar"))
+							xData, yData3, "平均运行时间", "m", "m", "bar"))
 				},0)
 			})
 		})
