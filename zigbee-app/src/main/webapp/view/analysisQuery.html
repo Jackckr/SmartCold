@@ -4,132 +4,229 @@
     <meta charset="UTF-8">
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>分析--制冷</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-    <link rel="stylesheet" href="../com/css/swiper.min.css" />
-    <link rel="stylesheet" href="../com/css/cold360.css" />
+    <link rel="stylesheet" href="../com/css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+    <link rel="stylesheet" href="../com/css/cold360.css"/>
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
-	<script type="text/javascript" src="../com/js/angular.min.js"></script>
-    <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-    <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
-	<script type="text/javascript" src="../com/js/highcharts.js"></script>
+    <script type="text/javascript" src="../com/js/angular.min.js"></script>
+    <script type="text/javascript" src="../com/js/swiper.min.js"></script>
+    <script type="text/javascript" src="../com/js/echarts-all.js"></script>
+    <script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/js/cold360.js" ></script>
-    <script type="text/javascript" src="../app/js/analysisQuery.js" ></script>
+    <script type="text/javascript" src="../com/datepicker/date.js"></script>
+    <script type="text/javascript" src="../com/datepicker/iscroll.js"></script>
+    <script type="text/javascript" src="../com/js/cold360.js"></script>
+    <script type="text/javascript" src="../app/js/analysisQuery.js"></script>
 </head>
 <body ng-app="app" ng-controller="analysisQuery" ng-cloak>
-    <!-- header -->
-         <header class="one">
-            <div class="area fl">
-                <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
-            </div>
-            <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
-                <a class="transion"><i class="iconfont">&#xe73c;</i></a>
-            </div>
-            <div class="txt omg">
-                {{rdcName}}
-            </div>
-            <ul class="rdcDropList" ng-repeat="storage in storages">
-                <li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
-            </ul>
-        </header>
-        <header class="two">
-        	<div class="area fl">
-        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
-        	</div>
+<!-- header -->
+<header class="one">
+    <div class="area fl">
+        <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
+    </div>
+    <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
+        <a class="transion"><i class="iconfont">&#xe73c;</i></a>
+    </div>
+    <div class="txt omg">
+        {{rdcName}}
+    </div>
+    <ul class="rdcDropList" ng-repeat="storage in storages">
+        <li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
+    </ul>
+</header>
+<header class="two">
+    <div class="area fl">
+        <a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+    </div>
 
-        	<div id="searchDara_div" class="search">
-        		<input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
-        		<i class="iconfont" >&#xe62f;</i>
-        	</div>
-	    </header>
-    <!-- header end-->
-    <section class="toggle">
-    	<div class="tempture other" id="temperature" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
+    <div id="searchDara_div" class="search">
+        <input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)"
+               ng-model-options="{debounce: 700}"/>
+        <i class="iconfont">&#xe62f;</i>
+    </div>
+</header>
+<!-- header end-->
+<section class="toggle">
+    <div class="tempture other" id="temperature" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
     		<span class="dropNext">
     			<b>温度</b><i class="iconfont">&#xe6f7;</i>
     		</span>
-            <ul class="otherList black">
-                <li><a href="javascript:;">超温时长统计</a></li>
-                <li><a href="javascript:;">超温因子统计</a></li>
-                <li><a href="javascript:;">保温因子统计</a></li>
-                <li><a href="javascript:;">温度周期因子统计</a></li>
-            </ul>
-    	</div>
-        <div class="light" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe6ed;</i>
+        <ul class="otherList black">
+            <li><a href="javascript:;">超温时长统计</a></li>
+            <li><a href="javascript:;">超温因子统计</a></li>
+            <li><a href="javascript:;">保温因子统计</a></li>
+            <li><a href="javascript:;">温度周期因子统计</a></li>
+        </ul>
+    </div>
+    <div class="light" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe6ed;</i>
             <span class="dropNext">
                 <b>运管</b><i class="iconfont">&#xe6f7;</i>
             </span>
-            <ul class="otherList black">
-                <li><a href="javascript:;"  id="door" ng-click="goDoor()">冷库门运行分析</a></li>
-                <li><a href="javascript:;" id="goods">货物因子分析</a></li>
-                <li><a href="javascript:;" id="hot">冷库日热量分析</a></li>
-            </ul>
-        </div>
-        <div class="door current" id="makeCold" ng-click="goCooling()"><i class="iconfont">&#xe7b6;</i>
+        <ul class="otherList black">
+            <li><a href="javascript:;" id="door" ng-click="goDoor()">冷库门运行分析</a></li>
+            <li><a href="javascript:;" id="goods">货物因子分析</a></li>
+            <li><a href="javascript:;" id="hot">冷库日热量分析</a></li>
+        </ul>
+    </div>
+    <div class="door" id="makeCold" ng-click="goCooling()"><i class="iconfont">&#xe7b6;</i>
             <span class="dropNext">
                 <b>制冷</b><i class="iconfont">&#xe6f7;</i>
             </span>
-            <ul class="otherList black">
-                <li><a href="javascript:;"  id="efficiency" ng-click="goDoor()">效率分析</a></li>
-                <li><a href="javascript:;" id="warn" ng-click="goWarnCount()">告警统计</a></li>
-                <li><a href="javascript:;" id="running">运行分析</a></li>
-            </ul>
-        </div>
-        <div class="other" id="runQuery" onclick="location.href='analysisHistoryData.html'"><i class="iconfont">&#xe7a2;</i>
+        <ul class="otherList black">
+            <li><a href="javascript:;" id="efficiency" ng-click="goDoor()">效率分析</a></li>
+            <li><a href="javascript:;" id="warn" ng-click="goWarnCount()">告警统计</a></li>
+            <li><a href="javascript:;" id="running">运行分析</a></li>
+        </ul>
+    </div>
+    <div class="current other" id="runQuery" ng-click="goQuery()"><i class="iconfont">&#xe7a2;</i>
     		<span class="dropNext">
     			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>
-            <ul class="otherList black">
-                <li><a href="javaScript:;">历史数据查询</a></li>
-                <li><a href="javaScript:;">报表功能</a></li>
-            </ul>
+        <ul class="otherList black">
+            <li><a href="javaScript:;" id="goHistoryData()">历史数据查询</a></li>
+            <li><a href="javaScript:;" id="goReport()">报表功能</a></li>
+        </ul>
+    </div>
+</section>
+<div class="backDrop"></div>
+<div id="val_list_div" class="coverBg">
+    <!-- 冷库温度list -->
+    <div class="my_list temperatureList">
+        <ul id="Temp_ul_0">
+            <li ng-repeat="obj in mystorages" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
+                {{obj.name}}
+            </li>
+        </ul>
+    </div>
+    <!-- 冷库电量list -->
+    <div class="my_list lightList">
+        <ul id="Temp_ul_1">
+            <li ng-repeat="obj in powers" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
+                {{obj.name}}
+            </li>
+        </ul>
+    </div>
+    <!-- 冷库门list -->
+    <div class="my_list doorList">
+        <ul id="Temp_ul_2">
+            <li ng-repeat="obj in coldstoragedoor" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
+                {{prove[obj.coldStorageId]+"-"+obj.name}}
+            </li>
+        </ul>
+    </div>
+
+    <!-- 月台门list -->
+    <div class="my_list platdoorList">
+        <ul id="Temp_ul_3">
+            <li ng-repeat="obj in platformDoors" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
+                {{obj.name}}
+            </li>
+        </ul>
+    </div>
+
+    <!-- 压缩机list -->
+    <div id="Temp_ul_4" class="my_list ysjList">
+        <label><input type="radio" name="cmsbkey" ng-click="chPress('highPress','高压')" checked>高压</label>
+        <label><input type="radio" name="cmsbkey" ng-click="chPress('lowPress','低压' )">低压</label>
+        <ul>
+            <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
+                {{obj.name}}
+            </li>
+        </ul>
+    </div>
+
+    <!-- 排气温度list -->
+    <div class="my_list ysjPqList" class="hide" key="exTemp" id="Temp_ul_5">
+        <label ng-repeat="obj in compressorGroups"><input type="radio" name="cmptkey" value="{{obj.id}}"
+                                                          ng-click="chexTemp($event)">{{obj.name}}</label>
+        <ul id="Temp_ul_5_key_span_{{selectedCompressorGroupId}}">
+            <li ng-repeat="obj in selectedCompressors" ng-click="selectTemper($event)" oid="{{obj.id}}"
+                class="selectLi">{{obj.name}}
+            </li>
+        </ul>
+    </div>
+    <span class="closeCover">&times;</span>
+
+    <div class="bottomBtn">
+        <button class="mybtn">确定</button>
+    </div>
+</div>
+<!-- <div class="anotherCover">
+
+    <span class="closeCover">&times;</span>
+</div> -->
+<div class="chart temperature historyData">
+    <div class="filter">
+        <p><strong>请选择需要查询的项目：</strong></p>
+
+        <div class="project clearfix">
+            <div kval="0" class="default defaultSelect">冷库温度</div>
+            <div kval="1" class="default">冷库电量</div>
+            <div kval="2" class="default">冷库门</div>
+            <div kval="3" class="default">月台门</div>
+            <div kval="4" class="default">压缩机组</div>
+            <div kval="5" class="default">压缩机-排气温度</div>
         </div>
-    </section>
-    <div class="backDrop"></div>
-	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper" id="chartView"></div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-        <!-- Add Arrows -->
-        <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
-        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
-  </div>
-	<!--rdc列表-------------------------------------------------->
-	 <section class="searchTop">
-	 	<ul class="rdcList">
-	 		<li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
-	 	</ul>
-	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
-	 </section>
-	 <!--rdc列表----------------------------------------------->
-    <ul class="footer">
-        <li>           
-            <a href="cold360.html">
-                <i class="iconfont">&#xe695;</i>
-                <p class="info">监控</p>
-            </a>
-        </li>
-        <li class="active">            
-            <a href="analysis.html">
-                <i class="iconfont">&#xe682;</i>
-                <p class="info">分析</p>
-            </a>
-        </li>
-        <li>
-            <a href="alarmLog.html">
-                <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
-                <p class="info">告警</p>
-                <span class="countNum">99</span>
-            </a>
-        </li>
-        <li>            
-            <a href="maintain.html">
-                <i class="iconfont">&#xe6a5;</i>
-                <p class="info">维护</p>
-            </a>
-        </li>
+        <p><strong>您所选的项目是：</strong></p>
+
+        <p class="selectInfo br">{{seletedDatas}}</p>
+
+        <p><strong>请选择时间范围</strong></p>
+
+        <p>开始时间<input type="text" id="startTime" class="kbtn" ng-model="begin"/></p>
+
+        <p>结束时间<input type="text" id="endTime" class="kbtn" ng-model="end"/></p>
+    </div>
+    <p class="chaxun">
+        <button class="mybtn" ng-click="goSearch()">查询</button>
+    </p>
+    <!-- 图表区域 -->
+    <div id="historyChart" style="height:18rem;"></div>
+</div>
+<!--rdc列表-------------------------------------------------->
+<section class="searchTop">
+    <ul class="rdcList">
+        <li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i
+                class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
     </ul>
+    <p>没有找到您要的信息~~~<br/>请检查您的输入条件是否有误^_^</p>
+</section>
+<div id="datePlugin"></div>
+<!--rdc列表----------------------------------------------->
+<ul class="footer">
+    <li>
+        <a href="cold360.html">
+            <i class="iconfont">&#xe695;</i>
+
+            <p class="info">监控</p>
+        </a>
+    </li>
+    <li class="active">
+        <a href="analysis.html">
+            <i class="iconfont">&#xe682;</i>
+
+            <p class="info">分析</p>
+        </a>
+    </li>
+    <li>
+        <a href="alarmLog.html">
+            <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
+
+            <p class="info">告警</p>
+            <span class="countNum">99</span>
+        </a>
+    </li>
+    <li>
+        <a href="maintain.html">
+            <i class="iconfont">&#xe6a5;</i>
+
+            <p class="info">维护</p>
+        </a>
+    </li>
+</ul>
 </body>
 </html>

@@ -65,17 +65,21 @@ public class WarningController extends BaseController {
 			HashMap<String, Object> resMap = new HashMap<String, Object>();
 			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);// 查询上个月的
 			if (SetUtil.isnotNullList(wrnType) && wrnType.size() > 0) {
+				String startime = TimeUtil.getBeforeMonthTime(1);
+				String endtime = TimeUtil.getEndMonthTime(1);
 				for (WarningsInfo warningsInfo : wrnType) {
 					resMap.put(warningsInfo.getWarningname(),
-							this.warningsInfoDao.getWarCountByType(rdcId, 1, 30, warningsInfo.getWarningname()));
+							this.warningsInfoDao.getWarCountByType(rdcId,30,warningsInfo.getWarningname(),startime,endtime) );
 				}
 			}
 			HashMap<String, Object> rescuMap = new HashMap<String, Object>();
 			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);// 查询当前月份的
 			if (SetUtil.isnotNullList(wrncuType) && wrncuType.size() > 0) {
+				String startime = TimeUtil.getBeforeMonthTime(0);
+				String endtime = TimeUtil.getEndMonthTime(0);
 				for (WarningsInfo warningsInfo : wrncuType) {
 					rescuMap.put(warningsInfo.getWarningname(),
-							this.warningsInfoDao.getWarCountByType(rdcId, 0, 30, warningsInfo.getWarningname()));
+							this.warningsInfoDao.getWarCountByType(rdcId,  30, warningsInfo.getWarningname(),startime,endtime));
 				}
 			}
 			allDataMap.put("cuttdata", rescuMap);
