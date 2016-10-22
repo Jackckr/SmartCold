@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.smartcold.manage.cold.entity.olddb.WeightSetEntity;
+
 /**
  * 获得配置
  * @author MaQiang34

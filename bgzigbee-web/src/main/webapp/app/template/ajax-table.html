@@ -13,16 +13,22 @@
                 <input style="width: 100%;height: 100%;" type="text" ng-model="obj[colum]" ng-show="obj.editable">
             </td>
             <td>
-                <a class="btn btn-success btn-xs" ng-click="obj.editable = true" ng-hide="obj.editable"><span
+           
+               <a class="btn btn-info btn-xs" ng-click="resttable(obj)" ng-show="obj.resttable" title="重置保养时间" >
+                    <span class="glyphicon glyphicon-wrench"></span>
+                </a>
+                <a class="btn btn-success btn-xs" ng-click="obj.editable = true" ng-hide="obj.editable" ><span
                         class="glyphicon glyphicon-pencil"></span></a>
                 <a class="btn btn-danger btn-xs" ng-click="delete(obj)" ng-hide="obj.editable" >
                     <span class="glyphicon glyphicon-trash"></span>
                 </a>
-                <a class="btn btn-success btn-xs" ng-click="update(obj)" ng-show="obj.editable"><span
+                <a class="btn btn-success btn-xs" ng-click="update(obj)" ng-show="obj.editable" ><span
                         class="glyphicon glyphicon-ok"></span></a>
                 <a class="btn btn-danger btn-xs" ng-click="obj.editable=false" ng-show="obj.editable" >
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
+                 
+               
             </td>
         </tr>
     </tbody>

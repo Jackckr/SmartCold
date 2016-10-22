@@ -88,7 +88,7 @@ public class MsgServiceimp implements MsgService {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
 		if(taskStatus){
 			this.getERRinfo();
-			addextMsg("checkData", null);//记录日志
+			addextMsg("checkData",1, null);//记录日志
 		}
 	}
 	/**
@@ -102,7 +102,7 @@ public class MsgServiceimp implements MsgService {
 	public void checkAPStatus() {
 		boolean taskStatus = quantityMapper.updateTaskStatus(2);
 		if(!taskStatus){return ;}
-		addextMsg("checkAPStatus", null);//记录日志
+		addextMsg("checkAPStatus", 2,null);//记录日志
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
@@ -126,11 +126,11 @@ public class MsgServiceimp implements MsgService {
 	 * 每天凌晨3:30点触发
 	 * Task:计算热量
 	 */
-	@Scheduled(cron = "0 30 03 * * ?")
-	private void reckonQuantity() {
+	@Scheduled(cron = "0 30 3 * * ?")
+	public void reckonQuantity() {
 	   boolean taskStatus = quantityMapper.updateTaskStatus(3);
 		if(!taskStatus){return ;}
-		addextMsg("reckonQuantity", null);//记录日志
+		addextMsg("reckonQuantity",3, null);//记录日志
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
 		Date dateTime = TimeUtil.parseYMD(time);
 		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
@@ -168,6 +168,9 @@ public class MsgServiceimp implements MsgService {
 	
 	/**
 	 * 检查数据是否正常
+	 * 1.电压：SELECT *  FROM `power`  where  `value` =0 and `key` LIKE  '_U' and `addtime` >'2016-10-20 10:00:00';
+	 * 2.电流： SELECT * from ( SELECT id, `key`, `value`, CASE WHEN ( (MAX(`value`) - MIN(`value`)) / MAX(`value`) * 100 ) > 15 THEN 1 ELSE 0 END AS vl FROM `power` WHERE oid=13 AND `key` LIKE '_I' AND `value` > 10 AND `addtime` > #{startTime} GROUP BY `addtime`, `oid` ORDER BY `addtime` ASC ) as c WHERE c.vl = 1
+	 * 3.温度：
 	 * @param startTime
 	 */
 	public void getERRinfo(){
@@ -179,8 +182,7 @@ public class MsgServiceimp implements MsgService {
 			if (SetUtil.isnotNullList(fErrWarningList)) {//
 				errInfoList.addAll(errInfoList);
 			}
-			List<PowerEntity> ublowerlist = this.powerMapper
-					.findUBlowerByTime(startTime);// 电压缺相报警-
+			List<PowerEntity> ublowerlist = this.powerMapper .findUBlowerByTime(startTime);// 电压缺相报警-
 			if (SetUtil.isnotNullList(ublowerlist)) {
 				List<Integer> poweid = new ArrayList<Integer>();
 				for (PowerEntity pow : ublowerlist) {
@@ -247,7 +249,7 @@ public class MsgServiceimp implements MsgService {
 				this.warningLogMapper.addWarningLog(errInfoList);
 			}
 		} catch (Exception e) {
-			addextMsg("getERRinfo", e.getMessage());//记录日志
+			addextMsg("getERRinfo",1, e.getMessage());//记录日志
 		}
 	}
 
@@ -313,7 +315,7 @@ public class MsgServiceimp implements MsgService {
 								updata);
 					}
 				} catch (Exception e) {
-					addextMsg("sendMsg", e.getMessage());//记录日志
+					addextMsg("sendMsg", 2,e.getMessage());//记录日志
 				}
 			}
 		}
@@ -370,7 +372,7 @@ public class MsgServiceimp implements MsgService {
 					}
 				}
 			} catch (Exception e) {
-				addextMsg("reckonQuantity", e.getMessage());//记录日志
+				addextMsg("reckonQuantity", 3,e.getMessage());//记录日志
 			}
 	}
 	
@@ -410,7 +412,7 @@ public class MsgServiceimp implements MsgService {
 				}
 			}
 		} catch (Exception e) {
-			addextMsg("setQblower", e.getMessage());//记录日志
+			addextMsg("setQblower", 3,e.getMessage());//记录日志
 		}
 	}
 
@@ -465,7 +467,7 @@ public class MsgServiceimp implements MsgService {
 					}
 				}
 			} catch (Exception e) {
-				addextMsg("setQForklift", e.getMessage());//记录日志
+				addextMsg("setQForklift", 3,e.getMessage());//记录日志
 			}
 	}
 	
@@ -496,11 +498,11 @@ public class MsgServiceimp implements MsgService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			addextMsg("setQctdoor", e.getMessage());//记录日志
+			addextMsg("setQctdoor",3, e.getMessage());//记录日志
 		}
 	}
     
-	private void addextMsg(String methodName,String errMsg){
+	private void addextMsg(String methodName,int type,String errMsg){
 		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 		if(StringUtil.isnotNull(errMsg)){
 //			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
@@ -508,7 +510,7 @@ public class MsgServiceimp implements MsgService {
 		   }
 		System.err.println(msg);
 		List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-		errInfoList.add(new WarningsLog(-1,-1,msg));
+		errInfoList.add(new WarningsLog(-1,type,msg));
 		this.warningLogMapper.addWarningLog(errInfoList);
 	}
 	

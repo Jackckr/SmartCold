@@ -12,6 +12,8 @@ public interface RdcWeightSetMapper {
 	RDCWeightSetEntity findRdcWeightSetByRdcId(@Param("rdcid") int rdcid);
 	
 	void insertRdcWeight(RDCWeightSetEntity entity);
+	
+	void updateWeight(RDCWeightSetEntity entity);
 
 	void deleteRdcWeight(@Param("id") int id);
 

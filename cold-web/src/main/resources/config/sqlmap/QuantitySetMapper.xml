@@ -4,6 +4,8 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.QuantitySetMapper">
 	
+	
+	
     <!-- 计算Q  根据rdcid 汇总 -->
     <select id="findColdstorages" parameterType="map" resultType="map">
 		 SELECT `RDCID` rdcid, group_concat(id) ids  FROM `${talbe}` GROUP BY rdcid;

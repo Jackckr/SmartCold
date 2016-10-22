@@ -18,9 +18,11 @@ public class CompressorSetEntity {
 	private int type;
 
 	private String mapping;
-
+	
 	@DateTimeFormat(pattern="yyyy-mm-dd hh:ii:ss")
-	private Date maintenancetime;
+	private Date lastMaintainTime;//最后保养时间
+	
+	private double maintenancetime;//压缩机维护时间
 
 	private Date addTime;
 
@@ -64,6 +66,14 @@ public class CompressorSetEntity {
 		this.waterRatio = waterRatio;
 	}
 
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
 	public String getMapping() {
 		return mapping;
 	}
@@ -72,11 +82,19 @@ public class CompressorSetEntity {
 		this.mapping = mapping;
 	}
 
-	public Date getMaintenancetime() {
+	public Date getLastMaintainTime() {
+		return lastMaintainTime;
+	}
+
+	public void setLastMaintainTime(Date lastMaintainTime) {
+		this.lastMaintainTime = lastMaintainTime;
+	}
+
+	public double getMaintenancetime() {
 		return maintenancetime;
 	}
 
-	public void setMaintenancetime(Date maintenancetime) {
+	public void setMaintenancetime(double maintenancetime) {
 		this.maintenancetime = maintenancetime;
 	}
 
@@ -86,14 +104,6 @@ public class CompressorSetEntity {
 
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
 	}
 
 }

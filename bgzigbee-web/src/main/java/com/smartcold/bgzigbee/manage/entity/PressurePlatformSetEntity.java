@@ -10,6 +10,8 @@ public class PressurePlatformSetEntity {
 	  
 	private int rdcid;
 	  
+	private double power;
+	
 	private String mapping;
 	  
 	private Date addTime;
@@ -44,6 +46,14 @@ public class PressurePlatformSetEntity {
 
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
 	}
 
 	public Date getAddTime() {

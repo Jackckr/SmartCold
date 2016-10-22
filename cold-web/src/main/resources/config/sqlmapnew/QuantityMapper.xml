@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.QuantityMapper">
-
-
-
-	<select id="findForkliftByTime" resultType="ForkLiftEntity">
-		SELECT oid ,SUM(`value`)power  FROM `forklift` where `oid` in(${oid}) and (`addtime` between  #{stTime} and #{edTime})  ;
-	</select>
 	
 	<update id="updateTaskStatus" parameterType="Integer" flushCache="true">
-		update queue_task sk set  LastRunTim=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:00') where id=#{id} and LastRunTim + interval intervalTime MINUTE &lt; now() ;
+		update queue_task sk set  LastRunTim=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:00') where id=#{id} and LastRunTim + interval intervalTime MINUTE &lt;= now() ;
 	</update>
 	
+	<!-- 360体检  -->
+	<select id="getAVGTempYinZi" parameterType="map" resultType="map">
+		select   `key` ,  avg(`value`) as vl from `coldstorageanalysis` where `type` =1 and oid in(${oid}) and `key` in('ChaoWenYinZi','BaoWenYinZi','JiangWenYinZi') and `date` BETWEEN #{stTime} and #{edTime} GROUP BY `key` ;
+	</select>
+	
+	
+	<!-- 检查是否有设备 -->
+	<select id="getCountBykey" parameterType="map" resultType="java.lang.Integer">
+		  SELECT  COUNT(*) FROM  ${table} where `oid`in (${oid}) and `key` =#{key} and `time` BETWEEN #{stTime} and #{edTime} GROUP BY mtime;  
+	</select>
+	<select id="getCountBydevkey" parameterType="map" resultType="java.lang.Integer">
+		  select  COUNT(*)  FROM storagedatacollection where `deviceid`in (${deviceid}) and `key` =#{key} and `time` BETWEEN #{stTime} and #{edTime} GROUP BY mtime) as c
+	</select>
+	
+	<!-- 获得冷库最高温度 -->
+	<select id="getSisBayKey" parameterType="map" resultType="java.lang.Double">
+		select avg(`value`)  from `coldstorageanalysis`  where type=#{type}  and `oid`in (${oid}) and `key` =#{key} and `date`   BETWEEN #{stTime} and #{edTime}; 
+	</select>
+	<!-- 获得货物信息-->
+	<select id="getGoodQuantit" parameterType="map" resultType="map">
+		SELECT avg(`inputQuantity`-`outputQUantity` )  quantit , avg(`inputTemperature`)temp  FROM `goodscoldstorage` where `coldstorageid` =#{oid} and `date`   BETWEEN #{stTime} and #{edTime};
+	</select>
 	
 	
 </mapper>

@@ -12,6 +12,9 @@
         UPDATE ${table} SET mapping=#{mapping}
         WHERE id=#{id}
     </update>
+    <update id="updateObj" parameterType="Object">
+        UPDATE ${table} SET name=#{name} ,power=#{power}  WHERE id=#{id};
+    </update>
     <delete id="deleteById">
         DELETE FROM ${table} WHERE id=#{id}
     </delete>

@@ -4,16 +4,19 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.CompressorSetMapper">
 	<insert id="insert">
-		INSERT INTO `compressorset` (`compressorgroupid`, `name`,`power`, `waterRatio`,`type`,`maintenancetime`)
-		VALUES (#{compressorgroupid}, #{name}, #{power}, #{waterRatio},#{type},#{maintenancetime})
+		INSERT INTO `compressorset` (`compressorgroupid`, `name`,`power`, `waterRatio`,`type`,`lastMaintainTime`,`maintenancetime`)
+		VALUES (#{compressorgroupid}, #{name}, #{power}, #{waterRatio},#{type},now() ,#{maintenancetime})
 	</insert>
 	<update id="updateById">
-		UPDATE `compressorset` SET
-		`name` = #{name},
-		`power` = #{power},
-		`waterRatio` = #{waterRatio},
-		`maintenancetime` =#{maintenancetime},
-		`type` = #{type}
+		UPDATE `compressorset` 
+		<set>
+		<if test=" name             !=null and name!=''">`name` = #{name},</if>
+		<if test=" power            !=null and power!=0">`power` = #{power},                        </if>
+		<if test=" waterRatio      !=null and waterRatio!=0">`waterRatio` = #{waterRatio},              </if>
+		<if test=" maintenancetime  !=null and maintenancetime!=0 ">`maintenancetime` =#{maintenancetime},     </if>
+		<if test=" lastMaintainTime !=null and lastMaintainTime!=''">`lastMaintainTime` =#{lastMaintainTime},     </if>
+		<if test=" type             !=null and type!=0">`type` = #{type}                           </if>
+		</set>
 		WHERE `id` = #{id}
 	</update>
 	<delete id="deleteById">

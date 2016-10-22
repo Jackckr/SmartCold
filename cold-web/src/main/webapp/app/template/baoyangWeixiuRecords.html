@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css">
+<div class="page-header">
+  &nbsp;&nbsp;故障维修记录
+</div>
+<div class="box myrecord" style="color:#333;background: #D1D5DE;margin: 0 15px;padding-right:15px;">
+  <div class="box-header with-border">
+  	<h3 class="box-title">维修完结记录</h3>
+  	<div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="records" class="table table-bordered table-striped">
+      <thead>
+        <tr class="row">
+          <th>序号</th>
+          <th>压缩机组</th>
+          <th>故障描述</th>
+          <th>预约维修时间</th>
+          <th>申请维修时间</th>
+          <th>备注</th>
+          <th>评价</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row">
+          	<td>1</td>
+          	<td>螺杆低温并联机组（2-120）</td>
+          	<td>风机出现故障不转圈了</td>
+          	<td>2016-10-18</td>
+          	<td>2016-10-20</td>
+          	<td>OK</td>
+          	<td contenteditable="true">维修及时快速，赞！</td>          	
+        </tr>
+        <tr class="row">
+          	<td>3</td>
+          	<td>螺杆低温并联机组（2-120）</td>
+          	<td>风机出现故障不转圈了</td>
+          	<td>2016-10-18</td>
+          	<td>2016-10-20</td>
+          	<td>OK</td>
+          	<td contenteditable="true">维修及时快速，赞！</td>          	
+        </tr>
+        <tr class="row">
+          	<td>2</td>
+          	<td>螺杆低温并联机组（2-120）</td>
+          	<td>风机出现故障不转圈了</td>
+          	<td>2016-10-18</td>
+          	<td>2016-10-20</td>
+          	<td>OK</td>
+          	<td contenteditable="true">维修及时快速，赞！</td>          	
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- 故障申请记录 -->
+<div class="box myrecord" style="color:#333;background: #D1D5DE;margin:15px;padding-right:15px;">
+  <div class="box-header with-border">
+  	<h3 class="box-title">故障申请记录　  <button class="applyBtn btn btn-primary">申请维修</button></h3>
+  	<div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="applyRecords" class="table table-bordered table-striped">
+      <thead>
+        <tr class="row">
+          <th>序号</th>
+          <th>压缩机组</th>
+          <th>故障描述</th>
+          <th>预约维修时间</th>
+          <th>查看进度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row">
+          	<td>1</td>
+          	<td>螺杆低温并联机组（2-120）</td>
+          	<td>风机出现故障不转圈了</td>
+          	<td>2016-10-18</td> 
+          	<td><button class="btn btn-success btn-xs">查看</button></td>       	
+        </tr>
+        <tr class="row">
+          	<td>3</td>
+          	<td>螺杆低温并联机组（2-120）</td>
+          	<td>风机出现故障不转圈了</td>
+          	<td>2016-10-18</td>  
+          	<td><button class="btn btn-success btn-xs">查看</button></td>        	
+        </tr>
+        <tr class="row">
+          	<td>2</td>
+          	<td>螺杆低温并联机组（2-120）</td>
+          	<td>风机出现故障不转圈了</td>
+          	<td>2016-10-18</td>   
+          	<td><span class="label label-success">Approved</span></td>      	
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+<!-- SlimScroll -->
+<script src="assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="assets/plugins/fastclick/fastclick.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#records,#applyRecords").DataTable(); 
+		$('.myrecord td[contenteditable]').blur(function(){
+			alert($(this).html())
+		});
+		var addTr = '<tr class="row">'+
+          	'<td contenteditable>3</td>'+
+          	'<td contenteditable></td>'+
+          	'<td contenteditable></td>'+
+          	'<td contenteditable></td>'+ 
+          	'<td><button class="btn btn-success btn-xs">查看</button></td>'+
+        '</tr>'
+		$(".applyBtn").click(function(){
+			$("#applyRecords tbody").append(addTr)
+		})
+	})
+</script>

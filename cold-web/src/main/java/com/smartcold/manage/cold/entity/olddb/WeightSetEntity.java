@@ -11,6 +11,7 @@ public class WeightSetEntity {
     private double	factor1        ;
     private double	factor2        ;
     private double	factor3        ;
+    private double	factor4        ;
     private double	transport1     ;
     private double	transport2     ;
     private double	transport3     ;
@@ -18,6 +19,29 @@ public class WeightSetEntity {
     private double	crew2          ;
     private double	crew3           ;
     
+    
+    
+	public WeightSetEntity() {
+		super();
+	}
+	
+	public WeightSetEntity( double factor1, double factor2,
+			double factor3,double factor4, double transport1, double transport2,
+			double transport3, double crew1, double crew2, double crew3) {
+		super();
+		
+		this.factor1 = factor1;
+		this.factor2 = factor2;
+		this.factor3 = factor3;
+		this.factor4 = factor4;
+		this.transport1 = transport1;
+		this.transport2 = transport2;
+		this.transport3 = transport3;
+		this.crew1 = crew1;
+		this.crew2 = crew2;
+		this.crew3 = crew3;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -48,6 +72,15 @@ public class WeightSetEntity {
 	public void setFactor3(double factor3) {
 		this.factor3 = factor3;
 	}
+	
+	public double getFactor4() {
+		return factor4;
+	}
+
+	public void setFactor4(double factor4) {
+		this.factor4 = factor4;
+	}
+
 	public double getTransport1() {
 		return transport1;
 	}

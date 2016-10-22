@@ -10,6 +10,7 @@ import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.CompressorGroupSetEntity;
 import com.smartcold.bgzigbee.manage.entity.CompressorSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SpiderItemType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -116,6 +118,22 @@ public class CompressorGroupSetController {
 		if (compressorSetDao.updateById(entity)) {
 			return new ResultDto(0, "更新成功");
 		}
+		return new ResultDto(-1, "失败");
+	}
+	
+	@RequestMapping(value = "/restlastMaintainTime", method = RequestMethod.POST)
+	@ResponseBody
+	public Object restlastMaintainTime(@RequestBody CompressorSetEntity entity) {
+		try {
+			if(entity!=null){
+				entity.setLastMaintainTime(new Date());
+				compressorSetDao.updateById(entity);
+			}
+			return new ResultDto(0, "更新成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return new ResultDto(-1, "失败");
 	}
 }

@@ -356,3 +356,38 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 	
 	$scope.load();
 })
+coldWeb.controller('goodsYzAnalysis', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
+	$scope.load = function(){
+		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
+		var endTime = new Date();
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
+            params: {
+            	"startTime": baseTools.formatTime(startTime),
+            	"endTime": baseTools.formatTime(endTime),
+                "rdcid": $scope.rdcId,
+                'keys':'GoodsLiuTongYinZi'
+            } 
+		}).success(function(data,status,config,header){
+			$scope.data = data;
+			angular.forEach(data,function(storage,key){
+				$timeout(function(){					
+					xData = []
+					yData = []
+					var chartId = key + "Chart"
+					var chart = echarts.init(document.getElementById(chartId));
+					$scope.showMap[chartId] = storage['GoodsLiuTongYinZi'].length
+					angular.forEach(storage['GoodsLiuTongYinZi'],function(item){
+						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
+						yData.unshift(item['value'] / 60)
+					})
+					chart.setOption(baseTools.getEchartSingleOption("", 
+							xData, yData, "时间", "", "货物流通因子", "bar",0));
+				},0)
+			})
+		})
+	}
+	
+	$scope.load()
+})

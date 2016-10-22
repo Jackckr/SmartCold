@@ -385,6 +385,7 @@ b{
 	text-align: center;
 	font-size: .75rem;
 	line-height: 2;
+	padding: 2px 0;
 }
 .cold_warn th[colspan="3"]{
 	height:2.5rem;
