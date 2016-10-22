@@ -391,3 +391,105 @@ coldWeb.controller('goodsYzAnalysis', function($rootScope, $scope,$timeout, $loc
 	
 	$scope.load()
 })
+
+coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
+	$scope.load = function(){
+		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
+		var endTime = new Date();
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+		$http.get('/i/compressor/findAnalysisByRdcidKeysDate',{
+            params: {
+            	"startTime": baseTools.formatTime(startTime),
+            	"endTime": baseTools.formatTime(endTime),
+                "rdcId": $scope.rdcId,
+                'keys':'RunningTime,RunningCount'
+            } 
+		}).success(function(data,status,config,header){
+			$scope.data = data;
+			angular.forEach(data,function(storage,key){
+				$timeout(function(){					
+					xData = []
+					yData1 = []
+					yData2 = []
+					yData3 = []
+					var chartId = key + "Chart"
+					var chart1 = echarts.init(document.getElementById(chartId + "1"));
+					var chart2 = echarts.init(document.getElementById(chartId + "2"));
+					$scope.showMap[chartId + '1'] = storage['RunningTime'].length
+					$scope.showMap[chartId + '2'] = storage['RunningTime'].length
+					angular.forEach(storage['RunningTime'],function(item,index){
+						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
+						yData1.unshift((item['value'] / 60).toFixed(2))
+						yData2.unshift(storage['RunningCount'][index].value)
+						yData3.unshift(
+								storage['RunningCount'][index].value == 0
+								? 0 : 
+									item['value'] / storage['RunningCount'][index].value / 60
+									)
+					})
+					option = {
+		                tooltip : {
+		                    trigger: 'axis'
+		                },
+		                toolbox: {
+		                    show : false,
+		                    feature : {
+		                        mark : {show: true},
+		                        dataView : {show: true, readOnly: false},
+		                        magicType: {show: true, type: ['line', 'bar']},
+		                        restore : {show: true},
+		                        saveAsImage : {show: true}
+		                    }
+		                },
+		                calculable : true,
+		                legend: {
+		                    data:['开门时长','开门次数']
+		                },
+		                xAxis : [
+		                    {
+		                        type : 'category',
+		                        data : xData
+		                    }
+		                ],
+		                yAxis : [
+		                    {
+		                        type : 'value',
+		                        name : '开门时长',
+		                        max : 1500,
+		                        axisLabel : {
+		                            formatter: '{value} m'
+		                        }
+		                    },
+		                    {
+		                        type : 'value',
+		                        name : '开门次数',
+		                        axisLabel : {
+		                            formatter: '{value}'
+		                        }
+		                    }
+		                ],
+		                series : [
+		                    {
+		                        name:'开门时长',
+		                        type:'bar',
+		                        data:yData1
+		                    },
+		                    {
+		                        name:'开门次数',
+		                        type:'line',
+		                        yAxisIndex: 1,
+		                        data:yData2
+		                    }
+		                ]
+		            };
+					chart1.setOption(option)
+					chart2.setOption(baseTools.getEchartSingleOption("", 
+							xData, yData3, "平均开门时间", "m", "m", "bar"))
+				},0)
+			})
+		})
+	}
+	
+	$scope.load();	
+})

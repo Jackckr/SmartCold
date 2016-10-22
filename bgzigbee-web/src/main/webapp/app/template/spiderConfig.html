@@ -1111,15 +1111,31 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-6" >
-                        <mapping-table data-name="冷凝系统风机" object-keys="evaporativeblowerKeys" object-sets="evaporativeBlowerSets"></mapping-table>
-                    </div>
-                    <div class="col-lg-6" >
-                        <mapping-table data-name="冷凝系统水泵" object-keys="evaporativewaterKeys" object-sets="evaporativeWaterSets"></mapping-table>
-                    </div>
                     <div class="col-lg-7">
                         <button class="btn btn-primary pull-right" ng-click="realSaveCompressGroup()">保存</button>
                     </div>
+                </uib-tab>
+
+				<uib-tab>
+                    <uib-tab-heading>
+                        <i class="fa fa-table"></i>冷凝系统配置
+                    </uib-tab-heading><br/>
+                    <form class="navbar-form">
+                            <div class="form-group">
+                                <label>冷凝系统</label>
+                                <select ng-options="item.name for item in evaporativeSets" class="form-control" 
+                                ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
+                            </div>
+                        </form>
+                    <div class="row">
+                        <div class="col-lg-6" >
+                        <mapping-table data-name="冷凝系统风机" object-keys="evaporativeblowerKeys" object-sets="evaporativeBlowerSets"></mapping-table>
+                    	</div>
+                    	<div class="col-lg-6" >
+                        <mapping-table data-name="冷凝系统水泵" object-keys="evaporativewaterKeys" object-sets="evaporativeWaterSets"></mapping-table>
+                    	</div>
+                    </div>
+                    <button class="btn btn-primary pull-right" ng-click="realSaveEvaporative()">保存</button>
                 </uib-tab>
 
                 <uib-tab>

@@ -2,125 +2,44 @@
     <div class="page-header">
 
     </div>
-	<!-- demo 页面-->
+
     <section class="content">
         <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
+
+            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" ng-repeat="(key,dt) in data">
+
+                <!-- Storage CHART -->
+                <div class="box bg-gray" ng-show="showMap[key+'Chart1'] != 0">
                     <div class="box-header with-border">
-                        <h3 class="box-title">压缩机运行总时长和次数</h3>
+                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;近30日累积运行总时长及日运行次数</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
+			               <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			               <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+			           </div>
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <div id="runningAll" style="height:300px"></div>
+                            <div id="{{key}}Chart1" style="height:300px;"></div>
                         </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box --> 
-            </div><!-- /.col (RIGHT) -->
-        </div><!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
+                    </div>
+                </div>
+                <div class="box bg-gray" ng-show="showMap[key+'Chart2'] != 0">
                     <div class="box-header with-border">
-                        <h3 class="box-title">压缩机运行单次时长</h3>
+                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;近30日冷库日平均运行时长</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
+			               <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			               <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+			           </div>
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <div id="runningSingle" style="height:300px"></div>
+                            <div id="{{key}}Chart2" style="height:300px;"></div>
                         </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box --> 
-            </div><!-- /.col (RIGHT) -->
+                    </div>
+                </div><!-- 2 -->
+
+            </div>
         </div>
-    </section><!-- /.content -->
+    </section>
 </div>
-<script src="../../assets/js/echarts.min.js"></script>
-<script>
-	$(function(){
-		var myChart1 = echarts.init(document.getElementById('runningAll'));
-		option = {
-		    tooltip : {
-		        trigger: 'axis'
-		    },
-		    calculable : false,
-		    legend: {
-		        data:['运行时长','运行次数']
-		    },
-		    xAxis : [
-		        {
-		            type : 'category',
-		            data : ['2016-09-24','2016-09-26','2016-09-28','2016-09-30','2016-10-02','2016-10-04','2016-10-06','2016-10-08','2016-10-10','2016-10-12','2016-10-14','2016-10-16']
-		        }
-		    ],
-		    yAxis : [
-		        {
-		            type : 'value',
-		            name : '运行时长',
-		            axisLabel : {
-		                formatter: '{value} m'
-		            }
-		        },
-		        {
-		            type : 'value',
-		            name : '运行次数'
-		        }
-		    ],
-		    series : [
-		
-		        {
-		            name:'运行时长',
-		            type:'bar',
-		            data:[1012.0, 1014.9, 1017.0, 923.2, 1025.6, 976.7, 1035.6, 1062.2, 1032.6, 1020.0, 1016.4, 1013.3]
-		        },
-		        {
-		            name:'运行次数',
-		            type:'line',
-		            yAxisIndex: 1,
-		            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-		        }
-		    ]
-		};
-		myChart1.setOption(option);
-		//single
-		var myChart2 = echarts.init(document.getElementById('runningSingle'));
-		option = {
-		    tooltip : {
-		        trigger: 'axis'
-		    },
-		    xAxis : [
-		        {
-		            type : 'category',
-		            data : ['2016-09-24','2016-09-26','2016-09-28','2016-09-30','2016-10-02','2016-10-04','2016-10-06','2016-10-08','2016-10-10','2016-10-12','2016-10-14','2016-10-16']
-		        }
-		    ],
-		    yAxis : [
-		        {
-		            type : 'value',
-		            name : '运行平均时长',
-		            axisLabel : {
-		                formatter: '{value} m'
-		            }
-		        }
-		    ],
-		    series : [
-		        {
-		            name:'平均运行时长',
-		            type:'bar',
-		            data:[502.0, 534.9, 487.0, 523.2, 425.6, 576.7, 635.6, 562.2, 332.6, 420.0, 526.4, 533.3]
-		        }
-		    ]
-		};
-		myChart2.setOption(option);
-	})
-	
-</script>
+<script src="../../assets/js/echarts-all.js"></script>

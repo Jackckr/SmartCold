@@ -15,7 +15,8 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
  */
 coldWeb.controller('alarmLog', function( $scope, $http,$timeout) {
 	 //根据rdcid查询该rdc的报警信息
-		$("#alarmLog").DataTable(); 
+//	$(".mainHeight").height( $(".content-wrapper").height());
+//	$("#alarmLog").DataTable(); 
 		$scope.initData=function(){
 			$http.get('/i/warlog/findWarningLogsByRdcID', {  params: { "rdcId": window.sessionStorage.smrdcId  } }).success(function (data) {
 	            $scope.alarmMsgs = data;

@@ -11,8 +11,10 @@
 
 
 	<select id="findByGroupid" parameterType="map" resultType="EvaporativeWaterSetEntity">
-		SELECT *
-		FROM `evaporativewaterset` WHERE `groupid` = #{groupid}
+	    SELECT ew.* FROM `evaporativewaterset` ew 
+		LEFT JOIN `evaporativeset` ev ON ew.`evaporativeid` = ev.id 
+		LEFT JOIN `compressorgroupset` cg ON ev.id = cg.`evaporativeId`
+		WHERE cg.id = #{groupid}
 	</select>
 
 </mapper>
