@@ -32,6 +32,7 @@
 	  (
 	  `name`,
 	  `rdcid`,
+	  `evaporativeid`, 
 	  `lowPress`, 
 	  `pressDiff`, 
 	  `meltFrostTemperature`,
@@ -45,6 +46,7 @@
 	  (
 	  #{name},
 	  #{rdcId},
+	  #{evaporativeid}, 
 	  #{lowPress}, 
 	  #{pressDiff}, 
 	  #{meltFrostTemperature},
