@@ -682,6 +682,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             id:obj.id,
             mapping:JSON.stringify(obj.mapping)
         }).then(function (resp) {
+        	if(resp.status == -1){
+				alert(resp.message);
+			}
         })
     }
 
@@ -724,6 +727,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		// angular.forEach($scope.evaporativeSets, function (item) {
 		// 	$scope.updateMapping("evaporativeset", item);
 		// })
+	}
+	
+	$scope.realSaveEvaporative = function(){
 		angular.forEach($scope.evaporativeBlowerSets, function (item) {
 			$scope.updateMapping("evaporativeblowerset", item);
 		})
