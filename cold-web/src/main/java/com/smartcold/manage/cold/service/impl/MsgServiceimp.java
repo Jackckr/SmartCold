@@ -341,30 +341,30 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 2 Q霜=Σ（P霜*t霜累积）->ok
 	 *   type=4 ,key='Qblower',valkey='Qblower'
-	 *   1. select group_concat(`id`) ids ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0  GROUP BY `coldStorageId`;
+	 *   1. select coldStorageId,group_concat(`id`) ids, ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0  GROUP BY `coldStorageId`;
 	 *   2. select * from `coldstorageanalysis` where 1=1 AND `type` = 4 AND `key`in ('DefrosingTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
 	private void setQFrost(String time, Date dateTime) {
 			try {
 				HashMap<Integer, Double> tempMap = null;
-				ColdStorageAnalysisEntity sis = null;
 				List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
-				List<HashMap<String, String>> blowerList = this.quantitySetMapper.findFrostPower(null);// 按冷库分组查询
+				List<HashMap<String, Object>> blowerList = this.quantitySetMapper.findFrostPower(null);// 按冷库分组查询
 				if (SetUtil.isnotNullList(blowerList)) {
 					HashMap<String, Object> fileter = new HashMap<String, Object>();
 					fileter.put("type", 4);fileter.put("time", time);fileter.put("key", "'DefrosingTime'");
-					for (HashMap<String, String> blowerinf : blowerList) {
-						String blids = blowerinf.get("ids");
-						String blfrostPowers = blowerinf.get("frostPowers");
+					for (HashMap<String, Object> blowerinf : blowerList) {
+						String blids =(String) blowerinf.get("ids");
+						String blfrostPowers = (String) blowerinf.get("frostPowers");
+						Integer coldStorageId =(Integer) blowerinf.get("coldStorageId");
 						tempMap = getValueMap(blids, blfrostPowers);
 						fileter.put("oid", blids);
+						double qfrost=0;
 						List<ColdStorageAnalysisEntity> blowersisdata = storageAnalysisMapper.findValueByFilter(fileter);
 						if (SetUtil.isnotNullList(blowersisdata)) {
 							for (ColdStorageAnalysisEntity clsis : blowersisdata) {
-								double qfrost = tempMap.get(clsis.getOid()) * clsis.getValue();
-								sis = new ColdStorageAnalysisEntity(4, clsis.getOid(), "QFrost", qfrost, dateTime);
-								sisList.add(sis);
+								 qfrost+= tempMap.get(clsis.getOid()) * clsis.getValue();
 							}
+							sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "QFrost", qfrost, dateTime));
 						} 
 					}
 					if(SetUtil.isnotNullList(sisList)){
@@ -384,27 +384,27 @@ public class MsgServiceimp implements MsgService {
 	 */
 	private void setQblower(String time, Date dateTime) {
 		try {
-			ColdStorageAnalysisEntity sis = null;
 			HashMap<Integer, Double> tempMap = null;
 			List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
-			List<HashMap<String, String>> blowerList = this.quantitySetMapper.findFanPower(null);// 按冷库分组查询
+			List<HashMap<String, Object>> blowerList = this.quantitySetMapper.findFanPower(null);// 按冷库分组查询
 			if (SetUtil.isnotNullList(blowerList)) {
 				HashMap<String, Object> fileter = new HashMap<String, Object>();
 				fileter.put("type", 4);
 				fileter.put("time", time);
 				fileter.put("key", "'totalRunning'");
-				for (HashMap<String, String> blowerinf : blowerList) {
-					String blids = blowerinf.get("ids");
-					String blfrostPowers = blowerinf.get("fanPowers");
+				for (HashMap<String, Object> blowerinf : blowerList) {
+					String blids = (String) blowerinf.get("ids");
+					String blfrostPowers = (String) blowerinf.get("fanPowers");
+					Integer coldStorageId =(Integer) blowerinf.get("coldStorageId");
 					tempMap = getValueMap(blids, blfrostPowers);
 					fileter.put("oid", blids);
+					double qfrost=0;
 					List<ColdStorageAnalysisEntity> blowersisdata = storageAnalysisMapper.findValueByFilter(fileter);
 					if (SetUtil.isnotNullList(blowersisdata)) {
 						for (ColdStorageAnalysisEntity clsis : blowersisdata) {
-							double qfrost = tempMap.get(clsis.getOid()) * clsis.getValue();
-							sis = new ColdStorageAnalysisEntity(4, clsis.getOid(), "Qblower", qfrost, dateTime);
-							sisList.add(sis);
+							 qfrost += tempMap.get(clsis.getOid()) * clsis.getValue();
 						}
+						sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "Qblower", qfrost, dateTime));
 					} 
 				}
 				if(SetUtil.isnotNullList(sisList)){
@@ -421,7 +421,7 @@ public class MsgServiceimp implements MsgService {
 	 * 4 Q照=Σ（P照*t照累积）-------->备注 ：由于叉车没有数据   按开门时间推算  后期需整改
 	 *  type=2  ,key='TotalTime',valkey='QForklift' -->type=14
 	 *   type=2 ,key='?'        ,valkey='Qlighting' -->type=15
-	 * 1.SELECT `RDCID` rdcid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY rdcid;
+	 * 1.SELECT rdcid,coldstorageid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY coldstorageid;
 	 * 2.SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers FROM `forkliftset` where `power` >0 GROUP BY rdcid; 计算平均功率
 	 * 3.select * from `coldstorageanalysis` where 1=1 AND `type` = 2 AND `key`in ('TotalTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
@@ -430,18 +430,17 @@ public class MsgServiceimp implements MsgService {
 				double avgforkliftPower=0;
 				double avglightsetPower=0;
 				List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
-				List<HashMap<String, Object>> doorsetList =this.quantitySetMapper.findColdstorages("coldstoragedoorset");//rdcid,  ids
+				List<HashMap<String, Object>> doorsetList =this.quantitySetMapper.getcoldstoragedoorset();//rdcid,  ids
 				if(SetUtil.isnotNullList(doorsetList)&&doorsetList.get(0)!=null){
 					HashMap<String, Object> fileter = new HashMap<String, Object>();
 					fileter.put("type", 2);
 					fileter.put("time", time);
 					fileter.put("key", "'TotalTime'");
 					  for (HashMap<String, Object> hashMap : doorsetList) {
-								 avgforkliftPower=0;
-								 avglightsetPower=0;
+								avgforkliftPower=0; avglightsetPower=0; double sumForklift=0; double sumlighting=0;
 								Object rdcid=hashMap.get("rdcid");
-							    String ids=	(String) hashMap.get("ids");
-							    fileter.put("oid", ids);
+								Integer coldstorageid=(Integer) hashMap.get("coldstorageid");
+							    fileter.put("oid", hashMap.get("ids"));
 							    List<ColdStorageAnalysisEntity> doorTotalTime = storageAnalysisMapper.findValueByFilter(fileter);
 							    if(SetUtil.isnotNullList(doorTotalTime)){
 							    	List<HashMap<String, String>> forkliftsetList = this.quantitySetMapper.getPowerGroupByRDC("forkliftset", rdcid);//获得叉车功率
@@ -454,12 +453,18 @@ public class MsgServiceimp implements MsgService {
 							    	}
 							    	for (ColdStorageAnalysisEntity clsis : doorTotalTime) {
 							    		if(avgforkliftPower!=0){
-							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "QForklift", avgforkliftPower * clsis.getValue(), dateTime));
+							    			sumForklift+=avgforkliftPower * clsis.getValue();
 							    		}
 							    		if(avglightsetPower!=0){
-							    			sisList.add(new ColdStorageAnalysisEntity(2, clsis.getOid(), "Qlighting", avglightsetPower * clsis.getValue(), dateTime));
+							    			sumlighting+=avglightsetPower * clsis.getValue();
 							    		}
 									 }
+							    	if(sumForklift==0){
+							    	  sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "QForklift", sumForklift, dateTime));
+							    	}
+							    	if(sumlighting==0){
+							    		sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "Qlighting", sumlighting, dateTime));
+							    	}
 							    }
 					  } 
 					if(SetUtil.isnotNullList(sisList)){
@@ -467,6 +472,7 @@ public class MsgServiceimp implements MsgService {
 					}
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				addextMsg("setQForklift", 3,e.getMessage());//记录日志
 			}
 	}
@@ -489,7 +495,7 @@ public class MsgServiceimp implements MsgService {
 						    Float hn=	(Float) hashMap.get("hn");//换气次数
 						    Float hw=	(Float) hashMap.get("hw");//换气次数
 						    Double Q=0.675*cgvolume*vvalue*(hw-hn);//临时值
-							sisList.add(new ColdStorageAnalysisEntity(2, id, "Qctdoor", Q, dateTime));
+							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q, dateTime));
 					 }
 				 }
 				 if(SetUtil.isnotNullList(sisList)){
@@ -505,7 +511,7 @@ public class MsgServiceimp implements MsgService {
 	private void addextMsg(String methodName,int type,String errMsg){
 		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 		if(StringUtil.isnotNull(errMsg)){
-//			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
+			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
 			 msg+=" 执行错误："+errMsg; 
 		   }
 		System.err.println(msg);
