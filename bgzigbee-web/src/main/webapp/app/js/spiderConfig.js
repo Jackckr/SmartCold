@@ -857,6 +857,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.addWall = function(){
 		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		$scope.wallEntity.coldstorageid = $scope.vm.choseStorage.id;
+		if(typeof($scope.wallEntity.outsidecoldstorage) != "undefined"){			
+			$scope.wallEntity.outsidecoldstorageid = $scope.wallEntity.outsidecoldstorage$scope.wallEntity.outsidecoldstorage.id;
+		}
 		$http.post("/i/spiderConfig/add/wallSet",$scope.wallEntity).success(function(data,status,config,headers){
 			if(data.status == -1){
 				alert(data.message);
