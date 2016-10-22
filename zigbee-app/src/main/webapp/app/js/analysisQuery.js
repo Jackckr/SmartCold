@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, $timeout) {
+app.controller('analysisQuery', function ($scope, $location, $http) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -12,6 +12,20 @@ app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, 
         if (r != null) return unescape(r[2]);
         return null;
     }
+
+    $scope.seletedDatas = '';
+    $scope.showobjgroup = false, $scope.coldstoragedoor = null;
+    $scope.oids = [], $scope.sltit = "", $scope.sl_index = 0, $scope.oldnames = [], $scope.slgptit = "";
+    //开始核心内容
+    $scope.typemode = {
+        tit: ['温度', '电量', '', '', '高压', '排气温度'],
+        unit: ['(°C)', '(kWh)', '', '', '(kPa)', '(°C)'],
+        type: [1, 10, 2, 11, 3, 5],
+        key: ['Temp', 'PWC', 'Switch', 'Switch', 'highPress', 'exTemp'],
+        ismklin: [true, true, false, false, true, true]
+    };
+    $scope.oids = [], $scope.sltit = "", $scope.sl_index = 0, $scope.oldnames = [], $scope.slgptit = "";
+
     var rootRdcId = $.getUrlParam('storageID');
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
@@ -36,9 +50,40 @@ app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, 
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
-                $scope.drawDoor();
+                $scope.prove = {};
+                $.each($scope.mystorages, function (i, vo) {
+                    $scope.prove[vo.id] = vo.name;
+                });
+                $http.get(ER.coldroot + "/i/AnalysisController/getColdStorageDoor", {params: {'rdcId': rdcId}}).success(function (data) {
+                    $scope.coldstoragedoor = data;
+                });
             }
         });
+        // 初始化电量
+        $http.get(ER.coldroot + '/i/power/findByRdcId?rdcId=' + rdcId).success(
+            function (data) {
+                $scope.powers = data;
+            })
+        $http.get(ER.coldroot + '/i/platformDoor/findByRdcId?rdcId=' + rdcId).success(
+            function (data) {
+                $scope.platformDoors = data;
+            })
+        // 初始化压缩机组
+        $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(
+            function (data) {
+                $scope.compressorGroups = data;
+                // 初始化压缩机
+                angular.forEach($scope.compressorGroups, function (item) {
+                    $http.get(ER.coldroot + '/i/compressor/findBygroupId?groupId=' + item.id).success(
+                        function (data) {
+                            item.compressors = data;
+                            if ($scope.selectedCompressors == undefined || $scope.selectedCompressors == []) {
+                                $scope.selectedCompressorGroupId = item.id;
+                                $scope.selectedCompressors = item.compressors;
+                            }
+                        })
+                })
+            })
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -55,7 +100,6 @@ app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, 
         }
     }
     $scope.changeRdc = function (rdc) {
-        clearSwiper();
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
@@ -72,239 +116,161 @@ app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, 
         window.location.href = 'analysisCooling.html?storageID=' + $scope.rdcId;
     }
 
-    $scope.swiper = 0;
-    $scope.defaltswiper = 0;
+    var lineChart = null;
+    var getFormatTimeString = function (delta) {
+        delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
+        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
+    }
+    $scope.end = getFormatTimeString(), $scope.begin = $scope.end.substr(0, 10) + " 00:00:00", $scope.picktime = $scope.begin + ' - ' + $scope.end;
+    $scope.goSearch = function () {//查询事件
+        if (lineChart == null) {
+            lineChart = echarts.init($('#historyChart')[0]);
+        }
+        if ($scope.oids && $scope.oids.length > 0) {
+            lineChart.showLoading({text: '数据加载中。。。。'});
+            lineChart.clear();
 
-    $scope.drawDoor = function () {
-        var endTime = new Date();
-        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
-        $http.get(ER.coldroot + '/i/coldStorage/findAnalysisByRdcidKeysDate', {
-            params: {
-                "startTime": formatTime(startTime),
-                "endTime": formatTime(endTime),
-                "rdcid": $scope.rdcId,
-                'keys': 'DoorTotalTime,DoorOpenTimes'
-            }
-        }).success(function (data) {
-            $scope.data = data;
-            angular.forEach(data, function (storage, key) {
-                xData = []
-                yData1 = []
-                yData2 = []
-                yData3 = []
-                var mainIdAll = 'doorAll' + key;
-                var mainIdAvg = 'doorAvg' + key;
-                if ($scope.swiper < $scope.mystorages.length) {
-                    var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">' + key + '</p>' +
-                        '<div id=' + mainIdAll + ' style="min-height:12rem;margin-bottom:.3rem;"></div> ' +
-                        '<div id=' + mainIdAvg + ' style="height: 12rem;"></div>' +
-                        '</div>';
-                    $("#chartView").last().append(innerHTML);
-                    $scope.swiper += 1;
+            $.ajax({
+                type: "POST",
+                url: ER.coldroot + "/i/baseInfo/getKeyValueDataByFilter", traditional: true,
+                data: {
+                    type: $scope.typemode.type[$scope.sl_index],
+                    ismklin: $scope.typemode.ismklin[$scope.sl_index],
+                    oids: $scope.oids,
+                    onames: $scope.echnames,
+                    key: $scope.typemode.key[$scope.sl_index],
+                    startTime: $scope.begin,
+                    endTime: $scope.end
+                },
+                success: function (data) {
+                    if (data.success) {
+                        $scope.drawDataLine(data.entity);
+                    } else {
+                        lineChart.hideLoading();
+                    }
                 }
-                var chart1 = echarts.init($('#' + mainIdAll).get(0));
-                var chart2 = echarts.init($('#' + mainIdAvg).get(0));
-                angular.forEach(storage['DoorTotalTime'], function (item, index) {
-                    xData.unshift(formatTime(item['date']).split(" ")[0])
-                    yData1.unshift((item['value'] / 60).toFixed(2))
-                    yData2.unshift(storage['DoorOpenTimes'][index].value)
-                    yData3.unshift(
-                        storage['DoorOpenTimes'][index].value == 0
-                            ? 0 :
-                        item['value'] / storage['DoorOpenTimes'][index].value / 60
-                    )
-                })
-                var option = {
-                	backgroundColor: '#D2D6DE',
-                	 title: {
-            	        text: '近30日冷库日累积开门总时长及日累积开门次数',
-            	        textStyle: {
-                            fontSize: 13 ,
-                            fontWeight: 'normal'
-                        },
-            	    },
-                    tooltip: {
-                        trigger: 'axis',                        
-                        textStyle: {
-                            fontSize: 12      // 主标题文字颜色
-                        },
-                    },
-                    toolbox: {
-                        show: false,
-                        feature: {
-                            mark: {show: true},
-                            dataView: {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line', 'bar']},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    calculable: true,
-                    legend: {
-                        data: ['开门时长', '开门次数'],
-                        y:'bottom'
-                    },
-                    xAxis: [
-                        {
-                            type: 'category',
-                            data: xData
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: '开门时长(m)',
-                            max: 1500,
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        },
-                        {
-                            type: 'value',
-                            name: '开门次数',
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        }
-                    ],
-                    grid: {
-                        x: 40,
-                        y: 50,
-                        width: '80%'
-                    },
-                    series: [
-                        {
-                            name: '开门时长',
-                            type: 'bar',
-                            data: yData1
-                        },
-                        {
-                            name: '开门次数',
-                            type: 'line',
-                            yAxisIndex: 1,
-                            data: yData2
-                        }
-                    ]
-                };
-                //chart1.setOption(Option);
-                chart1.setOption(option);
-                chart2.setOption($scope.getEchartSingleOption("", xData, yData3, "平均开门时间", "m", "m", "bar"));
-            })
-        })
-    }
-
-    $scope.goDoor = function () {
-        clearSwiper();
-        $scope.drawDoor();
-    }
-
-    function clearSwiper() {
-        $("div").remove(".swiper-slide");
-        $scope.swiper = 0;
-        $scope.defaltswiper = 0;
-    }
-
-    var formatTime = function (timeString) {
-        if (typeof(timeString) == "string") {
-            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+            });
         } else {
-            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+            lineChart.hideLoading();
+            alert("没有设置查询对象！");
+        }
+    };
+
+    $scope.drawDataLine = function (chardata) {
+        var tooltipmd = {trigger: 'axis'};
+        var yAxismode = {type: 'value', name: $scope.sl_unit, axisLabel: {formatter: '{value}'}};
+        var s = $scope.oldnames;
+        var xData = chardata.xdata, ydata = chardata.ydata;
+        xData = xData.length > 0 ? xData : [1, 2, 3, 4];
+        ydata = ydata.length > 0 ? ydata : [{name: $scope.slgptit, type: 'line', data: [34, 35, 34, 21]}];
+        var option = {
+            calculable: true,
+            legend: {data: s},
+            title: {text: $scope.slgptit + $scope.typemode.unit[$scope.sl_index]},
+            tooltip: tooltipmd,
+            legend: {data: [$scope.slgptit]},
+            xAxis: [{type: 'category', data: xData}],
+            yAxis: yAxismode,
+            grid: {x: 80, x2: 80},
+            series: ydata,
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {yAxisIndex: 'none'},
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            }
+        };
+        lineChart.setOption(option);
+        lineChart.hideLoading();
+    };
+
+
+    $scope.chPress = function (vl, vtxt) {//切换高低压
+        $scope.typemode.key[$scope.sl_index] = vl;
+        $scope.typemode.tit[$scope.sl_index] = vtxt;
+    };
+    $scope.chexTemp = function ($event) {//切换排气温度
+        var em = $($event.target), oid = em.attr("value");
+        angular.forEach($scope.compressorGroups, function (item) {
+            if (item.id == oid) {
+                $http.get(ER.coldroot + '/i/compressor/findBygroupId?groupId=' + item.id).success(function (data) {
+                    $scope.selectedCompressorGroupId = item.id;
+                    $scope.selectedCompressors = data;
+                })
+            }
+        })
+    };
+
+    $scope.selectTemper = function ($event) {
+        var em = $($event.target);
+        if (em.hasClass("selectLi")) {
+            em.removeClass("selectLi");
+        } else {
+            em.addClass("selectLi");
         }
     }
 
-    $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
-        var option = {
-    		backgroundColor: '#D2D6DE',
-            tooltip: {
-                trigger: 'axis',                   
-                textStyle: {
-                    fontSize: 12      // 主标题文字颜色
-                }
-            },
-            title: {
-                text: title,
-                x: 'center',
-                textStyle: {
-                    fontSize: 16,
-                    fontWeight: 400,
-                    color: '#333'          // 主标题文字颜色
-                },
-            },
-            calculable: true,
-            grid: {
-                x: 55,
-                y: 60,
-                x2: 75,
-                /*y2: 60,*/
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    data: xData
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: yName + "(" + yUnit + ")"
-                }
-            ],
-            series: [
-                {
-                    name: lineName,
-                    type: type,
-                    data: yData,
-                }
-            ]
-        };
-        return option
+    $scope.getSelected = function () {
+        $scope.sltit == "";
+        $scope.oids = [];
+        $scope.oldnames = [], $scope.echnames = [], keem = $(".defaultSelect"), slemkey = "#Temp_ul_" + $scope.sl_index + " li.selectLi", subtit = "";
+        if ($scope.sl_index == 4) {
+            subtit = "-" + $('#Temp_ul_4 input[name="cmsbkey"]:checked').parent()[0].innerText;
+        } else if ($scope.sl_index == 5) {
+            slemkey = "#Temp_ul_5_key_span_" + $('#Temp_ul_5 input[name="cmptkey"]:checked').val() + " li.selectLi";
+        }
+        var lilist = $(slemkey);
+        $.each(lilist, function (index, item) {
+            $scope.oids.push($(item).attr("oid"));
+            $scope.oldnames.push(item.innerText);
+            $scope.echnames.push(item.innerText + $scope.typemode.tit[$scope.sl_index]);
+        });
+        $scope.slgptit = keem.text().replace(/\s/gi, '');
+        $scope.sltit = $scope.slgptit + subtit + "-{" + ($scope.oldnames.join(",")) + "}";
+        $scope.seletedDatas = $scope.sltit;
+        $scope.$apply(function () {
+            $scope.seletedDatas;
+        });
     }
 
-    $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
-        var option = {
-    		backgroundColor: '#D2D6DE',
-    		 title: {
-	 	       text: '近30日冷库日平均单次开门时长',
-	 	       textStyle: {
-	                fontSize: 13,
-	                fontWeight: 'normal'
-	            }	     	        
-	 	    },
-            tooltip: {
-                trigger: 'axis',                   
-                textStyle: {
-                    fontSize: 12 ,
-                    fontWeight: 'normal'
-                },
-            },
-            calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    data: xData
+    $(function () {
+        var $index = '';
+        /*选择一级项目*/
+        $(".project .default").click(function () {
+            $index = $(this).index();
+            $(this).addClass('defaultSelect').siblings().removeClass('defaultSelect');
+            $scope.sl_index = $(".defaultSelect").attr("kval");
+            if ($scope.sl_index == 5) {//处理特殊情况
+                var chptkey = $('#Temp_ul_5 input[name="cmptkey"]:checked').val();//获得选择的压缩机组
+                if (chptkey == undefined || chptkey == '') {
+                    var ptck = $('#Temp_ul_5 input[name="cmptkey"]:first');
+                    ptck.attr("checked", true);
+                    chptkey = ptck.val();
                 }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: yName + "(" + yUnit + ")",
-                    min: yMin ? yMin : 0
-                }
-            ],
-            grid: {
-                x: 45,
-                y: 50,
-                width: '80%'
-            },
-            series: [
-                {
-                    name: lineName,
-                    type: type,
-                    data: yData,
-                }
-            ]
-        };
-        return option;
-    }
+                $("#Temp_ul_5 span").addClass("hide");
+                $("#Temp_ul_5_key_span_" + chptkey).removeClass("hide");
+            }
+            $(".coverBg").fadeIn();
+            $(".coverBg").children('.my_list').eq($index).show().siblings().not('.bottomBtn').not('.closeCover').hide();
+        })
+        /*选择二级项目*/
+        $(".my_list ul li").click(function () {
+            $(this).parents('.my_list').siblings().find('li').removeClass('selectLi');
+            $(this).toggleClass('selectLi');
+        })
+        /*点击确定  + X 隐藏遮罩*/
+        $('.bottomBtn .mybtn,.closeCover').click(function () {
+            $(".coverBg").hide();
+            $scope.getSelected();
+        })
+    })
+
+    $(function () {
+        $('#startTime').date({theme: "datetime"});
+        $('#endTime').date({theme: "datetime"});
+    })
 });
