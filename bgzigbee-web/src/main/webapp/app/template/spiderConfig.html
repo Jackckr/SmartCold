@@ -310,9 +310,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-lg-4">包装材料修正值b:</label>
+                                    <label class="control-label col-lg-4">保温材料修正值b:</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="wallEntity.b" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">墙外温度:</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="wallEntity.tw" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-8">
@@ -325,8 +331,8 @@
                                 <ajax-table array-objects="walls"
                                             delete-url="/i/spiderConfig/delete/wallSet"
                                             update-url="/i/spiderConfig/update/wallSet"
-                                            colums-th="名字,墙长度(M),墙高度(M),系数a,外侧系数,内侧系数,厚度,导热系数,修正值b"
-                                            colums="name,length,width,a,aw,an,thick,daorexishu,b"></ajax-table>
+                                            colums-th="名字,墙长度(M),墙高度(M),系数a,外侧系数,内侧系数,厚度,导热系数,修正值b,墙外温度"
+                                            colums="name,length,width,a,aw,an,thick,daorexishu,b,tw"></ajax-table>
                             </div>
                         </form>
                         <!--  -->

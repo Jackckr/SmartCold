@@ -24,6 +24,8 @@ public class WallSetEntity {
 
 	private float b;
 
+	private float tw;
+
 	private String mapping;
 
 	public int getId() {
@@ -112,6 +114,14 @@ public class WallSetEntity {
 
 	public void setB(float b) {
 		this.b = b;
+	}
+
+	public float getTw() {
+		return tw;
+	}
+
+	public void setTw(float tw) {
+		this.tw = tw;
 	}
 
 	public String getMapping() {
