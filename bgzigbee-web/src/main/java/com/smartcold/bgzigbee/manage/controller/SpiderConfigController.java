@@ -89,7 +89,7 @@ public class SpiderConfigController {
 	public Object addRdcWeight(@RequestBody RDCWeightSetEntity rdcWeightSetEntity) {
 		try {
 			rdcWeightSetMapper.insertRdcWeight(rdcWeightSetEntity);
-			return findRdcWeight(rdcWeightSetEntity.getId());
+			return findRdcWeight(rdcWeightSetEntity.getRdcid());
 		} catch (Exception e) {
 			return new ResultDto(-1, "添加失败");
 		}
@@ -97,7 +97,6 @@ public class SpiderConfigController {
 	@RequestMapping("/findRdcWeight")
 	public Object findRdcWeight(int rdcid) {
 		RDCWeightSetEntity rdcWeightSetEntity = rdcWeightSetMapper.findRdcWeightSetByRdcId(rdcid);
-		System.out.println("---");
 		return rdcWeightSetEntity;
 	}
 	

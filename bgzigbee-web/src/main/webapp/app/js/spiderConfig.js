@@ -96,25 +96,32 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		var weight = $scope.weight;
 		if(weight.factor1 && weight.factor2 && weight.factor3 && weight.transport1 && weight.transport2
 				&& weight.transport3 && weight.crew1 && weight.crew2 && weight.crew3){
-			$http.post('/i/spiderConfig/addRdcWeight',{
-				rdcid:$scope.vm.choseRdc.id,
-				factor1:weight.factor1,
-				factor2:weight.factor2,
-				factor3:weight.factor3,
-				transport1:weight.transport1,
-				transport2:weight.transport2,
-				transport3:weight.transport3,
-				crew1:weight.crew1,
-				crew2:weight.crew2,
-				crew3:weight.crew3}).success(function(data){
-					if (data !=null && data!="") {
-	                    $scope.weightdisplay.push(data);
-	                    $scope.weight = {};
-	                }
-					else{
-						alert("添加失败");
-					}
+			 $http.get("/i/spiderConfig/findRdcWeight?rdcid="+$scope.vm.choseRdc.id).success(function(data){
+		    	   if(data!=""&&data!=null)
+		    		   alert("该RDC已经存在权重，请勿重复添加");
+		    	   else{
+		    		   $http.post('/i/spiderConfig/addRdcWeight',{
+		   				rdcid:$scope.vm.choseRdc.id,
+		   				factor1:weight.factor1,
+		   				factor2:weight.factor2,
+		   				factor3:weight.factor3,
+		   				transport1:weight.transport1,
+		   				transport2:weight.transport2,
+		   				transport3:weight.transport3,
+		   				crew1:weight.crew1,
+		   				crew2:weight.crew2,
+		   				crew3:weight.crew3}).success(function(data){
+		   					if (data !=null && data!="") {
+		   	                    $scope.weightdisplay.push(data);
+		   	                    $scope.weight = {};
+		   	                }
+		   					else{
+		   						alert("添加失败");
+		   					}
+		   				});
+		    	   }
 				});
+			
 		}else{
 			alert("输入不完整");
 		}
@@ -868,6 +875,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.addCompressGroup = function(){
 		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
+		$scope..compressGroupEntity.evaporativeid = $scope.vm.choseEvaporative.id;
 		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
 			if(data.status == -1){
 				alert(data.message);

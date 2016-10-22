@@ -107,7 +107,7 @@
                             </div>
                         </form>
                         <form class="navbar-form">
-                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'evaporativewaterset' || choseDevice.table =='evaporativeblowerset'">
+                            <div class="col-lg-4 form-group" style="margin-top:20px;" ng-show="choseDevice.table == 'compressorgroupset' ||choseDevice.table == 'evaporativewaterset' || choseDevice.table =='evaporativeblowerset'">
                                 <label>冷凝系统：</label>
                                 <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
                             </div>
@@ -1358,45 +1358,45 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-3 control-label">温度因子权重3</label>
+                                    <label for="" class="col-lg-3 control-label"><em style="color:red">*</em>温度因子权重3</label>
                                     <div class="col-lg-9">
                                         <input ng-model="weight.factor3" class="form-control"/>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="" class="col-lg-3 control-label">运管权重1</label>
+                                    <label for="" class="col-lg-3 control-label"><em style="color:red">*</em>运管权重1</label>
                                     <div class="col-lg-9">
                                         <input ng-model="weight.transport1" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-3 control-label">运管权重2</label>
+                                    <label for="" class="col-lg-3 control-label"><em style="color:red">*</em>运管权重2</label>
                                     <div class="col-lg-9">
                                         <input ng-model="weight.transport2" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-lg-3 control-label">运管权重3</label>
+                                    <label for="" class="col-lg-3 control-label"><em style="color:red">*</em>运管权重3</label>
                                     <div class="col-lg-9">
                                         <input ng-model="weight.transport3" class="form-control"/>
                                     </div>
                                 </div>
                                 
                                  <div class="form-group">
-                                    <label for="" class="col-lg-3 control-label">机组权重1</label>
+                                    <label for="" class="col-lg-3 control-label"><em style="color:red">*</em>机组权重1</label>
                                     <div class="col-lg-9">
                                         <input ng-model="weight.crew1" class="form-control"/>
                                     </div>
                                 </div>
                                  <div class="form-group">
-                                    <label for="" class="col-lg-3 control-label">机组权重2</label>
+                                    <label for="" class="col-lg-3 control-label"><em style="color:red">*</em>机组权重2</label>
                                     <div class="col-lg-9">
                                         <input ng-model="weight.crew2" class="form-control"/>
                                     </div>
                                 </div>
                                  <div class="form-group">
-                                    <label for="" class="col-lg-3 control-label">机组权重3</label>
+                                    <label for="" class="col-lg-3 control-label"><em style="color:red">*</em>机组权重3</label>
                                     <div class="col-lg-9">
                                         <input ng-model="weight.crew3" class="form-control"/>
                                     </div>
