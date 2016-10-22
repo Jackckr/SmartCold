@@ -139,8 +139,8 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
                     oids: $scope.oids,
                     onames: $scope.echnames,
                     key: $scope.typemode.key[$scope.sl_index],
-                    startTime: $scope.begin,
-                    endTime: $scope.end
+                    startTime: $("#startTime").val(),
+                    endTime: $("#endTime").val()
                 },
                 success: function (data) {
                     if (data.success) {
@@ -273,4 +273,12 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         $('#startTime').date({theme: "datetime"});
         $('#endTime').date({theme: "datetime"});
     })
+
+    $scope.goHistoryData = function () {
+        window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;
+    }
+
+    $scope.goReport = function () {
+        window.location.href = 'analysisReport.html?storageID=' + $scope.rdcId;
+    }
 });

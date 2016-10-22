@@ -13,7 +13,8 @@
         `an`,
         `thick`,
         `daorexishu`,
-        `b`
+        `b`,
+        `tw`
         )
         VALUES 
         (
@@ -26,7 +27,8 @@
         #{an},
         #{thick},
         #{daorexishu},
-        #{b}
+        #{b},
+        #{tw}
         )
     </insert>
 
@@ -50,7 +52,8 @@
 	        `an` = #{an},
 	        `thick` = #{thick},
 	        `daorexishu` = #{daorexishu},
-	        `b` = #{b}
+	        `b` = #{b},
+	        `tw` = #{tw}
         WHERE `id` = #{id}
     </update>
 </mapper>
