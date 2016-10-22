@@ -119,7 +119,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		   						alert("添加失败");
 		   					}
 		   				});
-		    	   }
+			 }
+			 });
 		}else{
 			alert("输入不完整");
 		}
@@ -873,7 +874,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.addCompressGroup = function(){
 		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
-		$scope..compressGroupEntity.evaporativeid = $scope.vm.choseEvaporative.id;
+		$scope.compressGroupEntity.evaporativeid = $scope.vm.choseEvaporative.id;
 		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
 			if(data.status == -1){
 				alert(data.message);
