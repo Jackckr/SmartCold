@@ -649,7 +649,7 @@ em{
 	margin-right: .3rem;
 	background-size:cover;
 	overflow: hidden;
-	/* border:1px solid #eee */
+	border-radius:3px;
 }
 .imgFl img{
 	width:100%;
