@@ -12,12 +12,12 @@
 	</select>
 	
 	<select id="findFanPower" parameterType="map" resultType="map">
-		select group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from blowerset where  `frostPower` >0 
+		select coldStorageId,group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from blowerset where  `fanPower` >0 
 		<if test="ids!=null"> and coldStorageId in(${ids}) </if> 
 		<if test="ids==null"> GROUP BY `coldStorageId` </if> 
 	</select>
     <select id="findFrostPower" parameterType="map" resultType="map">
-		select group_concat(`id`) ids ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0 
+		select coldStorageId,group_concat(`id`) ids ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0 
 		<if test="ids!=null"> and coldStorageId in(${ids}) </if> 
 		<if test="ids==null"> GROUP BY `coldStorageId` </if> 
 	</select>

@@ -11,9 +11,10 @@ import java.io.Serializable;
 public enum QuantityType implements Serializable{
 	GoodsHeat(1,"GoodsHeat","Q货"),
 	QFrost(4, "QFrost", "Q霜"),
+	QForklift(2, "QForklift", "Q叉"),//2->14
+	WallHeat(1,"WallHeat","5保温热量"),
 	Qblower(4, "Qblower", "Q风"),
 	Qctdoor(2, "Qctdoor", "Q门"),//2     换气
-	QForklift(2, "QForklift", "Q叉"),//2->14
 	Qlighting(2, "Qlighting", "Q照");//2->15
 	private int type;
 	private String key;
