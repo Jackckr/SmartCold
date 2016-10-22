@@ -6,9 +6,9 @@
 	
 	
 	
-    <!-- 计算Q  根据rdcid 汇总 -->
-    <select id="findColdstorages" parameterType="map" resultType="map">
-		 SELECT `RDCID` rdcid, group_concat(id) ids  FROM `${talbe}` GROUP BY rdcid;
+    <!-- 计算Q   -->
+    <select id="getcoldstoragedoorset" parameterType="map" resultType="map">
+		 SELECT rdcid,coldstorageid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY coldstorageid;
 	</select>
 	
 	<select id="findFanPower" parameterType="map" resultType="map">
@@ -24,9 +24,9 @@
 	
     <select id="getPowerGroupByRDC" parameterType="map" resultType="map">
 		SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers
-	    <if test="rdcids!=null">,sum(power)/COUNT(*) avgpower </if> 
+	    <if test="rdcid!=null">,sum(power)/COUNT(*) avgpower </if> 
 	    FROM `${talbe}` where `power` >0 
-		<if test="rdcids!=null"> and rdcid in(${rdcids}) </if> 
+		<if test="rdcid!=null"> and rdcid in(${rdcid}) </if> 
 		GROUP BY rdcid;
 	</select>
 	<!-- 计算开门次数 -->
