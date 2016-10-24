@@ -56,7 +56,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		$scope.hidefilter();
 		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}
 		if($scope.oids&&$scope.oids.length>0){
-			lineChart.showLoading({text: '数据加载中。。。。' }); 
+			lineChart.showLoading({text: '数据加载中……' }); 
 			lineChart.clear(); 
 			bothTime = $scope.picktime.split(" - ");
 			$scope.begin = bothTime[0],$scope.end = bothTime[1];
