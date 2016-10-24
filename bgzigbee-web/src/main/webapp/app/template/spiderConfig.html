@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">理论能耗(KJ/h):</label>
+                                    <label class="control-label col-lg-6"><em style="color:red">*</em>理论能耗(KJ/h):</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.energyCost" class="form-control" />
                                     </div>
@@ -146,13 +146,13 @@
                                     </div>
                                 </div> -->
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">起始温度(℃):&nbsp;&nbsp;</label>
+                                    <label class="control-label col-lg-6"><em style="color:red">*</em>起始温度(℃):&nbsp;&nbsp;</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.startTemperature" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">温度差(℃):&nbsp;&nbsp;</label>
+                                    <label class="control-label col-lg-6"><em style="color:red">*</em>温度差(℃):&nbsp;&nbsp;</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.tempdiff" class="form-control" />
                                     </div>
@@ -200,15 +200,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">冷库内部温度(℃):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-4">
-                                        <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.intempe" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-6">
                                     <label class="control-label col-lg-6">冷库外部温度(℃):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-4">
-                                        <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.outtempe" class="form-control" />
+                                    <div class="col-lg-6">
+                                        <select ng-options="storage.id as storage.name for storage in storages" class="form-control" ng-model="storageEntity.refoid" style="width: 133px;    display: initial;"></select>
+                                      / <input type="number" placeholder="请输入数字" ng-model="storageEntity.outtempe" class="form-control" style="width: 100px;    display: initial;"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-12">
@@ -220,8 +215,8 @@
                                 <ajax-table array-objects="storages"
                                             delete-url="/i/coldStorage/deleteStorage"
                                             update-url="/i/coldStorage/updateStorage"
-                                            colums-th="冷库名,理论能耗(KJ/h),起始温度(℃),温度差(℃),超温报警值(℃),超温报警延时(s),冷库长(m),冷库宽(m),冷库高(m),冷库内部湿度(%RH),冷库外部湿度(%RH),冷库内部温度(℃),冷库外部温度(℃)"
-                                            colums="name,energyCost,startTemperature,tempdiff,overtempalarm,overtempdelay,length,width,height,inhumidity,outhumidity,intempe,outtempe"></ajax-table>
+                                            colums-th="冷库名,理论能耗(KJ/h),起始温度(℃),温度差(℃),超温报警值(℃),超温报警延时(s),冷库长(m),冷库宽(m),冷库高(m),冷库内部湿度(%RH),冷库外部湿度(%RH),冷库内引用冷库id,冷库外部温度(℃)"
+                                            colums="name,energyCost,startTemperature,tempdiff,overtempalarm,overtempdelay,length,width,height,inhumidity,outhumidity,refoid,outtempe"></ajax-table>
                             </div>
                         </form>
                         <!--  -->

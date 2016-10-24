@@ -34,8 +34,8 @@
 	 SELECT
 			 `id`,
 			 `length` * `width` * `height` AS cgvolume,
-       (select enthalpy from airenthalpy where humidity=inhumidity and  temperature=intempe) as hn,
-       (select enthalpy from airenthalpy where humidity=outhumidity and  temperature=outtempe) as hw,
+       (select enthalpy from sc360.airenthalpy where humidity=inhumidity and  temperature=intempe) as hn,
+       (select enthalpy from sc360.airenthalpy where humidity=outhumidity and  temperature=outtempe) as hw,
        (select IF (MIN(`value`)=MAX(`value`),MIN(`value`),MIN(`value`) +(MAX(`value`)-MIN(`value`))*(6000-MIN(`volume`))/(MAX(`volume`)-MIN(`volume`)) )AS vvlue from `ventilationset`  where abs(`volume`-cgvolume) =(select min(abs(`volume`-cgvolume)) from ventilationset))as vvalue 
 		FROM
 			`coldstorageset` 

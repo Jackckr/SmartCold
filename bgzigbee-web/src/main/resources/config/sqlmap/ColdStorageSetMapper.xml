@@ -36,6 +36,7 @@
 	   	 	`inhumidity`=#{inhumidity},
 	    	`outhumidity`= #{outhumidity},
 	    	`intempe`= #{intempe},
+	    	`refoid`= #{refoid},
 	    	`outtempe`= #{outtempe}
 	    	
 		WHERE id=#{id}
@@ -60,6 +61,7 @@
 	`inhumidity`,
 	`outhumidity`,
 	`intempe`,
+	`refoid`,
 	`outtempe`
 	)
 	VALUES
@@ -80,6 +82,7 @@
 	#{inhumidity },
 	#{outhumidity },
 	#{intempe },
+	#{refoid },
 	#{outtempe}
 	)
 	</insert>
