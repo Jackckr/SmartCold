@@ -388,4 +388,19 @@ ul,li {
 	display: inline-block;
 }
 /*报表功能*/
-#rpt_asis_table th,#rpt_asis_table td{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+html, body {
+    -ms-overflow-style: scrollbar;
+}
+#rpt_asis_table th,#rpt_asis_table td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.myrecord {
+	color: #333;
+	background: #D1D5DE;
+	margin: 10px 15px;
+	padding-right: 15px;
+	font-size: 12px;
+}

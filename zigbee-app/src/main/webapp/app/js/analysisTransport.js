@@ -86,7 +86,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
 
     $scope.drawDoor = function () {
         var endTime = new Date();
-        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60);
         $http.get(ER.coldroot + '/i/coldStorage/findAnalysisByRdcidKeysDate', {
             params: {
                 "startTime": formatTime(startTime),
@@ -163,7 +163,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     yAxis: [
                         {
                             type: 'value',
-                            name: '开门时长(m)',
+                            name: '开门时长(min)',
                             max: 1500,
                             axisLabel: {
                                 formatter: '{value}'
@@ -178,9 +178,9 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                         }
                     ],
                     grid: {
-                        x: 40,
+                        x: 45,
                         y: 50,
-                        width: '80%'
+                        width: '75%'
                     },
                     series: [
                         {
@@ -197,7 +197,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     ]
                 };
                 chart1.setOption(option);
-                chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "m", "m", "bar"));
+                chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "min", "m", "bar"));
             })
         })
     }
@@ -459,7 +459,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 }
             ],
             grid: {
-                x: 45,
+                x: 50,
                 y: 50,
                 width: '80%'
             },
