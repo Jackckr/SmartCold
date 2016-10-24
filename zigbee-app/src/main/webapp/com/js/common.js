@@ -49,6 +49,10 @@ window.onload = function(){
 };
 $(function(){
 	//$(".footer li").eq(2).find('span.countNum').html('1')
+	//一键回到顶部
+	var viewHeight=$(window).height();
+	$(window).scroll(function(event) {if ($(window).scrollTop() >= viewHeight) {$('.goTop').show();} else {$('.goTop').hide();}});
+	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
 })
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。

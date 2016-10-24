@@ -218,13 +218,16 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
                                 data: xData
                             }
                         ],
+                        grid:{
+                        	x:45
+                        },
                         yAxis: [
                             {
                                 type: 'value',
-                                name: '运行时长',
+                                name: '运行时长(m)',
                                 max: 1500,
                                 axisLabel: {
-                                    formatter: '{value} m'
+                                    formatter: '{value}'
                                 }
                             },
                             {
@@ -358,6 +361,9 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
                     data: xData
                 }
             ],
+            grid:{
+            	x:45
+            },
             yAxis: [
                 {
                     type: 'value',

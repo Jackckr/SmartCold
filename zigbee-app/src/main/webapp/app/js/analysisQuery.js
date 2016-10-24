@@ -136,7 +136,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             lineChart = echarts.init($('#historyChart')[0]);
         }
         if ($scope.oids && $scope.oids.length > 0) {
-            lineChart.showLoading({text: '数据加载中。。。。'});
+            lineChart.showLoading({text: '数据加载中……'});
             lineChart.clear();
 
             $.ajax({
@@ -161,7 +161,11 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             });
         } else {
             lineChart.hideLoading();
-            alert("没有设置查询对象！");
+            //alert("没有设置查询对象！");
+            layer.open({
+	           content: '没有设置查询对象哦^_^'
+	           ,btn: '确定'
+	        });
         }
     };
 

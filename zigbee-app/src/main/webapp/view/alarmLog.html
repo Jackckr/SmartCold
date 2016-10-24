@@ -96,32 +96,5 @@
         </li>
     </ul>
     <div class="goTop"><i class="iconfont">&#xe747;</i></div>
-    <script type="text/javascript">
-
-		$(function() {
-			
-			var viewHeight=$(window).height();
-
-			$(window).scroll(function(event) {
-				
-				//如果浏览器卷去了一屏的高
-				if($(window).scrollTop()>=viewHeight){
-					$('.goTop').show();
-				}else{
-					$('.goTop').hide();
-				}
-				console.log(viewHeight+'***'+$(window).scrollTop())
-
-			});
-
-			$('.goTop').click(function(event) {
-				$('html,body').stop().animate({
-					'scrollTop':0
-				}, 800); 				
-			});
-
-		});
-
-	</script>
 </body>
 </html>

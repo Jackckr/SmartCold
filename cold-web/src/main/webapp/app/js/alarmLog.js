@@ -4,9 +4,9 @@
  * 计算压缩机剩余时间
  */
 coldWeb.controller('baoyangReminder', function( $scope, $rootScope ) {
-	$(".mainHeight").height( $(".content-wrapper").height());
+	//$(".mainHeight").height( $(".content-wrapper").height());
 	 $scope.aredayTime = function(time) {
-			return "还剩"+ time+"小时";
+			return "还剩  "+ time+"小时";
       };
 });
 /**
