@@ -87,7 +87,7 @@
     			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>
         <ul class="otherList black">
-            <li><a href="javaScript:;" id="goHistoryData" ng-click="goHistoryData()">历史数据查询</a></li>
+            <li><a href="javaScript:;" id="goHistoryData" ng-click="goHistoryData()" style="color:#5BB789;">历史数据查询</a></li>
             <li><a href="javaScript:;" id="goReport" ng-click="goReport()">报表功能</a></li>
         </ul>
     </div>
@@ -217,7 +217,7 @@
             <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
 
             <p class="info">告警</p>
-            <span class="countNum">99</span>
+            <span class="countNum" ng-if="alarmTotalCnt > 0">{{alarmTotalCnt}}</span>
         </a>
     </li>
     <li>

@@ -47,6 +47,15 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     });
 
     $scope.viewStorage = function (rdcId) {
+        //根据rdcid查询该rdc的报警信息
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
+            "rdcId": rdcId
+        }
+        }).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.alarmTotalCnt = data.length;
+            }
+        });
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
@@ -157,7 +166,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     };
 
     $scope.drawDataLine = function (chardata) {
-        var tooltipmd = {trigger: 'axis'};
+        var tooltipmd = {trigger: 'axis',textStyle:{fontSize:12}};
         var yAxismode = {type: 'value', name: $scope.sl_unit, axisLabel: {formatter: '{value}'}};
         var s = $scope.oldnames;
         var xData = chardata.xdata, ydata = chardata.ydata;
@@ -171,18 +180,8 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             legend: {data: [$scope.slgptit]},
             xAxis: [{type: 'category', data: xData}],
             yAxis: yAxismode,
-            grid: {x: 80, x2: 80},
+            grid: {x: 50,width:'70%'},
             series: ydata,
-            toolbox: {
-                show: true,
-                feature: {
-                    dataZoom: {yAxisIndex: 'none'},
-                    dataView: {readOnly: false},
-                    magicType: {type: ['line', 'bar']},
-                    restore: {},
-                    saveAsImage: {}
-                }
-            }
         };
         lineChart.setOption(option);
         lineChart.hideLoading();

@@ -24,7 +24,9 @@ public class WallSetEntity {
 
 	private float b;
 
-	private float tw;
+	private Float tw;
+
+	private float outsidecoldstorageid;
 
 	private String mapping;
 
@@ -116,12 +118,20 @@ public class WallSetEntity {
 		this.b = b;
 	}
 
-	public float getTw() {
+	public Float getTw() {
 		return tw;
 	}
 
-	public void setTw(float tw) {
+	public void setTw(Float tw) {
 		this.tw = tw;
+	}
+
+	public float getOutsidecoldstorageid() {
+		return outsidecoldstorageid;
+	}
+
+	public void setOutsidecoldstorageid(float outsidecoldstorageid) {
+		this.outsidecoldstorageid = outsidecoldstorageid;
 	}
 
 	public String getMapping() {

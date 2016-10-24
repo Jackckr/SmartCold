@@ -14,7 +14,8 @@
         `thick`,
         `daorexishu`,
         `b`,
-        `tw`
+        `tw`,
+        `outsidecoldstorageid`
         )
         VALUES 
         (
@@ -28,7 +29,8 @@
         #{thick},
         #{daorexishu},
         #{b},
-        #{tw}
+        #{tw},
+        #{outsidecoldstorageid}
         )
     </insert>
 
@@ -53,7 +55,8 @@
 	        `thick` = #{thick},
 	        `daorexishu` = #{daorexishu},
 	        `b` = #{b},
-	        `tw` = #{tw}
+	        `tw` = #{tw},
+	        `outsidecoldstorageid` = #{outsidecoldstorageid}
         WHERE `id` = #{id}
     </update>
 </mapper>
