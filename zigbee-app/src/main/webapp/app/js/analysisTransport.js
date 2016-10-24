@@ -86,7 +86,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
 
     $scope.drawDoor = function () {
         var endTime = new Date();
-        var startTime = new Date(endTime.getTime() - 30 * 24 * 60);
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
         $http.get(ER.coldroot + '/i/coldStorage/findAnalysisByRdcidKeysDate', {
             params: {
                 "startTime": formatTime(startTime),
