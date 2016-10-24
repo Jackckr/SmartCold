@@ -31,15 +31,87 @@
 	</select>
 	<!-- 计算开门次数 -->
     <select id="getColdstorageset" parameterType="map" resultType="map">
-	 SELECT
-			 `id`,
-			 `length` * `width` * `height` AS cgvolume,
-       (select enthalpy from sc360.airenthalpy where humidity=inhumidity and  temperature=intempe) as hn,
-       (select enthalpy from sc360.airenthalpy where humidity=outhumidity and  temperature=outtempe) as hw,
-       (select IF (MIN(`value`)=MAX(`value`),MIN(`value`),MIN(`value`) +(MAX(`value`)-MIN(`value`))*(6000-MIN(`volume`))/(MAX(`volume`)-MIN(`volume`)) )AS vvlue from `ventilationset`  where abs(`volume`-cgvolume) =(select min(abs(`volume`-cgvolume)) from ventilationset))as vvalue 
+	  SELECT
+			ct.`id`,
+			ct.`length` * ct.`width` * ct.`height` AS cgvolume,
+			(
+				SELECT
+					enthalpy
+				FROM
+					sc360.airenthalpy
+				WHERE
+					humidity = inhumidity
+				AND temperature = ceil(
+					(
+						SELECT
+							avg(`value`)
+						FROM
+							`sc360`.`coldstorageanalysis` sis
+						WHERE
+							sis.`type` = ct.`id`
+						AND sis.oid = ct.id
+						AND sis.`key` = "AvgTemp"
+						AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
+					)
+				)
+			) AS hn,
+			(
+				SELECT
+					enthalpy
+				FROM
+					sc360.airenthalpy
+				WHERE
+					humidity = outhumidity
+				AND temperature =
+				IF (
+					ct.`refoid`,
+					ceil(
+						(
+							SELECT
+								avg(`value`)
+							FROM
+								`sc360`.`coldstorageanalysis` sis
+							WHERE
+								sis.`type` = ct.`id`
+							AND sis.oid = ct.id
+							AND sis.`key` = "AvgTemp"
+							AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
+						)
+					),
+					ct.`outtempe`
+				)
+			) AS hw,
+			(
+				SELECT
+		
+				IF (
+					MIN(`value`) = MAX(`value`),
+					MIN(`value`),
+					MIN(`value`) + (MAX(`value`) - MIN(`value`)) * (6000 - MIN(`volume`)) / (
+						MAX(`volume`) - MIN(`volume`)
+					)
+				) AS vvlue
+				FROM
+					`ventilationset`
+				WHERE
+					abs(`volume` - cgvolume) = (
+						SELECT
+							min(abs(`volume` - cgvolume))
+						FROM
+							ventilationset
+					)
+			) AS vvalue
 		FROM
-			`coldstorageset` 
+			`coldstorageset` ct
 		WHERE
-			`length`is not null and  `width` is not null and `height` is not null and  inhumidity is not null and outhumidity is not null and intempe is not null and outtempe is not null;
+			ct.`length` IS NOT NULL
+		AND ct.`width` IS NOT NULL
+		AND ct.`height` IS NOT NULL
+		AND ct.inhumidity IS NOT NULL
+		AND ct.outhumidity IS NOT NULL
+		AND (
+			ct.refoid IS NOT NULL
+			OR ct.outtempe IS NOT NULL
+		);
 	</select>
 </mapper>
