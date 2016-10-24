@@ -146,6 +146,6 @@
 	
 	
 	<select id="findAllWarningLog" parameterType="map" resultType="WarningsLog">
-      select * from `warninglog` where rdcid=#{rdcId} order by addtime desc
+      select * from `warninglog` where rdcid=#{rdcId} order by addtime desc  LIMIT 100;
     </select>
 </mapper>
