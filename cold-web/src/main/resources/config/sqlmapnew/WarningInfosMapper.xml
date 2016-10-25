@@ -12,10 +12,6 @@
     select * from `warningsinfo` where rdcid=#{rdcId} order by addtime desc limit #{point}
 </select>
 
-<select id="findErrWarningByTime" parameterType="map" resultType="WarningsInfo">
-   SELECT * FROM `warningsinfo`  where `level`!=0 and `addtime` >#{startTime};
-</select>
-
 
 <!-- 查询当前错误种类 -->
 <select id="getWrnType" parameterType="map" resultType="WarningsInfo">

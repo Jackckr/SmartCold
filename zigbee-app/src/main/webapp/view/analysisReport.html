@@ -6,10 +6,9 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>分析--报表功能</title>
-<!--     <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
-	<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
@@ -17,8 +16,8 @@
     <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 	<script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-	<script type="text/javascript" src="../com/datepicker/date.js"></script>
-	<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/analysisReport.js" ></script>
 </head>
@@ -87,7 +86,7 @@
     		</span>
 			<ul class="otherList black">
 				<li><a href="javaScript:;" id="goHistoryData" ng-click="goHistoryData()">历史数据查询</a></li>
-				<li><a href="javaScript:;" id="goReport" ng-click="goReport()">报表功能</a></li>
+				<li><a href="javaScript:;" id="goReport" ng-click="goReport()" style="color:#5BB789;">报表功能</a></li>
 			</ul>
 		</div>
     </section>
@@ -107,26 +106,22 @@
 				<div ng-click="showkeyli($event,8,0)" class="default">制冷运行分析</div>
 			</div>	
 			<p><strong>请选择时间范围</strong></p>
-            <p>开始时间<input type="text" id="startTime" class="kbtn" ng-model="begin"/></p>
-            <p>结束时间<input type="text" id="endTime" class="kbtn" ng-model="end"/></p>
+            <p>开始时间<input class="datainp" id="startTime" type="text" placeholder="请选择开始时间" ng-model="begin" readonly></p>
+            <p>结束时间<input class="datainp" id="endTime" type="text" placeholder="请选择结束时间" ng-model="end" readonly></p>
 		</div>		
        	<p class="chaxun"><button class="mybtn" ng-click="search()">查询</button></p>
+       	<h3 class="box-title" id="rpt_asistb_tit"> </h3>
 		<div class="analysis alarmLog">
-			<div class="col-lg-12 box bg-gray">
-				<div class="box-header with-border">
-					<h3 class="box-title" id="rpt_asistb_tit"> </h3>
-				</div>
-				<div id="rpt_asis_coment" class="box-body box table-responsive bg-gray box-gray" style="min-height: 250px;"  ng-show="!rs_msg">
-					<table id="rpt_asis_table" class="table table-bordered cold_warn" style="border:2px solid #337ab7;text-align: center;">
-						<thead id="rpt_asistb_thead">
-						</thead>
-						<tbody id="rpt_asistb_tbody">
-						</tbody>
-					</table>
-				</div>
-				<div ng-show="rs_msg" >
-					<div class="alert alert-warning text-center">{{rs_msg}}</div>
-				</div>
+			<div id="rpt_asis_coment" class="table-responsive" ng-show="!rs_msg">
+				<table id="rpt_asis_table" class="table table-bordered cold_warn">
+					<thead id="rpt_asistb_thead">
+					</thead>
+					<tbody id="rpt_asistb_tbody">
+					</tbody>
+				</table>
+			</div>
+			<div ng-show="rs_msg" >
+				<div class="alert alert-warning text-center">{{rs_msg}}</div>
 			</div>
        	</div>
  	</div>
@@ -156,7 +151,7 @@
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
-                <span class="countNum">99</span>
+                <span class="countNum" ng-if="alarmTotalCnt > 0">{{alarmTotalCnt}}</span>
             </a>
         </li>
         <li>            
@@ -166,5 +161,6 @@
             </a>
         </li>
     </ul>
+    <div class="goTop"><i class="iconfont">&#xe747;</i></div>
 </body>
 </html>

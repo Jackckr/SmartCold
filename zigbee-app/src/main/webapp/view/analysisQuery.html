@@ -9,7 +9,7 @@
     <title>分析--制冷</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" href="../com/css/cold360.css"/>
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
@@ -17,8 +17,8 @@
     <script type="text/javascript" src="../com/js/echarts-all.js"></script>
     <script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/datepicker/date.js"></script>
-    <script type="text/javascript" src="../com/datepicker/iscroll.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js"></script>
     <script type="text/javascript" src="../app/js/analysisQuery.js"></script>
 </head>
@@ -87,7 +87,7 @@
     			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>
         <ul class="otherList black">
-            <li><a href="javaScript:;" id="goHistoryData" ng-click="goHistoryData()">历史数据查询</a></li>
+            <li><a href="javaScript:;" id="goHistoryData" ng-click="goHistoryData()" style="color:#5BB789;">历史数据查询</a></li>
             <li><a href="javaScript:;" id="goReport" ng-click="goReport()">报表功能</a></li>
         </ul>
     </div>
@@ -177,9 +177,9 @@
 
         <p><strong>请选择时间范围</strong></p>
 
-        <p>开始时间<input type="text" id="startTime" class="kbtn" ng-model="begin"/></p>
+        <p>开始时间<input class="datainp" id="startTime" type="text" placeholder="请选择开始时间" ng-model="begin" readonly></p>
 
-        <p>结束时间<input type="text" id="endTime" class="kbtn" ng-model="end"/></p>
+        <p>结束时间<input class="datainp" id="endTime" type="text" placeholder="请选择结束时间" ng-model="end" readonly></p>
     </div>
     <p class="chaxun">
         <button class="mybtn" ng-click="goSearch()">查询</button>
@@ -217,7 +217,7 @@
             <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
 
             <p class="info">告警</p>
-            <span class="countNum">99</span>
+            <span class="countNum" ng-if="alarmTotalCnt > 0">{{alarmTotalCnt}}</span>
         </a>
     </li>
     <li>

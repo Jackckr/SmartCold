@@ -6,10 +6,10 @@
 coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools ) {
 	//初始化页面
 	$scope.pageindex=1;
-	$scope.rdcid=window.sessionStorage.smrdcId;
+	$scope.rdcid=$rootScope.rdcId;
 	$scope.cwheight=$(".content-wrapper").height();
 	$(".mainHeight").height($scope.cwheight); 
-	$scope.physicalday= window.localStorage.physicalday;
+	$scope.physicalday= window.localStorage['physicalday'+$scope.rdcid];
 	var msg={errmsg:{'0':"非法请求","-1":"你还没有冷库信息！","-2":"没有设备","-3":"没有配置！"}};
 	if($scope.physicalday){
 		var date1=new Date($scope.physicalday); var date2=new Date(); var date3=date2.getTime()-date1.getTime();  var days=Math.floor(date3/(86400000)) ; 
@@ -23,7 +23,7 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 		$http.get('/i/physicalController/checkup',{params: {"rdcId":$scope.rdcid } }).success(function(data,status,config,header){
 			 $("#loding").hide();
 		      if(data.success){
-		    	  window.localStorage.physicalday=new Date();
+		    	  window.localStorage['physicalday'+$scope.rdcid]=new Date();
 		    	  $scope.data=data.entity;
 		    	  $scope.showpage(2);
 		      }else{
@@ -35,7 +35,10 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 		if(em){
 			$("#grouppan1,#grouppan2,#grouppan3").addClass("collapsed-box");
 			$("#grouppan1 button[data-widget=collapse] i,#grouppan2 button[data-widget=collapse] i,#grouppan3 button[data-widget=collapse] i").removeClass("fa-minus").addClass("fa-plus");
-			$("#"+em).removeClass("collapsed-box");
+			$("#grouppan1 .box-body,#grouppan2 .box-body,#grouppan2 .box-body ").css({ display:"none"});
+			
+			$("#"+em ).removeClass("collapsed-box");
+			$("#"+em+" .box-body").css({ display:"block"});
 			$("#"+em+" button[data-widget=collapse] i").removeClass("fa-plus").addClass("fa-minus");
 //			$("#phsg_sour3:first").prepend($("#"+em));
 		}

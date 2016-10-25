@@ -4,7 +4,7 @@
   			<p><span class="blysj">{{value.name}}</span></p>
   			<div class="row">
   				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 alarm_bg" ng-repeat="obj in  value.compressors" >
-  					<strong class="remain" oid="{{obj.id}}"><i>{{aredayTime(obj.maintenancetime)}}</i></strong>
+  					<strong class="remain" oid="{{obj.id}}"><i>{{aredayTime(obj.id,obj.maintenancetime,obj.lastMaintainTime)}}</i></strong>
   					<p><b>{{obj.name}}距离下次定期保养</b></p>
   				</div>
   			</div>

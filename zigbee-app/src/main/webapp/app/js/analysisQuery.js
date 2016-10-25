@@ -47,6 +47,15 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     });
 
     $scope.viewStorage = function (rdcId) {
+        //根据rdcid查询该rdc的报警信息
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
+            "rdcId": rdcId
+        }
+        }).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.alarmTotalCnt = data.length;
+            }
+        });
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
@@ -123,11 +132,22 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     }
     $scope.end = getFormatTimeString(), $scope.begin = $scope.end.substr(0, 10) + " 00:00:00", $scope.picktime = $scope.begin + ' - ' + $scope.end;
     $scope.goSearch = function () {//查询事件
+    	//将字符串转换为日期
+        var begin=new Date($("#startTime").val().replace(/-/g,"/"));
+        var end=new Date($("#endTime").val().replace(/-/g,"/"));
+        //js判断日期
+        if(begin>end){
+           layer.open({
+	           content: '开始时间不能小于结束时间哦^_^'
+	           ,btn: '确定'
+	        });
+           return false;
+        }
         if (lineChart == null) {
             lineChart = echarts.init($('#historyChart')[0]);
         }
         if ($scope.oids && $scope.oids.length > 0) {
-            lineChart.showLoading({text: '数据加载中。。。。'});
+            lineChart.showLoading({text: '数据加载中……'});
             lineChart.clear();
 
             $.ajax({
@@ -152,12 +172,16 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             });
         } else {
             lineChart.hideLoading();
-            alert("没有设置查询对象！");
+            //alert("没有设置查询对象！");
+            layer.open({
+	           content: '没有设置查询对象哦^_^'
+	           ,btn: '确定'
+	        });
         }
     };
 
     $scope.drawDataLine = function (chardata) {
-        var tooltipmd = {trigger: 'axis'};
+        var tooltipmd = {trigger: 'axis',textStyle:{fontSize:12}};
         var yAxismode = {type: 'value', name: $scope.sl_unit, axisLabel: {formatter: '{value}'}};
         var s = $scope.oldnames;
         var xData = chardata.xdata, ydata = chardata.ydata;
@@ -168,21 +192,11 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             legend: {data: s},
             title: {text: $scope.slgptit + $scope.typemode.unit[$scope.sl_index]},
             tooltip: tooltipmd,
-            legend: {data: [$scope.slgptit]},
+            legend: {data: [$scope.slgptit],show:false},
             xAxis: [{type: 'category', data: xData}],
             yAxis: yAxismode,
-            grid: {x: 80, x2: 80},
+            grid: {x: 50,width:'70%'},
             series: ydata,
-            toolbox: {
-                show: true,
-                feature: {
-                    dataZoom: {yAxisIndex: 'none'},
-                    dataView: {readOnly: false},
-                    magicType: {type: ['line', 'bar']},
-                    restore: {},
-                    saveAsImage: {}
-                }
-            }
         };
         lineChart.setOption(option);
         lineChart.hideLoading();
@@ -269,11 +283,18 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         })
     })
 
-    $(function () {
-        $('#startTime').date({theme: "datetime"});
-        $('#endTime').date({theme: "datetime"});
-    })
-
+	jeDate({
+		dateCell:"#startTime",
+		isinitVal:true,
+		isTime:true, 
+		minDate:"2008-08-08 08:08:08"
+	});
+	jeDate({
+		dateCell:"#endTime",
+		isinitVal:true,
+		isTime:true, 
+		minDate:"2008-08-08 08:08:08"
+	});
     $scope.goHistoryData = function () {
         window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;
     }

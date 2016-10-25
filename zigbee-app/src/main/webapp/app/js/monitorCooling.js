@@ -73,6 +73,15 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
     $scope.defaltswiper = 0;
 
     $scope.initCompressorPressure = function (rdcId) {
+        //根据rdcid查询该rdc的报警信息
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
+            "rdcId": rdcId
+        }
+        }).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.alarmTotalCnt = data.length;
+            }
+        });
         // 初始化压缩机组
         $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(
             function (data) {
@@ -499,6 +508,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
                         silent: false
                     },
                     yAxis: {
+                    	name:'温度(℃)',
                         inverse: true,
                         splitArea: {show: false}
                     },

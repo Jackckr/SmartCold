@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/maintain.js" ></script>
 </head>
@@ -43,25 +44,207 @@
 	    </header>
     <!-- header end-->
     <section class="toggle">
-    	<div class="tempture current"><i class="iconfont">&#xe79c;</i>定期维护提醒</div>
-    	<div class="light" onclick="confirm('开发中，敬请期待……')"><i class="iconfont">&#xe7c9;</i>故障维修记录</div>    	
+    	<div class="tempture current mylog"><i class="iconfont">&#xe79c;</i>维护提醒</div>
+    	<div class="light mylog"><i class="iconfont">&#xe7c9;</i>维修记录</div>  
+    	<div class="applyLog mylog"><i class="iconfont" style="color: #438BCB;">&#xe639;</i>维修申请</div>    	
     </section>
     <div class="backDrop"></div>
-	<div class="swiper-container chart temperature maintain">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide" ng-repeat="(key,value) in  compressorGroups">
-            	 <p class="actually">{{value.name}}</p>
-            	 <div class="alarm_bg" ng-repeat="obj in  value.compressors">
-            	 	<strong class="remain" oid="{{obj.id}}">{{aredayTime(obj.maintenancetime)}}</strong>
-            	 	<p>{{obj.name}}距离下次定期保养</p>
-            	 </div>
-            </div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-        <!-- Add Arrows -->
-        <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
-        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
+    <div class="mainTainBottomL">
+	    <!-- 维护提醒html ===================*********==========***********=========-->
+		<div class="swiper-container chart temperature maintain">
+	        <div class="swiper-wrapper">
+	            <div class="swiper-slide" ng-repeat="(key,value) in  compressorGroups">
+	            	 <p class="actually">{{value.name}}</p>
+	            	 <div class="alarm_bg" ng-repeat="obj in  value.compressors">
+	            	 	<strong class="remain" oid="{{obj.id}}">{{aredayTime(obj.maintenancetime)}}</strong>
+	            	 	<p>{{obj.name}}距离下次定期保养</p>
+	            	 </div>
+	            </div>
+	        </div>
+	        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	        <!-- Add Arrows -->
+	        <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
+	        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
+	    </div>
+	  <!-- 维护提醒html  end -->
+	  
+	  <!-- 维护记录html ===================*********============*********==========-->
+		<div class="wxRecords black">
+			<p>维修完结记录</p>
+			<div class="analysis alarmLog">
+				<table class="cold_warn">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>机组名称</th>
+							<th>维修原因/保养要求</th>
+							<th>预约维修时间</th>
+							<th>实际维修时间</th>
+							<th>维修详情</th>
+							<th>备注</th>
+							<th>维修评价</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>机组1，1号压缩机</td>
+							<td>常规检查，更换冷冻油</td>
+							<td>2016-07-02</td>
+							<td>2016-07-03</td>
+							<td>油污染已更换，其他过滤器已检查</td>
+							<td></td>
+							<td contenteditable="true">服务好</td>
+						</tr>
+
+						<tr>
+							<td>2</td>
+							<td>机组1，2号压缩机</td>
+							<td>常规检查，更换冷冻油，压缩机排温高</td>
+							<td>2016-07-02</td>
+							<td>2016-07-03</td>
+							<td>油污染已更换，吸气过滤芯已清洗，其他过滤器已检查</td>
+							<td>下次藏堵需更换新的吸气过滤芯</td>
+							<td contenteditable="true"></td>
+						</tr>
+
+						<tr>
+							<td>3</td>
+							<td>机组2，1号压缩机</td>
+							<td>常规检查，油压差报警</td>
+							<td>2016-07-29</td>
+							<td>2016-07-30</td>
+							<td>油槽过滤网已清洗</td>
+							<td></td>
+							<td contenteditable="true">现场测试正常</td>
+						</tr>
+
+						<tr>
+							<td>4</td>
+							<td>机组2，2号压缩机</td>
+							<td>常规检查</td>
+							<td>2016-08-05</td>
+							<td>2016-08-06</td>
+							<td>已更换干燥过滤芯</td>
+							<td></td>
+							<td contenteditable="true">服务好</td>
+						</tr>
+
+						<tr>
+							<td>5</td>
+							<td>机组2，3号压缩机</td>
+							<td>低油位报警</td>
+							<td>2016-09-15</td>
+							<td>2016-09-17</td>
+							<td>已检查，清洗油过滤器，测试油位控制器性能</td>
+							<td></td>
+							<td contenteditable="true">现场测试正常</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>机组2，4号压缩机</td>
+							<td>接触器吸合时有杂音</td>
+							<td>2016-09-15</td>
+							<td>2016-09-17</td>
+							<td>已检查，接触器松动，积灰导致线圈衔铁接触面毛糙，已更换新接触器。</td>
+							<td></td>
+							<td contenteditable="true">现场测试正常</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>机组2</td>
+							<td>储液器液位低，各项保护是否有效</td>
+							<td>2016-09-15</td>
+							<td>2016-09-17</td>
+							<td>已检查，增补制冷剂</td>
+							<td></td>
+							<td contenteditable="true">服务好，收费合理。</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<p>维修申请记录</p>
+			<div class="analysis alarmLog">
+				<table class="cold_warn">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>机组名称</th>
+							<th>维修原因/保养要求</th>
+							<th>预约维修时间</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>机组1，1号压缩机</td>
+							<td>常规检查，更换冷冻油</td>
+							<td>2016-07-02</td>
+						</tr>
+
+						<tr>
+							<td>2</td>
+							<td>机组1，2号压缩机</td>
+							<td>常规检查，更换冷冻油，压缩机排温高</td>
+							<td>2016-07-02</td>
+						</tr>
+
+						<tr>
+							<td>3</td>
+							<td>机组2，1号压缩机</td>
+							<td>常规检查，油压差报警</td>
+							<td>2016-07-29</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>机组2，2号压缩机</td>
+							<td>常规检查</td>
+							<td>2016-08-05</td>
+						</tr>
+
+						<tr>
+							<td>5</td>
+							<td>机组2，3号压缩机</td>
+							<td>低油位报警</td>
+							<td>2016-09-15</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>机组2，4号压缩机</td>
+							<td>接触器吸合时有杂音</td>
+							<td>2016-09-15</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>机组2</td>
+							<td>储液器液位低，各项保护是否有效</td>
+							<td>2016-09-15</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- 维护记录html end-->  
+	  
+	  <!-- 维护申请html ===================*********============*********==========-->
+	  <div class="mainApply black">
+	  		<div class="applyKid">
+	  			<p>机组名称:</p>
+  				<textarea placeholder="请输入需要维修机组的名称"></textarea>
+	  			
+	  		</div>
+	  		<div class="applyKid">
+	  			<p>维修原因/保养要求:</p>
+  				<textarea colspan="10" rowspan="10" placeholder="请输入维修原因/保养要求"></textarea>	  			
+	  		</div>
+	  		<div class="applyKid">
+	  			<p>预约维修时间:</p>
+	  			<input id="applyTime" class="datainp" type="text" placeholder="请选择预约时间" readonly/>
+	  		</div>
+	  		<button class="mybtn">提交</button>
+	  </div>
+	  <!-- 维护申请html end-->   
   </div>
   <!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
@@ -88,7 +271,7 @@
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
-<!--                 <span class="countNum">99</span> -->
+                <span class="countNum" ng-if="alarmTotalCnt > 0">{{alarmTotalCnt}}</span>
             </a>
         </li>
         <li class="active">            
@@ -98,6 +281,6 @@
             </a>
         </li>
     </ul>
-    
+    <div class="goTop"><i class="iconfont">&#xe747;</i></div>
 </body>
 </html>
