@@ -186,7 +186,7 @@ public class MsgServiceimp implements MsgService {
 			for (DeviceObjectMappingEntity obj : devciceList) {
 				resMap = new HashMap<String, Object>();
 				Integer size = storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "", startTime, endTime);
-				if (size != null && size == 0) {
+				if (size == null || size == 0) {
 					String oidname = "";
 					List<HashMap<String, Object>> oidobj = this.megMapper .findObjsetByOid( StorageType.getStorageType(obj.getType()) .getTable(), obj.getOid());
 					if (SetUtil.isnotNullList(oidobj)) {
