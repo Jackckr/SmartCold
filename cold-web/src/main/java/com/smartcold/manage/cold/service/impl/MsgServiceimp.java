@@ -260,7 +260,7 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 2 Q霜=Σ（P霜*t霜累积）->ok
 	 *   type=4 ,key='Qblower',valkey='Qblower'
-	 *   1. select coldStorageId,group_concat(`id`) ids, ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0  GROUP BY `coldStorageId`;
+	 *   1. select coldStorageId,group_concat(`id`) ids ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0   GROUP BY `coldStorageId`
 	 *   2. select * from `coldstorageanalysis` where 1=1 AND `type` = 4 AND `key`in ('DefrosingTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
 	private void setQFrost(String time, Date dateTime) {
@@ -310,7 +310,7 @@ public class MsgServiceimp implements MsgService {
 				HashMap<String, Object> fileter = new HashMap<String, Object>();
 				fileter.put("type", 4);
 				fileter.put("time", time);
-				fileter.put("key", "'totalRunning'");
+				fileter.put("key", "'RunningTime'");
 				for (HashMap<String, Object> blowerinf : blowerList) {
 					String blids = (String) blowerinf.get("ids");
 					String blfrostPowers = (String) blowerinf.get("fanPowers");
