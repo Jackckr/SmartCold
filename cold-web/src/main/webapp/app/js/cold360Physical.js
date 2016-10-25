@@ -24,7 +24,9 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 			 $("#loding").hide();
 		      if(data.success){
 		    	  window.localStorage.physicalday=new Date();
+		    	  debugger;
 		    	  $scope.data=data.entity;
+		    	  
 		    	  $scope.showpage(2);
 		      }else{
 		    	 alert(msg.errmsg[data.message]);
@@ -34,9 +36,12 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 	$scope.showsg=function(i,em){
 		if(em){
 			$("#grouppan1,#grouppan2,#grouppan3").addClass("collapsed-box");
-			$("#grouppan1 button[data-widget=collapse] i,#grouppan2 button[data-widget=collapse] i,#grouppan3 button[data-widget=collapse] i").removeClass("fa-minus").addClass("fa-plus");
-			$("#"+em).removeClass("collapsed-box");
-			$("#"+em+" button[data-widget=collapse] i").removeClass("fa-plus").addClass("fa-minus");
+//			$("#grouppan1 button[data-widget=collapse] i,#grouppan2 button[data-widget=collapse] i,#grouppan3 button[data-widget=collapse] i").removeClass("fa-minus").addClass("fa-plus");
+//			$("#grouppan1 .box-body,#grouppan2 .box-body,#grouppan2 .box-body ").css({ display:"none"});
+			
+			$("#"+em ).removeClass("collapsed-box");
+//			$("#"+em+" .box-body").css({ display:"block"});
+//			$("#"+em+" button[data-widget=collapse] i").removeClass("fa-plus").addClass("fa-minus");
 //			$("#phsg_sour3:first").prepend($("#"+em));
 		}
 		$scope.showpage(i);

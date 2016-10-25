@@ -44,7 +44,7 @@
 	 INSERT INTO `sc360`.`warninglog` (`rdcid`, oid, `Msg`) 
 	      select *FROM ( SELECT
 			pw.`rdcid`,
-			pw.`id`,
+			pw.`id` AS OID,
             CASE WHEN ( (MAX(`value`) - MIN(`value`)) / MAX(`value`) * 100 ) > 15 THEN 1 ELSE 0 END AS vl,
 			CONCAT(pw.`name`, sn.`key`,"电流不平衡") as msg 
 		FROM

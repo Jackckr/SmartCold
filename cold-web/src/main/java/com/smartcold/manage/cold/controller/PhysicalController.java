@@ -77,9 +77,9 @@ public class PhysicalController {
 					int sransportS=this.getTransportScores(stTime, edTime, obj, weightSet);
 					int coldStorageS = this.getColdStorageScores(stTime, edTime, obj, weightSet);
 					sumtempS+=tempS; sumsransportS+=sransportS;sumColdStorageS+=coldStorageS;
-					tempScores.put(obj.getId(), df.format( tempS));//1.获取冷库的分数
-					transportScores.put(obj.getId(),df.format(sransportS) );//2.运管分数
-					coldStorageScores.put(obj.getId(), df.format(coldStorageS));
+					tempScores.put(obj.getId(), new Object[]{getColorVal(tempS),Double.parseDouble(df.format( tempS))});//1.获取冷库的分数
+					transportScores.put(obj.getId(),new Object[]{getColorVal(sransportS),Double.parseDouble(df.format(sransportS)) });//2.运管分数
+					coldStorageScores.put(obj.getId(),new Object[]{getColorVal(coldStorageS),Double.parseDouble( df.format(coldStorageS))});
 				}
 				resMap.put("TempScores",tempScores );
 				resMap.put("TransportScores",transportScores );
@@ -91,6 +91,14 @@ public class PhysicalController {
 		}
 		resMap.put("ishasTempDEV", ishasTempDEV);
 		return ResponseData.newSuccess(resMap);
+	}
+	private int  getColorVal(int tempS ){
+		if( tempS >=70&&tempS<=99){
+			return Integer.parseInt((tempS+"").substring(0,1)+"0");
+		}else if(tempS>=100){
+			return 100;
+		}
+		return 60;
 	}
 	
 	/**
