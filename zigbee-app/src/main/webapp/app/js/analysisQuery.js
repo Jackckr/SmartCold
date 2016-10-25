@@ -132,6 +132,17 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     }
     $scope.end = getFormatTimeString(), $scope.begin = $scope.end.substr(0, 10) + " 00:00:00", $scope.picktime = $scope.begin + ' - ' + $scope.end;
     $scope.goSearch = function () {//查询事件
+    	//将字符串转换为日期
+        var begin=new Date($("#startTime").val().replace(/-/g,"/"));
+        var end=new Date($("#endTime").val().replace(/-/g,"/"));
+        //js判断日期
+        if(begin>end){
+           layer.open({
+	           content: '开始时间不能小于结束时间哦^_^'
+	           ,btn: '确定'
+	        });
+           return false;
+        }
         if (lineChart == null) {
             lineChart = echarts.init($('#historyChart')[0]);
         }
@@ -277,14 +288,13 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
 		isinitVal:true,
 		isTime:true, 
 		minDate:"2008-08-08 08:08:08"
-	})
+	});
 	jeDate({
 		dateCell:"#endTime",
 		isinitVal:true,
 		isTime:true, 
 		minDate:"2008-08-08 08:08:08"
-	})
-
+	});
     $scope.goHistoryData = function () {
         window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;
     }
