@@ -77,7 +77,6 @@ public class MsgServiceimp implements MsgService {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
 		if(taskStatus){
 			this.getERRinfo();
-			addextMsg("checkData",1, null);//记录日志
 		}
 	}
 	/**
@@ -91,7 +90,6 @@ public class MsgServiceimp implements MsgService {
 	public void checkAPStatus() {
 		boolean taskStatus = quantityMapper.updateTaskStatus(2);
 		if(!taskStatus){return ;}
-		addextMsg("checkAPStatus", 2,null);//记录日志
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
@@ -119,7 +117,6 @@ public class MsgServiceimp implements MsgService {
 	public void reckonQuantity() {
 	   boolean taskStatus = quantityMapper.updateTaskStatus(3);
 		if(!taskStatus){return ;}
-		addextMsg("reckonQuantity",3, null);//记录日志
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
 		Date dateTime = TimeUtil.parseYMD(time);
 		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
@@ -164,7 +161,7 @@ public class MsgServiceimp implements MsgService {
 	 */
 	public void getERRinfo(){
 		Date startTime = TimeUtil.getBeforeMinute(1);//
-		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
+//		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
 		try { 	this.warningLogMapper.addSUerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  
 		try { 	this.warningLogMapper.addscollPUerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  
 		try { 	this.warningLogMapper.addSIerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  
