@@ -404,3 +404,7 @@ html, body {
 	padding-right: 15px;
 	font-size: 12px;
 }
+
+ .myrecord textarea{
+ 	resize: vertical;
+ }

@@ -15,7 +15,9 @@ if(window.user!=undefined ||window.user!=null)
      pageSize:null,
      userID:window.user.id},  function(data) {	
 	          if(data.success&&data.data.length>0){
-	        	window.msgTotalNum = data.total;
+	        	  //暂时隐藏
+	        	//window.msgTotalNum = data.total;
+	        	  window.msgTotalNum = 1;
 	          }
     });
 }
@@ -48,7 +50,6 @@ window.onload = function(){
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 };
 $(function(){
-	//$(".footer li").eq(2).find('span.countNum').html('1')
 	//一键回到顶部
 	var viewHeight=$(window).height();
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= viewHeight) {$('.goTop').show();} else {$('.goTop').hide();}});

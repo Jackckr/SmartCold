@@ -226,6 +226,17 @@ app.controller('analysisReport', function ($scope, $location, $http) {
     };
 
     $scope.search = function () {//查询数据
+    	//将字符串转换为日期
+        var begin=new Date($("#startTime").val().replace(/-/g,"/"));
+        var end=new Date($("#endTime").val().replace(/-/g,"/"));
+        //js判断日期
+        if(begin>end){
+           layer.open({
+	           content: '开始时间不能小于结束时间哦^_^'
+	           ,btn: '确定'
+	        });
+           return false;
+        }
         isSuccess = false, $scope.rs_msg = null;
         $scope.isLoaddata = true;
         var datainfo = getcofinData();
@@ -313,9 +324,16 @@ app.controller('analysisReport', function ($scope, $location, $http) {
         $("#rpt_asistb_thead").html(tit.join("") + subtit.join(""));
         $("#rpt_asistb_tbody").html(tboy.join(""));
     }
-
-    $(function () {
-        $('#startTime').date();
-        $('#endTime').date();
-    })
+    jeDate({
+		dateCell:"#startTime",
+		format:"YYYY-MM-DD",
+		isTime:false, 
+		minDate:"2008-08-08 08:08:08"
+	})
+	jeDate({
+		dateCell:"#endTime",
+		format:"YYYY-MM-DD",
+		isTime:false, 
+		minDate:"2008-08-08 08:08:08"
+	})
 });
