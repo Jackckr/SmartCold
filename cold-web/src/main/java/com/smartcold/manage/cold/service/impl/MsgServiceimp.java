@@ -161,13 +161,15 @@ public class MsgServiceimp implements MsgService {
 	 */
 	public void getERRinfo(){
 		Date startTime = TimeUtil.getBeforeMinute(1);//
-//		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
-		try { 	this.warningLogMapper.addSUerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addscollPUerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addSIerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addscollPIerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addHTCLogbyTime( startTime);      } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addwaringLogbyTime(startTime);    } catch (Exception e) { e.printStackTrace(); }  
+//PLC 		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
+		
+		try { 	this.warningLogMapper.addSUerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->U 
+		try { 	this.warningLogMapper.addSIerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->I
+		try { 	this.warningLogMapper.addHTCLogbyTime( startTime);      } catch (Exception e) { e.printStackTrace(); }   //dev->TEMP	
+		
+//		try { 	this.warningLogMapper.addscollPUerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  //PLC->U
+//		try { 	this.warningLogMapper.addscollPIerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }   //PLC->I	
+//		try { 	this.warningLogMapper.addwaringLogbyTime(startTime);    } catch (Exception e) { e.printStackTrace(); }  //PLC->TEMP	
 	}
 
 	/**

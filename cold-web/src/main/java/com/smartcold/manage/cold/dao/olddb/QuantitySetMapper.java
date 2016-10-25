@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
  *
  */
 public interface QuantitySetMapper {
+	
     //======================================================Q======================================================
 	//Q7 获得门配置方法
 	List<HashMap<String, Object>>  getColdstorageset();//根据冷库分组 获得换气配置集合
