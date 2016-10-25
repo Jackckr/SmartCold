@@ -508,6 +508,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
                         silent: false
                     },
                     yAxis: {
+                    	name:'温度(℃)',
                         inverse: true,
                         splitArea: {show: false}
                     },

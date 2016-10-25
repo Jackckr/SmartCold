@@ -318,10 +318,10 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 		                yAxis : [
 		                    {
 		                        type : 'value',
-		                        name : '开门时长',
+		                        name : '开门时长(min)',
 		                        max : 1500,
 		                        axisLabel : {
-		                            formatter: '{value} m'
+		                            formatter: '{value}'
 		                        }
 		                    },
 		                    {
@@ -348,7 +348,7 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 		            };
 					chart1.setOption(option)
 					chart2.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData3, "平均开门时间", "m", "m", "bar"))
+							xData, yData3, "平均开门时间", "min", "m", "bar"))
 				},0)
 			})
 		})
