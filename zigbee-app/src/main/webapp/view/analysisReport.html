@@ -110,22 +110,18 @@
             <p>结束时间<input class="datainp" id="endTime" type="text" placeholder="请选择结束时间" ng-model="end" readonly></p>
 		</div>		
        	<p class="chaxun"><button class="mybtn" ng-click="search()">查询</button></p>
+       	<h3 class="box-title" id="rpt_asistb_tit"> </h3>
 		<div class="analysis alarmLog">
-			<div class="col-lg-12 box bg-gray">
-				<div class="box-header with-border">
-					<h3 class="box-title" id="rpt_asistb_tit"> </h3>
-				</div>
-				<div id="rpt_asis_coment" class="box-body box table-responsive bg-gray box-gray" style="min-height: 250px;"  ng-show="!rs_msg">
-					<table id="rpt_asis_table" class="table table-bordered cold_warn" style="border:2px solid #337ab7;text-align: center;">
-						<thead id="rpt_asistb_thead">
-						</thead>
-						<tbody id="rpt_asistb_tbody">
-						</tbody>
-					</table>
-				</div>
-				<div ng-show="rs_msg" >
-					<div class="alert alert-warning text-center">{{rs_msg}}</div>
-				</div>
+			<div id="rpt_asis_coment" class="table-responsive" ng-show="!rs_msg">
+				<table id="rpt_asis_table" class="table table-bordered cold_warn">
+					<thead id="rpt_asistb_thead">
+					</thead>
+					<tbody id="rpt_asistb_tbody">
+					</tbody>
+				</table>
+			</div>
+			<div ng-show="rs_msg" >
+				<div class="alert alert-warning text-center">{{rs_msg}}</div>
 			</div>
        	</div>
  	</div>

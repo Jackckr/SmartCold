@@ -558,6 +558,8 @@ b{
 	text-indent: 10px;
 	margin-left: .2rem;
 	color:#555;
+	-webkit-appearance: none;
+	appearance: none;
 }
 /*报表功能*/
 .analysis{
@@ -573,6 +575,19 @@ b{
 .analysis th,.analysis td{
 	white-space: nowrap;
 	padding:.1rem;
+}
+#rpt_asistb_tit {
+	line-height: 2rem;
+	text-align: center;
+}
+
+#rpt_asis_coment {
+	min-height: 5rem;
+}
+
+#rpt_asis_table {
+	border: 2px solid #337ab7;
+	text-align: center;
 }
 /*保养提醒*/
 .maintain{
@@ -622,4 +637,46 @@ b{
 .goTop i{
 	color: #fff;
 	font-size: 2rem;	
+}
+/*维修*/
+.mainTain{
+	margin-bottom: 3rem;
+	background: #fff;
+	min-height: 22rem;
+	padding:0 .9rem;
+}
+.applyKid{
+	margin-bottom: .3rem;
+}
+.applyKid p{
+	font-size: .75rem;
+	font-weight: 800;
+	line-height: 2;
+}
+.mainTain~.jedatebox{width:90%;}
+#applyTime{width:100%}
+.applyKid textarea{
+	border:1px solid #ccc;
+	resize:vertical;
+	min-height:4rem;
+	width:100%;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.mainApply button{
+	width:100%;
+	margin-top: 2rem;
+}
+.current.applyLog{
+	color:#438BCB;
+    border-bottom: 3px solid #438BCB;
+}
+.wxRecords{
+	padding-bottom: 0.5rem;
+}
+.wxRecords>p {
+	padding-top: .5rem;
+	text-align: center;
+	font-size: 0.8rem;
+	color: #438BCB;
 }
