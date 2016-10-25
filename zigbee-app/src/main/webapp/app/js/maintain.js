@@ -90,6 +90,19 @@ app.controller('maintain', function ($scope, $location, $http) {
             });
         }
     }
+    jeDate({
+		dateCell:"#applyTime",
+		format:"YYYY-MM-DD",
+		isTime:false, 
+		zIndex:10000,
+		minDate:"2008-08-08 08:08:08"
+	})
+	/*tab切换*/
+	$(".mylog").click(function(event){
+		var $index = $(this).index();
+		$('.mainTainBottomL>div').eq($index).show().siblings().hide();
+		$(this).addClass('current').siblings().removeClass('current');
+	})
     $scope.changeRdc = function (rdc) {
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
