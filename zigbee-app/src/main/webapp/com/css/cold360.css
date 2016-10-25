@@ -652,8 +652,15 @@ b{
 	font-weight: 800;
 	line-height: 2;
 }
-.mainTain~.jedatebox{width:90%;}
-#applyTime{width:100%}
+.mainTainBottomL~.jedatebox {
+	width: 90%;
+}
+
+#applyTime {
+	width: 100%;
+	font-size: .75rem;
+}
+
 .applyKid textarea{
 	border:1px solid #ccc;
 	resize:vertical;
@@ -661,6 +668,7 @@ b{
 	width:100%;
 	-webkit-appearance: none;
 	appearance: none;
+	font-size: .75rem;
 }
 .mainApply button{
 	width:100%;
