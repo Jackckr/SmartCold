@@ -67,8 +67,9 @@ public class CompressorController {
 		for (CompressorGroupSetEntity group : groups) {
 			List<CompressorSetEntity> compressors = compressorSetMapping.findCompressorByGroupid(group.getId());
 			for (CompressorSetEntity compressor : compressors) {
-				result.put(group.getName() + ":"+compressor.getName(), analysisService.findValueByDateKeys(StorageType.COMPRESSOR.getType(),
-						group.getId(), Arrays.asList(keys.split(",")), startTime, endTime));
+				result.put(group.getName() + ":" + compressor.getName(),
+						analysisService.findValueByDateKeys(StorageType.COMPRESSOR.getType(), compressor.getId(),
+								Arrays.asList(keys.split(",")), startTime, endTime));
 			}
 		}
 

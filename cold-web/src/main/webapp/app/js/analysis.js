@@ -380,7 +380,7 @@ coldWeb.controller('goodsYzAnalysis', function($rootScope, $scope,$timeout, $loc
 					$scope.showMap[chartId] = storage['GoodsLiuTongYinZi'].length
 					angular.forEach(storage['GoodsLiuTongYinZi'],function(item){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
-						yData.unshift(item['value'] / 60)
+						yData.unshift(item['value'])
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
 							xData, yData, "时间", "", "货物流通因子", "bar",0));
