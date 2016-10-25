@@ -181,7 +181,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             legend: {data: s},
             title: {text: $scope.slgptit + $scope.typemode.unit[$scope.sl_index]},
             tooltip: tooltipmd,
-            legend: {data: [$scope.slgptit]},
+            legend: {data: [$scope.slgptit],show:false},
             xAxis: [{type: 'category', data: xData}],
             yAxis: yAxismode,
             grid: {x: 50,width:'70%'},
@@ -272,10 +272,18 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         })
     })
 
-    $(function () {
-        $('#startTime').date({theme: "datetime"});
-        $('#endTime').date({theme: "datetime"});
-    })
+	jeDate({
+		dateCell:"#startTime",
+		isinitVal:true,
+		isTime:true, 
+		minDate:"2008-08-08 08:08:08"
+	})
+	jeDate({
+		dateCell:"#endTime",
+		isinitVal:true,
+		isTime:true, 
+		minDate:"2008-08-08 08:08:08"
+	})
 
     $scope.goHistoryData = function () {
         window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;

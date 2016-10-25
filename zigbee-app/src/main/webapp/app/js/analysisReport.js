@@ -313,9 +313,16 @@ app.controller('analysisReport', function ($scope, $location, $http) {
         $("#rpt_asistb_thead").html(tit.join("") + subtit.join(""));
         $("#rpt_asistb_tbody").html(tboy.join(""));
     }
-
-    $(function () {
-        $('#startTime').date();
-        $('#endTime').date();
-    })
+    jeDate({
+		dateCell:"#startTime",
+		format:"YYYY-MM-DD",
+		isTime:false, 
+		minDate:"2008-08-08 08:08:08"
+	})
+	jeDate({
+		dateCell:"#endTime",
+		format:"YYYY-MM-DD",
+		isTime:false, 
+		minDate:"2008-08-08 08:08:08"
+	})
 });
