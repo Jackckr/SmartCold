@@ -105,11 +105,11 @@ public class PhysicalController {
 	 */
 	private boolean hasdev(int type,String table,int oid,String key, String stTime, String edTime){
 		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
-//		if (deviceEntity != null) {
-//			return true;// return this.quantityMapper.getCountBydevkey(deviceEntity.getDeviceid(), key, stTime, edTime)>0;//最终看使用哪种
-//		} else {
+		if (deviceEntity != null) {
+			return true;// return this.quantityMapper.getCountBydevkey(deviceEntity.getDeviceid(), key, stTime, edTime)>0;//最终看使用哪种
+		} else {
 			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
-//		}
+		}
 	}
 	
     /**
