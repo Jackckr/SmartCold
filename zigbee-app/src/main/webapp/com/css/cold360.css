@@ -639,11 +639,10 @@ b{
 	font-size: 2rem;	
 }
 /*维修*/
-.mainTain{
+.mainTainBottomL{
 	margin-bottom: 3rem;
 	background: #fff;
 	min-height: 22rem;
-	padding:0 .9rem;
 }
 .applyKid{
 	margin-bottom: .3rem;
@@ -671,8 +670,8 @@ b{
 	color:#438BCB;
     border-bottom: 3px solid #438BCB;
 }
-.wxRecords{
-	padding-bottom: 0.5rem;
+.wxRecords,.mainApply{
+	padding:0 0.9rem 0.5rem;
 }
 .wxRecords>p {
 	padding-top: .5rem;

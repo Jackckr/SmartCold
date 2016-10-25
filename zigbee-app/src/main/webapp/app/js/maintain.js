@@ -100,7 +100,7 @@ app.controller('maintain', function ($scope, $location, $http) {
 	/*tab切换*/
 	$(".mylog").click(function(event){
 		var $index = $(this).index();
-		$('.mainTain>div').eq($index).show().siblings().hide();
+		$('.mainTainBottomL>div').eq($index).show().siblings().hide();
 		$(this).addClass('current').siblings().removeClass('current');
 	})
     $scope.changeRdc = function (rdc) {
