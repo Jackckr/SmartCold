@@ -161,13 +161,15 @@ public class MsgServiceimp implements MsgService {
 	 */
 	public void getERRinfo(){
 		Date startTime = TimeUtil.getBeforeMinute(1);//
-//		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
-		try { 	this.warningLogMapper.addSUerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addscollPUerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addSIerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addscollPIerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addHTCLogbyTime( startTime);      } catch (Exception e) { e.printStackTrace(); }  
-		try { 	this.warningLogMapper.addwaringLogbyTime(startTime);    } catch (Exception e) { e.printStackTrace(); }  
+//PLC 		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
+		
+		try { 	this.warningLogMapper.addSUerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->U 
+		try { 	this.warningLogMapper.addSIerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->I
+		try { 	this.warningLogMapper.addHTCLogbyTime( startTime);      } catch (Exception e) { e.printStackTrace(); }   //dev->TEMP	
+		
+//		try { 	this.warningLogMapper.addscollPUerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  //PLC->U
+//		try { 	this.warningLogMapper.addscollPIerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }   //PLC->I	
+//		try { 	this.warningLogMapper.addwaringLogbyTime(startTime);    } catch (Exception e) { e.printStackTrace(); }  //PLC->TEMP	
 	}
 
 	/**
@@ -360,13 +362,13 @@ public class MsgServiceimp implements MsgService {
 							    fileter.put("oid", hashMap.get("ids"));
 							    List<ColdStorageAnalysisEntity> doorTotalTime = storageAnalysisMapper.findValueByFilter(fileter);
 							    if(SetUtil.isnotNullList(doorTotalTime)){
-							    	List<HashMap<String, String>> forkliftsetList = this.quantitySetMapper.getPowerGroupByRDC("forkliftset", rdcid);//获得叉车功率
-							    	List<HashMap<String, String>> lightsetList = this.quantitySetMapper.getPowerGroupByRDC("coldstoragelightset", rdcid);//获得照明功率
+							    	List<HashMap<String, Object>> forkliftsetList = this.quantitySetMapper.getPowerGroupByRDC("forkliftset", rdcid);//获得叉车功率
+							    	List<HashMap<String, Object>> lightsetList = this.quantitySetMapper.getPowerGroupByRDC("coldstoragelightset", rdcid);//获得照明功率
 							    	if(SetUtil.isnotNullList(forkliftsetList)){
-							    		avgforkliftPower =Double.parseDouble( forkliftsetList.get(0).get("avgpower")+"");
+							    		avgforkliftPower =(Double) forkliftsetList.get(0).get("avgpower");
 							    	}
 							    	if(SetUtil.isnotNullList(lightsetList)){
-							    		avglightsetPower =Double.parseDouble( lightsetList.get(0).get("avgpower")+"");
+							    		avglightsetPower =(Double) lightsetList.get(0).get("avgpower");
 							    	}
 							    	for (ColdStorageAnalysisEntity clsis : doorTotalTime) {
 							    		if(avgforkliftPower!=0){

@@ -1,10 +1,5 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
-import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
-import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
-import com.smartcold.manage.cold.util.SetUtil;
 
 /**
  * 
@@ -35,31 +25,6 @@ public class WarLogController extends BaseController {
 	public Object findWarningLogsByRdcID(@RequestParam int rdcId) {
 		return warningLogMapper.findAllWarningLog(rdcId);
 	}
-	private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
-	private static final ExecutorService executorService = Executors.newFixedThreadPool(10, threadFactory);
-	/**
-	 * 添加线程队列
-	 * @param arrayList
-	 */
-	public static void addextTask(List<StorageDataCollectionEntity> arrayList){
-		 SubTask subTask=new SubTask(arrayList);
-		 executorService.submit(subTask);
-	}
-}
-
-class SubTask implements Runnable {
-	@Autowired
-	private DeviceObjectMappingMapper deviceObjectMappingMapper;
-	@Autowired
-	private ColdStorageSetMapper coldStorageSetMapper;
-	@Autowired
-	private WarningLogMapper warningLogMapper;
-	List<StorageDataCollectionEntity> arrayList;
-    public SubTask(List<StorageDataCollectionEntity> data) { this.arrayList = data;  }
-	@Override
-    public void run() {
-        if(SetUtil.isNullList(arrayList))return;
-     
-     }
+	
 }
 

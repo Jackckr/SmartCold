@@ -19,8 +19,8 @@
 	    INSERT INTO `sc360`.`warninglog` (`rdcid`, oid, `Msg`) 
 		SELECT
 			pw.`rdcid`,
-			pw.`id`,
-			 CONCAT(pw.`name`, sn.`key`,"电压缺相") as msg 
+			pw.`id` oid,
+			 CONCAT(pw.`name`, sn.`key`,"电压缺相") as Msg 
 		FROM
 			`sc360`.`storagedatacollection` sn
 		LEFT JOIN `sc360`.`deviceobjectmapping` dv ON dv.`deviceid` = sn.`deviceid`
@@ -35,18 +35,18 @@
 	</insert>
 	<insert id="addscollPUerrByTime" parameterType="map" >
 	   INSERT INTO `sc360`.`warninglog` (`rdcid`, oid, `Msg`) 
-		 select ps.`rdcid` ,ps.id,  CONCAT(ps.`name`,pw.`key` ,"电压缺相") as msg  
+		 select ps.`rdcid` ,ps.id oid,  CONCAT(ps.`name`,pw.`key` ,"电压缺相") as Msg  
           from `sc360`.`power`  pw 
          LEFT JOIN `smartcold`.`powerset` ps on ps.id=pw.`oid`  where pw.`value` =0 and  pw.`key` in('AU','BU','CU') and pw.`addtime` >= #{startTime};
 	</insert>
 	<!-- 檢查DEV->I  PLC->I -->
 	<insert id="addSIerrByTime" parameterType="map" >
 	 INSERT INTO `sc360`.`warninglog` (`rdcid`, oid, `Msg`) 
-	      select *FROM ( SELECT
+	      select `rdcid`, oid, `Msg` FROM ( SELECT
 			pw.`rdcid`,
-			pw.`id` AS OID,
+			pw.`id` oid,
             CASE WHEN ( (MAX(`value`) - MIN(`value`)) / MAX(`value`) * 100 ) > 15 THEN 1 ELSE 0 END AS vl,
-			CONCAT(pw.`name`, sn.`key`,"电流不平衡") as msg 
+			CONCAT(pw.`name`, sn.`key`,"电流不平衡") as Msg 
 		FROM
 			`sc360`.`storagedatacollection` sn
 		LEFT JOIN `sc360`.`deviceobjectmapping` dv ON dv.`deviceid` = sn.`deviceid`
@@ -59,7 +59,7 @@
 	</insert>
 	<insert id="addscollPIerrByTime" parameterType="map" >
 	  INSERT INTO `sc360`.`warninglog` (`rdcid`, oid, `Msg`) 
-	  SELECT  `rdcid`, oid, CONCAT(`name`, `key`,"电流不平衡") as msg 
+	  SELECT  `rdcid`, oid, CONCAT(`name`, `key`,"电流不平衡") as Msg 
        FROM
 			(
 				SELECT

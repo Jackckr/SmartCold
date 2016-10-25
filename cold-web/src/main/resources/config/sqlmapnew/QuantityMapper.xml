@@ -11,6 +11,14 @@
 		select   `key` ,  avg(`value`) as vl from `coldstorageanalysis` where `type` =1 and oid in(${oid}) and `key` in('ChaoWenYinZi','BaoWenYinZi','JiangWenYinZi') and `date` BETWEEN #{stTime} and #{edTime} GROUP BY `key` ;
 	</select>
 	
+		<!-- 判断压缩机状态   -->
+    <select id="getcoldstoraginfo" parameterType="map" resultType="com.smartcold.manage.cold.entity.olddb.CompressorSetEntity">
+		select id,`maintenancetime` ,`lastMaintainTime`  from `smartcold`.compressorset where `compressorgroupid` in(${oids}) and `maintenancetime` IS NOT NULL and `lastMaintainTime` IS NOT NULL ;
+	</select>
+	<select id="getSumRunTime" parameterType="map" resultType="java.lang.Double">
+	    select SUM(`value`) vl  from `sc360`.`coldstorageanalysis` where `oid` =#{oid} and `type` =5 and `key` ='RunningTime' and `date` >=#{stTime} GROUP BY `oid`;
+	</select>
+	
 	
 	<!-- 检查是否有设备 -->
 	<select id="getCountBykey" parameterType="map" resultType="java.lang.Integer">

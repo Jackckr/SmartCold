@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
  *
  */
 public interface QuantitySetMapper {
+	
     //======================================================Q======================================================
 	//Q7 获得门配置方法
 	List<HashMap<String, Object>>  getColdstorageset();//根据冷库分组 获得换气配置集合
@@ -23,7 +24,7 @@ public interface QuantitySetMapper {
     //获得配置表集合
 //    List<HashMap<String, Object>> findColdstorages(@Param("talbe")String talbe);//根据rdc分组排序
     //获得指定配置信息功率信息
-    List<HashMap<String, String>> getPowerGroupByRDC(@Param("talbe")String talbe,@Param("rdcid")Object rdcids);
+    List<HashMap<String, Object>> getPowerGroupByRDC(@Param("talbe")String talbe,@Param("rdcid")Object rdcids);
     //======================================================Q======================================================
 
 }
