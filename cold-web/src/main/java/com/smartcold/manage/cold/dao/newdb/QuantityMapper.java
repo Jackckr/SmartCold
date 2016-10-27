@@ -1,12 +1,10 @@
 package com.smartcold.manage.cold.dao.newdb;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-
-import com.smartcold.manage.cold.entity.newdb.Company;
-import com.smartcold.manage.cold.entity.newdb.ForkLiftEntity;
+import com.smartcold.manage.cold.entity.olddb.CompressorSetEntity;
 
 /**
  * 计算Q
@@ -14,9 +12,11 @@ import com.smartcold.manage.cold.entity.newdb.ForkLiftEntity;
  *
  */
 public interface QuantityMapper {
-	
 	//获得任务状态->动态分配任务
 	public boolean updateTaskStatus(Integer id);
+	//获得机组运行时间
+	List<CompressorSetEntity>   getcoldstoraginfo(@Param("oids")Object oids);
+	public Double getSumRunTime(@Param("oid")Object oid,@Param("stTime")Date stTime);
 	//获得商品流转信息
 	public List<HashMap<String, Object>>  getGoodQuantit(@Param("oid")int oid,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	//360体检->因子平均值集合

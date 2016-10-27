@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">理论能耗(KJ/h):</label>
+                                    <label class="control-label col-lg-6"><em style="color:red">*</em>理论能耗(KJ/h):</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.energyCost" class="form-control" />
                                     </div>
@@ -146,13 +146,13 @@
                                     </div>
                                 </div> -->
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">起始温度(℃):&nbsp;&nbsp;</label>
+                                    <label class="control-label col-lg-6"><em style="color:red">*</em>起始温度(℃):&nbsp;&nbsp;</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.startTemperature" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">温度差(℃):&nbsp;&nbsp;</label>
+                                    <label class="control-label col-lg-6"><em style="color:red">*</em>温度差(℃):&nbsp;&nbsp;</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.tempdiff" class="form-control" />
                                     </div>
@@ -200,15 +200,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="control-label col-lg-6">冷库内部温度(℃):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-4">
-                                        <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.intempe" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-6">
                                     <label class="control-label col-lg-6">冷库外部温度(℃):&nbsp;&nbsp;</label>
-                                    <div class="col-lg-4">
-                                        <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="storageEntity.outtempe" class="form-control" />
+                                    <div class="col-lg-6">
+                                        <select ng-options="storage.id as storage.name for storage in storages" class="form-control" ng-model="storageEntity.refoid" style="width: 133px;    display: initial;"></select>
+                                      / <input type="number" placeholder="请输入数字" ng-model="storageEntity.outtempe" class="form-control" style="width: 100px;    display: initial;"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-12">
@@ -220,8 +215,8 @@
                                 <ajax-table array-objects="storages"
                                             delete-url="/i/coldStorage/deleteStorage"
                                             update-url="/i/coldStorage/updateStorage"
-                                            colums-th="冷库名,理论能耗(KJ/h),起始温度(℃),温度差(℃),超温报警值(℃),超温报警延时(s),冷库长(m),冷库宽(m),冷库高(m),冷库内部湿度(%RH),冷库外部湿度(%RH),冷库内部温度(℃),冷库外部温度(℃)"
-                                            colums="name,energyCost,startTemperature,tempdiff,overtempalarm,overtempdelay,length,width,height,inhumidity,outhumidity,intempe,outtempe"></ajax-table>
+                                            colums-th="冷库名,理论能耗(KJ/h),起始温度(℃),温度差(℃),超温报警值(℃),超温报警延时(s),冷库长(m),冷库宽(m),冷库高(m),冷库内部湿度(%RH),冷库外部湿度(%RH),冷库内引用冷库id,冷库外部温度(℃)"
+                                            colums="name,energyCost,startTemperature,tempdiff,overtempalarm,overtempdelay,length,width,height,inhumidity,outhumidity,refoid,outtempe"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -310,10 +305,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-lg-4">包装材料修正值b:</label>
+                                    <label class="control-label col-lg-4">保温材料修正值b:</label>
                                     <div class="col-lg-4">
                                         <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="wallEntity.b" class="form-control" />
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">墙外温度(设定):</label>
+                                    <div class="col-lg-4">
+                                        <input style="width:250px;" type="number" placeholder="请输入数字" ng-model="wallEntity.tw" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">墙外温度关联冷库:</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-control" ng-options="storage.name for storage in storages" ng-model="wallEntity.outsidecoldstorage"></select>
+                                    </div>
+                                    <em style="color:red">*如果关联了冷库则冷库优先</em>
                                 </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addWall()" ng-disabled="!wallEntity.name">添加</a>
@@ -325,8 +333,8 @@
                                 <ajax-table array-objects="walls"
                                             delete-url="/i/spiderConfig/delete/wallSet"
                                             update-url="/i/spiderConfig/update/wallSet"
-                                            colums-th="名字,墙长度(M),墙高度(M),系数a,外侧系数,内侧系数,厚度,导热系数,修正值b"
-                                            colums="name,length,width,a,aw,an,thick,daorexishu,b"></ajax-table>
+                                            colums-th="名字,墙长度(M),墙高度(M),系数a,外侧系数,内侧系数,厚度,导热系数,修正值b,墙外温度,关联冷库"
+                                            colums="name,length,width,a,aw,an,thick,daorexishu,b,tw,outsidecoldstorageid"></ajax-table>
                             </div>
                         </form>
                         <!--  -->
@@ -1111,15 +1119,31 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-6" >
-                        <mapping-table data-name="冷凝系统风机" object-keys="evaporativeblowerKeys" object-sets="evaporativeBlowerSets"></mapping-table>
-                    </div>
-                    <div class="col-lg-6" >
-                        <mapping-table data-name="冷凝系统水泵" object-keys="evaporativewaterKeys" object-sets="evaporativeWaterSets"></mapping-table>
-                    </div>
                     <div class="col-lg-7">
                         <button class="btn btn-primary pull-right" ng-click="realSaveCompressGroup()">保存</button>
                     </div>
+                </uib-tab>
+
+				<uib-tab>
+                    <uib-tab-heading>
+                        <i class="fa fa-table"></i>冷凝系统配置
+                    </uib-tab-heading><br/>
+                    <form class="navbar-form">
+                            <div class="form-group">
+                                <label>冷凝系统</label>
+                                <select ng-options="item.name for item in evaporativeSets" class="form-control" 
+                                ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
+                            </div>
+                        </form>
+                    <div class="row">
+                        <div class="col-lg-6" >
+                        <mapping-table data-name="冷凝系统风机" object-keys="evaporativeblowerKeys" object-sets="evaporativeBlowerSets"></mapping-table>
+                    	</div>
+                    	<div class="col-lg-6" >
+                        <mapping-table data-name="冷凝系统水泵" object-keys="evaporativewaterKeys" object-sets="evaporativeWaterSets"></mapping-table>
+                    	</div>
+                    </div>
+                    <button class="btn btn-primary pull-right" ng-click="realSaveEvaporative()">保存</button>
                 </uib-tab>
 
                 <uib-tab>

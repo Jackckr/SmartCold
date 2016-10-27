@@ -6,40 +6,112 @@
 	
 	
 	
-    <!-- 计算Q  根据rdcid 汇总 -->
-    <select id="findColdstorages" parameterType="map" resultType="map">
-		 SELECT `RDCID` rdcid, group_concat(id) ids  FROM `${talbe}` GROUP BY rdcid;
+    <!-- 计算Q   -->
+    <select id="getcoldstoragedoorset" parameterType="map" resultType="map">
+		 SELECT rdcid,coldstorageid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY coldstorageid;
 	</select>
 	
 	<select id="findFanPower" parameterType="map" resultType="map">
-		select group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from blowerset where  `frostPower` >0 
+		select coldStorageId,group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from blowerset where  `fanPower` >0 
 		<if test="ids!=null"> and coldStorageId in(${ids}) </if> 
 		<if test="ids==null"> GROUP BY `coldStorageId` </if> 
 	</select>
     <select id="findFrostPower" parameterType="map" resultType="map">
-		select group_concat(`id`) ids ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0 
+		select coldStorageId,group_concat(`id`) ids ,group_concat(`frostPower`) frostPowers  from blowerset where  `frostPower` >0 
 		<if test="ids!=null"> and coldStorageId in(${ids}) </if> 
 		<if test="ids==null"> GROUP BY `coldStorageId` </if> 
 	</select>
 	
     <select id="getPowerGroupByRDC" parameterType="map" resultType="map">
 		SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers
-	    <if test="rdcids!=null">,sum(power)/COUNT(*) avgpower </if> 
+	    <if test="rdcid!=null">,sum(power)/COUNT(*) avgpower </if> 
 	    FROM `${talbe}` where `power` >0 
-		<if test="rdcids!=null"> and rdcid in(${rdcids}) </if> 
+		<if test="rdcid!=null"> and rdcid in(${rdcid}) </if> 
 		GROUP BY rdcid;
 	</select>
 	<!-- 计算开门次数 -->
     <select id="getColdstorageset" parameterType="map" resultType="map">
-	 SELECT
-			 `id`,
-			 `length` * `width` * `height` AS cgvolume,
-       (select enthalpy from airenthalpy where humidity=inhumidity and  temperature=intempe) as hn,
-       (select enthalpy from airenthalpy where humidity=outhumidity and  temperature=outtempe) as hw,
-       (select IF (MIN(`value`)=MAX(`value`),MIN(`value`),MIN(`value`) +(MAX(`value`)-MIN(`value`))*(6000-MIN(`volume`))/(MAX(`volume`)-MIN(`volume`)) )AS vvlue from `ventilationset`  where abs(`volume`-cgvolume) =(select min(abs(`volume`-cgvolume)) from ventilationset))as vvalue 
+	  SELECT
+			ct.`id`,
+			ct.`length` * ct.`width` * ct.`height` AS cgvolume,
+			(
+				SELECT
+					enthalpy
+				FROM
+					sc360.airenthalpy
+				WHERE
+					humidity = inhumidity
+				AND temperature = ceil(
+					(
+						SELECT
+							avg(`value`)
+						FROM
+							`sc360`.`coldstorageanalysis` sis
+						WHERE
+							sis.`type` = ct.`id`
+						AND sis.oid = ct.id
+						AND sis.`key` = "AvgTemp"
+						AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
+					)
+				)
+			) AS hn,
+			(
+				SELECT
+					enthalpy
+				FROM
+					sc360.airenthalpy
+				WHERE
+					humidity = outhumidity
+				AND temperature =
+				IF (
+					ct.`refoid`,
+					ceil(
+						(
+							SELECT
+								avg(`value`)
+							FROM
+								`sc360`.`coldstorageanalysis` sis
+							WHERE
+								sis.`type` = ct.`id`
+							AND sis.oid = ct.id
+							AND sis.`key` = "AvgTemp"
+							AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
+						)
+					),
+					ct.`outtempe`
+				)
+			) AS hw,
+			(
+				SELECT
+		
+				IF (
+					MIN(`value`) = MAX(`value`),
+					MIN(`value`),
+					MIN(`value`) + (MAX(`value`) - MIN(`value`)) * (6000 - MIN(`volume`)) / (
+						MAX(`volume`) - MIN(`volume`)
+					)
+				) AS vvlue
+				FROM
+					`ventilationset`
+				WHERE
+					abs(`volume` - cgvolume) = (
+						SELECT
+							min(abs(`volume` - cgvolume))
+						FROM
+							ventilationset
+					)
+			) AS vvalue
 		FROM
-			`coldstorageset` 
+			`coldstorageset` ct
 		WHERE
-			`length`is not null and  `width` is not null and `height` is not null and  inhumidity is not null and outhumidity is not null and intempe is not null and outtempe is not null;
+			ct.`length` IS NOT NULL
+		AND ct.`width` IS NOT NULL
+		AND ct.`height` IS NOT NULL
+		AND ct.inhumidity IS NOT NULL
+		AND ct.outhumidity IS NOT NULL
+		AND (
+			ct.refoid IS NOT NULL
+			OR ct.outtempe IS NOT NULL
+		);
 	</select>
 </mapper>

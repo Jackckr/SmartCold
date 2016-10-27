@@ -292,20 +292,22 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             })
             $scope.vm.choseEvaporative = resp.data[0];
             $scope.vm.choseEvaporative?$scope.changeEvaporative():null;
-            $http.get("/i/spiderConfig/find/evaporativeWaterSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
-    			$scope.evaporativeWaterSets = resp.data;
-    			angular.forEach($scope.evaporativeWaterSets, function (item, index) {
-    				$scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
-    			})
-    			$scope.tagTypeChanged();
-    		})
-    		$http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
-    			$scope.evaporativeBlowerSets = resp.data;
-    			angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
-    				$scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
-    			})
-    			$scope.tagTypeChanged();
-    		})
+            if($scope.vm.choseEvaporative){
+	            $http.get("/i/spiderConfig/find/evaporativeWaterSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+	    			$scope.evaporativeWaterSets = resp.data;
+	    			angular.forEach($scope.evaporativeWaterSets, function (item, index) {
+	    				$scope.evaporativeWaterSets[index].mapping = JSON.parse($scope.evaporativeWaterSets[index].mapping);
+	    			})
+	    			$scope.tagTypeChanged();
+	    		})
+	    		$http.get("/i/spiderConfig/find/evaporativeBlowerSet?evaporativeid="+$scope.vm.choseEvaporative.id).then(function (resp) {
+	    			$scope.evaporativeBlowerSets = resp.data;
+	    			angular.forEach($scope.evaporativeBlowerSets, function (item, index) {
+	    				$scope.evaporativeBlowerSets[index].mapping = JSON.parse($scope.evaporativeBlowerSets[index].mapping);
+	    			})
+	    			$scope.tagTypeChanged();
+	    		})
+          }
         })
 
         $http.get("/i/spiderConfig/findByRdcid?table=powerset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
@@ -483,7 +485,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.addEvaporativeWaterSet = function () {
     	if( $scope.vm.choseEvaporative==undefined){alert("请设置冷凝系统对象！");return;}
         var object = $scope.evaporativeWaterSet;
-        object.groupid= $scope.vm.choseCompressGroup.id;
+//        object.groupid= $scope.vm.choseCompressGroup.id;
         object.evaporativeid = $scope.vm.choseEvaporative.id
         $http.post("/i/spiderConfig/add/evaporativeWaterSet", object).then(function (resp) {
         	if(resp.data.status == -1){
@@ -498,7 +500,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.addEvaporativeBlowerSet = function () {
     	if( $scope.vm.choseEvaporative==undefined){alert("请设置冷凝系统对象！");return;}
         var obj = $scope.evaporativeBlowerSet;
-        obj.groupid = $scope.vm.choseCompressGroup.id;
+//        obj.groupid = $scope.vm.choseCompressGroup.id;
         obj.evaporativeid = $scope.vm.choseEvaporative.id
         $http.post("/i/spiderConfig/add/evaporativeBlowerSet", obj).then(function (resp) {
         	if(resp.data.status == -1){
@@ -682,6 +684,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             id:obj.id,
             mapping:JSON.stringify(obj.mapping)
         }).then(function (resp) {
+        	if(resp.status == -1){
+				alert(resp.message);
+			}
         })
     }
 
@@ -724,6 +729,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		// angular.forEach($scope.evaporativeSets, function (item) {
 		// 	$scope.updateMapping("evaporativeset", item);
 		// })
+	}
+	
+	$scope.realSaveEvaporative = function(){
 		angular.forEach($scope.evaporativeBlowerSets, function (item) {
 			$scope.updateMapping("evaporativeblowerset", item);
 		})
@@ -826,6 +834,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.addStorage = function(){
 		$scope.storageEntity.rdcId = $scope.vm.choseRdc.id;
+		debugger;
 		$http.post("/i/coldStorage/insertStorage",$scope.storageEntity).success(function(data,status,config,headers){
 			if(data.status == -1){
 				alert(data.message);
@@ -851,6 +860,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.addWall = function(){
 		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
 		$scope.wallEntity.coldstorageid = $scope.vm.choseStorage.id;
+		if(typeof($scope.wallEntity.outsidecoldstorage) != "undefined"){			
+			$scope.wallEntity.outsidecoldstorageid = $scope.wallEntity.outsidecoldstorage$scope.wallEntity.outsidecoldstorage.id;
+		}
 		$http.post("/i/spiderConfig/add/wallSet",$scope.wallEntity).success(function(data,status,config,headers){
 			if(data.status == -1){
 				alert(data.message);
@@ -1060,7 +1072,7 @@ coldWeb.directive("ajaxTable", function ($http,baseTools) {
 			var table = attrs.table;
 
             scope.update = function (obj) {
-
+            	debugger;
 				if (updateUrl){
 				    var params = {id:obj.id};
 				    for(var i=0; i<scope.colums.length; i++){

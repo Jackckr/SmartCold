@@ -16,10 +16,12 @@ import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.WeightSetMapper;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
+import com.smartcold.manage.cold.entity.olddb.CompressorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.WeightSetEntity;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
+import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
@@ -32,18 +34,45 @@ import com.smartcold.manage.cold.util.TimeUtil;
 @RequestMapping(value = "/physicalController")
 public class PhysicalController {
 	@Autowired
+	private QuantityMapper quantityMapper;
+	@Autowired
 	private StorageService storageService;
 	@Autowired
 	private WeightSetMapper weightSetMapper;
 	@Autowired
 	private ColdStorageSetMapper coldsetServer;
 	@Autowired
-	private QuantityMapper quantityMapper;
-	@Autowired
 	private ColdStorageDoorSetMapper coldStorageDoorSetMapper;
 	@Autowired
 	private DeviceObjectMappingMapper deviceObjectMappingDao;
     private 	DecimalFormat    df   = new DecimalFormat("######0.00"); 
+    
+    
+    
+    /**
+	 * 获得机组运行状态
+	 * @param oids:压缩机组id集合
+	 * @return
+	 */
+    @RequestMapping(value = "/getCompressorinfo")
+	@ResponseBody
+	public ResponseData<HashMap<Integer, Object>> getCompressorinfo(String oids) {
+    	if(StringUtil.isnotNull(oids)){
+    		List<CompressorSetEntity> getcoldstoraginfo = this.quantityMapper.getcoldstoraginfo(oids);
+    		HashMap<Integer, Object> restMap=new HashMap<Integer, Object>();
+    		if(SetUtil.isnotNullList(getcoldstoraginfo) ){
+    			for (CompressorSetEntity compressorSetEntity : getcoldstoraginfo) {
+    				Double sumr = this.quantityMapper.getSumRunTime(compressorSetEntity.getId(), compressorSetEntity.getLastMaintainTime());
+    				if(sumr==null){sumr=new Double(0);}else{
+    					sumr=sumr/3600;
+    				}
+    				restMap.put(compressorSetEntity.getId(), compressorSetEntity.getMaintenancetime()-sumr)	;
+				}
+    		}
+    		return ResponseData.newSuccess(restMap);
+    	}
+    	return ResponseData.newFailure("非法请求！");
+    }
 	/**
 	 * 根据rdcid体检
 	 * 1.检查冷库信息
@@ -77,9 +106,9 @@ public class PhysicalController {
 					int sransportS=this.getTransportScores(stTime, edTime, obj, weightSet);
 					int coldStorageS = this.getColdStorageScores(stTime, edTime, obj, weightSet);
 					sumtempS+=tempS; sumsransportS+=sransportS;sumColdStorageS+=coldStorageS;
-					tempScores.put(obj.getId(), df.format( tempS));//1.获取冷库的分数
-					transportScores.put(obj.getId(),df.format(sransportS) );//2.运管分数
-					coldStorageScores.put(obj.getId(), df.format(coldStorageS));
+					tempScores.put(obj.getId(), new Object[]{getColorVal(tempS),Double.parseDouble(df.format( tempS))});//1.获取冷库的分数
+					transportScores.put(obj.getId(),new Object[]{getColorVal(sransportS),Double.parseDouble(df.format(sransportS)) });//2.运管分数
+					coldStorageScores.put(obj.getId(),new Object[]{getColorVal(coldStorageS),Double.parseDouble( df.format(coldStorageS))});
 				}
 				resMap.put("TempScores",tempScores );
 				resMap.put("TransportScores",transportScores );
@@ -91,6 +120,14 @@ public class PhysicalController {
 		}
 		resMap.put("ishasTempDEV", ishasTempDEV);
 		return ResponseData.newSuccess(resMap);
+	}
+	private int  getColorVal(int tempS ){
+		if( tempS >=70&&tempS<=99){
+			return Integer.parseInt((tempS+"").substring(0,1)+"0");
+		}else if(tempS>=100){
+			return 100;
+		}
+		return 60;
 	}
 	
 	/**
@@ -108,7 +145,7 @@ public class PhysicalController {
 		if (deviceEntity != null) {
 			return true;// return this.quantityMapper.getCountBydevkey(deviceEntity.getDeviceid(), key, stTime, edTime)>0;//最终看使用哪种
 		} else {
-			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)>0;
+			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
 		}
 	}
 	
@@ -175,6 +212,7 @@ public class PhysicalController {
 	 * GoodsHeat
 	 */
 	private int getColdStorageScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
-		return (int) Math.abs(100-45-obj.getColdStorageID()*2-obj.getTempdiff());
+		
+		return (int) Math.abs(100-obj.getColdStorageID()*2-obj.getTempdiff());
 	}
 }

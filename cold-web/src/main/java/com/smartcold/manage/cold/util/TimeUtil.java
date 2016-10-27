@@ -161,5 +161,50 @@ public class TimeUtil {
 		String timeBefore = datefm.format(endTime);
 		return timeBefore;
 	}
+	/**
+	 * 指定时间减去多少个月
+	 * 
+	 * @param interval
+	 *            月
+	 * @param dateTime
+	 *            指定时间
+	 * @return 返回时间(日期串格式)
+	 */
+	public static Date cutMonthByDate(int interval, Date dateTime) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(dateTime);
+		c.add(Calendar.MONTH, interval); // 当前时间减去几个月月
+		Date datebefore = new Date(c.getTimeInMillis());
+		return datebefore;
+	}
+	/**
+	 * 获得month前的月份的第一天
+	 * @param month
+	 * @return
+	 */
+	public static String getBeforeMonthTime(int month) {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, -month); 
+		c.set(Calendar.DAY_OF_MONTH, 1);
+		return datefm.format( c.getTime())+" 00:00:00" ;
+	}
+	/**
+	 * 获得month前的月份的最后一天
+	 * @param month
+	 * @return
+	 */
+	public static String getEndMonthTime(int month) {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, -month);
+		c.set(Calendar.DATE, 1);
+		c.roll(Calendar.DATE, -1);
+		return datefm.format(c.getTime())+" 23:59:59";
+	}
+	public static void main(String[] args) {
+		System.err.println(getBeforeMonthTime(1));
+		System.err.println(getEndMonthTime(1));
+		System.err.println(getBeforeMonthTime(0));
+		System.err.println(getEndMonthTime(0));
+	}
 	
 }

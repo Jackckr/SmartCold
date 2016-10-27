@@ -6,10 +6,9 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>分析--报表功能</title>
-<!--     <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
-	<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
@@ -17,18 +16,12 @@
     <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 	<script type="text/javascript" src="../com/js/highcharts.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-	<script type="text/javascript" src="../com/datepicker/date.js"></script>
-	<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
-    <script type="text/javascript" src="../app/js/analysisQuery.js" ></script>
-    <script>
-    $(function(){
-		$('#startTime').date({theme:"datetime"});
-		$('#endTime').date({theme:"datetime"});
-	})
-    </script>
+    <script type="text/javascript" src="../app/js/analysisReport.js" ></script>
 </head>
-<body ng-app="app" ng-controller="analysisQuery" ng-cloak>
+<body ng-app="app" ng-controller="analysisReport" ng-cloak>
     <!-- header -->
          <header class="one">
             <div class="area fl">
@@ -87,217 +80,49 @@
                 <li><a href="javascript:;" id="running">运行分析</a></li>
             </ul>
         </div>
-        <div class="other current" id="runQuery"><i class="iconfont">&#xe7a2;</i>
+		<div class="current other" id="runQuery" ng-click="goQuery()"><i class="iconfont">&#xe7a2;</i>
     		<span class="dropNext">
     			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>
-            <ul class="otherList black">
-                <li><a href="analysisHistoryData.html">历史数据查询</a></li>
-                <li><a href="analysisReport.html">报表功能</a></li>
-            </ul>
-        </div>
+			<ul class="otherList black">
+				<li><a href="javaScript:;" id="goHistoryData" ng-click="goHistoryData()">历史数据查询</a></li>
+				<li><a href="javaScript:;" id="goReport" ng-click="goReport()" style="color:#5BB789;">报表功能</a></li>
+			</ul>
+		</div>
     </section>
     <div class="backDrop"></div>
 	<div class="chart temperature historyData">
 		<div class="filter">
 			<p><strong>请选择需要查询的项目：</strong></p>
 			<div class="project clearfix">
-				<div class="default defaultSelect">日耗电量</div>
-				<div class="default">日耗水量</div>
-				<div class="default">冷库门</div>
-				<div class="default">热量</div>
-				<div class="default">冷风机</div>
-				<div class="default">系统效率</div>
-				<div class="default">温度分析</div>
+				<div ng-click="showkeyli($event,0,0)" class="default defaultSelect">日耗电量</div>
+				<div ng-click="showkeyli($event,1,0)" class="default">日耗水量</div>
+				<div ng-click="showkeyli($event,2,1)" class="default">冷  库  门</div>
+				<div ng-click="showkeyli($event,3,1)" class="default">温度分析</div>
+				<div ng-click="showkeyli($event,4,0)" class="default">热　　量</div>
+				<div ng-click="showkeyli($event,5,1)" class="default">冷风机</div>
+				<div ng-click="showkeyli($event,6,0)" class="default">系统效率</div>
+				<div ng-click="showkeyli($event,7,0)" class="default">货物因子</div>
+				<div ng-click="showkeyli($event,8,0)" class="default">制冷运行分析</div>
 			</div>	
 			<p><strong>请选择时间范围</strong></p>
-       		<p>开始时间<input type="text" placeholder="请选择开始时间" id="startTime" class="kbtn"/></p>
-       		<p>结束时间<input type="text" placeholder="请选择结束时间" id="endTime" class="kbtn"/></p>
+            <p>开始时间<input class="datainp" id="startTime" type="text" placeholder="请选择开始时间" ng-model="begin" readonly></p>
+            <p>结束时间<input class="datainp" id="endTime" type="text" placeholder="请选择结束时间" ng-model="end" readonly></p>
 		</div>		
-       	<p class="chaxun"><button class="mybtn">查询</button></p>    
-       	<!-- 图表区域 -->   	
-<!--        	<div class="alarmLog table-responsive"> -->
-<!-- 	       	<table class="table table-condensed table-bordered cold_warn"> -->
+       	<p class="chaxun"><button class="mybtn" ng-click="search()">查询</button></p>
+       	<h3 class="box-title" id="rpt_asistb_tit"> </h3>
 		<div class="analysis alarmLog">
-	       	<table class="cold_warn">
-	       	  <caption>日耗电量</caption>
-			  <tbody>
-				   <tr>
-					  <th>日期</th>
-					  <th>电表1(kW·h)</th>
-					  <th>电表2(kW·h)</th>
-					  <th>电表3(kW·h)</th>
-					  <th>电表4(kW·h)</th>
-					  <th>电表5(kW·h)</th>
-					  <th>电表6(kW·h)</th>
-					  <th>电表7(kW·h)</th>
-					  <th>电表8(kW·h)</th>
-					</tr>
-					<tr>
-				       <td>2016-09-02</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-					</tr>
-					<tr>
-				       <td>2016-09-02</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-					</tr><tr>
-				       <td>2016-09-02</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-					</tr><tr>
-				       <td>2016-09-02</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-					</tr>
-				</tbody>
-			</table>
-			<table class="cold_warn">
-	       	  <caption>温度分析</caption>
-			  <tbody>
-				   <tr>
-					  <th rowspan="2">日期</th>
-					  <th colspan="4">低温库</th>
-					  <th colspan="4">变温库</th>
-					  <th colspan="4">高温库</th>
-					  <th colspan="4">预冷间</th>
-					  <th colspan="4">理货间</th>
-					  <th colspan="4">冰鲜库</th>
-					</tr>
-					<tr>
-					  <th>超温时长(min)</th>
-					  <th>最高温度(℃)</th>
-					  <th>超温因子(ε)</th>
-					  <th>保温因子(τ)</th>
-					  <th>超温时长(min)</th>
-					  <th>最高温度(℃)</th>
-					  <th>超温因子(ε)</th>
-					  <th>保温因子(τ)</th>
-					  <th>超温时长(min)</th>
-					  <th>最高温度(℃)</th>
-					  <th>超温因子(ε)</th>
-					  <th>保温因子(τ)</th>
-					  <th>超温时长(min)</th>
-					  <th>最高温度(℃)</th>
-					  <th>超温因子(ε)</th>
-					  <th>保温因子(τ)</th>
-					  <th>超温时长(min)</th>
-					  <th>最高温度(℃)</th>
-					  <th>超温因子(ε)</th>
-					  <th>保温因子(τ)</th>
-					  <th>超温时长(min)</th>
-					  <th>最高温度(℃)</th>
-					  <th>超温因子(ε)</th>
-					  <th>保温因子(τ)</th>
-					</tr>
-					<tr>
-				       <td>2016-10-13</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-					</tr>
-					<tr>
-				       <td>2016-10-13</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-					</tr>
-					<tr>
-				       <td>2016-10-13</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>432</td>
-				       <td>fff</td>
-				       <td>324</td>
-				       <td>432</td>
-				       <td>fff</td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="rpt_asis_coment" class="table-responsive" ng-show="!rs_msg">
+				<table id="rpt_asis_table" class="table table-bordered cold_warn">
+					<thead id="rpt_asistb_thead">
+					</thead>
+					<tbody id="rpt_asistb_tbody">
+					</tbody>
+				</table>
+			</div>
+			<div ng-show="rs_msg" >
+				<div class="alert alert-warning text-center">{{rs_msg}}</div>
+			</div>
        	</div>
  	</div>
 	<!--rdc列表-------------------------------------------------->
@@ -326,7 +151,7 @@
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
-                <span class="countNum">99</span>
+                <span class="countNum" ng-if="alarmTotalCnt > 0">{{alarmTotalCnt}}</span>
             </a>
         </li>
         <li>            
@@ -336,14 +161,6 @@
             </a>
         </li>
     </ul>
+    <div class="goTop"><i class="iconfont">&#xe747;</i></div>
 </body>
-<script type="text/javascript">
-	$(function(){
-		var $index='';
-		/*选择一级项目*/
-		$(".project .default").click(function(){
-			$(this).addClass('defaultSelect').siblings().removeClass('defaultSelect');
-		})
-	})
-</script>
 </html>

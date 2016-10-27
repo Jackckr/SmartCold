@@ -33,6 +33,15 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
     });
 
     $scope.viewStorage = function (rdcId) {
+        //根据rdcid查询该rdc的报警信息
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
+            "rdcId": rdcId
+        }
+        }).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.alarmTotalCnt = data.length;
+            }
+        });
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
@@ -154,7 +163,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     yAxis: [
                         {
                             type: 'value',
-                            name: '开门时长(m)',
+                            name: '开门时长(min)',
                             max: 1500,
                             axisLabel: {
                                 formatter: '{value}'
@@ -169,9 +178,9 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                         }
                     ],
                     grid: {
-                        x: 40,
+                        x: 45,
                         y: 50,
-                        width: '80%'
+                        width: '75%'
                     },
                     series: [
                         {
@@ -188,48 +197,50 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     ]
                 };
                 chart1.setOption(option);
-                chart2.setOption($scope.getEchartSingleOption("", xData, yData3, "平均开门时间", "m", "m", "bar"));
+                chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "min", "m", "bar"));
             })
         })
     }
 
     $scope.drawGoodsYZAnalysis = function () {
 
-        var mainId = 'goodsYz';
-        if ($scope.swiper < $scope.mystorages.length) {
-            var innerHTML = '<div class="swiper-slide">' +
-                '<p class="actually">货物因子</p>' +
-                '<div id=' + mainId + ' style="height:300px"></div> ';
-            $("#chartView").last().append(innerHTML);
-            $scope.swiper += 1;
-        }
+        $scope.showMap = {}
+        var endTime = new Date();
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+        $http.get(ER.coldroot + '/i/coldStorage/findAnalysisByRdcidKeysDate', {
+            params: {
+                "startTime": formatTime(startTime),
+                "endTime": formatTime(endTime),
+                "rdcid": $scope.rdcId,
+                'keys': 'GoodsLiuTongYinZi'
+            }
+        }).success(function (data) {
+            $scope.data = data;
+            angular.forEach(data, function (storage, key) {
+                $timeout(function () {
+                    xData = []
+                    yData = []
 
-        var myChart = echarts.init($('#' + mainId).get(0));
-        var option = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    data: ['2016-09-18', '2016-09-19', '2016-09-20', '2016-09-21', '2016-09-22', '2016-09-23', '2016-09-24', '2016-09-25', '2016-09-26', '2016-09-27', '2016-09-28', '2016-09-29', '2016-09-30', '2016-10-01', '2016-10-02', '2016-10-03', '2016-10-04', '2016-10-05', '2016-10-06', '2016-10-07', '2016-10-08', '2016-10-09', '2016-10-10', '2016-10-11', '2016-10-12', '2016-10-13', '2016-10-14', '2016-10-15', '2016-10-16', '2016-10-17', '2016-10-18']
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '货物因子'
-                }
-            ],
-            series: [
-                {
-                    name: '货物因子',
-                    type: 'bar',
-                    data: [502.0, 534.9, 487.0, 523.2, 425.6, 576.7, 635.6, 562.2, 332.6, 420.0, 526.4, 533.3, 502.0, 534.9, 487.0, 523.2, 425.6, 576.7, 635.6, 562.2, 332.6, 420.0, 526.4, 533.3, 502.0, 534.9, 487.0, 523.2, 425.6, 576.7]
-                }
-            ]
-        };
-        myChart.setOption(option);
+                    var mainId = 'goodsYz' + key;
+                    if ($scope.swiper < $scope.mystorages.length) {
+                        var innerHTML = '<div class="swiper-slide">' +
+                            '<p class="actually">' + key + '</p>' +
+                            '<div id=' + mainId + ' style="height:300px"></div> ';
+                        $("#chartView").last().append(innerHTML);
+                        $scope.swiper += 1;
+                    }
+
+                    var chart = echarts.init($('#' + mainId).get(0));
+                    $scope.showMap[mainId] = storage['GoodsLiuTongYinZi'].length
+                    angular.forEach(storage['GoodsLiuTongYinZi'], function (item) {
+                        xData.unshift(formatTime(item['date']).split(" ")[0])
+                        yData.unshift(item['value'] / 60)
+                    })
+                    chart.setOption($scope.getEchartSingleOption("货物流通因子",
+                        xData, yData, "时间", "", "货物流通因子", "bar", 0));
+                }, 0)
+            })
+        })
     }
 
     $scope.drawHotAnalysis = function () {
@@ -414,10 +425,13 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
     }
 
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
+        angular.forEach(yData, function (item, index) {
+            yData[index] = yData[index].toFixed(2);
+        })
         var option = {
             backgroundColor: '#D2D6DE',
             title: {
-                text: '近30日冷库日平均单次开门时长',
+                text: title,
                 textStyle: {
                     fontSize: 13,
                     fontWeight: 'normal'
@@ -445,7 +459,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 }
             ],
             grid: {
-                x: 45,
+                x: 50,
                 y: 50,
                 width: '80%'
             },

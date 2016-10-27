@@ -78,7 +78,7 @@
                 <li><a href="javascript:;" id="running">运行分析</a></li>
             </ul>
         </div>
-    	<div class="other" id="runQuery" onclick="location.href='analysisHistoryData.html'"><i class="iconfont">&#xe7a2;</i>
+    	<div class="other" id="runQuery" ng-click="goQuery()"><i class="iconfont">&#xe7a2;</i>
     		<span class="dropNext">
     			<b>查询</b><i class="iconfont">&#xe6f7;</i>
     		</span>
@@ -122,7 +122,7 @@
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
-                <span class="countNum">99</span>
+                <span class="countNum" ng-if="alarmTotalCnt > 0">{{alarmTotalCnt}}</span>
             </a>
         </li>
         <li>            

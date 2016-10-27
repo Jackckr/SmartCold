@@ -10,11 +10,11 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	$('#reservationtime').daterangepicker({startDate:$scope.begin,endDate:$scope.end , timePicker: false, timePickerIncrement: 1, format: 'YYYY-MM-DD'});
 	//key
 	var typemode={
-			      type:[10,3,2,1,-1,4,-1,-1,-1],
-			      unit:[null,null,[1,60],[60,1,1,1],null,[3600,3600],null,null,null],//换算单位
+			      type:[10,3,2,1,1,4,-1,-1,-1],
+			      unit:[null,null,[1,60,60],[60,1,1,1],null,[3600,3600],null,null,null],//换算单位
 			      unite:["　(kW·h)","　(T)","","","","","","",""],
 			      title:["电量","水耗","冷库门","温度分析","热量","冷风机","系统效率","货物因子","制冷运行分析"],
-			      key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime','AvgTime';次数,时长(min),平均时长(min)","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)","","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)","","",""] 
+			      key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime','AvgTime';次数,时长(min),平均时长(min)","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)","'GoodsHeat','QFrost','QForklift','Qlighting','WallHeat','Qblower','Qctdoor';Q货,Q霜,Q叉,Q照,Q保,Q风,Q门","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)","","'GoodsLiuTongYinZi'","'key'"] 
 	};
     function gettbcltit(value,cl){//获取标题1
 	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';
@@ -36,31 +36,50 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
     	case 1:data= $rootScope.compressorGroups;break;//压缩机组 -> 水耗->ok
     	case 2:data=$scope.coldstoragedoor; break;//冷库门->开门
     	case 3:data=$rootScope.mystorages; break;//冷库->温度分析
-    	case 4:data=null; break;//冷库->热　　量
+    	case 4:data=$rootScope.mystorages; break;//冷库->热　　量
     	case 5:data=$scope.StorageBlower; break;//blower->冷风机
     	case 6:data=null; break;//系统效率
-    	case 7:data=null; break;//货物因子
-    	case 8:data=null; break;//制冷运行分析
+    	case 7:data=$rootScope.mystorages; break;//货物因子
+    	case 8:data=$scope.allcompressors; break;//制冷运行分析
     	default: break;
     	}
     	if(data!=null){
-    		$.each(data, function(i, vo){datainf.push({id:i,rdcid:vo.id,name:vo.name+typemode.unite[$scope.slindex] }); });
+    		$.each(data, function(i, vo){
+    			datainf.push({id:i,rdcid:vo.id,name:vo.name+typemode.unite[$scope.slindex] }); 
+    		});
     	}
     	$scope.tabletit=datainf;
     	return JSON.stringify(datainf);
     }
     $scope.getsldata=function(){//拦截未加载数据
-    	if($scope.slindex==2&&$scope.coldstoragedoor==undefined||$scope.slindex==5&&$scope.StorageBlower==undefined){
+    	if($scope.slindex==2&&$scope.coldstoragedoor==undefined||$scope.slindex==5&&$scope.StorageBlower==undefined||$scope.slindex==8&&$scope.allcompressors==undefined){
 	    	if($scope.prove==undefined){$scope.prove={};$.each($rootScope.mystorages, function(i, vo){ $scope.prove[vo.id]=vo.name;});}
 	    	if($scope.slindex==2){//冷库门->开门
 	    			$http.get("/i/AnalysisController/getColdStorageDoor",{params:{'rdcId':$scope.rdcid}}).success(function(data){
-	    				$.each(data, function(i, vo){vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; });$scope.coldstoragedoor=data;
+	    				$.each(data, function(i, vo){
+	    					vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; 
+	    					});
+	    				$scope.coldstoragedoor=data;
 	    			});
 	    	}else if($scope.slindex==5){//blower->冷风机
 	    			$http.get("/i/AnalysisController/getColdStorageBlower",{params:{'rdcId':$scope.rdcid}}).success(function(data){
-	    				 $.each(data, function(i, vo){vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; }); $scope.StorageBlower=data;
+	    				 $.each(data, function(i, vo){
+	    					 vo.name= $scope.prove[vo.coldStorageId]+ "-"+vo.name; }); 
+	    				  $scope.StorageBlower=data;
 	    			});
-	    	}}
+	    	}
+	    	else if($scope.slindex==8){//blower->冷风机
+	    		     var data=[];
+    				 $.each($rootScope.compressorGroups, function(i, vo){
+    					 $.each(vo.compressors, function(j, jvo){
+    					  jvo.name=vo.name+jvo.name;
+    					  data.push(jvo);
+    					 });
+    				  });
+    				 $scope.allcompressors=data;
+    	    }
+	    	
+    	}
     };
 	$scope.search = function(isexpt){//查询数据
 		isSuccess=false,$scope.rs_msg=null;$scope.isLoaddata=true; 

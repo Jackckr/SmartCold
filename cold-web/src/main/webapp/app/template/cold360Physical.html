@@ -92,10 +92,10 @@
 				    		<li class="row" ng-repeat="obj in mystorages"  >
 					    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">{{obj.name}}</div>
 					    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
-								    <div class="progress-bar progress-bar-{{data.TransportScores[obj.id].substr(0,1)<6 ? 6:data.TransportScores[obj.id].substr(0,1)+0 }}" role="progressbar" aria-valuenow="{{data.TempScores[obj.id]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.TempScores[obj.id]}}%;">
+								    <div class="progress-bar progress-bar-{{data.TempScores[obj.id][0]}}" role="progressbar" aria-valuenow="{{data.TempScores[obj.id][1]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.TempScores[obj.id][1]}}%;">
 								    </div>
 								</div>
-								<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-{{data.TransportScores[obj.id].substr(0,1)<6 ? 6:data.TransportScores[obj.id].substr(0,1)+0 }}"><b>{{data.TempScores[obj.id]}}分</b></div>
+								<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-{{data.TempScores[obj.id][0]}}"><b>{{data.TempScores[obj.id][1]}}分</b></div>
 				    		</li>
 				    	</ul>
 				    </div>
@@ -114,10 +114,10 @@
 				    		<li class="row" ng-repeat="obj in mystorages">
 					    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">{{obj.name}}</div>
 					    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
-								    <div class="progress-bar progress-bar-{{data.TransportScores[obj.id].substr(0,1)<6 ? 6:data.TransportScores[obj.id].substr(0,1)+0 }}" role="progressbar" val="" aria-valuenow="{{data.TransportScores[obj.id]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.TransportScores[obj.id]}}%;">
+								    <div class="progress-bar progress-bar-{{data.TransportScores[obj.id][0]}}" role="progressbar" val="" aria-valuenow="{{data.TransportScores[obj.id][1]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.TransportScores[obj.id][1]}}%;">
 								    </div>
 								</div>
-								<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-{{data.TransportScores[obj.id].substr(0,1)<6 ? 6:data.TransportScores[obj.id].substr(0,1)+0 }}"><b>{{data.TransportScores[obj.id]}}分</b></div>
+								<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-{{data.TransportScores[obj.id][0]}}"><b>{{data.TransportScores[obj.id][1]}}分</b></div>
 				    		</li>
 				    	</ul>
 				    </div>
@@ -136,10 +136,10 @@
 				    		<li class="row"   ng-repeat="obj in mystorages">
 					    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">{{obj.name}}</div>
 					    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
-								    <div class="progress-bar progress-bar-{{data.TransportScores[obj.id].substr(0,1)<6 ? 6:data.TransportScores[obj.id].substr(0,1)+0 }}" role="progressbar" aria-valuenow="{{data.ColdStorageScores[obj.id]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.ColdStorageScores[obj.id]}}%;">
+								    <div class="progress-bar progress-bar-{{data.ColdStorageScores[obj.id][0]}}" role="progressbar" aria-valuenow="{{data.ColdStorageScores[obj.id][1]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.ColdStorageScores[obj.id][1]}}%;">
 								    </div>
 								</div>
-								<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-{{data.TransportScores[obj.id].substr(0,1)<6 ? 6:data.TransportScores[obj.id].substr(0,1)+0 }}"><b>{{data.ColdStorageScores[obj.id]}}分</b></div>
+								<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-{{data.ColdStorageScores[obj.id][0]}}"><b>{{data.ColdStorageScores[obj.id][1]}}分</b></div>
 				    		</li>
 				    	</ul>
 				    </div>

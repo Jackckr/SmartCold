@@ -1,7 +1,6 @@
 package com.smartcold.manage.cold.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
-import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -65,17 +63,21 @@ public class WarningController extends BaseController {
 			HashMap<String, Object> resMap = new HashMap<String, Object>();
 			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);// 查询上个月的
 			if (SetUtil.isnotNullList(wrnType) && wrnType.size() > 0) {
+				String startime = TimeUtil.getBeforeMonthTime(1);
+				String endtime = TimeUtil.getEndMonthTime(1);
 				for (WarningsInfo warningsInfo : wrnType) {
 					resMap.put(warningsInfo.getWarningname(),
-							this.warningsInfoDao.getWarCountByType(rdcId, 1, 30, warningsInfo.getWarningname()));
+							this.warningsInfoDao.getWarCountByType(rdcId,30,warningsInfo.getWarningname(),startime,endtime) );
 				}
 			}
 			HashMap<String, Object> rescuMap = new HashMap<String, Object>();
 			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);// 查询当前月份的
 			if (SetUtil.isnotNullList(wrncuType) && wrncuType.size() > 0) {
+				String startime = TimeUtil.getBeforeMonthTime(0);
+				String endtime = TimeUtil.getEndMonthTime(0);
 				for (WarningsInfo warningsInfo : wrncuType) {
 					rescuMap.put(warningsInfo.getWarningname(),
-							this.warningsInfoDao.getWarCountByType(rdcId, 0, 30, warningsInfo.getWarningname()));
+							this.warningsInfoDao.getWarCountByType(rdcId,  30, warningsInfo.getWarningname(),startime,endtime));
 				}
 			}
 			allDataMap.put("cuttdata", rescuMap);
@@ -88,20 +90,6 @@ public class WarningController extends BaseController {
 
 	}
 	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	@ResponseBody
-	public void test() {
-		String dataMode[][]={{"apid1","apid2","apid3","apid4"},{"1","2","3","4"},{"AU","BU","CU","AI","BI","CI","Temp","WaterCost","isRunning","exTemp"}};
-		StorageDataCollectionEntity obj=null;
-		List<StorageDataCollectionEntity> arrayList =new ArrayList<StorageDataCollectionEntity>();
-		for (int i = 0; i < dataMode[0].length; i++) {
-			for (int j = 0; j <dataMode[2].length; j++) {
-				obj=new StorageDataCollectionEntity(dataMode[0][i],dataMode[1][i],dataMode[2][j],(i*j+2)+"",new Date());
-				arrayList.add(obj);
-			}
-		}
-		WarLogController.addextTask(arrayList);
-	}
 	
 	
 

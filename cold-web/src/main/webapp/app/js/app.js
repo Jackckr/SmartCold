@@ -474,6 +474,14 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/baoyangReminder',
     	controller: 'baoyangReminder',
         templateUrl: 'app/template/baoyangReminder.html'
+    }).state('baoyangWeixiuRecords',{
+    	url:'/baoyangWeixiuRecords',
+    	controller: 'baoyangWeixiuRecords',
+        templateUrl: 'app/template/baoyangWeixiuRecords.html'
+    }).state('baoyangWeixiuApply',{
+    	url:'/baoyangWeixiuApply',
+    	controller: 'baoyangWeixiuApply',
+        templateUrl: 'app/template/baoyangWeixiuApply.html'
     }).state('hotAnalysis',{
     	url:'/hotAnalysis',
     	controller: 'hotAnalysis',

@@ -33,6 +33,15 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
     });
 
     $scope.viewStorage = function (rdcId) {
+        //根据rdcid查询该rdc的报警信息
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
+            "rdcId": rdcId
+        }
+        }).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.alarmTotalCnt = data.length;
+            }
+        });
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
@@ -129,89 +138,125 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
     }
 
     $scope.drawRunAnalysis = function () {
-        var mainId1 = 'runningAll';
-        var mainId2 = 'runningSingle';
-        if ($scope.swiper < $scope.mystorages.length) {
-            var innerHTML = '<div class="swiper-slide">' +
-                '<div id=' + mainId1 + ' style="height:12rem;"></div>' +
-                '<div id=' + mainId2 + ' style="height:12rem;"></div>' +
-                '</div>';
-            $("#chartView").last().append(innerHTML);
-            $scope.swiper += 1;
-        }
-        var myChart1 = echarts.init(document.getElementById('runningAll'));
-        var myChart2 = echarts.init(document.getElementById('runningSingle'));
-        var option1 = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            calculable: false,
-            legend: {
-                data: ['运行时长', '运行次数']
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    data: ['2016-09-24', '2016-09-26', '2016-09-28', '2016-09-30', '2016-10-02', '2016-10-04', '2016-10-06', '2016-10-08', '2016-10-10', '2016-10-12', '2016-10-14', '2016-10-16']
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '运行时长',
-                    axisLabel: {
-                        formatter: '{value} m'
-                    }
-                },
-                {
-                    type: 'value',
-                    name: '运行次数'
-                }
-            ],
-            series: [
 
-                {
-                    name: '运行时长',
-                    type: 'bar',
-                    data: [1012.0, 1014.9, 1017.0, 923.2, 1025.6, 976.7, 1035.6, 1062.2, 1032.6, 1020.0, 1016.4, 1013.3]
-                },
-                {
-                    name: '运行次数',
-                    type: 'line',
-                    yAxisIndex: 1,
-                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-                }
-            ]
-        };
-        var option2 = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    data: ['2016-09-24', '2016-09-26', '2016-09-28', '2016-09-30', '2016-10-02', '2016-10-04', '2016-10-06', '2016-10-08', '2016-10-10', '2016-10-12', '2016-10-14', '2016-10-16']
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '运行平均时长',
-                    axisLabel: {
-                        formatter: '{value} m'
+        $scope.showMap = {}
+        var endTime = new Date();
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+        $http.get(ER.coldroot + '/i/compressor/findAnalysisByRdcidKeysDate', {
+            params: {
+                "startTime": formatTime(startTime),
+                "endTime": formatTime(endTime),
+                "rdcId": $scope.rdcId,
+                'keys': 'RunningTime,RunningCount'
+            }
+        }).success(function (data) {
+            $scope.data = data;
+            angular.forEach(data, function (storage, key) {
+                $timeout(function () {
+                    xData = []
+                    yData1 = []
+                    yData2 = []
+                    yData3 = []
+                    var chartId = key + "Chart"
+                    var chartId1 = chartId + "1";
+                    var chartId2 = chartId + "2";
+                    if ($scope.swiper < $scope.mystorages.length) {
+                        var innerHTML = '<div class="swiper-slide">' +
+                            '<p class="actually">' + key + '</p>' +
+                            '<div id=' + chartId1 + ' style="min-height:14rem;margin-bottom:.3rem;"></div>' +
+                            '<div id=' + chartId2 + ' style="height: 14rem;"></div>' +
+                            '</div>';
+                        $("#chartView").last().append(innerHTML);
+                        $scope.swiper += 1;
                     }
-                }
-            ],
-            series: [
-                {
-                    name: '平均运行时长',
-                    type: 'bar',
-                    data: [502.0, 534.9, 487.0, 523.2, 425.6, 576.7, 635.6, 562.2, 332.6, 420.0, 526.4, 533.3]
-                }
-            ]
-        };
-        myChart1.setOption(option1);
-        myChart2.setOption(option2);
+
+                    var chart1 = echarts.init(document.getElementById(chartId1));
+                    var chart2 = echarts.init(document.getElementById(chartId2));
+                    $scope.showMap[chartId + '1'] = storage['RunningTime'].length
+                    $scope.showMap[chartId + '2'] = storage['RunningTime'].length
+                    angular.forEach(storage['RunningTime'], function (item, index) {
+                        xData.unshift(formatTime(item['date']).split(" ")[0])
+                        yData1.unshift((item['value'] / 60).toFixed(2))
+                        yData2.unshift(storage['RunningCount'][index].value)
+                        yData3.unshift(
+                            storage['RunningCount'][index].value == 0 ? 0 : item['value'] / storage['RunningCount'][index].value / 60
+                        )
+                    })
+                    var option = {
+                        backgroundColor: '#D2D6DE',
+                        title: {
+                            text: '近30日累积运行总时长及日运行次数',
+                            textStyle: {
+                                fontSize: 13,
+                                fontWeight: 'normal'
+                            },
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            textStyle: {
+                                fontSize: 12      // 主标题文字颜色
+                            }
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {show: true},
+                                dataView: {show: true, readOnly: false},
+                                magicType: {show: true, type: ['line', 'bar']},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        calculable: true,
+                        legend: {
+                            data: ['运行时长', '运行次数'],
+                            y: 'bottom'
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: xData
+                            }
+                        ],
+                        grid:{
+                        	x:45
+                        },
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '运行时长(m)',
+                                max: 1500,
+                                axisLabel: {
+                                    formatter: '{value}'
+                                }
+                            },
+                            {
+                                type: 'value',
+                                name: '运行次数',
+                                axisLabel: {
+                                    formatter: '{value}'
+                                }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '运行时长',
+                                type: 'bar',
+                                data: yData1
+                            },
+                            {
+                                name: '运行次数',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                data: yData2
+                            }
+                        ]
+                    };
+                    chart1.setOption(option)
+                    chart2.setOption($scope.getEchartSingleOption("近30日日平均运行时长", xData, yData3, "平均运行时间", "m", "m", "bar"))
+                }, 0)
+            })
+        })
     }
 
     $scope.goEffectAnalysis = function () {
@@ -303,7 +348,11 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
                 }
             },
             title: {
-                text: title
+                text: title,
+                textStyle: {
+                    fontSize: 13,
+                    fontWeight: 'normal'
+                },
             },
             calculable: true,
             xAxis: [
@@ -312,6 +361,9 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
                     data: xData
                 }
             ],
+            grid:{
+            	x:45
+            },
             yAxis: [
                 {
                     type: 'value',

@@ -37,5 +37,7 @@
         LEFT JOIN `coldstoragedoorset`  d on c.`id` =d.`coldstorageid` 
         where r.`id`  = #{rdcId} AND d.id IS NOT null
     </select>
+    
+  
 
 </mapper>
