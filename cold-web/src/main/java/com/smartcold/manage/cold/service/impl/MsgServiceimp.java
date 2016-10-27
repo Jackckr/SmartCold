@@ -283,7 +283,7 @@ public class MsgServiceimp implements MsgService {
 							for (ColdStorageAnalysisEntity clsis : blowersisdata) {
 								 qfrost+= tempMap.get(clsis.getOid()) * clsis.getValue();
 							}
-							sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "QFrost", qfrost, dateTime));
+							sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "QFrost", qfrost/3600, dateTime));
 						} 
 					}
 					if(SetUtil.isnotNullList(sisList)){
@@ -323,7 +323,7 @@ public class MsgServiceimp implements MsgService {
 						for (ColdStorageAnalysisEntity clsis : blowersisdata) {
 							 qfrost += tempMap.get(clsis.getOid()) * clsis.getValue();
 						}
-						sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "Qblower", qfrost, dateTime));
+						sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "Qblower", qfrost/3600, dateTime));
 					} 
 				}
 				if(SetUtil.isnotNullList(sisList)){
@@ -380,10 +380,10 @@ public class MsgServiceimp implements MsgService {
 							    		}
 									 }
 							    	if(sumForklift!=0){
-							    	  sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "QForklift", sumForklift, dateTime));
+							    	  sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "QForklift", sumForklift/3600, dateTime));
 							    	}
 							    	if(sumlighting!=0){
-							    		sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "Qlighting", sumlighting, dateTime));
+							    		sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "Qlighting", sumlighting/3600, dateTime));
 							    	}
 							    }
 					  } 
@@ -415,7 +415,7 @@ public class MsgServiceimp implements MsgService {
 						    Double hn=	(Double) hashMap.get("hn");//换气次数
 						    Double hw=	(Double) hashMap.get("hw");//换气次数
 						    Double Q=0.675*cgvolume*vvalue*(hw-hn);//临时值
-							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q, dateTime));
+							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q/3600, dateTime));
 					 }
 				 }
 				 if(SetUtil.isnotNullList(sisList)){
