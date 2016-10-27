@@ -48,7 +48,7 @@
 						FROM
 							`sc360`.`coldstorageanalysis` sis
 						WHERE
-							sis.`type` = ct.`id`
+							sis.`type` = 1
 						AND sis.oid = ct.id
 						AND sis.`key` = "AvgTemp"
 						AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
@@ -72,7 +72,7 @@
 							FROM
 								`sc360`.`coldstorageanalysis` sis
 							WHERE
-								sis.`type` = ct.`id`
+								sis.`type` = 1
 							AND sis.oid = ct.id
 							AND sis.`key` = "AvgTemp"
 							AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30

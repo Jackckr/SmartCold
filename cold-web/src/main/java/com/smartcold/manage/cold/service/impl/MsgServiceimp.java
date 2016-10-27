@@ -298,7 +298,7 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 6 Q风=Σ（P风*t风累积）->ok
 	 * type=4  ,key='totalRunning',valkey='Qblower' 
-	 * 1.SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers FROM `forkliftset` where `power` >0 GROUP BY rdcid; 计算平均功率
+	 * 1.select coldStorageId,group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from `smartcold`.blowerset where  `fanPower` >0 GROUP BY `coldStorageId`; 计算平均功率
 	 * 2. select * from `coldstorageanalysis` where 1=1 AND `type` = 4 AND `key`in ('DefrosingTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
 	private void setQblower(String time, Date dateTime) {
@@ -341,7 +341,8 @@ public class MsgServiceimp implements MsgService {
 	 *  type=2  ,key='TotalTime',valkey='QForklift' -->type=14
 	 *   type=2 ,key='?'        ,valkey='Qlighting' -->type=15
 	 * 1.SELECT rdcid,coldstorageid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY coldstorageid;
-	 * 2.SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers FROM `forkliftset` where `power` >0 GROUP BY rdcid; 计算平均功率
+	 * 2.SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers ,sum(power)/COUNT(*) avgpower  FROM `forkliftset` where `power` >0 and rdcid in(1590) GROUP BY rdcid; ; 计算平均功率
+	 *   SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers ,sum(power)/COUNT(*) avgpower  FROM `coldstoragelightset` where `power` >0 and rdcid in(1590) GROUP BY rdcid; ; 计算平均功率
 	 * 3.select * from `coldstorageanalysis` where 1=1 AND `type` = 2 AND `key`in ('TotalTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
 	private void setQForklift(String time, Date dateTime,String startTime,String endTime) { //为机群服务器队列任务做准备
@@ -378,10 +379,10 @@ public class MsgServiceimp implements MsgService {
 							    			sumlighting+=avglightsetPower * clsis.getValue();
 							    		}
 									 }
-							    	if(sumForklift==0){
+							    	if(sumForklift!=0){
 							    	  sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "QForklift", sumForklift, dateTime));
 							    	}
-							    	if(sumlighting==0){
+							    	if(sumlighting!=0){
 							    		sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "Qlighting", sumlighting, dateTime));
 							    	}
 							    }
