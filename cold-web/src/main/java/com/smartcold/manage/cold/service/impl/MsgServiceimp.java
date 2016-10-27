@@ -412,8 +412,8 @@ public class MsgServiceimp implements MsgService {
 						    int id = (Integer) hashMap.get("id");//coldstorageset->id
 						    Double cgvolume=(Double) hashMap.get("cgvolume");//冷库面积d
 						    Double vvalue=	(Double) hashMap.get("vvalue");//换气次数d
-						    Float hn=	(Float) hashMap.get("hn");//换气次数
-						    Float hw=	(Float) hashMap.get("hw");//换气次数
+						    Double hn=	(Double) hashMap.get("hn");//换气次数
+						    Double hw=	(Double) hashMap.get("hw");//换气次数
 						    Double Q=0.675*cgvolume*vvalue*(hw-hn);//临时值
 							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q, dateTime));
 					 }
