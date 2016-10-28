@@ -17,10 +17,13 @@ public interface QuantityMapper {
 	//获得机组运行时间
 	List<CompressorSetEntity>   getcoldstoraginfo(@Param("oids")Object oids);
 	public Double getSumRunTime(@Param("oid")Object oid,@Param("stTime")Date stTime);
+	//获得Qsis
+	public List<HashMap<String, Object>> getQuantitsis(@Param("rdcId")int rdcId,@Param("stTime")String stTime);
 	//获得商品流转信息
 	public List<HashMap<String, Object>>  getGoodQuantit(@Param("oid")int oid,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	//360体检->因子平均值集合
 	public List<HashMap<String, Object>> getAVGTempYinZi(@Param("oid")Object oid,@Param("stTime")String stTime,@Param("edTime")String edTime);
+	
     //======================================================Q6======================================================
 	// 检查是否有设备->根据是否有数据判断PLC
 	public Integer getCountBydevkey(@Param("deviceid")Object deviceid,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);

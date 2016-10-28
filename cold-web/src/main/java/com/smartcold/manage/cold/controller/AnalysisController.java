@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
 import com.smartcold.manage.cold.dao.olddb.BlowerMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
@@ -44,6 +46,9 @@ public class AnalysisController {
 
 	@Autowired
 	private BlowerMapper blowerMapper;
+	
+	@Autowired
+	private QuantityMapper quantityMapper;
 
 	@Autowired
 	private CompressorGroupSetMapper compressorGroupSetDao;
@@ -79,6 +84,51 @@ public class AnalysisController {
 	public Object getColdStorageBlower(Integer rdcId) {
 		return blowerMapper.findBlowerByRdcID(rdcId);
 	}
+	/**
+	 * 
+	 * @param rdcId:冷库ID
+	 * @param oids:冷库id集合
+	 * @return
+	 */
+	@RequestMapping(value = "/getQAnalysis")
+	@ResponseBody
+	public ResponseData<HashMap<String, Object>> getQAnalysis(Integer rdcId){
+		if(rdcId==null){	return ResponseData.newFailure();}
+			String stTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(30));
+			List<HashMap<String, Object>> quantitsis = quantityMapper.getQuantitsis(rdcId, stTime);
+			if(SetUtil.isnotNullList(quantitsis)){
+				String xdata[] = new String[30];// 日期
+				HashMap<String, Integer> dataindex=new HashMap<String, Integer>();
+				double data[]=new double[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				for (int i = 0; i < 30; i++) {
+					Calendar c = Calendar.getInstance(); c.add(Calendar.DAY_OF_MONTH, -30 + i); 
+					String date=sdf.format(c.getTime());
+					xdata[i]=date;
+					dataindex.put(date, i);
+				}
+				HashMap<String, Object> resalldata=new HashMap<String, Object>();
+				LinkedHashMap<String ,double[]> tempdata=new LinkedHashMap<String, double[]>();
+				for (HashMap<String, Object> hashMap : quantitsis) {
+					String date = sdf.format((Date) hashMap.get("date"));
+					String key =  (String) hashMap.get("key");
+					Integer idt = dataindex.get(date);
+					if(tempdata.containsKey(key)){
+						double[] ds = tempdata.get(key);
+						ds[idt]=(Double) hashMap.get("sumq");
+					}else{
+						double[] clone = data.clone();
+						clone[idt]=(Double) hashMap.get("sumq");
+						tempdata.put(key, clone);
+					}
+				 }
+				resalldata.put("xAxis", xdata);
+				resalldata.put("allseries", tempdata);
+				return ResponseData.newSuccess(resalldata);
+			}
+			return ResponseData.newSuccess();
+	}
+	
 
 	/**
 	 * 
