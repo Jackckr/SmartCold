@@ -421,3 +421,40 @@ html, body {
  	border:0;
  	background-color: transparent;
 }
+/*compressorBlower*/
+#blowerPage>div{
+	margin-bottom: 10px;
+}
+.mybox .box-header,.mybox .box-body{
+	padding: 4px 10px;
+}
+.mybox .box-header>.box-tools{
+	top:0;
+}
+.myTopbg{
+	margin-top: 40px;
+}
+ .myTopbg .info-box-text span:first-child{
+ 	font-size: 20px;
+    color: #FF7F50;
+ }
+  .myTopbg .info-box-text span:last-child{
+ 	font-size: 40px;
+    color: #FF7F50;
+    position: relative;
+    top: 5px;    
+ }
+  .myTopbg .info-box-text{
+  line-height: 40px;
+  }
+.littlebg{
+	width:85px;
+	height: 50px;
+	line-height: 50px;
+}
+.littlebg i{
+	font-size: 35px;
+}
+.littlebg+.info-box-content{
+	padding: 0
+}
