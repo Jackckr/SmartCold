@@ -44,9 +44,10 @@ app.controller('analysisReport', function ($scope, $location, $http) {
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
-            "rdcId": rdcId
-        }
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
+            params: {
+                "rdcId": rdcId
+            }
         }).success(function (data) {
             if (data && data.length > 0) {
                 $scope.alarmTotalCnt = data.length;
@@ -175,19 +176,19 @@ app.controller('analysisReport', function ($scope, $location, $http) {
                 data = $scope.mystorages;
                 break;//冷库->温度分析
             case 4:
-                data = null;
+                data = $scope.mystorages;
                 break;//冷库->热　　量
             case 5:
                 data = $scope.StorageBlower;
                 break;//blower->冷风机
             case 6:
-                data = null;
+                data = $scope.qesis;
                 break;//系统效率
             case 7:
-                data = null;
+                data = $scope.mystorages;
                 break;//货物因子
             case 8:
-                data = null;
+                data = $scope.allcompressors;
                 break;//制冷运行分析
             default:
                 break;
@@ -209,7 +210,7 @@ app.controller('analysisReport', function ($scope, $location, $http) {
         $scope.getsldata();
     };
     $scope.getsldata = function () {//拦截未加载数据
-        if ($scope.slindex == 2 && $scope.coldstoragedoor == undefined || $scope.slindex == 5 && $scope.StorageBlower == undefined) {
+        if ($scope.slindex == 2 && $scope.coldstoragedoor == undefined || $scope.slindex == 5 && $scope.StorageBlower == undefined || $scope.slindex == 8 && $scope.allcompressors == undefined || $scope.slindex == 6 && $scope.qesis == undefined) {
             if ($scope.prove == undefined) {
                 $scope.prove = {};
                 $.each($scope.mystorages, function (i, vo) {
@@ -230,21 +231,32 @@ app.controller('analysisReport', function ($scope, $location, $http) {
                     });
                     $scope.StorageBlower = data;
                 });
+            } else if ($scope.slindex == 6) {//系统效率
+                $scope.qesis = [{id: 0, rdcid: 0, name: "系统效率"}];
+            } else if ($scope.slindex == 8) {//blower->冷风机
+                var data = [];
+                $.each($scope.compressorGroups, function (i, vo) {
+                    $.each(vo.compressors, function (j, jvo) {
+                        jvo.name = vo.name + jvo.name;
+                        data.push(jvo);
+                    });
+                });
+                $scope.allcompressors = data;
             }
         }
     };
 
     $scope.search = function () {//查询数据
-    	//将字符串转换为日期
-        var begin=new Date($("#startTime").val().replace(/-/g,"/"));
-        var end=new Date($("#endTime").val().replace(/-/g,"/"));
+        //将字符串转换为日期
+        var begin = new Date($("#startTime").val().replace(/-/g, "/"));
+        var end = new Date($("#endTime").val().replace(/-/g, "/"));
         //js判断日期
-        if(begin>end){
-           layer.open({
-	           content: '开始时间不能小于结束时间哦^_^'
-	           ,btn: '确定'
-	        });
-           return false;
+        if (begin > end) {
+            layer.open({
+                content: '开始时间不能小于结束时间哦^_^'
+                , btn: '确定'
+            });
+            return false;
         }
         isSuccess = false, $scope.rs_msg = null;
         $scope.isLoaddata = true;
@@ -259,7 +271,10 @@ app.controller('analysisReport', function ($scope, $location, $http) {
             type: "POST",
             url: ER.coldroot + '/i/AnalysisController/getCasesTotalSISAnalysis',
             data: {
-                index: $scope.urlid,
+                rdcid: $scope.rdcId,
+                index: $scope.slindex,
+                urlid: $scope.urlid,
+                isexpt: false,
                 type: typemode.type[$scope.slindex],
                 confdata: datainfo,
                 key: typemode.key[$scope.slindex],
@@ -270,7 +285,7 @@ app.controller('analysisReport', function ($scope, $location, $http) {
             success: function (data) {
                 if (data.success) {
                     isSuccess = true;
-                    if ($scope.urlid == 0) {
+                    if ($scope.urlid == 0 || $scope.urlid == 2) {
                         $scope.dldata(data);
                     } else {
                         $scope.cldata(data);
@@ -334,15 +349,15 @@ app.controller('analysisReport', function ($scope, $location, $http) {
         $("#rpt_asistb_tbody").html(tboy.join(""));
     }
     jeDate({
-		dateCell:"#startTime",
-		format:"YYYY-MM-DD",
-		isTime:false, 
-		minDate:"2008-08-08 08:08:08"
-	})
-	jeDate({
-		dateCell:"#endTime",
-		format:"YYYY-MM-DD",
-		isTime:false, 
-		minDate:"2008-08-08 08:08:08"
-	})
+        dateCell: "#startTime",
+        format: "YYYY-MM-DD",
+        isTime: false,
+        minDate: "2008-08-08 08:08:08"
+    })
+    jeDate({
+        dateCell: "#endTime",
+        format: "YYYY-MM-DD",
+        isTime: false,
+        minDate: "2008-08-08 08:08:08"
+    })
 });
