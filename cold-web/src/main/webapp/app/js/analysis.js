@@ -406,6 +406,10 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
                 'keys':'RunningTime,RunningCount'
             } 
 		}).success(function(data,status,config,header){
+			$scope.compressorKeys = []
+			angular.forEach(data,function(item,key){
+				$scope.compressorKeys.push({name:key})
+			})
 			$scope.data = data;
 			angular.forEach(data,function(storage,key){
 				$timeout(function(){					
