@@ -10,6 +10,8 @@ public class PressurePlatformSetEntity {
 
 	private int rdcid;
 
+	private int platformdoorid;
+
 	private String mapping;
 
 	private Date addTime;
@@ -46,6 +48,14 @@ public class PressurePlatformSetEntity {
 
 	public void setRdcid(int rdcid) {
 		this.rdcid = rdcid;
+	}
+
+	public int getPlatformdoorid() {
+		return platformdoorid;
+	}
+
+	public void setPlatformdoorid(int platformdoorid) {
+		this.platformdoorid = platformdoorid;
 	}
 
 	public String getMapping() {

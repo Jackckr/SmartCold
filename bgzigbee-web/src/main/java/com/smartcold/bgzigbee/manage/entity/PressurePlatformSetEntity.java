@@ -5,15 +5,17 @@ import java.util.Date;
 public class PressurePlatformSetEntity {
 
 	private int id;
-	  
+
 	private String name;
-	  
+
 	private int rdcid;
-	  
+
+	private int platformdoorid;
+
 	private double power;
-	
+
 	private String mapping;
-	  
+
 	private Date addTime;
 
 	public int getId() {
@@ -38,6 +40,14 @@ public class PressurePlatformSetEntity {
 
 	public void setRdcid(int rdcid) {
 		this.rdcid = rdcid;
+	}
+
+	public int getPlatformdoorid() {
+		return platformdoorid;
+	}
+
+	public void setPlatformdoorid(int platformdoorid) {
+		this.platformdoorid = platformdoorid;
 	}
 
 	public String getMapping() {

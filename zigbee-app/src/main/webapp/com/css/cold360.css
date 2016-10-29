@@ -687,3 +687,6 @@ b{
 	font-size: 0.8rem;
 	color: #438BCB;
 }
+#jedatebox{
+	z-index: 10000!important;
+}

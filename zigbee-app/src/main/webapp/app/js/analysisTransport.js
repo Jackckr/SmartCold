@@ -263,96 +263,80 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
             $("#chartView").last().append(innerHTML);
             $scope.swiper += 1;
         }
-        $('#' + mainId1).highcharts({
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 45,
-                    beta: 0
-                }
-            },
-            title: {
-                text: '最新热量分布图'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            legend: {
-                itemDistance: 10
-            },
-            plotOptions: {
-                pie: {
-                    depth: 40,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}'
-                    },
-                    showInLegend: true
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                type: 'pie',
-                name: '占比',
-                data: [['货物', 20.0], ['化霜', 26.8], ['叉车', 12.8], ['照明', 8.5], ['开门', 6.9], ['保温', 10], ['冷风机风扇', 15.0]]
-            }]
-        });
 
-        $('#' + mainId2).highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: '近30日热量分布图'
-            },
-            credits: {
-                enabled: false
-            },
-            xAxis: {
-                categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',],
-                labels: {
-                    format: '{value} 日'
-                },
-                max: 30
-            },
-            yAxis: {
-                min: 0,
-                text: null
-            },
-            tooltip: {
-                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-                shared: true
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'percent'
+        $http.get(ER.coldroot + '/i/AnalysisController/getQAnalysis', {params: {rdcId: $scope.rdcId}}).success(function (data) {
+            if (data.success) {
+                var quinisisdata = data.entity.allseries;
+                if (quinisisdata != undefined) {
+                    var nonedata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    if (quinisisdata.GoodsHeat == undefined) {
+                        quinisisdata.GoodsHeat = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.QFrost == undefined) {
+                        quinisisdata.QFrost = nonedat;
+                    }
+                    ;
+                    if (quinisisdata.QForklift == undefined) {
+                        quinisisdata.QForklift = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.WallHeat == undefined) {
+                        quinisisdata.WallHeat = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.Qblower == undefined) {
+                        quinisisdata.Qblower = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.Qctdoor == undefined) {
+                        quinisisdata.Qctdoor = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.Qlighting == undefined) {
+                        quinisisdata.Qlighting = nonedata;
+                    }
+                    ;
+                    var series = [], piedata = [], pxAxis = data.entity.xAxis;
+                    series.push({name: 'Q货', data: quinisisdata.GoodsHeat});
+                    series.push({name: 'Q霜', data: quinisisdata.QFrost});
+                    series.push({name: 'Q叉', data: quinisisdata.QForklift});
+                    series.push({name: 'Q保', data: quinisisdata.WallHeat});
+                    series.push({name: 'Q风', data: quinisisdata.Qblower});
+                    series.push({name: 'Q门', data: quinisisdata.Qctdoor});
+                    series.push({name: 'Q照', data: quinisisdata.Qlighting});
+                    piedata.push(['Q货', quinisisdata.GoodsHeat[29]]);
+                    piedata.push(['Q霜', quinisisdata.QFrost[29]]);
+                    piedata.push(['Q叉', quinisisdata.QForklift[29]]);
+                    piedata.push(['Q保', quinisisdata.WallHeat[29]]);
+                    piedata.push(['Q风', quinisisdata.Qblower[29]]);
+                    piedata.push(['Q门', quinisisdata.Qctdoor[29]]);
+                    piedata.push(['Q照', quinisisdata.Qlighting[29]]);
+                    data = undefined;
+                    quinisisdata = undefined;
+                    $('#' + mainId1).highcharts({
+                        title  : { text : '最新热量分布图' },
+                        credits: {  enabled: false },
+                        legend : { itemDistance: 10 },
+                        chart  : { type : 'pie', options3d : { enabled : true, alpha : 45, beta : 0 } },
+                        tooltip: { pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>' },
+                        series : [ { type : 'pie', name : '占比', data : piedata } ],
+                        plotOptions : { pie : { depth : 40, showInLegend: true, dataLabels : { enabled : true, format : '{point.name}' } } }
+                    });
+                    $('#' + mainId2).highcharts({
+                        chart: {  type: 'column'  },
+                        title: { text: '近30日热量分布图' },
+                        credits: {  enabled: false },
+                        yAxis: {  min: 0,  text: null },
+                        series: series,
+                        plotOptions: {  column: {  stacking: 'percent' } },
+                        xAxis: {   labels: {  format: '{value} 日' },  categories: pxAxis },
+                        tooltip: { shared: true,pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>'  }
+                    });
                 }
-            },
-            series: [{
-                name: '货物',
-                data: [2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 3, 1, 2, 2, 4, 2, 3, 6, 1]
-            }, {
-                name: '化霜',
-                data: [1, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 5, 3, 3, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 2, 2]
-            }, {
-                name: '叉车',
-                data: [1.5, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 3, 1, 2, 1.5, 4, 2, 5, 1]
-            }, {
-                name: '照明',
-                data: [1, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 2, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 2]
-            }, {
-                name: '开门',
-                data: [1.5, 2, 4, 2, 5, 6, 1, 2, 2, 4, 2, 3, 1, 1, 2, 2, 4, 2, 5, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 5, 2, 1]
-            }, {
-                name: '保温',
-                data: [2, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 3, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 1]
-            }, {
-                name: '冷风机风扇',
-                data: [1, 1, 4, 2, 5, 6, 1, 2, 1, 4, 2, 5, 1, 1, 2, 1, 4, 2, 5, 6, 1, 2, 1, 4, 2, 5, 2, 1, 2, 1, 4, 2, 5, 6, 1]
-            }]
+            } else {
+                alert(data.message);
+            }
         });
     }
 

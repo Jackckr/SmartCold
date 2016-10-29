@@ -56,7 +56,7 @@
 	            <div class="swiper-slide" ng-repeat="(key,value) in  compressorGroups">
 	            	 <p class="actually">{{value.name}}</p>
 	            	 <div class="alarm_bg" ng-repeat="obj in  value.compressors">
-	            	 	<strong class="remain" oid="{{obj.id}}">{{aredayTime(obj.maintenancetime)}}</strong>
+	            	 	<strong class="remain" oid="{{obj.id}}">{{obj.sytm}}</strong>
 	            	 	<p>{{obj.name}}距离下次定期保养</p>
 	            	 </div>
 	            </div>
