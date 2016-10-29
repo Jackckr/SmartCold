@@ -16,21 +16,29 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            if (rootRdcId == undefined || rootRdcId == null) {
-                $scope.currentRdc = $scope.storages[0];
-                $scope.rdcId = $scope.storages[0].id;
-                $scope.rdcName = $scope.storages[0].name;
-                $scope.initCompressorPressure($scope.rdcId);
-            } else {
-                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-                    $scope.currentRdc = data[0];
-                    $scope.rdcName =  data[0].name;
-                    $scope.rdcId =  data[0].id;
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
                     $scope.initCompressorPressure($scope.rdcId);
-                });
+                }
+            } else {
+                findByRdcId(rootRdcId);
             }
         }
     });
+
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName =  data[0].name;
+            $scope.rdcId =  data[0].id;
+            $scope.initCompressorPressure($scope.rdcId);
+        });
+    }
 
     $scope.viewStorage = function () {
         for (var i = 0; i < $scope.compressorGroups.length; i++) {
@@ -73,6 +81,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
     $scope.defaltswiper = 0;
 
     $scope.initCompressorPressure = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
         $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
             "rdcId": rdcId
