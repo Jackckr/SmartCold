@@ -57,7 +57,7 @@ public class AnalysisController {
 
 	@Autowired
 	private ColdStorageAnalysisService coldStorageAnalysisService;
-
+    private final static 	DecimalFormat dfformat = new DecimalFormat("######0.00");
 	private static HashMap<String, LinkedHashMap<String, Object[]>> expData = new HashMap<String, LinkedHashMap<String, Object[]>>();
 
 	/**
@@ -97,6 +97,7 @@ public class AnalysisController {
 			List<HashMap<String, Object>> quantitsis = this.quantityMapper.getQuantitsis(rdcId, stTime);
 			if(SetUtil.isnotNullList(quantitsis)){
 				String xdata[] = new String[30];// 日期
+			
 				HashMap<String, Integer> dataindex=new HashMap<String, Integer>();
 				double data[]=new double[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -112,12 +113,13 @@ public class AnalysisController {
 					String date = sdf.format((Date) hashMap.get("date"));
 					String key =  (String) hashMap.get("key");
 					Integer idt = dataindex.get(date);
+					double sumq= Double.parseDouble(dfformat.format((Double) hashMap.get("sumq")));
 					if(tempdata.containsKey(key)){
 						double[] ds = tempdata.get(key);
-						ds[idt]=(Double) hashMap.get("sumq");
+						ds[idt]=sumq ;
 					}else{
 						double[] clone = data.clone();
-						clone[idt]=(Double) hashMap.get("sumq");
+						clone[idt]=sumq;
 						tempdata.put(key, clone);
 					}
 				 }
@@ -153,7 +155,6 @@ public class AnalysisController {
 				for (HashMap<String, Object> hashMap : sumQlist) { QMap.put(sdf.format((Date) hashMap.get("date")),  (Double) hashMap.get("sumq")); }
 				for (HashMap<String, Object> hashMap : sumElist) { EMap.put(sdf.format((Date) hashMap.get("date")),  (Double) hashMap.get("sume")); }
 				for (int i = 0; i < 30; i++) { Calendar c = Calendar.getInstance(); c.add(Calendar.DAY_OF_MONTH, -30 + i); xdata[i] = sdf.format(c.getTime());}
-				DecimalFormat dfformat = new DecimalFormat("######0.00");
 				double y1[] = new double[xdata.length];
 				for (int i = 0; i < xdata.length; i++) {
 					Double q=  QMap.get(xdata[i])  ;       
@@ -257,7 +258,6 @@ public class AnalysisController {
 			HashMap<String, Object> restMap = new HashMap<String, Object>();
 			if (SetUtil.isnotNullList(datalist)) {
 				Object[] objects = {};
-				DecimalFormat dfformat = new DecimalFormat("######0.00");
 				for (ColdStorageAnalysisEntity coldsis : datalist) {// 2
 					String data = TimeUtil.getFormatDate(coldsis.getDate());
 					int oidindex = oidsymap.get(coldsis.getOid());
@@ -318,7 +318,6 @@ public class AnalysisController {
 			List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, stTime,endTime);
 			if(SetUtil.isnotNullList(sumElist)&&SetUtil.isnotNullList(sumQlist)){
 				HashMap<Date,Double > QMap=new HashMap<Date, Double>();
-				DecimalFormat dfformat = new DecimalFormat("######0.00");
 				HashMap<String, Object> restMap = new HashMap<String, Object>();
 				LinkedHashMap<Date, Object[]> tempData = new LinkedHashMap<Date, Object[]>();
 				for (HashMap<String, Object> hashMap : sumQlist) { QMap.put((Date) hashMap.get("date"),  (Double) hashMap.get("sumq")); }
