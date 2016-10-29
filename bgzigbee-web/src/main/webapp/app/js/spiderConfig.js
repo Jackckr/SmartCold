@@ -558,6 +558,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     	else if(obj.iunbalance!=undefined&&isNaN(obj.iunbalance))
     		alert("输入的不平衡值需要为数字");
     	else{
+    		if(obj.platformdoorid != null){
+    			obj.platformdoorid = obj.platformdoorid.id
+    		}
         obj.rdcid = $scope.vm.choseRdc.id;
         obj.table = table;
         //debugger;

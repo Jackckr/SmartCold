@@ -10,4 +10,15 @@
         SELECT *
         FROM `pressureplatformset` WHERE `rdcId` = #{rdcId}
     </select>
+    
+    <update id="update" parameterType="PressurePlatformSetEntity">
+        UPDATE pressureplatformset
+        SET
+        `name` = #{name},
+        `power` = #{power},
+        `rdcid` = #{rdcid},
+        `platformdoorid` = #{platformdoorid}
+        WHERE
+        `id` = #{id}
+    </update>
 </mapper>
