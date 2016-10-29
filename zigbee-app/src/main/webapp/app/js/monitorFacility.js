@@ -50,14 +50,14 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                 $scope.alarmTotalCnt = data.length;
             }
         });
-        $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
+        $http.get(ER.coldroot + '/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
                 for (var i = 0; i < $scope.mystorages.length; i++) {
                     $scope.drawDoor($scope.mystorages[i]);
                 }
             }
-        });
+            });
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();

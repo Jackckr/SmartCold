@@ -43,6 +43,8 @@ app.controller('maintain', function ($scope, $location, $http) {
         });
     }
 
+    $scope.smgroid = null;
+    $scope.sytime = undefined;
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
@@ -57,36 +59,38 @@ app.controller('maintain', function ($scope, $location, $http) {
         });
         $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(function (data) {
             $scope.compressorGroups = data;
+            var oid = [];
             angular.forEach($scope.compressorGroups, function (item) {
+                oid.push(item.id);
                 $http.get(ER.coldroot + '/i/compressor/findBygroupId?groupId=' + item.id).success(function (data) {
                     item.compressors = data;
                 })
             })
+            $scope.smgroid = oid.join(',');
+            $http.get(ER.coldroot + '/i/physicalController/getCompressorinfo', {params: {oids: $scope.smgroid}}).success(function (data) {
+                $scope.sytime = data.entity;
+                angular.forEach($scope.compressorGroups, function (item) {
+                    angular.forEach(item.compressors, function (obj) {
+                        obj.sytm = $scope.aredayTime(obj);
+                    });
+                });
+            });
         });
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
     }
 
-    $scope.aredayTime = function (time) {
-        if (time == null || time == "") {
-            return "未设置保养信息";
-        }
-        var text = "还剩  ";
-        var date1 = new Date();
-        var date2 = new Date(time);
-        var date3 = date2.getTime() - date1.getTime();  //时间差的毫秒数
-        var days = Math.floor(date3 / (86400000));
-        var hours = Math.floor(date3 % (86400000) / (3600000));
-        if (days > 0) {
-            text += days + "天 ";
-        }
-        if (hours > 0) {
-            text += hours + "小时 ";
+    $scope.aredayTime = function (obj) {
+        if (obj.maintenancetime && obj.lastMaintainTime) {
+            var sytime = $scope.sytime[obj.id];
+            if (sytime <= 0) {
+                return '已超保养期' + sytime;
+            }
+            return "还剩  " + parseInt(sytime) + "小时";
         } else {
-            text = "已过保养期";
+            return "未设置保养时间";
         }
-        return text;
     };
 
     $scope.searchRdcs = function (searchContent) {
