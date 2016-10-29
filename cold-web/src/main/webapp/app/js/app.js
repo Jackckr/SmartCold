@@ -137,7 +137,12 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
-        					$rootScope.storageModal = data[0];
+        					anglar.forEach(data,function(item){
+        						if(item.name == '睿冷'){
+        							$rootScope.storageModal = item;
+        						}
+        					})
+        					if($rootScope.storageModal == null)$rootScope.storageModal = data[0];
         				});
         		$http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
