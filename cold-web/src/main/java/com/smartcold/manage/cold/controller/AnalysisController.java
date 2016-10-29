@@ -279,7 +279,7 @@ public class AnalysisController {
 						Object[] keydata = tempData.get(sdkey);
 						for (int i =2; i < keydata.length; i++) {
 							if((i+1)%3==0&&0!=(Double)keydata[i-2]&&0!=(Double)keydata[i-1]){
-								keydata[i]=	((Double)keydata[i-2]/(Double)keydata[i-1]);
+								keydata[i]=	((Double)keydata[i-2]/(Double)keydata[i-1])*60;
 							}
 						}
 					}
