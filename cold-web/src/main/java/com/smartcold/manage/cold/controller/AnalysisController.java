@@ -97,6 +97,7 @@ public class AnalysisController {
 			List<HashMap<String, Object>> quantitsis = this.quantityMapper.getQuantitsis(rdcId, stTime);
 			if(SetUtil.isnotNullList(quantitsis)){
 				String xdata[] = new String[30];// 日期
+				DecimalFormat dfformat = new DecimalFormat("######0.00");
 				HashMap<String, Integer> dataindex=new HashMap<String, Integer>();
 				double data[]=new double[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -112,12 +113,13 @@ public class AnalysisController {
 					String date = sdf.format((Date) hashMap.get("date"));
 					String key =  (String) hashMap.get("key");
 					Integer idt = dataindex.get(date);
+					double sumq= Double.parseDouble(dfformat.format((Double) hashMap.get("sumq")));
 					if(tempdata.containsKey(key)){
 						double[] ds = tempdata.get(key);
-						ds[idt]=(Double) hashMap.get("sumq");
+						ds[idt]=sumq ;
 					}else{
 						double[] clone = data.clone();
-						clone[idt]=(Double) hashMap.get("sumq");
+						clone[idt]=sumq;
 						tempdata.put(key, clone);
 					}
 				 }

@@ -36,6 +36,14 @@ coldWeb.controller('hotAnalysis', function ($scope, $location, $http,$rootScope)
 				if(data.success){
 					var quinisisdata=	data.entity.allseries;
 					if(quinisisdata!=undefined){
+						var nonedata=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+						if(quinisisdata.GoodsHeat==undefined){quinisisdata.GoodsHeat= nonedata;};
+						if(quinisisdata.QFrost==undefined){quinisisdata.QFrost= nonedat;};
+						if(quinisisdata.QForklift==undefined){quinisisdata.QForklift= nonedata;};
+						if(quinisisdata.WallHeat==undefined){quinisisdata.WallHeat= nonedata;};
+						if(quinisisdata.Qblower==undefined){quinisisdata.Qblower= nonedata;};
+						if(quinisisdata.Qctdoor==undefined){quinisisdata.Qctdoor= nonedata;};
+						if(quinisisdata.Qlighting==undefined){quinisisdata.Qlighting= nonedata;};
 						var series=[],piedata=[], pxAxis=data.entity.xAxis;
 						series.push({name:'Q货',data:quinisisdata.GoodsHeat})	;
 						series.push({name:'Q霜',data:quinisisdata.QFrost})	;
