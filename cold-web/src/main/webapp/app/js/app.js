@@ -137,7 +137,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
-        					anglar.forEach(data,function(item){
+        					angular.forEach(data,function(item){
         						if(item.name == '睿冷'){
         							$rootScope.storageModal = item;
         						}
