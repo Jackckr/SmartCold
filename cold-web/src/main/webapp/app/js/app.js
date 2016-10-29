@@ -186,14 +186,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             				if(data.length == 0){
             					document.location.href = "/notAudit.html";
             				}
-            				angular.forEach(data,function(item){
-        						if(item.name == '睿冷'){
-        							$rootScope.vm = {choserdc:item,allUserRdcs:data};
-        						}
-        					})
-        					if($rootScope.vm == null){
-        						$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
-        					}
+            				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
             				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id)
             			})
             }
