@@ -6,7 +6,7 @@
 coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeout) {
 	$scope.smgroid=null;
 	$scope.sytime=undefined;$scope.exqfn=false;
-	$(".mainHeight").height( $(".content-wrapper").height());
+	//$(".mainHeight").height( $(".content-wrapper").height());
 	$scope.inintData=function(newValue,oldValue){//初始化冷库门
 		   if($rootScope.compressorGroups!=undefined){
 			   $scope.exqfn=true;
