@@ -408,6 +408,10 @@ html, body {
 	vertical-align: middle!important;
 	padding: 0 5px!important;
 }
+#applyRecords td{
+	vertical-align: middle!important;
+	padding: 5px!important;
+}
 .myrecord textarea{
  	resize: vertical;
 }
