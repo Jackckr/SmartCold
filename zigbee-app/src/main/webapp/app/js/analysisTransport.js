@@ -106,107 +106,109 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         }).success(function (data) {
             $scope.data = data;
             angular.forEach(data, function (storage, key) {
-                xData = []
-                yData1 = []
-                yData2 = []
-                yData3 = []
-                var mainIdAll = 'doorAll' + key;
-                var mainIdAvg = 'doorAvg' + key;
-                if ($scope.swiper < $scope.mystorages.length) {
-                    var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">' + key + '</p>' +
-                        '<div id=' + mainIdAll + ' style="min-height:14rem;margin-bottom:.3rem;"></div> ' +
-                        '<div id=' + mainIdAvg + ' style="height: 14rem;"></div>' +
-                        '</div>';
-                    $("#chartView").last().append(innerHTML);
-                    $scope.swiper += 1;
+                if (storage['DoorTotalTime'] && storage['DoorTotalTime'].length > 0) {
+                    xData = []
+                    yData1 = []
+                    yData2 = []
+                    yData3 = []
+                    var mainIdAll = 'doorAll' + key;
+                    var mainIdAvg = 'doorAvg' + key;
+                    if ($scope.swiper < $scope.mystorages.length) {
+                        var innerHTML = '<div class="swiper-slide">' +
+                            '<p class="actually">' + key + '</p>' +
+                            '<div id=' + mainIdAll + ' style="min-height:14rem;margin-bottom:.3rem;"></div> ' +
+                            '<div id=' + mainIdAvg + ' style="height: 14rem;"></div>' +
+                            '</div>';
+                        $("#chartView").last().append(innerHTML);
+                        $scope.swiper += 1;
+                    }
+                    var chart1 = echarts.init($('#' + mainIdAll).get(0));
+                    var chart2 = echarts.init($('#' + mainIdAvg).get(0));
+                    angular.forEach(storage['DoorTotalTime'], function (item, index) {
+                        xData.unshift(formatTime(item['date']).split(" ")[0])
+                        yData1.unshift((item['value'] / 60).toFixed(2))
+                        yData2.unshift(storage['DoorOpenTimes'][index].value)
+                        yData3.unshift(
+                            storage['DoorOpenTimes'][index].value == 0
+                                ? 0 :
+                            item['value'] / storage['DoorOpenTimes'][index].value / 60
+                        )
+                    })
+                    var option = {
+                        backgroundColor: '#D2D6DE',
+                        title: {
+                            text: '近30日冷库日累积开门总时长及日累积开门次数',
+                            textStyle: {
+                                fontSize: 13,
+                                fontWeight: 'normal'
+                            },
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            textStyle: {
+                                fontSize: 12      // 主标题文字颜色
+                            },
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {show: true},
+                                dataView: {show: true, readOnly: false},
+                                magicType: {show: true, type: ['line', 'bar']},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        calculable: true,
+                        legend: {
+                            data: ['开门时长', '开门次数'],
+                            y: 'bottom'
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: xData
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '开门时长(min)',
+                                max: 1500,
+                                axisLabel: {
+                                    formatter: '{value}'
+                                }
+                            },
+                            {
+                                type: 'value',
+                                name: '开门次数',
+                                axisLabel: {
+                                    formatter: '{value}'
+                                }
+                            }
+                        ],
+                        grid: {
+                            x: 45,
+                            y: 50,
+                            width: '75%'
+                        },
+                        series: [
+                            {
+                                name: '开门时长',
+                                type: 'bar',
+                                data: yData1
+                            },
+                            {
+                                name: '开门次数',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                data: yData2
+                            }
+                        ]
+                    };
+                    chart1.setOption(option);
+                    chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "min", "m", "bar"));
                 }
-                var chart1 = echarts.init($('#' + mainIdAll).get(0));
-                var chart2 = echarts.init($('#' + mainIdAvg).get(0));
-                angular.forEach(storage['DoorTotalTime'], function (item, index) {
-                    xData.unshift(formatTime(item['date']).split(" ")[0])
-                    yData1.unshift((item['value'] / 60).toFixed(2))
-                    yData2.unshift(storage['DoorOpenTimes'][index].value)
-                    yData3.unshift(
-                        storage['DoorOpenTimes'][index].value == 0
-                            ? 0 :
-                        item['value'] / storage['DoorOpenTimes'][index].value / 60
-                    )
-                })
-                var option = {
-                    backgroundColor: '#D2D6DE',
-                    title: {
-                        text: '近30日冷库日累积开门总时长及日累积开门次数',
-                        textStyle: {
-                            fontSize: 13,
-                            fontWeight: 'normal'
-                        },
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        textStyle: {
-                            fontSize: 12      // 主标题文字颜色
-                        },
-                    },
-                    toolbox: {
-                        show: false,
-                        feature: {
-                            mark: {show: true},
-                            dataView: {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line', 'bar']},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    calculable: true,
-                    legend: {
-                        data: ['开门时长', '开门次数'],
-                        y: 'bottom'
-                    },
-                    xAxis: [
-                        {
-                            type: 'category',
-                            data: xData
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: '开门时长(min)',
-                            max: 1500,
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        },
-                        {
-                            type: 'value',
-                            name: '开门次数',
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        }
-                    ],
-                    grid: {
-                        x: 45,
-                        y: 50,
-                        width: '75%'
-                    },
-                    series: [
-                        {
-                            name: '开门时长',
-                            type: 'bar',
-                            data: yData1
-                        },
-                        {
-                            name: '开门次数',
-                            type: 'line',
-                            yAxisIndex: 1,
-                            data: yData2
-                        }
-                    ]
-                };
-                chart1.setOption(option);
-                chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "min", "m", "bar"));
             })
         })
     }
