@@ -4,7 +4,7 @@ app.controller('coldmap', function ($http) {
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     // 百度地图API功能
     var map = new BMap.Map("rdcMapChart");
-    var point = new BMap.Point(111.3682900000, 23.1281990000);
+    var point = new BMap.Point(121.4037410000, 31.2190550000);
     map.centerAndZoom(point, 12);
     //添加鼠标滚动缩放
     map.enableScrollWheelZoom();
