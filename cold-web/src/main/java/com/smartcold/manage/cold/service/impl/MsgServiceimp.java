@@ -120,10 +120,10 @@ public class MsgServiceimp implements MsgService {
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
 		Date dateTime = TimeUtil.parseYMD(time);
 		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
-	    this.setQFrost(time,dateTime); //2 Q霜
+//	    this.setQFrost(time,dateTime); //2 Q霜
 	    this.setQblower(endtime, dateTime);//6 Q风
-		this.setQForklift(time,dateTime,startTime,endtime);//3 Q叉,4 Q照
-		this.setQctdoor(time, dateTime, startTime, endtime);//Q門
+//		this.setQForklift(time,dateTime,startTime,endtime);//3 Q叉,4 Q照
+//		this.setQctdoor(time, dateTime, startTime, endtime);//Q門
 	}
   
     
@@ -143,7 +143,7 @@ public class MsgServiceimp implements MsgService {
 		    List<ColdStorageAnalysisEntity> blowersisdata = storageAnalysisMapper.findValueByFilter(fileter);
         	if(SetUtil.isNullList(blowersisdata)){
         		this.setQFrost(time,dateTime); //2 Q霜
-            	this.setQblower(endtime, dateTime);//6 Q风
+            	this.setQblower(time, dateTime);//6 Q风
             	this.setQForklift(time,dateTime,startTime,endtime);//3 Q叉,4 Q照
             	this.setQctdoor(time, dateTime, startTime, endtime);//Q門
         	}
