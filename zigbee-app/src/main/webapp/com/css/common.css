@@ -251,11 +251,11 @@ header>div>a>.iconfont{
 }
 .countNum{
 	position: absolute;
-	width:0.8rem;
+	min-width:0.8rem;
 	height: 0.8rem;
 	border-radius: 50%;
 	top: 0.1rem;
-	right: 1rem;
+	right: 10%;
 	background-color: #f40;
 	font-size: 0.5rem;
 	color: #fff;
@@ -300,4 +300,12 @@ header>div>a>.iconfont{
 }
 .greenI{
 	color:#0CB78A;
+}
+.imgbg{
+	width:3rem;
+	height: 3rem;
+	background-size:cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: .3rem
 }

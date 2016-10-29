@@ -38,8 +38,7 @@ public class CompressorBlowerServiceImpl implements CompressorBlowerService {
 		List<StorageKeyValue> infos;
 		if (storageIdList != null && !storageIdList.isEmpty()) {
 			for (ColdStorageSetEntity coldStorageSetEntity : storageIdList) {
-				List<BlowerSetEntity> blowerSets = blowerSetDao
-						.findByStorageId(coldStorageSetEntity.getColdStorageID());
+				List<BlowerSetEntity> blowerSets = blowerSetDao.findByStorageId(coldStorageSetEntity.getId());
 				if (blowerSets != null && !blowerSets.isEmpty()) {
 					for (BlowerSetEntity blowerSetEntity : blowerSets) {
 						BlowerDTO blowerDTO = new BlowerDTO();
