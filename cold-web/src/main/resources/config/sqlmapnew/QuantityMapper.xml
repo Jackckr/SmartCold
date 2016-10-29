@@ -42,10 +42,14 @@
 	</select>
 	<!--系统效率分析  获得电表  -->
 	<select id="getsumEByRdcid" parameterType="map" resultType="map">
-			SELECT `date` ,SUM(`value`)sume  FROM `coldstorageanalysis`  WHERE `type` =10 and `key` ='TotalPWC' and `oid` in(select id from `smartcold`.powerset where rdcid=#{rdcId}) and `date` >=#{stTime} GROUP BY `date` ;
+			SELECT `date` ,SUM(`value`)sume  FROM `coldstorageanalysis`  WHERE `type` =10 and `key` ='TotalPWC' and `oid` in(select id from `smartcold`.powerset where rdcid=#{rdcId}) and `date` >=#{stTime} 
+			<if test="endTime!=null"> and `date` &lt;=#{endTime} </if>
+			 GROUP BY `date` ;
 	</select>
 	<select id="getsumQByRdcid" parameterType="map" resultType="map">
-		SELECT `date` ,SUM(`value`) sumq from `sc360`.`coldstorageanalysis` sis where sis.`oid` IN (SELECT id FROM `smartcold`.`coldstorageset` cs WHERE  cs.`RDCID` =#{rdcId}) and  sis.`type`= 1 and sis.`key` in( 'QFrost','GoodsHeat','QForklift','WallHeat','Qblower','Qctdoor','Qlighting' )and sis.`date`>=#{stTime} GROUP BY `date`;
+		SELECT `date` ,SUM(`value`) sumq from `sc360`.`coldstorageanalysis` sis where sis.`oid` IN (SELECT id FROM `smartcold`.`coldstorageset` cs WHERE  cs.`RDCID` =#{rdcId}) and  sis.`type`= 1 and sis.`key` in( 'QFrost','GoodsHeat','QForklift','WallHeat','Qblower','Qctdoor','Qlighting' )and sis.`date`>=#{stTime}
+		<if test="endTime!=null"> and `date` &lt;=#{endTime} </if>
+		 GROUP BY `date`;
 	</select>
 	
 	

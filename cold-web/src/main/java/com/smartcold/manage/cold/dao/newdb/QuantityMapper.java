@@ -34,8 +34,8 @@ public interface QuantityMapper {
 	public Double getSisBayKey(@Param("type")int type,@Param("oid")int oid,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
     //======================================================系统效率分析======================================================
 	
-	public List<HashMap<String, Object>> getsumEByRdcid(@Param("rdcId")int rdcId,@Param("stTime")String stTime);//計算電量E
-	public List<HashMap<String, Object>> getsumQByRdcid(@Param("rdcId")int rdcId,@Param("stTime")String stTime);//計算電量Q
+	public List<HashMap<String, Object>> getsumEByRdcid(@Param("rdcId")int rdcId,@Param("stTime")String stTime,@Param("endTime")String endTime);//計算電量E
+	public List<HashMap<String, Object>> getsumQByRdcid(@Param("rdcId")int rdcId,@Param("stTime")String stTime,@Param("endTime")String endTime);//計算電量Q
 	//======================================================Q======================================================
 	//======================================================Q7======================================================
 

@@ -25,7 +25,6 @@ import com.smartcold.manage.cold.dao.olddb.BlowerMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
-import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
@@ -143,16 +142,16 @@ public class AnalysisController {
 		try {
 			if (rdcId == null) { return ResponseData.newFailure("非法请求！"); }
 			String stTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(30));
-			List<HashMap<String, Object>> sumElist = this.quantityMapper.getsumEByRdcid(rdcId, stTime);
-			List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, stTime);
+			List<HashMap<String, Object>> sumElist = this.quantityMapper.getsumEByRdcid(rdcId, stTime,null);
+			List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, stTime,null);
 			if(SetUtil.isnotNullList(sumElist)&&SetUtil.isnotNullList(sumQlist)){
 				String xdata[] = new String[30];// 日期
-				HashMap<Date,Double > QMap=new HashMap<Date, Double>();
-				HashMap<Date,Double > EMap=new HashMap<Date, Double>();
-				HashMap<String, Object> chardata = new HashMap<String, Object>();//
-				for (HashMap<String, Object> hashMap : sumQlist) { QMap.put((Date) hashMap.get("date"),  (Double) hashMap.get("sumq")); }
-				for (HashMap<String, Object> hashMap : sumElist) { EMap.put((Date) hashMap.get("date"),  (Double) hashMap.get("sume")); }
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				HashMap<String,Double > QMap=new HashMap<String, Double>();
+				HashMap<String,Double > EMap=new HashMap<String, Double>();
+				HashMap<String, Object> chardata = new HashMap<String, Object>();//
+				for (HashMap<String, Object> hashMap : sumQlist) { QMap.put(sdf.format((Date) hashMap.get("date")),  (Double) hashMap.get("sumq")); }
+				for (HashMap<String, Object> hashMap : sumElist) { EMap.put(sdf.format((Date) hashMap.get("date")),  (Double) hashMap.get("sume")); }
 				for (int i = 0; i < 30; i++) { Calendar c = Calendar.getInstance(); c.add(Calendar.DAY_OF_MONTH, -30 + i); xdata[i] = sdf.format(c.getTime());}
 				DecimalFormat dfformat = new DecimalFormat("######0.00");
 				double y1[] = new double[xdata.length];
@@ -205,16 +204,13 @@ public class AnalysisController {
 	@RequestMapping(value = "/getCasesTotalSISAnalysis")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getCasesTotalSISAnalysis(HttpServletRequest request,
-			HttpServletResponse response, Boolean isexpt, int index,Integer urlid, Integer type, String confdata, String key,
+			HttpServletResponse response, Boolean isexpt,int rdcid, int index,Integer urlid, Integer type, String confdata, String key,
 			@RequestParam(value = "unit[]", required = false) Integer[] unit, String startTime, String endTime) {
 		try {
-			if (StringUtil.isNull(confdata) || StringUtil.isNull(key)) {
-				return ResponseData.newFailure("非法请求！");
-			}
+			if(index==6){ return getQEAnalysis(rdcid, startTime, endTime); }//又一个处理特殊情况的  坑死我啦。。。。系统效率没有固化
+			if (StringUtil.isNull(confdata) || StringUtil.isNull(key)) { return ResponseData.newFailure("非法请求！"); }
 			boolean isunit = false;
-			String[] keys = {};
-			String[] keyts = {};
-			String[] titls = {};
+			String[] keys = {}; String[] keyts = {}; String[] titls = {};
 			HashMap<Integer, Integer> oidsymap = new HashMap<Integer, Integer>();
 			HashMap<String, Integer> keymap = new HashMap<String, Integer>();
 			LinkedHashMap<String, Object[]> tempData = new LinkedHashMap<String, Object[]>();
@@ -278,12 +274,11 @@ public class AnalysisController {
 					objects[urlid == 0 ? oidindex : oidindex * keyts.length + keyindex] = value;
 					tempData.put(data, objects);
 				}
-				if(index==8){//处理特殊情况->制冷分析
+				if(index==8){//第二个坑   处理特殊情况->制冷分析->平均值
 					for (String sdkey : tempData.keySet()) {//String, Object[]
 						Object[] keydata = tempData.get(sdkey);
 						for (int i =2; i < keydata.length; i++) {
 							if((i+1)%3==0&&0!=(Double)keydata[i-2]&&0!=(Double)keydata[i-1]){
-								
 								keydata[i]=	((Double)keydata[i-2]/(Double)keydata[i-1]);
 							}
 						}
@@ -307,7 +302,48 @@ public class AnalysisController {
 			return ResponseData.newFailure("查询数据失败！请稍后重试！");
 		}
 	}
-
+	
+    /**
+     * 报表效率
+     * @param rdcId
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+	private ResponseData<HashMap<String, Object>> getQEAnalysis(Integer rdcId,String startTime, String endTime) {
+		try {
+			if (rdcId == null) { return ResponseData.newFailure("非法请求！"); }
+			String stTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(30));
+			List<HashMap<String, Object>> sumElist = this.quantityMapper.getsumEByRdcid(rdcId, stTime,endTime);
+			List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, stTime,endTime);
+			if(SetUtil.isnotNullList(sumElist)&&SetUtil.isnotNullList(sumQlist)){
+				HashMap<Date,Double > QMap=new HashMap<Date, Double>();
+				DecimalFormat dfformat = new DecimalFormat("######0.00");
+				HashMap<String, Object> restMap = new HashMap<String, Object>();
+				LinkedHashMap<Date, Object[]> tempData = new LinkedHashMap<Date, Object[]>();
+				for (HashMap<String, Object> hashMap : sumQlist) { QMap.put((Date) hashMap.get("date"),  (Double) hashMap.get("sumq")); }
+				for (HashMap<String, Object> hashMap : sumElist) { 
+					Date date=(Date) hashMap.get("date");
+					Double cutteQ = QMap.get(date);
+					if(cutteQ==null){cutteQ=new Double(0);}
+					Object[] objects = {Double.parseDouble(dfformat.format(cutteQ/ (Double) hashMap.get("sume")))};
+					tempData.put(date,objects );
+			    }
+				restMap.put("tbdata", tempData);
+				return ResponseData.newSuccess(restMap);
+			}else{
+				if(SetUtil.isNullList(sumElist)){
+					return ResponseData.newFailure("没有查询到电表采集的数据!请检查电表配置！");
+				}else if(SetUtil.isNullList(sumQlist)){
+					return ResponseData.newFailure("没有查询到热量采集数据!请检查AP配置！");
+				}
+				return ResponseData.newFailure("制冷系统运行效率趋势配置错误！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseData.newFailure("没有数据！");
+	}
 	/**
 	 * 导出请求。。。
 	 * 
