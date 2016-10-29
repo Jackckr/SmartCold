@@ -2,8 +2,6 @@ package com.smartcold.bgzigbee.manage.entity;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class CompressorSetEntity {
 	private int id;
 
@@ -19,7 +17,6 @@ public class CompressorSetEntity {
 
 	private String mapping;
 	
-	@DateTimeFormat(pattern="yyyy-mm-dd hh:ii:ss")
 	private Date lastMaintainTime;//最后保养时间
 	
 	private double maintenancetime;//压缩机维护时间

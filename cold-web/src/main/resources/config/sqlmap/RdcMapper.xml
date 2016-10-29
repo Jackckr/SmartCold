@@ -81,7 +81,7 @@
   </update>
 
   <select id="findRdcList" parameterType="map" resultType="Rdc">
-    SELECT * FROM `Rdc` order by `addTime` desc
+    SELECT * FROM `Rdc` where `latitude`!=0 and `longitude`!=0 order by `addTime` desc
   </select>
 
   <select id="findRDCByRDCId" parameterType="map" resultType="Rdc">

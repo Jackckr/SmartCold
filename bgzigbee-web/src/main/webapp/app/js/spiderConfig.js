@@ -1072,10 +1072,10 @@ coldWeb.directive("ajaxTable", function ($http,baseTools) {
 			var table = attrs.table;
 
             scope.update = function (obj) {
-            	debugger;
 				if (updateUrl){
 				    var params = {id:obj.id};
 				    for(var i=0; i<scope.colums.length; i++){
+				    	if(scope.colums[i]=='lastMaintainTime'){continue;}
 				    	params[scope.colums[i]] = obj[scope.colums[i]];
 					}
 					$http.post(updateUrl, params).then(function (resp) {

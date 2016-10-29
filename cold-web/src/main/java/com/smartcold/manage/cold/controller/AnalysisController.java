@@ -144,11 +144,12 @@ public class AnalysisController {
 	 * @param startTime:开始时间
 	 * @param endTime:结束数据
 	 * @return
+	 * index:$scope.slindex,urlid
 	 */
 	@RequestMapping(value = "/getCasesTotalSISAnalysis")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getCasesTotalSISAnalysis(HttpServletRequest request,
-			HttpServletResponse response, Boolean isexpt, int index, Integer type, String confdata, String key,
+			HttpServletResponse response, Boolean isexpt, int index,Integer urlid, Integer type, String confdata, String key,
 			@RequestParam(value = "unit[]", required = false) Integer[] unit, String startTime, String endTime) {
 		try {
 			if (StringUtil.isNull(confdata) || StringUtil.isNull(key)) {
@@ -161,8 +162,7 @@ public class AnalysisController {
 			HashMap<Integer, Integer> oidsymap = new HashMap<Integer, Integer>();
 			HashMap<String, Integer> keymap = new HashMap<String, Integer>();
 			LinkedHashMap<String, Object[]> tempData = new LinkedHashMap<String, Object[]>();
-			System.err.println(unit);
-			if (index == 1) {
+			if (urlid == 1) {
 				keys = StringUtil.splitString(key);
 				if (keys.length != 2) {
 					return ResponseData.newFailure("非法请求！key参数不完整");
@@ -175,9 +175,7 @@ public class AnalysisController {
 				for (int i = 0; i < keyts.length; i++) {
 					keymap.put(keyts[i].replace("'", ""), i);
 				}
-				if (unit != null && unit.length == keyts.length) {
-					isunit = true;
-				}
+				if (unit != null && unit.length == keyts.length) { isunit = true; }//判断是否进行单位转换
 			}
 			List<PowerSetEntity> powerList = JSON.parseArray(confdata, PowerSetEntity.class);
 			if (SetUtil.isNullList(powerList)) {
@@ -199,7 +197,7 @@ public class AnalysisController {
 			HashMap<String, Object> fileter = new HashMap<String, Object>();
 			fileter.put("type", type);
 			fileter.put("oid", oid);
-			fileter.put("key", index == 0 ? key : keys[0]);
+			fileter.put("key", urlid == 0 ? key : keys[0]);
 			fileter.put("desc", "asc");
 			fileter.put("startTime", startTime);
 			fileter.put("endTime", endTime);
@@ -211,18 +209,29 @@ public class AnalysisController {
 				for (ColdStorageAnalysisEntity coldsis : datalist) {// 2
 					String data = TimeUtil.getFormatDate(coldsis.getDate());
 					int oidindex = oidsymap.get(coldsis.getOid());
-					int keyindex = index == 0 ? 0 : keymap.get(coldsis.getKey());
+					int keyindex = urlid == 0 ? 0 : keymap.get(coldsis.getKey());
 					if (tempData.containsKey(data)) {
 						objects = tempData.get(data);
 					} else {
-						objects = new Object[index == 0 ? oids.length : oids.length * keyts.length];
+						objects = new Object[urlid == 0 ? oids.length : oids.length * keyts.length];
 					}
 					double value = coldsis.getValue();// 计算偏移量
 					if (isunit) {
 						value = Double.parseDouble(dfformat.format(value / unit[keyindex]));
 					} // 单位转换
-					objects[index == 0 ? oidindex : oidindex * keyts.length + keyindex] = value;
+					objects[urlid == 0 ? oidindex : oidindex * keyts.length + keyindex] = value;
 					tempData.put(data, objects);
+				}
+				if(index==8){//处理特殊情况->制冷分析
+					for (String sdkey : tempData.keySet()) {//String, Object[]
+						Object[] keydata = tempData.get(sdkey);
+						for (int i =2; i < keydata.length; i++) {
+							if((i+1)%3==0&&0!=(Double)keydata[i-2]&&0!=(Double)keydata[i-1]){
+								
+								keydata[i]=	((Double)keydata[i-2]/(Double)keydata[i-1]);
+							}
+						}
+					}
 				}
 				restMap.put("tbdata", tempData);
 			}
