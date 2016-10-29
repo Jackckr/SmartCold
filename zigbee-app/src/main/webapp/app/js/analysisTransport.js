@@ -420,9 +420,13 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
     }
 
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
+        min = max = yData.length > 0 ? yData[0] : 0;
         angular.forEach(yData, function (item, index) {
             yData[index] = yData[index].toFixed(2);
+            min = Math.min(min, yData[index])
+            max = Math.max(max, yData[index])
         })
+        yMin = max - min < 1 && type == 'line' ? min - 10 : yMin;
         var option = {
             backgroundColor: '#D2D6DE',
             title: {
@@ -450,7 +454,8 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 {
                     type: 'value',
                     name: yName + "(" + yUnit + ")",
-                    min: yMin ? yMin : 0
+                    min: yMin ? yMin : 'auto',
+                    minInterval: 1
                 }
             ],
             grid: {
