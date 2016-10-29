@@ -137,12 +137,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
         					$rootScope.mystorages = data;
-        					angular.forEach(data,function(item){
-        						if(item.name == '睿冷'){
-        							$rootScope.storageModal = item;
-        						}
-        					})
-        					if($rootScope.storageModal == null)$rootScope.storageModal = data[0];
+        					$rootScope.storageModal = data[0];
         				});
         		$http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
@@ -191,7 +186,14 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             				if(data.length == 0){
             					document.location.href = "/notAudit.html";
             				}
-            				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
+            				angular.forEach(data,function(item){
+        						if(item.name == '睿冷'){
+        							$rootScope.vm = {choserdc:item,allUserRdcs:data};
+        						}
+        					})
+        					if($rootScope.vm == null){
+        						$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
+        					}
             				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id)
             			})
             }
