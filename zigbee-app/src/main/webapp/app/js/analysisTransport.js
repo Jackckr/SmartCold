@@ -228,28 +228,28 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         }).success(function (data) {
             $scope.data = data;
             angular.forEach(data, function (storage, key) {
-                $timeout(function () {
-                    xData = []
-                    yData = []
+                if (storage['GoodsLiuTongYinZi'] && storage['GoodsLiuTongYinZi'].length > 0) {
+                    $timeout(function () {
+                        xData = [];
+                        yData = [];
+                        var mainId = 'goodsYz' + key;
+                        if ($scope.swiper < $scope.mystorages.length) {
+                            var innerHTML = '<div class="swiper-slide">' +
+                                '<p class="actually">' + key + '</p>' +
+                                '<div id=' + mainId + ' style="height:300px"></div> ';
+                            $("#chartView").last().append(innerHTML);
+                            $scope.swiper += 1;
+                        }
 
-                    var mainId = 'goodsYz' + key;
-                    if ($scope.swiper < $scope.mystorages.length) {
-                        var innerHTML = '<div class="swiper-slide">' +
-                            '<p class="actually">' + key + '</p>' +
-                            '<div id=' + mainId + ' style="height:300px"></div> ';
-                        $("#chartView").last().append(innerHTML);
-                        $scope.swiper += 1;
-                    }
-
-                    var chart = echarts.init($('#' + mainId).get(0));
-                    $scope.showMap[mainId] = storage['GoodsLiuTongYinZi'].length
-                    angular.forEach(storage['GoodsLiuTongYinZi'], function (item) {
-                        xData.unshift(formatTime(item['date']).split(" ")[0])
-                        yData.unshift(item['value'] / 60)
-                    })
-                    chart.setOption($scope.getEchartSingleOption("货物流通因子",
-                        xData, yData, "时间", "", "货物流通因子", "bar", 0));
-                }, 0)
+                        var chart = echarts.init($('#' + mainId).get(0));
+                        angular.forEach(storage['GoodsLiuTongYinZi'], function (item) {
+                            xData.unshift(formatTime(item['date']).split(" ")[0])
+                            yData.unshift(item['value'] / 60)
+                        })
+                        chart.setOption($scope.getEchartSingleOption("货物流通因子",
+                            xData, yData, "时间", "", "货物流通因子", "bar", 0));
+                    }, 0)
+                }
             })
         })
     }
