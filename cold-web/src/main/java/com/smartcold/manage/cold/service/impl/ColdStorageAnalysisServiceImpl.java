@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.service.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +31,17 @@ public class ColdStorageAnalysisServiceImpl implements ColdStorageAnalysisServic
 	}
 
 	@Override
-	public List<ColdStorageAnalysisEntity> findValueByFilter( HashMap<String, Object> filter) {
+	public List<ColdStorageAnalysisEntity> findValueByFilter(HashMap<String, Object> filter) {
 		return this.analysisDao.findValueByFilter(filter);
+	}
+
+	@Override
+	public List<ColdStorageAnalysisEntity> findValueByDateKeys(int type, int oid, String key, Date startTime,
+			Date endTime) {
+		List<String> keys = Arrays.asList(key);
+		Map<String, List<ColdStorageAnalysisEntity>> results = findValueByDateKeys(type, oid, keys, startTime, endTime);
+
+		return results.get(key);
 	}
 
 }
