@@ -260,7 +260,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         if ($scope.swiper < $scope.mystorages.length) {
             var innerHTML = '<div class="swiper-slide">' +
                 '<div id=' + mainId1 + ' style="height:14rem;margin-bottom:.3rem"></div>' +
-                '<div id=' + mainId2 + ' style="height:14em;margin-bottom:.3rem"></div>' +
+                '<div id=' + mainId2 + ' style="height:16em;margin-bottom:.3rem"></div>' +
                 '</div>';
             $("#chartView").last().append(innerHTML);
             $scope.swiper += 1;
@@ -330,10 +330,10 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                         title: { text: '近30日热量分布图' },
                         legend : { itemDistance: 5},
                         credits: {  enabled: false },
-                        yAxis: {  min: 0,  text: null },
+                        yAxis: {  min: 0,  title:{text: null} },
                         series: series,
                         plotOptions: {  column: {  stacking: 'percent' } },
-                        xAxis: {   labels: {  format: '{value} 日' },  categories: pxAxis },
+                        xAxis: {   labels: {  format: '{value}' },  categories: pxAxis },
                         tooltip: { shared: true,pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>'  }
                     });
                 }

@@ -458,3 +458,126 @@ html, body {
 .littlebg+.info-box-content{
 	padding: 0
 }
+/*月度报表css*/
+.tac{text-align:center;}
+.clearfix:after {
+	content: "";
+	display: block;
+	visibility: hidden;
+	height: 0;
+	clear: both;
+}
+.clearfix {
+	zoom: 1;
+}
+#print{
+	background: #fff;
+	color:#000;
+	padding:0 20px;
+}
+#print,#print h1,#print h2,#print h3,#print h4{
+	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体', Tahoma, Arial,
+		sans-serif !important;
+}
+.print_header{
+	height: 80px;
+	padding:15px 0;
+	/* border-bottom: 3px solid #A34039; */
+}
+.print_header>h3{
+	margin:0;
+	height: 50px;
+	line-height:50px;
+	font-size: 28px;
+	text-align: center;
+}
+.print_header hr{
+	margin:20px 0;
+	border-top: 3px solid #A34039;
+}
+.lianku_logo{
+	display: inline-block;
+	width:100px;
+	height: 35px;
+	margin-right:20px;
+	background: url(../../assets/img/logo_home.png) no-repeat center;
+	background-size: cover;
+}
+.print_title h2{
+	margin: 30px 0;
+}
+.print_name>div{
+	width:50%;
+	height: 40px;
+	margin: 5px 0;
+	overflow: hidden;
+}
+.print_name>div>input{
+	border:0;
+	border-bottom:1px solid #333;
+	width: 50%;
+}
+.print_part{
+	margin-top: 30px;
+}
+.partP p{
+	text-indent: 2em;
+}
+.chartPart p>span{
+	display: inline-block;
+	width:140px;
+	height:30px;
+	line-height:30px;
+	font-weight: 700;
+	padding: 0 15px;
+	color:#fff;
+	font-size: 16px;
+	background: #1A6CBE;
+	border-radius:15px;
+}
+.chartPart{
+}
+.textPart{
+	padding-top: 40px;
+}
+.intro{
+	color:coral
+}
+.chartHight{
+	height: 400px;
+	border:1px solid #ccc;
+}
+.chart_gap>div{
+	margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,201 @@
-<div class="page-content">
+<div class="page-content" style="padding: 0 10px">
 	<div class="page-header">
 	  &nbsp;&nbsp;月报表
+	  <button class="btn btn-primary" onclick="window.print();return">打 印</button>
+	</div>
+	<div id="print" style="height:3000px">
+		<div class="print_header">
+	        <h3>
+	            <img src="../../assets/img/logo_home.png" class="lianku_logo">睿冷信息技术（上海）有限公司
+	        </h3>
+	        <hr>
+	    </div>
+	    <!-- 报表标题  -->
+	    <div class="print_title">
+	    	<h2 class="tac"><strong>冷库综合运行系统月度分析报告</strong></h2>
+	    	<div class="print_name clearfix">
+	    		<div class="pull-left">
+	    			<span>客户名称：</span><input type="text">
+	    		</div>
+	    		<div class="pull-left">
+	    			<span>DC(冷库)名称：</span><input type="text">
+	    		</div>
+	    		<div class="pull-left">
+	    			<span>分析周期：</span><input type="text">
+	    		</div>
+	    	</div>
+	    </div>
+	    <!-- DC(冷库)综合评分分值（满分为100分）  -->
+	    <div class="print_part">
+	    	<h4><strong>DC(冷库)综合评分分值(满分为100分):</strong></h4>
+			<div id="physicalstep2" class="sys_group">
+				<!-- 温度系统 -->
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title">温度系统</h3>
+					</div>
+					<div class="box-body">
+						<!-- 有设备 -->
+						<div class="haveDevice">
+							<div class="circle fontBlue">
+								89<span>分</span>
+							</div>
+							<a href="#/cold360Physical"><button class="btn bgBlue">查看详情</button></a>
+						</div>
+						<!-- 建议安装设备 -->
+						<div class="noDevice black">
+							<div class="circle bluePlus"></div>
+							<a href="javascript:;"><button class="btn bgBlue disabled">建议安装监控设备</button></a>
+						</div>
+					</div>
+				</div>
+				<!-- 运管系统 -->
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title">运管系统</h3>
+					</div>
+					<div class="box-body">
+						<!-- 有设备 -->
+						<div class="haveDevice">
+							<div class="circle fontGold">
+								87<span>分</span>
+							</div>
+							<a href="#/cold360Physical"><button class="btn bgGold">查看详情</button></a>
+						</div>
+						<!-- 建议安装设备 -->
+						<div class="noDevice black">
+							<div class="circle goldPlus"></div>
+							<a href="javascript:;"><button class="btn bgGold disabled">建议安装监控设备</button></a>
+						</div>
+					</div>
+				</div>
+				<!-- 制冷系统 -->
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title">制冷系统</h3>
+					</div>
+					<div class="box-body">
+						<!-- 有设备 -->
+						<div class="haveDevice ">
+							<div class="circle fontGreen">
+								65<span>分</span>
+							</div>
+							<a href="#/cold360Physical"><button class="btn bgGreen">查看详情</button></a>
+						</div>
+						<!-- 建议安装设备 -->
+						<div class="noDevice black">
+							<div class="circle greenPlus"></div>
+							<a href="javascript:;"><button class="btn bgGreen disabled">建议安装监控设备</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- DC(冷库)月度运行状况分析结论  -->
+		<div class="print_part partP">
+	    	<h4><strong>DC(冷库)月度运行状况分析结论:</strong></h4>
+	    	<p>该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
+	    </div>
+	    
+	    <!-- DC(冷库)月度运行分析详情技术附件及结论：  -->
+	    <div class="print_part chart_gap">
+	    	<h4><strong>DC(冷库)月度运行分析详情技术附件及结论:</strong></h4>
+	    	<div class="row">
+	    		<div class="chartPart col-lg-8">
+	    			<p class="tac"><span>温度分析</span></p>
+	    			<div id="tempertureId" class="chartHight"></div>
+	    		</div>
+	    		<div class="textPart col-lg-4">
+	    			<p><strong>超温时长（综合大数据纵环比分析）</strong></p>
+	    			<p>低温库  平均日超温时长62min，温控优良</p>
+	    			<p>变温库  平均日超温时长68min，温控优良</p>
+	    			<p>高温库  平均日超温时长72min，温控优良</p>
+	    			<p class="intro">**判断优良标准逻辑：平均每天75min以下“优良”，75~120min属“一般”，150min以上属“不理想”**</p>
+	    		</div>
+	    	</div>
+	    	<hr>
+	    	<div class="row">
+	    		<div class="chartPart col-lg-8">
+	    			<div id="cwyzId" class="chartHight"></div>
+	    		</div>
+	    		<div class="textPart col-lg-4">
+	    			<p><strong>超温因子（综合大数据纵环比分析）</strong></p>
+	    			<p>低温库  平均日超温因子1.68，温控优良</p>
+	    			<p>变温库  平均日超温因子1.12，温控优良</p>
+	    			<p class="intro">**判断优良标准逻辑：平均每天2.0以下“优良”，2.0~5属“一般”，5以上属“不理想”**</p>
+	    		</div>
+	    	</div>
+	    	<hr>
+	    	<div class="row">
+	    		<div class="chartPart col-lg-8">
+	    			<div id="bwyzId" class="chartHight"></div>
+	    		</div>
+	    		<div class="textPart col-lg-4">
+	    			<p><strong>保温因子（综合大数据纵环比分析）</strong></p>
+	    			<p>低温库  平均日保温因子0.042，温控优良</p>
+	    			<p>变温库  平均日保温因子0.045，温控优良</p>
+	    			<p class="intro">**判断优良标准逻辑：平均每天0.1以下“优良”，0.1~0.15属“一般”，0.15以上属“不理想”**</p>
+	    		</div>
+	    	</div>
+	    </div>
 	</div>
 </div>
+
+<script type="text/javascript" src="../../assets/js/echarts-all.js"></script>
+<script type="text/javascript" src="../js/monthReport.js"></script>
+<script type="text/javascript">
+var myChart1 = echarts.init(document.getElementById('tempertureId')); 
+var myChart2 = echarts.init(document.getElementById('cwyzId')); 
+var myChart3 = echarts.init(document.getElementById('bwyzId')); 
+var option1 =option2=option3 = {
+    title : {
+        text: '超温时长',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['低温库','高温库'],
+        y:'bottom'
+    },
+    xAxis : [
+        {
+            type : 'category',
+            axisLabel:{
+            	rotate:'90',
+            	interval:0
+            },
+            data : ['2016-10-01','2016-10-02','2016-10-03','2016-10-04','2016-10-05','2016-10-06','2016-10-07','2016-10-08','2016-10-09','2016-10-10',
+                    '2016-10-11','2016-10-12','2016-10-13','2016-10-14','2016-10-15','2016-10-16','2016-10-17','2016-10-18','2016-10-19','2016-10-20',
+                    '2016-10-21','2016-10-22','2016-10-23','2016-10-24','2016-10-25','2016-10-26','2016-10-27','2016-10-28','2016-10-29','2016-10-30','2016-10-31']
+        }
+    ],
+    grid:{
+    	y2:110,
+    	width:'80%'
+    },
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel : {
+                formatter: '{value} °C'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'低温库',
+            type:'line',
+            data:[11, 16, 15, 13, 12, 13, 10, 11, 15, 13, 19, 13, 10, 11, 15, 13, 12, 13, 8, 11, 15, 13, 12, 13, 10, 6, 15, 13, 12, 13, 10],
+        },
+        {
+            name:'变温库',
+            type:'line',
+            data:[16, 15, 13, 12, 13, 10, 11, 15, 13, 19, 13, 10, 11, 15, 13, 12, 13, 8, 11, 15, 13, 12, 13, 10, 6, 15, 13, 12, 13, 10,20],
+        }
+    ]
+};
+myChart1.setOption(option1);myChart2.setOption(option2);myChart3.setOption(option3);
+</script>
