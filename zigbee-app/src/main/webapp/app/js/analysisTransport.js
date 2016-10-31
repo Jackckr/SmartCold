@@ -259,8 +259,8 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         var mainId2 = 'hotColumn';
         if ($scope.swiper < $scope.mystorages.length) {
             var innerHTML = '<div class="swiper-slide">' +
-                '<div id=' + mainId1 + ' style="height:250px"></div>' +
-                '<div id=' + mainId2 + ' style="height:250px"></div>' +
+                '<div id=' + mainId1 + ' style="height:14rem;margin-bottom:.3rem"></div>' +
+                '<div id=' + mainId2 + ' style="height:14em;margin-bottom:.3rem"></div>' +
                 '</div>';
             $("#chartView").last().append(innerHTML);
             $scope.swiper += 1;
@@ -319,15 +319,16 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     $('#' + mainId1).highcharts({
                         title  : { text : '最新热量分布图' },
                         credits: {  enabled: false },
-                        legend : { itemDistance: 10 },
-                        chart  : { type : 'pie', options3d : { enabled : true, alpha : 45, beta : 0 } },
+                        legend : { itemDistance: 5 },
+                        chart  : { type : 'pie', options3d : { enabled : true, alpha : 60, beta : 0 } ,backgroundColor: '#D2D6DE'},
                         tooltip: { pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>' },
                         series : [ { type : 'pie', name : '占比', data : piedata } ],
-                        plotOptions : { pie : { depth : 40, showInLegend: true, dataLabels : { enabled : true, format : '{point.name}' } } }
+                        plotOptions : { pie : { depth : 30, showInLegend: true, dataLabels : { enabled : true, format : '{point.name}' } } }
                     });
                     $('#' + mainId2).highcharts({
-                        chart: {  type: 'column'  },
+                        chart: {  type: 'column',backgroundColor: '#D2D6DE'  },
                         title: { text: '近30日热量分布图' },
+                        legend : { itemDistance: 5},
                         credits: {  enabled: false },
                         yAxis: {  min: 0,  text: null },
                         series: series,

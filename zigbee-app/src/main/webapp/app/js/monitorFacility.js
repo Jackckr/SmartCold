@@ -444,22 +444,30 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     series.push(outData,inData,inTemp)
                 })
                 barOption = {
+                	backgroundColor: '#D2D6DE',
                     tooltip : {
-                        trigger: 'axis'
-                    },
-                    toolbox: {
-                        show : false,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line', 'bar']},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
+                        trigger: 'axis',
+                        textStyle:{
+                        	fontSize:12
                         }
                     },
-                    calculable : true,
+                    title:{
+                    	text:'日均货物流通监控',
+                    	textStyle:{
+                        	fontSize:13,
+                        	fontWeight:'400'
+                        }
+                    },
                     legend: {
-                        data:legend
+                        data:legend,
+                        y:'bottom',
+                    },
+                    grid:{
+                    	x:40,
+                    	y:50,
+                    	x2:40,
+                    	y2:100,
+                    	width:"75%",
                     },
                     xAxis : [
                         {
@@ -470,16 +478,16 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     yAxis : [
                         {
                             type : 'value',
-                            name : '货物量',
+                            name : '货物量(kg)',
                             axisLabel : {
-                                formatter: '{value} kg'
+                                formatter: '{value}'
                             }
                         },
                         {
                             type : 'value',
-                            name : '温度',
+                            name : '温度(°C)',
                             axisLabel : {
-                                formatter: '{value} °C'
+                                formatter: '{value}'
                             }
                         }
                     ],
