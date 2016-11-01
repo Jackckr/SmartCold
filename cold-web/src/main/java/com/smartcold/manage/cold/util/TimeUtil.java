@@ -200,11 +200,9 @@ public class TimeUtil {
 		c.roll(Calendar.DATE, -1);
 		return datefm.format(c.getTime())+" 23:59:59";
 	}
+	
 	public static void main(String[] args) {
 		System.err.println(getBeforeMonthTime(1));
-		System.err.println(getEndMonthTime(1));
-		System.err.println(getBeforeMonthTime(0));
-		System.err.println(getEndMonthTime(0));
 	}
 	
 }
