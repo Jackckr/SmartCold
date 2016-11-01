@@ -203,7 +203,7 @@ section{
 	font-size: 1.8em;
 }
 div[id^="main"],.actually+div[id]{
-	min-height:15rem;
+	min-height:17rem;
 	
 }
 .inner{

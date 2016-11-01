@@ -213,11 +213,10 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             title: {
                 text: title,
                 x: 'left',
-                textStyle: {
-                    fontSize: 16,
-                    fontWeight: 400,
-                    color: '#333'          // 主标题文字颜色
-                },
+            	textStyle:{
+                	fontSize:13,
+                	fontWeight:'400'
+                }
             },
             calculable: true,
             grid: {
@@ -275,7 +274,11 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                 trigger: 'axis'
             },
             title: {
-                text: title
+                text: title,
+            	textStyle:{
+                	fontSize:13,
+                	fontWeight:'400'
+                }
             },
             calculable: true,
             xAxis: [

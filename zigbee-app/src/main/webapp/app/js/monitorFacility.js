@@ -96,6 +96,23 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         window.location.href='monitorCooling.html?storageID=' + $scope.rdcId;
     }
 
+    var getFormatTimeString = function (delta) {
+        delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
+        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
+    }
+
+    var formatTime = function (timeString) {
+        if (typeof(timeString) == "string") {
+            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        } else {
+            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        }
+    }
+
+    function formatTimeToDay(timeString){
+        return formatTime(timeString.substring(0,10)).substring(0,10)
+    }
+
     $scope.swiper = 0;
     $scope.defaltswiper = 0;
 
@@ -369,6 +386,21 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
 
         })
     }
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
 
     $scope.drawInOutGoods = function (storage) {
         var totalTime = 10;
@@ -376,46 +408,66 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         var time = []
         var timeMap = {}
         var legend = []
-        for(i=0; i< totalTime;i++){
-            xTime = formatTimeToDay(getFormatTimeString(0-i* 24 * 60 * 60 * 1000))
+        for(var i=0; i< totalTime;i++){
+            xTime = formatTimeToDay(getFormatTimeString(-i* 24 * 60 * 60 * 1000))
             time.unshift(xTime)
             timeMap[xTime] = totalTime - i - 1
         }
         var startDate = formatTimeToDay(getFormatTimeString(-10 * 24 * 60 * 60 * 1000))
-        var endDate = getFormatTimeString()
+        var endDate = getFormatTimeString();
         var url = ER.coldroot + "/i/other/findGoodsByDate?coldstorageId=" + storage.id +
             "&startCollectionTime=" + startDate + "&endCollectionTime=" + endDate;
         $http.get(url).success(function (data) {
-            if (Object.keys(data).length != 0) {
+            if (Object.keys(data).length > 0) {
+                var mainId = "barChart" + storage.id;
+                var barId = "#" + mainId;
+                if ($scope.swiper < $scope.mystorages.length) {
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">' + storage.name + '</p>' +
+                        '<div id=' + mainId + '></div> ';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper += 1;
+                }
+
                 angular.forEach(data,function(yData,key){
-                    outData = {name:key+'出货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}
+                    outData = {name:key+'出货量',type:'bar',data:new Array(totalTime+1).join("-").split("")};
                     inData = {name:key+'进货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}
                     inTemp = {name:key+'进货温度',type:'line',yAxisIndex: 1,data:new Array(totalTime+1).join("-").split("")}
-                    legend.push(key+'出货量',key+'进货量',key+'进货温度')
+                    legend.push(key+'出货量',key+'进货量',key+'进货温度');
                     angular.forEach(yData,function(item){
-                        outData.data[timeMap[formatTimeToDay(item.date)]] = item['outputQUantity']
-                        inData.data[timeMap[formatTimeToDay(item.date)]] = item['inputQuantity']
-                        inTemp.data[timeMap[formatTimeToDay(item.date)]] = item['inputTemperature']
+                        var date = new Date(item.date);
+                        var dateStr = date.Format("yyyy-MM-dd");
+                        outData.data[timeMap[dateStr]] = item['outputQUantity'];
+                        inData.data[timeMap[dateStr]] = item['inputQuantity'];
+                        inTemp.data[timeMap[dateStr]] = item['inputTemperature'];
                     })
                     series.push(outData,inData,inTemp)
                 })
                 barOption = {
+                	backgroundColor: '#D2D6DE',
                     tooltip : {
-                        trigger: 'axis'
-                    },
-                    toolbox: {
-                        show : false,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line', 'bar']},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
+                        trigger: 'axis',
+                        textStyle:{
+                        	fontSize:12
                         }
                     },
-                    calculable : true,
+                    title:{
+                    	text:'日均货物流通监控',
+                    	textStyle:{
+                        	fontSize:13,
+                        	fontWeight:'400'
+                        }
+                    },
                     legend: {
-                        data:legend
+                        data:legend,
+                        y:'bottom',
+                    },
+                    grid:{
+                    	x:40,
+                    	y:50,
+                    	x2:40,
+                    	y2:100,
+                    	width:"75%",
                     },
                     xAxis : [
                         {
@@ -426,30 +478,21 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     yAxis : [
                         {
                             type : 'value',
-                            name : '货物量',
+                            name : '货物量(kg)',
                             axisLabel : {
-                                formatter: '{value} kg'
+                                formatter: '{value}'
                             }
                         },
                         {
                             type : 'value',
-                            name : '温度',
+                            name : '温度(°C)',
                             axisLabel : {
-                                formatter: '{value} °C'
+                                formatter: '{value}'
                             }
                         }
                     ],
                     series : series
                 };
-                var mainId = "barChart" + storage.id;
-                var barId = "#" + mainId;
-                if ($scope.swiper < $scope.mystorages.length) {
-                    var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">' + storage.name + '</p>' +
-                        '<div id=' + mainId + '></div> ';
-                    $("#chartView").last().append(innerHTML);
-                    $scope.swiper += 1;
-                }
                 var barChart = echarts.init($(barId).get(0));
                 barChart.setOption(barOption);
             }
@@ -511,8 +554,10 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
     $scope.goodsInOutOther = function () {
         clearSwiper();
         $scope.activeEnergy = 'drawInOutGoods';
-        for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.drawInOutGoods($scope.mystorages[i]);
+        if ($scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawInOutGoods($scope.mystorages[i]);
+            }
         }
     }
 
@@ -526,23 +571,6 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         $("div").remove(".swiper-slide");
         $scope.swiper = 0;
         $scope.defaltswiper = 0;
-    }
-
-    var getFormatTimeString = function (delta) {
-        delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
-        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
-    }
-
-    var formatTime = function (timeString) {
-        if (typeof(timeString) == "string") {
-            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
-        } else {
-            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
-        }
-    }
-
-    function formatTimeToDay(timeString){
-        return formatTime(timeString).substring(0,10)
     }
 
     $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
