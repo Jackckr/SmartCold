@@ -74,7 +74,7 @@
 								`sc360`.`coldstorageanalysis` sis
 							WHERE
 								sis.`type` = 1
-							AND sis.oid = ct.id
+							AND sis.oid = ct.`refoid`
 							AND sis.`key` = "AvgTemp"
 							AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
 						)
@@ -110,7 +110,6 @@
 		AND ct.`height` IS NOT NULL
 		AND ct.inhumidity IS NOT NULL
 		AND ct.outhumidity IS NOT NULL
-        AND ct.`RDCID` =1590
 		AND (
 			ct.refoid IS NOT NULL
 			OR ct.outtempe IS NOT NULL

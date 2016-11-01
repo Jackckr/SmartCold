@@ -75,9 +75,8 @@ public class MsgServiceimp implements MsgService {
      @Scheduled(cron="0 0/5 * * * ?")
 	public void checkData() {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
-		if(taskStatus){
+	    if(!taskStatus){return ;}
 			this.getERRinfo();
-		}
 	}
 	/**
 	 * 半小时执行一次
@@ -154,22 +153,19 @@ public class MsgServiceimp implements MsgService {
 	
 	/**
 	 * 检查数据是否正常
-	 * 1.电压：SELECT *  FROM `power`  where  `value` =0 and `key` LIKE  '_U' and `addtime` >'2016-10-20 10:00:00';
-	 * 2.电流： SELECT * from ( SELECT id, `key`, `value`, CASE WHEN ( (MAX(`value`) - MIN(`value`)) / MAX(`value`) * 100 ) > 15 THEN 1 ELSE 0 END AS vl FROM `power` WHERE oid=13 AND `key` LIKE '_I' AND `value` > 10 AND `addtime` > #{startTime} GROUP BY `addtime`, `oid` ORDER BY `addtime` ASC ) as c WHERE c.vl = 1
-	 * 3.温度：
 	 * @param startTime
 	 */
 	public void getERRinfo(){
-		Date startTime = TimeUtil.getBeforeMinute(1);//
-//PLC 		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
-		
-		try { 	this.warningLogMapper.addSUerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->U 
-		try { 	this.warningLogMapper.addSIerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->I
-		try { 	this.warningLogMapper.addHTCLogbyTime( startTime);      } catch (Exception e) { e.printStackTrace(); }   //dev->TEMP	
+		Date startMTime = TimeUtil.getBeforeMinute(5);//
+//   	try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
+		try { 	this.warningLogMapper.addSUerrByTime( startMTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->U 
+		try { 	this.warningLogMapper.addSIerrByTime( startMTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->I
+		try { 	this.warningLogMapper.addHTCLogbyTime( startMTime);      } catch (Exception e) { e.printStackTrace(); }   //dev->TEMP	
 		
 //		try { 	this.warningLogMapper.addscollPUerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  //PLC->U
 //		try { 	this.warningLogMapper.addscollPIerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }   //PLC->I	
 //		try { 	this.warningLogMapper.addwaringLogbyTime(startTime);    } catch (Exception e) { e.printStackTrace(); }  //PLC->TEMP	
+		try { 	this.chdoorstatus();  } catch (Exception e) { e.printStackTrace(); }  //DEV -SWith门常开报警
 	}
 
 	/**
@@ -299,7 +295,7 @@ public class MsgServiceimp implements MsgService {
 	 * 6 Q风=Σ（P风*t风累积）->ok
 	 * type=4  ,key='totalRunning',valkey='Qblower' 
 	 * 1.select coldStorageId,group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from `smartcold`.blowerset where  `fanPower` >0 GROUP BY `coldStorageId`; 计算平均功率
-	 * 2. select * from `coldstorageanalysis` where 1=1 AND `type` = 4 AND `key`in ('DefrosingTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
+	 * 2. select * from `coldstorageanalysis` where 1=1 AND `type` = 4 AND `key`in ('RunningTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
 	private void setQblower(String time, Date dateTime) {
 		try {
@@ -427,7 +423,38 @@ public class MsgServiceimp implements MsgService {
 			addextMsg("setQctdoor",3, e.getMessage());//记录日志
 		}
 	}
-    
+	
+    /**
+     * 门报警
+     */
+	private void chdoorstatus( ){
+		List<DeviceObjectMappingEntity> doorDevMapper = this.quantityMapper.getDoorDevMapper();
+		if(SetUtil.isnotNullList(doorDevMapper)){
+			HashMap<Integer, String>  rdcdoorinfo=new HashMap<Integer, String>();
+			for (DeviceObjectMappingEntity obj : doorDevMapper) {
+				int overtempdelay=60;//默认60分钟
+				if(obj.getStatus()>0){overtempdelay=(int) obj.getStatus();}
+				Date stTime = TimeUtil.getBeforeMinute(overtempdelay);
+				Double sumcount = this.quantityMapper.getSwitchTime(obj.getDeviceid(), TimeUtil.getFormatDate(stTime), null);
+				Double opencount = this.quantityMapper.getSwitchTime(obj.getDeviceid(), TimeUtil.getFormatDate(stTime), 1);
+				if(sumcount!=null&&opencount!=null&&sumcount==opencount){//表示持续开门将报警
+					if(rdcdoorinfo.containsKey(obj.getRdcid())){
+						rdcdoorinfo.put(obj.getRdcid(), rdcdoorinfo.get(obj.getRdcid())+","+obj.getName());
+					}else{
+						rdcdoorinfo.put(obj.getRdcid(),obj.getName());
+					}
+				}
+			}
+			if(SetUtil.isNotNullMap(rdcdoorinfo)){
+				List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+				for (Integer rdcid: rdcdoorinfo.keySet()) {
+					rdcdoorinfo.put(rdcid, "{"+rdcdoorinfo.get(rdcid)+"}门超时未关闭");
+				}
+				this.warningLogMapper.addWarningLog(errInfoList);
+			 }
+		}
+	}
+	
 	private void addextMsg(String methodName,int type,String errMsg){
 		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 		if(StringUtil.isnotNull(errMsg)){
@@ -441,11 +468,9 @@ public class MsgServiceimp implements MsgService {
 	}
 	
 	public static void main(String[] args) {
-		long currentTime = System.currentTimeMillis() - 1800000;
-		Date startTime = new Date(currentTime);
-		Date endTime = new Date();
-		System.err.println(  TimeUtil.getDateTime(startTime) );
-		System.err.println(  TimeUtil.getDateTime(endTime) );
+		
+		
+		
 	}
 	
 	
