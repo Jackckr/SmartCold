@@ -473,7 +473,7 @@ html, body {
 #print{
 	background: #fff;
 	color:#000;
-	padding:0 20px;
+	padding:0 20px 50px;
 }
 #print,#print h1,#print h2,#print h3,#print h4{
 	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体', Tahoma, Arial,
@@ -520,10 +520,13 @@ html, body {
 .print_part{
 	margin-top: 30px;
 }
-.partP p{
+.partP>p{
 	text-indent: 2em;
 }
-.chartPart p>span{
+.chart_gap>p{
+	margin: 20px 0;
+}
+.chart_gap>p>span{
 	display: inline-block;
 	width:140px;
 	height:30px;
@@ -532,13 +535,12 @@ html, body {
 	padding: 0 15px;
 	color:#fff;
 	font-size: 16px;
-	background: #1A6CBE;
 	border-radius:15px;
 }
 .chartPart{
 }
 .textPart{
-	padding-top: 40px;
+	padding-top: 60px;
 }
 .intro{
 	color:coral
@@ -549,6 +551,15 @@ html, body {
 }
 .chart_gap>div{
 	margin-bottom: 20px;
+}
+.bgPurple{
+	background: #5AB1EF;
+}
+.bgPink{
+	background: #2EC7C9;
+}
+.bgRed{
+	background: #EC594A;
 }
 
 
