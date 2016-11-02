@@ -1,7 +1,7 @@
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
 	<div class="page-header">
 	  &nbsp;&nbsp;月报表
-	  <button class="btn btn-primary" ng-click="Preview();">打 印</button>
+	  <button class="btn btn-info myPrint"> 打印预览 </button>
 	</div>
 	<div id="print">
 		<div class="print_header">
@@ -37,7 +37,8 @@
 					<div class="box-body">
 						<!-- 有设备 -->
 						<div class="haveDevice">
-							<div class="circle fontBlue">
+							<div class="circle nobg fontBlue">
+								<img src="../../assets/img/blue_circle.png" height="200" width="200" alt="">
 								{{pysicaldata.avgTempScores}}<span>分</span>
 							</div>
 						</div>
@@ -51,7 +52,8 @@
 					<div class="box-body">
 						<!-- 有设备 -->
 						<div class="haveDevice">
-							<div class="circle fontGold">
+							<div class="circle nobg fontGold">
+								<img src="../../assets/img/gold_circle.png" height="200" width="200" alt="图片丢失了~">
 								{{pysicaldata.avgTransportScores}}<span>分</span>
 							</div>
 						</div>
@@ -65,7 +67,8 @@
 					<div class="box-body">
 						<!-- 有设备 -->
 						<div class="haveDevice ">
-							<div class="circle fontGreen">
+							<div class="circle nobg fontGreen">
+								<img src="../../assets/img/green_circle.png" height="200" width="200" alt="">
 								{{pysicaldata.avgColdStorageScores}}<span>分</span>
 							</div>
 						</div>
@@ -84,23 +87,23 @@
 	    <!-- 温度分析部分 -->
 	    <div class="print_part chart_gap">
 	    	<h4><strong>DC(冷库)月度运行分析详情技术附件及结论:</strong></h4>
-	    	<p class="tac col-lg-8"><span class="bgBlue">温度分析</span></p>
-	    	<div class="row">
-	    		<div class="chartPart col-lg-8">
+	    	<p class="tac w60"><span class="bgBlue">温度分析</span></p>
+	    	<div class="clearfix">
+	    		<div class="chartPart w60">
 	    			<div id="tempertureId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<p><strong>超温时长（综合大数据纵环比分析）</strong></p>
 	    			<p   ng-repeat="obj in resoverTempe">{{obj.msg}}</p>
 	    			<p class="intro">**判断优良标准逻辑：平均每天75min以下“优良”，75~120min属“一般”，150min以上属“不理想”**</p>
 	    		</div>
 	    	</div>
 	    	<hr>
-	    	<div class="row">
-	    		<div class="chartPart col-lg-8">
+	    	<div class="clearfix">
+	    		<div class="chartPart w60">
 	    			<div id="cwyzId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<p><strong>超温因子（综合大数据纵环比分析）</strong></p>
 	    			<p>低温库  平均日超温因子1.68，温控优良</p>
 	    			<p>变温库  平均日超温因子1.12，温控优良</p>
@@ -108,11 +111,11 @@
 	    		</div>
 	    	</div>
 	    	<hr>
-	    	<div class="row">
-	    		<div class="chartPart col-lg-8">
+	    	<div class="clearfix">
+	    		<div class="chartPart w60">
 	    			<div id="bwyzId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<p><strong>保温因子（综合大数据纵环比分析）</strong></p>
 	    			<p>预冷间  平均日保温因子0.042，温控优良</p>
 	    			<p>冰鲜库 平均日保温因子0.045，温控优良</p>
@@ -123,12 +126,12 @@
 	    <!-- 运管分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac col-lg-8"><span class="bgGold">运管分析</span></p>
-	    	<div class="row">
-	    		<div class="chartPart col-lg-8">
+	    	<p class="tac w60"><span class="bgGold">运管分析</span></p>
+	    	<div class="clearfix">
+	    		<div class="chartPart w60">
 	    			<div id="openDoorTimesId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<p><strong>开门次数（综合大数据纵环比分析）</strong></p>
 	    			<p>低温库  平均日开门次数15，库门操作规范</p>
 	    			<p>变温库  平均日开门次数33，库门操作规范</p>
@@ -136,11 +139,11 @@
 	    		</div>
 	    	</div>
 	    	<hr>
-	    	<div class="row">
-	    		<div class="chartPart col-lg-8">
+	    	<div class="clearfix">
+	    		<div class="chartPart w60">
 	    			<div id="singleOpenDoorId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<p><strong>单次开门时长(综合大数据纵比分析）</strong></p>
 	    			<p>低温库  平均单次开门时长5，库门操作规范</p>
 	    			<p>变温库  平均单次开门时长6，库门操作规范</p>
@@ -148,11 +151,11 @@
 	    		</div>
 	    	</div>
 	    	<hr>
-	    	<div class="row">
-	    		<div class="chartPart col-lg-8">
+	    	<div class="clearfix">
+	    		<div class="chartPart w60">
 	    			<div id="goodsId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<p><strong>货物流通因子(综合大数据纵环比分析）</strong></p>
 	    			<p>本DC（冷库）的月平均货物因子为**.**表明本DC（冷库）货物流通情况符合规设计条件。</p>
 	    			<p class="intro">**文本框处根据月度平均货物因子值自动判断“低于”“符合””超过”**</p>
@@ -162,26 +165,26 @@
 	    <!-- 制冷分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac col-lg-8"><span class="bgGreen">制冷分析</span></p>
-	    	<div class="row partP">
-	    		<div class="chartPart col-lg-6">
+	    	<p class="tac w60"><span class="bgGreen">制冷分析</span></p>
+	    	<div class="clearfix partP">
+	    		<div class="chartPart w50">
 	    			<div id="ysjRunningTimeId" class="chartHight"></div>
 	    		</div>
-	    		<div class="chartPart col-lg-6">
+	    		<div class="chartPart w50">
 	    			<div id="onOffCycleId" class="chartHight"></div>
 	    		</div>
-	    		<p class="col-lg-12" style="margin: 20px 0;">该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
+	    		<p class="w100" style="margin: 20px 0;">该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
 	    	</div>
 	    </div>
 	    <!-- 热量分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac col-lg-8"><span class="bgPurple">热量分析</span></p>
-	    	<div class="row">
-	    		<div class="chartPart col-lg-8">
+	    	<p class="tac w60"><span class="bgPurple">热量分析</span></p>
+	    	<div class="clearfix">
+	    		<div class="chartPart w60">
 	    			<div id="hotId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<table class="table table-bordered">
 	    				<caption>本DC（冷库）的月平均热量分布</caption>
 	    				<tbody>
@@ -232,13 +235,13 @@
 	    <!-- 能耗分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac col-lg-8"><span class="bgRed">能耗分析</span></p>
-	    	<div class="row partP">
-	    		<div class="chartPart col-lg-8">
-	    			<div id="electricId" class="chartHight col-lg-6"></div>
-	    			<div id="waterId" class="chartHight col-lg-6"></div>
+	    	<p class="tac w60"><span class="bgRed">能耗分析</span></p>
+	    	<div class="clearfix partP">
+	    		<div class="chartPart w60">
+	    			<div id="electricId" class="chartHight w50"></div>
+	    			<div id="waterId" class="chartHight w50"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<table class="table table-bordered">
 	    				<caption>本DC（冷库）的月累计能耗统计</caption>
 	    				<tbody>
@@ -285,12 +288,12 @@
 	    <!-- 能效分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac col-lg-8"><span class="bgPink">能效分析</span></p>
-	    	<div class="row partP">
-	    		<div class="chartPart col-lg-8">
+	    	<p class="tac w60"><span class="bgPink">能效分析</span></p>
+	    	<div class="clearfix partP">
+	    		<div class="chartPart w60">
 	    			<div id="energyEfficiencyId" class="chartHight"></div>
 	    		</div>
-	    		<div class="textPart col-lg-4">
+	    		<div class="textPart w40">
 	    			<table class="table table-bordered">
 	    				<caption>本DC（冷库）的月累计能耗统计</caption>
 	    				<tbody>
@@ -337,5 +340,11 @@
                                 正在体检，请稍后！
       </div>
 </div>
-<script src="assets/js/printThis.js"></script>
 <script type="text/javascript" src="../../assets/js/echarts-all.js"></script>
+<<script type="text/javascript">
+$(function(){
+	 $(".myPrint").on('click', function() {
+         $.print("#print");
+     });
+})
+</script>

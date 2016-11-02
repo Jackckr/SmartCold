@@ -540,7 +540,6 @@ html, body {
 .chartPart{
 }
 .textPart{
-	padding-top: 60px;
 }
 .intro{
 	color:coral
@@ -561,7 +560,35 @@ html, body {
 .bgRed{
 	background: #EC594A;
 }
-
+.nobg{
+	background: transparent!important;
+	position: relative;
+}
+.nobg img{
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 1;
+}
+.w60,.w40,.w50{
+	width:60%;
+	float:left;
+	margin-left: 0;
+	margin-right: 0;
+}
+.w40{
+	width: 40%;
+	padding-left: 30px;
+}
+.w50{
+	width: 50%;
+}
+.w100{
+	float:left;
+}
+.textPart table td,#print p{
+	font-size: 12px;
+}
 
 
 
