@@ -33,42 +33,75 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 		}
 		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{ params: { "startTime":$scope.startTime, "endTime": $scope.endTime,  "rdcid": $scope.rdcId,  'keys':'ChaoWenShiJian' }}).success(function(data,status,config,header){
 			if(data!=null){
-				var ldata=[],seriesdata=[],maxxdata=0,xydata=null,xData = [];$scope.resoverTempe=[];
+				var ldata=[],seriesdata=[],maxxdata=0,xydata=null,xData =[];$scope.resoverTempe=[];
 //				<p>变温库  平均日超温时长68min，温控优良</p>
 				angular.forEach(data,function(storage,name){
-					   var yData = [],sumval=0; ldata.push(name);
+					   var yData =[],sumval=0; ldata.push(name);
 					   if(storage['ChaoWenShiJian'].length>maxxdata){ maxxdata=storage['ChaoWenShiJian'].length; xydata=storage['ChaoWenShiJian'];  };
 					    angular.forEach(storage['ChaoWenShiJian'],function(item){  var val=item['value'] / 60;  yData.unshift(val); sumval+=val;  });
-					    if(sumval>0){
-					    	var avg=(sumval/storage['ChaoWenShiJian'].length).toFixed(2);
-					    	$scope.resoverTempe.push({name :name,avgval:avg,msg:name+" 平均日超温时长"+avg+"min,温控"+getMsg(avg)}); }
+					    if(sumval>0){ var avg=(sumval/storage['ChaoWenShiJian'].length).toFixed(2);
+					    $scope.resoverTempe.push({name :name,avgval:avg,msg:name+" 平均日超温时长"+avg+"min,温控"+getMsg(avg)}); }
 					    seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
 				});
 				angular.forEach(xydata,function(item){  xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]); });
 				var myChart1 = echarts.init(document.getElementById('tempertureId'));
 				var option1 = {
-					title : { text : '超温时长(min/day)', x : 'center', y : 20 },
+					series : seriesdata,
 					tooltip : { trigger : 'axis' },
 					grid : { y2 : 110, width : '80%' },
 					legend : { data : ldata, y : 'bottom' },
-					xAxis : [ { type : 'category',  
-			            splitLine:{ show:false    }, 
-						axisLabel : {rotate : '60',interval : 0},
-						data :xData
-					} ],
+					title : { text : '超温时长(min/day)', x : 'center', y : 20 },
 					yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],
-					series : seriesdata
+					xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]
 				};
 				myChart1.setOption(option1);
 			}
 		});
 	};
 	
+	//超温因子
+     $scope.overTemperatureYZ = function(){
+			$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{params: {"startTime": $scope.startTime,"endTime": $scope.endTime,  "rdcid": $scope.rdcId,'keys':'ChaoWenYinZi'}}).success(function(data,status,config,header){
+//				$scope.data = data;
+				if(data!=null){
+					debugger;
+					var ldata=[],seriesdata=[],maxxdata=0,xydata=null,xData =[];$scope.resoverTempeYZ=[];
+					angular.forEach(data,function(storage,name){
+						   var yData =[],sumval=0; ldata.push(name);
+						   if(storage['ChaoWenYinZi'].length>maxxdata){ maxxdata=storage['ChaoWenYinZi'].length; xydata=storage['ChaoWenYinZi'];  };
+						    angular.forEach(storage['ChaoWenYinZi'],function(item){  var val=item['value'] / 60;  yData.unshift(val); sumval+=val;  });
+						    if(sumval>0){ var avg=(sumval/storage['ChaoWenYinZi'].length).toFixed(2);
+						    $scope.resoverTempeYZ.push({name :name,avgval:avg,msg:name+" 平均日超温时长"+avg+"min,温控"}); }
+						    seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
+					});
+					angular.forEach(xydata,function(item){  xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]); });
+					  myChart2 = echarts.init(document.getElementById('cwyzId'));
+					  var option2 = {
+								title : {text : '超温因子(ε)',x : 'center', y : 20},
+								tooltip : {trigger : 'axis'},
+								legend : {data : ldata,y : 'bottom'},
+								xAxis : [ {
+									type : 'category',  
+						            splitLine:{show:false}, 
+									axisLabel : {rotate : '60',interval : 0},
+									data : xData
+								} ],
+								grid : {y2 : 110,width : '80%'},
+								yAxis: [{type : 'value',axisLabel : {formatter : '{value}'}} ],
+								series :seriesdata
+							};
+						myChart2.setOption(option2);
+				}
+					
+			});
+	};
+	
 	$scope.pysical();//冷库体检信息
 	$scope.overTemperature();//超温时长	
+	$scope.overTemperatureYZ();//超温时长	
 	
 	
-    myChart2 = echarts.init(document.getElementById('cwyzId')),
+  
     myChart3 = echarts.init(document.getElementById('bwyzId')),
     myChart4 = echarts.init(document.getElementById('openDoorTimesId')),
     myChart5 = echarts.init(document.getElementById('singleOpenDoorId')),
@@ -80,63 +113,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     myChart11 = echarts.init(document.getElementById('waterId')),
     myChart12 = echarts.init(document.getElementById('energyEfficiencyId'));
 
-	var option2 = {
-		title : {
-			text : '超温因子(ε)',
-			x : 'center',
-			y : 20
-		},
-		tooltip : {
-			trigger : 'axis'
-		},
-		legend : {
-			data : [ '低温库', '变温库' ],
-			y : 'bottom'
-		},
-		xAxis : [ {
-			type : 'category',  
-            splitLine:{  
-                show:false  
-            }, 
-			axisLabel : {
-				rotate : '60',
-				interval : 0
-			},
-			data : [ '2016-10-01', '2016-10-02', '2016-10-03', '2016-10-04',
-					'2016-10-05', '2016-10-06', '2016-10-07', '2016-10-08',
-					'2016-10-09', '2016-10-10', '2016-10-11', '2016-10-12',
-					'2016-10-13', '2016-10-14', '2016-10-15', '2016-10-16',
-					'2016-10-17', '2016-10-18', '2016-10-19', '2016-10-20',
-					'2016-10-21', '2016-10-22', '2016-10-23', '2016-10-24',
-					'2016-10-25', '2016-10-26', '2016-10-27', '2016-10-28',
-					'2016-10-29', '2016-10-30', '2016-10-31' ]
-		} ],
-		grid : {
-			y2 : 110,
-			width : '80%'
-		},
-		yAxis : [ {
-			type : 'value',
-			axisLabel : {
-				formatter : '{value}'
-			}
-		} ],
-		series : [
-				{
-					name : '低温库',
-					type : 'line',
-					data : [ 13, 11, 12, 11, 15, 18, 10, 11, 15, 13, 11, 13,
-							16, 11, 15, 13, 17, 13, 8, 11, 15, 13, 11, 13, 10,
-							6, 15, 13, 16, 13, 18 ],
-				},
-				{
-					name : '变温库',
-					type : 'line',
-					data : [ 12, 13, 14, 12, 23, 10, 11, 15, 13, 19, 13, 10,
-							11, 15, 13, 12, 13, 18, 11, 15, 13, 12, 13, 13, 60,
-							15, 11, 12, 52, 20, 10 ],
-				} ]
-	};
+	
 	var option3 = {
 		title : {
 			text : '保温因子(τ)',
@@ -608,7 +585,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 			} ]
 		};
 	
-	myChart2.setOption(option2);
+
 	myChart3.setOption(option3);
 	myChart4.setOption(option4);
 	myChart5.setOption(option5);

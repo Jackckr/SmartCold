@@ -359,13 +359,13 @@ public class MsgServiceimp implements MsgService {
 							    fileter.put("oid", hashMap.get("ids"));
 							    List<ColdStorageAnalysisEntity> doorTotalTime = storageAnalysisMapper.findValueByFilter(fileter);
 							    if(SetUtil.isnotNullList(doorTotalTime)){
+							    	List<HashMap<String, Object>> lightsetList = this.quantitySetMapper.getLightPowerByCoid(coldstorageid);//获得照明功率
 							    	List<HashMap<String, Object>> forkliftsetList = this.quantitySetMapper.getPowerGroupByRDC("forkliftset", rdcid);//获得叉车功率
-							    	List<HashMap<String, Object>> lightsetList = this.quantitySetMapper.getPowerGroupByRDC("coldstoragelightset", rdcid);//获得照明功率
 							    	if(SetUtil.isnotNullList(forkliftsetList)){
 							    		avgforkliftPower =(Double) forkliftsetList.get(0).get("avgpower");
 							    	}
 							    	if(SetUtil.isnotNullList(lightsetList)){
-							    		avglightsetPower =(Double) lightsetList.get(0).get("avgpower");
+							    		avglightsetPower =(Double) lightsetList.get(0).get("sumpower");
 							    	}
 							    	for (ColdStorageAnalysisEntity clsis : doorTotalTime) {
 							    		if(avgforkliftPower!=0){

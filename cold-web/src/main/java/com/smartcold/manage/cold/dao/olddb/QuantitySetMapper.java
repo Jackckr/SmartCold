@@ -24,7 +24,8 @@ public interface QuantitySetMapper {
     //获得配置表集合
 //    List<HashMap<String, Object>> findColdstorages(@Param("talbe")String talbe);//根据rdc分组排序
     //获得指定配置信息功率信息
-    List<HashMap<String, Object>> getPowerGroupByRDC(@Param("talbe")String talbe,@Param("rdcid")Object rdcids);
+    List<HashMap<String, Object>> getLightPowerByCoid(@Param("coid")Object  coid);//获得灯组功率
+    List<HashMap<String, Object>> getPowerGroupByRDC(@Param("talbe")String talbe,@Param("rdcid")Object rdcids);//获得叉车平均功率
     //======================================================Q======================================================
 
 }

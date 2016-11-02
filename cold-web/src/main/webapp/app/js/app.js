@@ -128,6 +128,11 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
     return {
         setUser: function (user) {
             $rootScope.user = user;
+            $rootScope.logout = function () {
+	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
+	        	 $rootScope.user =window.user=user=undefined;//清除系统user;
+	        	 window.location.href="login.html";
+	        };
         },
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
