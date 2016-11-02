@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -60,16 +61,20 @@ public class UtilController   {
 			return ResponseData.newFailure("抱歉！暂时没有找到相关信息！");
 		}
 	}
-	
+	/**
+	 * 版本控制器
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping(value = "/downLoadapk")
 	@ResponseBody
-	public void downLoadapk(HttpServletRequest request, HttpServletResponse response){
-		try {
-			this.downLoad(response,"apk/liankur.v1.0.3.apk",false);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String downLoadapk(HttpServletRequest request, HttpServletResponse response){
+		/**
+		 * 为微信扫一扫做处理
+		 * 为统计做处理
+		 */
+		//http://180.153.105.144/imtt.dd.qq.com/16891/796606D2D7EB792432DDAECCA2FEDE82.apk?mkey=58198488364bc481&f=188a&c=0&fsname=com.tencent.mobileqq_6.5.8_422.apk&csr=4d5s&p=.apk
+		return " <script  type='text/javascript'> window.location.href='http://liankur.com/apk/liankur.v1.0.3.apk'</script>";
 	}
 	
 	
