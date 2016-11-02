@@ -589,6 +589,9 @@ html, body {
 .textPart table td,#print p{
 	font-size: 12px;
 }
+#print .sys_group .box{
+	height: 300px;
+}
 
 
 
