@@ -97,7 +97,11 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
                 		 $scope.cldata(data); 
                 		 } }
 	               }else{
-	            	   if(isexpt){ alert("导出失败！"+data.message);  }else{ $scope.rs_msg=data.message; }; //em.attr("disabled",false);
+	            	   if(isexpt){ alert("导出失败！"+data.message);  }else{
+	            		   $scope.$apply(function () {
+	            			   $scope.rs_msg=data.message; 
+	            		   });
+	            		 }; //em.attr("disabled",false);
 	               }
 	               $("#rpt_print").attr("disabled",!isSuccess);
             }

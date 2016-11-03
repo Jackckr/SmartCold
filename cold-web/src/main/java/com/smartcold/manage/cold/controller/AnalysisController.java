@@ -26,6 +26,7 @@ import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.CompressorGroupSetMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
+import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.ResponseData;
@@ -83,6 +84,37 @@ public class AnalysisController {
 	public Object getColdStorageBlower(Integer rdcId) {
 		return blowerMapper.findBlowerByRdcID(rdcId);
 	}
+	
+	/**
+	 * 月报告Q信息
+	 * @param rdcId
+	 * @param stTime
+	 * @param endTime
+	 * @return
+	 */
+	@RequestMapping(value = "/getQAnalysisByMonth")
+	@ResponseBody
+	public Object getQAnalysis(Integer rdcId,String stTime,String edTime){
+		if(rdcId!=null){
+			return this.quantityMapper.getQuantitsis(rdcId, stTime,edTime);
+		}
+		return null;
+	}
+	/**
+	 * 月报告信息
+	 * @param rdcId
+	 * @param stTime
+	 * @param endTime
+	 * @return
+	 */
+	@RequestMapping(value = "/getSumkeySisByKey")
+	@ResponseBody
+	public Object getSumkeySisByKey(Integer rdcId,Integer type,String key, String stTime,String edTime){
+		if(rdcId!=null&&type!=null&&StringUtil.isnotNull(key)){
+			return this.quantityMapper.getSumKeyByRdcId(rdcId,StorageType.getStorageType(type).getTable()+"set", type, key, stTime, edTime);
+		}
+		return null;
+	}
 	/**
 	 * 
 	 * @param rdcId:冷库ID
@@ -94,10 +126,9 @@ public class AnalysisController {
 	public ResponseData<HashMap<String, Object>> getQAnalysis(Integer rdcId){
 		if(rdcId==null){	return ResponseData.newFailure();}
 			String stTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(30));
-			List<HashMap<String, Object>> quantitsis = this.quantityMapper.getQuantitsis(rdcId, stTime);
+			List<HashMap<String, Object>> quantitsis = this.quantityMapper.getQuantitsis(rdcId, stTime,null);
 			if(SetUtil.isnotNullList(quantitsis)){
 				String xdata[] = new String[30];// 日期
-			
 				HashMap<String, Integer> dataindex=new HashMap<String, Integer>();
 				double data[]=new double[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -310,12 +341,13 @@ public class AnalysisController {
      * @param endTime
      * @return
      */
-	private ResponseData<HashMap<String, Object>> getQEAnalysis(Integer rdcId,String startTime, String endTime) {
+	@RequestMapping(value = "/getQEAnalysis")
+	@ResponseBody
+	public ResponseData<HashMap<String, Object>> getQEAnalysis(Integer rdcId,String startTime, String endTime) {
 		try {
 			if (rdcId == null) { return ResponseData.newFailure("非法请求！"); }
-			String stTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(30));
-			List<HashMap<String, Object>> sumElist = this.quantityMapper.getsumEByRdcid(rdcId, stTime,endTime);
-			List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, stTime,endTime);
+			List<HashMap<String, Object>> sumElist = this.quantityMapper.getsumEByRdcid(rdcId, startTime,endTime);
+			List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, startTime,endTime);
 			if(SetUtil.isnotNullList(sumElist)&&SetUtil.isnotNullList(sumQlist)){
 				HashMap<Date,Double > QMap=new HashMap<Date, Double>();
 				HashMap<String, Object> restMap = new HashMap<String, Object>();
@@ -332,7 +364,7 @@ public class AnalysisController {
 				return ResponseData.newSuccess(restMap);
 			}else{
 				if(SetUtil.isNullList(sumElist)){
-					return ResponseData.newFailure("没有查询到电表采集的数据!请检查电表配置！");
+					return ResponseData.newFailure("电表采集的数据异常!请检查电表配置！");
 				}else if(SetUtil.isNullList(sumQlist)){
 					return ResponseData.newFailure("没有查询到热量采集数据!请检查AP配置！");
 				}

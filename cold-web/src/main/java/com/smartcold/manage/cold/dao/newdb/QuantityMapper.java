@@ -20,11 +20,12 @@ public interface QuantityMapper {
 	public List<CompressorSetEntity>   getcoldstoraginfo(@Param("oids")Object oids);//获得机组保养信息时间
 	public Double getSumRunTime(@Param("oid")Object oid,@Param("stTime")Date stTime);//获得单体压缩机运行时间
 	//======================================================360体检信息===========================================================
-	public List<HashMap<String, Object>> getQuantitsis(@Param("rdcId")int rdcId,@Param("stTime")String stTime);//获得Qsis
 	//获得商品流转信息
 	public List<HashMap<String, Object>>  getGoodQuantit(@Param("oid")int oid,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	//360体检->因子平均值集合
 	public List<HashMap<String, Object>> getAVGTempYinZi(@Param("oid")Object oid,@Param("stTime")String stTime,@Param("edTime")String edTime);
+	//获得Q信息
+	public List<HashMap<String, Object>> getQuantitsis(@Param("rdcId")int rdcId,@Param("stTime")String stTime,@Param("endTime")String endTime);//获得Qsis
 	// 检查是否有设备->根据是否有数据判断PLC
 	public Integer getCountBydevkey(@Param("deviceid")Object deviceid,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	public Integer getCountBykey(@Param("oid")Object oid,@Param("table")String table, @Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
@@ -36,6 +37,7 @@ public interface QuantityMapper {
 	//======================================================门超时报警分析==================================================================
 	public List<DeviceObjectMappingEntity>   getDoorDevMapper(); 
 	public Double  getSwitchTime(@Param("deviceid")String deviceid,@Param("stTime")String stTime,@Param("value")Integer value);
-	//======================================================Q7======================================================
+	//======================================================月报表======================================================
+	public List<HashMap<String, Object>> getSumKeyByRdcId(@Param("rdcId")int rdcId,@Param("table")String table,@Param("type")int type,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
 
 }

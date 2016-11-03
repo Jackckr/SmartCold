@@ -11,16 +11,19 @@ import org.springframework.stereotype.Service;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.StorageService;
+import com.smartcold.manage.cold.util.SetUtil;
 
 @Service
 public class StorageServiceImpl implements StorageService {
@@ -30,6 +33,9 @@ public class StorageServiceImpl implements StorageService {
 
 	@Autowired
 	private ColdStorageSetMapper coldStorageSetDao;
+	
+	@Autowired
+	private ColdStorageDoorSetMapper coldStorageDoorSetMapper;
 
 	@Autowired
 	private StorageKeyValueMapper storageKeyValueDao;
@@ -115,6 +121,22 @@ public class StorageServiceImpl implements StorageService {
 		for (ColdStorageSetEntity storage : storages) {
 			result.put(storage.getName(), analysisService.findValueByDateKeys(StorageType.STORAGE.getType(),
 					storage.getId(), keys, startTime, endTime));
+		}
+		return result;
+	}
+	
+	@Override
+	public Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findDoorSisByRdcidKeyDate(int rdcid,
+			List<String> keys, Date startTime, Date endTime) {
+		HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>> result = new HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>>();
+		List<ColdStorageSetEntity> storages = coldStorageSetDao.findByRdcId(rdcid);
+		for (ColdStorageSetEntity storage : storages) {
+			List<ColdStorageDoorSetEntity> doorset = this.coldStorageDoorSetMapper.findByStorageId(storage.getId());
+			if(SetUtil.isnotNullList(doorset)){
+				for (ColdStorageDoorSetEntity door : doorset) {
+					result.put(storage.getName()+"-"+door.getName(), analysisService.findValueByDateKeys(StorageType.DOOR.getType(),door.getId(), keys, startTime, endTime));
+				}
+			}
 		}
 		return result;
 	}

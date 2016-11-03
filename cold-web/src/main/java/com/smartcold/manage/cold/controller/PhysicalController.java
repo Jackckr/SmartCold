@@ -97,10 +97,8 @@ public class PhysicalController {
 	 */
 	@RequestMapping(value = "/mothCheckup")
 	@ResponseBody
-	public ResponseData<HashMap<String, Object>> mothCheckup(Integer rdcId) {
+	public ResponseData<HashMap<String, Object>> mothCheckup(Integer rdcId,String stTime,String edTime ) {
 		if(rdcId==null){ return ResponseData.newFailure("0");}//0.非法请求
-		String stTime = TimeUtil.getBeforeMonthTime(1);
-		String edTime = TimeUtil.getEndMonthTime(1);
 		HashMap<String, Object> resMap = getPysicalInfo(rdcId,  stTime, edTime);
 		return ResponseData.newSuccess(resMap);
 	}

@@ -1,7 +1,7 @@
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
 	<div class="page-header">
 	  &nbsp;&nbsp;月报表
-	  <button class="btn btn-info myPrint"> 打印预览 </button>
+	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button>
 	</div>
 	<div id="print">
 		<div class="print_header">
@@ -21,7 +21,7 @@
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}">
 	    		</div>
 	    		<div class="pull-left">
-	    			<span>分析周期：</span><input type="text">
+	    			<span>分析周期：</span><input type="text" value="{{startTime+'-'+endTime}}">
 	    		</div>
 	    	</div>
 	    </div>
@@ -90,35 +90,36 @@
 	    	<p class="tac w60"><span class="bgBlue">温度分析</span></p>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
-	    			<div id="tempertureId" class="chartHight"></div>
+	    			<div id="tempertureId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="tempertureId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>超温时长（综合大数据纵环比分析）</strong></p>
-	    			<p   ng-repeat="obj in resoverTempe">{{obj.msg}}</p>
+	    			<p   ng-repeat="obj in charrestmsg[0]">{{obj.msg}}</p>
 	    			<p class="intro">**判断优良标准逻辑：平均每天75min以下“优良”，75~120min属“一般”，150min以上属“不理想”**</p>
 	    		</div>
 	    	</div>
 	    	<hr>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
-	    			<div id="cwyzId" class="chartHight"></div>
+	    			<div id="cwyzId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="cwyzId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>超温因子（综合大数据纵环比分析）</strong></p>
-	    			<p>低温库  平均日超温因子1.68，温控优良</p>
-	    			<p>变温库  平均日超温因子1.12，温控优良</p>
+	    		    <p   ng-repeat="obj in charrestmsg[1]">{{obj.msg}}</p>
 	    			<p class="intro">**判断优良标准逻辑：平均每天2.0以下“优良”，2.0~5属“一般”，5以上属“不理想”**</p>
 	    		</div>
 	    	</div>
 	    	<hr>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
-	    			<div id="bwyzId" class="chartHight"></div>
+	    			<div id="bwyzId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="bwyzId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>保温因子（综合大数据纵环比分析）</strong></p>
-	    			<p>预冷间  平均日保温因子0.042，温控优良</p>
-	    			<p>冰鲜库 平均日保温因子0.045，温控优良</p>
+	    			<p   ng-repeat="obj in charrestmsg[2]">{{obj.msg}}</p>
 	    			<p class="intro">**判断优良标准逻辑：平均每天0.1以下“优良”，0.1~0.15属“一般”，0.15以上属“不理想”**</p>
 	    		</div>
 	    	</div>
@@ -129,35 +130,36 @@
 	    	<p class="tac w60"><span class="bgGold">运管分析</span></p>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
-	    			<div id="openDoorTimesId" class="chartHight"></div>
+	    			<div id="openDoorTimesId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="openDoorTimesId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>开门次数（综合大数据纵环比分析）</strong></p>
-	    			<p>低温库  平均日开门次数15，库门操作规范</p>
-	    			<p>变温库  平均日开门次数33，库门操作规范</p>
+	    			<p   ng-repeat="obj in charrestmsg[3]">{{obj.msg}}</p>
 	    			<p class="intro">**判断优良标准逻辑：平均每天30以下“规范”，30~50属“一般”，50以上属“频繁”**</p>
 	    		</div>
 	    	</div>
 	    	<hr>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
-	    			<div id="singleOpenDoorId" class="chartHight"></div>
+	    			<div id="singleOpenDoorId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="singleOpenDoorId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>单次开门时长(综合大数据纵比分析）</strong></p>
-	    			<p>低温库  平均单次开门时长5，库门操作规范</p>
-	    			<p>变温库  平均单次开门时长6，库门操作规范</p>
+	    		    <p   ng-repeat="obj in charrestmsg[4]">{{obj.msg}}</p>
 	    			<p class="intro">**判断优良标准逻辑：平均每次开门时长3以下“规范”，3~5属“一般”，5以上属“不规范”**</p>
 	    		</div>
 	    	</div>
 	    	<hr>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
-	    			<div id="goodsId" class="chartHight"></div>
+	    			<div id="goodsId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="goodsId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>货物流通因子(综合大数据纵环比分析）</strong></p>
-	    			<p>本DC（冷库）的月平均货物因子为**.**表明本DC（冷库）货物流通情况符合规设计条件。</p>
+	    			 <p   ng-repeat="obj in charrestmsg[5]">{{obj.msg}}</p>
 	    			<p class="intro">**文本框处根据月度平均货物因子值自动判断“低于”“符合””超过”**</p>
 	    		</div>
 	    	</div>
@@ -168,10 +170,11 @@
 	    	<p class="tac w60"><span class="bgGreen">制冷分析</span></p>
 	    	<div class="clearfix partP">
 	    		<div class="chartPart w50">
-	    			<div id="ysjRunningTimeId" class="chartHight"></div>
+	    			<div id="ysjRunningTimeId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="ysjRunningTimeId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="chartPart w50">
-	    			<div id="onOffCycleId" class="chartHight"></div>
+	    			<div id="onOffCycleId" class="chartHight" ng-show="isnotprint"></div>
 	    		</div>
 	    		<p class="w100" style="margin: 20px 0;">该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
 	    	</div>
@@ -182,48 +185,19 @@
 	    	<p class="tac w60"><span class="bgPurple">热量分析</span></p>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
-	    			<div id="hotId" class="chartHight"></div>
+	    			<div id="hotId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="hotId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<table class="table table-bordered">
 	    				<caption>本DC（冷库）的月平均热量分布</caption>
 	    				<tbody>
-	    				<tr>
-	    					<td>货物热量</td>
-	    					<td>20%</td>
-	    					<td>偏小</td>
-	    					<td>有增加空间</td>
+	    				<tr  ng-repeat="obj in charrestmsg[8]">
+	    					<td>{{obj.key}}</td>
+	    					<td>{{obj.zb}}</td>
+	    					<td>{{obj.zbm}}</td>
+	    					<td>{{obj.yhm}}</td>
 	    				</tr>
-	    				<tr>
-	    					<td>化霜热量</td>
-	    					<td>26.8%</td>
-	    					<td>严重偏大</td>
-	    					<td>需优化</td>
-	    				</tr>
-	    				<tr>
-	    					<td>叉车热量</td>
-	    					<td>12.8%</td>
-	    					<td>严重偏大</td>
-	    					<td>需优化</td>
-	    				</tr>
-	    				<tr>
-	    					<td>照明热量</td>
-	    					<td>8.5%</td>
-	    					<td>严重偏大</td>
-	    					<td>需优化</td>
-	    				</tr>
-	    				<tr>
-	    					<td>维护侵入热量</td>
-	    					<td>10%</td>
-	    					<td>良好</td>
-	    					<td>无需优化</td>
-	    				</tr>
-	    				<tr>
-	    					<td>风机运行热量</td>
-	    					<td>15%</td>
-	    					<td>严重偏大</td>
-	    					<td>需优化</td>
-	    				</tr>	    				
 	    				</tbody>
 	    				<tfoot class="intro">
 	    					<tr><td colspan="4">**文本框处预设占比值自动判断形成结果**</td></tr>
@@ -238,48 +212,26 @@
 	    	<p class="tac w60"><span class="bgRed">能耗分析</span></p>
 	    	<div class="clearfix partP">
 	    		<div class="chartPart w60">
-	    			<div id="electricId" class="chartHight w50"></div>
-	    			<div id="waterId" class="chartHight w50"></div>
+	    			<div id="electricId" class="chartHight w50" ng-show="isnotprint"></div>
+	    			<div id="waterId" class="chartHight w50" ng-show="isnotprint"></div>
+	    			<div id="electricId_img" class=" w50" ng-show="!isnotprint"></div>
+	    			<div id="waterId_img" class=" w50"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<table class="table table-bordered">
 	    				<caption>本DC（冷库）的月累计能耗统计</caption>
 	    				<tbody>
-		    				<tr>
-		    					<td>电表1</td>
+		    				<tr ng-repeat="obj in charrestmsg[9]">
+		    					<td>{{obj.name}}</td>
 		    					<td>累计电耗</td>
-		    					<td>32149kwh</td>
+		    					<td>{{obj.value  | number:2}}kwh</td>
 		    				</tr>
-		    				<tr>
-		    					<td>电表2</td>
-		    					<td>累计电耗</td>
-		    					<td>1026kwh</td>
+		    				<tr ng-repeat="obj in charrestmsg[10]">
+		    					<td>{{obj.name}}</td>
+		    					<td>累计水耗</td>
+		    					<td>{{obj.value | number:2}}t</td>
 		    				</tr>
-		    				<tr>
-		    					<td>电表3</td>
-		    					<td>累计电耗</td>
-		    					<td>843kwh</td>
-		    				</tr>
-		    				<tr>
-		    					<td>电表4</td>
-		    					<td>累计电耗</td>
-		    					<td>8492kwh</td>
-		    				</tr>
-		    				<tr>
-	    					<td>机组1</td>
-	    					<td>累计水耗</td>
-	    					<td>162.8t</td>
-	    				</tr>
-	    				<tr>
-	    					<td>机组2</td>
-	    					<td>累计水耗</td>
-	    					<td>2.7t</td>
-	    				</tr>
-	    				<tr>
-	    					<td>机组3</td>
-	    					<td>累计水耗</td>
-	    					<td>0.0t</td>
-	    				</tr>	 
+		    					 
 	    				</tbody>
 	    			</table>
 				</div>
@@ -291,32 +243,18 @@
 	    	<p class="tac w60"><span class="bgPink">能效分析</span></p>
 	    	<div class="clearfix partP">
 	    		<div class="chartPart w60">
-	    			<div id="energyEfficiencyId" class="chartHight"></div>
+	    			<div id="energyEfficiencyId" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="energyEfficiencyId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
 	    			<table class="table table-bordered">
 	    				<caption>本DC（冷库）的月累计能耗统计</caption>
 	    				<tbody>
-		    				<tr>
-		    					<td>电表1</td>
+		    				<tr ng-repeat="obj in charrestmsg[9]">
+		    					<td>{{obj.name}}</td>
 		    					<td>累计电耗</td>
-		    					<td>32149kwh</td>
+		    					<td>{{obj.value  | number:2}}kwh</td>
 		    				</tr>
-		    				<tr>
-		    					<td>电表2</td>
-		    					<td>累计电耗</td>
-		    					<td>1026kwh</td>
-		    				</tr>
-		    				<tr>
-		    					<td>电表3</td>
-		    					<td>累计电耗</td>
-		    					<td>843kwh</td>
-		    				</tr>
-		    				<tr>
-		    					<td>电表4</td>
-		    					<td>累计电耗</td>
-		    					<td>8492kwh</td>
-		    				</tr> 
 	    				</tbody>
 	    			</table>
 				</div>
@@ -341,10 +279,8 @@
       </div>
 </div>
 <script type="text/javascript" src="../../assets/js/echarts-all.js"></script>
-<<script type="text/javascript">
-$(function(){
-	 $(".myPrint").on('click', function() {
-         $.print("#print");
-     });
-})
-</script>
+<!-- <<script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!-- 	 $(".myPrint").on('click', function() { $.print("#print"); }); -->
+<!-- }) -->
+<!-- </script> -->
