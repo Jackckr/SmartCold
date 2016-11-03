@@ -21,7 +21,7 @@
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}">
 	    		</div>
 	    		<div class="pull-left">
-	    			<span>分析周期：</span><input type="text" value="{{startTime+'-'+endTime}}">
+	    			<span>分析周期：</span><input type="text" value="{{startTime.substring(0,10)+'至'+endTime.substring(0,10)}}">
 	    		</div>
 	    	</div>
 	    </div>
