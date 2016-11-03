@@ -1074,6 +1074,14 @@ coldWeb.directive("ajaxTable", function ($http,baseTools) {
 			var resttableurl = attrs.resttableUrl;
 			var table = attrs.table;
 
+			scope.edittable=function(obj){
+				if(obj.editable){
+					obj.editable = false;
+					scope.update(obj);
+				}else{
+					obj.editable =true;	
+				}
+			};
             scope.update = function (obj) {
 				if (updateUrl){
 				    var params = {id:obj.id};
