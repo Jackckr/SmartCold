@@ -46,7 +46,7 @@ var app = angular.module('app', []);
        document.getElementById ("city").innerHTML = "上海";
        break;
      }
-     alert(result);
+    // alert(result);
  }
 	/* var map = new BMap.Map("allmap");
 		var point = new BMap.Point("116",

@@ -433,6 +433,7 @@ html, body {
 }
 .myTopbg{
 	margin-top: 40px;
+	padding: 15px 0;
 }
  .myTopbg .info-box-text span:first-child{
  	font-size: 20px;
