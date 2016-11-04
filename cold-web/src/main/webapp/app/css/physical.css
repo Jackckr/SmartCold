@@ -482,9 +482,7 @@ html, body {
 		sans-serif !important;
 }
 .print_header{
-	height: 80px;
-	padding:15px 0;
-	/* border-bottom: 3px solid #A34039; */
+	height: 60px;
 }
 .print_header>h3{
 	margin:0;
@@ -494,7 +492,7 @@ html, body {
 	text-align: center;
 }
 .print_header hr{
-	margin:20px 0;
+	margin:10px 0;
 	border-top: 3px solid #A34039;
 }
 .lianku_logo{
@@ -506,27 +504,24 @@ html, body {
 	background-size: cover;
 }
 .print_title h2{
-	margin: 30px 0;
+	margin: 20px 0;
 }
 .print_name>div{
 	width:50%;
 	height: 40px;
-	margin: 5px 0;
 	overflow: hidden;
+	font-size: 12px;
 }
 .print_name>div>input{
 	border:0;
 	border-bottom:1px solid #333;
 	width: 65%;
 }
-.print_part{
-	margin-top: 30px;
-}
 .partP>p{
 	text-indent: 2em;
 }
 .chart_gap>p{
-	margin: 20px 0;
+	margin: 10px 0;
 }
 .chart_gap>p>span{
 	display: inline-block;
@@ -538,10 +533,6 @@ html, body {
 	color:#fff!important;
 	font-size: 16px;
 	border-radius:15px;
-}
-.chartPart{
-}
-.textPart{
 }
 .intro,.intro td{
 	color:coral!important;
@@ -577,7 +568,11 @@ html, body {
 	position: absolute;
 	top:0;
 	left:50%;
-	margin-left:-80px!important;
+	-webkit-transform:translateX(-50%);
+	-moz-transform:translateX(-50%);
+	-ms-transform:translateX(-50%);
+	-o-transform:translateX(-50%);
+	transform:translateX(-50%);
 	z-index: 1;
 } 
 .w60,.w40,.w50{
@@ -596,12 +591,14 @@ html, body {
 .w100{
 	float:left;
 }
-.textPart table td,#print p{
+#print p{
 	font-size: 12px!important;
 	padding: 2px!important;
+	margin-bottom: 2px;
 }
 #print .sys_group .box{
-	height: 300px;
+	height: 260px;
+	margin-bottom: 0;
 }
 .chartHight+div{
 	min-height:300px;
@@ -618,31 +615,9 @@ html, body {
 	font-size: 12px!important;
 	line-height: 2;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.print_part>h4{
+	font-size: 14px;
+}
+.print_part+hr{
+	margin: 5px 0;
+}

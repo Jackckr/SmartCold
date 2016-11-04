@@ -14,12 +14,12 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//数据模型
 	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
 			  val:[[75,120],[2,5],[0.1,0.15],[30,50],[3,5], [25,50], [],[],[5,10,20]],
-			  tmg:[",温控",",温控",",温控",",库门操作",",库门操作",",货物流通情况",",温控",",温控",",温控",],
+			  tmg:[",温控",",温控",",温控",",开门操作",",开门操作",",货物流通情况",",温控",",温控",",温控",],
 			  msg:[["优良","一般","不理想"],["优良","一般","不理想"], ["优良","一般","不理想"],["优良","一般","不理想"],["规范","一般","频繁"],["优良","一般","不理想"],[],[], [0,1,2,3]]};
 	//===================================================================================工具类start==================================================================================
 	var util = {
 			getMsg:function(index,avgval){var vls=mode.val[index];for (var i = 0; i < vls.length; i++) {if(avgval<=vls[i]){ return mode.msg[index][i]; }}return mode.msg[index][mode.msg[index].length-1];},
-			getpieoption:function(title,ldata,sData){return {title :{ text: title,  x:'center', y : 20 },tooltip:{trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)" },legend: {y: 'bottom',data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData}]};},
+			getpieoption:function(title,ldata,sData){return {title :{ text: title,  x:'center', y : 'bottom' },tooltip:{trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)" },legend: {y: 'top',data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData}]};},
 			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { y2 : 110, width : '80%' },legend : { data : ldata, y : 'bottom' },title : { text : title, x : 'center', y : 20 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
 	};
 	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge ){
@@ -32,7 +32,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 					angular.forEach(storage[keys],function(item){  var val=item['value']/nuit ;  yData.unshift(val); sumval+=val;  });
 //					if(sumval){
 						var avg=(sumval/storage[keys].length).toFixed(2);
-					    restmsg.push({name :name,avgval:avg,msg:name+msge+avg+",温控"+util.getMsg(index,avg)}); 
+					    restmsg.push({name :name,avgval:avg,msg:name+msge+avg+mode.tmg[index]+util.getMsg(index,avg)}); 
 //					}
 					seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
 				});
@@ -141,7 +141,15 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 			title : { text : '设备的开关周期',x : 'center', y : 20},
 			tooltip : {trigger : 'axis'},
 			legend : {data : [ '每天或现行小时的次数', '每小时最高次数' ],y : 'bottom'},
-			xAxis : [ {type : 'category', splitLine:{ show:false}, axisLabel : {interval : 0},data : [ '已55分钟','已08小时55分钟','-1天','-2天','-3天','-4天','-5天','-6天' ] } ],
+			xAxis : [ {type : 'category', splitLine:{ show:false}, 
+					//文本换行
+					axisLabel : {interval : 0,formatter:function(params){var newParamsName = "", paramsNameNumber = params.length,provideNumber = 4,rowNumber = Math.ceil(paramsNameNumber / provideNumber);
+						   if (paramsNameNumber > provideNumber) {for (var p = 0; p < rowNumber; p++) {
+						     var tempStr = "",start = p * provideNumber, end = start + provideNumber;
+						     if (p == rowNumber - 1) {tempStr = params.substring(start, paramsNameNumber);
+						     } else {tempStr = params.substring(start, end) + "\n";} newParamsName += tempStr;}						
+						   } else {newParamsName = params;}return newParamsName}},
+						   data : [ '已55分钟','已08小时55分钟','-1天','-2天','-3天','-4天','-5天','-6天' ] } ],
 			grid : {x:'40',y2 : 110,width : '80%'},
 			yAxis : [ {type : 'value',name:'次数',axisLabel : {formatter : '{value}'}
 			} ],
