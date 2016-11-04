@@ -38,7 +38,7 @@
 						<!-- 有设备 -->
 						<div class="haveDevice">
 							<div class="circle nobg fontBlue">
-								<img src="../../assets/img/blue_circle.png" height="200" width="200" alt="">
+								<img src="../../assets/img/blue_circle.png" height="160" width="160" alt="">
 								{{pysicaldata.avgTempScores}}<span>分</span>
 							</div>
 						</div>
@@ -53,7 +53,7 @@
 						<!-- 有设备 -->
 						<div class="haveDevice">
 							<div class="circle nobg fontGold">
-								<img src="../../assets/img/gold_circle.png" height="200" width="200" alt="图片丢失了~">
+								<img src="../../assets/img/gold_circle.png" height="160" width="160" alt="图片丢失了~">
 								{{pysicaldata.avgTransportScores}}<span>分</span>
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 						<!-- 有设备 -->
 						<div class="haveDevice ">
 							<div class="circle nobg fontGreen">
-								<img src="../../assets/img/green_circle.png" height="200" width="200" alt="">
+								<img src="../../assets/img/green_circle.png" height="160" width="160" alt="">
 								{{pysicaldata.avgColdStorageScores}}<span>分</span>
 							</div>
 						</div>
@@ -176,8 +176,8 @@
 	    		<div class="chartPart w50">
 	    			<div id="onOffCycleId" class="chartHight" ng-show="isnotprint"></div>
 	    		</div>
-	    		<p class="w100" style="margin: 20px 0;">该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
 	    	</div>
+	    	<p style="margin: 20px 0;text-indent: 2em;">该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
 	    </div>
 	    <!-- 热量分析部分 -->
 	    <hr>
@@ -189,20 +189,13 @@
 	    			<div id="hotId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
-	    			<table class="table table-bordered">
-	    				<caption>本DC（冷库）的月平均热量分布</caption>
-	    				<tbody>
-	    				<tr  ng-repeat="obj in charrestmsg[8]">
-	    					<td>{{obj.key}}</td>
-	    					<td>{{obj.zb}}</td>
-	    					<td>{{obj.zbm}}</td>
-	    					<td>{{obj.yhm}}</td>
-	    				</tr>
-	    				</tbody>
-	    				<tfoot class="intro">
-	    					<tr><td colspan="4">**文本框处预设占比值自动判断形成结果**</td></tr>
-	    				</tfoot>
-	    			</table>
+    				<p>本DC（冷库）的月平均热量分布</p>
+    				<ul> 
+    					<li  ng-repeat="obj in charrestmsg[8]">
+    						{{obj.key}}-{{obj.zb}}%-{{obj.zbm}}-{{obj.yhm}}
+						</li>
+    				</ul>
+    				<p class="intro">**文本框处预设占比值自动判断形成结果**</p>
 	    		</div>
 	    	</div>
 	    </div>
@@ -218,22 +211,15 @@
 	    			<div id="waterId_img" class=" w50"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
-	    			<table class="table table-bordered">
-	    				<caption>本DC（冷库）的月累计能耗统计</caption>
-	    				<tbody>
-		    				<tr ng-repeat="obj in charrestmsg[9]">
-		    					<td>{{obj.name}}</td>
-		    					<td>累计电耗</td>
-		    					<td>{{obj.value  | number:2}}kwh</td>
-		    				</tr>
-		    				<tr ng-repeat="obj in charrestmsg[10]">
-		    					<td>{{obj.name}}</td>
-		    					<td>累计水耗</td>
-		    					<td>{{obj.value | number:2}}t</td>
-		    				</tr>
-		    					 
-	    				</tbody>
-	    			</table>
+	    			<p>本DC（冷库）的月累计能耗统计</p>
+    				<ul> 
+    					<li ng-repeat="obj in charrestmsg[9]">
+    						{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh
+						</li>
+						<li ng-repeat="obj in charrestmsg[10]">
+    						{{obj.name}}-累计水耗-{{obj.value | number:2}}t
+						</li>
+    				</ul>
 				</div>
 	    	</div>
 	    </div>
@@ -247,16 +233,12 @@
 	    			<div id="energyEfficiencyId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
-	    			<table class="table table-bordered">
-	    				<caption>本DC（冷库）的月累计能耗统计</caption>
-	    				<tbody>
-		    				<tr ng-repeat="obj in charrestmsg[9]">
-		    					<td>{{obj.name}}</td>
-		    					<td>累计电耗</td>
-		    					<td>{{obj.value  | number:2}}kwh</td>
-		    				</tr>
-	    				</tbody>
-	    			</table>
+	    			<p>本DC（冷库）的月累计能耗统计</p>
+    				<ul> 
+    					<li ng-repeat="obj in charrestmsg[9]">
+    						{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh
+						</li>
+    				</ul>
 				</div>
 	    	</div>
 	    </div>

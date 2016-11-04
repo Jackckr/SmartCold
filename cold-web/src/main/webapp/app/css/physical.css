@@ -308,6 +308,7 @@ ul,li {
 	top:0;
 	left:0;
 	padding-left: 230px; 
+	z-index: 3;
 }
 .cover_bg .loader {
     box-sizing: border-box;
@@ -516,7 +517,7 @@ html, body {
 .print_name>div>input{
 	border:0;
 	border-bottom:1px solid #333;
-	width: 50%;
+	width: 65%;
 }
 .print_part{
 	margin-top: 30px;
@@ -546,7 +547,8 @@ html, body {
 	color:coral!important;
 }
 .chartHight{
-	height: 400px;
+	min-height:300px;
+	max-height: 400px;
 	border:1px solid #ccc;
 }
 .chart_gap>div{
@@ -564,16 +566,20 @@ html, body {
 .nobg{
 	background: transparent!important;
 	position: relative;
-}
+	height: 160px;
+	line-height: 160px;
+	font-size: 56px;
+} 
 .nobg b{
 	font-weight: 400;
 }
 .nobg img{
 	position: absolute;
 	top:0;
-	left:0;
+	left:50%;
+	margin-left:-80px!important;
 	z-index: 1;
-}
+} 
 .w60,.w40,.w50{
 	width:60%;
 	float:left;
@@ -591,19 +597,27 @@ html, body {
 	float:left;
 }
 .textPart table td,#print p{
-	font-size: 12px;
+	font-size: 12px!important;
+	padding: 2px!important;
 }
 #print .sys_group .box{
 	height: 300px;
 }
 .chartHight+div{
-	height: 400px;
+	min-height:300px;
+	max-height: 400px;
 }
 .chartHight+div img{
 	width:100%;
 	height:auto;
 }
-
+.textPart>ul{
+	padding-left: 0;
+}
+.textPart>ul>li{
+	font-size: 12px!important;
+	line-height: 2;
+}
 
 
 
