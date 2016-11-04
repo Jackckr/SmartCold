@@ -15,7 +15,7 @@
 	    	<h2 class="tac"><strong>冷库综合运行系统月度分析报告</strong></h2>
 	    	<div class="print_name clearfix">
 	    		<div class="pull-left">
-	    			<span>客户名称：</span><input type="text">
+	    			<span>客户名称：</span><input type="text" value="">
 	    		</div>
 	    		<div class="pull-left">
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}">
@@ -265,7 +265,7 @@
 	 <img alt="" src="">
 	</div>
 </div>
-<div id="loding" class="cover_bg black">
+<div id="loding" class="cover_bg black" ng-show="loadindex!=11">
 	<div class="loader">
         <div class="loader-inner line-scale">
           <div></div>
@@ -275,12 +275,7 @@
           <div></div>
         </div>
         <br/>
-                                正在体检，请稍后！
+                                正在生成报表，请稍后！
       </div>
 </div>
 <script type="text/javascript" src="../../assets/js/echarts-all.js"></script>
-<!-- <<script type="text/javascript"> -->
-<!-- $(function(){ -->
-<!-- 	 $(".myPrint").on('click', function() { $.print("#print"); }); -->
-<!-- }) -->
-<!-- </script> -->

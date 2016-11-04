@@ -5,12 +5,14 @@
  */
 coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
 	$("#loding").show();
-	$scope.isnotprint=true;
+	$scope.loadindex=0;//已完成加载数据
+	$scope.isnotprint=true;//当前是否是打印状态
 	$scope.rdcId = $stateParams.rdcId;
-	$scope.charArray={},$scope.charrestmsg={};
+	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
 	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
 	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
 	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate);
+	//数据模型
 	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
 			  val:[[75,120],[2,5],[0.1,0.15],[30,50],[3,5], [25,50], [],[],[5,10,20]],
 			  msg:[["优良","一般","不理想"],["优良","一般","不理想"], ["优良","一般","不理想"],["优良","一般","不理想"],["规范","一般","频繁"],["优良","一般","不理想"],[],[], [0,1,2,3]]};
@@ -22,7 +24,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	};
 	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge ){
 		$http.get(url,{params: {  "rdcid": $scope.rdcId,'keys':keys,"startTime": $scope.startTime,"endTime": $scope.endTime}}).success(function(data,status,config,header){
-			if(data!=null){
+			++$scope.loadindex;if(data!=null){
 				var ldata=[],seriesdata=[],maxxdata=0,xydata=null,xData =[],restmsg=[];
 				angular.forEach(data,function(storage,name){
 					var yData =[],sumval=0; ldata.push(name);
@@ -46,7 +48,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//1.系统评分
 	$scope.pysical=function(){
 		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
-			$scope.pysicaldata=data.entity;
+			++$scope.loadindex;$scope.pysicaldata=data.entity;
 		}});
 	};
 	//
@@ -63,7 +65,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	
 	$scope.initQsis=function(){//8
 		$http.get('/i/AnalysisController/getQAnalysisByMonth',{params: {rdcId:$scope.rdcId,"stTime": $scope.startTime,"edTime": $scope.endTime}} ).success(function(data,status,headers,config){
-			if(data!=null){
+			++$scope.loadindex;if(data!=null){
 				var sumaq=0,sdata=[],mi=0;
 				var zbmsg=['偏小','良好','偏大','严重偏大'],yhmsg=['有增加空间','无需优化','需优化','需优化'];
 				var ldata=['Q货','Q霜','Q叉','Q保','Q风','Q门','Q照'], keys=['GoodsHeat','QFrost','QForklift','WallHeat','Qblower','Qctdoor','Qlighting'];
@@ -81,7 +83,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     //获得电表
     $scope.initPowersis=function(){//9
     	$http.get('/i/AnalysisController/getSumkeySisByKey',{params: {rdcId: $scope.rdcId,type:10,key:'TotalPWC',stTime: $scope.startTime,edTime: $scope.endTime}}).success(function(data,status,config,header){
-    		if(data){
+    		++$scope.loadindex;if(data){
     			var ldata=[];
     			$scope.charrestmsg[9]=data;
     			$.each(data, function(i, vo){  ldata.push(vo.name); });
@@ -94,7 +96,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     //获得水耗
     $scope.initWaterCostsis=function(){//10
     	$http.get('/i/AnalysisController/getSumkeySisByKey',{params: {rdcId: $scope.rdcId,type:3,key:'WaterCost',stTime: $scope.startTime,edTime: $scope.endTime}}).success(function(data,status,config,header){
-    		if(data){
+    		++$scope.loadindex;if(data){
     			var ldata=[];
     			$scope.charrestmsg[10]=data;
     			$.each(data, function(i, vo){  ldata.push(vo.name); });
@@ -107,7 +109,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     //系統效率
     $scope.initQEsis=function(){//11    Integer rdcId,String startTime, String endTime
     	$http.get('/i/AnalysisController/getQEAnalysis',{params: {rdcId: $scope.rdcId,startTime: $scope.startTime,endTime: $scope.endTime}}).success(function(data,status,config,header){
-    		if(data.success){
+    		++$scope.loadindex;if(data.success){
     			var ldata=[],sdata=[];
     			var qesis=data.entity.tbdata;
     			$.each(qesis, function(i, vo){  ldata.push(i);  sdata.push(qesis[i][0]); });
@@ -159,11 +161,12 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     $scope.initWaterCostsis();
     $scope.initQEsis();
 
-	 $scope.Preview=function(){ //打印预览
+    function printpage(){$.print('#print');}
+    function chanpangstatus(){$scope.isnotprint=true;}
+	$scope.Preview=function(){ //打印预览
 		  $scope.isnotprint=false;
 		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });
-		  $.print("#print");
-//		  $scope.isnotprint=true;
-	  };
-     $("#loding").hide();
+		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
+	 };
+    
 });
