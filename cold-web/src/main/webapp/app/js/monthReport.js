@@ -19,7 +19,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//===================================================================================工具类start==================================================================================
 	var util = {
 			getMsg:function(index,avgval){var vls=mode.val[index];for (var i = 0; i < vls.length; i++) {if(avgval<=vls[i]){ return mode.msg[index][i]; }}return mode.msg[index][mode.msg[index].length-1];},
-			getpieoption:function(title,ldata,sData){return {title :{ text: title,  x:'center', y : 10 },tooltip:{trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)" },legend: {x:'left',y: 30,data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData}]};},
+			getpieoption:function(title,ldata,sData){return {title :{ text: title,  x:'center', y : 10 },tooltip:{trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)" },legend: {x:'right',orient:'vertical',y: 30,data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData}]};},
 			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { x:40,y2 : 30, width : '86%' ,height:'55%'},legend : { data : ldata, y : 30 },title : { text : title, x : 'center', y : 10 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
 	};
 	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge ){

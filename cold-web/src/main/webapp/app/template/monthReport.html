@@ -6,7 +6,7 @@
 	<div id="print">
 		<div class="print_header">
 	        <h3>
-	            <img src="../../assets/img/logo_home.png" class="lianku_logo">睿冷信息技术（上海）有限公司
+	            <img src="../../assets/img/logo_home.png" class="lianku_logo fl"><span class="fr">冷库360在线管理系统</span>
 	        </h3>
 	        <hr>
 	    </div>
@@ -204,18 +204,22 @@
 	    <div class="print_part chart_gap">
 	    	<p class="tac w60"><span class="bgRed">能耗分析</span></p>
 	    	<div class="clearfix partP">
-	    		<div class="chartPart w60">
-	    			<div id="electricId" class="chartHight w50" ng-show="isnotprint"></div>
-	    			<div id="waterId" class="chartHight w50" ng-show="isnotprint"></div>
-	    			<div id="electricId_img" class=" w50" ng-show="!isnotprint"></div>
-	    			<div id="waterId_img" class=" w50"  ng-show="!isnotprint"></div>
+	    		<div class="chartPart w50">
+	    			<div id="electricId" class="chartHight w100" ng-show="isnotprint"></div>
+	    			<div id="electricId_img" class=" w100" ng-show="!isnotprint"></div>
 	    		</div>
-	    		<div class="textPart w40">
-	    			<p><strong >本DC（冷库）的月累计能耗统计</strong></p>
-    				<ul> 
+	    		<div class="chartPart w50">
+	    			<div id="waterId" class="chartHight w100" ng-show="isnotprint"></div>
+	    			<div id="waterId_img" class=" w100"  ng-show="!isnotprint"></div>
+	    		</div>
+	    		<div class="textPart w100">
+	    			<p class="w50" style="margin-top: 20px;margin-right: 100px;"><strong>本DC（冷库）的月累计能耗统计</strong></p>
+    				<ul class="w50"> 
     					<li ng-repeat="obj in charrestmsg[9]">
     						<span >{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh</span>
 						</li>
+    				</ul>
+    				<ul class="w50"> 
 						<li ng-repeat="obj in charrestmsg[10]">
     						<span >{{obj.name}}-累计水耗-{{obj.value | number:2}}t</span>
 						</li>
