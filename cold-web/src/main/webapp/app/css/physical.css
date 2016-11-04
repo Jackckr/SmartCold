@@ -120,27 +120,27 @@
 }
 
 .bgBlue {
-	background-color: #0065C1;
+	background-color: #0065C1!important;
 }
 
 .bgGold {
-	background-color: #FF5001;
+	background-color: #FF5001!important;
 }
 
 .bgGreen {
-	background-color: #2A972C;
+	background-color: #2A972C!important;
 }
 
 .fontBlue {
-	color: #0065C1;
+	color: #0065C1!important;
 }
 
 .fontGold {
-	color: #FF5001;
+	color: #FF5001!important;
 }
 
 .fontGreen {
-	color: #2A972C;
+	color: #2A972C!important;
 }
 
 .haveDevice .circle.fontBlue {
@@ -534,7 +534,7 @@ html, body {
 	line-height:30px;
 	font-weight: 700;
 	padding: 0 15px;
-	color:#fff;
+	color:#fff!important;
 	font-size: 16px;
 	border-radius:15px;
 }
@@ -542,8 +542,8 @@ html, body {
 }
 .textPart{
 }
-.intro{
-	color:coral
+.intro,.intro td{
+	color:coral!important;
 }
 .chartHight{
 	height: 400px;
@@ -553,17 +553,20 @@ html, body {
 	margin-bottom: 20px;
 }
 .bgPurple{
-	background: #5AB1EF;
+	background: #5AB1EF!important;
 }
 .bgPink{
-	background: #2EC7C9;
+	background: #2EC7C9!important;
 }
 .bgRed{
-	background: #EC594A;
+	background: #EC594A!important;
 }
 .nobg{
 	background: transparent!important;
 	position: relative;
+}
+.nobg b{
+	font-weight: 400;
 }
 .nobg img{
 	position: absolute;
@@ -593,7 +596,13 @@ html, body {
 #print .sys_group .box{
 	height: 300px;
 }
-
+.chartHight+div{
+	height: 400px;
+}
+.chartHight+div img{
+	width:100%;
+	height:auto;
+}
 
 
 
