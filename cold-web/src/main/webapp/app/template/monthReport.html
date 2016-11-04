@@ -38,7 +38,7 @@
 						<!-- 有设备 -->
 						<div class="haveDevice">
 							<div class="circle nobg fontBlue">
-								<img src="../../assets/img/blue_circle.png" height="160" width="160" alt="">
+								<img class="no-print" src="../../assets/img/blue_circle.png" height="160" width="160" alt="">
 								{{pysicaldata.avgTempScores}}<span>分</span>
 							</div>
 						</div>
@@ -53,7 +53,7 @@
 						<!-- 有设备 -->
 						<div class="haveDevice">
 							<div class="circle nobg fontGold">
-								<img src="../../assets/img/gold_circle.png" height="160" width="160" alt="图片丢失了~">
+								<img class="no-print" src="../../assets/img/gold_circle.png" height="160" width="160" alt="图片丢失了~">
 								{{pysicaldata.avgTransportScores}}<span>分</span>
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 						<!-- 有设备 -->
 						<div class="haveDevice ">
 							<div class="circle nobg fontGreen">
-								<img src="../../assets/img/green_circle.png" height="160" width="160" alt="">
+								<img class="no-print" src="../../assets/img/green_circle.png" height="160" width="160" alt="">
 								{{pysicaldata.avgColdStorageScores}}<span>分</span>
 							</div>
 						</div>
@@ -95,8 +95,8 @@
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>超温时长（综合大数据纵环比分析）</strong></p>
-	    			<p   ng-repeat="obj in charrestmsg[0]">{{obj.msg}}</p>
-	    			<p class="intro">**判断优良标准逻辑：平均每天75min以下“优良”，75~120min属“一般”，150min以上属“不理想”**</p>
+	    			<p ng-repeat="obj in charrestmsg[0]"><span >{{obj.msg}}</span></p>
+	    			<p><span class="intro">**判断优良标准逻辑：平均每天75min以下“优良”，75~120min属“一般”，150min以上属“不理想”**</span></p>
 	    		</div>
 	    	</div>
 	    	<hr>
@@ -107,8 +107,8 @@
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>超温因子（综合大数据纵环比分析）</strong></p>
-	    		    <p   ng-repeat="obj in charrestmsg[1]">{{obj.msg}}</p>
-	    			<p class="intro">**判断优良标准逻辑：平均每天2.0以下“优良”，2.0~5属“一般”，5以上属“不理想”**</p>
+	    		    <p ng-repeat="obj in charrestmsg[1]"><span >{{obj.msg}}</span></p>
+	    			<p><span class="intro">**判断优良标准逻辑：平均每天2.0以下“优良”，2.0~5属“一般”，5以上属“不理想”**<span ></p>
 	    		</div>
 	    	</div>
 	    	<hr>
@@ -119,8 +119,8 @@
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>保温因子（综合大数据纵环比分析）</strong></p>
-	    			<p   ng-repeat="obj in charrestmsg[2]">{{obj.msg}}</p>
-	    			<p class="intro">**判断优良标准逻辑：平均每天0.1以下“优良”，0.1~0.15属“一般”，0.15以上属“不理想”**</p>
+	    			<p ng-repeat="obj in charrestmsg[2]"><span >{{obj.msg}}</span></p>
+	    			<p><span class="intro">**判断优良标准逻辑：平均每天0.1以下“优良”，0.1~0.15属“一般”，0.15以上属“不理想”**</span></p>
 	    		</div>
 	    	</div>
 	    </div>
@@ -135,8 +135,8 @@
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>开门次数（综合大数据纵环比分析）</strong></p>
-	    			<p   ng-repeat="obj in charrestmsg[3]">{{obj.msg}}</p>
-	    			<p class="intro">**判断优良标准逻辑：平均每天30以下“规范”，30~50属“一般”，50以上属“频繁”**</p>
+	    			<p ng-repeat="obj in charrestmsg[3]"><span >{{obj.msg}}</span></p>
+	    			<p><span class="intro">**判断优良标准逻辑：平均每天30以下“规范”，30~50属“一般”，50以上属“频繁”**</span></p>
 	    		</div>
 	    	</div>
 	    	<hr>
@@ -147,8 +147,8 @@
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>单次开门时长(综合大数据纵比分析）</strong></p>
-	    		    <p   ng-repeat="obj in charrestmsg[4]">{{obj.msg}}</p>
-	    			<p class="intro">**判断优良标准逻辑：平均每次开门时长3以下“规范”，3~5属“一般”，5以上属“不规范”**</p>
+	    		    <p ng-repeat="obj in charrestmsg[4]"><span >{{obj.msg}}</span></p>
+	    			<p><span class="intro">**判断优良标准逻辑：平均每次开门时长3以下“规范”，3~5属“一般”，5以上属“不规范”**</span></p>
 	    		</div>
 	    	</div>
 	    	<hr>
@@ -159,8 +159,8 @@
 	    		</div>
 	    		<div class="textPart w40">
 	    			<p><strong>货物流通因子(综合大数据纵环比分析）</strong></p>
-	    			 <p   ng-repeat="obj in charrestmsg[5]">{{obj.msg}}</p>
-	    			<p class="intro">**文本框处根据月度平均货物因子值自动判断“低于”“符合””超过”**</p>
+	    			 <p ng-repeat="obj in charrestmsg[5]"><span >{{obj.msg}}</span></p>
+	    			<p><span class="intro">**文本框处根据月度平均货物因子值自动判断“低于”“符合””超过”**</span></p>
 	    		</div>
 	    	</div>
 	    </div>
@@ -189,13 +189,13 @@
 	    			<div id="hotId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
-    				<p>本DC（冷库）的月平均热量分布</p>
+    				<p><strong >本DC（冷库）的月平均热量分布</strong></p>
     				<ul> 
     					<li  ng-repeat="obj in charrestmsg[8]">
-    						{{obj.key}}-{{obj.zb}}%-{{obj.zbm}}-{{obj.yhm}}
+    						<span >{{obj.key}}-{{obj.zb}}%-{{obj.zbm}}-{{obj.yhm}}</span>
 						</li>
     				</ul>
-    				<p class="intro">**文本框处预设占比值自动判断形成结果**</p>
+    				<p><span class="intro">**文本框处预设占比值自动判断形成结果**</span></p>
 	    		</div>
 	    	</div>
 	    </div>
@@ -211,13 +211,13 @@
 	    			<div id="waterId_img" class=" w50"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
-	    			<p>本DC（冷库）的月累计能耗统计</p>
+	    			<p><strong >本DC（冷库）的月累计能耗统计</strong></p>
     				<ul> 
     					<li ng-repeat="obj in charrestmsg[9]">
-    						{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh
+    						<span >{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh</span>
 						</li>
 						<li ng-repeat="obj in charrestmsg[10]">
-    						{{obj.name}}-累计水耗-{{obj.value | number:2}}t
+    						<span >{{obj.name}}-累计水耗-{{obj.value | number:2}}t</span>
 						</li>
     				</ul>
 				</div>
@@ -233,10 +233,10 @@
 	    			<div id="energyEfficiencyId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    		<div class="textPart w40">
-	    			<p>本DC（冷库）的月累计能耗统计</p>
+	    			<p><strong >本DC（冷库）的月累计能耗统计</strong></p>
     				<ul> 
     					<li ng-repeat="obj in charrestmsg[9]">
-    						{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh
+    						<span >{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh</span>
 						</li>
     				</ul>
 				</div>
