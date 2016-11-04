@@ -4,10 +4,9 @@
  * 月分析报表
  */
 coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
-	$("#loding").show();
-	$scope.loadindex=0;//已完成加载数据
 	$scope.isnotprint=true;//当前是否是打印状态
 	$scope.rdcId = $stateParams.rdcId;
+	$("#loding").show(); $scope.loadindex=0;//已完成加载数据
 	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
 	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
 	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
@@ -15,6 +14,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//数据模型
 	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
 			  val:[[75,120],[2,5],[0.1,0.15],[30,50],[3,5], [25,50], [],[],[5,10,20]],
+			  tmg:[",温控",",温控",",温控",",库门操作",",库门操作",",货物流通情况",",温控",",温控",",温控",],
 			  msg:[["优良","一般","不理想"],["优良","一般","不理想"], ["优良","一般","不理想"],["优良","一般","不理想"],["规范","一般","频繁"],["优良","一般","不理想"],[],[], [0,1,2,3]]};
 	//===================================================================================工具类start==================================================================================
 	var util = {
