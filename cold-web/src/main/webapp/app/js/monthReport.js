@@ -14,7 +14,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//数据模型
 	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
 			  val:[[75,120],[2,5],[0.1,0.15],[30,50],[3,5], [25,50], [],[],[5,10,20]],
-			  tmg:[",温控",",温控",",温控",",库门操作",",库门操作",",货物流通情况",",温控",",温控",",温控",],
+			  tmg:[",温控",",温控",",温控",",开门操作",",开门操作",",货物流通情况",",温控",",温控",",温控",],
 			  msg:[["优良","一般","不理想"],["优良","一般","不理想"], ["优良","一般","不理想"],["优良","一般","不理想"],["规范","一般","频繁"],["优良","一般","不理想"],[],[], [0,1,2,3]]};
 	//===================================================================================工具类start==================================================================================
 	var util = {
@@ -32,7 +32,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 					angular.forEach(storage[keys],function(item){  var val=item['value']/nuit ;  yData.unshift(val); sumval+=val;  });
 //					if(sumval){
 						var avg=(sumval/storage[keys].length).toFixed(2);
-					    restmsg.push({name :name,avgval:avg,msg:name+msge+avg+",温控"+util.getMsg(index,avg)}); 
+					    restmsg.push({name :name,avgval:avg,msg:name+msge+avg+mode.tmg[index]+util.getMsg(index,avg)}); 
 //					}
 					seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
 				});
