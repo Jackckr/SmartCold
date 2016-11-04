@@ -16,4 +16,7 @@
     <select id="getCommDataByID" parameterType="int" resultType="map">
         select type_code,type_name,type_desc from comm_mata_data where type_code=#{type_code} and source_type=#{codetype} ;
     </select>
+    <update id="updateDowCountbykye" parameterType="map">
+      update comm_mata_data set type_value=type_value+1 where source_type='versions' and source_col_name=#{codetype};
+    </update>
 </mapper>
