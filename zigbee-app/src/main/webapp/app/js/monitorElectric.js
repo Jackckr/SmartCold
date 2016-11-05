@@ -142,9 +142,10 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
     $scope.powerEnergy = function () {
         clearSwiper();
         $scope.activeEnergy = 'power';
-
-        for (var i = 0; i < $scope.powers.length; i++) {
-            $scope.load($scope.powers[i]);
+        if ($scope.powers & $scope.powers.length > 0) {
+            for (var i = 0; i < $scope.powers.length; i++) {
+                $scope.load($scope.powers[i]);
+            }
         }
     }
 
@@ -169,9 +170,8 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                         });
                         var currentWater = '';
                         if (data.length > 0) {
-                            currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value).toFixed(1) : '';//
+                            currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value).toFixed(1) : '';
                         }
-                        ;
                         $scope.currentWater = currentWater;
 
                         var mainId = 'water' + item.id;
@@ -194,7 +194,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        if ($scope.activeEnergy == 'power') {
+        if ($scope.activeEnergy == 'power' && $scope.powers && $scope.powers.length > 0) {
             for (var i = 0; i < $scope.powers.length; i++) {
                 $scope.load($scope.powers[i]);
             }
