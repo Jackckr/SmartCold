@@ -364,5 +364,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/userRelate/:companyId',
         controller: 'userRelate',
         templateUrl: 'app/template/userRelate.html'
+    }).state('monthlyReportList', {
+        url: '/monthlyReportList',
+        controller: 'monthlyReportList',
+        templateUrl: 'app/template/monthlyReportList.html'
     });
 });
