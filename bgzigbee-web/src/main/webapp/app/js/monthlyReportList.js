@@ -9,6 +9,7 @@ coldWeb.controller('monthlyReportList', function ($scope,$http) {
 	    });
 	};
     $scope.initdata();
+  
     //==========================================================================初始化事件==========================================================
     //全选、全不选
     $scope.exists = function (rdc, list) {return list.indexOf(rdc) > -1;};

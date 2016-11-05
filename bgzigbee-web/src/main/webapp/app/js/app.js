@@ -368,5 +368,13 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/monthlyReportList',
         controller: 'monthlyReportList',
         templateUrl: 'app/template/monthlyReportList.html'
+    }).state('rdcReportList', {
+        url: '/rdcReportList/{rdcId}',
+        controller: 'rdcReportList',
+        templateUrl: 'app/template/rdcReportList.html'
+    }).state('monthReport',{//冷库月分析报告
+    	url: '/monthReport/{rdcId}',
+    	controller: 'monthReport',
+        templateUrl: 'app/template/monthReport.html'
     });
 });
