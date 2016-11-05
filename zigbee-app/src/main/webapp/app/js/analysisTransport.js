@@ -395,7 +395,6 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 x: 55,
                 y: 60,
                 x2: 75,
-                /*y2: 60,*/
             },
             xAxis: [
                 {
