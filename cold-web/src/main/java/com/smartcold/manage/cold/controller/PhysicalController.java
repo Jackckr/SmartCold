@@ -100,6 +100,7 @@ public class PhysicalController {
 	public ResponseData<HashMap<String, Object>> mothCheckup(Integer rdcId,String stTime,String edTime ) {
 		if(rdcId==null){ return ResponseData.newFailure("0");}//0.非法请求
 		HashMap<String, Object> resMap = getPysicalInfo(rdcId,  stTime, edTime);
+		resMap.put("compName", this.quantityMapper.getCompNameByRdcId(rdcId));//查询集团名称
 		return ResponseData.newSuccess(resMap);
 	}
 	

@@ -64,4 +64,7 @@
 	<select id="getSumKeyByRdcId" parameterType="map" resultType="map">
 	  select ps.`name` ,SUM(sis.`value`) value from  `coldstorageanalysis` sis LEFT JOIN  `smartcold`.`${table}` ps on(ps.id=sis.`oid` and ps.`rdcid` =#{rdcId}) where `type` =#{type} and `key` =#{key} and oid in (ps.`id`)  and `date` BETWEEN #{stTime} and #{edTime} GROUP BY oid;
 	</select>
+	<select id="getCompNameByRdcId" parameterType="map" resultType="java.lang.String">
+	    select name from `company` where id=(SELECT companyid from `companyrdc`  where rdcid=#{rdcId});
+	</select>
 </mapper>

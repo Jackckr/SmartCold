@@ -82,8 +82,10 @@ public class AnalysisController {
 	@RequestMapping(value = "/getColdStorageBlower")
 	@ResponseBody
 	public Object getColdStorageBlower(Integer rdcId) {
+		if(rdcId==null)return null;
 		return blowerMapper.findBlowerByRdcID(rdcId);
 	}
+
 	
 	/**
 	 * 月报告Q信息

@@ -38,6 +38,7 @@ public interface QuantityMapper {
 	public List<DeviceObjectMappingEntity>   getDoorDevMapper(); 
 	public Double  getSwitchTime(@Param("deviceid")String deviceid,@Param("stTime")String stTime,@Param("value")Integer value);
 	//======================================================月报表======================================================
+	public String getCompNameByRdcId(@Param("rdcId")int rdcId);
 	public List<HashMap<String, Object>> getSumKeyByRdcId(@Param("rdcId")int rdcId,@Param("table")String table,@Param("type")int type,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
 
 }
