@@ -10,7 +10,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
 	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
 	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
-	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate);
+	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); $scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 	//数据模型
 	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
 			  val:[[75,120],[2,5],[0.1,0.15],[30,50],[3,5], [25,50], [],[],[5,10,20]],
@@ -148,7 +148,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 						     var tempStr = "",start = p * provideNumber, end = start + provideNumber;
 						     if (p == rowNumber - 1) {tempStr = params.substring(start, paramsNameNumber);
 						     } else {tempStr = params.substring(start, end) + "\n";} newParamsName += tempStr;}						
-						   } else {newParamsName = params;}return newParamsName}},
+						   } else {newParamsName = params;}return newParamsName;}},
 						   data : [ '已55分钟','已08小时55分钟','-1天','-2天','-3天','-4天','-5天','-6天' ] } ],
 			grid : {x:'40',y2 : 110,width : '80%'},
 			yAxis : [ {type : 'value',name:'次数',axisLabel : {formatter : '{value}'}
@@ -174,7 +174,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	$.print('#print');}
     function chanpangstatus(){
     	$scope.isnotprint=true;
-    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10')
+    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
     }
 	$scope.Preview=function(){ //打印预览
 		  $scope.isnotprint=false;
