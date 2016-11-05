@@ -461,6 +461,35 @@ html, body {
 	padding: 0
 }
 /*月度报表css*/
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #fff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.bg-gray {
+    color: #000;
+    background-color: #d2d6de !important;
+}
+.box-header.with-border {
+    border-bottom: 1px solid #f4f4f4;}
+    .box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;}
+.box-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}   
+    
+    
 .tac{text-align:center;}
 .clearfix:after {
 	content: "";
@@ -588,7 +617,7 @@ html, body {
 }
 .w40{
 	width: 40%;
-	padding-left: 25px;
+	padding-left: 15px;
 }
 .w50{
 	width: 50%;
@@ -624,7 +653,7 @@ html, body {
 	display:block;
 } 
 #print .sys_group .box{
-	height: 260px;
+	height: 220px;
 	margin-bottom: 0;
 }
 .chartHight+div{
@@ -640,6 +669,7 @@ html, body {
 }
 .textPart>ul>li{
 	line-height: 2;
+	font-size:12px!important;
 }
 .print_part>h4,#print .box-title{
 	font-size: 14px;

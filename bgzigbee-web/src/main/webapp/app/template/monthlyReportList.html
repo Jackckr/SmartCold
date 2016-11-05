@@ -1,11 +1,13 @@
 <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
-	<div id="search" style="margin-left:0">		
-	    <select >
+	<div id="search" class="btn-group pull-left monthAll" style="margin-left:0">		
+	    <select class="monthSelect">
 	      <option value="">全部</option> <option value="0">device</option> <option value="1">PLC</option>
 	    </select>						
+	</div>			
+	<div class="pull-left monthSearch">
 		<input  id="myText"  type="text" ng-model="keyword" placeholder="请输入冷库名或冷库ID" ng-keyup="searchData($event);"/>
 		<div id="searchImg" ng-click="initdata();" > <span class="glyphicon glyphicon-search"></span> </div>
-	</div>			
+	</div>
 	<!-- 表格操作区域开始 -->
 	<div class="tableArea" >
 		<table class="table table-striped table-bordered" id="tableArea" ng-model="rdcs">
