@@ -258,8 +258,6 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                         }]
                 });
             });
-
-//        });
     }
 
     function clearSwiper() {
@@ -269,8 +267,10 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
     
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.load($scope.mystorages[i],true);
+        if ($scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.load($scope.mystorages[i],true);
+            }
         }
     }, 30000);
 

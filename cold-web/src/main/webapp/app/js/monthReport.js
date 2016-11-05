@@ -19,8 +19,8 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//===================================================================================工具类start==================================================================================
 	var util = {
 			getMsg:function(index,avgval){var vls=mode.val[index];for (var i = 0; i < vls.length; i++) {if(avgval<=vls[i]){ return mode.msg[index][i]; }}return mode.msg[index][mode.msg[index].length-1];},
-			getpieoption:function(title,ldata,sData){return {title :{ text: title,  x:'center', y : 'bottom' },tooltip:{trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)" },legend: {y: 'top',data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData}]};},
-			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { y2 : 110, width : '80%' },legend : { data : ldata, y : 'bottom' },title : { text : title, x : 'center', y : 20 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
+			getpieoption:function(title,ldata,sData){return {title :{ text: title,  x:'center', y : 10 },tooltip:{trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)" },legend: {x:'right',orient:'vertical',y: 30,data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData}]};},
+			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { x:40,y2 : 30, width : '86%' ,height:'55%'},legend : { data : ldata, y : 30 },title : { text : title, x : 'center', y : 10 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
 	};
 	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge ){
 		$http.get(url,{params: {  "rdcid": $scope.rdcId,'keys':keys,"startTime": $scope.startTime,"endTime": $scope.endTime}}).success(function(data,status,config,header){
@@ -58,7 +58,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	     $scope.toolchart(2,mode.url[0], 'bwyzId', '保温因子(τ)', 'BaoWenYinZi', 1, " 平均日保温因子");//保温因子2
 	     $scope.toolchart(3,mode.url[0], 'openDoorTimesId', '日开门次数', 'DoorOpenTimes', 1, " 平均日开门次数");//开门次数3
 	     $scope.toolchart(4,mode.url[1], 'singleOpenDoorId', '单次开门时长', 'AvgTime', 60, " 平均日单次开门时长");//4
-	     $scope.toolchart(5,mode.url[0], 'goodsId', '货物因子', 'GoodsLiuTongYinZi', 1, " 的月平均货物因子为");//4
+	     $scope.toolchart(5,mode.url[0], 'goodsId', '货物因子', 'GoodsLiuTongYinZi', 1, " 月平均货物因子为");//4
 //	     $scope.toolchart(6,mode.url[0], 'ysjRunningTimeId', '压缩机运行时间', 'GoodsLiuTongYinZi', 1, " 压缩机运行时间");//-----没做
 //	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
 	};       
@@ -115,7 +115,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     			$.each(qesis, function(i, vo){  ldata.push(i);  sdata.push(qesis[i][0]); });
     		    var myChart = echarts.init(document.getElementById('energyEfficiencyId'));
     			var option = {
-    				tooltip : { trigger : 'axis' },grid : {y2 : 110,width : '80%'},
+    				tooltip : { trigger : 'axis' },grid : {x:40,y2 : 70,x2:40,width : '90%'},
 	    			title : { text : '制冷系统运行效率趋势', x : 'center', y : 20 },
 	    			series : [ {name : '系统效率',type : 'line',data : sdata} ],
 	    			yAxis : [ {type : 'value',axisLabel : {formatter : '{value}'}}],
@@ -169,8 +169,13 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     $scope.initWaterCostsis();
     $scope.initQEsis();
 
-    function printpage(){$.print('#print');}
-    function chanpangstatus(){$scope.isnotprint=true;}
+    function printpage(){
+    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").addClass('font10');
+    	$.print('#print');}
+    function chanpangstatus(){
+    	$scope.isnotprint=true;
+    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10')
+    }
 	$scope.Preview=function(){ //打印预览
 		  $scope.isnotprint=false;
 		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });

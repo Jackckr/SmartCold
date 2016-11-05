@@ -537,17 +537,20 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
     $scope.storageDoorFacility = function () {
         clearSwiper();
         $scope.activeEnergy = 'storageDoor';
-
-        for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.drawDoor($scope.mystorages[i]);
+        if ($scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawDoor($scope.mystorages[i]);
+            }
         }
     }
 
     $scope.platformDoorFacility = function () {
         clearSwiper();
         $scope.activeEnergy = 'platformDoor';
-        for (var i = 0; i < $scope.platformDoors.length; i++) {
-            $scope.drawFlatform($scope.platformDoors[i]);
+        if ($scope.platformDoors && $scope.platformDoors.length > 0) {
+            for (var i = 0; i < $scope.platformDoors.length; i++) {
+                $scope.drawFlatform($scope.platformDoors[i]);
+            }
         }
     }
 
@@ -620,17 +623,17 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        if ($scope.activeEnergy == 'storageDoor') {
+        if ($scope.activeEnergy == 'storageDoor' && $scope.mystorages && $scope.mystorages.length > 0) {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawDoor($scope.mystorages[i]);
             }
         }
-        if ($scope.activeEnergy == 'platformDoor') {
+        if ($scope.activeEnergy == 'platformDoor' && $scope.mystorages && $scope.mystorages.length > 0) {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawFlatform($scope.mystorages[i]);
             }
         }
-        if ($scope.activeEnergy == 'drawInOutGoods') {
+        if ($scope.activeEnergy == 'drawInOutGoods' && $scope.mystorages && $scope.mystorages.length > 0) {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawInOutGoods($scope.mystorages[i]);
             }
