@@ -169,15 +169,14 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
                     var chartId = key + "Chart"
                     var chartId1 = chartId + "1";
                     var chartId2 = chartId + "2";
-                    if ($scope.swiper < $scope.mystorages.length) {
-                        var innerHTML = '<div class="swiper-slide">' +
-                            '<p class="actually">' + key + '</p>' +
-                            '<div id=' + chartId1 + ' style="min-height:14rem;margin-bottom:.3rem;"></div>' +
-                            '<div id=' + chartId2 + ' style="height: 14rem;"></div>' +
-                            '</div>';
-                        $("#chartView").last().append(innerHTML);
-                        $scope.swiper += 1;
-                    }
+
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">' + key + '</p>' +
+                        '<div id=' + chartId1 + ' style="min-height:14rem;margin-bottom:.3rem;"></div>' +
+                        '<div id=' + chartId2 + ' style="height: 14rem;"></div>' +
+                        '</div>';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper += 1;
 
                     var chart1 = echarts.init(document.getElementById(chartId1));
                     var chart2 = echarts.init(document.getElementById(chartId2));

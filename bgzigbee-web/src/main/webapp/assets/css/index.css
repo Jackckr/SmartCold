@@ -142,7 +142,7 @@ body{
 #status .btn{
 	width: 100px;
 }
-#status select{
+#status select,.monthSelect{
 	width:130px;
 	height:32px;
 	line-height:32px;
@@ -151,10 +151,16 @@ body{
 	text-align:center;
 	padding-left:1.5em;
 }
-#search{
+#search,.monthSearch{
 	width: 30%!important;
 	margin-left: 350px;
 	position: relative;
+}
+#search.monthAll{
+	width: 15%!important;
+}
+.monthSearch{
+	margin-left: 0;
 }
 #myText{
 	width: 100%;
@@ -419,4 +425,230 @@ footer{
 	text-align:center;
 	height:30px;	
 	line-height:30px;
+}
+/*月度报表css*/
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #fff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.bg-gray {
+    color: #000;
+    background-color: #d2d6de !important;
+}
+.box-header.with-border {
+    border-bottom: 1px solid #f4f4f4;}
+    .box-header {
+    color: #444;
+    display: block;
+    position: relative;
+	text-align: center;
+}
+.box-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}   
+.sys_group .box {
+	width:30%;
+	display:inline-block;
+	margin-left:2%; 
+	height:400px;
+	overflow: hidden;
+}
+.sys_group .box-title {
+	color: #000;
+}
+
+.circle {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	line-height: 200px;
+	margin: 0 auto;
+	font-size: 70px;
+}
+
+.haveDevice .circle span {
+	font-size: 14px;
+}
+
+.bgBlue {
+	background-color: #0065C1!important;
+}
+
+.bgGold {
+	background-color: #FF5001!important;
+}
+
+.bgGreen {
+	background-color: #2A972C!important;
+}
+
+.fontBlue {
+	color: #0065C1!important;
+}
+
+.fontGold {
+	color: #FF5001!important;
+}
+
+.fontGreen {
+	color: #2A972C!important;
+}   
+    
+.tac{text-align:center;}
+#print{
+	background: #fff;
+	color:#000;
+	padding:10px 20px 50px;
+	box-sizing:border-box;
+}
+#print,#print h1,#print h2,#print h3,#print h4{
+	font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体', Tahoma, Arial,
+		sans-serif !important;
+}
+.print_header{
+	height: 50px;
+}
+.print_header>h3{
+	margin:0;
+	height: 50px;
+	line-height:50px;
+	font-size: 24px;
+	text-align: center;
+}
+.print_header hr{
+	margin:10px 0;
+	border-top: 3px solid #000;
+}
+.lianku_logo{
+	vertical-align:middle;
+	width:100px;
+	height: 35px;
+	margin-top: 8px;
+}
+.print_name{
+	margin-top: 30px;
+}
+.print_title h2{
+	font-size: 24px;
+}
+.print_name>div{
+	width:50%;
+	height: 40px;
+	overflow: hidden;
+	font-size: 12px;
+}
+.print_name>div>input{
+	border:0;
+	border-bottom:1px solid #333;
+	width: 65%;
+}
+.partP>p{
+	text-indent: 2em;
+	font-size: 12px;
+}
+.chart_gap>p{
+	margin: 10px 0;
+}
+.chart_gap>p>span{
+	display: inline-block;
+	width:140px;
+	height:26px;
+	line-height:26px;
+	font-weight: 700;
+	padding: 0 15px;
+	color:#fff!important;
+	font-size: 14px;
+	border-radius:15px;
+}
+.intro{
+	color:coral!important;
+}
+.chartHight{
+	min-height:300px;
+	max-height: 400px;
+}
+.chartPart{	
+	border:1px solid #ccc;
+}
+.chart_gap>div{
+	margin-bottom: 5px;
+}
+.bgPurple{
+	background: #5AB1EF!important;
+}
+.bgPink{
+	background: #2EC7C9!important;
+}
+.bgRed{
+	background: #EC594A!important;
+}
+.nobg{
+	background: transparent!important;
+	position: relative;
+	height: 160px;
+	line-height: 160px;
+	font-size: 56px;
+	text-align: center;
+} 
+.nobg b{
+	font-weight: 400;
+}
+.nobg img{
+	position: absolute;
+	top:0;
+	left:50%;
+	-webkit-transform:translateX(-50%);
+	-moz-transform:translateX(-50%);
+	-ms-transform:translateX(-50%);
+	-o-transform:translateX(-50%);
+	transform:translateX(-50%);
+	z-index: 1;
+} 
+.w60,.w40,.w50{
+	width:60%;
+	float:left;
+	margin-left: 0;
+	margin-right: 0;
+}
+.w40{
+	width: 40%;
+	padding-left: 15px;
+}
+.w50{
+	width: 50%;
+}
+.w100{
+	width:100%;
+	float:left;
+}
+#print .sys_group .box{
+	height: 260px;
+	margin-bottom: 0;
+}
+.chartHight+div img{
+	width:100%;
+	height:auto;
+	border: 1px solid #ccc;
+}
+.textPart>ul{
+	padding-left: 0;
+}
+.textPart>ul>li{
+	line-height: 2;
+}
+.print_part>h4,#print .box-title{
+	font-size: 14px;
+}
+.print_part+hr,.clearfix+hr{
+	margin: 20px 0;
+	border-bottom:1px solid #ddd;
 }
