@@ -426,7 +426,11 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
             min = Math.min(min, yData[index])
             max = Math.max(max, yData[index])
         })
-        yMin = max - min < 1 && type == 'line' ? min - 10 : yMin;
+        if (max === 0 && min === 0) {
+            yMin = 0;
+        } else {
+            yMin = max - min < 1 && type == 'line' ? min - 10 : yMin;
+        }
         var option = {
             backgroundColor: '#D2D6DE',
             title: {
