@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -82,7 +83,23 @@ public class AnalysisController {
 	@RequestMapping(value = "/getColdStorageBlower")
 	@ResponseBody
 	public Object getColdStorageBlower(Integer rdcId) {
+		if(rdcId==null)return null;
 		return blowerMapper.findBlowerByRdcID(rdcId);
+	}
+
+	/**
+	 * 获得月分析报表
+	 * @param rdcId
+	 * @param stTime
+	 * @param edTime
+	 * @return
+	 */
+	@RequestMapping(value = "/getRdcreportsis", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getRdcreportsis(Integer rdcId,String stTime ,String edTime) {
+		if(rdcId!=null&&StringUtil.isnotNull(stTime)&&StringUtil.isnotNull(edTime)){ 
+			return this.quantityMapper.getMothReportsisByrdcId(rdcId, stTime, edTime);}
+		return null;
 	}
 	
 	/**

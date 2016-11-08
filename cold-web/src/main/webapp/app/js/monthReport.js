@@ -47,6 +47,10 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//===================================================================================工具类end==================================================================================
 	//1.系统评分
 	$scope.pysical=function(){
+		//获得分析结果
+		$http({method:'POST',url:'/i/AnalysisController/getQAnalysisByMonth',params:{"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime}}).success(function (data) {
+			if(data!=null&&data.length>0){ $scope.rdcsis=data[0];}else{$scope.rdcsis=null;}
+	    });
 		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
 			++$scope.loadindex;$scope.pysicaldata=data.entity;
 		}});
