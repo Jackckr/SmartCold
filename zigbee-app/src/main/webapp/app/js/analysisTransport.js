@@ -16,23 +16,32 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            if (rootRdcId == undefined || rootRdcId == null) {
-                $scope.currentRdc = $scope.storages[0];
-                $scope.rdcId = $scope.storages[0].id;
-                $scope.rdcName = $scope.storages[0].name;
-                $scope.viewStorage($scope.storages[0].id);
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
+                    $scope.viewStorage($scope.storages[0].id);
+                }
             } else {
-                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-                    $scope.currentRdc = data[0];
-                    $scope.rdcName = data[0].name;
-                    $scope.rdcId = data[0].id;
-                    $scope.viewStorage($scope.rdcId);
-                });
+                findByRdcId(rootRdcId);
             }
         }
     });
 
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName = data[0].name;
+            $scope.rdcId = data[0].id;
+            $scope.viewStorage($scope.rdcId);
+        });
+    }
+
     $scope.viewStorage = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
         $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
             "rdcId": rdcId
@@ -97,107 +106,109 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         }).success(function (data) {
             $scope.data = data;
             angular.forEach(data, function (storage, key) {
-                xData = []
-                yData1 = []
-                yData2 = []
-                yData3 = []
-                var mainIdAll = 'doorAll' + key;
-                var mainIdAvg = 'doorAvg' + key;
-                if ($scope.swiper < $scope.mystorages.length) {
-                    var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">' + key + '</p>' +
-                        '<div id=' + mainIdAll + ' style="min-height:14rem;margin-bottom:.3rem;"></div> ' +
-                        '<div id=' + mainIdAvg + ' style="height: 14rem;"></div>' +
-                        '</div>';
-                    $("#chartView").last().append(innerHTML);
-                    $scope.swiper += 1;
+                if (storage['DoorTotalTime'] && storage['DoorTotalTime'].length > 0) {
+                    xData = []
+                    yData1 = []
+                    yData2 = []
+                    yData3 = []
+                    var mainIdAll = 'doorAll' + key;
+                    var mainIdAvg = 'doorAvg' + key;
+                    if ($scope.swiper < $scope.mystorages.length) {
+                        var innerHTML = '<div class="swiper-slide">' +
+                            '<p class="actually">' + key + '</p>' +
+                            '<div id=' + mainIdAll + ' style="min-height:14rem;margin-bottom:.3rem;"></div> ' +
+                            '<div id=' + mainIdAvg + ' style="height: 14rem;"></div>' +
+                            '</div>';
+                        $("#chartView").last().append(innerHTML);
+                        $scope.swiper += 1;
+                    }
+                    var chart1 = echarts.init($('#' + mainIdAll).get(0));
+                    var chart2 = echarts.init($('#' + mainIdAvg).get(0));
+                    angular.forEach(storage['DoorTotalTime'], function (item, index) {
+                        xData.unshift(formatTime(item['date']).split(" ")[0])
+                        yData1.unshift((item['value'] / 60).toFixed(2))
+                        yData2.unshift(storage['DoorOpenTimes'][index].value)
+                        yData3.unshift(
+                            storage['DoorOpenTimes'][index].value == 0
+                                ? 0 :
+                            item['value'] / storage['DoorOpenTimes'][index].value / 60
+                        )
+                    })
+                    var option = {
+                        backgroundColor: '#D2D6DE',
+                        title: {
+                            text: '近30日冷库日累积开门总时长及日累积开门次数',
+                            textStyle: {
+                                fontSize: 13,
+                                fontWeight: 'normal'
+                            },
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            textStyle: {
+                                fontSize: 12      // 主标题文字颜色
+                            },
+                        },
+                        toolbox: {
+                            show: false,
+                            feature: {
+                                mark: {show: true},
+                                dataView: {show: true, readOnly: false},
+                                magicType: {show: true, type: ['line', 'bar']},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        calculable: true,
+                        legend: {
+                            data: ['开门时长', '开门次数'],
+                            y: 'bottom'
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: xData
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '开门时长(min)',
+                                max: 1500,
+                                axisLabel: {
+                                    formatter: '{value}'
+                                }
+                            },
+                            {
+                                type: 'value',
+                                name: '开门次数',
+                                axisLabel: {
+                                    formatter: '{value}'
+                                }
+                            }
+                        ],
+                        grid: {
+                            x: 45,
+                            y: 50,
+                            width: '75%'
+                        },
+                        series: [
+                            {
+                                name: '开门时长',
+                                type: 'bar',
+                                data: yData1
+                            },
+                            {
+                                name: '开门次数',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                data: yData2
+                            }
+                        ]
+                    };
+                    chart1.setOption(option);
+                    chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "min", "m", "bar"));
                 }
-                var chart1 = echarts.init($('#' + mainIdAll).get(0));
-                var chart2 = echarts.init($('#' + mainIdAvg).get(0));
-                angular.forEach(storage['DoorTotalTime'], function (item, index) {
-                    xData.unshift(formatTime(item['date']).split(" ")[0])
-                    yData1.unshift((item['value'] / 60).toFixed(2))
-                    yData2.unshift(storage['DoorOpenTimes'][index].value)
-                    yData3.unshift(
-                        storage['DoorOpenTimes'][index].value == 0
-                            ? 0 :
-                        item['value'] / storage['DoorOpenTimes'][index].value / 60
-                    )
-                })
-                var option = {
-                    backgroundColor: '#D2D6DE',
-                    title: {
-                        text: '近30日冷库日累积开门总时长及日累积开门次数',
-                        textStyle: {
-                            fontSize: 13,
-                            fontWeight: 'normal'
-                        },
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        textStyle: {
-                            fontSize: 12      // 主标题文字颜色
-                        },
-                    },
-                    toolbox: {
-                        show: false,
-                        feature: {
-                            mark: {show: true},
-                            dataView: {show: true, readOnly: false},
-                            magicType: {show: true, type: ['line', 'bar']},
-                            restore: {show: true},
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    calculable: true,
-                    legend: {
-                        data: ['开门时长', '开门次数'],
-                        y: 'bottom'
-                    },
-                    xAxis: [
-                        {
-                            type: 'category',
-                            data: xData
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: '开门时长(min)',
-                            max: 1500,
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        },
-                        {
-                            type: 'value',
-                            name: '开门次数',
-                            axisLabel: {
-                                formatter: '{value}'
-                            }
-                        }
-                    ],
-                    grid: {
-                        x: 45,
-                        y: 50,
-                        width: '75%'
-                    },
-                    series: [
-                        {
-                            name: '开门时长',
-                            type: 'bar',
-                            data: yData1
-                        },
-                        {
-                            name: '开门次数',
-                            type: 'line',
-                            yAxisIndex: 1,
-                            data: yData2
-                        }
-                    ]
-                };
-                chart1.setOption(option);
-                chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "min", "m", "bar"));
             })
         })
     }
@@ -217,28 +228,28 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         }).success(function (data) {
             $scope.data = data;
             angular.forEach(data, function (storage, key) {
-                $timeout(function () {
-                    xData = []
-                    yData = []
+                if (storage['GoodsLiuTongYinZi'] && storage['GoodsLiuTongYinZi'].length > 0) {
+                    $timeout(function () {
+                        xData = [];
+                        yData = [];
+                        var mainId = 'goodsYz' + key;
+                        if ($scope.swiper < $scope.mystorages.length) {
+                            var innerHTML = '<div class="swiper-slide">' +
+                                '<p class="actually">' + key + '</p>' +
+                                '<div id=' + mainId + ' style="height:300px"></div> ';
+                            $("#chartView").last().append(innerHTML);
+                            $scope.swiper += 1;
+                        }
 
-                    var mainId = 'goodsYz' + key;
-                    if ($scope.swiper < $scope.mystorages.length) {
-                        var innerHTML = '<div class="swiper-slide">' +
-                            '<p class="actually">' + key + '</p>' +
-                            '<div id=' + mainId + ' style="height:300px"></div> ';
-                        $("#chartView").last().append(innerHTML);
-                        $scope.swiper += 1;
-                    }
-
-                    var chart = echarts.init($('#' + mainId).get(0));
-                    $scope.showMap[mainId] = storage['GoodsLiuTongYinZi'].length
-                    angular.forEach(storage['GoodsLiuTongYinZi'], function (item) {
-                        xData.unshift(formatTime(item['date']).split(" ")[0])
-                        yData.unshift(item['value'] / 60)
-                    })
-                    chart.setOption($scope.getEchartSingleOption("货物流通因子",
-                        xData, yData, "时间", "", "货物流通因子", "bar", 0));
-                }, 0)
+                        var chart = echarts.init($('#' + mainId).get(0));
+                        angular.forEach(storage['GoodsLiuTongYinZi'], function (item) {
+                            xData.unshift(formatTime(item['date']).split(" ")[0])
+                            yData.unshift(item['value'] / 60)
+                        })
+                        chart.setOption($scope.getEchartSingleOption("货物流通因子",
+                            xData, yData, "时间", "", "货物流通因子", "bar", 0));
+                    }, 0)
+                }
             })
         })
     }
@@ -248,102 +259,87 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         var mainId2 = 'hotColumn';
         if ($scope.swiper < $scope.mystorages.length) {
             var innerHTML = '<div class="swiper-slide">' +
-                '<div id=' + mainId1 + ' style="height:250px"></div>' +
-                '<div id=' + mainId2 + ' style="height:250px"></div>' +
+                '<div id=' + mainId1 + ' style="height:14rem;margin-bottom:.3rem"></div>' +
+                '<div id=' + mainId2 + ' style="height:16em;margin-bottom:.3rem"></div>' +
                 '</div>';
             $("#chartView").last().append(innerHTML);
             $scope.swiper += 1;
         }
-        $('#' + mainId1).highcharts({
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 45,
-                    beta: 0
-                }
-            },
-            title: {
-                text: '最新热量分布图'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            legend: {
-                itemDistance: 10
-            },
-            plotOptions: {
-                pie: {
-                    depth: 40,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}'
-                    },
-                    showInLegend: true
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                type: 'pie',
-                name: '占比',
-                data: [['货物', 20.0], ['化霜', 26.8], ['叉车', 12.8], ['照明', 8.5], ['开门', 6.9], ['保温', 10], ['冷风机风扇', 15.0]]
-            }]
-        });
 
-        $('#' + mainId2).highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: '近30日热量分布图'
-            },
-            credits: {
-                enabled: false
-            },
-            xAxis: {
-                categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',],
-                labels: {
-                    format: '{value} 日'
-                },
-                max: 30
-            },
-            yAxis: {
-                min: 0,
-                text: null
-            },
-            tooltip: {
-                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-                shared: true
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'percent'
+        $http.get(ER.coldroot + '/i/AnalysisController/getQAnalysis', {params: {rdcId: $scope.rdcId}}).success(function (data) {
+            if (data.success) {
+                var quinisisdata = data.entity.allseries;
+                if (quinisisdata != undefined) {
+                    var nonedata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    if (quinisisdata.GoodsHeat == undefined) {
+                        quinisisdata.GoodsHeat = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.QFrost == undefined) {
+                        quinisisdata.QFrost = nonedat;
+                    }
+                    ;
+                    if (quinisisdata.QForklift == undefined) {
+                        quinisisdata.QForklift = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.WallHeat == undefined) {
+                        quinisisdata.WallHeat = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.Qblower == undefined) {
+                        quinisisdata.Qblower = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.Qctdoor == undefined) {
+                        quinisisdata.Qctdoor = nonedata;
+                    }
+                    ;
+                    if (quinisisdata.Qlighting == undefined) {
+                        quinisisdata.Qlighting = nonedata;
+                    }
+                    ;
+                    var series = [], piedata = [], pxAxis = data.entity.xAxis;
+                    series.push({name: 'Q货', data: quinisisdata.GoodsHeat});
+                    series.push({name: 'Q霜', data: quinisisdata.QFrost});
+                    series.push({name: 'Q叉', data: quinisisdata.QForklift});
+                    series.push({name: 'Q保', data: quinisisdata.WallHeat});
+                    series.push({name: 'Q风', data: quinisisdata.Qblower});
+                    series.push({name: 'Q门', data: quinisisdata.Qctdoor});
+                    series.push({name: 'Q照', data: quinisisdata.Qlighting});
+                    piedata.push(['Q货', quinisisdata.GoodsHeat[29]]);
+                    piedata.push(['Q霜', quinisisdata.QFrost[29]]);
+                    piedata.push(['Q叉', quinisisdata.QForklift[29]]);
+                    piedata.push(['Q保', quinisisdata.WallHeat[29]]);
+                    piedata.push(['Q风', quinisisdata.Qblower[29]]);
+                    piedata.push(['Q门', quinisisdata.Qctdoor[29]]);
+                    piedata.push(['Q照', quinisisdata.Qlighting[29]]);
+                    data = undefined;
+                    quinisisdata = undefined;
+                    $('#' + mainId1).highcharts({
+                        title  : { text : '最新热量分布图' },
+                        credits: {  enabled: false },
+                        legend : { itemDistance: 5 },
+                        chart  : { type : 'pie', options3d : { enabled : true, alpha : 60, beta : 0 } ,backgroundColor: '#D2D6DE'},
+                        tooltip: { pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>' },
+                        series : [ { type : 'pie', name : '占比', data : piedata } ],
+                        plotOptions : { pie : { depth : 30, showInLegend: true, dataLabels : { enabled : true, format : '{point.name}' } } }
+                    });
+                    $('#' + mainId2).highcharts({
+                        chart: {  type: 'column',backgroundColor: '#D2D6DE'  },
+                        title: { text: '近30日热量分布图' },
+                        legend : { itemDistance: 5},
+                        credits: {  enabled: false },
+                        yAxis: {  min: 0,  title:{text: null} },
+                        series: series,
+                        plotOptions: {  column: {  stacking: 'percent' } },
+                        xAxis: {   labels: {  format: '{value}' },  categories: pxAxis },
+                        tooltip: { shared: true,pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>'  }
+                    });
                 }
-            },
-            series: [{
-                name: '货物',
-                data: [2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 3, 3, 1, 2, 2, 4, 2, 3, 6, 1]
-            }, {
-                name: '化霜',
-                data: [1, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 5, 3, 3, 1.5, 3, 2, 1, 5, 6, 3, 1.5, 3, 2, 1, 2, 2]
-            }, {
-                name: '叉车',
-                data: [1.5, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 6, 1, 2, 1.5, 4, 2, 5, 3, 1, 2, 1.5, 4, 2, 5, 1]
-            }, {
-                name: '照明',
-                data: [1, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 2, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 2]
-            }, {
-                name: '开门',
-                data: [1.5, 2, 4, 2, 5, 6, 1, 2, 2, 4, 2, 3, 1, 1, 2, 2, 4, 2, 5, 6, 1, 2, 2, 4, 2, 3, 6, 1, 2, 2, 4, 2, 5, 2, 1]
-            }, {
-                name: '保温',
-                data: [2, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 3, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 6, 3, 1, 3, 2, 1, 5, 1]
-            }, {
-                name: '冷风机风扇',
-                data: [1, 1, 4, 2, 5, 6, 1, 2, 1, 4, 2, 5, 1, 1, 2, 1, 4, 2, 5, 6, 1, 2, 1, 4, 2, 5, 2, 1, 2, 1, 4, 2, 5, 6, 1]
-            }]
+            } else {
+                alert(data.message);
+            }
         });
     }
 
@@ -399,7 +395,6 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 x: 55,
                 y: 60,
                 x2: 75,
-                /*y2: 60,*/
             },
             xAxis: [
                 {
@@ -425,9 +420,17 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
     }
 
     $scope.getEchartSingleOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin) {
+        min = max = yData.length > 0 ? yData[0] : 0;
         angular.forEach(yData, function (item, index) {
             yData[index] = yData[index].toFixed(2);
+            min = Math.min(min, yData[index])
+            max = Math.max(max, yData[index])
         })
+        if (max === 0 && min === 0) {
+            yMin = 0;
+        } else {
+            yMin = max - min < 1 && type == 'line' ? min - 10 : yMin;
+        }
         var option = {
             backgroundColor: '#D2D6DE',
             title: {
@@ -455,7 +458,8 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 {
                     type: 'value',
                     name: yName + "(" + yUnit + ")",
-                    min: yMin ? yMin : 0
+                    min: yMin ? yMin : 'auto',
+                    minInterval: 1
                 }
             ],
             grid: {

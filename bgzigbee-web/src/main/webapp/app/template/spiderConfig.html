@@ -695,6 +695,13 @@
                                         <input style="width:250px;" ng-model="pressurePlatformSet.power" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4"><em style="color:red">*</em>月台门:</label>
+                                    <div class="col-lg-8">
+                                        <select ng-options="item.name for item in platformDoorSets" class="form-control" 
+                                        ng-model="pressurePlatformSet.platformdoorid"></select>
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addRdcIdAndName(pressurePlatformSet, choseDevice.table)" ng-disabled="!pressurePlatformSet.name">添加</a>
                                 </div>
@@ -704,8 +711,8 @@
                                       <ajax-table array-objects="pressurePlatformSets"
                                             delete-url="/i/spiderConfig/delete/deletePressureplfmById"
                                             update-url="/i/spiderConfig/update/updatePressureplfmSet"
-                                            colums-th="名字,功率(kW)"
-                                            colums="name,power"></ajax-table>
+                                            colums-th="名字,功率(kW),月台门ID"
+                                            colums="name,power,platformdoorid"></ajax-table>
                             </div>
                         </form>
                         <!--充电桩-->

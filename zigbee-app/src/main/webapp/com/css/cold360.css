@@ -203,7 +203,7 @@ section{
 	font-size: 1.8em;
 }
 div[id^="main"],.actually+div[id]{
-	min-height:15rem;
+	min-height:17rem;
 	
 }
 .inner{
@@ -686,4 +686,7 @@ b{
 	text-align: center;
 	font-size: 0.8rem;
 	color: #438BCB;
+}
+#jedatebox{
+	z-index: 10000!important;
 }

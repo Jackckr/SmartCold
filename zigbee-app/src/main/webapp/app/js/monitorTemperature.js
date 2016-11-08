@@ -13,27 +13,35 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
         if (r != null) return unescape(r[2]); return null;
     }
     var rootRdcId = $.getUrlParam('storageID');
-
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            if (rootRdcId == undefined || rootRdcId == null) {
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
                     $scope.currentRdc = $scope.storages[0];
                     $scope.rdcId = $scope.storages[0].id;
                     $scope.rdcName = $scope.storages[0].name;
                     $scope.viewStorage($scope.storages[0].id);
+                }
             } else {
-                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-                    $scope.currentRdc = data[0];
-                    $scope.rdcName =  data[0].name;
-                    $scope.rdcId =  data[0].id;
-                    $scope.viewStorage($scope.rdcId);
-                });
+                findByRdcId(rootRdcId)
             }
         }
     });
 
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName = data[0].name;
+            $scope.rdcId = data[0].id;
+            $scope.viewStorage($scope.rdcId);
+        });
+    }
+
     $scope.viewStorage = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
         $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
             "rdcId": rdcId
@@ -250,8 +258,6 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                         }]
                 });
             });
-
-//        });
     }
 
     function clearSwiper() {
@@ -261,8 +267,10 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
     
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        for (var i = 0; i < $scope.mystorages.length; i++) {
-            $scope.load($scope.mystorages[i],true);
+        if ($scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.load($scope.mystorages[i],true);
+            }
         }
     }, 30000);
 

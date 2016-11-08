@@ -17,7 +17,7 @@ coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools,$ti
 					angular.forEach($scope.waterCosts,function(item){
 						xData.push(item.compressorGroupName);
 						yData.push(item.waterCost);
-					})
+					});
 					option = baseTools.getEchartSingleOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'bar');
 					barCharts.setOption(option);
 				})

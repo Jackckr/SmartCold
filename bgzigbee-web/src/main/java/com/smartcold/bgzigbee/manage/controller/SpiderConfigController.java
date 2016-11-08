@@ -57,11 +57,9 @@ public class SpiderConfigController {
 
 	@Autowired
 	private WindScreenSetMapping windScreenSetMapping;
-	
 
 	@Autowired
 	private PowerSetMapping powerSetMapping;
-
 
 	@Autowired
 	private EvaporativeSetMapping evaporativeSetMapping;
@@ -88,6 +86,9 @@ public class SpiderConfigController {
 	@Autowired
 	private RemoteService remoteService;
 
+	@Autowired
+	private PressurePlatformSetMapping platformDao;
+
 	@RequestMapping(value = "/addRdcWeight", method = RequestMethod.POST)
 	public Object addRdcWeight(@RequestBody RDCWeightSetEntity rdcWeightSetEntity) {
 		try {
@@ -97,12 +98,13 @@ public class SpiderConfigController {
 			return new ResultDto(-1, "保存失败");
 		}
 	}
+
 	@RequestMapping("/findRdcWeight")
 	public Object findRdcWeight(int rdcid) {
 		RDCWeightSetEntity rdcWeightSetEntity = rdcWeightSetMapper.findRdcWeightSetByRdcId(rdcid);
 		return rdcWeightSetEntity;
 	}
-	
+
 	@RequestMapping(value = "/delRdcWeight", method = RequestMethod.DELETE)
 	public Object delRdcWeight(int id) {
 		try {
@@ -112,7 +114,7 @@ public class SpiderConfigController {
 			return new ResultDto(-1, "删除失败");
 		}
 	}
-	
+
 	@RequestMapping("/update/mapping")
 	public Object updateSetTableMapping(@RequestBody UpdateMappingDTO updateMappingDTO) {
 		if (updateMappingDTO.getTable().equals("rdc") || SetTables.checkTable(updateMappingDTO.getTable())) {
@@ -124,41 +126,46 @@ public class SpiderConfigController {
 		}
 		return new ResultDto(-1, "添加失败");
 	}
-    //删除液压平台
+
+	// 删除液压平台
 	@RequestMapping(value = "/delete/deletePressureplfmById", method = RequestMethod.DELETE)
 	public Object deletePressureplfmById(Integer id) {
-		if(id==null)return new ResultDto(-1, "删除失败！");
+		if (id == null)
+			return new ResultDto(-1, "删除失败！");
 		if (setTableMapper.deleteById("pressureplatformset", id)) {
 			return new ResultDto(0, "删除成功");
 		}
 		return new ResultDto(-1, "删除失败");
 	}
-	 //更新液压平台
+
+	// 更新液压平台
 	@RequestMapping(value = "/update/updatePressureplfmSet", method = RequestMethod.POST)
 	public Object updatePressureplfmSet(@RequestBody PressurePlatformSetEntity obj) {
 		try {
-			if(setTableMapper.updateObj("pressureplatformset", obj.getId(),obj.getName(),obj.getPower())){
-				return new ResultDto(0, "更新成功");
-			}
+			platformDao.update(obj);
+			return new ResultDto(0, "更新成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResultDto(-1, "更新失败");
 	}
-	 //删除充电桩
+
+	// 删除充电桩
 	@RequestMapping(value = "/delete/deleteChargingpilesetById", method = RequestMethod.DELETE)
 	public Object deleteChargingpilesetById(Integer id) {
-		if(id==null)return new ResultDto(-1, "删除失败！");
+		if (id == null)
+			return new ResultDto(-1, "删除失败！");
 		if (setTableMapper.deleteById("chargingpileset", id)) {
 			return new ResultDto(0, "删除成功");
 		}
 		return new ResultDto(-1, "删除失败");
 	}
-	//更新充电桩
+
+	// 更新充电桩
 	@RequestMapping(value = "/update/updateChargingpileset", method = RequestMethod.POST)
 	public Object updateChargingpileset(@RequestBody ChargingPileSetEntity obj) {
 		try {
-			if(setTableMapper.updateObj("chargingpileset", obj.getId(),obj.getName(),obj.getPower())){
+			if (setTableMapper.updateObj("chargingpileset", obj.getId(), obj.getName(), obj.getPower())) {
 				return new ResultDto(0, "更新成功");
 			}
 		} catch (Exception e) {
@@ -166,8 +173,7 @@ public class SpiderConfigController {
 		}
 		return new ResultDto(-1, "更新失败");
 	}
-	
-	
+
 	@RequestMapping(value = "/delete/id", method = RequestMethod.DELETE)
 	public Object deleteById(String table, int id) {
 		if (!(table.equals("deviceobjectmapping") || SetTables.checkTable(table))) {
@@ -233,7 +239,6 @@ public class SpiderConfigController {
 		return new ResultDto(-1, "添加失败");
 	}
 
-	
 	@RequestMapping(value = "/delete/coldStorageLightSet", method = RequestMethod.DELETE)
 	public Object deletecoldStorageLightSet(int id) {
 		try {
@@ -253,8 +258,7 @@ public class SpiderConfigController {
 			return new ResultDto(-1, "更新失败");
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "/delete/forkliftSet", method = RequestMethod.DELETE)
 	public Object deleteforkliftSet(int id) {
 		try {
@@ -274,7 +278,7 @@ public class SpiderConfigController {
 			return new ResultDto(-1, "更新失败");
 		}
 	}
-	
+
 	@RequestMapping(value = "/delete/powerSet", method = RequestMethod.DELETE)
 	public Object deletepowerSet(int id) {
 		try {
@@ -294,7 +298,7 @@ public class SpiderConfigController {
 			return new ResultDto(-1, "更新失败");
 		}
 	}
-	
+
 	@RequestMapping(value = "/delete/windscreenset", method = RequestMethod.DELETE)
 	public Object deleteWindScreenSet(int id) {
 		try {
@@ -394,7 +398,7 @@ public class SpiderConfigController {
 			return new ResultDto(-1, "删除失败");
 		}
 	}
-	
+
 	@RequestMapping(value = "/update/wallSet", method = RequestMethod.POST)
 	public Object updateWallSet(@RequestBody WallSetEntity wallSet) {
 		wallSetDao.update(wallSet);

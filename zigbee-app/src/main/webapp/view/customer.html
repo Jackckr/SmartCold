@@ -25,7 +25,7 @@
     <section class="tel rel clearfix">
     	<div class="logo"><img src="../com/img/logo.png" alt="" /></div>
     	<p class="contact">联系电话：</p>
-    	<p ><span>021-25360067</span>　　<span>021-25360068</span></p>
+    	<p ><span>021-23560067</span>　　<span>021-23560068</span></p>
     	
     	<p class="contact">官方网站：</p>
     	<p><a href="http://liankur.com/" target="_blank">www.liankur.com</a></p>
@@ -67,7 +67,7 @@
             <a href="messages.html">
                 <i class="iconfont">&#xe71c;</i>
                 <p class="info">消息</p>
-                  <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=''" class="countNum">{{msgTotalNum}}</span>
+                  <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=''" class="countNum" ng-bind="msgTotalNum"></span>
             </a>
         </li>
         <li class="active">            

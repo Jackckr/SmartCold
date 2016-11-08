@@ -1,21 +1,31 @@
 var app = angular.module('app', []);
 app.controller('coldmap', function ($http) {
-    $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+    $http.defaults.withCredentials = true;
+    $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     // 百度地图API功能
     var map = new BMap.Map("rdcMapChart");
-    var point = new BMap.Point(110.114129, 24.550339);
-    map.centerAndZoom(point, 5);
+    var point = new BMap.Point(121.4037410000, 31.2190550000);
+    map.centerAndZoom(point, 12);
     //添加鼠标滚动缩放
     map.enableScrollWheelZoom();
 
     //添加缩略图控件
     map.addControl(new BMap.OverviewMapControl({isOpen: false})); //缩略地图控件，默认位于地图右下方，是一个可折叠的缩略地图
     //添加缩放平移控件
-    map.addControl(new BMap.NavigationControl());
+    var opts = {anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_ZOOM}
+    map.addControl(new BMap.NavigationControl(opts));
     //添加比例尺控件
     map.addControl(new BMap.ScaleControl());
     //添加地图类型控件
     //map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]}));     //2D图，卫星图   //左上角， 地图类型控件
+
+    function iploac(result) {//根据IP设置地图中心
+        var cityName = result.name;
+        map.setCenter(cityName);
+    }
+
+    var myCity = new BMap.LocalCity();
+    myCity.get(iploac);
 
     $http.get(ER.root + '/i/rdc/findRdcList').success(function (data) {
         var index = 0;

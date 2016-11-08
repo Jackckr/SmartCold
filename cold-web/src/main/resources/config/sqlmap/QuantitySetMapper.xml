@@ -3,9 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.QuantitySetMapper">
-	
-	
-	
     <!-- 计算Q   -->
     <select id="getcoldstoragedoorset" parameterType="map" resultType="map">
 		 SELECT rdcid,coldstorageid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY coldstorageid;
@@ -29,9 +26,12 @@
 		<if test="rdcid!=null"> and rdcid in(${rdcid}) </if> 
 		GROUP BY rdcid;
 	</select>
+    <select id="getLightPowerByCoid" parameterType="map" resultType="map">
+		SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers  ,sum(power) sumpower  FROM `coldstoragelightset` where `power` >0  and `coldStorageId` in(${coid})  GROUP BY `coldStorageId`;
+	</select>
 	<!-- 计算开门次数 -->
     <select id="getColdstorageset" parameterType="map" resultType="map">
-	  SELECT
+	  select * from(SELECT
 			ct.`id`,
 			ct.`length` * ct.`width` * ct.`height` AS cgvolume,
 			(
@@ -48,10 +48,11 @@
 						FROM
 							`sc360`.`coldstorageanalysis` sis
 						WHERE
-							sis.`type` = ct.`id`
+							sis.`type` =1
 						AND sis.oid = ct.id
 						AND sis.`key` = "AvgTemp"
 						AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
+                        
 					)
 				)
 			) AS hn,
@@ -72,8 +73,8 @@
 							FROM
 								`sc360`.`coldstorageanalysis` sis
 							WHERE
-								sis.`type` = ct.`id`
-							AND sis.oid = ct.id
+								sis.`type` = 1
+							AND sis.oid = ct.`refoid`
 							AND sis.`key` = "AvgTemp"
 							AND TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30
 						)
@@ -112,6 +113,6 @@
 		AND (
 			ct.refoid IS NOT NULL
 			OR ct.outtempe IS NOT NULL
-		);
+		))as A1 where hn IS NOT NULL and hw IS NOT NULL ;
 	</select>
 </mapper>

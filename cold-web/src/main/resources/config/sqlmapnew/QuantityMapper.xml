@@ -36,6 +36,32 @@
 	<select id="getGoodQuantit" parameterType="map" resultType="map">
 		SELECT avg(`inputQuantity`-`outputQUantity` )  quantit , avg(`inputTemperature`)temp  FROM `goodscoldstorage` where `coldstorageid` =#{oid} and `date`   BETWEEN #{stTime} and #{edTime};
 	</select>
-	
-	
+	<!-- 获得信息-->
+	<select id="getQuantitsis" parameterType="map" resultType="map">
+		SELECT `key`,date ,SUM(`value`) sumq from `sc360`.`coldstorageanalysis` sis where sis.`oid` IN (SELECT id FROM `smartcold`.`coldstorageset` cs WHERE  cs.`RDCID` =rdcId) and  sis.`type`= 1 and sis.`key` in( 'QFrost','GoodsHeat','QForklift','WallHeat','Qblower','Qctdoor','Qlighting' )
+		<if test="stTime!=null and endTime!=null"> and sis.`date` BETWEEN #{stTime} and #{endTime} GROUP BY `key` </if>
+		<if test="stTime!=null and endTime==null"> and sis.`date`>=#{stTime} GROUP BY date,`key`</if>
+	</select>
+	<!--系统效率分析  Q->E->QE  -->
+	<select id="getsumEByRdcid" parameterType="map" resultType="map">
+			SELECT `date` ,SUM(`value`)sume  FROM `coldstorageanalysis`  WHERE `type` =10 and `key` ='TotalPWC' and `oid` in(select id from `smartcold`.powerset where rdcid=#{rdcId}) and `date` >=#{stTime} 
+			<if test="endTime!=null"> and `date` &lt;=#{endTime} </if>
+			 GROUP BY `date` ;
+	</select>
+	<select id="getsumQByRdcid" parameterType="map" resultType="map">
+		SELECT `date` ,SUM(`value`) sumq from `sc360`.`coldstorageanalysis` sis where sis.`oid` IN (SELECT id FROM `smartcold`.`coldstorageset` cs WHERE  cs.`RDCID` =#{rdcId}) and  sis.`type`= 1 and sis.`key` in( 'QFrost','GoodsHeat','QForklift','WallHeat','Qblower','Qctdoor','Qlighting' )and sis.`date`>=#{stTime}
+		<if test="endTime!=null"> and `date` &lt;=#{endTime} </if>
+		 GROUP BY `date`;
+	</select>
+	<!-- 门报警         -->
+	<select id="getDoorDevMapper" parameterType="map" resultType="DeviceObjectMappingEntity">
+       SELECT  dev.`oid` ,dev.`deviceid`  ,cs.`overtempdelay` status,cs.`rdcid` ,cs.`name`  from `deviceobjectmapping` dev LEFT JOIN  `smartcold`.`coldstoragedoorset`  cs on(cs.id=dev.`oid` ) where dev.type=2;
+    </select>
+	<select id="getSwitchTime" parameterType="map" resultType="java.lang.Double">
+        SELECT COUNT(*) FROM `storagedatacollection`  where  deviceid=#{deviceid} and `key` ='Switch' and `addtime` >= #{stTime}  <if test="value!=null">   and `value` =1   </if>;
+    </select>
+	<!-- 月报表 -->
+	<select id="getSumKeyByRdcId" parameterType="map" resultType="map">
+	  select ps.`name` ,SUM(sis.`value`) value from  `coldstorageanalysis` sis LEFT JOIN  `smartcold`.`${table}` ps on(ps.id=sis.`oid` and ps.`rdcid` =#{rdcId}) where `type` =#{type} and `key` =#{key} and oid in (ps.`id`)  and `date` BETWEEN #{stTime} and #{edTime} GROUP BY oid;
+	</select>
 </mapper>

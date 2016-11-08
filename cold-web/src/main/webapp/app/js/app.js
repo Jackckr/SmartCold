@@ -128,6 +128,11 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
     return {
         setUser: function (user) {
             $rootScope.user = user;
+            $rootScope.logout = function () {
+	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
+	        	 $rootScope.user =window.user=user=undefined;//清除系统user;
+	        	 window.location.href="login.html";
+	        };
         },
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
@@ -446,6 +451,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/goodsYzAnalysis/{rdcId}',
     	controller: 'goodsYzAnalysis',
         templateUrl: 'app/template/goodsYzAnalysis.html'
+    }).state('monthReport',{//分析  -分析报告--jhy--2016-10-31
+    	url: '/monthReport/{rdcId}',
+    	controller: 'monthReport',
+        templateUrl: 'app/template/monthReport.html'
     }).state('cpswaterCost',{//
     	url: '/cpswaterCost/{groupID}',
     	controller: 'cpswaterCost',

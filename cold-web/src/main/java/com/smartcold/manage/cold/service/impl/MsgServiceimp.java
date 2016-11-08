@@ -75,9 +75,8 @@ public class MsgServiceimp implements MsgService {
      @Scheduled(cron="0 0/5 * * * ?")
 	public void checkData() {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
-		if(taskStatus){
+	    if(!taskStatus){return ;}
 			this.getERRinfo();
-		}
 	}
 	/**
 	 * 半小时执行一次
@@ -121,7 +120,7 @@ public class MsgServiceimp implements MsgService {
 		Date dateTime = TimeUtil.parseYMD(time);
 		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
 	    this.setQFrost(time,dateTime); //2 Q霜
-	    this.setQblower(endtime, dateTime);//6 Q风
+	    this.setQblower(time, dateTime);//6 Q风
 		this.setQForklift(time,dateTime,startTime,endtime);//3 Q叉,4 Q照
 		this.setQctdoor(time, dateTime, startTime, endtime);//Q門
 	}
@@ -143,7 +142,7 @@ public class MsgServiceimp implements MsgService {
 		    List<ColdStorageAnalysisEntity> blowersisdata = storageAnalysisMapper.findValueByFilter(fileter);
         	if(SetUtil.isNullList(blowersisdata)){
         		this.setQFrost(time,dateTime); //2 Q霜
-            	this.setQblower(endtime, dateTime);//6 Q风
+            	this.setQblower(time, dateTime);//6 Q风
             	this.setQForklift(time,dateTime,startTime,endtime);//3 Q叉,4 Q照
             	this.setQctdoor(time, dateTime, startTime, endtime);//Q門
         	}
@@ -154,22 +153,19 @@ public class MsgServiceimp implements MsgService {
 	
 	/**
 	 * 检查数据是否正常
-	 * 1.电压：SELECT *  FROM `power`  where  `value` =0 and `key` LIKE  '_U' and `addtime` >'2016-10-20 10:00:00';
-	 * 2.电流： SELECT * from ( SELECT id, `key`, `value`, CASE WHEN ( (MAX(`value`) - MIN(`value`)) / MAX(`value`) * 100 ) > 15 THEN 1 ELSE 0 END AS vl FROM `power` WHERE oid=13 AND `key` LIKE '_I' AND `value` > 10 AND `addtime` > #{startTime} GROUP BY `addtime`, `oid` ORDER BY `addtime` ASC ) as c WHERE c.vl = 1
-	 * 3.温度：
 	 * @param startTime
 	 */
 	public void getERRinfo(){
-		Date startTime = TimeUtil.getBeforeMinute(1);//
-//PLC 		try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
-		
-		try { 	this.warningLogMapper.addSUerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->U 
-		try { 	this.warningLogMapper.addSIerrByTime( startTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->I
-		try { 	this.warningLogMapper.addHTCLogbyTime( startTime);      } catch (Exception e) { e.printStackTrace(); }   //dev->TEMP	
+		Date startMTime = TimeUtil.getBeforeMinute(5);//
+//   	try {   this.warningLogMapper.addWREerrByTime( startTime);      } catch (Exception e) { e.printStackTrace(); }
+		try { 	this.warningLogMapper.addSUerrByTime( startMTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->U 
+		try { 	this.warningLogMapper.addSIerrByTime( startMTime);       } catch (Exception e) { e.printStackTrace(); }  //DEV->I
+		try { 	this.warningLogMapper.addHTCLogbyTime( startMTime);      } catch (Exception e) { e.printStackTrace(); }   //dev->TEMP	
 		
 //		try { 	this.warningLogMapper.addscollPUerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }  //PLC->U
 //		try { 	this.warningLogMapper.addscollPIerrByTime( startTime);  } catch (Exception e) { e.printStackTrace(); }   //PLC->I	
 //		try { 	this.warningLogMapper.addwaringLogbyTime(startTime);    } catch (Exception e) { e.printStackTrace(); }  //PLC->TEMP	
+		try { 	this.chdoorstatus();  } catch (Exception e) { e.printStackTrace(); }  //DEV -SWith门常开报警
 	}
 
 	/**
@@ -283,7 +279,7 @@ public class MsgServiceimp implements MsgService {
 							for (ColdStorageAnalysisEntity clsis : blowersisdata) {
 								 qfrost+= tempMap.get(clsis.getOid()) * clsis.getValue();
 							}
-							sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "QFrost", qfrost, dateTime));
+							sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "QFrost", qfrost/3600, dateTime));
 						} 
 					}
 					if(SetUtil.isnotNullList(sisList)){
@@ -298,8 +294,8 @@ public class MsgServiceimp implements MsgService {
 	/**
 	 * 6 Q风=Σ（P风*t风累积）->ok
 	 * type=4  ,key='totalRunning',valkey='Qblower' 
-	 * 1.SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers FROM `forkliftset` where `power` >0 GROUP BY rdcid; 计算平均功率
-	 * 2. select * from `coldstorageanalysis` where 1=1 AND `type` = 4 AND `key`in ('DefrosingTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
+	 * 1.select coldStorageId,group_concat(`id`) ids ,group_concat(`fanPower`) fanPowers  from `smartcold`.blowerset where  `fanPower` >0 GROUP BY `coldStorageId`; 计算平均功率
+	 * 2. select * from `coldstorageanalysis` where 1=1 AND `type` = 4 AND `key`in ('RunningTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
 	private void setQblower(String time, Date dateTime) {
 		try {
@@ -323,7 +319,7 @@ public class MsgServiceimp implements MsgService {
 						for (ColdStorageAnalysisEntity clsis : blowersisdata) {
 							 qfrost += tempMap.get(clsis.getOid()) * clsis.getValue();
 						}
-						sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "Qblower", qfrost, dateTime));
+						sisList.add(new ColdStorageAnalysisEntity(1, coldStorageId, "Qblower", qfrost/3600, dateTime));
 					} 
 				}
 				if(SetUtil.isnotNullList(sisList)){
@@ -341,7 +337,8 @@ public class MsgServiceimp implements MsgService {
 	 *  type=2  ,key='TotalTime',valkey='QForklift' -->type=14
 	 *   type=2 ,key='?'        ,valkey='Qlighting' -->type=15
 	 * 1.SELECT rdcid,coldstorageid, group_concat(id) ids  FROM `coldstoragedoorset` GROUP BY coldstorageid;
-	 * 2.SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers FROM `forkliftset` where `power` >0 GROUP BY rdcid; 计算平均功率
+	 * 2.SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers ,sum(power)/COUNT(*) avgpower  FROM `forkliftset` where `power` >0 and rdcid in(1590) GROUP BY rdcid; ; 计算平均功率
+	 *   SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers ,sum(power)/COUNT(*) avgpower  FROM `coldstoragelightset` where `power` >0 and rdcid in(1590) GROUP BY rdcid; ; 计算平均功率
 	 * 3.select * from `coldstorageanalysis` where 1=1 AND `type` = 2 AND `key`in ('TotalTime') AND `oid` in (26,28)   AND `date` BETWEEN '2016-10-17 00:00:00'  and '2016-10-17 23:59:59'  order by `date`,`oid` ;
 	 */
 	private void setQForklift(String time, Date dateTime,String startTime,String endTime) { //为机群服务器队列任务做准备
@@ -362,13 +359,13 @@ public class MsgServiceimp implements MsgService {
 							    fileter.put("oid", hashMap.get("ids"));
 							    List<ColdStorageAnalysisEntity> doorTotalTime = storageAnalysisMapper.findValueByFilter(fileter);
 							    if(SetUtil.isnotNullList(doorTotalTime)){
+							    	List<HashMap<String, Object>> lightsetList = this.quantitySetMapper.getLightPowerByCoid(coldstorageid);//获得照明功率
 							    	List<HashMap<String, Object>> forkliftsetList = this.quantitySetMapper.getPowerGroupByRDC("forkliftset", rdcid);//获得叉车功率
-							    	List<HashMap<String, Object>> lightsetList = this.quantitySetMapper.getPowerGroupByRDC("coldstoragelightset", rdcid);//获得照明功率
 							    	if(SetUtil.isnotNullList(forkliftsetList)){
 							    		avgforkliftPower =(Double) forkliftsetList.get(0).get("avgpower");
 							    	}
 							    	if(SetUtil.isnotNullList(lightsetList)){
-							    		avglightsetPower =(Double) lightsetList.get(0).get("avgpower");
+							    		avglightsetPower =(Double) lightsetList.get(0).get("sumpower");
 							    	}
 							    	for (ColdStorageAnalysisEntity clsis : doorTotalTime) {
 							    		if(avgforkliftPower!=0){
@@ -378,11 +375,11 @@ public class MsgServiceimp implements MsgService {
 							    			sumlighting+=avglightsetPower * clsis.getValue();
 							    		}
 									 }
-							    	if(sumForklift==0){
-							    	  sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "QForklift", sumForklift, dateTime));
+							    	if(sumForklift!=0){
+							    	  sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "QForklift", sumForklift/3600, dateTime));
 							    	}
-							    	if(sumlighting==0){
-							    		sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "Qlighting", sumlighting, dateTime));
+							    	if(sumlighting!=0){
+							    		sisList.add(new ColdStorageAnalysisEntity(1,coldstorageid, "Qlighting", sumlighting/3600, dateTime));
 							    	}
 							    }
 					  } 
@@ -411,10 +408,10 @@ public class MsgServiceimp implements MsgService {
 						    int id = (Integer) hashMap.get("id");//coldstorageset->id
 						    Double cgvolume=(Double) hashMap.get("cgvolume");//冷库面积d
 						    Double vvalue=	(Double) hashMap.get("vvalue");//换气次数d
-						    Float hn=	(Float) hashMap.get("hn");//换气次数
-						    Float hw=	(Float) hashMap.get("hw");//换气次数
+						    Double hn=	(Double) hashMap.get("hn");//换气次数
+						    Double hw=	(Double) hashMap.get("hw");//换气次数
 						    Double Q=0.675*cgvolume*vvalue*(hw-hn);//临时值
-							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q, dateTime));
+							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q/3600, dateTime));
 					 }
 				 }
 				 if(SetUtil.isnotNullList(sisList)){
@@ -426,7 +423,38 @@ public class MsgServiceimp implements MsgService {
 			addextMsg("setQctdoor",3, e.getMessage());//记录日志
 		}
 	}
-    
+	
+    /**
+     * 门报警
+     */
+	private void chdoorstatus( ){
+		List<DeviceObjectMappingEntity> doorDevMapper = this.quantityMapper.getDoorDevMapper();
+		if(SetUtil.isnotNullList(doorDevMapper)){
+			HashMap<Integer, String>  rdcdoorinfo=new HashMap<Integer, String>();
+			for (DeviceObjectMappingEntity obj : doorDevMapper) {
+				int overtempdelay=60;//默认60分钟
+				if(obj.getStatus()>0){overtempdelay=(int) obj.getStatus();}
+				Date stTime = TimeUtil.getBeforeMinute(overtempdelay);
+				Double sumcount = this.quantityMapper.getSwitchTime(obj.getDeviceid(), TimeUtil.getFormatDate(stTime), null);
+				Double opencount = this.quantityMapper.getSwitchTime(obj.getDeviceid(), TimeUtil.getFormatDate(stTime), 1);
+				if(sumcount!=null&&opencount!=null&&sumcount==opencount){//表示持续开门将报警
+					if(rdcdoorinfo.containsKey(obj.getRdcid())){
+						rdcdoorinfo.put(obj.getRdcid(), rdcdoorinfo.get(obj.getRdcid())+","+obj.getName());
+					}else{
+						rdcdoorinfo.put(obj.getRdcid(),obj.getName());
+					}
+				}
+			}
+			if(SetUtil.isNotNullMap(rdcdoorinfo)){
+				List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+				for (Integer rdcid: rdcdoorinfo.keySet()) {
+					rdcdoorinfo.put(rdcid, "{"+rdcdoorinfo.get(rdcid)+"}门超时未关闭");
+				}
+				this.warningLogMapper.addWarningLog(errInfoList);
+			 }
+		}
+	}
+	
 	private void addextMsg(String methodName,int type,String errMsg){
 		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 		if(StringUtil.isnotNull(errMsg)){
@@ -440,11 +468,9 @@ public class MsgServiceimp implements MsgService {
 	}
 	
 	public static void main(String[] args) {
-		long currentTime = System.currentTimeMillis() - 1800000;
-		Date startTime = new Date(currentTime);
-		Date endTime = new Date();
-		System.err.println(  TimeUtil.getDateTime(startTime) );
-		System.err.println(  TimeUtil.getDateTime(endTime) );
+		
+		
+		
 	}
 	
 	

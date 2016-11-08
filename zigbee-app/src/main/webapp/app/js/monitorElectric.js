@@ -19,23 +19,32 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            if (rootRdcId == undefined || rootRdcId == null) {
-                $scope.currentRdc = $scope.storages[0];
-                $scope.rdcId = $scope.storages[0].id;
-                $scope.rdcName = $scope.storages[0].name;
-                $scope.viewStorage($scope.storages[0].id);
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
+                    $scope.viewStorage($scope.storages[0].id);
+                }
             } else {
-                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-                    $scope.currentRdc = data[0];
-                    $scope.rdcName = data[0].name;
-                    $scope.rdcId = data[0].id;
-                    $scope.viewStorage($scope.rdcId);
-                });
+                findByRdcId(rootRdcId)
             }
         }
     });
 
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName = data[0].name;
+            $scope.rdcId = data[0].id;
+            $scope.viewStorage($scope.rdcId);
+        });
+    }
+
     $scope.viewStorage = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
         $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
             "rdcId": rdcId
@@ -133,9 +142,10 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
     $scope.powerEnergy = function () {
         clearSwiper();
         $scope.activeEnergy = 'power';
-
-        for (var i = 0; i < $scope.powers.length; i++) {
-            $scope.load($scope.powers[i]);
+        if ($scope.powers & $scope.powers.length > 0) {
+            for (var i = 0; i < $scope.powers.length; i++) {
+                $scope.load($scope.powers[i]);
+            }
         }
     }
 
@@ -160,9 +170,8 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                         });
                         var currentWater = '';
                         if (data.length > 0) {
-                            currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value).toFixed(1) : '';//
+                            currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value).toFixed(1) : '';
                         }
-                        ;
                         $scope.currentWater = currentWater;
 
                         var mainId = 'water' + item.id;
@@ -185,7 +194,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        if ($scope.activeEnergy == 'power') {
+        if ($scope.activeEnergy == 'power' && $scope.powers && $scope.powers.length > 0) {
             for (var i = 0; i < $scope.powers.length; i++) {
                 $scope.load($scope.powers[i]);
             }
@@ -204,11 +213,10 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             title: {
                 text: title,
                 x: 'left',
-                textStyle: {
-                    fontSize: 16,
-                    fontWeight: 400,
-                    color: '#333'          // 主标题文字颜色
-                },
+            	textStyle:{
+                	fontSize:13,
+                	fontWeight:'400'
+                }
             },
             calculable: true,
             grid: {
@@ -259,14 +267,22 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             min = Math.min(min, yData[index])
             max = Math.max(max, yData[index])
         })
-        yMin = max - min < 1 && type == 'line' ? min - 10 : yMin
+        if (max === 0 && min === 0) {
+            yMin = 0;
+        } else {
+            yMin = max - min < 1 && type == 'line' ? min - 10 : yMin;
+        }
         option = {
         	backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis'
             },
             title: {
-                text: title
+                text: title,
+            	textStyle:{
+                	fontSize:13,
+                	fontWeight:'400'
+                }
             },
             calculable: true,
             xAxis: [

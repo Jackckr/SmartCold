@@ -409,7 +409,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <!-- 制冷系统分析end -->
                <li onclick="activeLi(this)"><a href="#/historyData"><i class="icon iconfont">&#xe7a2;</i><span class="menu-title">历史数据查询</span></a></li>
                <li onclick="activeLi(this)"><a href="#/reportsAnalysis/{{rdcId}}"><i class="icon iconfont">&#xe7aa;</i><span class="menu-title">报表功能</span></a></li>
-               <li onclick="activeLi(this)"><a href="#/report-daily-"><i class="icon iconfont">&#xe7a7;</i><span class="menu-title">分析报告</span></a></li>
+               <li onclick="activeLi(this)"><a href="#/monthReport/{{rdcId}}"><i class="icon iconfont">&#xe7a7;</i><span class="menu-title">分析报告</span></a></li>
               </ul>
             </li>
 	            <li class="treeview">
@@ -470,6 +470,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 	<!-- jQuery 2.1.4 -->
 	<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script type='text/javascript'>
+	     window.jQuery || document.write('<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"><\/script>')
+	 </script>
 	<!-- Bootstrap 3.3.5 -->
 	<script src="assets/js/bootstrap.min.js"></script>
 	<!-- AdminLTE App -->
@@ -538,6 +541,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="app/js/analysis.js"></script>
 <script src="app/js/alarmLog.js"></script>
 <script src="app/js/waterCostGroup.js"></script>
+<script src="app/js/monthReport.js"></script>
 <script src="app/js/cold360Physical.js"></script>
 <!--  -->
 <script src="assets/plugins/chartjs/Chart.min.js"></script>
@@ -553,4 +557,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="assets/plugins/daterangepicker/moment.js"></script>
 <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="assets/plugins/daterangepicker2/bootstrap-datetimepicker.js"></script>
+
+<script src="../../assets/js/jQuery.print.js"></script>
 </html>

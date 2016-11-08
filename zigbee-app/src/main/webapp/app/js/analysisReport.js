@@ -17,27 +17,37 @@ app.controller('analysisReport', function ($scope, $location, $http) {
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            if (rootRdcId == undefined || rootRdcId == null) {
-                $scope.currentRdc = $scope.storages[0];
-                $scope.rdcId = $scope.storages[0].id;
-                $scope.rdcName = $scope.storages[0].name;
-                $scope.viewStorage($scope.storages[0].id);
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
+                    $scope.viewStorage($scope.storages[0].id);
+                }
             } else {
-                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-                    $scope.currentRdc = data[0];
-                    $scope.rdcName = data[0].name;
-                    $scope.rdcId = data[0].id;
-                    $scope.viewStorage($scope.rdcId);
-                });
+                findByRdcId(rootRdcId);
             }
         }
     });
 
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName = data[0].name;
+            $scope.rdcId = data[0].id;
+            $scope.viewStorage($scope.rdcId);
+        });
+    }
+
     $scope.viewStorage = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
-            "rdcId": rdcId
-        }
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
+            params: {
+                "rdcId": rdcId
+            }
         }).success(function (data) {
             if (data && data.length > 0) {
                 $scope.alarmTotalCnt = data.length;
@@ -126,12 +136,12 @@ app.controller('analysisReport', function ($scope, $location, $http) {
     $scope.begin = $scope.getDateTimeStringBefore(3).substr(0, 10), $scope.end = $scope.getDateTimeStringBefore(0).substr(0, 10);
     $scope.slindex = 0, $scope.urlid = 0, $scope.sltit = "日耗电量", $scope.tabletit = null, $scope.rs_msg = null, isSuccess = false, $scope.coldstoragedoor = undefined, $scope.StorageBlower = undefined, $scope.prove = undefined;//冷库门
     //key
-    var typemode = {
-        type: [10, 3, 2, 1, -1, 4, -1, -1, -1],
-        unit: [null, null, [1, 60], [60, 1, 1, 1], null, [3600, 3600], null, null, null],//换算单位
-        unite: ["　(kW·h)", "　(T)", "", "", "", "", "", "", ""],
-        title: ["电量", "水耗", "冷库门", "温度分析", "热量", "冷风机", "系统效率", "货物因子", "制冷运行分析"],
-        key: ["'TotalPWC'", "'WaterCost'", "'OpenTimes','TotalTime','AvgTime';次数,时长(min),平均时长(min)", "'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)", "货物热量,化霜热量,叉车热量,照明热量,保温热量,冷风机风扇热量,开门热量;GoodsHeat,QFrost,QForklift,Qlighting,WallHeat,Qblower,Qctdoor", "'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)", "", "", ""]
+    var typemode={
+        type:[10,3,2,1,1,4,-1,1,5],
+        unit:[null,null,[1,60,60],[60,1,1,1],null,[3600,3600],null,null,[3600,1,60]],//换算单位
+        unite:["　(kW·h)","　(T)","","","","","","",""],
+        title:["电量","水耗","冷库门","温度分析","热量","冷风机","系统效率","货物因子","制冷运行分析"],
+        key:["'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime','AvgTime';次数,时长(min),平均时长(min)","'ChaoWenShiJian','MaxTemp','ChaoWenYinZi','BaoWenYinZi';超温时长(min),最高温度(℃),超温因子(ε),保温因子(τ)","'GoodsHeat','QFrost','QForklift','Qlighting','WallHeat','Qblower','Qctdoor';Q货,Q霜,Q叉,Q照,Q保,Q风,Q门","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)","avg","'GoodsLiuTongYinZi'","'RunningTime','RunningCount','avg';运行总时间(H),运行总次数,平均时间(min)"]
     };
 
     function gettbcltit(value, cl) {//获取标题1
@@ -166,19 +176,19 @@ app.controller('analysisReport', function ($scope, $location, $http) {
                 data = $scope.mystorages;
                 break;//冷库->温度分析
             case 4:
-                data = null;
+                data = $scope.mystorages;
                 break;//冷库->热　　量
             case 5:
                 data = $scope.StorageBlower;
                 break;//blower->冷风机
             case 6:
-                data = null;
+                data = $scope.qesis;
                 break;//系统效率
             case 7:
-                data = null;
+                data = $scope.mystorages;
                 break;//货物因子
             case 8:
-                data = null;
+                data = $scope.allcompressors;
                 break;//制冷运行分析
             default:
                 break;
@@ -200,7 +210,7 @@ app.controller('analysisReport', function ($scope, $location, $http) {
         $scope.getsldata();
     };
     $scope.getsldata = function () {//拦截未加载数据
-        if ($scope.slindex == 2 && $scope.coldstoragedoor == undefined || $scope.slindex == 5 && $scope.StorageBlower == undefined) {
+        if ($scope.slindex == 2 && $scope.coldstoragedoor == undefined || $scope.slindex == 5 && $scope.StorageBlower == undefined || $scope.slindex == 8 && $scope.allcompressors == undefined || $scope.slindex == 6 && $scope.qesis == undefined) {
             if ($scope.prove == undefined) {
                 $scope.prove = {};
                 $.each($scope.mystorages, function (i, vo) {
@@ -221,21 +231,32 @@ app.controller('analysisReport', function ($scope, $location, $http) {
                     });
                     $scope.StorageBlower = data;
                 });
+            } else if ($scope.slindex == 6) {//系统效率
+                $scope.qesis = [{id: 0, rdcid: 0, name: "系统效率"}];
+            } else if ($scope.slindex == 8) {//blower->冷风机
+                var data = [];
+                $.each($scope.compressorGroups, function (i, vo) {
+                    $.each(vo.compressors, function (j, jvo) {
+                        jvo.name = vo.name + jvo.name;
+                        data.push(jvo);
+                    });
+                });
+                $scope.allcompressors = data;
             }
         }
     };
 
     $scope.search = function () {//查询数据
-    	//将字符串转换为日期
-        var begin=new Date($("#startTime").val().replace(/-/g,"/"));
-        var end=new Date($("#endTime").val().replace(/-/g,"/"));
+        //将字符串转换为日期
+        var begin = new Date($("#startTime").val().replace(/-/g, "/"));
+        var end = new Date($("#endTime").val().replace(/-/g, "/"));
         //js判断日期
-        if(begin>end){
-           layer.open({
-	           content: '开始时间不能小于结束时间哦^_^'
-	           ,btn: '确定'
-	        });
-           return false;
+        if (begin > end) {
+            layer.open({
+                content: '开始时间不能小于结束时间哦^_^'
+                , btn: '确定'
+            });
+            return false;
         }
         isSuccess = false, $scope.rs_msg = null;
         $scope.isLoaddata = true;
@@ -250,7 +271,10 @@ app.controller('analysisReport', function ($scope, $location, $http) {
             type: "POST",
             url: ER.coldroot + '/i/AnalysisController/getCasesTotalSISAnalysis',
             data: {
-                index: $scope.urlid,
+                rdcid: $scope.rdcId,
+                index: $scope.slindex,
+                urlid: $scope.urlid,
+                isexpt: false,
                 type: typemode.type[$scope.slindex],
                 confdata: datainfo,
                 key: typemode.key[$scope.slindex],
@@ -261,7 +285,7 @@ app.controller('analysisReport', function ($scope, $location, $http) {
             success: function (data) {
                 if (data.success) {
                     isSuccess = true;
-                    if ($scope.urlid == 0) {
+                    if ($scope.urlid == 0 || $scope.urlid == 2) {
                         $scope.dldata(data);
                     } else {
                         $scope.cldata(data);
@@ -325,15 +349,15 @@ app.controller('analysisReport', function ($scope, $location, $http) {
         $("#rpt_asistb_tbody").html(tboy.join(""));
     }
     jeDate({
-		dateCell:"#startTime",
-		format:"YYYY-MM-DD",
-		isTime:false, 
-		minDate:"2008-08-08 08:08:08"
-	})
-	jeDate({
-		dateCell:"#endTime",
-		format:"YYYY-MM-DD",
-		isTime:false, 
-		minDate:"2008-08-08 08:08:08"
-	})
+        dateCell: "#startTime",
+        format: "YYYY-MM-DD",
+        isTime: false,
+        minDate: "2008-08-08 08:08:08"
+    })
+    jeDate({
+        dateCell: "#endTime",
+        format: "YYYY-MM-DD",
+        isTime: false,
+        minDate: "2008-08-08 08:08:08"
+    })
 });

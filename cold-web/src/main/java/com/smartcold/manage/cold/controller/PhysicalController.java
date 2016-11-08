@@ -85,15 +85,31 @@ public class PhysicalController {
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> checkup(Integer rdcId) {
 		if(rdcId==null){ return ResponseData.newFailure("0");}//0.非法请求
-		List<ColdStorageSetEntity> coldStorageSetList = coldsetServer.findByRdcId(rdcId);
 		String stTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(30))+" 00:00:00";
 		String edTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(0))+ " 23:59:59";
-		WeightSetEntity weightSet = this.weightSetMapper.getWeightSet(rdcId);//占比
-		if(weightSet==null){weightSet=new WeightSetEntity(0,2,10,10,2,3,0,30,5,1);};
-		//1.2检查冷库信息 
+		HashMap<String, Object> resMap = getPysicalInfo(rdcId,  stTime, edTime);
+		return ResponseData.newSuccess(resMap);
+	}
+	/**
+	 * 获得月体检报告
+	 * @param rdcId
+	 * @return
+	 */
+	@RequestMapping(value = "/mothCheckup")
+	@ResponseBody
+	public ResponseData<HashMap<String, Object>> mothCheckup(Integer rdcId,String stTime,String edTime ) {
+		if(rdcId==null){ return ResponseData.newFailure("0");}//0.非法请求
+		HashMap<String, Object> resMap = getPysicalInfo(rdcId,  stTime, edTime);
+		return ResponseData.newSuccess(resMap);
+	}
+	
+	private HashMap<String, Object> getPysicalInfo(Integer rdcId,  String stTime, String edTime) {
 		boolean ishasTempDEV=false;
 		HashMap<String, Object> resMap=new HashMap<String, Object>();
-		if(SetUtil.isnotNullList(coldStorageSetList)){
+		WeightSetEntity weightSet = this.weightSetMapper.getWeightSet(rdcId);//占比
+		if(weightSet==null){weightSet=new WeightSetEntity(0,2,10,10,2,3,0,30,5,1);};
+		List<ColdStorageSetEntity> coldStorageSetList = coldsetServer.findByRdcId(rdcId);
+		if(SetUtil.isnotNullList(coldStorageSetList)){	//1.2检查冷库信息 
 			Integer oid= coldStorageSetList.get(0).getId();
 			 ishasTempDEV= this.hasdev(1, "coldstorage", oid, "Temp", stTime, edTime);//1.1检查温度是否有设备
 			if(ishasTempDEV){ //2.2檢查設備(进行评估冷库)
@@ -119,7 +135,7 @@ public class PhysicalController {
 	        }
 		}
 		resMap.put("ishasTempDEV", ishasTempDEV);
-		return ResponseData.newSuccess(resMap);
+		return resMap;
 	}
 	private int  getColorVal(int tempS ){
 		if( tempS >=70&&tempS<=99){

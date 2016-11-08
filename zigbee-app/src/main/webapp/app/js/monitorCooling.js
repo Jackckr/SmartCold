@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('monitorCooling', function ($scope, $location, $http, $rootScope, $sce) {
+app.controller('monitorCooling', function ($scope, $location, $http, $rootScope) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -16,21 +16,29 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            if (rootRdcId == undefined || rootRdcId == null) {
-                $scope.currentRdc = $scope.storages[0];
-                $scope.rdcId = $scope.storages[0].id;
-                $scope.rdcName = $scope.storages[0].name;
-                $scope.initCompressorPressure($scope.rdcId);
-            } else {
-                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-                    $scope.currentRdc = data[0];
-                    $scope.rdcName =  data[0].name;
-                    $scope.rdcId =  data[0].id;
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
                     $scope.initCompressorPressure($scope.rdcId);
-                });
+                }
+            } else {
+                findByRdcId(rootRdcId);
             }
         }
     });
+
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName =  data[0].name;
+            $scope.rdcId =  data[0].id;
+            $scope.initCompressorPressure($scope.rdcId);
+        });
+    }
 
     $scope.viewStorage = function () {
         for (var i = 0; i < $scope.compressorGroups.length; i++) {
@@ -73,6 +81,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
     $scope.defaltswiper = 0;
 
     $scope.initCompressorPressure = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
         $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
             "rdcId": rdcId
@@ -543,8 +552,10 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
         clearSwiper();
         $scope.swiper = 0;
         $scope.activeEnergy = 'compressorPressure';
-        for (var i = 0; i < $scope.compressorGroups.length; i++) {
-            $scope.drawCompressorPressure($scope.compressorGroups[i]);
+        if ($scope.compressorGroups && $scope.compressorGroups.length > 0) {
+            for (var i = 0; i < $scope.compressorGroups.length; i++) {
+                $scope.drawCompressorPressure($scope.compressorGroups[i]);
+            }
         }
     }
 
@@ -552,8 +563,10 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
         clearSwiper();
         $scope.swiper = 0;
         $scope.activeEnergy = 'condensation';
-        for (var i = 0; i < $scope.compressorGroups.length; i++) {
-            $scope.drawCondensation($scope.compressorGroups[i]);
+        if ($scope.compressorGroups && $scope.compressorGroups.length > 0) {
+            for (var i = 0; i < $scope.compressorGroups.length; i++) {
+                $scope.drawCondensation($scope.compressorGroups[i]);
+            }
         }
     }
 
@@ -568,8 +581,10 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
         clearSwiper();
         $scope.swiper = 0;
         $scope.activeEnergy = 'exhaustTemper';
-        for (var i = 0; i < $scope.compressorGroups.length; i++) {
-            $scope.drawExhaustTemper($scope.compressorGroups[i]);
+        if ($scope.compressorGroups && $scope.compressorGroups.length > 0) {
+            for (var i = 0; i < $scope.compressorGroups.length; i++) {
+                $scope.drawExhaustTemper($scope.compressorGroups[i]);
+            }
         }
     }
 
@@ -577,11 +592,6 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
         $("div").remove(".swiper-slide");
         $scope.swiper = 0;
         $scope.defaltswiper = 0;
-    }
-
-    var getFormatTimeString = function (delta) {
-        delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
-        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
     }
 
     function formatTime(timeString) {
@@ -618,7 +628,6 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
                 x: 55,
                 y: 60,
                 x2: 75,
-                /*y2: 60,*/
             },
             xAxis: [
                 {
@@ -645,12 +654,12 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
-        if ($scope.activeEnergy == 'compressorPressure') {
+        if ($scope.activeEnergy == 'compressorPressure' && $scope.compressorGroups && $scope.compressorGroups.length > 0) {
             for (var i = 0; i < $scope.compressorGroups.length; i++) {
                 $scope.drawCompressorPressure($scope.compressorGroups[i]);
             }
         }
-        if ($scope.activeEnergy == 'condensation') {
+        if ($scope.activeEnergy == 'condensation' && $scope.compressorGroups && $scope.compressorGroups.length > 0) {
             for (var i = 0; i < $scope.compressorGroups.length; i++) {
                 $scope.drawCondensation($scope.compressorGroups[i]);
             }
@@ -658,7 +667,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
         if ($scope.activeEnergy == 'compressorBlower') {
             $scope.drawCompressorBlower();
         }
-        if ($scope.activeEnergy == 'exhaustTemper') {
+        if ($scope.activeEnergy == 'exhaustTemper' && $scope.compressorGroups && $scope.compressorGroups.length > 0) {
             for (var i = 0; i < $scope.compressorGroups.length; i++) {
                 $scope.drawExhaustTemper($scope.compressorGroups[i]);
             }

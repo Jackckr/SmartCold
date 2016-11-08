@@ -73,4 +73,11 @@ public class ColdStorageController {
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 		return storageService.findAnalysisByRdcidKeyDate(rdcid, Arrays.asList(keys.split(",")), startTime, endTime);
 	}
+	@RequestMapping(value = "/findDoorSisByRdcidKeyDate", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findDoorSisByRdcidKeyDate (int rdcid, String keys,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		return storageService.findDoorSisByRdcidKeyDate(rdcid, Arrays.asList(keys.split(",")), startTime, endTime);
+	}
 }

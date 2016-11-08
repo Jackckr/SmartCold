@@ -5,7 +5,8 @@
         INSERT into ${table} set name=#{name},rdcid=#{rdcid}
          <if test="mapping !=null and mapping!=''">,mapping=#{mapping}</if>
          <if test="iunbalance !=null and iunbalance!=''">,iunbalance=#{iunbalance}</if>
-         <if test="power !=null and power!=''">,power=#{power}</if>;
+         <if test="power !=null and power!=''">,power=#{power}</if>
+         <if test="platformdoorid != null and platformdoorid != 0">,platformdoorid=#{platformdoorid}</if>
     </insert>
 
     <update id="updateMapping">
@@ -13,7 +14,7 @@
         WHERE id=#{id}
     </update>
     <update id="updateObj" parameterType="Object">
-        UPDATE ${table} SET name=#{name} ,power=#{power}  WHERE id=#{id};
+        UPDATE ${table} SET name=#{name} ,power=#{power}
     </update>
     <delete id="deleteById">
         DELETE FROM ${table} WHERE id=#{id}

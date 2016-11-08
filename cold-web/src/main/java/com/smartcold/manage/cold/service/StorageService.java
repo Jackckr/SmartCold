@@ -23,6 +23,9 @@ public interface StorageService {
 	
     List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,int daysBetween,String dateFormat,String orderBy);
 //	
+    
+    Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findDoorSisByRdcidKeyDate(int rdcid, List<String> keys, Date startTime, Date endTime) ;
+    
 	Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findAnalysisByRdcidKeyDate(int rdcid, List<String> keys, Date startTime, Date endTime);
 	
 	

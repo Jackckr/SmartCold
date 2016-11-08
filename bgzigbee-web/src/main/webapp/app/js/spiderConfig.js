@@ -559,6 +559,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     	else if(obj.iunbalance!=undefined&&isNaN(obj.iunbalance))
     		alert("输入的不平衡值需要为数字");
     	else{
+    		if(obj.platformdoorid != null){
+    			obj.platformdoorid = obj.platformdoorid.id
+    		}
         obj.rdcid = $scope.vm.choseRdc.id;
         obj.table = table;
         //debugger;
@@ -1072,11 +1075,19 @@ coldWeb.directive("ajaxTable", function ($http,baseTools) {
 			var resttableurl = attrs.resttableUrl;
 			var table = attrs.table;
 
+			scope.edittable=function(obj){
+				if(obj.editable){
+					obj.editable = false;
+					scope.update(obj);
+				}else{
+					obj.editable =true;	
+				}
+			};
             scope.update = function (obj) {
-            	debugger;
 				if (updateUrl){
 				    var params = {id:obj.id};
 				    for(var i=0; i<scope.colums.length; i++){
+				    	if(scope.colums[i]=='lastMaintainTime'){continue;}
 				    	params[scope.colums[i]] = obj[scope.colums[i]];
 					}
 					$http.post(updateUrl, params).then(function (resp) {

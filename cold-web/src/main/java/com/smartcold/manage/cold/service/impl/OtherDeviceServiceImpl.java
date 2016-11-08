@@ -20,15 +20,15 @@ import com.smartcold.manage.cold.dao.olddb.PressurePlatformSetMapping;
 import com.smartcold.manage.cold.dao.olddb.WindScreenSetMapping;
 import com.smartcold.manage.cold.dto.CostEntity;
 import com.smartcold.manage.cold.dto.OtherDeviceDto;
-import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.olddb.ChargingPileSetEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.ForkLiftSetEntity;
 import com.smartcold.manage.cold.entity.olddb.PressurePlatformSetEntity;
 import com.smartcold.manage.cold.entity.olddb.WindScreenSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
+import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.OtherDeviceService;
-import com.smartcold.manage.cold.service.StorageService;
 
 @Service
 public class OtherDeviceServiceImpl implements OtherDeviceService {
@@ -49,7 +49,7 @@ public class OtherDeviceServiceImpl implements OtherDeviceService {
 	private ColdStorageSetMapper coldStorageSetDao;
 
 	@Autowired
-	private StorageService storageService;
+	private ColdStorageAnalysisService coldstorageAnalysisiService;
 
 	@Override
 	public OtherDeviceDto getOtherDeviceCostByTime(int rdcId, Date startTime, Date endTime) {
@@ -67,10 +67,10 @@ public class OtherDeviceServiceImpl implements OtherDeviceService {
 		List<ForkLiftSetEntity> forkLiftEntities = forkLiftSetDao.findByRdcId(rdcId);
 		ArrayList<CostEntity> costEntities = new ArrayList<CostEntity>();
 		for (ForkLiftSetEntity entity : forkLiftEntities) {
-			List<StorageKeyValue> infos = storageService.findByTime(StorageType.FORKLIFT.getType(), entity.getId(),
-					"time", startTime, endTime);
-			for (StorageKeyValue info : infos) {
-				costEntities.add(new CostEntity(entity.getPower() * info.getValue(), info.getAddtime()));
+			List<ColdStorageAnalysisEntity> infos = coldstorageAnalysisiService.findValueByDateKeys(
+					StorageType.FORKLIFT.getType(), entity.getId(), "ForkLiftPower", startTime, endTime);
+			for (ColdStorageAnalysisEntity info : infos) {
+				costEntities.add(new CostEntity(info.getValue(), info.getDate()));
 			}
 		}
 
@@ -83,10 +83,10 @@ public class OtherDeviceServiceImpl implements OtherDeviceService {
 		for (ColdStorageSetEntity entity : storages) {
 			List<WindScreenSetEntity> windEntities = windScreenSetDao.findByStorageId(entity.getId());
 			for (WindScreenSetEntity windEntity : windEntities) {
-				List<StorageKeyValue> infos = storageService.findByTime(StorageType.WINDSCREEN.getType(),
-						windEntity.getId(), "time", startTime, endTime);
-				for (StorageKeyValue info : infos) {
-					costEntities.add(new CostEntity(windEntity.getPower() * info.getValue(), info.getAddtime()));
+				List<ColdStorageAnalysisEntity> infos = coldstorageAnalysisiService.findValueByDateKeys(
+						StorageType.WINDSCREEN.getType(), windEntity.getId(), "WindScreenPower", startTime, endTime);
+				for (ColdStorageAnalysisEntity info : infos) {
+					costEntities.add(new CostEntity(info.getValue(), info.getDate()));
 				}
 			}
 		}
@@ -98,10 +98,10 @@ public class OtherDeviceServiceImpl implements OtherDeviceService {
 		ArrayList<CostEntity> costEntities = new ArrayList<CostEntity>();
 		List<PressurePlatformSetEntity> pressureEntities = pressurePlatformSetDao.findByRdcId(rdcId);
 		for (PressurePlatformSetEntity pressure : pressureEntities) {
-			List<StorageKeyValue> infos = storageService.findByTime(StorageType.PRESSUREPLATFORM.getType(),
-					pressure.getId(), "time", startTime, endTime);
-			for (StorageKeyValue info : infos) {
-				costEntities.add(new CostEntity(pressure.getPower() * info.getValue(), info.getAddtime()));
+			List<ColdStorageAnalysisEntity> infos = coldstorageAnalysisiService.findValueByDateKeys(
+					StorageType.PRESSUREPLATFORM.getType(), pressure.getId(), "PlatformPower", startTime, endTime);
+			for (ColdStorageAnalysisEntity info : infos) {
+				costEntities.add(new CostEntity(info.getValue(), info.getDate()));
 			}
 		}
 
@@ -112,10 +112,10 @@ public class OtherDeviceServiceImpl implements OtherDeviceService {
 		ArrayList<CostEntity> costEntities = new ArrayList<CostEntity>();
 		List<ChargingPileSetEntity> chargingEntities = chargingPileSetDao.findByRdcId(rdcId);
 		for (ChargingPileSetEntity chargingEntity : chargingEntities) {
-			List<StorageKeyValue> infos = storageService.findByTime(StorageType.CHARGINGPILE.getType(),
-					chargingEntity.getId(), "time", startTime, endTime);
-			for (StorageKeyValue info : infos) {
-				costEntities.add(new CostEntity(chargingEntity.getPower() * info.getValue(), info.getAddtime()));
+			List<ColdStorageAnalysisEntity> infos = coldstorageAnalysisiService.findValueByDateKeys(
+					StorageType.CHARGINGPILE.getType(), chargingEntity.getId(), "ChargingPower", startTime, endTime);
+			for (ColdStorageAnalysisEntity info : infos) {
+				costEntities.add(new CostEntity(info.getValue(), info.getDate()));
 			}
 		}
 

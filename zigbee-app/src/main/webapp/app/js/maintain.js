@@ -16,68 +16,81 @@ app.controller('maintain', function ($scope, $location, $http) {
     }
     var rootRdcId = $.getUrlParam('storageID');
 
-    //根据rdcid查询该rdc的报警信息
-    $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
-        "rdcId": rootRdcId
-    }
-    }).success(function (data) {
-        if (data && data.length > 0) {
-            $scope.alarmTotalCnt = data.length;
-        }
-    });
-
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
-            if (rootRdcId == undefined || rootRdcId == null) {
-                $scope.currentRdc = $scope.storages[0];
-                $scope.rdcId = $scope.storages[0].id;
-                $scope.rdcName = $scope.storages[0].name;
-                $scope.viewStorage($scope.storages[0].id);
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
+                    $scope.viewStorage($scope.storages[0].id);
+                }
             } else {
-                $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
-                    $scope.currentRdc = data[0];
-                    $scope.rdcName = data[0].name;
-                    $scope.rdcId = data[0].id;
-                    $scope.viewStorage($scope.rdcId);
-                });
+                findByRdcId(rootRdcId);
             }
         }
     });
 
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName = data[0].name;
+            $scope.rdcId = data[0].id;
+            $scope.viewStorage($scope.rdcId);
+        });
+    }
+
+    $scope.smgroid = null;
+    $scope.sytime = undefined;
     $scope.viewStorage = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
+        //根据rdcid查询该rdc的报警信息
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
+            params: {
+                "rdcId": $scope.rdcId
+            }
+        }).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.alarmTotalCnt = data.length;
+            }
+        });
         $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(function (data) {
             $scope.compressorGroups = data;
+            var oid = [];
             angular.forEach($scope.compressorGroups, function (item) {
+                oid.push(item.id);
                 $http.get(ER.coldroot + '/i/compressor/findBygroupId?groupId=' + item.id).success(function (data) {
                     item.compressors = data;
                 })
             })
+            $scope.smgroid = oid.join(',');
+            $http.get(ER.coldroot + '/i/physicalController/getCompressorinfo', {params: {oids: $scope.smgroid}}).success(function (data) {
+                $scope.sytime = data.entity;
+                angular.forEach($scope.compressorGroups, function (item) {
+                    angular.forEach(item.compressors, function (obj) {
+                        obj.sytm = $scope.aredayTime(obj);
+                    });
+                });
+            });
         });
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
     }
 
-    $scope.aredayTime = function (time) {
-        if (time == null || time == "") {
-            return "未设置保养信息";
-        }
-        var text = "还剩  ";
-        var date1 = new Date();
-        var date2 = new Date(time);
-        var date3 = date2.getTime() - date1.getTime();  //时间差的毫秒数
-        var days = Math.floor(date3 / (86400000));
-        var hours = Math.floor(date3 % (86400000) / (3600000));
-        if (days > 0) {
-            text += days + "天 ";
-        }
-        if (hours > 0) {
-            text += hours + "小时 ";
+    $scope.aredayTime = function (obj) {
+        if (obj.maintenancetime && obj.lastMaintainTime) {
+            var sytime = $scope.sytime[obj.id];
+            if (sytime <= 0) {
+                return '已超保养期' + sytime;
+            }
+            return "还剩  " + parseInt(sytime) + "小时";
         } else {
-            text = "已过保养期";
+            return "未设置保养时间";
         }
-        return text;
     };
 
     $scope.searchRdcs = function (searchContent) {
@@ -90,19 +103,20 @@ app.controller('maintain', function ($scope, $location, $http) {
             });
         }
     }
+
     jeDate({
-		dateCell:"#applyTime",
-		format:"YYYY-MM-DD",
-		isTime:false, 
-		zIndex:10000,
-		minDate:"2008-08-08 08:08:08"
-	})
-	/*tab切换*/
-	$(".mylog").click(function(event){
-		var $index = $(this).index();
-		$('.mainTainBottomL>div').eq($index).show().siblings().hide();
-		$(this).addClass('current').siblings().removeClass('current');
-	})
+        dateCell: "#applyTime",
+        format: "YYYY-MM-DD",
+        isTime: false,
+        zIndex: 10000,
+        minDate: "2008-08-08 08:08:08"
+    })
+    /*tab切换*/
+    $(".mylog").click(function (event) {
+        var $index = $(this).index();
+        $('.mainTainBottomL>div').eq($index).show().siblings().hide();
+        $(this).addClass('current').siblings().removeClass('current');
+    })
     $scope.changeRdc = function (rdc) {
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;

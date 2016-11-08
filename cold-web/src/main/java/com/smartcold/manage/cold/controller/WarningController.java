@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.util.ResponseData;
-import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 @Controller
@@ -56,30 +55,28 @@ public class WarningController extends BaseController {
 	public ResponseData<HashMap<String, Object>> getWarncoldAnalysis(Integer rdcId) {
 		try {
 			System.out.println(TimeUtil.getDateTime());
-			if (rdcId == null) {
-				return ResponseData.newFailure("非法访问！");
-			}
+			if (rdcId == null) { return ResponseData.newFailure("非法访问！"); }
 			HashMap<String, Object> allDataMap = new HashMap<String, Object>();
 			HashMap<String, Object> resMap = new HashMap<String, Object>();
-			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);// 查询上个月的
-			if (SetUtil.isnotNullList(wrnType) && wrnType.size() > 0) {
-				String startime = TimeUtil.getBeforeMonthTime(1);
-				String endtime = TimeUtil.getEndMonthTime(1);
-				for (WarningsInfo warningsInfo : wrnType) {
-					resMap.put(warningsInfo.getWarningname(),
-							this.warningsInfoDao.getWarCountByType(rdcId,30,warningsInfo.getWarningname(),startime,endtime) );
-				}
-			}
+//			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);// 查询上个月的
+//			if (SetUtil.isnotNullList(wrnType) && wrnType.size() > 0) {
+//				String startime = TimeUtil.getBeforeMonthTime(1);
+//				String endtime = TimeUtil.getEndMonthTime(1);
+//				for (WarningsInfo warningsInfo : wrnType) {
+//					resMap.put(warningsInfo.getWarningname(),
+//							this.warningsInfoDao.getWarCountByType(rdcId,30,warningsInfo.getWarningname(),startime,endtime) );
+//				}
+//			}
 			HashMap<String, Object> rescuMap = new HashMap<String, Object>();
-			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);// 查询当前月份的
-			if (SetUtil.isnotNullList(wrncuType) && wrncuType.size() > 0) {
-				String startime = TimeUtil.getBeforeMonthTime(0);
-				String endtime = TimeUtil.getEndMonthTime(0);
-				for (WarningsInfo warningsInfo : wrncuType) {
-					rescuMap.put(warningsInfo.getWarningname(),
-							this.warningsInfoDao.getWarCountByType(rdcId,  30, warningsInfo.getWarningname(),startime,endtime));
-				}
-			}
+//			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);// 查询当前月份的
+//			if (SetUtil.isnotNullList(wrncuType) && wrncuType.size() > 0) {
+//				String startime = TimeUtil.getBeforeMonthTime(0);
+//				String endtime = TimeUtil.getEndMonthTime(0);
+//				for (WarningsInfo warningsInfo : wrncuType) {
+//					rescuMap.put(warningsInfo.getWarningname(),
+//							this.warningsInfoDao.getWarCountByType(rdcId,  30, warningsInfo.getWarningname(),startime,endtime));
+//				}
+//			}
 			allDataMap.put("cuttdata", rescuMap);
 			allDataMap.put("lsttdata", resMap);
 			return ResponseData.newSuccess(allDataMap);
