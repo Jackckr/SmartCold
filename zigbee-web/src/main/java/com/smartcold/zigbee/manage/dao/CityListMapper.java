@@ -13,4 +13,6 @@ public interface CityListMapper {
     List<CityListEntity> findCitysByProvinceId(@Param("provinceID") int provinceID);
 
     CityListEntity findCityById(@Param("CityID") int CityID);
+
+	List<CityListEntity> findCityByName(@Param("cityName") String cityName);
 }

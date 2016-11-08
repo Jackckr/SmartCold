@@ -10,7 +10,7 @@ public interface DeviceObjectMappingMapper {
 	
 	public void upDeviceObjectStatus(@Param("status") int status,@Param("id") int id);
 	
-	public Page<DeviceObjectMappingEntity> findAllDevice(@Param("keyword") String keyword,@Param("audit") int audit);
+	public Page<DeviceObjectMappingEntity> findAllDevice(@Param("keyword") String keyword,@Param("audit") Integer audit);
 	
 	public boolean delById(@Param("id") int id);
 }

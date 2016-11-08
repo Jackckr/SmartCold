@@ -1,5 +1,7 @@
 package com.smartcold.zigbee.manage.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.zigbee.manage.dao.CityListMapper;
 import com.smartcold.zigbee.manage.dao.ProvinceListMapper;
+import com.smartcold.zigbee.manage.entity.CityListEntity;
 import com.smartcold.zigbee.manage.util.APP;
 
 @Controller
@@ -40,5 +43,13 @@ public class CityController {
     @ResponseBody
     public Object findCityById(@RequestParam int CityID) {
         return cityListDao.findCityById(CityID);
+    }
+    
+    @RequestMapping(value = "/findCityByName", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findCityByName(@RequestParam String CityName) {
+    	String cityName = CityName.substring(0, 2);
+    	List<CityListEntity> cList =  cityListDao.findCityByName(cityName);
+        return cList.get(0);
     }
 }

@@ -1,4 +1,4 @@
-coldWeb.controller('deviceManage', function ($rootScope, $scope, $state, $cookies, $http, $location) {
+coldWeb.controller('deviceConfig', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 	$scope.load = function(){
 		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
 			   $rootScope.admin = data.entity;

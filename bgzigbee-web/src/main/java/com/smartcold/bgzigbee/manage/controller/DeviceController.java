@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
@@ -39,7 +41,8 @@ public class DeviceController extends BaseController {
 		else{
 		keyword = URLDecoder.decode(keyword, "UTF-8");
 		}
-		return new PageInfo<DeviceObjectMappingEntity>(deviceObjectMappingMapper.findAllDevice(keyword, audit));
+		Page<DeviceObjectMappingEntity> devicePage = deviceObjectMappingMapper.findAllDevice(keyword, audit);
+		return new PageInfo<DeviceObjectMappingEntity>(devicePage);
 		
 	}
 	
