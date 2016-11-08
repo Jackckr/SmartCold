@@ -4,11 +4,10 @@
  * 月分析报表
  */
 coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
-	$scope.isnotprint=true;//当前是否是打印状态
-	$scope.rdcId = $stateParams.rdcId;
-	var rooturl='http://smartcold.org.cn/';//
-	$("#loding").show(); $scope.loadindex=0;//已完成加载数据
-	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
+	$scope.rdcId = $stateParams.rdcId;if($scope.rdcId==undefined){ alert("无效请求");return ;}
+	$scope.isnotprint=true;$scope.rdcname = $stateParams.name; 
+	var rooturl='http://smartcold.org.cn/'; $("#loding").show(); $scope.loadindex=0; $scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
+	if($scope.rdcname==null){$scope.rdcname=window.sessionStorage.mrdcname;}else{window.sessionStorage.mrdcname=$scope.rdcname;}
 	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
 	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
 	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); $scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
@@ -48,6 +47,10 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//===================================================================================工具类end==================================================================================
 	//1.系统评分
 	$scope.pysical=function(){
+		//获得分析结果
+		$http({method:'POST',url:'/i/report/getRdcreportsis',params:{"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime}}).success(function (data) {
+			if(data!=null&&data.length>0){ $scope.rdcsis=data[0];}else{$scope.rdcsis=null;}
+	    });
 		$http.get(rooturl+'/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
 			++$scope.loadindex;$scope.pysicaldata=data.entity;
 		}});
@@ -169,18 +172,14 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     $scope.initPowersis();
     $scope.initWaterCostsis();
     $scope.initQEsis();
-
-    function printpage(){
-    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").addClass('font10');
-    	$.print('#print');}
-    function chanpangstatus(){
-    	$scope.isnotprint=true;
-    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
-    }
-	$scope.Preview=function(){ //打印预览
-		  $scope.isnotprint=false;
-		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });
-		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
-	 };
+    
+    //**保存
+    $scope.savesis=function(){
+    	$scope.rdcsis.rdcId=$scope.rdcId;
+    	$scope.rdcsis.time= $scope.endTime.substring(0,10);
+    	$http({method:'POST',url:'/i/report/saveRdcreportsis',params:$scope.rdcsis}).success(function (data) {
+			alert(data.message);
+	    });
+    };
     
 });

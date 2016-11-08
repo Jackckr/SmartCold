@@ -17,6 +17,6 @@ public interface ReportMapper {
 	 * @param type
 	 * @return
 	 */
-    Page<HashMap<String, Object>> findDLRDCByFilter( @Param("type") Integer type, @Param("keyword") String keyword);
+    Page<HashMap<String, Object>> findDLRDCByFilter( @Param("type") String type, @Param("keyword") String keyword);
    
 }

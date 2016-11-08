@@ -1,7 +1,7 @@
 <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
 	<div id="search" class="btn-group pull-left monthAll" style="margin-left:0">		
-	    <select class="monthSelect">
-	      <option value="">全部</option> <option value="0">device</option> <option value="1">PLC</option>
+	    <select class="monthSelect"    ng-change="changeType(x)" ng-model="x">
+	      <option value="">全部</option> <option value="0">DEV</option> <option value="1">PLC</option>
 	    </select>						
 	</div>			
 	<div class="pull-left monthSearch">
@@ -19,6 +19,7 @@
 		         	</div>
 		         </th>
 		         <th>冷库ID</th>
+		         <th>类型</th>
 		         <th>冷库名</th>
 		         <th>操作</th>
 		      </tr>
@@ -29,9 +30,10 @@
 					<input type="checkbox" ng-checked="exists(item, selected)" ng-click="toggle(item, selected)"/>
 		         </td>
 		         <td>{{item.id}}</td>
+		         <td>{{item.type==0?"DEV":"PLC"}}</td>
 		         <td>{{item.name}}</td>
 		         <td>
-		          <a href="#/monthReport/{{item.id}}" title="详细"><span class="edit" ></span></a>
+	              <a  ng-click="goreport(item)" title="详细"><span class="edit" ></span></a>
 		         </td>
 		      </tr>
 		   </tbody>

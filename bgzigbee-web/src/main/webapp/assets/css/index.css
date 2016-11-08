@@ -5,6 +5,8 @@ body{
 	width: 100%;
 	height: 60px;
 	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	box-sizing:border-box;
 }
 .logoArea,.userArea{
 	height: 100%;
@@ -544,7 +546,6 @@ footer{
 	width:50%;
 	height: 40px;
 	overflow: hidden;
-	font-size: 12px;
 }
 .print_name>div>input{
 	border:0;
@@ -553,7 +554,6 @@ footer{
 }
 .partP>p{
 	text-indent: 2em;
-	font-size: 12px;
 }
 .chart_gap>p{
 	margin: 10px 0;
