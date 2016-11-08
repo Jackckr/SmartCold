@@ -549,7 +549,6 @@ footer{
 .print_name>div{
 	width:50%;
 	height: 40px;
-	overflow: hidden;
 }
 .print_name>div>input{
 	border:0;

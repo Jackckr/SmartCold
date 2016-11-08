@@ -1,3 +1,16 @@
+<link rel="stylesheet" type="text/css" media="all" href="assets/plugins/daterangepicker/bootstrap-datetimepicker.css" />
+<script type="text/javascript" src="assets/plugins/daterangepicker/moment-with-locales.js"></script>
+<script type="text/javascript" src="assets/plugins/daterangepicker/bootstrap-datetimepicker.js"></script>
+<!-- 分析週期日起查詢 -->
+      <script type="text/javascript">
+      $(document).ready(function() {
+         $('#datetimepicker10').datetimepicker({
+             viewMode: 'years',
+            format: 'YYYY/MM'
+         });
+      });
+      </script>
+      
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
 	<div class="page-header">
 	  &nbsp;&nbsp;月报表
@@ -20,8 +33,9 @@
 	    		<div class="pull-left">
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}">
 	    		</div>
-	    		<div class="pull-left">
-	    			<span>分析周期：</span><input type="text" value="{{timeuRange}}">
+	    		<div class="pull-left input-group date">
+	    			<span>分析周期：</span><!-- <input type="text" value="{{timeuRange}}"> -->
+	    			<input type='text' id='datetimepicker10' />
 	    		</div>
 	    	</div>
 	    </div>

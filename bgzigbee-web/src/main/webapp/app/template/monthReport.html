@@ -1,17 +1,12 @@
-      <link rel="stylesheet" type="text/css" media="all" href="assets/plugins/daterangepicker/daterangepicker-bs3.css" />
-      <script type="text/javascript" src="assets/plugins/daterangepicker/moment.js"></script>
-      <script type="text/javascript" src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+      <link rel="stylesheet" type="text/css" media="all" href="assets/plugins/daterangepicker/bootstrap-datetimepicker.css" />
+      <script type="text/javascript" src="assets/plugins/daterangepicker/moment-with-locales.js"></script>
+      <script type="text/javascript" src="assets/plugins/daterangepicker/bootstrap-datetimepicker.js"></script>
       <!-- 分析週期日起查詢 -->
       <script type="text/javascript">
       $(document).ready(function() {
-         $('#reservationtime').daterangepicker({
-           timePicker: true,
-           timePickerIncrement: 30,
-           format: 'YYYY/MM/DD',
-           timePicker: false,
-           timePicker12Hour:false,
-         }, function(start, end, label) {
-           console.log(start.toISOString(), end.toISOString(), label);
+         $('#datetimepicker10').datetimepicker({
+             viewMode: 'years',
+            format: 'YYYY/MM'
          });
       });
       </script>
@@ -28,9 +23,9 @@
 	    		<div class="pull-left">
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{rdcname}}">
 	    		</div>
-	    		<div class="pull-left">
+	    		<div class="pull-left input-group date">
 	    			<span>分析周期：</span><!-- <input type="text" value="{{timeuRange}}"> -->
-	    			<input type="text" name="reservation" id="reservationtime" value="2016/10/01 - 2016/10/31" />
+	    			<input type='text' id='datetimepicker10' />&nbsp;
 	    			<button class="btn btn-primary btn-sm">查询</button>
 	    		</div>
 	    	</div>
