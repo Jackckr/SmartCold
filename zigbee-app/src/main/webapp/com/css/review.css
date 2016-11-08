@@ -6,6 +6,9 @@
 .main{
 	margin: 2.2rem 0 0.1rem;
 }
+.recentSearch{
+	padding:.2rem .9rem;
+}
 .search {
 	height: 100%;
 	margin: 0 1.5rem;
@@ -63,6 +66,40 @@
 	color: #666;
 	line-height: 1.75rem;
 }
+.listDad{
+	margin: 0.4rem 0 0.6rem;
+}
+.listDad li{
+	font-size: 0.8rem;
+}
+.listDad li i{
+	font-size: 0.8rem;
+}
+.borderlist{
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 0.3rem;
+}
+.borderlist li{
+	float: left;
+	padding: 0.2rem 0.4rem;
+	border: 1px solid #aaa;
+	cursor: pointer;
+	font-size: 0.7rem;
+	margin:0.2rem 0.4rem 0.2rem 0;
+	border-radius: 4px;
+}
+.delete{
+	text-align: center;
+	font-size: 0.8rem;
+	color: #999;
+	line-height: 2rem;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover{
+	border-color: #eee;
+}
+a:focus, a:hover{
+	color: #438BCB;
+}
 #myTab>li{
 	width: 50%;
 	text-align: center;
@@ -84,11 +121,7 @@
 	min-height: 25rem;
 	border-top: .2rem solid #F6F5FA;
 }
-#wenduChart{
-	width:100%;
-	height:16rem;
-}
-#HSChart{
+#HSChart,#wenduChart{
 	margin:0 auto;
 	width:16rem;
 	height:16rem;
