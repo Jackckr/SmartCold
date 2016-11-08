@@ -26,6 +26,8 @@ public interface QuantityMapper {
 	public List<HashMap<String, Object>> getAVGTempYinZi(@Param("oid")Object oid,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	//获得Q信息
 	public List<HashMap<String, Object>> getQuantitsis(@Param("rdcId")int rdcId,@Param("stTime")String stTime,@Param("endTime")String endTime);//获得Qsis
+	
+	public List<HashMap<String, Object>> getMothReportsisByrdcId(@Param("rdcId")Integer rdcId,@Param("startTime")String startTime ,@Param("endTime")String endTime);//获得月报表信息
 	// 检查是否有设备->根据是否有数据判断PLC
 	public Integer getCountBydevkey(@Param("deviceid")Object deviceid,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	public Integer getCountBykey(@Param("oid")Object oid,@Param("table")String table, @Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);

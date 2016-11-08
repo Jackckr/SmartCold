@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -86,6 +87,20 @@ public class AnalysisController {
 		return blowerMapper.findBlowerByRdcID(rdcId);
 	}
 
+	/**
+	 * 获得月分析报表
+	 * @param rdcId
+	 * @param stTime
+	 * @param edTime
+	 * @return
+	 */
+	@RequestMapping(value = "/getRdcreportsis", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getRdcreportsis(Integer rdcId,String stTime ,String edTime) {
+		if(rdcId!=null&&StringUtil.isnotNull(stTime)&&StringUtil.isnotNull(edTime)){ 
+			return this.quantityMapper.getMothReportsisByrdcId(rdcId, stTime, edTime);}
+		return null;
+	}
 	
 	/**
 	 * 月报告Q信息
