@@ -7,7 +7,9 @@
          $('#reservationtime').daterangepicker({
            timePicker: true,
            timePickerIncrement: 30,
-           format: 'MM/DD/YYYY'
+           format: 'YYYY/MM/DD',
+           timePicker: false,
+           timePicker12Hour:false,
          }, function(start, end, label) {
            console.log(start.toISOString(), end.toISOString(), label);
          });
@@ -28,7 +30,8 @@
 	    		</div>
 	    		<div class="pull-left">
 	    			<span>分析周期：</span><!-- <input type="text" value="{{timeuRange}}"> -->
-	    			<input type="text" name="reservation" id="reservationtime" value="08/01/2013 - 08/01/2013" />
+	    			<input type="text" name="reservation" id="reservationtime" value="2016/10/01 - 2016/10/31" />
+	    			<button class="btn btn-primary btn-sm">查询</button>
 	    		</div>
 	    	</div>
 	    </div>
@@ -88,7 +91,7 @@
 		<div class="print_part partP">
 	    	<h4><strong>DC(冷库)月度运行状况分析结论:</strong></h4>
 	    	<textarea ng-model="rdcsis.rdcsis"></textarea>
-	    	<p class="text-right"><button class="btn btn-success">保存</button></p>
+	    	<p class="text-right"><button class="btn btn-success" ng-click="savesis()">保存</button></p>
 	    </div>
 	    
 	    <!-- DC(冷库)月度运行分析详情技术附件及结论：  -->
@@ -187,7 +190,7 @@
 	    		</div>
 	    	</div>
 	    	<textarea ng-model="rdcsis.chillersis"></textarea>
-	    	<p class="text-right"><button class="btn btn-success">保存</button></p>
+	    	<p class="text-right"><button class="btn btn-success" ng-click="savesis()">保存</button></p>
 	    </div>
 	    <!-- 热量分析部分 -->
 	    <hr>
