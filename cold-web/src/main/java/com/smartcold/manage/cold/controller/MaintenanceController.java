@@ -52,6 +52,12 @@ public class MaintenanceController {
 	}
 	
 	
+	@RequestMapping(value = "findMaintenanceByID", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findMaintenanceByID(int id) {
+		return maintenanceMapper.findMaintenanceByID(id);
+	}
+	
 	@RequestMapping(value="/addMaintenance", method=RequestMethod.POST)
 	@ResponseBody
 	public Object addMaintenance(@RequestParam(value="unitname",required=false)String unitname,
@@ -68,7 +74,30 @@ public class MaintenanceController {
 	
 	@RequestMapping(value="/updateMaintenance", method=RequestMethod.POST)
 	@ResponseBody
-	public Object updateMaintenance(MaintenanceEntity maintenanceEntity){
+	public Object updateMaintenance(@RequestParam(value="id",required=false)int id,
+			@RequestParam(value="audit",required=false)int audit,
+			@RequestParam(value="detail",required=false)String detail,
+			@RequestParam(value="note",required=false)String note,
+			@RequestParam(value="fixtime",required=false)String fixtime) throws ParseException, UnsupportedEncodingException{
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
+		maintenanceEntity.setId(id);
+		maintenanceEntity.setAudit(audit);
+		maintenanceEntity.setDetail( URLDecoder.decode(detail, "UTF-8"));
+		maintenanceEntity.setNote(URLDecoder.decode(note, "UTF-8"));
+		maintenanceEntity.setFixtime(sdf.parse(fixtime));
+		maintenanceMapper.updateMaintenance(maintenanceEntity);
+		return true;
+	}
+	@RequestMapping(value="/updateMaintenanceAppraise", method=RequestMethod.POST)
+	@ResponseBody
+	public Object updateMaintenanceAppraise(@RequestParam(value="id",required=false)int id,
+			@RequestParam(value="appraise",required=false)String appraise
+			) throws ParseException, UnsupportedEncodingException{
+		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
+		maintenanceEntity.setId(id);
+		maintenanceEntity.setAudit(1);
+		maintenanceEntity.setAppraise(appraise);
 		maintenanceMapper.updateMaintenance(maintenanceEntity);
 		return true;
 	}

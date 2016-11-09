@@ -7,7 +7,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     $scope.bigCurrentPage = 1;
 	$scope.Maintenances0 = [];
 	$scope.Maintenances1 = [];
-
+	$scope.updateMaintenance0 = {};
 	$scope.getMaintenances0 = function() {
 		$http({
 			method : 'POST',
@@ -79,15 +79,53 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     	$state.reload();
     	}
     };
-  
-    $scope.updateMaintenance = function(maintenance){
-    	maintenance.audit = 1;
+    
+    
+    
+    
+    $scope.weixiuapply = function (id) {
+    	$http.get('/i/maintenance/findMaintenanceByID', {
+            params: {
+                "id": id
+            }
+        }).success(function (data) {
+        	$scope.updateMaintenance0 = data;
+        });
+    };
+    
+    
+    $scope.submitfix = function(){
+    	$scope.updateMaintenance0.audit = 1;
     	$http({
     		'method':'POST',	
     		'url':'/i/maintenance/updateMaintenance',
     		'params':{
-    			'maintenanceEntity':maintenance,
+    			"id":$scope.updateMaintenance0.id,
+    			 "detail"  :encodeURI($scope.updateMaintenance0.detail,"UTF-8"),
+    			   "fixtime" :$scope.updateMaintenance0.fixtime,
+    			   "note" :encodeURI($scope.updateMaintenance0.note,"UTF-8"),
+    			   "audit":1
+    		}
+    	}).success(function (data) {
+        	if(data){
+        		alert("提交成功");
+        		window.location.reload();
+        	}
+        	else{
+        		alert("提交失败");
+        	}
+        });
+    };
+  
+    $scope.change = function(id,appraise){
+    	$http({
+    		'method':'POST',	
+    		'url':'/i/maintenance/updateMaintenanceAppraise',
+    		'params':{
+    			'id':id,
+    			'appraise':appraise
     		}
     	});
-    };
+	};
+    
 });
