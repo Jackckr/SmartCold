@@ -1,29 +1,19 @@
-<link rel="stylesheet" type="text/css" media="all" href="assets/plugins/daterangepicker/bootstrap-datetimepicker.css" />
-<script type="text/javascript" src="assets/plugins/daterangepicker/moment-with-locales.js"></script>
-<script type="text/javascript" src="assets/plugins/daterangepicker/bootstrap-datetimepicker.js"></script>
-<!-- 分析週期日起查詢 -->
-      <script type="text/javascript">
-      $(document).ready(function() {
-         $('#datetimepicker10').datetimepicker({
-             viewMode: 'years',
-            format: 'YYYY/MM'
-         });
-      });
-      </script>
-      
-<div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
-	<div class="page-header row">
+<link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">
+<script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
+<style>.jedateblue .jedatebot .jedatebtn span{  width:46%!important;  }  </style>
+<div id="rpt_asis_coment" class="page-content" style="padding: 0 10px" >
+	<div class="page-header row" style="padding: 5px 0px">
 	  <div class="col-lg-4">
 	  	&nbsp;&nbsp;月报表
 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button>
 	  </div>
 	  <div class="col-lg-4"></div>
 	  	<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
-	  	  <input type='text' id='datetimepicker10' style="text-indent: 1em;"/>
-	      <button class="btn btn-info myPrint">查询 </button>
+	  	     <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
+	      <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
 	  	</div>
 	</div>
-	<div id="print">
+	<div id="print" ng-show="!isloaderr">
 		<div class="print_header">
 	        <h3>
 	            <img src="../../assets/img/logo_home.png" class="lianku_logo fl"><span class="fr">冷库360在线管理系统</span>
@@ -269,11 +259,14 @@
 	    	</div>
 	    </div>
 	</div>
-	<div id="imgtest">
-	 <img alt="" src="">
-	</div>
+	
+	<div class="col-lg-12 text-center" ng-show="isloaderr">
+	  <div class="alert alert-info text-center">没有查到当前月份的分析数据哦</div>
+   </div>
+	
+	
 </div>
-<div id="loding" class="cover_bg black" ng-hide="loadindex==11">
+<div id="loding" class="cover_bg black" ng-hide="loadindex>=11">
 	<div class="loader">
         <div class="loader-inner line-scale">
           <div></div>
@@ -283,7 +276,8 @@
           <div></div>
         </div>
         <br/>
-                                正在生成报表，请稍后！
+                                正在生成报表，请稍后！{{loadindex}}
       </div>
 </div>
+
 <script type="text/javascript" src="../../assets/js/echarts-all.js"></script>

@@ -4,10 +4,12 @@
  * 月分析报表
  */
 coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
-	$scope.isnotprint=true;//当前是否是打印状态
+	$scope.isnotprint=true;$scope.isloaderr=false;//当前是否是打印状态
 	$scope.rdcId = $stateParams.rdcId;
 	$("#loding").show(); $scope.loadindex=0;//已完成加载数据
 	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
+	$("#date04").jeDate({isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
+	
 	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
 	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
 	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); $scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
@@ -24,23 +26,26 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	};
 	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge ){
 		$http.get(url,{params: {  "rdcid": $scope.rdcId,'keys':keys,"startTime": $scope.startTime,"endTime": $scope.endTime}}).success(function(data,status,config,header){
-			++$scope.loadindex;if(data!=null){
+			++$scope.loadindex;
+			if(data!=null){
 				var ldata=[],seriesdata=[],maxxdata=0,xydata=null,xData =[],restmsg=[];
 				angular.forEach(data,function(storage,name){
 					var yData =[],sumval=0; ldata.push(name);
 					if(storage[keys].length>maxxdata){ maxxdata=storage[keys].length; xydata=storage[keys];  };
 					angular.forEach(storage[keys],function(item){  var val=item['value']/nuit ;  yData.unshift(val); sumval+=val;  });
-//					if(sumval){
 						var avg=(sumval/storage[keys].length).toFixed(2);
 					    restmsg.push({name :name,avgval:avg,msg:name+msge+avg+mode.tmg[index]+util.getMsg(index,avg)}); 
-//					}
 					seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
 				});
-				angular.forEach(xydata,function(item){  xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]); });
-				var myChart= echarts.init(document.getElementById(emid));
-				myChart.setOption(util.getlineoption(title, ldata, xData, seriesdata));
-				$scope.charArray[index]=myChart;
-				$scope.charrestmsg[index]=restmsg;
+				if(xydata!=null){
+					angular.forEach(xydata,function(item){  xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]); });
+					var myChart= echarts.init(document.getElementById(emid));
+					myChart.setOption(util.getlineoption(title, ldata, xData, seriesdata));
+					$scope.charArray[index]=myChart;
+					$scope.charrestmsg[index]=restmsg;
+				}else{
+					$scope.loadindex=11; $scope.isloaderr=true;
+				}
 			}
 		});
 	};
@@ -113,7 +118,8 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     //系統效率
     $scope.initQEsis=function(){//11    Integer rdcId,String startTime, String endTime
     	$http.get('/i/AnalysisController/getQEAnalysis',{params: {rdcId: $scope.rdcId,startTime: $scope.startTime,endTime: $scope.endTime}}).success(function(data,status,config,header){
-    		++$scope.loadindex;if(data.success){
+    		++$scope.loadindex;
+    		if(data.success){
     			var ldata=[],sdata=[];
     			var qesis=data.entity.tbdata;
     			$.each(qesis, function(i, vo){  ldata.push(i);  sdata.push(qesis[i][0]); });
@@ -127,52 +133,60 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	    		};
     			myChart.setOption(option);//title,ldata,xData,seriesdata
     			$scope.charArray[11]=myChart;
+    		}else{
+    			$scope.loadindex=11; $scope.isloaderr=true;
     		}
     		
     	});
     };
     
     //============================================================================看不懂==============================================================================
-	var option6 = {
-			title : { text : '压缩机运行时间', x : 'center', y : 20 },
-			tooltip : { trigger : 'axis' },
-			xAxis : [ { type : 'category', name:'min',  splitLine:{    show:false   },  axisLabel : { interval : 0 }, data : [ '<5', '5-9', '10-19', '20-29','30-59', '60-119', '120-300', '>300']} ],
-			grid : { x:40, y2 : 110, width : '80%' },
-			yAxis : [ { name:'%', type : 'value', axisLabel : { formatter : '{value}' } } ],
-			series : [ { name : '运行时间', type : 'bar', data : [ 68,40,10,15,9,2,1,1 ], } ]
-		};
-	var option7 = {
-			title : { text : '设备的开关周期',x : 'center', y : 20},
-			tooltip : {trigger : 'axis'},
-			legend : {data : [ '每天或现行小时的次数', '每小时最高次数' ],y : 'bottom'},
-			xAxis : [ {type : 'category', splitLine:{ show:false}, 
-					//文本换行
-					axisLabel : {interval : 0,formatter:function(params){var newParamsName = "", paramsNameNumber = params.length,provideNumber = 4,rowNumber = Math.ceil(paramsNameNumber / provideNumber);
-						   if (paramsNameNumber > provideNumber) {for (var p = 0; p < rowNumber; p++) {
-						     var tempStr = "",start = p * provideNumber, end = start + provideNumber;
-						     if (p == rowNumber - 1) {tempStr = params.substring(start, paramsNameNumber);
-						     } else {tempStr = params.substring(start, end) + "\n";} newParamsName += tempStr;}						
-						   } else {newParamsName = params;}return newParamsName;}},
-						   data : [ '已55分钟','已08小时55分钟','-1天','-2天','-3天','-4天','-5天','-6天' ] } ],
-			grid : {x:'40',y2 : 110,width : '80%'},
-			yAxis : [ {type : 'value',name:'次数',axisLabel : {formatter : '{value}'}
-			} ],
-			series : [ {name : '每天或现行小时的次数',type : 'bar',data : [ 0,0,255,125,110,130,110,90 ],}, {name : '每小时最高次数',type : 'bar',data : [ 0,0,10,15,10,8,7,12 ]} ]
-		};
-    var	myChart6 = echarts.init(document.getElementById('ysjRunningTimeId'));
-    var	myChart7 = echarts.init(document.getElementById('onOffCycleId'));
-	myChart6.setOption(option6);
-	myChart7.setOption(option7);
-	$scope.charArray[6]=myChart6;
-	$scope.charArray[7]=myChart7;
+    $scope.initcompruntime=function(){
+			var option6 = {
+					title : { text : '压缩机运行时间', x : 'center', y : 20 },
+					tooltip : { trigger : 'axis' },
+					xAxis : [ { type : 'category', name:'min',  splitLine:{    show:false   },  axisLabel : { interval : 0 }, data : [ '<5', '5-9', '10-19', '20-29','30-59', '60-119', '120-300', '>300']} ],
+					grid : { x:40, y2 : 110, width : '80%' },
+					yAxis : [ { name:'%', type : 'value', axisLabel : { formatter : '{value}' } } ],
+					series : [ { name : '运行时间', type : 'bar', data : [ 68,40,10,15,9,2,1,1 ], } ]
+				};
+			var option7 = {
+					title : { text : '设备的开关周期',x : 'center', y : 20},
+					tooltip : {trigger : 'axis'},
+					legend : {data : [ '每天或现行小时的次数', '每小时最高次数' ],y : 'bottom'},
+					xAxis : [ {type : 'category', splitLine:{ show:false}, 
+							//文本换行
+							axisLabel : {interval : 0,formatter:function(params){var newParamsName = "", paramsNameNumber = params.length,provideNumber = 4,rowNumber = Math.ceil(paramsNameNumber / provideNumber);
+								   if (paramsNameNumber > provideNumber) {for (var p = 0; p < rowNumber; p++) {
+								     var tempStr = "",start = p * provideNumber, end = start + provideNumber;
+								     if (p == rowNumber - 1) {tempStr = params.substring(start, paramsNameNumber);
+								     } else {tempStr = params.substring(start, end) + "\n";} newParamsName += tempStr;}						
+								   } else {newParamsName = params;}return newParamsName;}},
+								   data : [ '已55分钟','已08小时55分钟','-1天','-2天','-3天','-4天','-5天','-6天' ] } ],
+					grid : {x:'40',y2 : 110,width : '80%'},
+					yAxis : [ {type : 'value',name:'次数',axisLabel : {formatter : '{value}'}
+					} ],
+					series : [ {name : '每天或现行小时的次数',type : 'bar',data : [ 0,0,255,125,110,130,110,90 ],}, {name : '每小时最高次数',type : 'bar',data : [ 0,0,10,15,10,8,7,12 ]} ]
+				};
+		    var	myChart6 = echarts.init(document.getElementById('ysjRunningTimeId'));
+		    var	myChart7 = echarts.init(document.getElementById('onOffCycleId'));
+			myChart6.setOption(option6);
+			myChart7.setOption(option7);
+			$scope.charArray[6]=myChart6;
+			$scope.charArray[7]=myChart7;
+    };
 	//==========================================================================================================================================================
-	$scope.pysical();
-    $scope.initlineChar();
-    $scope.initQsis();
-    $scope.initPowersis();
-    $scope.initWaterCostsis();
-    $scope.initQEsis();
-
+    $scope.initdata=function(){
+    	   $scope.loadindex=0;$scope.isloaderr=false;
+    	    $scope.pysical();
+    	    $scope.initlineChar();
+    	    $scope.initQsis();
+    	    $scope.initPowersis();
+    	    $scope.initWaterCostsis();
+    	    $scope.initQEsis();
+    	    $scope.initcompruntime();
+    };
+    $scope.initdata();
     function printpage(){
     	$(".chartPart").css('border',0);
     	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").addClass('font10');
@@ -182,6 +196,18 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	$(".chartPart").css('border','1px solid #eee');
     	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
     }
+    $scope.getreport=function(){
+    	var newDate=$("#date04").val().split("-");
+    	if(newDate.length!=2){ return; }
+    	var firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);
+    	firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
+    	var endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); 
+    	endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
+    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
+    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+    	if(newtime==$scope.timeuRange){return;} $scope.timeuRange=newtime;
+    	 $scope.initdata();
+    };
 	$scope.Preview=function(){ //打印预览
 		  $scope.isnotprint=false;
 		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });
