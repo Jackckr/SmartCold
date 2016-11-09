@@ -8,6 +8,12 @@
     </div>
   </div>
   <div class="box-body">
+  	<div class="form-group">
+		<div class="col-md-5 col-md-offset-6">
+			<input type="text" class="form-control" placeholder="请输入搜索内容">
+		</div>		
+		<label class="col-md-1 control-label"><button class="btn btn-primary">搜索</button></label>
+	</div>
     <table id="records" class="table table-bordered table-striped table-condensed">
       <thead>
         <tr>
@@ -118,39 +124,95 @@
           <th>机组名称</th>
           <th>维修原因/保养要求</th>
           <th>预约维修时间</th>
+          <th class="text-center">操作</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="maintenance0 in Maintenances0">
-          	 <td>{{maintenance0.id}}</td>
+          	<td class="text-center">{{maintenance0.id}}</td>
           	<td>{{maintenance0.unitname}}</td>
           	<td>{{maintenance0.reason}}</td>
-          	<td>{{maintenance0.ordertime}}</td>       	
+          	<td>{{maintenance0.ordertime}}</td>   
+          	<td class="text-center">
+          		<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myApply">维修</button>
+       		</td>    	
         </tr>
       </tbody>
     </table>
   </div>
   <!-- /.box-body -->
 </div>
-<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+<!-- 维修模态框（Modal） -->
+<div class="modal fade form-horizontal" id="myApply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">维修操作</h4>
+            </div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">机组名称</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" ng-model="unitname"
+							placeholder="请输入需要维修机组的名称">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">维修详情</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" style="resize: vertical;" ng-model="reason"
+							placeholder="请输入维修详情"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">实际维修时间</label>
+					<div class="col-sm-9">
+						<div class="input-group date form_date col-md-12" data-date=""
+							data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
+							data-link-format="yyyy-mm-dd">
+							<input ng-model="ordertime" class="form-control" size="16"
+								type="text" value="" readonly placeholder="请选择时间"><span
+								class="input-group-addon"><span
+								class="glyphicon glyphicon-remove"></span></span> <span
+								class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="hidden" id="dtp_input2" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">备注</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" style="resize: vertical;width: 100%;"
+							placeholder="请输入文字(选填)"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">提交维修</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script> -->
+<!-- <script src="assets/plugins/datatables/dataTables.bootstrap.min.js"></script> -->
 
 <!-- SlimScroll -->
-<script src="assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- <script src="assets/plugins/slimScroll/jquery.slimscroll.min.js"></script> -->
 <!-- FastClick -->
-<script src="assets/plugins/fastclick/fastclick.js"></script>
+<!-- <script src="assets/plugins/fastclick/fastclick.js"></script> -->
 <script type="text/javascript">
-	$(function(){
-		$("#records,#applyRecords").DataTable(); 
-		var addTr = '<tr class="row">'+
-          	'<td contenteditable>3</td>'+
-          	'<td contenteditable></td>'+
-          	'<td contenteditable></td>'+
-          	'<td contenteditable></td>'+ 
-          	'<td><button class="btn btn-success btn-xs">查看</button></td>'+
-        '</tr>'
-		$(".applyBtn").click(function(){
-			$("#applyRecords tbody").append(addTr)
-		})
-	})
+	$('.form_date').datetimepicker({
+		format: 'yyyy-mm-dd',
+	    weekStart: 1,
+	    todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
 </script>
