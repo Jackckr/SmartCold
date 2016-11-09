@@ -658,3 +658,6 @@ html, body {
 .fr{
 	float:right;
 }
+#rpt_asis_coment .page-header input{
+	text-indent: 1em;
+}

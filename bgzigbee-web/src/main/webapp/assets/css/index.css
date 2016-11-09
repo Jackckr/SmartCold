@@ -662,3 +662,8 @@ footer{
 	border: 1px solid #ccc;
 	resize:vertical;
 }
+#rpt_asis_coment .page-header input{
+	text-indent: 1em;
+	border:1px solid #ccc;
+	border-radius:4px;
+}
