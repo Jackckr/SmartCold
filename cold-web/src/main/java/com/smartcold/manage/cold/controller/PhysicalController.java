@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.controller;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -105,36 +106,38 @@ public class PhysicalController {
 	}
 	
 	private HashMap<String, Object> getPysicalInfo(Integer rdcId,  String stTime, String edTime) {
-		boolean ishasTempDEV=false;
+		boolean ishasTempDEV=false;boolean ishasplc=false;
 		HashMap<String, Object> resMap=new HashMap<String, Object>();
 		WeightSetEntity weightSet = this.weightSetMapper.getWeightSet(rdcId);//占比
 		if(weightSet==null){weightSet=new WeightSetEntity(0,2,10,10,2,3,0,30,5,1);};
 		List<ColdStorageSetEntity> coldStorageSetList = coldsetServer.findByRdcId(rdcId);
 		if(SetUtil.isnotNullList(coldStorageSetList)){	//1.2检查冷库信息 
 			Integer oid= coldStorageSetList.get(0).getId();
+			 ishasplc=	this.hasplc(1, "coldstorage", oid, "Temp", stTime, edTime);//plc
 			 ishasTempDEV= this.hasdev(1, "coldstorage", oid, "Temp", stTime, edTime);//1.1检查温度是否有设备
 			if(ishasTempDEV){ //2.2檢查設備(进行评估冷库)
-				double sumtempS = 0; double sumsransportS=0; double sumColdStorageS=0;
+				double sumtempS = 0; double sumsransportS=0; 
 				HashMap<Integer, Object> tempScores=new HashMap<Integer, Object>();
 				HashMap<Integer, Object> transportScores=new HashMap<Integer, Object>();
-				HashMap<Integer, Object> coldStorageScores=new HashMap<Integer, Object>();
 				for (ColdStorageSetEntity obj : coldStorageSetList) {
 					int tempS = this.getTempScores( stTime, edTime, obj, weightSet);
 					int sransportS=this.getTransportScores(stTime, edTime, obj, weightSet);
-					int coldStorageS = this.getColdStorageScores(stTime, edTime, obj, weightSet);
-					sumtempS+=tempS; sumsransportS+=sransportS;sumColdStorageS+=coldStorageS;
+					sumtempS+=tempS; sumsransportS+=sransportS;
 					tempScores.put(obj.getId(), new Object[]{getColorVal(tempS),Double.parseDouble(df.format( tempS))});//1.获取冷库的分数
 					transportScores.put(obj.getId(),new Object[]{getColorVal(sransportS),Double.parseDouble(df.format(sransportS)) });//2.运管分数
-					coldStorageScores.put(obj.getId(),new Object[]{getColorVal(coldStorageS),Double.parseDouble( df.format(coldStorageS))});
+					
 				}
 				resMap.put("TempScores",tempScores );
 				resMap.put("TransportScores",transportScores );
-				resMap.put("ColdStorageScores",coldStorageScores );
 				resMap.put("avgTempScores",(int)sumtempS/coldStorageSetList.size());
 				resMap.put("avgTransportScores",(int)sumsransportS/coldStorageSetList.size() );
-				resMap.put("avgColdStorageScores",(int)sumColdStorageS/coldStorageSetList.size());
 	        }
+			if(ishasplc){
+				int coldStorage = this.getColdStorageScores(stTime, edTime, rdcId, weightSet);
+				resMap.put("coldStorage",coldStorage );
+			}
 		}
+		resMap.put("ishasplc", ishasplc);
 		resMap.put("ishasTempDEV", ishasTempDEV);
 		return resMap;
 	}
@@ -165,6 +168,14 @@ public class PhysicalController {
 			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
 		}
 	}
+	private boolean hasplc(int type,String table,int oid,String key, String stTime, String edTime){
+		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
+		if (deviceEntity ==null) {
+			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
+		} else {
+			return false;
+		}
+	}
 	
     /**
      * 根据id对冷库评分
@@ -174,16 +185,29 @@ public class PhysicalController {
      * @param edTime
      * @param obj
      * @param weightSet
+     * //Ct=100-超温因子*20-（Tmax-Tset-Tdiff）*2-保温因子*10-1/温度周期因子（降温部分）*10
      * @return
      */
 	private int getTempScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
 		try {
 			double chaowenyinzi=0;double baowenyinzi=0;double jiangwenyinzi=0;
-			List<HashMap<String, Object>> avgTempYinZi = this.quantityMapper.getAVGTempYinZi(obj.getId(), stTime, edTime);
-			for (HashMap<String, Object> hashMap : avgTempYinZi) {if(hashMap.containsKey("ChaoWenYinZi")){chaowenyinzi=(Double) hashMap.get("ChaoWenYinZi");}else if(hashMap.containsKey("BaoWenYinZi")){baowenyinzi=(Double) hashMap.get("BaoWenYinZi");}else if(hashMap.containsKey("JiangWenYinZi")){jiangwenyinzi=(Double) hashMap.get("JiangWenYinZi");}}
 			double maxtemp=this.quantityMapper.getSisBayKey(1,obj.getId(), "MaxTemp", stTime, edTime);
-		if(jiangwenyinzi!=0){jiangwenyinzi=	1/jiangwenyinzi*weightSet.getFactor4();}
-			return (int)Math.abs(100-chaowenyinzi*weightSet.getFactor1()-(maxtemp-obj.getStartTemperature()-obj.getTempdiff())-baowenyinzi*weightSet.getFactor3()-jiangwenyinzi);
+		    double temcuf=(maxtemp-obj.getStartTemperature()-obj.getTempdiff()); 
+		    if(temcuf>0){temcuf=temcuf*weightSet.getFactor2();}else{temcuf=0;}
+			List<HashMap<String, Object>> avgTempYinZi = this.quantityMapper.getAVGTempYinZi(obj.getId(), stTime, edTime);
+			for (HashMap<String, Object> hashMap : avgTempYinZi) {
+				if(hashMap.containsKey("ChaoWenYinZi")){
+					chaowenyinzi=(Double) hashMap.get("ChaoWenYinZi");
+					if(chaowenyinzi>0){chaowenyinzi=chaowenyinzi*weightSet.getFactor1();}else{chaowenyinzi=0;}
+				}else if(hashMap.containsKey("BaoWenYinZi")){
+					baowenyinzi=(Double) hashMap.get("BaoWenYinZi");
+					if(baowenyinzi>0){baowenyinzi=baowenyinzi*weightSet.getFactor3();}else{baowenyinzi=0;}
+				}else if(hashMap.containsKey("JiangWenYinZi")){
+					jiangwenyinzi=(Double) hashMap.get("JiangWenYinZi");
+					if(jiangwenyinzi!=0&&jiangwenyinzi>0){jiangwenyinzi=1/jiangwenyinzi*weightSet.getFactor4();}else{jiangwenyinzi=0;}
+				}
+			}
+			return (int)Math.abs(100-chaowenyinzi-temcuf-baowenyinzi-jiangwenyinzi);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -204,14 +228,15 @@ public class PhysicalController {
 		try {
 			double emgodunit=0;
 			Double doorAvgTime	=this.quantityMapper.getSisBayKey(1,obj.getId(), "DoorAvgTime", stTime, edTime);//获得平均开门时间
-			if(doorAvgTime==null){doorAvgTime=new Double(0);}else{doorAvgTime=(doorAvgTime/3600);}
+			if(doorAvgTime!=null&&doorAvgTime>0){doorAvgTime=(doorAvgTime/3600)*weightSet.getTransport1();}else{doorAvgTime=new Double(0);}
 			List<HashMap<String, Object>> goodQuantit = this.quantityMapper.getGoodQuantit(obj.getId(), stTime, edTime);
 			if (SetUtil.isnotNullList(goodQuantit)&&goodQuantit.get(0)!=null) {
 			  Double  temp=	 (Double) goodQuantit.get(0).get("temp");
 			  Double quantit=(Double) goodQuantit.get(0).get("quantit");
-			  emgodunit= quantit*(temp-obj.getStartTemperature());
+			  emgodunit= quantit*(temp-obj.getStartTemperature())*weightSet.getTransport2();
+			  if(emgodunit<0){emgodunit=0;}
 			}
-		  return (int)Math.abs(100-doorAvgTime*weightSet.getTransport1()-emgodunit);
+		  return (int)Math.abs(100-doorAvgTime-emgodunit);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -228,8 +253,26 @@ public class PhysicalController {
 	 * @return
 	 * GoodsHeat
 	 */
-	private int getColdStorageScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
-		
-		return (int) Math.abs(100-obj.getColdStorageID()*2-obj.getTempdiff());
+	private int getColdStorageScores(String stTime,String edTime,Integer rdcId,WeightSetEntity weightSet){
+		double qe=0;double	hwarcount=0;double	lwarcount=0;
+		List<HashMap<String, Object>> sumElist = this.quantityMapper.getsumEByRdcid(rdcId, stTime,edTime);
+		List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, stTime,edTime);
+		List<HashMap<String, Object>> warCounList = this.quantityMapper.getWarCountByTime(rdcId, stTime, edTime);
+		if(SetUtil.isnotNullList(sumElist)&&SetUtil.isnotNullList(sumQlist)){
+		    double	allsumq=0;  double	allsume=0;
+			for (HashMap<String, Object> hashMap : sumQlist) { allsumq+=(Double) hashMap.get("sumq");}
+			for (HashMap<String, Object> hashMap : sumElist) { allsume+=(Double) hashMap.get("sume"); }
+			if(allsume!=0&&allsumq!=0){qe=(allsumq/allsume)* weightSet.getCrew1();}
+		}
+		if(SetUtil.isnotNullList(warCounList)){
+			for (HashMap<String, Object> hashMap : warCounList) {
+				if(hashMap.containsKey("HighWarningCount")){
+					hwarcount=(Double) hashMap.get("val")*weightSet.getCrew2();
+				}else if(hashMap.containsKey("LowWarningCount")){
+					lwarcount=(Double) hashMap.get("val")*weightSet.getCrew3();
+				}
+			}
+		}
+		return (int) Math.abs(100-qe-hwarcount-lwarcount);
 	}
 }

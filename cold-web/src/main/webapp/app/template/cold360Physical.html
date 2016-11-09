@@ -57,14 +57,13 @@
 	    </div>
 	    <div class="box-body">
    			<!-- 有设备 -->
-	   		<div class="haveDevice " ng-if="data.ishasTempDEV">
+	   		<div class="haveDevice " ng-if="data.ishasplc">
 	   			<div class="circle fontGreen">
-	   				{{data.avgColdStorageScores}}<span>分</span>
+	   				{{data.coldStorage}}<span>分</span>
 	   			</div>
-	   			<a href="#/cold360Physical" ng-click="showsg(3,'grouppan3')"><button class="btn bgGreen">查看详情</button></a>
 	   		</div>
 	   		<!-- 建议安装设备 -->
-	   		<div class="noDevice " ng-if="!data.ishasTempDEV">
+	   		<div class="noDevice " ng-if="!data.ishasplc">
 	   			<div class="circle greenPlus"></div>
 	   			<a href="javascript:;"><button class="btn bgGreen disabled">建议安装监控设备</button></a>
 	   		</div>
@@ -122,28 +121,6 @@
 				    	</ul>
 				    </div>
 				</div>
-				<!-- 制冷系统 -->
-				<div id="grouppan3" class="box bg-gray">
-				    <div class="box-header with-border">
-				        <h3 class="box-title">制冷系统</h3>
-				         <div class="box-tools pull-right">
-				             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				         </div>
-				    </div>
-				    <div class="box-body">
-				    	<ul>
-				    		<li class="row"   ng-repeat="obj in mystorages">
-					    		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName">{{obj.name}}</div>
-					    		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-5 progress ">	    		
-								    <div class="progress-bar progress-bar-{{data.ColdStorageScores[obj.id][0]}}" role="progressbar" aria-valuenow="{{data.ColdStorageScores[obj.id][1]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{data.ColdStorageScores[obj.id][1]}}%;">
-								    </div>
-								</div>
-								<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 coldName coldName-{{data.ColdStorageScores[obj.id][0]}}"><b>{{data.ColdStorageScores[obj.id][1]}}分</b></div>
-				    		</li>
-				    	</ul>
-				    </div>
-	      </div>
 	</div>
 </div>
 <div id="physicalstep4" class="score_list black" >

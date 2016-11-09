@@ -60,7 +60,7 @@
 					</div>
 				</div>
 				<!-- 制冷系统 -->
-				<div class="box bg-gray" ng-if="pysicaldata.ishasTempDEV">
+				<div class="box bg-gray" ng-if="pysicaldata.ishasplc">
 					<div class="box-header with-border">
 						<h3 class="box-title">制冷系统</h3>
 					</div>
@@ -69,7 +69,7 @@
 						<div class="haveDevice ">
 							<div class="circle nobg fontGreen">
 								<img class="no-print" src="../../assets/img/green_circle.png" height="160" width="160" alt="">
-								{{pysicaldata.avgColdStorageScores}}<span>分</span>
+								{{pysicaldata.coldStorage}}<span>分</span>
 							</div>
 						</div>
 					</div>
@@ -80,7 +80,7 @@
 		<!-- DC(冷库)月度运行状况分析结论  -->
 		<div class="print_part partP">
 	    	<h4><strong>DC(冷库)月度运行状况分析结论:</strong></h4>
-	    	<p>该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
+	    	<p>{{rdcsis.rdcsis}}</p>
 	    </div>
 	    
 	    <!-- DC(冷库)月度运行分析详情技术附件及结论：  -->
@@ -178,7 +178,7 @@
 	    			<div id="onOffCycleId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    	</div>
-	    	<p style="margin: 20px 0;text-indent: 2em;">该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。该文本框显示内容为分析人员可手动输入，如不输入按预设文本自动显示。（预设温度设几个引导判断因素，随后提供文本内容）</p>
+	    	<p style="margin: 20px 0;text-indent: 2em;">{{rdcsis.chillersis}}</p>
 	    </div>
 	    <!-- 热量分析部分 -->
 	    <hr>

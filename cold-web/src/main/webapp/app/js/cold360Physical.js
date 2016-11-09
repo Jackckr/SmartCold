@@ -6,6 +6,7 @@
 coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools ) {
 	//初始化页面
 	$scope.pageindex=1;
+	
 	$scope.rdcid=$rootScope.rdcId;
 	$scope.cwheight=$(".content-wrapper").height();
 	$(".mainHeight").height($scope.cwheight); 
@@ -27,15 +28,15 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 		    	  $scope.data=data.entity;
 		    	  $scope.showpage(2);
 		      }else{
-		    	 alert(msg.errmsg[data.message]);
+		    	// alert(msg.errmsg[data.message]);
 		      }
 		 });
 	};
 	$scope.showsg=function(i,em){
 		if(em){
-			$("#grouppan1,#grouppan2,#grouppan3").addClass("collapsed-box");
-			$("#grouppan1 button[data-widget=collapse] i,#grouppan2 button[data-widget=collapse] i,#grouppan3 button[data-widget=collapse] i").removeClass("fa-minus").addClass("fa-plus");
-			$("#grouppan1 .box-body,#grouppan2 .box-body,#grouppan2 .box-body ").css({ display:"none"});
+			$("#grouppan1,#grouppan2").addClass("collapsed-box");
+			$("#grouppan1 button[data-widget=collapse] i,#grouppan2 button[data-widget=collapse] i").removeClass("fa-minus").addClass("fa-plus");
+			$("#grouppan1 .box-body,#grouppan2 .box-body ").css({ display:"none"});
 			
 			$("#"+em ).removeClass("collapsed-box");
 			$("#"+em+" .box-body").css({ display:"block"});
@@ -46,13 +47,12 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 	};
 	//切換也頁面
 	$scope.showpage=function(i){
-		$("#physicalstep1,#physicalstep2,#physicalstep3").hide(); $("#physicalstep"+i).show();
+		$("#physicalstep1,#physicalstep2,#physicalstep3").hide(); 
+		$("#physicalstep"+i).show();
 	};
 	
 });
 
-coldWeb.controller('cold360PhysicalList', function( $scope, $rootScope ) {
-	
-});
+
 
 

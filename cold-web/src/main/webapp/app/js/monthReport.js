@@ -48,7 +48,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//1.系统评分
 	$scope.pysical=function(){
 		//获得分析结果
-		$http({method:'POST',url:'/i/AnalysisController/getQAnalysisByMonth',params:{"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime}}).success(function (data) {
+		$http({method:'POST',url:'/i/AnalysisController/getRdcreportsis',params:{"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime}}).success(function (data) {
 			if(data!=null&&data.length>0){ $scope.rdcsis=data[0];}else{$scope.rdcsis=null;}
 	    });
 		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
@@ -133,7 +133,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     };
     
     //============================================================================看不懂==============================================================================
-	var option7 = {
+	var option6 = {
 			title : { text : '压缩机运行时间', x : 'center', y : 20 },
 			tooltip : { trigger : 'axis' },
 			xAxis : [ { type : 'category', name:'min',  splitLine:{    show:false   },  axisLabel : { interval : 0 }, data : [ '<5', '5-9', '10-19', '20-29','30-59', '60-119', '120-300', '>300']} ],
@@ -141,7 +141,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 			yAxis : [ { name:'%', type : 'value', axisLabel : { formatter : '{value}' } } ],
 			series : [ { name : '运行时间', type : 'bar', data : [ 68,40,10,15,9,2,1,1 ], } ]
 		};
-	var option8 = {
+	var option7 = {
 			title : { text : '设备的开关周期',x : 'center', y : 20},
 			tooltip : {trigger : 'axis'},
 			legend : {data : [ '每天或现行小时的次数', '每小时最高次数' ],y : 'bottom'},
@@ -159,12 +159,12 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 			} ],
 			series : [ {name : '每天或现行小时的次数',type : 'bar',data : [ 0,0,255,125,110,130,110,90 ],}, {name : '每小时最高次数',type : 'bar',data : [ 0,0,10,15,10,8,7,12 ]} ]
 		};
-    var	myChart7 = echarts.init(document.getElementById('ysjRunningTimeId'));
-    var	myChart8 = echarts.init(document.getElementById('onOffCycleId'));
+    var	myChart6 = echarts.init(document.getElementById('ysjRunningTimeId'));
+    var	myChart7 = echarts.init(document.getElementById('onOffCycleId'));
+	myChart6.setOption(option6);
 	myChart7.setOption(option7);
-	myChart8.setOption(option8);
+	$scope.charArray[6]=myChart6;
 	$scope.charArray[7]=myChart7;
-	$scope.charArray[8]=myChart8;
 	//==========================================================================================================================================================
 	$scope.pysical();
     $scope.initlineChar();

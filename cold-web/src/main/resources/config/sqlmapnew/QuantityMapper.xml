@@ -10,8 +10,11 @@
 	<select id="getAVGTempYinZi" parameterType="map" resultType="map">
 		select   `key` ,  avg(`value`) as vl from `coldstorageanalysis` where `type` =1 and oid in(${oid}) and `key` in('ChaoWenYinZi','BaoWenYinZi','JiangWenYinZi') and `date` BETWEEN #{stTime} and #{edTime} GROUP BY `key` ;
 	</select>
+	<select id="getWarCountByTime" parameterType="map" resultType="map">
+		SELECT `key` ,sum(`value`)  val FROM `coldstorageanalysis` where oid=#{rdcId} and `key` in('HighWarningCount','LowWarningCount') and  `date` BETWEEN #{stTime} and #{edTime} GROUP BY `key` ;
+	</select>
 	
-		<!-- 判断压缩机状态   -->
+	<!-- 判断压缩机状态   -->
     <select id="getcoldstoraginfo" parameterType="map" resultType="com.smartcold.manage.cold.entity.olddb.CompressorSetEntity">
 		select id,`maintenancetime` ,`lastMaintainTime`  from `smartcold`.compressorset where `compressorgroupid` in(${oids}) and `maintenancetime` IS NOT NULL and `lastMaintainTime` IS NOT NULL ;
 	</select>
