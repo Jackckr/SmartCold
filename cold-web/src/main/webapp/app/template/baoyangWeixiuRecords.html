@@ -10,9 +10,9 @@
   <div class="box-body">
   	<div class="form-group">
 		<div class="col-md-5 col-md-offset-6">
-			<input type="text" class="form-control" placeholder="请输入搜索内容">
+			<input type="text" class="form-control" ng-model="keyword" placeholder="请输入搜索内容">
 		</div>		
-		<label class="col-md-1 control-label"><button class="btn btn-primary">搜索</button></label>
+		<label class="col-md-1 control-label"><button class="btn btn-primary" ng-click="goSearch1()">搜索</button></label>
 	</div>
     <table id="records" class="table table-bordered table-striped table-condensed">
       <thead>
@@ -25,85 +25,31 @@
           <th>维修详情</th>
           <th>备注</th>
           <th>维修评价</th>
+          <th class="text-center">操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          	<td class="text-center">1</td>
-          	<td>机组1，1号压缩机</td>
-          	<td>常规检查，更换冷冻油</td>
-          	<td>2016-07-02</td>
-          	<td>2016-07-03</td>
-          	<td>油污染已更换，其他过滤器已检查</td>
-          	<td></td>
-          	<td><textarea>服务好</textarea></td>          	
-        </tr>
-        
-        <tr>
-          	<td class="text-center">2</td>
-          	<td>机组1，2号压缩机</td>
-          	<td>常规检查，更换冷冻油，压缩机排温高</td>
-          	<td>2016-07-02</td>
-          	<td>2016-07-03</td>
-          	<td>油污染已更换，吸气过滤芯已清洗，其他过滤器已检查</td>
-          	<td>下次藏堵需更换新的吸气过滤芯</td>
-          	<td><textarea></textarea></td>          	
-        </tr>
-        
-        <tr>
-          	<td class="text-center">3</td>
-          	<td>机组2，1号压缩机</td>
-          	<td>常规检查，油压差报警</td>
-          	<td>2016-07-29</td>
-          	<td>2016-07-30</td>
-          	<td>油槽过滤网已清洗</td>
-          	<td></td>
-          	<td><textarea>现场测试正常</textarea></td>          	
-        </tr>
-        
-        <tr>
-          	<td class="text-center">4</td>
-          	<td>机组2，2号压缩机</td>
-          	<td>常规检查</td>
-          	<td>2016-08-05</td>
-          	<td>2016-08-06</td>
-          	<td>已更换干燥过滤芯</td>
-          	<td></td>
-          	<td><textarea>服务好</textarea></td>          	
-        </tr>
-        
-        <tr>
-          	<td class="text-center">5</td>
-          	<td>机组2，3号压缩机</td>
-          	<td>低油位报警</td>
-          	<td>2016-09-15</td>
-          	<td>2016-09-17</td>
-          	<td>已检查，清洗油过滤器，测试油位控制器性能</td>
-          	<td></td>
-          	<td><textarea>现场测试正常</textarea></td>          	
-        </tr>
-        <tr>
-          	<td class="text-center">6</td>
-          	<td>机组2，4号压缩机</td>
-          	<td>接触器吸合时有杂音</td>
-          	<td>2016-09-15</td>
-          	<td>2016-09-17</td>
-          	<td>已检查，接触器松动，积灰导致线圈衔铁接触面毛糙，已更换新接触器。</td>
-          	<td></td>
-          	<td><textarea>现场测试正常</textarea></td>          	
-        </tr>
-        <tr>
-          	<td class="text-center">7</td>
-          	<td>机组2</td>
-          	<td>储液器液位低，各项保护是否有效</td>
-          	<td>2016-09-15</td>
-          	<td>2016-09-17</td>
-          	<td>已检查，增补制冷剂</td>
-          	<td></td>
-          	<td><textarea>现场测试正常</textarea></td>          	
+         <tr ng-repeat="maintenance1 in Maintenances1">
+          	<td class="text-center">{{maintenance1.id}}</td>
+          	<td>{{maintenance1.unitname}}</td>
+          	<td>{{maintenance1.reason}}</td>
+          	<td>{{maintenance1.ordertime}}</td>   
+          	<td>{{maintenance1.fixtime}}</td> 
+          	<td>{{maintenance1.detail}}</td> 	
+          	<td>{{maintenance1.note}}</td> 	
+          	<td><textarea ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
+          	<td class="text-center">
+          		<button class="btn btn-primary btn-xs"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
+       		</td>    
         </tr>
       </tbody>
     </table>
+               <!-- 翻页功能 -->
+               <div class="row" style="text-align:center">
+                    <pagination ng-change="pageChanged1()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
   </div>
   <!-- /.box-body -->
 </div>
@@ -134,7 +80,8 @@
           	<td>{{maintenance0.reason}}</td>
           	<td>{{maintenance0.ordertime}}</td>   
           	<td class="text-center">
-          		<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myApply">维修</button>
+          		<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myApply" ng-click="weixiuapply(maintenance0.id)">维修</button>
+          		<button class="btn btn-primary btn-xs"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>
        		</td>    	
         </tr>
       </tbody>
@@ -155,14 +102,14 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">机组名称</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" ng-model="unitname"
+						<input type="text" class="form-control" ng-model="updateMaintenance0.unitname"
 							placeholder="请输入需要维修机组的名称">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-3 control-label">维修详情</label>
 					<div class="col-sm-9">
-						<textarea class="form-control" style="resize: vertical;" ng-model="reason"
+						<textarea class="form-control" style="resize: vertical;" ng-model="updateMaintenance0.detail"
 							placeholder="请输入维修详情"></textarea>
 					</div>
 				</div>
@@ -172,7 +119,7 @@
 						<div class="input-group date form_date col-md-12" data-date=""
 							data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
 							data-link-format="yyyy-mm-dd">
-							<input ng-model="ordertime" class="form-control" size="16"
+							<input ng-model="updateMaintenance0.fixtime" class="form-control" size="16"
 								type="text" value="" readonly placeholder="请选择时间"><span
 								class="input-group-addon"><span
 								class="glyphicon glyphicon-remove"></span></span> <span
@@ -185,14 +132,14 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">备注</label>
 					<div class="col-sm-9">
-						<textarea class="form-control" style="resize: vertical;width: 100%;"
+						<textarea class="form-control" ng-model="updateMaintenance0.note" style="resize: vertical;width: 100%;"
 							placeholder="请输入文字(选填)"></textarea>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">提交维修</button>
+                <button type="button" class="btn btn-primary" ng-click="submitfix()" data-dismiss="modal">提交维修</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->

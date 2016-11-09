@@ -21,7 +21,7 @@ coldWeb.controller('baoyangWeixiuApply', function ($rootScope, $scope, $state, $
 	        }).success(function (data) {
 	            if(data){
 	            	alert("添加成功");
-					window.location.reload();
+	            	$state.reload();
 	            }
 	            else{
 	            	alert("添加失败");

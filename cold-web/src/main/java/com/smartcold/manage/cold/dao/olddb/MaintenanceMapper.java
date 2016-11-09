@@ -8,6 +8,8 @@ import com.smartcold.manage.cold.entity.olddb.MaintenanceEntity;
 public interface MaintenanceMapper {
 
 	int deleteMaintenance(Integer id);
+	
+	MaintenanceEntity findMaintenanceByID(Integer id);
 
     int insertMaintenance(MaintenanceEntity maintenanceEntity);
 
