@@ -364,6 +364,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/userRelate/:companyId',
         controller: 'userRelate',
         templateUrl: 'app/template/userRelate.html'
+    }).state('deviceConfig', {
+        url: '/deviceConfig',
+        controller: 'deviceConfig',
+        templateUrl: 'app/template/deviceConfig.html'
     }).state('monthlyReportList', {
         url: '/monthlyReportList',
         controller: 'monthlyReportList',

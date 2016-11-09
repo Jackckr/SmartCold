@@ -13,5 +13,10 @@
         SELECT *
         FROM `citylist` WHERE `CityID` = #{CityID}
     </select>
+    
+     <select id="findCityByName" parameterType="map" resultType="CityListEntity">
+        SELECT *
+        FROM `citylist` WHERE substring(CityName, 1, 2) = #{cityName}
+    </select>
 
 </mapper>

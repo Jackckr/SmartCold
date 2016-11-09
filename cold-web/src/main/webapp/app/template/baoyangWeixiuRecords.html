@@ -121,11 +121,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          	<td class="text-center">1</td>
-          	<td>机组2，1号压缩机</td>
-          	<td>常规检查，更换冷冻油</td>
-          	<td>2016-11-05</td>       	
+        <tr ng-repeat="maintenance0 in Maintenances0">
+          	 <td>{{maintenance0.id}}</td>
+          	<td>{{maintenance0.unitname}}</td>
+          	<td>{{maintenance0.reason}}</td>
+          	<td>{{maintenance0.ordertime}}</td>       	
         </tr>
       </tbody>
     </table>

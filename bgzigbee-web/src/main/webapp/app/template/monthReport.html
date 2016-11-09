@@ -1,12 +1,18 @@
+      <link rel="stylesheet" type="text/css" media="all" href="assets/plugins/daterangepicker/bootstrap-datetimepicker.css" />
+      <script type="text/javascript" src="assets/plugins/daterangepicker/moment-with-locales.js"></script>
+      <script type="text/javascript" src="assets/plugins/daterangepicker/bootstrap-datetimepicker.js"></script>
+      <!-- 分析週期日起查詢 -->
+      <script type="text/javascript">
+      $(document).ready(function() {
+         $('#datetimepicker10').datetimepicker({
+             viewMode: 'years',
+            format: 'YYYY/MM'
+         });
+      });
+      </script>
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
-	 <div class="page-header">&nbsp;&nbsp;月报表<button class="btn btn-info myPrint left" ng-click="savesis()">保存 </button></div>
+	 <div class="page-header"><h4>&nbsp;&nbsp;月报表&nbsp;&nbsp;<button class="btn btn-info myPrint left" ng-click="savesis()">保存 </button></h4></div>
 	<div id="print">
-		<!-- <div class="print_header">
-	        <h3>
-	            <img src="../../assets/img/logo_home.png" class="lianku_logo fl"><span class="fr">冷库360在线管理系统</span>
-	        </h3>
-	        <hr>
-	    </div> -->
 	    <!-- 报表标题  -->
 	    <div class="print_title">
 	    	<h2 class="tac" style="margin: 0"><strong>冷库综合运行系统月度分析报告</strong></h2>
@@ -17,8 +23,10 @@
 	    		<div class="pull-left">
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{rdcname}}">
 	    		</div>
-	    		<div class="pull-left">
-	    			<span>分析周期：</span><input type="text" value="{{timeuRange}}">
+	    		<div class="pull-left input-group date">
+	    			<span>分析周期：</span><!-- <input type="text" value="{{timeuRange}}"> -->
+	    			<input type='text' id='datetimepicker10' />&nbsp;
+	    			<button class="btn btn-primary btn-sm">查询</button>
 	    		</div>
 	    	</div>
 	    </div>
@@ -77,7 +85,8 @@
 		<!-- DC(冷库)月度运行状况分析结论  -->
 		<div class="print_part partP">
 	    	<h4><strong>DC(冷库)月度运行状况分析结论:</strong></h4>
-	    	<textarea style="margin: 10px; width: 90%; height: 200px;border: 1px solid #EEEEEE;" ng-model="rdcsis.rdcsis"></textarea>
+	    	<textarea ng-model="rdcsis.rdcsis"></textarea>
+	    	<p class="text-right"><button class="btn btn-success" ng-click="savesis()">保存</button></p>
 	    </div>
 	    
 	    <!-- DC(冷库)月度运行分析详情技术附件及结论：  -->
@@ -175,7 +184,8 @@
 	    			<div id="onOffCycleId_img"  ng-show="!isnotprint"></div>
 	    		</div>
 	    	</div>
-	    	<textarea style="margin: 10px; width: 90%; height: 200px;border: 1px solid #EEEEEE;" ng-model="rdcsis.chillersis"></textarea>
+	    	<textarea ng-model="rdcsis.chillersis"></textarea>
+	    	<p class="text-right"><button class="btn btn-success" ng-click="savesis()">保存</button></p>
 	    </div>
 	    <!-- 热量分析部分 -->
 	    <hr>

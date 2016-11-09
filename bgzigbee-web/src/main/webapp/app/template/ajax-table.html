@@ -11,6 +11,10 @@
             <td ng-repeat="colum in colums">
                 <span ng-hide="obj.editable">{{obj[colum]}}</span>
                 <input style="width: 100%;height: 100%;" type="text"  ng-model="obj[colum]" ng-show="obj.editable&&colum!='refoid'&&colum!='outsidecoldstorageid'">
+                <select ng-options="obj.id as obj.name for obj in arrayObjects" class="form-control" ng-model="obj[colum]"  
+                style="width: 100%;height: 100%;" ng-show="obj.editable&&colum=='refoid'"></select>
+                  <select ng-options="storage.id as storage.name for storage in arrayObjects.storages" class="form-control" ng-model="obj[colum]"  
+                style="width: 100px;height: 100%;" ng-show="obj.editable&&colum=='outsidecoldstorageid'"></select>
                 <select ng-options="obj.id as obj.name for obj in arrayObjects" class="form-control" ng-model="obj[colum]"  style="width: 100%;height: 100%;" ng-show="obj.editable&&(colum=='refoid'||colum=='outsidecoldstorageid')"></select>
             </td>
             <td>

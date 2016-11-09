@@ -12,7 +12,13 @@ app.controller('ctrl', function ($http, $location, $scope) {
         document.getElementById ("city").innerHTML = cityName;
         //alert("当前定位城市:" + cityName);
         //window.gpslocationcity = cityName;
-        window.localStorage.cityName = cityName;
+        $http.get(ER.root+'/i/city/findCityByName', {
+            params: {
+                "CityName": cityName
+            }
+        }).success(function (data) {
+        	 window.localStorage.appLocalCity = data;
+        });
     }
 
     var myCity = new BMap.LocalCity();

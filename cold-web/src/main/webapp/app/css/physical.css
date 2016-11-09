@@ -511,7 +511,6 @@ html, body {
 .print_name>div{
 	width:50%;
 	height: 40px;
-	overflow: hidden;
 	font-size: 12px;
 }
 .print_name>div>input{
