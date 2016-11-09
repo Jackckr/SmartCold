@@ -1,17 +1,34 @@
-      <link rel="stylesheet" type="text/css" media="all" href="assets/plugins/daterangepicker/bootstrap-datetimepicker.css" />
-      <script type="text/javascript" src="assets/plugins/daterangepicker/moment-with-locales.js"></script>
-      <script type="text/javascript" src="assets/plugins/daterangepicker/bootstrap-datetimepicker.js"></script>
+      <link rel="stylesheet" type="text/css" media="all" href="assets/jedate/skin/jedate.css" />
+      <script type="text/javascript" src="assets/jedate/jquery.jedate.js"></script>
+      
+      
       <!-- 分析週期日起查詢 -->
       <script type="text/javascript">
       $(document).ready(function() {
-         $('#datetimepicker10').datetimepicker({
-             viewMode: 'years',
-            format: 'YYYY/MM'
-         });
+         $("#date04").jeDate({
+        	    isinitVal:true,
+        	    festival:true,
+        	    ishmsVal:false,
+        	    minDate: '2016-06-16 23:59:59',
+        	    maxDate: $.nowDate(0),
+        	    format:"YYYY-MM",
+        	    zIndex:3000,
+        	})
       });
       </script>
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
-	 <div class="page-header"><h4>&nbsp;&nbsp;月报表&nbsp;&nbsp;<button class="btn btn-info myPrint left" ng-click="savesis()">保存 </button></h4></div>
+	<div class="page-header row" style="padding-top: 5px;">
+		<div class="col-lg-4">
+				&nbsp;&nbsp;月报表&nbsp;&nbsp;
+				<button class="btn btn-info myPrint left" ng-click="savesis()">保存 </button>
+		</div>
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
+			<input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM" readonly style="text-indent: 1em;border:1px solid #ccc;border-radius:4px;">
+			<button class="btn btn-info myPrint">查询 </button>
+		</div>
+	</div>
+
 	<div id="print">
 	    <!-- 报表标题  -->
 	    <div class="print_title">
@@ -24,9 +41,8 @@
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{rdcname}}">
 	    		</div>
 	    		<div class="pull-left input-group date">
-	    			<span>分析周期：</span><!-- <input type="text" value="{{timeuRange}}"> -->
-	    			<input type='text' id='datetimepicker10' />&nbsp;
-	    			<button class="btn btn-primary btn-sm">查询</button>
+	    			<span>分析周期：</span><input type="text" value="{{timeuRange}}">
+	    			
 	    		</div>
 	    	</div>
 	    </div>
