@@ -422,6 +422,16 @@ html, body {
  	border:0;
  	background-color: transparent;
 }
+#myApply{
+	color: #333;
+}
+#myApply .modal-dialog {
+     width:800px;
+ }
+#myApply .modal-content{
+     border-radius:5px;
+	
+}
 /*compressorBlower*/
 #blowerPage>div{
 	margin-bottom: 10px;
