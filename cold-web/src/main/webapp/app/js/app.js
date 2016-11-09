@@ -86,7 +86,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 				min = Math.min(min,yData[index])
                 max = Math.max(max,yData[index])
 			})
-			if(min==0&&max==0){
+			if(min>=0){
 				yMin=0;
 			}else{
 				yMin = max - min < 1 && type == 'line' ?min - 10:yMin

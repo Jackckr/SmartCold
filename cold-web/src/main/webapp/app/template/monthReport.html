@@ -12,9 +12,16 @@
       </script>
       
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
-	<div class="page-header">
-	  &nbsp;&nbsp;月报表
+	<div class="page-header row">
+	  <div class="col-lg-4">
+	  	&nbsp;&nbsp;月报表
 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button>
+	  </div>
+	  <div class="col-lg-4"></div>
+	  	<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
+	  	  <input type='text' id='datetimepicker10' style="text-indent: 1em;"/>
+	      <button class="btn btn-info myPrint">查询 </button>
+	  	</div>
 	</div>
 	<div id="print">
 		<div class="print_header">
@@ -28,14 +35,14 @@
 	    	<h2 class="tac"><strong>冷库综合运行系统月度分析报告</strong></h2>
 	    	<div class="print_name clearfix">
 	    		<div class="pull-left">
-	    			<span>客户名称：</span><input type="text" value="{{pysicaldata.compName}}">
+	    			<span>客户名称：</span><input type="text" value="{{pysicaldata.compName}}" readonly="readonly">
 	    		</div>
 	    		<div class="pull-left">
-	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}">
+	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}" readonly="readonly">
 	    		</div>
 	    		<div class="pull-left input-group date">
-	    			<span>分析周期：</span><!-- <input type="text" value="{{timeuRange}}"> -->
-	    			<input type='text' id='datetimepicker10' />
+	    			<span>分析周期：</span> <input type="text" value="{{timeuRange}}" readonly="readonly"> 
+	    		
 	    		</div>
 	    	</div>
 	    </div>

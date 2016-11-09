@@ -263,6 +263,7 @@ public class PhysicalController {
 			for (HashMap<String, Object> hashMap : sumQlist) { allsumq+=(Double) hashMap.get("sumq");}
 			for (HashMap<String, Object> hashMap : sumElist) { allsume+=(Double) hashMap.get("sume"); }
 			if(allsume!=0&&allsumq!=0){qe=(allsumq/allsume)* weightSet.getCrew1();}
+			if(qe<0){return 0;}else if(qe>=100){qe=75;}//
 		}
 		if(SetUtil.isnotNullList(warCounList)){
 			for (HashMap<String, Object> hashMap : warCounList) {
@@ -273,6 +274,8 @@ public class PhysicalController {
 				}
 			}
 		}
-		return (int) Math.abs(100-qe-hwarcount-lwarcount);
+		int soure= (int) (100-qe-hwarcount-lwarcount);
+		if(soure<35){soure=35;}
+		return soure;
 	}
 }
