@@ -39,7 +39,7 @@
           	<td>{{maintenance1.note}}</td> 	
           	<td><textarea ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
           	<td class="text-center">
-          		<button class="btn btn-primary btn-xs"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
+          		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
        		</td>    
         </tr>
       </tbody>
@@ -80,8 +80,8 @@
           	<td>{{maintenance0.reason}}</td>
           	<td>{{maintenance0.ordertime | date:'yyyy-MM-dd' }}</td>   
           	<td class="text-center">
-          		<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myApply" ng-click="weixiuapply(maintenance0.id)">维修</button>
-          		<button class="btn btn-primary btn-xs"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>
+          		<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myApply" ng-click="weixiuapply(maintenance0.id)">维修</button>
+          		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>
        		</td>    	
         </tr>
       </tbody>
