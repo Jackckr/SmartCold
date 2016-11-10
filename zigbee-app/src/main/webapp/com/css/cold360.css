@@ -697,4 +697,9 @@ b{
 .cold_warn .mybtn{
 	padding: 0.2rem 0.5rem;
 }
-
+.myTd{
+	max-width: 15rem;
+	min-width: 12rem;
+	word-break: break-all;	
+	white-space: normal;
+}

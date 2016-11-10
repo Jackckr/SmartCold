@@ -35,8 +35,7 @@
 			margin: 0;
 			font-size: .8rem;
 		}
-		ol, ul {
-		    margin-top: 0;
+		ol, ul, p{
 		   margin-bottom:0;
 		}
     </style>
@@ -137,7 +136,7 @@
 							<td>常规检查，更换冷冻油，压缩机排温高</td>
 							<td>2016-07-02</td>
 							<td>2016-07-03</td>
-							<td>油污染已更换，吸气过滤芯已清洗，其他过滤器已检查</td>
+							<td>油污染已更换，吸气过滤芯已清洗，其他过滤器已检查/</td>
 							<td>下次藏堵需更换新的吸气过滤芯</td>
 							<td contenteditable="true"></td>
 							<td>
@@ -270,7 +269,7 @@
 	  			<p>预约维修时间:</p>
 	  			<input class="datainp" type="date" placeholder="请选择预约时间" /> 
 	  		</div>
-	  		<button class="mybtn">提交</button>
+	  		<button class="mybtn" onclick="yesFn()">提交</button>
 	  </div>
 	  <!-- 维护申请html end-->   
   </div>
@@ -348,6 +347,13 @@
 			    }
 	    	})
     	}
+    	function yesFn(){
+    		 layer.open({
+   			    content: '<p class="line_height">提交成功</p>'
+   			    ,btn: '确定'
+   			  });
+    	}
+    	
     </script>
 </body>
 </html>
