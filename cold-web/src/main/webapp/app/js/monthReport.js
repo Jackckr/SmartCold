@@ -33,9 +33,11 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 					var yData =[],sumval=0; ldata.push(name);
 					if(storage[keys].length>maxxdata){ maxxdata=storage[keys].length; xydata=storage[keys];  };
 					angular.forEach(storage[keys],function(item){  var val=item['value']/nuit ;  yData.unshift(val); sumval+=val;  });
-						var avg=(sumval/storage[keys].length).toFixed(2);
-					    restmsg.push({name :name,avgval:avg,msg:name+msge+avg+mode.tmg[index]+util.getMsg(index,avg)}); 
-					seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
+					var avg=(sumval/storage[keys].length).toFixed(2);
+					if(!isNaN(avg)){
+						  restmsg.push({name :name,avgval:avg,msg:name+msge+avg+mode.tmg[index]+util.getMsg(index,avg)}); 
+						  seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
+					}
 				});
 				if(xydata!=null){
 					angular.forEach(xydata,function(item){  xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]); });
