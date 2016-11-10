@@ -117,4 +117,37 @@ app.controller('maintain', function ($scope, $location, $http) {
         $scope.alarmTotalCnt = 0;
         $scope.viewStorage(rdc.id);
     }
+
+    function checkInput() {
+        var flag = true;
+        // 检查必须填写项
+        if ($scope.unitname == undefined || $scope.unitname == '') {
+            flag = false;
+        }
+        return flag;
+    }
+
+    $scope.addMaintenance = function () {
+        if (checkInput()) {
+            $http({
+                method: 'POST',
+                url: ER.coldroot + '/i/maintenance/addMaintenance',
+                params: {
+                    unitname: encodeURI($scope.unitname, "UTF-8"),
+                    reason: encodeURI($scope.reason, "UTF-8"),
+                    ordertime: $scope.ordertime
+                }
+            }).success(function (data) {
+                if (data) {
+                    alert("添加成功");
+                }
+                else {
+                    alert("添加失败");
+                }
+            });
+
+        } else {
+            alert("机组名称不允许为空!");
+        }
+    };
 });

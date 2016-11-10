@@ -255,22 +255,21 @@
 		<!-- 维护记录html end-->  
 	  
 	  <!-- 维护申请html ===================*********============*********==========-->
-	  <div class="mainApply black">
-	  		<div class="applyKid">
-	  			<p>机组名称:</p>
-  				<textarea placeholder="请输入需要维修机组的名称"></textarea>
-	  			
-	  		</div>
-	  		<div class="applyKid">
-	  			<p>维修原因/保养要求:</p>
-  				<textarea colspan="10" rowspan="10" placeholder="请输入维修原因/保养要求"></textarea>	  			
-	  		</div>
-	  		<div class="applyKid">
-	  			<p>预约维修时间:</p>
-	  			<input class="datainp" type="date" placeholder="请选择预约时间" /> 
-	  		</div>
-	  		<button class="mybtn" onclick="yesFn()">提交</button>
-	  </div>
+		<div class="mainApply black">
+			<div class="applyKid">
+				<p>机组名称:</p>
+				<textarea placeholder="请输入需要维修机组的名称" ng-model="unitname"></textarea>
+			</div>
+			<div class="applyKid">
+				<p>维修原因/保养要求:</p>
+				<textarea colspan="10" rowspan="10" ng-model="reason" placeholder="请输入维修原因/保养要求"></textarea>
+			</div>
+			<div class="applyKid">
+				<p>预约维修时间:</p>
+				<input class="datainp" type="date" ng-model="ordertime" placeholder="请选择预约时间"/>
+			</div>
+			<button class="mybtn" ng-click="addMaintenance()">提交</button>
+		</div>
 	  <!-- 维护申请html end-->   
   </div>
   <!--rdc列表-------------------------------------------------->
@@ -347,12 +346,12 @@
 			    }
 	    	})
     	}
-    	function yesFn(){
-    		 layer.open({
-   			    content: '<p class="line_height">提交成功</p>'
-   			    ,btn: '确定'
-   			  });
-    	}
+//    	function yesFn(){
+//    		 layer.open({
+//   			    content: '<p class="line_height">提交成功</p>'
+//   			    ,btn: '确定'
+//   			  });
+//    	}
     	
     </script>
 </body>
