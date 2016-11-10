@@ -4,7 +4,7 @@
  * 月分析报表
  */
 coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
-	$scope.isnotprint=true;$scope.isloaderr=false;//当前是否是打印状态
+	$scope.isnotprint=true;$scope.isloaderr=false;//当前是否是打印状态和加载状态
 	$scope.rdcId = $stateParams.rdcId;
 	$("#loding").show(); $scope.loadindex=0;//已完成加载数据
 	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
@@ -55,12 +55,16 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	//1.系统评分
 	$scope.pysical=function(){
 		//获得分析结果
-		$http({method:'POST',url:'/i/AnalysisController/getRdcreportsis',params:{"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime}}).success(function (data) {
-			if(data!=null&&data.length>0){ $scope.rdcsis=data[0];}else{$scope.rdcsis=null;}
-	    });
+		
 		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
 			++$scope.loadindex;$scope.pysicaldata=data.entity;
 		}});
+	};
+	$scope.initRdcreportsis=function(){
+		//获得分析结果
+		$http({method:'POST',url:'/i/AnalysisController/getRdcreportsis',params:{"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime}}).success(function (data) {
+			if(data!=null&&data.length>0){ $scope.rdcsis=data[0];}else{$scope.rdcsis=null;}
+	    });
 	};
 	//
 	$scope.initlineChar = function(){//初始化折现图
@@ -178,9 +182,21 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 			$scope.charArray[7]=myChart7;
     };
 	//==========================================================================================================================================================
+    $scope.disposeChart=function(){
+    	if($scope.charArray!=null){
+    		angular.forEach($scope.charArray,function(item){ 
+        		item.clear();//销毁对象并设为null  
+        		 $("#"+item.dom.id).empty();
+        	});
+    	}
+    	$scope.loadindex=0;$scope.isloaderr=false; 
+        window.CollectGarbage && CollectGarbage();//清理内存  	
+    };
+    
     $scope.initdata=function(){
-    	   $scope.loadindex=0;$scope.isloaderr=false;
+    	    $scope.disposeChart();
     	    $scope.pysical();
+    	    $scope.initRdcreportsis();
     	    $scope.initlineChar();
     	    $scope.initQsis();
     	    $scope.initPowersis();

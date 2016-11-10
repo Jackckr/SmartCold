@@ -6,19 +6,7 @@
 		}
       </style>
       <!-- 分析週期日起查詢 -->
-      <script type="text/javascript">
-      $(document).ready(function() {
-         $("#date04").jeDate({
-        	    isinitVal:true,
-        	    festival:true,
-        	    ishmsVal:false,
-        	    minDate: '2016-06-16 23:59:59',
-        	    maxDate: $.nowDate(0),
-        	    format:"YYYY-MM",
-        	    zIndex:3000,
-        	})
-      });
-      </script>
+     
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px">
 	<div class="page-header row" style="padding-top: 5px;">
 		<div class="col-lg-4">
@@ -27,12 +15,12 @@
 		</div>
 		<div class="col-lg-4"></div>
 		<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
-			<input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM" readonly >
-			<button class="btn btn-info myPrint">查询 </button>
+			  <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
+			<button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
 		</div>
 	</div>
 
-	<div id="print">
+	<div id="print" ng-show="!isloaderr">
 	    <!-- 报表标题  -->
 	    <div class="print_title">
 	    	<h2 class="tac" style="margin: 0"><strong>冷库综合运行系统月度分析报告</strong></h2>
@@ -84,7 +72,7 @@
 					</div>
 				</div>
 				<!-- 制冷系统 -->
-				<div class="box bg-gray" ng-if="pysicaldata.ishasTempDEV">
+				<div class="box bg-gray" ng-if="pysicaldata.ishasplc">
 					<div class="box-header with-border">
 						<h3 class="box-title">制冷系统</h3>
 					</div>
@@ -93,7 +81,7 @@
 						<div class="haveDevice ">
 							<div class="circle nobg fontGreen">
 								<img class="no-print" src="../../assets/img/green_circle.png" height="160" width="160" alt="">
-								{{pysicaldata.avgColdStorageScores}}<span>分</span>
+								{{pysicaldata.coldStorage}}<span>分</span>
 							</div>
 						</div>
 					</div>
@@ -121,7 +109,6 @@
 	    		<div class="textPart w40">
 	    			<p><strong>超温时长（综合大数据纵环比分析）</strong></p>
 	    			<p ng-repeat="obj in charrestmsg[0]"><span >{{obj.msg}}</span></p>
-<!-- 	    			<p><span class="intro">**判断优良标准逻辑：平均每天75min以下“优良”，75~120min属“一般”，150min以上属“不理想”**</span></p> -->
 	    		</div>
 	    	</div>
 	    	<hr>
@@ -273,11 +260,11 @@
 	    	</div>
 	    </div>
 	</div>
-	<div id="imgtest">
-	 <img alt="" src="">
-	</div>
+	<div class="col-lg-12 text-center" ng-show="isloaderr">
+	  <div class="alert alert-info text-center">没有查到当前月份的分析数据哦</div>
+   </div>
 </div>
-<div id="loding" class="cover_bg black" ng-hide="loadindex==11">
+<div id="loding" class="cover_bg black" ng-hide="loadindex>=11">
 	<div class="loader">
         <div class="loader-inner line-scale">
           <div></div>
