@@ -8,9 +8,11 @@
     <title>360维护</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
     <link rel="stylesheet" href="../com/css/layer.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+	    <script type="text/javascript" src="../com/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
@@ -28,6 +30,14 @@
 		.line_height{
 			line-height: 5rem;
 			text-align: center;
+		}
+		.layui-m-layerchild h3{
+			margin: 0;
+			font-size: .8rem;
+		}
+		ol, ul {
+		    margin-top: 0;
+		   margin-bottom:0;
 		}
     </style>
 </head>
@@ -86,6 +96,12 @@
 	  <!-- 维护记录html ===================*********============*********==========-->
 		<div class="wxRecords black">
 			<p>维修完结记录</p>
+			<div class="input-group">
+                 <input type="text" class="form-control">
+                 <span class="input-group-btn">
+                     <button class="btn btn-primary" type="button">搜索</button>
+                 </span>
+             </div><br>
 			<div class="analysis alarmLog">
 				<table class="cold_warn">
 					<thead>
@@ -115,9 +131,101 @@
 								<button class="mybtn" onclick="delFn(this)">删除</button>
 							</td>
 						</tr>
+						<tr>
+							<td>2</td>
+							<td>机组1，2号压缩机</td>
+							<td>常规检查，更换冷冻油，压缩机排温高</td>
+							<td>2016-07-02</td>
+							<td>2016-07-03</td>
+							<td>油污染已更换，吸气过滤芯已清洗，其他过滤器已检查</td>
+							<td>下次藏堵需更换新的吸气过滤芯</td>
+							<td contenteditable="true"></td>
+							<td>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
+						</tr>
+
+						<tr>
+							<td>3</td>
+							<td>机组2，1号压缩机</td>
+							<td>常规检查，油压差报警</td>
+							<td>2016-07-29</td>
+							<td>2016-07-30</td>
+							<td>油槽过滤网已清洗</td>
+							<td></td>
+							<td contenteditable="true">现场测试正常</td>
+							<td>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
+						</tr>
+
+						<tr>
+							<td>4</td>
+							<td>机组2，2号压缩机</td>
+							<td>常规检查</td>
+							<td>2016-08-05</td>
+							<td>2016-08-06</td>
+							<td>已更换干燥过滤芯</td>
+							<td></td>
+							<td contenteditable="true">服务好</td>
+							<td>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
+						</tr>
+
+						<tr>
+							<td>5</td>
+							<td>机组2，3号压缩机</td>
+							<td>低油位报警</td>
+							<td>2016-09-15</td>
+							<td>2016-09-17</td>
+							<td>已检查，清洗油过滤器，测试油位控制器性能</td>
+							<td></td>
+							<td contenteditable="true">现场测试正常</td>
+							<td>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>机组2，4号压缩机</td>
+							<td>接触器吸合时有杂音</td>
+							<td>2016-09-15</td>
+							<td>2016-09-17</td>
+							<td>已检查，接触器松动，积灰导致线圈衔铁接触面毛糙，已更换新接触器。</td>
+							<td></td>
+							<td contenteditable="true">现场测试正常</td>
+							<td>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>机组2</td>
+							<td>储液器液位低，各项保护是否有效</td>
+							<td>2016-09-15</td>
+							<td>2016-09-17</td>
+							<td>已检查，增补制冷剂</td>
+							<td></td>
+							<td contenteditable="true">服务好，收费合理。</td>
+							<td>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
+			<ul class="pagination">
+			    <li><a href="#">&laquo;</a></li>
+			    <li><a href="#">1</a></li>
+			    <li><a href="#">2</a></li>
+			    <li><a href="#">3</a></li>
+			    <li><a href="#">4</a></li>
+			    <li><a href="#">5</a></li>
+			    <li><a href="#">&raquo;</a></li>
+			</ul>
+			<hr/>
+			
 			<p>待维修记录</p>
 			<div class="analysis alarmLog">
 				<table class="cold_warn">
