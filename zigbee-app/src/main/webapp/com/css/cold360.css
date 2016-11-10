@@ -560,6 +560,7 @@ b{
 	color:#555;
 	-webkit-appearance: none;
 	appearance: none;
+	font-size: .75rem;
 }
 /*报表功能*/
 .analysis{
@@ -670,6 +671,9 @@ b{
 	appearance: none;
 	font-size: .75rem;
 }
+.textA.applyKid  textarea{
+	min-height:2rem;
+}
 .mainApply button{
 	width:100%;
 	margin-top: 2rem;
@@ -690,3 +694,7 @@ b{
 #jedatebox{
 	z-index: 10000!important;
 }
+.cold_warn .mybtn{
+	padding: 0.2rem 0.5rem;
+}
+

@@ -8,14 +8,28 @@
     <title>360维护</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
+    <link rel="stylesheet" href="../com/css/layer.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js" ></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/maintain.js" ></script>
+    <style>
+    	.layui-m-layercont{
+			padding: .2rem .59rem!important;
+			min-height: 5rem;
+		}
+		.layui-m-layercont{	
+			text-align: left!important;
+		}
+		.line_height{
+			line-height: 5rem;
+			text-align: center;
+		}
+    </style>
 </head>
 <body ng-app="app" ng-controller="maintain" ng-cloak>
     <!-- header -->
@@ -84,6 +98,7 @@
 							<th>维修详情</th>
 							<th>备注</th>
 							<th>维修评价</th>
+							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -96,70 +111,9 @@
 							<td>油污染已更换，其他过滤器已检查</td>
 							<td></td>
 							<td contenteditable="true">服务好</td>
-						</tr>
-
-						<tr>
-							<td>2</td>
-							<td>机组1，2号压缩机</td>
-							<td>常规检查，更换冷冻油，压缩机排温高</td>
-							<td>2016-07-02</td>
-							<td>2016-07-03</td>
-							<td>油污染已更换，吸气过滤芯已清洗，其他过滤器已检查</td>
-							<td>下次藏堵需更换新的吸气过滤芯</td>
-							<td contenteditable="true"></td>
-						</tr>
-
-						<tr>
-							<td>3</td>
-							<td>机组2，1号压缩机</td>
-							<td>常规检查，油压差报警</td>
-							<td>2016-07-29</td>
-							<td>2016-07-30</td>
-							<td>油槽过滤网已清洗</td>
-							<td></td>
-							<td contenteditable="true">现场测试正常</td>
-						</tr>
-
-						<tr>
-							<td>4</td>
-							<td>机组2，2号压缩机</td>
-							<td>常规检查</td>
-							<td>2016-08-05</td>
-							<td>2016-08-06</td>
-							<td>已更换干燥过滤芯</td>
-							<td></td>
-							<td contenteditable="true">服务好</td>
-						</tr>
-
-						<tr>
-							<td>5</td>
-							<td>机组2，3号压缩机</td>
-							<td>低油位报警</td>
-							<td>2016-09-15</td>
-							<td>2016-09-17</td>
-							<td>已检查，清洗油过滤器，测试油位控制器性能</td>
-							<td></td>
-							<td contenteditable="true">现场测试正常</td>
-						</tr>
-						<tr>
-							<td>6</td>
-							<td>机组2，4号压缩机</td>
-							<td>接触器吸合时有杂音</td>
-							<td>2016-09-15</td>
-							<td>2016-09-17</td>
-							<td>已检查，接触器松动，积灰导致线圈衔铁接触面毛糙，已更换新接触器。</td>
-							<td></td>
-							<td contenteditable="true">现场测试正常</td>
-						</tr>
-						<tr>
-							<td>7</td>
-							<td>机组2</td>
-							<td>储液器液位低，各项保护是否有效</td>
-							<td>2016-09-15</td>
-							<td>2016-09-17</td>
-							<td>已检查，增补制冷剂</td>
-							<td></td>
-							<td contenteditable="true">服务好，收费合理。</td>
+							<td>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -173,6 +127,7 @@
 							<th>机组名称</th>
 							<th>维修原因/保养要求</th>
 							<th>预约维修时间</th>
+							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -181,6 +136,10 @@
 							<td>机组2，1号压缩机</td>
 							<td>常规检查，更换冷冻油</td>
 							<td>2016-11-05</td>
+							<td>
+								<button class="mybtn" onclick="weixiu()">维修</button>
+								<button class="mybtn" onclick="delFn(this)">删除</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -201,7 +160,7 @@
 	  		</div>
 	  		<div class="applyKid">
 	  			<p>预约维修时间:</p>
-	  			<input id="applyTime" class="datainp" type="text" placeholder="请选择预约时间" readonly/>
+	  			<input class="datainp" type="date" placeholder="请选择预约时间" /> 
 	  		</div>
 	  		<button class="mybtn">提交</button>
 	  </div>
@@ -243,5 +202,44 @@
         </li>
     </ul>
     <div class="goTop"><i class="iconfont">&#xe747;</i></div>
+    <script>
+    	function weixiu(){
+    		layer.open({
+			  title: [
+			    '维修操作',
+			    'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;'
+			  ]
+			  //,anim: 'up'
+			  ,content: '<div class="applyKid textA">'+
+	  			'<p>机组名称:</p>'+
+  				'<textarea placeholder="请输入需要维修机组的名称"></textarea>	'+  			
+	  		'</div>'+
+	  		'<div class="applyKid textA">'+
+	  			'<p>维修详情:</p>'+
+  				'<textarea colspan="10" rowspan="10" placeholder="请输入维修详情"></textarea>'+  			
+	  		'</div>'+
+	  		'<div class="applyKid">'+
+	  			'<p>实际维修时间:</p>'+
+	  			'<input class="datainp" style="width:100%;" type="date" placeholder="请选择维修时间"/>'+
+	  		'</div>'+
+	  		'<div class="applyKid textA">'+
+	  			'<p>备注:</p>'+
+  				'<textarea colspan="10" rowspan="10" placeholder="请输入文字"></textarea>'+  			
+	  		'</div>'
+			  ,btn: ['确认', '取消']
+			});			
+		}
+    	function delFn(ops){
+    		layer.open({
+			    content: '<p class="line_height">您确定要删除本条数据吗？</p>'
+			    ,btn: ['确定', '取消']
+			    ,yes: function(index){
+			    	$(ops).parents('tr').remove();
+			      //location.reload();
+			      layer.close(index);
+			    }
+	    	})
+    	}
+    </script>
 </body>
 </html>

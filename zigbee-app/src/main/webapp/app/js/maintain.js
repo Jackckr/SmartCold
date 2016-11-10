@@ -104,13 +104,6 @@ app.controller('maintain', function ($scope, $location, $http) {
         }
     }
 
-    jeDate({
-        dateCell: "#applyTime",
-        format: "YYYY-MM-DD",
-        isTime: false,
-        zIndex: 10000,
-        minDate: "2008-08-08 08:08:08"
-    })
     /*tab切换*/
     $(".mylog").click(function (event) {
         var $index = $(this).index();

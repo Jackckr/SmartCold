@@ -551,6 +551,7 @@ html, body {
 }
 .chartHight{
 	height: 400px;
+	border:1px solid #eee
 }
 .chartPart{	
 	border:1px solid #ccc;
