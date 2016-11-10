@@ -190,10 +190,9 @@ public class PhysicalController {
      */
 	private int getTempScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
 		try {
-			double chaowenyinzi=0;double baowenyinzi=0;double jiangwenyinzi=0;
-			double maxtemp=this.quantityMapper.getSisBayKey(1,obj.getId(), "MaxTemp", stTime, edTime);
-		    double temcuf=(maxtemp-obj.getStartTemperature()-obj.getTempdiff()); 
-		    if(temcuf>0){temcuf=temcuf*weightSet.getFactor2();}else{temcuf=0;}
+			double chaowenyinzi=0;double baowenyinzi=0;double jiangwenyinzi=0;double temcuf=0;
+			Double maxtemp=this.quantityMapper.getSisBayKey(1,obj.getId(), "MaxTemp", stTime, edTime);
+			if(maxtemp!=null&&maxtemp!=0){temcuf=(maxtemp-obj.getStartTemperature()-obj.getTempdiff()); if(temcuf>0){temcuf=temcuf*weightSet.getFactor2();}else{temcuf=0;}}
 			List<HashMap<String, Object>> avgTempYinZi = this.quantityMapper.getAVGTempYinZi(obj.getId(), stTime, edTime);
 			for (HashMap<String, Object> hashMap : avgTempYinZi) {
 				if(hashMap.containsKey("ChaoWenYinZi")){

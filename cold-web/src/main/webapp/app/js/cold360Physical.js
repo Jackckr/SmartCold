@@ -6,12 +6,10 @@
 coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools ) {
 	//初始化页面
 	$scope.pageindex=1;
-	
-	$scope.rdcid=$rootScope.rdcId;
+	$scope.rdcId=$rootScope.rdcId;
 	$scope.cwheight=$(".content-wrapper").height();
 	$(".mainHeight").height($scope.cwheight); 
-	$scope.physicalday= window.localStorage['physicalday'+$scope.rdcid];
-	var msg={errmsg:{'0':"非法请求","-1":"你还没有冷库信息！","-2":"没有设备","-3":"没有配置！"}};
+	$scope.physicalday= window.localStorage['physicalday'+$scope.rdcId];
 	if($scope.physicalday){
 		var date1=new Date($scope.physicalday); var date2=new Date(); var date3=date2.getTime()-date1.getTime();  var days=Math.floor(date3/(86400000)) ; 
 		if(days==0){$scope.msg='上次体检时间：'+baseTools.formatTime( $scope.physicalday);}else if(days<2){$scope.msg='系统已经'+days+"天未体检了,建议体检";}else {$scope.msg='系统已经很久未体检了,建议体检';}
@@ -21,15 +19,14 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 	//体检
 	$scope.physical=function(){ $("#loding").show(); $timeout($scope.pysical,1500); };
 	$scope.pysical=function(){
-		$http.get('/i/physicalController/checkup',{params: {"rdcId":$scope.rdcid } }).success(function(data,status,config,header){
+		$http.get('/i/physicalController/checkup',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
 			 $("#loding").hide();
 		      if(data.success){
-		    	  window.localStorage['physicalday'+$scope.rdcid]=new Date();
+		    	  window.localStorage['physicalday'+$scope.rdcId]=new Date();
 		    	  $scope.data=data.entity;
 		    	  $scope.showpage(2);
-		      }else{
-		    	// alert(msg.errmsg[data.message]);
 		      }
+		      //else{alert(msg.errmsg[data.message]);}//	var msg={errmsg:{'0':"非法请求","-1":"你还没有冷库信息！","-2":"没有设备","-3":"没有配置！"}};
 		 });
 	};
 	$scope.showsg=function(i,em){
