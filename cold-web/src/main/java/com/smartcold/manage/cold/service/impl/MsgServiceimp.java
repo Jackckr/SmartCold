@@ -180,7 +180,7 @@ public class MsgServiceimp implements MsgService {
 			LinkedHashMap<Integer, Map<String, Object>> tempData = new LinkedHashMap<Integer, Map<String, Object>>();
 			for (DeviceObjectMappingEntity obj : devciceList) {
 				resMap = new HashMap<String, Object>();
-				Integer size = storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "", startTime, endTime);
+				Integer size = storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), null, startTime, endTime);
 				if (size == null || size == 0) {
 					String oidname = "";
 					List<HashMap<String, Object>> oidobj = this.megMapper .findObjsetByOid( StorageType.getStorageType(obj.getType()) .getTable(), obj.getOid());
