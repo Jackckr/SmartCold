@@ -8,7 +8,7 @@ public class WarningsLog {
 	private int rdcid;
 	private int oid;
 	private String msg;
-	private Date addtime;
+	private String addtime;
 	
 	public WarningsLog() {
 		super();
@@ -43,11 +43,12 @@ public class WarningsLog {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public Date getAddtime() {
+	public String getAddtime() {
 		return addtime;
 	}
-	public void setAddtime(Date addtime) {
+	public void setAddtime(String addtime) {
 		this.addtime = addtime;
 	}
+	
 	
 }
