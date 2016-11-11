@@ -37,7 +37,7 @@
           	<td>{{maintenance1.fixtime}}</td> 
           	<td>{{maintenance1.detail}}</td> 	
           	<td>{{maintenance1.note}}</td> 	
-          	<td><textarea ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
+          	<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
           	<td class="text-center">
           		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
        		</td>    

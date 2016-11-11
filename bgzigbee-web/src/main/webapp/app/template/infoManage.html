@@ -154,6 +154,17 @@
     		</div>
 <!-- ==============================已发布信息================================================= -->
     		<div class="tab-pane fade clearfix" id="alreadyRel">
+    			<div class="newsTyps">
+                    <form class="form-horizontal" role="form"> 
+        				<div class="form-group clearfix"> 
+    				        <label class="col-sm-1 control-label">信息类型</label> 
+    				        <div class="col-sm-8"> 
+    				            <select class="form-control" ng-model="inforCategory"
+                                    ng-options="x.id as x.categoryname for x in inforCategorys"></select>
+    				        </div> 
+    				    </div>
+                    </form>   
+                </div>
     			<ul class="imgList pull-left" ng-repeat="information in AllInformation">
                     <li>
                         <div class="img pull-left"><img src="{{information.coverpic}}"></div>
