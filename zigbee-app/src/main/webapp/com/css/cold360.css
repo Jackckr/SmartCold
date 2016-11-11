@@ -576,7 +576,7 @@ b{
 	text-align:left;
 	text-indent:2rem;
 }
-.analysis th,.analysis td{
+.analysis thead th,.analysis thead td,.analysis tbody tr td:first-child,.analysis tbody tr td:last-child{
 	white-space: nowrap;
 	padding:.1rem;
 }
@@ -706,4 +706,7 @@ b{
 	min-width: 12rem;
 	word-break: break-all;	
 	white-space: normal;
+}
+.myNote{
+	min-width: 6rem;
 }
