@@ -5,6 +5,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     $scope.bigTotalItems = 12;
     // 当前页
     $scope.bigCurrentPage = 1;
+    $scope.bigCurrentPage1 = 1;
 	$scope.Maintenances0 = [];
 	$scope.Maintenances1 = [];
 	$scope.updateMaintenance0 = {};
@@ -29,7 +30,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 			method : 'POST',
 			url : '/i/maintenance/findMaintenanceList',
 			params : {
-				pageNum : $scope.bigCurrentPage,
+				pageNum : $scope.bigCurrentPage1,
 				pageSize : $scope.maxSize,
 				audit : 1,
 				keyword : encodeURI($scope.keyword,"UTF-8"),
@@ -109,7 +110,9 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     	}).success(function (data) {
         	if(data){
         		alert("提交成功");
-        		window.location.reload();
+        		//window.location.reload();
+        		 $scope.getMaintenances0();
+                 $scope.getMaintenances1();
         	}
         	else{
         		alert("提交失败");

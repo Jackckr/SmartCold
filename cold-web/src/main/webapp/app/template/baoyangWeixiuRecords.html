@@ -10,7 +10,7 @@
   <div class="box-body">
   	<div class="form-group">
 		<div class="col-md-5 col-md-offset-6">
-			<input type="text" class="form-control" ng-model="keyword" placeholder="请输入搜索内容" ng-keyup="goSearch1();">
+			<input type="text" class="form-control" ng-model="keyword" placeholder="请输入搜索内容" ng-change="goSearch1();">
 		</div>		
 		<label class="col-md-1 control-label"><button class="btn btn-primary" ng-click="goSearch1()">搜索</button></label>
 	</div>
@@ -33,7 +33,7 @@
           	<td class="text-center">{{$index+1}}</td>
           	<td>{{maintenance1.unitname}}</td>
           	<td>{{maintenance1.reason}}</td>
-          	<td>{{baseTools.formatTime(maintenance1.ordertime)}}</td>   
+          	<td>{{maintenance1.ordertime}}</td>   
           	<td>{{maintenance1.fixtime}}</td> 
           	<td>{{maintenance1.detail}}</td> 	
           	<td>{{maintenance1.note}}</td> 	
@@ -47,7 +47,7 @@
                <!-- 翻页功能 -->
                <div class="row" style="text-align:center">
                     <pagination ng-change="pageChanged1()" total-items="bigTotalItems"
-                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm"
                              boundary-links="true" rotate="false" num-pages="numPages"></pagination>
                 </div>
   </div>

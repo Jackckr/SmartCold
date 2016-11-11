@@ -2,13 +2,14 @@ package com.smartcold.manage.cold.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -63,11 +64,10 @@ public class MaintenanceController {
 	public Object addMaintenance(@RequestParam(value="unitname",required=false)String unitname,
 			@RequestParam(value="reason",required=false)String reason,
 			@RequestParam(value="ordertime",required=false)String ordertime) throws ParseException, UnsupportedEncodingException{
-		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
 		maintenanceEntity.setUnitname( URLDecoder.decode(unitname, "UTF-8"));
 		maintenanceEntity.setReason(URLDecoder.decode(reason, "UTF-8"));
-		maintenanceEntity.setOrdertime(sdf.parse(ordertime));
+		maintenanceEntity.setOrdertime(ordertime);
 		maintenanceMapper.insertMaintenance(maintenanceEntity);
 		return true;
 	}
@@ -79,13 +79,12 @@ public class MaintenanceController {
 			@RequestParam(value="detail",required=false)String detail,
 			@RequestParam(value="note",required=false)String note,
 			@RequestParam(value="fixtime",required=false)String fixtime) throws ParseException, UnsupportedEncodingException{
-		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
 		maintenanceEntity.setId(id);
 		maintenanceEntity.setAudit(audit);
 		maintenanceEntity.setDetail( URLDecoder.decode(detail, "UTF-8"));
 		maintenanceEntity.setNote(URLDecoder.decode(note, "UTF-8"));
-		maintenanceEntity.setFixtime(sdf.parse(fixtime));
+		maintenanceEntity.setFixtime(fixtime);
 		maintenanceMapper.updateMaintenance(maintenanceEntity);
 		return true;
 	}

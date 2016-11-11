@@ -18,9 +18,9 @@ public class MaintenanceEntity {
 	
 	private int audit;
 	
-    private Date ordertime;
+    private String ordertime;
     
-    private Date fixtime;
+    private String fixtime;
 
 	public int getId() {
 		return id;
@@ -78,21 +78,23 @@ public class MaintenanceEntity {
 		this.audit = audit;
 	}
 
-	public Date getOrdertime() {
+	public String getOrdertime() {
 		return ordertime;
 	}
 
-	public void setOrdertime(Date ordertime) {
+	public void setOrdertime(String ordertime) {
 		this.ordertime = ordertime;
 	}
 
-	public Date getFixtime() {
+	public String getFixtime() {
 		return fixtime;
 	}
 
-	public void setFixtime(Date fixtime) {
+	public void setFixtime(String fixtime) {
 		this.fixtime = fixtime;
 	}
+
+	
 
     
 }

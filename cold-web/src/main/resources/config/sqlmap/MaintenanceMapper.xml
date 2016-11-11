@@ -5,7 +5,17 @@
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.MaintenanceMapper">
 
     <select id="findAllMaintenances" parameterType="map" resultType="MaintenanceEntity">
-         SELECT * FROM `maintenance`
+           SELECT 
+
+
+id,
+unitname,
+reason,
+detail,
+note,
+appraise,
+audit,
+date_format(ordertime,'%Y-%m-%d')ordertime,date_format(fixtime,'%Y-%m-%d') fixtime FROM `maintenance`
          <where> 
             <if test="audit != null">
 			    audit=#{audit}
