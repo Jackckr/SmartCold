@@ -96,9 +96,9 @@
 		<div class="wxRecords black">
 			<p>维修完结记录</p>
 			<div class="input-group">
-                 <input type="text" class="form-control">
+                 <input type="text" class="form-control" placeholder="请输入机组名" ng-model="keyword" ng-change="goSearch1()" ng-model-options="{debounce: 700}">
                  <span class="input-group-btn">
-                     <button class="btn btn-primary" type="button">搜索</button>
+                     <button class="btn btn-primary" type="button" ng-click="goSearch1()">搜索</button>
                  </span>
              </div><br>
 			<div class="analysis alarmLog">
@@ -117,112 +117,27 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>机组1，1号压缩机</td>
-							<td>常规检查，更换冷冻油</td>
-							<td>2016-07-02</td>
-							<td>2016-07-03</td>
-							<td>油污染已更换，其他过滤器已检查</td>
-							<td></td>
-							<td contenteditable="true">服务好</td>
-							<td>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>机组1，2号压缩机</td>
-							<td>常规检查，更换冷冻油，压缩机排温高</td>
-							<td>2016-07-02</td>
-							<td>2016-07-03</td>
-							<td>油污染已更换，吸气过滤芯已清洗，其他过滤器已检查/</td>
-							<td>下次藏堵需更换新的吸气过滤芯</td>
-							<td contenteditable="true"></td>
-							<td>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
-							</td>
-						</tr>
-
-						<tr>
-							<td>3</td>
-							<td>机组2，1号压缩机</td>
-							<td>常规检查，油压差报警</td>
-							<td>2016-07-29</td>
-							<td>2016-07-30</td>
-							<td>油槽过滤网已清洗</td>
-							<td></td>
-							<td contenteditable="true">现场测试正常</td>
-							<td>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
-							</td>
-						</tr>
-
-						<tr>
-							<td>4</td>
-							<td>机组2，2号压缩机</td>
-							<td>常规检查</td>
-							<td>2016-08-05</td>
-							<td>2016-08-06</td>
-							<td>已更换干燥过滤芯</td>
-							<td></td>
-							<td contenteditable="true">服务好</td>
-							<td>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
-							</td>
-						</tr>
-
-						<tr>
-							<td>5</td>
-							<td>机组2，3号压缩机</td>
-							<td>低油位报警</td>
-							<td>2016-09-15</td>
-							<td>2016-09-17</td>
-							<td>已检查，清洗油过滤器，测试油位控制器性能</td>
-							<td></td>
-							<td contenteditable="true">现场测试正常</td>
-							<td>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>6</td>
-							<td>机组2，4号压缩机</td>
-							<td>接触器吸合时有杂音</td>
-							<td>2016-09-15</td>
-							<td>2016-09-17</td>
-							<td>已检查，接触器松动，积灰导致线圈衔铁接触面毛糙，已更换新接触器。</td>
-							<td></td>
-							<td contenteditable="true">现场测试正常</td>
-							<td>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>7</td>
-							<td>机组2</td>
-							<td>储液器液位低，各项保护是否有效</td>
-							<td>2016-09-15</td>
-							<td>2016-09-17</td>
-							<td>已检查，增补制冷剂</td>
-							<td></td>
-							<td contenteditable="true">服务好，收费合理。</td>
-							<td>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
+						<tr ng-repeat="maintenance1 in Maintenances1">
+							<td class="text-center">{{$index+1}}</td>
+							<td>{{maintenance1.unitname}}</td>
+							<td>{{maintenance1.reason}}</td>
+							<td>{{maintenance1.ordertime | date:'yyyy-MM-dd'}}</td>
+							<td>{{maintenance1.fixtime | date:'yyyy-MM-dd' }}</td>
+							<td>{{maintenance1.detail}}</td>
+							<td>{{maintenance1.note}}</td>
+							<td><textarea ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td>
+							<td class="text-center">
+								<button class="btn btn-danger"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				<div class="row" style="text-align:center">
+					<pagination ng-change="pageChanged1()" total-items="bigTotalItems"
+								ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+								boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+				</div>
 			</div>
-			<ul class="pagination">
-			    <li><a href="#">&laquo;</a></li>
-			    <li><a href="#">1</a></li>
-			    <li><a href="#">2</a></li>
-			    <li><a href="#">3</a></li>
-			    <li><a href="#">4</a></li>
-			    <li><a href="#">5</a></li>
-			    <li><a href="#">&raquo;</a></li>
-			</ul>
 			<hr/>
 			
 			<p>待维修记录</p>
@@ -238,14 +153,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>机组2，1号压缩机</td>
-							<td>常规检查，更换冷冻油</td>
-							<td>2016-11-05</td>
-							<td>
-								<button class="btn btn-success" onclick="weixiu()">维修</button>
-								<button class="btn btn-danger" onclick="delFn(this)">删除</button>
+						<tr ng-repeat="maintenance0 in Maintenances0">
+							<td class="text-center">{{$index+1}}</td>
+							<td>{{maintenance0.unitname}}</td>
+							<td>{{maintenance0.reason}}</td>
+							<td>{{maintenance0.ordertime | date:'yyyy-MM-dd' }}</td>
+							<td class="text-center">
+								<button class="btn btn-success" ng-click="weixiuapply(maintenance0.id)">维修</button>
+								<button class="btn btn-danger"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>
 							</td>
 						</tr>
 					</tbody>
@@ -270,7 +185,6 @@
 			</div>
 			<button class="mybtn" ng-click="addMaintenance()">提交</button>
 		</div>
-	  <!-- 维护申请html end-->   
   </div>
   <!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
@@ -308,51 +222,5 @@
         </li>
     </ul>
     <div class="goTop"><i class="iconfont">&#xe747;</i></div>
-    <script>
-    	function weixiu(){
-    		layer.open({
-			  title: [
-			    '维修操作',
-			    'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;'
-			  ]
-			  //,anim: 'up'
-			  ,content: '<div class="applyKid textA">'+
-	  			'<p>机组名称:</p>'+
-  				'<textarea placeholder="请输入需要维修机组的名称"></textarea>	'+  			
-	  		'</div>'+
-	  		'<div class="applyKid textA">'+
-	  			'<p>维修详情:</p>'+
-  				'<textarea colspan="10" rowspan="10" placeholder="请输入维修详情"></textarea>'+  			
-	  		'</div>'+
-	  		'<div class="applyKid">'+
-	  			'<p>实际维修时间:</p>'+
-	  			'<input class="datainp" style="width:100%;" type="date" placeholder="请选择维修时间"/>'+
-	  		'</div>'+
-	  		'<div class="applyKid textA">'+
-	  			'<p>备注:</p>'+
-  				'<textarea colspan="10" rowspan="10" placeholder="请输入文字"></textarea>'+  			
-	  		'</div>'
-			  ,btn: ['确认', '取消']
-			});			
-		}
-    	function delFn(ops){
-    		layer.open({
-			    content: '<p class="line_height">您确定要删除本条数据吗？</p>'
-			    ,btn: ['确定', '取消']
-			    ,yes: function(index){
-			    	$(ops).parents('tr').remove();
-			      //location.reload();
-			      layer.close(index);
-			    }
-	    	})
-    	}
-//    	function yesFn(){
-//    		 layer.open({
-//   			    content: '<p class="line_height">提交成功</p>'
-//   			    ,btn: '确定'
-//   			  });
-//    	}
-    	
-    </script>
 </body>
 </html>

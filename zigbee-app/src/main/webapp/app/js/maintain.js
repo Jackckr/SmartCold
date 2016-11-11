@@ -140,6 +140,7 @@ app.controller('maintain', function ($scope, $location, $http) {
             }).success(function (data) {
                 if (data) {
                     alert("添加成功");
+                    window.location.reload();
                 }
                 else {
                     alert("添加失败");
@@ -150,4 +151,171 @@ app.controller('maintain', function ($scope, $location, $http) {
             alert("机组名称不允许为空!");
         }
     };
+
+    // 显示最大页数
+    $scope.maxSize = 6;
+    // 总条目数(默认每页十条)
+    $scope.bigTotalItems = 6;
+    // 当前页
+    $scope.bigCurrentPage = 1;
+    $scope.Maintenances0 = [];
+    $scope.Maintenances1 = [];
+    $scope.updateMaintenance0 = {};
+    $scope.getMaintenances0 = function () {
+        $http({
+            method: 'POST',
+            url: ER.coldroot + '/i/maintenance/findMaintenanceList',
+            params: {
+                pageNum: $scope.bigCurrentPage,
+                pageSize: $scope.maxSize,
+                audit: 0,
+                keyword: encodeURI($scope.keyword, "UTF-8"),
+            }
+        }).success(function (data) {
+            $scope.bigTotalItems = data.total;
+            $scope.Maintenances0 = data.list;
+        });
+    };
+
+    $scope.getMaintenances1 = function () {
+        $http({
+            method: 'POST',
+            url: ER.coldroot + '/i/maintenance/findMaintenanceList',
+            params: {
+                pageNum: $scope.bigCurrentPage,
+                pageSize: $scope.maxSize,
+                audit: 1,
+                keyword: encodeURI($scope.keyword, "UTF-8"),
+            }
+        }).success(function (data) {
+            $scope.bigTotalItems = data.total;
+            $scope.Maintenances1 = data.list;
+        });
+    };
+
+    $scope.getMaintenances0();
+    $scope.getMaintenances1();
+
+    $scope.pageChanged0 = function () {
+        $scope.getMaintenances0();
+    };
+    $scope.pageChanged1 = function () {
+        $scope.getMaintenances1();
+    };
+
+    $scope.auditChanged = function (optAudiet) {
+        $scope.getMaintenances0();
+        $scope.getMaintenances1();
+    };
+    $scope.goSearch0 = function () {
+        $scope.getMaintenances0();
+    };
+    $scope.goSearch1 = function () {
+        $scope.getMaintenances1();
+    };
+
+    function delcfm() {
+        if (!confirm("确认要删除？")) {
+            return false;
+        }
+        return true;
+    }
+
+    $scope.goDeleteMaintenance = function (id) {
+        if (delcfm()) {
+            $http.get(ER.coldroot + '/i/maintenance/deleteMaintenance', {
+                params: {
+                    "id": id
+                }
+            }).success(function (data) {
+                window.location.reload();
+            });
+        }
+    };
+
+    $scope.weixiuapply = function (id) {
+        $http.get(ER.coldroot + '/i/maintenance/findMaintenanceByID', {
+            params: {
+                "id": id
+            }
+        }).success(function (data) {
+            $scope.updateMaintenance0 = data;
+            layer.open({
+                title: [
+                    '维修操作',
+                    'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;'
+                ]
+                , content: '<div class="applyKid textA">' +
+                '<p>机组名称:</p>' +
+                '<textarea disabled>' + $scope.updateMaintenance0.unitname + '</textarea>' +
+                '</div>' +
+                '<div class="applyKid textA">' +
+                '<p>维修详情:</p>' +
+                '<textarea colspan="10" rowspan="10" id="detail" placeholder="请输入维修详情"></textarea>' +
+                '</div>' +
+                '<div class="applyKid">' +
+                '<p>实际维修时间:</p>' +
+                '<input class="datainp" style="width:100%;" type="date" id="fixtime" placeholder="请选择维修时间"/>' +
+                '</div>' +
+                '<div class="applyKid textA">' +
+                '<p>备注:</p>' +
+                '<textarea colspan="10" rowspan="10" id="note"" placeholder="请输入文字"></textarea>' +
+                '</div>'
+                , btn: ['确认', '取消']
+                , yes: function (index) {
+                    var detail = $('#detail').val();
+                    var fixtime = $('#fixtime').val();
+                    var note = $('#note').val();
+                    if (detail === '') {
+                        alert("请填写维修详情");
+                        return;
+                    }
+                    if (fixtime === '') {
+                        alert("请填写维修时间");
+                        return;
+                    }
+                    $scope.submitfix(detail, fixtime, note);
+                    layer.close(index);
+                }
+            });
+        });
+    };
+
+    $scope.submitfix = function (detail, fixtime, note) {
+        $scope.updateMaintenance0.detail = detail;
+        $scope.updateMaintenance0.fixtime = fixtime;
+        $scope.updateMaintenance0.note = note;
+        $scope.updateMaintenance0.audit = 1;
+        $http({
+            'method': 'POST',
+            'url': ER.coldroot + '/i/maintenance/updateMaintenance',
+            'params': {
+                "id": $scope.updateMaintenance0.id,
+                "detail": encodeURI($scope.updateMaintenance0.detail, "UTF-8"),
+                "fixtime": $scope.updateMaintenance0.fixtime,
+                "note": encodeURI($scope.updateMaintenance0.note, "UTF-8"),
+                "audit": 1
+            }
+        }).success(function (data) {
+            if (data) {
+                alert("提交成功");
+                window.location.reload();
+            }
+            else {
+                alert("提交失败");
+            }
+        });
+    };
+
+    $scope.change = function (id, appraise) {
+        $http({
+            'method': 'POST',
+            'url': ER.coldroot + '/i/maintenance/updateMaintenanceAppraise',
+            'params': {
+                'id': id,
+                'appraise': appraise
+            }
+        });
+    };
+
 });
