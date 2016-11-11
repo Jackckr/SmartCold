@@ -20,7 +20,7 @@ coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools
 	$scope.physical=function(){ $("#loding").show(); $timeout($scope.pysical,1500); };
 	$scope.pysical=function(){
 		if($scope.rdcId==undefined){
-			$scope.rdcId=window.sessionStorage.smrdcId();
+			$scope.rdcId=window.sessionStorage.smrdcId;
 		}
 		$http.get('/i/physicalController/checkup',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
 			 $("#loding").hide();
