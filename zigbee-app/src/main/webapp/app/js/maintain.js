@@ -140,7 +140,10 @@ app.controller('maintain', function ($scope, $location, $http) {
             }).success(function (data) {
                 if (data) {
                     alert("添加成功");
-                    window.location.reload();
+//                    window.location.reload();
+                    $scope.getMaintenances0();
+                    $scope.getMaintenances1();
+                    $scope.unitname = $scope.reason=$scope.ordertime=null;
                 }
                 else {
                     alert("添加失败");
@@ -228,7 +231,9 @@ app.controller('maintain', function ($scope, $location, $http) {
                     "id": id
                 }
             }).success(function (data) {
-                window.location.reload();
+//                window.location.reload();
+            	 $scope.getMaintenances0();
+                 $scope.getMaintenances1();
             });
         }
     };
@@ -299,7 +304,9 @@ app.controller('maintain', function ($scope, $location, $http) {
         }).success(function (data) {
             if (data) {
                 alert("提交成功");
-                window.location.reload();
+//                window.location.reload();
+                $scope.getMaintenances0();
+                $scope.getMaintenances1();
             }
             else {
                 alert("提交失败");

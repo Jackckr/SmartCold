@@ -109,7 +109,9 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     	}).success(function (data) {
         	if(data){
         		alert("提交成功");
-        		window.location.reload();
+        		//window.location.reload();
+        		 $scope.getMaintenances0();
+                 $scope.getMaintenances1();
         	}
         	else{
         		alert("提交失败");
