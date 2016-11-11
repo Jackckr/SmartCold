@@ -136,7 +136,7 @@ app.controller('maintain', function ($scope, $location, $http) {
                 params: {
                     unitname: encodeURI($scope.unitname, "UTF-8"),
                     reason: encodeURI($scope.reason, "UTF-8"),
-                    ordertime: $scope.ordertime
+                    ordertime: $("input[ng-model='ordertime']").val()
                 }
             }).success(function (data) {
                 if (data) {
