@@ -387,6 +387,9 @@ b{
 	line-height: 2;
 	padding: 2px 0;
 }
+.analysis .cold_warn td{
+	line-height: 1;
+}
 .cold_warn th[colspan="3"]{
 	height:2.5rem;
 	line-height:2.5rem;

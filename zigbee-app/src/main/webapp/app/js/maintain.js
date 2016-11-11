@@ -1,6 +1,7 @@
 checkLogin();
 var app = angular.module('app', []);
 app.controller('maintain', function ($scope, $location, $http) {
+	var pageNum =  totalPages = 0;
     $scope.user = window.user;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -161,6 +162,7 @@ app.controller('maintain', function ($scope, $location, $http) {
     $scope.bigTotalItems = 6;
     // 当前页
     $scope.bigCurrentPage = 1;
+    $scope.bigCurrentPage1 = 1;
     $scope.Maintenances0 = [];
     $scope.Maintenances1 = [];
     $scope.updateMaintenance0 = {};
@@ -185,14 +187,27 @@ app.controller('maintain', function ($scope, $location, $http) {
             method: 'POST',
             url: ER.coldroot + '/i/maintenance/findMaintenanceList',
             params: {
-                pageNum: $scope.bigCurrentPage,
+                pageNum: $scope.bigCurrentPage1,
                 pageSize: $scope.maxSize,
                 audit: 1,
                 keyword: encodeURI($scope.keyword, "UTF-8"),
             }
         }).success(function (data) {
-            $scope.bigTotalItems = data.total;
-            $scope.Maintenances1 = data.list;
+           pageNum = data.pageNum;
+          totalPages = data.pages;
+          
+          $scope.Maintenances1 = data.list;
+          $('.pagination').jqPagination({
+        	  link_string : '/?page={page_number}',
+        	  current_page: pageNum, //设置当前页 默认为1
+        	  max_page : totalPages , //设置最大页 默认为1
+        	  page_string : '当前第'+pageNum+'页,共'+totalPages+'页',
+        	  paged : function(page) {
+        		  $scope.bigCurrentPage1=page;
+        		  $scope.getMaintenances1();
+        	      }
+        	});
+          
         });
     };
 
@@ -323,6 +338,5 @@ app.controller('maintain', function ($scope, $location, $http) {
                 'appraise': appraise
             }
         });
-    };
-
+    };  
 });
