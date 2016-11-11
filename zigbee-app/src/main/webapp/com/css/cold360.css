@@ -578,7 +578,10 @@ b{
 }
 .analysis thead th,.analysis thead td,.analysis tbody tr td:first-child,.analysis tbody tr td:last-child{
 	white-space: nowrap;
-	padding:.1rem;
+	padding:5px 8px;
+}
+.analysis td{
+	padding:5px 8px;
 }
 #rpt_asistb_tit {
 	line-height: 2rem;

@@ -160,7 +160,7 @@
 						<tr ng-repeat="maintenance0 in Maintenances0">
 							<td class="text-center">{{$index+1}}</td>
 							<td>{{maintenance0.unitname}}</td>
-							<td>{{maintenance0.reason}}</td>
+							<td class="myNote">{{maintenance0.reason}}</td>
 							<td>{{maintenance0.ordertime | date:'yyyy-MM-dd' }}</td>
 							<td class="text-center">
 								<button class="btn btn-success" ng-click="weixiuapply(maintenance0.id)">维修</button>
