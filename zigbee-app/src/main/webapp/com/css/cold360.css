@@ -697,9 +697,10 @@ b{
 #jedatebox{
 	z-index: 10000!important;
 }
-/* .cold_warn .mybtn{
-	padding: 0.2rem 0.5rem;
-} */
+.analysis textarea{
+	width:10rem;
+	overflow: visible;
+} 
 .myTd{
 	max-width: 15rem;
 	min-width: 12rem;
