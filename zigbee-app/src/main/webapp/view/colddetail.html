@@ -161,7 +161,7 @@
                         </ul>
                     </div>
                     <p class="commentTxt">{{eva.content}}</p>
-                    <div class="baguetteBoxOne gallery" ng-if="eva.reviewPics">
+                    <div class="baguetteBoxOne gallery" ng-if="eva.reviewPics.length>0">
                         <a  ng-repeat="fl in eva.reviewPics" href="{{fl.location}}"  ><img ng-src="{{fl.location}}" alt="" /></a>
                     </div>
                 </li>

@@ -21,21 +21,17 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 	    
 	    function checkCommentSubmit(){
-	        var flag = true;
-	        // 检查必须填写项
-	        if ($scope.commentinfo == undefined || $scope.commentinfo == '' ) {
-	            flag = false;
-	        }
-	        return flag;
+	        return $scope.commentinfo!= undefined && $scope.commentinfo != '' ; // 检查必须填写项
 	    }
 	    
 	    $scope.submit = function(){
-	    	if(checkCommentSubmit){
+	    	if(checkCommentSubmit()){
 	    		layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
 			    });
+	    	if($scope.commentinfo==undefined){$scope.commentinfo="";}
 			data = {
 					file0: null,
 					file1: null,
@@ -51,7 +47,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					serviceGrade : window.serviceGrade,
 					sanitaryGrade : window.sanitaryGrade,
 			};
-			for(i = 0; i < $scope.totalfiles.length; i++){
+			for(var i = 0; i < $scope.totalfiles.length; i++){
 				data["file" + i] = $scope.totalfiles[i];
 			}
 			Upload.upload({
@@ -78,6 +74,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		}
 	    	else{
 	    		layer.open({content: '请填写评论信息',btn: '确定'});return;
-	    		}
+	    	}
 	  };
 });
