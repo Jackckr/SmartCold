@@ -10,7 +10,7 @@
   <div class="box-body">
   	<div class="form-group">
 		<div class="col-md-5 col-md-offset-6">
-			<input type="text" class="form-control" ng-model="keyword" placeholder="请输入搜索内容">
+			<input type="text" class="form-control" ng-model="keyword" placeholder="请输入搜索内容" ng-keyup="goSearch1();">
 		</div>		
 		<label class="col-md-1 control-label"><button class="btn btn-primary" ng-click="goSearch1()">搜索</button></label>
 	</div>
@@ -33,8 +33,8 @@
           	<td class="text-center">{{$index+1}}</td>
           	<td>{{maintenance1.unitname}}</td>
           	<td>{{maintenance1.reason}}</td>
-          	<td>{{maintenance1.ordertime | date:'yyyy-MM-dd'}}</td>   
-          	<td>{{maintenance1.fixtime | date:'yyyy-MM-dd' }}</td> 
+          	<td>{{baseTools.formatTime(maintenance1.ordertime)}}</td>   
+          	<td>{{maintenance1.fixtime}}</td> 
           	<td>{{maintenance1.detail}}</td> 	
           	<td>{{maintenance1.note}}</td> 	
           	<td><textarea ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
@@ -78,7 +78,7 @@
           	<td class="text-center">{{$index+1}}</td>
           	<td>{{maintenance0.unitname}}</td>
           	<td>{{maintenance0.reason}}</td>
-          	<td>{{maintenance0.ordertime | date:'yyyy-MM-dd' }}</td>   
+          	<td>{{maintenance0.ordertime}}</td>   
           	<td class="text-center">
           		<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myApply" ng-click="weixiuapply(maintenance0.id)">维修</button>
           		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>

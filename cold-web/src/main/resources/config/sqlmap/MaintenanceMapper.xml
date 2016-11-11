@@ -11,7 +11,7 @@
 			    audit=#{audit}
 			</if>
 		    <if test="keyword != null">
-		      AND unitname like "%"#{keyword}"%"
+		      AND (unitname like "%"#{keyword}"%"  or note like "%"#{keyword}"%")
 		    </if>
 		 </where>
          order by `ordertime` desc

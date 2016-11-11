@@ -127,5 +127,6 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     		}
     	});
 	};
+	
     
 });
