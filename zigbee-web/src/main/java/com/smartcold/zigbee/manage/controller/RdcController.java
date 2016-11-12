@@ -1,13 +1,15 @@
 package com.smartcold.zigbee.manage.controller;
 
-import java.io.File;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -42,6 +44,7 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
+import com.smartcold.zigbee.manage.service.impl.WebvistsService;
 import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
@@ -575,6 +578,7 @@ public class RdcController {
 	@RequestMapping(value = "/getRDCFilterData")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getRDCFilterData(HttpServletRequest request) {
+		WebvistsService.addCount(1);
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("dt", this.commonService.getBaseData("storagetype", "id", "type"));// 商品存放形式
