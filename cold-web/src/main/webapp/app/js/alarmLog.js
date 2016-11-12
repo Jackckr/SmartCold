@@ -59,8 +59,10 @@ coldWeb.controller('alarmLog', function( $scope, $http,$timeout) {
 		$scope.inittable=function(){
 			$("#alarmLog").DataTable();
 		};
-		$scope.initData();
-		$timeout($scope.initData,60000);
-//		$timeout($scope.inittable,800);
+	    $scope.changerdc=function(){
+	    	$scope.initData();
+	    	$timeout($scope.initData,60000);
+	    };
+	    $scope.$watch('rdcId', $scope.changerdc,true);//监听冷库变化
 });
 
