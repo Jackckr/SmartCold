@@ -260,7 +260,12 @@ section.show{
 }
 .contact~.fl{
 	text-align: center;
-	width:50%;
+	width:33.33%;
+}
+.contact~.fl>p{
+	font-size: .7rem;
+	text-align: center;
+	font-weight: 700;
 }
 .contact~.fl a{
 	display: block;
@@ -508,54 +513,6 @@ html,body{
 }
 .detail{
 	margin-top:.3rem;
-}
-/*我的订阅css*/
-.subscription li{
-	padding: .2rem 0;
-	border-bottom: 2px solid #eee;
-	width: 100%;
-}
-.subscription li span{
-	display: inline-block;
-	vertical-align: middle;
-	font-size: .8rem;
-	text-align: right;
-	width: 4rem;
-}
-.subscription li i{
-	font-size: 1.5rem;
-	color: #438BCB;
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: .5rem;
-}
-.subscription li:nth-child(3) i,
-.subscription li:nth-child(4) i,
-.subscription li:nth-child(5) i,
-.subscription li:nth-child(6) i{
-	font-size: 1.3rem;
-}
-.subscription li button{
-	width: 4rem;
-	height: 1.5rem;
-	padding: .2rem .6rem;
-	font-size: .75rem;
-	text-align: center;
-	box-sizing: border-box;
-	border-radius: .2rem;
-	margin: 0 .5rem;
-}
-.addSub{
-	background-color: #ccc;
-	color: #333;
-}
-.curSub{
-	background-color: #0CB78A;
-	color: #fff;
-}
-.scan{
-	background-color: #F39826;
-	color: #fff;
 }
 /* 去掉链接触摸高亮 */	
 .newsImg li{

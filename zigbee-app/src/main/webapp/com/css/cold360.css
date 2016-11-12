@@ -703,6 +703,7 @@ b{
 .analysis textarea{
 	width:10rem;
 	overflow: visible;
+	height: 100%!important;
 } 
 .myTd{
 	max-width: 15rem;

@@ -29,6 +29,7 @@ import com.smartcold.manage.cold.service.GoodsService;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.ResponseData;
+import com.smartcold.manage.cold.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/baseInfo")
@@ -135,7 +136,24 @@ public class BaseInfoController extends BaseController {
 			return "%Y-%m-%d";
 		
 	}
-
+	@RequestMapping("/ios_getKeyValueDataByFilter")
+	@ResponseBody
+	public ResponseData<HashMap<String, Object>> ios_getKeyValueDataByFilter(Integer type, Boolean ismklin, String key, String oids, String onames, String startTime, String endTime) {
+		if(StringUtil.isnotNull(oids)&&StringUtil.isnotNull(onames)){
+			String []newoid=StringUtil.splitfhString(oids);
+			String []newonames= StringUtil.splitfhString(onames);
+			if (newoid.length==newonames.length) {
+				Integer [] newoids=new Integer[newoid.length];
+				for (int i = 0; i < newoid.length; i++) {
+					newoids[i]=Integer.parseInt(newoid[i]);
+				}	
+				return getKeyValueDataByFilter( type,  ismklin,  key,  newoids,  newonames,  startTime,  endTime);
+			}else{
+				return ResponseData.newFailure("参数不全！");
+			}
+		}
+		return ResponseData.newFailure("参数不全！");
+	}
 	/**
 	 * 1. SELECT * FROM `deviceObjectMapping` WHERE `type` = #{type} AND `oid` =
 	 * #{oid}->deviceid
