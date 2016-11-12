@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.zigbee.manage.dao.WebvisitMapper">
+
+    <update id="updateWebvisits" parameterType="map" > 
+		update `webvisits` set `count`=`count`+${value} where `idx` = ${id};
+	</update> 
+    <update id="updateWebvisitsList" parameterType="map" > 
+      <foreach item="item" collection="list" separator="">
+	    	update `webvisits` set `count`=`count`+1 where id = 1;
+	  </foreach>
+    </update>
+</mapper>
