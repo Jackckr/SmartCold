@@ -168,6 +168,13 @@
 			<artifactId>guava</artifactId>
 			<version>18.0</version>
 		</dependency>
+		<dependency>
+			<groupId>QRCode</groupId>
+			<artifactId>QRCode</artifactId>
+			<version>3.0</version>
+			 <scope>system</scope>
+	          <systemPath>${project.basedir}/lib/QRCode.jar</systemPath>
+		</dependency>  
 		<!-- 支持短信验证  -->
 	    <dependency>
 	      <groupId>org.taobao.sdk</groupId>
