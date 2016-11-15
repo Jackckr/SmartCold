@@ -103,8 +103,8 @@ public class RdcController {
      */
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findRdcList(Integer type) {
-	    if(type!=null){WebvistsService.addCount(type);}//统计模块统计次数
+	public Object findRdcList() {
+	     WebvistsService.addCount(2);//统计地图模块访问次数
 		return rdcMapper.findRdcList();
 	}
 
@@ -583,7 +583,7 @@ public class RdcController {
 	@RequestMapping(value = "/getRDCFilterData")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getRDCFilterData(HttpServletRequest request) {
-		WebvistsService.addCount(1);
+		
 		ResponseData<HashMap<String, Object>> result = ResponseData.getInstance();
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("dt", this.commonService.getBaseData("storagetype", "id", "type"));// 商品存放形式
@@ -631,6 +631,7 @@ public class RdcController {
 	@RequestMapping(value = "/getRDCList")
 	@ResponseBody
 	public ResponseData<RdcEntityDTO> getRDCList(HttpServletRequest request,String isKey, String keyword,String provinceid,String managementType,String storageType,String storagetempertype,String sqm,String hasCar,String orderBy) {
+		WebvistsService.addCount(1);//統計次數
 		this.pageNum  = Integer.parseInt(request.getParameter("pageNum") == null ? "1" : request.getParameter("pageNum"));
 		this.pageSize = Integer.parseInt(request.getParameter("pageSize") == null ? "10" : request.getParameter("pageSize")); // 每页数据量
 		HashMap<String, Object> filter=new HashMap<String, Object>();

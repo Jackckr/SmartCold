@@ -14,6 +14,20 @@ app.controller('multi-query', function ($http, $location, $scope) {
 		});
 	};
 	
+	
+	$scope.singleSearch2 = function(key){
+		url = ER.root+"/i/singleInfo/findByKey?key=" + key;
+		$scope.key = key;
+		$http.get(url).success(function(data,status,config,header){
+				$scope.singleInfo = data;
+				$scope.singleChart($scope.singleInfo);
+				$("#pici").removeClass('active').removeClass('in');
+				$("#wendu").addClass('active').addClass('in');
+				$('#myTab a:first').tab('show');
+				
+		});
+	};
+	
 	$scope.batchSearch = function(){
 		url = ER.root+"/i/singleInfo/findBatchByKey?key=" + $scope.key;
 		$scope.warnings = 0;

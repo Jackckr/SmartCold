@@ -145,7 +145,7 @@
                          style="height: 80px;width: 98%;position: relative;top: 10px;left: 0;margin:0;border-style: none none solid none;border-bottom:1px solid #D3D3D3;">
                         <div class="col-lg-9 col-sm-9 col-xs-9 col-sm-9 col-xs-9 col-md-9" style="padding:0;">
                             <a href="" ng-click="goDetail(rdc.id)" class="pull-left" style="position: relative;top: 10px;left: 0px;height:64px;z-index: 1;">
-                                <img style="width:66px;height: 66px;" src="{{rdc.logo}}" alt='' /></a>
+                                <img style="width:66px;height: 66px;" ng-src="{{rdc.logo}}" alt='' /></a>
 
                             <div style="position: relative;left: 10px">
                                 <h5 style="color: #428bca;;position: relative;top: 5px">
@@ -185,7 +185,7 @@
                      style="height: 70px;width: 95%;position: relative;top: 10px;left: 20px;border-style: none none solid none;border-bottom:1px solid #D3D3D3;">
                     <div class="col-lg-9 col-sm-9 col-xs-9 col-md-9" style="padding:0;">
                         <a href="" ng-click="goDetail(hotrdc.id)" class="pull-left" style="position: relative;top: 5px;left: 0px"><img
-                                src="{{hotrdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" style="width: 60px;height: 60px" alt="冷库图片"/></a>
+                                ng-src="{{hotrdc.storagePic.location || 'app/img/rdcHeader.jpg'}}" style="width: 60px;height: 60px" alt="冷库图片"/></a>
 
                         <div style="position: relative;left: 5px;">
                             <span style="color: #428bca;font-size: 12px;top: 1px;"><a href="" ng-click="goDetail(hotrdc.id)">{{hotrdc.name}}</a></span>

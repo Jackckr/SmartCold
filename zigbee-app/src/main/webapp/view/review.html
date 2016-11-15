@@ -138,11 +138,11 @@
 					<li class="list-group-item list-group-item-default">
 						<a class="text-info" >(10)2401(241)3021(21)300004</a>
 					</li> -->
-					 <li class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
+					 <li ng-click="singleSearch2(bdata.key)" class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
 					     ng-if="bdata.overTemperatureTimes > 0" >
-					     <a href="#/multi-query/{{bdata.key}}" class="text-danger" ng-bind="bdata.key"></a></li>
-	    				 <li class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
-	    				 ng-if="bdata.overTemperatureTimes == 0"><a href="#/multi-query/{{bdata.key}}" 
+					     <a class="text-danger" ng-bind="bdata.key"></a></li>
+	    				 <li ng-click="singleSearch2(bdata.key)" class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
+	    				 ng-if="bdata.overTemperatureTimes == 0"><a
 	    				 class="text-info" ng-bind="bdata.key"></a></li>
 				</ul>
 				<div id="HSChart"></div>
