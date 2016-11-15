@@ -662,3 +662,6 @@ html, body {
 #rpt_asis_coment .page-header input{
 	text-indent: 1em;
 }
+#physicalstep2>.box{
+	border:1px solid #ccc;
+}

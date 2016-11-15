@@ -576,9 +576,12 @@ b{
 	text-align:left;
 	text-indent:2rem;
 }
-.analysis th,.analysis td{
+.analysis thead th,.analysis thead td,.analysis tbody tr td:first-child,.analysis tbody tr td:last-child{
 	white-space: nowrap;
-	padding:.1rem;
+	padding:5px 8px;
+}
+.analysis td{
+	padding:5px 8px;
 }
 #rpt_asistb_tit {
 	line-height: 2rem;
@@ -700,10 +703,14 @@ b{
 .analysis textarea{
 	width:10rem;
 	overflow: visible;
+	height: 100%!important;
 } 
 .myTd{
 	max-width: 15rem;
 	min-width: 12rem;
 	word-break: break-all;	
 	white-space: normal;
+}
+.myNote{
+	min-width: 6rem;
 }

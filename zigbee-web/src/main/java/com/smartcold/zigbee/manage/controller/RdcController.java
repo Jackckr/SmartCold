@@ -96,10 +96,15 @@ public class RdcController {
 	@Autowired
 	private FileDataMapper fileDataDao;
 
-
+    /**
+     * 
+     * @param type
+     * @return
+     */
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findRdcList() {
+	public Object findRdcList(Integer type) {
+	    if(type!=null){WebvistsService.addCount(type);}//统计模块统计次数
 		return rdcMapper.findRdcList();
 	}
 
