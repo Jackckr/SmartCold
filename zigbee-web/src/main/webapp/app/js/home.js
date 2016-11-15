@@ -5,7 +5,7 @@ coldWeb.controller('home', function ($scope, $location, $stateParams, $http, $st
     $('.carousel').carousel({
         wrap: true
     });
-
+/*
     // 获取当前冷库的列表
     $http.get('/i/rdc/findRdcList').success(function (data) {
         var size = data.length;
@@ -79,4 +79,5 @@ coldWeb.controller('home', function ($scope, $location, $stateParams, $http, $st
             }, "");
         }
     });
+    */
 });

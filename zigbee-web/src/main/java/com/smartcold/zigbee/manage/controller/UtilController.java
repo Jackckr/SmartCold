@@ -21,6 +21,7 @@ import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.RdcShareDTO;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
+import com.smartcold.zigbee.manage.service.impl.WebvistsService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 /*
  * Copyright (C) DCIS 版权所有
@@ -37,6 +38,23 @@ public class UtilController   {
 	private RdcService rdcService;
 	@Autowired
 	private RdcShareService rdcShareService;
+	
+	/**
+	 * 测试方法  
+	 * @return
+	 */
+	@RequestMapping(value = "/getVisited")
+	@ResponseBody
+	public Object getVisited () {
+		return WebvistsService.getCount();
+	}
+	
+	@RequestMapping(value = "/setVisited")
+	@ResponseBody
+	public void setVisited (Integer type) {
+		if(type!=null){ WebvistsService.addCount(type);}
+	}
+	
 	
 	/**
 	 * 支持全文检索

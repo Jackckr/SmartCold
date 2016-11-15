@@ -20,6 +20,7 @@ import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.InformationEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
+import com.smartcold.zigbee.manage.service.impl.WebvistsService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 /**
  * 资讯controller
@@ -96,6 +97,7 @@ public class InformationController extends BaseController {
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
+		 WebvistsService.addCount(12);
 		Page<InformationEntity> info = informationDao.findInformationByCategory(categoryID);
 		PageInfo<InformationEntity> data = new PageInfo<InformationEntity>(info);
 	    return ResponseData.newSuccess(data);
