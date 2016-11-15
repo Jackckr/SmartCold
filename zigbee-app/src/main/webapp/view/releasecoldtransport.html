@@ -125,10 +125,14 @@
                       <div class="mySelect">
 	                    <select id="stprovince" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="stprovinceSelected(stprovinceID)"
-                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                                    ng-options="x.provinceId as x.provinceName for x in provinces">
+                                    <option value="">省份</option>
+                        </select>
 	                    <select id="stcity" ng-model="stcityID" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
-                                    ng-options="x.cityID as x.cityName for x in stcitys"></select>
+                                    ng-options="x.cityID as x.cityName for x in stcitys">
+                                    <option value="">城市</option>
+                                    </select>
 	                    <input type="text" placeholder="请输入详细地址" ng-model="staddress" style="min-width:130%;"/>
 	                </div>
                  </li>
@@ -144,10 +148,12 @@
                       <div class="mySelect">
 	                    <select id="toprovince" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="toprovinceSelected(toprovinceID)"
-                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                                    ng-options="x.provinceId as x.provinceName for x in provinces">
+                                    <option value="">省份</option></select>
 	                    <select id="tocity" ng-model="tocityID" name="cityid"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
-                                    ng-options="x.cityID as x.cityName for x in tocitys"></select>
+                                    ng-options="x.cityID as x.cityName for x in tocitys">
+                                    <option value="">城市</option></select>
 	                    <input type="text" placeholder="请输入详细地址" ng-model="toaddress" style="min-width:130%;"/>
 	                </div>
                  </li>
