@@ -204,7 +204,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 	 $scope.getOrder=function () {  
 		   $("#shaerdailModal").modal("hide");
 		    $(".modal-backdrop").remove();
-	    	if(user!="undefined"&&user.id!=0){
+	    	if(user!=null&&user!="undefined"&&user.id!=0){
 	    		if(user.telephone!=''&&user.telephone!=undefined){
 	    	 $.ajax({ url: "/i/orders/generateOrder", data: {
 	    		  userid:user.id,

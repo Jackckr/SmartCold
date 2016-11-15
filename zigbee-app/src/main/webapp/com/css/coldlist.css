@@ -183,6 +183,8 @@ section{
 	max-width: 3rem;
 	height: 3rem;
 	margin: 0 0.5rem 0 0.25rem;
+	border-radius:.2em;
+	background: #90CAFB;
 }
 .imgCell a>img+div{
 	font-size: 0.5rem;
@@ -285,7 +287,9 @@ section{
 	background-size: cover;
 	text-align: center;
 }
-
+.gallery img{
+	border-radius:.1rem;
+}
 .infolist{
 	width: 100%;
 }
