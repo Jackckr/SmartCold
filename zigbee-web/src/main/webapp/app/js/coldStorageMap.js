@@ -1,7 +1,8 @@
 coldWeb.controller('coldStorageMap', function ($rootScope, $scope, $state, $cookies, $http, $location, $q) {
 
     $scope.Allrdcs = "";
-
+/*
+ * 这是干啥的？？
     // 获取当前冷库的列表
     $http.get('/i/rdc/findRdcList').success(function (data) {
         var size = data.length;
@@ -18,7 +19,7 @@ coldWeb.controller('coldStorageMap', function ($rootScope, $scope, $state, $cook
         }
         $scope.rdcs = firstData;
     });
-
+*/
     $scope.goDetail = function (rdcID) {
         $state.go('coldStorageComment', {"rdcID": rdcID});
     }

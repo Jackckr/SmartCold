@@ -1,4 +1,5 @@
 $(function() {
+	$.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:11}}); 
 	//点击“其他”出现下拉单
 	$('.other').bind({
 		"click":function(e){//alert("双击")

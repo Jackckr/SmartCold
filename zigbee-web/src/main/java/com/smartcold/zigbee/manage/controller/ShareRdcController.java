@@ -19,6 +19,7 @@ import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
+import com.smartcold.zigbee.manage.service.impl.WebvistsService;
 import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SessionUtil;
@@ -258,6 +259,7 @@ public class ShareRdcController  {
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSEGDList(HttpServletRequest request,String rdcID,String type,String datatype,String goodtype, String keyword,String provinceid,String orderBy) {
 		this.getPageInfo(request);
+		WebvistsService.addCount(4);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
 		filter.put("sstauts", 1);//必须
@@ -291,6 +293,7 @@ public class ShareRdcController  {
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String rdcID,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String provincefwID,String orderBy) {
 		this.getPageInfo(request);
+		WebvistsService.addCount(5);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);//OK
 		filter.put("sstauts", 1);//必须
@@ -330,6 +333,7 @@ public class ShareRdcController  {
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSERDCList(HttpServletRequest request,String rdcID,String datatype,String goodtype, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,String orderBy) {
 		this.getPageInfo(request);
+		WebvistsService.addCount(3);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2  
@@ -416,6 +420,8 @@ public class ShareRdcController  {
 				}
 			}
 			RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+			Integer type= rdcShareDTO.getDataType();
+			if(type!=null){switch (type) {case 1: WebvistsService.addCount(4); break;case 2: WebvistsService.addCount(5);break;case 3: WebvistsService.addCount(3);break;default: break;}}
 			if(rdcShareDTO.getId()==0){
 				rdcShareDTO.setReleaseID(uid);//设置发布消id//user.getId()
 				rdcShareDTO.setStauts(1);
