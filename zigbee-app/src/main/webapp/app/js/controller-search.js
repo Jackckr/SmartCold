@@ -86,7 +86,10 @@ app.controller('multi-query', function ($http, $location, $scope) {
     	});
 	    	option = {
 				    tooltip : {
-				        trigger: 'axis'
+				        trigger: 'axis',
+				        textStyle:{
+				        	fontSize:12
+				        }
 				    },
 				    calculable : false,
 				    legend: {
@@ -104,9 +107,9 @@ app.controller('multi-query', function ($http, $location, $scope) {
 				    yAxis : [
 				        {
 				            type : 'value',
-				            name : '温度',
+				            name : '温度(°C)',
 				            axisLabel : {
-				                formatter: '{value} °C'
+				                formatter: '{value}'
 				            },
 				            splitLine: {
 				                show: false
@@ -167,11 +170,17 @@ app.controller('multi-query', function ($http, $location, $scope) {
 		
 		option = {
 			    tooltip : {
-			        trigger: 'axis'
+			        trigger: 'axis',
+			        textStyle:{
+			        	fontSize:12
+			        }
 			    },
 			    calculable : true,
 			    legend: {
 			        data:['温度','货损量']
+			    },
+			    grid:{
+			    	x:40
 			    },
 			    xAxis : [
 			        {
@@ -182,16 +191,16 @@ app.controller('multi-query', function ($http, $location, $scope) {
 			    yAxis : [
 			        {
 			            type : 'value',
-			            name : '温度',
+			            name : '温度(°C)',
 			            axisLabel : {
-			                formatter: '{value} °C'
+			                formatter: '{value}'
 			            }
 			        },
 			        {
 			            type : 'value',
-			            name : '货损量',
+			            name : '货损量(kg)',
 			            axisLabel : {
-			                formatter: '{value} kg'
+			                formatter: '{value}'
 			            }
 			        }
 			    ],
