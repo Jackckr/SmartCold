@@ -289,6 +289,7 @@ section{
 }
 .gallery img{
 	border-radius:.1rem;
+	background: #90CAFB;
 }
 .infolist{
 	width: 100%;
@@ -411,7 +412,10 @@ section{
 .commentArea{
 	padding: 0.8rem 0 0.5rem;
 	border-bottom: 1px solid #ccc;
-	margin-bottom:2rem;
+	margin-bottom:.5rem;
+}
+.commentArea:last-child{
+	margin-bottom:2.2rem;
 }
 .commentArea>li:nth-child(1){
 	width: 2.5rem;
@@ -445,7 +449,7 @@ section{
 	margin: 0.1rem;
 }
 .commentTxt{
-	font-size: .6rem;
+	font-size: .7rem;
 	color: #666;
 }
 /*仓位详情*/
