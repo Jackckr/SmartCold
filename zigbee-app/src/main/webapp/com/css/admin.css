@@ -127,6 +127,10 @@ section.show{
 	height: 3rem;
 	border-radius: 0;
 }
+.commentList .img>img{
+	border-radius: .2em;
+    background: #90CAFB;
+}
 .company{
 	font-size: 0.7rem;
 	color: #333;
