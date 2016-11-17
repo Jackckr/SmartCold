@@ -107,8 +107,20 @@ section.show{
 	line-height: 3rem;
 	position:relative;
 }
+
+.adminInfo .myicon,.adminInfo  .rightArrow{
+	width: 3rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+}
+.adminInfo  .name{
+	padding-left: 3rem;
+	margin: 0;
+	height: 2.5rem;
+}
 .adminInfo .list_name{
 	text-align: right;	
+	line-height: 2.5rem;
 }
 .adminInfo+.mybtn{
 	margin-bottom: 3rem;
