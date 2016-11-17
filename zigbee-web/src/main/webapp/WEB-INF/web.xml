@@ -9,7 +9,6 @@
         <param-value>/WEB-INF/classes/log4j.properties</param-value>  
     </context-param>  
     
-    
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -26,6 +25,9 @@
 	<listener><!-- 防止内存泄露        --> 
 	   <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>   
 	</listener>
+	<listener> <!--session监听        -->  
+     <listener-class>com.smartcold.zigbee.manage.listener.SessionListener</listener-class>  
+    </listener>  
 
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>

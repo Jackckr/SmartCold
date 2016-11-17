@@ -16,16 +16,14 @@ import jp.sourceforge.qrcode.exception.DecodingFailedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.swetake.util.Qrcode;
+
+
 /*
  * Copyright (C) DCIS 版权所有
  * 功能描述: QRCodeController 二维码条形码解析工具 
  * Create on MaQiang 2016-6-25 09:28:36
  */
-
-import com.swetake.util.Qrcode;
-
-
-
 @Controller
 @RequestMapping(value = "/QRCodeController")
 public class QRCodeController   {

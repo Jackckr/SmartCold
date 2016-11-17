@@ -3,6 +3,8 @@ package com.smartcold.zigbee.manage.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,12 +94,12 @@ public class InformationController extends BaseController {
 	
 	@RequestMapping(value = "/findInformationsByCate")
 	@ResponseBody
-	public Object findInformationsByCate(@RequestParam(value="pageNum",required=false) Integer pageNum,
+	public Object findInformationsByCate(HttpServletRequest request,  @RequestParam(value="pageNum",required=false) Integer pageNum,
 			@RequestParam(value="pageSize") Integer pageSize,@RequestParam(value="categoryID") Integer categoryID) throws UnsupportedEncodingException {
+		WebvistsService.addCount( request, 12);
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
-		 WebvistsService.addCount(12);
 		Page<InformationEntity> info = informationDao.findInformationByCategory(categoryID);
 		PageInfo<InformationEntity> data = new PageInfo<InformationEntity>(info);
 	    return ResponseData.newSuccess(data);

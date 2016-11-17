@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.zigbee.manage.dao.CityListMapper;
 import com.smartcold.zigbee.manage.dao.ProvinceListMapper;
 import com.smartcold.zigbee.manage.entity.CityListEntity;
-import com.smartcold.zigbee.manage.util.APP;
 
 @Controller
 @RequestMapping(value = "/city")
@@ -25,14 +24,12 @@ public class CityController {
     private CityListMapper cityListDao;
 
     
-    @APP
     @RequestMapping(value = "/findProvinceList", method = RequestMethod.GET)
     @ResponseBody
     public Object findProvinceList() {
         return provinceListMapper.findProvinceList();
     }
     
-    @APP
     @RequestMapping(value = "/findCitysByProvinceId", method = RequestMethod.GET)
     @ResponseBody
     public Object findCitysByProvinceId(@RequestParam int provinceID) {

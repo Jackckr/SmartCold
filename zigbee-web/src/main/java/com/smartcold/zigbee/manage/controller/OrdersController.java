@@ -32,7 +32,6 @@ import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.util.CometUtil;
 import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
@@ -110,7 +109,7 @@ public class OrdersController extends BaseController {
 	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id,Integer uid) {
 		HashMap<String, Object> dataMap=new HashMap<String, Object>();
 		if(uid==null||uid==0){
-			UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+			UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
 			if(user==null||user.getId()==0){return ResponseData.newFailure("请登录后查看信息");}else{
 				uid=user.getId();
 			}

@@ -51,8 +51,8 @@ public class UtilController   {
 	
 	@RequestMapping(value = "/setVisited")
 	@ResponseBody
-	public void setVisited (Integer type) {
-		if(type!=null){ WebvistsService.addCount(type);}
+	public void setVisited (HttpServletRequest request, Integer type) {
+		if(type!=null){ WebvistsService.addCount( request, type);}
 	}
 	
 	

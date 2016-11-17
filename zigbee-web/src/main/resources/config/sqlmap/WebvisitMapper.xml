@@ -7,9 +7,16 @@
     <update id="updateWebvisits" parameterType="map" > 
 		update `webvisits` set `count`=`count`+${value} where `idx` = ${id};
 	</update> 
-    <update id="updateWebvisitsList" parameterType="map" > 
-      <foreach item="item" collection="list" separator="">
-	    	update `webvisits` set `count`=`count`+1 where id = 1;
+   <insert id="addwebAcces" parameterType="map">
+      insert INTO webacces (ip,sysinfo,browinfo,userinfo,online)VALUES(#{ip},#{sysinfo},#{browinfo},#{userinfo},#{online});
+   </insert>
+   
+    <insert id="addwebAcceslist">
+	 insert INTO webacces (ip,sysinfo,browinfo,userinfo,online)VALUES
+	  <foreach item="item" collection="list" separator=",">
+	  (#{item.ip},#{item.sysinfo},#{item.browinfo},#{item.userinfo},#{item.online})
 	  </foreach>
-    </update>
+	</insert>
+   
+   
 </mapper>

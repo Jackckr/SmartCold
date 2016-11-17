@@ -20,9 +20,7 @@ import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.service.impl.WebvistsService;
-import com.smartcold.zigbee.manage.util.APP;
 import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.SessionUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 import com.smartcold.zigbee.manage.util.TimeUtil;
@@ -200,7 +198,7 @@ public class ShareRdcController  {
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSEListByUID(HttpServletRequest request,Integer uid) {
 		if(uid==null||uid==0){
-		    UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+		    UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
 			if(user!=null&&user.getId()!=0){
 				uid=user.getId();
 			}else{
@@ -254,12 +252,11 @@ public class ShareRdcController  {
      * @param orderBy 排序
      * @return
      */
-	@APP
 	@RequestMapping(value = "/getSEGDList")
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSEGDList(HttpServletRequest request,String rdcID,String type,String datatype,String goodtype, String keyword,String provinceid,String orderBy) {
 		this.getPageInfo(request);
-		WebvistsService.addCount(4);
+		WebvistsService.addCount( request, 4);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
 		filter.put("sstauts", 1);//必须
@@ -288,12 +285,11 @@ public class ShareRdcController  {
 	 * @param orderBy 排序
 	 * @return
 	 */
-	@APP
 	@RequestMapping(value = "/getSEPSList")
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String rdcID,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String provincefwID,String orderBy) {
+		WebvistsService.addCount( request, 5);
 		this.getPageInfo(request);
-		WebvistsService.addCount(5);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);//OK
 		filter.put("sstauts", 1);//必须
@@ -328,12 +324,11 @@ public class ShareRdcController  {
 	 * @param storagetempertype 温度类型 -> rdcext t
 	 * @return
 	 */
-	@APP
 	@RequestMapping(value = "/getSERDCList")
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSERDCList(HttpServletRequest request,String rdcID,String datatype,String goodtype, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,String orderBy) {
+		WebvistsService.addCount( request, 3);
 		this.getPageInfo(request);
-		WebvistsService.addCount(3);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2  
@@ -365,7 +360,7 @@ public class ShareRdcController  {
 	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request,Integer uid){
 		this.getPageInfo(request);//
 		if(uid==null||uid==0){
-		    UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");if(user!=null&&user.getId()!=0){uid=user.getId();}else{return ResponseData.newFailure("回话超时，请重新登录！~");}
+		    UserEntity user =(UserEntity) request.getSession().getAttribute( "user");if(user!=null&&user.getId()!=0){uid=user.getId();}else{return ResponseData.newFailure("回话超时，请重新登录！~");}
 		}
 		HashMap<String, Object> parameters=new HashMap<String, Object>();
 		parameters.put("userid",uid);// 
@@ -412,7 +407,7 @@ public class ShareRdcController  {
 	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data,Integer uid){
 		try {
 			if(uid==null||uid==0){
-			    UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
+			    UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
 				if(user!=null&&user.getId()!=0){
 					uid=user.getId();
 				}else{
@@ -421,7 +416,7 @@ public class ShareRdcController  {
 			}
 			RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
 			Integer type= rdcShareDTO.getDataType();
-			if(type!=null){switch (type) {case 1: WebvistsService.addCount(4); break;case 2: WebvistsService.addCount(5);break;case 3: WebvistsService.addCount(3);break;default: break;}}
+			if(type!=null){switch (type) {case 1: WebvistsService.addCount(request, 4); break;case 2: WebvistsService.addCount(request, 5);break;case 3: WebvistsService.addCount(request, 3);break;default: break;}}
 			if(rdcShareDTO.getId()==0){
 				rdcShareDTO.setReleaseID(uid);//设置发布消id//user.getId()
 				rdcShareDTO.setStauts(1);
