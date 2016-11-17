@@ -442,7 +442,10 @@ checkLogin();
 	        $scope.coldTruck3 = data[0].coldTruck3;
 	        $scope.coldTruck4 = data[0].coldTruck4;
 	        $scope.facility = data[0].facility;
-	
+	        if($scope.remark=="undefined")
+	        $scope.remark = "";
+	        if($scope.facility=="undefined")
+	        $scope.facility = "";
 	        // 根据省ID查询城市列表
 	        $http.get(ER.root+"/i/city/findCitysByProvinceId", { params: { "provinceID": $scope.provinceId}}).success(function (data) {
 	            $scope.citys = data;

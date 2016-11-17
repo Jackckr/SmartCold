@@ -49,7 +49,7 @@
                 </li>
 				<li><span class="type">面积：</span><span class="text">{{vo.sqm}}㎡</span></li>
             	<!-- <li ng-if="vo.capacity!=0"><span class="type">吨位：</span><span class="text">{{vo.capacity}}</span></li> -->
-				<li><span class="type">电话：</span><span class="text">{{vo.cellphone}}</span></li>
+				<li ng-if="window.user!=null&&window.user!=undefined"><span class="type">电话：</span><span class="text">{{vo.cellphone}}</span></li>
 				<!-- <li><span class="type">冷链设施：</span><span class="text">{{vo.storagetruck!=null?'自有冷藏车':'无'}}</span></li> -->
             </ul>
             <!--双箭头下拉-->

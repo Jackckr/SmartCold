@@ -126,7 +126,7 @@
                                             </td>
                                         </tr>
                                         
-                                        <tr>
+                                        <tr ng-if="user.id!=0&&user!=null&&user!=undefined">
                                             <td>联系电话</td>
                                             <td>
                                                 <ul>
@@ -379,7 +379,7 @@
                                                             {{comment.content}}
                                                         </p>
                                                         <div style="margin-top: 20px">
-                                                            <img ng-repeat="reviewPic in comment.reviewPics" ng-src="{{reviewPic.location}}" width="80px" height="80px"/>
+                                                            <img ng-repeat="reviewPic in comment.reviewPics" ng-src="{{reviewPic.location}}" width="80px" height="80px" style="margin: 0 10px;"/>
                                                         </div>
                                                     </div>
                                                 </div>

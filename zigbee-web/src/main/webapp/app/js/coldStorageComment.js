@@ -1,7 +1,6 @@
 coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies, $http, $location, $state, $stateParams, $uibModal, $log, $cookieStore) {
 	
 	$scope.rdcId = $stateParams.rdcID;
-
     // 获取省列表
     $http.get('/i/city/findProvinceList').success(function (data) { 	
         $scope.provinces = data;

@@ -159,6 +159,9 @@ public class OrdersController extends BaseController {
 			order.setOrdername(ordername);
 			order.setOwnerid(releaseID);
 			UserEntity owner = userDao.findUserById(releaseID);
+			if (owner==null) {
+				return ResponseData.newFailure("下单失败！发布者没有留下联系方式！");
+			}
 			if (owner!=null&&StringUtil.isNull(owner.getTelephone())) {
 				return ResponseData.newFailure("下单失败！发布者没有留下联系方式！");
 			}

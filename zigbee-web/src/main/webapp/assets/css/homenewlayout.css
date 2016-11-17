@@ -1091,3 +1091,7 @@ html, body {
 .closeApp:hover{
 	color:#f00;
 }
+
+.myAddon .input-group-addon{
+	width:100px;
+}
