@@ -18,7 +18,7 @@ if(window.user!=undefined ||window.user!=null)
 	          if(data.success&&data.data.length>0){
 	        	  //暂时隐藏
 	        	//window.msgTotalNum = data.total;
-	        	  window.msgTotalNum = 1;
+	        	  window.msgTotalNum = 2;
 	          }
     });
 }
