@@ -15,5 +15,5 @@ public interface MaintenanceMapper {
 
     int updateMaintenance(MaintenanceEntity maintenanceEntity);
 	
-	Page<MaintenanceEntity> findAllMaintenances(@Param("audit") Integer audit,@Param("keyword") String keyword);
+	Page<MaintenanceEntity> findMaintByRdcId( @Param("rdcId") Integer rdcId , @Param("audit") Integer audit,@Param("keyword") String keyword);
 }

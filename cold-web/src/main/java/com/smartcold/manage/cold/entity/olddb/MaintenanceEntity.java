@@ -5,6 +5,8 @@ import java.util.Date;
 public class MaintenanceEntity {
 
 	private int id;
+	
+	private int rdcId;
 
 	private String unitname;
 
@@ -28,6 +30,13 @@ public class MaintenanceEntity {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getRdcId() {
+		return rdcId;
+	}
+
+	public void setRdcId(int rdcId) {
+		this.rdcId = rdcId;
 	}
 
 	public String getUnitname() {

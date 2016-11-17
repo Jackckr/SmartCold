@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.manage.cold.dao.olddb.MaintenanceMapper;
 import com.smartcold.manage.cold.entity.olddb.MaintenanceEntity;
+import com.smartcold.manage.cold.util.StringUtil;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 @Controller
 @RequestMapping(value = "/maintenance")
@@ -26,22 +29,13 @@ public class MaintenanceController {
 
 	@RequestMapping(value = "/findMaintenanceList", method = RequestMethod.POST)
 	@ResponseBody
-	public Object findMaintenanceList(@RequestParam(value="pageNum",required=false) Integer pageNum,
-			@RequestParam(value="pageSize") Integer pageSize, 
-			@RequestParam(value="audit", required=false) Integer audit,
-			@RequestParam(value="keyword", required=false) String keyword) throws UnsupportedEncodingException {
-		if( !(audit == 1 || audit == 0) ){
-			audit = null;
-		}
+	public Object findMaintenanceList(Integer rdcId,Integer audit,String keyword,  Integer pageNum,Integer pageSize )  {
+		if(audit==null||  rdcId==null){ return null; }
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 12:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
-		if(keyword.equals("undefined"))
-			keyword = null;
-		else{
-		keyword = URLDecoder.decode(keyword, "UTF-8");
-		}
-		Page<MaintenanceEntity> maintenancePage = maintenanceMapper.findAllMaintenances(audit, keyword);
+		if(keyword.equals("undefined")){keyword = null;}
+		Page<MaintenanceEntity> maintenancePage = maintenanceMapper.findMaintByRdcId(rdcId,audit, keyword);
 		return new PageInfo<MaintenanceEntity>(maintenancePage);
 	}
 	
@@ -61,24 +55,20 @@ public class MaintenanceController {
 	
 	@RequestMapping(value="/addMaintenance", method=RequestMethod.POST)
 	@ResponseBody
-	public Object addMaintenance(@RequestParam(value="unitname",required=false)String unitname,
-			@RequestParam(value="reason",required=false)String reason,
-			@RequestParam(value="ordertime",required=false)String ordertime) throws ParseException, UnsupportedEncodingException{
+	public Object addMaintenance(Integer rdcId, String unitname, String reason,String ordertime) throws ParseException, UnsupportedEncodingException{
+		if(StringUtil.isNull(ordertime)){ordertime=TimeUtil.getFormatDate(new Date());}
 		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
 		maintenanceEntity.setUnitname( URLDecoder.decode(unitname, "UTF-8"));
 		maintenanceEntity.setReason(URLDecoder.decode(reason, "UTF-8"));
 		maintenanceEntity.setOrdertime(ordertime);
+		maintenanceEntity.setRdcId(rdcId);
 		maintenanceMapper.insertMaintenance(maintenanceEntity);
 		return true;
 	}
 	
 	@RequestMapping(value="/updateMaintenance", method=RequestMethod.POST)
 	@ResponseBody
-	public Object updateMaintenance(@RequestParam(value="id",required=false)int id,
-			@RequestParam(value="audit",required=false)int audit,
-			@RequestParam(value="detail",required=false)String detail,
-			@RequestParam(value="note",required=false)String note,
-			@RequestParam(value="fixtime",required=false)String fixtime) throws ParseException, UnsupportedEncodingException{
+	public Object updateMaintenance(int id,int audit,String detail,String note,String fixtime) throws ParseException, UnsupportedEncodingException{
 		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
 		maintenanceEntity.setId(id);
 		maintenanceEntity.setAudit(audit);

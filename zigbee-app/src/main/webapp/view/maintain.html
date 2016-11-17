@@ -76,7 +76,7 @@
     <div class="backDrop"></div>
     <div class="mainTainBottomL">
 	    <!-- 维护提醒html ===================*********==========***********=========-->
-		<div class="swiper-container chart temperature maintain">
+		<div class="swiper-container chart temperature maintain" ng-if="rdcId">
 	        <div class="swiper-wrapper">
 	            <div class="swiper-slide" ng-repeat="(key,value) in  compressorGroups">
 	            	 <p class="actually">{{value.name}}</p>
@@ -95,7 +95,7 @@
 	  <!-- 维护提醒html  end -->
 	  
 	  <!-- 维护记录html ===================*********============*********==========-->
-		<div class="wxRecords black">
+		<div class="wxRecords black"  ng-if="rdcId">
 			<p>维修完结记录</p>
 			<div class="input-group">
                  <input type="text" class="form-control" placeholder="请输入机组名" ng-model="keyword" ng-change="goSearch1()" ng-model-options="{debounce: 700}">
@@ -174,7 +174,7 @@
 		<!-- 维护记录html end-->  
 	  
 	  <!-- 维护申请html ===================*********============*********==========-->
-		<div class="mainApply black">
+		<div class="mainApply black"  ng-if="rdcId">
 			<div class="applyKid">
 				<p>机组名称:</p>
 				<textarea placeholder="请输入需要维修机组的名称" ng-model="unitname"></textarea>

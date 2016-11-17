@@ -1,6 +1,6 @@
 checkLogin();
 var app = angular.module('app', []);
-app.controller('maintain', function ($scope, $location, $http) {
+app.controller('maintain', function ($scope, $location, $http,$timeout) {
 	var pageNum =  totalPages = 0;
     $scope.user = window.user;
     $http.defaults.withCredentials = true;
@@ -129,11 +129,13 @@ app.controller('maintain', function ($scope, $location, $http) {
     }
 
     $scope.addMaintenance = function () {
+    	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
         if (checkInput()) {
             $http({
                 method: 'POST',
                 url: ER.coldroot + '/i/maintenance/addMaintenance',
                 params: {
+                	rdcId: $scope.rdcId,
                     unitname: encodeURI($scope.unitname, "UTF-8"),
                     reason: encodeURI($scope.reason, "UTF-8"),
                     ordertime: $("input[ng-model='ordertime']").val()
@@ -167,12 +169,14 @@ app.controller('maintain', function ($scope, $location, $http) {
     $scope.Maintenances1 = [];
     $scope.updateMaintenance0 = {};
     $scope.getMaintenances0 = function () {
+//    	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
         $http({
             method: 'POST',
             url: ER.coldroot + '/i/maintenance/findMaintenanceList',
             params: {
                 pageNum: $scope.bigCurrentPage,
                 pageSize: $scope.maxSize,
+                rdcId: $scope.rdcId,
                 audit: 0,
                 keyword: encodeURI($scope.keyword, "UTF-8"),
             }
@@ -183,12 +187,14 @@ app.controller('maintain', function ($scope, $location, $http) {
     };
 
     $scope.getMaintenances1 = function () {
+//    	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
         $http({
             method: 'POST',
             url: ER.coldroot + '/i/maintenance/findMaintenanceList',
             params: {
                 pageNum: $scope.bigCurrentPage1,
                 pageSize: $scope.maxSize,
+                rdcId: $scope.rdcId,
                 audit: 1,
                 keyword: encodeURI($scope.keyword, "UTF-8"),
             }
@@ -211,9 +217,7 @@ app.controller('maintain', function ($scope, $location, $http) {
         });
     };
 
-    $scope.getMaintenances0();
-    $scope.getMaintenances1();
-
+  
     $scope.pageChanged0 = function () {
         $scope.getMaintenances0();
     };
@@ -338,5 +342,13 @@ app.controller('maintain', function ($scope, $location, $http) {
                 'appraise': appraise
             }
         });
-    };  
+    }; 
+	 $scope.initMainit=function(newValue,oldValue){
+		   if($scope.rdcId!=undefined){
+			    $scope.getMaintenances0();
+                $scope.getMaintenances1();
+		   }
+	  };
+	  $scope.$watch('rdcId',$scope.initMainit,true);//监听冷库变化
+
 });

@@ -4,10 +4,8 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.MaintenanceMapper">
 
-    <select id="findAllMaintenances" parameterType="map" resultType="MaintenanceEntity">
+    <select id="findMaintByRdcId" parameterType="map" resultType="MaintenanceEntity">
            SELECT 
-
-
 id,
 unitname,
 reason,
@@ -15,21 +13,17 @@ detail,
 note,
 appraise,
 audit,
-date_format(ordertime,'%Y-%m-%d')ordertime,date_format(fixtime,'%Y-%m-%d') fixtime FROM `maintenance`
-         <where> 
-            <if test="audit != null">
-			    audit=#{audit}
-			</if>
+date_format(ordertime,'%Y-%m-%d')ordertime,date_format(fixtime,'%Y-%m-%d') fixtime FROM `maintenance` where rdcId=#{rdcId} and    audit=#{audit}
 		    <if test="keyword != null">
 		      AND (unitname like "%"#{keyword}"%"  or note like "%"#{keyword}"%")
 		    </if>
-		 </where>
+		
          order by `ordertime` desc
     </select>
     
     <insert id="insertMaintenance" parameterType="map">
-      insert into `maintenance` (unitname,  reason ,  detail,   note,   appraise,   audit,   ordertime,   fixtime)
-      values                 (#{unitname},#{reason},#{detail},#{note},#{appraise},#{audit},#{ordertime},#{fixtime});
+      insert into `maintenance` (rdcId,unitname,  reason ,  detail,   note,   appraise,   audit,   ordertime,   fixtime)
+      values                 (#{rdcId},#{unitname},#{reason},#{detail},#{note},#{appraise},#{audit},#{ordertime},#{fixtime});
     </insert>
     
     <update id="updateMaintenance" parameterType="map">

@@ -14,6 +14,7 @@ coldWeb.controller('baoyangWeixiuApply', function ($rootScope, $scope, $state, $
 	            method: 'POST',
 	            url: '/i/maintenance/addMaintenance',
 	            params: {
+	            	rdcId:$rootScope.rdcId ,
 	            	unitname : encodeURI($scope.unitname,"UTF-8"),
 					reason : encodeURI($scope.reason,"UTF-8"),
 					ordertime : $scope.ordertime

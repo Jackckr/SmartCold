@@ -16,6 +16,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 			params : {
 				pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize,
+				rdcId:$rootScope.rdcId,
 				audit : 0,
 				keyword : encodeURI($scope.keyword,"UTF-8"),
 			}
@@ -32,6 +33,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 			params : {
 				pageNum : $scope.bigCurrentPage1,
 				pageSize : $scope.maxSize,
+				rdcId:$rootScope.rdcId,
 				audit : 1,
 				keyword : encodeURI($scope.keyword,"UTF-8"),
 			}
