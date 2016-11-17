@@ -20,7 +20,7 @@ public class SessionListener implements HttpSessionListener{
 
 	/* Session失效事件 */
 	public void sessionDestroyed(HttpSessionEvent event) {
-		SessionListener.activeSessions--;
+		if(SessionListener.activeSessions>0){SessionListener.activeSessions--;}
 	}
 
 	
