@@ -73,7 +73,7 @@
 			    			  }
 			    	   }
 			    	  }); 
-			    	}else{/*alert("请留下手机号之后再下单")*/layer.open({content: '请留下手机号之后再下单',btn: '确定'});}}else{checkLogin("登陆之后才可以抢单");}
+			    	}else{/*alert("请留下手机号之后再下单")*/layer.open({content: '请完善您的联系方式！',btn: '确定'});}}else{checkLogin("请登陆之后再抢单");}
 	    	
     } ; 
 	$scope.initdata();
