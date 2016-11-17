@@ -246,6 +246,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 height4 : $scope.height4,
                 height5 : $scope.height5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
+                userid : window.user.id,
                 arrangePics : $scope.arrangePic,
             }
             for(var i = 0; i < $scope.totalfiles.length; i++){
