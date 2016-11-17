@@ -11,6 +11,7 @@ import com.smartcold.zigbee.manage.service.FtpService;
  */
 public class RdcShareDTO {
 	private int id; //
+	private Integer uid;
 	private int rdcID; // 睿库的ID
 	private int releaseID; // 发布者id
 	private int dataType; // 数据类型
@@ -61,6 +62,14 @@ public class RdcShareDTO {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	
+	public Integer getUid() {
+		return uid;
+	}
+	public void setUid(Integer uid) {
+		this.uid = uid;
 	}
 	public int getRdcID() {
 		return rdcID;

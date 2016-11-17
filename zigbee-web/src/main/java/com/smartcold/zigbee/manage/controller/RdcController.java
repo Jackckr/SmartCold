@@ -253,11 +253,16 @@ public class RdcController {
 		if (rdcAddDTO.getRemark()!=null) {
 			rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		}
-		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
-		if (user!=null) {
-			rdcEntity.setUserId(user.getId());
+		if(rdcAddDTO.getUserId()!=0){
+			rdcEntity.setUserId(rdcAddDTO.getUserId());
+		}else{
+			UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+			if (user!=null) {
+				rdcEntity.setUserId(user.getId());
+			}else{
+				return new BaseDto(-1);
+			}
 		}
-		rdcEntity.setUserId(rdcAddDTO.getUserId());
 		rdcEntity.setType(0);
 		rdcEntity.setStoragetype("");
 		rdcEntity.setColdtype("");

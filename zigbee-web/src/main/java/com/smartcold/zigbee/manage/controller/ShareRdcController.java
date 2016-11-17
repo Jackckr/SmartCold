@@ -406,7 +406,10 @@ public class ShareRdcController  {
 	@ResponseBody
 	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data,Integer uid){
 		try {
-			if(uid==null||uid==0){
+			if(StringUtil.isNull(data)){return null;}
+			RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+			Integer loguid = rdcShareDTO.getUid();
+			if(uid==null&&loguid==null){
 			    UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
 				if(user!=null&&user.getId()!=0){
 					uid=user.getId();
@@ -414,7 +417,7 @@ public class ShareRdcController  {
 					return ResponseData.newFailure("会话超时，请重新登录！~");
 				}
 			}
-			RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+			if(uid==null){uid=loguid;}
 			Integer type= rdcShareDTO.getDataType();
 			if(type!=null){switch (type) {case 1: WebvistsService.addCount(request, 4); break;case 2: WebvistsService.addCount(request, 5);break;case 3: WebvistsService.addCount(request, 3);break;default: break;}}
 			if(rdcShareDTO.getId()==0){
