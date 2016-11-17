@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<meta name = "format-detection" content="telephone = no" />
 	<title>联系我们</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">  
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
      <script src="../bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
      <script type="text/javascript" src="../app/js/customer.js" ></script>
 </head>
 <body ng-app="app" ng-controller="ctrl">
@@ -29,7 +31,6 @@
     	<p>电      话：<span>021-23560067</span>　　<span>021-23560068</span><br/>
     		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #999">(办公时间：周一至周五&nbsp;&nbsp;9:30--17:30)</span><br/>
     		<span>QQ群：461450534</span><br/>
-<!--     		<span>公众号：链库<img style="width:120px;height: 120px;vertical-align: top;" src="../com/img/weixin_lianku.jpg"></span> -->
     	</p>
     	
     	<p class="contact">官方网站：</p>
@@ -39,26 +40,20 @@
     	<p>kefu@smartcold.cn</p>
     	
     	<p class="contact" style="margin-bottom: .3rem">扫码下载APP或关注链库：</p>
-		<div class="fl">
-			<!-- 二维码图片 -->
-			<!-- https://itunes.apple.com/us/app/lian-ku/id1142867105?l=zh&ls=1&mt=8 -->
-				<img src="../com/img/ios.png">
-			<!-- 文字  -->
-				<p style="">ios下载</p>		
+		<div class="gallery">
+				<!-- iPhone -->
+				<!-- https://itunes.apple.com/us/app/lian-ku/id1142867105?l=zh&ls=1&mt=8 -->
+				<a href="../com/img/ios.png" data-caption="Image caption" data-font="ios下载"><img
+					src="../com/img/ios.png"></a>
+				<!-- 安卓 -->
+				<a href="../com/img/android.png" data-caption="Image caption" data-font="android下载"><img
+					src="../com/img/android.png"></a>
+				<!-- 链库公众号 -->
+				<a href="../com/img/weixin_lianku.png" data-caption="Image caption" data-font="链库公众号"><img
+					src="../com/img/weixin_lianku.png"></a>
+			</div>
 		</div>
-		<div class="fl">
-		<!-- 二维码图片 -->
-			<img src="../com/img/android.png">
-		<!-- 文字  -->
-			<p>android下载</p>
-		</div>
-		<div class="fl" style="margin-bottom: 0">
-		<!-- 二维码图片 -->
-			<img src="../com/img/weixin_lianku.png">
-			<p>链库公众号</p>
-		<!-- 文字  -->
-		</div>
-    </section>    
+	</section>    
     
     <ul class="footer">
         <li>           
@@ -89,9 +84,11 @@
     </ul>
     <script>
     	$(function(){
-    		$(".btnGroup").children().click(function(){
-    			$(this).addClass('current').siblings().removeClass('current')
-    		})
+    		baguetteBox.run('.gallery', {
+    			captions: false,
+    		    animation: 'fadeIn',
+    		    buttons:'true'
+    		});
     	})
     </script>
 </body>
