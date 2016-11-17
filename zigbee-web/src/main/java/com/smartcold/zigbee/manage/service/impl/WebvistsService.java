@@ -113,7 +113,7 @@ public class WebvistsService  {
 
 	private static String  getuser(HttpServletRequest request){
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
-		if(user!=null){return user.getNickname()+"-"+user.getRealname();}
+		if(user!=null){return user.getUsername()+"-"+user.getRealname();}
 		return "游客访问";
 	}
 	
