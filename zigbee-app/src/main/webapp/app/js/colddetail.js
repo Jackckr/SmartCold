@@ -1,4 +1,13 @@
  var id  = getUrlParam("id");//当前rdc-id数据信息
+ //登录之后才显示手机号码
+ function tel(){
+	 if(window.user!=null&&window.user!=undefined){
+		 $(".myphone").show();
+	 }else{
+		 $(".myphone").hide();
+	 };
+ }
+
  if(id==null||id==''){
 	 	$(document.body).html("");
 	 	layer.open({
@@ -8,6 +17,7 @@
 	 	//alert("请求内容不存在！");
  }else{
      var app = angular.module('app', []);
+     $(".myphone").hide();     
      app.controller('colddetail', function($http, $location,$scope) { 
     	$scope.rdcid=id;
 		$scope.datatype=1;
@@ -20,7 +30,7 @@
 		$scope.initdata=function(){
 	       //获得数据
 	    	$http.get(ER.root+'/i/rdc/findRDCByID', { params: {"rdcID": id}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-	    		if(data.success){$scope.vo=data.data[0]; }else{
+	    		if(data.success){$scope.vo=data.data[0];tel() }else{
 	    			//alert(data.message);
 	    			layer.open({
 	    		 	    content: data.message
