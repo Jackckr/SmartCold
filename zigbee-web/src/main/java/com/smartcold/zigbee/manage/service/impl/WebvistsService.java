@@ -3,27 +3,19 @@ package com.smartcold.zigbee.manage.service.impl;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dao.WebvisitMapper;
-import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.listener.SessionListener;
-import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 
@@ -175,7 +167,6 @@ public class WebvistsService  {
 	    	int bloweridx=  userAgent.lastIndexOf(")");
 		  String os[]=userAgent.substring(userAgent.indexOf("(")+1,sysindex).split(";");//获得系统名称
 		  String age=userAgent.substring(bloweridx+1).trim();//获得系统名称
-		  System.err.println(userAgent);
 		   if(StringUtil.isnotNull(age)){//非ie os[0]
 			   String[] split = age.split(" ");  
 			   if(os.length==2){
@@ -201,7 +192,6 @@ public class WebvistsService  {
 		   temp.put("ip", getIpAddr(request));
 		   temp.put("userinfo", getuser(request));
 		   temp.put("online",SessionListener.getonlineUser());
-		   System.err.println(temp);
 		   webaccectList.add(temp);
 	}
 	
