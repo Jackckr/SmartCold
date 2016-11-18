@@ -65,7 +65,6 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 		},
 		formatTime: function(timeString){
 			if (typeof(timeString) == "string"){	
-				if(isNaN(Date.parse(timeString))){timeString=timeString.substring(0,10); }
 				return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
 			}else{
 				return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/,"")
