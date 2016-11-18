@@ -10,6 +10,8 @@ coldWeb.controller('baoyangWeixiuApply', function ($rootScope, $scope, $state, $
 	
 	$scope.addMaintenance = function() {
 		if (checkInput()) {
+			if($scope.reason=='undefined')
+				$scope.reason = '';
 			$http({
 	            method: 'POST',
 	            url: '/i/maintenance/addMaintenance',

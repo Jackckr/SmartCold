@@ -5,23 +5,19 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     $scope.bigTotalItems = 12;
     // 当前页
     $scope.bigCurrentPage = 1;
-    $scope.bigCurrentPage1 = 1;
 	$scope.Maintenances0 = [];
 	$scope.Maintenances1 = [];
 	$scope.updateMaintenance0 = {};
 	$scope.getMaintenances0 = function() {
 		$http({
 			method : 'POST',
-			url : '/i/maintenance/findMaintenanceList',
+			url : '/i/maintenance/findAllMaintenance',
 			params : {
-				pageNum : $scope.bigCurrentPage,
-				pageSize : $scope.maxSize,
 				rdcId:$rootScope.rdcId,
 				audit : 0,
 				keyword : encodeURI($scope.keyword,"UTF-8"),
 			}
 		}).success(function(data) {
-			$scope.bigTotalItems = data.total;
 			$scope.Maintenances0 = data.list;
 		});
 	};
@@ -31,7 +27,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 			method : 'POST',
 			url : '/i/maintenance/findMaintenanceList',
 			params : {
-				pageNum : $scope.bigCurrentPage1,
+				pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize,
 				rdcId:$rootScope.rdcId,
 				audit : 1,
@@ -46,10 +42,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 	$scope.getMaintenances0();
 	$scope.getMaintenances1();
     
-	$scope.pageChanged0 = function() {
-		$scope.getMaintenances0();
-	};
-	$scope.pageChanged1 = function() {
+	$scope.pageChanged = function() {
 		$scope.getMaintenances1();
 	};
 	
@@ -99,6 +92,11 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     
     $scope.submitfix = function(){
     	$scope.updateMaintenance0.audit = 1;
+    	if($scope.updateMaintenance0.fixtime>$scope.updateMaintenance0.ordertime){
+    		if($scope.updateMaintenance0.detail=='undefined')
+    			$scope.updateMaintenance0.detail = '';
+    		if($scope.updateMaintenance0.note=='undefined')
+    			$scope.updateMaintenance0.note = '';
     	$http({
     		'method':'POST',	
     		'url':'/i/maintenance/updateMaintenance',
@@ -120,6 +118,10 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
         		alert("提交失败");
         	}
         });
+    	}
+    	else{
+    		alert("维修时间不能早于预约时间");
+    	}
     };
   
     $scope.change = function(id,appraise){
