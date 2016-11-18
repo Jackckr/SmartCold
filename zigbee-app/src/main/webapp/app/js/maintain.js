@@ -303,7 +303,7 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
     };
 
     $scope.submitfix = function (detail, fixtime, note) {
-    	if($scope.updateMaintenance0.fixtime>$scope.updateMaintenance0.ordertime){
+    	if(new Date(fixtime).getTime()>=new Date($scope.updateMaintenance0.ordertime).getTime()){
         $scope.updateMaintenance0.detail = detail;
         $scope.updateMaintenance0.fixtime = fixtime;
         $scope.updateMaintenance0.note = note;

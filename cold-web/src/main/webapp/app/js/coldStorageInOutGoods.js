@@ -5,21 +5,21 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
     console.log($stateParams.storageID);
 
     $scope.drawInOutChart = function(storageId){
-    	$scope.showMap = {}
+    	$scope.showMap = {};
     	var barId = "#barChart" + storageId;
     	var barChart = echarts.init($(barId).get(0));
-        var totalTime = 10
-        var series = []
-        var time = []
-        var timeMap = {}
-        var legend = []
+        var totalTime = 10  ;
+        var series = []     ;
+        var time = []       ;
+        var timeMap = {}    ;
+        var legend = []     ;
         for(i=0; i< totalTime;i++){
-        	xTime = baseTools.formatTimeToDay(baseTools.getFormatTimeString(0-i* 24 * 60 * 60 * 1000))
-        	time.unshift(xTime)
-        	timeMap[xTime] = totalTime - i - 1
+        	xTime = baseTools.formatTimeToDay(baseTools.getFormatTimeString(0-i* 24 * 60 * 60 * 1000).substring(0,10));
+        	time.unshift(xTime);
+        	timeMap[xTime] = totalTime - i - 1;
         }
-        startDate = baseTools.formatTimeToDay(baseTools.getFormatTimeString(-10 * 24 * 60 * 60 * 1000))
-        endDate = baseTools.getFormatTimeString()
+        startDate = baseTools.formatTimeToDay(baseTools.getFormatTimeString(-10 * 24 * 60 * 60 * 1000).substring(0,10));
+        endDate = baseTools.getFormatTimeString();
         url = "/i/other/findGoodsByDate?coldstorageId=" + storageId + 
         "&startCollectionTime=" + startDate + "&endCollectionTime=" +  endDate
         $http.get(url).success(function(data,status,config,header){
