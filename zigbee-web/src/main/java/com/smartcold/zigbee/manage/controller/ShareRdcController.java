@@ -256,7 +256,7 @@ public class ShareRdcController  {
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSEGDList(HttpServletRequest request,String rdcID,String type,String datatype,String goodtype, String keyword,String provinceid,String orderBy) {
 		this.getPageInfo(request);
-		WebvistsService.addCount( request, 4);
+		WebvistsService.addCount(4);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
 		filter.put("sstauts", 1);//必须
@@ -288,7 +288,7 @@ public class ShareRdcController  {
 	@RequestMapping(value = "/getSEPSList")
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSEPSList(HttpServletRequest request,String rdcID,String type,String datatype, String keyword,String stprovinceID,String stcityID,String toprovinceID,String tocityID,String validStartTime ,String validEndTime,String storagetempertype,String businessType,String carType,String provincefwID,String orderBy) {
-		WebvistsService.addCount( request, 5);
+		WebvistsService.addCount(5);
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);//OK
@@ -327,7 +327,7 @@ public class ShareRdcController  {
 	@RequestMapping(value = "/getSERDCList")
 	@ResponseBody
 	public ResponseData<RdcShareDTO> getSERDCList(HttpServletRequest request,String rdcID,String datatype,String goodtype, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,String orderBy) {
-		WebvistsService.addCount( request, 3);
+		WebvistsService.addCount(3);
 		this.getPageInfo(request);
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("type", type);
@@ -419,7 +419,7 @@ public class ShareRdcController  {
 			}
 			if(uid==null){uid=loguid;}
 			Integer type= rdcShareDTO.getDataType();
-			if(type!=null){switch (type) {case 1: WebvistsService.addCount(request, 4); break;case 2: WebvistsService.addCount(request, 5);break;case 3: WebvistsService.addCount(request, 3);break;default: break;}}
+			if(type!=null){switch (type) {case 1: WebvistsService.addCount(4); break;case 2: WebvistsService.addCount(5);break;case 3: WebvistsService.addCount(3);break;default: break;}}
 			if(rdcShareDTO.getId()==0){
 				rdcShareDTO.setReleaseID(uid);//设置发布消id//user.getId()
 				rdcShareDTO.setStauts(1);

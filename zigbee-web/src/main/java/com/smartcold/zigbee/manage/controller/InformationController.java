@@ -96,7 +96,7 @@ public class InformationController extends BaseController {
 	@ResponseBody
 	public Object findInformationsByCate(HttpServletRequest request,  @RequestParam(value="pageNum",required=false) Integer pageNum,
 			@RequestParam(value="pageSize") Integer pageSize,@RequestParam(value="categoryID") Integer categoryID) throws UnsupportedEncodingException {
-		WebvistsService.addCount( request, 12);
+		WebvistsService.addCount( 12);
 		pageNum = pageNum == null? 1:pageNum;
 		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);

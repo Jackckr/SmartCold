@@ -26,7 +26,7 @@
 	   <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>   
 	</listener>
 	<listener> <!--session监听        -->  
-     <listener-class>com.smartcold.zigbee.manage.listener.SessionListener</listener-class>  
+     <listener-class>com.smartcold.zigbee.manage.filter.SessionListener</listener-class>  
     </listener>  
 
 	<servlet>
@@ -82,7 +82,17 @@
 	</filter>
 	<filter-mapping>
 	    <filter-name>cors</filter-name>
-	    <url-pattern>/*</url-pattern>
+	    <url-pattern>/a/*</url-pattern>
+	    <url-pattern>/i/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+	    <filter-name>fhtml</filter-name>
+	    <filter-class>com.smartcold.zigbee.manage.filter.BrowsingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>fhtml</filter-name>
+	    <url-pattern>*.html</url-pattern>
 	</filter-mapping>
 	
 	<servlet-mapping>

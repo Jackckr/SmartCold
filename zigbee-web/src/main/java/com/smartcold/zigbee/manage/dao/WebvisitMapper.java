@@ -13,5 +13,4 @@ public interface WebvisitMapper {
 	
 	public void addwebAcceslist(List<HashMap<String, Object>> list);
 	
-	public void addwebAcces(String ip,String sysinfo,String browinfo,String userinfo);
 }

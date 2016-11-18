@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.smartcold.zigbee.manage.dao.WebvisitMapper;
 import com.smartcold.zigbee.manage.entity.UserEntity;
-import com.smartcold.zigbee.manage.listener.SessionListener;
+import com.smartcold.zigbee.manage.filter.SessionListener;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 
@@ -41,20 +41,10 @@ public class WebvistsService  {
     
 	@Autowired
 	private  WebvisitMapper webvisit;
-	
-	
-	public static LinkedList<String> sessionlist = new LinkedList<String>();
-	
 	public static LinkedList<HashMap<String, Object>> webaccectList = new LinkedList<HashMap<String, Object>>();
+	public static HashMap<String, HashMap<String, Object>> AUMap=new HashMap<String, HashMap<String,Object>>();
 	
-//	private final static String[] Telephone  = {"Android", "iPhone", "iPod","iPad", "Windows Phone"  };
-//	private final static String[] system  = { "Android", "iPhone", "iPod","iPad", "Windows Phone" ,"Windows", "Mac","Linux","Solaris","FreeBSD" };
-//	private final static String[] browser =   {"MSIE", "UCWEB","UCBrowser","opera","SE","MetaSr","SogouMobileBrowser","chrome","safari","Firefox","TencentTraveler","QQBrowser","360SE","The world"};
-//	private final static String[] browsername={"IE","UC","UC","opera","搜狗浏览器","搜狗浏览器","搜狗浏览器","chrome","safari","Firefox","QQ 浏览器","QQ 浏览器","360浏览器","Theworld"}; 
-	
-	public static void addSessionInfo(String key) {sessionlist.add(key);}
-	
-	public static void addCount(HttpServletRequest request, int index) {
+	public static void addCount(int index) {
 		switch (index) {
 		case -6: release++; break;
 		case -3: share++; break;
@@ -73,17 +63,14 @@ public class WebvistsService  {
 		case 13: msg++; break;
 		default: break;
 		}
-		if(sessionlist.contains(request.getSession().getId())){
-			sessionlist.remove(request.getSession().getId());
-			WebvistsService.checkAgentIsMobile(request);
-		}
+		
 	}
 	
 	/**
 	 * 半小时自动保存一次
 	 * 	
 	 */
-	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	private void saveCount() {
 		if (share    != 0) { webvisit.updateWebvisits( -3, share);share = 0;}
 		if (release  != 0) { webvisit.updateWebvisits( -6, release);release = 0;}
@@ -100,21 +87,73 @@ public class WebvistsService  {
 		if (sc360    != 0) { webvisit.updateWebvisits( 11, sc360 ); sc360 = 0; }
 		if (news     != 0) { webvisit.updateWebvisits( 12, news ); news = 0; }
 		if (msg      != 0) { webvisit.updateWebvisits( 13, msg); msg = 0; }
-		sessionlist.clear();
 		if(SetUtil.isnotNullList(webaccectList)){
 			webvisit.addwebAcceslist(webaccectList);
 			webaccectList.clear();
+			AUMap.clear();
 		}
 	}
 
+	/**
+	 * 
+	 * @param request
+	 */
+	public static void  addHistory(HttpServletRequest request) {
+			String id = request.getSession().getId();
+			HashMap<String, Object> aumap=null;
+	        if (AUMap.containsKey(id)) {
+	        	 aumap = AUMap.get(id);
+	        }else{
+	        	aumap=getAUinfo(request);
+	        	aumap.put("sid", id);
+	        	AUMap.put(id, aumap);
+	        }
+	        aumap.put("url", request.getServletPath());
+	        aumap.put("uid", getuser(request));
+	        aumap.put("online",SessionListener.getonlineUser());
+	        webaccectList.add(aumap);
+	}
 	
 	
+	
+	public static HashMap<String, Object>   getAUinfo(HttpServletRequest request) {
+		  HashMap<String, Object>   temp=new HashMap<String, Object>();
+		  String userAgent=request.getHeader("User-Agent");
+		  int sysindex = userAgent.indexOf(")");
+	      int bloweridx=  userAgent.lastIndexOf(")");
+		  String os[]=userAgent.substring(userAgent.indexOf("(")+1,sysindex).split(";");//获得系统名称
+		  String age=userAgent.substring(bloweridx+1).trim();//获得系统名称
+		   if(StringUtil.isnotNull(age)){//非ie os[0]
+			   String[] split = age.split(" ");  
+			   if(os.length==2){
+				   temp.put("dev", os[0]);
+				}else if(os.length==3){
+					 temp.put("dev", os[1]);
+				}else{ 
+					 temp.put("dev", os[0]);
+				}
+			   if(split.length>2){
+				   String bros="";
+				    for (int i = 1; i < split.length; i++) {
+					 bros+=split[i]+" ";
+			    	}
+				   temp.put("au",bros);
+			   }else{
+				   temp.put("au", split[split.length-1]);
+			   }
+		   }else{//处理IE内核
+			   temp.put("dev", os[2]);
+			   temp.put("au",os[1]);
+		   }
+		   temp.put("ip", getIpAddr(request));
+		  return temp;
+	}
 
 
-	private static String  getuser(HttpServletRequest request){
+	private static Integer  getuser(HttpServletRequest request){
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
-		if(user!=null){return user.getUsername()+"-"+user.getRealname();}
-		return "游客访问";
+		if(user!=null){return user.getId();}
+		return null;
 	}
 	
 	
@@ -160,40 +199,10 @@ public class WebvistsService  {
 		}  
 		return ipAddress;  
 	}  
-	public static void  checkAgentIsMobile(HttpServletRequest request) {
-		  HashMap<String, Object>   temp=new HashMap<String, Object>();
-		  String userAgent=request.getHeader("User-Agent");
-		  int sysindex = userAgent.indexOf(")");
-	    	int bloweridx=  userAgent.lastIndexOf(")");
-		  String os[]=userAgent.substring(userAgent.indexOf("(")+1,sysindex).split(";");//获得系统名称
-		  String age=userAgent.substring(bloweridx+1).trim();//获得系统名称
-		   if(StringUtil.isnotNull(age)){//非ie os[0]
-			   String[] split = age.split(" ");  
-			   if(os.length==2){
-				   temp.put("sysinfo", os[0]);
-				}else if(os.length==3){
-					 temp.put("sysinfo", os[1]);
-				}else{ 
-					 temp.put("sysinfo", os[0]);
-				}
-			   if(split.length>2){
-				   String bros="";
-				    for (int i = 1; i < split.length; i++) {
-					 bros+=split[i]+" ";
-			    	}
-				   temp.put("browinfo",bros);
-			   }else{
-				   temp.put("browinfo", split[split.length-1]);
-			   }
-		   }else{//处理IE内核
-			   temp.put("sysinfo", os[2]);
-			   temp.put("browinfo",os[1]);
-		   }
-		   temp.put("ip", getIpAddr(request));
-		   temp.put("userinfo", getuser(request));
-		   temp.put("online",SessionListener.getonlineUser());
-		   webaccectList.add(temp);
-	}
+	
+	
+	
+
 	
 	public static List<Object[]> getCount(){
 		List<Object[]> datalist = new ArrayList<Object[]>();
