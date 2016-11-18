@@ -172,16 +172,13 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
 //    	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
         $http({
             method: 'POST',
-            url: ER.coldroot + '/i/maintenance/findMaintenanceList',
+            url: ER.coldroot + '/i/maintenance/findAllMaintenance',
             params: {
-                pageNum: $scope.bigCurrentPage,
-                pageSize: $scope.maxSize,
                 rdcId: $scope.rdcId,
                 audit: 0,
                 keyword: encodeURI($scope.keyword, "UTF-8"),
             }
         }).success(function (data) {
-            $scope.bigTotalItems = data.total;
             $scope.Maintenances0 = data.list;
         });
     };
@@ -306,6 +303,7 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
     };
 
     $scope.submitfix = function (detail, fixtime, note) {
+    	if($scope.updateMaintenance0.fixtime>$scope.updateMaintenance0.ordertime){
         $scope.updateMaintenance0.detail = detail;
         $scope.updateMaintenance0.fixtime = fixtime;
         $scope.updateMaintenance0.note = note;
@@ -331,6 +329,10 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
                 alert("提交失败");
             }
         });
+    	}
+    	else{
+    		alert("维修时间不能早于预约时间");
+    	}
     };
 
     $scope.change = function (id, appraise) {
