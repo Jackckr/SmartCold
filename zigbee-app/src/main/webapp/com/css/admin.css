@@ -113,6 +113,9 @@ section.show{
 	height: 2.5rem;
 	line-height: 2.5rem;
 }
+.adminInfo  .rightArrow{
+	width: 2rem;
+}
 .adminInfo  .name{
 	padding-left: 3rem;
 	margin: 0;
