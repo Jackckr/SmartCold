@@ -28,10 +28,16 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">预约维修时间</label>
 			<div class="col-sm-10">
-				<div class="input-group col-md-5">
-					<input ng-model="ordertime" class="form-control"  type="date" value=""
-						 placeholder="请选择时间">
+				<div class="input-group date form_date col-md-5" data-date=""
+					data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
+					data-link-format="yyyy-mm-dd">
+					<input ng-model="ordertime" class="form-control" size="16" type="text" value=""
+						readonly placeholder="请选择时间"><span class="input-group-addon"><span
+						class="glyphicon glyphicon-remove"></span></span> <span
+						class="input-group-addon"><span
+						class="glyphicon glyphicon-calendar"></span></span>
 				</div>
+				<input type="hidden" id="dtp_input2" value="" />
 			</div>
 			
 		</div>
@@ -45,3 +51,15 @@
 	<!-- /.box-body -->
 </div>
 
+<script type="text/javascript">
+$('.form_date').datetimepicker({
+	format: 'yyyy-mm-dd',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	forceParse: 0
+});
+</script>

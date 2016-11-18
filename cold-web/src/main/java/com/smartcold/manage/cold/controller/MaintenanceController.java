@@ -2,7 +2,6 @@ package com.smartcold.manage.cold.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,15 +60,7 @@ public class MaintenanceController {
 	@RequestMapping(value = "findMaintenanceByID", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findMaintenanceByID(int id) {
-		MaintenanceEntity maintenanceEntity = maintenanceMapper.findMaintenanceByID(id);
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			maintenanceEntity.setOrdertime(format.parse(maintenanceEntity.getOrdertime()).toString());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return maintenanceEntity;
+		return maintenanceMapper.findMaintenanceByID(id);
 	}
 	
 	@RequestMapping(value="/addMaintenance", method=RequestMethod.POST)
@@ -80,8 +71,7 @@ public class MaintenanceController {
 		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
 		maintenanceEntity.setUnitname( URLDecoder.decode(unitname, "UTF-8"));
 		maintenanceEntity.setReason(URLDecoder.decode(reason, "UTF-8"));
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		maintenanceEntity.setOrdertime(format.parse(ordertime).toString());
+		maintenanceEntity.setOrdertime(ordertime);
 		maintenanceEntity.setRdcId(rdcId);
 		maintenanceMapper.insertMaintenance(maintenanceEntity);
 		return true;
