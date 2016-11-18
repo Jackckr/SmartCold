@@ -56,6 +56,7 @@ public class MaintenanceController {
 	@RequestMapping(value="/addMaintenance", method=RequestMethod.POST)
 	@ResponseBody
 	public Object addMaintenance(Integer rdcId, String unitname, String reason,String ordertime) throws ParseException, UnsupportedEncodingException{
+		if(rdcId==null){return false;}
 		if(StringUtil.isNull(ordertime)){ordertime=TimeUtil.getFormatDate(new Date());}
 		MaintenanceEntity maintenanceEntity = new MaintenanceEntity();
 		maintenanceEntity.setUnitname( URLDecoder.decode(unitname, "UTF-8"));
