@@ -107,8 +107,20 @@ section.show{
 	line-height: 3rem;
 	position:relative;
 }
+
+.adminInfo .myicon,.adminInfo  .rightArrow{
+	width: 3rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+}
+.adminInfo  .name{
+	padding-left: 3rem;
+	margin: 0;
+	height: 2.5rem;
+}
 .adminInfo .list_name{
 	text-align: right;	
+	line-height: 2.5rem;
 }
 .adminInfo+.mybtn{
 	margin-bottom: 3rem;
@@ -235,7 +247,7 @@ section.show{
 .logo{
 	width: 7rem;
 	height: 2.63rem;
-	margin: 1rem auto;
+	margin: 0 auto;
 }
 .logo img{
 	max-width: 100%;
@@ -262,22 +274,29 @@ section.show{
 .tel p:nth-last-child(3){
 	margin-bottom: .3rem;
 }
-.contact~.fl{
-	text-align: center;
-	width:33.33%;
+.gallery .fl{
+	width:33.33%
 }
-.contact~.fl>p{
-	font-size: .7rem;
-	text-align: center;
-	font-weight: 700;
+
+.contact+.gallery{
+	height:130px;
 }
-.contact~.fl a{
-	display: block;
+.contact+.gallery a{
+	min-height:110px;
+	position: relative;
 }
-.contact~.fl img{
+.contact+.gallery a img{
 	width:100px;
-	height:100px;
-	background: #90CAFB;
+	height:100px
+}
+.contact+.gallery a:before{
+	content: attr(data-font);
+	position: absolute;
+	top:100%;
+	left:0;
+	width:100%;
+	font-size: .65rem;
+	color:#555;
 }
 #headImg{
 	position: absolute;

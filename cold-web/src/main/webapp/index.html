@@ -365,7 +365,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li>
                  <a><i class="fa fa-circle-o"></i>制冷机组<i class="fa fa-angle-left pull-right"></i></a>
                  <ul class="treeview-menu" style="display: none;">
-                    <li ng-repeat="compressorGroup in compressorGroups" onclick="activeLi(this)"><a href="" ng-click="toMyCompressor(compressorGroup.id)">
+                    <li ng-repeat="compressorGroup in compressorGroups" onclick="activeLi(this)" title="{{compressorGroup.name}}"><a href="" class="omg" ng-click="toMyCompressor(compressorGroup.id)">
                     <i class="fa fa-circle-o"></i> {{compressorGroup.name}}</a></li>
                   </ul>
                </li>
