@@ -558,7 +558,6 @@ checkLogin();
     };
 
     $scope.submit = function(){
-    if( $scope.issubmit)return; $scope.issubmit=true;$("#but_savedata").text("提交中……");
     if(checkCommit()){
         if (checkInput()){
         	layer.open({
@@ -566,6 +565,7 @@ checkLogin();
         		,content: '努力加载中~~~'
         		,shadeClose:false
 		    });
+        if( $scope.issubmit)return; $scope.issubmit=true;$("#but_savedata").text("提交中……");
             $scope.isDisabled = true;
             data = {
                 file0: null,
