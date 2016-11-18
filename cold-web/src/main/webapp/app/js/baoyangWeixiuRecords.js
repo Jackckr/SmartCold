@@ -1,8 +1,8 @@
 coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state, $cookies, $http, $location) {
 	// 显示最大页数
-    $scope.maxSize = 12;
+    $scope.maxSize = 10;
     // 总条目数(默认每页十条)
-    $scope.bigTotalItems = 12;
+    $scope.bigTotalItems = 10;
     // 当前页
     $scope.bigCurrentPage = 1;
 	$scope.Maintenances0 = [];
@@ -92,7 +92,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     
     $scope.submitfix = function(){
     	$scope.updateMaintenance0.audit = 1;
-    	if($scope.updateMaintenance0.fixtime>$scope.updateMaintenance0.ordertime){
+    	if(new Date($scope.updateMaintenance0.fixtime).getTime()>=new Date($scope.updateMaintenance0.ordertime).getTime()){
     		if($scope.updateMaintenance0.detail=='undefined')
     			$scope.updateMaintenance0.detail = '';
     		if($scope.updateMaintenance0.note=='undefined')
@@ -110,6 +110,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     	}).success(function (data) {
         	if(data){
         		alert("提交成功");
+        		$('#myApply').modal('hide')
         		//window.location.reload();
         		 $scope.getMaintenances0();
                  $scope.getMaintenances1();
