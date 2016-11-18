@@ -177,6 +177,7 @@ section{
 	overflow: hidden;
 	vertical-align: middle;
 	color: #333;
+	padding: .3rem 0;
 }
 .imgCell a>img{
 	line-height: 3rem;
@@ -382,7 +383,7 @@ section{
 }
 .more{
 	margin-top: .4rem;
-	padding-bottom: 0;
+	padding-bottom: 2.2rem;
 }
 .more li{
 	padding:0;
@@ -414,9 +415,9 @@ section{
 	border-bottom: 1px solid #ccc;
 	margin-bottom:.5rem;
 }
-.commentArea:last-child{
+/* .commentArea:last-child{
 	margin-bottom:2.2rem;
-}
+} */
 .commentArea>li:nth-child(1){
 	width: 2.5rem;
 	height: 2.5rem;
