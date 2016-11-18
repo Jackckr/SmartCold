@@ -84,9 +84,11 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
     
 	 $scope.inintData=function(newValue,oldValue){//初始化冷库门
 		   if($rootScope.mystorages!=undefined){
-			   angular.forEach($rootScope.mystorages,function(storage){
-		    		$timeout(function(){ $scope.drawInOutChart(storage.id); },0);
-		    	});
+				$timeout(function(){ 
+			    angular.forEach($rootScope.mystorages,function(storage){
+		    	  $scope.drawInOutChart(storage.id); 
+		    	 });
+				},200);
 		   }
 	  };
 	  $scope.$watch('mystorages',$scope.inintData,true);//监听冷库变化
