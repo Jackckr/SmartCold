@@ -303,7 +303,9 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
     };
 
     $scope.submitfix = function (detail, fixtime, note) {
-    	if(new Date(fixtime).getTime()>=new Date($scope.updateMaintenance0.ordertime).getTime()){
+    	//if(fixtime>=$scope.updateMaintenance0.ordertime){
+    	//alert(new Date(fixtime).getTime()+'-----'+new Date($scope.updateMaintenance0.ordertime).getTime())
+    	if(new Date(fixtime).getDate()>=new Date($scope.updateMaintenance0.ordertime).getDate()){
         $scope.updateMaintenance0.detail = detail;
         $scope.updateMaintenance0.fixtime = fixtime;
         $scope.updateMaintenance0.note = note;
@@ -331,6 +333,7 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
         });
     	}
     	else{
+    		
     		alert("维修时间不能早于预约时间");
     	}
     };

@@ -92,7 +92,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     
     $scope.submitfix = function(){
     	$scope.updateMaintenance0.audit = 1;
-    	if(new Date($scope.updateMaintenance0.fixtime).getTime()>=new Date($scope.updateMaintenance0.ordertime).getTime()){
+    	if(new Date($scope.updateMaintenance0.fixtime)>=new Date($scope.updateMaintenance0.ordertime)){
     		if($scope.updateMaintenance0.detail=='undefined')
     			$scope.updateMaintenance0.detail = '';
     		if($scope.updateMaintenance0.note=='undefined')
