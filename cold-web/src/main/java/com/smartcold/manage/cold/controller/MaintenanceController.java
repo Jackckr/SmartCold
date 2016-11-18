@@ -32,7 +32,7 @@ public class MaintenanceController {
 	public Object findMaintenanceList(Integer rdcId,Integer audit,String keyword,  Integer pageNum,Integer pageSize )  {
 		if(audit==null||  rdcId==null){ return null; }
 		pageNum = pageNum == null? 1:pageNum;
-		pageSize = pageSize==null? 12:pageSize;
+		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
 		if(keyword.equals("undefined")){keyword = null;}
 		Page<MaintenanceEntity> maintenancePage = maintenanceMapper.findMaintByRdcId(rdcId,audit, keyword);
