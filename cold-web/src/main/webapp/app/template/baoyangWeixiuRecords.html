@@ -32,11 +32,14 @@
          <tr ng-repeat="maintenance1 in Maintenances1">
           	<td class="text-center">{{$index+1}}</td>
           	<td>{{maintenance1.unitname}}</td>
-          	<td>{{maintenance1.reason}}</td>
+          	<td ng-if="maintenance1.reason=='undefined'"></td> 
+          	<td ng-if="maintenance1.reason!='undefined'">{{maintenance1.reason}}</td> 	
           	<td>{{maintenance1.ordertime}}</td>   
           	<td>{{maintenance1.fixtime}}</td> 
-          	<td>{{maintenance1.detail}}</td> 	
-          	<td>{{maintenance1.note}}</td> 	
+          	<td ng-if="maintenance1.detail=='undefined'"></td> 
+          	<td ng-if="maintenance1.detail!='undefined'">{{maintenance1.detail}}</td> 	
+          	<td ng-if="maintenance1.note=='undefined'"></td> 
+          	<td ng-if="maintenance1.note!='undefined'">{{maintenance1.note}}</td> 	
           	<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
           	<td class="text-center">
           		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
@@ -46,8 +49,8 @@
     </table>
                <!-- 翻页功能 -->
                <div class="row" style="text-align:center">
-                    <pagination ng-change="pageChanged1()" total-items="bigTotalItems"
-                             ng-model="bigCurrentPage1" max-size="maxSize" class="pagination-sm"
+                    <pagination ng-change="pageChanged()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
                              boundary-links="true" rotate="false" num-pages="numPages"></pagination>
                 </div>
   </div>
@@ -77,7 +80,8 @@
         <tr ng-repeat="maintenance0 in Maintenances0">
           	<td class="text-center">{{$index+1}}</td>
           	<td>{{maintenance0.unitname}}</td>
-          	<td>{{maintenance0.reason}}</td>
+          	<td ng-if="maintenance0.reason=='undefined'"></td> 
+          	<td ng-if="maintenance0.reason!='undefined'">{{maintenance0.reason}}</td> 	
           	<td>{{maintenance0.ordertime}}</td>   
           	<td class="text-center">
           		<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myApply" ng-click="weixiuapply(maintenance0.id)">维修</button>

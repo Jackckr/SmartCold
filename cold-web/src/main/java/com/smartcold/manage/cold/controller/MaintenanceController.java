@@ -39,6 +39,16 @@ public class MaintenanceController {
 		return new PageInfo<MaintenanceEntity>(maintenancePage);
 	}
 	
+	
+	@RequestMapping(value = "/findAllMaintenance", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findAllMaintenance(Integer rdcId,Integer audit,String keyword)  {
+		if(audit==null||  rdcId==null){ return null; }
+		if(keyword.equals("undefined")){keyword = null;}
+		Page<MaintenanceEntity> maintenancePage = maintenanceMapper.findMaintByRdcId(rdcId,audit, keyword);
+		return new PageInfo<MaintenanceEntity>(maintenancePage);
+	}
+	
 	@RequestMapping(value = "/deleteMaintenance", method = RequestMethod.GET)
 	@ResponseBody
 	public Object deleteMaintenance(int id) {
