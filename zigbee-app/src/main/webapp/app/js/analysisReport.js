@@ -269,7 +269,7 @@ app.controller('analysisReport', function ($scope, $location, $http) {
             var datainfo = getcofinData();
             $("#rpt_asistb_tit").html($scope.sltit);
             if (datainfo == null || datainfo == "[]") {
-                $scope.rs_msg = "当前冷库的没有" + typemode.title[$scope.slindex] + "相关的配置！";
+                $scope.rs_msg = "当前冷库没有" + typemode.title[$scope.slindex] + "的相关配置！";
                 $("#rpt_print").attr("disabled", !isSuccess);
                 return;
             }
