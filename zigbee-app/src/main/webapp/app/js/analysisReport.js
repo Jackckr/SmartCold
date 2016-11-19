@@ -134,7 +134,7 @@ app.controller('analysisReport', function ($scope, $location, $http) {
         return new Date(new Date().getTime() - before * 24 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/g, '');
     };
     $scope.begin = $scope.getDateTimeStringBefore(3).substr(0, 10), $scope.end = $scope.getDateTimeStringBefore(0).substr(0, 10);
-    $scope.slindex = 0, $scope.urlid = 0, $scope.sltit = "日耗电量", $scope.tabletit = null, $scope.rs_msg = null, isSuccess = false, $scope.coldstoragedoor = undefined, $scope.StorageBlower = undefined, $scope.prove = undefined;//冷库门
+    $scope.slindex = -1, $scope.urlid = 0, $scope.sltit = "日耗电量", $scope.tabletit = null, $scope.rs_msg = null, isSuccess = false, $scope.coldstoragedoor = undefined, $scope.StorageBlower = undefined, $scope.prove = undefined;//冷库门
     //key
     var typemode={
         type:[10,3,2,1,1,4,-1,1,5],
@@ -247,54 +247,61 @@ app.controller('analysisReport', function ($scope, $location, $http) {
     };
 
     $scope.search = function () {//查询数据
-        //将字符串转换为日期
-        var begin = new Date($("#startTime").val().replace(/-/g, "/"));
-        var end = new Date($("#endTime").val().replace(/-/g, "/"));
-        //js判断日期
-        if (begin > end) {
+        if ($scope.slindex === -1) {
             layer.open({
-                content: '开始时间不能小于结束时间哦^_^'
-                , btn: '确定'
+                content: '没有设置查询对象哦^_^'
+                ,btn: '确定'
             });
-            return false;
-        }
-        isSuccess = false, $scope.rs_msg = null;
-        $scope.isLoaddata = true;
-        var datainfo = getcofinData();
-        $("#rpt_asistb_tit").html($scope.sltit);
-        if (datainfo == null || datainfo == "[]") {
-            $scope.rs_msg = "当前冷库的没有" + typemode.title[$scope.slindex] + "相关的配置！";
-            $("#rpt_print").attr("disabled", !isSuccess);
-            return;
-        }
-        $.ajax({
-            type: "POST",
-            url: ER.coldroot + '/i/AnalysisController/getCasesTotalSISAnalysis',
-            data: {
-                rdcid: $scope.rdcId,
-                index: $scope.slindex,
-                urlid: $scope.urlid,
-                isexpt: false,
-                type: typemode.type[$scope.slindex],
-                confdata: datainfo,
-                key: typemode.key[$scope.slindex],
-                unit: typemode.unit[$scope.slindex],
-                startTime: $("#startTime").val(),
-                endTime: $("#endTime").val()
-            },
-            success: function (data) {
-                if (data.success) {
-                    isSuccess = true;
-                    if ($scope.urlid == 0 || $scope.urlid == 2) {
-                        $scope.dldata(data);
-                    } else {
-                        $scope.cldata(data);
-                    }
-                } else {
-                    $scope.rs_msg = data.message;
-                }
+        } else {
+            //将字符串转换为日期
+            var begin = new Date($("#startTime").val().replace(/-/g, "/"));
+            var end = new Date($("#endTime").val().replace(/-/g, "/"));
+            //js判断日期
+            if (begin > end) {
+                layer.open({
+                    content: '开始时间不能小于结束时间哦^_^'
+                    , btn: '确定'
+                });
+                return false;
             }
-        });
+            isSuccess = false, $scope.rs_msg = null;
+            $scope.isLoaddata = true;
+            var datainfo = getcofinData();
+            $("#rpt_asistb_tit").html($scope.sltit);
+            if (datainfo == null || datainfo == "[]") {
+                $scope.rs_msg = "当前冷库的没有" + typemode.title[$scope.slindex] + "相关的配置！";
+                $("#rpt_print").attr("disabled", !isSuccess);
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: ER.coldroot + '/i/AnalysisController/getCasesTotalSISAnalysis',
+                data: {
+                    rdcid: $scope.rdcId,
+                    index: $scope.slindex,
+                    urlid: $scope.urlid,
+                    isexpt: false,
+                    type: typemode.type[$scope.slindex],
+                    confdata: datainfo,
+                    key: typemode.key[$scope.slindex],
+                    unit: typemode.unit[$scope.slindex],
+                    startTime: $("#startTime").val(),
+                    endTime: $("#endTime").val()
+                },
+                success: function (data) {
+                    if (data.success) {
+                        isSuccess = true;
+                        if ($scope.urlid == 0 || $scope.urlid == 2) {
+                            $scope.dldata(data);
+                        } else {
+                            $scope.cldata(data);
+                        }
+                    } else {
+                        $scope.rs_msg = data.message;
+                    }
+                }
+            });
+        }
     };
 
     //开始绘制表格
