@@ -44,7 +44,7 @@
                     <input type="text" ng-model="name" ng-disabled="editable" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET" placeholder="请输入冷库名称">
-                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;">冷库名已被用</em>
+                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;" ng-bind="againTxt='冷库名已被用'"></em>
                             </form>
                 </li>
                 <li>
