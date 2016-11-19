@@ -6,12 +6,12 @@
 
     <select id="findCompressorByid" parameterType="map" resultType="CompressorSetEntity">
 		SELECT *
-		FROM `compressorset` WHERE `id` = #{id}
+		FROM `compressorset` WHERE `id` = #{id} ORDER BY `addTime`
 	</select>
 	
 	<select id="findCompressorByGroupid" parameterType="map" resultType="CompressorSetEntity">
 		SELECT *
-		FROM `compressorset` WHERE `compressorgroupid` = #{groupId}
+		FROM `compressorset` WHERE `compressorgroupid` = #{groupId} ORDER BY `addTime`
 	</select>
 
 </mapper>
