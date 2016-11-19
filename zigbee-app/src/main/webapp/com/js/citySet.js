@@ -17,88 +17,94 @@
     if(window.localStorage.appLocalprovince){
     	 $("#_citys0 a[data-id="+window.localStorage.appLocalprovince+"]").addClass("citysselect");//设置默认样式
     }
-    $("#_citys0 a").click(function () {
-       $("#_citys0 a").removeClass("heprselect");
-    	    $(this).addClass("heprselect");
-    	    window.localStorage.appLocalprovince=$(this).data('id');
-	        $.get(ER.root+"/i/city/findCitysByProvinceId.json",{provinceID: $(this).data('id')}, function(data) {
-	            var g = '';
-	            for (var j = 0; j<data.length; j++) {
-	                g += '<a data-level="1" data-id="' + data[j]['cityID'] + '" data-name="' + data[j]['cityName'] + '" title="' + data[j]['cityName'] + '">' + data[j]['cityName'] + '</a>';
-	            }
-	            $("#_citysheng li").removeClass("citySel");
-	            $("#_citysheng li:eq(1)").addClass("citySel");
-
-	        $("#_citys1 a").remove();
-	        $("#_citys1").append(g);
-	        if(  window.localStorage.appLocalCity ){
-	        	 $("#_citys1 a[data-id="+JSON.parse(window.localStorage.appLocalCity).cityID+"]").addClass("citysselect");//设置默认样式
-	        }
-	        $("._citys1").hide();
-	        $("._citys1:eq(1)").show();
-	        $("#_citys0 a,#_citys1 a").removeClass("AreaS");
-	        $(this).addClass("AreaS");
-	        var lev = $(this).data("name");
-	        ths.value = $(this).data("name");
-	        if (document.getElementById("hcity") == null) {
-	            var hcitys = $('<input>', {
-	                type: 'hidden',
-	                name: "hcity",
-	                "data-id": $(this).data("id"),
-	                id: "hcity",
-	                val: lev
-	            });
-	            $(ths).after(hcitys);
-	        }
-	        else {
-	            $("#hcity").val(lev);
-	            $("#hcity").attr("data-id", $(this).data("id"));
-	        }
-	        $("#_citys1 a").click(function () {
-	            $("#_citys1 a").removeClass("AreaS");
-	            $(this).addClass("AreaS");
-	            var lev =  $(this).data("name");
-	            if (document.getElementById("hproper") == null) {
-	                var hcitys = $('<input>', {
-	                    type: 'hidden',
-	                    name: "hproper",
-	                    "data-id": $(this).data("id"),
-	                    id: "hproper",
-	                    val: lev
-	                });
-	                $(ths).after(hcitys);
-	            }
-	            else {
-	                $("#hproper").attr("data-id", $(this).data("id"));
-	                $("#hproper").val(lev);
-	            }
-	            var bc = $("#hcity").val();
-	            ths.value = bc+ "-" + $(this).data("name");
-	
-//	            var ar = getArea($(this));
-	            $("._citys1").hide();
-	            $("._citys1:eq(2)").show();
-	                        
-	            var bp = $("#hproper").val();
-	            ths.innerHTML=bp;
-	            Iput.colse();
-	            $("#city").siblings('i').html('&#xe62d;');
-	            window.localStorage.appLocalCity =JSON.stringify({cityID:$(this).data("id"),cityName:bp});
-	        });
-        
-        
-        
-        });//初始化城市
-       // return;
-    });
+    $("#_citys0 a").click(function(){setcity(this);});
     $("#_citysheng li").click(function () {
         $("#_citysheng li").removeClass("citySel");
         $(this).addClass("citySel");
         var s = $("#_citysheng li").index(this);
         $("._citys1").hide();
         $("._citys1:eq(" + s + ")").show();
+        if(s==1){
+            var a=$("#_citys0 a[data-id="+window.localStorage.appLocalprovince+"]");
+            setcity(a);
+        }
     });
+    function setcity(em) {
+        $("#_citys0 a").removeClass("heprselect");
+     	    $(this).addClass("heprselect");
+     	       window.localStorage.appLocalprovince=$(em).data('id');
+    	        $.get(ER.root+"/i/city/findCitysByProvinceId.json",{provinceID: $(em).data('id')}, function(data) {
+    	            var g = '';
+    	            for (var j = 0; j<data.length; j++) {
+    	                g += '<a data-level="1" data-id="' + data[j]['cityID'] + '" data-name="' + data[j]['cityName'] + '" title="' + data[j]['cityName'] + '">' + data[j]['cityName'] + '</a>';
+    	            }
+    	            $("#_citysheng li").removeClass("citySel");
+    	            $("#_citysheng li:eq(1)").addClass("citySel");
+
+    	        $("#_citys1 a").remove();
+    	        $("#_citys1").append(g);
+    	        if(  window.localStorage.appLocalCity ){
+    	        	 $("#_citys1 a[data-id="+JSON.parse(window.localStorage.appLocalCity).cityID+"]").addClass("citysselect");//设置默认样式
+    	        }
+    	        $("._citys1").hide();
+    	        $("._citys1:eq(1)").show();
+    	        $("#_citys0 a,#_citys1 a").removeClass("AreaS");
+    	        $(this).addClass("AreaS");
+    	        var lev = $(em).data("name");
+    	        ths.value = $(em).data("name");
+    	        if (document.getElementById("hcity") == null) {
+    	            var hcitys = $('<input>', {
+    	                type: 'hidden',
+    	                name: "hcity",
+    	                "data-id": $(em).data("id"),
+    	                id: "hcity",
+    	                val: lev
+    	            });
+    	            $(ths).after(hcitys);
+    	        }
+    	        else {
+    	            $("#hcity").val(lev);
+    	            $("#hcity").attr("data-id", $(em).data("id"));
+    	        }
+    	        $("#_citys1 a").click(function () {
+    	            $("#_citys1 a").removeClass("AreaS");
+    	            $(this).addClass("AreaS");
+    	            var lev =  $(this).data("name");
+    	            if (document.getElementById("hproper") == null) {
+    	                var hcitys = $('<input>', {
+    	                    type: 'hidden',
+    	                    name: "hproper",
+    	                    "data-id": $(this).data("id"),
+    	                    id: "hproper",
+    	                    val: lev
+    	                });
+    	                $(ths).after(hcitys);
+    	            }
+    	            else {
+    	                $("#hproper").attr("data-id", $(this).data("id"));
+    	                $("#hproper").val(lev);
+    	            }
+    	            var bc = $("#hcity").val();
+    	            ths.value = bc+ "-" + $(this).data("name");
+    	
+//    	            var ar = getArea($(this));
+    	            $("._citys1").hide();
+    	            $("._citys1:eq(2)").show();
+    	                        
+    	            var bp = $("#hproper").val();
+    	            ths.innerHTML=bp;
+    	            Iput.colse();
+    	            $("#city").siblings('i').html('&#xe62d;');
+    	            window.localStorage.appLocalCity =JSON.stringify({cityID:$(this).data("id"),cityName:bp});
+    	        });
+         
+         
+         
+         });//初始化城市
+        // return;
+     }
 }
+
 
 function getCity(obj) {
     var c = obj.data('id');

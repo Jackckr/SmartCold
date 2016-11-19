@@ -23,6 +23,7 @@ import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.service.impl.WebvistsService;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.StringUtil;
 /*
  * Copyright (C) DCIS 版权所有
  * 功能描述: Utils 工具类->全文检索
@@ -67,6 +68,7 @@ public class UtilController   {
 	public ResponseData<HashMap<String, Object>> searchdata(HttpServletRequest request,String provinceid,String keyword) {
 		HashMap<String, Object> alldata=new HashMap<String, Object>();
 		HashMap<String, Object> filter=new HashMap<String, Object>();
+		if(StringUtil.isnotNull(keyword)){keyword=keyword.replace("'", "");}
 		filter.put("sstauts", 1);
 		filter.put("keyword", keyword);
 		filter.put("provinceid", provinceid);
