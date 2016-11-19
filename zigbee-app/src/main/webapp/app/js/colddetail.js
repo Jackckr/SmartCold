@@ -3,8 +3,10 @@
  function tel(){
 	 if(window.user!=null&&window.user!=undefined){
 		 $(".myphone").show();
+		 $(".myphonedis").hide();
 	 }else{
 		 $(".myphone").hide();
+		 $(".myphonedis").show();
 	 };
  }
 
