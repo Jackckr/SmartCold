@@ -6,6 +6,9 @@ getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 var ER = {root:"http://192.168.1.100:8989",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
+if(new Date().getDate()==23&&window.localStorage.msgTotalNumFlag==undefined){
+	window.localStorage.msgTotalNum=2;
+};
 if(window.localStorage.msgTotalNum==undefined){
 	window.localStorage.msgTotalNum = 2;
 }
@@ -58,6 +61,7 @@ $(function(){
 	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
 	$("#msgTotalNumReset").click(function(){
 		window.localStorage.msgTotalNum = 0;
+		window.localStorage.msgTotalNumFlag = 0;
 	});
 })
 /*

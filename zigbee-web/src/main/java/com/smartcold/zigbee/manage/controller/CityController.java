@@ -2,6 +2,7 @@ package com.smartcold.zigbee.manage.controller;
 
 import java.util.List;
 
+import org.apache.commons.net.nntp.NewGroupsOrNewsQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,9 @@ public class CityController {
     public Object findCityByName(@RequestParam String CityName) {
     	String cityName = CityName.substring(0, 2);
     	List<CityListEntity> cList =  cityListDao.findCityByName(cityName);
-        return cList.get(0);
+    	if (cList!=null&&!cList.isEmpty()) {
+    		return cList.get(0);
+		}
+        return null;
     }
 }
