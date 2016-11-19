@@ -58,7 +58,6 @@ $(function(){
 	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
 	$("#msgTotalNumReset").click(function(){
 		window.localStorage.msgTotalNum = 0;
-		$("#msgTotalNumReset span").css('background','#fff')
 	});
 })
 /*
