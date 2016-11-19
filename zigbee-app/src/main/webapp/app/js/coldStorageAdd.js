@@ -4,6 +4,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
 	$scope.phoneNum = window.user.telephone;
 	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 0,name: "无"}];
     // 获取省列表
+	$.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:6}});
     $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
     });
