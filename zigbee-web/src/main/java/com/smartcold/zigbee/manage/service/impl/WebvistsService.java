@@ -67,10 +67,10 @@ public class WebvistsService  {
 	}
 	
 	/**
-	 * 半小时自动保存一次
+	 * 自动保存一次
 	 * 	
 	 */
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/10 * * * ?")
 	private void saveCount() {
 		if (share    != 0) { webvisit.updateWebvisits( -3, share);share = 0;}
 		if (release  != 0) { webvisit.updateWebvisits( -6, release);release = 0;}

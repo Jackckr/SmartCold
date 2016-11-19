@@ -12,6 +12,8 @@ coldWeb.controller('releaseItemList', function ($rootScope, $scope,$stateParams,
      $scope._cuttid=$stateParams._cuttid;//系统传参  rdcconfig
      var datatype= $location.search()._cuttid;//外部传参
      if(!datatype){ datatype=rdcconfig._cuttid; }
+     var type=[0,4,5,3];
+     $.ajax({ url: "/i/UtilController/setVisited",type: "POST",data:{type:type[datatype]}});
      $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:datatype;//当前数据类型
      $scope.appmode=[{url1:""},{tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],btn:"发布"},{tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],btn:"发布"},{tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],btn:"发布"}];
 	 $scope.releaseitem=function(data){//带数据发布

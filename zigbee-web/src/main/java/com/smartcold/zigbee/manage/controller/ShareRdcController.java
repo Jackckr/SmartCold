@@ -418,8 +418,6 @@ public class ShareRdcController  {
 				}
 			}
 			if(uid==null){uid=loguid;}
-			Integer type= rdcShareDTO.getDataType();
-			if(type!=null){switch (type) {case 1: WebvistsService.addCount(4); break;case 2: WebvistsService.addCount(5);break;case 3: WebvistsService.addCount(3);break;default: break;}}
 			if(rdcShareDTO.getId()==0){
 				rdcShareDTO.setReleaseID(uid);//设置发布消id//user.getId()
 				rdcShareDTO.setStauts(1);

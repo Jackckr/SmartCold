@@ -95,7 +95,7 @@
 		<div class="filter">
 			<p><strong>请选择需要查询的项目：</strong></p>
 			<div class="project clearfix">
-				<div ng-click="showkeyli($event,0,0)" class="default defaultSelect">日耗电量</div>
+				<div ng-click="showkeyli($event,0,0)" class="default">日耗电量</div>
 				<div ng-click="showkeyli($event,1,0)" class="default">日耗水量</div>
 				<div ng-click="showkeyli($event,2,1)" class="default">冷  库  门</div>
 				<div ng-click="showkeyli($event,3,1)" class="default">温度分析</div>
@@ -111,7 +111,7 @@
 		</div>		
        	<p class="chaxun"><button class="mybtn" ng-click="search()">查询</button></p>
        	<h3 class="box-title" id="rpt_asistb_tit"> </h3>
-		<div class="analysis alarmLog">
+		<div class="analysis alarmLog" style="border:0"><!--   ng-show="slindex !== -1" -->
 			<div id="rpt_asis_coment" class="table-responsive" ng-show="!rs_msg">
 				<table id="rpt_asis_table" class="table table-bordered cold_warn">
 					<thead id="rpt_asistb_thead">
