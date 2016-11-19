@@ -1,6 +1,6 @@
 var app = angular.module('app', []);
 app.controller('ctrl', function($http, $location,$scope) {
-	 $scope.msgTotalNum = window.msgTotalNum;
+	 $scope.msgTotalNum = window.localStorage.msgTotalNum;
 });
 var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该联络单信息吗？" ,"确定要删除该评价吗？"] ,["colddetail.html?id=","releasedetail.html?id=","orderdetail.html?id="]];
 var urlset = [

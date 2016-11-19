@@ -1,9 +1,8 @@
 var app = angular.module('app', []);
 app.controller('ctrl', function ($http, $location, $scope) {
-    $scope.msgTotalNum = window.msgTotalNum;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-
+    $scope.msgTotalNum = window.localStorage.msgTotalNum;
     function myFun(result) {
         var cityName = "上海";
         if (result && result.name) {

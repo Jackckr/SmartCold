@@ -76,11 +76,11 @@
                 <p class="info">资讯</p>
             </a>
         </li>
-        <li>            
+        <li id="msgTotalNumReset">            
             <a href="messages.html">
                 <i class="iconfont">&#xe71c;</i>
                 <p class="info">消息</p>
-                 <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=''" class="countNum" ng-bind="msgTotalNum"></span>
+                 <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=0" class="countNum" ng-bind="msgTotalNum"></span>
             </a>
         </li>
         <li>            
