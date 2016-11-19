@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.smartcold.zigbee.manage.dao.ComMessageReadMapper;
 import com.smartcold.zigbee.manage.dao.MessageMapper;
 import com.smartcold.zigbee.manage.dao.MsgCategoryMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
+import com.smartcold.zigbee.manage.entity.ComMessageReadEntity;
 import com.smartcold.zigbee.manage.entity.MessageEntity;
 import com.smartcold.zigbee.manage.util.ResponseData;
 /**
@@ -25,6 +27,8 @@ import com.smartcold.zigbee.manage.util.ResponseData;
 public class MessageController extends BaseController {
 	@Autowired
 	private MessageMapper messageDao;
+	@Autowired
+	private ComMessageReadMapper comMessageReadMapper;
 	@Autowired
 	private MsgCategoryMapper msgCategoryDao;
 	
@@ -113,4 +117,31 @@ public class MessageController extends BaseController {
 	public Object findAllMsgCategory() {
 		return msgCategoryDao.findAllMsgCategory();
 	}
+	
+	@RequestMapping(value = "/addComMessageRead")
+	@ResponseBody
+	public Object addComMessageRead(@RequestParam(value="userID", required=false) int userID,
+			@RequestParam(value="comMessageID", required=false) int comMessageID) throws Exception {
+		if (findComMessageReadByUserId(userID)==false) {
+			ComMessageReadEntity comMessageReadEntity = new ComMessageReadEntity();
+			comMessageReadEntity.setCommessageid(comMessageID);
+			comMessageReadEntity.setUserid(userID);
+			comMessageReadMapper.insertComMessageRead(comMessageReadEntity);
+		}
+		return new BaseDto(0);
+	}
+	
+	@RequestMapping(value = "/findComMessageReadByUserId")
+	@ResponseBody
+	public boolean findComMessageReadByUserId(
+			@RequestParam(value="userID", required=false) Integer userID) throws UnsupportedEncodingException {
+		ComMessageReadEntity commessageread = comMessageReadMapper.findComMessageReadByUserID(userID);
+		if (commessageread!=null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 }

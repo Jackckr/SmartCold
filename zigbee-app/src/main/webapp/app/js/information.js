@@ -4,7 +4,7 @@
  */
 var app = angular.module('app', []);
  app.controller('ctrl', function($http, $location,$scope) {
-	 $scope.msgTotalNum = window.msgTotalNum;
+	 $scope.msgTotalNum = window.localStorage.msgTotalNum;
  });
 var cundex=0,maxSize=10, isLoadRB=false;  
 var lilist=[{categoryID:1},{categoryID:2},{categoryID:3}];

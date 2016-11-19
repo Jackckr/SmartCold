@@ -5,21 +5,24 @@ var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
+if(window.localStorage.msgTotalNum==undefined){
+	window.localStorage.msgTotalNum = 2;
+}
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;}}
-if(window.user!=undefined ||window.user!=null)
-{
+if(window.user!=undefined ||window.user!=null){}
+
+//暂时隐藏
+/*{
  $.post(ER.root+"/i/message/findMessageByUserId", {
      pageNum: null,
      pageSize:null,
      userID:window.user.id},  function(data) {	
 	          if(data.success&&data.data.length>0){
-	        	  //暂时隐藏
-	        	//window.msgTotalNum = data.total;
-	        	  window.msgTotalNum = 2;
+	        	window.msgTotalNum = data.total;
 	          }
     });
-}
+}*/
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
@@ -53,6 +56,9 @@ $(function(){
 	var viewHeight=$(window).height();
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= viewHeight) {$('.goTop').show();} else {$('.goTop').hide();}});
 	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
+	$("#msgTotalNumReset").click(function(){
+		window.localStorage.msgTotalNum = 0;
+	});
 })
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。

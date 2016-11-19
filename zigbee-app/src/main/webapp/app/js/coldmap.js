@@ -19,13 +19,18 @@ app.controller('coldmap', function ($http) {
     //添加地图类型控件
     //map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]}));     //2D图，卫星图   //左上角， 地图类型控件
 
-    function iploac(result) {//根据IP设置地图中心
-        var cityName = result.name;
+    if (window.localStorage.appLocalCity) {
+        var cityName = JSON.parse(window.localStorage.appLocalCity).cityName;
         map.setCenter(cityName);
-    }
+    } else {
+        function iploac(result) {//根据IP设置地图中心
+            var cityName = result.name;
+            map.setCenter(cityName);
+        }
 
-    var myCity = new BMap.LocalCity();
-    myCity.get(iploac);
+        var myCity = new BMap.LocalCity();
+        myCity.get(iploac);
+    }
 
     $http.get(ER.root + '/i/rdc/findRdcList').success(function (data) {
         var index = 0;
