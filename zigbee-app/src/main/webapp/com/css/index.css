@@ -390,3 +390,7 @@ html{
 	color: #666;
 	font-size: .75rem;
 }
+.citysselect {
+    color: #fff !important;
+    background-color: #56b4f8 !important;
+}
