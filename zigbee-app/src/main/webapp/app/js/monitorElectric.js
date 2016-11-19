@@ -46,9 +46,10 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
-            "rdcId": rdcId
-        }
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
+            params: {
+                "rdcId": rdcId
+            }
         }).success(function (data) {
             if (data && data.length > 0) {
                 $scope.alarmTotalCnt = data.length;
@@ -142,9 +143,9 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
     $scope.powerEnergy = function () {
         clearSwiper();
         $scope.activeEnergy = 'power';
-        if ($scope.powers & $scope.powers.length > 0) {
-            for (var i = 0; i < $scope.powers.length; i++) {
-                $scope.load($scope.powers[i]);
+        if ($scope.powers.length > 0) {
+            for (var m = 0; m < $scope.powers.length; m++) {
+                $scope.load($scope.powers[m]);
             }
         }
     }
@@ -213,9 +214,9 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             title: {
                 text: title,
                 x: 'left',
-            	textStyle:{
-                	fontSize:13,
-                	fontWeight:'400'
+                textStyle: {
+                    fontSize: 13,
+                    fontWeight: '400'
                 }
             },
             calculable: true,
@@ -273,15 +274,15 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             yMin = max - min < 1 && type == 'line' ? min - 10 : yMin;
         }
         option = {
-        	backgroundColor: '#D2D6DE',
+            backgroundColor: '#D2D6DE',
             tooltip: {
                 trigger: 'axis'
             },
             title: {
                 text: title,
-            	textStyle:{
-                	fontSize:13,
-                	fontWeight:'400'
+                textStyle: {
+                    fontSize: 13,
+                    fontWeight: '400'
                 }
             },
             calculable: true,
