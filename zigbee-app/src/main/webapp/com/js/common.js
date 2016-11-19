@@ -3,10 +3,7 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
-//var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-//var ER = {root:"http://192.168.1.114:8080",coldroot:"http://www.smartcold.org.cn",isdebug:true};
-//var ER = {root:"http://192.168.1.138:8080",coldroot:"http://192.168.1.138:8999",isdebug:true};
-var ER = {root:"http://192.168.1.100:8989",coldroot:"http://www.smartcold.org.cn",isdebug:true};
+var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
 if(window.localStorage.msgTotalNum==undefined){
 	window.localStorage.msgTotalNum = 2;

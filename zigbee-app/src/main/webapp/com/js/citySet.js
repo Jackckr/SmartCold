@@ -8,13 +8,19 @@
     });
     var tb_province = [];
     var b = province;
+    
     for (var i = 0;i<b.length;  i++) {
     	 tb_province.push('<a data-level="0" data-id="' + b[i]['provinceId'] + '" data-name="' + b[i]['provinceName'] + '">' + b[i]['provinceName'] + '</a>');
     }
     $("#_citys0").append(tb_province.join(""));
+    
+    if(window.localStorage.appLocalprovince){
+    	 $("#_citys0 a[data-id="+window.localStorage.appLocalprovince+"]").addClass("citysselect");//设置默认样式
+    }
     $("#_citys0 a").click(function () {
        $("#_citys0 a").removeClass("heprselect");
-    	$(this).addClass("heprselect");
+    	    $(this).addClass("heprselect");
+    	    window.localStorage.appLocalprovince=$(this).data('id');
 	        $.get(ER.root+"/i/city/findCitysByProvinceId.json",{provinceID: $(this).data('id')}, function(data) {
 	            var g = '';
 	            for (var j = 0; j<data.length; j++) {
@@ -25,6 +31,9 @@
 
 	        $("#_citys1 a").remove();
 	        $("#_citys1").append(g);
+	        if(  window.localStorage.appLocalCity ){
+	        	 $("#_citys1 a[data-id="+JSON.parse(window.localStorage.appLocalCity).cityID+"]").addClass("citysselect");//设置默认样式
+	        }
 	        $("._citys1").hide();
 	        $("._citys1:eq(1)").show();
 	        $("#_citys0 a,#_citys1 a").removeClass("AreaS");
@@ -74,7 +83,7 @@
 	            ths.innerHTML=bp;
 	            Iput.colse();
 	            $("#city").siblings('i').html('&#xe62d;');
-	
+	            window.localStorage.appLocalCity =JSON.stringify({cityID:$(this).data("id"),cityName:bp});
 	        });
         
         

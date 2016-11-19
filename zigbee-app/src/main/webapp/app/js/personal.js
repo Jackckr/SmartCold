@@ -4,7 +4,7 @@
 			$http.get(ER.root+'/i/user/logout');
            	$scope.user=window.user  = null;
            	util.delCookie("token");
-           	window.localStorage.removeItem("lkuser");
+           	localStorage.clear();
            	gohome();
      };
 	$scope.initdata=function(){
@@ -55,10 +55,7 @@
             contentType: false,
             success: function(data){if(!data){
             	//alert("修改失败咯，请稍后重试吧~");
-            	layer.open({
-            	    content: '修改失败咯，请稍后重试吧~'
-            	    ,btn: '确定'
-            	  });
+            	layer.open({ content: '修改失败咯，请稍后重试吧~' ,btn: '确定' });
             }
             else{
             	window.localStorage.lkuser=JSON.stringify(data);
