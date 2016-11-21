@@ -147,6 +147,25 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setRemark(rdcEntity.getCommit());
             rdcAddDTO.setTelphoneNum(rdcEntity.getPhone());
             rdcAddDTO.setTonnage(rdcEntity.getCapacity());
+            List<FileDataEntity> authFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_AUTH_PIC);
+			if (authFiles!=null&&!CollectionUtils.isEmpty(authFiles)) {
+				List<RdcAuthDTO> rdcAuthDTOs = Lists.newArrayList();
+				RdcAuthDTO rdcAuthDTO;
+				for (FileDataEntity item : authFiles) {
+					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+					rdcAuthDTO = new RdcAuthDTO();
+					rdcAuthDTO.setAuthPics(Lists.newArrayList(item));
+					String location = item.getLocation();
+					if (!StringUtils.isEmpty(location)) {
+						String[] temps = location.split("_");
+						int userId = Integer.parseInt(temps[1]);
+						rdcAuthDTO.setUserId(userId);
+						rdcAuthDTO.setUserName(userDao.findUserById(userId).getUsername());
+					}
+					rdcAuthDTOs.add(rdcAuthDTO);
+				}
+				rdcAddDTO.setAuthPics(rdcAuthDTOs);
+			}
         }
 
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0 && !CollectionUtils.isEmpty(rdcExtByRDCId)
@@ -185,26 +204,6 @@ public class RdcServiceImpl implements RdcService {
 					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
 				}
 				rdcAddDTO.setHonorPics(honorFiles);
-			}
-
-			List<FileDataEntity> authFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_AUTH_PIC);
-			if (!CollectionUtils.isEmpty(authFiles)) {
-				List<RdcAuthDTO> rdcAuthDTOs = Lists.newArrayList();
-				RdcAuthDTO rdcAuthDTO;
-				for (FileDataEntity item : authFiles) {
-					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
-					rdcAuthDTO = new RdcAuthDTO();
-					rdcAuthDTO.setAuthPics(Lists.newArrayList(item));
-					String location = item.getLocation();
-					if (!StringUtils.isEmpty(location)) {
-						String[] temps = location.split("_");
-						int userId = Integer.parseInt(temps[1]);
-						rdcAuthDTO.setUserId(userId);
-						rdcAuthDTO.setUserName(userDao.findUserById(userId).getUsername());
-					}
-					rdcAuthDTOs.add(rdcAuthDTO);
-				}
-				rdcAddDTO.setAuthPics(rdcAuthDTOs);
 			}
 
             String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
