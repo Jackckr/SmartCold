@@ -11,12 +11,11 @@
      <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/TouchSlide.1.1.source.js" ></script>
-    <script src="../bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="../app/js/information.js"></script>
     <style type="text/css">	
 	</style>
 </head>
-<body ng-app="app" ng-controller="ctrl">
+<body >
     <!-- header -->
         <header>
             <div class="txt">
@@ -80,7 +79,6 @@
             <a href="messages.html">
                 <i class="iconfont">&#xe71c;</i>
                 <p class="info">消息</p>
-                 <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=0" class="countNum" ng-bind="msgTotalNum"></span>
             </a>
         </li>
         <li>            

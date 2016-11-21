@@ -9,7 +9,6 @@ var app = angular.module('app', []);
 			 }
 		 }); 
 	 };
-	 $scope.msgTotalNum = window.localStorage.msgTotalNum;
 	 $scope.initdata();
  });
 	

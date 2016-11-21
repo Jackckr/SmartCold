@@ -5,6 +5,26 @@ function gosharlist(){var key=$("#searchdiv").val();   window.localStorage.setIt
 function goshkeylist(em){var key=$(em).attr("value");  window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/searchList.html?key="+key;};
 $().ready(function() { 
 	var province=null,sccsize=0,shear=false;
+	if(window.localStorage.appLocalCity ){
+    	 document.getElementById ("city").innerHTML =JSON.parse(window.localStorage.appLocalCity).cityName;
+    }else{
+    	  function myFun(result) {
+    	        var cityName = "上海";
+    	        if (result && result.name) { cityName = result.name;  }
+    	        $.get(ER.root+'/i/city/findCityByName', { "CityName": cityName}, function(data) {
+    	        	if(data!=null&&data!=undefined&&data!=""){
+    	        	    document.getElementById ("city").innerHTML = data.cityName;
+    	        	 	 window.localStorage.appLocalCity =JSON.stringify(data);
+    	        	    }
+    	        	else{
+    	        		document.getElementById ("city").innerHTML = "上海";
+    	        	    window.localStorage.appLocalCity='{"cityID":1,"cityName":"上海"}';//设置默认城市
+    	        	}
+    			});//
+    	    }
+    	    var myCity = new BMap.LocalCity();
+    	    myCity.get(myFun);
+    }
 	function initdata(){
 		$.getJSON(ER.root+'/i/city/findProvinceList',function(data){province=data;});//footer
 	};

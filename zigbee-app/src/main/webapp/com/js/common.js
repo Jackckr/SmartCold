@@ -53,7 +53,7 @@ window.onload = function(){
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});
 	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
 	$("#msgTotalNumReset").click(function(){window.localStorage.msgTotalNum = window.localStorage.msgTotalNumFlag = 0;});
-	
+	if(localStorage.msgTotalNum&&localStorage.msgTotalNum!=0){$("#msgTotalNumReset a").append('<span class="countNum" > '+localStorage.msgTotalNum+'</span>');}
 };
 //$(function(){
 //	

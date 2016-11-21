@@ -11,12 +11,10 @@
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
-     <script src="../bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
-     <script type="text/javascript" src="../app/js/customer.js" ></script>
 </head>
-<body ng-app="app" ng-controller="ctrl">
+<body >
     <header>
     	<div class="area fl">
     		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
@@ -75,7 +73,6 @@
             <a href="messages.html">
                 <i class="iconfont">&#xe71c;</i>
                 <p class="info">消息</p>
-                  <span ng-if="msgTotalNum!=null&&msgTotalNum!=undefined&&msgTotalNum!=0" class="countNum" ng-bind="msgTotalNum"></span>
             </a>
         </li>
         <li class="active">            

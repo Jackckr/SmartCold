@@ -2,10 +2,6 @@
 /**
  * 冷库列表
  */
-var app = angular.module('app', []);
- app.controller('ctrl', function($http, $location,$scope) {
-	 $scope.msgTotalNum = window.localStorage.msgTotalNum;
- });
 var cundex=0,maxSize=10, isLoadRB=false;  
 var lilist=[{categoryID:1},{categoryID:2},{categoryID:3}];
 var pageinf=[{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1}];
