@@ -44,17 +44,15 @@ var util = {
  * 事件
  */
 window.onload = function(){
-	var shortCut = '<link rel="shortcut icon" href="../com/img/favicon.ico" />';
-	$("head").append(shortCut);
+	$("head").append('<link rel="shortcut icon" href="../com/img/favicon.ico" />');
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 	
 	//一键回到顶部
-	var viewHeight=$(window).height();
-	$(window).scroll(function(event) {if ($(window).scrollTop() >= viewHeight) {$('.goTop').show();} else {$('.goTop').hide();}});
+	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});
 	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
-	$("#msgTotalNumReset").click(function(){window.localStorage.msgTotalNum = 0;window.localStorage.msgTotalNumFlag = 0;});
+	$("#msgTotalNumReset").click(function(){window.localStorage.msgTotalNum = window.localStorage.msgTotalNumFlag = 0;});
 	
 };
 //$(function(){
