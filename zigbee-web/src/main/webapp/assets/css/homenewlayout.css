@@ -1071,7 +1071,8 @@ html, body {
 }
 .imgLoad li a{
 	text-decoration: none;
-	margin-top: 20px;
+	display:block;
+	margin-top: 10px;
 }
 .imgLoad li:hover a,.imgLoad li:hover .goTop{
 	color:#fff;
