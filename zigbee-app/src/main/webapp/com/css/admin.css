@@ -282,15 +282,16 @@ section.show{
 }
 
 .contact+.gallery{
-	height:130px;
+	height:6.5rem;
+	margin-bottom: 2.3rem;
 }
 .contact+.gallery a{
-	min-height:110px;
+	min-height:5.2rem;
 	position: relative;
 }
 .contact+.gallery a img{
-	width:100px;
-	height:100px
+	width:5rem;
+	height:5rem;
 }
 .contact+.gallery a:before{
 	content: attr(data-font);
@@ -587,3 +588,10 @@ html,body{
 	display: inline-block;
 	padding: 0 .3rem;
 } 
+#version{
+	text-align: center;
+	font-weight: 400;
+	font-size: .7em;
+	color: #888888;
+	margin-top: .3rem;
+}

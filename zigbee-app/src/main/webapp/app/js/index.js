@@ -1,8 +1,7 @@
 var app = angular.module('app', []);
 app.controller('ctrl', function ($http, $location, $scope) {
-    $http.defaults.withCredentials = true;
-    $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    $scope.msgTotalNum = window.localStorage.msgTotalNum;
+	$scope.msgTotalNum = window.localStorage.msgTotalNum;
+    $http.defaults.withCredentials = true; $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     if(window.localStorage.appLocalCity ){
     	 document.getElementById ("city").innerHTML =JSON.parse(window.localStorage.appLocalCity).cityName;
     }else{
@@ -16,6 +15,7 @@ app.controller('ctrl', function ($http, $location, $scope) {
     	        	    }
     	        	else{
     	        		document.getElementById ("city").innerHTML = "上海";
+    	        	    window.localStorage.appLocalCity='{"cityID":1,"cityName":"上海"}';//设置默认城市
     	        	}
     	        });
     	    }
