@@ -21,7 +21,7 @@ $().ready(function() {
      	    var scrollTop = $(this).scrollTop();
 	     	var scrollHeight = $(document).height();
 	     	var windowHeight = $(this).height();
-	     	if(scrollTop + windowHeight > scrollHeight-30){
+	     	if(scrollTop + windowHeight > scrollHeight-100){
 	     		if(isLoadRB==false&&currentPage<totalPages){
 	     		   getPageData();
 	     		}
