@@ -223,8 +223,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									src="assets/img/user2-160x160.jpg" class="img-circle"
 									alt="User Image">
 									<p>
-										Alexander Pierce - Web Developer <small>Member since
-											Nov. 2012</small>
+										{{user.username}}<small>Smart Cold
+											Nov. 2016</small>
 									</p></li>
 								<!-- Menu Body -->
 								<li class="user-body">
@@ -240,11 +240,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								</li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
-									<div class="pull-left">
+									<!-- <div class="pull-left">
 										<a href="#" class="btn btn-default btn-flat">详细</a>
 									</div>
 									<div class="pull-right">
 										<a href="#" class="btn btn-default btn-flat"
+											ng-click="logout()">退出</a>
+									</div> -->
+									<div>
+										<a href="#" style="display: block;" class="btn btn-default btn-flat"
 											ng-click="logout()">退出</a>
 									</div>
 								</li>
