@@ -271,7 +271,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
                 console.log('progress: ' + progressPercentage + '% ' + evt.name);
             });
         } else {
-            alert("请填写标记*的必选项在提交!");
+            alert("请填写标记<em>*</em>的必选项在提交!");
         }
 
 

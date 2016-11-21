@@ -3,6 +3,7 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
+
 var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://192.168.1.100:8989",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}

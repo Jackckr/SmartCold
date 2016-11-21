@@ -222,7 +222,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         } else {        	
             //alert("请填写标记*的必选项在提交!");
             layer.open({
-                content: '请填写标记*的必选项再提交哦'
+                content: '请填写标记<em>*</em>的必选项再提交哦'
                 ,btn: '确定'
               });
         }

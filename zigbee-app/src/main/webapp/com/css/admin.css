@@ -595,3 +595,7 @@ html,body{
 	color: #888888;
 	margin-top: .3rem;
 }
+#baguetteBox-overlay .full-image figcaption{
+	font-size: .75rem;
+	line-height: 2.5rem;
+}
