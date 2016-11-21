@@ -7,7 +7,7 @@ app.controller('ctrl', function ($http, $location, $scope) {
     	 document.getElementById ("city").innerHTML =JSON.parse(window.localStorage.appLocalCity).cityName;
     }else{
     	  function myFun(result) {
-    	        var cityName = "上海市";
+    	        var cityName = "上海";
     	        if (result && result.name) { cityName = result.name;  }
     	        $http.get(ER.root+'/i/city/findCityByName', { params: { "CityName": cityName} }).success(function (data) {
     	        	if(data!=null&&data!=undefined&&data!=""){
@@ -15,7 +15,7 @@ app.controller('ctrl', function ($http, $location, $scope) {
     	        	 	 window.localStorage.appLocalCity =JSON.stringify(data);
     	        	    }
     	        	else{
-    	        		document.getElementById ("city").innerHTML = "上海市";
+    	        		document.getElementById ("city").innerHTML = "上海";
     	        	}
     	        });
     	    }
