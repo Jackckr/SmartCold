@@ -1051,28 +1051,30 @@ html, body {
 	border: 1px solid #ccc;
 	border-right: 0;
 }
-.downloadApp b{
-	font-size:14px;
-	line-height: 1.75;
-	display:inline-block;
-	width:110px;
-	color:#333;
-	margin-top:10px;
-}
 .imgLoad{
 	padding:0;
+	margin-bottom: 0;
+	    box-shadow: 0 0 10px #888;
 }
 .imgLoad li{
-	width:110px;
+	width:50px;
+	min-height:60px;
 	padding:5px;
+	cursor: pointer;
 }
-.imgLoad li p{
-	margin: 0;
-	color: #0284C3;
+.imgLoad li .goTop{
+	color:#555
 }
-.imgLoad li img{
-	width:100%;
-	height:auto;
+.imgLoad li:hover {
+	background: #438BCB;
+	color:#fff!important;
+}
+.imgLoad li a{
+	text-decoration: none;
+}
+.imgLoad li:hover a,.imgLoad li:hover .goTop{
+	color:#fff;
+	text-decoration: none;
 }
 .closeApp{
 	position:absolute;

@@ -198,6 +198,26 @@
 				&copy;2016&nbsp;Smartcold&nbsp;&nbsp;&nbsp;&nbsp;沪ICP备 16004753 </label>
 		</section>
 	</footer>
+	
+	<!-- 帮助文档下载 -->
+ <div class="downloadApp">
+	<span class="closeApp" onclick="closeApp()">&times;</span>
+	<ul class="imgLoad">
+		<li style="border-bottom:1px solid #ccc">
+			
+			<a href="javascript:;" title="链库使用文档"><br/>帮助文档
+<!-- 				<br/><span class="glyphicon glyphicon-download-alt"></span> -->
+			</a>
+		</li>
+		<li>
+			<div class="goTop" title="返回顶部">
+			<span class="glyphicon glyphicon-chevron-up"></span><br/>
+			顶部
+			</div>
+		</li>
+	</ul>
+</div>
+<!-- 帮助文档下载 end -->
 		<script src="bower_components/jquery/dist/jquery.js"></script>
 <!--<script type="text/javascript" src="assets/js/jquery.js"></script> 
 	<script type="text/javascript" src="assets/js/handlebars.js"></script>
@@ -285,6 +305,18 @@
 		function pushClose(){
 			$(".msgPush").hide()
 		}
+		function closeApp(){
+			$('.downloadApp').hide();
+		}
+		//一键回到顶部
+		$('.goTop').click(function(event) {
+			if ($(window).scrollTop() <= 0) {
+				alert('您已经在顶部了哦(⊙o⊙)')
+			} else {
+				$('html,body').stop().animate({'scrollTop':0}, 200);
+			}
+			
+		});
 	</script>
 </body>
 </html>
