@@ -293,7 +293,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			else {
 	            //alert("请填写标记*的必选项在提交!");
-	            layer.open({content:'请填写标记*的必选项再提交哦',btn: '确定'});
+	            layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 	    
@@ -356,7 +356,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			else {
 	            //alert("请填写标记*的必选项在提交!");
-	            layer.open({content:'请填写标记*的必选项再提交哦',btn: '确定'});
+	            layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 		
@@ -419,7 +419,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			else {
 	            //alert("请填写标记*的必选项在提交!");
-				 layer.open({content:'请填写标记*的必选项再提交哦',btn: '确定'});
+				 layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 });
