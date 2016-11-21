@@ -1048,13 +1048,13 @@ html, body {
 	z-index:99999;
 	background: #fff;
 	text-align: center;
-	border: 1px solid #ccc;
-	border-right: 0;
+	/* border: 1px solid #ccc;
+	border-right: 0; */
 }
 .imgLoad{
 	padding:0;
 	margin-bottom: 0;
-	    box-shadow: 0 0 10px #888;
+	box-shadow: 0 0 10px #888;
 }
 .imgLoad li{
 	width:50px;
