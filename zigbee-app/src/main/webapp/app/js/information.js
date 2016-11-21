@@ -55,7 +55,7 @@ initevg=function(){
     var scrollTop = $(this).scrollTop();
    	var scrollHeight = $(document).height();
    	var windowHeight = $(this).height();
-   	if(scrollTop + windowHeight > scrollHeight-30){
+   	if(scrollTop + windowHeight > scrollHeight-100){
    		if(isLoadRB==false&&pageinf[cundex].currentPage<   pageinf[cundex].totalPages){
    			pageinf[cundex].currentPage++; 
    		   getPageData();
