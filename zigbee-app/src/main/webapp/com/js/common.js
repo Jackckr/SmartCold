@@ -6,17 +6,13 @@ getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://192.168.1.100:8989",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
-if(new Date().getDate()==23&&window.localStorage.msgTotalNumFlag==undefined){
-	window.localStorage.msgTotalNum=2;
-};
-if(window.localStorage.msgTotalNum==undefined){
-	window.localStorage.msgTotalNum = 2;
-}
+if(new Date().getDate()==23&&window.localStorage.msgTotalNumFlag==undefined){window.localStorage.msgTotalNum=2;};
+if(window.localStorage.msgTotalNum==undefined){window.localStorage.msgTotalNum = 2;}
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;}}
 /*if(window.user!=undefined ||window.user!=null)
 //暂时隐藏
-{
+{	
  $.post(ER.root+"/i/message/findMessageByUserId", {
      pageNum: null,
      pageSize:null,
@@ -53,17 +49,17 @@ window.onload = function(){
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
 	$("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
-};
-$(function(){
+	
 	//一键回到顶部
 	var viewHeight=$(window).height();
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= viewHeight) {$('.goTop').show();} else {$('.goTop').hide();}});
 	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
-	$("#msgTotalNumReset").click(function(){
-		window.localStorage.msgTotalNum = 0;
-		window.localStorage.msgTotalNumFlag = 0;
-	});
-});
+	$("#msgTotalNumReset").click(function(){window.localStorage.msgTotalNum = 0;window.localStorage.msgTotalNumFlag = 0;});
+	
+};
+//$(function(){
+//	
+//});
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
  * 引入 dist/vconsole.min.js 到项目中：
