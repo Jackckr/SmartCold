@@ -1099,3 +1099,6 @@ html, body {
 .myAddon .input-group-addon{
 	width:100px;
 }
+#usefulcnt{
+	cursor: pointer;
+}
