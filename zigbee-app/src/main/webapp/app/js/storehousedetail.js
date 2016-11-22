@@ -5,7 +5,19 @@
     $scope.appmode=[{title:["","货品详情","配送详情","仓位详情"]},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
 	$scope.initdata=function(){
 		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
-			if(data.success){ $scope.vo=data.entity; $scope.datatype=data.entity.dataType;}
+			if(data.success){ 
+				$scope.vo=data.entity; 
+				$scope.unitatr1 = data.entity.unit1;
+				$scope.unitatr2 = data.entity.unit2;
+				if($scope.unitatr1.indexOf("undefined")){
+					$scope.unitatr1  = $scope.unitatr1.substring(0,$scope.unitatr1.length-10);
+				}
+				if($scope.unitatr2.indexOf("undefined")){
+					$scope.unitatr2  = $scope.unitatr2.substring(0,$scope.unitatr2.length-10);
+				}
+				$scope.vo.unit1 = $scope.unitatr1;
+				$scope.vo.unit2 = $scope.unitatr2;
+                scope.datatype=data.entity.dataType;}
         });
 		/* $http.get(ER.root + "/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
 			  if (data && data.id != 0) {  window.user = data; }  

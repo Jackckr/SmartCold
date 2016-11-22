@@ -222,8 +222,18 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			$scope.startTime = $("#startTime").val();
 			$scope.arriveTime = $("#arriveTime").val();
 			$scope.rdcAddress = '';
-			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
-			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
+			if($scope.staddress!=undefined){
+			   var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
+			}
+			else{
+				 var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
+			}
+			if($scope.toaddress!=undefined){
+			    var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
+			}
+			else{
+				 var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
+			}
 			if(window.flag1==1){
 				$scope.typeCode = 2;
 				$scope.typeText = "找车";
