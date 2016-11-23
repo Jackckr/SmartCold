@@ -16,9 +16,11 @@ import com.smartcold.zigbee.manage.service.impl.WebvistsService;
  *
  */
 public class BrowsingFilter extends OncePerRequestFilter {
-	
 	    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 	    	WebvistsService.addHistory(request);  //记录浏览信息    
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);//http://liankur.com/apk/liankur.v1.0.3.apk
+            if(request.getServletPath().indexOf("apk")!=-1){
+            	response.sendRedirect("http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yananxu.smartcold"); 
+            }
 	    }
 }

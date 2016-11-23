@@ -93,6 +93,7 @@
 	<filter-mapping>
 	    <filter-name>fhtml</filter-name>
 	    <url-pattern>*.html</url-pattern>
+	    <url-pattern>*.apk</url-pattern>
 	</filter-mapping>
 	
 	<servlet-mapping>

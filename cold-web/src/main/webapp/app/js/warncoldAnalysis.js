@@ -7,9 +7,18 @@ coldWeb.controller('warncoldAnalysis', function ($scope, $stateParams, $http,$ro
 	$scope.initdata=function(){
 		$http.get('/i/warn/getWarncoldAnalysis',{params: {rdcId:$scope.rdcid}} ).success(function(data,status,headers,config){
 			if(data.success){
+				$scope.cuttdata=data.entity.cuttdata;
+				$scope.lsttdata=data.entity.lsttdata;
+				debugger;
+				if($scope.cuttdata.length>0){
+					
+				}
+				if($scope.lsttdata.length>0){
+					
+				}
+
 				
-				}else{
-//					alert(data.message);
+				
 				}
 		});
 	};
