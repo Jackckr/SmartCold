@@ -15,9 +15,8 @@ import com.smartcold.zigbee.manage.service.impl.WebvistsService;
  * @author maqiang34 2016年11月17日17:54:46
  *
  */
-public class BrowsingFilter extends OncePerRequestFilter {
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-    	    	WebvistsService.addHistory(request);  //记录浏览信息    
-                filterChain.doFilter(request, response);
+public class ApkFilter extends OncePerRequestFilter {
+         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+            	response.sendRedirect("http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yananxu.smartcold"); 
 	    }
 }

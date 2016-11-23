@@ -90,9 +90,16 @@
 	    <filter-name>fhtml</filter-name>
 	    <filter-class>com.smartcold.zigbee.manage.filter.BrowsingFilter</filter-class>
 	</filter>
+	<filter>
+	    <filter-name>apk</filter-name>
+	    <filter-class>com.smartcold.zigbee.manage.filter.ApkFilter</filter-class>
+	</filter>
 	<filter-mapping>
 	    <filter-name>fhtml</filter-name>
 	    <url-pattern>*.html</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	    <filter-name>apk</filter-name>
 	    <url-pattern>*.apk</url-pattern>
 	</filter-mapping>
 	
