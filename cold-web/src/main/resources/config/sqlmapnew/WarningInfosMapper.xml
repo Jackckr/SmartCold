@@ -12,29 +12,12 @@
     select * from `warningsinfo` where rdcid=#{rdcId} order by addtime desc limit #{point}
 </select>
 
-
-<!-- 查询当前错误种类 -->
-<select id="getWrnType" parameterType="map" resultType="WarningsInfo">
-    SELECT * FROM  warningsinfo   WHERE `rdcid` =#{rdcId}  
-    <if test="month==0"> and DATE_FORMAT( `addtime`, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) </if> 
-    <if test="month!=1"> and PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( `addtime`, '%Y%m' ) ) =#{month} </if> 
-	 GROUP BY `warningname` ;
+<select id="getWarCountByHPO" resultType="map">
+	SELECT `key` ,sum(`value`)  value FROM `coldstorageanalysis` where oid=#{rdcId} and `key` in('HighPressWarningCount','PowerWarningCount','OilWarningCount','LowWarningCount')  and  `date` BETWEEN #{stTime} and #{edTime} GROUP BY `key` ;
 </select>
 
-<!-- 获得错误消息汇总 -->
-<select id="getWarCountByType" parameterType="map" resultType="WarningsInfo">
-	SELECT
-	 @sm,@tp,(@sm := @sm +IF (TIMESTAMPDIFF(SECOND ,@tp, w.`addtime`) >#{jtime},1,0)) AS id,
-	  @tp := w.`addtime` as addtime,
-	 `warningname` 
-	FROM
-		`warningsinfo` w
-	WHERE `rdcid` =#{rdcid}
-	      and `warningname` like '%#{wartype}%'
-        and w.addtime BETWEEN  #{stTime} and #{enTime}
-	ORDER BY
-		id DESC
-	LIMIT 1;
-</select>
+
+
+
 
 </mapper>

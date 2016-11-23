@@ -55,47 +55,17 @@ public class WarningController extends BaseController {
 	public ResponseData<HashMap<String, Object>> getWarncoldAnalysis(Integer rdcId) {
 		try {
 			if (rdcId == null) { return ResponseData.newFailure("非法访问！"); }
+			HashMap<String, Object> allDataMap = new HashMap<String, Object>();
 			String stTime = TimeUtil.getBeginDay()+" 00:00:00";String edTime = TimeUtil.getDateTime();//当月起止时间
 			String lstTime = TimeUtil.getBeforeMonthTime(1);String ledTime =TimeUtil.getEndMonthTime(1);//上月起止时间
-			
-			
-			//  	上月累计次数	本月累计次数
-			//高压报警	 HighPressWarningCount 
-			//电源报警	 PowerWarningCount 
-			//缺油报警   OilWarningCount
-			
-			HashMap<String, Object> allDataMap = new HashMap<String, Object>();
-			HashMap<String, Object> resMap = new HashMap<String, Object>();
-//			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);// 查询上个月的
-//			if (SetUtil.isnotNullList(wrnType) && wrnType.size() > 0) {
-//				String startime = TimeUtil.getBeforeMonthTime(1);
-//				String endtime = TimeUtil.getEndMonthTime(1);
-//				for (WarningsInfo warningsInfo : wrnType) {
-//					resMap.put(warningsInfo.getWarningname(),
-//							this.warningsInfoDao.getWarCountByType(rdcId,30,warningsInfo.getWarningname(),startime,endtime) );
-//				}
-//			}
-			HashMap<String, Object> rescuMap = new HashMap<String, Object>();
-//			List<WarningsInfo> wrncuType = this.warningsInfoDao.getWrnType(rdcId, 0);// 查询当前月份的
-//			if (SetUtil.isnotNullList(wrncuType) && wrncuType.size() > 0) {
-//				String startime = TimeUtil.getBeforeMonthTime(0);
-//				String endtime = TimeUtil.getEndMonthTime(0);
-//				for (WarningsInfo warningsInfo : wrncuType) {
-//					rescuMap.put(warningsInfo.getWarningname(),
-//							this.warningsInfoDao.getWarCountByType(rdcId,  30, warningsInfo.getWarningname(),startime,endtime));
-//				}
-//			}
-			allDataMap.put("cuttdata", rescuMap);
-			allDataMap.put("lsttdata", resMap);
+			List<HashMap<String, Object>> cuttMothRestMap=this.warningsInfoDao.getWarCountByHPO(rdcId, lstTime, ledTime);//本月累计次数
+			List<HashMap<String, Object>> lastMothRestMap = this.warningsInfoDao.getWarCountByHPO(rdcId, stTime, edTime);	//  	上月累计次数
+			allDataMap.put("cuttdata", cuttMothRestMap);
+			allDataMap.put("lsttdata", lastMothRestMap);
 			return ResponseData.newSuccess(allDataMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseData.newFailure("查询错误！请稍后重试！");
 		}
-
 	}
-	
-	
-	
-
 }
