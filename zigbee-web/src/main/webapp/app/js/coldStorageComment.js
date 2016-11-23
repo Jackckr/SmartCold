@@ -58,13 +58,14 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
             $scope.storageHonorPics = data[0].storageHonorPics;
             $scope.storageGallery = new Array();
             //小于两张图片添加默认
-            for(var j=0, len = $scope.storagePics.length;j < 2 - len;j++){
-            	$scope.storagePics.push({location:"app/img/rdc.png"});
+            if($scope.storagePics!=undefined){
+	            for(var j=0, len = $scope.storagePics.length;j < 2 - len;j++){
+	            	$scope.storagePics.push({location:"app/img/rdc.png"});
+	            }
+	            for(j=0; j<$scope.storagePics.length; j++){
+	            	$scope.storageGallery.push({thumb:$scope.storagePics[j].location ,img:$scope.storagePics[j].location})
+	            }
             }
-            for(j=0; j<$scope.storagePics.length; j++){
-            	$scope.storageGallery.push({thumb:$scope.storagePics[j].location ,img:$scope.storagePics[j].location})
-            }
-            
             for (var i = 0, len = $scope.provinces.length; i < len; i++) {
                 if ($scope.provinces[i].provinceId === $scope.provinceId) {
                     $scope.provinceName = $scope.provinces[i].provinceName;

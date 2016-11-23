@@ -54,8 +54,16 @@ public class WarningController extends BaseController {
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getWarncoldAnalysis(Integer rdcId) {
 		try {
-			System.out.println(TimeUtil.getDateTime());
 			if (rdcId == null) { return ResponseData.newFailure("非法访问！"); }
+			String stTime = TimeUtil.getBeginDay()+" 00:00:00";String edTime = TimeUtil.getDateTime();//当月起止时间
+			String lstTime = TimeUtil.getBeforeMonthTime(1);String ledTime =TimeUtil.getEndMonthTime(1);//上月起止时间
+			
+			
+			//  	上月累计次数	本月累计次数
+			//高压报警	 HighPressWarningCount 
+			//电源报警	 PowerWarningCount 
+			//缺油报警   OilWarningCount
+			
 			HashMap<String, Object> allDataMap = new HashMap<String, Object>();
 			HashMap<String, Object> resMap = new HashMap<String, Object>();
 //			List<WarningsInfo> wrnType = this.warningsInfoDao.getWrnType(rdcId, 1);// 查询上个月的

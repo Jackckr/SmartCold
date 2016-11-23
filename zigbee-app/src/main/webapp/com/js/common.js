@@ -3,7 +3,6 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
-
 var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://192.168.1.100:8989",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}
@@ -53,7 +52,10 @@ window.onload = function(){
 	//一键回到顶部
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});
 	$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });
-	$("#msgTotalNumReset").click(function(){window.localStorage.msgTotalNum = window.localStorage.msgTotalNumFlag = 0;});
+	$("#msgTotalNumReset").click(function(){
+		window.localStorage.msgTotalNum = 0;
+        if(new Date().getDate()==23){window.localStorage.msgTotalNumFlag = 0;}
+	  });
 	if(localStorage.msgTotalNum&&localStorage.msgTotalNum!=0){$("#msgTotalNumReset a").append('<span class="countNum" > '+localStorage.msgTotalNum+'</span>');}
 };
 //$(function(){
