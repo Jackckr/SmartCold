@@ -28,7 +28,7 @@
 	};
 	$scope.getVerCode=function(){
 		var length = ($scope.telephone+'').length; 
-		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
 		if(!ct){/*alert("请输入正确的手机号码哟~");*/layer.open({content: '请输入正确的手机号码哟~',btn: '确定'});return;}//需要手机验证
 		setTime(document.getElementById("but_vercode"));
@@ -43,7 +43,7 @@
 	};
 	$scope.vertelephone=function(){//验证手机号码
 		var length = ($scope.telephone+'').length; 
-		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
 		$("#but_vercode").attr("disabled",!ct);
 		if(ct){$("#but_vercode").removeClass("gray");}else{$("#but_vercode").addClass("gray");}

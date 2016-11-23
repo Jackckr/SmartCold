@@ -40,9 +40,7 @@ function goback() {
 	if (window.location.pathname.indexOf("login.html") && window.location.hash.indexOf("user-") != -1) {
 		window.location.href = "user.html";
 		return;
-	} else if (window.location.pathname.indexOf("login.html") && window.location.hash.indexOf("cold360") != -1) {
-		window.location.href = "../index.html";
-	} else {
+	} else if (window.location.pathname.indexOf("login.html") && window.location.hash.indexOf("cold360") != -1) { window.location.href = "../index.html"; } else {
 		window.history.back();
 	}
 }//返回上一级
