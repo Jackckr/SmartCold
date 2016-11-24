@@ -216,7 +216,7 @@ $(function(){
 		});
 		//if(userName == "" || checkPassword() || email == ""){
 		if(userName == "" || checkPassword()){
-			alert("用户名、密码不能为空");
+			alert("用户名、密码输入有误");
 		}else{
 	    	$.ajax({
 	    		type:"POST",
