@@ -230,7 +230,7 @@ $(function(){
 	    		url:"/i/user/signup?",
 	    				async:false}).success(function(data){
 	    					alert(data.message);
-	    					if(data.status == 0){
+	    					if(data.status == "0"){
 	    						window.location.href = "http://" + window.location.host + "/login.html";
 	    						window.event.returnValue=false;
 	    					}

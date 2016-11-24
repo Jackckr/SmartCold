@@ -83,7 +83,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
             url: ER.root+"/i/user/signup?",
             complete : function(e){$(me).text("注册"); $(me).delay(500).data('isLoading',false);},
             success: function(data){
-            	if(data.status==0){
+            	if(data.status=="0"){
             		//alert(data.message);
             		layer.open({
     				    content: data.message

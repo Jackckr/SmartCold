@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dto.ResultDto;
+import com.smartcold.zigbee.manage.dto.ResultDtoStr;
 import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
@@ -148,21 +149,21 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode) throws ApiException {
 		if (username == null || password == null || !password.equals(password1)) {
-			return new ResultDto(-1, "用户名和密码不能为空");
+			return new ResultDtoStr("-1", "用户名密码输入错误");
 		}
 		String sessyzm=""+request.getSession().getAttribute("signUpCode");
 		if(StringUtil.isNull(sessyzm)||"null".endsWith(sessyzm)){
 			sessyzm=request.getSession().getAttribute("signUpCodeshear_yzm")+"";
 			}//跨app获得验证码
 		if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
-			return new ResultDto(-1, "验证码输入错误");
-		UserEntity userEntity = new UserEntity();
+			return new ResultDtoStr("-1", "验证码输入错误");
+		UserEntity userEntity = new UserEntity();   
 		userEntity.setUsername(username);
 		userEntity.setPassword(EncodeUtil.encodeByMD5(password));
 		userEntity.setEmail(email);
 		userEntity.setTelephone(telephone);
 		userDao.insertUser(userEntity);
-		return new ResultDto(0, "注册成功");
+		return new ResultDtoStr("0", "注册成功");
 	}
 	
 	
