@@ -9,8 +9,8 @@
 				if(data.entity.unit!=undefined){
 					
 					if(data.entity.unit.length<4){ 
-						if(data.entity.dataType==1||data.entity.dataType==2){
-							data.entity.picunit="";
+						if(data.entity.dataType==3){
+							data.entity.picunit="元/天·"+data.entity.unit;
 						}else{
 							data.entity.picunit="元/"+data.entity.unit;
 						}
@@ -19,10 +19,6 @@
 						data.entity.unit=data.entity.picunit.substr(4);
 					}
 				}
-//				else{
-//					data.entity.unit= $scope.appmode[data.entity.dataType].lab[0][1];
-//					data.entity.picunit=data.entity.unit;
-//				}
 				$scope.vo=data.entity; 
 				$scope.datatype=data.entity.dataType;
               }
