@@ -9,17 +9,17 @@ coldWeb.controller('warncoldAnalysis', function ($scope, $stateParams, $http,$ro
 			if(data.success){
 				$scope.cuttdata=data.entity.cuttdata;
 				$scope.lsttdata=data.entity.lsttdata;
-				debugger;
-				if($scope.cuttdata.length>0){
-					
+				if($scope.cuttdata!=undefined&&$scope.cuttdata.length>0){
+					 $.each($scope.cuttdata, function(i, vo){ 
+						 $("#c"+vo.key).html(vo.value);
+						 });
 				}
-				if($scope.lsttdata.length>0){
-					
+				if($scope.lsttdata!=undefined&&$scope.lsttdata.length>0){
+					 $.each($scope.lsttdata, function(i, vo){ 
+						 $("#l"+vo.key).html(vo.value);
+						});
 				}
-
-				
-				
-				}
+			}
 		});
 	};
 	$scope.initdata();

@@ -128,23 +128,32 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
             '<tbody>' +
             '<tr><th colspan="3">高危报警统计</th> </tr>' +
             '<tr> <td></td> <td>上月累计次数</td> <td>本月累计次数</td> </tr>' +
-            '<tr> <td>高压报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr> <tr>' +
-            '<td>电源报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr>' +
-            '<tr> <td>缺油报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr>' +
+            '<tr> <td>高压报警</td> <td><i id="lHighPressWarningCount">0</i></td> <td><i id="cHighPressWarningCount">0</i></td> </tr> <tr>' +
+            '<td>电源报警</td> <td><i id="lPowerWarningCount">0</i></td> <td><i id="cPowerWarningCount">0</i></td> </tr>' +
+            '<tr> <td>缺油报警</td> <td><i  id="lOilWarningCount">0</i></td> <td><i id="cOilWarningCount">0</i></td> </tr>' +
             '<tr><th colspan="3">常规报警统计</th></tr>' +
             '<tr> <td></td> <td>上月累计次数</td> <td>本月累计次数</td>' +
-            '</tr> <tr> <td>常规报警</td> <td><i>0</i></td> <td><i>0</i></td> </tr>' +
+            '</tr> <tr> <td>常规报警</td> <td><i  id="lLowWarningCount">0</i></td> <td><i id="cLowWarningCount">0</i></td> </tr>' +
             '</tbody></table>' +
             '</div> ';
         $("#chartView").last().append(innerHTML);
         $http.get(ER.coldroot + '/i/warn/getWarncoldAnalysis', {params: {rdcId: $scope.rdcId}}).success(function (data) {
-            if (data.success) {
-
-            } else {
-                //alert(data.message);
-            }
+        	if(data.success){
+				$scope.cuttdata=data.entity.cuttdata;
+				$scope.lsttdata=data.entity.lsttdata;
+				if($scope.cuttdata!=undefined&&$scope.cuttdata.length>0){
+					 $.each($scope.cuttdata, function(i, vo){ 
+						 $("#c"+vo.key).html(vo.value);
+						 });
+				}
+				if($scope.lsttdata!=undefined&&$scope.lsttdata.length>0){
+					 $.each($scope.lsttdata, function(i, vo){ 
+						 $("#l"+vo.key).html(vo.value);
+						});
+				}
+			}
         });
-    }
+    };
 
     $scope.drawRunAnalysis = function () {
 
