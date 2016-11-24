@@ -5,15 +5,28 @@
     $scope.appmode=[{title:["","货品详情","配送详情","仓位详情"]},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
 	$scope.initdata=function(){
 		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
-			if(data.success){ 
+			if(data.success&&data.entity!=undefined){ 
+				if(data.entity.unit!=undefined){
+					
+					if(data.entity.unit.length<4){ 
+						if(data.entity.dataType==1||data.entity.dataType==2){
+							data.entity.picunit="";
+						}else{
+							data.entity.picunit="元/"+data.entity.unit;
+						}
+					}else{ 
+						data.entity.picunit=data.entity.unit;
+						data.entity.unit=data.entity.picunit.substr(4);
+					}
+				}
+//				else{
+//					data.entity.unit= $scope.appmode[data.entity.dataType].lab[0][1];
+//					data.entity.picunit=data.entity.unit;
+//				}
 				$scope.vo=data.entity; 
-				$scope.vo.unit1 = data.entity.unit1;
-				$scope.vo.unit2 =data.entity.unit2;
-                $scope.datatype=data.entity.dataType;}
+				$scope.datatype=data.entity.dataType;
+              }
         });
-		/* $http.get(ER.root + "/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
-			  if (data && data.id != 0) {  window.user = data; }  
-		 });*/
 	};
 	$scope.initevg=function(){ 
 		$("#she_imglist li a").imgbox({'speedIn': 0,'speedOut'	: 0,'alignment'		: 'center','overlayShow'	: true,'allowMultiple'	: false});//图片

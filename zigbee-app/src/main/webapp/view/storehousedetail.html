@@ -63,8 +63,8 @@
 						<li class="filled">★</li>
 					</ul>
 				</li>
-				<li><span class="type">{{appmode[datatype].lab[0][0]}}：</span><span class="text">{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</span></li>
-				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span></li>
+				<li><span class="type">{{appmode[datatype].lab[0][0]}}：</span><span class="text">{{vo.sqm+vo.unit}}</span></li>
+				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span></li>
 				<li  style="width:100%;"><span class="type">有效开始时间：</span><span class="text">{{vo.validStartTime |date:"yyyy-MM-dd" }}</span></li>
 				<li  style="width:100%;"><span class="type">有效结束时间：</span><span class="text">{{vo.validEndTime |date:"yyyy-MM-dd" }}</span></li>
 				<!--<li><span class="type">电话：</span><span class="text">{{vo.telephone}}</span></li>-->
@@ -87,8 +87,8 @@
 						<li class="filled">★</li>
 					</ul>
 				</li>
-				<li><span class="type">{{appmode[datatype].lab[0][0]}}：</span><span class="text">{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</span></li>
-				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice==undefined||vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span></li>
+				<li><span class="type">{{appmode[datatype].lab[0][0]}}：</span><span class="text">{{vo.sqm+vo.unit}}  </span></li>
+				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice==undefined||vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span></li>
 				<li  style="width:100%;"><span class="type">有效开始时间：</span><span class="text">{{vo.validStartTime |date:"yyyy-MM-dd" }}</span></li>
 				<li  style="width:100%;"><span class="type">有效结束时间：</span><span class="text">{{vo.validEndTime |date:"yyyy-MM-dd" }}</span></li>
 				<!--<li><span class="type">电话：</span><span class="text">{{vo.telephone}}</span></li>-->
@@ -112,7 +112,7 @@
 						<li class="filled">★</li>
 					</ul>
 				</li>
-				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span></li>
+				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.picunit}}</span></li>
 				<li style="width:100%;"><span class="type">出发地址：</span><span class="text">{{vo.unit1}}</span></li>
 				<li style="width:100%;"><span class="type">目的地址：</span><span class="text">{{vo.unit2}}</span></li>
 				<li style="width:100%;"><span class="type">出发时间：</span><span class="text">{{vo.validStartTime |date:"yyyy-MM-dd" }}</span></li>
