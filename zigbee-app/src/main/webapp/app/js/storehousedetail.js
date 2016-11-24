@@ -7,17 +7,9 @@
 		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
 			if(data.success){ 
 				$scope.vo=data.entity; 
-				$scope.unitatr1 = data.entity.unit1;
-				$scope.unitatr2 = data.entity.unit2;
-				if($scope.unitatr1.indexOf("undefined")){
-					$scope.unitatr1  = $scope.unitatr1.substring(0,$scope.unitatr1.length-10);
-				}
-				if($scope.unitatr2.indexOf("undefined")){
-					$scope.unitatr2  = $scope.unitatr2.substring(0,$scope.unitatr2.length-10);
-				}
-				$scope.vo.unit1 = $scope.unitatr1;
-				$scope.vo.unit2 = $scope.unitatr2;
-                scope.datatype=data.entity.dataType;}
+				$scope.vo.unit1 = data.entity.unit1;
+				$scope.vo.unit2 =data.entity.unit2;
+                $scope.datatype=data.entity.dataType;}
         });
 		/* $http.get(ER.root + "/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
 			  if (data && data.id != 0) {  window.user = data; }  
