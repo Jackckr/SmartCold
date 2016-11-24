@@ -595,13 +595,13 @@ i.icon-mobile-phone {
     border-radius: 5px;
 }
 .user-common-wrapper .user-common-h4{
-    text-align: right;
+    text-align: center;
     padding: 0;
     margin: 0;
-    font-size: 18px;
-    color: #999999;
+    color: #777;
     height: 60px;
     line-height: 60px;
+    font: bold 22px/2em "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif; 
 }
 .user-common-wrapper .user-common-form input[type=text], .user-common-wrapper .user-common-form input[type=password] {
     height: 44px;

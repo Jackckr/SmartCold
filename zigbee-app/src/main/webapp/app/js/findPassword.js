@@ -2,7 +2,7 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 	$http.defaults.withCredentials = true;$http.defaults.headers = {'Content-Type' : 'application/x-www-form-urlencoded'};
 	$scope.vsphone = function(telephone) {// 验证手机号码
 		var length = (telephone + '').length;
-		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 		return telephone && length == 11&& mobile.test(telephone);
 	};
 	$scope.vertelephone = function() {// 验证手机号码

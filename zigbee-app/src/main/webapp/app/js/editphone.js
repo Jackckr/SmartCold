@@ -36,7 +36,7 @@
 	};
 	$scope.vertelephone=function(){//验证手机号码
 		var length = ($scope.telephone+'').length; 
-		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
 		$("#but_vercode2").attr("disabled",!ct).css("background-color",ct?"#438BCB":"#cccccc");
 	};

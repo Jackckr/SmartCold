@@ -3,7 +3,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
 	$scope.vsphone = function(telephone) {// 验证手机号码
 		var length = (telephone + '').length;
-		var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 		return telephone && length == 11&& mobile.test(telephone);
 	};
 	$scope.vertelephone = function() {// 验证手机号码
