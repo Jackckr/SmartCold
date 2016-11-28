@@ -87,10 +87,8 @@ $().ready(function() {
   		localStorage.cold_totalPages=totalPages;
   		localStorage.cold_currentPage=currentPage;
   		localStorage.cold_html=$("#ul_rdcsL_list").html();
-//		var pageHeight = Math.max(document.body.scrollHeight,document.body.offsetHeight);//真实内容的高度
-//		var viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;//视窗的高度
-		localStorage.cold_scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
-		var cache_coldlist={totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html()};
+		localStorage.cold_scrollHeight=scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
+		var cache_coldlist={totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html(),scrollHeight:scrollHeight};
   	};
   	
   	function gethtml(rdc){
@@ -124,10 +122,8 @@ $().ready(function() {
 			 getPageData();
 		 }
 		 initFilter();
-	      initevg();
+	     initevg();
 		 
 	};
 	initData();
-  	
- 
 });	
