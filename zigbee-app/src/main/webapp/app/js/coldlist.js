@@ -83,11 +83,19 @@ $().ready(function() {
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
+  	getSoll=function(){
+  		localStorage.cold_totalPages=totalPages;
+  		localStorage.cold_currentPage=currentPage;
+  		localStorage.cold_html=$("#ul_rdcsL_list").html();
+//		var pageHeight = Math.max(document.body.scrollHeight,document.body.offsetHeight);//真实内容的高度
+//		var viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;//视窗的高度
+		localStorage.cold_scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
+		var cache_coldlist={totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html()};
+  	};
+  	
   	function gethtml(rdc){
-  		 var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
-  		 	  for ( var i = 1; i <= 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); }
-  		 		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
-  		   		  return score.join("");
+  		 var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'" onclick="getSoll()"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p><ul class="star" value="'+rdc.score+'">'];
+  		 	  for ( var i = 1; i <= 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); } score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>'); return score.join("");
   	}
   	function getPageData(){//启用无限加载
   		   isLoadRB=true;
@@ -105,7 +113,21 @@ $().ready(function() {
   	   	     isLoadRB=false;
   		    });
   	};
-  	getPageData();
-  	initFilter();
-  	initevg();
+  	
+	function initData(){//启用无限加载
+		 if(localStorage.cold_html){
+			 totalPages=parseInt(localStorage.cold_totalPages);
+			 currentPage= parseInt(localStorage.cold_currentPage);
+		     $("#ul_rdcsL_list").html(localStorage.cold_html);
+		     $(document).scrollTop(	localStorage.cold_scrollHeight );
+		 }else{
+			 getPageData();
+		 }
+		 initFilter();
+	      initevg();
+		 
+	};
+	initData();
+  	
+ 
 });	
