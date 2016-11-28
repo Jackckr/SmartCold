@@ -184,7 +184,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                             value: 0,
                             width: 1,
                             color: '#808080'
-                        }, {
+                        },/* {
                             color: 'red',           //线的颜色，定义为红色
                             dashStyle: 'solid',     //默认值，这里定义为实线
                             value: startTemperature,               //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
@@ -194,7 +194,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                                 align: 'right',                //标签的水平位置，水平居左,默认是水平居中center
                                 x: 0                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
                             }//标示线的宽度，2px
-                        },
+                        },*/
                             {
                                 color: 'red',           //线的颜色，定义为红色
                                 dashStyle: 'solid',     //默认值，这里定义为实线
@@ -234,7 +234,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                             return data;
                         })()
                     },
-                        {
+                        /*{
                             name: '设定温度',
                             color: 'red',
                             dashStyle: 'solid',
@@ -244,7 +244,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                             data: (function () {
                                 return startData;
                             })()
-                        },
+                        },*/
                         {
                             name: '基准温度',
                             color: 'red',

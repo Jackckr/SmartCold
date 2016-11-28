@@ -23,7 +23,7 @@ coldWeb.controller('cpswaterCost', function ($scope,$http, $location,$stateParam
             	currentWater = data[0] ? parseFloat(data[0].value).toFixed(1) : '';//
             };
             $scope.currentWater = currentWater;
-			option = baseTools.getEchartSingleOption('日实时累积耗水量', xData, yData, '耗水量', 't', '耗水量', 'line', parseInt(yData[0]));
+			option = baseTools.getEchartSingleOption('', xData, yData, '耗水量', 't', '耗水量', 'line', parseInt(yData[0]));
 			lineChart.setOption(option);
 		});
 		

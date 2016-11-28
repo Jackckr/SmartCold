@@ -198,7 +198,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
                             	fontSize: 14
                             },
                             itemGap: 12,
-                            data: ['高压' + parseFloat(highPress).toFixed(0), '低压' + parseFloat(lowPress).toFixed(0)]
+                            data: ['高压' + parseFloat(highPress).toFixed(0)+'kpa', '低压' + parseFloat(lowPress).toFixed(0)+'kpa']
                         },
                         toolbox: {
                             show: false,
@@ -219,11 +219,11 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
                                 data: [
                                     {
                                         value: parseInt(highPress / 20),
-                                        name: '高压' + parseFloat(highPress).toFixed(0)
+                                        name: '高压' + parseFloat(highPress).toFixed(0)+'kpa'
                                     },
                                     {
                                         value: 100 - parseInt(highPress / 20),
-                                        name: '高压可用:' + (2000 - parseInt(highPress)),
+                                        name: '高压可用:' + (2000 - parseInt(highPress)+'kpa'),
                                         itemStyle: placeHolderStyle
                                     }
                                 ]
@@ -237,11 +237,11 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
                                 data: [
                                     {
                                         value: parseInt(lowPress / 20),
-                                        name: '低压' + parseFloat(lowPress).toFixed(0)
+                                        name: '低压' + parseFloat(lowPress).toFixed(0)+'kpa'
                                     },
                                     {
                                         value: 100 - parseInt(lowPress / 20),
-                                        name: '高压可用:' + (2000 - parseInt(lowPress).toFixed(0)),
+                                        name: '高压可用:' + (2000 - parseInt(lowPress).toFixed(0)+'kpa'),
                                         itemStyle: placeHolderStyle
                                     }
                                 ]
