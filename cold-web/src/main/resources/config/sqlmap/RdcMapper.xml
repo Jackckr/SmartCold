@@ -91,6 +91,9 @@
   <select id="searchRdc" parameterType="map" resultType="Rdc">
     SELECT * FROM `Rdc` WHERE name like #{filter}
   </select>
+  <select id="searchRdcByfilter" parameterType="map" resultType="Rdc">
+    SELECT * FROM `smartcold`.`rdc`   where   name like #{filter} and id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping union  SELECT `rdcid`  FROM `smartcold`.spidercollectionconfig );
+  </select>
   <select id="findRdcManger" parameterType="map" resultType="map">
      select m.rdcid, m.aTelephone as telephone from rdcmanageinfo m where m.`aTelephone` IS NOT NULL and m.`aTelephone`  !='';
   </select>

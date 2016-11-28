@@ -27,4 +27,11 @@ public interface RdcMapper {
 	List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);
 
 	List<Rdc> searchRdc(@Param("filter") String filter);
+	
+	/**
+	 * 360获得有效冷库
+	 * @param filter
+	 * @return
+	 */
+	List<Rdc> searchRdcByfilter(@Param("filter") String filter);
 }

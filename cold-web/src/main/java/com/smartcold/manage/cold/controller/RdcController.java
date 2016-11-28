@@ -60,9 +60,10 @@ public class RdcController {
 
 	@RequestMapping(value = "/searchRdc", method = RequestMethod.GET)
 	@ResponseBody
-	public Object searchRdc(String filter) {
-		// HashMap<String, List<Rdc>> result = new HashMap<String, List<Rdc>>();
-		// result.put("results", rdcMapper.searchRdc("%" + filter + "%"));
+	public Object searchRdc(String filter,Integer type) {
+		if(type!=null&&type==1){
+			return rdcMapper.searchRdcByfilter("%" + filter + "%");
+		}
 		return rdcMapper.searchRdc("%" + filter + "%");
 	}
 
