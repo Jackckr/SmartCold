@@ -179,9 +179,10 @@
                 };
 
                 scope.closeGallery = function () {
-                	 scope.showNext();
-                     scope.showPrev();
-                	
+                     if(scope.images.length>=2) {
+                 		scope.showNext();
+                 		scope.showPrev();
+                 	}
                     scope.opened = false;
                     if (scope.hideOverflow) {
                         $('body').css({overflow: ''});
@@ -232,10 +233,12 @@
                 };
 
                 scope.showNext = function () {
+                	if(scope.images.length <2){return;};
                     scope.index = (scope.index < scope.images.length - 2) ? ++scope.index : 0;
                 };
 
                 scope.showPrev = function () {
+                	if(scope.images.length <2){return;};
                     scope.index = (scope.index > 0) ? --scope.index : scope.images.length - 2;
                 };
             }
