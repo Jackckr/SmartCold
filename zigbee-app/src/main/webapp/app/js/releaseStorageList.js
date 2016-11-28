@@ -54,25 +54,5 @@ $().ready(function() {
   	};
   	getPageData();
   	initevg();
-  //date
-	$("#startTime_day").jeDate({
-	    format:"hh:mm",
-	    isTime:true, 
-	    minDate:"2008-08-08 08:08"
-	})
-	$("#startTime_week").jeDate({
-	    format:"hh:mm",
-	    isTime:true, 
-	    minDate:"2008-08-08 08:08"
-	})
-	$("#startTime_single").jeDate({
-	    format:"YYYY-MM-DD hh:mm",
-	    isTime:true, 
-	    minDate:"2008-08-08 08:08"
-	})
-	$("#endTime").jeDate({
-	    format:"YYYY-MM-DD hh:mm",
-	    isTime:true, 
-	    minDate:"2008-08-08 08:08"
-	})
+ 
 });	
