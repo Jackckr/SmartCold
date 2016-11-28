@@ -7,19 +7,18 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title> 发布冷运</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css"> 
-	    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+    <link rel="stylesheet" type="text/css" href="../com/js/jedate/skin/jedate1.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
-<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
-<script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
-<script type="text/javascript" src="../com/js/common.js"></script>
-        <script type="text/javascript" src="../com/js/layer.js"></script>
-<script type="text/javascript" src="../com/datepicker/date.js"></script>
-<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
-<script src="../bower_components/angular/angular.min.js"></script>
-<script type="text/javascript"
+	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
+	<script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script type="text/javascript" src="../com/js/jedate/jquery.jedate.js"></script>
+	<script src="../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript"
 	src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
-<script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
+	<script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
 </head>
 <body ng-app="app" ng-controller="ctrl">
 <script>
@@ -137,12 +136,34 @@
 	                    <input type="text" placeholder="请输入详细地址" ng-model="staddress" style="min-width:130%;"/>
 	                </div>
                  </li>
-                 <li>
+                 <li class="bg">
                      <label for="startTime">出发时间</label><em>*</em>
                      <div class="mySelect">
-						<input type="text" id="startTime" placeholder="请选择出发时间" class="kbtn" ng-model="startTime"/>
+						<select id="sl_attrvalue1"  name="attrvalue1" onchange="releaseCarInfo.changtimemode(this);" style="border-bottom:1px solid #ccc">
+	                         <option value="1">每天</option>
+	                         <option value="2">每周</option>
+	                         <option value="3">单次</option>
+	                     </select>
 					</div>
-					<i class="iconfont fr">&#xe63a;</i>
+					<i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <div class="opIndex black"><!-- 每天 -->
+						<input class="datainp" id="startTime_day" type="text" placeholder="请选择出发时间"  ng-model="startTime" readonly>
+					</div>
+					<div class="opIndex"><!-- 每周 -->						
+					   <ul class="weekBox clearfix">
+					   		<li class="active">一</li>
+					   		<li>二</li>
+					   		<li>三</li>
+					   		<li>四</li>
+					   		<li>五</li>
+					   		<li>六</li>
+					   		<li>日</li>
+					   </ul>
+						<input class="datainp" id="startTime_week" type="text" placeholder="请选择出发时间"  ng-model="startTime" readonly>
+					</div>
+					<div class="opIndex black"><!-- 单次 -->
+						<input class="datainp" id="startTime_single" type="text" placeholder="请选择出发时间"  ng-model="startTime" readonly>
+					</div>
                  </li>
                  <li class="bg">
                      <label for="arrow">目的地</label><em>*</em>
@@ -158,13 +179,14 @@
 	                    <input type="text" placeholder="请输入详细地址" ng-model="toaddress" style="min-width:130%;"/>
 	                </div>
                  </li>
-                 <li>
+                 <li class="bg">
                      <label for="arriveTime">到达时间</label><em>*</em>
                      <div class="mySelect">
-						<input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="arriveTime"/>
+						<!-- <input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="arriveTime"/> -->
+						<input class="datainp" id="endTime" type="text" placeholder="请选择结束时间" ng-model="end" readonly>
 					</div>
-					<i class="iconfont fr">&#xe63a;</i>
-                    
+<!-- 					<i class="iconfont fr">&#xe63a;</i> -->
+					</li>
                  </li>
 				<li><label for="phone">联系电话</label><em>*</em>
 				 <input type="text" name="telephone"

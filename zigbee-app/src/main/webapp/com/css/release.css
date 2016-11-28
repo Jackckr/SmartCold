@@ -693,3 +693,56 @@ em{
 	display: inline-block;
 	padding: 0 .3rem;
 } 
+/*date*/
+.datainp{
+	width:100%;
+	height:2rem;
+	line-height: 2rem;	
+	text-indent: 4.5rem;
+	margin-left: .2rem;
+	color:#555;
+	-webkit-appearance: none;
+	appearance: none;
+	font-size: .75rem;
+}
+.jedatebox .next{padding: 0}
+.jedatebox em{color:inherit}
+.jedatebox{
+	left: 50%!important;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+.weekBox{
+	width: 100%;
+	border-radius:.3rem;
+	margin-top: .2rem;
+	padding-left: 4rem;
+}
+.weekBox li{
+	float:left;
+	width: 10%;
+	background: #ccc;
+	border-left:1px solid #eee;
+	text-align: center;
+}
+.weekBox li.active{
+	background: #438BCB;
+	color:#fff;
+}
+.weekBox li:first-child{
+	border-bottom-left-radius: .3rem;
+	border-top-left-radius: .3rem;
+	border-left:0;
+}
+.weekBox li:last-child{
+	border-bottom-right-radius: .3rem;
+	border-top-right-radius: .3rem;
+}
+.jedateblue .jedaul li{
+	height:1.5rem;
+}
+.jedateblue .jedaul li .nolunar{
+	line-height: 1.5rem;
+	font-size: .75rem;
+}
+
