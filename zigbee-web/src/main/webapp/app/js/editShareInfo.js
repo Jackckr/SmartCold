@@ -418,4 +418,21 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	            // layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
+		 $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
+		 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
+		      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
+		      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){
+		    	  if($("#sl_attrvalue1").val()=='3'){
+			    		 $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+			    	 }else{
+			    		 if($("#sl_attrvalue2").val()==1){  
+				    		  $("#txt_endtim").datetimepicker("setEndDate",'1899-12-31 23:59:59');
+				    		  $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+				    	  }else{
+				    		  $("#txt_endtim").datetimepicker("setStartDate",null);
+				    	  } 
+			    	 }
+		      });
+//			  $('#txt_sattim,#txt_endtim').datetimepicker('update', new Date());
+		});  
 });

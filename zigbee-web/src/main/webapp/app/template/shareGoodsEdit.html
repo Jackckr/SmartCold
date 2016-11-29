@@ -1,3 +1,4 @@
+	<link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
 	<div>
 	<div class="coldlist"  ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
       <ul class="imgTable">
@@ -48,6 +49,15 @@
                     <input type="text" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
                 </li>
                 <li>
+                	<label for="time"><em>*</em>信息有效期:</label>
+					<div style="width:450px;margin-left: 20px;display: inline-block;">
+                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control "   class="span4"/>
+                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
+                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
+					</div>
+                </li>
+               <!--  <li>
 					<label for="time"><em>*</em>有效开始时间:</label>
 					<input type="text" placeholder="请选择开始时间" ng-model="validStartTime" id="sttime" class="kbtn"/>
 				</li>
@@ -55,7 +65,7 @@
 				<li>
 					<label for="time"><em>*</em>有效结束时间:</label>
 					<input type="text" placeholder="请选择结束时间" id="endtime" ng-model="validEndTime" class="kbtn"/>
-				</li>
+				</li> -->
                 <li>
                     <label for="phone"><em>*</em>联系电话:</label>
                     <input type="text" id="phone" ng-model="telephone" />
