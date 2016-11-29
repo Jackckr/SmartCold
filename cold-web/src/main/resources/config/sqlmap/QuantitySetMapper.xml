@@ -29,7 +29,35 @@
     <select id="getLightPowerByCoid" parameterType="map" resultType="map">
 		SELECT  rdcid, group_concat(id) ids ,group_concat(power) powers  ,sum(power) sumpower  FROM `coldstoragelightset` where `power` >0  and `coldStorageId` in(${coid})  GROUP BY `coldStorageId`;
 	</select>
-	<!-- 计算开门次数 -->
+     <!-- 	 ==============================================================================================计算开门次数 start ============================================================================================== -->
+    <select id="getColdstorageseting" parameterType="map" resultType="map">
+	       SELECT
+				ct.`id`,ct.`length` * ct.`width` * ct.`height` AS cgvolume,ct.inhumidity,ct.outhumidity,ct.refoid,ct.outtempe
+			FROM
+				`coldstorageset` ct
+			WHERE
+				ct.`length` IS NOT NULL
+			AND ct.`width` IS NOT NULL
+			AND ct.`height` IS NOT NULL
+			AND ct.inhumidity IS NOT NULL
+			AND ct.outhumidity IS NOT NULL
+			AND ( ct.refoid IS NOT NULL OR ct.outtempe IS NOT NULL )
+    </select>
+    <select id="getHNbyOid" parameterType="map" resultType="Double">
+               SELECT enthalpy FROM sc360.airenthalpy WHERE humidity = #{humidity} AND temperature = ceil( 
+                <if test="oid!=null">
+                  ( SELECT avg(`value`) FROM `sc360`.`coldstorageanalysis` sis WHERE sis.`type` =1 AND sis.oid = #{oid} AND sis.`key` = "AvgTemp" AND  (  TO_DAYS(NOW()) - TO_DAYS(sis.`date`) &lt;= 30) ) 
+                </if>
+                <if test="temperature!=null and oid==null">
+                 #{temperature}
+                </if>
+               
+               );
+    </select>
+    <select id="getventilationSet" parameterType="map" resultType="Double">
+         SELECT IF ( MIN(`value`) = MAX(`value`), MIN(`value`), MIN(`value`) + (MAX(`value`) - MIN(`value`)) * (6000 - MIN(`volume`)) / ( MAX(`volume`) - MIN(`volume`) ) ) AS vvlue FROM `ventilationset` WHERE abs(`volume` - #{cgvolume}) = ( SELECT min(abs(`volume` - #{cgvolume})) FROM ventilationset );
+    </select>
+    
     <select id="getColdstorageset" parameterType="map" resultType="map">
 	  select * from(SELECT
 			ct.`id`,
@@ -115,4 +143,5 @@
 			OR ct.outtempe IS NOT NULL
 		))as A1 where hn IS NOT NULL and hw IS NOT NULL ;
 	</select>
+     <!-- 	 ==============================================================================================计算开门次数 end ============================================================================================== -->
 </mapper>

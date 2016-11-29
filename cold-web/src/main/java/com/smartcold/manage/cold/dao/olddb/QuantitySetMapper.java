@@ -14,7 +14,13 @@ public interface QuantitySetMapper {
 	
     //======================================================Q======================================================
 	//Q7 获得门配置方法
+	@Deprecated
 	List<HashMap<String, Object>>  getColdstorageset();//根据冷库分组 获得换气配置集合
+	//下面方法用于替换上面方法
+	List<HashMap<String, Object>>   getColdstorageseting();//1
+	Double  getHNbyOid(@Param("oid")Object oid,@Param("humidity")Object humidity,@Param("temperature")Object temperature);//2 获得含烷值
+	Double  getventilationSet(@Param("cgvolume")Object cgvolume);//3 获得换气次数
+	
 	
 	List<HashMap<String, Object>> getcoldstoragedoorset();//根据门配置集合 coldstorageid oid
     //有效值：ids->BlowerSet id集合, frostPowers->风扇功率集合
