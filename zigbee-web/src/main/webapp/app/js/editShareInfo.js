@@ -1,14 +1,9 @@
-checkLogin();
-angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upload, $http) { 
-	 $http.defaults.withCredentials=true;
-	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
-	var url=window.location.href;
-	var arrurl=url.split("?id=");
+coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
 	$scope.totalfiles = [];
-	if(arrurl[1]!=''&&arrurl[1]!=undefined){
-	 $http.get(ER.root+'/i/ShareRdcController/getSEByIDForEdit', {
+	if($stateParams.shareID!=''&&$stateParams.shareID!=undefined){
+	 $http.get('/i/ShareRdcController/getSEByIDForEdit', {
          params: {
-             "id": arrurl[1]
+             "id": $stateParams.shareID
          }
      }).success(function (data) {
     	 $scope.rdcsharedto = data.entity;
@@ -40,7 +35,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	 $scope.stprovinceSelected();
     	 $scope.toprovinceSelected();
     	 if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
-    		 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
+    		 $http.get('/i/rdc/findRDCEntityDtoByRdcId', {
     	         params: {
     	             "rdcID": $scope.rdcsharedto.rdcID
     	         }
@@ -51,12 +46,12 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
      });
 	}
 	  // 获取省列表
-	    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
+	    $http.get('/i/city/findProvinceList').success(function (data) {
 	        $scope.provinces = data;
 	    });
 	    // 根据省ID查询城市列表
 	    $scope.provinceSelected = function () {
-	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	        $http.get('/i/city/findCitysByProvinceId', {
 	            params: {
 	                "provinceID": $scope.provinceId
 	            }
@@ -67,7 +62,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    }
 	    // 根据出发地省ID查询城市列表
 	    $scope.stprovinceSelected = function () {
-	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	        $http.get('/i/city/findCitysByProvinceId', {
 	            params: {
 	                "provinceID": $scope.stprovinceID
 	            }
@@ -79,7 +74,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 	    // 根据目的地省ID查询城市列表
 	    $scope.toprovinceSelected = function () {
-	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	        $http.get('/i/city/findCitysByProvinceId', {
 	            params: {
 	                "provinceID": $scope.toprovinceID
 	            }
@@ -94,7 +89,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	  
 	    
 	    // 获取冷库经营类型
-	    $http.get(ER.root+"/i/rdc/findAllManageType").success(function (data) {
+	    $http.get("/i/rdc/findAllManageType").success(function (data) {
 	        $scope.manageTypes = data;
 	        $scope.manageType = data[0].id;
 	    });
@@ -103,7 +98,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    };
 
 	    // 获取商品温度类型
-	    $http.get(ER.root+"/i/rdc/findAllTemperType").success(function (data) {
+	    $http.get("/i/rdc/findAllTemperType").success(function (data) {
 	        $scope.temperTypes = data;
 	        $scope.temperType = data[0].id;
 	    });
@@ -111,13 +106,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    $scope.TemperTypeSelected = function () {
 	    };
 	    //冷运参数
-	    $http.get(ER.root+'/i/ShareRdcController/getPSFilterData').success(function(data) {
+	    $http.get('/i/ShareRdcController/getPSFilterData').success(function(data) {
         	$scope.codeLave1 = data.entity.fm;
         	$scope.codeLave2 = data.entity.cl;
         	$scope.ps_cr_type = data.entity.sk;
         }); 
 	    //货物参数
-	    $http.get(ER.root+'/i/ShareRdcController/getGDFilterData').success(function(data) {
+	    $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {
 	    	$scope.good_type = data.entity.gt;
 	    	}); 
 	    
@@ -269,7 +264,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
 			Upload.upload({
-		        url: ER.root+"/i/ShareRdcController/shareFreeRelease",
+		        url: "/i/ShareRdcController/shareFreeRelease",
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
@@ -331,7 +326,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
 			Upload.upload({
-		        url: ER.root+"/i/ShareRdcController/shareFreeRelease",
+		        url: "/i/ShareRdcController/shareFreeRelease",
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
@@ -394,7 +389,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
 			Upload.upload({
-		        url: ER.root+"/i/ShareRdcController/shareFreeRelease",
+		        url: "/i/ShareRdcController/shareFreeRelease",
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {

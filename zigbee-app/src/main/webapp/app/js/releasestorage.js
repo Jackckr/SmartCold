@@ -448,26 +448,4 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	            layer.open({content: '请填写标记<em>*</em>的必选项再提交哦~',btn: '确定'});
 	        }
 		};
-		//date
-		$("#startTime_day").jeDate({
-		    format:"hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-		$("#startTime_week").jeDate({
-		    format:"hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-		$("#startTime_single").jeDate({
-		    format:"YYYY-MM-DD hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-		$("#endTime").jeDate({
-		    format:"YYYY-MM-DD hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-		
 });

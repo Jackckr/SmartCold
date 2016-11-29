@@ -32,6 +32,25 @@ coldWeb.controller('personalShare', function ($rootScope, $scope, $state, $cooki
 	}
 	$scope.getShares();
 	
+	$scope.goEditShare = function(shareID){
+		 $http.get('/i/ShareRdcController/getSEByIDForEdit', {
+	         params: {
+	             "id": shareID
+	         }
+	     }).success(function (data) {
+	    	 if(data.entity.dataType==1){
+	    		 $state.go('shareGoodsEdit', {"shareID": shareID});
+	    	 }
+	    	 if(data.entity.dataType==2){
+	    		 $state.go('shareTransportEdit', {"shareID": shareID});
+	    	 }
+	    	 if(data.entity.dataType==3){
+	    		 $state.go('shareStorageEdit', {"shareID": shareID});
+	    	 }
+	     });
+	};
+	
+	
 	$scope.goDeleteShare = function(shareID){
     	var r=confirm("删除订单？");
     	if(r){

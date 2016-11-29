@@ -360,6 +360,18 @@ coldWeb.config(function ($httpProvider,$stateProvider, $urlRouterProvider) {
         url: '/coldStorageAuth/:rdcID',
         controller: 'coldStorageAuth',
         templateUrl: 'app/template/coldStorageAuth.html'
+    }).state('shareStorageEdit', {
+        url: '/shareStorageEdit/:shareID',
+        controller: 'editShareInfo',
+        templateUrl: 'app/template/shareStorageEdit.html'
+    }).state('shareGoodsEdit', {
+        url: '/shareGoodsEdit/:shareID',
+        controller: 'editShareInfo',
+        templateUrl: 'app/template/shareGoodsEdit.html'
+    }).state('shareTransportEdit', {
+        url: '/shareTransportEdit/:shareID',
+        controller: 'editShareInfo',
+        templateUrl: 'app/template/shareTransportEdit.html'
     });
 
 });
