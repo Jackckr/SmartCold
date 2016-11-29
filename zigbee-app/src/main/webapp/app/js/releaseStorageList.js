@@ -54,4 +54,5 @@ $().ready(function() {
   	};
   	getPageData();
   	initevg();
+ 
 });	

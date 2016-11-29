@@ -76,6 +76,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
     	        silent: false
     	    },
     	    yAxis: {
+    	    	name:"温度(℃)",
     	        inverse: true,
     	        splitArea: {show: false}
     	    },
@@ -149,7 +150,7 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                 x: 30,
                 y: 200,
                 itemGap: 12,
-                data: ['高压' + parseFloat(highPress).toFixed(0), '低压' + parseFloat(lowPress).toFixed(0)]
+                data: ['高压' + parseFloat(highPress).toFixed(0)+'kpa', '低压' + parseFloat(lowPress).toFixed(0)+'kpa']
             },
             toolbox: {
                 show: false,
@@ -170,11 +171,11 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     data: [
                         {
                             value: parseInt(highPress / 20),
-                            name: '高压' + parseFloat(highPress).toFixed(0)
+                            name: '高压' + parseFloat(highPress).toFixed(0)+'kpa'
                         },
                         {
                             value: 100 - parseInt(highPress / 20),
-                            name: '高压可用:' + (2000 - parseInt(highPress)),
+                            name: '高压可用:' + (2000 - parseInt(highPress))+'kpa',
                             itemStyle: placeHolderStyle
                         }
                     ]
@@ -188,11 +189,11 @@ coldWeb.controller('compressorPressure', function ($scope, $location, $statePara
                     data: [
                         {
                             value: parseInt(lowPress / 20),
-                            name: '低压' + parseFloat(lowPress).toFixed(0)
+                            name: '低压' + parseFloat(lowPress).toFixed(0)+'kpa'
                         },
                         {
                             value: 100 - parseInt(lowPress / 20),
-                            name: '高压可用:' + (2000 - parseInt(lowPress).toFixed(0)),
+                            name: '高压可用:' + (2000 - parseInt(lowPress).toFixed(0)+'kpa'),
                             itemStyle: placeHolderStyle
                         }
                     ]
