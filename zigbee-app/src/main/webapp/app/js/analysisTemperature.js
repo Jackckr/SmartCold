@@ -118,7 +118,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http) {
                 var chart = echarts.init($('#' + mainId).get(0));
                 angular.forEach(storage['ChaoWenShiJian'], function (item) {
                     xData.unshift(formatTime(item['date']).split(" ")[0])
-                    yData.unshift(item['value'] / 60)
+                    yData.unshift((item['value'] / 60).toFixed(2))
                 })
                 chart.setOption($scope.getEchartSingleOption("30日超温时间", xData, yData, "时间", "m", "超温时间", "bar"));
             })
@@ -252,7 +252,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http) {
                 }
                 var chart = echarts.init($('#' + mainId).get(0));
                 angular.forEach(storage['BaoWenYinZi'], function (item) {
-                    yData.unshift(item['value'])
+                    yData.unshift(item['value'].toFixed(2))
                     xData.unshift(formatTime(item['date']).split(" ")[0])
                 })
                 chart.setOption($scope.getEchartSingleOption("30日保温因子τ趋势图", xData, yData, "保温因子", "τ", "τ", "bar"));
@@ -287,8 +287,8 @@ app.controller('analysisTemperature', function ($scope, $location, $http) {
                 var chart = echarts.init($('#' + mainId).get(0));
                 angular.forEach(storage['JiangWenYinZi'], function (item, index) {
                     xData.unshift(formatTime(item['date']).split(" ")[0])
-                    yData1.unshift(0 - storage['JiangWenYinZi'][index]['value'])
-                    yData2.unshift(storage['ShengWenYinZi'][index]['value'])
+                    yData1.unshift(0 - storage['JiangWenYinZi'][index]['value'].toFixed(2))
+                    yData2.unshift(storage['ShengWenYinZi'][index]['value'].toFixed(2))
                 })
                 var option = {
                 	backgroundColor: '#D2D6DE',
