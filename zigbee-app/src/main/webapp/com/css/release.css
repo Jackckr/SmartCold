@@ -467,6 +467,7 @@ form+.mybtn,.next+.mybtn{
 	max-width: 3rem;
 	height: 3rem;
 	margin: 0 0.5rem 0 0.25rem;
+	border-radius: .2em;
 }
 .imgCell a>img+div{
 	font-size: 0.5rem;

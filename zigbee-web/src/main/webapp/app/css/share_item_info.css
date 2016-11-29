@@ -110,53 +110,53 @@
 	display: none;
 }
 
-.control-label {
+.shareMain .control-label {
 	line-height: 32px;
 }
 
-.form-control {
+.shareMain .form-control {
 	display: inline-block;
 }
 
-.input-group-addon {
+.shareMain .input-group-addon {
 	display: block;
 	height: 34px;
 	float: left;
 	width: 49px;
 }
 
-.form-control:FOCUS {
+.shareMain .form-control:FOCUS {
 	box-shadow: 0 0 2px #00A6FF !important;
 	border-color: #00A6FF !important;
 }
 
-.sp_radio {
+.shareMain .sp_radio {
 	margin-right: 10px;
 }
 
-.sp_radio input {
+.shareMain .sp_radio input {
 	width: 20px !important;
 }
 
-#files {
+.shareMain #files {
 	width: 65px;
 	border: medium none;
 	margin-top: -10px;
 }
 
-.img_list {
+.shareMain .img_list {
 	width: 1000px;
 	overflow: hidden;
 }
 
-.img_list span img {
+.shareMain .img_list span img {
 	height: 100px;
 	width: auto;
 	margin-left: 10px;
 	margin-bottom: 10px;
 }
 
-.img_list span i {
+.shareMain .img_list span i {
 	position: absolute;
 	cursor: pointer;
 	color: #fff;
@@ -171,7 +171,7 @@
 	font: normal normal normal 18px/1 FontAwesome
 }
 
-.file {
+.shareMain .file {
 	position: relative;
 	display: inline-block;
 	border: 1px solid #ccc;
@@ -185,11 +185,11 @@
 	background: url(../img/image-upload.png) no-repeat center
 }
 
-.file:hover {
+.shareMain .file:hover {
 	text-decoration: none
 }
 
-.file input {
+.shareMain .file input {
 	position: absolute;
 	font-size: 75pt;
 	right: 0;
@@ -197,31 +197,31 @@
 	opacity: 0
 }
 /*错误提示样式*/
-label.success {
+.shareMain label.success {
 	display: none;
 }
 
-input.error {
+.shareMain input.error {
 	box-shadow: 0 0 5px #d74f5a !important;
 	border: 1px solid red !important;
 }
 
-input.error:FOCUS {
+.shareMain input.error:FOCUS {
 	box-shadow: 0 0 5px #00A6FF !important;
 	border-color: #00A6FF !important;
 }
 
-input.error:FOCUS+label.error {
+.shareMain input.error:FOCUS+label.error {
 	border-color: #00A6FF;
 	color: #00A6FF;
 	box-shadow: 0 0 5px #00A6FF !important;
 }
 
-input.error:FOCUS+label.error::before {
+.shareMain input.error:FOCUS+label.error::before {
 	border-color: #00A6FF;
 }
 
-label.error::before {
+.shareMain label.error::before {
 	content: "";
 	padding: 0px;
 	margin: 0px;
@@ -236,7 +236,7 @@ label.error::before {
 	transform: rotate(45deg);
 }
 
-label.error {
+.shareMain label.error {
 	float: left;
 	position: absolute;
 	color: red;
@@ -249,10 +249,6 @@ label.error {
 	box-shadow: 0 0 5px #d74f5a !important;
 }
 /*修改发布 2016-11-29*/
-.coldlist{
-	margin-top: 100px;
-	width:90%;
-}
 .houseinfo li{
 	margin-bottom: 10px;
 }

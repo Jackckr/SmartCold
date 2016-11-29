@@ -401,18 +401,19 @@ public class MsgServiceimp implements MsgService {
 	private void setQctdoor(String time, Date dateTime,String startTime,String endTime) {
 		try {
 			List<ColdStorageAnalysisEntity> sisList = new ArrayList<ColdStorageAnalysisEntity>();
-			List<HashMap<String, Object>> coldstoragesetList = this.quantitySetMapper.getColdstorageset();
+			List<HashMap<String, Object>> coldstoragesetList = this.quantitySetMapper.getColdstorageseting();
 			if (SetUtil.isnotNullList(coldstoragesetList)) {
 				for (HashMap<String, Object> hashMap : coldstoragesetList) {
-					if(hashMap.get("hn")!=null  &&hashMap.get("hw")!=null){
 						    int id = (Integer) hashMap.get("id");//coldstorageset->id
+						    Double  hw = this.quantitySetMapper.getHNbyOid(hashMap.get("refoid"), hashMap.get("outhumidity"),hashMap.get("outtempe"));
+						    if(hw==null){continue;}
+						    Double  hn = this.quantitySetMapper.getHNbyOid(id, hashMap.get("inhumidity"),null);
+						    if(hn==null){continue;}
 						    Double cgvolume=(Double) hashMap.get("cgvolume");//冷库面积d
-						    Double vvalue=	(Double) hashMap.get("vvalue");//换气次数d
-						    Double hn=	(Double) hashMap.get("hn");//换气次数
-						    Double hw=	(Double) hashMap.get("hw");//换气次数
-						    Double Q=0.675*cgvolume*vvalue*(hw-hn);//临时值
-							sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q/3600, dateTime));
-					 }
+						    Double  vvalue = this.quantitySetMapper.getventilationSet(cgvolume);//换气次数d
+						    if(vvalue==null){continue;}
+						    Double Q=0.675*cgvolume*vvalue*(hw-hn)/3600;//临时值
+						    sisList.add(new ColdStorageAnalysisEntity(1, id, "Qctdoor", Q, dateTime));
 				 }
 				 if(SetUtil.isnotNullList(sisList)){
 					this.storageAnalysisMapper.addColdStorageAnalysis(sisList);//批處理
