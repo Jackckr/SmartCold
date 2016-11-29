@@ -173,7 +173,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                         yAxis: [
                             {
                                 type: 'value',
-                                name: '开门时长(min)',
+                                name: '开门时长/min',
                                 max: 1500,
                                 axisLabel: {
                                     formatter: '{value}'
@@ -207,7 +207,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                         ]
                     };
                     chart1.setOption(option);
-                    chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间", "min", "m", "bar"));
+                    chart2.setOption($scope.getEchartSingleOption("近30日冷库日平均单次开门时长", xData, yData3, "平均开门时间/", "min", "m", "bar"));
                 }
             })
         })
@@ -247,7 +247,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                             yData.unshift(item['value'] / 60)
                         })
                         chart.setOption($scope.getEchartSingleOption("货物流通因子",
-                            xData, yData, "时间", "", "货物流通因子", "bar", 0));
+                            xData, yData, "", "", "货物流通因子", "bar", 0));
                     }, 0)
                 }
             })
@@ -457,7 +457,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
             yAxis: [
                 {
                     type: 'value',
-                    name: yName + "(" + yUnit + ")",
+                    name: yName + yUnit,
                     min: yMin ? yMin : 'auto',
                     minInterval: 1
                 }

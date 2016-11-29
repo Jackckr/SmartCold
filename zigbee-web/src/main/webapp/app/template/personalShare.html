@@ -20,7 +20,7 @@
 		<ul class="imgList clearfix">
 			<li ng-repeat="sharedto in sharesDto">
 				<div class="img pull-left">
-					<img src={{sharedto.logo}}>
+					<img ng-src={{sharedto.logo}}>
 				</div>
 
 				<p class="company omg">{{sharedto.title}}</p>
@@ -55,6 +55,8 @@
 				<p class="area">
 					{{sharedto.updatetime}} <span class="delete"
 						ng-click="goDeleteShare(sharedto.id)">删除</span>
+						<span class="delete"
+						ng-click="goEditShare(sharedto.id)">修改</span>
 				</p></li>
 		</ul>
 		<div class="page">

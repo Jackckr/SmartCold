@@ -1,0 +1,94 @@
+	<link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
+	<div  class="shareMain">
+	<div class="coldlist"  ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
+      <ul class="imgTable">
+			<li class="imgCell">
+				<div>
+					<p>{{rdcdto.name}}&nbsp;&nbsp;<span class="glyphicon glyphicon-map-marker"></span> {{rdcdto.address}}</p>
+				</div>
+			</li>
+		</ul>
+    </div>
+			<form id="release_item_from" name="itemform" >
+            <ul class="houseinfo">
+                <li>
+                    <label for="name"><em>*</em>描述:</label>
+                    <input type="text" ng-model="title"  id="name" placeholder="货品出售"/>
+                </li>
+                <li class="bossToggle" ng-if="rdcsharedto.typeCode==1">
+                    <label for="boss">供应商:</label>
+                    <input type="text" ng-model="unit1" id="boss"/>
+                </li>
+                 <li class="offershow">
+                    <label for="province"><em>*</em>省:</label>
+                    	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
+                                    ng-change="provinceSelected(provinceId)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                      
+                 </li>
+                 <li class="offershow">
+                    <label for="city"><em>*</em>市:</label>
+	                <select id="city" ng-model="cityId" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in citys"></select>
+                      
+                 </li>
+                <li>
+                    <label for="category"><em>*</em>品类:</label>
+                    <select id="category" id="good_type" name="codeLave11" ng-model="codeLave11">
+                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
+                    </select>
+                     
+                </li>
+                <li>
+                    <label for="num"><em>*</em>数量:</label>
+                    <input type="text" id="num" placeholder="吨" ng-model="sqm"/>
+                </li>
+                <li>
+                    <label for="price">单价:</label>
+                    <input type="text" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
+                </li>
+                <li>
+                	<label for="time"><em>*</em>信息有效期:</label>
+					<div style="width:450px;margin-left: 20px;display: inline-block;">
+                       <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                       <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control "   class="span4"/>
+                       <input id="hl_validStartTime" type="hidden" name="validStartTime"/>
+                       <input id="hl_validEndTime"   type="hidden" name="validEndTime"/>
+					</div>
+                </li>
+               <!--  <li>
+					<label for="time"><em>*</em>有效开始时间:</label>
+					<input type="text" placeholder="请选择开始时间" ng-model="validStartTime" id="sttime" class="kbtn"/>
+				</li>
+				
+				<li>
+					<label for="time"><em>*</em>有效结束时间:</label>
+					<input type="text" placeholder="请选择结束时间" id="endtime" ng-model="validEndTime" class="kbtn"/>
+				</li> -->
+                <li>
+                    <label for="phone"><em>*</em>联系电话:</label>
+                    <input type="text" id="phone" ng-model="telephone" />
+                </li>
+                <li>
+                    <label for="note">备注:</label>
+                    <input type="text" ng-model="note" id="note" placeholder="（选填）"/>
+                </li>
+                <li class="infoList clearfix">
+					<div class="pull-left" style="padding-right: 0">图片:</div>
+					<div class="pull-left" style="margin-left:20px;">
+						<output id="img_list1" class="img_list">
+							<span ng-repeat="honorfile in totalfiles"><img class="thumb"
+								ngf-src="honorfile" title="{{honorfile.name}}"><i
+								ng-click="drophonor(honorfile)">×</i></span>
+						</output>
+						<a href="javascript:;" class="file">选择文件
+							<input type="file" id="files" ngf-select="addFiles($files)" 
+							ng-model="files"  ngf-multiple="true" name="files" >
+						</a>
+					</div>
+				</li>
+            </ul>
+        </form>
+        <button class="btn btn-primary" ng-click="goodSubmit()"  style="margin-left: 180px;">确认修改</button>
+</div>

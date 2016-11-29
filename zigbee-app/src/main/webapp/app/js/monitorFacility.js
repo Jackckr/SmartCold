@@ -524,7 +524,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                 var xData = []
                 var yData = []
                 angular.forEach(infos, function (info) {
-                    yData.push(info.cost)
+                    yData.push(info.cost.toFixed(2))
                     xData.push(formatTime(info.time))
                 })
                 chart.setOption($scope.creatOption(keyDescribleMap[key], xData, yData,
@@ -580,7 +580,10 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         var option = {
             backgroundColor: '#D2D6DE',
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                textStyle:{
+                	fontSize:12
+                }
             },
             title: {
                 text: title,

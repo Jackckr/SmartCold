@@ -196,7 +196,7 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
                         yData1.unshift((item['value'] / 60).toFixed(2))
                         yData2.unshift(storage['RunningCount'][index].value)
                         yData3.unshift(
-                            storage['RunningCount'][index].value == 0 ? 0 : item['value'] / storage['RunningCount'][index].value / 60
+                            (storage['RunningCount'][index].value == 0 ? 0 : item['value'] / storage['RunningCount'][index].value / 60).toFixed(2)
                         )
                     })
                     var option = {

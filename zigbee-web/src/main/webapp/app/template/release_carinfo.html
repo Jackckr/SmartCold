@@ -1,28 +1,6 @@
 		<link rel="stylesheet" type="text/css" href="app/css/common.css">
         <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
         <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/bootstrap-datetimepicker.min.css" />
-        <style>
-           .shar_none{display: none;}
-           .control-label{line-height: 32px;}
-           .form-control{display: inline-block;}
-           .input-group-addon{display: block;height: 34px;float: left;width: 49px;}
-           .form-control:FOCUS{box-shadow: 0 0 2px #00A6FF !important; border-color: #00A6FF !important;}
-           .sp_radio{margin-right: 10px;}
-           .sp_radio input{width: 20px !important;}
-           #files{width: 65px;border: medium none;margin-top: -10px;}
-           .img_list { width: 1000px; overflow: hidden;}
-           .img_list span img{height:100px;width: auto;margin-left: 10px;margin-bottom: 10px;}
-           .img_list span i{position:absolute;cursor:pointer;color:#fff;border-radius:3px;background:rgba(0,0,0,.5);margin-left:-21px;width:18px;height:18px;text-align:center;opacity:.6;line-height:13px;font:normal normal normal 18px/1 FontAwesome}
-            .file{position:relative;display:inline-block;border:1px solid #ccc;border-radius:4px;overflow:hidden;line-height:29px;width:85px;height:29px;text-indent:2em;font-size:9pt;background:url(app/img/image-upload.png) no-repeat center}.file:hover{text-decoration:none}.file input{position:absolute;font-size:75pt;right:0;top:0;opacity:0}
-           /*错误提示样式*/
-           label.success{display: none; } 
- 	       input.error{box-shadow: 0 0 5px #d74f5a !important;border: 1px solid red !important;} 
-	       input.error:FOCUS{  box-shadow: 0 0 5px #00A6FF !important; border-color: #00A6FF !important;} 
-	       input.error:FOCUS+label.error{ border-color: #00A6FF;color:#00A6FF; box-shadow: 0 0 5px #00A6FF !important;}
-	       input.error:FOCUS+label.error::before{ border-color: #00A6FF;}
-		   label.error::before{content:"";padding:0px;margin:0px;width:10px;height:10px;position:absolute;border-left:1px solid red;border-bottom:1px solid red;background-color:white;left:-6px;top:10px;transform:rotate(45deg);}
-		   label.error{float:left;position:absolute;color:red;border:1px solid red;border-radius:5px;padding:5px 20px;text-align:left;margin-left:10px;background-color:white;box-shadow:0 0 5px #d74f5a !important;}
-       </style>
     
     	<div id="" class="shareMain">
 			<!-- 出售和求购 -->
@@ -49,7 +27,7 @@
 					</div>
 					<div class="outSon clearfix">
 						<div class="img"  ng-repeat="img in rdcimgs" >
-							<img src="{{img}}" height="184" width="319" alt="">
+							<img ng-src="{{img}}" height="184" width="319" alt="">
 						</div>
 					</div>
 				</div>

@@ -1,14 +1,9 @@
-checkLogin();
-angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upload, $http) { 
-	 $http.defaults.withCredentials=true;
-	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
-	var url=window.location.href;
-	var arrurl=url.split("?id=");
+coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
 	$scope.totalfiles = [];
-	if(arrurl[1]!=''&&arrurl[1]!=undefined){
-	 $http.get(ER.root+'/i/ShareRdcController/getSEByIDForEdit', {
+	if($stateParams.shareID!=''&&$stateParams.shareID!=undefined){
+	 $http.get('/i/ShareRdcController/getSEByIDForEdit', {
          params: {
-             "id": arrurl[1]
+             "id": $stateParams.shareID
          }
      }).success(function (data) {
     	 $scope.rdcsharedto = data.entity;
@@ -40,7 +35,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	 $scope.stprovinceSelected();
     	 $scope.toprovinceSelected();
     	 if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
-    		 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', {
+    		 $http.get('/i/rdc/findRDCEntityDtoByRdcId', {
     	         params: {
     	             "rdcID": $scope.rdcsharedto.rdcID
     	         }
@@ -51,12 +46,12 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
      });
 	}
 	  // 获取省列表
-	    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
+	    $http.get('/i/city/findProvinceList').success(function (data) {
 	        $scope.provinces = data;
 	    });
 	    // 根据省ID查询城市列表
 	    $scope.provinceSelected = function () {
-	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	        $http.get('/i/city/findCitysByProvinceId', {
 	            params: {
 	                "provinceID": $scope.provinceId
 	            }
@@ -67,7 +62,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    }
 	    // 根据出发地省ID查询城市列表
 	    $scope.stprovinceSelected = function () {
-	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	        $http.get('/i/city/findCitysByProvinceId', {
 	            params: {
 	                "provinceID": $scope.stprovinceID
 	            }
@@ -79,7 +74,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 	    // 根据目的地省ID查询城市列表
 	    $scope.toprovinceSelected = function () {
-	        $http.get(ER.root+'/i/city/findCitysByProvinceId', {
+	        $http.get('/i/city/findCitysByProvinceId', {
 	            params: {
 	                "provinceID": $scope.toprovinceID
 	            }
@@ -94,7 +89,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	  
 	    
 	    // 获取冷库经营类型
-	    $http.get(ER.root+"/i/rdc/findAllManageType").success(function (data) {
+	    $http.get("/i/rdc/findAllManageType").success(function (data) {
 	        $scope.manageTypes = data;
 	        $scope.manageType = data[0].id;
 	    });
@@ -103,7 +98,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    };
 
 	    // 获取商品温度类型
-	    $http.get(ER.root+"/i/rdc/findAllTemperType").success(function (data) {
+	    $http.get("/i/rdc/findAllTemperType").success(function (data) {
 	        $scope.temperTypes = data;
 	        $scope.temperType = data[0].id;
 	    });
@@ -111,13 +106,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    $scope.TemperTypeSelected = function () {
 	    };
 	    //冷运参数
-	    $http.get(ER.root+'/i/ShareRdcController/getPSFilterData').success(function(data) {
+	    $http.get('/i/ShareRdcController/getPSFilterData').success(function(data) {
         	$scope.codeLave1 = data.entity.fm;
         	$scope.codeLave2 = data.entity.cl;
         	$scope.ps_cr_type = data.entity.sk;
         }); 
 	    //货物参数
-	    $http.get(ER.root+'/i/ShareRdcController/getGDFilterData').success(function(data) {
+	    $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {
 	    	$scope.good_type = data.entity.gt;
 	    	}); 
 	    
@@ -242,11 +237,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
 			if(checkCarSubmit()){
-	        	layer.open({
+	        	/*layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
-			    });
+			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -269,13 +264,14 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
 			Upload.upload({
-		        url: ER.root+"/i/ShareRdcController/shareFreeRelease",
+		        url: "/i/ShareRdcController/shareFreeRelease",
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	//alert(resp.data.message);
+		    	alert(resp.data.message);
+		    	//window.location.href ="coldtransportlist.html"; 
 		    	//layer.open({content: resp.data.message,btn: '确定'});
-		    	layer.closeAll();
+		    	/*layer.closeAll();
 		    	 layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -283,7 +279,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				    ,yes:function(){
 				    	window.location.href ="coldtransportlist.html"; 
 				    }
-				  });
+				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -292,8 +288,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    });
 			}
 			else {
-	            //alert("请填写标记*的必选项在提交!");
-	            layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
+	            alert("请填写标记<em>*</em>的必选项再提交哦");
+	            //layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 	    
@@ -306,11 +302,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkGoodsSubmit()){
-	        	layer.open({
+	        	/*layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
-			    });
+			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -331,14 +327,14 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
 			Upload.upload({
-		        url: ER.root+"/i/ShareRdcController/shareFreeRelease",
+		        url: "/i/ShareRdcController/shareFreeRelease",
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	//alert(resp.data.message);
+		    	alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="goodslist.html";
-		    	layer.closeAll();
+		    	/*layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -346,7 +342,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				    ,yes:function(){
 				    	window.location.href ="goodslist.html"; 
 				    }
-				  });
+				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -355,8 +351,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    });
 			}
 			else {
-	            //alert("请填写标记*的必选项在提交!");
-	            layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
+	            alert("请填写标记<em>*</em>的必选项再提交哦");
+	            //layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 		
@@ -369,11 +365,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkStorageSubmit()){
-	        	layer.open({
+	        	/*layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
-			    });
+			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -394,14 +390,14 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
 			Upload.upload({
-		        url: ER.root+"/i/ShareRdcController/shareFreeRelease",
+		        url: "/i/ShareRdcController/shareFreeRelease",
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	//alert(resp.data.message);
+		    	alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="user-myrelease.html"; 
-		    	layer.closeAll();
+		    	/*layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -409,7 +405,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				    ,yes:function(){
 				    	window.location.href ="user-myrelease.html"; 
 				    }
-				  });
+				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -418,8 +414,25 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    });
 			}
 			else {
-	            //alert("请填写标记*的必选项在提交!");
-				 layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
+	            alert("请填写标记<em>*</em>的必选项再提交哦");
+	            // layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
+		 $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
+		 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
+		      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
+		      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){
+		    	  if($("#sl_attrvalue1").val()=='3'){
+			    		 $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+			    	 }else{
+			    		 if($("#sl_attrvalue2").val()==1){  
+				    		  $("#txt_endtim").datetimepicker("setEndDate",'1899-12-31 23:59:59');
+				    		  $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+				    	  }else{
+				    		  $("#txt_endtim").datetimepicker("setStartDate",null);
+				    	  } 
+			    	 }
+		      });
+//			  $('#txt_sattim,#txt_endtim').datetimepicker('update', new Date());
+		});  
 });
