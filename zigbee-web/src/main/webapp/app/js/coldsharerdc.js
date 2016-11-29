@@ -181,16 +181,14 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
     	
     		$scope.datatype=1;
     		$scope._dataid =sharid;//当前数据类型
+    		$scope.storageGallery = new Array();
     		$($scope._dataid?"#release_main":"#nodata_div").removeClass("hide");
     		if(!$scope._dataid){return;}
-    		
-    		
         	$http.get('/i/ShareRdcController/getSEByID', { params: {"id": $scope._dataid}  }).success(function(data) {
         		$scope.vo=null;
         		 $scope.vo=data.entity;
         		 $scope.dgfiles=data.entity.files;
         		 $scope.dgdatatype=data.entity.dataType;
-        		 $scope.storageGallery = new Array();
 	        		 $scope.storageGallery.length=0;
 	        		 if($scope.dgfiles!=null&&$scope.dgfiles.length>0){
 		                  for(var j=0; j<$scope.dgfiles.length; j++){
