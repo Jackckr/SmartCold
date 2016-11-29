@@ -17,6 +17,35 @@ var releaseCarInfo = {
             	 reg=/^(?:[01]?\d|2[0-3]){1}(?::[0-5]?\d){1}$/; 
             }
             return this.optional(element) || (length ==vlength && reg.test(value));},"时间格式不正确！");
+        jQuery.validator.addMethod("isEndHHmm",   function(value, element) {
+        	var reg=null;
+        	var type=$("#sl_attrvalue1").val();
+        	var vlength =type==3? 16:5; 
+        	var length = value.length;
+        	if(type==3){
+        		reg=/^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]$/; 
+        	}else{
+        		reg=/^(?:[01]?\d|2[0-3]){1}(?::[0-5]?\d){1}$/; 
+        	}
+        	var vis= this.optional(element) || (length ==vlength && reg.test(value));
+        	if(vis){
+        		if($("#sl_attrvalue1").val()=='3'){//('#txt_sattim,#txt_endtim'
+        			var sattim =new Date($('#txt_sattim').val());
+        			var endtim =new Date($('#txt_endtim').val());
+        			return endtim>sattim;
+        	   }else if($("#sl_attrvalue2").val()==1){
+        			var a= $('#txt_sattim').val().split(":");
+        			var b= $('#txt_endtim').val().split(":");
+        			if(a[0]>b[0]){ 
+        				return false;
+        			}else if(a[0]==b[0]&&a[1]>b[1]){
+        				return false;
+        			}
+        			return true;
+        	 }
+        	}
+          return vis;	
+        },"到达时间设置错误！到达时间应晚于发车时间！");
         $("#release_item_from").validate({
             rules: {
                 title: { required: true},provinceId: { required: true},city: { required: true },
@@ -24,7 +53,7 @@ var releaseCarInfo = {
                 sqm: { required: true,number:true    },
                 unitPrice: {  number:true   },
                 reservation: { required: true }, telephone: { required: true,isMobile: true },
-                txt_sattim:{required: true,isHHmm:true},txt_endtim:{required: true,isHHmm:true}
+                txt_sattim:{required: true,isHHmm:true},txt_endtim:{required: true,isEndHHmm:true}
             },
             messages: {
                 title: { required: "请输入描述!"}, provinceId: { required: "请选择省份!"},
@@ -88,9 +117,20 @@ var releaseCarInfo = {
 coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, Upload, $state, $cookies, $http, $location) {
 	if(user==null||(user!=null&&user.id==0)){util.info(null,"请登录后执行该操作！",function(){window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseCarInfo";return;});return;}
 	$.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
-	      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
-	      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){$("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());  });
-		  $('#txt_sattim,#txt_endtim').datetimepicker('update', new Date());
+	      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
+	      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){
+	    	  if($("#sl_attrvalue1").val()=='3'){
+		    		 $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+		    	 }else{
+		    		 if($("#sl_attrvalue2").val()==1){  
+			    		  $("#txt_endtim").datetimepicker("setEndDate",'1899-12-31 23:59:59');
+			    		  $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+			    	  }else{
+			    		  $("#txt_endtim").datetimepicker("setStartDate",null);
+			    	  } 
+		    	 }
+	      });
+//		  $('#txt_sattim,#txt_endtim').datetimepicker('update', new Date());
 	});  
 	$scope.files;
 	$scope.totalfiles = [];
