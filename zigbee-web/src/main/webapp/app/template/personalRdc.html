@@ -25,7 +25,7 @@
 		<!-- 图文列表区域 -->
 			<ul class="imgList clearfix">
 				<li ng-repeat="rdc in rdcs">
-					<div class="img pull-left"><img src={{rdc.logo}}></div>
+					<div class="img pull-left"><img ng-src={{rdc.logo}}></div>
 					<p class="company">{{rdc.name}}</p>
 					<p class="area omg"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
 					<p class="area">

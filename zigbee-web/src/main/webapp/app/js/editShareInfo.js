@@ -237,11 +237,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
 			if(checkCarSubmit()){
-	        	layer.open({
+	        	/*layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
-			    });
+			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -268,9 +268,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	//alert(resp.data.message);
+		    	alert(resp.data.message);
+		    	//window.location.href ="coldtransportlist.html"; 
 		    	//layer.open({content: resp.data.message,btn: '确定'});
-		    	layer.closeAll();
+		    	/*layer.closeAll();
 		    	 layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -278,7 +279,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				    ,yes:function(){
 				    	window.location.href ="coldtransportlist.html"; 
 				    }
-				  });
+				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -287,8 +288,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		    });
 			}
 			else {
-	            //alert("请填写标记*的必选项在提交!");
-	            layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
+	            alert("请填写标记<em>*</em>的必选项再提交哦");
+	            //layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 	    
@@ -301,11 +302,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkGoodsSubmit()){
-	        	layer.open({
+	        	/*layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
-			    });
+			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -330,10 +331,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	//alert(resp.data.message);
+		    	alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="goodslist.html";
-		    	layer.closeAll();
+		    	/*layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -341,7 +342,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				    ,yes:function(){
 				    	window.location.href ="goodslist.html"; 
 				    }
-				  });
+				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -350,8 +351,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		    });
 			}
 			else {
-	            //alert("请填写标记*的必选项在提交!");
-	            layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
+	            alert("请填写标记<em>*</em>的必选项再提交哦");
+	            //layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 		
@@ -364,11 +365,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkStorageSubmit()){
-	        	layer.open({
+	        	/*layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
-			    });
+			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -393,10 +394,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	//alert(resp.data.message);
+		    	alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	//window.location.href ="user-myrelease.html"; 
-		    	layer.closeAll();
+		    	/*layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
 				    ,btn: '确定'
@@ -404,7 +405,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				    ,yes:function(){
 				    	window.location.href ="user-myrelease.html"; 
 				    }
-				  });
+				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -413,8 +414,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		    });
 			}
 			else {
-	            //alert("请填写标记*的必选项在提交!");
-				 layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
+	            alert("请填写标记<em>*</em>的必选项再提交哦");
+	            // layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 });

@@ -1,105 +1,96 @@
 <div>
-	<div class="coldlist" style="margin-bottom: 0" ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
-      <ul class="imgTable">
-			<li class="imgCell"><a href="javascript:;">
-					<div class="">
-						<p class='ellipsis'>{{rdcdto.name}}</p>
-						<p class='position'>
-							<i class="iconfont">&#xe66e;</i> {{rdcdto.address}}
-						</p>
-					</div> </a></li>
+	<div class="coldlist" style="margin-bottom: 0"
+		ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
+		<ul class="imgTable">
+			<li class="imgCell">
+				<div>
+					<p>{{rdcdto.name}}&nbsp;&nbsp;<span class="glyphicon glyphicon-map-marker"></span> {{rdcdto.address}}</p>
+				</div>
+			</li>
 		</ul>
-    </div>
-		<form id="release_item_from" name="itemform" >
-            <ul class="houseinfo">
-                <li>
-                    <label for="name">描述</label><em>*</em>
-                    <input type="text"  id="name" ng-model="title" placeholder="发布冷运描述"/>
-                </li>
-                <li>
-                    <label for="businessType">业务类型</label><em>*</em>
-                    <div class="mySelect">
-	                    <select id="businessType" name="codeLave1" ng-model="codeLave11">
-	                      <option ng-repeat="x in  codeLave1" value="{{x.type_code}}">{{x.type_name}}</option>
-	                    </select>
-	                </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="temperatureType">温度类型</label><em>*</em>                                      
-                    <div class="mySelect">
-	                    <select id="temperatureType" name="codeLave2" ng-model="codeLave22">
-	                        	<option ng-repeat="x in  codeLave2" value="{{x.type_code}}">{{x.type_name}}</option>
-	                    </select>
-	                </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="carType">车型</label><em>*</em>                                      
-                    <div class="mySelect">
-	                    <select id="carType" name="codeLave3" ng-model="codeLave33">
-	                       <option ng-repeat="x in  ps_cr_type" value="{{x.id}}">{{x.type}}</option>
-	                    </select>
-	                </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="price">价格</label>
-                    <input type="text" name="unitPrice" ng-model="unitprice" id="price" placeholder="面议"/>
-                </li>
-                 <!-- <li>
-                     <label for="start" class="bg">出发地</label>
-                     <input type="text" id="start" name="staddress" ng-model="staddress" placeholder="（选填）" />
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
-                 </li> -->
-                 <li class="bg">
-                     <label for="arrow">出发地</label><em>*</em>
-                      <div class="mySelect">
-	                    <select id="stprovince" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
-                                    ng-change="stprovinceSelected(stprovinceID)"
-                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-	                    <select id="stcity" ng-model="stcityID" name="cityid"
-                                    ng-disabled="editable" ng-change="citySelected(stcityID)"
-                                    ng-options="x.cityID as x.cityName for x in stcitys"></select>
-	                    <input type="text" placeholder="请输入详细地址" ng-model="staddress" style="min-width:130%;"/>
-	                </div>
-                 </li>
-                 <li>
-                     <label for="startTime">出发时间</label><em>*</em>
-                     <div class="mySelect">
-						<input type="text" id="startTime" placeholder="请选择出发时间" class="kbtn" ng-model="validStartTime"/>
-					</div>
-					<i class="iconfont fr">&#xe63a;</i>
-                 </li>
-                 <li class="bg">
-                     <label for="arrow">目的地</label><em>*</em>
-                      <div class="mySelect">
-	                    <select id="toprovince" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
-                                    ng-change="toprovinceSelected(toprovinceID)"
-                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-	                    <select id="tocity" ng-model="tocityID" name="cityid"
-                                    ng-disabled="editable" ng-change="citySelected(tocityID)"
-                                    ng-options="x.cityID as x.cityName for x in tocitys"></select>
-	                    <input type="text" placeholder="请输入详细地址" ng-model="toaddress" style="min-width:130%;"/>
-	                </div>
-                 </li>
-                 <li>
-                     <label for="arriveTime">到达时间</label><em>*</em>
-                     <div class="mySelect">
-						<input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="validEndTime"/>
-					</div>
-					<i class="iconfont fr">&#xe63a;</i>
-                    
-                 </li>
-				<li><label for="phone">联系电话</label><em>*</em>
-				 <input type="text" name="telephone"
-					id="phone" ng-model="telephone"/></li>
-				<li><label for="note">备注</label> <input type="text" id="note"
-					placeholder="（选填）" ng-model="note" name="note"/></li>
-				<li><label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
-				 </label> <span id="">上传图片<small class="text-warning">*最多十张</small></span><br>
-	             <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
-            </ul>
-        </form>
-        <button class="mybtn" ng-click="carSubmit()">确认修改</button>
+	</div>
+	<form id="release_item_from" name="itemform">
+		<ul class="houseinfo">
+			<li>
+				<label for="name"><em>*</em>描述:</label>
+				<input type="text" id="name" ng-model="title" placeholder="发布冷运描述" />
+			</li>
+			<li>
+				<label for="businessType"><em>*</em>业务类型:</label>
+				<select id="businessType" name="codeLave1" ng-model="codeLave11">
+					<option ng-repeat="x in  codeLave1" value="{{x.type_code}}">{{x.type_name}}</option>
+				</select>
+			</li>
+			<li>
+				<label for="temperatureType"><em>*</em>温度类型:</label>
+				<select id="temperatureType" name="codeLave2" ng-model="codeLave22">
+					<option ng-repeat="x in  codeLave2" value="{{x.type_code}}">{{x.type_name}}</option>
+				</select>
+			</li>
+			<li>
+				<label for="carType"><em>*</em>车型:</label>
+				<select id="carType" name="codeLave3" ng-model="codeLave33">
+					<option ng-repeat="x in  ps_cr_type" value="{{x.id}}">{{x.type}}</option>
+				</select>
+			</li>
+			<li>
+				<label for="price">价格:</label>
+				<input type="text" name="unitPrice" ng-model="unitprice" id="price" placeholder="面议" />
+			</li>
+			<li class="bg">
+				<label for="arrow"><em>*</em>出发地:</label>
+				<select id="stprovince" ng-model="stprovinceID"
+					ng-disabled="editable" name="provinceId"
+					ng-change="stprovinceSelected(stprovinceID)"
+					ng-options="x.provinceId as x.provinceName for x in provinces" style="width:220px;"></select>
+				<select id="stcity" ng-model="stcityID" name="cityid"
+					ng-disabled="editable" ng-change="citySelected(stcityID)"
+					ng-options="x.cityID as x.cityName for x in stcitys" style="width:220px;margin-left: 5px;"></select><br/>
+				<input type="text" placeholder="请输入详细地址" ng-model="staddress" style="margin-left: 145px;"/>
+			</li>
+			<li>
+				<label for="startTime"><em>*</em>出发时间:</label>
+				<input type="text" id="startTime" placeholder="请选择出发时间" class="kbtn" ng-model="validStartTime" />
+			</li>
+			<li class="bg">
+				<label for="arrow"><em>*</em>目的地:</label>
+				<select id="toprovince" ng-model="toprovinceID"
+					ng-disabled="editable" name="provinceId"
+					ng-change="toprovinceSelected(toprovinceID)"
+					ng-options="x.provinceId as x.provinceName for x in provinces" style="width:220px;"></select>
+				<select id="tocity" ng-model="tocityID" name="cityid"
+					ng-disabled="editable" ng-change="citySelected(tocityID)"
+					ng-options="x.cityID as x.cityName for x in tocitys" style="width:220px;margin-left: 5px;"></select><br/>
+					<input type="text" placeholder="请输入详细地址" ng-model="toaddress"  style="margin-left: 145px;" />
+			</li>
+			<li>
+				<label for="arriveTime"><em>*</em>到达时间:</label>
+				<input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="validEndTime" />
+			</li>
+			<li>
+				<label for="phone"><em>*</em>联系电话:</label>
+				<input type="text" name="telephone" id="phone" ng-model="telephone" />
+			</li>
+			<li>
+				<label for="note">备注:</label>
+				<input type="text" id="note" placeholder="（选填）" ng-model="note" name="note" />
+			</li>
+			<li class="infoList clearfix">
+				<div class="pull-left" style="padding-right: 0">图片:</div>
+				<div class="pull-left" style="margin-left:20px;">
+					<output id="img_list1" class="img_list">
+						<span ng-repeat="honorfile in totalfiles"><img class="thumb"
+							ngf-src="honorfile" title="{{honorfile.name}}"><i
+							ng-click="drophonor(honorfile)">×</i></span>
+					</output>
+					<a href="javascript:;" class="file">选择文件
+						<input type="file" id="files" ngf-select="addFiles($files)" 
+						ng-model="files"  ngf-multiple="true" name="files" >
+					</a>
+				</div>
+			</li>
+		</ul>
+		<button class="btn btn-primary" ng-click="carSubmit()" style="margin-left: 180px;">确认修改</button>
+	</form>
+	
 </div>
