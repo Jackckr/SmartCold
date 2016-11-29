@@ -1,10 +1,27 @@
 <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
 <link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" type="text/css" href="app/css/personalinfo.css">
+<div class="shareMain clearfix">
+	<!-- sidebar -->
+		<div class="sidebar pull-left">
+			<ul class="infoList">
+				<li><a href="#/personalDetail"><font color="black">个人信息</font></a></li>
+				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
+				<li><a href="#/personalShare"><font color="#418ACA">我的发布</font></a></li>
+				<li><a href="#/personalOrder"><font color="black">我的联络单</font></a></li>
+				<li><a href="#/personalComment"><font color="black">我的点评</font></a></li>
+				<li><a href="#/personalMessage"><font color="black">我的消息</font></a></li>
+				<li><a onclick="alert('开发中，敬请期待...')"><font color="black">冷链保险</font></a></li>
+				<li><a href="#/personalConnect"><font color="black">联系客服</font></a></li>
+			</ul>
+		</div>
+	<!-- sidebar end -->
+	<!-- content -->
+		<div class="content">
 <div>
-	<div class="coldlist" style="margin-bottom: 0"
-		ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
-		<ul class="imgTable">
-			<li class="imgCell">
+	<div ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0" style="margin-bottom: 0;">
+		<ul>
+			<li>
 				<div>
 					<p>{{rdcdto.name}}&nbsp;&nbsp;<span class="glyphicon glyphicon-map-marker"></span> {{rdcdto.address}}</p>
 				</div>
@@ -44,21 +61,22 @@
 				<div  class="pull-left" style="margin-left: 20px;">
 				    <div style="width: 600px;"> 
 				             <span class="">出发地</span>
-							 <select id="sl_provinceId1" name="provinceId1" class="arrdes" style="width: 100px;"   ng-model="stprovinceID" ng-disabled="editable" ng-change="changcity1()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-							 <input class=""  name="stprovinceID"  type="hidden" value="{{stprovinceID}}">
-							 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 100px;"  >
-								<option ng-repeat="x in city1" value="{{x.cityID}}">{{x.cityName}}</option>
-							 </select>
-							 <input type="text"   name="staddress" class="arrdes" placeholder="请输入详细地址" style="width:200px" >
+							 <select class="arrdes" style="width: 100px;"  id="stprovince" ng-model="stprovinceID" ng-disabled="editable" name="provinceId" 
+							  ng-change="stprovinceSelected(stprovinceID)" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+							 <select  class="arrdes" style="width: 100px;" id="stcity" ng-model="stcityID" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(stcityID)"
+                                    ng-options="x.cityID as x.cityName for x in stcitys"></select>
+							 <input type="text"  ng-model="staddress" name="staddress" class="arrdes" placeholder="请输入详细地址" style="width:200px" >
 					 </div>
 					 <div style="width: 600px;">
 					         <span class="">目的地</span>
-							 <select id="sl_provinceId2" name="provinceId2"  class="arrdes" style="width: 100px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-							 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}">
-							 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 100px;" >
-								<option ng-repeat="x in city2" value="{{x.cityID}}">{{x.cityName}}</option>
-							 </select>
-							 <input type="text"  name="toaddress" class="arrdes" placeholder="请输入详细地址" style="width:200px;" ><span>（选填）</span>
+							 <select  id="toprovince" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
+                                    ng-change="toprovinceSelected(toprovinceID)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces" class="arrdes" style="width: 100px;"  ></select>
+							 <select  class="arrdes" style="width: 100px;" id="tocity" ng-model="tocityID" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(tocityID)"
+                                    ng-options="x.cityID as x.cityName for x in tocitys"></select>
+							 <input type="text"  ng-model="toaddress" class="arrdes" placeholder="请输入详细地址" style="width:200px;" ><span>（选填）</span>
 					 </div>
 				</div>
 			</li>
@@ -157,5 +175,6 @@
 		</ul>
 		<button class="btn btn-primary" ng-click="carSubmit()" style="margin-left: 180px;">确认修改</button>
 	</form>
-	
+	</div>
+</div>
 </div>

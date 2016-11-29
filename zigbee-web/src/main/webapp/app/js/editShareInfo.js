@@ -12,6 +12,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
     	 $scope.telephone = $scope.rdcsharedto.telephone;
     	 $scope.validStartTime = $scope.rdcsharedto.validStartTime;
     	 $scope.validEndTime = $scope.rdcsharedto.validEndTime;
+    	 var stentime =  $scope.validStartTime + "-" + $scope.validEndTime;
+    	 $("#reservationtime").val(stentime);
     	 $scope.note = $scope.rdcsharedto.note;
     	 $scope.unitprice = $scope.rdcsharedto.unitPrice;
     	 $scope.codeLave11 = $scope.rdcsharedto.codeLave1;
@@ -25,8 +27,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
     	 $scope.cityId = $scope.rdcsharedto.cityid;
     	 $scope.unit1 = $scope.rdcsharedto.unit1;
     	 $scope.sqm = $scope.rdcsharedto.sqm;
-    	 $scope.temperType = $scope.rdcsharedto.codeLave2;
-    	 $scope.manageType = $scope.rdcsharedto.codeLave1;
+    	 $scope.temperType =parseInt($scope.rdcsharedto.codeLave2);
+    	 $scope.manageType = parseInt($scope.rdcsharedto.codeLave1);
     	 $scope.unit = $scope.rdcsharedto.unit;
     	 $scope.totalfiles = $scope.rdcsharedto.files;
     	 if($scope.totalfiles==undefined)
@@ -68,7 +70,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	            }
 	        }).success(function (data) {
 	            $scope.stcitys = data;
-	            $scope.stcityId = data[0].cityID;
+	            $scope.stcityId = parseInt(data[0].cityID);
 	        });
 	    }
 	    
@@ -91,16 +93,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    // 获取冷库经营类型
 	    $http.get("/i/rdc/findAllManageType").success(function (data) {
 	        $scope.manageTypes = data;
-	        $scope.manageType = data[0].id;
 	    });
-
-	    $scope.ManageTypeSelected = function () {
-	    };
 
 	    // 获取商品温度类型
 	    $http.get("/i/rdc/findAllTemperType").success(function (data) {
 	        $scope.temperTypes = data;
-	        $scope.temperType = data[0].id;
 	    });
 
 	    $scope.TemperTypeSelected = function () {
@@ -232,10 +229,33 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    
 	    
 		$scope.carSubmit = function(){
-			$scope.validStartTime = $("#startTime").val();
-			$scope.validEndTime = $("#arriveTime").val();
-			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
-			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
+			var attr1=$("#sl_attrvalue1").val();
+	    	var sl1= $("#sl_attrvalue1").find("option:selected").text();
+	    	var sl2= $("#sl_attrvalue2").find("option:selected").text();
+	    	if(attr1==1){
+	    		$scope.validStartTime = sl1+" "+$("#txt_sattim").val();
+	    		$scope.validEndTime =   sl2+" "+$("#txt_endtim").val();
+	    	}else if(attr1==2){
+	    		var spCodesTemp = "";
+	    		 $('input:checkbox[class="wk_erw"]:checked').each(function(i){spCodesTemp += ($(this).val()+","); });
+	    		 $scope.validStartTime =sl1+spCodesTemp.substr(0,spCodesTemp.length-1)+" "+$("#txt_sattim").val();
+	    		 $scope.validEndTime =  sl2+" "+$("#txt_endtim").val();
+	    	}else if(attr1==3){
+	    		     $scope.validEndTime = $("#txt_sattim").val(); 
+	        		 $scope.validStartTime =$("#txt_endtim").val();
+	    	} 
+			if($scope.staddress!=undefined){
+				var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
+			}
+			else{
+				var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
+			}
+			if($scope.toaddress!=undefined){
+				var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
+			}
+			else{
+				var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
+			}
 			if(checkCarSubmit()){
 	        	/*layer.open({
 	        		type: 2
@@ -269,7 +289,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		        data: data
 		    }).then(function (resp) {
 		    	alert(resp.data.message);
-		    	//window.location.href ="coldtransportlist.html"; 
+		    	window.location.href ="#personalShare"; 
 		    	//layer.open({content: resp.data.message,btn: '确定'});
 		    	/*layer.closeAll();
 		    	 layer.open({
@@ -295,8 +315,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    
 	    
 		$scope.goodSubmit = function(){
-			$scope.validStartTime = $("#sttime").val();
-			$scope.validEndTime = $("#endtime").val();
+			var stentime=$("#reservationtime").val().split(" - ");
+	    	if(stentime.length==2){
+	    		$scope.validStartTime = stentime[0]; 
+	    		$scope.validEndTime = stentime[1];
+	    	}
 			$scope.detlAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
@@ -333,7 +356,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		    }).then(function (resp) {
 		    	alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
-		    	//window.location.href ="goodslist.html";
+		    	window.location.href ="#personalShare";
 		    	/*layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message
@@ -358,8 +381,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		
 		$scope.submit = function(){
 			$scope.rdcID = '';
-			$scope.validStartTime = $("#sttime").val();
-			$scope.validEndTime = $("#endtime").val();
+			var stentime=$("#reservationtime").val().split(" - ");
+	    	if(stentime.length==2){
+	    		$scope.validStartTime = stentime[0]; 
+	    		$scope.validEndTime = stentime[1];
+	    	}
 			$scope.detlAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
 			if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
@@ -377,7 +403,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
 					codeLave2 : $scope.temperType,
-					codeLave1:$scope.storageType,
+					codeLave1:$scope.manageType,
 					unit : $scope.unit,
 					sqm:$scope.sqm,
 					unitPrice : $scope.unitprice,
@@ -396,7 +422,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		    }).then(function (resp) {
 		    	alert(resp.data.message);
 		    	//layer.open({content:resp.data.message,btn: '确定'});
-		    	//window.location.href ="user-myrelease.html"; 
+		    	window.location.href ="#personalShare"; 
 		    	/*layer.closeAll();
 		    	layer.open({
 				    content: resp.data.message

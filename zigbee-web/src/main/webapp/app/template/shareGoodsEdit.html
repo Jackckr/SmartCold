@@ -1,8 +1,26 @@
 	<link rel="stylesheet" type="text/css" href="assets/plugins/daterangepicker2/daterangepicker-bs3.css" />
+	<link rel="stylesheet" type="text/css" href="app/css/personalinfo.css">
+	<div class="shareMain clearfix">
+	<!-- sidebar -->
+		<div class="sidebar pull-left">
+			<ul class="infoList">
+				<li><a href="#/personalDetail"><font color="black">个人信息</font></a></li>
+				<li> <a href="#/personalRdc"><font color="black">我的冷库</font></a></li>
+				<li><a href="#/personalShare"><font color="#418ACA">我的发布</font></a></li>
+				<li><a href="#/personalOrder"><font color="black">我的联络单</font></a></li>
+				<li><a href="#/personalComment"><font color="black">我的点评</font></a></li>
+				<li><a href="#/personalMessage"><font color="black">我的消息</font></a></li>
+				<li><a onclick="alert('开发中，敬请期待...')"><font color="black">冷链保险</font></a></li>
+				<li><a href="#/personalConnect"><font color="black">联系客服</font></a></li>
+			</ul>
+		</div>
+	<!-- sidebar end -->
+	<!-- content -->
+		<div class="content">
 	<div>
-	<div class="coldlist"  ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0">
-      <ul class="imgTable">
-			<li class="imgCell">
+	<div  ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0"  style="margin-bottom: 0;">
+      <ul>
+			<li>
 				<div>
 					<p>{{rdcdto.name}}&nbsp;&nbsp;<span class="glyphicon glyphicon-map-marker"></span> {{rdcdto.address}}</p>
 				</div>
@@ -35,7 +53,7 @@
                  </li>
                 <li>
                     <label for="category"><em>*</em>品类:</label>
-                    <select id="category" id="good_type" name="codeLave11" ng-model="codeLave11">
+                    <select  id="good_type" name="codeLave11" ng-model="codeLave11">
                        <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
                     </select>
                      
@@ -91,4 +109,6 @@
             </ul>
         </form>
         <button class="btn btn-primary" ng-click="goodSubmit()"  style="margin-left: 180px;">确认修改</button>
+</div>
+</div>
 </div>
