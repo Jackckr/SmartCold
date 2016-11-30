@@ -5,6 +5,13 @@ coldWeb.controller('home', function ($scope, $location, $stateParams, $http, $st
     $('.carousel').carousel({
         wrap: true
     });
+    $(".left.carousel-control").click(function(){
+		$("#carousel").carousel('prev');
+	});
+	// 循环轮播到下一个项目
+	$(".right.carousel-control").click(function(){
+		$("#carousel").carousel('next');
+	});
 /*
     // 获取当前冷库的列表
     $http.get('/i/rdc/findRdcList').success(function (data) {

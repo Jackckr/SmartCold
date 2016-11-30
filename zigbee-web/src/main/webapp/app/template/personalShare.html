@@ -23,13 +23,13 @@
 					<img ng-src={{sharedto.logo}}>
 				</div>
 
-				<p class="company omg">{{sharedto.title}}</p>
+				<p class="company omg" title="{{sharedto.title}}">{{sharedto.title}}</p>
 
 				<div ng-if="sharedto.dataType==3">
 					<p class="area">
 						<span>发布类型:</span> <span>[冷库]{{sharedto.typeText}}</span>
 					</p>
-					<p class="area">
+					<p class="area omg" title="冷库名称:{{sharedto.name}}">
 						<span>冷库名称:</span> <span>{{sharedto.name}}</span>
 					</p>
 				</div>
@@ -38,7 +38,7 @@
 					<p class="area">
 						<span>发布类型:</span> <span>[配送]{{sharedto.typeText}}</span>
 					</p>
-					<p class="area">
+					<p class="area omg" title="{{sharedto.unit1}}-->{{sharedto.unit2}}">
 						<span>始发地:</span> <span>{{sharedto.unit1}}</span> <span>--></span>
 						<span>目的地:</span> <span>{{sharedto.unit2}}</span>
 					</p>
@@ -53,11 +53,10 @@
 					</p>
 				</div>
 				<p class="area">
-					{{sharedto.updatetime}} <span class="delete"
-						ng-click="goDeleteShare(sharedto.id)">删除</span>
-						<span class="delete"
-						ng-click="goEditShare(sharedto.id)">修改</span>
-				</p></li>
+					{{sharedto.updatetime}} <span class="delete"ng-click="goDeleteShare(sharedto.id)">删除</span>
+						<span class="delete"ng-click="goEditShare(sharedto.id)">修改</span>
+				</p>
+				</li>
 		</ul>
 		<div class="page">
                <!-- 翻页功能 -->
