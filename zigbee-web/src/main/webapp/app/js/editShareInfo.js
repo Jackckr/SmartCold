@@ -25,6 +25,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			 }
 			 var unita=vo.unit1.split("-"),unitb=vo.unit2.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};  if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
 			 $("#txt_sattim").val( $scope.validStartTime );  $("#txt_endtim").val( $scope.validEndTime );
+			 $scope.staddress=vo.staddress;
+		     $scope.toaddress=vo.toaddress;	
 		 }else{
 			 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 $("#reservationtime").val($scope.validStartTime+" - "+ $scope.validEndTime);
@@ -43,10 +45,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
     	 $scope.typeCode = $scope.rdcsharedto.typeCode;
     	 $scope.title = $scope.rdcsharedto.title;
     	 $scope.telephone = $scope.rdcsharedto.telephone;
-//    	 $scope.validStartTime = $scope.rdcsharedto.validStartTime;
-//    	 $scope.validEndTime = $scope.rdcsharedto.validEndTime;
-//    	 var stentime =  $scope.validStartTime + "-" + $scope.validEndTime;
-//    	 $("#reservationtime").val(stentime);
     	 $scope.note = $scope.rdcsharedto.note;
     	 $scope.unitprice = $scope.rdcsharedto.unitPrice;
     	 $scope.codeLave11 = $scope.rdcsharedto.codeLave1;
@@ -279,8 +277,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    	} 
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
-			if($scope.staddress){stplace+='-'+$scope.staddress;}
-			if($scope.toaddress){toplace+='-'+$scope.toaddress;}
 			if(checkCarSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
@@ -300,8 +296,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					validEndTime : $scope.arriveTime,
 					telephone:$scope.telephone,
 					note : $scope.note,
-					 attrvalue1:attr1,
-	    	         attrvalue2: attr2
+					attrvalue1:attr1,
+	    	        attrvalue2: attr2,
+	    	        staddress:$scope.staddress?$scope.staddress:"",
+	    	        toaddress:$scope.toaddress?$scope.toaddress:"",	
 			};
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};

@@ -53,7 +53,7 @@ $().ready(function() {
   		ul_select.empty();
   		getPageData();
   	 };
-  	 initFilter=function(){
+  	  initFilter=function(){
   		   var mtlist=[],stlist=[],prove=[];
   		   $.get(ER.root+'/i/city/findProvinceList',function(data) {
 				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
@@ -73,8 +73,9 @@ $().ready(function() {
   			   }
   	      });
   	 };
-  	 getFilter=function(pageNum,pageSize){
+  	  getFilter=function(pageNum,pageSize){
   			var sqm =$("#ul_sqm_list li.active").attr("value");//面积
+  			
   		    var smty=$("#ul_stty_list li.active").attr("value");//温度
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   			var adds=$("#ul_address_list li.active").attr("value");////地区
@@ -82,13 +83,10 @@ $().ready(function() {
   		    var _options={ sqm:sqm, storagetempertype: smty,managementType:sety,provinceid:adds,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
-  	};
-  	getSoll=function(){
-  		localStorage.cold_totalPages=totalPages;
-  		localStorage.cold_currentPage=currentPage;
-  		localStorage.cold_html=$("#ul_rdcsL_list").html();
-		localStorage.cold_scrollHeight=scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
-		var cache_coldlist={totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html(),scrollHeight:scrollHeight};
+  	 };
+     getSoll=function(){
+		var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
+		localStorage.list_cache_coldlist=JSON.stringify({totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html(),scrollHeight:scrollHeight});
   	};
   	
   	function gethtml(rdc){
@@ -113,11 +111,12 @@ $().ready(function() {
   	};
   	
 	function initData(){//启用无限加载
-		 if(localStorage.cold_html){
-			 totalPages=parseInt(localStorage.cold_totalPages);
-			 currentPage= parseInt(localStorage.cold_currentPage);
-		     $("#ul_rdcsL_list").html(localStorage.cold_html);
-		     $(document).scrollTop(	localStorage.cold_scrollHeight );
+		 if(localStorage.list_cache_coldlist){
+			 var  cachdata=JSON.parse(localStorage.list_cache_coldlist);
+			 totalPages=parseInt(cachdata.totalPages);
+			 currentPage= parseInt(cachdata.currentPage);
+		     $("#ul_rdcsL_list").html(cachdata.html);
+		     $(document).scrollTop(	cachdata.scrollHeight );
 		 }else{
 			 getPageData();
 		 }

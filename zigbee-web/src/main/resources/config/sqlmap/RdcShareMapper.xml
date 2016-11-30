@@ -39,7 +39,7 @@
 		s.applyID,
 		s.bookings,
 		s.stauts,s.detlAddress,
-		s.codeLave1,s.codeLave2,s.codeLave3,s.codeLave4,s.attrvalue,s.attrvalue1,s.attrvalue2,
+		s.codeLave1,s.codeLave2,s.codeLave3,s.codeLave4,s.attrvalue,s.attrvalue1,s.attrvalue2,s.staddress,s.toaddress,
 		r. NAME,r.address,r.coldtype,
 		(SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1 ) AS logo
 		FROM

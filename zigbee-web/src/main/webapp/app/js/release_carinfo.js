@@ -101,6 +101,7 @@ var releaseCarInfo = {
     	} 
         var unit1=$("#sl_provinceId1 option:selected").text()+"-"+$("#sl_cityid1 option:selected").text();
         var unit2=$("#sl_provinceId2 option:selected").text()+"-"+$("#sl_cityid2 option:selected").text();
+        
         $("#hide_div [name=unit1]").val(unit1);
         $("#hide_div [name=unit2]").val(unit2);
         var data = $("#release_item_from").serializeArray();

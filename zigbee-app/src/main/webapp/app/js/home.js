@@ -104,16 +104,9 @@ $().ready(function() {
 			$("#cuttseachdata").hide();
 		}
 	}
-	//alert(localStorage.cold_totalPages)
 });
-localStorage.cold_totalPages = 0;
-localStorage.cold_currentPage = 0;
-localStorage.cold_html = "";
-localStorage.cold_scrollHeight = 0;
-/*localStorage.setItem(cold_currentPage,1);
-localStorage.setItem(cold_totalPages,1);
-localStorage.setItem(cold_html,"");
-localStorage.setItem(cold_scrollHeight,0);*/
+localStorage.removeItem("list_cache_coldlist");
+
 
 	
 
