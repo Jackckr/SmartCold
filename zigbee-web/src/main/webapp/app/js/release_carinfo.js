@@ -4,30 +4,24 @@
 var releaseCarInfo = {
 	wk_type:1,//每天1，每周2，固定3
 	$scope:null,
+	vistHHMM:function(em,value, element){
+		var reg=null, type=$("#sl_attrvalue1").val(), vlength =type==3? 16:5, length = value.length;
+        if(type==3){ reg=/^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]$/;   }else{  reg=/^(?:[01]?\d|2[0-3]){1}(?::[0-5]?\d){1}$/;  }
+        return em.optional(element) || (length ==vlength && reg.test(value));
+	},
     initvalidate: function() { //验证必填项
         jQuery.validator.addMethod("isMobile", function(value, element) {var length = value.length; var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;return this.optional(element) || (length == 11 && mobile.test(value));},"请正确填写您的手机号码");
         jQuery.validator.addMethod("isHHmm",   function(value, element) {
-        	var reg=null;
-        	var type=$("#sl_attrvalue1").val();
-            var vlength =type==3? 16:5; 
-            var length = value.length;
-            if(type==3){
-            	 reg=/^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]$/; 
-            }else{
-            	 reg=/^(?:[01]?\d|2[0-3]){1}(?::[0-5]?\d){1}$/; 
-            }
-            return this.optional(element) || (length ==vlength && reg.test(value));},"时间格式不正确！");
-        jQuery.validator.addMethod("isEndHHmm",   function(value, element) {
-        	var reg=null;
-        	var type=$("#sl_attrvalue1").val();
-        	var vlength =type==3? 16:5; 
-        	var length = value.length;
-        	if(type==3){
-        		reg=/^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]$/; 
-        	}else{
-        		reg=/^(?:[01]?\d|2[0-3]){1}(?::[0-5]?\d){1}$/; 
+        	var vis= releaseCarInfo.vistHHMM(this,value, element);
+        	if(vis&&$("#sl_attrvalue1").val()==2){
+        		vis= $('input:checkbox[class="wk_erw"]:checked').length>0;
+        		if(!vis){ jQuery.validator.messages.isHHmm='请选择周一至周天具体发车时间!'; }else{ jQuery.validator.messages.isHHmm='发车时间设置式不正确！';  }
+        		return vis;
         	}
-        	var vis= this.optional(element) || (length ==vlength && reg.test(value));
+           return vis;
+        },'发车时间设置式不正确！');
+        jQuery.validator.addMethod("isEndHHmm",   function(value, element) {
+        	var vis=  releaseCarInfo.vistHHMM(this,value, element);;
         	if(vis){
         		if($("#sl_attrvalue1").val()=='3'){//('#txt_sattim,#txt_endtim'
         			var sattim =new Date($('#txt_sattim').val());
@@ -37,15 +31,18 @@ var releaseCarInfo = {
         			var a= $('#txt_sattim').val().split(":");
         			var b= $('#txt_endtim').val().split(":");
         			if(a[0]>b[0]){ 
+        				jQuery.validator.messages.isEndHHmm="到达时间应晚于发车时间！";
         				return false;
-        			}else if(a[0]==b[0]&&a[1]>b[1]){
+        			}else if(a[0]==b[0]&&(a[1]>b[1]||a[1]==b[1])){
+        				jQuery.validator.messages.isEndHHmm="到达时间应晚于发车时间！";
         				return false;
         			}
         			return true;
         	 }
         	}
+        	jQuery.validator.messages.isEndHHmm="到达时间设置错误！";
           return vis;	
-        },"到达时间设置错误！到达时间应晚于发车时间！");
+        },"到达时间设置错误！");
         $("#release_item_from").validate({
             rules: {
                 title: { required: true},provinceId: { required: true},city: { required: true },
@@ -77,11 +74,12 @@ var releaseCarInfo = {
     	if(val==3){
     		$('#txt_sattim,#txt_endtim').datetimepicker('remove');
     	    $('#txt_sattim,#txt_endtim').datetimepicker({ format: 'yyyy-mm-dd hh:ii', weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 2,forceParse: 0,showMeridian: 1 });
+    	    $('#txt_sattim,#txt_endtim').datetimepicker('update', new Date());
     	}else{
     		$('#txt_sattim,#txt_endtim').datetimepicker('remove');
     	    $('#txt_sattim,#txt_endtim').datetimepicker({  format: 'hh:ii', weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});
+    	    $('#txt_sattim').datetimepicker('update', '1899-12-31 09:00:00');  $('#txt_endtim').datetimepicker('update', '1899-12-31 17:00:00');
     	}
-    	 $('#txt_sattim,#txt_endtim').datetimepicker('update', new Date());
     },
     savedata: function() {if ($("#release_item_from").valid()) { this.addvo(); } else {$($("#release_item_from input.error")[0]).focus();} },
     checktime:function(em){},
@@ -134,40 +132,6 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
 	});  
 	$scope.files;
 	$scope.totalfiles = [];
-//	$scope.addFiles = function (files) {
-//		if(files.length==0){return;};
-//		var allfiles = $scope.totalfiles.concat(files);
-//		if(allfiles.length>10){
-//			alert("最多选择10张！");
-//		}
-//       if( allfiles!=$scope.totalfiles){
-//    	   $scope.totalfiles=allfiles;
-//    	   $scope.refimg();
-//       }
-//    };
-//    $scope.refimg=function(){
-//    	$("#img_list").empty();
-//    	var files = $scope.totalfiles ; // FileList object
-//	    for (var i = 0, f; f = files[i]; i++) {
-//	      if (!f.type.match('image.*')) { continue;}
-//	         var reader = new FileReader();
-//	         reader.onload = (function(theFile) {  return function(e) { 
-//	        	 var innerHTML = ['<span id="thumb_id' + i + '"><img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/><i onclick="releaseCarInfo.deleteimg(' + i+",'" +theFile.name+ '\')">×</i></span>'].join('');
-//	        	    $("#img_list").last().append(innerHTML);
-//	        	 };
-//	        	})(f);
-//	      reader.readAsDataURL(f);
-//	    }
-//    };
-//	$scope.drop = function(i,imgname){
-//		angular.forEach($scope.totalfiles,function(item, key){
-//            if(item.name == imgname){
-//                $scope.totalfiles.splice(key,1);
-//                $('#img_list img[title=\''+imgname+'\']').parent().remove();
-//               return false;
-//            }
-//        });
-//    };
 	$scope.addFiles = function (files) {
 		if(files.length==0){return;};
 		var allfiles = $scope.totalfiles.concat(files);

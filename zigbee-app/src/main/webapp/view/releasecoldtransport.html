@@ -21,51 +21,8 @@
 	<script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
 </head>
 <body ng-app="app" ng-controller="ctrl">
-<script>
-       $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:9}});
-    	$(function() {
-			$('.toggle').children('div').click(function(){
-				$(this).addClass('current').siblings().removeClass('current');
-				if($(this).index()==1){
-                    window.flag1 = 1;
-				}else{
-                     window.flag1 = 0;
-				}
-			});
-            $('.radiocar button').click(function(event){
-                $(".main").show();
-                $('.coldlist').hide();
-                $(this).parent().hide()
-            });
-			/*date*/
-			$('#startTime').date();
-			$('#arriveTime').date();
-		});
-			//date
-		$("#startTime_day").jeDate({
-		    format:"hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-		$("#startTime_week").jeDate({
-		    format:"hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-		$("#startTime_single").jeDate({
-		    format:"YYYY-MM-DD hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-		$("#endTime").jeDate({
-		    format:"YYYY-MM-DD hh:mm",
-		    isTime:true, 
-		    minDate:"2008-08-08 08:08"
-		})
-    </script>
     <!-- header -->
         <header>
-        	
             <div class="area fl">
                 <a href="release.html"><i class="iconfont">&#xe60e;</i></a>
             </div>
@@ -171,19 +128,16 @@
 						<input class="datainp" id="startTime_day" type="text" placeholder="请选择出发时间"  ng-model="startTime" readonly>
 					</div>
 					<div class="opIndex"><!-- 每周 -->						
-					   <ul class="weekBox clearfix">
-					   		<li class="active">一</li>
-					   		<li>二</li>
-					   		<li>三</li>
-					   		<li>四</li>
-					   		<li>五</li>
-					   		<li>六</li>
-					   		<li>日</li>
+					   <ul id="ul_work" class="weekBox clearfix black">
+					   		<li class="active" value="一">一</li>
+					   		<li value="二">二</li>
+					   		<li value="三">三</li>
+					   		<li value="四">四</li>
+					   		<li value="五">五</li>
+					   		<li value="六">六</li>
+					   		<li value="日">日</li>
 					   </ul>
-						<input class="datainp" id="startTime_week" type="text" placeholder="请选择出发时间"  ng-model="startTime" readonly>
-					</div>
-					<div class="opIndex black"><!-- 单次 -->
-						<input class="datainp" id="startTime_single" type="text" placeholder="请选择出发时间"  ng-model="startTime" readonly>
+						<input  id="startTime" class="datainp"  type="text" placeholder="请选择出发时间"  value="09:00" readonly>
 					</div>
                  </li>
                  <li class="bg">
@@ -202,13 +156,14 @@
                  </li>
                  <li class="bg">
                      <label for="arriveTime">到达时间</label><em>*</em>
-                     <div class="mySelect">
-						<!-- <input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="arriveTime"/> -->
-						<input class="datainp" id="endTime" type="text" placeholder="请选择结束时间" ng-model="end" readonly>
+                     <div id="eiv_endTime" class="mySelect">
+                         <select id="sl_attrvalue2"  name="attrvalue2" class="form-control " style="width:25%;float: left;" >
+		                         <option value="1">当天</option>
+		                         <option value="2">次日</option>
+		                 </select>
+						<input id="arriveTime" class="datainp"  name="validEndTime" type="text" placeholder="请选择结束时间"  value="17:00" readonly style="width:70%;float: left;">
 					</div>
-<!-- 					<i class="iconfont fr">&#xe63a;</i> -->
-					</li>
-                 </li>
+				</li>
 				<li><label for="phone">联系电话</label><em>*</em>
 				 <input type="text" name="telephone"
 					id="phone" ng-model="telephone"/></li>
@@ -222,5 +177,48 @@
         <button class="mybtn" ng-click="carSubmit()">确认发布</button>
     </section>
 </body>
+<script type="text/javascript">
+       $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:9}});
+			$('.toggle').children('div').click(function(){
+				$(this).addClass('current').siblings().removeClass('current');
+				if($(this).index()==1){
+                    window.flag1 = 1;
+				}else{
+                     window.flag1 = 0;
+				}
+			});
+            $('.radiocar button').click(function(event){
+                $(".main").show();
+                $('.coldlist').hide();
+                $(this).parent().hide();
+            });
+            $("#ul_work li").click(function(event){
+            	var em=$(this);
+               if(em.hasClass("active")){
+            	   em.removeClass("active");
+               }else{
+            	   em.addClass("active");
+               }
+            });
+            var releaseCarInfo={
+            		changtimemode:function(em){
+            			var val=em.value;  $("#startTime,#arriveTime").remove(); 
+            	        $("#ul_work").after("<input  id='startTime' class='datainp'  type='text' placeholder='请选择出发时间'  readonly>");
+            	        $("#sl_attrvalue2").after("<input  id='arriveTime' class='datainp'  type='text' placeholder='请选择结束时间'   readonly "+(val==3?"":"style='width:70%;float: left;'")+">");
+            	        var form=val==3?"YYYY-MM-DD hh:mm":"hh:mm";
+            	        var start = { format: form, minDate: $.nowDate(0),   isinitVal:true,  initAddVal:[2,"hh"], choosefun: function(elem,datas){end.minDate = datas;  }};
+    	    		    var end = { format: form, minDate: $.nowDate(0),isinitVal:true,initAddVal:[4,"hh"],choosefun: function(elem,datas){ start.maxDate = datas;}};
+            	    	if(val==3){
+            	    		$("#sl_attrvalue2,#ul_work").hide(); $("#startTime,#arriveTime").val("");
+            	    	}else{
+            	    		$("#sl_attrvalue2").show();
+            	    		if(val==2){$("#ul_work").show();}else{$("#ul_work").hide();} $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
+            	    	}
+            	    	$('#startTime').jeDate(start); $('#arriveTime').jeDate(end);
+            		}	
+            };
+            $("#startTime,#arriveTime").jeDate({isTime:true,format:"hh:mm"});
+    </script>
 <script type="text/javascript" src="../app/js/releasestorage.js"></script>
+
 </html>
