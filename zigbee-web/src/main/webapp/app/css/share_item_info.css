@@ -283,9 +283,6 @@
     margin-left: 10px;
     margin-bottom: 10px;
 }
-.img_list span{
-	display: inline-block;
-}
 .img_list span:hover i{
 	color:red;
 	opacity:1;
