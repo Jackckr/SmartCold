@@ -110,31 +110,31 @@
 	display: none;
 }
 
-.shareMain .control-label {
+.houseinfo .control-label {
 	line-height: 32px;
 }
 
-.shareMain .form-control {
+.houseinfo .form-control {
 	display: inline-block;
 }
 
-.shareMain .input-group-addon {
+.houseinfo .input-group-addon {
 	display: block;
 	height: 34px;
 	float: left;
 	width: 49px;
 }
 
-.shareMain .form-control:FOCUS {
+.houseinfo .form-control:FOCUS {
 	box-shadow: 0 0 2px #00A6FF !important;
 	border-color: #00A6FF !important;
 }
 
-.shareMain .sp_radio {
+.houseinfo .sp_radio {
 	margin-right: 10px;
 }
 
-.shareMain .sp_radio input {
+.houseinfo .sp_radio input {
 	width: 20px !important;
 }
 
@@ -251,6 +251,9 @@
 /*修改发布 2016-11-29*/
 .houseinfo li{
 	margin-bottom: 10px;
+}
+.houseinfo .infoList{
+	background: transparent;
 }
 .houseinfo li>label{
 	width:120px;
