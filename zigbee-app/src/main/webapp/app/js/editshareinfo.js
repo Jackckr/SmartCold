@@ -30,17 +30,25 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 $http.defaults.withCredentials=true;
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	 $scope.initData=function(vo){
-		 if(vo.dataType==2&&vo.attrvalue1!=3){
-			var tstime= vo.validStartTime.substring(2), tetime= vo.validEndTime.substring(2);
-			 if(vo.attrvalue1==1){
-				 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
+		 if(vo.dataType==2){
+			 if(vo.attrvalue1==3){
+				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 }else{
-		    	 $scope.validEndTime = tetime; 
-		    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+1);
-		    	 releaseCarInfo.initui(vo.attrvalue1, tstime.substring(0,tstime.lastIndexOf(",")).split(","));
+			
+				var tstime= vo.validStartTime.substring(2), tetime= vo.validEndTime.substring(2);
+				 if(vo.attrvalue1==1){
+					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
+				 }else{
+			    	 $scope.validEndTime = tetime; 
+			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+1);
+			    	 releaseCarInfo.initui(vo.attrvalue1, tstime.substring(0,tstime.lastIndexOf(",")).split(","));
+				 }
 			 }
+			 var unita=vo.unit1.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};
+			 var unitb=vo.unit2.split("-"); if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
+			 releaseCarInfo.initui(vo.attrvalue1,undefined);
 		 }else{
-			 if(vo.dataType==2){ releaseCarInfo.initui(vo.attrvalue1,undefined);}
+			 
 			 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 		 }
 	 };
