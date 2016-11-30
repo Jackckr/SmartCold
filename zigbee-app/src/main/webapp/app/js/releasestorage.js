@@ -120,10 +120,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    		$scope.arriveTime =sl2+" "+edtime;
 	    	}else if(attr1==2){
 	    		var spCodesTemp = "";
-	    		 $('#ul_work li[class="active"]').each(function(i,em){
-	    			 debugger;
-	    			 spCodesTemp += ($(em).attr("value")+","); 
-	    			});
+	    		 $('#ul_work li[class="active"]').each(function(i,em){  spCodesTemp += ($(em).attr("value")+",");  });
 	    		 $scope.startTime =sl1+spCodesTemp.substr(0,spCodesTemp.length-1)+" "+sttime;
 	    		 $scope.arriveTime =  sl2+" "+edtime;
 	    	}else if(attr1==3){

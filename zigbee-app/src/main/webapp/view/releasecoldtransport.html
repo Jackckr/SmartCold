@@ -124,9 +124,6 @@
 	                     </select>
 					</div>
 					<i class="iconfont fr moreinfo">&#xe60d;</i>
-                     <div class="opIndex black"><!-- 每天 -->
-						<input class="datainp" id="startTime_day" type="text" placeholder="请选择出发时间"  ng-model="startTime" readonly>
-					</div>
 					<div class="opIndex"><!-- 每周 -->						
 					   <ul id="ul_work" class="weekBox clearfix black">
 					   		<li class="active" value="一">一</li>
@@ -193,12 +190,7 @@
                 $(this).parent().hide();
             });
             $("#ul_work li").click(function(event){
-            	var em=$(this);
-               if(em.hasClass("active")){
-            	   em.removeClass("active");
-               }else{
-            	   em.addClass("active");
-               }
+            	var em=$(this); if(em.hasClass("active")){ em.removeClass("active"); }else{ em.addClass("active"); }
             });
             var releaseCarInfo={
             		changtimemode:function(em){
