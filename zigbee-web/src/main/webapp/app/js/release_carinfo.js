@@ -64,8 +64,7 @@ var releaseCarInfo = {
             } 
         });
     },
-   changtimemode:function(em){
-    	var val= $(em).val();
+   changtimemode:function(val){
     	$("#st_sttime,#en_endtime").find(".obj_hide").hide();
     	$("#st_sttime .time_mod"+val).show();
     	$("#en_endtime .time_mod"+val).show();

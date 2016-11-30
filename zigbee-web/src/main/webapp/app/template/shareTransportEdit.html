@@ -87,13 +87,13 @@
 				<div class="pull-left col-sm-4 control-label " style="padding-right: 0">发车时间:</div>
 				<div class="pull-left" style="margin-left: 20px;">
 				   <div id="st_sttime" class="clearfix" style="width: 600px;display: -moz-box;"> 
-	                     <select id="sl_attrvalue1"  name="attrvalue1"   class="form-control pull-left" style="width:80px;margin-right:5px;" onchange="releaseCarInfo.changtimemode(this);">
+	                     <select id="sl_attrvalue1"  ng-model="attrvalue1"    class="form-control pull-left" style="width:80px;margin-right:5px;" onchange="releaseCarInfo.changtimemode(this.value);">
 	                         <option value="1">每天</option>
 	                         <option value="2">每周</option>
 	                         <option value="3">单次</option>
 	                     </select>
 						  <div  class="btn-group shar_none obj_hide time_mod2 pull-left clearfix" data-toggle="buttons" style="margin-right:5px;">
-							   <label class="btn btn-default" style="border-radius:5px 0px 0px 5px;"><input type="checkbox" class="wk_erw" value="-">一</label>
+							   <label class="btn btn-default" style="border-radius:5px 0px 0px 5px;"><input type="checkbox" class="wk_erw" value="一">一</label>
 							   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="二">二 </label>
 							   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="三">三</label>
 							   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="四">四</label>
@@ -114,7 +114,7 @@
 					<div class="pull-left col-sm-4 control-label " style="padding-right: 0">到达时间:</div>
 					<div class="pull-left" style="margin-left: 20px;">
 		                 <div style="width: 600px;"> 
-		                     <select id="sl_attrvalue2"  name="attrvalue2" class="form-control  shar_none obj_hide time_mod1 time_mod2" style="width:80px;" >
+		                     <select id="sl_attrvalue2"  ng-model="attrvalue2"  class="form-control  shar_none obj_hide time_mod1 time_mod2" style="width:80px;" >
 		                         <option value="1">当天</option>
 		                         <option value="2">次日</option>
 		                     </select>
@@ -123,36 +123,6 @@
 		                 </div>
 		              </div>
 				</li>
-			<!-- <li class="bg">
-				<label for="arrow"><em>*</em>出发地:</label>
-				<select id="stprovince" ng-model="stprovinceID"
-					ng-disabled="editable" name="provinceId"
-					ng-change="stprovinceSelected(stprovinceID)"
-					ng-options="x.provinceId as x.provinceName for x in provinces" style="width:220px;"></select>
-				<select id="stcity" ng-model="stcityID" name="cityid"
-					ng-disabled="editable" ng-change="citySelected(stcityID)"
-					ng-options="x.cityID as x.cityName for x in stcitys" style="width:220px;margin-left: 5px;"></select><br/>
-				<input type="text" placeholder="请输入详细地址" ng-model="staddress" style="margin-left: 145px;"/>
-			</li>
-			<li>
-				<label for="startTime"><em>*</em>发车时间:</label>
-				<input type="text" id="startTime" placeholder="请选择出发时间" class="kbtn" ng-model="validStartTime" />
-			</li>
-			<li class="bg">
-				<label for="arrow"><em>*</em>目的地:</label>
-				<select id="toprovince" ng-model="toprovinceID"
-					ng-disabled="editable" name="provinceId"
-					ng-change="toprovinceSelected(toprovinceID)"
-					ng-options="x.provinceId as x.provinceName for x in provinces" style="width:220px;"></select>
-				<select id="tocity" ng-model="tocityID" name="cityid"
-					ng-disabled="editable" ng-change="citySelected(tocityID)"
-					ng-options="x.cityID as x.cityName for x in tocitys" style="width:220px;margin-left: 5px;"></select><br/>
-					<input type="text" placeholder="请输入详细地址" ng-model="toaddress"  style="margin-left: 145px;" />
-			</li>
-			<li>
-				<label for="arriveTime"><em>*</em>到达时间:</label>
-				<input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="validEndTime" />
-			</li> -->
 			<li>
 				<label for="phone"><em>*</em>联系电话:</label>
 				<input type="text" name="telephone" id="phone" ng-model="telephone" />

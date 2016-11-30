@@ -1,19 +1,51 @@
 coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
 	$scope.totalfiles = [];
+	 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  	});  
+	 $scope.initData=function(vo){
+		 if(vo.dataType==2){
+			 releaseCarInfo.changtimemode(vo.attrvalue1);
+			 if(vo.attrvalue1==3){
+				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
+			 }else{
+				var tstime= vo.validStartTime.substring(2), tetime= vo.validEndTime.substring(2);
+				 if(vo.attrvalue1==1){
+					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
+				 }else{
+			    	 $scope.validEndTime = tetime; 
+			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+1);
+			    	var work= tstime.substring(0,tstime.lastIndexOf(",")).split(",");
+			    	if(work&&work!=""){ 
+			    		$.each(work, function(i, vo){ 
+			    		    var em=	$("#st_sttime input:checkbox[value="+vo+"]");
+			    			em.attr("checked"); 
+			    			em.parent().addClass("active");
+			    			});
+				    };
+			    }
+			 }
+			 var unita=vo.unit1.split("-"),unitb=vo.unit2.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};  if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
+			 $("#txt_sattim").val( $scope.validStartTime );  $("#txt_endtim").val( $scope.validEndTime );
+		 }else{
+			 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
+		 }
+		 
+	 };
+	 
 	if($stateParams.shareID!=''&&$stateParams.shareID!=undefined){
 	 $http.get('/i/ShareRdcController/getSEByIDForEdit', {
          params: {
              "id": $stateParams.shareID
          }
      }).success(function (data) {
+    	 $scope.initData(data.entity);
     	 $scope.rdcsharedto = data.entity;
     	 $scope.typeCode = $scope.rdcsharedto.typeCode;
     	 $scope.title = $scope.rdcsharedto.title;
     	 $scope.telephone = $scope.rdcsharedto.telephone;
-    	 $scope.validStartTime = $scope.rdcsharedto.validStartTime;
-    	 $scope.validEndTime = $scope.rdcsharedto.validEndTime;
-    	 var stentime =  $scope.validStartTime + "-" + $scope.validEndTime;
-    	 $("#reservationtime").val(stentime);
+//    	 $scope.validStartTime = $scope.rdcsharedto.validStartTime;
+//    	 $scope.validEndTime = $scope.rdcsharedto.validEndTime;
+//    	 var stentime =  $scope.validStartTime + "-" + $scope.validEndTime;
+//    	 $("#reservationtime").val(stentime);
     	 $scope.note = $scope.rdcsharedto.note;
     	 $scope.unitprice = $scope.rdcsharedto.unitPrice;
     	 $scope.codeLave11 = $scope.rdcsharedto.codeLave1;
@@ -31,6 +63,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
     	 $scope.manageType = parseInt($scope.rdcsharedto.codeLave1);
     	 $scope.unit = $scope.rdcsharedto.unit;
     	 $scope.totalfiles = $scope.rdcsharedto.files;
+    	 $scope.attrvalue1= $scope.rdcsharedto.attrvalue1;
+    	 $scope.attrvalue2= $scope.rdcsharedto.attrvalue2;
     	 if($scope.totalfiles==undefined)
     		 $scope.totalfiles = [];
     	 $scope.provinceSelected();
@@ -229,33 +263,23 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    
 	    
 		$scope.carSubmit = function(){
-			var attr1=$("#sl_attrvalue1").val();
-	    	var sl1= $("#sl_attrvalue1").find("option:selected").text();
-	    	var sl2= $("#sl_attrvalue2").find("option:selected").text();
+			var attr1=$("#sl_attrvalue1").val(),attr2=$("#sl_attrvalue2").val(),sttime=$("#txt_sattim").val(), edtime=$("#txt_endtim").val();
+	    	var sl1= $("#sl_attrvalue1").find("option:selected").text(),sl2= $("#sl_attrvalue2").find("option:selected").text();
 	    	if(attr1==1){
-	    		$scope.validStartTime = sl1+" "+$("#txt_sattim").val();
-	    		$scope.validEndTime =   sl2+" "+$("#txt_endtim").val();
+	    		$scope.startTime =sl1+" "+sttime;
+	    		$scope.arriveTime =sl2+" "+edtime;
 	    	}else if(attr1==2){
 	    		var spCodesTemp = "";
 	    		 $('input:checkbox[class="wk_erw"]:checked').each(function(i){spCodesTemp += ($(this).val()+","); });
-	    		 $scope.validStartTime =sl1+spCodesTemp.substr(0,spCodesTemp.length-1)+" "+$("#txt_sattim").val();
-	    		 $scope.validEndTime =  sl2+" "+$("#txt_endtim").val();
+	    		 $scope.startTime =sl1+spCodesTemp.substr(0,spCodesTemp.length-1)+" "+sttime;
+	    		 $scope.arriveTime =  sl2+" "+edtime;
 	    	}else if(attr1==3){
-	    		     $scope.validEndTime = $("#txt_sattim").val(); 
-	        		 $scope.validStartTime =$("#txt_endtim").val();
+	    		$scope.startTime =sttime;  $scope.arriveTime= edtime;
 	    	} 
-			if($scope.staddress!=undefined){
-				var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
-			}
-			else{
-				var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
-			}
-			if($scope.toaddress!=undefined){
-				var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
-			}
-			else{
-				var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
-			}
+			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
+			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
+			if($scope.staddress){stplace+='-'+$scope.staddress;}
+			if($scope.toaddress){toplace+='-'+$scope.toaddress;}
 			if(checkCarSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
@@ -271,10 +295,12 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					tocityID:$scope.tocityID,
 					unit1:stplace,
 					unit2:toplace,
-					validStartTime:$scope.validStartTime,
-					validEndTime : $scope.validEndTime,
+					validStartTime:$scope.startTime,
+					validEndTime : $scope.arriveTime,
 					telephone:$scope.telephone,
 					note : $scope.note,
+					 attrvalue1:attr1,
+	    	         attrvalue2: attr2
 			};
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
@@ -396,20 +422,20 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	            alert("请填写标记<em>*</em>的必选项再提交哦");
 	        }
 		}
-		 $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
-		 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
-		      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
-		      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){
-		    	  if($("#sl_attrvalue1").val()=='3'){
-			    		 $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
-			    	 }else{
-			    		 if($("#sl_attrvalue2").val()==1){  
-				    		  $("#txt_endtim").datetimepicker("setEndDate",'1899-12-31 23:59:59');
-				    		  $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
-				    	  }else{
-				    		  $("#txt_endtim").datetimepicker("setStartDate",null);
-				    	  } 
-			    	 }
-		      });
-		});  
+//		 $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
+//		 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
+//		      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
+//		      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){
+//		    	  if($("#sl_attrvalue1").val()=='3'){
+//			    		 $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+//			    	 }else{
+//			    		 if($("#sl_attrvalue2").val()==1){  
+//				    		  $("#txt_endtim").datetimepicker("setEndDate",'1899-12-31 23:59:59');
+//				    		  $("#txt_endtim").datetimepicker("setStartDate",$("#txt_sattim").val());
+//				    	  }else{
+//				    		  $("#txt_endtim").datetimepicker("setStartDate",null);
+//				    	  } 
+//			    	 }
+//		      });
+
 });
