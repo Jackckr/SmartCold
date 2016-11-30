@@ -104,8 +104,8 @@ div.select_2 select{
 .searchImg{
     position: absolute;
     top: 0;
-    right: 20px;
-    line-height: 32px;
+    right: 5px;
+    line-height: 28px;
 }
 .searchImg span{
     cursor: pointer;
