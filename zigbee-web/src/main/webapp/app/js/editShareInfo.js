@@ -12,8 +12,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
 				 }else{
 			    	 $scope.validEndTime = tetime; 
-			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+1);
-			    	var work= tstime.substring(0,tstime.lastIndexOf(",")).split(",");
+			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
+			    	var work= tstime.substring(0,tstime.lastIndexOf(",")+2).split(",");
 			    	if(work&&work!=""){ 
 			    		$.each(work, function(i, vo){ 
 			    		    var em=	$("#st_sttime input:checkbox[value="+vo+"]");
