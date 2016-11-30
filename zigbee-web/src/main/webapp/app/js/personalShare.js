@@ -61,7 +61,7 @@ coldWeb.controller('personalShare', function ($rootScope, $scope, $state, $cooki
     				'uid':$rootScope.user.id
     			}
     		}).success(function (data) {
-    				alert("删除成功");
+    				//alert("删除成功");
     				$state.reload(); 
             });
     	}

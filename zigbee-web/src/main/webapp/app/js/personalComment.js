@@ -49,7 +49,7 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
     				'commentID':commentID
     			}
     		}).success(function (data) {
-				alert("删除成功");
+				//alert("删除成功");
 				$state.reload(); 
         });
     	}

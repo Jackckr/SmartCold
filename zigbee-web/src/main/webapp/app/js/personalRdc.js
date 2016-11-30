@@ -51,7 +51,7 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
 	    				'rdcID':rdcID
 	    			}
 	    		}).success(function (data) {
-    				alert("删除成功");
+    				//alert("删除成功");
     				$state.reload(); 
             });
 	    	}

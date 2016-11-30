@@ -42,7 +42,7 @@ coldWeb.controller('personalMessage', function ($rootScope, $scope, $state, $coo
 	    				'msgID':msgID
 	    			}
 	    		}).success(function (data) {
-    				alert("删除成功");
+    				//alert("删除成功");
     				$state.reload(); 
             });
 	    	}

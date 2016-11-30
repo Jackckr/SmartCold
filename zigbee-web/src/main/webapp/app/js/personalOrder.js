@@ -52,7 +52,7 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
     				'orderID':orderID
     			}
     		}).success(function (data) {
-				alert("删除成功");
+				//alert("删除成功");
 				$state.reload(); 
         });
     	}

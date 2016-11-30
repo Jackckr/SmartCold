@@ -257,11 +257,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
 			}
 			if(checkCarSubmit()){
-	        	/*layer.open({
-	        		type: 2
-	        		,content: '努力加载中~~~'
-	        		,shadeClose:false
-			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -290,16 +285,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		    }).then(function (resp) {
 		    	alert(resp.data.message);
 		    	window.location.href ="#personalShare"; 
-		    	//layer.open({content: resp.data.message,btn: '确定'});
-		    	/*layer.closeAll();
-		    	 layer.open({
-				    content: resp.data.message
-				    ,btn: '确定'
-				    ,shadeClose:false
-				    ,yes:function(){
-				    	window.location.href ="coldtransportlist.html"; 
-				    }
-				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -309,7 +294,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			}
 			else {
 	            alert("请填写标记<em>*</em>的必选项再提交哦");
-	            //layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 	    
@@ -325,11 +309,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkGoodsSubmit()){
-	        	/*layer.open({
-	        		type: 2
-	        		,content: '努力加载中~~~'
-	        		,shadeClose:false
-			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -355,17 +334,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		        data: data
 		    }).then(function (resp) {
 		    	alert(resp.data.message);
-		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	window.location.href ="#personalShare";
-		    	/*layer.closeAll();
-		    	layer.open({
-				    content: resp.data.message
-				    ,btn: '确定'
-				    ,shadeClose:false
-				    ,yes:function(){
-				    	window.location.href ="goodslist.html"; 
-				    }
-				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -375,7 +344,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			}
 			else {
 	            alert("请填写标记<em>*</em>的必选项再提交哦");
-	            //layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 		
@@ -391,11 +359,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkStorageSubmit()){
-	        	/*layer.open({
-	        		type: 2
-	        		,content: '努力加载中~~~'
-	        		,shadeClose:false
-			    });*/
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -421,17 +384,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 		        data: data
 		    }).then(function (resp) {
 		    	alert(resp.data.message);
-		    	//layer.open({content:resp.data.message,btn: '确定'});
 		    	window.location.href ="#personalShare"; 
-		    	/*layer.closeAll();
-		    	layer.open({
-				    content: resp.data.message
-				    ,btn: '确定'
-				    ,shadeClose:false
-				    ,yes:function(){
-				    	window.location.href ="user-myrelease.html"; 
-				    }
-				  });*/
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -441,7 +394,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			}
 			else {
 	            alert("请填写标记<em>*</em>的必选项再提交哦");
-	            // layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 		 $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
@@ -459,6 +411,5 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 				    	  } 
 			    	 }
 		      });
-//			  $('#txt_sattim,#txt_endtim').datetimepicker('update', new Date());
 		});  
 });
