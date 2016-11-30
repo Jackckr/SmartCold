@@ -2,7 +2,7 @@
     margin-top: 60px;
 }
 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.nav, .pagination, .panel-title a { cursor: pointer; }
 .popover-large + .popover {
     width: 300px !important;
     max-width: 300px !important;
@@ -111,4 +111,19 @@ ul.rating {
 }
 h4.text-gray{
 	min-height:38px;
+}
+/*banner*/
+#carousel .carousel-control i{
+	position: absolute;
+    top: 50%;
+    z-index: 5;
+    width: 80px;
+    height: 80px;
+    margin-top: -40px;
+    margin-left: -40px;
+    font-size: 60px;
+    line-height: 80px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,.6);
 }
