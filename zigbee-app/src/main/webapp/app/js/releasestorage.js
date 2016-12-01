@@ -175,7 +175,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 						attrvalue2:attr2//设置到达时间类型
 				};
 				var sdata  = JSON.stringify(simdata);
-				alert(sdata );
 				var data = {data:sdata, "files":$scope.totalfiles};
 				Upload.upload({url: ER.root+"/i/ShareRdcController/shareFreeRelease",  headers :{ 'Content-Transfer-Encoding': 'utf-8' },  data: data}).then(function (resp) {
 			    	//alert(resp.data.message);

@@ -746,4 +746,9 @@ em{
 	line-height: 1.5rem;
 	font-size: .75rem;
 }
-
+#sl_attrvalue2{
+	width:30%;
+	float: left;
+	text-indent: 0.7rem;
+	border:0;
+}

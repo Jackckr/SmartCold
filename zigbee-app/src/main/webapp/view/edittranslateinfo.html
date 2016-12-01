@@ -24,6 +24,43 @@
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/editshareinfo.js"></script>
+<script type="text/javascript">
+	var releaseCarInfo={
+			initui:function(attrvalue1,work){
+				$("#ul_work li").click(function(event){
+					$(this).toggleClass("active"); 
+				});
+				if(work&&work!=""){ $("#ul_work li").removeClass("active");  $.each(work, function(i, vo){ if(vo!=""&&vo!=" "){ $("#ul_work li[value="+vo+"]").addClass("active"); } });}
+				if(attrvalue1==3){
+					$("#ul_work,#sl_attrvalue2").hide();
+					$("#startTime,#arriveTime").jeDate({isTime:true,format:"YYYY-MM-DD hh:mm"});
+				}else{
+					$("#sl_attrvalue2").show(); 
+					$("#startTime,#arriveTime").jeDate({isTime:true,format:"hh:mm"});
+					if(attrvalue1==2){
+						$("#ul_work").show(); 
+				   }else{
+					   $("#ul_work").hide();
+				   }
+				}
+			},
+			changtimemode:function(val){
+			    $("#startTime,#arriveTime").remove(); 
+		        $("#ul_work").after("<input  id='startTime' class='datainp'  type='text' placeholder='请选择出发时间'  readonly>");
+		        $("#sl_attrvalue2").after("<input  id='arriveTime' class='datainp'  type='text' placeholder='请选择结束时间'   readonly "+(val==3?"":"style='width:70%;float: left;'")+">");
+		        var form=val==3?"YYYY-MM-DD hh:mm":"hh:mm";
+		        var start = { format: form, minDate: $.nowDate(0),   isinitVal:true,  initAddVal:[2,"hh"], choosefun: function(elem,datas){end.minDate = datas;  }};
+			    var end = { format: form, minDate: $.nowDate(0),isinitVal:true,initAddVal:[4,"hh"],choosefun: function(elem,datas){ start.maxDate = datas;}};
+		    	if(val==3){
+		    		$("#sl_attrvalue2,#ul_work").hide(); $("#startTime,#arriveTime").val("");
+		    	}else{
+		    		$("#sl_attrvalue2").show();
+		    		if(val==2){$("#ul_work").show();}else{$("#ul_work").hide();} $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
+		    	}
+		    	$('#startTime').jeDate(start); $('#arriveTime').jeDate(end);
+			}	
+	};
+	</script>
 </head>
 <body ng-app="app" ng-controller="ctrl">
 	<!-- header -->
@@ -138,7 +175,8 @@
 					   		<li value="六">六</li>
 					   		<li value="日">日</li>
 					   </ul>
-						<input  id="startTime" class="kbtn"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly>
+<!-- 						<input  id="startTime" class="kbtn"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly> -->
+						<input  id="startTime" class="datainp"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly>
 					</div>
                  </li>
                  <li class="bg">
@@ -156,13 +194,13 @@
                  <li>
                      <label for="arriveTime">到达时间</label><em>*</em>
                      <div class="mySelect">
-                        <select id="sl_attrvalue2"  ng-model="attrvalue2" class="form-control " style="width:25%;float: left;" >
+                        <select id="sl_attrvalue2"  ng-model="attrvalue2" class="form-control ">
 		                         <option value="1">当天</option>
 		                         <option value="2">次日</option>
 		                 </select>
-						<input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="validEndTime" style="width:70%;float: left;"/>
+						<input type="text" id="arriveTime" placeholder="请选择到达时间" class="datainp" ng-model="validEndTime"  style="width:60%;float: left;margin-left: 0;"/>
 					</div>
-					<i class="iconfont fr">&#xe63a;</i>
+<!-- 					<i class="iconfont fr">&#xe63a;</i> -->
                     
                  </li>
 				<li><label for="phone">联系电话</label><em>*</em>
@@ -178,5 +216,6 @@
         <button class="mybtn" ng-click="carSubmit()">确认修改</button>
 	</section>
 	<div id="datePlugin"></div>
+	
 </body>
 </html>

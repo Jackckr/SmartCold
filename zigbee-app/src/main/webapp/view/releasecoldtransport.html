@@ -154,11 +154,11 @@
                  <li class="bg">
                      <label for="arriveTime">到达时间</label><em>*</em>
                      <div id="eiv_endTime" class="mySelect">
-                         <select id="sl_attrvalue2"  name="attrvalue2" class="form-control " style="width:25%;float: left;" >
+                         <select id="sl_attrvalue2"  name="attrvalue2" class="form-control ">
 		                         <option value="1">当天</option>
 		                         <option value="2">次日</option>
 		                 </select>
-						<input id="arriveTime" class="datainp"  name="validEndTime" type="text" placeholder="请选择结束时间"  value="17:00" readonly style="width:70%;float: left;">
+						<input id="arriveTime" class="datainp"  name="validEndTime" type="text" placeholder="请选择结束时间"  value="17:00" readonly style="width:60%;float: left;margin-left: 0;">
 					</div>
 				</li>
 				<li><label for="phone">联系电话</label><em>*</em>
@@ -190,7 +190,7 @@
                 $(this).parent().hide();
             });
             $("#ul_work li").click(function(event){
-            	var em=$(this); if(em.hasClass("active")){ em.removeClass("active"); }else{ em.addClass("active"); }
+            	$(this).toggleClass("active"); 
             });
             var releaseCarInfo={
             		changtimemode:function(em){
