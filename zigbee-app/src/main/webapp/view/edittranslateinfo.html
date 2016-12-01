@@ -24,43 +24,6 @@
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/editshareinfo.js"></script>
-<script type="text/javascript">
-	var releaseCarInfo={
-			initui:function(attrvalue1,work){
-				$("#ul_work li").click(function(event){
-					$(this).toggleClass("active"); 
-				});
-				if(work&&work!=""){ $("#ul_work li").removeClass("active");  $.each(work, function(i, vo){ if(vo!=""&&vo!=" "){ $("#ul_work li[value="+vo+"]").addClass("active"); } });}
-				if(attrvalue1==3){
-					$("#ul_work,#sl_attrvalue2").hide();
-					$("#startTime,#arriveTime").jeDate({isTime:true,format:"YYYY-MM-DD hh:mm"});
-				}else{
-					$("#sl_attrvalue2").show(); 
-					$("#startTime,#arriveTime").jeDate({isTime:true,format:"hh:mm"});
-					if(attrvalue1==2){
-						$("#ul_work").show(); 
-				   }else{
-					   $("#ul_work").hide();
-				   }
-				}
-			},
-			changtimemode:function(val){
-			    $("#startTime,#arriveTime").remove(); 
-		        $("#ul_work").after("<input  id='startTime' class='datainp'  type='text' placeholder='请选择出发时间'  readonly>");
-		        $("#sl_attrvalue2").after("<input  id='arriveTime' class='datainp'  type='text' placeholder='请选择结束时间'   readonly "+(val==3?"":"style='width:70%;float: left;'")+">");
-		        var form=val==3?"YYYY-MM-DD hh:mm":"hh:mm";
-		        var start = { format: form, minDate: $.nowDate(0),   isinitVal:true,  initAddVal:[2,"hh"], choosefun: function(elem,datas){end.minDate = datas;  }};
-			    var end = { format: form, minDate: $.nowDate(0),isinitVal:true,initAddVal:[4,"hh"],choosefun: function(elem,datas){ start.maxDate = datas;}};
-		    	if(val==3){
-		    		$("#sl_attrvalue2,#ul_work").hide(); $("#startTime,#arriveTime").val("");
-		    	}else{
-		    		$("#sl_attrvalue2").show();
-		    		if(val==2){$("#ul_work").show();}else{$("#ul_work").hide();} $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
-		    	}
-		    	$('#startTime').jeDate(start); $('#arriveTime').jeDate(end);
-			}	
-	};
-	</script>
 </head>
 <body ng-app="app" ng-controller="ctrl">
 	<!-- header -->

@@ -243,19 +243,30 @@
                     <label>资质荣誉图：<small class="text-warning">*最多八张</small></label>
                    <label class="pic">
                             <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles" ngf-multiple="true" name="honorfiles">                       
-                    </label>                
+                    </label> 
+                    <output class="img_list">
+						<span ng-repeat="honorfile in totalhonorfiles"><img
+							class="thumb" ngf-src="honorfile" title="{{honorfile}}"><i
+							ng-click="drophonor(honorfile)">×</i></span>
+					</output>               
                 </li>
-                <li>
-                    <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px">
-                        <span ng-bind="honorfile.name"></span>
-                        <i class="fa fa-times danger" style="margin-right:10px;color:red;" ng-click="drophonor(honorfile)"></i>
-                    </label>
-                </li>
+<!--                 <li> -->
+<!--                     <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"> -->
+<!--                         <span ng-bind="honorfile.name"></span> -->
+<!--                         <i class="fa fa-times danger" style="margin-right:10px;color:red;" ng-click="drophonor(honorfile)"></i> -->
+<!--                     </label> -->
+<!--                 </li> -->
                 <li>
                     <label>功能平面布置图：</label>
-                    <div class="mySelect">
-                      <input type="file" ng-model="arrangePic" name="arrangePic"  ngf-select="addArrangePic($arrangePic)">
- 					</div>
+                   <label class="pic">
+                      <input type="file" ng-model="arrangePic" name="arrangePic"  ngf-select="addArrangePic($files)">
+ 					</label>
+ 					<output class="img_list">
+						<span ng-repeat="arrangePic in arrangePics">
+							<img class="thumb" ngf-src="arrangePic" title="{{arrangePic.name}}">
+							<i ng-click="dropArrangePic(arrangePic)">×</i>
+						</span>
+					</output>
                 </li>
                 <li style="border:0;">
                     <label>冷库图片：<small class="text-warning">*最多五张</small></label>
