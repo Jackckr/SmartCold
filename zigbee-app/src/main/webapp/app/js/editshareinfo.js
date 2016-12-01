@@ -16,7 +16,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 }else{
 			    	 $scope.validEndTime = tetime; 
 			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
-			    	 work=tstime.substring(0,tstime.lastIndexOf(",")).split(",");
+			    	 work=tstime.substring(0,tstime.lastIndexOf(" ")).split(",");
 				 }
 			 }
 			 releaseCarInfo.initui(vo.attrvalue1,work);
