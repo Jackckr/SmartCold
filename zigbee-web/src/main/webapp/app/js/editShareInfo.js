@@ -7,20 +7,21 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			 if(vo.attrvalue1==3){
 				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 }else{
-				var tstime= vo.validStartTime.substring(2), tetime= vo.validEndTime.substring(2);
+				var tstime= vo.validStartTime.substring(2).trim(), tetime= vo.validEndTime.substring(2).trim();
 				 if(vo.attrvalue1==1){
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
 				 }else{
 			    	 $scope.validEndTime = tetime; 
-			    	 $scope.validStartTime = tstime;
 			    	 if(tstime.lastIndexOf(",")!=-1){
-			    		 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
+			    		 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+1);
 			    		 var work= tstime.substring(0,tstime.lastIndexOf(",")+2).trim().split(",");
-					    	if(work&&work!=""&&work!=" "){ 
+					     if(work&&work!=""&&work!=" "){ 
 					    		$.each(work, function(i, vo){ 
 					    			if(vo!=""&&vo!=" "){ var em=	$("#st_sttime input:checkbox[value="+vo+"]"); em.attr("checked");  em.parent().addClass("active"); }
 					    		 });
-						    };
+						  };
+			    	 }else{
+			    		 $scope.validStartTime = tstime;
 			    	 }
 			    }
 			 }
