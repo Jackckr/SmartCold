@@ -12,15 +12,16 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
 				 }else{
 			    	 $scope.validEndTime = tetime; 
-			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
-			    	var work= tstime.substring(0,tstime.lastIndexOf(",")+2).split(",");
-			    	if(work&&work!=""){ 
-			    		$.each(work, function(i, vo){ 
-			    		    var em=	$("#st_sttime input:checkbox[value="+vo+"]");
-			    			em.attr("checked"); 
-			    			em.parent().addClass("active");
-			    			});
-				    };
+			    	 $scope.validStartTime = tstime;
+			    	 if(tstime.lastIndexOf(",")!=-1){
+			    		 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
+			    		 var work= tstime.substring(0,tstime.lastIndexOf(",")+2).trim().split(",");
+					    	if(work&&work!=""&&work!=" "){ 
+					    		$.each(work, function(i, vo){ 
+					    			if(vo!=""&&vo!=" "){ var em=	$("#st_sttime input:checkbox[value="+vo+"]"); em.attr("checked");  em.parent().addClass("active"); }
+					    		 });
+						    };
+			    	 }
 			    }
 			 }
 			 var unita=vo.unit1.split("-"),unitb=vo.unit2.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};  if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
@@ -31,7 +32,6 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 $("#reservationtime").val($scope.validStartTime+" - "+ $scope.validEndTime);
 		 }
-		 
 	 };
 	 
 	if($stateParams.shareID!=''&&$stateParams.shareID!=undefined){
