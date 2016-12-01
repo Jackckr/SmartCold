@@ -4,7 +4,7 @@
 var releaseItem = {
 	$scope:null,
     initvalidate: function() { //验证必填项
-        jQuery.validator.addMethod("isMobile", function(value, element) {var length = value.length; var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;return this.optional(element) || (length == 11 && mobile.test(value));},"请正确填写您的手机号码");
+        jQuery.validator.addMethod("isMobile", function(value, element) {var length = value.length; var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;return this.optional(element) || (length == 11 && mobile.test(value));},"请正确填写您的手机号码");
         $("#release_item_from").validate({
             rules: {
                 title: { required: true},provinceId: { required: true},city: { required: true },codeLave1: { required: true },

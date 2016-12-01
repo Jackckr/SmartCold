@@ -10,7 +10,7 @@ var releaseCarInfo = {
         return em.optional(element) || (length ==vlength && reg.test(value));
 	},
     initvalidate: function() { //验证必填项
-        jQuery.validator.addMethod("isMobile", function(value, element) {var length = value.length; var mobile = /^1[3|4|5|8][0-9]\d{4,8}$/;return this.optional(element) || (length == 11 && mobile.test(value));},"请正确填写您的手机号码");
+        jQuery.validator.addMethod("isMobile", function(value, element) {var length = value.length; var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;return this.optional(element) || (length == 11 && mobile.test(value));},"请正确填写您的手机号码");
         jQuery.validator.addMethod("isHHmm",   function(value, element) {
         	var vis= releaseCarInfo.vistHHMM(this,value, element);
         	if(vis&&$("#sl_attrvalue1").val()==2){
