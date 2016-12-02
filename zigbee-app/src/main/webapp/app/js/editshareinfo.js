@@ -50,7 +50,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
 				 }else{
 			    	 $scope.validEndTime = tetime; 
-			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
+//			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
+			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")).trim();
 			    	 work=tstime.substring(0,tstime.lastIndexOf(" ")).split(",");
 				 }
 			 }
@@ -306,11 +307,17 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if($scope.staddress){stplace+='-'+$scope.staddress;}
 			if($scope.toaddress){toplace+='-'+$scope.toaddress;}
 			if(checkCarSubmit()){
+				if(parseFloat($scope.unitprice).toFixed(2).length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
 			    });
+	        	
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,
@@ -349,8 +356,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    });
 			}
 			else {
-	            //alert("请填写标记*的必选项在提交!");
-	            layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
+		        	layer.open({content:'请填写标记<em>*</em>的必选项再提交哦',btn: '确定'});
 	        }
 		}
 	    
@@ -363,6 +369,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkGoodsSubmit()){
+				if($scope.sqm.length > 11){
+		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
+		        }else if(parseFloat($scope.unitprice).toFixed(2).length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
@@ -426,11 +439,19 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
 			if(checkStorageSubmit()){
+				if($scope.sqm.length > 11){
+		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
+		        }else if(parseFloat($scope.unitprice).toFixed(2).length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
 			    });
+        	
 			var simdata = {
 					id:$scope.rdcsharedto.id,
 					uid:window.user.id,

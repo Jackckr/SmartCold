@@ -151,6 +151,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
 			if(checkCarSubmit()){
+				if($scope.unitPrice.length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({ type: 2 ,content: '努力加载中~~~' ,shadeClose:false});
 				var simdata = {
 						title:$scope.title,
@@ -213,11 +218,19 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			var vo = {}; 
 			if(checkGoodsSubmit()){
+				if($scope.sqm.toString().length > 11){
+		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
+		        }else if($scope.unitprice.length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
 			    });
+        	
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,
@@ -284,6 +297,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			var vo = {}; 
 			if(checkStorageSubmit()){
+				if($scope.sqm.toString().length > 11){
+		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
+		        }else if(parseFloat($scope.unitprice).length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'

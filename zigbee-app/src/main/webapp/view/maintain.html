@@ -127,7 +127,7 @@
 							<td>{{maintenance1.fixtime | date:'yyyy-MM-dd' }}</td>
 							<td class="myNote">{{maintenance1.detail}}</td>
 							<td class="myNote">{{maintenance1.note}}</td>
-							<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td>
+							<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-blur="change(maintenance1.id,maintenance1.appraise)"></textarea></td>
 							<td class="text-center">
 								<button class="btn btn-danger"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
 							</td>

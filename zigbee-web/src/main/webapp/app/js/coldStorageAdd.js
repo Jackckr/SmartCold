@@ -125,7 +125,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     $scope.capacity5 = 0;
     $scope.totalfiles = [];
     $scope.totalhonorfiles = [];
-
+    $scope.arrangePics = [];
     $scope.addFiles = function (files) {
         if($scope.totalfiles.length + files.length > 5){
             alert("最多上传五张图片");
@@ -141,6 +141,11 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
     }
     $scope.addArrangePic = function (arrangePic) {
+    	angular.forEach($scope.arrangePics,function(item, key){
+            if(item == file){
+                $scope.arrangePics.splice(key,1);
+            }
+        })
     }
 
     $scope.drop = function(file){
