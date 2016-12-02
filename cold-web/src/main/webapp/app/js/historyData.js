@@ -68,6 +68,9 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
    $scope.expdata=function(){//导出数据
 	   $scope.hidefilter();
 		if($scope.oids&&$scope.oids.length>0){
+			bothTime = $scope.picktime.split(" - ");
+			$scope.begin = bothTime[0],$scope.end = bothTime[1];
+			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
 			$("#but_expdata").attr("disabled",true);
 	        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/baseInfo/expHistoryData').attr('id', "expdataform");
 	        expfrom.attr("Content-Type","application/json;charset=UTF-8");
@@ -92,9 +95,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		if($scope.oids&&$scope.oids.length>0){
 			bothTime = $scope.picktime.split(" - ");
 			$scope.begin = bothTime[0],$scope.end = bothTime[1];
-			if($scope.checktime($scope.begin , $scope.end )){
-				alert("查询区间时间最大为3天！");return;
-			}
+			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
 			lineChart.showLoading({text: '数据加载中……' }); 
 			lineChart.clear(); 
 			$.ajax({

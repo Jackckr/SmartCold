@@ -1139,7 +1139,7 @@
                         }
                     } else if (calendar[row][col] >= this.startDate && calendar[row][col] <= this.endDate) {
                         cname += ' in-range ';
-                        calendar[row][col]._i[5]=this.startDate._i[5]=0;
+//                        calendar[row][col]._i[5]=this.startDate._i[5]=0;
                         if (calendar[row][col].isSame(this.startDate)) { cname += ' start-date '; }
                         if (calendar[row][col].isSame(this.endDate)) { cname += ' end-date '; }
                         
