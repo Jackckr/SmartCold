@@ -270,7 +270,9 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    		$scope.arriveTime =sl2+" "+edtime;
 	    	}else if(attr1==2){
 	    		var spCodesTemp = "";
-	    		 $('input:checkbox[class="wk_erw"]:checked').each(function(i){spCodesTemp += ($(this).val()+","); });
+	    		 $('input:checkbox[class="wk_erw"]').parent('label.active').each(function(i){
+	    			 spCodesTemp += (this.textContent+","); 
+    			 });
 	    		 $scope.startTime =sl1+spCodesTemp.substr(0,spCodesTemp.length-1)+" "+sttime;
 	    		 $scope.arriveTime =  sl2+" "+edtime;
 	    	}else if(attr1==3){
@@ -342,7 +344,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
 					codeLave1:$scope.codeLave11,
-					unit1 : $scope.unit1,
+					unit1 : $("#boss").val(),
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
