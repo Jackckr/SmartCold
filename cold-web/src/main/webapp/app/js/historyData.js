@@ -10,7 +10,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	   function initComplete(data){
 	       $('#reservationtime').daterangepicker( {
 	                   maxDate : moment(), //最大时间
-	                   dateLimit : { days :3 }, //起止时间的最大间隔
+	                   dateLimit : { days :2 }, //起止时间的最大间隔
 	                   showDropdowns : true,
 	                   showWeekNumbers : false, //是否显示第几周
 	                   timePicker : true, //是否显示小时和分钟
@@ -18,7 +18,6 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	                   timePicker12Hour : false, //是否使用12小时制来显示时间
 	                   ranges : {
 //	                	   '最近1小时': [moment().subtract('hours',1), moment()],
-//	                       '最近6小时': [moment().subtract('hours',6), moment()],
 	                       '今日': [moment().startOf('day'), moment()],
 	                       '昨日': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
 	                       '最近3日': [moment().subtract('days', 3), moment()]
@@ -40,24 +39,8 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	                       firstDay : 1
 	                   }
 	               }, function(start, end, label) {$('#reportrange span').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss')); });
-////	               $("#reservationtime").on('show.daterangepicker',function(){
-//			    	   $(".calendar-date td").click(function(event){
-//				    	   debugger;
-//				    	   $(this);
-//				    	   
-//				    	   
-////				       });
-//	       });
-	      
 	   }
-	
 	   initComplete();
-	
-	
-	
-	
-	
-	
 	
 	//开始核心内容
 	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['(°C)','(kWh)','','','(kPa)','(°C)'],type:[1,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};

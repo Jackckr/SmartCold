@@ -818,6 +818,9 @@
                 if (typeof this.dateLimit === 'object') {
                     var maxDate = moment(startDate).add(this.dateLimit).startOf('day');
                     if (endDate.isAfter(maxDate)) {
+                    	maxDate._d.setHours(23); 
+                    	maxDate._d.setMinutes(59);  
+                    	maxDate._d.setSeconds(59);
                         endDate = maxDate;
                     }
                 }
@@ -827,6 +830,9 @@
                 if (typeof this.dateLimit === 'object') {
                     var minDate = moment(endDate).subtract(this.dateLimit).startOf('day');
                     if (startDate.isBefore(minDate)) {
+                    	endDate._d.setHours(23); 
+                    	endDate._d.setMinutes(59);  
+                    	endDate._d.setSeconds(59);
                         startDate = minDate;
                     }
                 }

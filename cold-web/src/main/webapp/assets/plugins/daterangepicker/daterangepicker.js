@@ -818,6 +818,9 @@
                 if (typeof this.dateLimit === 'object') {
                     var maxDate = moment(startDate).add(this.dateLimit).startOf('day');
                     if (endDate.isAfter(maxDate)) {
+//                    	maxDate._d.setHours(23); 
+//                    	maxDate._d.setMinutes(59);  
+//                    	maxDate._d.setSeconds(59);
                         endDate = maxDate;
                     }
                 }
@@ -827,6 +830,9 @@
                 if (typeof this.dateLimit === 'object') {
                     var minDate = moment(endDate).subtract(this.dateLimit).startOf('day');
                     if (startDate.isBefore(minDate)) {
+//                    	endDate._d.setHours(23); 
+//                    	endDate._d.setMinutes(59);  
+//                    	endDate._d.setSeconds(59);
                         startDate = minDate;
                     }
                 }
@@ -1133,8 +1139,10 @@
                         }
                     } else if (calendar[row][col] >= this.startDate && calendar[row][col] <= this.endDate) {
                         cname += ' in-range ';
+                        calendar[row][col]._i[5]=this.startDate._i[5]=0;
                         if (calendar[row][col].isSame(this.startDate)) { cname += ' start-date '; }
                         if (calendar[row][col].isSame(this.endDate)) { cname += ' end-date '; }
+                        
                     }
 
                     var title = 'r' + row + 'c' + col;
@@ -1177,6 +1185,11 @@
 
                 var start = 0;
                 var end = 23;
+                if(side == 'right'&&selected.hour()==0 ){
+                	selected.hour(end);
+                	selected.minute(59);
+                	selected.second(59);
+                }
                 var selected_hour = selected.hour();
                 if (this.timePicker12Hour) {
                     start = 1;
