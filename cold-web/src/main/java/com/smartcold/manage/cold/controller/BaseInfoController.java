@@ -183,6 +183,7 @@ public class BaseInfoController extends BaseController {
 				Date sttime = sdf.parse(startTime);
 				Date edTime = sdf.parse(endTime);
 				int daysBetween = daysBetween(sttime, edTime);
+				if(daysBetween>5){return ResponseData.newFailure("时间范围超过最大允许值!"); }
 				String groupfm = getDateFormat(daysBetween);//用于后期优化
 				HashMap<String, Object> restData = new HashMap<String, Object>();
 				LinkedList<HashMap<String, Object>> restList = new LinkedList<HashMap<String, Object>>();

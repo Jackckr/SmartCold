@@ -3,11 +3,62 @@
  * 历史数据查询
  */
 coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,baseTools) {
-	var lineChart =null;
-	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 
-	$scope.showobjgroup=false,$scope.coldstoragedoor=null;
-	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= $scope.end.substr(0,10)+" 00:00:00",$scope.picktime = $scope.begin + ' - ' + $scope.end;
-	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
+	var lineChart =null,stdate = new Date(); stdate.setHours(stdate.getHours () - 4);
+	$scope.rdcid=window.sessionStorage.smrdcId,$scope.showobjgroup=false,$scope.coldstoragedoor=null;
+	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= baseTools.formatTime(stdate),$scope.picktime = $scope.begin + ' - ' + $scope.end;
+//	 $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss' , timePicker12Hour : false, maxDate : moment(), });
+	   function initComplete(data){
+	       $('#reservationtime').daterangepicker( {
+	                   maxDate : moment(), //最大时间
+	                   dateLimit : { days :3 }, //起止时间的最大间隔
+	                   showDropdowns : true,
+	                   showWeekNumbers : false, //是否显示第几周
+	                   timePicker : true, //是否显示小时和分钟
+	                   timePickerIncrement : 1, //时间的增量，单位为分钟
+	                   timePicker12Hour : false, //是否使用12小时制来显示时间
+	                   ranges : {
+//	                	   '最近1小时': [moment().subtract('hours',1), moment()],
+//	                       '最近6小时': [moment().subtract('hours',6), moment()],
+	                       '今日': [moment().startOf('day'), moment()],
+	                       '昨日': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
+	                       '最近3日': [moment().subtract('days', 3), moment()]
+	                   },
+	                   opens : 'right', //日期选择框的弹出位置
+	                   buttonClasses : [ 'btn btn-default' ],
+	                   applyClass : 'btn-small btn-primary blue',
+	                   cancelClass : 'btn-small',
+	                   format : 'YYYY-MM-DD HH:mm:ss', //控件中from和to 显示的日期格式
+	                   separator : ' - ',
+	                   locale : {
+	                       applyLabel : '确定',
+	                       cancelLabel : '取消',
+	                       fromLabel : '起始时间',
+	                       toLabel : '结束时间',
+	                       customRangeLabel : '自定义',
+	                       daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+	                       monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',  '七月', '八月', '九月', '十月', '十一月', '十二月' ],
+	                       firstDay : 1
+	                   }
+	               }, function(start, end, label) {$('#reportrange span').html(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss')); });
+////	               $("#reservationtime").on('show.daterangepicker',function(){
+//			    	   $(".calendar-date td").click(function(event){
+//				    	   debugger;
+//				    	   $(this);
+//				    	   
+//				    	   
+////				       });
+//	       });
+	      
+	   }
+	
+	   initComplete();
+	
+	
+	
+	
+	
+	
+	
 	//开始核心内容
 	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['(°C)','(kWh)','','','(kPa)','(°C)'],type:[1,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
@@ -56,10 +107,13 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		$scope.hidefilter();
 		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}
 		if($scope.oids&&$scope.oids.length>0){
-			lineChart.showLoading({text: '数据加载中……' }); 
-			lineChart.clear(); 
 			bothTime = $scope.picktime.split(" - ");
 			$scope.begin = bothTime[0],$scope.end = bothTime[1];
+			if($scope.checktime($scope.begin , $scope.end )){
+				alert("查询区间时间最大为3天！");return;
+			}
+			lineChart.showLoading({text: '数据加载中……' }); 
+			lineChart.clear(); 
 			$.ajax({
                 type: "POST",
                 url:"i/baseInfo/getKeyValueDataByFilter",traditional:true,
@@ -109,6 +163,10 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	
 
 	//********************************************************************事件START**********************************************************************
+	$scope.checktime=function(startDate,endDate){
+		var catime =new Date(endDate).getTime()-new Date(startDate).getTime();  
+	    return catime > 259200000; 
+	 };
 	 $scope.slgroupsl=function(e){//点击下拉框事件
 		 $scope.showobjgroup=!$scope.showobjgroup;}
 	 ;
