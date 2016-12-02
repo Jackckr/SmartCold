@@ -151,7 +151,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
 			if(checkCarSubmit()){
-				if(parseFloat($scope.unitPrice).toFixed(2).length>11){
+				if($scope.unitPrice.length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }else if($scope.telephone.trim().length != 11){
 		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
@@ -220,7 +220,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkGoodsSubmit()){
 				if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
-		        }else if(parseFloat($scope.unitprice).toFixed(2).length>11){
+		        }else if($scope.unitprice.length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }else if($scope.telephone.trim().length != 11){
 		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
@@ -299,7 +299,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkStorageSubmit()){
 				if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
-		        }else if(parseFloat($scope.unitprice).toFixed(2).length>11){
+		        }else if(parseFloat($scope.unitprice).length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }else if($scope.telephone.trim().length != 11){
 		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
