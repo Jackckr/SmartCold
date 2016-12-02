@@ -1,11 +1,22 @@
 checkLogin();
-
 var releaseCarInfo={
 		initui:function(attrvalue1,work){
-			$("#ul_work li").click(function(event){var em=$(this); if(em.hasClass("active")){ em.removeClass("active"); }else{ em.addClass("active"); }});
-			$("#startTime,#arriveTime").jeDate({isTime:true,format:"hh:mm"});
-			if(work&&work!=""){ $("#ul_work li").removeClass("active");  $.each(work, function(i, vo){  $("#ul_work li[value="+vo+"]").addClass("active");  });}
-			if(attrvalue1==3){$("#ul_work,#sl_attrvalue2").hide();}else{ $("#sl_attrvalue2").show(); if(attrvalue1==2){$("#ul_work").show(); }else{$("#ul_work").hide();}}
+			$("#ul_work li").click(function(event){
+				$(this).toggleClass("active"); 
+			});
+			if(work&&work!=""){ $("#ul_work li").removeClass("active");  $.each(work, function(i, vo){ if(vo!=""&&vo!=" "){ $("#ul_work li[value="+vo+"]").addClass("active"); } });}
+			if(attrvalue1==3){
+				$("#ul_work,#sl_attrvalue2").hide();
+				$("#startTime,#arriveTime").jeDate({isTime:true,format:"YYYY-MM-DD hh:mm"});
+			}else{
+				$("#sl_attrvalue2").show(); 
+				$("#startTime,#arriveTime").jeDate({isTime:true,format:"hh:mm"});
+				if(attrvalue1==2){
+					$("#ul_work").show(); 
+			   }else{
+				   $("#ul_work").hide();
+			   }
+			}
 		},
 		changtimemode:function(val){
 		    $("#startTime,#arriveTime").remove(); 
@@ -23,33 +34,30 @@ var releaseCarInfo={
 	    	$('#startTime').jeDate(start); $('#arriveTime').jeDate(end);
 		}	
 };
-
-
-
 angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upload, $http) { 
 	 $http.defaults.withCredentials=true;
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	 $scope.initData=function(vo){
 		 if(vo.dataType==2){
+			 var work=undefined;
 			 if(vo.attrvalue1==3){
 				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 }else{
-			
-				var tstime= vo.validStartTime.substring(2), tetime= vo.validEndTime.substring(2);
+				 var unita=vo.unit1.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};
+				 var unitb=vo.unit2.split("-"); if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
+				var tstime= vo.validStartTime.substring(2).trim(), tetime= vo.validEndTime.substring(2).trim();
 				 if(vo.attrvalue1==1){
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
 				 }else{
 			    	 $scope.validEndTime = tetime; 
-			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+1);
-			    	 releaseCarInfo.initui(vo.attrvalue1, tstime.substring(0,tstime.lastIndexOf(",")).split(","));
+			    	 $scope.validStartTime = tstime.substring(tstime.lastIndexOf(" ")+2);
+			    	 work=tstime.substring(0,tstime.lastIndexOf(" ")).split(",");
 				 }
 			 }
-			 var unita=vo.unit1.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};
-			 var unitb=vo.unit2.split("-"); if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
-			 releaseCarInfo.initui(vo.attrvalue1,undefined);
+			 releaseCarInfo.initui(vo.attrvalue1,work);
 		 }else{
-			 
 			 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
+			 releaseCarInfo.initui(vo.attrvalue1,undefined);
 		 }
 	 };
 	 

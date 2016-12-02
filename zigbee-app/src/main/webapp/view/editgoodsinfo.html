@@ -17,6 +17,7 @@
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
         <script type="text/javascript" src="../com/js/layer.js"></script>
+<script type="text/javascript" src="../com/js/jedate/jquery.jedate.js"></script>
 <script type="text/javascript" src="../com/datepicker/date.js"></script>
 <script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
 <script src="../bower_components/angular/angular.min.js"></script>
@@ -45,7 +46,7 @@ $(function() {
       <ul class="imgTable">
 			<li class="imgCell">
 				<a href="javascript:;">
-					<img class="fl" src="{{rdcdto.logo}}">
+					<img class="fl" ng-src="{{rdcdto.logo}}">
 					<div class="">
 						<p class='ellipsis'>{{rdcdto.name}}</p>
 						<p class='position'>

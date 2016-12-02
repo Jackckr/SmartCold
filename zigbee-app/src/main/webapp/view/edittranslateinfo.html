@@ -138,7 +138,8 @@
 					   		<li value="六">六</li>
 					   		<li value="日">日</li>
 					   </ul>
-						<input  id="startTime" class="kbtn"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly>
+<!-- 						<input  id="startTime" class="kbtn"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly> -->
+						<input  id="startTime" class="datainp"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly>
 					</div>
                  </li>
                  <li class="bg">
@@ -156,13 +157,13 @@
                  <li>
                      <label for="arriveTime">到达时间</label><em>*</em>
                      <div class="mySelect">
-                        <select id="sl_attrvalue2"  ng-model="attrvalue2" class="form-control " style="width:25%;float: left;" >
+                        <select id="sl_attrvalue2"  ng-model="attrvalue2" class="form-control ">
 		                         <option value="1">当天</option>
 		                         <option value="2">次日</option>
 		                 </select>
-						<input type="text" id="arriveTime" placeholder="请选择到达时间" class="kbtn" ng-model="validEndTime" style="width:70%;float: left;"/>
+						<input type="text" id="arriveTime" placeholder="请选择到达时间" class="datainp" ng-model="validEndTime"  style="width:60%;float: left;margin-left: 0;"/>
 					</div>
-					<i class="iconfont fr">&#xe63a;</i>
+<!-- 					<i class="iconfont fr">&#xe63a;</i> -->
                     
                  </li>
 				<li><label for="phone">联系电话</label><em>*</em>
@@ -178,5 +179,6 @@
         <button class="mybtn" ng-click="carSubmit()">确认修改</button>
 	</section>
 	<div id="datePlugin"></div>
+	
 </body>
 </html>

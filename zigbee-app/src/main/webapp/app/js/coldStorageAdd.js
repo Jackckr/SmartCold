@@ -60,6 +60,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     $scope.capacity5 = 0;
     $scope.totalfiles = [];
     $scope.totalhonorfiles = [];
+    $scope.arrangePics = [];
     $scope.addFiles = function (files) {
         if($scope.totalfiles.length + files.length > 5){
            // alert("最多上传五张图片");
@@ -70,6 +71,17 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
+    }
+    $scope.addArrangePic= function (files) {
+    	if($scope.arrangePics.length + files.length > 1){
+            //alert("最多上传八张图片");
+        	layer.open({
+                content: '只能上传一张图片哦'
+                ,btn: '确定'
+              });
+            return;
+        }
+        $scope.arrangePics = $scope.arrangePics.concat(files);
     }
     $scope.addHonorFiles = function (files) {
         if($scope.totalhonorfiles.length + files.length > 8){
@@ -86,6 +98,13 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
                 $scope.totalfiles.splice(key,1);
+            }
+        })
+    }
+    $scope.dropArrangePic = function(file){
+        angular.forEach($scope.arrangePics,function(item, key){
+            if(item == file){
+                $scope.arrangePics.splice(key,1);
             }
         })
     }
