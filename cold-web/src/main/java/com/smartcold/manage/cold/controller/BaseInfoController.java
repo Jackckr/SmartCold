@@ -214,7 +214,7 @@ public class BaseInfoController extends BaseController {
 					if (datalist.size() > maxsize) {
 						index = i;
 					}
-					linmap.put("type", "line");
+					linmap.put("type", "line");//type==2||type==3?"bar":line
 					linmap.put("data", datalist);
 					linmap.put("name", oname);
 					if (ismklin != null && ismklin) {
