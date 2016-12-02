@@ -20,7 +20,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	
 	$scope.goaddrdcpag=function(){  $location.path("/coldStorageAdd");  };
 	     // 获取省列表
-    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {  $scope.provinces = data;    });
+    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) { 
+    	$scope.provinces = data;  
+    	
+    });
     // 根据省ID查询城市列表
     $scope.provinceSelected = function () {
         $http.get(ER.root+'/i/city/findCitysByProvinceId', {  params: {  "provinceID": $scope.provinceId }  }).success(function (data) {
@@ -204,8 +207,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if($scope.rdcflag==1)
 			{
 				$scope.rdcID = $scope.rdcdto.id;
+			    $scope.provinceId=$scope.rdcdto.provinceid;
+			    $scope.cityId=$scope.rdcdto.cityid;
 				$scope.rdcAddress = $scope.rdcdto.address;
-				}
+			}
 			var vo = {}; 
 			if(checkGoodsSubmit()){
 	        	layer.open({
