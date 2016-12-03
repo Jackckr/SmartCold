@@ -150,7 +150,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    $scope.addFiles = function (files) {
 			if(files.length==0){return;};
 			var allfiles = $scope.totalfiles.concat(files);
-			if(allfiles.length>10){/*alert("最多选择10张！");*/ layer.open({content: '最多选择10张哦' ,btn: '确定'});return;}
+			if(allfiles.length>10){alert("最多选择10张！"); /*layer.open({content: '最多选择10张哦' ,btn: '确定'});*/return;}
 	        $scope.totalfiles=allfiles; 
 	    };
 	    $scope.drophonor = function(honorfile){
