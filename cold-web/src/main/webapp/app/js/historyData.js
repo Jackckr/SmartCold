@@ -116,7 +116,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	//********************************************************************事件START**********************************************************************
 	$scope.checktime=function(startDate,endDate){
 		var catime =new Date(endDate).getTime()-new Date(startDate).getTime();  
-	    return catime > 259200000; 
+	    return catime > 259900000; 
 	 };
 	 $scope.slgroupsl=function(e){//点击下拉框事件
 		 $scope.showobjgroup=!$scope.showobjgroup;}
