@@ -3,11 +3,17 @@
  * 历史数据查询
  */
 coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,baseTools) {
-	var lineChart =null,stdate = new Date(); stdate.setHours(stdate.getHours () - 4);
+	var lineChart =null,stdate = new Date(); stdate.setHours(stdate.getHours () - 6);
 	$scope.rdcid=window.sessionStorage.smrdcId,$scope.showobjgroup=false,$scope.coldstoragedoor=null;
 	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= baseTools.formatTime(stdate),$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	function gettitval(val){if(val!=undefined&&val!=""){if($scope.sl_index!=2&&$scope.sl_index!=3){return val+$scope.typemode.unit[$scope.sl_index]; }else{return val==0?"关":"开";}}else{return "-";}}
-    $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:2},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{"今日":[moment().startOf("day"),moment()],"昨日":[moment().subtract("days",1).startOf("day"),moment().subtract("days",1).endOf("day")],"最近3天":[moment().subtract("days",3),moment()]},opens:"right",buttonClasses:["btn btn-default"],applyClass:"btn-small btn-primary blue",cancelClass:"btn-small",format:"YYYY-MM-DD HH:mm:ss",separator:" - ",locale:{applyLabel:"确定",cancelLabel:"取消",fromLabel:"起始时间",toLabel:"结束时间",customRangeLabel:"自定义",daysOfWeek:["日","一","二","三","四","五","六"],monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],firstDay:1}},function(start,end,label){$("#reportrange span").html(start.format("YYYY-MM-DD HH:mm:ss")+" - "+end.format("YYYY-MM-DD HH:mm:ss"));});
+    $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:2},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{
+    "今日":[moment().startOf("day"),moment()],
+    "昨日":[moment().subtract("days",1).startOf("day"),moment().subtract("days",1).endOf("day")],
+    "最近3天":[moment().subtract("days",3),moment()],
+    '最近1小时': [moment().subtract('hours',1), moment()],
+    '最近6小时': [moment().subtract('hours',6), moment()]
+    },opens:"right",buttonClasses:["btn btn-default"],applyClass:"btn-small btn-primary blue",cancelClass:"btn-small",format:"YYYY-MM-DD HH:mm:ss",separator:" - ",locale:{applyLabel:"确定",cancelLabel:"取消",fromLabel:"起始时间",toLabel:"结束时间",customRangeLabel:"自定义",daysOfWeek:["日","一","二","三","四","五","六"],monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],firstDay:1}},function(start,end,label){$("#reportrange span").html(start.format("YYYY-MM-DD HH:mm:ss")+" - "+end.format("YYYY-MM-DD HH:mm:ss"));});
 	//开始核心内容
 	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['°C','kWh','','','kPa','°C'],type:[1,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
