@@ -71,8 +71,12 @@ $().ready(function() {
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
+	getSoll=function(){
+		var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
+		localStorage.list_cache_goodlist=JSON.stringify({totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html(),scrollHeight:scrollHeight});
+	};
   	function gethtml(rdc){
-  		  var score=['<li class="imgCell" ><a href="storehousedetail.html?id='+rdc.id+'"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">【'+rdc.typeText+"】"+rdc.title+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.detlAddress+'</p><ul class="star" value="'+rdc.score+'">'];
+  		  var score=['<li class="imgCell" ><a href="storehousedetail.html?id='+rdc.id+'" onclick="getSoll()"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">【'+rdc.typeText+"】"+rdc.title+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.detlAddress+'</p><ul class="star" value="'+rdc.score+'">'];
   		  for ( var i = 0; i < 5; i++) { score.push(i<=rdc.score&&i!=0?'<li class="filled">★</li>':"<li class='filled'>★</li>"); }
   		  score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >立即联系</button></li>');
   		  return score.join("");
@@ -93,7 +97,19 @@ $().ready(function() {
   	   	          isLoadRB=false;
   		    });
   	};
-  	getPageData();
-  	initFilter();
-  	initevg();
+	function initData(){//启用无限加载
+		if(localStorage.list_cache_goodlist){
+			var  cachdata=JSON.parse(localStorage.list_cache_goodlist);
+			totalPages=parseInt(cachdata.totalPages);
+			currentPage= parseInt(cachdata.currentPage);
+			$("#ul_rdcsL_list").html(cachdata.html);
+			$(document).scrollTop(	cachdata.scrollHeight );
+		}else{
+			getPageData();
+		}
+		initFilter();
+		initevg();
+
+	};
+	initData();
 });	
