@@ -78,7 +78,7 @@ var psaction={
 			   });
 		}
 		,getFilter:function(pageNum,pageSize){
-				  var stentime=$("#reservationtime").val().split(" - ");
+				  var stentime=$("#reservationtime").val().split("-");
 			      if(stentime.length!=2){ stentime=[null,null]; }
 		    	  var ctlist= ($("#car_type_div li.active_rdc").length==$("#car_type_div li").length||$("#car_type_div li.active_rdc").length==0)?null:$("#car_type_div li.active_rdc");
 			      var clist=($("#cool_type_div li.active_rdc").length==$("#cool_type_div li").length||$("#cool_type_div li.active_rdc").length==0)?null:$("#cool_type_div li.active_rdc");
