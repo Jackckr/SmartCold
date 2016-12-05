@@ -105,17 +105,17 @@
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li><label for="temperatureType">冷库温度类型</label><em>*</em>
-					<div class="mySelect">
-						<select id="temperatureType" ng-model="temperType" name="temperType"
-                                    ng-change="TemperTypeSelected(temperType)"
-                                    ng-options="x.id as x.type for x in temperTypes"></select>
-					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 				<li><label for="storageType">经营类型</label><em>*</em>
 					<div class="mySelect">
 						<select ng-model="storageType" name="storageType"
                                     ng-change="StorageTypeSelected(storageType)"
                                     ng-options="x.id as x.type for x in storageTypes"></select>
+					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+				<li><label for="temperatureType">冷库温度类型</label><em>*</em>
+					<div class="mySelect">
+						<select id="temperatureType" ng-model="temperType" name="temperType"
+                                    ng-change="TemperTypeSelected(temperType)"
+                                    ng-options="x.id as x.type for x in temperTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 				<li><label>数/质/量</label> <em>*</em>
 				<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"/>
@@ -125,7 +125,7 @@
 					checked />平方米</label>&nbsp;&nbsp;
 			    <label><input type="radio" name="quality" value="元/天·其他"  ng-model="unit" name="unit" />其他</label> </li>
 					
-				<li><label for="price">单价</label> <input type="text" id="price" name="unitPrice"
+				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
 					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
 					
 				<li>

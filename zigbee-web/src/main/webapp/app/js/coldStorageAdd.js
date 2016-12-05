@@ -140,18 +140,26 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
     }
-    $scope.addArrangePic = function (arrangePic) {
+    $scope.addArrangePic = function (files) {
     	angular.forEach($scope.arrangePics,function(item, key){
             if(item == file){
                 $scope.arrangePics.splice(key,1);
             }
         })
+        $scope.arrangePics = $scope.arrangePics.concat(files);
     }
 
     $scope.drop = function(file){
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
                 $scope.totalfiles.splice(key,1);
+            }
+        })
+    }
+    $scope.dropArrangePic = function(file){
+        angular.forEach($scope.arrangePics,function(item, key){
+            if(item == file){
+                $scope.arrangePics.splice(key,1);
             }
         })
     }
