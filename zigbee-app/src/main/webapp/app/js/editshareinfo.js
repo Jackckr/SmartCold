@@ -208,102 +208,46 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        });
 	    };
 	    function checkStorageSubmit(){
-	        var flag = true;
 	        // 检查必须填写项
-	        if ($scope.title == undefined || $scope.title == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {
-	            flag = false;
-	        }
-	        if ($scope.temperType == undefined || $scope.temperType == '') {
-	            flag = false;
-	        }
-	        
-	        if ($scope.manageType == undefined || $scope.manageType == '') {
-	            flag = false;
-	        }
-	        if ($scope.sqm == undefined || $scope.sqm == '') {
-	            flag = false;
-	        }
-	        if ($scope.telephone == undefined || $scope.telephone == '') {
-	            flag = false;
-	        }
-	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
-	            flag = false;
-	        }
-	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
-	            flag = false;
-	        }
-	        return flag;
+	        if ($scope.title == undefined || $scope.title == '' ) {return false; }
+	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
+	        if ($scope.temperType == undefined || $scope.temperType == '') { return false;}
+	        if ($scope.manageType == undefined || $scope.manageType == '') { return false;}
+	        if ($scope.sqm == undefined || $scope.sqm == '') { return false;}
+	        if ($scope.telephone == undefined || $scope.telephone == '') { return false;}
+	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {return false;}
+	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {return false;}
+	        return true;
 	    }
 	    
 	    
 	    function checkGoodsSubmit(){
-	        var flag = true;
 	        // 检查必须填写项
-	        if ($scope.title == undefined || $scope.title == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {
-	            flag = false;
-	        }
-	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
-	            flag = false;
-	        }
-	        if ($scope.sqm == undefined || $scope.sqm == '') {
-	            flag = false;
-	        }
-	        if ($scope.telephone == undefined || $scope.telephone == '') {
-	            flag = false;
-	        }
-	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
-	            flag = false;
-	        }
-	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
-	            flag = false;
-	        }
-	        return flag;
+	        if ($scope.title == undefined || $scope.title == '' ) {return false;}
+	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') { return false;}
+	        if ($scope.sqm == undefined || $scope.sqm == '') {return false;}
+	        if ($scope.telephone == undefined || $scope.telephone == '') {return false;}
+	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {return false; }
+	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {return false;}
+	        return true;
 	    }
 	    
 	    
 	    function checkCarSubmit(){
-	        var flag = true;
 	        // 检查必须填写项
-	        if ($scope.title == undefined || $scope.title == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.stcityID == undefined || $scope.stcityID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
-	            flag = false;
-	        }
-	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {
-	            flag = false;
-	        }
-	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {
-	            flag = false;
-	        }
-	        if ($scope.telephone == undefined || $scope.telephone == '') {
-	            flag = false;
-	        }
-	        if ($scope.startTime == undefined || $scope.startTime == '') {
-	            flag = false;
-	        }
-	        if ($scope.arriveTime == undefined || $scope.arriveTime == '') {
-	            flag = false;
-	        }
-	        return flag;
+	        if ($scope.title == undefined || $scope.title == '' ) { return false; }
+	        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) {return false; }
+	        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) { return false; }
+	        if ($scope.stcityID == undefined || $scope.stcityID == '' ) {return false; }
+	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {return false; }
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {return false; }
+	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {return false;}
+	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {return false;}
+	        if ($scope.telephone == undefined || $scope.telephone == '') { return false;}
+	        if ($scope.startTime == undefined || $scope.startTime == '') {return false;}
+	        if ($scope.arriveTime == undefined || $scope.arriveTime == '') { return false;}
+	        return true;
 	    }
 	    
 	    
