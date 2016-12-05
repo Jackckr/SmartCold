@@ -73,7 +73,7 @@ $().ready(function() {
   	};
 	getSoll=function(){
 		var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
-		localStorage.list_cache_goodlist=JSON.stringify({totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html(),scrollHeight:scrollHeight});
+		localStorage.list_cache_goodlist=JSON.stringify({totalPages:totalPages,currentPage:currentPage,html:$("#ul_goodlist_list").html(),scrollHeight:scrollHeight});
 	};
   	function gethtml(rdc){
   		  var score=['<li class="imgCell" ><a href="storehousedetail.html?id='+rdc.id+'" onclick="getSoll()"><img class="fl" src="'+rdc.logo+'"><div><p class="ellipsis">【'+rdc.typeText+"】"+rdc.title+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.detlAddress+'</p><ul class="star" value="'+rdc.score+'">'];
@@ -102,7 +102,7 @@ $().ready(function() {
 			var  cachdata=JSON.parse(localStorage.list_cache_goodlist);
 			totalPages=parseInt(cachdata.totalPages);
 			currentPage= parseInt(cachdata.currentPage);
-			$("#ul_rdcsL_list").html(cachdata.html);
+			$("#ul_goodlist_list").html(cachdata.html);
 			$(document).scrollTop(	cachdata.scrollHeight );
 		}else{
 			getPageData();

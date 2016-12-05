@@ -153,7 +153,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(checkCarSubmit()){
 				if($scope.unitPrice == undefined || $scope.unitPrice == null || $scope.unitPrice == ""){
 					$scope.unitPrice = ""
-				}else if($scope.unitPrice.trim().length>11){
+				}else if($scope.unitPrice.toString().trim().length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }else if($scope.telephone.trim().length != 11){
 		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
