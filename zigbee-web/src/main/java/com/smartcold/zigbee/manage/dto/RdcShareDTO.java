@@ -111,6 +111,7 @@ public class RdcShareDTO {
 		return unitPrice;
 	}
 	public void setUnitPrice(String unitPrice) {
+		if(unitPrice==""){unitPrice=null;}
 		this.unitPrice = unitPrice;
 	}
 	public String getUnit() {

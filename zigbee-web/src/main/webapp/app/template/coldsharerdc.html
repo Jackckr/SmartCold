@@ -170,20 +170,20 @@
 			      </tr>
 			   </thead>
 			   <tbody>
-			      <tr  ng-click="gosharedile(rdc.id);"   ng-repeat="rdc in pslist">
+			      <tr  ng-click="gosharedile(vo.id);"   ng-repeat="vo in pslist">
 			         <td width="5%">
-			         	<div class="image"><img ng-src="{{rdc.logo}}"></div>
+			         	<div class="image"><img ng-src="{{vo.logo}}"></div>
 			         </td>
 			         <td style="max-width:410px;">
-			         	<div class="company">【{{rdc.typeText}}】 {{rdc.title}} </div>
-			         	<div class="position">&nbsp;车型：{{rdc.codeLave3}}</div>
+			         	<div class="company">【{{vo.typeText}}】 {{vo.title}} </div>
+			         	<div class="position">&nbsp;车型：{{vo.codeLave3}}</div>
 			         </td>
 		            <td> <!-- 	 线路 -->
-			         	<div class="position"><span class="_sh_orang">出发地：</span>{{rdc.unit1}}</div>
-			         	<div class="position"><span style="color:#707070">目的地：</span>{{rdc.unit2}}</div>
+			         	<div class="position"><span class="_sh_orang">出发地：</span>{{vo.unit1}}</div>
+			         	<div class="position"><span style="color:#707070">目的地：</span>{{vo.unit2}}</div>
 			         </td>
-			         <td>{{rdc.codeLave1}}</td>
-			         <td>{{rdc.validStartTime}}至{{rdc.validEndTime}}</td>
+			         <td>{{vo.codeLave1}}</td>
+			         <td > <i ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车{{vo.validEndTime}}到达</i><i ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</i>  </td>
 			         <td>
 			         	<button class="btn btn-primary" >详情</button>
 			         </td>
@@ -304,6 +304,10 @@
 							<table class="info">
 								<caption>基本信息</caption>
 								<tbody>
+									<tr ng-if="dgdatatype==1"> 
+				 				         <th>品类:</th> 
+				 				        <td>{{vo.codeLave1}}</td> 
+								    </tr>  
 									<tr ng-if="dgdatatype==2"> 
 				 				         <th>冷库温度类型:</th> 
 				 				        <td>{{vo.codeLave2}}</td> 
@@ -330,9 +334,15 @@
 				  						<th>地理位置:</th>
 				 						<td>{{vo.detlAddress}}</td>
 				 					</tr>
-									<tr>
+									<tr ng-if="dgdatatype!=2">
 										<th>信息有效期:</th>
 										<td>{{vo.validStartTime}}至{{vo.validEndTime}}</td>
+									</tr>
+									<tr ng-if="dgdatatype==2">
+										<th>始发信息:</th>
+										<td>
+										 <i ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车{{vo.validEndTime}}到达</i><i ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</i> 
+										</td>
 									</tr>
 								</tbody>
 							</table>

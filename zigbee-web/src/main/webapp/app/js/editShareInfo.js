@@ -6,7 +6,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			 releaseCarInfo.changtimemode(vo.attrvalue1);
 			 if(vo.attrvalue1==3){
 				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
-			 }else{
+			 }else if(vo.attrvalue1==1||vo.attrvalue1==2){
 				var tstime= vo.validStartTime.substring(2).trim(), tetime= vo.validEndTime.substring(2).trim();
 				 if(vo.attrvalue1==1){
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
@@ -24,6 +24,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			    		 $scope.validStartTime = tstime;
 			    	 }
 			    }
+			 }else if(vo.attrvalue1==4){
+				 $scope.validEndTime = vo.validEndTime.substring(2).trim();
+				 $("#sl_attrvalue1_4").val( vo.validStartTime.substring(1,2).trim());
+			 }else if(vo.attrvalue1==5){
+				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 }
 			 var unita=vo.unit1.split("-"),unitb=vo.unit2.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};  if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
 			 $("#txt_sattim").val( $scope.validStartTime );  $("#txt_endtim").val( $scope.validEndTime );
@@ -41,7 +46,9 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
              "id": $stateParams.shareID
          }
      }).success(function (data) {
+    	 if(!data.success){alert("数据查询失败！请刷新页面重试");return;}
     	 $scope.initData(data.entity);
+    	 if(data.entity.unitPrice=="0.00"){data.entity.unitPrice=null;}
     	 $scope.rdcsharedto = data.entity;
     	 $scope.typeCode = $scope.rdcsharedto.typeCode;
     	 $scope.title = $scope.rdcsharedto.title;
@@ -251,12 +258,12 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	        if ($scope.telephone == undefined || $scope.telephone == '') {
 	            flag = false;
 	        }
-	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
-	            flag = false;
-	        }
-	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
-	            flag = false;
-	        }
+//	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
+//	            flag = false;
+//	        }
+//	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
+//	            flag = false;
+//	        }
 	        return flag;
 	    }
 	    
@@ -277,7 +284,14 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    		 $scope.arriveTime =  sl2+" "+edtime;
 	    	}else if(attr1==3){
 	    		$scope.startTime =sttime;  $scope.arriveTime= edtime;
-	    	} 
+	    	} else if(attr1==4){
+	    		 $scope.startTime="每"+$("#sl_attrvalue1_4").val()+"天一次";
+	    		 $scope.arriveTime =  sl2+" "+$("#txt_endtim").val();
+	    	}else if(attr1==5){
+	    		 $scope.startTime=$("#sl_attrvalue1_5").val();
+	    		 $scope.arriveTime = null;
+	    		 $("#hl_validEndTime").val("");
+	    	}
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
 			if(checkCarSubmit()){

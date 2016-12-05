@@ -148,7 +148,12 @@ var serdc = {
 var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, $scope,$stateParams, $state, $cookies, $http, $location) {
       $scope.maxSize = 10;	// 显示最大页数
       rdcconfig.$scope=$scope;
-      rdcconfig._cuttid=$stateParams._cuttid?$stateParams._cuttid:rdcconfig._cuttid;//系统传参
+			if ($stateParams._cuttid != undefined) {
+				rdcconfig._cuttid = $stateParams._cuttid;
+			} else if (sessionStorage.shpg != undefined) {
+				rdcconfig._cuttid = sessionStorage.shpg;
+			} 
+//      rdcconfig._cuttid=$stateParams._cuttid?$stateParams._cuttid:rdcconfig._cuttid;//系统传参
 //      $scope.bigTotalItems1=$scope.bigTotalItems2=$scope.bigTotalItems3 = 0; // 总条目数(默认每页十条)
 //      $scope.bigCurrentPage1= $scope.bigCurrentPage2= $scope.bigCurrentPage3 = 1;  // 当前页
       $scope.page = {bigCurrentPage1:1,bigCurrentPage2:1,bigCurrentPage3:1,bigTotalItems1:0,bigTotalItems2:0,bigTotalItems3:0 };
@@ -272,6 +277,7 @@ var coldSharePage= coldWeb.controller('coldShareComment', function ($rootScope, 
 		  }
 	 };
 	 $scope.initApp=function(){
+		 sessionStorage.shpg=rdcconfig._cuttid;
 		 if(rdcconfig._cuttid==1){//getGDFilterData
 			 if(!good._isLoad){
 			   good._isLoad=true;

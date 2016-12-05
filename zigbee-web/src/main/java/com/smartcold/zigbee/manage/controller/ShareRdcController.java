@@ -406,8 +406,9 @@ public class ShareRdcController  {
 	@ResponseBody
 	public ResponseData<RdcShareDTO> shareFreeRelease(HttpServletRequest request,String  data,Integer uid){
 		try {
-			if(StringUtil.isNull(data)){return null;}
+			if(StringUtil.isNull(data)){return  ResponseData.newFailure("数据不能包含特殊字符~");}
 			RdcShareDTO	rdcShareDTO= JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+			if("".equals(rdcShareDTO.getUnitPrice())||"undefined".equals(rdcShareDTO.getUnitPrice())){rdcShareDTO.setUnitPrice("0");}
 			Integer loguid = rdcShareDTO.getUid();
 			if(uid==null&&loguid==null){
 			    UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
