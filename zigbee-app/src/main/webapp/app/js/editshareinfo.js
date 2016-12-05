@@ -27,7 +27,7 @@ var releaseCarInfo={
 		changtimemode:function(val){
 		    $("#startTime,#arriveTime").remove(); 
 	        $("#ul_work").after("<input  id='startTime' class='datainp'  type='text' placeholder='请选择出发时间'  readonly>");
-	        $("#sl_attrvalue2").after("<input  id='arriveTime' class='datainp'  type='text' placeholder='请选择结束时间'   readonly "+(val==3?"":"style='width:70%;float: left;'")+">");
+	        $("#sl_attrvalue2").after("<input  id='arriveTime' class='datainp'  type='text' placeholder='请选择结束时间'   readonly "+(val==3?"":"style='width:60%;float: left;'")+">");
 	        var form=val==3?"YYYY-MM-DD hh:mm":"hh:mm";
 	        var start = { format: form, minDate: $.nowDate(0),   isinitVal:true,  initAddVal:[2,"hh"], choosefun: function(elem,datas){end.minDate = datas;  }};
 		    var end = { format: form, minDate: $.nowDate(0),isinitVal:true,initAddVal:[4,"hh"],choosefun: function(elem,datas){ start.maxDate = datas;}};

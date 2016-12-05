@@ -183,7 +183,7 @@
 			         	<div class="position"><span style="color:#707070">目的地：</span>{{vo.unit2}}</div>
 			         </td>
 			         <td>{{vo.codeLave1}}</td>
-			         <td > <i ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车{{vo.validEndTime}}到达</i><i ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</i>  </td>
+			         <td > <span ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车--{{vo.validEndTime}}到达</span><span ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</span>  </td>
 			         <td>
 			         	<button class="btn btn-primary" >详情</button>
 			         </td>
@@ -345,7 +345,7 @@
 									<tr ng-if="dgdatatype==2">
 										<th>始发信息:</th>
 										<td>
-										 <i ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车{{vo.validEndTime}}到达</i><i ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</i> 
+										 <span ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车--{{vo.validEndTime}}到达</span><span ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</span> 
 										</td>
 									</tr>
 								</tbody>
