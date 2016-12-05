@@ -308,6 +308,10 @@
 				 				         <th>品类:</th> 
 				 				        <td>{{vo.codeLave1}}</td> 
 								    </tr>  
+								    <tr ng-if="dgdatatype==2"> 
+				 				         <th>业务类型:</th> 
+				 				        <td>{{vo.codeLave1}}</td> 
+								    </tr> 
 									<tr ng-if="dgdatatype==2"> 
 				 				         <th>冷库温度类型:</th> 
 				 				        <td>{{vo.codeLave2}}</td> 
@@ -330,7 +334,7 @@
 				  					      <span ng-if="vo.unitPrice != '0.00'"> {{vo.unit!=null?vo.unit:appmode[dgdatatype].lab[1][1] }}</span>
 				  					   </td>
 				  					</tr>
-				  					<tr>
+				  					<tr ng-if="dgdatatype!=2">
 				  						<th>地理位置:</th>
 				 						<td>{{vo.detlAddress}}</td>
 				 					</tr>
