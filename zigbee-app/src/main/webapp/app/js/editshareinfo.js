@@ -32,6 +32,7 @@ var releaseCarInfo={
 	        var start = { format: form, minDate: $.nowDate(0),   isinitVal:true,  initAddVal:[2,"hh"], choosefun: function(elem,datas){end.minDate = datas;  }};
 		    var end = { format: form, minDate: $.nowDate(0),isinitVal:true,initAddVal:[4,"hh"],choosefun: function(elem,datas){ start.maxDate = datas;}};
 		    $('#startTime').jeDate(start); $('#arriveTime').jeDate(end);
+		    $("#li_end_time").show();
 		    $("#release_item_from .obj_hide").hide();
 		    $("#release_item_from .time_mod"+val).show();
 	    	if(val==3){
@@ -43,7 +44,7 @@ var releaseCarInfo={
 	    		$("#sl_attrvalue2").show();
 	    		$("#ul_work,#startTime").hide(); $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
 	    	}else if(val==5){
-	    		$("#sl_attrvalue2,#ul_work,#startTime,#arriveTime").hide();
+	    		$("#sl_attrvalue2,#ul_work,#startTime,#arriveTime,#li_end_time").hide();
 //	    		$("#sl_attrvalue1_5").show();
 	    	}
 	    	
