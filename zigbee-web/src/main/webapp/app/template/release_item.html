@@ -58,6 +58,14 @@
 						</select>
 					</div>
 				</div>
+					<div class="mode_3 shar_none mode_hide infoList clearfix">
+					<div class="pull-left col-sm-4  control-label " ><em>*</em>经营类型:</div>
+					<div class="pull-left">
+                       <select  id="tx_attrvalue" name="codeLave1" class="form-control" >
+							<option ng-repeat="x in  manageTypes" value="{{x.id}}">{{x.type}}</option>
+						</select>
+					</div>
+				</div>
 				<div id="sh_pct_div" class="mode_hide shar_none" ><!-- class="mode_1_2 mode_3_2 mode_hide shar_none"  -->
 					<div class="infoList clearfix city">
 						<div class="pull-left col-sm-4  control-label "  ><em>*</em>省:</div>
