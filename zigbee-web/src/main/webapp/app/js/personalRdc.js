@@ -33,7 +33,11 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
         $scope.getRdcs();
     }
 
-	
+	$scope.goDetail = function (rdcID) {
+	   	 console.log("rdcID" + rdcID);
+	        $state.go('coldStorageComment', {"rdcID": rdcID});
+	    };
+		
 	$scope.pageChanged = function() {
 		$scope.getRdcs();
 	}
