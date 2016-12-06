@@ -20,7 +20,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	
 	$scope.goaddrdcpag=function(){  $location.path("/coldStorageAdd");  };
 	     // 获取省列表
-    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {  $scope.provinces = data;    });
+    $http.get(ER.root+'/i/city/findProvinceList').success(function (data) { 
+    	$scope.provinces = data;  
+    	
+    });
     // 根据省ID查询城市列表
     $scope.provinceSelected = function () {
         $http.get(ER.root+'/i/city/findCitysByProvinceId', {  params: {  "provinceID": $scope.provinceId }  }).success(function (data) {
@@ -125,7 +128,17 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    		 $scope.arriveTime =  sl2+" "+edtime;
 	    	}else if(attr1==3){
 	    		$scope.startTime =sttime;  $scope.arriveTime= edtime;
-	    	} 
+	    	}  else if(attr1==4){
+	    		$scope.startTime ="每"+$("#sl_attrvalue1_4").val()+"天一次";
+	    		 $scope.arriveTime=   sl2+" "+$("#arriveTime").val();
+	    	}else if(attr1==5){
+	    		$scope.startTime = $("#sl_attrvalue1_5").val();
+	    		 $scope.arriveTime="当天  17:00";
+	    		 $("#hl_validEndTime").val("");
+	    	}
+	    	
+	    	
+	    	
 			$scope.rdcAddress = '';
 			var stplace =toplace="";
 			if($scope.staddress!=undefined){
@@ -148,6 +161,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
 			if(checkCarSubmit()){
+				if($scope.unitPrice == undefined || $scope.unitPrice == null || $scope.unitPrice == ""){
+					$scope.unitPrice = ""
+				}else if($scope.unitPrice.toString().trim().length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({ type: 2 ,content: '努力加载中~~~' ,shadeClose:false});
 				var simdata = {
 						title:$scope.title,
@@ -204,15 +224,27 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if($scope.rdcflag==1)
 			{
 				$scope.rdcID = $scope.rdcdto.id;
+			    $scope.provinceId=$scope.rdcdto.provinceid;
+			    $scope.cityId=$scope.rdcdto.cityid;
 				$scope.rdcAddress = $scope.rdcdto.address;
-				}
+			}
 			var vo = {}; 
 			if(checkGoodsSubmit()){
+				if($scope.sqm.toString().length > 11){
+		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
+		        }else if($scope.unitprice == undefined || $scope.unitprice == null || $scope.unitprice == ""){
+		        	$scope.unitprice = ""
+		        }else if($scope.unitprice.toString().length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
 	        		,shadeClose:false
 			    });
+        	
 			var simdata = {
 					title:$scope.title,
 					uid:window.user.id,
@@ -279,6 +311,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			var vo = {}; 
 			if(checkStorageSubmit()){
+				if($scope.sqm.toString().length > 11){
+		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
+		        }else if(parseFloat($scope.unitprice).length>11){
+					layer.open({content:'单价不合法哦~',btn: '确定'});return;
+		        }else if($scope.telephone.trim().length != 11){
+		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
+		        }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'

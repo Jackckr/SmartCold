@@ -142,6 +142,8 @@
 		s.bookings,
 		s.stauts,
 		s.detlAddress,
+		s.attrvalue1,
+		s.attrvalue2,
 		IFNULL(	date_format(s.validStartTime,'%Y-%m-%d'),s.validStartTime)validStartTime,
 		IFNULL(	date_format(s.validEndTime, '%Y-%m-%d' ),s.validEndTime) validEndTime,
 		(SELECT type_name FROM comm_mata_data f WHERE f.source_type='ps_fm_type' and f.type_code=s.codeLave1 LIMIT 1 )codeLave1,
@@ -266,7 +268,7 @@
 								<if test=" title         !=null and codeLave4  !=''">	title           =#{title            }  ,</if>
 								<if test=" typeCode      !=0">                          typeCode        =#{typeCode         }  ,</if>
 								<if test=" typeText      !=null and typeText   !=''">	typeText        =#{typeText         }  ,</if>
-								<if test=" unitPrice     !=0 ">	                        unitPrice       =#{unitPrice        }  ,</if>
+								                        unitPrice       =#{unitPrice        }  ,
 								<if test=" sqm           !=0 ">                         sqm             =#{sqm              }  ,</if>
 								<if test=" unit          !=null and unit       !=''">	unit            =#{unit             }  ,</if>
 								<if test=" unit1         !=null and unit1      !=''">	unit1           =#{unit1            }  ,</if>

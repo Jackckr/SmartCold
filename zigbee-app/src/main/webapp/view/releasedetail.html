@@ -72,7 +72,7 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 		<!-- 订单详情区域 -->
 			<h4><i class="dot"></i>{{appmode[0].title[datatype]}}信息 <span class="date">{{orders.generatetime}}</span></h4>
 			<p class="infos" style="margin-left: 20px;">
-				<span class="first">类　　型:</span><span class="second">{{typetitle}}</span>
+				<span class="first">类型:</span><span class="second">{{typetitle}}</span>
 			</p>
 			<div ng-if="datatype==3" style="margin-left: 20px;">
 			   <p class="infos"><span class="first">温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
@@ -80,18 +80,18 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 			   <p class="infos"><span class="first">地理位置:</span><span class="second">{{rsd.address}}</span></p>
 			</div>
 			<div ng-if="datatype==2" style="margin-left: 20px;">
-			   <p class="infos"><span class="first">始　　发　地:</span><span class="second">{{rsd.unit1}}</span></p>
-			   <p class="infos"><span class="first">目　　的　地:</span><span class="second">{{rsd.unit2}}</span></p>
-			   <p class="infos"><span class="first">业&nbsp;务&nbsp;类&nbsp;型:</span><span class="second">{{rsd.codeLave1}}</span></p>
-			   <p class="infos"><span class="first">车&nbsp;辆&nbsp;类&nbsp;型:</span><span class="second">{{rsd.codeLave3}}</span></p>
+			   <p class="infos"><span class="first">始发地:</span><span class="second">{{rsd.unit1}}</span></p>
+			   <p class="infos"><span class="first">目的地:</span><span class="second">{{rsd.unit2}}</span></p>
+			   <p class="infos"><span class="first">业务类型:</span><span class="second">{{rsd.codeLave1}}</span></p>
+			   <p class="infos"><span class="first">车辆类型:</span><span class="second">{{rsd.codeLave3}}</span></p>
 			   <p class="infos"><span class="first">冷库温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
 			</div>
 			
 			<div ng-if="datatype==1" style="margin-left: 20px;">
-		        <p class="infos"><span class="first">品　　　类:</span><span class="second">{{rsd.codeLave1}}</span></p>
-			    <p class="infos"><span class="first">供　应　商:</span><span class="second">{{rsd.unit1?rsd.unit1:'不详' }}</span></p>
+		        <p class="infos"><span class="first">品类:</span><span class="second">{{rsd.codeLave1}}</span></p>
+			    <p class="infos"><span class="first">供应商:</span><span class="second">{{rsd.unit1?rsd.unit1:'不详' }}</span></p>
 			    <p class="infos"><span class="first">最大预定量:</span><span class="second">{{rsd.sqm }}吨</span></p>
-			    <p class="infos"><span class="first">单　　　价:</span><span class="second">{{rsd.unitPrice == 0.00 ?"面议":rsd.unitPrice+'元/吨'}}</span></p>
+			    <p class="infos"><span class="first">单价:</span><span class="second">{{rsd.unitPrice == 0.00 ?"面议":rsd.unitPrice+'元/吨'}}</span></p>
 			</div>
 			<h4><i class="dot"></i>其他信息 <span class="date">{{orders.generatetime}}</span></h4>
 			<div style="margin-left: 20px;">

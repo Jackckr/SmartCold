@@ -3,13 +3,19 @@
  * 历史数据查询
  */
 coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,baseTools) {
-	var lineChart =null;
-	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 
-	$scope.showobjgroup=false,$scope.coldstoragedoor=null;
-	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= $scope.end.substr(0,10)+" 00:00:00",$scope.picktime = $scope.begin + ' - ' + $scope.end;
-	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 1, format: 'YYYY-MM-DD HH:mm:ss'});
+	var lineChart =null,stdate = new Date(); stdate.setHours(stdate.getHours () - 6);
+	$scope.rdcid=window.sessionStorage.smrdcId,$scope.showobjgroup=false,$scope.coldstoragedoor=null;
+	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= baseTools.formatTime(stdate),$scope.picktime = $scope.begin + ' - ' + $scope.end;
+	function gettitval(val){if(val!=undefined&&val!=""){if($scope.sl_index!=2&&$scope.sl_index!=3){return val+$scope.typemode.unit[$scope.sl_index]; }else{return val==0?"关":"开";}}else{return "-";}}
+    $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:2},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{
+    "今日":[moment().startOf("day"),moment()],
+    "昨日":[moment().subtract("days",1).startOf("day"),moment().subtract("days",1).endOf("day")],
+    "最近3天":[moment().subtract("days",3),moment()],
+    '最近1小时': [moment().subtract('hours',1), moment()],
+    '最近6小时': [moment().subtract('hours',6), moment()]
+    },opens:"right",buttonClasses:["btn btn-default"],applyClass:"btn-small btn-primary blue",cancelClass:"btn-small",format:"YYYY-MM-DD HH:mm:ss",separator:" - ",locale:{applyLabel:"确定",cancelLabel:"取消",fromLabel:"起始时间",toLabel:"结束时间",customRangeLabel:"自定义",daysOfWeek:["日","一","二","三","四","五","六"],monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],firstDay:1}},function(start,end,label){$("#reportrange span").html(start.format("YYYY-MM-DD HH:mm:ss")+" - "+end.format("YYYY-MM-DD HH:mm:ss"));});
 	//开始核心内容
-	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['(°C)','(kWh)','','','(kPa)','(°C)'],type:[1,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
+	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['°C','kWh','','','kPa','°C'],type:[1,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
  //
    //设置数据模型
@@ -34,6 +40,9 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
    $scope.expdata=function(){//导出数据
 	   $scope.hidefilter();
 		if($scope.oids&&$scope.oids.length>0){
+			bothTime = $scope.picktime.split(" - ");
+			$scope.begin = bothTime[0],$scope.end = bothTime[1];
+			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
 			$("#but_expdata").attr("disabled",true);
 	        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/baseInfo/expHistoryData').attr('id', "expdataform");
 	        expfrom.attr("Content-Type","application/json;charset=UTF-8");
@@ -56,14 +65,15 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		$scope.hidefilter();
 		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}
 		if($scope.oids&&$scope.oids.length>0){
-			lineChart.showLoading({text: '数据加载中……' }); 
-			lineChart.clear(); 
 			bothTime = $scope.picktime.split(" - ");
 			$scope.begin = bothTime[0],$scope.end = bothTime[1];
+			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
+			lineChart.showLoading({text: '数据加载中……' }); 
+			lineChart.clear(); 
 			$.ajax({
                 type: "POST",
                 url:"i/baseInfo/getKeyValueDataByFilter",traditional:true,
-                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.echnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
+                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.oldnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
                 success: function(data) {
                     if(data.success){
                     	$scope.drawDataLine(data.entity);
@@ -77,38 +87,37 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 			 alert("没有设置查询对象！");
 		 }
 	};
-	
 	$scope.drawDataLine = function(chardata){
-		var tooltipmd= {trigger: 'axis'};
-		var yAxismode= {type : 'value', name :$scope.sl_unit,axisLabel : {formatter: '{value}'}} ;
-	    if($scope.sl_index==2){//处理特殊事件
-//		   yAxismode.axisLabel={ formatter:function(){  return this.value===0?"关":"开"; } };
-//		   yAxismode.plotLines= [{value: 0, width: 1,color: '#808080' }];
-//		   yAxismode. max=1; yAxismode.min=0;
-//		   tooltipmd.formatter=function () {var state = undefined; if (this.y === 1){ state = '冷库处于开门状态'; } else {state = '冷库处于关门状态';} return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +state; } ;
-	    }
-		var s=$scope.oldnames;
 		var xData=chardata.xdata,ydata=chardata.ydata;
-		xData = xData.length > 0? xData : [1,2,3,4];
-		ydata = ydata.length > 0 ? ydata : [ { name:$scope.slgptit, type:'line', data:[34,35,34,21] }] ;
-		option = {
+		var yAxismode= {type : 'value', axisLabel : {formatter: '{value}'}} ;
+		var tooltipmd= {trigger: 'axis',formatter:function(params){
+			var html=[]; 
+			var relVal = params[0].name;  
+			if(relVal!=undefined&&relVal!=""){html.push(relVal+"<br/>"); }
+	        for (var i = 0, l = params.length; i < l; i++) {  html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'); html.push(params[i].seriesName + ' : '+gettitval(params[i].value)+"<br/>" );} return html.join(""); 
+		}};
+		if($scope.sl_index==2||$scope.sl_index==3){yAxismode={type : 'value',splitNumber: 1, axisLabel: {formatter: function(value){return value==1?"开":"关";} } };}
+		var option = {
 				calculable : true,
-				legend: {data:s},
+				legend: {data:$scope.oldnames},
 				title: {text: $scope.slgptit+$scope.typemode.unit[$scope.sl_index]},
 			    tooltip :tooltipmd,
-			    legend: {  data:[$scope.slgptit]},
 			    xAxis : [{type : 'category',data : xData} ],
 			    yAxis :yAxismode,
 			    grid:{x:80,x2:80},
 			    series : ydata,
 			    toolbox: {show: true,feature: {dataZoom: {yAxisIndex: 'none'},dataView: {readOnly: false},magicType: {type: ['line', 'bar']},restore: {},saveAsImage: {}} }
-			 };
+		};
 		lineChart.setOption(option);
 		lineChart.hideLoading();  
 	};
 	
 
 	//********************************************************************事件START**********************************************************************
+	$scope.checktime=function(startDate,endDate){
+		var catime =new Date(endDate).getTime()-new Date(startDate).getTime();  
+	    return catime > 259900000; 
+	 };
 	 $scope.slgroupsl=function(e){//点击下拉框事件
 		 $scope.showobjgroup=!$scope.showobjgroup;}
 	 ;

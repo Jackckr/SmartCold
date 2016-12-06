@@ -17,6 +17,7 @@
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
         <script type="text/javascript" src="../com/js/layer.js"></script>
+<script type="text/javascript" src="../com/js/jedate/jquery.jedate.js"></script>
 <script type="text/javascript" src="../com/datepicker/date.js"></script>
 <script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
 <script src="../bower_components/angular/angular.min.js"></script>
@@ -84,7 +85,7 @@ $(function() {
 	                </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
-				<li><label for="temperatureType">冷库温度类型</label>
+				<li><label for="manageType">经营类型</label>
 				<em>*</em>
 					<div class="mySelect">
 						 <select ng-model="manageType"
@@ -92,7 +93,7 @@ $(function() {
                                     ng-options="x.id as x.type for x in manageTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 					
-				<li><label for="manageType">经营类型</label>
+				<li><label for="temperatureType">冷库温度类型</label>
 				<em>*</em>
 					<div class="mySelect">
 						   <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>

@@ -16,6 +16,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     $scope.isDisabled = false;
     $scope.totalfiles = [];
     $scope.totalhonorfiles = [];
+    $scope.arrangePics = [];
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
         id: 0,
@@ -180,6 +181,13 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             }
         })
     }
+    $scope.dropArrangePic = function(file){
+        angular.forEach($scope.arrangePics,function(item, key){
+            if(item == file){
+                $scope.arrangePics.splice(key,1);
+            }
+        })
+    }
     $scope.drophonor = function(honorfile){
         angular.forEach($scope.totalhonorfiles,function(item, key){
             if(item == honorfile){
@@ -237,6 +245,9 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
+    }
+    $scope.addArrangePic = function (files) {
+        $scope.arrangePics = $scope.arrangePics.concat(files);
     }
     $scope.addHonorFiles = function (files) {
         if($scope.totalhonorfiles.length + files.length > 8){
@@ -321,7 +332,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.name);
+                //console.log('progress: ' + progressPercentage + '% ' + evt.name);
             });
         } else {
             alert("请填写标记<em>*</em>的必选项在提交!");

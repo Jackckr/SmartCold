@@ -132,7 +132,7 @@ $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:7}}
 			   		<label><input type="radio"  value="元/天·其他"  ng-model="unit" name="unit" />其他</label>
 				</li>
 			    
-				<li><label for="price">单价</label> <input type="text" id="price" name="unitPrice"
+				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
 					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
 				<li>
 					<label for="time">有效开始时间</label><em>*</em>

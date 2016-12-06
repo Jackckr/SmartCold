@@ -109,6 +109,8 @@
 		                         <option value="1">每天</option>
 		                         <option value="2">每周</option>
 		                         <option value="3">单次</option>
+		                         <option value="4">每隔</option>
+		                         <option value="5">自定义</option>
 		                     </select>
 							  <div  class="btn-group shar_none obj_hide time_mod2 pull-left clearfix" data-toggle="buttons" style="margin-right:5px;">
 								   <label class="btn btn-default" style="border-radius:5px 0px 0px 5px;"><input type="checkbox" class="wk_erw" value="一">一</label>
@@ -119,6 +121,12 @@
 								   <label class="btn btn-default"><input type="checkbox" class="wk_erw" value="六">六</label>
 								   <label class="btn btn-default" style="border-radius:0px 5px 5px 0px;"><input type="checkbox" class="wk_erw" value="日">日</label>
 								</div>
+							  <div  class="btn-group shar_none obj_hide time_mod4 pull-left clearfix" data-toggle="buttons" style="margin-right:5px;">
+								    每<input  id="sl_attrvalue1_4" name="sl_attrvalue1_4" type="text" value="二"   class="form-control  form_datetime" style="width:50px;" maxlength="1"/>天一次
+							  </div>
+							  <div  class="btn-group shar_none obj_hide time_mod5 pull-left clearfix" data-toggle="buttons" style="margin-right:5px;">
+								  <input id="sl_attrvalue1_5" name="sl_attrvalue1_5" type="text" placeholder="请输入自定义发车时间(最多20字)"  class="form-control  form_datetime" style="width:365px;" maxlength="20"/>
+							  </div>
 							   <div id="sattim_div" class="pull-left">	
 							     <span class="add-on input-group-addon shar_none obj_hide time_mod3" style="display: none;border-radius: 4px;margin-right: -5px;"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
 		                         <input id="txt_sattim"  type="text" name="txt_sattim" value="09:00" class="form-control  form_datetime" style="width:85px;" >
@@ -132,12 +140,12 @@
 					<div class="pull-left col-sm-4 control-label ">到达时间:</div>
 					<div class="pull-left">
 		                 <div style="width: 600px;"> 
-		                     <select id="sl_attrvalue2"  name="attrvalue2" class="form-control  shar_none obj_hide time_mod1 time_mod2" style="width:80px;" >
+		                     <select id="sl_attrvalue2"  name="attrvalue2" class="form-control  shar_none obj_hide time_mod1 time_mod2 time_mod4" style="width:80px;" >
 		                         <option value="1">当天</option>
 		                         <option value="2">次日</option>
 		                     </select>
 		                     <span class="add-on input-group-addon shar_none obj_hide time_mod3" style="display: none;border-radius: 4px;margin-right: -5px;"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-		                     <input id="txt_endtim"  type="text" name="txt_endtim" value="17:00" class="form-control  time_mod1 time_mod2" style="width:85px;" >
+		                     <input id="txt_endtim"  type="text" name="txt_endtim" value="17:00" class="form-control  time_mod1 time_mod2 time_mod4" style="width:85px;" >
 		                 </div>
 		              </div>
 				</div>

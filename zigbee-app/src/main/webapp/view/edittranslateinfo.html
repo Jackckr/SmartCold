@@ -24,43 +24,6 @@
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/editshareinfo.js"></script>
-<script type="text/javascript">
-	var releaseCarInfo={
-			initui:function(attrvalue1,work){
-				$("#ul_work li").click(function(event){
-					$(this).toggleClass("active"); 
-				});
-				if(work&&work!=""){ $("#ul_work li").removeClass("active");  $.each(work, function(i, vo){ if(vo!=""&&vo!=" "){ $("#ul_work li[value="+vo+"]").addClass("active"); } });}
-				if(attrvalue1==3){
-					$("#ul_work,#sl_attrvalue2").hide();
-					$("#startTime,#arriveTime").jeDate({isTime:true,format:"YYYY-MM-DD hh:mm"});
-				}else{
-					$("#sl_attrvalue2").show(); 
-					$("#startTime,#arriveTime").jeDate({isTime:true,format:"hh:mm"});
-					if(attrvalue1==2){
-						$("#ul_work").show(); 
-				   }else{
-					   $("#ul_work").hide();
-				   }
-				}
-			},
-			changtimemode:function(val){
-			    $("#startTime,#arriveTime").remove(); 
-		        $("#ul_work").after("<input  id='startTime' class='datainp'  type='text' placeholder='请选择出发时间'  readonly>");
-		        $("#sl_attrvalue2").after("<input  id='arriveTime' class='datainp'  type='text' placeholder='请选择结束时间'   readonly "+(val==3?"":"style='width:70%;float: left;'")+">");
-		        var form=val==3?"YYYY-MM-DD hh:mm":"hh:mm";
-		        var start = { format: form, minDate: $.nowDate(0),   isinitVal:true,  initAddVal:[2,"hh"], choosefun: function(elem,datas){end.minDate = datas;  }};
-			    var end = { format: form, minDate: $.nowDate(0),isinitVal:true,initAddVal:[4,"hh"],choosefun: function(elem,datas){ start.maxDate = datas;}};
-		    	if(val==3){
-		    		$("#sl_attrvalue2,#ul_work").hide(); $("#startTime,#arriveTime").val("");
-		    	}else{
-		    		$("#sl_attrvalue2").show();
-		    		if(val==2){$("#ul_work").show();}else{$("#ul_work").hide();} $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
-		    	}
-		    	$('#startTime').jeDate(start); $('#arriveTime').jeDate(end);
-			}	
-	};
-	</script>
 </head>
 <body ng-app="app" ng-controller="ctrl">
 	<!-- header -->
@@ -162,6 +125,8 @@
 	                         <option value="1">每天</option>
 	                         <option value="2">每周</option>
 	                         <option value="3">单次</option>
+	                         <option value="4">每隔</option>
+		                     <option value="5">自定义</option>
 	                     </select>
 					</div>
 					<i class="iconfont fr moreinfo">&#xe60d;</i>
@@ -175,7 +140,12 @@
 					   		<li value="六">六</li>
 					   		<li value="日">日</li>
 					   </ul>
-<!-- 						<input  id="startTime" class="kbtn"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly> -->
+					   <div  class="btn-group shar_none obj_hide time_mod4 pull-left clearfix black" data-toggle="buttons" style="margin-right:5px;text-indent: 4rem;">
+								    每<input  id="sl_attrvalue1_4" name="sl_attrvalue1_4" type="text" placeholder="二" style="width:50px;font-size: .75rem;text-align: center;" maxlength="1"/>天一次
+							  </div>
+						<div  class="btn-group shar_none obj_hide time_mod5 pull-left clearfix black" data-toggle="buttons" style="margin-right:5px;">
+								  <input id="sl_attrvalue1_5" name="sl_attrvalue1_5" placeholder="请输入自定义发车时间(最多20字)" type="text" style="width:100%;font-size: .75rem" style="width:100%;font-size: .75rem" maxlength="20"/>
+						</div>
 						<input  id="startTime" class="datainp"  type="text" placeholder="请选择出发时间"  ng-model="validStartTime" readonly>
 					</div>
                  </li>
@@ -191,7 +161,7 @@
 	                    <input type="text" placeholder="请输入详细地址" ng-model="toaddress" style="min-width:130%;"/>
 	                </div>
                  </li>
-                 <li>
+                 <li id="li_end_time">
                      <label for="arriveTime">到达时间</label><em>*</em>
                      <div class="mySelect">
                         <select id="sl_attrvalue2"  ng-model="attrvalue2" class="form-control ">

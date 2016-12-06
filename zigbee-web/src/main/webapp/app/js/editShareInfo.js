@@ -6,7 +6,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			 releaseCarInfo.changtimemode(vo.attrvalue1);
 			 if(vo.attrvalue1==3){
 				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
-			 }else{
+			 }else if(vo.attrvalue1==1||vo.attrvalue1==2){
 				var tstime= vo.validStartTime.substring(2).trim(), tetime= vo.validEndTime.substring(2).trim();
 				 if(vo.attrvalue1==1){
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
@@ -24,6 +24,11 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			    		 $scope.validStartTime = tstime;
 			    	 }
 			    }
+			 }else if(vo.attrvalue1==4){
+				 $scope.validEndTime = vo.validEndTime.substring(2).trim();
+				 $("#sl_attrvalue1_4").val( vo.validStartTime.substring(1,2).trim());
+			 }else if(vo.attrvalue1==5){
+				 $("#sl_attrvalue1_5").val(vo.validStartTime);  $scope.validEndTime = vo.validEndTime;
 			 }
 			 var unita=vo.unit1.split("-"),unitb=vo.unit2.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};  if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
 			 $("#txt_sattim").val( $scope.validStartTime );  $("#txt_endtim").val( $scope.validEndTime );
@@ -41,7 +46,9 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
              "id": $stateParams.shareID
          }
      }).success(function (data) {
+    	 if(!data.success){alert("数据查询失败！请刷新页面重试");return;}
     	 $scope.initData(data.entity);
+    	 if(data.entity.unitPrice=="0.00"){data.entity.unitPrice=null;}
     	 $scope.rdcsharedto = data.entity;
     	 $scope.typeCode = $scope.rdcsharedto.typeCode;
     	 $scope.title = $scope.rdcsharedto.title;
@@ -150,7 +157,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    $scope.addFiles = function (files) {
 			if(files.length==0){return;};
 			var allfiles = $scope.totalfiles.concat(files);
-			if(allfiles.length>10){/*alert("最多选择10张！");*/ layer.open({content: '最多选择10张哦' ,btn: '确定'});return;}
+			if(allfiles.length>10){alert("最多选择10张！"); /*layer.open({content: '最多选择10张哦' ,btn: '确定'});*/return;}
 	        $scope.totalfiles=allfiles; 
 	    };
 	    $scope.drophonor = function(honorfile){
@@ -162,102 +169,44 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	        });
 	    };
 	    function checkStorageSubmit(){
-	        var flag = true;
 	        // 检查必须填写项
-	        if ($scope.title == undefined || $scope.title == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {
-	            flag = false;
-	        }
-	        if ($scope.temperType == undefined || $scope.temperType == '') {
-	            flag = false;
-	        }
-	        
-	        if ($scope.manageType == undefined || $scope.manageType == '') {
-	            flag = false;
-	        }
-	        if ($scope.sqm == undefined || $scope.sqm == '') {
-	            flag = false;
-	        }
-	        if ($scope.telephone == undefined || $scope.telephone == '') {
-	            flag = false;
-	        }
-	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
-	            flag = false;
-	        }
-	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
-	            flag = false;
-	        }
-	        return flag;
+	        if ($scope.title == undefined || $scope.title == '' ) { return false;}
+	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
+	        if ($scope.temperType == undefined || $scope.temperType == '') {return false;}
+	        if ($scope.manageType == undefined || $scope.manageType == '') { return false;}
+	        if ($scope.sqm == undefined || $scope.sqm == '') {return false;}
+	        if ($scope.telephone == undefined || $scope.telephone == '') {return false;}
+	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') { return false;}
+	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {return false;}
+	        return true;
 	    }
 	    
 	    
 	    function checkGoodsSubmit(){
-	        var flag = true;
 	        // 检查必须填写项
-	        if ($scope.title == undefined || $scope.title == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {
-	            flag = false;
-	        }
-	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
-	            flag = false;
-	        }
-	        if ($scope.sqm == undefined || $scope.sqm == '') {
-	            flag = false;
-	        }
-	        if ($scope.telephone == undefined || $scope.telephone == '') {
-	            flag = false;
-	        }
-	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
-	            flag = false;
-	        }
-	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
-	            flag = false;
-	        }
-	        return flag;
+	        if ($scope.title == undefined || $scope.title == '' ) {return false;}
+	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {return false;}
+	        if ($scope.sqm == undefined || $scope.sqm == '') {return false;}
+	        if ($scope.telephone == undefined || $scope.telephone == '') { return false;}
+	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {return false;}
+	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {return false;}
+	        return true;
 	    }
 	    
 	    
 	    function checkCarSubmit(){
-	        var flag = true;
 	        // 检查必须填写项
-	        if ($scope.title == undefined || $scope.title == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.stcityID == undefined || $scope.stcityID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {
-	            flag = false;
-	        }
-	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
-	            flag = false;
-	        }
-	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {
-	            flag = false;
-	        }
-	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {
-	            flag = false;
-	        }
-	        if ($scope.telephone == undefined || $scope.telephone == '') {
-	            flag = false;
-	        }
-	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
-	            flag = false;
-	        }
-	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {
-	            flag = false;
-	        }
-	        return flag;
+	        if ($scope.title == undefined || $scope.title == '' ) {return false;}
+	        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false;}
+	        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {return false;}
+	        if ($scope.stcityID == undefined || $scope.stcityID == '' ) { return false;}
+	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {return false;}
+	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {return false;}
+	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {return false;}
+	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {return false; }
+	        if ($scope.telephone == undefined || $scope.telephone == '') {return false;}
+	        return true;
 	    }
 	    
 	    
@@ -270,12 +219,21 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    		$scope.arriveTime =sl2+" "+edtime;
 	    	}else if(attr1==2){
 	    		var spCodesTemp = "";
-	    		 $('input:checkbox[class="wk_erw"]:checked').each(function(i){spCodesTemp += ($(this).val()+","); });
+	    		 $('input:checkbox[class="wk_erw"]').parent('label.active').each(function(i){
+	    			 spCodesTemp += (this.textContent+","); 
+    			 });
 	    		 $scope.startTime =sl1+spCodesTemp.substr(0,spCodesTemp.length-1)+" "+sttime;
 	    		 $scope.arriveTime =  sl2+" "+edtime;
 	    	}else if(attr1==3){
 	    		$scope.startTime =sttime;  $scope.arriveTime= edtime;
-	    	} 
+	    	} else if(attr1==4){
+	    		 $scope.startTime="每"+$("#sl_attrvalue1_4").val()+"天一次";
+	    		 $scope.arriveTime =  sl2+" "+$("#txt_endtim").val();
+	    	}else if(attr1==5){
+	    		 $scope.startTime=$("#sl_attrvalue1_5").val();
+	    		 $scope.arriveTime = null;
+	    		 $("#hl_validEndTime").val("");
+	    	}
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
 			if(checkCarSubmit()){
@@ -342,7 +300,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
 					codeLave1:$scope.codeLave11,
-					unit1 : $scope.unit1,
+					unit1 : $("#boss").val(),
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,

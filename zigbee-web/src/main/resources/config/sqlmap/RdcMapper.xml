@@ -114,6 +114,8 @@
     <select id="findRDCEntityDtoByRdcId" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
 			 SELECT
 			r.id,
+			r.provinceid,
+			r.cityid,
 			r.name,
 			r.address,
 			r.addtime,

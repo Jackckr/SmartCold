@@ -129,7 +129,11 @@ img {
 	z-index: 2;
 	display: none;
 }
-
+.layui-m-layercont>em{
+	font-size: 1.5rem;
+	position: relative;
+    top: .5rem;
+}
 /*点击图片放大*/
 .imglist>li>a{
 	display: block;

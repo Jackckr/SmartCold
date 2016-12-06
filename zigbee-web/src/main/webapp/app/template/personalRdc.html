@@ -29,9 +29,9 @@
 					<p class="company"><span class="edit"  ng-click="goDetail(rdc.id)"><font color="#418ACA">{{rdc.name}}</font></span></p>
 					<p class="area omg"><span class="glyphicon glyphicon-map-marker"></span>{{rdc.address}}</p>
 					<p class="area">
-						{{rdc.addtime}}
+						{{rdc.addtime}} 
+						<span class="delete" ng-click="deleteRdc(rdc.id)">删除</span> &nbsp; &nbsp;
 						<span class="edit" ng-click="goEditRdc(rdc.id)">修改</span>
-						<span class="delete" ng-click="deleteRdc(rdc.id)">删除</span>
 					</p>
 				</li>
 			</ul>

@@ -105,17 +105,17 @@
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li><label for="temperatureType">冷库温度类型</label><em>*</em>
-					<div class="mySelect">
-						<select id="temperatureType" ng-model="temperType" name="temperType"
-                                    ng-change="TemperTypeSelected(temperType)"
-                                    ng-options="x.id as x.type for x in temperTypes"></select>
-					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 				<li><label for="storageType">经营类型</label><em>*</em>
 					<div class="mySelect">
 						<select ng-model="storageType" name="storageType"
                                     ng-change="StorageTypeSelected(storageType)"
                                     ng-options="x.id as x.type for x in storageTypes"></select>
+					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+				<li><label for="temperatureType">冷库温度类型</label><em>*</em>
+					<div class="mySelect">
+						<select id="temperatureType" ng-model="temperType" name="temperType"
+                                    ng-change="TemperTypeSelected(temperType)"
+                                    ng-options="x.id as x.type for x in temperTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 				<li><label>数/质/量</label> <em>*</em>
 				<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"/>
@@ -125,7 +125,7 @@
 					checked />平方米</label>&nbsp;&nbsp;
 			    <label><input type="radio" name="quality" value="元/天·其他"  ng-model="unit" name="unit" />其他</label> </li>
 					
-				<li><label for="price">单价</label> <input type="text" id="price" name="unitPrice"
+				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
 					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
 					
 				<li>
@@ -158,19 +158,5 @@
 	<button class="mybtn" ng-click="submit()">确认发布</button>
 	</section>
 	<div id="datePlugin"></div>
-	<!--<ul class="footer">
-		<li><a href="../index.html"> <i class="iconfont">&#xe65a;</i>
-				<p class="info">首页</p> </a></li>
-		<li><a href="news.html"> <i class="iconfont">&#xe6f8;</i>
-				<p class="info">资讯</p> </a></li>
-		<li class="active"><a href="release.html"> <i
-				class="iconfont">&#xe6ff;</i>
-				<p class="info">发布</p> </a></li>
-		<li><a href="review.html"> <i class="iconfont">&#xe642;</i>
-				<p class="info">追溯</p> </a></li>
-		<li><a href="user.html"> <i class="iconfont">&#xe6fd;</i>
-				<p class="info">我的</p> </a></li>
-	</ul>-->
-	<script type="text/javascript" src="../com/js/file_upload.js"></script>
 </body>
 </html>
