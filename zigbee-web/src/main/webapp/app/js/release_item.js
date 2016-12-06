@@ -136,7 +136,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         $scope.initMode();
         $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
         $http.get('/i/ShareRdcController/getGDFilterData').success(function(data) {$scope.good_type = data.entity.gt;}); //加载区域数据
-        $http.get('/i/ShareRdcController/getSEFilterData').success(function(data) {$scope.codeLave2 = data.entity.st;$scope.codeLave1 = data.entity.mt;}); 
+        $http.get('/i/ShareRdcController/getSEFilterData').success(function(data) {$scope.codeLave2 = data.entity.st;/*$scope.codeLave1 = data.entity.mt;*/}); 
         $scope.initpriv();
       
     };
