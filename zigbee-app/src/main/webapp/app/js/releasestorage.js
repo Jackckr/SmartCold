@@ -315,6 +315,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcID = $scope.rdcdto.id;
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
+			if($scope.rdcdto!=undefined)
+				$scope.storageType = $scope.rdcdto.storagetype;
 			var vo = {}; 
 			if(checkStorageSubmit()){
 				if($scope.sqm.toString().length > 11){

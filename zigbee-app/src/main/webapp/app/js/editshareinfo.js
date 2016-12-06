@@ -417,6 +417,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
+			if($scope.rdcdto!=undefined)
+				$scope.storageType = $scope.rdcdto.storagetype;
 			if(checkStorageSubmit()){
 				if($scope.sqm.length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
