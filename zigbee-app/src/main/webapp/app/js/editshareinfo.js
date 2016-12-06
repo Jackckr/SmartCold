@@ -1,4 +1,11 @@
 checkLogin();
+function getVal(obj){
+	if($(obj).val() == 1){
+		$(obj).parents('li').children('.mySelect').children('select').show()
+	}else{
+		$(obj).parents('li').children('.mySelect').children('select').hide()
+	}
+}
 var releaseCarInfo={
 		initui:function(attrvalue1,work){
 			$("#ul_work li").click(function(event){ $(this).toggleClass("active"); });

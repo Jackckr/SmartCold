@@ -100,7 +100,12 @@
                     <input type="number" name="unitPrice" ng-model="unitPrice" id="price" placeholder="面议"/>
                 </li>
                  <li class="bg">
-                     <label for="start">出发地</label><em>*</em>
+                     <label for="start">
+                     	<select style="width:4rem;" onchange="getVal(this)">
+                     		<option value="1">出发地</option>
+                     		<option value="2">自定义</option>
+                     	</select>
+                     </label><em>*</em>
                      <div class="mySelect">
 	                     <select id="stprovince" ng-model="stprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="stprovinceSelected(stprovinceID)"
@@ -147,7 +152,12 @@
 					</div>
                  </li>
                  <li class="bg">
-                     <label for="arrow">目的地</label><em>*</em>
+                     <label for="arrow">
+                     	<select style="width:4rem;" onchange="getVal(this)">
+                     		<option value="1">目的地</option>
+                     		<option value="2">自定义</option>
+                     	</select>                     
+                     </label><em>*</em>
                       <div class="mySelect">
 	                    <select id="toprovince" ng-model="toprovinceID" ng-disabled="editable" name="provinceId"
                                     ng-change="toprovinceSelected(toprovinceID)"

@@ -1,6 +1,12 @@
 checkLogin();
 
-
+function getVal(obj){
+	if($(obj).val() == 1){
+		$(obj).parents('li').children('.mySelect').children('select').show()
+	}else{
+		$(obj).parents('li').children('.mySelect').children('select').hide()
+	}
+}
 angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upload, $http) { 
 	$http.defaults.withCredentials=true;  $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var id=getUrlParam("id");
