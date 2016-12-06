@@ -272,6 +272,7 @@ em{
     padding-right: 20px;
     line-height: 29px;
 }
+input.arrdes{border-radius: 4px;}
 #img_list .thumb{
 	border:1px solid #eee;
 }
