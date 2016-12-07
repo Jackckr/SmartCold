@@ -103,7 +103,7 @@ var gethtml = function(obj) {
 		        , obj.commentdto.avatar
 		        , "'/></div><p class='company'>名称："
 		        , obj.rdcname
-		        , "</p><p class='position'>点评内容："
+		        , "</p><p class='position' style='padding-left: 3.5rem;'>点评内容："
 		        , obj.commentdto.content
 		        , "</p></div><p class='btnGroup'><button onclick='delrdc("
 		        , obj.commentdto.id + ",this);'>删除</button></p></li>"].join("");

@@ -189,7 +189,7 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
 	$scope.submit = function(){
 		if ($("#but_submit").data('isLoading') === true) return; 
 		if(user!==null&&user.id!=0){ if (!$("#release_item_from").valid()) { $($("#release_item_from input.error")[0]).focus();  return; }  }else{util.info(null,"请登录后执行该操作！",function(){ window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";});return;}
-		 $("#but_submit").text("保存中...");
+		 $("#but_submit").text("保存中···");
 		 $("#but_submit").data('isLoading', true);
 		var data = {data:releaseCarInfo.addvo(), "files":$scope.totalfiles};
 		Upload.upload({
