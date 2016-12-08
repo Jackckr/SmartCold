@@ -318,11 +318,11 @@
 								    </tr>  
 							        <tr ng-if="dgdatatype==2">
 										<th>始发地:</th>
-										<td>{{vo.unit1}} <span ng-if="vo.staddress">-{{vo.staddress}}</span></td>
+										<td>{{vo.unit1}} <span ng-if="vo.staddress">({{vo.staddress}})</span></td>
 									</tr>
 									<tr ng-if="dgdatatype==2">
 				 						<th>目的地:</th>
-				 					   <td>{{vo.unit2}}  <span ng-if="vo.toaddress">-{{vo.toaddress}}</span></td>
+				 					   <td>{{vo.unit2}}  <span ng-if="vo.toaddress">({{vo.toaddress}})</span></td>
 				  					</tr>
 				  					<tr ng-if="dgdatatype!=2">
 										<th>{{appmode[dgdatatype].lab[0][0]}}:</th>
