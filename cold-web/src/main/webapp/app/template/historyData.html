@@ -46,9 +46,9 @@
 						       </ul>
 						       <ul id="Temp_ul_4"  class="hide"> <!-- 初始化压缩机组-->
 							         <div>
-										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('highPress','高压')" checked >高压</label>
-										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('lowPress','低压' )">低压</label>
-										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('liquidLevel','液位' )">液位</label>
+										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('highPress','高压','kPa')" checked >高压</label>
+										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('lowPress','低压' ,'kPa')">低压</label>
+										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('liquidLevel','液位','mm' )">液位</label>
 							        </div>
 						           <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
 						       </ul>

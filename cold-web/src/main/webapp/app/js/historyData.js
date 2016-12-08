@@ -92,15 +92,22 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		var yAxismode= {type : 'value', axisLabel : {formatter: '{value}'}} ;
 		var tooltipmd= {trigger: 'axis',formatter:function(params){
 			var html=[]; 
-			var relVal = params[0].name;  
-			if(relVal!=undefined&&relVal!=""){html.push(relVal+"<br/>"); }
-	        for (var i = 0, l = params.length; i < l; i++) {  html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'); html.push(params[i].seriesName + ' : '+gettitval(params[i].value)+"<br/>" );} return html.join(""); 
+			if(params.length!=undefined){
+			  var relVal = params[0].name;  
+			  if(relVal!=undefined&&relVal!=""){html.push(relVal+"<br/>"); }
+	          for (var i = 0, l = params.length; i < l; i++) {  html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'); html.push(params[i].seriesName + ' : '+gettitval(params[i].value)+"<br/>" );} return html.join(""); 
+			}else{
+				html.push(params.name+"<br/>"); 
+				html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params.color+'"></span>'); 
+				html.push(params.seriesName + ' : '+gettitval(params.value)+"<br/>" );
+			   return html.join("");
+			}
 		}};
 		if($scope.sl_index==2||$scope.sl_index==3){yAxismode={type : 'value',splitNumber: 1, axisLabel: {formatter: function(value){return value==1?"开":"关";} } };}
 		var option = {
 				calculable : true,
 				legend: {data:$scope.oldnames},
-				title: {text: $scope.slgptit+$scope.typemode.unit[$scope.sl_index]},
+				title: {text: $scope.sltit.substring(0,$scope.sltit.indexOf("{")-1)+$scope.typemode.unit[$scope.sl_index]},
 			    tooltip :tooltipmd,
 			    xAxis : [{type : 'category',data : xData} ],
 			    yAxis :yAxismode,
@@ -121,7 +128,8 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	 $scope.slgroupsl=function(e){//点击下拉框事件
 		 $scope.showobjgroup=!$scope.showobjgroup;}
 	 ;
-	 $scope.chPress=function(vl,vtxt){//切换高低压
+	 $scope.chPress=function(vl,vtxt,dw){//切换高低压
+		 $scope.typemode.unit[$scope.sl_index]=dw;
 		 $scope.typemode.key[$scope.sl_index]=vl;
 		 $scope.typemode.tit[$scope.sl_index]=vtxt;
 	 };
