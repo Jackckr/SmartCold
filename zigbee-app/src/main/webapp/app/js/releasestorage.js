@@ -160,12 +160,12 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	
 	    	
 			$scope.rdcAddress = '';
-			var stplace=toplace=""; 
+			var stplace=toplace="";
 			if(onoff){
 				stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
 			    toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
-				if($scope.staddress!=undefined){ stplace +="-"+$scope.staddress;}
-				if($scope.toaddress!=undefined){ toplace +="-"+$scope.toaddress;}
+				if($scope.staddress==undefined){ $scope.staddress="";}
+				if($scope.toaddress==undefined){ $scope.toaddress="";}
 		    }else{
 		    	stplace = $('.user_defined_address1').val();//出发地详细地址
 				toplace = $('.user_defined_address2').val();//目的地详细地址
@@ -214,6 +214,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 						rdcID : $scope.rdcID,
 						detlAddress:$scope.rdcAddress,
 						attrvalue:onoff?1:0,
+						staddress:$scope.staddress,
+						toaddress:$scope.toaddress,
 						attrvalue1:attr1,//设置时间类型  每天，每周，单次
 						attrvalue2:attr2//设置到达时间类型
 				};
@@ -256,7 +258,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
 		        }else if($scope.unitprice == undefined || $scope.unitprice == null || $scope.unitprice == ""){
-		        	$scope.unitprice = ""
+		        	$scope.unitprice = "";
 		        }else if($scope.unitprice.toString().length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }else if($scope.telephone.trim().length != 11){

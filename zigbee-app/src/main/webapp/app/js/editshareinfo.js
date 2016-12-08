@@ -309,13 +309,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(releaseCarInfo.onoff){
 				 stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
 				 toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
-				if($scope.staddress){stplace+='-'+$scope.staddress;}
-				if($scope.toaddress){toplace+='-'+$scope.toaddress;}
+				if($scope.staddress==undefined){$scope.staddress="";}
+				if($scope.toaddress==undefined){$scope.toaddress="";}
 		    }else{
+		    	$scope.staddress=$scope.toaddress="";
 		    	stplace = $('.user_defined_address1').val();//出发地详细地址
 				toplace = $('.user_defined_address2').val();//目的地详细地址
 		    }
-			
 			
 			if(checkCarSubmit()){
 				if(parseFloat($scope.unitprice).toFixed(2).length>11){
@@ -341,6 +341,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				    stcityID:$scope.stcityID,
 				    toprovinceID:$scope.toprovinceID,
 					tocityID:$scope.tocityID,
+					staddress:$scope.staddress,
+					toaddress:$scope.toaddress,
 					unit1:stplace,
 					unit2:toplace,
 					validStartTime:$scope.startTime,
