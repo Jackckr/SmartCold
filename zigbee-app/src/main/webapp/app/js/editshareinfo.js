@@ -97,7 +97,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $("#sl_attrvalue1_5").val(vo.validStartTime);  $scope.validEndTime = vo.validEndTime;
 			 }
 			 releaseCarInfo.initui(vo.attrvalue1,work);
-			 releaseCarInfo.changline(vo.attrvalue );
+			 releaseCarInfo.changline(vo.attrvalue=='0' );
 			 if(vo.attrvalue=='0'){
 				    $('.user_defined_address1').val(vo.unit1);
 					$('.user_defined_address2').val(vo.unit2);
