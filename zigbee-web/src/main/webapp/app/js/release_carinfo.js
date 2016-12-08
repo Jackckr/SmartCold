@@ -109,6 +109,7 @@ var releaseCarInfo = {
     	var attr1=$("#sl_attrvalue1").val();
     	var sl1= $("#sl_attrvalue1").find("option:selected").text();
     	var sl2= $("#sl_attrvalue2").find("option:selected").text();
+    	
     	if(attr1==1){
     		 $("#hl_validStartTime").val(sl1+" "+$("#txt_sattim").val());
     		 $("#hl_validEndTime").val(  sl2+" "+$("#txt_endtim").val());
@@ -129,6 +130,8 @@ var releaseCarInfo = {
     	}
         var unit1=$("#sl_provinceId1 option:selected").text()+"-"+$("#sl_cityid1 option:selected").text();
         var unit2=$("#sl_provinceId2 option:selected").text()+"-"+$("#sl_cityid2 option:selected").text();
+        var user_defined_unit1 = $('.user_defined_address1').val();//出发地详细地址
+        var user_defined_unit2 = $('.user_defined_address2').val();//目的地详细地址
         
         $("#hide_div [name=unit1]").val(unit1);
         $("#hide_div [name=unit2]").val(unit2);
@@ -142,18 +145,24 @@ var releaseCarInfo = {
 };
 coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, Upload, $state, $cookies, $http, $location) {
 	if(user==null||(user!=null&&user.id==0)){util.info(null,"请登录后执行该操作！",function(){window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseCarInfo";return;});return;}
-	$scope.routes=[{"id":"0","name":"路线"},{"id":"1","name":"自定义路线"}];
-	$scope.route = "0";
-	$scope.routechange=function(){
-		if($scope.route=="0"){
-		$("#routeselect1").show();
-		$("#routeselect2").hide();
+	var onoff = true;
+	$('#user-defined').click(function(){
+		if (onoff) {
+			$('.route select').hide();
+			$('.route input').css('width',400);
+			$(this).html('固定路线');
+			$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
+			$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
+			onoff = false
+		} else {
+			$('.route select').show();
+			$('.route input').css('width',200);
+			$(this).html('自定义');
+			$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
+			$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
+			onoff = true;
 		}
-		if($scope.route=="1"){
-			$("#routeselect2").show();
-			$("#routeselect1").hide();
-		}
-    };
+	})
 	$.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
 	      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
 	      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){

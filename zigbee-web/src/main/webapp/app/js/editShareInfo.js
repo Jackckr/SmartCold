@@ -1,16 +1,22 @@
 coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
-	$scope.routes=[{"id":"0","name":"路线"},{"id":"1","name":"自定义路线"}];
-	$scope.route = "0";
-	$scope.routechange=function(){
-		if($scope.route=="0"){
-		$("#routeselect1").show();
-		$("#routeselect2").hide();
+	var onoff = true;
+	$('#user-defined').click(function(){
+		if (onoff) {
+			$('.route select').hide();
+			$('.route input').css('width',400);
+			$(this).html('固定路线');
+			$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
+			$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
+			onoff = false
+		} else {
+			$('.route select').show();
+			$('.route input').css('width',200);
+			$(this).html('自定义');
+			$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
+			$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
+			onoff = true;
 		}
-		if($scope.route=="1"){
-			$("#routeselect2").show();
-			$("#routeselect1").hide();
-		}
-    };
+	})
 	$scope.totalfiles = [];
 	 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  	});  
 	 $scope.initData=function(vo){
