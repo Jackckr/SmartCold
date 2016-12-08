@@ -10,7 +10,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			$(this).html('固定路线');
 			$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
 			$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
-			onoff = false
+			onoff = false;
 		} else {
 			$('.route select').show();
 			$(this).html('自定义');
@@ -116,10 +116,15 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     }
     function checkCarSubmit(){  // 检查必须填写项
         if ($scope.title == undefined || $scope.title == '' ) {   return false;  }
-        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false; }
-        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {  return false; }
-        if ($scope.stcityID == undefined || $scope.stcityID == '' ) { return false; }
-        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {  return false;  }
+        if(onoff){
+        	 if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false; }
+             if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {  return false; }
+             if ($scope.stcityID == undefined || $scope.stcityID == '' ) { return false; }
+             if ($scope.tocityID == undefined || $scope.tocityID == '' ) {  return false;  }
+        }else{
+        	if($('.user_defined_address1').val().trim()==""){return false;};//出发地详细地址
+        	if($('.user_defined_address2').val().trim()==""){return false;};//目的地详细地址
+        }
         if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {  return false; }
         if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {   return false;  }
         if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {  return false; }
@@ -155,17 +160,17 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	
 	    	
 			$scope.rdcAddress = '';
-			var stplace =toplace="";
-			if($scope.staddress!=undefined){
-			    stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text()+"-"+$scope.staddress;
-			}else{
-				  stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
-			}
-			if($scope.toaddress!=undefined){
-			     toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text()+"-"+$scope.toaddress;
-			}else{
-				  toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
-			}
+			var stplace=toplace=""; 
+			if(onoff){
+				stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
+			    toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
+				if($scope.staddress!=undefined){ stplace +="-"+$scope.staddress;}
+				if($scope.toaddress!=undefined){ toplace +="-"+$scope.toaddress;}
+		    }else{
+		    	stplace = $('.user_defined_address1').val();//出发地详细地址
+				toplace = $('.user_defined_address2').val();//目的地详细地址
+		    }
+			
 			if(window.flag1==1){
 				$scope.typeCode = 2;
 				$scope.typeText = "找车";
@@ -175,9 +180,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcID = $scope.rdcdto.id;
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
+			
+			
 			if(checkCarSubmit()){
 				if($scope.unitPrice == undefined || $scope.unitPrice == null || $scope.unitPrice == ""){
-					$scope.unitPrice = ""
+					$scope.unitPrice = "";
 				}else if($scope.unitPrice.toString().trim().length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }else if($scope.telephone.trim().length != 11){
@@ -206,6 +213,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 						typeText : $scope.typeText,
 						rdcID : $scope.rdcID,
 						detlAddress:$scope.rdcAddress,
+						attrvalue:onoff?1:0,
 						attrvalue1:attr1,//设置时间类型  每天，每周，单次
 						attrvalue2:attr2//设置到达时间类型
 				};

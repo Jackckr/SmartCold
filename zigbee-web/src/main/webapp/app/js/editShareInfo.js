@@ -1,27 +1,33 @@
 coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
 	var onoff = true;
-	$('#user-defined').click(function(){
-		if (onoff) {
+	$scope.totalfiles = [];
+	$scope.changline=function(uline){
+		if (uline) {
 			$('.route select').hide();
 			$('.route input').css('width',400);
-			$(this).html('固定路线');
+			$("#user-defined").html('自定义');
 			$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
 			$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
-			onoff = false
+			onoff = false;
 		} else {
 			$('.route select').show();
 			$('.route input').css('width',200);
-			$(this).html('自定义');
+			$("#user-defined").html('固定路线');
 			$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
 			$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
 			onoff = true;
 		}
-	})
-	$scope.totalfiles = [];
+	};
+    $('#user-defined').click(function(){ $scope.changline(onoff);});
 	 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  	});  
 	 $scope.initData=function(vo){
 		 if(vo.dataType==2){
 			 releaseCarInfo.changtimemode(vo.attrvalue1);
+			 $scope.changline(vo.attrvalue=='0');
+			 if(vo.attrvalue=='0'){
+				    $('.user_defined_address1').val(vo.unit1);
+					$('.user_defined_address2').val(vo.unit2);
+			 }
 			 if(vo.attrvalue1==3){
 				 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 }else if(vo.attrvalue1==1||vo.attrvalue1==2){
@@ -254,6 +260,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    	}
 			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
 			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
+	        if(!onoff){
+	        	stplace = $('.user_defined_address1').val();//出发地详细地址
+	        	toplace = $('.user_defined_address2').val();//目的地详细地址
+	        }
 			if(checkCarSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
@@ -273,6 +283,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					validEndTime : $scope.arriveTime,
 					telephone:$scope.telephone,
 					note : $scope.note,
+					attrvalue:onoff?1:0,
 					attrvalue1:attr1,
 	    	        attrvalue2: attr2,
 	    	        staddress:$scope.staddress?$scope.staddress:"",

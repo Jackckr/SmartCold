@@ -142,6 +142,7 @@
 		s.bookings,
 		s.stauts,
 		s.detlAddress,
+		s.attrvalue,
 		s.attrvalue1,
 		s.attrvalue2,
 		IFNULL(	date_format(s.validStartTime,'%Y-%m-%d'),s.validStartTime)validStartTime,

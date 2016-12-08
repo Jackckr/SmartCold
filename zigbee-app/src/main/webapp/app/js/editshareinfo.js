@@ -1,26 +1,30 @@
 checkLogin();
 
 var releaseCarInfo={
+		onoff:true,
+		changline:	function(uline){
+			if (uline) {
+				$('.route select').hide();
+				$("#user-defined").html('固定路线');
+				$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
+				$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
+				releaseCarInfo.onoff = false;
+			} else {
+				$('.route select').show();
+				$("#user-defined").html('自定义');
+				$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
+				$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
+				releaseCarInfo.onoff = true;
+			}
+		},
 		initui:function(attrvalue1,work){
 			$("#ul_work li").click(function(event){ $(this).toggleClass("active"); });
 			if(work&&work!=""){ $("#ul_work li").removeClass("active");  $.each(work, function(i, vo){ if(vo!=""&&vo!=" "){ $("#ul_work li[value="+vo+"]").addClass("active"); } });}
 			releaseCarInfo.changtimemode(attrvalue1);
-			var onoff = true;
 			$('#user-defined').click(function(){
-				if (onoff) {
-					$('.route select').hide();
-					$(this).html('固定路线');
-					$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
-					$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
-					onoff = false
-				} else {
-					$('.route select').show();
-					$(this).html('自定义');
-					$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
-					$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
-					onoff = true;
-				}
+				releaseCarInfo.changline(releaseCarInfo.onoff );
 			});
+	
 //		   $("#release_item_from .obj_hide").hide();
 //		   $("#release_item_from .time_mod"+attrvalue1).show();
 //			if(attrvalue1==3){
@@ -93,6 +97,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				 $("#sl_attrvalue1_5").val(vo.validStartTime);  $scope.validEndTime = vo.validEndTime;
 			 }
 			 releaseCarInfo.initui(vo.attrvalue1,work);
+			 releaseCarInfo.changline(vo.attrvalue );
+			 if(vo.attrvalue=='0'){
+				    $('.user_defined_address1').val(vo.unit1);
+					$('.user_defined_address2').val(vo.unit2);
+			 }
 		 }else{
 			 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
 			 releaseCarInfo.initui(vo.attrvalue1,undefined);
@@ -254,10 +263,15 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    function checkCarSubmit(){
 	        // 检查必须填写项
 	        if ($scope.title == undefined || $scope.title == '' ) { return false; }
-	        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) {return false; }
-	        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) { return false; }
-	        if ($scope.stcityID == undefined || $scope.stcityID == '' ) {return false; }
-	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {return false; }
+	        if(releaseCarInfo.onoff){
+	        	 if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false; }
+	             if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {  return false; }
+	             if ($scope.stcityID == undefined || $scope.stcityID == '' ) { return false; }
+	             if ($scope.tocityID == undefined || $scope.tocityID == '' ) {  return false;  }
+	        }else{
+	        	if($('.user_defined_address1').val().trim()==""){return false;};//出发地详细地址
+	        	if($('.user_defined_address2').val().trim()==""){return false;};//目的地详细地址
+	        }
 	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {return false; }
 	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {return false;}
 	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {return false;}
@@ -290,10 +304,19 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    		 $scope.arriveTime="当天  17:00";
 	    		 $("#hl_validEndTime").val("");
 	    	}
-			var stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
-			var toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
-			if($scope.staddress){stplace+='-'+$scope.staddress;}
-			if($scope.toaddress){toplace+='-'+$scope.toaddress;}
+	    	
+	    	var stplace=toplace=""; 
+			if(releaseCarInfo.onoff){
+				 stplace = $("#stprovince option:selected").text()+"-"+$("#stcity option:selected").text();
+				 toplace = $("#toprovince option:selected").text()+"-"+$("#tocity option:selected").text();
+				if($scope.staddress){stplace+='-'+$scope.staddress;}
+				if($scope.toaddress){toplace+='-'+$scope.toaddress;}
+		    }else{
+		    	stplace = $('.user_defined_address1').val();//出发地详细地址
+				toplace = $('.user_defined_address2').val();//目的地详细地址
+		    }
+			
+			
 			if(checkCarSubmit()){
 				if(parseFloat($scope.unitprice).toFixed(2).length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
@@ -324,6 +347,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					validEndTime : $scope.arriveTime,
 					telephone:$scope.telephone,
 					note : $scope.note,
+					attrvalue:releaseCarInfo.onoff?1:0,
 					attrvalue1:attr1,//设置时间类型  每天，每周，单次
 					attrvalue2:attr2//设置到达时间类型
 			};
