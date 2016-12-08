@@ -263,15 +263,16 @@ em{
     margin:0 auto;
 }
 .formInfo .infoList{
-    width: 600px;
+    width: 800px;
     margin-bottom: 10px;
 }
 .infoList>div:nth-child(1){
-    width:120px;
+    width:180px;
     text-align: right;
     padding-right: 20px;
     line-height: 29px;
 }
+input.arrdes{border-radius: 4px;}
 #img_list .thumb{
 	border:1px solid #eee;
 }

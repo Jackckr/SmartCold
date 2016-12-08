@@ -1,4 +1,16 @@
 coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cookies, $http, Upload, $stateParams,$location) {
+	$scope.routes=[{"id":"0","name":"路线"},{"id":"1","name":"自定义路线"}];
+	$scope.route = "0";
+	$scope.routechange=function(){
+		if($scope.route=="0"){
+		$("#routeselect1").show();
+		$("#routeselect2").hide();
+		}
+		if($scope.route=="1"){
+			$("#routeselect2").show();
+			$("#routeselect1").hide();
+		}
+    };
 	$scope.totalfiles = [];
 	 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  	});  
 	 $scope.initData=function(vo){

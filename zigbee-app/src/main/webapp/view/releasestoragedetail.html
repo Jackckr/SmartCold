@@ -105,7 +105,7 @@
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li><label for="storageType">经营类型</label><em>*</em>
+				<li ng-if="rdcdto==null||rdcdto==undefined"><label for="storageType">经营类型</label><em>*</em>
 					<div class="mySelect">
 						<select ng-model="storageType" name="storageType"
                                     ng-change="StorageTypeSelected(storageType)"

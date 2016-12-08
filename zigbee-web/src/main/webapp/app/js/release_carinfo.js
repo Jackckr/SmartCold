@@ -142,6 +142,18 @@ var releaseCarInfo = {
 };
 coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, Upload, $state, $cookies, $http, $location) {
 	if(user==null||(user!=null&&user.id==0)){util.info(null,"请登录后执行该操作！",function(){window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseCarInfo";return;});return;}
+	$scope.routes=[{"id":"0","name":"路线"},{"id":"1","name":"自定义路线"}];
+	$scope.route = "0";
+	$scope.routechange=function(){
+		if($scope.route=="0"){
+		$("#routeselect1").show();
+		$("#routeselect2").hide();
+		}
+		if($scope.route=="1"){
+			$("#routeselect2").show();
+			$("#routeselect1").hide();
+		}
+    };
 	$.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
 	      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
 	      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){
@@ -177,7 +189,7 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
 	$scope.submit = function(){
 		if ($("#but_submit").data('isLoading') === true) return; 
 		if(user!==null&&user.id!=0){ if (!$("#release_item_from").valid()) { $($("#release_item_from input.error")[0]).focus();  return; }  }else{util.info(null,"请登录后执行该操作！",function(){ window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseItemList";});return;}
-		 $("#but_submit").text("保存中...");
+		 $("#but_submit").text("保存中···");
 		 $("#but_submit").data('isLoading', true);
 		var data = {data:releaseCarInfo.addvo(), "files":$scope.totalfiles};
 		Upload.upload({
