@@ -179,8 +179,8 @@
 			         	<div class="position">&nbsp;车型：{{vo.codeLave3}}</div>
 			         </td>
 		            <td> <!-- 	 线路 -->
-			         	<div class="position"><span class="_sh_orang">出发地：</span>{{vo.unit1}}</div>
-			         	<div class="position"><span style="color:#707070">目的地：</span>{{vo.unit2}}</div>
+			         	<div class="position" style="text-align: left;"><span class="glyphicon glyphicon-map-marker" style="color:#00CC00!important;"></span>{{vo.unit1}}</div>
+			         	<div class="position" style="text-align: left;"><span class="glyphicon glyphicon-map-marker"></span>{{vo.unit2}}</div>
 			         </td>
 			         <td>{{vo.codeLave1}}</td>
 			         <td > <span ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车--{{vo.validEndTime}}到达</span><span ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</span>  </td>
