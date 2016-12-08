@@ -1,17 +1,26 @@
 checkLogin();
-function getVal(obj){
-	if($(obj).val() == 1){
-		$(obj).parents('li').children('.mySelect').children('select').show()
-	}else{
-		$(obj).parents('li').children('.mySelect').children('select').hide()
-	}
-}
+
 var releaseCarInfo={
 		initui:function(attrvalue1,work){
 			$("#ul_work li").click(function(event){ $(this).toggleClass("active"); });
 			if(work&&work!=""){ $("#ul_work li").removeClass("active");  $.each(work, function(i, vo){ if(vo!=""&&vo!=" "){ $("#ul_work li[value="+vo+"]").addClass("active"); } });}
 			releaseCarInfo.changtimemode(attrvalue1);
-			
+			var onoff = true;
+			$('#user-defined').click(function(){
+				if (onoff) {
+					$('.route select').hide();
+					$(this).html('固定路线');
+					$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
+					$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
+					onoff = false
+				} else {
+					$('.route select').show();
+					$(this).html('自定义');
+					$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
+					$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
+					onoff = true;
+				}
+			});
 //		   $("#release_item_from .obj_hide").hide();
 //		   $("#release_item_from .time_mod"+attrvalue1).show();
 //			if(attrvalue1==3){

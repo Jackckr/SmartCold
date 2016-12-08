@@ -1,15 +1,24 @@
 checkLogin();
 
-function getVal(obj){
-	if($(obj).val() == 1){
-		$(obj).parents('li').children('.mySelect').children('select').show()
-	}else{
-		$(obj).parents('li').children('.mySelect').children('select').hide()
-	}
-}
 angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upload, $http) { 
 	$http.defaults.withCredentials=true;  $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	var id=getUrlParam("id");
+	var onoff = true;
+	$('#user-defined').click(function(){
+		if (onoff) {
+			$('.route select').hide();
+			$(this).html('固定路线');
+			$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
+			$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
+			onoff = false
+		} else {
+			$('.route select').show();
+			$(this).html('自定义');
+			$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
+			$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
+			onoff = true;
+		}
+	});
 	$scope.totalfiles = [];
 	$scope.unit = "元/天·平方米"; 
 	$scope.telephone =  window.user.telephone;
