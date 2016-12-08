@@ -3,6 +3,7 @@
  */
 var releaseCarInfo = {
 	wk_type:1,//每天1，每周2，固定3
+	 onoff :true,
 	$scope:null,
 	vistHHMM:function(em,value, element){
 		var reg = null, type = $("#sl_attrvalue1").val(), vlength = type == 3 ? 16
@@ -15,6 +16,8 @@ var releaseCarInfo = {
 		return em.optional(element) || (length == vlength && reg.test(value));
 	},
     initvalidate: function() { //验证必填项
+    	jQuery.validator.addMethod("ckstaddress",   function(value, element) { if(releaseCarInfo.onoff){return true;}else{if(value.trim()==""){return false;}return true;} },"请输入有效的出发地信息！");
+    	jQuery.validator.addMethod("cktoaddress",   function(value, element) { if(releaseCarInfo.onoff){return true;}else{if(value.trim()==""){return false;}return true;}},"请输入有效的目的地信息！");
         jQuery.validator.addMethod("isMobile", function(value, element) {var length = value.length; var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;return this.optional(element) || (length == 11 && mobile.test(value));},"请正确填写您的手机号码");
         jQuery.validator.addMethod("isHHmm",   function(value, element) {
         	var vis= releaseCarInfo.vistHHMM(this,value, element);
@@ -53,6 +56,8 @@ var releaseCarInfo = {
         	jQuery.validator.messages.isEndHHmm="到达时间设置错误！";
           return vis;	
         },"到达时间设置错误！");
+        
+        
         $("#release_item_from").validate({
             rules: {
                 title: { required: true},provinceId: { required: true},city: { required: true },
@@ -62,7 +67,7 @@ var releaseCarInfo = {
                 sqm: { required: true,number:true    },
                 unitPrice: {  number:true   },
                 reservation: { required: true }, telephone: { required: true,isMobile: true },
-                txt_sattim:{required: true,isHHmm:true},txt_endtim:{required: true,isEndHHmm:true}
+                txt_sattim:{required: true,isHHmm:true},txt_endtim:{required: true,isEndHHmm:true},staddress:{ckstaddress:true},toaddress:{cktoaddress:true}
             },
             messages: {
                 title: { required: "请输入描述!"}, provinceId: { required: "请选择省份!"},
@@ -104,7 +109,7 @@ var releaseCarInfo = {
     },
     savedata: function() {if ($("#release_item_from").valid()) { this.addvo(); } else {$($("#release_item_from input.error")[0]).focus();} },
     checktime:function(em){},
-    addvo: function() {
+    addvo: function(usrole) {
     	var vo = {}; 
     	var attr1=$("#sl_attrvalue1").val();
     	var sl1= $("#sl_attrvalue1").find("option:selected").text();
@@ -130,9 +135,10 @@ var releaseCarInfo = {
     	}
         var unit1=$("#sl_provinceId1 option:selected").text()+"-"+$("#sl_cityid1 option:selected").text();
         var unit2=$("#sl_provinceId2 option:selected").text()+"-"+$("#sl_cityid2 option:selected").text();
-        var user_defined_unit1 = $('.user_defined_address1').val();//出发地详细地址
-        var user_defined_unit2 = $('.user_defined_address2').val();//目的地详细地址
-        
+        if(!releaseCarInfo.onoff){
+        	 unit1 = $('.user_defined_address1').val();//出发地详细地址
+             unit2 = $('.user_defined_address2').val();//目的地详细地址
+        }
         $("#hide_div [name=unit1]").val(unit1);
         $("#hide_div [name=unit2]").val(unit2);
         var data = $("#release_item_from").serializeArray();
@@ -145,24 +151,23 @@ var releaseCarInfo = {
 };
 coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, Upload, $state, $cookies, $http, $location) {
 	if(user==null||(user!=null&&user.id==0)){util.info(null,"请登录后执行该操作！",function(){window.location.href =  "http://" + $location.host() + ":" + $location.port() + "/login.html#/releaseCarInfo";return;});return;}
-	var onoff = true;
 	$('#user-defined').click(function(){
-		if (onoff) {
+		if (releaseCarInfo.onoff) {
 			$('.route select').hide();
 			$('.route input').css('width',400);
 			$(this).html('固定路线');
 			$('.user_defined_address1').attr('placeholder','请输入自定义出发地址');
 			$('.user_defined_address2').attr('placeholder','请输入自定义目的地址');
-			onoff = false
+			releaseCarInfo.onoff = false;
 		} else {
 			$('.route select').show();
 			$('.route input').css('width',200);
 			$(this).html('自定义');
 			$('.user_defined_address1').attr('placeholder','请输入详细地址(选填)');
 			$('.user_defined_address2').attr('placeholder','请输入详细地址(选填)');
-			onoff = true;
+			releaseCarInfo.onoff = true;
 		}
-	})
+	});
 	$.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
 	      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
 	      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){

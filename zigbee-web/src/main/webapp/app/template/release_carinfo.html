@@ -87,12 +87,12 @@
 									 <select id="sl_cityid1" name="stcityID" class="arrdes" style="width: 100px;padding: 6px 12px;"  >
 										<option ng-repeat="x in city1" value="{{x.cityID}}">{{x.cityName}}</option>
 									 </select>
-									 <input type="text"   name="staddress" class="arrdes user_defined_address1" placeholder="请输入详细地址(选填)" style="width:200px;padding: 6px 12px;" >
-									 <button class="btn btn-default btn-sm" style="margin-left: 0" id="user-defined">自定义</button>
+									 <input type="text"   name="staddress" class="arrdes user_defined_address1" placeholder="请输入详细地址(选填)" data-msg="请输入有效出发地" style="width:200px;padding: 6px 12px;" >
+									 <button class="btn btn-default btn-sm" style="margin-left: 0" id="user-defined">自定义线路</button>
 							 </div>
 							 <div style="width: 600px;"  class="route">
 							         <span class="">目的地</span>
-									 <select id="sl_provinceId2" name="provinceId2"  class="arrdes" style="width: 100px;padding: 6px 12px;"  ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+									 <select id="sl_provinceId2" name="provinceId2"  class="arrdes" style="width: 100px;padding: 6px 12px;" data-msg="请输入有效目的地" ng-model="toprovinceID" ng-disabled="editable" ng-change="changcity2()" ng-options="x.provinceId as x.provinceName for x in provinces"></select>
 									 <input  name="toprovinceID"  type="hidden" value="{{toprovinceID}}">
 									 <select id="sl_cityid2" name="tocityID"  class="arrdes" style="width: 100px;padding: 6px 12px;" >
 										<option ng-repeat="x in city2" value="{{x.cityID}}">{{x.cityName}}</option>
