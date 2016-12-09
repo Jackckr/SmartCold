@@ -81,7 +81,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			 }else if(vo.attrvalue1==1||vo.attrvalue1==2){
 				 var unita=vo.unit1.split("-"); if(unita.length==3){$scope.staddress=vo.unit1.split("-")[2];};
 				 var unitb=vo.unit2.split("-"); if(unitb.length==3){$scope.toaddress=vo.unit2.split("-")[2];};
-				var tstime= vo.validStartTime.substring(2).trim(), tetime= vo.validEndTime.substring(2).trim();
+				var tstime= vo.validStartTime.substring(2).trim(), tetime= vo.validEndTime.substring(vo.validEndTime.lastIndexOf(":")-2).trim();
 				 if(vo.attrvalue1==1){
 					 $scope.validStartTime = tstime;  $scope.validEndTime = tetime; 
 				 }else{
@@ -91,7 +91,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			    	 work=tstime.substring(0,tstime.lastIndexOf(" ")).split(",");
 				 }
 			 }else if(vo.attrvalue1==4){
-				 $scope.validEndTime = vo.validEndTime.substring(2).trim();
+				 $scope.validEndTime = vo.validEndTime.substring(vo.validEndTime.lastIndexOf(":")-2).trim();
 				 $("#sl_attrvalue1_4").val( vo.validStartTime.substring(1,2).trim());
 			 }else if(vo.attrvalue1==5){
 				 $("#sl_attrvalue1_5").val(vo.validStartTime);  $scope.validEndTime = vo.validEndTime;
