@@ -5,7 +5,7 @@ var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
 //var ER = {root:"http://192.168.1.137:8080/",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.117:8080/",coldroot:"http://192.168.1.117:8989/"};
+var ER = {root:"http://192.168.1.119:8080/",coldroot:"http://192.168.1.119:8989/"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(new Date().getDate()==23&&window.localStorage.msgTotalNumFlag==undefined){window.localStorage.msgTotalNum=2;};
 if(window.localStorage.msgTotalNum==undefined){window.localStorage.msgTotalNum = 2;}

@@ -50,6 +50,12 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	$scope.files;
 	$scope.totalfiles = [];
 	releaseItem.$scope=$scope;
+	
+	// 获取冷库经营类型
+    $http.get("/i/rdc/findAllManageType").success(function (data) {
+        $scope.manageTypes = data;
+    });
+	
 	$scope.appmode=[{},{tit:"货品",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送",tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价",$scope.unit]]}];
 	$scope.gocoldShareComment=function(){ $state.go('coldShareComment',{_cuttid: $scope.dataType});};
     $scope.initMode=function(){
