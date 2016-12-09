@@ -21,14 +21,13 @@ public class ResponseData<T> {
 	 * 获取当前可用的ResponseData对象
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> ResponseData<T> getInstance() {
-		ResponseData<T> rd = TLRD.get();
-		if (rd == null) {
-			rd = new ResponseData<T>();
-			TLRD.set(rd);
-		}
-		return rd;
+//		ResponseData<T> rd = TLRD.get();
+//		if (rd == null) {
+			return new ResponseData<T>();
+//			TLRD.set(rd);
+//		}
+//		return rd;
 	}
 
 	/**

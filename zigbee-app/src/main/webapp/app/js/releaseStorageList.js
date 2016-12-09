@@ -39,7 +39,7 @@ $().ready(function() {
   		   isLoadRB=true;
   		  $.post(ER.root+"/i/ShareRdcController/getRdcByUid", {
                pageNum: currentPage,
-               pageSize:maxSize,uid:null},  function(data) {	
+               pageSize:maxSize,uid:window.user.id},  function(data) {	
   	   	          if(data.success&&data.data.length>0){
   	   	        	  totalPages=data.totalPages;
   	   	         	  currentPage++; var html=[];var   rdcsList = data.data;//
