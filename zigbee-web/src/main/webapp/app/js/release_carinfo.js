@@ -136,7 +136,7 @@ var releaseCarInfo = {
         var unit1=$("#sl_provinceId1 option:selected").text()+"-"+$("#sl_cityid1 option:selected").text();
         var unit2=$("#sl_provinceId2 option:selected").text()+"-"+$("#sl_cityid2 option:selected").text();
         if(!releaseCarInfo.onoff){
-        	 vo.attrvalue=onoff?1:0;
+        	 vo.attrvalue=releaseCarInfo.onoff?1:0;
         	 unit1 = $('.user_defined_address1').val();//出发地详细地址
              unit2 = $('.user_defined_address2').val();//目的地详细地址
         }

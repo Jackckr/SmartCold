@@ -101,6 +101,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			 if(vo.attrvalue=='0'){
 				    $('.user_defined_address1').val(vo.unit1);
 					$('.user_defined_address2').val(vo.unit2);
+			 }else{
+				 $('.user_defined_address1').val(vo.staddress);
+				 $('.user_defined_address2').val(vo.toaddress);
 			 }
 		 }else{
 			 $scope.validStartTime = vo.validStartTime;  $scope.validEndTime = vo.validEndTime;
