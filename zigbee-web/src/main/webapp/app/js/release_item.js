@@ -50,14 +50,9 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	$scope.files;
 	$scope.totalfiles = [];
 	releaseItem.$scope=$scope;
-	
-	// 获取冷库经营类型
-    $http.get("/i/rdc/findAllManageType").success(function (data) {
-        $scope.manageTypes = data;
-    });
-	
-	$scope.appmode=[{},{tit:"货品",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送",tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价",$scope.unit]]}];
 	$scope.gocoldShareComment=function(){ $state.go('coldShareComment',{_cuttid: $scope.dataType});};
+	$http.get("/i/rdc/findAllManageType").success(function (data) { $scope.manageTypes = data; });
+	$scope.appmode=[{},{tit:"货品",tolimg:["goods","outCur","offerCur"],tool:[[1,"出售"],[2,"求购"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"配送",tolimg:["car","carCur","noCarCur"],tool:[[1,"找货"],[2,"找车"]],lab:[["数量","吨"],["单价","元/吨"]]},{tit:"仓库",tolimg:["rent","rentCur","noRentCur"],tool:[[1,"出租"],[2,"求租"]],lab:[["数/质/量",""],["单价",$scope.unit]]}];
     $scope.initMode=function(){
     	$(".mode_hide").hide();
     	$(".mode_"+$scope.dataType).show();
@@ -67,6 +62,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     	if( $scope.rdcinfo==null||($scope.dataType==3&&$scope.typeCode==2)){$("#recinfo_div").hide();}else{$("#recinfo_div").show();}
     	if($scope.rdcinfo==null||($scope.typeCode==2&&$scope.dataType==3)){$("#sh_pct_div").show();}
     };
+    // 获取冷库经营类型
     $scope.changtype=function(_em){
     	   var em=$(_em); 
     	   if(em.attr("value")==1&&$scope.rdcinfo==null&&$scope.dataType ==3){ util.info(null,"请选择冷库！然后才能发布出租信息！！",function(){  $state.go('releaseItemList',{data:null,dataid:null,_cuttid: $scope.dataType}); });  return;}
@@ -85,8 +81,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
     $scope.drophonor = function(honorfile){
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == honorfile){
-                $scope.totalfiles.splice(key,1);
-                return false;
+                $scope.totalfiles.splice(key,1); return false;
             }
         });
     };
@@ -136,7 +131,7 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
         $scope.dataType = $stateParams._cuttid?$stateParams._cuttid:1;//当前数据类型
         $scope.unit = $scope.dataType==3?"元/天·平方米":"元/吨";
         $scope.seltype=$stateParams.dataid!=null?$stateParams.dataid:1;//支持直接发布(0,1)
-        if ($scope.rdcinfo) {$scope.rdcID = $scope.rdcinfo.rdcID;$scope.rdcimgs = $scope.rdcinfo.files; }
+        if ($scope.rdcinfo) {$scope.rdcID = $scope.rdcinfo.rdcID;$scope.rdcimgs = $scope.rdcinfo.files; $("#hi_codeLave1").val($scope.rdcinfo.codeLave1); }
         $scope.typeCode=$scope.appmode[$scope.dataType].tool[$scope.seltype][0];
         $scope.typeText=$scope.appmode[$scope.dataType].tool[$scope.seltype][1];
         $scope.initMode();
