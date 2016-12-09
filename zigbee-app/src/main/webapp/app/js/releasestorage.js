@@ -23,14 +23,17 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	$scope.unit = "元/天·平方米"; 
 	$scope.telephone =  window.user.telephone;
 	if(id){
-		 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', { params: {  "rdcID": id } }).success(function (data) {
-	    	 $scope.rdcdto = data;
-	    	 $scope.star = [];
-	    	 $scope.nostar = [];
-	    	 $scope.star.length = $scope.rdcdto.score;
-	    	 $scope.nostar.length = 5-$scope.rdcdto.score;
-	    	 for(var i=0;i<$scope.star.length;i++){  $scope.star[i] = 1;  }
-	     });
+//		 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', { params: {  "rdcID": id, } }).success(function (data) {
+//	    	 $scope.rdcdto = data;
+//	    	 $scope.star = [];
+//	    	 $scope.nostar = [];
+//	    	 $scope.star.length = 5;
+//	    	 $scope.nostar.length = 3;
+//	    	 for(var i=0;i<5;i++){  $scope.star[i] = 1;  }
+//	     });
+		$http.get(ER.root+'/i/ShareRdcController/getRdcByUid', { params: {  "rdcId": id,uid:window.user.id } }).success(function (data) {
+	    	if(data.success){ $scope.rdcdto = data.data[0];}
+		});
 	};
 	
 	$scope.goaddrdcpag=function(){  $location.path("/coldStorageAdd");  };
@@ -234,7 +237,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			} else {
 	            layer.open({content: '请填写标记<em>*</em>的必选项再提交哦~',btn: '确定'});
 	        }
-		}
+		};
 	    
 	    
 		$scope.goodSubmit = function(){
@@ -253,7 +256,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			    $scope.cityId=$scope.rdcdto.cityid;
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
-			var vo = {}; 
 			if(checkGoodsSubmit()){
 				if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
@@ -321,25 +323,22 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	            //alert("请填写标记*的必选项在提交!");
 	            layer.open({content: '请填写标记<em>*</em>的必选项再提交哦~',btn: '确定'});
 	        }
-		}
+		};
 		
 		$scope.submit = function(){
 			$scope.rdcID = '';
 			$scope.validStartTime = $("#sttime").val();
 			$scope.validEndTime = $("#endtime").val();
 			$scope.rdcAddress = $("#province option:selected").text()+"-"+$("#city option:selected").text();
-			if( ($scope.provinceId==""||$scope.provinceId==undefined)&&$scope.rdcdto!=undefined){
+			if($(".coldlist").is(":visible")){//出租
 				$scope.typeCode = 1;
 				$scope.typeText = "出租";
 				$scope.rdcID = $scope.rdcdto.id;
 				$scope.rdcAddress = $scope.rdcdto.address;
-			}
-			if($scope.rdcdto!=undefined){
-				$scope.storageType = $scope.rdcdto.storagetype;
+				$scope.storageType = $scope.rdcdto.codeLave1;
 			}else{
-				
+//				 $scope.storageType =$("#ls_storageType").val();
 			}
-			var vo = {}; 
 			if(checkStorageSubmit()){
 				if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;

@@ -357,12 +357,13 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value="getRdcByUid")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request,Integer uid){
+	public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request,Integer uid,Integer rdcId){
 		this.getPageInfo(request);//
 		if(uid==null||uid==0){
 		    UserEntity user =(UserEntity) request.getSession().getAttribute( "user");if(user!=null&&user.getId()!=0){uid=user.getId();}else{return ResponseData.newFailure("回话超时，请重新登录！~");}
 		}
 		HashMap<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("rdcId",rdcId);//
 		parameters.put("userid",uid);// 
 		parameters.put("audit",2);//
 		PageInfo<RdcShareDTO> rdcList = this.rdcShareService.getRdcList(this.pageNum, this.pageSize, parameters);

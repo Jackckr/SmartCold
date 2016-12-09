@@ -32,10 +32,12 @@
 					$('#name').attr('placeholder','仓位求租')
 					$(".offershow").show();
 					$('.coldlist').hide();
+					$('#li_storageType').show();
 				}else{
 					$('#name').attr('placeholder','仓位出租')
 					$(".offershow").hide();
 					$('.coldlist').show();
+					$('#li_storageType').hide();
 				}
 			});
 			 $('#sttime').date();
@@ -77,10 +79,10 @@
 						<p class='position'>
 							<i class="iconfont">&#xe66e;</i> {{rdcdto.address}}
 						</p>
-						<ul class='star'  ng-repeat="item in star">
-							<li class="filled">★</li>
+<!-- 						<ul class='star'  ng-repeat="item in star"> -->
+<!-- 							<li class="filled">★</li> -->
 							<!-- <li ng-repeat="item in nostar">★</li> -->
-						</ul>
+<!-- 						</ul> -->
 					</div> </a></li>
 		</ul>
 	</div>
@@ -105,9 +107,9 @@
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li ng-if="rdcdto==null||rdcdto==undefined"><label for="storageType">经营类型</label><em>*</em>
+				<li id="li_storageType" class="black"><label for="storageType">经营类型</label><em>*</em>
 					<div class="mySelect">
-						<select ng-model="storageType" name="storageType"
+						<select id="ls_storageType" ng-model="storageType" name="storageType"
                                     ng-change="StorageTypeSelected(storageType)"
                                     ng-options="x.id as x.type for x in storageTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
