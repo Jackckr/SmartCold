@@ -19,6 +19,8 @@ public interface InformationMapper {
 	Page<InformationEntity> findInformationByPosterID(@Param("posterID") int posterID,@Param("keyword")String keyword);
 	
 	Page<InformationEntity> findInformationByCategory(@Param("categoryID") int categoryID);
+	
+	Page<InformationEntity> findInformationList(@Param("categoryID") int categoryID);
 
 	void insertInformation(InformationEntity informationEntity);
 	

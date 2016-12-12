@@ -91,7 +91,36 @@ public class InformationController extends BaseController {
 	    return pageInfo;
 	}
 	
-	
+	/**
+	 * H5
+	 * @param request
+	 * @param pageNum
+	 * @param pageSize
+	 * @param categoryID
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/findInformationsList")
+	@ResponseBody
+	public Object findInformationsList(HttpServletRequest request,  @RequestParam(value="pageNum",required=false) Integer pageNum,
+			@RequestParam(value="pageSize") Integer pageSize,@RequestParam(value="categoryID") Integer categoryID) throws UnsupportedEncodingException {
+		WebvistsService.addCount( 12);
+		pageNum = pageNum == null? 1:pageNum;
+		pageSize = pageSize==null? 10:pageSize;
+		PageHelper.startPage(pageNum, pageSize);
+		Page<InformationEntity> info = informationDao.findInformationByCategory(categoryID);
+		PageInfo<InformationEntity> data = new PageInfo<InformationEntity>(info);
+		return ResponseData.newSuccess(data);
+	}
+	/**
+	 * IOS
+	 * @param request
+	 * @param pageNum
+	 * @param pageSize
+	 * @param categoryID
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping(value = "/findInformationsByCate")
 	@ResponseBody
 	public Object findInformationsByCate(HttpServletRequest request,  @RequestParam(value="pageNum",required=false) Integer pageNum,

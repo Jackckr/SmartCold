@@ -86,6 +86,9 @@
 		SELECT *
 		FROM `information` WHERE `category` = #{categoryID} order by `posttime` desc 
 	</select>
+	<select id="findInformationList" parameterType="map" resultType="InformationEntity">
+		SELECT id,`title` ,`coverpic` ,`posttime`  FROM `information` WHERE `category` = 1 order by `posttime` desc 
+	</select>
 	
 	<delete id="deleteInformation" parameterType="map">
 	    DELETE FROM information WHERE `id` = #{inforID}
