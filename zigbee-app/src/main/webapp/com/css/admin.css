@@ -524,8 +524,8 @@ html,body{
 }
 .redDot{
 	position: absolute;
-	top:0;
-	right:0;
+	top:-.2rem;
+	right:-.2rem;
 	width:.4rem;
 	height:.4rem;
 	background: red;
