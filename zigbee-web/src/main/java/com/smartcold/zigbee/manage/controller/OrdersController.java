@@ -201,8 +201,8 @@ public class OrdersController extends BaseController {
 			e.printStackTrace();
 			return ResponseData.newFailure("下单失败！当前发布信息已失效！");
 		}
-		OrdersDTO data = ordersDTO;
-		return ResponseData.newSuccess(data);
+//		OrdersDTO data = ordersDTO;
+		return ResponseData.newSuccess(ordersDTO);
 	}
 	
 	/**
@@ -212,11 +212,18 @@ public class OrdersController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteByOrderID")
-	public Object deleteByOrderID(Integer orderID) {
-		if (orderID <= 0) {
-			return new BaseDto(-1);
+	public Object deleteByOrderID(HttpServletRequest request,Integer orderID,Integer uid) {
+		if (orderID <= 0) {return new BaseDto(-1);}
+		if(uid==null){
+			 UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
+				if(user!=null&&user.getId()!=0){
+					uid=user.getId();
+				}else{
+					return new BaseDto(-1);
+				}
 		}
-		orderDao.deleteByOrderID(orderID);
+		orderDao.deleteByOrderID(orderID,uid);
+		orderDao.deleteMsgByOrderID(orderID,uid);
 		return new BaseDto(0);
 	}
 

@@ -27,5 +27,7 @@ public interface OrdersMapper {
 	
 	void updateOrderTimes(OrdersEntity ordersEntity);
 	
-	int deleteByOrderID(int orderID);
+	int deleteByOrderID(@Param("orderID")int orderID,@Param("userid")Integer userid);
+	
+	int deleteMsgByOrderID(@Param("orderID")int orderID,@Param("userid")Integer userid);
 }

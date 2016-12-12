@@ -51,7 +51,10 @@
     </update>
     
     <delete id="deleteByOrderID">
-		delete from orders where id = #{orderID}
+		delete from orders where id = #{orderID};
+	</delete>
+    <delete id="deleteMsgByOrderID">
+	 	  delete from message where oid=#{orderID} and userid=#{userid};
 	</delete>
 
     <select id="findOrdersByPersonId" parameterType="map" resultType="OrdersEntity">

@@ -49,7 +49,7 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
     			method:'DELETE',
     			url:'/i/orders/deleteByOrderID',
     			params:{
-    				'orderID':orderID
+    				orderID:orderID,uid:$rootScope.user.id
     			}
     		}).success(function (data) {
 				//alert("删除成功");
