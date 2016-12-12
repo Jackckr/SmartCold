@@ -4,8 +4,8 @@ var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.137:8080/",coldroot:"http://www.smartcold.org.cn"};
-//var ER = {root:"http://192.168.1.114:8080/",coldroot:"http://192.168.1.114:8989/"};
+//var ER = {root:"http://192.168.1.137:8080/",coldroot:"http://www.smartcold.org.cn"};
+var ER = {root:"http://192.168.1.114:8080/",coldroot:"http://192.168.1.114:8989/"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;}}
@@ -65,8 +65,8 @@ function formatDate(date,format){
     ,d  : date.getDate()   //日 : 如果1位的时候不补0
     ,dd : paddNum(date.getDate())//日 : 如果1位的时候补0
     ,hh : date.getHours()  //时
-    ,mm : date.getMinutes() //分
-    ,ss : date.getSeconds() //秒
+    ,mm : paddNum(date.getMinutes()+0) //分
+    ,ss : paddNum(date.getSeconds()+0) //秒
   }
   format || (format = "yyyy-MM-dd hh:mm:ss");
   return format.replace(/([a-z])(\1)*/ig,function(m){return cfg[m];});

@@ -10,6 +10,7 @@
 				}
 			}).success(function(data) {
 				$scope.informationDetail = data;
+				$scope.informationDetail.posttime = formatCSTDate($scope.informationDetail.posttime,"yyyy-MM-dd")
 				document.getElementById("infoContent").innerHTML=$scope.informationDetail.content;
 		});
 	}

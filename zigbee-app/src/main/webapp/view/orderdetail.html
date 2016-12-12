@@ -29,6 +29,7 @@
 				   $scope.orders=data.entity.orders; //联络单信息
 				   $scope.ownerUser=data.entity.ownerUser; //发布者信息
 				   $scope.orderUser=data.entity.orderUser; //联络单者信息
+				   $scope.orders.generatetime=formatCSTDate($scope.orders.generatetime,"yyyy-MM-dd hh:mm:ss")
 				    if($scope.rsd){
 				       $scope.datatype=$scope.rsd.dataType;
 				       $scope.typetitle=$scope.appmode[0].title[$scope.datatype]+data.entity.rsd.typeText;
@@ -114,9 +115,9 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 			    <p class="infos"><i class="dot"></i><span class="first">最大预定量:</span><span class="second">{{rsd.sqm }}吨</span></p>
 			    <p class="infos"><i class="dot"></i><span class="first">单价:</span><span class="second">{{rsd.unitPrice == 0.00 ?"面议":rsd.unitPrice+'元/吨'}}</span></p>
 			</div>
-			<h4>其他信息 <span class="date">{{orders.generatetime}}</span></h4>
+			<h4>其他信息</h4>
 			<div>
-			   <p class="infos"><i class="dot"></i><span class="first">有效期:</span><span class="second">{{rsd.validStartTime}}至{{rsd.validEndTime}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">有效期:</span><span class="second">{{formatCSTDate($scope.rsd.validStartTime,"yyyy-MM-dd hh:mm:ss")}}至{{rsd.validEndTime}}</span></p>
 			   <p class="infos"><i class="dot"></i><span class="first">备注:</span><span class="second">{{rsd.note?rsd.note:'无'}}</span></p>
 			</div>
 			<!--点击图片循环展示-->
