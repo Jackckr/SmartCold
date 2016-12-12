@@ -518,7 +518,7 @@ html,body{
 	line-height:2rem;
 	background-color: #F39826;
 	text-align: center;
-	border-radius: 50%;
+	border-radius: .2rem;
 	margin-right:.3rem;
 }
 .red{background-color: #F1594B;}
@@ -564,11 +564,14 @@ html,body{
 	overflow : hidden;
     text-overflow: ellipsis;
   	display: -webkit-box;
-  	font-size:.75rem;
+  	font-size:.7rem;
 	color:#333;
   	-webkit-line-clamp: 2;
   	-webkit-box-orient: vertical;
 } 
+.messageInfo .newsTitle:last-child{
+	color:#999
+}
 .newsTxt span{
 	font-size: .6rem;
 	color: #999;
