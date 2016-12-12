@@ -1,6 +1,5 @@
 package com.smartcold.zigbee.manage.entity;
 
-import java.util.Date;
 /**
  * 消息实体类
  * @author jkq
@@ -8,11 +7,12 @@ import java.util.Date;
  */
 public class MessageEntity {
 	private int id;
+	private int oid;//订单或者报警ID
 	private int userid;//要通知的userid
     private int msgcount;//消息的数量
     private String msgdata;//消息内容
     private int msgcategory;//消息分类
-    private Date informtime;//通知时间
+    private String informtime;//通知时间
     private String msgpic = "app/img/food.jpg";//消息图片
     private String msgurl; //消息外链
     private int isread; //是否已读
@@ -24,6 +24,12 @@ public class MessageEntity {
 	}
 	public int getUserid() {
 		return userid;
+	}
+	public int getOid() {
+		return oid;
+	}
+	public void setOid(int oid) {
+		this.oid = oid;
 	}
 	public void setUserid(int userid) {
 		this.userid = userid;
@@ -46,10 +52,11 @@ public class MessageEntity {
 	public void setMsgcategory(int msgcategory) {
 		this.msgcategory = msgcategory;
 	}
-	public Date getInformtime() {
+	
+	public String getInformtime() {
 		return informtime;
 	}
-	public void setInformtime(Date informtime) {
+	public void setInformtime(String informtime) {
 		this.informtime = informtime;
 	}
 	public String getMsgpic() {

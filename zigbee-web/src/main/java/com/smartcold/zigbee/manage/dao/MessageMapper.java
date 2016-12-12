@@ -11,6 +11,18 @@ import com.smartcold.zigbee.manage.entity.MessageEntity;
  * 消息通知mapper
  */
 public interface MessageMapper {
+	
+	
+	void insertMessage(MessageEntity messageEntity);
+	
+	void deleteMessage(@Param("msgID") int msgID);
+	
+	void updateMessage(MessageEntity messageEntity);
+	
+	void updateMsgStaus(@Param("userID") int userID,@Param("ids") Object ids);//获得未读消息数
+	
+	
+	Integer getMsgCountByUID(@Param("userID") int userID);//获得未读消息数
 
 	MessageEntity findMessageByID(@Param("msgID") int msgID);
 	
@@ -19,10 +31,5 @@ public interface MessageMapper {
 	Page<MessageEntity> findMessageByUserID(@Param("userID") int userID);
 	
 	Page<MessageEntity> findMessageByCategory(@Param("categoryID") int categoryID);
-
-	void insertMessage(MessageEntity messageEntity);
 	
-	void deleteMessage(@Param("msgID") int msgID);
-	
-	void updateMessage(MessageEntity messageEntity);
 }

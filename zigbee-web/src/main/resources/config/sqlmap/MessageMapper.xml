@@ -6,6 +6,7 @@
 
     <insert id="insertMessage" parameterType="MessageEntity">
         INSERT INTO `message`(
+		`oid`,
 		`userid`,
 		`msgcount`,
 		`msgdata`,
@@ -17,6 +18,7 @@
 		)
 		VALUE 
 		(
+		#{oid},
 		#{userid},
 		#{msgcount},
 		#{msgdata},
@@ -27,6 +29,7 @@
 		now()
 		)
     </insert>
+    
     
     <update id="updateMessage" parameterType="MessageEntity" >
         update message
@@ -71,6 +74,7 @@
 		FROM `message` WHERE `id` = #{msgID}
 	</select>
 	
+
 	<select id="findMessageByUserID" parameterType="map" resultType="MessageEntity">
 		SELECT * FROM `message`
 		WHERE `userid` = #{userID} order by `informtime` desc 
@@ -85,5 +89,13 @@
 	    DELETE FROM message WHERE `id` = #{msgID}
 	</delete>
 	
+	
+	
+	<select id="getMsgCountByUID" parameterType="map" resultType="Integer">
+		SELECT  COUNT(*) FROM `message` WHERE `userid` = #{userID}  and isread=0;
+	</select>
+	<update id="updateMsgStaus" parameterType="map">
+       update `message` SET isread=1 where  `userid` =#{userID}  <if test="ids!=null and ids!=''"> and id in(${ids})</if>;
+    </update>
 	
 </mapper>

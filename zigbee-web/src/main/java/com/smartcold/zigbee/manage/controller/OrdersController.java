@@ -172,21 +172,16 @@ public class OrdersController extends BaseController {
 			order.setUsertele(telephone);
 			order.setShareinfoid(rsdid);
 			RdcShareDTO rsd = rsmDao.getSEByID("" + rsdid);
-			if(rsd==null){
-				return ResponseData.newFailure("下单失败！当前发布信息已失效！");
-			}
+			if(rsd==null){return ResponseData.newFailure("下单失败！当前发布信息已失效！");}
 			List<FileDataEntity> files = this.fileDataDao.findByBelongIdAndCategory(rsd.getId(), FileDataMapper.CATEGORY_SHARE_PIC);
-			if (rsd != null) {
 			if(SetUtil.isnotNullList(files)){
-					List<String> filelist =new ArrayList<String>();
-					for (FileDataEntity file : files) {
-						filelist.add(FtpService.READ_URL+file.getLocation());
-					}
-						ordersDTO.setFiles(filelist);
-						ordersDTO.setLogo(filelist.get(0));
-					}
-					
-			} 
+				List<String> filelist =new ArrayList<String>();
+				for (FileDataEntity file : files) {
+					filelist.add(FtpService.READ_URL+file.getLocation());
+				}
+				ordersDTO.setFiles(filelist);
+				ordersDTO.setLogo(filelist.get(0));
+			}
 			ordersDTO.setOrders(order);
 			ordersDTO.setRsd(rsd);
 			ordersDTO.setUseraddress(address);
@@ -197,6 +192,7 @@ public class OrdersController extends BaseController {
 			message.setMsgdata(order.getOrdername()+":您已经抢到来自"+order.getOwnername()+"的订单");
 			message.setMsgcategory(1);
 			message.setMsgcount(1);
+			message.setOid(order.getId());
 			msgDao.insertMessage(message);
 			new CometUtil().pushTo(message);
 			// return ResponseData.newSuccess("验证码已发送到您的手机！请注意查收！");

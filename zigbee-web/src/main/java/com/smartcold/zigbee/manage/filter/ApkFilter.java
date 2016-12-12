@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.smartcold.zigbee.manage.service.impl.WebvistsService;
 /**
  * 支持springmvc跨域
  * @author maqiang34 2016年11月17日17:54:46
