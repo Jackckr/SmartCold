@@ -6,9 +6,10 @@ var cundex=0,maxSize=10, isLoadRB=false;
 var lilist=[{categoryID:1},{categoryID:2},{categoryID:3}];
 var pageinf=[{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1}];
 function gethtml(news){
-	  var html=['<li><a href="newsdetail.html?id=',news.id,'"class="clearfix"><div class="imgFl fl" style="background:#eee url(',news.coverpic,') center no-repeat;background-size:cover;"></div> <div class="newsTxt"><p class="newsTitle">',news.title,'</p><p class="newsDate">',news.posttime,'</p></div></a></li>'];
+	  var html=['<li><a href="newsdetail.html?id=',news.id,'"class="clearfix"><div class="imgFl fl" style="background:#eee url(',news.coverpic,') center no-repeat;background-size:cover;"></div> <div class="newsTxt"><p class="newsTitle">',news.title,'</p><p class="newsDate">',formatCSTDate(news.posttime,"yyyy-MM-dd"),'</p></div></a></li>'];
 	  return html.join("");
-}
+};
+
 function getPageData(){//启用无限加载
 	  isLoadRB=true;
 	  $.post(ER.root+"/i/information/findInformationsByCate", {  pageNum: pageinf[cundex].currentPage,pageSize:maxSize, categoryID:lilist[cundex].categoryID},  function(data) {	
@@ -16,7 +17,7 @@ function getPageData(){//启用无限加载
       	   if(data.success&&data.data.length>0){
       		   pageinf[cundex].totalPages=data.totalPages;
       		   var html=[];var   newsList = data.data;//
-	   	              $.each(newsList, function(index, item) {html.push( gethtml(item)); });
+	   	              $.each(newsList, function(index, item) {html.push( gethtml(item));});
 	   	              $("#ul_newsL_list"+lilist[cundex].categoryID).append(html.join(""));
 	   	       	      $(".nodata").hide();
 	   	          }else{

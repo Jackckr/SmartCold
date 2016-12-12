@@ -4,8 +4,8 @@ var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.137:8080/",coldroot:"http://www.smartcold.org.cn"};
-//var ER = {root:"http://192.168.1.119:8080/",coldroot:"http://192.168.1.119:8989/"};
+//var ER = {root:"http://192.168.1.137:8080/",coldroot:"http://www.smartcold.org.cn"};
+var ER = {root:"http://192.168.1.114:8080/",coldroot:"http://192.168.1.114:8989/"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;getmsg();}}
@@ -41,6 +41,32 @@ function goback() {
 		window.history.back();return;
 	}
 }//返回上一级
+//格式化CST日期的字串
+function formatCSTDate(strDate,format){
+  return formatDate(new Date(strDate),format);
+}
+ 
+//格式化日期,
+function formatDate(date,format){
+  var paddNum = function(num){
+    num += "";
+    return num.replace(/^(\d)$/,"0$1");
+  }
+  //指定格式字符
+  var cfg = {
+     yyyy : date.getFullYear() //年 : 4位
+    ,yy : date.getFullYear().toString().substring(2)//年 : 2位
+    ,M  : date.getMonth() + 1  //月 : 如果1位的时候不补0
+    ,MM : paddNum(date.getMonth() + 1) //月 : 如果1位的时候补0
+    ,d  : date.getDate()   //日 : 如果1位的时候不补0
+    ,dd : paddNum(date.getDate())//日 : 如果1位的时候补0
+    ,hh : date.getHours()  //时
+    ,mm : date.getMinutes() //分
+    ,ss : date.getSeconds() //秒
+  }
+  format || (format = "yyyy-MM-dd hh:mm:ss");
+  return format.replace(/([a-z])(\1)*/ig,function(m){return cfg[m];});
+} 
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
 function checktoken(toke){if(toke==undefined){toke=localStorage.token;}$.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:toke}, url:ER.root + "/i/user/findUser",success:function(data) {if (data && data.id != 0) {window.user = data;window.localStorage.lkuser=JSON.stringify(data);} else {window.user = null;window.localStorage.removeItem("lkuser");}} });}
 function setTime(obj){if(_sysconfig.countdown==0){obj.removeAttribute("disabled");obj.style.background="#438BCB";obj.innerHTML="获取验证码";_sysconfig.countdown=60;return;}else{if($(obj).siblings("input").val().length==0){/*alert("输入不能为空哦~");*/layer.open({content: '输入不能为空哦~',btn: '确定'});return false;}else{obj.setAttribute("disabled",true);obj.style.background="#ccc";obj.innerHTML="重新发送("+_sysconfig.countdown+")";_sysconfig.countdown--;}}setTimeout(function(){setTime(obj);},1000);};

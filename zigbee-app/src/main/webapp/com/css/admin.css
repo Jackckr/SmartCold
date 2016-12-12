@@ -520,6 +520,16 @@ html,body{
 	text-align: center;
 	border-radius: .2rem;
 	margin-right:.3rem;
+	position: relative;
+}
+.redDot{
+	position: absolute;
+	top:0;
+	right:0;
+	width:.4rem;
+	height:.4rem;
+	background: red;
+	border-radius:50%;
 }
 .red{background-color: #F1594B;}
 .messageImg i{
