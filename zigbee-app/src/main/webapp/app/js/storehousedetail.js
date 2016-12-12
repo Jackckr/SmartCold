@@ -79,6 +79,7 @@
 			    		  title:$scope.vo.title
 			    		  }, type: 'POST',dataType:"json", success: function(data) {
 			    			  if(data.success){
+			    				  getmsg();
 			    				  window.location.href ='orderdetail.html?id='+data.entity.orders.id;
 			    			  }
 			    			  else{

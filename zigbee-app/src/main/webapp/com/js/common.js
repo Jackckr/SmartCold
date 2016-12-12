@@ -8,7 +8,7 @@ getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 var ER = {root:"http://192.168.1.114:8080/",coldroot:"http://192.168.1.114:8989/"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
-if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;getmsg();}}
+if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;}}
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页
@@ -17,7 +17,11 @@ function setIOS_token(token){util.setCookie("token",token,"d7");checktoken();}//
 function setIOS_deltoken(){ $http.get(ER.root+'/i/user/logout');window.user  = null;util.delCookie("token");util.delCookie("lkuser");}//同步token
 function gologin(){ window.location.href = "login.html#" + window.location.href;};//去首页
 function showErrorInfo(msg){var msgEl=$("#mention");if(msg==null||msg==''){msgEl.hide();msgEl.html('');}else{msgEl.show();msgEl.html(msg);}}
-function getmsg(){$.post(ER.root+"/i/message/getMsgCountByUID", {userID:window.user.id},  function(data) {localStorage.msgTotalNum = data;});}
+function getmsg(){if(window.user&&window.user.id!=0){$.post(ER.root+"/i/message/getMsgCountByUID", {userID:window.user.id},  function(data) {
+	localStorage.msgTotalNum = data;
+	if(localStorage.msgTotalNum&&localStorage.msgTotalNum!=0){$("#msgTotalNumReset a").append('<span class="countNum" > '+localStorage.msgTotalNum+'</span>');}
+	});
+}}
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
 function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(); } return true; }else{ window.user = null;window.location.href = "login.html#" + window.location.href; return false;}}
 function goback() {
@@ -80,13 +84,12 @@ var util = {
  * 事件
  */
 window.onload = function(){
+	getmsg();
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
     $("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
-    
-	if(localStorage.msgTotalNum&&localStorage.msgTotalNum!=0){$("#msgTotalNumReset a").append('<span class="countNum" > '+localStorage.msgTotalNum+'</span>');}
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });//一键回到顶部
-	};
+};
 
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
