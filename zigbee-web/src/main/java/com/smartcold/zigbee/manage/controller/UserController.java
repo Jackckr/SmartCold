@@ -48,7 +48,7 @@ public class UserController extends BaseController {
 			UserEntity user = userDao.findUser(userName, EncodeUtil.encodeByMD5(password));
 			if (user != null) {
 				String cookie = cookieService.insertCookie(userName);
-				user.setPassword("********");
+				user.setPassword(null);
 				request.getSession().setAttribute("user", user);
 	            return  ResponseData.newSuccess(String.format("token=%s", cookie));
 			}
@@ -92,7 +92,7 @@ public class UserController extends BaseController {
 			if (effectiveCookie != null) {
 				user = userDao.findUserByName(effectiveCookie.getUsername());
 				if(user!=null){
-					user.setPassword("********");
+					user.setPassword(null);
 					request.getSession().setAttribute("user", user);
 					return user;
 				}
@@ -190,7 +190,7 @@ public class UserController extends BaseController {
 				if(StringUtil.isnotNull(user.getPassword())){user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));}
 				this.userDao.updateUser(user);
 				UserEntity	ol_user=this.userDao.findUserById(user.getId());
-				ol_user.setPassword("********");
+				ol_user.setPassword(null);
 				request.getSession().setAttribute("user",ol_user);
 				return ol_user;
 			}

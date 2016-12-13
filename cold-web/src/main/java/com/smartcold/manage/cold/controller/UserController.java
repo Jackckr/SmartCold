@@ -67,7 +67,7 @@ public class UserController extends BaseController {
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
 			if(roleUser==null)return new ResultDto(1, "您没有权限登录该系统！若有疑问请联系管理员！");
 			Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
-			user.setPassword("******");
+			user.setPassword(null);
 			user.setRole(role.getId());
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
@@ -146,7 +146,7 @@ public class UserController extends BaseController {
 					if(user==null)return new UserEntity();
 					RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
 					Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
-					user.setPassword("******");
+					user.setPassword(null);
 					user.setRole(role.getId());
 					request.getSession().setAttribute("user", user);
 					return user;

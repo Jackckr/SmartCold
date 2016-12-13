@@ -26,7 +26,15 @@ $().ready(function() {
     	    myCity.get(myFun);
     }
 	function initdata(){
-		$.getJSON(ER.root+'/i/city/findProvinceList',function(data){province=data;});//footer
+		if(localStorage.home_ProvinceList){
+			province=JSON.parse(localStorage.home_ProvinceList);
+		}else{
+			$.getJSON(ER.root+'/i/city/findProvinceList',function(data){
+				province=data;
+				localStorage.home_ProvinceList=JSON.stringify(data);
+			});//footer
+		}
+		
 	};
 	function  getSHHistory(){//获得搜索记录
 		var hist=util.getCookie("mianshdt");
