@@ -96,6 +96,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
     	 $scope.manageType = parseInt($scope.rdcsharedto.codeLave1);
     	 $scope.unit = $scope.rdcsharedto.unit;
     	 $scope.totalfiles = $scope.rdcsharedto.files;
+    	 $scope.rmomtfiles = $scope.rdcsharedto.fileList;
     	 $scope.attrvalue1= $scope.rdcsharedto.attrvalue1;
     	 $scope.attrvalue2= $scope.rdcsharedto.attrvalue2;
     	 if($scope.totalfiles==undefined)
@@ -187,12 +188,18 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	        $scope.totalfiles=allfiles; 
 	    };
 	    $scope.drophonor = function(honorfile){
-	        angular.forEach($scope.totalfiles,function(item, key){
-	            if(item == honorfile){
-	                $scope.totalfiles.splice(key,1);
-	                return false;
-	            }
-	        });
+	    	angular.forEach($scope.totalfiles,function(item, key){if(item == honorfile){ $scope.totalfiles.splice(key,1);  $scope.delimg(honorfile); return; }});
+	    };
+	    $scope.delimg=function(honorfile){
+	    	if(honorfile.indexOf("http:")!=-1){
+	    		angular.forEach($scope.rmomtfiles,function(item, key){
+	    			if(item.location==honorfile){
+//	    				item.location=item.type;
+	    				$http({ method:'DELETE',url:'i/rdc/deleteStoragePic', params:item}).success(function(){  });	
+                        return;	    				
+	    			}
+	    		 });
+	    	}
 	    };
 	    function checkStorageSubmit(){
 	        // 检查必须填写项
@@ -224,10 +231,16 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    function checkCarSubmit(){
 	        // 检查必须填写项
 	        if ($scope.title == undefined || $scope.title == '' ) {return false;}
-	        if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false;}
-	        if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {return false;}
-	        if ($scope.stcityID == undefined || $scope.stcityID == '' ) { return false;}
-	        if ($scope.tocityID == undefined || $scope.tocityID == '' ) {return false;}
+	        if($("#stprovince").is(':visible')){
+	        	if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false;}
+	        	if ($scope.toprovinceID == undefined || $scope.toprovinceID == '' ) {return false;}
+	        	if ($scope.stcityID == undefined || $scope.stcityID == '' ) { return false;}
+	        	if ($scope.tocityID == undefined || $scope.tocityID == '' ) {return false;}
+	        }else{
+	        	if($scope.staddress==""||$scope.toaddress==""){
+	        		return false;
+	        	}
+	        }
 	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {return false;}
 	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {return false;}
 	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {return false; }

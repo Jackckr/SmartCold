@@ -145,9 +145,12 @@ public class RdcShareServiceImpl implements RdcShareService {
  			 if(SetUtil.isnotNullList(files)){
  					List<String> filelist =new ArrayList<String>();
  					for (FileDataEntity file : files) {
+ 						file.setType(file.getLocation());
  						filelist.add(FtpService.READ_URL+file.getLocation());
+ 						file.setLocation(FtpService.READ_URL+file.getLocation());
  					}
  					vo.setFiles(filelist);
+ 					vo.setFileList(files);
  					vo.setLogo(files.get(files.size()-1).getLocation());
  			} 
  		 }

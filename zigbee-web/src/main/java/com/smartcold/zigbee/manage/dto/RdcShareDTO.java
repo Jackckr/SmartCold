@@ -2,6 +2,7 @@ package com.smartcold.zigbee.manage.dto;
 
 import java.util.List;
 
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 
 /*
@@ -56,6 +57,7 @@ public class RdcShareDTO {
 	private String coldtype;
 	private int audit;//审核状态：-1未通过，0待审核，1通过审核
 	private  List<String> files;//图片组
+	private  List<FileDataEntity> fileList;//图片组
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	public int getId() {
 		return id;
@@ -326,4 +328,11 @@ public class RdcShareDTO {
 	public void setAudit(int audit) {
 		this.audit = audit;
 	}
+	public List<FileDataEntity> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<FileDataEntity> fileList) {
+		this.fileList = fileList;
+	}
+	
 }
