@@ -100,9 +100,9 @@ var releaseCarInfo = {
     	}else if(val==4){
     		$('#txt_sattim,#txt_endtim').datetimepicker('remove');
     		 $('#txt_sattim,#txt_endtim').datetimepicker({  format: 'hh:ii', weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});
-    		 $('#txt_sattim').datetimepicker('update', '1899-12-31 00:00:00');  $('#txt_endtim').datetimepicker('update', '1899-12-31 17:00:00');
-    		$("#en_endtime").show();
-    		$("#sattim_div").hide();
+    		 $('#txt_sattim').datetimepicker('update', '1899-12-31 00:00:00'); 
+    		 $('#txt_endtim').datetimepicker('update', '1899-12-31 17:00:00');
+    		 $("#en_endtime,#sattim_div").show();
     	}else{
     		$("#sattim_div,#en_endtime").hide();
     	}
@@ -127,7 +127,7 @@ var releaseCarInfo = {
         		 $("#hl_validEndTime").val($("#txt_sattim").val()); 
         		 $("#hl_validStartTime").val($("#txt_endtim").val());
     	} else if(attr1==4){
-    		 $("#hl_validStartTime").val("每"+$("#sl_attrvalue1_4").val()+"天一次");
+    		 $("#hl_validStartTime").val("每"+$("#sl_attrvalue1_4").val()+"天一次  "+ $("#txt_sattim").val());
     		 $("#hl_validEndTime").val(  sl2+" "+$("#txt_endtim").val());
     	}else if(attr1==5){
     		 $("#hl_validStartTime").val($("#sl_attrvalue1_5").val());

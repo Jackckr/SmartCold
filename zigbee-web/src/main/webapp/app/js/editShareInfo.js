@@ -51,6 +51,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			    	 }
 			    }
 			 }else if(vo.attrvalue1==4){
+				 $scope.validStartTime = vo.validStartTime.substring(vo.validStartTime.lastIndexOf(" ")+1).trim();
 				 $scope.validEndTime = vo.validEndTime.substring(vo.validEndTime.lastIndexOf(":")-2).trim();
 				 $("#sl_attrvalue1_4").val( vo.validStartTime.substring(1,2).trim());
 			 }else if(vo.attrvalue1==5){
@@ -266,7 +267,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    	}else if(attr1==3){
 	    		$scope.startTime =sttime;  $scope.arriveTime= edtime;
 	    	} else if(attr1==4){
-	    		 $scope.startTime="每"+$("#sl_attrvalue1_4").val()+"天一次";
+	    		 $scope.startTime="每"+$("#sl_attrvalue1_4").val()+"天一次 "+$("#txt_sattim").val();
 	    		 $scope.arriveTime =  sl2+" "+$("#txt_endtim").val();
 	    	}else if(attr1==5){
 	    		 $scope.startTime=$("#sl_attrvalue1_5").val();
