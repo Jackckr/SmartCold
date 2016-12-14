@@ -185,7 +185,6 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             });
         } else {
             lineChart.hideLoading();
-            alert(22)
             layer.open({
 	           content: '没有设置查询对象哦^_^'
 	           ,btn: '确定'
