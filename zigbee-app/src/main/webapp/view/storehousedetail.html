@@ -43,9 +43,6 @@
 			 <div id="she_imglist" class="baguetteBoxOne gallery" ng-if="vo.files">
                 <a ng-repeat="fl in vo.files" href="{{fl}}"><img ng-src="{{fl}}"/></a>
             </div>
-			<!-- <ul id="she_imglist" class="imglist">
-				<li ng-repeat="fl in vo.files"><a href="{{fl}}"><img ng-src="{{fl}}" alt="" /></a></li>
-			</ul> -->
 			<!-- ======================================================================================= 冷仓信息共享-->
 			<div ng-if="vo.dataType==3">
 			<ul class="infolist clearfix">
@@ -91,7 +88,6 @@
 				<li><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice==undefined||vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}{{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}</span><span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span></li>
 				<li  style="width:100%;"><span class="type">有效开始时间：</span><span class="text">{{vo.validStartTime |date:"yyyy-MM-dd" }}</span></li>
 				<li  style="width:100%;"><span class="type">有效结束时间：</span><span class="text">{{vo.validEndTime |date:"yyyy-MM-dd" }}</span></li>
-				<!--<li><span class="type">电话：</span><span class="text">{{vo.telephone}}</span></li>-->
 			</ul>
 			</div>
 			<!-- ======================================================================================= 冷运信息共享-->
@@ -120,30 +116,11 @@
 			    <li  ng-if="vo.attrvalue1==3" style="width:100%;"><span class="type">到达时间：</span><span class="text">{{vo.validEndTime |date:"yyyy-MM-dd" }}</span></li>
 				<li ng-if="vo.attrvalue1==1||vo.attrvalue1==2||vo.attrvalue1==4" style="width:100%;"><span class="type">出发时间：</span><span class="text">{{vo.validStartTime  }}</span></li>
 				<li ng-if="vo.attrvalue1==1||vo.attrvalue1==2||vo.attrvalue1==4" style="width:100%;"><span class="type">到达时间：</span><span class="text">{{vo.validEndTime }}</span></li>
-				<!--<li><span class="type">电话：</span><span class="text">{{vo.telephone}}</span></li>-->
-<!-- 				<li><span class="type">{{appmode[datatype].lab[0][0]}}：</span><span class="text">{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}</span></li> -->
-				
 			</ul>
 			</div>
 			<!-- ======================================================================================= -->
 			<p class="dateline"><span class="type">备注：</span><span class="text">{{vo.note?vo.note:'无'}}</span></p>
-<!-- 			<p class="dateline"><span class="type">有效期：</span><span class="text">{{vo.validStartTime}}至{{vo.validEndTime}}</span></p> -->
-		
-			<!--============抢单=============-->
-<!-- 			<div class="input"> -->
-<!-- 				<div class="tel"> -->
-<!-- 					<i class="iconfont">&#xe608;</i> -->
-<!-- 					<input id="txt_telephone" type="tel" placeholder="请输入您的手机号" ng-model="telephone" ng-change="vertelephone()" /> -->
-<!-- 					<button id="but_vercode" class="idcode fr gray" disabled="disabled" ng-click="getVerCode();">获取验证码</button> -->
-<!-- 				</div> -->
-<!-- 				<div class="tel"> -->
-<!-- 					<i class="iconfont ">&#xe639;</i> -->
-<!-- 					<input id="txt_vcode" type="text" placeholder="请输入手机验证码"  ng-model="verrcode"  ng-change="veteleCode()"/> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
 			<button id="app_order" class="mybtn" ng-click="getOrder();"  >确认抢单</button>	<!-- disabled="disabled" -->
-			<!--=============抢单============-->
-			<!--<button class="mybtn" onclick="location.href='confirm.html'">立即抢单</button>-->
 		</section>
 	</body>
 </html>
