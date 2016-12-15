@@ -61,8 +61,8 @@ var releaseCarInfo={
 	    		$("#sl_attrvalue2").show();
 	    		if(val==2){$("#ul_work").show();}else{$("#ul_work").hide();} $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
 	    	}else if(val==4){
-	    		$("#sl_attrvalue2").show();
-	    		$("#ul_work,#startTime").hide(); $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
+	    		$("#sl_attrvalue2,#startTime").show();
+	    		$("#ul_work").hide(); $("#startTime").val("09:00"); $("#arriveTime").val("17:00");
 	    	}else if(val==5){
 	    		$("#sl_attrvalue2,#ul_work,#startTime,#arriveTime,#li_end_time").hide();
 //	    		$("#sl_attrvalue1_5").show();
@@ -91,6 +91,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			    	 work=tstime.substring(0,tstime.lastIndexOf(" ")).split(",");
 				 }
 			 }else if(vo.attrvalue1==4){
+				 $scope.validStartTime = vo.validStartTime.substring(vo.validStartTime.lastIndexOf(" ")+1).trim();
 				 $scope.validEndTime = vo.validEndTime.substring(vo.validEndTime.lastIndexOf(":")-2).trim();
 				 $("#sl_attrvalue1_4").val( vo.validStartTime.substring(1,2).trim());
 			 }else if(vo.attrvalue1==5){
@@ -300,7 +301,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	}else if(attr1==3){
 	    		$scope.startTime =sttime;  $scope.arriveTime= edtime;
 	    	} else if(attr1==4){
-	    		$scope.startTime ="每"+$("#sl_attrvalue1_4").val()+"天一次";
+	    		$scope.startTime ="每"+$("#sl_attrvalue1_4").val()+"天一次 "+sttime ;
 	    		 $scope.arriveTime=   sl2+" "+$("#arriveTime").val();
 	    	}else if(attr1==5){
 	    		$scope.startTime = $("#sl_attrvalue1_5").val();

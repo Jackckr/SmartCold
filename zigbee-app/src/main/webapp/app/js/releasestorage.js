@@ -152,7 +152,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	}else if(attr1==3){
 	    		$scope.startTime =sttime;  $scope.arriveTime= edtime;
 	    	}  else if(attr1==4){
-	    		$scope.startTime ="每"+$("#sl_attrvalue1_4").val()+"天一次";
+	    		$scope.startTime ="每"+$("#sl_attrvalue1_4").val()+"天一次 "+sttime;
 	    		 $scope.arriveTime=   sl2+" "+$("#arriveTime").val();
 	    	}else if(attr1==5){
 	    		$scope.startTime = $("#sl_attrvalue1_5").val();
