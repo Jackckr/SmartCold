@@ -148,6 +148,7 @@
 
 .gallery img {
 	height: 100%;
+	border-radius:.25rem;
 }
 .baguetteBoxOne {
 	width: 100%; 

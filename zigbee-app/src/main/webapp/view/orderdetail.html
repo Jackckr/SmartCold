@@ -117,7 +117,7 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 			</div>
 			<h4>其他信息</h4>
 			<div>
-			   <p class="infos"><i class="dot"></i><span class="first">有效期:</span><span class="second">{{formatCSTDate($scope.rsd.validStartTime,"yyyy-MM-dd hh:mm:ss")}}至{{rsd.validEndTime}}</span></p>
+			   <p class="infos"><i class="dot"></i><span class="first">有效期:</span><span class="second">{{rsd.validStartTime}}至{{rsd.validEndTime}}</span></p>
 			   <p class="infos"><i class="dot"></i><span class="first">备注:</span><span class="second">{{rsd.note?rsd.note:'无'}}</span></p>
 			</div>
 			<!--点击图片循环展示-->

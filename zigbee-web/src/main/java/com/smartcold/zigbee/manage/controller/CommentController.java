@@ -1,7 +1,9 @@
 package com.smartcold.zigbee.manage.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.commons.io.filefilter.IOFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +19,18 @@ import com.smartcold.zigbee.manage.dao.RdcMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.PersonalCommentDTO;
 import com.smartcold.zigbee.manage.entity.CommentEntity;
+import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.service.CommentService;
+import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.util.ResponseData;
+import com.smartcold.zigbee.manage.util.SetUtil;
+import com.smartcold.zigbee.manage.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/comment")
 public class CommentController {
-
+	@Autowired
+	private FtpService ftpService;
     @Autowired
     private CommentMapper commentDao;
     @Autowired
@@ -42,10 +49,16 @@ public class CommentController {
     public ResponseData<HashMap<String , Object>> getCommentById(int id) {
     	CommentEntity comment = commentService.getCommentById(id);
     	if(comment==null){ return ResponseData.newFailure("未找到评价信息"); }
+    	List<FileDataEntity> imgList = fileMapper.findByBelongIdAndCategory(id,FileDataMapper.CATEGORY_COMMENT_PIC);
+    	if(SetUtil.isnotNullList(imgList)){
+    		for (FileDataEntity vo : imgList) {
+    			vo.setLocation(FtpService.READ_URL+vo.getLocation());
+			}    	
+    	}
     	HashMap<String , Object> hashMap=new HashMap<String, Object>();
     	hashMap.put("data", comment);
     	hashMap.put("rdc", this.rdcMapper.findRDCEntityDtoByRdcId(comment.getRdcID()));
-    	hashMap.put("img", fileMapper.findByBelongIdAndCategory(id,FileDataMapper.CATEGORY_COMMENT_PIC));
+    	hashMap.put("img", imgList);
     	return ResponseData.newSuccess(hashMap);
     }
     
@@ -81,6 +94,12 @@ public class CommentController {
 		if (commentID==null||commentID <= 0) {
 			return new BaseDto(-1);
 		}
+		List<FileDataEntity> imgList = fileMapper.findByBelongIdAndCategory(commentID,FileDataMapper.CATEGORY_COMMENT_PIC);
+    	if(SetUtil.isnotNullList(imgList)){
+    		for (FileDataEntity vo : imgList) {
+    			 this.ftpService.deleteFile(FtpService.READ_URL+vo.getLocation());
+			}    	
+    	}
 		commentDao.deleteByCommentID(commentID);
 		return new BaseDto(0);
 	}

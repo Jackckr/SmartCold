@@ -23,19 +23,46 @@
 	      $scope.initdata=function(){
 			$http.get(ER.root+"/i/comment/getCommentById", { params:{id:getUrlParam("id")}}).success(function(data) { //获得数据
 			    if(data.success){
-				   $scope.rdcLogo=data.logo;//冷库图片
-				   $scope.name=data.commentdto.rdcname;//冷库名
-				   $scope.content=data.commentdto.content; //评价具体内容
-				   $scope.time=data.commentdto.addTime; //评价具体时间
-				   $scope.pics=data.commentdto.reviewPics; //评价图片
+			       var data = data.entity;
+			       $scope.id=data.data.id;
+				   $scope.rdcLogo=data.rdc.logo;//冷库图片
+				   $scope.name=data.rdc.name;//冷库名
+				   $scope.content=data.data.content; //评价具体内容
+				   $scope.time=formatCSTDate(data.data.addTime,"yyyy-MM-dd hh:mm:ss"); //评价具体时间
+				   $scope.pics=data.img; //评价图片
 			   }else{
 			       $("#ul_rdcsL_list").html("获取数据失败！");// goback();
 			   } 
            });
+			$scope.initevg=function(){
+				 baguetteBox.run('.baguetteBoxOne', {animation: 'slideIn', buttons: true});
+			};
+			
 		};
+		
+		
 		$scope.initdata();
+		$scope.initevg();
+		$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {/*alert("33");*/ baguetteBox.run('.baguetteBoxOne', {buttons:true});});
 	});
-    </script>
+      app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
+      var delrdc = function( em) {
+			if (confirm('确定删除该条评论吗？')) {
+				$.ajax({
+					url : ER.root + "/i/comment/deleteByCommentID",
+					type : "post",//DELETE
+					data : {"commentID" :$(em).val()},
+					success : function(data) {
+						 if (data.status == 0 || data.success) {
+							goback();
+						} else {
+							 layer.open({content: '删除失败！请稍后重试吧' ,btn: '确定' });
+						} 
+					}
+				});
+			}
+		};
+      </script>
 </head>
 	<body  ng-app="app"  ng-controller="commentInfo" ng-cloak on-finish-render-filters>
 	    <header>
@@ -45,48 +72,23 @@
 	    	<div class="txt">点评详情</div>
 	    </header>
 	    <ul id="ul_rdcsL_list" class="commentList">
-			<li class="clearfix"><div class="clearfix">
-				<div class="img fl">
-					<img ng-src="rdcLogo">
+			<li style="min-height:25rem ">
+				<div class="clearfix">
+					<div class="img fl" style="width: 2.5rem;height:2.5rem">
+						<img ng-src="{{rdcLogo}}" style="border-radius:50%">
+					</div>
+					<p class="company" style="line-height: 1.75;">{{name}}</p>
+					<p style="color:#999;font-size:.6rem;line-height: 1.75">{{time}}</p>
 				</div>
-				<p class="company">名称：{{name}}</p>
-				<p class="position" style="padding-left: 3.5rem;word-break: break-all;">点评时间：{{time}}</p>
-				<p class="position" style="padding-left: 3.5rem;word-break: break-all;">点评内容：{{content}}</p>
+				<p class="position" style="word-break: break-all;margin-top: .3rem;text-indent: 2em;font-size: .7rem;color:#666">{{content}}</p>
 				<!--点击图片循环展示-->
-				<div class="baguetteBoxOne gallery" ng-if="pics">
-			         <a ng-repeat="pic in pics" ng-href="{{pic}}"><img ng-src="{{pic}}"/></a>
-				</div>
+				<div class="baguetteBoxOne gallery" ng-if="pics.length>0"style="margin-top: 1rem;">
+			         <a ng-repeat="pic in pics" ng-href="{{pic.location}}" ><img ng-src="{{pic.location}}"/></a>
 				</div>
 				<p class="btnGroup">
-					<button onclick="delrdc(197,this);">删除</button>
+					<button value="{{id}}" onclick="delrdc(this)">删除</button>
 				</p>
 			</li>
 		</ul>
-	    <ul class="footer">
-        <li>           
-            <a href="../index.html">
-                <i class="iconfont">&#xe65a;</i>
-                <p class="info">首页</p>
-            </a>
-        </li>
-        <li>         
-            <a href="news.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p>
-            </a>
-        </li>
-        <li id="msgTotalNumReset">            
-            <a href="messages.html">
-                <i class="iconfont">&#xe71c;</i>
-                <p class="info">消息</p>
-            </a>
-        </li>
-        <li class="active">            
-            <a href="user.html">
-                <i class="iconfont">&#xe6fd;</i>
-                <p class="info">我的</p>
-            </a>
-        </li>
-    </ul>
 	</body>
 </html>
