@@ -14,11 +14,14 @@ import com.smartcold.zigbee.manage.entity.CommentEntity;
  */
 public interface CommentService {
 
+	public CommentEntity getCommentById(int id);
+	
+	public void insertComment(CommentEntity comment);
+	
 	List<CommentEntity> findLastNComment(@RequestParam int rdcID, @RequestParam int npoint);
 
 	List<CommentDTO> findCommentsRdcID(@RequestParam int rdcID, @RequestParam int npoint);
 
-	public void insertComment(CommentEntity comment);
 
 	Page<PersonalCommentDTO> findCommentsUserID(int userID,int pageNum,int pageSize);
 }

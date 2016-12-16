@@ -31,5 +31,7 @@ public interface CommentMapper {
 	Page<CommentEntity> findCommentsByUserId(int userID);
 	
 	int deleteByCommentID(int commentID);
+	
+	CommentEntity getCommentById(@Param("id")int id);
     
 }

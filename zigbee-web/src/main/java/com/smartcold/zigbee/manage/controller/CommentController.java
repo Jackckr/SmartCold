@@ -36,6 +36,12 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @RequestMapping(value = "/getCommentById", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getCommentById( int id) {
+    	return commentService.getCommentById(id);
+    }
+    
     @RequestMapping(value = "/findCommentsByRDCId", method = RequestMethod.GET)
     @ResponseBody
     public Object findCommentsByRDCId(@RequestParam int rdcID, @RequestParam int npoint) {

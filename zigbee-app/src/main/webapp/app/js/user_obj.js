@@ -3,7 +3,7 @@ var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
 		[ "editshareinfo.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/getSEListByUID" ],//1：我的发布//
 		[ "orderdetail.html?id=", "/i/orders/deleteByOrderID","/i/orders/findOrdersByUserId" ] , //2:我的联络单
-		[ "orderdetail.html?id=", "/i/comment/deleteByCommentID","/i/comment/findCommentsByUserId" ]  // 3：我的点评
+		[ "commentInfo.html?id=", "/i/comment/deleteByCommentID","/i/comment/findCommentsByUserId" ]  // 3：我的点评
 		];										
 var isLoadRB = false, maxSize = 10, totalPages = currentPage = 1; // 当前页
 var editinfo = function(id) {
@@ -100,9 +100,11 @@ var gethtml = function(obj) {
 		        , obj.logo
 		        , "'/></div><p class='company'>名称："
 		        , obj.rdcname
-		        , "</p><p class='position' style='padding-left: 3.5rem;'>点评内容："
+		        , "</p><p class='position' style='padding-left: 3.5rem;word-break: break-all;'>点评内容："
 		        , obj.commentdto.content
-		        , "</p></div><p class='btnGroup'><button onclick='delrdc("
+		        , "</p></div><p class='btnGroup'><button onclick='editinfo("
+				, obj.commentdto.id
+				, ")'>查看</button><button onclick='delrdc("
 		        , obj.commentdto.id + ",this);'>删除</button></p></li>"].join("");
 		break;
 	default:break;

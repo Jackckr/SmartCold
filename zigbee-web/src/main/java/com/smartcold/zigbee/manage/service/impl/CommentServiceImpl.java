@@ -44,6 +44,11 @@ public class CommentServiceImpl implements CommentService {
 	private FileDataMapper fileDataDao;
 
 	@Override
+	public CommentEntity getCommentById(int id) {
+	  return this.commentDao.getCommentById(id);
+	}
+	
+	@Override
 	public List<CommentEntity> findLastNComment(@RequestParam int rdcID, @RequestParam int npoint) {
 		return commentDao.findLastNComment(rdcID, npoint);
 	}
@@ -133,4 +138,6 @@ public class CommentServiceImpl implements CommentService {
 		}
 		return results;
 	}
+
+	
 }

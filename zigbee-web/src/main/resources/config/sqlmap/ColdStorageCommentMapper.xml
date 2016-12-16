@@ -10,6 +10,9 @@
 	order by `addTime` desc
 	limit #{npoint}
 </select>
+<select id="getCommentById" parameterType="map" resultType="CommentEntity">
+	SELECT * FROM `ColdStorageComment` WHERE `id` = #{id};
+</select>
 
 <insert id="insertComment" parameterType="CommentEntity" 
   useGeneratedKeys="true" keyProperty="id">
