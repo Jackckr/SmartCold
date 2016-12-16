@@ -56,7 +56,7 @@ var initevg = function() {
 		var scrollHeight = $(document).height();
 		var windowHeight = $(this).height();
 		if (scrollTop + windowHeight > scrollHeight - 30) {
-			if (isLoadRB == false && currentPage < totalPages) {
+			if (isLoadRB == false && currentPage <=totalPages) {
 				getPageData();
 			}
 		}
@@ -97,7 +97,7 @@ var gethtml = function(obj) {
 		break;
 	case 3:
 		return ["<li class='clearfix'><div class='clearfix'><div class='img fl' ><img src='"
-		        , obj.commentdto.avatar
+		        , obj.logo
 		        , "'/></div><p class='company'>名称："
 		        , obj.rdcname
 		        , "</p><p class='position' style='padding-left: 3.5rem;'>点评内容："

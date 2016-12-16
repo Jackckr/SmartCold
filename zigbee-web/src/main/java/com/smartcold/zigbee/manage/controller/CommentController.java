@@ -46,8 +46,7 @@ public class CommentController {
     @ResponseBody
     public Object findCommentsByUserId(@RequestParam int userID,@RequestParam int pageNum, @RequestParam int pageSize) {
     	try {
-			PageHelper.startPage(pageNum, pageSize);
-			Page<PersonalCommentDTO> commentsList = commentService.findCommentsUserID(userID);
+			Page<PersonalCommentDTO> commentsList = commentService.findCommentsUserID(userID,pageNum,pageSize);
 			PageInfo<PersonalCommentDTO> data = new PageInfo<PersonalCommentDTO>(commentsList);
 			return ResponseData.newSuccess(data);
 		} catch (Exception e) {

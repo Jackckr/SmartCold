@@ -1,6 +1,5 @@
 package com.smartcold.zigbee.manage.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.smartcold.zigbee.manage.dao.CommentMapper;
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
 import com.smartcold.zigbee.manage.dao.RdcMapper;
@@ -32,7 +30,6 @@ import com.smartcold.zigbee.manage.util.TimeUtil;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-	private final Gson gson = new Gson();
 
 	@Autowired
 	private CommentMapper commentDao;
@@ -89,9 +86,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public Page<PersonalCommentDTO> findCommentsUserID(int userID) {
+	public Page<PersonalCommentDTO> findCommentsUserID(int userID,int pageNum,int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
 		Page<CommentEntity> commentDTOList = commentDao.findCommentsByUserId(userID);//准备使用连接查询替换
 		Page<PersonalCommentDTO> results = new Page<PersonalCommentDTO>();
+		results.setPages(commentDTOList.getPages());
+		results.setTotal(commentDTOList.getTotal());
 		for (CommentEntity commentEntity : commentDTOList) {
 			PersonalCommentDTO pDto = new PersonalCommentDTO();
 			CommentDTO commentDTO = new CommentDTO();
@@ -107,11 +107,16 @@ public class CommentServiceImpl implements CommentService {
 			commentDTO.setUsefulcnt(commentEntity.getUsefulcnt());
 			
 			//查出评论图片
-			List<FileDataEntity> reviewPics = fileDataDao.findByBelongIdAndCategory(commentEntity.getId(), FileDataMapper.CATEGORY_COMMENT_PIC);
-			for (FileDataEntity item:reviewPics) {
-				item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+			List<FileDataEntity> reviewPics = fileDataDao.findByBelongIdAndCategory(commentEntity.getRdcID(), FileDataMapper.CATEGORY_STORAGE_PIC);
+			if(SetUtil.isnotNullList(reviewPics)){
+				for (FileDataEntity item:reviewPics) {
+					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, item.getLocation()));
+				}
+				commentDTO.setReviewPics(reviewPics);;
+				pDto.setLogo(reviewPics.get(0).getLocation());
+			}else{
+				pDto.setLogo("app/img/rdcHeader.jpg");
 			}
-			commentDTO.setReviewPics(reviewPics);;
 			commentDTO.setCommerID(commentEntity.getCommerID());
 			UserEntity userEntity = userDao.findUserById(commentEntity.getCommerID());
 			List<RdcEntity> rdclist = rdcDao.findRDCByRDCId(commentEntity.getRdcID());
@@ -123,9 +128,7 @@ public class CommentServiceImpl implements CommentService {
 			commentDTO.setAvatar(userEntity.getAvatar());
 			pDto.setCommentdto(commentDTO);
 			
-			if (!reviewPics.isEmpty()) {
-				pDto.setLogo(reviewPics.get(0).getLocation());
-			}
+			
 			results.add(pDto);
 		}
 		return results;
