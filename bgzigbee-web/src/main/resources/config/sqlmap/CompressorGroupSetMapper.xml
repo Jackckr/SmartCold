@@ -17,6 +17,7 @@
 	<update id="updateById">
 		UPDATE `CompressorGroupSet` SET
         `name` = #{name},
+        `evaporativeId`=#{evaporativeid},
         `lowPress` = #{lowPress},
         `pressDiff` = #{pressDiff},
         `meltFrostTemperature` = #{meltFrostTemperature},

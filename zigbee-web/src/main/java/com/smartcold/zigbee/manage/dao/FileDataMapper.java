@@ -19,7 +19,7 @@ public interface FileDataMapper {
 	static final String CATEGORY_ARRANGE_PIC= "arrangePic";
 	//评论的图片
 	static final String CATEGORY_COMMENT_PIC = "commentPic";
-	//评论的图片
+	//共享图片
 	static final String CATEGORY_SHARE_PIC = "sharePic";
 	//资质荣誉图片
 	static final String CATEGORY_HONOR_PIC = "honorPic";

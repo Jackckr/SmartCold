@@ -433,6 +433,7 @@
                                 <div class="form-group col-lg-8">
                                     <a class="btn btn-sm btn-primary pull-right" type='submit' ng-click="addCompressGroup()" ng-disabled="!compressGroupEntity.name">添加</a>
                                 </div>
+<!--                                   <select ng-options="item.name for item in evaporativeSets" class="form-control" ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select> -->
                             </div>
                             <div class="col-lg-6">
                             	<div><label>&nbsp;</label></div>
@@ -440,8 +441,8 @@
                                 <ajax-table array-objects="compressGroups"
                                             delete-url="/i/compressorGroup/deleteCompressGroup"
                                             update-url="/i/compressorGroup/updateCompressGroup"
-                                            colums-th="名字,设定低压,设定压差,化霜温度,高压压力过高报警值,排气温度过高报警值,排气温度过低报警值"
-                                            colums="name,lowPress,pressDiff,meltFrostTemperature,highPressAlarm,highTempAlarm,lowTempAlarm"></ajax-table>
+                                            colums-th="名字,制冷系统,设定低压,设定压差,化霜温度,高压压力过高报警值,排气温度过高报警值,排气温度过低报警值"
+                                            colums="name,evaporativeid,lowPress,pressDiff,meltFrostTemperature,highPressAlarm,highTempAlarm,lowTempAlarm"></ajax-table>
                             </div>
                         </form>
 
@@ -1138,8 +1139,7 @@
                     <form class="navbar-form">
                             <div class="form-group">
                                 <label>冷凝系统</label>
-                                <select ng-options="item.name for item in evaporativeSets" class="form-control" 
-                                ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
+                                <select ng-options="item.name for item in evaporativeSets" class="form-control"   ng-model="vm.choseEvaporative" ng-change="changeEvaporative()"></select>
                             </div>
                         </form>
                     <div class="row">

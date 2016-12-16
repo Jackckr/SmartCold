@@ -65,7 +65,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.vm = {};
 	$scope.vm.choseStorage = {};
 	$scope.vm.choseStorage.mapping = [];
-	
+	$scope.evaporativeSets=null;
 
 	
 	$scope.typeChanged = function(item){
@@ -261,30 +261,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 					$scope.vm.password = data?data.password:'';
 				})
 		
-		$http.get('/i/compressorGroup/getCompressGroupByRdcId?rdcId=' + $scope.vm.choseRdc.id
-				).success(function(data,status,config,headers){
-			angular.forEach(data,function(item,index){
-				data[index].mapping = JSON.parse(data[index].mapping)
-			})
-			$scope.compressGroups = data;
-			$scope.vm.choseCompressGroup = data[0];
-            $scope.vm.choseCompressGroup ? $scope.changeCompressGroup():null;
-		})
-		// $http.get('/i/compressorGroup/findItem').success(function(data,status,config,headers){
-		// 	$scope.compressGroupItem = data;
-		// 	$scope.vm.choseCompressGroupItem = data[0];
-		// 	$scope.compressGroupItemKeys = getDistinctColumnKey($scope.compressGroupItem);
-		// 	$scope.vm.choseCompressGroupItemKey = $scope.compressGroupItemKeys[0];
-		// 	$scope.compressGroupItem.push($scope.handItem);
-		// })
-       $http.get("/i/spiderConfig/findRdcWeight?rdcid="+$scope.vm.choseRdc.id).success(function(data){
-    	   if(data!=""&&data!=null){
-    		   $scope.weight=data;
-    	   } else{
-    		   $scope.weight={}; 
-    	   }
-		});
-
         $http.get('/i/spiderConfig/find/evaporativeSet?rdcId='+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.evaporativeSets = resp.data;
             angular.forEach($scope.evaporativeSets, function (item, index) {
@@ -309,6 +285,31 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	    		})
           }
         })
+        
+		$http.get('/i/compressorGroup/getCompressGroupByRdcId?rdcId=' + $scope.vm.choseRdc.id ).success(function(data,status,config,headers){
+			angular.forEach(data,function(item,index){
+				data[index].mapping = JSON.parse(data[index].mapping);
+				data[index].editevaporativeSets = $scope.evaporativeSets;
+			}); 
+			$scope.compressGroups = data;
+			$scope.vm.choseCompressGroup = data[0];
+            $scope.vm.choseCompressGroup ? $scope.changeCompressGroup():null;
+		})
+		// $http.get('/i/compressorGroup/findItem').success(function(data,status,config,headers){
+		// 	$scope.compressGroupItem = data;
+		// 	$scope.vm.choseCompressGroupItem = data[0];
+		// 	$scope.compressGroupItemKeys = getDistinctColumnKey($scope.compressGroupItem);
+		// 	$scope.vm.choseCompressGroupItemKey = $scope.compressGroupItemKeys[0];
+		// 	$scope.compressGroupItem.push($scope.handItem);
+		// })
+       $http.get("/i/spiderConfig/findRdcWeight?rdcid="+$scope.vm.choseRdc.id).success(function(data){
+    	   if(data!=""&&data!=null){
+    		   $scope.weight=data;
+    	   } else{
+    		   $scope.weight={}; 
+    	   }
+		});
+
 
         $http.get("/i/spiderConfig/findByRdcid?table=powerset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.powerSets = resp.data;
@@ -1057,6 +1058,7 @@ coldWeb.directive("mappingTable", function ($http) {
  *
  */
 coldWeb.directive("ajaxTable", function ($http,baseTools) {
+	
 	var defaults = {
 		deleteUrl : '/i/spiderConfig/delete/id'
 	}
