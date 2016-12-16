@@ -69,7 +69,7 @@
     		<i class="iconfont">&#xe6e1;</i>
     	</p>
     	<form class="commentInfo">
-    		<textarea id="tx_commentinfo" ng-model="commentinfo" placeholder="跟大家分享一下您对我们冷库的感受吧~"></textarea>
+    		<textarea id="tx_commentinfo" ng-model="commentinfo" placeholder="跟大家分享一下您对我们冷库的感受吧(最多200字)~" maxlength="200"></textarea>
     		<label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
 				 </label> <span id="">上传图片<small class="text-warning">*最多5张</small></span><br>
 	              <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>

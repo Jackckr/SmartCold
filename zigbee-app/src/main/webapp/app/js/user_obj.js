@@ -86,10 +86,10 @@ var gethtml = function(obj) {
 	case 2:
 		return ["<li class='clearfix'><div  onclick='detailinfo("+ obj.orders.id+")' class='clearfix'><div class='img fl' ><img src='"
 				, obj.logo
-				, "'/></div><p class='company'>联络单编号："
-				, obj.orders.orderid
-				, "</p><p class='position'>联络单名称："
+				, "'/></div><p class='company'>联络单名称："
 				, obj.orders.ordername
+				, "</p><p class='position'>联络单编号："
+				, obj.orders.orderid
 				, "</p></div><p class='btnGroup'><button onclick='editinfo("
 				, obj.orders.id
 				, ")'>查看</button><button onclick='delrdc("
