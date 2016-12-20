@@ -19,7 +19,7 @@
 		<!-- 图文列表区域 -->
 			<ul class="imgList clearfix">
 				<li ng-repeat="msg in msgs">
-					<div class="img pull-left">
+					<div class="img pull-left" style="width:60px;height:60px">
 					<img ng-src="app/img/message/message{{msg.msgcategory}}.png"></div>
 					<p class="company" ng-if="msg.msgcategory==1">订单通知</p>
 					<p class="company" ng-if="msg.msgcategory==2">告警通知</p>
