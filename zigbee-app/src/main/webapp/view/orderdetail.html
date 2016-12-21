@@ -98,8 +98,8 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 			</p>
 			<div ng-if="datatype==3">
 			   <p class="infos"><i class="dot"></i><span class="first">温度类型:</span><span class="second">{{rsd.codeLave2}}</span></p>
-			   <p class="infos"><i class="dot"></i><span class="first">冷库名称:</span><span class="second">{{rsd.name}}</span></p>
-			   <p class="infos"><i class="dot"></i><span class="first">冷库地址:</span><span class="second">{{rsd.address}}</span></p>
+			   <p class="infos" ng-if="rsd.rdcID"><i class="dot"></i><span class="first">冷库名称:</span><span class="second">{{rsd.name}}</span></p>
+			   <p class="infos" ng-if="rsd.rdcID"><i class="dot"></i><span class="first">冷库地址:</span><span class="second">{{rsd.address}}</span></p>
 			</div>
 			<div ng-if="datatype==2">
 			   <p class="infos"><i class="dot"></i><span class="first">始发地:</span><span class="second">{{rsd.unit1}}</span></p>

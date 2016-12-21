@@ -86,8 +86,8 @@
 		            	<p><i class="dot"></i><span class="order_title">联络单类型:</span>{{typetitle}}</p>
 					    <div ng-if="datatype==3" style="padding-left: 0">
 						   <p class="infos"><i class="dot"></i><span class="order_title">温度类型:</span>{{rsd.codeLave2}}</p>
-						   <p class="infos"><i class="dot"></i><span class="order_title">冷库名称:</span>{{rsd.name}}</p>
-						   <p class="infos"><i class="dot"></i><span class="order_title">冷库地址:</span>{{rsd.address}}</p>
+						   <p class="infos" ng-if="rsd.rdcID" ><i class="dot"></i><span class="order_title">冷库名称:</span>{{rsd.name}}</p>
+						   <p class="infos" ng-if="rsd.rdcID"><i class="dot"></i><span class="order_title">冷库地址:</span>{{rsd.address}}</p>
 						</div>
 						<div ng-if="datatype==2">
 						   <p class="infos"><i class="dot"></i><span class="order_title">始发地:</span>{{rsd.unit1}}</p>
