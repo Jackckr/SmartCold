@@ -890,6 +890,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.addCompressGroup = function(){
+		if($scope.vm.choseEvaporative==undefined){alert("请添加冷凝系统!");}
 		$scope.compressGroupEntity.rdcId = $scope.vm.choseRdc.id;
 		$scope.compressGroupEntity.evaporativeid = $scope.vm.choseEvaporative.id;
 		$http.post("/i/compressorGroup/insertCompressGroup",$scope.compressGroupEntity).success(function(data,status,config,headers){
