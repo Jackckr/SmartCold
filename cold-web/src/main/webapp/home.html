@@ -50,27 +50,41 @@
 				temBox.addClass('box3');
 			}else if(len == 4 || len ==7 || len ==8 || len == 16){
 				temBox.addClass('box4');
-			}else if(len == 5 || len ==9 || len ==10 || len == 13 || len ==14 || len ==15 || len == 19 || len == 20){
+			}else if(len == 5 || len ==9 || len ==10 || len == 13 || len ==14 || len ==15 ){
 				temBox.addClass('box5');
-			}else if(len == 6 || len ==11 || len ==12 || len == 17 || len == 18 || len >= 21){
+			}else if(len == 6 || len ==11 || len == 12 || len == 17 || len == 18 || len >= 21){
 				temBox.addClass('box6');
 			}
 		}
 		var flag = true;
+		var oHeight = document.documentElement.clientHeight-$('header').height()-39;//获取可用区域高度
+		
 		function openObj(em){	
 			var oVal = $(em).attr('value');
+			var temSib = $(".temperatureBox").siblings(".box-body"),
+			 	powSib = $(".powerBox").siblings(".box-body"),
+				comSib = $(".compressorBox").siblings(".box-body").find(".box3");
 			if(oVal == 1){
 				if(flag){
 					$(".pow").hide();
 					$(".com").hide();
 					$(em).html("返回");
-					$(".temperatureBox").siblings(".box-body").eq(11).nextAll().show();
+					temSib.eq(11).nextAll().show();					
+					var singleH = Math.ceil(temSib.length/6);
+					if(temSib.length>66){
+						alert(oHeight+'px')
+						alert(singleH)
+						$(".defineHeight").height(oHeight/singleH-45).children(".box1").css('lineHeight',oHeight/singleH-45+'px')
+					}else{
+						$(".defineHeight").height(oHeight/singleH-60).children(".box1").css('lineHeight',oHeight/singleH-60+'px')
+					}
 					flag = false;
 				}else{
 					$(".pow").show();
 					$(".com").show();
 					$(em).html("更多");
-					$(".temperatureBox").siblings(".box-body").eq(11).nextAll().hide();
+					temSib.eq(11).nextAll().hide();
+					$(".defineHeight").height(30).children(".box1").css('lineHeight',"30px")
 					flag = true;
 				}	
 			}else if(oVal == 2){
@@ -78,13 +92,13 @@
 					$(".tem").hide();
 					$(".com").hide();
 					$(em).html("返回");
-					$(".powerBox").siblings(".box-body").eq(3).nextAll().show();
+					powSib.eq(3).nextAll().show();
 					flag = false;
 				}else{
 					$(".tem").show();
 					$(".com").show();
 					$(em).html("更多");
-					$(".powerBox").siblings(".box-body").eq(3).nextAll().hide();
+					powSib.eq(3).nextAll().hide();
 					flag = true;
 				}	
 			}else if(oVal == 3){
@@ -92,13 +106,13 @@
 					$(".pow").hide();
 					$(".tem").hide();
 					$(em).html("返回");
-					$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().show();
+					comSib.eq(2).nextAll().show();
 					flag = false;
 				}else{
 					$(".pow").show();
 					$(".tem").show();
 					$(em).html("更多");
-					$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().hide();
+					comSib.eq(2).nextAll().hide();
 					flag = true;
 				}	
 			}
@@ -147,7 +161,7 @@
 		.whiteBox>.box-header.with-border{border-bottom:1px solid #D2D6DE;}
 		.whiteBox>.box-header.with-border h3.box-title{font-size: 16px}
 		/* 自适应class */
-		.box1,.box2,.box3,.box4,.box5,.box6{float: left;}
+		.box1,.box2,.box3,.box4,.box5,.box6,.box8{float: left;}
 		/*只有1个Grid*/
 		.box1{width: 100%;}
 		/*2个Grid*/
@@ -160,6 +174,10 @@
 		.box5{width: 20%;}
 		/*6、11、12、17、18个Grid*/
 		.box6{width: 16.66667%;}
+		.box8{width: 12.5%;}
+		/*自定义高度*/
+		.defineHeight{height:30px;}
+		.defineHeight .box1{height:100%;line-height: 30px;}
 	</style>
 
 </head>
@@ -315,7 +333,7 @@
                         <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-18.2</span>
                            		<span class="tUiit">℃</span>
@@ -327,13 +345,12 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-18.8</span>
                            		<span class="tUiit">℃</span>
@@ -345,13 +362,12 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">8.8</span>
                            		<span class="tUiit">℃</span>
@@ -363,13 +379,13 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">8.5</span>
                            		<span class="tUiit">℃</span>
@@ -381,13 +397,13 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">9.4</span>
                            		<span class="tUiit">℃</span>
@@ -399,12 +415,453 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-1.2</span>
                            		<span class="tUiit">℃</span>
@@ -416,12 +873,391 @@
 		</div> 
 		<div class="box-body">
 	     	 <div class="box1">
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-3.6</span>
                            		<span class="tUiit">℃</span>
@@ -433,136 +1269,13 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-18.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-18.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">8.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">8.5</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">9.4</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-1.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-3.6</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
                  
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-18.2</span>
                            		<span class="tUiit">℃</span>
@@ -580,7 +1293,7 @@
                         <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-18.8</span>
                            		<span class="tUiit">℃</span>
@@ -598,7 +1311,7 @@
                         <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">8.8</span>
                            		<span class="tUiit">℃</span>
@@ -616,7 +1329,7 @@
                         <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">8.5</span>
                            		<span class="tUiit">℃</span>
@@ -634,7 +1347,7 @@
                         <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">9.4</span>
                            		<span class="tUiit">℃</span>
@@ -652,7 +1365,7 @@
                         <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-1.2</span>
                            		<span class="tUiit">℃</span>
@@ -670,259 +1383,7 @@
                         <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
                     </div>
                     <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-3.6</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-18.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-18.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">8.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">8.5</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">9.4</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-1.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-3.6</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-18.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-18.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">8.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">8.5</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">9.4</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">  
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
-                            <div class="box1 text-center"  >
-								<span class="tNum">-1.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-		</div> 
-		<div class="box-body">
-	     	 <div class="box1">
-                 
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
-                    </div>
-                    <div class="box-body">
-                        <div  style="height:30px">
+                        <div  class="defineHeight">
                             <div class="box1 text-center"  >
 								<span class="tNum">-3.6</span>
                            		<span class="tUiit">℃</span>
@@ -950,7 +1411,7 @@
 						<h3 class="box-title"><a class="home" href="#/power/1">实时电量(电表1)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">310050.4</span> <span
@@ -1012,7 +1473,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表2)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">13215.2</span> <span
@@ -1074,7 +1535,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表3)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">64524.6</span> <span
@@ -1136,7 +1597,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表4)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">44213.4</span> <span
@@ -1199,7 +1660,7 @@
 						<h3 class="box-title"><a class="home" href="#/power/1">实时电量(电表5)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">310050.4</span> <span
@@ -1261,7 +1722,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表6)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">13215.2</span> <span
@@ -1323,7 +1784,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表7)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">64524.6</span> <span
@@ -1385,7 +1846,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表8)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">44213.4</span> <span
@@ -1448,7 +1909,7 @@
 						<h3 class="box-title"><a class="home" href="#/power/1">实时电量(电表9)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">310050.4</span> <span
@@ -1510,7 +1971,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表10)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">13215.2</span> <span
@@ -1572,7 +2033,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表11)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">64524.6</span> <span
@@ -1634,7 +2095,7 @@
 						<h3 class="box-title"><a class="home">实时电量(电表12)</a></h3>
 					</div>
 					<div class="box-body">
-						<div  style="height:80px">
+						<div  class="clearfix">
 							<div class="box1 text-center"
 								style="position: relative; ">
 								<span class="tNum">44213.4</span> <span
