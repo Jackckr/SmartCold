@@ -92,13 +92,22 @@
 					$(".tem").hide();
 					$(".com").hide();
 					$(em).html("返回");
+					var singleH = Math.ceil(powSib.length/4);
 					powSib.eq(3).nextAll().show();
+					$(".powerBox").siblings(".box4").find(".box-body").height(oHeight/singleH-66);
+					$(".powerBox").siblings(".box4").find(".box1.text-center").css('margin-bottom',30);
+					$(".box.box-primary").css('margin-bottom','10px');
+					$(".box.box-primary h3.box-title").css('padding','10px')
 					flag = false;
 				}else{
 					$(".tem").show();
 					$(".com").show();
 					$(em).html("更多");
 					powSib.eq(3).nextAll().hide();
+					$(".powerBox").siblings(".box4").find(".box-body").height(124);
+					$(".powerBox").siblings(".box4").find(".box1.text-center").css('margin-bottom',0);
+					$(".box.box-primary").css('margin-bottom',0);
+					$(".box.box-primary h3.box-title").css('padding',0)
 					flag = true;
 				}	
 			}else if(oVal == 3){
