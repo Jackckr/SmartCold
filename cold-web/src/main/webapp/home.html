@@ -64,13 +64,13 @@
 					$(".pow").hide();
 					$(".com").hide();
 					$(em).html("返回");
-					$(".temperatureBox").siblings(".box-body").eq(11).nextAll().not('.myOpen').show();
+					$(".temperatureBox").siblings(".box-body").eq(11).nextAll().show();
 					flag = false;
 				}else{
 					$(".pow").show();
 					$(".com").show();
 					$(em).html("更多");
-					$(".temperatureBox").siblings(".box-body").eq(11).nextAll().not('.myOpen').hide();
+					$(".temperatureBox").siblings(".box-body").eq(11).nextAll().hide();
 					flag = true;
 				}	
 			}else if(oVal == 2){
@@ -78,13 +78,13 @@
 					$(".tem").hide();
 					$(".com").hide();
 					$(em).html("返回");
-					$(".powerBox").siblings(".box-body").eq(3).nextAll().not('.myOpen').show();
+					$(".powerBox").siblings(".box-body").eq(3).nextAll().show();
 					flag = false;
 				}else{
 					$(".tem").show();
 					$(".com").show();
 					$(em).html("更多");
-					$(".powerBox").siblings(".box-body").eq(3).nextAll().not('.myOpen').hide();
+					$(".powerBox").siblings(".box-body").eq(3).nextAll().hide();
 					flag = true;
 				}	
 			}else if(oVal == 3){
@@ -92,55 +92,58 @@
 					$(".pow").hide();
 					$(".tem").hide();
 					$(em).html("返回");
-					$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().not('.myOpen').show();
+					$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().show();
 					flag = false;
 				}else{
 					$(".pow").show();
 					$(".tem").show();
 					$(em).html("更多");
-					$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().not('.myOpen').hide();
+					$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().hide();
 					flag = true;
 				}	
 			}
 					
 		}
 		$(function(){
+			temLen();
+			$(".btn-warning").hide();
 			/*温度后面按钮判断隐藏和显示*/
-			if($(".temperatureBox").siblings(".box-body").length>11){
-				$(".temperatureBox").siblings(".box-body").eq(11).nextAll().not('.myOpen').hide();
+			if($(".temperatureBox").siblings(".box-body").length>12){
+				$(".temperatureBox").find(".btn-warning").show();
+				$(".temperatureBox").siblings(".box-body").eq(11).nextAll().hide();
 			}else{
-				$(".temperatureBox").siblings(".myOpen").hide()
+				$(".temperatureBox").find(".btn-warning").hide();
 			}
 			/*电量后面按钮判断隐藏和显示*/
-			if($(".powerBox").siblings(".box-body").length>3){
-				$(".powerBox").siblings(".box-body").eq(3).nextAll().not('.myOpen').hide();
+			if($(".powerBox").siblings(".box-body").length>4){
+				$(".powerBox").find(".btn-warning").show();
+				$(".powerBox").siblings(".box-body").eq(3).nextAll().hide();
 			}else{
-				$(".powerBox").siblings(".myOpen").hide()
+				$(".powerBox").find(".btn-warning").hide();
 			}
 			/*压缩机后面按钮判断隐藏和显示*/
-			if($(".compressorBox").siblings(".box-body").find('.box3').length>2){
-				$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().not('.myOpen').hide();
+			if($(".compressorBox").siblings(".box-body").find('.box3').length>3){
+				$(".compressorBox").find(".btn-warning").show();
+				$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().hide();
 			}else{
-				$(".compressorBox").siblings(".box-body").find(".myOpen").hide()
+				$(".compressorBox").find(".btn-warning").hide();
 			}
-			temLen();
+			
 		})
 	</script>
 	<style type="text/css">
 		.home {display: block;color: #fff!important;}
 		.box-title .home{color: #555!important;cursor: pointer;}
 		.whiteBox{background: #eee!important;}
-		.tNum{font-size: 1.5em;}
+		.tNum{font-size: 2em;}
 		.tUiit{font-size: 1em;}
 		.box{margin-bottom: 0}
 		.box-header{padding: 5px 10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 		.box-body{padding: 3px 10px;}
 		 .box-header h3.box-title{font-size: 14px;}
 		.box-primary .box-header h3.box-title{font-size: 12px;}
-		.box-primary .box-header{padding:3px 10px!important;}
-		.myOpen{float:right!important;}
-		.myOpen .btn{padding: 2px 12px;}
-		
+		.box-primary .box-header{padding:3px 0!important;text-align: center;font-size: 12px;}
+		.tem,.pow,.com{margin-bottom: 10px;}
 		.whiteBox>.box-header.with-border{border-bottom:1px solid #D2D6DE;}
 		.whiteBox>.box-header.with-border h3.box-title{font-size: 16px}
 		/* 自适应class */
@@ -301,10 +304,13 @@
 		<div class="whiteBox box bg-gray clearfix" style="padding-bottom: 5px;">
 	     <div class="box-header with-border temperatureBox">
 	         <h3 class="box-title">温度</h3>
+	         <div class="box-tools pull-right">
+                 <button class="btn btn-warning btn-xs" value="1" onclick="openObj(this)">更多</button>
+             </div>
 	     </div>
 	    <div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
@@ -322,7 +328,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
@@ -340,7 +346,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
@@ -358,7 +364,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
@@ -376,7 +382,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
@@ -394,7 +400,6 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
@@ -412,7 +417,6 @@
 		</div> 
 		<div class="box-body">
 	     	 <div class="box1">
-                <!-- AREA CHART -->
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
@@ -430,7 +434,6 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
@@ -448,7 +451,6 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
@@ -466,7 +468,6 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
@@ -484,7 +485,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
@@ -502,7 +503,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
@@ -520,7 +521,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
@@ -538,7 +539,7 @@
 		</div> 
 		<div class="box-body">
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
@@ -556,7 +557,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
@@ -574,7 +575,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
@@ -592,7 +593,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
@@ -610,7 +611,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
@@ -628,7 +629,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
@@ -646,7 +647,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
@@ -664,7 +665,7 @@
 		</div> 
 		<div class="box-body">
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
@@ -682,7 +683,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
@@ -700,7 +701,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
@@ -718,7 +719,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
@@ -736,7 +737,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
@@ -754,7 +755,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
@@ -772,7 +773,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
@@ -790,7 +791,7 @@
 		</div> 
 		<div class="box-body">
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
@@ -808,7 +809,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
@@ -826,7 +827,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
@@ -844,7 +845,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
@@ -862,7 +863,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
@@ -880,7 +881,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
@@ -898,7 +899,7 @@
 		</div> 
 		<div class="box-body">  
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
@@ -916,7 +917,7 @@
 		</div> 
 		<div class="box-body">
 	     	 <div class="box1">
-                <!-- AREA CHART -->
+                 
                 <div class="box bg-gray">
                     <div class="box-header with-border">
                         <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
@@ -932,14 +933,16 @@
                 </div> 
             </div> 
 		</div> 
-		<div class="myOpen box-body text-right"><button class="btn btn-warning" value="1" onclick="openObj(this)">更多</button></div>
 	   </div> 
 	</div>
 	<!-- -----------------------这是温度分割线-------------------------- -->
-	<div class="pow" style="margin: 5px 0">
+	<div class="pow">
 		<div class="whiteBox box bg-gray clearfix">
 	     <div class="box-header with-border powerBox">
 	         <h3 class="box-title">电耗</h3>
+	         <div class="box-tools pull-right">
+                 <button class="btn btn-warning btn-xs" value="2" onclick="openObj(this)">更多</button>
+             </div>
 	     </div>
 	     <div class="box-body box4">     
 			<div class="box1">
@@ -951,8 +954,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">310050.4</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">310050.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1013,8 +1016,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">13215.2</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">13215.2</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1075,8 +1078,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">64524.6</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">64524.6</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1137,8 +1140,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">44213.4</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">44213.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1200,8 +1203,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">310050.4</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">310050.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1262,8 +1265,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">13215.2</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">13215.2</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1324,8 +1327,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">64524.6</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">64524.6</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1386,8 +1389,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">44213.4</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">44213.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1449,8 +1452,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">310050.4</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">310050.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1511,8 +1514,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">13215.2</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">13215.2</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1573,8 +1576,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">64524.6</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">64524.6</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1635,8 +1638,8 @@
 						<div  style="height:80px">
 							<div class="box1 text-center"
 								style="position: relative; ">
-								<span style="font-size: 2em;color: coral">44213.4</span> <span
-									style="font-size: 1em;color: coral">&nbsp;kW·h</span>
+								<span class="tNum">44213.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
 							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6">
 								<div class="box box-primary box-solid">
@@ -1687,7 +1690,6 @@
 				 
 			</div>
 		</div> 
-	    <div class="myOpen box-body text-right"><button class="btn btn-warning" value="2" onclick="openObj(this)">更多</button></div>
 	   </div> 
 	</div>
 	<!-- -----------------------这是电量分割线-------------------------- -->
@@ -1695,16 +1697,19 @@
 		<div class="whiteBox box bg-gray clearfix">
 	     <div class="box-header with-border compressorBox">
 	         <h3 class="box-title">压缩机</h3>
+	         <div class="box-tools pull-right">
+                 <button class="btn btn-warning btn-xs" value="3" onclick="openObj(this)">更多</button>
+             </div>
 	     </div>
 	     <div class="box-body  box1">
 	     	<div class="box bg-gray">
                     <div class="box-body">
-                    	<div class="col-lg-12 text-center" style="margin-bottom: 5px">
+                    	<div class="col-lg-12 text-center" style="margin-bottom: 10px">
 							<img src="assets/img/run.png" /> 运行 <img
 								src="assets/img/stop.png" /> 停止 <a style="float:right;"><font
 								class="font">压缩机状态监控</font></a>
 						</div>
-                         <div class="box3" style="height:100px;">
+                        <div class="box3" style="min-height:100px;">
 							<div id="runChart" class="clearfix">
 								<div ng-repeat="compressor in compressors"
 									style="width:12%;float:left;"
@@ -1739,7 +1744,7 @@
 							</div>
 							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（4-35）</p>
 						</div>
-						 <div class="box3" style="height:100px;">
+						 <div class="box3" style="min-height:100px;">
 							<div id="runChart" class="clearfix">
 								<div ng-repeat="compressor in compressors"
 									style="width:12%;float:left;"
@@ -1791,7 +1796,7 @@
 							</div>
 							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（3-35）</p>
 						</div>
-						 <div class="box3" style="height:100px;">
+						 <div class="box3" style="min-height:100px;">
 							<div id="runChart" class="clearfix">
 								<div ng-repeat="compressor in compressors"
 									style="width:12%;float:left;"
@@ -1818,9 +1823,9 @@
 										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机3</label>
 								</div>
 							</div>
-							<p class="text-left" style="margin-top: 5px;">螺杆低温并联机组（2-120）</p>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（2-120）</p>
 						</div>
-                          <div class="box3" style="height:100px;">
+                          <div class="box3" style="min-height:100px;">
 							<div id="runChart" class="clearfix">
 								<div ng-repeat="compressor in compressors"
 									style="width:12%;float:left;"
@@ -1856,7 +1861,7 @@
 							</div>
 							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（4-35）</p>
 						</div>
-						 <div class="box3" style="height:100px;">
+						 <div class="box3" style="min-height:100px;">
 							<div id="runChart" class="clearfix">
 								<div ng-repeat="compressor in compressors"
 									style="width:12%;float:left;"
@@ -1908,7 +1913,7 @@
 							</div>
 							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（3-35）</p>
 						</div>
-						 <div class="box3" style="height:100px;">
+						 <div class="box3" style="min-height:100px;">
 							<div id="runChart" class="clearfix">
 								<div ng-repeat="compressor in compressors"
 									style="width:12%;float:left;"
@@ -1935,11 +1940,10 @@
 										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机3</label>
 								</div>
 							</div>
-							<p class="text-left" style="margin-top: 5px;">螺杆低温并联机组（2-120）</p>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（2-120）</p>
 						</div>
                     </div>
                 </div>
-                <div class="myOpen box-body text-right"><button class="btn btn-warning" value="3" onclick="openObj(this)">更多</button></div>
             </div>
 	     </div>
 	   </div> 
