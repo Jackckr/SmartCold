@@ -180,7 +180,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			if($scope.rdcflag==1)
 			{
-				$scope.rdcID = $scope.rdcdto.id;
+				$scope.rdcID = $scope.rdcdto.rdcID;
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
 			
@@ -251,7 +251,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			}
 			if($scope.rdcflag==1)
 			{
-				$scope.rdcID = $scope.rdcdto.id;
+				$scope.rdcID = $scope.rdcdto.rdcID;
 			    $scope.provinceId=$scope.rdcdto.provinceid;
 			    $scope.cityId=$scope.rdcdto.cityid;
 				$scope.rdcAddress = $scope.rdcdto.address;
@@ -333,7 +333,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if($(".coldlist").is(":visible")){//出租
 				$scope.typeCode = 1;
 				$scope.typeText = "出租";
-				$scope.rdcID = $scope.rdcdto.id;
+				$scope.rdcID = $scope.rdcdto.rdcID;
 				$scope.rdcAddress = $scope.rdcdto.address;
 				$scope.storageType = $scope.rdcdto.codeLave1;
 			}else{

@@ -151,7 +151,9 @@ public class RdcShareServiceImpl implements RdcShareService {
  					}
  					vo.setFiles(filelist);
  					vo.setFileList(files);
- 					vo.setLogo(files.get(files.size()-1).getLocation());
+ 					if(StringUtil.isNull(vo.getLogo())){
+ 				    	vo.setLogo(files.get(files.size()-1).getLocation());
+ 					}
  			} 
  		 }
  		 return vo;

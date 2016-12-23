@@ -74,7 +74,7 @@ $(function() {
                     <label for="boss">供应商</label>
                     <input type="text" ng-model="unit1" id="boss"/>
                 </li>
-                 <li class="offershow">
+                 <li class="offershow" ng-hide="rdcsharedto.rdcID">
                     <label for="province">省</label><em>*</em>
                     <div class="mySelect">
                     	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
@@ -83,7 +83,7 @@ $(function() {
                     </div>
                      <i class="iconfont fr moreinfo">&#xe60d;</i>
                  </li>
-                 <li class="offershow">
+                 <li class="offershow" ng-hide="rdcsharedto.rdcID">
                     <label for="city">市</label><em>*</em>
                     <div class="mySelect">
 	                    <select id="city" ng-model="cityId" name="cityid"
