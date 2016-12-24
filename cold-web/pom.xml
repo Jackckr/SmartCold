@@ -144,6 +144,19 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.4</version>
 		</dependency>
+		
+        <!-- socket  -->
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.22</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.mina</groupId>
+		    <artifactId>mina-core</artifactId>
+		    <version>2.0.13</version>
+		</dependency>
+		
 
 		<!-- Util -->
 		<dependency>
