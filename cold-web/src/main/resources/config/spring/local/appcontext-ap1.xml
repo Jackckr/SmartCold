@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <!--自己实现的handler-->
+    <bean id="serverHandler" class="com.smartcold.manage.cold.socket.handler.MyHandler" />
+	<bean id="address" class="java.net.InetSocketAddress">
+        <!-- <constructor-arg index="0" value="192.168.1.137" /> -->
+		<constructor-arg index="0" value="8888" />
+	</bean>
+	
+	 <!--日志-->
+    <bean id="loggingFilter" class="org.apache.mina.filter.logging.LoggingFilter" /><!--  -->
+
+    <!--编解码-->
+    <bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
+        <constructor-arg>
+            <!--构造函数的参数传入自己实现的对象-->
+            <bean class="com.smartcold.manage.cold.socket.services.MyCodeFactory">
+                <property name="bufferLength" value="10000000"></property>
+                <property name="decoderMaxLineLength" value="100000000"></property> 
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor"   init-method="bind" destroy-method="unbind">
+        <!--端口号-->
+        <property name="defaultLocalAddress" ref="address" />
+        <!--绑定自己实现的handler-->
+        <property name="handler" ref="serverHandler" />
+        <!--声明过滤器的集合-->
+        <property name="filterChainBuilder" ref="filterChainBuilder" />
+        <property name="reuseAddress" value="true" />
+    </bean>
+
+    <bean id="filterChainBuilder"   class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
+        <property name="filters">
+            <map>
+                <!--mina自带的线程池filter-->
+                <entry key="executor" value-ref="executorFilter" />
+                <entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" />
+                <!--自己实现的编解码器filter-->
+                <entry key="codecFilter" value-ref="codecFilter" />
+                <!--日志的filter-->
+                 <entry key="loggingFilter" value-ref="loggingFilter" /><!-- -->
+                <!--心跳filter-->
+               <entry key="keepAliveFilter" value-ref="keepAliveFilter" /> 
+            </map>
+        </property>
+    </bean>
+ <!-- executorFilter多线程处理 -->  
+    <bean id="executorFilter" class="org.apache.mina.filter.executor.ExecutorFilter" />
+    <bean id="mdcInjectionFilter" class="org.apache.mina.filter.logging.MdcInjectionFilter">
+        <constructor-arg value="remoteAddress" />
+    </bean>
+
+
+
+    <!--心跳检测filter-->
+    <bean id="keepAliveFilter" class="org.apache.mina.filter.keepalive.KeepAliveFilter">
+        <!--构造函数的第一个参数传入自己实现的工厂-->
+        <constructor-arg >  <bean class="com.smartcold.manage.cold.socket.services.MyKeepAliveMessageFactory"></bean>  </constructor-arg> 
+        <!--第二个参数需要的是IdleStatus对象，value值设置为读写空闲-->
+        <constructor-arg type = "org.apache.mina.core.session.IdleStatus" value="BOTH_IDLE" ></constructor-arg>
+        <property name="requestInterval" value="60" />  <!--心跳频率，不设置则默认60s  -->
+        <property name="requestTimeout" value="60" /> <!--心跳超时时间，不设置则默认30s    -->
+        <property name="forwardEvent" value="true" /> <!--不设置默认false-->
+    </bean>
+
+   
+</beans>
