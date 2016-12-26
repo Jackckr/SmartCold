@@ -8,6 +8,8 @@ public class EvaporativeSetEntity {
 	private String name;
 
 	private int rdcid;
+	
+	private int groupid;
 
 	private String mapping;
 
@@ -35,6 +37,13 @@ public class EvaporativeSetEntity {
 
 	public void setRdcid(int rdcid) {
 		this.rdcid = rdcid;
+	}
+	public int getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(int groupid) {
+		this.groupid = groupid;
 	}
 
 	public String getMapping() {

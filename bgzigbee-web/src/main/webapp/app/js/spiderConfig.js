@@ -487,8 +487,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.addEvaporativeWaterSet = function () {
     	if( $scope.vm.choseEvaporative==undefined){alert("请设置冷凝系统对象！");return;}
         var object = $scope.evaporativeWaterSet;
-//        object.groupid= $scope.vm.choseCompressGroup.id;
-        object.evaporativeid = $scope.vm.choseEvaporative.id
+        object.groupid=$scope.vm.choseEvaporative.groupid;
+        object.evaporativeid = $scope.vm.choseEvaporative.id;
         $http.post("/i/spiderConfig/add/evaporativeWaterSet", object).then(function (resp) {
         	if(resp.data.status == -1){
 		    	alert(resp.data.message);
@@ -502,8 +502,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     $scope.addEvaporativeBlowerSet = function () {
     	if( $scope.vm.choseEvaporative==undefined){alert("请设置冷凝系统对象！");return;}
         var obj = $scope.evaporativeBlowerSet;
-//        obj.groupid = $scope.vm.choseCompressGroup.id;
-        obj.evaporativeid = $scope.vm.choseEvaporative.id
+        obj.groupid =$scope.vm.choseEvaporative.groupid;
+        obj.evaporativeid = $scope.vm.choseEvaporative.id;
         $http.post("/i/spiderConfig/add/evaporativeBlowerSet", obj).then(function (resp) {
         	if(resp.data.status == -1){
 		    	alert(resp.data.message);
