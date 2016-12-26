@@ -145,9 +145,11 @@ public class UserController extends BaseController {
 					user = userDao.findUserByName(effectiveCookie.getUsername());
 					if(user==null)return new UserEntity();
 					RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
-					Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
+					if(roleUser!=null){
+					  Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
+					  user.setRole(role.getId());
+					}
 					user.setPassword(null);
-					user.setRole(role.getId());
 					request.getSession().setAttribute("user", user);
 					return user;
 				}

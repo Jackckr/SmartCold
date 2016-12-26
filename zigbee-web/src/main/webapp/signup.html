@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="assets/css/signin.css">
     <link rel="stylesheet" href="assets/css/homenewlayout.css"/>
 	<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<style type="text/css">
+		.form-group{margin: 15px 0 3px;}
+	</style>
 </head>
 <body class="home-layout ">
 	<header class="light">
@@ -93,14 +96,14 @@
 	                <h4 class="user-common-h4 text-center">链库注册</h4>
 	                <div class="form-group">
 	                    <input type="text" class="form-control" name="username" id="username" placeholder='用户名'>
-	                    <!-- 错误信息 popover -->
-	                    <div class="err-popover-out">
-	                        <div class="">
+	                </div>
+	                <!-- 错误信息 popover -->
+	                    <div>
+	                        <div style="font-size: 12px;">
 	                            <div class="text-danger" id="username_error"></div>
 	                        </div>
 	                    </div>
 	                    <!-- 错误信息 popover end -->
-	                </div>
 	                 <!-- <div class="form-group">
 	                    <input type="text" class="form-control" name="email" id="email" placeholder='电子邮箱'>
 	                    错误信息 popover
@@ -113,32 +116,33 @@
 	                </div>  -->
 	                <div class="form-group">
 	                    <input type="password" class="form-control password" name="password" placeholder='密码'>
-	                    <div class="err-popover-out">
+	                </div>
+	                <div style="font-size: 12px;">
 	                        <div class="">
 	                            <div class="text-danger" id="password_error"></div>
 	                        </div>
 	                    </div>
-	                </div>
 	                <div class="form-group">
 	                    <input type="password" class="form-control password" name="password1" placeholder='重复密码'>
-	                    <!-- 错误信息 popover -->
-	                    <div class="err-popover-out">
+	                </div>
+	                <!-- 错误信息 popover -->
+	                    <div style="font-size: 12px;">
 	                        <div class="">
 	                            <div class="text-danger" id="password_error1"></div>
 	                        </div>
 	                    </div>
 	                    <!-- 错误信息 popover end -->
-	                </div>
 	                <div class="form-group">
 	                    <input id="text_telephone" type="text" class="form-control" name="telephone" placeholder='手机号'>
-	                    <!-- 错误信息 popover -->
-	                    <div class="err-popover-out">
+	                    
+	                </div>
+	                <!-- 错误信息 popover -->
+	                    <div style="font-size: 12px;">
 	                        <div class="">
-	                            <div class="text-danger" id="password_error1"></div>
+	                            <div class="text-danger" id="phone"></div>
 	                        </div>
 	                    </div>
 	                    <!-- 错误信息 popover end -->
-	                </div>
 	                <div class="form-group clearfix">
 	                	<div class="">
 		                	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding: 0 5px 0 0">
@@ -146,15 +150,15 @@
 		                    </div>
 		                    <button id="authcode" class="btn btn-primary col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding: 11px 0;">获取验证码</button>
 	                	</div>
-	                    <!-- 错误信息 popover -->
-	                    <div class="err-popover-out">
+	                </div>
+	                 <!-- 错误信息 popover -->
+	                    <div style="font-size: 12px;">
 	                        <div class="">
 	                            <div class="text-danger" id="password_error1"></div>
 	                        </div>
 	                    </div>
 	                    <!-- 错误信息 popover end -->
-	                </div>
-	                <button type="submit" id="submit" class="btn btn-form-common form-control"><span>注册</span></button>
+	                <button type="submit" id="submit" class="btn btn-form-common form-control" style="margin-top: 15px;"><span>注册</span></button>
 	                <div class="checkbox no-padding">
 	                    <a href="login.html" class="a pull-right">已经注册</a>
 	                </div>
@@ -181,6 +185,28 @@ $(function(){
 		    }
 		else{
 			$("#username_error")[0].innerText = "";
+		}
+	});
+	function vsphone(telephone) {// 验证手机号码
+		var length = (telephone + '').length;
+		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+		return telephone && length == 11&& mobile.test(telephone);
+	};
+	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
+	$('#text_telephone').blur(function(){
+		var telephone = $(this).val();
+		var ct = vsphone(telephone);
+	    if(ct){
+			victdata.victtl=true;
+			$.post( "/i/user/existenceUserName", {userName: telephone}, function(data) {
+                victdata.extname=!data;
+                $("#phone").html(data?"该手机已经注册":"");
+//                 $("#but_vercode").attr("disabled", data).css("background-color", data ?  "#cccccc":"#438BCB" );
+			});//
+		}else{
+			 victdata.victtl=false;
+			 $("#phone").html("请输入正确手机号码");
+// 			 $("#but_vercode").attr("disabled", false).css("background-color",  "#cccccc");
 		}
 	});
 	$('.password').keyup(function(){
