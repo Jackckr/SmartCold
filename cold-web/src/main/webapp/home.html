@@ -19,790 +19,15 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/iconfont.css">
-<!-- Ionicons -->
-<link rel="stylesheet" href="assets/css/ionicons.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
 <link rel="stylesheet" href="assets/css/skins/diaodiao-skin.css">
 <link rel="stylesheet" href="app/css/physical.css">
 <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-<style type="text/css">
-.home {
-	display: block;
-	color: #fff!important;
-}
-.box-title .home{color: #555!important;cursor: pointer;}
-.whiteBox{background: #eee!important;/* width: 96%;margin: 0 auto 20px; */}
-</style>
-
-</head>
-
-<body>
-	<button class="btn btn-primary">
-		<a class="home" href="index.html">主页</a>
-	</button>
-	<div class="clearfix ">
-		<div class="whiteBox box bg-gray">
-	     <div class="box-header with-border">
-	         <h3 class="box-title">温度</h3>
-	         <div class="box-tools pull-right">
-	             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-	         </div>
-	     </div>
-	     <div class="box-body">  
-	     	 <div class="col-lg-5 col-md-5 col-sm-12">
-                <!-- AREA CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="position: relative;margin:10% 10% 10% 1%;">
-								<span class="tNum">-18.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (LEFT) -->
-            <div class="col-lg-7 col-md-7 col-sm-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">低温库历史温度</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="temperatureChart" style="height:300px"></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (RIGHT) -->   
-		</div><!-- /.box-body -->
-		<div class="box-body">  
-	     	 <div class="col-lg-5 col-md-5 col-sm-12">
-                <!-- AREA CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="position: relative;margin:10% 10% 10% 1%;">
-								<span class="tNum">-18.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (LEFT) -->
-            <div class="col-lg-7 col-md-7 col-sm-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">变温库历史温度</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="temperatureChart1" style="height:300px"></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (RIGHT) -->   
-		</div><!-- /.box-body -->
-		<div class="box-body">  
-	     	 <div class="col-lg-5 col-md-5 col-sm-12">
-                <!-- AREA CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="position: relative;margin:10% 10% 10% 1%;">
-								<span class="tNum">8.8</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (LEFT) -->
-            <div class="col-lg-7 col-md-7 col-sm-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">高温库历史温度</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="temperatureChart2" style="height:300px"></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (RIGHT) -->   
-		</div><!-- /.box-body -->
-		<div class="box-body">  
-	     	 <div class="col-lg-5 col-md-5 col-sm-12">
-                <!-- AREA CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="position: relative;margin:10% 10% 10% 1%;">
-								<span class="tNum">8.5</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (LEFT) -->
-            <div class="col-lg-7 col-md-7 col-sm-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">预冷间历史温度</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="temperatureChart3" style="height:300px"></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (RIGHT) -->   
-		</div><!-- /.box-body -->
-		<div class="box-body">  
-	     	 <div class="col-lg-5 col-md-5 col-sm-12">
-                <!-- AREA CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="position: relative;margin:10% 10% 10% 1%;">
-								<span class="tNum">9.4</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (LEFT) -->
-            <div class="col-lg-7 col-md-7 col-sm-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">理货间历史温度</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="temperatureChart4" style="height:300px"></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (RIGHT) -->   
-		</div><!-- /.box-body -->
-		<div class="box-body">  
-	     	 <div class="col-lg-5 col-md-5 col-sm-12">
-                <!-- AREA CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="position: relative;margin:10% 10% 10% 1%;">
-								<span class="tNum">-1.2</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (LEFT) -->
-            <div class="col-lg-7 col-md-7 col-sm-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">冰鲜库历史温度</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="temperatureChart5" style="height:300px"></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (RIGHT) -->   
-		</div><!-- /.box-body -->
-		<div class="box-body">  
-	     	 <div class="col-lg-5 col-md-5 col-sm-12">
-                <!-- AREA CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="position: relative;margin:10% 10% 10% 1%;">
-								<span class="tNum">-3.6</span>
-                           		<span class="tUiit">℃</span>
-                            </div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (LEFT) -->
-            <div class="col-lg-7 col-md-7 col-sm-12">
-                <!-- LINE CHART -->
-                <div class="box bg-gray">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">环境温度LXJ历史温度</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <div id="temperatureChart6" style="height:300px"></div>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col (RIGHT) -->   
-		</div><!-- /.box-body -->
-
-	   </div><!-- /.box -->
-	</div>
-	<!-- -----------------------这是温度分割线-------------------------- -->
-	<div class="clearfix ">
-		<div class="whiteBox box bg-gray">
-	     <div class="box-header with-border">
-	         <h3 class="box-title">电耗</h3>
-	         <div class="box-tools pull-right">
-	             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-	         </div>
-	     </div>
-	     <div class="box-body">     
-			<div class="col-lg-5 col-md-5 col-sm-12">
-				<div class="box bg-gray">
-					<div class="box-header with-border">
-						<h3 class="box-title"><a class="home" href="#/power/1">实时电量(电表1)</a></h3>
-						<div class="box-tools pull-right">
-							<button class="btn btn-box-tool" data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-							<button class="btn btn-box-tool" data-widget="remove">
-								<i class="fa fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body">
-						<div class="row" style="height:300px">
-							<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12"
-								style="position: relative;margin:0 10% 3% 1%;">
-								<span style="font-size: 4em;color: coral">310050.4</span> <span
-									style="font-size: 3em;color: coral">&nbsp;kW·h</span>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-			</div>
-			<div class="col-lg-7 col-md-7 col-sm-12">
-			<div class="box bg-gray">
-				<div class="box-header with-border">
-					<h3 class="box-title">累积电量实时监控</h3>
-					<div class="box-tools pull-right">
-						<button class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-						<button class="btn btn-box-tool" data-widget="remove">
-							<i class="fa fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="chart">
-						<div id="line1" style="height: 300px;"></div>
-					</div>
-				</div>
-				<!-- /.box-body -->
-			</div>
-			<!-- /.box -->
-		</div>
-		</div><!-- /.box-body -->
-		<div class="box-body">     
-			<div class="col-lg-5 col-md-5 col-sm-12">
-				<div class="box bg-gray">
-					<div class="box-header with-border">
-						<h3 class="box-title"><a class="home">实时电量(电表2)</a></h3>
-						<div class="box-tools pull-right">
-							<button class="btn btn-box-tool" data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-							<button class="btn btn-box-tool" data-widget="remove">
-								<i class="fa fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body">
-						<div class="row" style="height:300px">
-							<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12"
-								style="position: relative;margin:0 10% 3% 1%;">
-								<span style="font-size: 4em;color: coral">13215.2</span> <span
-									style="font-size: 3em;color: coral">&nbsp;kW·h</span>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-			</div>
-			<div class="col-lg-7 col-md-7 col-sm-12">
-			<div class="box bg-gray">
-				<div class="box-header with-border">
-					<h3 class="box-title">累积电量实时监控</h3>
-					<div class="box-tools pull-right">
-						<button class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-						<button class="btn btn-box-tool" data-widget="remove">
-							<i class="fa fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="chart">
-						<div id="line2" style="height: 300px;"></div>
-					</div>
-				</div>
-				<!-- /.box-body -->
-			</div>
-			<!-- /.box -->
-		</div>
-		</div><!-- /.box-body -->
-		<div class="box-body">     
-			<div class="col-lg-5 col-md-5 col-sm-12">
-				<div class="box bg-gray">
-					<div class="box-header with-border">
-						<h3 class="box-title"><a class="home">实时电量(电表3)</a></h3>
-						<div class="box-tools pull-right">
-							<button class="btn btn-box-tool" data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-							<button class="btn btn-box-tool" data-widget="remove">
-								<i class="fa fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body">
-						<div class="row" style="height:300px">
-							<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12"
-								style="position: relative;margin:0 10% 3% 1%;">
-								<span style="font-size: 4em;color: coral">64524.6</span> <span
-									style="font-size: 3em;color: coral">&nbsp;kW·h</span>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-			</div>
-			<div class="col-lg-7 col-md-7 col-sm-12">
-			<div class="box bg-gray">
-				<div class="box-header with-border">
-					<h3 class="box-title">累积电量实时监控</h3>
-					<div class="box-tools pull-right">
-						<button class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-						<button class="btn btn-box-tool" data-widget="remove">
-							<i class="fa fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="chart">
-						<div id="line3" style="height: 300px;"></div>
-					</div>
-				</div>
-				<!-- /.box-body -->
-			</div>
-			<!-- /.box -->
-			<!-- <div class="box box-gray bg-gray" style="margin-top:10px;">
-      <div id="line" style="height: 300px;"></div>
-    </div> -->
-		</div>
-		</div><!-- /.box-body -->
-		<div class="box-body">     
-			<div class="col-lg-5 col-md-5 col-sm-12">
-				<div class="box bg-gray">
-					<div class="box-header with-border">
-						<h3 class="box-title"><a class="home">实时电量(电表4)</a></h3>
-						<div class="box-tools pull-right">
-							<button class="btn btn-box-tool" data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-							<button class="btn btn-box-tool" data-widget="remove">
-								<i class="fa fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body">
-						<div class="row" style="height:300px">
-							<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12"
-								style="position: relative;margin:0 10% 3% 1%;">
-								<span style="font-size: 4em;color: coral">44213.4</span> <span
-									style="font-size: 3em;color: coral">&nbsp;kW·h</span>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-xs-6">
-								<div class="box box-primary box-solid">
-									<div class="box-header with-border">
-										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-			</div>
-			<div class="col-lg-7 col-md-7 col-sm-12">
-			<div class="box bg-gray">
-				<div class="box-header with-border">
-					<h3 class="box-title">累积电量实时监控</h3>
-					<div class="box-tools pull-right">
-						<button class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-						<button class="btn btn-box-tool" data-widget="remove">
-							<i class="fa fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="chart">
-						<div id="line4" style="height: 300px;"></div>
-					</div>
-				</div>
-				<!-- /.box-body -->
-			</div>
-			<!-- /.box -->
-			<!-- <div class="box box-gray bg-gray" style="margin-top:10px;">
-      <div id="line" style="height: 300px;"></div>
-    </div> -->
-		</div>
-		</div><!-- /.box-body -->
-	   </div><!-- /.box -->
-	</div>
-	<!-- -----------------------这是电量分割线-------------------------- -->
-	<div class="clearfix ">
-		<div class="whiteBox box bg-gray">
-	     <div class="box-header with-border">
-	         <h3 class="box-title">压缩机</h3>
-	         <div class="box-tools pull-right">
-	             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-	         </div>
-	     </div>
-	     <div class="box-body">
-	     	<div class="box bg-gray">
-                    <div class="box-body">
-                    	<div class="col-lg-12 text-center">
-									<img src="assets/img/run.png" /> 运行 <img
-										src="assets/img/stop.png" /> 停止 <a style="float:right;"><font
-										class="font">压缩机状态监控</font></a>
-								</div>
-                          <div class="col-lg-4 col-sm-4 col-xs-12 col-md-12">
-							<div id="runChart" style="height:220px;">
-								<div ng-repeat="compressor in compressors"
-									style="width:16.66%;margin-top:40px;float:left;"
-									class="text-center">
-									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" >
-                            		<label style="font-size: 12px;">压缩机1</label>
-										
-								</div>
-								<div ng-repeat="compressor in compressors"
-									style="width:16.66%;margin-top:40px;float:left;"
-									class="text-center">
-									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==0" src="assets/img/pressure2_stop.png" style="width:100%;float:left;" >
-									<label style="font-size: 12px;">压缩机2</label>
-								</div>
-							</div>
-								<p class="text-center">螺杆低温并联机组（4-35）</p>
-						</div>
-						 <div class="col-lg-4 col-sm-4 col-xs-12 col-md-12">
-							<div id="runChart" style="height:220px;">
-								<div ng-repeat="compressor in compressors"
-									style="width:16.66%;margin-top:40px;float:left;"
-									class="text-center">
-									<img
-										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
-										src="assets/img/pressure1_stop.png"
-										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机1</label>
-								</div>
-								<div ng-repeat="compressor in compressors"
-									style="width:16.66%;margin-top:40px;float:left;"
-									class="text-center">
-									<img
-										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
-										src="assets/img/pressure1_run.png"
-										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机2</label>
-								</div>
-							</div>
-								<p class="text-center">螺杆低温并联机组（3-35）</p>
-						</div>
-						 <div class="col-lg-4 col-sm-4 col-xs-12 col-md-12">
-							<div id="runChart" style="height:220px;">
-								<div ng-repeat="compressor in compressors"
-									style="width:16.66%;margin-top:40px;float:left;"
-									class="text-center">
-									<img
-										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
-										src="assets/img/pressure1_stop.png"
-										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机1</label>
-								</div>
-								<div ng-repeat="compressor in compressors"
-									style="width:16.66%;margin-top:40px;float:left;"
-									class="text-center">
-									<img
-										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
-										src="assets/img/pressure1_run.png"
-										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机2</label>
-								</div>
-							</div>
-							<p class="text-center">螺杆低温并联机组（2-120）</p>
-						</div>
-						
-                    </div>
-                </div>
-            </div>
-	     </div>
-	   </div><!-- /.box -->
-	</div>
-
-
-	<!-- ************************引入js******************************* -->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!-- ************************引入js******************************* -->
 	<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<!-- Bootstrap 3.3.5 -->
 	<script src="assets/js/bootstrap.min.js"></script>
@@ -812,518 +37,2387 @@
 	<script src="assets/js/highcharts.js"></script>
 	<script src="../assets/js/echarts.min.js"></script>
 	<script type="text/javascript">
-	$(function () {
-	    $('#temperatureChart').highcharts({
-	        chart: {
-	            type: 'spline',
-	            backgroundColor: 'transparent',
-	        },
-	        title: {
-	            text: null
-	        },
-	        xAxis: {
-	            type: 'datetime',
-	            dateTimeLabelFormats: { // don't display the dummy year
-	                month: '%e. %b',
-	                year: '%b'
-	            },
-	            title: {
-	                text: 'Date'
-	            }
-	        },
-	        yAxis: {
-	            title: {
-	                text: '温度 (℃)'
-	            },
-	            min: 0
-	        },
-	        tooltip: {
-	            headerFormat: '<b>{series.name}</b><br>',
-	            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-	        },
-	        plotOptions: {
-	            spline: {
-	                marker: {
-	                    enabled: true
-	                }
-	            }
-	        },
-	        series: [{
-	            name: 'Winter 2007-2008',
-	            data: [
-	                [Date.UTC(1970,  9, 27), 0   ],
-	                [Date.UTC(1970, 10, 10), 0.6 ],
-	                [Date.UTC(1970, 10, 18), 0.7 ],
-	                [Date.UTC(1970, 11,  2), 0.8 ],
-	                [Date.UTC(1970, 11,  9), 0.6 ],
-	                [Date.UTC(1970, 11, 16), 0.6 ],
-	                [Date.UTC(1970, 11, 28), 0.67],
-	                [Date.UTC(1971,  0,  1), 0.81],
-	                [Date.UTC(1971,  0,  8), 0.78],
-	                [Date.UTC(1971,  0, 12), 0.98],
-	                [Date.UTC(1971,  0, 27), 1.24],
-	                [Date.UTC(1971,  1, 10), 1.80],
-	                [Date.UTC(1971,  1, 18), 1.40],
-	                [Date.UTC(1971,  1, 24), 1.92],
-	                [Date.UTC(1971,  2,  4), 2.49],
-	                [Date.UTC(1971,  2, 11), 1.79],
-	                [Date.UTC(1971,  2, 15), 2.73],
-	                [Date.UTC(1971,  2, 25), 2.61],
-	                [Date.UTC(1971,  3,  2), 2.76],
-	                [Date.UTC(1971,  3,  6), 1.82],
-	                [Date.UTC(1971,  3, 13), 2.8 ],
-	                [Date.UTC(1971,  4,  3), 2.1 ],
-	                [Date.UTC(1971,  4, 26), 1.1 ],
-	                [Date.UTC(1971,  5,  9), 0.25],
-	                [Date.UTC(1971,  5, 12), 0   ]
-	            ]
-	        }]
-	    });
-	    $('#temperatureChart1').highcharts({
-	        chart: {
-	            type: 'spline',
-	            backgroundColor: 'transparent',
-	        },
-	        title: {
-	            text: null
-	        },
-	        xAxis: {
-	            type: 'datetime',
-	            dateTimeLabelFormats: { // don't display the dummy year
-	                month: '%e. %b',
-	                year: '%b'
-	            },
-	            title: {
-	                text: 'Date'
-	            }
-	        },
-	        yAxis: {
-	            title: {
-	                text: '温度 (℃)'
-	            },
-	            min: 0
-	        },
-	        tooltip: {
-	            headerFormat: '<b>{series.name}</b><br>',
-	            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-	        },
-	        plotOptions: {
-	            spline: {
-	                marker: {
-	                    enabled: true
-	                }
-	            }
-	        },
-	        series: [{
-	            name: 'Winter 2007-2008',
-	            data: [
-	                [Date.UTC(1970,  9, 27), 0   ],
-	                [Date.UTC(1970, 10, 10), 0.6 ],
-	                [Date.UTC(1970, 10, 18), 0.7 ],
-	                [Date.UTC(1970, 11,  2), 0.8 ],
-	                [Date.UTC(1970, 11,  9), 0.6 ],
-	                [Date.UTC(1970, 11, 16), 0.6 ],
-	                [Date.UTC(1970, 11, 28), 0.67],
-	                [Date.UTC(1971,  0,  1), 0.81],
-	                [Date.UTC(1971,  0,  8), 0.78],
-	                [Date.UTC(1971,  0, 12), 0.98],
-	                [Date.UTC(1971,  0, 27), 1.84],
-	                [Date.UTC(1971,  1, 10), 1.80],
-	                [Date.UTC(1971,  1, 18), 1.80],
-	                [Date.UTC(1971,  1, 24), 1.92],
-	                [Date.UTC(1971,  2,  4), 2.49],
-	                [Date.UTC(1971,  2, 11), 2.79],
-	                [Date.UTC(1971,  2, 15), 2.73],
-	                [Date.UTC(1971,  2, 25), 2.61],
-	                [Date.UTC(1971,  3,  2), 2.76],
-	                [Date.UTC(1971,  3,  6), 2.82],
-	                [Date.UTC(1971,  3, 13), 2.8 ],
-	                [Date.UTC(1971,  4,  3), 2.1 ],
-	                [Date.UTC(1971,  4, 26), 1.1 ],
-	                [Date.UTC(1971,  5,  9), 0.25],
-	                [Date.UTC(1971,  5, 12), 0   ]
-	            ]
-	        }]
-	    });
-	    $('#temperatureChart2').highcharts({
-	        chart: {
-	            type: 'spline',
-	            backgroundColor: 'transparent',
-	        },
-	        title: {
-	            text: null
-	        },
-	        xAxis: {
-	            type: 'datetime',
-	            dateTimeLabelFormats: { // don't display the dummy year
-	                month: '%e. %b',
-	                year: '%b'
-	            },
-	            title: {
-	                text: 'Date'
-	            }
-	        },
-	        yAxis: {
-	            title: {
-	                text: '温度 (℃)'
-	            },
-	            min: 0
-	        },
-	        tooltip: {
-	            headerFormat: '<b>{series.name}</b><br>',
-	            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-	        },
-	        plotOptions: {
-	            spline: {
-	                marker: {
-	                    enabled: true
-	                }
-	            }
-	        },
-	        series: [{
-	            name: 'Winter 2007-2008',
-	            data: [
-	                [Date.UTC(1970,  9, 27), 0   ],
-	                [Date.UTC(1970, 10, 10), 0.6 ],
-	                [Date.UTC(1970, 10, 18), 0.7 ],
-	                [Date.UTC(1970, 11,  2), 0.8 ],
-	                [Date.UTC(1970, 11,  9), 0.6 ],
-	                [Date.UTC(1970, 11, 16), 0.6 ],
-	                [Date.UTC(1970, 11, 28), 0.67],
-	                [Date.UTC(1971,  0,  1), 2.81],
-	                [Date.UTC(1971,  0,  8),1.78],
-	                [Date.UTC(1971,  0, 12), 0.98],
-	                [Date.UTC(1971,  0, 27), 1.84],
-	                [Date.UTC(1971,  1, 10), 1.80],
-	                [Date.UTC(1971,  1, 18), 1.80],
-	                [Date.UTC(1971,  1, 24), 1.92],
-	                [Date.UTC(1971,  2,  4), 3.49],
-	                [Date.UTC(1971,  2, 11), 2.79],
-	                [Date.UTC(1971,  2, 15), 2.73],
-	                [Date.UTC(1971,  2, 25), 2.61],
-	                [Date.UTC(1971,  3,  2), 1.76],
-	                [Date.UTC(1971,  3,  6), 2.82],
-	                [Date.UTC(1971,  3, 13), 2.8 ],
-	                [Date.UTC(1971,  4,  3), 2.1 ],
-	                [Date.UTC(1971,  4, 26), 1.1 ],
-	                [Date.UTC(1971,  5,  9), 0.25],
-	                [Date.UTC(1971,  5, 12), 0   ]
-	            ]
-	        }]
-	    });
-	    $('#temperatureChart3').highcharts({
-	        chart: {
-	            type: 'spline',
-	            backgroundColor: 'transparent',
-	        },
-	        title: {
-	            text: null
-	        },
-	        xAxis: {
-	            type: 'datetime',
-	            dateTimeLabelFormats: { // don't display the dummy year
-	                month: '%e. %b',
-	                year: '%b'
-	            },
-	            title: {
-	                text: 'Date'
-	            }
-	        },
-	        yAxis: {
-	            title: {
-	                text: '温度 (℃)'
-	            },
-	            min: 0
-	        },
-	        tooltip: {
-	            headerFormat: '<b>{series.name}</b><br>',
-	            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-	        },
-	        plotOptions: {
-	            spline: {
-	                marker: {
-	                    enabled: true
-	                }
-	            }
-	        },
-	        series: [{
-	            name: 'Winter 2007-2008',
-	            data: [
-	                [Date.UTC(1970,  9, 27), 0   ],
-	                [Date.UTC(1970, 10, 10), 1.6 ],
-	                [Date.UTC(1970, 10, 18), 0.7 ],
-	                [Date.UTC(1970, 11,  2), 0.8 ],
-	                [Date.UTC(1970, 11,  9), 0.6 ],
-	                [Date.UTC(1970, 11, 16), 2.6 ],
-	                [Date.UTC(1970, 11, 28), 0.67],
-	                [Date.UTC(1971,  0,  1), 0.81],
-	                [Date.UTC(1971,  0,  8), 0.78],
-	                [Date.UTC(1971,  0, 12), 0.98],
-	                [Date.UTC(1971,  0, 27), 1.84],
-	                [Date.UTC(1971,  1, 10), 1.80],
-	                [Date.UTC(1971,  1, 18), 1.80],
-	                [Date.UTC(1971,  1, 24), 1.92],
-	                [Date.UTC(1971,  2,  4), 2.49],
-	                [Date.UTC(1971,  2, 11), 2.79],
-	                [Date.UTC(1971,  2, 15), 2.73],
-	                [Date.UTC(1971,  2, 25), 2.61],
-	                [Date.UTC(1971,  3,  2), 1.76],
-	                [Date.UTC(1971,  3,  6), 2.82],
-	                [Date.UTC(1971,  3, 13), 2.8 ],
-	                [Date.UTC(1971,  4,  3), 2.1 ],
-	                [Date.UTC(1971,  4, 26), 1.1 ],
-	                [Date.UTC(1971,  5,  9), 0.25],
-	                [Date.UTC(1971,  5, 12), 0   ]
-	            ]
-	        }]
-	    });
-	    $('#temperatureChart4').highcharts({
-	        chart: {
-	            type: 'spline',
-	            backgroundColor: 'transparent',
-	        },
-	        title: {
-	            text: null
-	        },
-	        xAxis: {
-	            type: 'datetime',
-	            dateTimeLabelFormats: { // don't display the dummy year
-	                month: '%e. %b',
-	                year: '%b'
-	            },
-	            title: {
-	                text: 'Date'
-	            }
-	        },
-	        yAxis: {
-	            title: {
-	                text: '温度 (℃)'
-	            },
-	            min: 0
-	        },
-	        tooltip: {
-	            headerFormat: '<b>{series.name}</b><br>',
-	            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-	        },
-	        plotOptions: {
-	            spline: {
-	                marker: {
-	                    enabled: true
-	                }
-	            }
-	        },
-	        series: [{
-	            name: 'Winter 2007-2008',
-	            data: [
-	                [Date.UTC(1970,  9, 27), 0   ],
-	                [Date.UTC(1970, 10, 10), 1.6 ],
-	                [Date.UTC(1970, 10, 18), 0.7 ],
-	                [Date.UTC(1970, 11,  2), 0.8 ],
-	                [Date.UTC(1970, 11,  9), 0.6 ],
-	                [Date.UTC(1970, 11, 16), 0.6 ],
-	                [Date.UTC(1970, 11, 28), 1.67],
-	                [Date.UTC(1971,  0,  1), 0.81],
-	                [Date.UTC(1971,  0,  8), 0.78],
-	                [Date.UTC(1971,  0, 12), 0.98],
-	                [Date.UTC(1971,  0, 27), 1.84],
-	                [Date.UTC(1971,  1, 10), 1.80],
-	                [Date.UTC(1971,  1, 18), 1.80],
-	                [Date.UTC(1971,  1, 24), 1.92],
-	                [Date.UTC(1971,  2,  4), 2.49],
-	                [Date.UTC(1971,  2, 11), 2.79],
-	                [Date.UTC(1971,  2, 15), 2.73],
-	                [Date.UTC(1971,  2, 25), 2.61],
-	                [Date.UTC(1971,  3,  2), 2.76],
-	                [Date.UTC(1971,  3,  6), 2.82],
-	                [Date.UTC(1971,  3, 13), 2.8 ],
-	                [Date.UTC(1971,  4,  3), 2.1 ],
-	                [Date.UTC(1971,  4, 26), 1.1 ],
-	                [Date.UTC(1971,  5,  9), 0.25],
-	                [Date.UTC(1971,  5, 12), 0   ]
-	            ]
-	        }]
-	    });
-	    $('#temperatureChart5').highcharts({
-	        chart: {
-	            type: 'spline',
-	            backgroundColor: 'transparent',
-	        },
-	        title: {
-	            text: null
-	        },
-	        xAxis: {
-	            type: 'datetime',
-	            dateTimeLabelFormats: { // don't display the dummy year
-	                month: '%e. %b',
-	                year: '%b'
-	            },
-	            title: {
-	                text: 'Date'
-	            }
-	        },
-	        yAxis: {
-	            title: {
-	                text: '温度 (℃)'
-	            },
-	            min: 0
-	        },
-	        tooltip: {
-	            headerFormat: '<b>{series.name}</b><br>',
-	            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-	        },
-	        plotOptions: {
-	            spline: {
-	                marker: {
-	                    enabled: true
-	                }
-	            }
-	        },
-	        series: [{
-	            name: 'Winter 2007-2008',
-	            data: [
-	                [Date.UTC(1970,  9, 27), 0   ],
-	                [Date.UTC(1970, 10, 10), 0.6 ],
-	                [Date.UTC(1970, 10, 18), 0.7 ],
-	                [Date.UTC(1970, 11,  2), 0.8 ],
-	                [Date.UTC(1970, 11,  9), 0.6 ],
-	                [Date.UTC(1970, 11, 16), 1.6 ],
-	                [Date.UTC(1970, 11, 28), 2.67],
-	                [Date.UTC(1971,  0,  1), 0.81],
-	                [Date.UTC(1971,  0,  8), 0.78],
-	                [Date.UTC(1971,  0, 12), 0.98],
-	                [Date.UTC(1971,  0, 27), 1.84],
-	                [Date.UTC(1971,  1, 10), 1.80],
-	                [Date.UTC(1971,  1, 18), 2.80],
-	                [Date.UTC(1971,  1, 24), 1.92],
-	                [Date.UTC(1971,  2,  4), 2.49],
-	                [Date.UTC(1971,  2, 11), 2.79],
-	                [Date.UTC(1971,  2, 15), 2.73],
-	                [Date.UTC(1971,  2, 25), 2.61],
-	                [Date.UTC(1971,  3,  2), 2.76],
-	                [Date.UTC(1971,  3,  6), 2.82],
-	                [Date.UTC(1971,  3, 13), 2.8 ],
-	                [Date.UTC(1971,  4,  3), 1.1 ],
-	                [Date.UTC(1971,  4, 26), 1.1 ],
-	                [Date.UTC(1971,  5,  9), 0.25],
-	                [Date.UTC(1971,  5, 12), 0   ]
-	            ]
-	        }]
-	    });
-	    $('#temperatureChart6').highcharts({
-	        chart: {
-	            type: 'spline',
-	            backgroundColor: 'transparent',
-	        },
-	        title: {
-	            text: null
-	        },
-	        xAxis: {
-	            type: 'datetime',
-	            dateTimeLabelFormats: { // don't display the dummy year
-	                month: '%e. %b',
-	                year: '%b'
-	            },
-	            title: {
-	                text: 'Date'
-	            }
-	        },
-	        yAxis: {
-	            title: {
-	                text: '温度 (℃)'
-	            },
-	            min: 0
-	        },
-	        tooltip: {
-	            headerFormat: '<b>{series.name}</b><br>',
-	            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-	        },
-	        plotOptions: {
-	            spline: {
-	                marker: {
-	                    enabled: true
-	                }
-	            }
-	        },
-	        series: [{
-	            name: 'Winter 2007-2008',
-	            data: [
-	                [Date.UTC(1970,  9, 27), 0   ],
-	                [Date.UTC(1970, 10, 10), 0.6 ],
-	                [Date.UTC(1970, 10, 18), 0.7 ],
-	                [Date.UTC(1970, 11,  2), 0.8 ],
-	                [Date.UTC(1970, 11,  9), 0.6 ],
-	                [Date.UTC(1970, 11, 16), 0.6 ],
-	                [Date.UTC(1970, 11, 28), 0.67],
-	                [Date.UTC(1971,  0,  1), 0.81],
-	                [Date.UTC(1971,  0,  8), 0.78],
-	                [Date.UTC(1971,  0, 12), 0.98],
-	                [Date.UTC(1971,  0, 27), 1.84],
-	                [Date.UTC(1971,  1, 10), 1.80],
-	                [Date.UTC(1971,  1, 18), 1.80],
-	                [Date.UTC(1971,  1, 24), 1.92],
-	                [Date.UTC(1971,  2,  4), 2.49],
-	                [Date.UTC(1971,  2, 11), 2.79],
-	                [Date.UTC(1971,  2, 15), 2.73],
-	                [Date.UTC(1971,  2, 25), 2.61],
-	                [Date.UTC(1971,  3,  2), 2.76],
-	                [Date.UTC(1971,  3,  6), 2.82],
-	                [Date.UTC(1971,  3, 13), 2.8 ],
-	                [Date.UTC(1971,  4,  3), 2.1 ],
-	                [Date.UTC(1971,  4, 26), 1.1 ],
-	                [Date.UTC(1971,  5,  9), 0.25],
-	                [Date.UTC(1971,  5, 12), 0   ]
-	            ]
-	        }]
-	    });
-	});
-	var myChart1 = echarts.init(document.getElementById('line1'));
-	var myChart2 = echarts.init(document.getElementById('line2'));
-	var myChart3 = echarts.init(document.getElementById('line3'));
-	var myChart4 = echarts.init(document.getElementById('line4'));
-	 /* option; */
-	var option1 = option2 = option3 = option4 = option={
-		    tooltip : {
-		        trigger: 'axis'
-		    },
-		    toolbox: {
-		        show : true,
-		        feature : {
-		            mark : {show: true},
-		            dataView : {show: true, readOnly: false},
-		            magicType : {show: true, type: ['line', 'bar']},
-		            restore : {show: true},
-		            saveAsImage : {show: true}
-		        }
-		    },
-		    calculable : true,
-		    xAxis : [
-		        {
-		            type : 'category',
-		            boundaryGap : false,
-		            data : ['2016-12-21 8:42','2016-12-21 8:52','2016-12-21 9:02','2016-12-21 9:12','2016-12-21 9:22','2016-12-21 9:32','2016-12-21 8:42']
-		        }
-		    ],
-		    yAxis : [
-		        {
-		            type : 'value',
-		            name:'电量(kwh)',
-		            axisLabel : {
-		                formatter: '{value}'
-		            }
-		        }
-		    ],
-		    series : [
-		        {
-		            name:'电量',
-		            type:'line',
-		            data:[113213, 113464, 153453, 134653, 126588, 135865, 156340],
-		        }
-		    ]
-		};
-	myChart1.setOption(option);
- 	myChart2.setOption(option2);
-	myChart3.setOption(option3);
-	myChart4.setOption(option4);
+		//判断温度Grid个数
+		function temLen(){
+			var temBox = $(".temperatureBox").siblings(".box-body");
+			var len = temBox.length;
+			console.log(len);
+			if(len == 1){
+				temBox.addClass('box1');
+			}else if(len == 2){
+				temBox.addClass('box2');
+			}else if(len == 3){
+				temBox.addClass('box3');
+			}else if(len == 4 || len ==7 || len ==8 || len == 16){
+				temBox.addClass('box4');
+			}else if(len == 5 || len ==9 || len ==10 || len == 13 || len ==14 || len ==15 ){
+				temBox.addClass('box5');
+			}else if(len == 6 || len ==11 || len == 12 || len == 17 || len == 18 || len >= 21){
+				temBox.addClass('box6');
+			}
+		}
+		var flag = true;
+		var oHeight = document.documentElement.clientHeight-$('header').height()-39;//获取可用区域高度
+		
+		function openObj(em){	
+			var oVal = $(em).attr('value');
+			var temSib = $(".temperatureBox").siblings(".box-body"),
+			 	powSib = $(".powerBox").siblings(".box-body"),
+				comSib = $(".compressorBox").siblings(".box-body").find(".box3");
+			if(oVal == 1){
+				if(flag){
+					$(".pow").hide();
+					$(".com").hide();
+					$(em).html("返回");
+					temSib.eq(11).nextAll().show();					
+					var singleH = Math.ceil(temSib.length/6);
+					if(temSib.length>66){
+						alert(oHeight+'px')
+						alert(singleH)
+						$(".defineHeight").height(oHeight/singleH-45).children(".box1").css('lineHeight',oHeight/singleH-45+'px')
+					}else{
+						$(".defineHeight").height(oHeight/singleH-60).children(".box1").css('lineHeight',oHeight/singleH-60+'px')
+					}
+					flag = false;
+				}else{
+					$(".pow").show();
+					$(".com").show();
+					$(em).html("更多");
+					temSib.eq(11).nextAll().hide();
+					$(".defineHeight").height(30).children(".box1").css('lineHeight',"30px")
+					flag = true;
+				}	
+			}else if(oVal == 2){
+				if(flag){
+					$(".tem").hide();
+					$(".com").hide();
+					$(em).html("返回");
+					var singleH = Math.ceil(powSib.length/4);
+					powSib.eq(3).nextAll().show();
+					$(".powerBox").siblings(".box4").find(".box-body").height(oHeight/singleH-66);
+					$(".powerBox").siblings(".box4").find(".box1.text-center").css('margin-bottom',30);
+					$(".box.box-primary").css('margin-bottom','10px');
+					$(".box.box-primary h3.box-title").css('padding','10px')
+					flag = false;
+				}else{
+					$(".tem").show();
+					$(".com").show();
+					$(em).html("更多");
+					powSib.eq(3).nextAll().hide();
+					$(".powerBox").siblings(".box4").find(".box-body").height(124);
+					$(".powerBox").siblings(".box4").find(".box1.text-center").css('margin-bottom',0);
+					$(".box.box-primary").css('margin-bottom',0);
+					$(".box.box-primary h3.box-title").css('padding',0)
+					flag = true;
+				}	
+			}else if(oVal == 3){
+				if(flag){
+					$(".pow").hide();
+					$(".tem").hide();
+					$(em).html("返回");
+					comSib.eq(2).nextAll().show();
+					flag = false;
+				}else{
+					$(".pow").show();
+					$(".tem").show();
+					$(em).html("更多");
+					comSib.eq(2).nextAll().hide();
+					flag = true;
+				}	
+			}
+					
+		}
+		$(function(){
+			temLen();
+			$(".btn-warning").hide();
+			/*温度后面按钮判断隐藏和显示*/
+			if($(".temperatureBox").siblings(".box-body").length>12){
+				$(".temperatureBox").find(".btn-warning").show();
+				$(".temperatureBox").siblings(".box-body").eq(11).nextAll().hide();
+			}else{
+				$(".temperatureBox").find(".btn-warning").hide();
+			}
+			/*电量后面按钮判断隐藏和显示*/
+			if($(".powerBox").siblings(".box-body").length>4){
+				$(".powerBox").find(".btn-warning").show();
+				$(".powerBox").siblings(".box-body").eq(3).nextAll().hide();
+			}else{
+				$(".powerBox").find(".btn-warning").hide();
+			}
+			/*压缩机后面按钮判断隐藏和显示*/
+			if($(".compressorBox").siblings(".box-body").find('.box3').length>3){
+				$(".compressorBox").find(".btn-warning").show();
+				$(".compressorBox").siblings(".box-body").find('.box3').eq(2).nextAll().hide();
+			}else{
+				$(".compressorBox").find(".btn-warning").hide();
+			}
+			
+		})
 	</script>
+	<style type="text/css">
+		.home {display: block;color: #fff!important;}
+		.box-title .home{color: #555!important;cursor: pointer;}
+		.whiteBox{background: #eee!important;}
+		.tNum{font-size: 2em;}
+		.tUiit{font-size: 1em;}
+		.box{margin-bottom: 0}
+		.box-header{padding: 5px 10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+		.box-body{padding: 3px 10px;}
+		 .box-header h3.box-title{font-size: 14px;}
+		.box-primary .box-header h3.box-title{font-size: 12px;}
+		.box-primary .box-header{padding:3px 0!important;text-align: center;font-size: 12px;}
+		.tem,.pow,.com{margin-bottom: 10px;}
+		.whiteBox>.box-header.with-border{border-bottom:1px solid #D2D6DE;}
+		.whiteBox>.box-header.with-border h3.box-title{font-size: 16px}
+		/* 自适应class */
+		.box1,.box2,.box3,.box4,.box5,.box6,.box8{float: left;}
+		/*只有1个Grid*/
+		.box1{width: 100%;}
+		/*2个Grid*/
+		.box2{width: 50%;}
+		/*3个Grid*/
+		.box3{width: 33.3333%;}
+		/*4、7、8、16个Grid*/
+		.box4{width: 25%;}
+		/*5、9 10、13、14、15、19、20个Grid*/
+		.box5{width: 20%;}
+		/*6、11、12、17、18个Grid*/
+		.box6{width: 16.66667%;}
+		.box8{width: 12.5%;}
+		/*自定义高度*/
+		.defineHeight{height:30px;}
+		.defineHeight .box1{height:100%;line-height: 30px;}
+	</style>
+
+</head>
+
+<body class="skin-blue body-color">
+	<header class="main-header">
+		<a href="index.html" class="logo">
+			<span class="logo-lg"><span class="glyphicon glyphicon-home"></span><b>&nbsp;SMART</b>COLD</span>
+		</a>
+
+		<!-- Header Navbar -->
+		<nav class="navbar navbar-static-top" role="navigation">
+			<!-- Navbar Right Menu -->
+			<div class="navbar-custom-menu">
+				<ul class="nav navbar-nav">
+					<!-- Messages: style can be found in dropdown.less-->
+					<li class="dropdown messages-menu">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-envelope-o"
+							style="color: #fff"></i> <span class="label label-success">4</span>
+					</a>
+						<ul class="dropdown-menu">
+							<li class="header">You have 4 messages</li>
+							<li>
+								<!-- inner menu: contains the messages -->
+								<ul class="menu">
+									<li>
+										<!-- start message --> <a href="#">
+											<div class="pull-left">
+												<!-- User Image -->
+												<img src="assets/img/user2-160x160.jpg" class="img-circle"
+													alt="User Image">
+											</div> <!-- Message title and timestamp -->
+											<h4>
+												Support Team <small><i class="fa fa-clock-o"></i> 5
+													mins</small>
+											</h4> <!-- The message -->
+											<p>Why not buy a new awesome theme?</p>
+									</a>
+									</li>
+									<!-- end message -->
+								</ul> <!-- /.menu -->
+							</li>
+							<li class="footer"><a href="#">See All Messages</a></li>
+						</ul>
+					</li>
+					<!-- /.messages-menu -->
+
+					<!-- Notifications Menu -->
+					<li class="dropdown notifications-menu">
+						<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> <i class="fa fa-bell-o"
+							style="color: #fff"></i> <span class="label label-warning">10</span>
+					</a>
+						<ul class="dropdown-menu">
+							<li class="header">You have 10 notifications</li>
+							<li>
+								<!-- Inner Menu: contains the notifications -->
+								<ul class="menu">
+									<li>
+										<!-- start notification --> <a href="#"> <i
+											class="fa fa-users text-aqua"></i> 5 new members joined today
+									</a>
+									</li>
+									<!-- end notification -->
+								</ul>
+							</li>
+							<li class="footer"><a href="#">View all</a></li>
+						</ul>
+					</li>
+					<!-- Tasks Menu -->
+					<li class="dropdown tasks-menu">
+						<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> <i class="fa fa-flag-o"
+							style="color: #fff"></i> <span class="label label-danger">9</span>
+					</a>
+						<ul class="dropdown-menu">
+							<li class="header">You have 9 tasks</li>
+							<li>
+								<!-- Inner menu: contains the tasks -->
+								<ul class="menu">
+									<li>
+										<!-- Task item --> <a href="#"> <!-- Task title and progress text -->
+											<h3>
+												Design some buttons <small class="pull-right">20%</small>
+											</h3> <!-- The progress bar -->
+											<div class="progress xs">
+												<!-- Change the css width attribute to simulate progress -->
+												<div class="progress-bar progress-bar-aqua"
+													style="width: 20%" role="progressbar" aria-valuenow="20"
+													aria-valuemin="0" aria-valuemax="100">
+													<span class="sr-only">20% Complete</span>
+												</div>
+											</div>
+									</a>
+									</li>
+									<!-- end task item -->
+								</ul>
+							</li>
+							<li class="footer"><a href="#">View all tasks</a></li>
+						</ul>
+					</li>
+					<!-- User Account Menu -->
+					<li class="dropdown user user-menu">
+						<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> <span class="hidden-xs text-white">lxj</span>
+					</a>
+						<ul class="dropdown-menu">
+							<!-- The user image in the menu -->
+							<li class="user-header"><img
+								src="assets/img/user2-160x160.jpg" class="img-circle"
+								alt="User Image">
+								<p>
+									lxj<small>Smart Cold Nov. 2016</small>
+								</p></li>
+							<!-- Menu Body -->
+							<li class="user-body">
+								<div class="col-xs-4 text-center">
+									<a href="#">Followers</a>
+								</div>
+								<div class="col-xs-4 text-center">
+									<a href="#">Sales</a>
+								</div>
+								<div class="col-xs-4 text-center">
+									<a href="#">Friends</a>
+								</div>
+							</li>
+							<!-- Menu Footer-->
+							<li class="user-footer">
+								<div>
+									<a href="#" style="display: block;"
+										class="btn btn-default btn-flat" ng-click="logout()">退出</a>
+								</div>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="tem">
+		<div class="whiteBox box bg-gray clearfix" style="padding-bottom: 5px;">
+	     <div class="box-header with-border temperatureBox">
+	         <h3 class="box-title">温度</h3>
+	         <div class="box-tools pull-right">
+                 <button class="btn btn-warning btn-xs" value="1" onclick="openObj(this)">更多</button>
+             </div>
+	     </div>
+	    <div class="box-body">  
+	     	 <div class="box1">
+                
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div>
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">低温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">变温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-18.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">高温库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.8</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">预冷间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">8.5</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">理货间实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">9.4</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">  
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">冰鲜库实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-1.2</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+		<div class="box-body">
+	     	 <div class="box1">
+                 
+                <div class="box bg-gray">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><a class="home">环境温度LXJ实时温度</a></h3>
+                    </div>
+                    <div class="box-body">
+                        <div  class="defineHeight">
+                            <div class="box1 text-center"  >
+								<span class="tNum">-3.6</span>
+                           		<span class="tUiit">℃</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+		</div> 
+	   </div> 
+	</div>
+	<!-- -----------------------这是温度分割线-------------------------- -->
+	<div class="pow">
+		<div class="whiteBox box bg-gray clearfix">
+	     <div class="box-header with-border powerBox">
+	         <h3 class="box-title">电耗</h3>
+	         <div class="box-tools pull-right">
+                 <button class="btn btn-warning btn-xs" value="2" onclick="openObj(this)">更多</button>
+             </div>
+	     </div>
+	     <div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home" href="#/power/1">实时电量(电表1)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">310050.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表2)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">13215.2</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表3)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">64524.6</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表4)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">44213.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+	    
+	     <div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home" href="#/power/1">实时电量(电表5)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">310050.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表6)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">13215.2</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表7)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">64524.6</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表8)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">44213.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+	    
+	     <div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home" href="#/power/1">实时电量(电表9)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">310050.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表10)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">13215.2</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表11)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">64524.6</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+		<div class="box-body box4">     
+			<div class="box1">
+				<div class="box bg-gray">
+					<div class="box-header with-border">
+						<h3 class="box-title"><a class="home">实时电量(电表12)</a></h3>
+					</div>
+					<div class="box-body">
+						<div  class="clearfix">
+							<div class="box1 text-center"
+								style="position: relative; ">
+								<span class="tNum">44213.4</span> <span
+									class="tUiit">&nbsp;kW·h</span>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电压&nbsp;220&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">A相电流&nbsp;100&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电压&nbsp;215&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">B相电流&nbsp;104&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电压&nbsp;217&nbsp;V</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-xs-6">
+								<div class="box box-primary box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">C相电流&nbsp;105&nbsp;A</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					 
+				</div>
+				 
+			</div>
+		</div> 
+	   </div> 
+	</div>
+	<!-- -----------------------这是电量分割线-------------------------- -->
+	<div class="com">
+		<div class="whiteBox box bg-gray clearfix">
+	     <div class="box-header with-border compressorBox">
+	         <h3 class="box-title">压缩机</h3>
+	         <div class="box-tools pull-right">
+                 <button class="btn btn-warning btn-xs" value="3" onclick="openObj(this)">更多</button>
+             </div>
+	     </div>
+	     <div class="box-body  box1">
+	     	<div class="box bg-gray">
+                    <div class="box-body">
+                    	<div class="col-lg-12 text-center" style="margin-bottom: 10px">
+							<img src="assets/img/run.png" /> 运行 <img
+								src="assets/img/stop.png" /> 停止 <a style="float:right;"><font
+								class="font">压缩机状态监控</font></a>
+						</div>
+                        <div class="box3" style="min-height:100px;">
+							<div id="runChart" class="clearfix">
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机1</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机2</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机3</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==0" src="assets/img/pressure2_stop.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机4</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机5</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机6</label>
+								</div>
+							</div>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（4-35）</p>
+						</div>
+						 <div class="box3" style="min-height:100px;">
+							<div id="runChart" class="clearfix">
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机1</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机2</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机3</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机4</label>
+								</div><div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机5</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机6</label>
+								</div>
+							</div>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（3-35）</p>
+						</div>
+						 <div class="box3" style="min-height:100px;">
+							<div id="runChart" class="clearfix">
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机1</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机2</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机3</label>
+								</div>
+							</div>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（2-120）</p>
+						</div>
+                          <div class="box3" style="min-height:100px;">
+							<div id="runChart" class="clearfix">
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机1</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机2</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机3</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==0" src="assets/img/pressure2_stop.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机4</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机5</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" 
+									style="width:100%;float:left;" ><label style="font-size: 12px;">压缩机6</label>
+								</div>
+							</div>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（4-35）</p>
+						</div>
+						 <div class="box3" style="min-height:100px;">
+							<div id="runChart" class="clearfix">
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机1</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机2</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机3</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机4</label>
+								</div><div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机5</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机6</label>
+								</div>
+							</div>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（3-35）</p>
+						</div>
+						 <div class="box3" style="min-height:100px;">
+							<div id="runChart" class="clearfix">
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0"
+										src="assets/img/pressure1_stop.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机1</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机2</label>
+								</div>
+								<div ng-repeat="compressor in compressors"
+									style="width:12%;float:left;"
+									class="text-center">
+									<img
+										ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1"
+										src="assets/img/pressure1_run.png"
+										style="width:100%;float:left;"><label style="font-size: 12px;">压缩机3</label>
+								</div>
+							</div>
+							<p class="text-left" style="margin-top: 10px;">螺杆低温并联机组（2-120）</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+	     </div>
+	   </div> 
+	</div>
+
+	
 </body>
 </html>

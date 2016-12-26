@@ -588,8 +588,7 @@ i.icon-mobile-phone {
 }
 .user-common-wrapper .user-common-form{
     width: 620px;
-    margin: 0;
-    margin-right: 270px;
+    margin: 0 auto;
     padding: 18px 110px 60px;
     background-color: #FFFFFF;
     border-radius: 5px;
@@ -615,10 +614,9 @@ i.icon-mobile-phone {
     color: #333333;
 }
 .user-common-wrapper .user-common-form .btn-form-common{
-    font-size: 22px;
+    font-size: 16px;
     padding: 0;
-    line-height: 60px;
-    height: 60px;
+    height: 40px;
     color: #FFFFFF;
     background: #9BC200;
 }
@@ -642,3 +640,22 @@ i.icon-mobile-phone {
     display: none;
 }
 /* 2016-03-02 新版登录注册相关 end */
+.findWord .input-group{
+	margin-bottom: 15px;
+	width: 380px;
+}
+.findWord .input-group-addon{
+	width: 120px;
+}
+.ok,.no{
+	position: absolute;
+	top:30%;
+	right:5%;
+	font-size:18px;
+	color:green;
+	z-index: 3;
+	display: none;
+}
+.no{
+	color: red;
+}

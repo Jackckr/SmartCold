@@ -139,6 +139,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	 $scope.manageType = $scope.rdcsharedto.codeLave1;
 	    	 $scope.unit = $scope.rdcsharedto.unit;
 	    	 $scope.totalfiles = $scope.rdcsharedto.files;
+	    	 $scope.rmomtfiles = $scope.rdcsharedto.fileList;
 	    	 $scope.attrvalue1= $scope.rdcsharedto.attrvalue1;
 	    	 $scope.attrvalue2= $scope.rdcsharedto.attrvalue2;
 	    	 if($scope.totalfiles==undefined){ $scope.totalfiles = []; }
@@ -229,14 +230,31 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if(allfiles.length>10){/*alert("最多选择10张！");*/ layer.open({content: '最多选择10张哦' ,btn: '确定'});return;}
 	        $scope.totalfiles=allfiles; 
 	    };
-	    $scope.drophonor = function(honorfile){
+	    /*$scope.drophonor = function(honorfile){
 	        angular.forEach($scope.totalfiles,function(item, key){
 	            if(item == honorfile){
 	                $scope.totalfiles.splice(key,1);
 	                return false;
 	            }
 	        });
-	    };
+	    };*/
+	    $scope.drophonor = function(honorfile){
+	    	 if(confirm("确定要删除吗？")){
+	           angular.forEach($scope.totalfiles,function(item, key){if(item == honorfile){ $scope.totalfiles.splice(key,1);  $scope.delimg(honorfile); return; }});
+	    	 }
+	      };
+	      $scope.delimg=function(honorfile){
+	    	
+	    		 if(honorfile.indexOf("http:")!=-1){
+	   	          angular.forEach($scope.rmomtfiles,function(item, key){
+	   	            if(item.location==honorfile){
+	   	              $http({ method:'DELETE',url:ER.root+'/i/rdc/deleteStoragePic', params:item}).success(function(){  });  
+	   	                        return;              
+	   	            }
+	   	           });
+	   	        }
+	        
+	      };
 	    function checkStorageSubmit(){
 	        // 检查必须填写项
 	        if ($scope.title == undefined || $scope.title == '' ) {return false; }
