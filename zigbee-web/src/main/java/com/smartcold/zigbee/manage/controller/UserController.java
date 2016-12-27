@@ -239,7 +239,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/existenceUserName")
 	@ResponseBody
 	public boolean existenceUserName(HttpServletRequest request,String userName){
-		if(StringUtil.isNull(userName)){return true;}
+		if(StringUtil.isNull(userName)){return false;}
 	    return this.userDao.existenceUserName(userName)>0;
 	}
 

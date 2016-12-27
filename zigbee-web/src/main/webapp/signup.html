@@ -222,8 +222,8 @@ $(function(){
 		$(this).attr('disabled','disabled');
 		$.post('/i/user/telephoneVerify',{
 			telephone:$('input[name=telephone]').val()
-		}, function(){
-			
+		}, function(data){
+			alert(data.message)
 		});
 	})
 	$('#submit').click(function(){
