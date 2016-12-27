@@ -32,7 +32,8 @@
 	};
 	$scope.getVerCode2=function(){
 		setTime(document.getElementById("but_vercode2"));
-		$scope.getMobileCode('user_upphone',$scope.userinfo.telephone,'#but_vercode2');
+		alert(11)
+		$scope.getMobileCode('user_upphone',$("#telNum").val(),'#but_vercode2');
 	};
 	$scope.vertelephone=function(){//验证手机号码
 		var length = ($scope.telephone+'').length; 
@@ -79,7 +80,10 @@
 	};
 	$scope.savedata=function(){//验证码
 		$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data: $('#datafrom').serialize(),success: function(data) { 
-			if(data){tourl("personal.html");}else{/*alert("修改失败！请稍后重试！");*/layer.open({content:'修改失败了，请稍后重试吧',btn: '确定'});}
+			if(data){
+				window.user = data;window.localStorage.lkuser=JSON.stringify(data);
+				tourl("personal.html");
+			}else{layer.open({content:'修改失败了，请稍后重试吧',btn: '确定'});}
 		}
     });
 	};
