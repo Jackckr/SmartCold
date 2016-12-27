@@ -158,7 +158,7 @@
 	                        </div>
 	                    </div>
 	                    <!-- 错误信息 popover end -->
-	                <button type="submit" id="submit" class="btn btn-form-common form-control" style="margin-top: 15px;"><span>注册</span></button>
+	                <button type="submit" id="submit" class="btn btn-form-common form-control" style="margin-top: 15px;">注册</button>
 	                <div class="checkbox no-padding">
 	                    <a href="login.html" class="a pull-right">已经注册</a>
 	                </div>
@@ -202,10 +202,13 @@ $(function(){
                 victdata.extname=!data;
                 $("#phone").html(data?"该手机已经注册":"");
                 $('#authcode').attr('disabled',data);
+                $('#submit').attr("disabled",data);
 			});
 		}else{
 			 victdata.victtl=false;
 			 $("#phone").html("请输入正确手机号码");
+			 $('#authcode').attr('disabled',!ct);
+             $('#submit').attr("disabled",!ct);
 		}
 	});
 	/* $('#email').blur(function(){
@@ -237,8 +240,8 @@ $(function(){
 			 alert("用户名已存在");
 		});
 		//if(userName == "" || checkPassword() || email == ""){
-		if(userName == "" || checkPassword()){
-			alert("用户名、密码输入有误");
+		if(userName == ""){
+			alert("用户名不能为空");
 		}else{
 	    	$.ajax({
 	    		type:"POST",
@@ -262,31 +265,36 @@ $(function(){
 		}
 	});
 })
-//返回true 表示有问题  $("#phone").html(data?"该手机已经注册":"");
+//返回true 表示有问题  
 function checkPassword(){
 	var password = $('input[name=password]').val();
 	var password1 = $('input[name=password1]').val();
 	if(password == ''){
 		$("#password_error").html("密码不能为空");
+		$('#submit').attr("disabled",true);
 		return false;
 	}else if(password.length<6){
 		$("#password_error").html("密码长度最少六位");
+		$('#submit').attr("disabled",true);
 		return false;
 	}else if(password.length>=6){
 		$("#password_error").html("");
 		if(password1.length<6){
 			$("#password_error1").html("密码长度最少六位");
+			$('#submit').attr("disabled",true);
 			return false;
 		}else if(password1.length>=6){
 			if(password != password1){
 				$("#password_error1").html("两次密码不一样");
+				$('#submit').attr("disabled",true);
 				return false;
 			}else{
 				$("#password_error1").html("");
+				$('#submit').attr("disabled",false);
 			}
 		}
 	}
-	return true;
+	//return true;
 }
  $(function() {
         $('.navShow>li').hover(function() {
