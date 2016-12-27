@@ -77,9 +77,61 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			color:#fff;
 			background:rgba(0,0,0,.8);
 		}
-		.skin-blue .my_sidebar>li:hover>a{
-			background: #0b2041;
+		.angucomplete-dropdown{padding:0 0 0 6px;width:230px;font-size: 12px;max-height:280px;}
+		.main-sidebar{
+			position: fixed;
+			top:0;
+			left:0;
 		}
+		/* .skin-blue .my_sidebar>li:hover>a{
+			background: #0b2041;
+		} */
+		/*style 重构 2016-12-26----------------------待定中--------------------------------*/
+		/* .skin-blue .wrapper,
+		.skin-blue .main-sidebar, 
+		.skin-blue .left-side,
+		.skin-blue .sidebar-menu > li > a,
+		.skin-blue .sidebar-menu > li > .treeview-menu{
+			background: #222;
+		}
+		.sidebar-menu>li{
+			border-top:1px solid #7B7B7B;
+			margin-bottom:1px;
+			border-bottom:3px solid #000;
+			background:  #222;
+			box-shadow: 1px -1px 6px #444;
+		}
+		.sidebar-menu>li.treeview li.treeview{
+			border-bottom:1px solid #333;
+		}
+		.sidebar-menu>li.treeview a .icon.iconfont,.sidebar-menu>li.treeview a .fa.fa-angle-left{
+			font-size: 18px;
+		}
+		.skin-blue .treeview-menu > li > a{
+			cursor: pointer;
+		}
+		.body-color,.main-footer{
+			background:transparent;
+		}
+		.skin-blue .sidebar-menu > li:hover > a{
+			background: #3c8dbc;
+		}
+		.sidebar-menu .treeview-menu .treeview-menu,.sidebar-menu .treeview-menu{
+			padding-left: 0; 
+		}
+		.sidebar-menu .treeview-menu .treeview-menu>li{
+			width:100%;
+		}
+		.sidebar-menu .treeview-menu .treeview-menu>li>a{
+			padding-left: 20px; 
+		}
+		.sidebar-menu .treeview-menu .treeview-menu>li>a:hover
+		,.skin-blue .treeview-menu > li > a:hover
+		,.skin-blue .sidebar-menu > li.active > a,
+		.skin-blue .treeview-menu > li.active > a, .skin-blue .treeview-menu > li > a:hover{
+			background: #3c8dbc;
+			border: 0
+		} */
     </style>
   </head>
   <!--
@@ -103,6 +155,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   |---------------------------------------------------------|
   -->
 <body class="hold-transition skin-blue sidebar-mini">
+
 	<div class="wrapper">
 
 		<!-- Main Header -->
@@ -447,11 +500,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		</aside>
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper body-color">
+		<div class="content-wrapper body-color" style="position: relative;">
 			<!-- Main content -->
-			<div class="main-content body-color text-white">
+			<div class="main-content body-color text-white" style="position: relative;z-index: 1">
 				<div ui-view></div>
 			</div>
+<!-- 			<canvas id="mycanvas" style="position: absolute;width: 100%;height:100%;top:0;left:0;z-index: 0"></canvas> -->
 		</div>
 		<!-- /.content-wrapper -->
 
@@ -508,12 +562,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="assets/js/three.min.js"></script>
 <script src="assets/js/OrbitControls.js"></script>
 <script src="assets/js/stats.min.js"></script>
+<script src="assets/js/star.js"></script>
 <!-- <script src="assets/js/echarts-all.js"></script> -->
 <!-- <script src="assets/js/echarts.min.js"></script> -->
 <script src="assets/js/highcharts.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=1b7XOzUYmHvOTXlchvZuDzns"></script>
 <!--  -->
+
 <script src="app/js/threeTemplate.js"></script>
 <script src="app/js/app.js"></script>
 <script src="app/js/controller-base.js"></script>

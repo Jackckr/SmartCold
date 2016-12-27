@@ -623,12 +623,12 @@ i.icon-mobile-phone {
 .user-common-wrapper .user-common-form .btn-form-common:hover{
     background: #89AE00;
 }
-.user-common-wrapper .user-common-form .btn-form-common[disabled]{
+/* .user-common-wrapper .user-common-form .btn-form-common[disabled]{
     background-image: url(../img/btn-loading.gif);
     background-position: 50% center;
     background-repeat: no-repeat;
     text-indent: -1000em;
-}
+} */
 .user-common-wrapper .user-common-form .btn-form-common.nbg[disabled]{
     background-image: none;
     text-indent: 0;

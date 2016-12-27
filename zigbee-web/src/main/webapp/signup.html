@@ -115,7 +115,7 @@
 	                    错误信息 popover end
 	                </div>  -->
 	                <div class="form-group">
-	                    <input type="password" class="form-control password" name="password" placeholder='密码'>
+	                    <input type="password" class="form-control password" name="password" placeholder='密码' onblur="checkPassword()">
 	                </div>
 	                <div style="font-size: 12px;">
 	                        <div class="">
@@ -123,7 +123,7 @@
 	                        </div>
 	                    </div>
 	                <div class="form-group">
-	                    <input type="password" class="form-control password" name="password1" placeholder='重复密码'>
+	                    <input type="password" class="form-control password" name="password1" placeholder='重复密码' onblur="checkPassword()">
 	                </div>
 	                <!-- 错误信息 popover -->
 	                    <div style="font-size: 12px;">
@@ -201,16 +201,12 @@ $(function(){
 			$.post( "/i/user/existenceUserName", {userName: telephone}, function(data) {
                 victdata.extname=!data;
                 $("#phone").html(data?"该手机已经注册":"");
-//                 $("#but_vercode").attr("disabled", data).css("background-color", data ?  "#cccccc":"#438BCB" );
-			});//
+                $('#authcode').attr('disabled',data);
+			});
 		}else{
 			 victdata.victtl=false;
 			 $("#phone").html("请输入正确手机号码");
-// 			 $("#but_vercode").attr("disabled", false).css("background-color",  "#cccccc");
 		}
-	});
-	$('.password').keyup(function(){
-		checkPassword();
 	});
 	/* $('#email').blur(function(){
 		if($("#email")[0].value == ""){
@@ -266,18 +262,29 @@ $(function(){
 		}
 	});
 })
-//返回true 表示有问题
+//返回true 表示有问题  $("#phone").html(data?"该手机已经注册":"");
 function checkPassword(){
 	var password = $('input[name=password]').val();
 	var password1 = $('input[name=password1]').val();
 	if(password == ''){
-		$("#password_error")[0].innerText = "密码不能为空";
-	}else if(password != password1)
-		$("#password_error1")[0].innerText = "两次密码不一样";
-	else{
-		$("#password_error")[0].innerText = "";
-		$("#password_error1")[0].innerText = "";
-		return false;	
+		$("#password_error").html("密码不能为空");
+		return false;
+	}else if(password.length<6){
+		$("#password_error").html("密码长度最少六位");
+		return false;
+	}else if(password.length>=6){
+		$("#password_error").html("");
+		if(password1.length<6){
+			$("#password_error1").html("密码长度最少六位");
+			return false;
+		}else if(password1.length>=6){
+			if(password != password1){
+				$("#password_error1").html("两次密码不一样");
+				return false;
+			}else{
+				$("#password_error1").html("");
+			}
+		}
 	}
 	return true;
 }
