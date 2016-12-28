@@ -27,11 +27,6 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
 	 $scope.aredayTime = function(obj) {
 		 if(obj.maintenancetime&&obj.lastMaintainTime){
 			   var sytime= $scope.sytime[obj.id];  
-			   if(obj.id==7||obj.id==13){
-				   sytime=24+obj.id;
-			   }else if(obj.id==6||obj.id==8){
-				   sytime=-24+obj.id;
-			   }
 			   if(sytime<50){
 				   if(sytime<0){$scope.warid.push(obj.id);}else{ $scope.infoids.push(obj.id);}
 			   }
