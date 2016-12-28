@@ -83,8 +83,7 @@ public class RdcSensorController {
 
 		List<RdcSensor> sensors = rdcSensorDao.selectByRdcId(rdcId);
 		for (RdcSensor sensor : sensors) {
-			List<StorageKeyValue> infos = storageService.findByNums(StorageType.STORAGE.getType(), sensor.getOid(),
-					sensor.getKey(), 1);
+			List<StorageKeyValue> infos = storageService.findByNums(StorageType.STORAGE.getType(), sensor.getOid(),sensor.getKey(), 1);
 			Map map = new HashMap();
 			map.put("storageID", sensor.getOid());
 			map.put("temperature", infos.size() > 0 ? Math.round(infos.get(0).getValue() * 10 / 10) : 0);

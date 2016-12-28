@@ -4,7 +4,7 @@
  * 计算压缩机剩余时间
  */
 coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeout) {
-	$scope.smgroid=null;
+	$scope.smgroid=null,$scope.warid=[],$scope.infoids=[];
 	$scope.sytime=undefined;$scope.exqfn=false;
 	//$(".mainHeight").height( $(".content-wrapper").height());
 	$scope.inintData=function(newValue,oldValue){//初始化冷库门
@@ -17,15 +17,24 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
 				   $scope.sytime=data.entity;
 				   angular.forEach($rootScope.compressorGroups,function(item){ 
 					   angular.forEach(item.compressors,function(obj){ 
-						   obj.sytm=   $scope.aredayTime(obj);
+						   obj.sytm= $scope.aredayTime(obj);
 					 }); 
 				   }); 
+				   $scope.addStyl();
 			   });
 		   }
 	 };
 	 $scope.aredayTime = function(obj) {
 		 if(obj.maintenancetime&&obj.lastMaintainTime){
 			   var sytime= $scope.sytime[obj.id];  
+			   if(obj.id==7||obj.id==13){
+				   sytime=24+obj.id;
+			   }else if(obj.id==6||obj.id==8){
+				   sytime=-24+obj.id;
+			   }
+			   if(sytime<50){
+				   if(sytime<0){$scope.warid.push(obj.id);}else{ $scope.infoids.push(obj.id);}
+			   }
 			   if(sytime<=0){   return '已超保养期'+sytime;} 
 			   return "还剩  "+ parseInt(sytime)+"小时";
 		 }else{
@@ -33,9 +42,18 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
 		 }
       };
       /*红灯闪烁报警 1s 闪一次*/
-      setInterval(function(){
-    	  $(".warnIcon").toggleClass('dangerIcon').fadeToggle()
-      }, 1000);
+      
+      
+      $scope.addStyl=function(){
+    	  setInterval(function(){
+    		  angular.forEach($scope.warid,function(item){ 
+    			  $("#st_tm_"+item).toggleClass("dangerIcon");
+    		  });
+    		  angular.forEach($scope.infoids,function(item){ 
+    			  $("#st_tm_"+item).toggleClass("warnIcon");
+    		  });
+    	 }, 1000); 
+      };
       /*红灯闪烁报警 1s 闪一次*/
       $scope.chanvl=function(){
     	  $scope.inintData(null,null);

@@ -59,9 +59,9 @@ public class StorageServiceImpl implements StorageService {
 
 	@Override
 	public List<StorageKeyValue> findByNums(int type, int oid, String key, int nums) {
-		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
-		if (deviceEntity != null) {
-			return storageDataCollectionDao.findLastNPoint(null, deviceEntity.getDeviceid(), key, nums);
+		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+		if (SetUtil.isnotNullList(deviceList)) {
+			return storageDataCollectionDao.findLastNPoint(null, deviceList.get(0).getDeviceid(), key, nums);
 		} else {
 			String table = StorageType.getStorageType(type).getTable();
 			List<StorageKeyValue> result = storageKeyValueDao.findByNums(table, oid, key, nums);
@@ -71,9 +71,9 @@ public class StorageServiceImpl implements StorageService {
 
 	@Override
 	public List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums) {
-		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(stype.getType(), oid);
-		if (deviceEntity != null) {
-			return storageDataCollectionDao.findLastNPoint(null, deviceEntity.getDeviceid(), key, nums);
+		List<DeviceObjectMappingEntity> deviceList =deviceObjectMappingDao.findByTypeOid(stype.getType(), oid);
+		if (SetUtil.isnotNullList(deviceList)) {
+			return storageDataCollectionDao.findLastNPoint(null,  deviceList.get(0).getDeviceid(), key, nums);
 		} else {
 			return storageKeyValueDao.findByNums(stype.getTable(), oid, key, nums);
 		}
@@ -81,9 +81,9 @@ public class StorageServiceImpl implements StorageService {
 
 	@Override
 	public List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime) {
-		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
-		if (deviceEntity != null) {
-			return storageDataCollectionDao.findByTime(null, deviceEntity.getDeviceid(), key, startTime, endTime);
+		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+		if (SetUtil.isnotNullList(deviceList)) {
+			return storageDataCollectionDao.findByTime(null,  deviceList.get(0).getDeviceid(), key, startTime, endTime);
 		} else {
 			return storageKeyValueDao.findByTime(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime);
 		}
@@ -107,9 +107,9 @@ public class StorageServiceImpl implements StorageService {
 	
 	@Override
 	public List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,int daysBetween,String dateFormat,String orderBy) {
-		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
-		if (deviceEntity != null) {
-			return storageDataCollectionDao.findByTimeFormat(null, deviceEntity.getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
+		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+		if (SetUtil.isnotNullList(deviceList)) {
+			return storageDataCollectionDao.findByTimeFormat(null,deviceList.get(0).getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
 		} else {
 			return storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,dateFormat,orderBy);
 		}

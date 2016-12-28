@@ -161,16 +161,16 @@ public class PhysicalController {
 	 * @return
 	 */
 	private boolean hasdev(int type,String table,int oid,String key, String stTime, String edTime){
-		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
-		if (deviceEntity != null) {
+		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+		if (SetUtil.isnotNullList(deviceList)) {
 			return true;// return this.quantityMapper.getCountBydevkey(deviceEntity.getDeviceid(), key, stTime, edTime)>0;//最终看使用哪种
 		} else {
 			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
 		}
 	}
 	private boolean hasplc(int type,String table,int oid,String key, String stTime, String edTime){
-		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
-		if (deviceEntity ==null) {
+		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+		if (SetUtil.isNullList(deviceList)) {
 			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
 		} else {
 			return false;

@@ -21,7 +21,8 @@ public interface DeviceObjectMappingMapper {
 	
 	public DeviceObjectMappingEntity findInfoByDeviceId(@Param("deviceId") int deviceId);
 	
-	public DeviceObjectMappingEntity findInfoByTypeOid(@Param("type") int type, @Param("oid") int oid);
+	
+//	public DeviceObjectMappingEntity findInfoByTypeOid(@Param("type") int type, @Param("oid") int oid);
 
 	public List<DeviceObjectMappingEntity> findByTypeOid(@Param("type") int type, @Param("oid")int oid);
 	
