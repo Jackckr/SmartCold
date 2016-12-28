@@ -34,7 +34,7 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
       };
       /*红灯闪烁报警 1s 闪一次*/
       setInterval(function(){
-    	  $(".warnIcon").toggleClass('dangerIcon')
+    	  $(".warnIcon").toggleClass('dangerIcon').fadeToggle()
       }, 1000);
       /*红灯闪烁报警 1s 闪一次*/
       $scope.chanvl=function(){
