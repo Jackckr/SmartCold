@@ -6,6 +6,11 @@
     <select id="findInfoByTypeOid" resultType="DeviceObjectMappingEntity" parameterType="map">
         SELECT * FROM `deviceObjectMapping` WHERE `type` = #{type} AND `oid` = #{oid}
     </select>
+    
+    <select id="findByTypeOid" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity">
+        SELECT * FROM `deviceObjectMapping`  WHERE `type`=#{type} and `oid`=#{oid}
+    </select>
+    
     <select id="findInfoByfilter" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity" >
            select *  from `deviceobjectmapping` d WHERE 1=1 
          <if test="type!=null and type!=''"> and d.`type` in(${type})</if> 
@@ -17,10 +22,7 @@
         SELECT * FROM `deviceObjectMapping` WHERE `deviceid` = #{deviceId}
     </select>
 
-    <select id="findByTypeOid" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity">
-        SELECT * FROM `deviceObjectMapping`
-        WHERE `type`=#{type} and `oid`=#{oid}
-    </select>
+    
     
      <select id="findByTypeDeviceId" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity">
         SELECT * FROM `deviceObjectMapping`

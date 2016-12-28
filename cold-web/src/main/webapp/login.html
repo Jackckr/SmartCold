@@ -230,23 +230,23 @@
 					if (data.status == 0) {
                         document.cookie = data.message;
                         /*暂时注释*/
-						/* if (window.location.hash != "") {
+				 if (window.location.hash != "") {
 							backUrl = window.location.hash;
 						} else {
 							backUrl = "#/cold360Physical";
 						}
 						window.location.href = "http://"+ window.location.host + "/"+ backUrl;
-						window.Event.returnValue = false; */
-						
-                        if (window.location.hash != "") {
-							backUrl = window.location.hash;
-							window.location.href = "http://"+ window.location.host + "/"+ backUrl;
-						} else {
-							//backUrl = "#/home";
-							window.location.href="http://"+ window.location.host + "/home.html"
-						}
-						
 						window.Event.returnValue = false;
+						
+//                         if (window.location.hash != "") {
+// 							backUrl = window.location.hash;
+// 							window.location.href = "http://"+ window.location.host + "/"+ backUrl;
+// 						} else {
+// 							backUrl = "#/home";
+// 							window.location.href="http://"+ window.location.host + "/home.html"
+// 						}
+						
+// 						window.Event.returnValue = false;
 					} else {
 					    $("#mention")[0].hidden = false;
 						showErrorInfo(data.message);

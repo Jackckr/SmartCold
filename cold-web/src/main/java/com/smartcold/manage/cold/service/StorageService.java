@@ -19,6 +19,9 @@ public interface StorageService {
 
 	List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime);
 	
+	//支持多温
+	Map<String, List<StorageKeyValue>> findTempByTime(int type, int oid, String key, Date startTime, Date endTime);
+	
 	Integer findCounSizeByTime(int type, int oid, String deviceid,String key, Date startTime, Date endTime);
 	
     List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,int daysBetween,String dateFormat,String orderBy);

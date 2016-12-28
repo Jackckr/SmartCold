@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -155,21 +156,6 @@ public class BaseInfoController extends BaseController {
 		return ResponseData.newFailure("参数不全！");
 	}
 	/**
-	 * 1. SELECT * FROM `deviceObjectMapping` WHERE `type` = #{type} AND `oid` =
-	 * #{oid}->deviceid
-	 * 
-	 * 2. SELECT * FROM storagedatacollection WHERE 1 =1 <if test=
-	 * "apid != null" > AND `apid` = #{apid} </if> <if test="deviceid != null"
-	 * > AND `deviceid` = #{deviceid} </if> <if test="key != null"> AND `key` =
-	 * #{key} </if> AND time > #{startTime} AND time &lt; #{endTime} ORDER BY
-	 * `time` DESC
-	 *
-	 * select * from ${table} where `key`=#{key} AND oid=#{oid} AND `addtime` >=
-	 * #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime`
-	 * desc select * from ${table} where `key`=#{key} AND oid=#{oid} AND
-	 * `addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order
-	 * by `addtime` desc
-	 * 
 	 * 
 	 */
 	@RequestMapping("/getKeyValueDataByFilter")
@@ -210,19 +196,37 @@ public class BaseInfoController extends BaseController {
 					HashMap<String, Object> linmap = new HashMap<String, Object>();
 					int oid = oids[i];
 					String oname = onames[i];
-					List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime, daysBetween,groupfm," asc ");//
-					if (datalist.size() > maxsize) {
-						index = i;
+					if("Temp".equals(key)){//
+						 Map<String, List<StorageKeyValue>> data = storageService.findTempByTime(type, oid, key, sttime, edTime);//
+						 for (String  devkey : data.keySet()) {
+							 List<StorageKeyValue> datalist = data.get(devkey);
+							 if (datalist.size() > maxsize) {index = i;}
+							linmap.put("type", "line");
+							linmap.put("data", datalist);
+							linmap.put("name", oname+devkey);
+							if (ismklin != null && ismklin) {
+								linmap.put("markLine", dttemp);
+								linmap.put("markPoint", rttemp);
+							}
+							xtemp.add(datalist);
+							restList.add(linmap);
+						}
+					}else{
+						  List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime,0,null," asc " );//
+							if (datalist.size() > maxsize) {
+								index = i;
+							}
+							linmap.put("type", "line");//type==2||type==3?"bar":line
+							linmap.put("data", datalist);
+							linmap.put("name", oname);
+							if (ismklin != null && ismklin) {
+								linmap.put("markLine", dttemp);
+								linmap.put("markPoint", rttemp);
+							}
+							xtemp.add(datalist);
+							restList.add(linmap);
 					}
-					linmap.put("type", "line");//type==2||type==3?"bar":line
-					linmap.put("data", datalist);
-					linmap.put("name", oname);
-					if (ismklin != null && ismklin) {
-						linmap.put("markLine", dttemp);
-						linmap.put("markPoint", rttemp);
-					}
-					xtemp.add(datalist);
-					restList.add(linmap);
+					
 				}
 				if (index != -1) {
 					List<StorageKeyValue> list = xtemp.get(index);

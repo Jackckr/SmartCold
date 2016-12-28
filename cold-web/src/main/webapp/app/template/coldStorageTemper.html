@@ -4,6 +4,7 @@
     </div>
 
     <section class="content">
+        
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <!-- AREA CHART -->
@@ -17,11 +18,9 @@
                     </div>
                     <div class="box-body">
                         <div class="row" style="height:300px">
-                            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 text-center" style="position: relative;line-height: 260px;">
-								<span class="tNum">{{curtemper}}</span>
-                           		<span class="tUiit">℃</span>
+                            <div ng-repeat="obj in curtemper" class="col-lg-12 col-sm-12 col-xs-12 col-md-12 text-center" style="position: relative;line-height: {{240/curtemper.length}}px;">
+                             <span class="tNum">{{obj}}</span><span class="tUiit">℃</span> 
                             </div>
-                            <!--<div id="temperatureNowChart" style="height:300px"></div>-->
                         </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -44,6 +43,13 @@
                 </div><!-- /.box -->
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->
+        
+         <div ng-show="isErr">
+           <div class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
+				警告！当前冷库没有最新温度信息！请检查设备！
+			</div>
+        </div>    
 
     </section><!-- /.content -->
 </div>

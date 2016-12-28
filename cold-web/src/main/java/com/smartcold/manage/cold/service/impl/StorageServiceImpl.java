@@ -90,20 +90,28 @@ public class StorageServiceImpl implements StorageService {
 	}
 	
 	@Override
+	public Map<String, List<StorageKeyValue>> findTempByTime(int type, int oid,String key, Date startTime, Date endTime) {
+		Map<String, List<StorageKeyValue>> resdata=new HashMap<String, List<StorageKeyValue>>();
+		 List<DeviceObjectMappingEntity> devList = deviceObjectMappingDao.findByTypeOid(type, oid);
+		    if (SetUtil.isnotNullList(devList)) {
+		    	for (DeviceObjectMappingEntity dev : devList) {
+		    		resdata.put(key+dev.getDeviceid(), storageDataCollectionDao.findByTimeFormat(null, dev.getDeviceid(), key, startTime, endTime,null," asc"));
+				}
+			} else {
+				 List<StorageKeyValue> findByTime = storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,null," asc");
+				 resdata.put(key, findByTime);
+			}
+		return resdata;
+	}
+	
+	
+	@Override
 	public List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,int daysBetween,String dateFormat,String orderBy) {
 		DeviceObjectMappingEntity deviceEntity = deviceObjectMappingDao.findInfoByTypeOid(type, oid);
 		if (deviceEntity != null) {
-//			if(daysBetween<=3){
-				return storageDataCollectionDao.findByTimeFormat(null, deviceEntity.getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
-//			}else{
-//				return storageDataCollectionDao.findByTimeFormat1(null, deviceEntity.getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
-//			}
+			return storageDataCollectionDao.findByTimeFormat(null, deviceEntity.getDeviceid(), key, startTime, endTime,dateFormat,orderBy);
 		} else {
-//			if(daysBetween<=3){
-				return storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,dateFormat,orderBy);
-//			}else{
-//				return storageKeyValueDao.findByTimeFormat1(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,dateFormat,orderBy);
-//			}
+			return storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,dateFormat,orderBy);
 		}
 	}
 	
@@ -140,5 +148,7 @@ public class StorageServiceImpl implements StorageService {
 		}
 		return result;
 	}
+
+
 	
 }

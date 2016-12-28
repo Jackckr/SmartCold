@@ -3,6 +3,7 @@ package com.smartcold.manage.cold.controller;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,13 +48,11 @@ public class ColdStorageController {
 	}
 
 	@RequestMapping("/getTempByTime")
-	public Object getTempByTime(Integer oid, String key,
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-		List<StorageKeyValue> list = storageService.findByTime(StorageType.STORAGE.getType(), oid, key, startTime,
-				endTime);
+	public Object getTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+	  
+		Map<String, List<StorageKeyValue>> tempMap = storageService.findTempByTime(StorageType.STORAGE.getType(), oid, key, startTime,endTime);
 		NewStorageTempDto storageTempDto = new NewStorageTempDto();
-		storageTempDto.setList(list);
+		storageTempDto.setTempMap(tempMap);
 		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
 		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
 		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
