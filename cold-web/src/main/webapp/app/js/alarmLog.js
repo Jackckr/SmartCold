@@ -25,11 +25,18 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
 	 };
 	 $scope.aredayTime = function(obj) {
 		 if(obj.maintenancetime&&obj.lastMaintainTime){
-			   var sytime= $scope.sytime[obj.id];  if(sytime<=0){   return '已超保养期'+sytime;} return "还剩  "+ parseInt(sytime)+"小时";
+			   var sytime= $scope.sytime[obj.id];  
+			   if(sytime<=0){   return '已超保养期'+sytime;} 
+			   return "还剩  "+ parseInt(sytime)+"小时";
 		 }else{
 			 return "未设置保养时间"; 
 		 }
       };
+      /*红灯闪烁报警 1s 闪一次*/
+      setInterval(function(){
+    	  $(".warnIcon").toggleClass('dangerIcon')
+      }, 1000);
+      /*红灯闪烁报警 1s 闪一次*/
       $scope.chanvl=function(){
     	  $scope.inintData(null,null);
       };

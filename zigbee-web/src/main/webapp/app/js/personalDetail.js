@@ -59,16 +59,29 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
         oReader.readAsDataURL(oFile);
       
     };
-
+    $scope.getVerCode=function(){
+		$scope.getMobileCode('user_upphone',$scope.telephone,'#authcode2');
+	};
+	$scope.getMobileCode=function(key,telephone,vcid){
+		$http.get("/i/ShareRdcController/sharvistPhone.json",  { params: {key:key,telephone:telephone}  }).success(function(data) {
+			if(data.success){
+				$scope.mtvarcode=data.entity;//
+				$(vcid).data('vc', true);
+			}
+			alert(data.message);
+		});
+	};
     $("#headImg").change(function() {
     	$scope.setimg(this,'showimg');
         });
 	$scope.goUpdateUser = function() {
-					$http.get('/i/user/checkVerifyCode', {
+		$.ajax({ url: "/i/user/updateUser",type: 'POST',
+			data: $scope.verifycode,success: function(res1) { 
+					/*$http.get('/i/user/checkVerifyCode', {
 						params : {
 							verifycode : $scope.verifycode
 						}
-					}).success(function(res1) {
+					}).success(function(res1) {*/
 						if ($scope.oldTele != $scope.telephone) 
 						    verifyCodeflag = res1;
 						$http.get('/i/user/checkOldPassword', {

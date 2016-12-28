@@ -32,7 +32,7 @@
 	};
 	$scope.getVerCode2=function(){
 		setTime(document.getElementById("but_vercode2"));
-		alert(11)
+		//alert(11)
 		$scope.getMobileCode('user_upphone',$("#telNum").val(),'#but_vercode2');
 	};
 	$scope.vertelephone=function(){//验证手机号码

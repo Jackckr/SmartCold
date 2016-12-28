@@ -267,6 +267,7 @@ ul,li {
 	background: url(../../assets/img/alarm.png);
 	background-size: cover;
 	margin: 0 20px 50px;
+	position: relative;
 }
 .remain{
 	display: inline-block;
@@ -280,6 +281,20 @@ ul,li {
 	color: #2b3046;
 	text-align: center;
 }
+/*保养维修提醒警示灯 2016-12-28*/
+.warnIcon{
+	position: absolute;
+	top:-20%;
+	font-size: 50px!important;
+	right:0;
+	z-index: 3;
+	color:#f80;
+}
+/*报警时间小于0小时红色报警*/
+.dangerIcon{
+	color:red;
+}
+/*保养维修提醒警示灯 2016-12-28*/
 /*优化部分css*/
 .tNum,.tUiit{
 	color: coral
