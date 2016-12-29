@@ -19,7 +19,13 @@ coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $loc
 					yData = []
 					var chartId = key + "Chart"
 					var chart = echarts.init(document.getElementById(chartId));
-					$scope.showMap[chartId] = storage['ChaoWenShiJian'].length
+					$scope.showMap[chartId] = storage['ChaoWenShiJian'].length;
+					/*添加动画2016-12-29*/
+					if($scope.showMap[chartId]!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					}
+					/*添加动画*/
 					angular.forEach(storage['ChaoWenShiJian'],function(item){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData.unshift(item['value'] / 60)
@@ -56,7 +62,15 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 					xData = []
 					var chartId = key + "Chart"
 					var chart = echarts.init(document.getElementById(chartId));
-					$scope.showMap[chartId] = storage['ChaoWenYinZi'].length || storage['MaxTemp'].length
+					$scope.showMap[chartId] = storage['ChaoWenYinZi'].length || storage['MaxTemp'].length;
+					/*添加动画2016-12-29*/
+					if($scope.showMap[chartId]!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					}else{
+						console.log($scope.showMap[chartId])
+					}
+					/*添加动画*/
 					angular.forEach(storage['ChaoWenYinZi'],function(item,index){
 						yData1.unshift(storage['ChaoWenYinZi'][index]['value'])
 						yData2.unshift(storage['MaxTemp'][index]['value'])
@@ -147,13 +161,21 @@ coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $htt
 					yData = []
 					var chartId = key + "Chart"
 					var chart = echarts.init(document.getElementById(chartId));
-					$scope.showMap[chartId] = storage['BaoWenYinZi'].length
+					$scope.showMap[chartId] = storage['BaoWenYinZi'].length;
+					/*添加动画*/
+					if($scope.showMap[chartId]!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					}
+					/*添加动画*/
 					angular.forEach(storage['BaoWenYinZi'],function(item){
 						yData.unshift(item['value'])
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
+						console.log(chartId)
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
 							xData, yData, "保温因子", "τ", "τ", "bar"));
+					
 				},0)
 			})
 		})
@@ -184,7 +206,13 @@ coldWeb.controller('WDZQYZ', function($rootScope, $scope,$timeout, $location, $h
 					yData2 = []
 					var chartId = key + "Chart"
 					var chart = echarts.init(document.getElementById(chartId));
-					$scope.showMap[chartId] = storage['JiangWenYinZi'].length || storage['ShengWenYinZi'].length
+					$scope.showMap[chartId] = storage['JiangWenYinZi'].length || storage['ShengWenYinZi'].length;
+					/*添加动画2016-12-29*/
+					if($scope.showMap[chartId]!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					}
+					/*添加动画*/
 					angular.forEach(storage['JiangWenYinZi'],function(item,index){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData1.unshift(0 - storage['JiangWenYinZi'][index]['value'])
@@ -279,8 +307,14 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
 					var chartId = key + "Chart"
 					var chart1 = echarts.init(document.getElementById(chartId + "1"));
 					var chart2 = echarts.init(document.getElementById(chartId + "2"));
-					$scope.showMap[chartId + '1'] = storage['DoorTotalTime'].length
-					$scope.showMap[chartId + '2'] = storage['DoorTotalTime'].length
+					$scope.showMap[chartId + '1'] = storage['DoorTotalTime'].length;
+					$scope.showMap[chartId + '2'] = storage['DoorTotalTime'].length;
+					/*添加动画2016-12-29*/
+					if($scope.showMap[chartId + '1']!=0 || $scope.showMap[chartId + '2']!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					};
+					/*添加动画*/
 					angular.forEach(storage['DoorTotalTime'],function(item,index){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData1.unshift((item['value'] / 60).toFixed(2))
@@ -377,7 +411,13 @@ coldWeb.controller('goodsYzAnalysis', function($rootScope, $scope,$timeout, $loc
 					yData = []
 					var chartId = key + "Chart"
 					var chart = echarts.init(document.getElementById(chartId));
-					$scope.showMap[chartId] = storage['GoodsLiuTongYinZi'].length
+					$scope.showMap[chartId] = storage['GoodsLiuTongYinZi'].length;
+					/*添加动画2016-12-29*/
+					if($scope.showMap[chartId]!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					};
+					/*添加动画*/
 					angular.forEach(storage['GoodsLiuTongYinZi'],function(item){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData.unshift(item['value'])
@@ -420,8 +460,17 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 					var chartId = key + "Chart"
 					var chart1 = echarts.init(document.getElementById(chartId + "1"));
 					var chart2 = echarts.init(document.getElementById(chartId + "2"));
-					$scope.showMap[chartId + '1'] = storage['RunningTime'].length
-					$scope.showMap[chartId + '2'] = storage['RunningTime'].length
+					$scope.showMap[chartId + '1'] = storage['RunningTime'].length;
+					$scope.showMap[chartId + '2'] = storage['RunningTime'].length;
+					/*添加动画2016-12-29*/
+					if($scope.showMap[chartId + '1']!=0 || $scope.showMap[chartId + '2']!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					}else{
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					}
+					/*添加动画*/
 					angular.forEach(storage['RunningTime'],function(item,index){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						yData1.unshift((item['value'] / 60).toFixed(2))

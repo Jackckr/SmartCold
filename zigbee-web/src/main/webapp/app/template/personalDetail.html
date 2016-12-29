@@ -113,23 +113,23 @@
 		  			 <span ng-if="newPwd2!=''&&newPwd1!=newPwd2"><font color="red">两次密码不一致</font></span>
 		  		</div>
 		  	</div>
-		  	<p class="ok"><button class="btn btn-success" ng-click="goUpdateUser()">完成修改</button></p>
+		  	<p class="ok"><button class="btn btn-success" ng-click="goUpdateUser()">保存修改</button></p>
 		</div>
 	<!-- content end-->
 	</div>	
 	<script>
-	
-$(function(){
-$('#authcode2').click(function(){
-		$(this).attr('disabled','disabled');
-		$("#yzm").css("display","inline");
-		$.post('/i/user/identityVerify',{
-			telephone:$('input[name=telephone]').val()
-		}, function(){
+		$(function() {
+			$('#authcode2').click(function() {
+				$(this).attr('disabled', 'disabled');
+				$("#yzm").css("display", "inline");
+				$.post('/i/user/identityVerify', {
+					telephone : $('input[name=telephone]').val()
+				}, function(data) {
+					alert(data.message)
+				});
+			});
+			$('#update').click(function() {
+				$("#tele2").css("display", "block");
+			});
 		});
-	  });
-	$('#update').click(function(){
-		 $("#tele2").css("display","block");
-	  });
-    });
-</script>
+	</script>

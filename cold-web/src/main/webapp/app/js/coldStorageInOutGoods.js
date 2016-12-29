@@ -23,7 +23,13 @@ coldWeb.controller('coldStorageInOutGoods', function ($scope, $location, $stateP
         url = "/i/other/findGoodsByDate?coldstorageId=" + storageId + 
         "&startCollectionTime=" + startDate + "&endCollectionTime=" +  endDate
         $http.get(url).success(function(data,status,config,header){
-        	$scope.showMap[barId] = Object.keys(data).length
+        	$scope.showMap[barId] = Object.keys(data).length;
+        	/*添加动画*/
+        	if(Object.keys(data).length!=0){
+    		  $('.animated:odd').addClass('bounceInLeft');
+			  $('.animated:even').addClass('bounceInRight');
+    	    }
+        	/*添加动画*/
         	angular.forEach(data,function(yData,key){
         		outData = {name:key+'出货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}
         		inData = {name:key+'进货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}

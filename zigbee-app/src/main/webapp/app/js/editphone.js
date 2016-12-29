@@ -81,6 +81,7 @@
 	$scope.savedata=function(){//验证码
 		$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data: $('#datafrom').serialize(),success: function(data) { 
 			if(data){
+				alert("恭喜你，号码修改成功了");
 				window.user = data;window.localStorage.lkuser=JSON.stringify(data);
 				tourl("personal.html");
 			}else{layer.open({content:'修改失败了，请稍后重试吧',btn: '确定'});}
