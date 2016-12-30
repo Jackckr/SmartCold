@@ -49,7 +49,17 @@ public class ColdStorageController {
 
 	@RequestMapping("/getTempByTime")
 	public Object getTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-	  
+		NewStorageTempDto storageTempDto = new NewStorageTempDto();
+		List<StorageKeyValue> tempList = storageService.findByTime(StorageType.STORAGE.getType(), oid, key, startTime,endTime);
+		storageTempDto.setList(tempList);
+		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
+		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
+		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
+		storageTempDto.setName(coldStorageSetEntity.getName());
+		return storageTempDto;
+	}
+	@RequestMapping("/getPCTempByTime")
+	public Object getPCTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 		Map<String, List<StorageKeyValue>> tempMap = storageService.findTempByTime(StorageType.STORAGE.getType(), oid, key, startTime,endTime);
 		NewStorageTempDto storageTempDto = new NewStorageTempDto();
 		storageTempDto.setTempMap(tempMap);

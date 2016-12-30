@@ -8,7 +8,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	$scope.curtemper = [];
         var endTime =  new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000), maxTime=endTime.getTime();
         Highcharts.setOptions({  global: {useUTC: false  } , colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] });
-        $http.get('/i/coldStorage/getTempByTime', { params: {"oid": $stateParams.storageID,'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
+        $http.get('/i/coldStorage/getPCTempByTime', { params: {"oid": $stateParams.storageID,'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
         	var yData = [], tempMap = result.tempMap;
             var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
