@@ -24,11 +24,11 @@
 			$http.get(ER.root+"/i/comment/getCommentById", { params:{id:getUrlParam("id")}}).success(function(data) { //获得数据
 			    if(data.success){
 			       var obj = data.entity;
-			       $scope.id=obj.id;
+			       $scope.id=obj.data.id;
 				   $scope.rdcLogo=obj.rdc.logo;//冷库图片
 				   $scope.name=obj.rdc.name;//冷库名
-				   $scope.content=obj.content; //评价具体内容
-				   $scope.time=formatCSTDate(obj.addTime,"yyyy-MM-dd hh:mm:ss"); //评价具体时间
+				   $scope.content=obj.data.content; //评价具体内容
+				   $scope.time=formatCSTDate(obj.data.addTime,"yyyy-MM-dd hh:mm:ss"); //评价具体时间
 				   $scope.pics=obj.img; //评价图片
 			   }else{
 			       $("#ul_rdcsL_list").html("获取数据失败！");// goback();

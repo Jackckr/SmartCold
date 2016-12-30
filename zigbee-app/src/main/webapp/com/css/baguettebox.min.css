@@ -104,9 +104,8 @@
 	border: 0;
 	-moz-border-radius: 15%;
 	border-radius: 15%;
-	background-color: #323232;
-	background-color: transparent;
-	color: #ddd;
+	background-color: rgba(50,50,50,.75);
+	color: #fff;
 	font: 1.6em sans-serif;
 	-webkit-transition: background-color .4s ease;
 	transition: background-color .4s ease
