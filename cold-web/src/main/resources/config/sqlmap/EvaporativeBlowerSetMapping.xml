@@ -9,13 +9,13 @@
 		FROM `evaporativeblowerset` WHERE `id` = #{id}
 	</select>
 	
-	<select id="findByGroupid" parameterType="map" resultType="EvaporativeBlowerSetEntity">
-	  SELECT * FROM `evaporativeblowerset` where `groupid` = #{groupid}
-	</select>
 <!-- 	<select id="findByGroupid" parameterType="map" resultType="EvaporativeBlowerSetEntity"> -->
-<!-- 		SELECT eb.* FROM `evaporativeblowerset` eb  -->
-<!-- 		LEFT JOIN `evaporativeset` ev ON eb.`evaporativeid` = ev.id  -->
-<!-- 		LEFT JOIN `compressorgroupset` cg ON ev.id = cg.`evaporativeId` -->
-<!-- 		WHERE cg.id = #{groupid} -->
+<!-- 	  SELECT * FROM `evaporativeblowerset` where `groupid` = #{groupid} -->
 <!-- 	</select> -->
+ 	<select id="findByGroupid" parameterType="map" resultType="EvaporativeBlowerSetEntity"> 
+ 		SELECT eb.* FROM `evaporativeblowerset` eb  
+ 		LEFT JOIN `evaporativeset` ev ON eb.`evaporativeid` = ev.id  
+ 		LEFT JOIN `compressorgroupset` cg ON ev.id = cg.`evaporativeId` 
+ 		WHERE cg.id = #{groupid} 
+ 	</select> 
 </mapper>
