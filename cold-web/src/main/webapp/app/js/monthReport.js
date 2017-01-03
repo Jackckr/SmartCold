@@ -46,7 +46,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 					$scope.charArray[index]=myChart;
 					$scope.charrestmsg[index]=restmsg;
 				}else{
-					$scope.loadindex=11; $scope.isloaderr=true;
+					$scope.loadindex=11; //$scope.isloaderr=true;
 				}
 			}
 		});
@@ -140,7 +140,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     			myChart.setOption(option);//title,ldata,xData,seriesdata
     			$scope.charArray[11]=myChart;
     		}else{
-    			$scope.loadindex=11; $scope.isloaderr=true;
+    			$scope.loadindex=11; //$scope.isloaderr=true;
     		}
     		
     	});
