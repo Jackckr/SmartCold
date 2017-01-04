@@ -351,6 +351,43 @@ public class AnalysisController {
 		}
 	}
 	
+	
+	/**
+	 * 导出请求。。。
+	 * 
+	 * @param request
+	 * @param response
+	 * @param fileName
+	 * @param title
+	 * @param sid
+	 * @param index
+	 * @param type
+	 */
+	@RequestMapping(value = "/expSISAnalysisData")
+	@ResponseBody
+	public void expSISAnalysisData(HttpServletRequest request, HttpServletResponse response,  Boolean isexpt,int rdcid, int index,Integer urlid, Integer type, String confdata, String key,@RequestParam(value = "unit[]", required = false) Integer[] unit, String startTime, String endTime,String fileName, String title ) {
+		try {
+			if(StringUtil.isnotNull(fileName)){
+				 ResponseData<HashMap<String, Object>> expdata = this.getCasesTotalSISAnalysis(request, response, true, rdcid, index, urlid, type, confdata, key, unit, startTime, endTime);
+				 String sid=expdata.getMessage();
+				 if(expdata.isSuccess()&& StringUtil.isnotNull(sid)){
+								LinkedHashMap<String, Object[]> tempData = expData.get(sid);
+								String[] names = (String[]) request.getSession().getAttribute(sid + "name");
+								String[] titls = (String[]) request.getSession().getAttribute(sid + "titls");
+								expData.remove(sid);
+								request.getSession().removeAttribute(sid + "name");
+								request.getSession().removeAttribute(sid + "titls");
+								experrDataTool(request, response, fileName, title, names, titls, false, tempData);// 导出数据
+			 }else{
+				 experrDataTool(request, response, fileName, title, new String[]{startTime}, null, false, null);// 导出数据
+			 }
+			}else{
+				experrDataTool(request, response, fileName, title, new String[]{startTime}, null, false, null);// 导出数据
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
     /**
      * 报表效率
      * @param rdcId
@@ -392,35 +429,7 @@ public class AnalysisController {
 		}
 		return ResponseData.newFailure("没有数据！");
 	}
-	/**
-	 * 导出请求。。。
-	 * 
-	 * @param request
-	 * @param response
-	 * @param fileName
-	 * @param title
-	 * @param sid
-	 * @param index
-	 * @param type
-	 */
-	@RequestMapping(value = "/expSISAnalysisData")
-	@ResponseBody
-	public void expSISAnalysisData(HttpServletRequest request, HttpServletResponse response, String fileName,
-			String title, String sid) {
-		try {
-			if (StringUtil.isnotNull(fileName) && StringUtil.isnotNull(sid)) {
-				LinkedHashMap<String, Object[]> tempData = expData.get(sid);
-				String[] names = (String[]) request.getSession().getAttribute(sid + "name");
-				String[] titls = (String[]) request.getSession().getAttribute(sid + "titls");
-				expData.remove(sid);
-				request.getSession().removeAttribute(sid + "name");
-				request.getSession().removeAttribute(sid + "titls");
-				experrDataTool(request, response, fileName, title, names, titls, false, tempData);// 导出数据
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	/**
 	 * 导出辅助工具

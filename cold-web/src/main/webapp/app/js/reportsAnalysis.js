@@ -84,28 +84,50 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	    $("#rpt_asistb_tit").html($scope.sltit);
 	    if(datainfo==null||datainfo=="[]"){$scope.rs_msg="当前冷库的没有"+typemode.title[$scope.slindex]+"相关的配置！"; $("#rpt_print").attr("disabled",!isSuccess);return;}
 	    var stentime=$scope.picktime .split(" - ");
-		$.ajax({
-            type: "POST",
-            url:'i/AnalysisController/getCasesTotalSISAnalysis',
-            data:{rdcid:$scope.rdcid, index:$scope.slindex,urlid:$scope.urlid,isexpt:isexpt,type:typemode.type[$scope.slindex],confdata:datainfo, key:typemode.key[$scope.slindex],unit:typemode.unit[$scope.slindex], startTime:stentime[0],endTime:stentime[1]},//
-            success: function(data) {
-                if(data.success){
-                	isSuccess=true;
-                	if(isexpt){$scope.subform(data.message);}else{ if($scope.urlid==0||$scope.urlid==2){  
-                		$scope.dldata(data);
-                	 }else{
-                		 $scope.cldata(data); 
-                		 } }
-	               }else{
-	            	   if(isexpt){ alert("导出失败！"+data.message);  }else{
-	            		   $scope.$apply(function () {
-	            			   $scope.rs_msg=data.message; 
-	            		   });
-	            		 }; //em.attr("disabled",false);
-	               }
-	               $("#rpt_print").attr("disabled",!isSuccess);
-            }
-        });
+	    if(isexpt){
+	    	$("#rpt_expxls").attr("disabled",true);
+	        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/AnalysisController/expSISAnalysisData').attr('id', "expdataform");
+	        expfrom.attr("Content-Type","application/json;charset=UTF-8");
+//	        expfrom.append($("<input>").attr("name","sid").attr("value",sid));
+	        expfrom.append($("<input>").attr("name","fileName").attr("value",$scope.sltit+"分析.xls"));
+	        expfrom.append($("<input>").attr("name","title").attr("value",$scope.sltit));
+	        expfrom.append($("<input>").attr("name","rdcid").attr("value",$scope.rdcid));
+	        expfrom.append($("<input>").attr("name","index").attr("value",$scope.slindex));
+	        expfrom.append($("<input>").attr("name","urlid").attr("value",$scope.urlid));
+	        expfrom.append($("<input>").attr("name","urlid").attr("value",$scope.urlid));
+	        expfrom.append($("<input>").attr("name","type").attr("value",typemode.type[$scope.slindex]));
+	        expfrom.append($("<input>").attr("name","confdata").attr("value",datainfo));
+	        expfrom.append($("<input>").attr("name","key").attr("value",typemode.key[$scope.slindex]));
+	        expfrom.append($("<input>").attr("name","unit").attr("value",typemode.unit[$scope.slindex]));
+	        expfrom.append($("<input>").attr("name","startTime").attr("value",stentime[0]));
+	        expfrom.append($("<input>").attr("name","endTime").attr("value",stentime[1]));
+	        expfrom.appendTo('body').submit().remove();
+	        setTimeout(function () {$("#rpt_expxls").attr("disabled",false); }, 3000);
+	    }else{
+	    	$.ajax({
+	            type: "POST",
+	            url:'i/AnalysisController/getCasesTotalSISAnalysis',
+	            data:{rdcid:$scope.rdcid, index:$scope.slindex,urlid:$scope.urlid,isexpt:isexpt,type:typemode.type[$scope.slindex],confdata:datainfo, key:typemode.key[$scope.slindex],unit:typemode.unit[$scope.slindex], startTime:stentime[0],endTime:stentime[1]},//
+	            success: function(data) {
+	                if(data.success){
+	                	isSuccess=true;
+	                		if($scope.urlid==0||$scope.urlid==2){  
+	                		  $scope.dldata(data);
+	                	    }else{
+	                		 $scope.cldata(data); 
+	                		 } 
+		               }else{
+		            	   if(isexpt){ alert("导出失败！"+data.message);  }else{
+		            		   $scope.$apply(function () {
+		            			   $scope.rs_msg=data.message; 
+		            		   });
+		            		 }; //em.attr("disabled",false);
+		               }
+		               $("#rpt_print").attr("disabled",!isSuccess);
+	            }
+	        });
+	    }
+	
 	};
 	$scope.subform=function(sid){//创建无刷新下载表单
 		$("#rpt_expxls").attr("disabled",true);
