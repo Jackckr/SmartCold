@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
     <script type="text/javascript" src="../app/js/user_obj.js" ></script>
-    <script type="text/javascript">var type=3; checkLogin(null,initdata);</script>
+    <script type="text/javascript">var type=3; checkLogin(null,initdata);	</script>
 </head>
 <body >
     <header>
@@ -26,21 +26,7 @@
     	</div>
     </header>
 <!--     <section id="user_info" class="clearfix"></section> -->
-    <ul id="ul_rdcsL_list" class="commentList">
-<!--     	<li class="clearfix"> -->
-<!--     		<div class="clearfix"> -->
-<!-- 	    		<div class="img fl" onclick="location.href='colddetail.html'"><img src="../com/img/list_03.png"/></div> -->
-<!-- 	    		<p class="company omg">莱芜嘉禾冷链物流有限公司<span>【出租】</span></p> -->
-<!-- 	    		<p class="position"> -->
-<!-- 	    			<span class="orderNum">订单号：4654654654121</span> -->
-<!-- 	    		</p> -->
-<!--     		</div> -->
-<!--     		<p class="btnGroup"> -->
-<!--     			<button>删除订单</button> -->
-<!--     			<button onclick="location.href='commentdetail.html'">立即评价</button> -->
-<!--     		</p> -->
-<!--     	</li> -->
-    </ul>
+    <ul id="ul_rdcsL_list" class="commentList"></ul>
         <div id="" class="nodata black"> <img src="../com/img/nodata.jpg" alt=""><p>您还没有评价信息哦~~</p></div>
     <ul class="footer">
         <li>           
@@ -69,14 +55,5 @@
             </a>
         </li>
     </ul>
-    <script>
-    	$(function(){
-    		$(".btnGroup").children().click(function(){
-    			if ($(this).index()==0) {
-    				$(this).parents('li').remove()
-    			}
-    		})
-    	})
-    </script>
 </body>
 </html>
