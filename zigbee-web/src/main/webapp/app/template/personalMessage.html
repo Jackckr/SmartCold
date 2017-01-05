@@ -25,7 +25,8 @@
 					<p class="company" ng-if="msg.msgcategory==2">告警通知</p>
 					<p class="area omg">{{msg.msgdata}}</p>
 					<p class="area">
-						{{msg.informtime}}
+						{{msg.informtime}}<span class="delete"
+						data-toggle="modal" ng-click="goShowMsg(msg)">详情</span>
 						<span class="delete" ng-click="deleteMsg(msg.id)">删除</span>
 					</p>
 				</li>
@@ -39,6 +40,66 @@
                 </div>
 	     </div>
 		<!-- 图文列表区域 end-->
+		</div>
+		<div class="modal fade" id="order_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h4 class="modal-title" id="myModalLabel">【{{appmode[0].title[datatype]}}】{{rsd.title}}</h4>
+		            </div>
+		            <div class="modal-body" style="padding: 10px 20px;">
+		            	<h4 style="color:#999;margin: 0 0 10px 0;">联络单详情   <span style="font-size: 14px;">{{orders.generatetime}}</span></h4>
+		            	<p><i class="dot"></i><span class="order_title">联络单号:</span>{{orders.orderid}}</p>
+		            	<p><i class="dot"></i><span class="order_title">联络单类型:</span>{{typetitle}}</p>
+					    <div ng-if="datatype==3" style="padding-left: 0">
+						   <p class="infos"><i class="dot"></i><span class="order_title">温度类型:</span>{{rsd.codeLave2}}</p>
+						   <p class="infos" ng-if="rsd.rdcID" ><i class="dot"></i><span class="order_title">冷库名称:</span>{{rsd.name}}</p>
+						   <p class="infos" ng-if="rsd.rdcID"><i class="dot"></i><span class="order_title">冷库地址:</span>{{rsd.address}}</p>
+						</div>
+						<div ng-if="datatype==2">
+						   <p class="infos"><i class="dot"></i><span class="order_title">始发地:</span>{{rsd.unit1}}</p>
+						   <p class="infos"><i class="dot"></i><span class="order_title">目的地:</span>{{rsd.unit2}}</p>
+						   <p class="infos"><i class="dot"></i><span class="order_title">业务类型:</span>{{rsd.codeLave1}}</p>
+						   <p class="infos"><i class="dot"></i><span class="order_title">车辆类型:</span>{{rsd.codeLave3}}</p>
+						   <p class="infos"><i class="dot"></i><span class="order_title">冷库温度类型:</span>{{rsd.codeLave2}}</p>
+						</div>
+						
+						<div ng-if="datatype==1">
+					        <p class="infos"><i class="dot"></i><span class="order_title">品类:</span>{{rsd.codeLave1}}</p>
+						    <p class="infos"><i class="dot"></i><span class="order_title">供应商:</span>{{rsd.unit1?rsd.unit1:'不详' }}</p>
+						    <p class="infos"><i class="dot"></i><span class="order_title">最大预定量:</span>{{rsd.sqm }}吨</p>
+						    <p class="infos"><i class="dot"></i><span class="order_title">单价:</span>{{rsd.unitPrice == 0.00 ?"面议":rsd.unitPrice+'元/吨'}}</p>
+						</div>
+		            	<h4 style="color:#999;margin: 10px 0;">其他信息</h4>
+						<div>
+						   <p class="infos"><i class="dot"></i><span class="order_title">有效期:</span>{{rsd.validStartTime}}至{{rsd.validEndTime}}</p>
+						   <p class="infos"><i class="dot"></i><span class="order_title">备注:</span>{{rsd.note?rsd.note:'无'}}</p>
+						</div>
+		            	<ul ng-if="rsd.files" class="clearfix">
+		            		<li ng-repeat="fl in rsd.files" class="pull-left" style="width:30%;height:80px;margin:10px 1% 0 0;">
+		            			<img ng-src={{fl}} style="width:100%;height:100%;"/>
+		            		</li>
+		            	</ul>
+		            	<ul class="object clearfix">
+							<li class="pull-left">
+								<p>出租方</p>
+								<p><span>姓名：</span>{{orders.ownername}}</p>
+								<p><span>地址:</span>{{ownerUser.address}}</p>
+							</li>
+							<li class="pull-left">
+								<p>租入方</p>
+								<p><span>姓名：</span>{{orders.username}}</p>
+								<p><span>地址:</span>{{orderUser.address}}</p>
+							</li>
+						</ul>
+	            	</div>
+		            <div class="modal-footer" style="padding: 10px 20px;margin-top: 0">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-if="rsd" ng-click="getTeleNum()">获取联系方式</button>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal -->
 		</div>
 	<!-- content end-->
 	</div>
