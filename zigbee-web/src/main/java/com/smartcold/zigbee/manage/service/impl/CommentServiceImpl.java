@@ -78,8 +78,10 @@ public class CommentServiceImpl implements CommentService {
 			commentDTO.setReviewPics(reviewPics);;
 			commentDTO.setCommerID(commentEntity.getCommerID());
 			UserEntity userEntity = userDao.findUserById(commentEntity.getCommerID());
-			commentDTO.setCommerName(userEntity.getUsername());
-			commentDTO.setAvatar(userEntity.getAvatar());
+			if(userEntity!=null){
+				commentDTO.setCommerName(userEntity.getUsername());
+				commentDTO.setAvatar(userEntity.getAvatar());
+			}
 			results.add(commentDTO);
 		}
 		return results;
