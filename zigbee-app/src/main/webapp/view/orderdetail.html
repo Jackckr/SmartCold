@@ -122,7 +122,7 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 			</div>
 			<!--点击图片循环展示-->
 			<div class="baguetteBoxOne gallery" ng-if="rsd.files">
-		         <a ng-repeat="fl in rsd.files" ng-href="{{fl}}"><img ng-src="{{fl}}"/></a>
+		         <a ng-repeat="fl in rsd.files" ng-href="{{fl}}" data-caption="{{($index+1)+'/'+rsd.files.length}}"><img ng-src="{{fl}}"/></a>
 			</div>
 			<ul class="object">
 				<li>

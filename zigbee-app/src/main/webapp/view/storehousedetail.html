@@ -41,7 +41,7 @@
 				</li>
 			</ul>
 			 <div id="she_imglist" class="baguetteBoxOne gallery" ng-if="vo.files">
-                <a ng-repeat="fl in vo.files" href="{{fl}}"><img ng-src="{{fl}}"/></a>
+                <a ng-repeat="fl in vo.files" href="{{fl}}" data-caption="{{($index+1)+'/'+vo.files.length}}"><img ng-src="{{fl}}"/></a>
             </div>
 			<!-- ======================================================================================= 冷仓信息共享-->
 			<div ng-if="vo.dataType==3">

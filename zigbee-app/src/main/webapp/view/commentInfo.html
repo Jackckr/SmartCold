@@ -93,7 +93,7 @@
 				<p class="position" style="word-break: break-all;margin-top: .3rem;text-indent: 2em;font-size: .7rem;color:#666">{{content}}</p>
 				<!--点击图片循环展示-->
 				<div class="baguetteBoxOne gallery" ng-if="pics.length>0"style="margin-top: 1rem;">
-			         <a ng-repeat="pic in pics" ng-href="{{pic.location}}" ><img ng-src="{{pic.location}}"/></a>
+			         <a ng-repeat="pic in pics" ng-href="{{pic.location}}" data-caption="{{($index+1)+'/'+pics.length}}" ><img ng-src="{{pic.location}}"/></a>
 				</div>
 <!-- 				<p class="btnGroup"><button value="{{id}}" onclick="delrdc(this)">删除</button></p> -->
 		</li>
