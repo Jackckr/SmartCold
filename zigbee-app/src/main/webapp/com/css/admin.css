@@ -490,6 +490,22 @@ section.show{
 	width: 0;
 	height:0;
 }
+/*评价星级*/
+.star {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    color: #CACACA;
+    overflow: hidden;
+}
+.star li {
+    float: left;
+    padding: 0;
+    border-bottom: 0;
+}
+.filled {
+    color: #F59000;
+    background-size: cover;
+}
 /* 我的消息 */
 html,body{
 	height:100%;

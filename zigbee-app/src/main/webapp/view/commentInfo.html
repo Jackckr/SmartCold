@@ -28,6 +28,7 @@
 				   $scope.rdcLogo=obj.rdc.logo;//冷库图片
 				   $scope.name=obj.rdc.name;//冷库名
 				   $scope.content=obj.data.content; //评价具体内容
+				   $scope.grade=obj.data.grade;
 				   $scope.time=formatCSTDate(obj.data.addTime,"yyyy-MM-dd hh:mm:ss"); //评价具体时间
 				   $scope.pics=obj.img; //评价图片
 			   }else{
@@ -78,7 +79,16 @@
 						<img ng-src="{{rdcLogo}}" style="border-radius:50%">
 					</div>
 					<p class="company" style="line-height: 1.75;">{{name}}</p>
-					<p style="color:#999;font-size:.6rem;line-height: 1.75">{{time}}</p>
+					<div style="height:1.5rem;line-height: 1.5rem;">
+						<ul class="star fl">
+	                       <li class="{{grade>=1?'filled':''}}">★</li>
+	                       <li class="{{grade>=2?'filled':''}}">★</li>
+	                       <li class="{{grade>=3?'filled':''}}">★</li>
+	                       <li class="{{grade>=4?'filled':''}}">★</li>
+	                       <li class="{{grade>=5?'filled':''}}">★</li>
+	                    </ul>
+	                    <span class="fr" style="color:#999;font-size:.6rem;">{{time}}</span>
+					</div>
 				</div>
 				<p class="position" style="word-break: break-all;margin-top: .3rem;text-indent: 2em;font-size: .7rem;color:#666">{{content}}</p>
 				<!--点击图片循环展示-->

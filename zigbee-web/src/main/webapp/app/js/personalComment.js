@@ -45,6 +45,7 @@ coldWeb.controller('personalComment', function ($rootScope, $scope, $state, $coo
 				   $scope.rdcLogo=data.rdc.logo;//冷库图片
 				   $scope.name=data.rdc.name;//冷库名
 				   $scope.content=data.data.content; //评价具体内容
+				   $scope.grade=data.data.grade;
 				   $scope.time=formatCSTDate(data.data.addTime,"yyyy-MM-dd hh:mm:ss"); //评价具体时间
 				   $scope.pics=data.img; //评价图片
 			   }else{
