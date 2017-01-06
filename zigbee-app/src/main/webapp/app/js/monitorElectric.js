@@ -205,7 +205,18 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
         }
     }, 30000);
 
-    $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
+    $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type, yMin, yMax) {
+    	min = max = yData.length > 0?yData[0]:0;
+		angular.forEach(yData,function(item,index){
+			yData[index] = yData[index].toFixed(2);
+			min = Math.min(min,yData[index]);
+            max = Math.max(max,yData[index]);
+		});
+		if(min>=0){
+			yMin=0;
+		}else{
+			yMin = max - min < 1 && type == 'line' ?min - 10:yMin;
+		};
         var option = {
             backgroundColor: '#D2D6DE',
             tooltip: {
@@ -235,7 +246,10 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             yAxis: [
                 {
                     type: 'value',
-                    name: yName + "(" + yUnit + ")"
+                    name: yName + "(" + yUnit + ")",
+                    min : yMin ? yMin : 'auto',
+		            max : yMax ? yMax : 'auto',
+		            minInterval : 1
                 }
             ],
             series: [
@@ -243,6 +257,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                     name: lineName,
                     type: type,
                     data: yData,
+                    smooth:true
                 }
             ]
         };
@@ -306,6 +321,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                     name: lineName,
                     type: type,
                     data: yData,
+                    smooth:true
                 }
             ]
         };

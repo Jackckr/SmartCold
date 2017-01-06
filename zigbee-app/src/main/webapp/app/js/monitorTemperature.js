@@ -225,6 +225,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                     },
                     series: [{
                         name: '温度',
+                        smooth:true,
                         markPoint: {
                             data: [
                                 {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
