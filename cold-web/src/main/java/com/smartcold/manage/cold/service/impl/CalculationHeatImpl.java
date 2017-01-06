@@ -49,7 +49,7 @@ public class CalculationHeatImpl implements CalculationHeat {
 				calculationEntity.getRightWall().getOutTemperature(), insideTemperature, 1);
 		float behindWall = calculateWall(calculationEntity.getHeight() * calculationEntity.getLength(),
 				calculationEntity.getBehindWall().getMaterial().getThermalConductivity(),
-				calculationEntity.getBehindWall().getOutTemperature(), insideTemperature, 1);
+	 			calculationEntity.getBehindWall().getOutTemperature(), insideTemperature, 1);
 		float floor = calculateWall(calculationEntity.getWeight() * calculationEntity.getLength(),
 				calculationEntity.getFloor().getMaterial().getThermalConductivity(),
 				calculationEntity.getFloor().getOutTemperature(), insideTemperature, 1);
