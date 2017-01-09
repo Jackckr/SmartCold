@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.api;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -10,8 +11,12 @@ import org.apache.mina.core.session.IoSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
+import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.entity.newdb.WarningsLog;
+import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.StringUtil;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
  * @author Administrator
@@ -19,6 +24,8 @@ import com.smartcold.manage.cold.util.StringUtil;
  */
 public class SocketHandler extends IoHandlerAdapter {
 	
+	@Autowired
+	public  WarningLogMapper warningLogMapper;
 	@Autowired
 	public  StorageDataCollectionMapper storageDataCollectionDao;
 	
@@ -41,7 +48,9 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     public void messageReceived(IoSession session, Object message) throws Exception {
         session.write("200:"+message);
+//        System.err.println("收到客户端消息："+message);
 //       this.addAPdata(message.toString());
+        this.addextMsg("messageReceived", 2, message.toString());
     }
     
     /*
@@ -99,7 +108,7 @@ public class SocketHandler extends IoHandlerAdapter {
     }
     
     
-    private void addAPdata( String data){
+    public  void addAPdata( String data){
     	if(StringUtil.isNull(data))return;
 		System.err.println(data);
     	ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
@@ -109,5 +118,29 @@ public class SocketHandler extends IoHandlerAdapter {
 			storageDataCollectionDao.batchInsert(arrayList);
 		}
     }
+    
+    private void addextMsg(String methodName,int type,String errMsg){
+		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
+		if(StringUtil.isnotNull(errMsg)){
+			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
+			 msg+=" 执行错误："+errMsg; 
+			 List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+			 errInfoList.add(new WarningsLog(-1,type,msg));
+			 this.warningLogMapper.addWarningLog(errInfoList);
+		}
+	}
+    
+    /**  
+     * @Description: 发送消息到客户端  
+     * @author whl  
+     * @date 2014-9-29 下午1:57:51  
+     */  
+    public static void sendConfig( Object config){  
+       for (IoSession is : curSessionMap.values()) {
+    	   is.write(config);  
+	  }
+    	
+    	
+    }  
 
 }

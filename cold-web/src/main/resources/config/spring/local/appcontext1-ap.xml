@@ -9,10 +9,11 @@
 		<constructor-arg index="1" value="5000" />
 	</bean>
 	<!-- 监听端口 -->
-	<bean id="address" class="java.net.InetSocketAddress">
-		<!-- <constructor-arg index="0" value="192.168.1.137" /> -->
-		<constructor-arg index="0" value="2196" />
-	</bean>
+	<bean id="address" class="java.net.InetSocketAddress"> 
+<!-- 		<constructor-arg index="0" value="139.196.41.18" />    -->
+ 		<constructor-arg index="0" value="2196" /> 
+	</bean> 
+	
 	<bean id="mdcInjectionFilter" class="org.apache.mina.filter.logging.MdcInjectionFilter">
 		<constructor-arg value="remoteAddress" />
 	</bean>
@@ -59,8 +60,7 @@
 
 	<!-- session config 通过工厂方法注入 -->
 	<bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig">
-		<property name="bothIdleTime" value="30" /><!-- 配置session 空闲时间，单位 
-			秒 -->
+		<property name="bothIdleTime" value="30" /><!-- 配置session 空闲时间，单位 秒 -->
 		<property name="readerIdleTime" value="10" />
 		<property name="minReadBufferSize" value="512" />
 		<property name="maxReadBufferSize" value="10240" />
