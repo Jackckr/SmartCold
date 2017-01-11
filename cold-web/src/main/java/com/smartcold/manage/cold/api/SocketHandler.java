@@ -1,26 +1,20 @@
 package com.smartcold.manage.cold.api;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
-import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
-import com.smartcold.manage.cold.util.StringUtil;
 
 /**
  * @author Administrator
  *
  */
 public class SocketHandler extends IoHandlerAdapter {
-	
-	@Autowired
-	public  StorageDataCollectionMapper storageDataCollectionDao;
+//	@Autowired
+//	public  WarningLogMapper warningLogMapper;
+//	@Autowired
+//	public  StorageDataCollectionMapper storageDataCollectionDao;
 	
     public static ConcurrentHashMap<Long, IoSession> curSessionMap = new ConcurrentHashMap<Long, IoSession>();
     
@@ -93,12 +87,12 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
-    	session.write("超时关闭");
+    	session.write("超410关闭");
         session.closeOnFlush();
         super.sessionIdle(session, status);
     }
     
-    
+   /* 
     private void addAPdata( String data){
     	if(StringUtil.isNull(data))return;
 		System.err.println(data);
@@ -109,5 +103,16 @@ public class SocketHandler extends IoHandlerAdapter {
 			storageDataCollectionDao.batchInsert(arrayList);
 		}
     }
+      
+    private void addextMsg(String methodName,int type,String errMsg){
+		if(StringUtil.isnotNull(errMsg)){
+			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
+			String msg=" 提交数据："+errMsg; 
+			 List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+			 errInfoList.add(new WarningsLog(-1,type,msg));
+			 this.warningLogMapper.addWarningLog(errInfoList);
+		}
+	}
+    */
 
 }
