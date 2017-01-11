@@ -242,5 +242,19 @@ public class UserController extends BaseController {
 		if(StringUtil.isNull(userName)){return false;}
 	    return this.userDao.existenceUserName(userName)>0;
 	}
+	
+	/**
+	 * 检查用户名是否占用
+	 * @param request true：表示当前用户名已存在或为null->不能注册
+	 * @param userName
+	 * @return
+	 */
+	@RequestMapping(value = "/addmessaged ")
+	@ResponseBody
+	public ResponseData<String>  addmessaged (HttpServletRequest request,String userName,String telephone,String corporateName,String note){
+		if(StringUtil.isNull(userName)||StringUtil.isNull(telephone)){return ResponseData.newFailure("请填写完整信息！");}
+		this.userDao.addmsg(userName, telephone, corporateName, note);
+		return ResponseData.newSuccess();
+	}
 
 }

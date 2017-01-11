@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.api;
 
+
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -15,7 +16,6 @@ public class SocketHandler extends IoHandlerAdapter {
 //	public  WarningLogMapper warningLogMapper;
 //	@Autowired
 //	public  StorageDataCollectionMapper storageDataCollectionDao;
-	
     public static ConcurrentHashMap<Long, IoSession> curSessionMap = new ConcurrentHashMap<Long, IoSession>();
     
 
@@ -36,6 +36,7 @@ public class SocketHandler extends IoHandlerAdapter {
     public void messageReceived(IoSession session, Object message) throws Exception {
         session.write("200:"+message);
 //       this.addAPdata(message.toString());
+//        this.addextMsg("messageReceived", 2, message.toString());
     }
     
     /*
@@ -92,7 +93,8 @@ public class SocketHandler extends IoHandlerAdapter {
         super.sessionIdle(session, status);
     }
     
-   /* 
+/*
+
     private void addAPdata( String data){
     	if(StringUtil.isNull(data))return;
 		System.err.println(data);
@@ -103,16 +105,31 @@ public class SocketHandler extends IoHandlerAdapter {
 			storageDataCollectionDao.batchInsert(arrayList);
 		}
     }
-      
     private void addextMsg(String methodName,int type,String errMsg){
+		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 		if(StringUtil.isnotNull(errMsg)){
 			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
-			String msg=" 提交数据："+errMsg; 
+			 msg+=" 执行错误："+errMsg; 
+
 			 List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
 			 errInfoList.add(new WarningsLog(-1,type,msg));
 			 this.warningLogMapper.addWarningLog(errInfoList);
 		}
 	}
-    */
+*/
+    
+    /**  
+     * @Description: 发送消息到客户端  
+     * @author whl  
+     * @date 2014-9-29 下午1:57:51  
+     */  
+    public static void sendConfig( Object config){  
+       for (IoSession is : curSessionMap.values()) {
+    	   is.write(config);  
+	  }
+    	
+    	
+    }  
+
 
 }

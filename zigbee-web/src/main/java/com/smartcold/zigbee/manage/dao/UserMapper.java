@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.dao;
 
 import com.smartcold.zigbee.manage.entity.UserEntity;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
@@ -18,4 +19,6 @@ public interface UserMapper {
 	public int upPwdByTelephone(UserEntity userEntity);
 	
 	public int existenceUserName(@Param("username")String username);
+	
+	public void addmsg(@Param("userName")String userName,@Param("telephone")String telephone,@Param("corporateName")String corporateName,@Param("note")String note);
 }
