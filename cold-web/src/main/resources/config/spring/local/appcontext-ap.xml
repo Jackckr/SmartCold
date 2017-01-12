@@ -62,12 +62,12 @@
 
 
 	<!-- session config 通过工厂方法注入 -->
-	<bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig"> 
-		<property name="bothIdleTime" value="1800" /><!-- 配置session 空闲时间，单位 秒 -->
+<!-- 	<bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig">  -->
+<!-- 		<property name="bothIdleTime" value="1800" />配置session 空闲时间，单位 秒 -->
 <!-- 		<property name="readerIdleTime" value="1800" />  -->
-		<property name="minReadBufferSize" value="512" /> 
-		<property name="maxReadBufferSize" value="10240" />
-	</bean> 
+<!-- 		<property name="minReadBufferSize" value="512" />  -->
+<!-- 		<property name="maxReadBufferSize" value="10240" /> -->
+<!-- 	</bean>  -->
 	
 <!-- 	<bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor" init-method="bind" destroy-method="unbind">  -->
 	<!-- 设置线程数 -->

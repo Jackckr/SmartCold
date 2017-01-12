@@ -46,7 +46,7 @@ public class SocketHandler extends IoHandlerAdapter {
         session.write("200={\"status\":\"200\"}");
         System.err.println("收到客户端消息："+message);
 //       this.addAPdata(message.toString());
-//        this.addextMsg("messageReceived", 2, message.toString());
+        this.addextMsg("messageReceived", 2, message.toString());
     }
     
     /*
@@ -116,15 +116,19 @@ public class SocketHandler extends IoHandlerAdapter {
 		}
     }
     */
-    private void addextMsg(String methodName,int type,String errMsg){
-		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
-		if(StringUtil.isnotNull(errMsg)){
-			if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
-			 msg+=" 执行错误："+errMsg; 
+    public void addextMsg(String methodName,int type,String errMsg){
+		try {
+			String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
+			if(StringUtil.isnotNull(errMsg)){
+				if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
+				 msg+=" 执行错误："+errMsg; 
 
-			 List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
-			 errInfoList.add(new WarningsLog(-1,type,msg));
-			 this.warningLogMapper.addWarningLog(errInfoList);
+				 List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
+				 errInfoList.add(new WarningsLog(-1,type,msg));
+				 this.warningLogMapper.addWarningLog(errInfoList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

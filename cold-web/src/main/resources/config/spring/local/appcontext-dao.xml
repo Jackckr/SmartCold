@@ -30,5 +30,5 @@
 		<property name="configLocation"  value="classpath:config/mybatis/mybatis-config.xml" />
     </bean>
     
-    <bean id="beanDefineConfigue" class="com.smartcold.manage.cold.service.impl.SocketServer" init-method="bind" destroy-method="unbind" ></bean>
+<!--     <bean id="beanDefineConfigue" class="com.smartcold.manage.cold.service.impl.SocketServer" init-method="initServer" destroy-method="unitServer" ></bean> -->
 </beans>
