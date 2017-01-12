@@ -1,19 +1,28 @@
 package com.smartcold.manage.cold.api;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
+import com.smartcold.manage.cold.entity.newdb.WarningsLog;
+import com.smartcold.manage.cold.util.RemoteUtil;
+import com.smartcold.manage.cold.util.StringUtil;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
  * @author Administrator
  *
  */
 public class SocketHandler extends IoHandlerAdapter {
-//	@Autowired
-//	public  WarningLogMapper warningLogMapper;
+	@Autowired
+	public  WarningLogMapper warningLogMapper;
 //	@Autowired
 //	public  StorageDataCollectionMapper storageDataCollectionDao;
     public static ConcurrentHashMap<Long, IoSession> curSessionMap = new ConcurrentHashMap<Long, IoSession>();
@@ -34,7 +43,8 @@ public class SocketHandler extends IoHandlerAdapter {
      * @see org.apache.mina.core.service.IoHandlerAdapter#messageReceived(org.apache.mina.core.session.IoSession, java.lang.Object)
      */
     public void messageReceived(IoSession session, Object message) throws Exception {
-        session.write("200:"+message);
+        session.write("200={\"status\":\"200\"}");
+        System.err.println("收到客户端消息："+message);
 //       this.addAPdata(message.toString());
 //        this.addextMsg("messageReceived", 2, message.toString());
     }
@@ -88,9 +98,9 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
-    	session.write("超410关闭");
+    	session.write("410={\"msg\":\"会话超时\"}");
         session.closeOnFlush();
-        super.sessionIdle(session, status);
+        System.err.println("关闭客户端："+session);
     }
     
 /*
@@ -105,6 +115,7 @@ public class SocketHandler extends IoHandlerAdapter {
 			storageDataCollectionDao.batchInsert(arrayList);
 		}
     }
+    */
     private void addextMsg(String methodName,int type,String errMsg){
 		String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 		if(StringUtil.isnotNull(errMsg)){
@@ -116,7 +127,7 @@ public class SocketHandler extends IoHandlerAdapter {
 			 this.warningLogMapper.addWarningLog(errInfoList);
 		}
 	}
-*/
+
     
     /**  
      * @Description: 发送消息到客户端  
