@@ -62,29 +62,27 @@
 
 
 	<!-- session config 通过工厂方法注入 -->
-<!-- 	<bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig">  -->
-<!-- 		<property name="bothIdleTime" value="1800" />配置session 空闲时间，单位 秒 -->
-<!-- 		<property name="readerIdleTime" value="1800" />  -->
-<!-- 		<property name="minReadBufferSize" value="512" />  -->
-<!-- 		<property name="maxReadBufferSize" value="10240" /> -->
-<!-- 	</bean>  -->
+	<bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig"> 
+		<property name="bothIdleTime" value="1800" />
+		<property name="readerIdleTime" value="1800" /> 
+		<property name="minReadBufferSize" value="512" />  
+		<property name="maxReadBufferSize" value="10240" /> 
+	</bean>  
 	
-<!-- 	<bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor" init-method="bind" destroy-method="unbind">  -->
-	<!-- 设置线程数 -->
-<!--  		<constructor-arg index="0" value="500"></constructor-arg>  --> 
-	<!--端口号 -->
-<!-- 		<property name="defaultLocalAddress" ref="defaultLocalAddress" />   -->
-	<!--绑定自己实现的handler -->
-<!-- 		<property name="handler" ref="serverHandler" />  -->
-	<!--声明过滤器的集合 -->
-<!-- 		<property name="filterChainBuilder" ref="filterChainBuilder" />  -->
-<!-- 		<property name="reuseAddress" value="true" /> -->
-<!-- 	</bean>  -->
+ 	<bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor"  destroy-method="unbind"> 
+         <!-- 设置线程数 -->
+  		<constructor-arg index="0" value="500"></constructor-arg>  
+         <!--端口号 -->
+ 		<property name="defaultLocalAddress" ref="defaultLocalAddress" />   
+        <!--绑定自己实现的handler -->
+ 		<property name="handler" ref="serverHandler" />  
+         <!--声明过滤器的集合 -->
+ 		<property name="filterChainBuilder" ref="filterChainBuilder" />  
+ 		<property name="reuseAddress" value="true" /> 
+ 	</bean>  
 
-
-
-
-	
+    <!-- 委托器管理服务 -->
+    <bean id="beanDefineConfigue" class="com.smartcold.manage.cold.service.impl.SocketServer" init-method="initServer"  > </bean> 
 
 
 	<!--心跳检测filter 用于定时推送消息。。。。 -->

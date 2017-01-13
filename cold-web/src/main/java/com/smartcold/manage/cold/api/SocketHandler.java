@@ -44,7 +44,7 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     public void messageReceived(IoSession session, Object message) throws Exception {
         session.write("200={\"status\":\"200\"}");
-        System.err.println("收到客户端消息："+message);
+//        System.err.println("收到客户端消息："+message);
 //       this.addAPdata(message.toString());
         this.addextMsg("messageReceived", 2, message.toString());
     }
@@ -121,8 +121,7 @@ public class SocketHandler extends IoHandlerAdapter {
 			String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 			if(StringUtil.isnotNull(errMsg)){
 				if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
-				 msg+=" 执行错误："+errMsg; 
-
+				 msg+=" 客户端消息："+errMsg; 
 				 List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
 				 errInfoList.add(new WarningsLog(-1,type,msg));
 				 this.warningLogMapper.addWarningLog(errInfoList);
