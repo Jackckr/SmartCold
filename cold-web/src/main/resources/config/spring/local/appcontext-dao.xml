@@ -4,7 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
      
-    
+   <bean class="org.springframework.web.client.RestTemplate">
+		<constructor-arg>
+			<bean
+				class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+				<property name="readTimeout" value="5000" />
+				<property name="connectTimeout" value="5000" />
+			</bean>
+		</constructor-arg>
+	</bean>
            
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
        <property name="basePackage" value="com.smartcold.manage.cold.dao.olddb" />    
