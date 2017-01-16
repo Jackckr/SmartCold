@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -198,6 +199,15 @@ public class InformationController extends BaseController {
 	public Object findAllInforCategory() {
 		return inforCategoryDao.findAllInforCategory();
 	}
+	
+	/**
+	 * 每天8点更新资讯
+	 */
+	 @Scheduled(cron = "0 0 8 * * ?") 
+	  public void randinformation(){
+		 this.informationDao.randinformation(1);
+		 this.informationDao.randinformation(2);
+	  }	 
 	
 	/*@ResponseBody
 	@RequestMapping(value="/changeAudit", method=RequestMethod.POST)

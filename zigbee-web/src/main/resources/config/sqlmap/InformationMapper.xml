@@ -94,5 +94,9 @@
 	    DELETE FROM information WHERE `id` = #{inforID}
 	</delete>
 	
+	<update id="randinformation" parameterType="Integer">
+	  update information set posttime=DATE_ADD(CURDATE(),  INTERVAL  FLOOR(1 + (RAND() * 5000))   SECOND ) where `category` =#{category} ORDER BY rand() LIMIT 15;
+	</update>
+	
 	
 </mapper>

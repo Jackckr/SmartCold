@@ -11,6 +11,14 @@ import com.smartcold.zigbee.manage.entity.InformationEntity;
  *@Description: Information Mapper
  */
 public interface InformationMapper {
+	//产生随机资讯
+	void  randinformation(Integer category);
+	
+	void insertInformation(InformationEntity informationEntity);
+	
+	void deleteInformation(@Param("inforID") int inforID);
+	
+	void updateInformation(InformationEntity informationEntity);
 
 	InformationEntity findInformationByID(@Param("inforID") int inforID);
 	
@@ -22,9 +30,4 @@ public interface InformationMapper {
 	
 	Page<InformationEntity> findInformationList(@Param("categoryID") int categoryID);
 
-	void insertInformation(InformationEntity informationEntity);
-	
-	void deleteInformation(@Param("inforID") int inforID);
-	
-	void updateInformation(InformationEntity informationEntity);
 }
