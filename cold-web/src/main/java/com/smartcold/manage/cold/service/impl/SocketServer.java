@@ -47,6 +47,7 @@ public class SocketServer {
         	if(ioAcceptor!=null){
         		Socket socket = new Socket(ioAcceptor.getDefaultLocalAddress().getAddress(),ioAcceptor.getDefaultLocalAddress().getPort());  
         		socket.close();
+        		logger.warn("Service registration failed ! Port is occupied!");
         		return false;  
         	}else{
         		return true;//托管失败。。。。。。
