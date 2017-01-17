@@ -22,7 +22,8 @@ public class SocketServer {
 	public synchronized void initServer(){
 		try {
 			boolean portUsing = this.isPortUsing();
-			if(ioAcceptor!=null&&portUsing){
+			if(!portUsing){return;	}
+			if(ioAcceptor!=null){
 				ioAcceptor.bind();
 				logger.info("SocketServer start Success! Server:"+ioAcceptor.getDefaultLocalAddress().getAddress()+":"+ioAcceptor.getDefaultLocalAddress().getPort());
 			}else{
