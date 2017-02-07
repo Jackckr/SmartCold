@@ -100,7 +100,7 @@ var gethtml = function(obj) {
 		        , obj.logo
 		        , "'/></div><p class='company'>名称："
 		        , obj.rdcname
-		        , "</p><p class='position' style='padding-left: 3.5rem;word-break: break-all;'>点评内容："
+		        , "</p><p class='position' style='word-break: break-all;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;color:#333;-webkit-line-clamp: 2;-webkit-box-orient: vertical;'>点评内容："
 		        , obj.commentdto.content
 		        , "</p></div><p class='btnGroup'><button onclick='editinfo("
 				, obj.commentdto.id
