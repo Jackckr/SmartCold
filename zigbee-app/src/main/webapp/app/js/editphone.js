@@ -1,6 +1,7 @@
  var app = angular.module('app', []);
  app.controller('usercl', function($http, $location,$scope) {
 	$http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
 	$scope.initdata=function(){
        $scope.userinfo= window.user;
 	};
@@ -39,7 +40,18 @@
 		var length = ($scope.telephone+'').length; 
 		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
-		$("#but_vercode2").attr("disabled",!ct).css("background-color",ct?"#438BCB":"#cccccc");
+		if(ct){
+			victdata.victtl=true;
+			$.post( ER.root+"/i/user/existenceUserName", {userName: $scope.telephone}, function(data) {
+                victdata.extname=!data;
+                $("#mention1").html(data?"该手机已经注册,请更换新手机号~":"");
+                $("#but_vercode2").attr("disabled",data).css("background-color",data?"#ccc":"#438BCB");
+			});
+		}else{
+			 victdata.victtl=false;
+			 $("#mention1").html("请输入正确手机号码~");
+			 $("#but_vercode2").attr("disabled", false).css("background-color", "#cccccc");
+		}
 	};
 	$scope.getMobileCode=function(key,telephone,vcid){
 		$http.get(ER.root+"/i/ShareRdcController/sharvistPhone.json",  { params: {key:key,telephone:telephone}  }).success(function(data) {
