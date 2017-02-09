@@ -105,7 +105,8 @@
 		  		<div class="lines">
 		  			<span>新密码：</span>
 		  			 <input type="password" ng-model="newPwd1" class="newTel" placeholder="6~16个字符">
-		  			  <span ng-if="newPwd1!=''&&oldPwd==''"><font color="red">请输入旧密码</font></span>
+		  			  <span ng-if="newPwd1!=''&&oldPwd==''"><font color="red">旧密码不能为空~</font></span>
+		  			  <span ng-if="newPwd1!='' && newPwd1.length<6 && oldPwd!=''"><font color="red">密码长度最少6位~</font></span>
 		  		</div>
 		  		<div class="lines">
 		  			<span>确认密码：</span>
