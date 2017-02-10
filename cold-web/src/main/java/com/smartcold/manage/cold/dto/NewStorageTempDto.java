@@ -6,11 +6,20 @@ import java.util.Map;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 
 public class NewStorageTempDto {
-	private float startTemperature;
-	private float tempdiff;
 	private String name;
+	private Long systime;
+	private float tempdiff;
+	private float startTemperature;
 	private List<StorageKeyValue> list;
 	private Map<String, List<StorageKeyValue>> tempMap;
+
+	public Long getSystime() {
+		return systime;
+	}
+
+	public void setSystime(Long systime) {
+		this.systime = systime;
+	}
 
 	public float getStartTemperature() {
 		return startTemperature;

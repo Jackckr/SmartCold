@@ -67,6 +67,7 @@ public class ColdStorageController {
 		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
 		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
 		storageTempDto.setName(coldStorageSetEntity.getName());
+		storageTempDto.setSystime(new Date().getTime());
 		return storageTempDto;
 	}
 

@@ -10,7 +10,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         Highcharts.setOptions({  global: {useUTC: false  } , colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] });
         $http.get('/i/coldStorage/getPCTempByTime', { params: {"oid": $stateParams.storageID,'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
-        	var yData = [], tempMap = result.tempMap;
+        	var yData = [], tempMap = result.tempMap,systime=result.systime;
             var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
         	var i= 0,tempList=newdata = [],vo=cuttime=lasttime=null; 
             for(var key in tempMap) { 
@@ -23,7 +23,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 	                	 if(cuttime-lasttime>120000){ newdata.push({ x: lasttime+60000,y: null });} //修正中间数据短传问题1
 	                	 newdata.push({ x: cuttime,y: vo.value });
 					}
-	                if( maxTime-cuttime>120000){
+	                if( systime-cuttime>1800000&&systime-maxTime<600000){//大于半个小时。。提醒
 	                	newdata.push({ x: maxTime,y:null }); 
 	                	if(!$scope.isErr){ $scope.isErr=true;}
 	                }   //修正尾部数据短传问题2
