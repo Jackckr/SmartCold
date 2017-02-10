@@ -34,7 +34,7 @@
 			    audit=#{audit}
 			</if>
 		    <if test="keyword != null">
-		        AND username like "%"#{keyword}"%"
+		        AND username like "%"#{keyword}"%"  or `telephone`  like "%"#{keyword}"%" 
 		    </if>
 		 </where>
          order by `addTime` desc
