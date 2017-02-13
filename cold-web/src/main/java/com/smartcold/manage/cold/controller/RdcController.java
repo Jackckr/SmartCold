@@ -1,12 +1,5 @@
 package com.smartcold.manage.cold.controller;
 
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +70,11 @@ public class RdcController {
 	@ResponseBody
 	public Object findRDCByUserid(@RequestParam int userid) {
 		return rdcService.findRdcByUserid(userid);
+	}
+	@RequestMapping(value = "/getACLByRdcID", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getACLByRdcID( int rdcId) {
+		return rdcMapper.getACLByRdcID(rdcId);
 	}
 	
 	

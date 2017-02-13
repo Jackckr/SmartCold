@@ -83,6 +83,9 @@
   <select id="findRdcList" parameterType="map" resultType="Rdc">
     SELECT * FROM `Rdc` where `latitude`!=0 and `longitude`!=0 order by `addTime` desc
   </select>
+  <select id="getACLByRdcID" parameterType="Integer" resultType="map">
+   SELECT * from rdcacl where rdcid=#{rdcId};
+  </select>
 
   <select id="findRDCByRDCId" parameterType="map" resultType="Rdc">
     SELECT * FROM `Rdc` WHERE `id` = #{rdcID}

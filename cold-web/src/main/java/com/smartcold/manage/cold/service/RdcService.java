@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.smartcold.manage.cold.entity.olddb.Rdc;
 
@@ -18,4 +19,6 @@ public interface RdcService {
 	List<Rdc> findRdcByUserid(int userid);
 
 	List<Rdc> findRdcsByUserId(int userId);
+	
+	Map<String,Object> findRdcAcl(int rdcId );
 }

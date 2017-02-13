@@ -142,6 +142,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         	$rootScope.initAllByRdcId = function(rdcId){
         		$rootScope.rdcId = rdcId;
         		window.sessionStorage.smrdcId=rdcId;//缓存rdcid
+        		// 初始权限
+        		$http.get('/i/rdc/getACLByRdcID?rdcId=' + rdcId).success( function(data,status,headers,config){
+        					debugger;
+        		});
         		// 初始化冷库
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
@@ -407,11 +411,18 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/rdcPower/:rdcId',
         controller: 'rdcPower',
         templateUrl: 'app/template/rdcPower.html'
-    }).state('historyData',{
+    })
+    .state('historyData',{
     	url:'/historyData',
     	controller: 'historyData',
         templateUrl: 'app/template/historyData.html'
-    }).state('power',{
+    })
+    .state('exphistoryData',{
+    	url:'/exphistoryData',
+    	controller: 'exphistoryData',
+    	templateUrl: 'app/template/exphistoryData.html'
+    })
+    .state('power',{
     	url:'/power/{powerid}',
     	controller: 'power',
         templateUrl: 'app/template/power.html'
