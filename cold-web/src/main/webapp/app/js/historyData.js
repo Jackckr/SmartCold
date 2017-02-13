@@ -37,30 +37,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	 	   $scope.sltit=$scope.slgptit+subtit+ "-{"+ ($scope.oldnames.join(","))+"}";
    };
    
-   $scope.expdata=function(){//导出数据
-	   $scope.hidefilter();
-		if($scope.oids&&$scope.oids.length>0){
-			bothTime = $scope.picktime.split(" - ");
-			$scope.begin = bothTime[0],$scope.end = bothTime[1];
-			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
-			$("#but_expdata").attr("disabled",true);
-	        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/baseInfo/expHistoryData').attr('id', "expdataform");
-	        expfrom.attr("Content-Type","application/json;charset=UTF-8");
-	        expfrom.append($("<input>").attr("name","rdcid").attr("value",$scope.rdcid));
-	        expfrom.append($("<input>").attr("name","filename").attr("value","历史数据"));
-	        expfrom.append($("<input>").attr("name","title").attr("value",$scope.slgptit));
-	        expfrom.append($("<input>").attr("name","type").attr("value",$scope.typemode.type[$scope.sl_index]));
-	        expfrom.append($("<input>").attr("name","oids").attr("value",$scope.oids));
-	        expfrom.append($("<input>").attr("name","onames").attr("value",$scope.oldnames));
-	        expfrom.append($("<input>").attr("name","key").attr("value",$scope.typemode.key[$scope.sl_index]));
-	        expfrom.append($("<input>").attr("name","startTime").attr("value",$scope.begin));
-	        expfrom.append($("<input>").attr("name","endTime").attr("value",$scope.end));
-	        expfrom.appendTo('body').submit().remove();
-	        setTimeout(function () {$("#but_expdata").attr("disabled",false); }, 3000);
-		}else{
-			 alert("没有设置查询对象！");
-		}
-   };
+ 
 	$scope.search = function(){//查询事件
 		$scope.hidefilter();
 		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}

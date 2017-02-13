@@ -61,64 +61,64 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 			 alert("没有设置查询对象！");
 		}
    };
-	$scope.search = function(){//查询事件
-		$scope.hidefilter();
-		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}
-		if($scope.oids&&$scope.oids.length>0){
-			bothTime = $scope.picktime.split(" - ");
-			$scope.begin = bothTime[0],$scope.end = bothTime[1];
-			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
-			lineChart.showLoading({text: '数据加载中……' }); 
-			lineChart.clear(); 
-			$.ajax({
-                type: "POST",
-                url:"i/baseInfo/getKeyValueDataByFilter",traditional:true,
-                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.oldnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
-                success: function(data) {
-                    if(data.success){
-                    	$scope.drawDataLine(data.entity);
-                   }else{
-                	   lineChart.hideLoading();  
-                   }
-                }
-            });
-		 }else{
-			 lineChart.hideLoading();  
-			 alert("没有设置查询对象！");
-		 }
-	};
-	$scope.drawDataLine = function(chardata){
-		var xData=chardata.xdata,ydata=chardata.ydata;
-		var yAxismode= {type : 'value', axisLabel : {formatter: '{value}'}} ;
-		var tooltipmd= {trigger: 'axis',formatter:function(params){
-			var html=[]; 
-			if(params.length!=undefined){
-			  var relVal = params[0].name;  
-			  if(relVal!=undefined&&relVal!=""){html.push(relVal+"<br/>"); }
-	          for (var i = 0, l = params.length; i < l; i++) {  html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'); html.push(params[i].seriesName + ' : '+gettitval(params[i].value)+"<br/>" );} return html.join(""); 
-			}else{
-				html.push(params.name+"<br/>"); 
-				html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params.color+'"></span>'); 
-				html.push(params.seriesName + ' : '+gettitval(params.value)+"<br/>" );
-			   return html.join("");
-			}
-		}};
-		if($scope.sl_index==2||$scope.sl_index==3){yAxismode={type : 'value',splitNumber: 1, axisLabel: {formatter: function(value){return value==1?"开":"关";} } };}
-		var option = {
-				calculable : true,
-				legend: {data:$scope.oldnames},
-				title: {text: $scope.sltit.substring(0,$scope.sltit.indexOf("{")-1)+$scope.typemode.unit[$scope.sl_index]},
-			    tooltip :tooltipmd,
-			    xAxis : [{type : 'category',data : xData} ],
-			    yAxis :yAxismode,
-			    grid:{x:80,x2:80},
-			    series : ydata,
-			    toolbox: {show: true,feature: {dataZoom: {yAxisIndex: 'none'},dataView: {readOnly: false},magicType: {type: ['line', 'bar']},restore: {},saveAsImage: {}} }
-		};
-		lineChart.setOption(option);
-		lineChart.hideLoading();  
-	};
-	
+//	$scope.search = function(){//查询事件
+//		$scope.hidefilter();
+//		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}
+//		if($scope.oids&&$scope.oids.length>0){
+//			bothTime = $scope.picktime.split(" - ");
+//			$scope.begin = bothTime[0],$scope.end = bothTime[1];
+//			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
+//			lineChart.showLoading({text: '数据加载中……' }); 
+//			lineChart.clear(); 
+//			$.ajax({
+//                type: "POST",
+//                url:"i/baseInfo/getKeyValueDataByFilter",traditional:true,
+//                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.oldnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
+//                success: function(data) {
+//                    if(data.success){
+//                    	$scope.drawDataLine(data.entity);
+//                   }else{
+//                	   lineChart.hideLoading();  
+//                   }
+//                }
+//            });
+//		 }else{
+//			 lineChart.hideLoading();  
+//			 alert("没有设置查询对象！");
+//		 }
+//	};
+//	$scope.drawDataLine = function(chardata){
+//		var xData=chardata.xdata,ydata=chardata.ydata;
+//		var yAxismode= {type : 'value', axisLabel : {formatter: '{value}'}} ;
+//		var tooltipmd= {trigger: 'axis',formatter:function(params){
+//			var html=[]; 
+//			if(params.length!=undefined){
+//			  var relVal = params[0].name;  
+//			  if(relVal!=undefined&&relVal!=""){html.push(relVal+"<br/>"); }
+//	          for (var i = 0, l = params.length; i < l; i++) {  html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'); html.push(params[i].seriesName + ' : '+gettitval(params[i].value)+"<br/>" );} return html.join(""); 
+//			}else{
+//				html.push(params.name+"<br/>"); 
+//				html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params.color+'"></span>'); 
+//				html.push(params.seriesName + ' : '+gettitval(params.value)+"<br/>" );
+//			   return html.join("");
+//			}
+//		}};
+//		if($scope.sl_index==2||$scope.sl_index==3){yAxismode={type : 'value',splitNumber: 1, axisLabel: {formatter: function(value){return value==1?"开":"关";} } };}
+//		var option = {
+//				calculable : true,
+//				legend: {data:$scope.oldnames},
+//				title: {text: $scope.sltit.substring(0,$scope.sltit.indexOf("{")-1)+$scope.typemode.unit[$scope.sl_index]},
+//			    tooltip :tooltipmd,
+//			    xAxis : [{type : 'category',data : xData} ],
+//			    yAxis :yAxismode,
+//			    grid:{x:80,x2:80},
+//			    series : ydata,
+//			    toolbox: {show: true,feature: {dataZoom: {yAxisIndex: 'none'},dataView: {readOnly: false},magicType: {type: ['line', 'bar']},restore: {},saveAsImage: {}} }
+//		};
+//		lineChart.setOption(option);
+//		lineChart.hideLoading();  
+//	};
+//	
 
 	//********************************************************************事件START**********************************************************************
 	$scope.checktime=function(startDate,endDate){

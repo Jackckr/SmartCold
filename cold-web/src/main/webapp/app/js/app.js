@@ -148,21 +148,21 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         		        var mlacl=data.authority.split("_");
         		        if(mlacl.length=5){
         		        	var ml=$("#lfmenu>li.treeview"),len1= mlacl.length;
-        		        	
         		        	for (var k = 0;k <len1 ; k++) {
         		        		var acl= mlacl[k], em= ml[k], facl=acl.substr(0,1);
         		        	    if(facl==1){
-        		        	    	if(k==0){
+        		        	    	if(acl.length>1){
         		        	    		var sm=$(em).children("ul").children();
         		        	    		var len2=sm.length;
-        		        	    		for (var a = 0; a <len2 ; a++) {
-        		        	    			var sacl=acl.substr(a+1,1);
-        		        	    			if(sacl==0){
-        		        	    				$(sm[a]).addClass("quanxian");
-        		        	    			}
+        		        	    		if(sm.length==len2){
+        		        	    			for (var a = 0; a <len2 ; a++) {
+            		        	    			var sacl=acl.substr(a+1,1);
+            		        	    			if(sacl==0){
+            		        	    				$(sm[a]).addClass("quanxian");
+            		        	    			}
+            		        	    		}
         		        	    		}
         		        	    	}
-        		        	    	
         		        	    }else{
         		        	    	$(em).addClass("quanxian");
         		        	    }	
