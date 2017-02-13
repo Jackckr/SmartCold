@@ -20,6 +20,8 @@ public class CommentDTO {
 	private String addTime;
 
 	private String commerName;
+	
+	private  String nickname;
 
 	private float grade;
 
@@ -123,6 +125,14 @@ public class CommentDTO {
 
 	public void setServiceGrade(float serviceGrade) {
 		this.serviceGrade = serviceGrade;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public float getSanitaryGrade() {
