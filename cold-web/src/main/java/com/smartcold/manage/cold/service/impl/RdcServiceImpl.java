@@ -66,7 +66,7 @@ public class RdcServiceImpl implements RdcService {
 	}
 
 	@Override
-	public Map<String, Object> findRdcAcl(int rdcId) {
+	public Object findRdcAcl(int rdcId) {
 		return rdcDao.getACLByRdcID(rdcId);
 	}
 

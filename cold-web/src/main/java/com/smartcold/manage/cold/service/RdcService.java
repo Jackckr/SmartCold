@@ -20,5 +20,5 @@ public interface RdcService {
 
 	List<Rdc> findRdcsByUserId(int userId);
 	
-	Map<String,Object> findRdcAcl(int rdcId );
+	Object findRdcAcl(int rdcId );
 }

@@ -144,7 +144,36 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         		window.sessionStorage.smrdcId=rdcId;//缓存rdcid
         		// 初始权限
         		$http.get('/i/rdc/getACLByRdcID?rdcId=' + rdcId).success( function(data,status,headers,config){
-        					debugger;
+        			if(data&&data!=""){
+        		        var mlacl=data.authority.split("_");
+        		        if(mlacl.length=5){
+        		        	var ml=$("#lfmenu>li.treeview"),len1= mlacl.length;
+        		        	
+        		        	for (var k = 0;k <len1 ; k++) {
+        		        		var acl= mlacl[k], em= ml[k], facl=acl.substr(0,1);
+        		        	    if(facl==1){
+        		        	    	if(k==0){
+        		        	    		var sm=$(em).children("ul").children();
+        		        	    		var len2=sm.length;
+        		        	    		for (var a = 0; a <len2 ; a++) {
+        		        	    			var sacl=acl.substr(a+1,1);
+        		        	    			if(sacl==0){
+        		        	    				$(sm[a]).addClass("quanxian");
+        		        	    			}
+        		        	    		}
+        		        	    	}
+        		        	    	
+        		        	    }else{
+        		        	    	$(em).addClass("quanxian");
+        		        	    }	
+        		        		
+        		        	}
+        		        }else{
+        		        	alert("权限配置异常！");
+        		        }
+        		        
+        		        
+        			}
         		});
         		// 初始化冷库
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
@@ -363,10 +392,6 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/myColdStorage/:storageID',
     	controller: 'myColdStorage',
         templateUrl: 'app/template/myColdStorage.html'
-    }).state('designStorage',{
-    	url:'/designStorage',
-    	controller: 'designStorage',
-        templateUrl: 'app/template/designStorage.html'
     }).state('report',{
     	url:'/report-{time}-{item}',
     	controller: 'report',
@@ -506,7 +531,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/alarmLog',
     	controller: 'alarmLog',
         templateUrl: 'app/template/alarmLog.html'
-    });
+    }).state('designStorage',{//选型
+    	url:'/designStorage',
+    	controller: 'designStorage',
+        templateUrl: 'app/template/designStorage.html'
+    })
 });
 
 
