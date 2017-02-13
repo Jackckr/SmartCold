@@ -36,10 +36,15 @@
 		//alert(11)
 		$scope.getMobileCode('user_upphone',$("#telNum").val(),'#but_vercode2');
 	};
-	$scope.vertelephone=function(){//验证手机号码
-		var length = ($scope.telephone+'').length; 
+	
+	$scope.chphone=function(telephone){
+		var length = (telephone+'').length; 
 		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
-		var ct=$scope.telephone&&length == 11 && mobile.test($scope.telephone);
+		return telephone&&length == 11 && mobile.test(telephone);
+	}
+	
+	$scope.vertelephone=function(){//验证手机号码
+		var ct=$scope.chphone($scope.telephone);
 		if(ct){
 			victdata.victtl=true;
 			$.post( ER.root+"/i/user/existenceUserName", {userName: $scope.telephone}, function(data) {
@@ -91,9 +96,16 @@
 		}
 	};
 	$scope.savedata=function(){//验证码
-		$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data: $('#datafrom').serialize(),success: function(data) { 
+		var data=$('#datafrom').serialize();
+		var userName= $scope.userinfo.username;
+		var ct=$scope.chphone(userName);
+		if(ct){
+			data+="&username="+$("#telNum").val();
+		}
+		$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data: data,success: function(data) { 
 			if(data){
 				alert("恭喜你，号码修改成功了");
+//				data.userName = $scope.telephone;
 				window.user = data;window.localStorage.lkuser=JSON.stringify(data);
 				tourl("personal.html");
 			}else{layer.open({content:'修改失败了，请稍后重试吧',btn: '确定'});}

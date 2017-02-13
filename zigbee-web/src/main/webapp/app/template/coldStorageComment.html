@@ -347,15 +347,14 @@
                                 <div class="row" ng-repeat="comment in comments"
                                      style="padding-bottom: 10px;height: auto;width: 95%;position: relative;top: 10px;left: 1px;border-style: none none solid none;border-bottom:1px  solid #d3d3d3;">
                                     <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
-                                        <div class="row">
-                                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
-                                                <a href="" class="pull-left"
-                                                   style="position: relative;top: 5px;left: 0px"><img
+                                        <div class="row" style="padding-top: 10px;">
+                                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2 text-center">
+                                                <a href=""><img style="border-radius:50%;overflow: hidden;border:1px solid #eee;"
                                                         ng-src="{{comment.avatar}}" width="60px" height="60px"/></a>
 
-                                                <div style="position: relative;left: 10px;top: 5px;height: 200px;">
+                                                <div>
                                                     <p style="color: #428bca">
-                                                        <span style="color: #00b3ee">{{comment.commerName}}</span>
+                                                        <span style="color: #00b3ee">{{comment.nickname}}</span>
                                                     </p>
 
                                                     <p>
