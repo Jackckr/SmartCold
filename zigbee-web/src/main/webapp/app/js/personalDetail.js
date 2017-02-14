@@ -78,7 +78,7 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
     	var isok=vsphone($scope.telephone);
     	if(isok){
     		if($scope.telephone==$scope.oldTele){
-    		    alert("请输入新的手机号");
+    		    alert("请输入新的手机号~");
     		}else{
     			$.post('/i/user/identityVerify', {telephone :$scope.telephone}, function(data) {
     				em.attr('disabled', 'disabled');
@@ -87,7 +87,7 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
     			});
     		}
     	}else{
-    		alert("请正确输入新的手机号码！");
+    		alert("请正确输入新的手机号码~");
     	}
     };
     
@@ -103,14 +103,14 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 	 */
 	$scope.cktelephone=function(){
 		    if($scope.telephone.length=11&&vsphone($scope.telephone)){
-			if($scope.telephone==$scope.oldTele){$("#authcode2").attr('disabled', "disabled");alert("请输入有效的手机号码！");return;}
+			if($scope.telephone==$scope.oldTele){$("#authcode2").attr('disabled', "disabled");alert("请输入有效的手机号码~");return;}
 			var ckuserName=	vsphone($scope.user.username);//判断用户名是否为手机号
 		    if(ckuserName){//
 				    $.post('/i/user/userNameVerify', {username : $scope.telephone}, function(data) {//true 表示可用
 	    				if(data){
 	    					$("#authcode2").attr('disabled', false);
 	    				}else{
-	    					alert("该手机已经注册！请更换手机号重试！");
+	    					alert("该手机已经注册！请更换手机号重试~");
 	    					$("#authcode2").attr('disabled', "disabled");
 	    				}
 	    			});
@@ -126,19 +126,40 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
      *更新用户信息
      *同步执行（禁止异步操作）
      */
+	$scope.pwd = function() {
+		var password = $scope.newPwd1;
+		if(password.length>=6){
+			if (/^(\d)\1+$/.test(password)){
+				$("#pwdError").html("密码太过简单了~");
+				return false;
+			}/*else{
+				$("#pwdError").html("");
+			}*/
+		}
+	}
 	$scope.goUpdateUser = function() {
 		var ckvcd=ckpwd=true;
 		//校验用户名 ，验证码
 		if($scope.oldTele != $scope.telephone&&$scope.telephone!=""){
-				if($scope.telephone==$scope.oldTele){alert("请输入有效的手机号码！");return;}
+				if($scope.telephone==$scope.oldTele){alert("请输入有效的手机号码~");return;}
 				var ckuserName=	vsphone($scope.user.username);//判断用户名是否为手机号
 			    if(ckuserName){$.post('/i/user/userNameVerify', {username : $scope.telephone}, function(data) {	if(!data){alert("该手机已经注册！请更换手机号重试！");return;}}); }
 			    $.ajax({ type : "POST", url : '/i/user/checkVerifyCode', data:{verifycode : $scope.verifycode},cache : false, async : false, success : function (result){  ckvcd =result;$scope.verifycode_err=!ckvcd;
 			    if(!result){return false;}
 			     } }); 
 		}
+		if($scope.oldPwd == '' || $scope.newPwd1 == ''|| $scope.newPwd2 == ''){
+			alert("请输入有效密码~");return;
+		}
+		if($scope.newPwd1.length<6){
+			$("#pwdError").html("密码长度最少6位~");return;
+		}
 		if($scope.oldPwd != '' && $scope.newPwd1 != ''&& $scope.newPwd2 != ''){
-			$.ajax({ type : "POST", url : '/i/user/checkOldPassword', data:{pwd : $scope.oldPwd}, cache : false, async : false, success : function (result){ ckpwd =result; $scope.opwd_err=!result;	if(!result){return false;}}});
+			if($scope.newPwd1 ==  $scope.newPwd2 ){
+				$.ajax({ type : "POST", url : '/i/user/checkOldPassword', data:{pwd : $scope.oldPwd}, cache : false, async : false, success : function (result){ ckpwd =result; $scope.opwd_err=!result;	if(!result){return false;}}});
+			}else{
+				return;
+			}
 		}
 			if(ckvcd&&ckpwd){
 				if($scope.hometownid==undefined)
@@ -157,11 +178,7 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 					nickname : $scope.nickname
 				};
 				if($scope.oldTele != $scope.telephone&&$scope.telephone!=""&&vsphone($scope.user.username)){
-					if(confirm('修改手机号后只能用新的手机号码登录,确认修改吗？')){
-						data.username=$scope.telephone;
-					}else{
-						return;
-					}
+					data.username=$scope.telephone;
 				}
 				var formdata = new FormData();
 				formdata.append('fileData',$("input[type='file']")[0].files[0]);

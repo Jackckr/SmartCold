@@ -290,7 +290,7 @@ function checkPassword(){
 	}else if(password.length>=6){
 		$("#password_error").html("");
 		if (/^(\d)\1+$/.test(password)){
-			$("#password_error").html("密码太过简单了~");
+			$("#password_error").html("密码太过简单了~").css("color","#f80");
 			$('#submit').attr("disabled",true);
 			return false;
 		}else{
