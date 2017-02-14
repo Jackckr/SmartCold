@@ -96,7 +96,7 @@
 	            <form id="loginFrm" class="user-common-form" role="form" method="post" onsubmit="return false;">
 	                <h4 class="user-common-h4 text-center">链库注册</h4>
 	                <div class="form-group">
-	                    <input type="text" class="form-control" name="username" id="username" placeholder='用户名'>
+	                    <input type="text" class="form-control" name="username" id="username" placeholder='用户名(数字字母均可，不能包含中文和特殊字符)'>
 	                </div>
 	                <!-- 错误信息 popover -->
 	                    <div>
@@ -159,7 +159,7 @@
 	                        </div>
 	                    </div>
 	                    <!-- 错误信息 popover end -->
-	                <button type="submit" id="submit" class="btn btn-form-common form-control" style="margin-top: 15px;">注册</button>
+	                <button type="submit" id="submit" class="btn btn-form-common form-control" disabled style="margin-top: 15px;pointer-events:auto;">注册</button>
 	                <div class="checkbox no-padding">
 	                    <a href="login.html" class="a pull-right">已经注册</a>
 	                </div>
@@ -175,17 +175,26 @@
 $(function(){
 	$('#username').blur(function(){
 	    var flag;
-	    $.post('/i/user/userNameVerify',{
-			username:$('input[name=username]').val()
-		}, function(data){
-			if(!data)
-			  $("#username_error")[0].innerText = "用户名已存在";
-		});
-		if($("#username")[0].value == ""){
-		    $("#username_error")[0].innerText = "用户名不能为空";
-		    }
-		else{
-			$("#username_error")[0].innerText = "";
+	    var reg=/^[a-zA-Z0-9][a-zA-Z0-9]{5,15}$/;
+	    if ($("#username").val().length>0&&reg.test($("#username").val())==false){
+			 console.log($("#username").val())
+			 $("#username").focus();
+			 $("#submit").attr("disabled",true);
+			 $("#username_error").html('用户名不能包含中文和特殊字符，长度不得低于6位~');
+			 return false;
+		}else{
+		    $.post('/i/user/userNameVerify',{
+				username:$('input[name=username]').val()
+			}, function(data){
+				if(!data)
+				  $("#username_error").html( "用户名已存在");
+			});
+			if($("#username").val() == ""){
+			    $("#username_error").html( "用户名不能为空");
+			    }
+			else{
+				$("#username_error").html("");
+			}
 		}
 	});
 	function vsphone(telephone) {// 验证手机号码
@@ -271,27 +280,33 @@ function checkPassword(){
 	var password = $('input[name=password]').val();
 	var password1 = $('input[name=password1]').val();
 	if(password == ''){
-		$("#password_error").html("密码不能为空");
+		$("#password_error").html("密码不能为空~");
 		$('#submit').attr("disabled",true);
 		return false;
 	}else if(password.length<6){
-		$("#password_error").html("密码长度最少六位");
+		$("#password_error").html("密码长度最少六位~");
 		$('#submit').attr("disabled",true);
 		return false;
 	}else if(password.length>=6){
 		$("#password_error").html("");
-		if(password1.length<6){
-			$("#password_error1").html("密码长度最少六位");
+		if (/^(\d)\1+$/.test(password)){
+			$("#password_error").html("密码太过简单了~");
 			$('#submit').attr("disabled",true);
 			return false;
-		}else if(password1.length>=6){
-			if(password != password1){
-				$("#password_error1").html("两次密码不一样");
+		}else{
+			if(password1.length<6){
+				$("#password_error1").html("再次输入的密码长度最少六位~");
 				$('#submit').attr("disabled",true);
 				return false;
-			}else{
-				$("#password_error1").html("");
-				$('#submit').attr("disabled",false);
+			}else if(password1.length>=6){
+				if(password != password1){
+					$("#password_error1").html("两次密码不一致~");
+					$('#submit').attr("disabled",true);
+					return false;
+				}else{
+					$("#password_error1").html("");
+					$('#submit').attr("disabled",false);
+				}
 			}
 		}
 	}

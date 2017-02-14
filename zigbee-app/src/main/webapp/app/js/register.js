@@ -42,33 +42,50 @@ var app = angular.module('app', []).controller('register',function($http, $locat
     		victdata.victyzm= $scope.verrcode&& $scope.mtvarcode&& ($scope.mtvarcode.toLowerCase() == $scope.verrcode.toLowerCase());
     	} 
    };
+   $scope.checkpwd=function(){
+	   var password = $("#txt_password").val(); 
+       var repsword = $("#txt_repsword").val(); 
+       if(password == ''){
+			$("#mention1").html("密码不能为空");
+			$('#app_but1').attr("disabled",true);
+			return false;
+		}else if(password.length<6){
+			$("#mention1").html("密码长度最少六位");
+			$('#app_but1').attr("disabled",true);
+			return false;
+		}else if(password.length>=6){
+			$("#mention1").html("");
+			if (/^(\d)\1+$/.test(password)){
+				$("#mention1").html("密码太过简单了~");
+				$('#app_but1').attr("disabled",true);
+				return false;
+			}else{
+				if(repsword.length<6){
+					$("#mention1").html("再次输入的密码长度最少六位");
+					$('#app_but1').attr("disabled",true);
+					return false;
+				}else{
+					if(password != repsword){
+						$("#mention1").html("两次密码输入不一致，请重新输入");
+						$('#app_but1').attr("disabled",true);
+						return false;
+					}else{
+						$("#mention1").html("");
+						$('#app_but1').attr("disabled",false);
+					}
+				}
+			}
+		}else{
+			$("#mention2").html("输入有误，请重新输入");
+		}
+   }
    $scope.checkData=function (){ 
-	     $("#mention1").html();
+	      $("#mention1").html();
 	      if(!victdata.victtl){ $("#mention1").html("请输入正确手机号码~");return false; }
 	      if(!victdata.extname){ $("#mention1").html("该手机已经注册~");return false; }
 	      if(!victdata.victyzm){ $("#mention1").html("验证码错误~请重新输入~");return false; }
-  	       var password = $("#txt_password").val(); 
-           var repsword = $("#txt_repsword").val(); 
-           if (password.length!=0 && repsword.length!=0) {
-        	   if(password.length<6){
-        		   $("#mention1").html("密码长度不能小于6位~");
-        		    return false;
-        	   }
-           	   if(password != repsword) {
-		         $("#mention1").html("两次密码输入不一致，请重新输入");
-		         return false;
-		       }
-		       else {
-		    		$scope.savedata();
-		       }
-           } else{
-        	 if(password.length==0){
-        		 $("#txt_password").focus();
-        	 }else if(repsword.length==0){
-        		 $("#txt_repsword").focus();
-        	 }
-           	  $("#mention1").html("密码不能为空哦，请输入密码~");
-           }
+	      $scope.savedata();
+  	      
   	  };
    	$scope.savedata= function () {// 修改密码
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
