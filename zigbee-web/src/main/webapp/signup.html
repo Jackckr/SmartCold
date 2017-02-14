@@ -295,7 +295,7 @@ function checkPassword(){
 			return false;
 		}else{
 			if(password1.length<6){
-				$("#password_error1").html("密码长度最少六位~");
+				$("#password_error1").html("再次输入的密码长度最少六位~");
 				$('#submit').attr("disabled",true);
 				return false;
 			}else if(password1.length>=6){
