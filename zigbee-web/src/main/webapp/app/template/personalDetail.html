@@ -33,7 +33,7 @@
 		  	<div class="editTel">
 		  		<h4>修改联系方式</h4>
 		  		<div id="tele1"><span>原手机号码：</span><i>{{oldTele}}</i>
-		  		<button id="update" class="btn btn-primary">修改</button>
+		  		<button id="update" class="btn btn-primary" ng-click="uptelephone()">修改</button>
 		  		</div>
 		  		 <!-- <button id="authcode1" class="btn btn-primary">获取手机验证码</button></div> -->
 		  		 
@@ -43,12 +43,13 @@
 				 </div> -->
 		  		 <div class="lines" id="tele2"  style="display:none">
 		  		 	<span>新手机号码：</span>
-			  		 <input type="text" class="newTel"  ng-model="telephone" name="telephone" placeholder="请输入您的新手机号码">
-			  		 <button id="authcode2" class="btn btn-primary">获取手机验证码</button>
+			  		 <input id="input_newTel" type="tel" class="newTel"  ng-model="telephone" name="telephone" placeholder="请输入您的新手机号码" ng-change="cktelephone()">
+			  		 <button id="authcode2" class="btn btn-primary" disabled="disabled" ng-click="sendverifCode()">获取手机验证码</button>
 		  		 </div>
 		  		 <div class="lines" id="yzm" style="display:none">
 				 	<span>验证码:</span>
 			  		 <input type="text" ng-model="verifycode" class="newTel" placeholder="请输入您的验证码">
+			  		   <span ng-if="verifycode_err"><font color="red">验证码错误！</font></span>
 				 </div>
 				 
 		  	</div>
@@ -101,6 +102,7 @@
 		  		<div class="lines">
 		  			<span>旧密码：</span>
 		  			 <input type="password" class="newTel" ng-model="oldPwd" placeholder="请输入旧密码">
+		  			  <span ng-if="opwd_err"><font color="red">验证码错误！</font></span>
 		  		</div>
 		  		<div class="lines">
 		  			<span>新密码：</span>
@@ -118,19 +120,3 @@
 		</div>
 	<!-- content end-->
 	</div>	
-	<script>
-		$(function() {
-			$('#authcode2').click(function() {
-				$(this).attr('disabled', 'disabled');
-				$("#yzm").css("display", "inline");
-				$.post('/i/user/identityVerify', {
-					telephone : $('input[name=telephone]').val()
-				}, function(data) {
-					alert(data.message)
-				});
-			});
-			$('#update').click(function() {
-				$("#tele2").css("display", "block");
-			});
-		});
-	</script>

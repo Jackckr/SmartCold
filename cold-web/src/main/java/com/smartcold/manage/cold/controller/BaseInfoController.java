@@ -265,8 +265,19 @@ public class BaseInfoController extends BaseController {
 			String mode[][] = { { "数据id", "对象", "值", "时间" }, { "id", "key", "value", "addtime" }, { "5", "5", "10", "10", "10", "10" } };// 标题（必须），对应属性（必须），宽度
 			for (int i = 0; i < oids.length; i++) {
 				int oid = oids[i];
-				List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
+//				List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
+//				alldata.add(datalist);
+				List<StorageKeyValue> datalist =new ArrayList<StorageKeyValue>();
+				for (int j = 0; j <200000; j++) {
+					StorageKeyValue k=new StorageKeyValue();
+					k.setId(j);
+					k.setKey(key);
+					k.setOid(oid);
+					k.setValue(new Double(j));
+					datalist.add(k);
+				}
 				alldata.add(datalist);
+				
 			}
 			ExportExcelUtil.expExcel(response, filename + "_" + title + ".xls", title, mode, null, onames, alldata);
 		} catch (Exception e) {

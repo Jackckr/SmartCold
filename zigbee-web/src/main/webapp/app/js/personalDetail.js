@@ -7,7 +7,7 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 				url = "http://" + $location.host() + ":" + $location.port();
 				window.location.href = url;
 			}
-	    })
+	    });
 		//});
 	        $scope.oldTele = $scope.user.telephone;
 		    $scope.verifycode = '';
@@ -16,7 +16,7 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 		    $scope.newPwd2 = '';
 		    
 		    $scope.avatar = $scope.user.avatar;
-		    $scope.telephone = $scope.user.telephone;
+		    $scope.telephone ="";
 		    $scope.realname = $scope.user.realname;
 		    $scope.sex = $scope.user.sex;
 		    $scope.hometownid = $scope.user.hometownid;
@@ -36,13 +36,18 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
     }
     $scope.load();
    
-    // 获取省列表
-    $http.get('/i/city/findProvinceList').success(function (data) {
-        $scope.provinces = data;
-    });
-    var verifyCodeflag = true;
-	var OldPwdflag = false;
+    
+    function vsphone(telephone) {// 验证手机号码
+		var length = (telephone + '').length;
+		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+		return telephone && length == 11&& mobile.test(telephone);
+	};
+    
 	
+	
+
+    // 获取省列表
+    $http.get('/i/city/findProvinceList').success(function (data) { $scope.provinces = data;});
 	$scope.setimg = function(em, imgid) {
         var oFile = $(em)[0].files[0];
         var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
@@ -60,74 +65,117 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
       
     };
 
-    $("#headImg").change(function() {
-    	$scope.setimg(this,'showimg');
-        });
+  
+    $("#headImg").change(function() {$scope.setimg(this,'showimg');});
+    $scope.verifycode_err=$scope.opwd_err=false;
+    
+    /**
+     * 修改手机号码
+     */
+    $scope.sendverifCode=function(){
+    	$("#yzm").css("display", "inline");
+    	var em=$("#authcode2");
+    	var isok=vsphone($scope.telephone);
+    	if(isok){
+    		if($scope.telephone==$scope.oldTele){
+    		    alert("请输入新的手机号");
+    		}else{
+    			$.post('/i/user/identityVerify', {telephone :$scope.telephone}, function(data) {
+    				em.attr('disabled', 'disabled');
+    				$("#input_newTel").attr('disabled', 'disabled');
+    				alert(data.message);
+    			});
+    		}
+    	}else{
+    		alert("请正确输入新的手机号码！");
+    	}
+    };
+    
+    
+    $scope.uptelephone=function(){
+    	$scope.telephone="";
+    	$("#tele2").css("display", "block");
+    	$("#input_newTel").attr('disabled', false);
+    };
+    
+	/**
+	 *  校验手机号码是否合法
+	 */
+	$scope.cktelephone=function(){
+		    if($scope.telephone.length=11&&vsphone($scope.telephone)){
+			if($scope.telephone==$scope.oldTele){$("#authcode2").attr('disabled', "disabled");alert("请输入有效的手机号码！");return;}
+			var ckuserName=	vsphone($scope.user.username);//判断用户名是否为手机号
+		    if(ckuserName){//
+				    $.post('/i/user/userNameVerify', {username : $scope.telephone}, function(data) {//true 表示可用
+	    				if(data){
+	    					$("#authcode2").attr('disabled', false);
+	    				}else{
+	    					alert("该手机已经注册！请更换手机号重试！");
+	    					$("#authcode2").attr('disabled', "disabled");
+	    				}
+	    			});
+			 }
+		}else{
+			$("#authcode2").attr('disabled', "disabled");
+		}
+	};
+	
+    /**
+     *更新用户信息
+     *同步执行（禁止异步操作）
+     */
 	$scope.goUpdateUser = function() {
-					$http.get('/i/user/checkVerifyCode', {
-						params : {
-							verifycode : $scope.verifycode
-						}
-					}).success(function(res1) {
-						if ($scope.oldTele != $scope.telephone) 
-						    verifyCodeflag = res1;
-						$http.get('/i/user/checkOldPassword', {
-							params : {
-								pwd : $scope.oldPwd
-							}
-						}).success(function(res2) {
-							if ($scope.oldPwd == '' && $scope.newPwd1 == ''
-								&& $scope.newPwd2 == '')
-							OldPwdflag = true;
-							else
-								OldPwdflag = res2;
-							if (verifyCodeflag) {
-									if (OldPwdflag){ 
-										if($scope.hometownid==undefined)
-											$scope.hometownid =  '';
-										if($scope.addressid==undefined)
-											$scope.addressid =  '';
-										data = {
-											avatar : $scope.avatar,
-											telephone : $scope.telephone,
-											realname : $scope.realname,
-											sex : $scope.sex,
-											hometownid : $scope.hometownid,
-											addressid : $scope.addressid,
-											password : $scope.newPwd1,
-											email : $scope.email,
-											nickname : $scope.nickname
-										};
-										var formdata = new FormData();
-										formdata.append('fileData',
-												$("input[type='file']")[0].files[0]);
-										$.each(data, function(index, item) {
-											formdata.append(index, item);
-										});
-										$.ajax({
-											type : 'POST',
-											url : "/i/user/updateUser",
-											data : formdata,
-											processData : false,
-											contentType : false,
-											success : function(data) {
-												//alert("删除成功");
-												//$state.reload(); 
-												window.location.reload();
-											}
-										});
-									
-									 
-									}else {
-										alert("旧密码输入错误!");
-									}
-								} else {
-									alert("验证码输入错误!");
-								}
-						});
-					});
-				
-				
-			
-			};
-		});
+		var ckvcd=ckpwd=true;
+		//校验用户名 ，验证码
+		if($scope.oldTele != $scope.telephone&&$scope.telephone!=""){
+				if($scope.telephone==$scope.oldTele){alert("请输入有效的手机号码！");return;}
+				var ckuserName=	vsphone($scope.user.username);//判断用户名是否为手机号
+			    if(ckuserName){$.post('/i/user/userNameVerify', {username : $scope.telephone}, function(data) {	if(!data){alert("该手机已经注册！请更换手机号重试！");return;}}); }
+			    $.ajax({ type : "POST", url : '/i/user/checkVerifyCode', data:{verifycode : $scope.verifycode},cache : false, async : false, success : function (result){  ckvcd =result;$scope.verifycode_err=!ckvcd;
+			    if(!result){return false;}
+			     } }); 
+		}
+		if($scope.oldPwd != '' && $scope.newPwd1 != ''&& $scope.newPwd2 != ''){
+			$.ajax({ type : "POST", url : '/i/user/checkOldPassword', data:{pwd : $scope.oldPwd}, cache : false, async : false, success : function (result){ ckpwd =result; $scope.opwd_err=!result;	if(!result){return false;}}});
+		}
+			if(ckvcd&&ckpwd){
+				if($scope.hometownid==undefined)
+					$scope.hometownid =  '';
+				if($scope.addressid==undefined)
+					$scope.addressid =  '';
+				data = {
+					avatar : $scope.avatar,
+					telephone : $scope.telephone,
+					realname : $scope.realname,
+					sex : $scope.sex,
+					hometownid : $scope.hometownid,
+					addressid : $scope.addressid,
+					password : $scope.newPwd1,
+					email : $scope.email,
+					nickname : $scope.nickname
+				};
+				if($scope.oldTele != $scope.telephone&&$scope.telephone!=""&&vsphone($scope.user.username)){
+					if(confirm('修改手机号后只能用新的手机号码登录,确认修改吗？')){
+						data.username=$scope.telephone;
+					}else{
+						return;
+					}
+				}
+				var formdata = new FormData();
+				formdata.append('fileData',$("input[type='file']")[0].files[0]);
+				$.each(data, function(index, item) {formdata.append(index, item);});
+				$.ajax({
+					type : 'POST',
+					url : "/i/user/updateUser",
+					data : formdata,
+					processData : false,
+					contentType : false,
+					success : function(data) {
+						//alert("删除成功");
+						//$state.reload(); 
+						window.location.reload();
+					}
+				});
+			}		
+		};
+});

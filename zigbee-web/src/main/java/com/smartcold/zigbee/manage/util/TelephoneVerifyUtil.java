@@ -13,9 +13,9 @@ import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
 public class TelephoneVerifyUtil {
 	// 链库
-		public String url = "http://gw.api.taobao.com/router/rest";
-		public String appkey = "23406243";
-		public String secret = "13872806b7fe94689eda5ffaf2d2bd9e";
+		public final static String url = "http://gw.api.taobao.com/router/rest";
+		public final static String appkey = "23406243";
+		public final static String secret = "13872806b7fe94689eda5ffaf2d2bd9e";
 		TaobaoClient client = null;
 
 		public TelephoneVerifyUtil() {
@@ -64,18 +64,18 @@ public class TelephoneVerifyUtil {
 		 * @throws ApiException
 		 */
 		public String identityVerify(String telephone) throws ApiException {
-			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-			req.setExtend("123456");
-			req.setSmsType("normal");
-			req.setSmsFreeSignName("链库网");
+//			AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+//			req.setExtend("123456");
+//			req.setSmsType("normal");
+//			req.setSmsFreeSignName("链库网");
 			String code = generateCode();
-			// System.out.println("{\"code\":\"123\"}");
+			 System.out.println("{\"code\":"+code+"}");
 			// System.out.println("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
-			req.setSmsParamString("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
-			req.setRecNum(telephone);
-			req.setSmsTemplateCode("SMS_12145753"); //【链库网】验证码3GZ9，您正在进行链库身份验证，打死不要告诉别人哦！
-			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-			System.out.println(rsp.getBody());
+//			req.setSmsParamString("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
+//			req.setRecNum(telephone);
+//			req.setSmsTemplateCode("SMS_12145753"); //【链库网】验证码3GZ9，您正在进行链库身份验证，打死不要告诉别人哦！
+//			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+//			System.out.println(rsp.getBody());
 			return code;
 		}
 		
@@ -146,12 +146,7 @@ public class TelephoneVerifyUtil {
 		 * @return
 		 */
 		public String generateCode() {
-			String[] beforeShuffle = new String[] { "0", "1", "2", "3", "4", "5", "6", "7",
-					"8", "9" };
-			/*String[] beforeShuffle = new String[] { "2", "3", "4", "5", "6", "7",
-					"8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
-					"W", "X", "Y", "Z" };*/
+			String[] beforeShuffle = new String[] { "0", "1", "2", "3", "4", "5", "6", "7","8", "9" };
 			List<String> list = Arrays.asList(beforeShuffle);
 			Collections.shuffle(list);
 			StringBuilder sb = new StringBuilder();

@@ -16,6 +16,13 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * EXCEL报表工具类.
@@ -44,11 +51,11 @@ public class ExportExcelUtil {
 		try {
 
 			ExportExcelUtil.setResponse(response, fileName);// 创建工作博
-			HSSFWorkbook wb = new HSSFWorkbook();
+			XSSFWorkbook wb = new XSSFWorkbook();
 			// 创建单元格样式
 			// ------------------------------------------------------------------
-			HSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
-			HSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
+			XSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
+			XSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
 			ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, "shell1", title, mode, null, list);
@@ -63,29 +70,29 @@ public class ExportExcelUtil {
 		}
 	}
 
+
+
 	@SuppressWarnings("rawtypes")
 	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],
 			int[][] colmode, String[] shelName, List<List> datalist) {
 		try {
 
 			ExportExcelUtil.setResponse(response, fileName);// 创建工作博
-			HSSFWorkbook wb = new HSSFWorkbook();
+			XSSFWorkbook wb = new XSSFWorkbook();
 			// 创建单元格样式
 			// ------------------------------------------------------------------
-			HSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
-			HSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
+			XSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
+			XSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
 			if (shelName.length > 1) {
 				List list = null;
 				for (int i = 0; i < datalist.size(); i++) {
 					list = datalist.get(i);
-					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode,
-							list);
+					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode, list);
 				}
 			} else {
-				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,
-						datalist);
+				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,datalist);
 			}
 			bufferedOutPut.flush();
 			wb.write(bufferedOutPut);
@@ -148,13 +155,13 @@ public class ExportExcelUtil {
 	 * @param colSum
 	 *            该报表的列数
 	 */
-	public static void createNormalHead(HSSFSheet sheet, HSSFWorkbook wb, String headString, int colSum) {
-		HSSFRow row = sheet.createRow(0);
-		HSSFCell cell = row.createCell(0);// 设置第一行
+	public static void createNormalHead(XSSFSheet sheet, XSSFWorkbook wb, String headString, int colSum) {
+		XSSFRow row = sheet.createRow(0);
+		XSSFCell cell = row.createCell(0);// 设置第一行
 		cell.setCellType(HSSFCell.ENCODING_UTF_16);// 中文处理
-		cell.setCellValue(new HSSFRichTextString(headString));
+		cell.setCellValue(new XSSFRichTextString(headString));
 		sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) colSum));
-		HSSFCellStyle cellStyle = wb.createCellStyle();
+		XSSFCellStyle cellStyle = wb.createCellStyle();
 		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 指定单元格居中对齐
 		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 指定单元格垂直居中对齐
 		cellStyle.setWrapText(true);// 指定单元格自动换行
@@ -169,7 +176,7 @@ public class ExportExcelUtil {
 	 * @param cellStyle
 	 * @return
 	 */
-	private static HSSFCellStyle getbodyHSSFCellStyle(HSSFWorkbook wb, HSSFCellStyle cellStyle) {
+	private static XSSFCellStyle getbodyHSSFCellStyle(XSSFWorkbook wb, XSSFCellStyle cellStyle) {
 		if (cellStyle != null) {
 			return cellStyle;
 		}
@@ -191,12 +198,12 @@ public class ExportExcelUtil {
 	 * @param cellStyleTitle
 	 * @return
 	 */
-	private static HSSFCellStyle getHSSFCellStyle(HSSFWorkbook wb, HSSFCellStyle cellStyleTitle) {
+	private static XSSFCellStyle getHSSFCellStyle(XSSFWorkbook wb, XSSFCellStyle cellStyleTitle) {
 		// 设置单元格字体
 		if (cellStyleTitle != null) {
 			return cellStyleTitle;
 		}
-		HSSFFont font = wb.createFont();
+		XSSFFont font = wb.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		font.setFontName("宋体");
 		font.setFontHeight((short) 200);
@@ -228,10 +235,10 @@ public class ExportExcelUtil {
 	 * @param list
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void createHSSFSheet(HSSFWorkbook wb, HSSFCellStyle cellStyleTitle, HSSFCellStyle cellStyle,
+	public static void createHSSFSheet(XSSFWorkbook wb,XSSFCellStyle cellStyleTitle, XSSFCellStyle cellStyle,
 			String title, String shetName, String mode[][], int[][] colmode, List list) {
 		int rowinxe = 1;
-		HSSFSheet sheet = wb.createSheet(title); // 创建报表头部
+		XSSFSheet sheet = wb.createSheet(title); // 创建报表头部
 		ExportExcelUtil.createNormalHead(sheet, wb, title, mode[0].length - 1); // 定义第一行
 																				// ->标题
 																				// rowinxe=0
@@ -240,17 +247,17 @@ public class ExportExcelUtil {
 				sheet.setColumnWidth(i, Integer.parseInt(mode[2][i]) * 1000);
 			}
 		}
-		HSSFRow newrow = sheet.createRow(rowinxe);// 创建第一行 rowinxe=1;
-		HSSFCell cell1 = newrow.createCell(0);
+		XSSFRow newrow = sheet.createRow(rowinxe);// 创建第一行 rowinxe=1;
+		XSSFCell cell1 = newrow.createCell(0);
 		// 第一行第一列 ->什么鬼
 		// -------------------------------------------------------------
 		String titmode[] = mode[0];
 		cell1.setCellStyle(cellStyleTitle);
-		cell1.setCellValue(new HSSFRichTextString(titmode[0]));
+		cell1.setCellValue(new XSSFRichTextString(titmode[0]));
 		for (int i = 1; i < titmode.length; i++) {
 			cell1 = newrow.createCell(i);
 			cell1.setCellStyle(cellStyleTitle);
-			cell1.setCellValue(new HSSFRichTextString(titmode[i]));
+			cell1.setCellValue(new XSSFRichTextString(titmode[i]));
 		}
 		if (colmode != null && mode.length >= 4) {// 支持子标题
 			++rowinxe;
@@ -259,7 +266,7 @@ public class ExportExcelUtil {
 			for (int i = 0; i < titmode.length; i++) {
 				cell1 = newrow.createCell(i);
 				cell1.setCellStyle(cellStyleTitle);
-				cell1.setCellValue(new HSSFRichTextString(titmode[i]));
+				cell1.setCellValue(new XSSFRichTextString(titmode[i]));
 			}
 			for (int[] climod : colmode) {// 进行跨行跨列操作
 				sheet.addMergedRegion(new CellRangeAddress((short) climod[0], (short) climod[1], (short) climod[2],
@@ -268,13 +275,13 @@ public class ExportExcelUtil {
 		}
 		++rowinxe;
 		// 定义第二行
-		HSSFRow row = sheet.createRow(rowinxe);
-		HSSFCell cell = row.createCell(1);
+		XSSFRow row = sheet.createRow(rowinxe);
+		XSSFCell cell = row.createCell(1);
 		if (SetUtil.isnotNullList(list)) {
 			String datamode[] = mode[1];
-			if (list.size() > 60000) {
-				list.subList(0, 59999);
-			} // 防止数据溢出
+//			if (list.size() > 60000) {
+//				list.subList(0, 59999);
+//			} // 防止数据溢出
 			for (int i = 0; i < list.size(); i++) { // 65536
 				Object object = list.get(i);
 				row = sheet.createRow(i + rowinxe);
@@ -292,13 +299,13 @@ public class ExportExcelUtil {
 								val = da.toString();
 							}
 						}
-						cell.setCellValue(new HSSFRichTextString(val));
+						cell.setCellValue(new XSSFRichTextString(val));
 					}
 				} else {
 					for (int j = 0; j < datamode.length; j++) {
 						cell = row.createCell(j);
 						cell.setCellStyle(cellStyle);
-						cell.setCellValue(new HSSFRichTextString(getFieldValueByName(datamode[j], object)));
+						cell.setCellValue(new XSSFRichTextString(getFieldValueByName(datamode[j], object)));
 					}
 				}
 			}
@@ -306,14 +313,17 @@ public class ExportExcelUtil {
 			row = sheet.createRow(rowinxe);
 			cell = row.createCell(0);
 			cell.setCellStyle(cellStyleTitle);
-			cell.setCellValue(new HSSFRichTextString("没有数据！"));
+			cell.setCellValue(new XSSFRichTextString("没有数据！"));
 			for (int i = 1; i < mode[0].length; i++) {
 				cell1 = row.createCell(i);
 				cell1.setCellStyle(cellStyleTitle);
-				cell1.setCellValue(new HSSFRichTextString(""));
+				cell1.setCellValue(new XSSFRichTextString(""));
 			}
 			sheet.addMergedRegion(new CellRangeAddress(rowinxe, rowinxe, 0, mode[0].length - 1));
 		}
 	}
+
+
+
 
 }

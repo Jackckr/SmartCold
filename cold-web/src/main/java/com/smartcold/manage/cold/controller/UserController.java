@@ -75,46 +75,7 @@ public class UserController extends BaseController {
 		}
 		return new ResultDto(1, "用户名或密码错误！");
 	}
-	/*
-	 * @SuppressWarnings({ "finally", "rawtypes", "unchecked" })
-	 * 
-	 * @RequestMapping(value = "/login",method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody public ModelAndView login2(HttpServletRequest
-	 * request,HttpServletResponse response, String userName, String
-	 * password)throws Exception { ModelAndView mav = new ModelAndView();
-	 * MappingJackson2JsonView view = new MappingJackson2JsonView(); Map map =
-	 * new HashMap(); try{ UserEntity user =
-	 * userService.getUserByNAndP(userName, password); if (user!=null) {
-	 * RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId()); Role
-	 * role = roleService.getRoleByRoleId(roleUser.getRoleid()); String roleName
-	 * = role.getName(); CompanyUser compUser =
-	 * companyUserService.getComUserByUserId(user.getId()); Company company =
-	 * companyService.getCompByCompId(compUser.getCompanyid()); String
-	 * companyName = company.getName(); ArrayList<Integer> rdcIdList = new
-	 * ArrayList<Integer>(); if(compUser.getCompanyid()!=null) {
-	 * List<CompanyRdc> compRdcList =
-	 * companyRdcService.getCompRdcsByCompId(compUser.getCompanyid()); for(int
-	 * i=0;i<compRdcList.size(); i++){
-	 * rdcIdList.add(compRdcList.get(i).getRdcid()); } } //取得角色对应的权限
-	 *//*
-		 * List<Privilege> privList = new ArrayList<Privilege>();
-		 * List<PrivilegeRole> privRoleList = privilegeRoleService
-		 * .getPrivRoleByRoleId(roleUser.getRoleid()); for (int i = 0; i <
-		 * privRoleList.size(); i++) { Privilege priv =
-		 * privilegeService.getPrivByPrivId(privRoleList.get(i).getId());
-		 * privList.add(priv); }
-		 *//*
-		 * user.setPassword("******"); HttpSession session =
-		 * request.getSession(); user.setRole(role.getId());
-		 * session.setAttribute("user", user); session.setAttribute("cookie",
-		 * user); map.put("companyName", companyName); map.put("roleName",
-		 * roleName); map.put("rdcIdList", rdcIdList); map.put("result",
-		 * Boolean.TRUE); }else { map.put("result", Boolean.FALSE); }
-		 * }catch(Exception e){ map.put("result", Boolean.FALSE);
-		 * e.printStackTrace(); }finally{ view.setAttributesMap(map);
-		 * mav.setView(view); return mav; } }
-		 */
+	
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
