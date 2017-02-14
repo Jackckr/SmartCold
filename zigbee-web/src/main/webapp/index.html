@@ -94,7 +94,7 @@
 						<div class="btn-group omg">
 							<span class="user_info"  onclick="window.location.href='#/personalDetail'">
 								<img class="user_info" ng-src="{{user.avatar}}" style="border-radius: 50%;height: 40px; width: 40px;margin-right:3px;">
-								{{user.nickname}}
+								{{(user.nickname.trim()==undefined || user.nickname.trim()=="")?user.username:user.nickname}}
 							</span>
 						</div>&nbsp;&nbsp;
 					<b><a ng-click="logout()" href="" ng-bind="'退出'"></a></b>
