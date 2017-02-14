@@ -114,6 +114,8 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 	    					$("#authcode2").attr('disabled', "disabled");
 	    				}
 	    			});
+			 }else{
+				 $("#authcode2").attr('disabled', false);
 			 }
 		}else{
 			$("#authcode2").attr('disabled', "disabled");
