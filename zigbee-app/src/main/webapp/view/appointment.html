@@ -54,42 +54,103 @@
      
      </script>
     <style type="text/css">
-       body{
-            background: url(app/img/1.png) no-repeat fixed top;
-            
-       }
-       #main_div{    text-align: center; margin-top: 20%;}
-       .title{    width: 100%;
-    height: auto;
-    color: rgb(249, 127, 45);
-    font-size: 32px;
-    text-align: center;
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 1.5;
-    border-style: none;
-    border-color: black;
-    border-width: 0px;
-    font-style: normal;
-    border-radius: 0px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    font-weight:bold;  animation: moveUp 1000ms ease 100ms both running;}
-       ul{    margin: 0px;  padding: 0px;}
-       li{list-style:none;    margin-top: 20px;}
-      textarea, input{    background-color: transparent; width:85%; border: 2px solid rgb(249, 127, 45); height: 40px; margin-bottom: 13px;  font-size: 19px;   }
-       .subbtn{    width: 85%;   height: 48px; background-color: rgb(249, 127, 45);  border: none;  color: white;   font-size: 26px;}
-    </style>
+		html {
+			-webkit-text-size-adjust: 100%;
+			-ms-text-size-adjust: 100%;
+			margin: 0 auto;
+		}
+		body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+			margin: 0;
+			padding: 0;
+			border: none;
+			list-style: none;
+		}
+		body {
+			background: url(app/img/2.jpg) no-repeat fixed top;
+			background-size: cover;
+			padding: 0 5%;
+		}
+		
+		#main_div {
+			background: rgba(255,255,255,.3);
+			border:1px solid #ddd;
+			border-radius:4px;
+			box-sizing:border-box;
+			padding: .3rem .9rem;
+			text-align: center;
+			margin-top:20%;
+		}
+		
+		.title {
+			width: 100%;
+			height: auto;
+			color: #03a9f4;
+			font-size: 1.5rem;
+			text-align: center;
+			font-weight: bold;
+			text-decoration: none;
+			line-height: 1.5;
+			border-style: none;
+			border-color: black;
+			border-width: 0px;
+			font-style: normal;
+			border-radius: 0px;
+			word-wrap: break-word;
+			white-space: pre-wrap;
+			font-weight: bold;
+			animation: moveUp 1000ms ease 100ms both running;
+		}
+				
+		li {
+			margin-top: .5rem;
+		}
+		.layui-m-layercont,.layui-m-layerbtn span{
+		    font-size: .8rem;
+		}
+		textarea,input {
+			background-color: transparent;
+			width: 100%;
+			border: .1rem solid #03a9f4;
+			height: 2rem;
+			line-height:1.75;
+			margin-bottom: .5rem;
+			font-size: .75rem;
+			padding-left: 1em;
+			box-sizing:border-box;
+		}
+		input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
+			color: #666; 
+		} 
+		input:-moz-placeholder, textarea:-moz-placeholder { 
+			color: #666; 
+		} 
+		input::-moz-placeholder, textarea::-moz-placeholder { 
+			color: #666; 
+		} 
+		input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
+			color: #666; 
+		} 
+
+		.subbtn {
+			width: 100%;
+			height: 2rem;
+			line-height: 2rem;
+			background-color: #03a9f4;
+			border: none;
+			color: white;
+			font-size: 0.8rem;
+		}
+	</style>
     <title>预约演示</title>
 </head>
 <body>
     <div id="main_div">
           <ul>
            <li class="title"> 360预约演示 </li>
-           <li>  <input    id="input_userName"     name="userName" placeholder="姓名"> </li>
-           <li>  <input    id="input_telephone"     name="telephone" placeholder="电话"> </li>
-           <li>  <input    id="input_corporateName"     name="corporateName" placeholder="公司"> </li>
-           <li>  <textarea id="input_note" name="note" placeholder="备注" style="height: 80px"></textarea></li>
+           <li>  <input id="input_userName" name="userName" placeholder="姓名"> </li>
+           <li>  <input id="input_telephone" name="telephone" type="tel" placeholder="电话"> </li>
+           <li>  <input id="input_corporateName" name="corporateName" placeholder="公司"> </li>
+           <li>  <textarea id="input_note" name="note" placeholder="备注" style="height: 3rem"></textarea></li>
            <li>  <button class="subbtn" onclick="lvmsge(this)">提交</button></li>
           </ul>      
     </div>
