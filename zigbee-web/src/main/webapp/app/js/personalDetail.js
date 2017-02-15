@@ -148,17 +148,22 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 			    if(!result){return false;}
 			     } }); 
 		}
-		if($scope.oldPwd == '' || $scope.newPwd1 == ''|| $scope.newPwd2 == ''){
-			alert("请输入有效密码~");return;
-		}
-		if($scope.newPwd1.length<6){
-			$("#pwdError").html("密码长度最少6位~");return;
-		}
+	
+	
 		if($scope.oldPwd != '' && $scope.newPwd1 != ''&& $scope.newPwd2 != ''){
+			if($scope.newPwd1.length<6){
+				$("#pwdError").html("密码长度最少6位~");return;
+			}
 			if($scope.newPwd1 ==  $scope.newPwd2 ){
 				$.ajax({ type : "POST", url : '/i/user/checkOldPassword', data:{pwd : $scope.oldPwd}, cache : false, async : false, success : function (result){ ckpwd =result; $scope.opwd_err=!result;	if(!result){return false;}}});
 			}else{
 				return;
+			}
+		}else {
+			if($scope.oldPwd == '' && $scope.newPwd1 == ''&& $scope.newPwd2 == ''){
+				
+			}else {
+				alert("请输入有效密码~");return;
 			}
 		}
 			if(ckvcd&&ckpwd){
