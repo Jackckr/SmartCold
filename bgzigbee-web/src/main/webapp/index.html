@@ -48,7 +48,7 @@
     					</div>
     					<ul class="list" ng-controller="index">
     					
-    						<li ng-click="goMenu('usermanage','#/home')" id ="usermanage">
+    						<li onclick="secLi(this,'#/home')" id ="usermanage">
     							<span class="glyphicon glyphicon-user"></span>
     							<a>用户管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -59,7 +59,7 @@
     							</ul>
     						</li>
     					
-    						<li  ng-click="goMenu('usermanage','#/adminlist')" ng-if="admin.role==1" >
+    						<li onclick="secLi(this,'#/adminlist')" ng-if="admin.role==1" >
     							<span class="glyphicon glyphicon-user"></span>
     							<a>管理员管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -69,7 +69,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-							<li ng-click="goMenu('usermanage','#/companylist')">
+							<li onclick="secLi(this,'#/companylist')">
 								<span class="glyphicon glyphicon-home"></span>
 								<a>集团管理</a>
 								<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -79,7 +79,7 @@
 									<li>children</li>
 								</ul>
 							</li>
-    						<li ng-click="goMenu('usermanage','#/storageManage')">
+    						<li onclick="secLi(this,'#/storageManage')">
     							<span class="glyphicon glyphicon-cog"></span>
     							<a>冷库管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -89,7 +89,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li ng-click="goMenu('usermanage','#/storageConfig')">
+    						<li onclick="secLi(this,'#/storageConfig')">
     							<span class="glyphicon glyphicon-th-list"></span>
     							<a>冷库配置信息</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -99,7 +99,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li ng-click="goMenu('usermanage','#/spiderConfig')">
+    						<li onclick="secLi(this,'#/spiderConfig')">
     							<span class="glyphicon glyphicon-th"></span>
     							<a>冷库360配置</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -109,17 +109,17 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li ng-click="goMenu('usermanage','#/monthlyReportList')">
+    						<li onclick="secLi(this,'#/monthlyReportList')">
     							<span class="glyphicon glyphicon-th"></span>
     							<a>冷库报表管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
     						</li>
-    						<li ng-click="goMenu('usermanage','#/deviceConfig')">
+    						<li onclick="secLi(this,'#/deviceConfig')">
     							<span class="glyphicon glyphicon-th"></span>
     							<a>Device配置</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
                             </li>
-    						<li ng-click="goMenu('usermanage','#/commentManage')">
+    						<li onclick="secLi(this,'#/commentManage')">
     							<span class="glyphicon glyphicon-pencil"></span>
     							<a>评价管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -129,7 +129,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li ng-click="goMenu('usermanage','#/infoManage')">
+    						<li onclick="secLi(this,'#/infoManage')">
     							<span class="glyphicon glyphicon-calendar"></span>
     							<a>资讯管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -139,7 +139,7 @@
     								<li>children</li>
     							</ul>
     						</li>
-    						<li ng-click="goMenu('usermanage','#/operationLog')">
+    						<li onclick="secLi(this,'#/operationLog')">
     							<span class="glyphicon glyphicon-calendar"></span>
     							<a>操作日志</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
@@ -159,9 +159,9 @@
     			<!-- 内容区域结构结束-->
     		</div>
     	<!-- 主体区域结构结束-->
-    	<footer>
+    	<!-- <footer>
     		<p class="copyRight"> &copy;2016&nbsp;Smartcold&nbsp;&nbsp;&nbsp;&nbsp;沪ICP备　16004753</p>
-    	</footer>
+    	</footer> -->
     </body>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>

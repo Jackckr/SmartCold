@@ -1,8 +1,8 @@
 coldWeb.controller('index', function ($scope, $state, $cookies, $http, $location) {
-	   $scope.goMenu = function (name,url) {
+	  /* $scope.goMenu = function (name,url) {
 		    angular.element(name).addClass('highlight');
 	   		window.location.href=url;
-	   	};
+	   	};*/
 /*	$(function() {
 	//  侧栏下拉菜单暂时隐藏	
 	//$(".list li").eq(0).addClass('highlight').siblings().removeClass('highlight');
@@ -22,3 +22,7 @@ coldWeb.controller('index', function ($scope, $state, $cookies, $http, $location
 	});
 });*/
 });
+function secLi(ops,url){
+	$(ops).addClass('highlight').siblings().removeClass('highlight');;
+	window.location.href=url;
+}

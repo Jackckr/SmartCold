@@ -102,18 +102,19 @@
 		  		<div class="lines">
 		  			<span>旧密码：</span>
 		  			 <input type="password" class="newTel" ng-model="oldPwd" placeholder="请输入旧密码">
-		  			  <span ng-if="opwd_err"><font color="red">验证码错误！</font></span>
+		  			  <span ng-if="opwd_err"><font color="red">输入错误！</font></span>
 		  		</div>
 		  		<div class="lines">
 		  			<span>新密码：</span>
-		  			 <input type="password" ng-model="newPwd1" class="newTel" placeholder="6~16个字符">
+		  			 <input type="password" ng-model="newPwd1" class="newTel" placeholder="6~16个字符" ng-change="pwd()">
 		  			  <span ng-if="newPwd1!=''&&oldPwd==''"><font color="red">旧密码不能为空~</font></span>
 		  			  <span ng-if="newPwd1!='' && newPwd1.length<6 && oldPwd!=''"><font color="red">密码长度最少6位~</font></span>
+		  			  <span><font color="#f80" id="pwdError"></font></span>
 		  		</div>
 		  		<div class="lines">
 		  			<span>确认密码：</span>
 		  			 <input type="password" ng-model="newPwd2" class="newTel" placeholder="请再次输入密码">
-		  			 <span ng-if="newPwd2!=''&&newPwd1!=newPwd2"><font color="red">两次密码不一致</font></span>
+		  			 <span ng-if="newPwd2!=''&&newPwd1!=newPwd2"><font color="red">两次密码不一致~</font></span>
 		  		</div>
 		  	</div>
 		  	<p class="ok"><button class="btn btn-success" ng-click="goUpdateUser()">保存修改</button></p>

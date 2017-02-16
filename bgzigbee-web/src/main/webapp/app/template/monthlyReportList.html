@@ -4,7 +4,7 @@
 	      <option value="">全部</option> <option value="0">DEV</option> <option value="1">PLC</option>
 	    </select>						
 	</div>			
-	<div class="pull-left monthSearch">
+	<div class="pull-left monthSearch" style="margin-bottom: 20px;">
 		<input  id="myText"  type="text" ng-model="keyword" placeholder="请输入冷库名或冷库ID" ng-keyup="searchData($event);"/>
 		<div id="searchImg" ng-click="initdata();" > <span class="glyphicon glyphicon-search"></span> </div>
 	</div>
@@ -15,7 +15,7 @@
 		      <tr>
 		         <th>
 		         	<div>
-		         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox"  > <label for="allSecSon" style="font-size:16px;font-weight:400" ng-click="toggleAll()">全选</label>
+		         		<input type="checkbox" ng-checked="isChecked()" ng-click="toggleAll()" class="checkBox"  > <label for="allSecSon" style="font-size:12px;font-weight:400" ng-click="toggleAll()">全选</label>
 		         	</div>
 		         </th>
 		         <th>冷库ID</th>

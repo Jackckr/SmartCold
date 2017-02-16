@@ -1,8 +1,8 @@
     <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
     	<!-- 按钮操作区域开始 -->
 			<div class="operation">
-		<div class="btn-group pull-left" id="status">
-			<select ng-model="optAudit" ng-change="auditChanged(optAudit)">
+		<div class="btn-group pull-left" id="status" style="padding-left: 0;width:250px;">
+			<select ng-model="optAudit" ng-change="auditChanged(optAudit)"  style="width:250px;">
 				<option value="8">所有</option>
 				<option value="0">异常</option>
 				<option value="1">正常</option>
@@ -44,7 +44,7 @@
 				         <td ng-bind="getAudit(deviceObjectMapping.status)"></td>
 				         <td>
 				         	<button class="delete" ng-click="goDeleteDeviceObjectMapping(deviceObjectMapping.id)"></button>
-				            <button class="btn btn-primary btn-sm" ng-click="changeAudit(deviceObjectMapping)">重置</button>
+				            <button class="btn btn-primary btn-xs" ng-click="changeAudit(deviceObjectMapping)">重置</button>
 				         </td>
 				      </tr>
 				   </tbody>
