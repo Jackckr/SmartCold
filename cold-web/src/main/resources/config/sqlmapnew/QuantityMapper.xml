@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.QuantityMapper">
 	
+	<delete id="delTempTask">
+     	DELETE FROM `queue_task` where `type` =-1 and `state` =100;
+	</delete>
 	<update id="updateTaskStatus" parameterType="Integer" flushCache="true">
 		update queue_task sk set  LastRunTim=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:00') where id=#{id} and LastRunTim + interval intervalTime MINUTE &lt;= now() ;
 	</update>
@@ -27,9 +30,9 @@
 	<select id="getCountBykey" parameterType="map" resultType="java.lang.Integer">
 		  SELECT  COUNT(*) FROM  ${table} where `oid`in (${oid}) and `key` =#{key} and `addtime` BETWEEN #{stTime} and #{edTime} GROUP BY `oid`;  
 	</select>
-	<select id="getCountBydevkey" parameterType="map" resultType="java.lang.Integer">
-		  select  COUNT(*)  FROM storagedatacollection where `deviceid`in (${deviceid}) and `key` =#{key} and `time` BETWEEN #{stTime} and #{edTime} GROUP BY `oid`) as c
-	</select>
+<!-- 	<select id="getCountBydevkey" parameterType="map" resultType="java.lang.Integer"> -->
+<!-- 		  select  COUNT(*)  FROM storagedatacollection where `deviceid`in (${deviceid}) and `key` =#{key} and `time` BETWEEN #{stTime} and #{edTime} GROUP BY `oid`) as c -->
+<!-- 	</select> -->
 	
 	<!-- 获得冷库最高温度 -->
 	<select id="getSisBayKey" parameterType="map" resultType="java.lang.Double">

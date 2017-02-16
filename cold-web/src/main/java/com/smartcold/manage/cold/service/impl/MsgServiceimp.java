@@ -28,6 +28,7 @@ import com.smartcold.manage.cold.entity.olddb.WarningMsgEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.MsgService;
 import com.smartcold.manage.cold.service.StorageService;
+import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -68,6 +69,9 @@ public class MsgServiceimp implements MsgService {
 	@Autowired
 	private ColdStorageAnalysisMapper sisMapper;
 
+	
+	
+	
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
@@ -108,6 +112,21 @@ public class MsgServiceimp implements MsgService {
 			sendMsg(devciceList, telMap,startTime,endTime);
 		}
 	}
+	
+	
+	
+	/**
+	 * 每天凌晨1:00点触发
+	 * Task:刪除临时任务
+	 */
+	@Scheduled(cron = "0 0 1 * * ?")
+	public void delTempTask() {
+		ExportExcelUtil.clearTask();        
+		this.quantityMapper.delTempTask();//添加临时任务
+
+	}
+	
+	
 	/**
 	 * 每天凌晨3:30点触发
 	 * Task:计算热量

@@ -17,6 +17,9 @@
 	<section class="content">
 		<div class="row">
 			<div class="col-md-12">
+			 <span id="grid-1009_header_hd-textEl" class="x-header-text x-panel-header-text x-panel-header-text-default" unselectable="on">友情提示：导出任务的文件只保留24小时，在任务执行后请确保尽快下载。</span>
+			</div>
+			<div class="col-md-12">
 				<!-- 查询数据展示  -->
 				<div class="col-lg-12">
 					<div class="col-lg-12  clearfix">
@@ -81,11 +84,44 @@
 							</div>
 						</form>
 					</div>
-<!-- 					<div class="col-lg-12">
-						<div class="box box-gray">
-							<div class="bg-gray" id="data-chart" style="height: 600px;"></div>
+					<div class="col-lg-12"> 
+						<div class="box box-gray" style="height: 600px;color: black;">
+							<table class="table table-bordered text-conter" >
+							  <thead>
+							    <tr>
+							      <th width="10%">任务号</th>
+							      <th width="10%">状态</th>
+							      <th width="30%">进度</th>
+							      <th width="15%">文件名</th>
+							      <th width="10%">开始时间</th>
+							      <th width="10%">操作</th>
+							    </tr>
+							  </thead>
+							  
+							  <tbody   >
+							    <tr id="tr_task_{{obj.id}}" ng-repeat="obj in tasklist">
+							      <td>{{obj.id}}</td>
+							      <td id="td_taskstate_{{obj.id}}" style="color: forestgreen">{{obj.state==100?'已完成':'进行中'}}</td>
+							      <td>
+							         <div class="progress progress-striped active">
+										<div id="prog_usertask_{{obj.id}}"  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{obj.state}}" aria-valuemin="0" aria-valuemax="100"  style="width: {{obj.state}}%;">
+										 <span class="sr-only">{{obj.state}}% 完成</span>
+										</div>
+									</div>
+							      </td>
+							      <td>{{obj.methodName}}</td>
+							      <td>{{obj.updateTime}}</td>
+							      <td>
+							        <button ng-if="obj.state==100" type="button" class="btn btn-xs btn-success" ng-click="downloadFile(obj.id,obj.methodName)">下载</button>
+							        <button type="button" class="btn btn-xs btn-danger" ng-click="delTask(obj.id)">删除</button>
+							      </td>
+							    </tr>
+							    <tr ng-if="tasklist.length==0"><td colspan="4">没有任务！</td></tr>
+							  </tbody>
+							   
+							</table>
 						</div>
-					</div> -->
+					</div> 
 				</div>
 			</div>
 		</div>

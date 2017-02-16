@@ -1,5 +1,8 @@
 package com.smartcold.manage.cold.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,33 +26,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.newdb.PackMapper;
+import com.smartcold.manage.cold.dao.newdb.TaskMapper;
 import com.smartcold.manage.cold.dao.newdb.UsageMapper;
 import com.smartcold.manage.cold.dao.newdb.WallMaterialMapper;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
+import com.smartcold.manage.cold.entity.newdb.TaskEntity;
 import com.smartcold.manage.cold.service.GoodsService;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
+import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.StringUtil;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 @Controller
 @RequestMapping(value = "/baseInfo")
 public class BaseInfoController extends BaseController {
-
-	@Autowired
-	private GoodsService goodsService;
-
 	@Autowired
 	private PackMapper packDao;
-
 	@Autowired
-	private WallMaterialMapper wallMaterialDao;
-
+	private TaskMapper taskDao;
 	@Autowired
 	private UsageMapper usageDao;
-
+	@Autowired
+	private GoodsService goodsService;
 	@Autowired
 	private StorageService storageService;
+	@Autowired
+	private WallMaterialMapper wallMaterialDao;
 
 	@RequestMapping(value = "/findAllGoods", method = RequestMethod.GET)
 	@ResponseBody
@@ -155,6 +159,7 @@ public class BaseInfoController extends BaseController {
 		}
 		return ResponseData.newFailure("参数不全！");
 	}
+	
 	/**
 	 * 
 	 */
@@ -213,9 +218,7 @@ public class BaseInfoController extends BaseController {
 						}
 					}else{
 						  List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime,0,null," asc " );//
-							if (datalist.size() > maxsize) {
-								index = i;
-							}
+							if (datalist.size() > maxsize) {index = i;}
 							linmap.put("type", "line");//type==2||type==3?"bar":line
 							linmap.put("data", datalist);
 							linmap.put("name", oname);
@@ -253,36 +256,5 @@ public class BaseInfoController extends BaseController {
 		return ResponseData.newFailure();
 	}
 
-	@SuppressWarnings("rawtypes")
-	@RequestMapping("/expHistoryData")
-	public void expHistoryData(HttpServletRequest request, HttpServletResponse response, String filename, String title,
-			Integer type, String key, Integer[] oids, String[] onames, String startTime, String endTime) {
-		try {
-			List<List> alldata = new ArrayList<List>();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date sttime = sdf.parse(startTime);
-			Date edTime = sdf.parse(endTime);
-			String mode[][] = { { "数据id", "对象", "值", "时间" }, { "id", "key", "value", "addtime" }, { "5", "5", "10", "10", "10", "10" } };// 标题（必须），对应属性（必须），宽度
-			for (int i = 0; i < oids.length; i++) {
-				int oid = oids[i];
-//				List<StorageKeyValue> datalist = storageService.findByTime(type, oid, key, sttime, edTime);
-//				alldata.add(datalist);
-				List<StorageKeyValue> datalist =new ArrayList<StorageKeyValue>();
-				for (int j = 0; j <200000; j++) {
-					StorageKeyValue k=new StorageKeyValue();
-					k.setId(j);
-					k.setKey(key);
-					k.setOid(oid);
-					k.setValue(new Double(j));
-					datalist.add(k);
-				}
-				alldata.add(datalist);
-				
-			}
-			ExportExcelUtil.expExcel(response, filename + "_" + title + ".xls", title, mode, null, onames, alldata);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 }

@@ -1,28 +1,30 @@
 package com.smartcold.manage.cold.util;
 
 import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 /**
  * EXCEL报表工具类.
@@ -30,7 +32,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Maqiang34
  */
 public class ExportExcelUtil {
-
+	
+	public static void clearTask(){EXPPROGRESS.clear(); }
+    private static Map<Integer,Double > EXPPROGRESS=new HashMap<Integer, Double>();
+    public static double getTask(int id){if(EXPPROGRESS.containsKey(id)){return EXPPROGRESS.get(id); }else{return -1;}}
+	//==================================================================================================================================================================================================================
 	/**
 	 * 
 	 * @param response
@@ -46,19 +52,17 @@ public class ExportExcelUtil {
 	 *            //数据集合
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],
-			List list) {
+	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],List list) {
 		try {
-
 			ExportExcelUtil.setResponse(response, fileName);// 创建工作博
-			XSSFWorkbook wb = new XSSFWorkbook();
+			SXSSFWorkbook wb = new SXSSFWorkbook(1000);
 			// 创建单元格样式
 			// ------------------------------------------------------------------
-			XSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
-			XSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
+			CellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
+			CellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
-			ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, "shell1", title, mode, null, list);
+			ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, "shell1", title, mode, null, list,null);
 			bufferedOutPut.flush();
 			wb.write(bufferedOutPut);
 			bufferedOutPut.close();
@@ -70,29 +74,23 @@ public class ExportExcelUtil {
 		}
 	}
 
-
-
 	@SuppressWarnings("rawtypes")
-	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],
-			int[][] colmode, String[] shelName, List<List> datalist) {
+	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],int[][] colmode, String[] shelName, List<List> datalist) {
 		try {
-
 			ExportExcelUtil.setResponse(response, fileName);// 创建工作博
-			XSSFWorkbook wb = new XSSFWorkbook();
-			// 创建单元格样式
-			// ------------------------------------------------------------------
-			XSSFCellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
-			XSSFCellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
+			SXSSFWorkbook   wb = new SXSSFWorkbook(1000);////内存中保留 1000 条数据，以免内存溢出，其余写入 硬盘  
+			CellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);//创建标题样式
+			CellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);//创建内容样式
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bufferedOutPut = new BufferedOutputStream(output);
 			if (shelName.length > 1) {
 				List list = null;
 				for (int i = 0; i < datalist.size(); i++) {
 					list = datalist.get(i);
-					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode, list);
+					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode, list,null);
 				}
 			} else {
-				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,datalist);
+				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,datalist,null);
 			}
 			bufferedOutPut.flush();
 			wb.write(bufferedOutPut);
@@ -104,6 +102,45 @@ public class ExportExcelUtil {
 			System.gc();
 		}
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static void expZIPXLS( int id,String sid,String serverPath,String fileName, String title, String mode[][],int[][] colmode, String[] shelName, List<List> datalist) {
+		try {
+			EXPPROGRESS.put(id, 0.00);
+			SXSSFWorkbook   wb = new SXSSFWorkbook(2000);////内存中保留 2000 条数据，以免内存溢出，其余写入 硬盘 -- workbook1,100 
+			CellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
+			CellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
+			if (shelName.length > 1) {
+				List list = null;
+				for (int i = 0; i < datalist.size(); i++) {
+					System.err.println("执行第"+i+"shee");
+					list = datalist.get(i);
+					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode, list,new int[]{id,i,datalist.size()});
+					EXPPROGRESS.put(id, new Double((i+1)/datalist.size()*100));
+				}
+			} else {
+				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,datalist,new int[]{id,1,datalist.size()});
+			}
+			ZipEntry zipEntry = new ZipEntry(fileName+".xls");
+            ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(serverPath+sid+".zip"));
+            zipOut.putNextEntry(zipEntry);  
+            wb.write(zipOut); 
+            zipOut.flush();
+            zipOut.close();  
+            EXPPROGRESS.put(id, 100.00);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Output   is   closed ");
+		} finally {
+			System.gc();
+		}
+	}
+	
+	
+
+    
+  
+    //==================================================================================================================================================================================================================
 
 	/**
 	 * 根据属性获得对象属性值
@@ -136,9 +173,7 @@ public class ExportExcelUtil {
 	 */
 	public static void setResponse(HttpServletResponse response, String fileName) throws Exception {
 		response.reset();
-		if (StringUtil.isNull(fileName)) {
-			fileName = "导出数据.xls";
-		}
+		if (StringUtil.isNull(fileName)) {fileName = "导出数据.xls";}
 		fileName = new String(fileName.getBytes("GBK"), "iso8859-1");
 		response.setHeader("Content-Disposition", "attachment;filename=" + fileName);// 指定下载的文件名
 		response.setContentType("application/vnd.ms-excel");
@@ -149,19 +184,18 @@ public class ExportExcelUtil {
 
 	/**
 	 * 创建通用EXCEL头部
-	 * 
 	 * @param headString
 	 *            头部显示的字符
 	 * @param colSum
 	 *            该报表的列数
 	 */
-	public static void createNormalHead(XSSFSheet sheet, XSSFWorkbook wb, String headString, int colSum) {
-		XSSFRow row = sheet.createRow(0);
-		XSSFCell cell = row.createCell(0);// 设置第一行
+	public static void createNormalHead(Sheet sheet, SXSSFWorkbook wb, String headString, int colSum) {
+		Row row = sheet.createRow(0);
+		Cell cell = row.createCell(0);// 设置第一行
 		cell.setCellType(HSSFCell.ENCODING_UTF_16);// 中文处理
 		cell.setCellValue(new XSSFRichTextString(headString));
 		sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) colSum));
-		XSSFCellStyle cellStyle = wb.createCellStyle();
+		CellStyle cellStyle = wb.createCellStyle();
 		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 指定单元格居中对齐
 		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 指定单元格垂直居中对齐
 		cellStyle.setWrapText(true);// 指定单元格自动换行
@@ -176,7 +210,7 @@ public class ExportExcelUtil {
 	 * @param cellStyle
 	 * @return
 	 */
-	private static XSSFCellStyle getbodyHSSFCellStyle(XSSFWorkbook wb, XSSFCellStyle cellStyle) {
+	private static CellStyle getbodyHSSFCellStyle(SXSSFWorkbook wb, CellStyle cellStyle) {
 		if (cellStyle != null) {
 			return cellStyle;
 		}
@@ -198,12 +232,12 @@ public class ExportExcelUtil {
 	 * @param cellStyleTitle
 	 * @return
 	 */
-	private static XSSFCellStyle getHSSFCellStyle(XSSFWorkbook wb, XSSFCellStyle cellStyleTitle) {
+	private static CellStyle getHSSFCellStyle(SXSSFWorkbook wb, CellStyle cellStyleTitle) {
 		// 设置单元格字体
 		if (cellStyleTitle != null) {
 			return cellStyleTitle;
 		}
-		XSSFFont font = wb.createFont();
+		Font font = wb.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		font.setFontName("宋体");
 		font.setFontHeight((short) 200);
@@ -235,20 +269,18 @@ public class ExportExcelUtil {
 	 * @param list
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void createHSSFSheet(XSSFWorkbook wb,XSSFCellStyle cellStyleTitle, XSSFCellStyle cellStyle,
-			String title, String shetName, String mode[][], int[][] colmode, List list) {
+	public static void createHSSFSheet(SXSSFWorkbook wb,CellStyle cellStyleTitle, CellStyle cellStyle,String title, String shetName, String mode[][], int[][] colmode, List list,int [] progress) {
 		int rowinxe = 1;
-		XSSFSheet sheet = wb.createSheet(title); // 创建报表头部
+		boolean isprogress=progress!=null;
+		Sheet sheet = wb.createSheet(title); // 创建报表头部
 		ExportExcelUtil.createNormalHead(sheet, wb, title, mode[0].length - 1); // 定义第一行
-																				// ->标题
-																				// rowinxe=0
 		if (mode.length >= 3) {// 设定每列宽度
 			for (int i = 0; i < mode[2].length; i++) {
 				sheet.setColumnWidth(i, Integer.parseInt(mode[2][i]) * 1000);
 			}
 		}
-		XSSFRow newrow = sheet.createRow(rowinxe);// 创建第一行 rowinxe=1;
-		XSSFCell cell1 = newrow.createCell(0);
+		Row newrow = sheet.createRow(rowinxe);// 创建第一行 rowinxe=1;
+		Cell cell1 = newrow.createCell(0);
 		// 第一行第一列 ->什么鬼
 		// -------------------------------------------------------------
 		String titmode[] = mode[0];
@@ -275,14 +307,22 @@ public class ExportExcelUtil {
 		}
 		++rowinxe;
 		// 定义第二行
-		XSSFRow row = sheet.createRow(rowinxe);
-		XSSFCell cell = row.createCell(1);
+		Row row = sheet.createRow(rowinxe);
+		Cell cell = row.createCell(1);
 		if (SetUtil.isnotNullList(list)) {
 			String datamode[] = mode[1];
-//			if (list.size() > 60000) {
-//				list.subList(0, 59999);
-//			} // 防止数据溢出
+			if (list.size() > 1048576) {list.subList(0, 1048576);} // 防止数据溢出
 			for (int i = 0; i < list.size(); i++) { // 65536
+				if(isprogress&&i!=0&&i%100==0){//
+				    double pr= new Double(progress[1]+1)/new Double(progress[2])*new Double(i)/list.size()*100;
+				    EXPPROGRESS.put(progress[0], pr);
+				  try {
+					
+					  Thread.sleep(100);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				}
 				Object object = list.get(i);
 				row = sheet.createRow(i + rowinxe);
 				if (object instanceof List) {

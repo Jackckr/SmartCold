@@ -15,6 +15,7 @@ import com.smartcold.manage.cold.entity.olddb.CompressorSetEntity;
  * class:MsgServiceimp
  */
 public interface QuantityMapper {
+	public void delTempTask();//删除临时任务
 	public boolean updateTaskStatus(Integer id);//获得任务状态->动态分配任务
 	//======================================================压缩机组定时保养信息======================================================
 	public List<CompressorSetEntity>   getcoldstoraginfo(@Param("oids")Object oids);//获得机组保养信息时间
@@ -30,7 +31,7 @@ public interface QuantityMapper {
 	public List<HashMap<String, Object>> getWarCountByTime(@Param("rdcId")Integer rdcId,@Param("stTime")String stTime ,@Param("edTime")String edTime);//获得高低报警次数->360体检
 	public List<HashMap<String, Object>> getMothReportsisByrdcId(@Param("rdcId")Integer rdcId,@Param("startTime")String startTime ,@Param("endTime")String endTime);//获得月报表信息
 	// 检查是否有设备->根据是否有数据判断PLC
-	public Integer getCountBydevkey(@Param("deviceid")Object deviceid,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
+//	public Integer getCountBydevkey(@Param("deviceid")Object deviceid,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	public Integer getCountBykey(@Param("oid")Object oid,@Param("table")String table, @Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);
 	//查询指定key平均值
 	public Double getSisBayKey(@Param("type")int type,@Param("oid")int oid,@Param("key")String key,@Param("stTime")String stTime,@Param("edTime")String edTime);

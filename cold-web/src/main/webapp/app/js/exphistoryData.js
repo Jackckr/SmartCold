@@ -3,10 +3,9 @@
  * 历史数据查询
  */
 coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout,baseTools) {
-	var lineChart =null,stdate = new Date(); stdate.setHours(stdate.getHours () - 6);
+	var stdate = new Date(); stdate.setHours(stdate.getHours () - 6);
 	$scope.rdcid=window.sessionStorage.smrdcId,$scope.showobjgroup=false,$scope.coldstoragedoor=null;
 	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= baseTools.formatTime(stdate),$scope.picktime = $scope.begin + ' - ' + $scope.end;
-	function gettitval(val){if(val!=undefined&&val!=""){if($scope.sl_index!=2&&$scope.sl_index!=3){return val+$scope.typemode.unit[$scope.sl_index]; }else{return val==0?"关":"开";}}else{return "-";}}
     $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:2},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{
     "今日":[moment().startOf("day"),moment()],
     "昨日":[moment().subtract("days",1).startOf("day"),moment().subtract("days",1).endOf("day")],
@@ -37,88 +36,77 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 	 	   $scope.sltit=$scope.slgptit+subtit+ "-{"+ ($scope.oldnames.join(","))+"}";
    };
    
+   //
+   
+   
+   $scope.getUserTask=function(){
+	   $http.get('/i/history/getTaskByUid', { params: { uid: user.id} }).success(function (result) {
+		   $scope.tasklist=result;
+		   $scope.unfinishedtask=[];
+		   $.each($scope.tasklist, function(i, vo){
+			   if(vo.state<100){ $scope.unfinishedtask.push({id:vo.id,ip:vo.exqip}); }
+		   });
+		  if($scope.unfinishedtask.length>0){
+			   clearInterval($rootScope.timeTicket);
+			   $rootScope.timeTicket = setInterval(function () { $scope.getRunTaskStatus(); }, 1000);
+			   $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
+		  }
+		   
+       });
+   };
+   $scope.getRunTaskStatus=function(){
+	   if($scope.unfinishedtask.length==0){ return;}
+	   $.each($scope.unfinishedtask, function(i, vo){
+		   $http.get('http://'+vo.ip+':8999/i/history/getTaskProgress', { params: { id:vo.id} }).success(function (result) {
+			   if(result>0){
+				   $("#prog_usertask_"+vo.id).css({  width:result+"%"});
+				   $("#td_taskstate_"+ vo.id).html("<em style='color: gold;'>任务进行中!</em>");
+				   if(result==100){
+					   $("#td_taskstate_"+ vo.id).html("<em style='color: forestgreen;'>已完成！</em>");
+					}
+			   }else{
+				   $scope.unfinishedtask.splice(i,1);
+				   $("#td_taskstate_"+ vo.id).html("<em style='color: red;'>任务失败！</em>");
+			   }
+			   
+		   });
+		   
+	  });
+   };
+ 
+
+   
+   
+   $scope.downloadFile=function(id,fileName){
+	   $scope.createForm(fileName);
+   };
+   
+   $scope.delTask=function(id){
+	   $http.get('/i/history/delProgress', { params: { id:id} }).success(function (result) {
+		   if(result){
+			   $("#tr_task_"+id).remove();
+		   }
+	   });
+   };
+   
    $scope.expdata=function(){//导出数据
 	   $scope.hidefilter();
 		if($scope.oids&&$scope.oids.length>0){
-			bothTime = $scope.picktime.split(" - ");
-			$scope.begin = bothTime[0],$scope.end = bothTime[1];
-			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
-			$("#but_expdata").attr("disabled",true);
-	        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/baseInfo/expHistoryData').attr('id', "expdataform");
-	        expfrom.attr("Content-Type","application/json;charset=UTF-8");
-	        expfrom.append($("<input>").attr("name","rdcid").attr("value",$scope.rdcid));
-	        expfrom.append($("<input>").attr("name","filename").attr("value","历史数据"));
-	        expfrom.append($("<input>").attr("name","title").attr("value",$scope.slgptit));
-	        expfrom.append($("<input>").attr("name","type").attr("value",$scope.typemode.type[$scope.sl_index]));
-	        expfrom.append($("<input>").attr("name","oids").attr("value",$scope.oids));
-	        expfrom.append($("<input>").attr("name","onames").attr("value",$scope.oldnames));
-	        expfrom.append($("<input>").attr("name","key").attr("value",$scope.typemode.key[$scope.sl_index]));
-	        expfrom.append($("<input>").attr("name","startTime").attr("value",$scope.begin));
-	        expfrom.append($("<input>").attr("name","endTime").attr("value",$scope.end));
-	        expfrom.appendTo('body').submit().remove();
-	        setTimeout(function () {$("#but_expdata").attr("disabled",false); }, 3000);
+		   //记录是否在任务队列中，如果有则不计算	
+		   bothTime = $scope.picktime.split(" - ");
+		   $scope.begin = bothTime[0],$scope.end = bothTime[1];
+		   if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
+			$.ajax({type: "POST",traditional:true, url:"i/history/expHistoryData", data:{ rdcid:$scope.rdcid,uid:user.id,filename:"历史数据",title:$scope.slgptit,type:$scope.typemode.type[$scope.sl_index],oids:$scope.oids,onames:$scope.oldnames,key:$scope.typemode.key[$scope.sl_index], startTime:$scope.begin,endTime:$scope.end},success: function(data) {
+		                    alert(data);//开启下载
+                        
+		     }});
+			setTimeout( $scope.getUserTask(),2000);
 		}else{
 			 alert("没有设置查询对象！");
 		}
    };
-//	$scope.search = function(){//查询事件
-//		$scope.hidefilter();
-//		if(lineChart==null){ lineChart = echarts.init($('#data-chart')[0]);}
-//		if($scope.oids&&$scope.oids.length>0){
-//			bothTime = $scope.picktime.split(" - ");
-//			$scope.begin = bothTime[0],$scope.end = bothTime[1];
-//			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
-//			lineChart.showLoading({text: '数据加载中……' }); 
-//			lineChart.clear(); 
-//			$.ajax({
-//                type: "POST",
-//                url:"i/baseInfo/getKeyValueDataByFilter",traditional:true,
-//                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.oldnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
-//                success: function(data) {
-//                    if(data.success){
-//                    	$scope.drawDataLine(data.entity);
-//                   }else{
-//                	   lineChart.hideLoading();  
-//                   }
-//                }
-//            });
-//		 }else{
-//			 lineChart.hideLoading();  
-//			 alert("没有设置查询对象！");
-//		 }
-//	};
-//	$scope.drawDataLine = function(chardata){
-//		var xData=chardata.xdata,ydata=chardata.ydata;
-//		var yAxismode= {type : 'value', axisLabel : {formatter: '{value}'}} ;
-//		var tooltipmd= {trigger: 'axis',formatter:function(params){
-//			var html=[]; 
-//			if(params.length!=undefined){
-//			  var relVal = params[0].name;  
-//			  if(relVal!=undefined&&relVal!=""){html.push(relVal+"<br/>"); }
-//	          for (var i = 0, l = params.length; i < l; i++) {  html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'); html.push(params[i].seriesName + ' : '+gettitval(params[i].value)+"<br/>" );} return html.join(""); 
-//			}else{
-//				html.push(params.name+"<br/>"); 
-//				html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params.color+'"></span>'); 
-//				html.push(params.seriesName + ' : '+gettitval(params.value)+"<br/>" );
-//			   return html.join("");
-//			}
-//		}};
-//		if($scope.sl_index==2||$scope.sl_index==3){yAxismode={type : 'value',splitNumber: 1, axisLabel: {formatter: function(value){return value==1?"开":"关";} } };}
-//		var option = {
-//				calculable : true,
-//				legend: {data:$scope.oldnames},
-//				title: {text: $scope.sltit.substring(0,$scope.sltit.indexOf("{")-1)+$scope.typemode.unit[$scope.sl_index]},
-//			    tooltip :tooltipmd,
-//			    xAxis : [{type : 'category',data : xData} ],
-//			    yAxis :yAxismode,
-//			    grid:{x:80,x2:80},
-//			    series : ydata,
-//			    toolbox: {show: true,feature: {dataZoom: {yAxisIndex: 'none'},dataView: {readOnly: false},magicType: {type: ['line', 'bar']},restore: {},saveAsImage: {}} }
-//		};
-//		lineChart.setOption(option);
-//		lineChart.hideLoading();  
-//	};
-//	
+
+
 
 	//********************************************************************事件START**********************************************************************
 	$scope.checktime=function(startDate,endDate){
@@ -173,7 +161,14 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 		   }
 	  };
 	  $scope.$watch('mystorages',$scope.inintcoldoot,true);//监听冷库变化
-	 
+	  $scope.getUserTask();
+	  
+	  $scope.createForm=function(url){
+		   var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/history/downloadFile').attr('id', "expdataform");
+	       expfrom.attr("Content-Type","application/json;charset=UTF-8");
+	       expfrom.append($("<input>").attr("name","url").attr("value",url));
+	       expfrom.appendTo('body').submit().remove();
+	   };
 	 //windows事件
 	 $(document).bind('click',function(e){ 
 			if($scope.showobjgroup){
