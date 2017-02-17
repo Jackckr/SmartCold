@@ -34,7 +34,7 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 public class ExportExcelUtil {
 	
 	public static void clearTask(){EXPPROGRESS.clear(); }
-    private static Map<Integer,Double > EXPPROGRESS=new HashMap<Integer, Double>();
+    public static Map<Integer,Double > EXPPROGRESS=new HashMap<Integer, Double>();
     public static double getTask(int id){if(EXPPROGRESS.containsKey(id)){return EXPPROGRESS.get(id); }else{return -1;}}
 	//==================================================================================================================================================================================================================
 	/**
@@ -106,7 +106,6 @@ public class ExportExcelUtil {
 	@SuppressWarnings("rawtypes")
 	public static void expZIPXLS( int id,String sid,String serverPath,String fileName, String title, String mode[][],int[][] colmode, String[] shelName, List<List> datalist) {
 		try {
-			EXPPROGRESS.put(id, 0.00);
 			SXSSFWorkbook   wb = new SXSSFWorkbook(2000);////内存中保留 2000 条数据，以免内存溢出，其余写入 硬盘 -- workbook1,100 
 			CellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
 			CellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
@@ -312,8 +311,8 @@ public class ExportExcelUtil {
 		if (SetUtil.isnotNullList(list)) {
 			String datamode[] = mode[1];
 			if (list.size() > 1048576) {list.subList(0, 1048576);} // 防止数据溢出
-			for (int i = 0; i < list.size(); i++) { // 65536
-				if(isprogress&&i!=0&&i%10000==0){//
+			for (int i = 0; i < list.size(); i++) { //  1663132
+				if(isprogress&&i!=0&&i%10000==0){//1663132
 				    double pr= new Double(progress[1]+1)/new Double(progress[2])*new Double(i)/list.size()*100;
 				    EXPPROGRESS.put(progress[0], pr);
 				}

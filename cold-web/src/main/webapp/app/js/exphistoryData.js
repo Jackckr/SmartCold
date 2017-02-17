@@ -88,6 +88,7 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
    
    $scope.expdata=function(){//导出数据
 	   $scope.hidefilter();
+	    $("#but_expdata").attr("disabled",true);
 		if($scope.oids&&$scope.oids.length>0){
 		   //记录是否在任务队列中，如果有则不计算	
 		   bothTime = $scope.picktime.split(" - ");
@@ -99,9 +100,11 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 		            }else{
 		            	alert(data.message);
 		            }
-                        
 		     }});
-			setTimeout($scope.getUserTask,1000);
+			setTimeout($scope.getUserTask,500);
+			setTimeout(function(){
+				$("#but_expdata").attr("disabled",false);
+			},3000);
 		}else{
 			 alert("没有设置查询对象！");
 		}
