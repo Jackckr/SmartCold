@@ -316,12 +316,6 @@ public class ExportExcelUtil {
 				if(isprogress&&i!=0&&i%100==0){//
 				    double pr= new Double(progress[1]+1)/new Double(progress[2])*new Double(i)/list.size()*100;
 				    EXPPROGRESS.put(progress[0], pr);
-				  try {
-					
-					  Thread.sleep(100);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
 				}
 				Object object = list.get(i);
 				row = sheet.createRow(i + rowinxe);

@@ -14,7 +14,7 @@ import com.smartcold.manage.cold.entity.newdb.TaskEntity;
  */
 public interface TaskMapper {
 	
-	public void delTempTask(int id);
+	public void delTempTask(Integer id);
 	
 	public List<Object> getTaskByUid(Integer uid);
 	

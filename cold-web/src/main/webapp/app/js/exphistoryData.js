@@ -44,41 +44,34 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 		   $scope.tasklist=result;
 		   $scope.unfinishedtask=[];
 		   $.each($scope.tasklist, function(i, vo){
-			   if(vo.state<100){ $scope.unfinishedtask.push({id:vo.id,ip:vo.exqip}); }
+			   if(vo.state<100){ $scope.unfinishedtask.push({id:vo.id,ip:vo.exqip,port:vo.className}); }
 		   });
 		  if($scope.unfinishedtask.length>0){
 			   clearInterval($rootScope.timeTicket);
 			   $rootScope.timeTicket = setInterval(function () { $scope.getRunTaskStatus(); }, 1000);
 			   $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
 		  }
-		   
        });
    };
    $scope.getRunTaskStatus=function(){
 	   if($scope.unfinishedtask.length==0){ return;}
 	   $.each($scope.unfinishedtask, function(i, vo){
-		   $http.get('http://'+vo.ip+':8999/i/history/getTaskProgress', { params: { id:vo.id} }).success(function (result) {
+		   $http.get('http://'+vo.ip+':'+vo.port+'/i/history/getTaskProgress', { params: { id:vo.id} }).success(function (result) {
 			   if(result>0){
 				   $("#prog_usertask_"+vo.id).css({  width:result+"%"});
 				   $("#td_taskstate_"+ vo.id).html("<em style='color: gold;'>任务进行中!</em>");
-				   if(result==100){
-					   $("#td_taskstate_"+ vo.id).html("<em style='color: forestgreen;'>已完成！</em>");
-					}
+				   if(result==100){  $("#td_taskstate_"+ vo.id).html("<em style='color: forestgreen;'>已完成！</em>");}
 			   }else{
 				   $scope.unfinishedtask.splice(i,1);
 				   $("#td_taskstate_"+ vo.id).html("<em style='color: red;'>任务失败！</em>");
 			   }
-			   
 		   });
 		   
 	  });
    };
- 
-
    
-   
-   $scope.downloadFile=function(id,fileName){
-	   $scope.createForm(fileName);
+   $scope.downloadFile=function(id,ip,port,fileName){
+	   $scope.createForm(ip,port,fileName);
    };
    
    $scope.delTask=function(id){
@@ -97,10 +90,14 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 		   $scope.begin = bothTime[0],$scope.end = bothTime[1];
 		   if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
 			$.ajax({type: "POST",traditional:true, url:"i/history/expHistoryData", data:{ rdcid:$scope.rdcid,uid:user.id,filename:"历史数据",title:$scope.slgptit,type:$scope.typemode.type[$scope.sl_index],oids:$scope.oids,onames:$scope.oldnames,key:$scope.typemode.key[$scope.sl_index], startTime:$scope.begin,endTime:$scope.end},success: function(data) {
-		                    alert(data);//开启下载
+		            if(data.success){
+		            	$scope.createForm(data.entity.exqip,data.entity.className,data.entity.methodName);//id:vo.id,ip:vo.exqip,port:vo.className
+		            }else{
+		            	alert(data.message);
+		            }
                         
 		     }});
-			setTimeout( $scope.getUserTask(),2000);
+			setTimeout("$scope.getUserTask()",2000);
 		}else{
 			 alert("没有设置查询对象！");
 		}
@@ -163,8 +160,8 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 	  $scope.$watch('mystorages',$scope.inintcoldoot,true);//监听冷库变化
 	  $scope.getUserTask();
 	  
-	  $scope.createForm=function(url){
-		   var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/history/downloadFile').attr('id', "expdataform");
+	  $scope.createForm=function(ip,port,url){
+		   var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'http://'+ip+':'+port+'i/history/downloadFile').attr('id', "expdataform");
 	       expfrom.attr("Content-Type","application/json;charset=UTF-8");
 	       expfrom.append($("<input>").attr("name","url").attr("value",url));
 	       expfrom.appendTo('body').submit().remove();
