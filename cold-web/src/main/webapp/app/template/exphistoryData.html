@@ -112,7 +112,7 @@
 							      <td>{{obj.methodName}}</td>
 							      <td>{{obj.updateTime}}</td>
 							      <td>
-							        <button ng-show="obj.state==100" type="button" class="btn btn-xs btn-success" ng-click="downloadFile(obj.id,obj.exqip,obj.className,obj.methodName)">下载</button>
+							        <button id="but_dow_{{obj.id}}" ng-disabled="obj.state!=100" type="button" class="btn btn-xs btn-success" ng-click="downloadFile(obj.id,obj.exqip,obj.className,obj.methodName)">下载</button>
 							        <button type="button" class="btn btn-xs btn-danger" ng-click="delTask(obj.id)">删除</button>
 							      </td>
 							    </tr>

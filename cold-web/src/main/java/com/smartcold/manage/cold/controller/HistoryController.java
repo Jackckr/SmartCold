@@ -42,14 +42,14 @@ public class HistoryController extends BaseController {
 			if(StringUtil.isNull(filename)||StringUtil.isNull(title)||type==0||StringUtil.isNull(key)||oids==null||onames==null||StringUtil.isNull(startTime)||StringUtil.isNull(endTime)){return  ResponseData.newFailure("参数不全！");}
 			Date date = new Date();  
 			String fullname=filename + "_" + title;
-			String sid = TimeUtil.datefmlong.format(date)+uid+date.getTime();  
+			String sid = TimeUtil.datefmlong.format(date)+uid;  
 			String serverPath= request.getSession().getServletContext().getRealPath("")+File.separator+"Temp"+File.separator;
 			File dir = new File(serverPath);  if(!dir.exists()){  dir.mkdir();   }  //创建文件夹 
 //			Date sttime = TimeUtil.dateFormat.parse(startTime);Date edTime = TimeUtil.dateFormat.parse(endTime);
-			TaskEntity task	=new TaskEntity(-1,0,Integer.parseInt(uid), request.getLocalPort()+"","Temp/"+sid+".zip",RemoteUtil.getServerIP());
+			TaskEntity task	=new TaskEntity(-1,0,Integer.parseInt(uid), request.getLocalPort()+"",sid+".zip",RemoteUtil.getServerIP());
 			this.taskDao.addTempTask(task); int taskid=task.getId();
 			List<List> alldata = new ArrayList<List>();
-			int [] leng={1,20,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+			int [] leng={100000,20,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 			String mode[][] = { { "数据id", "对象", "值", "时间" }, { "id", "key", "value", "addtime" }, { "5", "5", "10", "10", "10", "10" } };// 标题（必须），对应属性（必须），宽度
 			for (int i = 0; i < oids.length; i++) {
 				int oid = oids[i];
@@ -73,10 +73,10 @@ public class HistoryController extends BaseController {
 	
 	
 	 @RequestMapping("/downloadFile")
-	 public void downloadFile(HttpServletRequest request, HttpServletResponse response,String url)  {
+	 public void downloadFile(HttpServletRequest request, HttpServletResponse response,String fileName)  {
 	        try {
-	        	String fileName = "2017021612325911487219579472.zip"; // 文件的默认保存名
-	        	String serverPath= request.getSession().getServletContext().getRealPath("")+File.separator+"Temp"+File.separator;
+//	        	String fileName = "2017021612325911487219579472.zip"; // 文件的默认保存名
+	        	String serverPath= request.getSession().getServletContext().getRealPath("")+File.separator+"Temp"+"/";
 	        	File file = new File(serverPath+fileName);
 	        	response.reset();
 	        	response.setContentType("bin");
@@ -111,9 +111,9 @@ public class HistoryController extends BaseController {
 		 }
 	 }
 	 
-	 @RequestMapping("/delProgress")
+	 @RequestMapping("/delTempTask")
 	 @ResponseBody
-	 public Object delProgress(Integer id)  {
+	 public Object delTempTask(HttpServletRequest request,Integer id,String fileName)  {
 		 if(id!=null){
 			this.taskDao.delTempTask(id);
 		    return true;

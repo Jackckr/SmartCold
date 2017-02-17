@@ -70,7 +70,14 @@ public class MsgServiceimp implements MsgService {
 	private ColdStorageAnalysisMapper sisMapper;
 
 	
-	
+	/**
+	 * 5分钟执行一次
+	 * Task:检查数据是否执行报警 
+	 */
+     @Scheduled(cron="0 0/1 * * * ?")
+	public void delTempFile() {
+    	 System.err.println("当前"+this.getClass().getResource(""));
+     }
 	
 	/**
 	 * 5分钟执行一次

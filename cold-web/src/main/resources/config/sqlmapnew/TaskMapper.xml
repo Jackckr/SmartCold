@@ -11,7 +11,7 @@
 	</delete>
 	
 	<select id="getTaskByUid" resultType="map">
-		SELECT * FROM `queue_task` where `intervalTime` =#{uid} and `type` =-1 ORDER BY `id` desc ;
+		SELECT t.`id` ,t.`state` ,t.`intervalTime` ,t.`className` ,t.`methodName` ,t.`exqip` ,date_format(t.`updateTime`, '%Y-%c-%d %h:%i:%s' ) as `updateTime`  FROM `queue_task` t where `intervalTime` =#{uid} and `type` =-1 ORDER BY `id` desc  LIMIT 10;
 	</select>
 	
 	<insert id="addTempTask" parameterType="com.smartcold.manage.cold.entity.newdb.TaskEntity" useGeneratedKeys="true" keyProperty="id">

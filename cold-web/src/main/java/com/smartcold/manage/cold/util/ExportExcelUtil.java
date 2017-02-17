@@ -313,7 +313,7 @@ public class ExportExcelUtil {
 			String datamode[] = mode[1];
 			if (list.size() > 1048576) {list.subList(0, 1048576);} // 防止数据溢出
 			for (int i = 0; i < list.size(); i++) { // 65536
-				if(isprogress&&i!=0&&i%100==0){//
+				if(isprogress&&i!=0&&i%10000==0){//
 				    double pr= new Double(progress[1]+1)/new Double(progress[2])*new Double(i)/list.size()*100;
 				    EXPPROGRESS.put(progress[0], pr);
 				}
