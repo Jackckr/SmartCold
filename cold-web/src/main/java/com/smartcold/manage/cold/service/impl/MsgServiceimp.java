@@ -1,5 +1,7 @@
 package com.smartcold.manage.cold.service.impl;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -70,14 +72,8 @@ public class MsgServiceimp implements MsgService {
 	private ColdStorageAnalysisMapper sisMapper;
 
 	
-	/**
-	 * 5分钟执行一次
-	 * Task:检查数据是否执行报警 
-	 */
-     @Scheduled(cron="0 0/1 * * * ?")
-	public void delTempFile() {
-    	 System.err.println("当前"+this.getClass().getResource(""));
-     }
+     
+   
 	
 	/**
 	 * 5分钟执行一次
@@ -130,7 +126,10 @@ public class MsgServiceimp implements MsgService {
 	public void delTempTask() {
 		ExportExcelUtil.clearTask();        
 		this.quantityMapper.delTempTask();//添加临时任务
-
+		 String path=this.getClass().getResource("").getPath();
+    	 path= path.substring(0, path.indexOf("WEB-INF"));
+    	 File file=new File(path+File.separator+"Temp");
+    	 deleteFile(file);
 	}
 	
 	
@@ -151,6 +150,25 @@ public class MsgServiceimp implements MsgService {
 		this.setQctdoor(time, dateTime, startTime, endtime);//Q門
 	}
   
+	/**
+	 * 删除文件夹
+	 * @param file
+	 */
+	private void deleteFile(File file) {
+		if (file.exists()) {// 判断文件是否存在
+			if (file.isFile()) {// 判断是否是文件
+				file.delete();// 删除文件
+			} else if (file.isDirectory()) {// 否则如果它是一个目录
+				File[] files = file.listFiles();// 声明目录下所有的文件 files[];
+				for (int i = 0; i < files.length; i++) {// 遍历目录下所有的文件
+					this.deleteFile(files[i]);// 把每个文件用这个方法进行迭代
+				}
+				file.delete();// 删除文件夹
+			}
+		} else {
+			System.out.println("所删除的文件不存在");
+		}
+	}
     
     /**
      *跑完之前的值

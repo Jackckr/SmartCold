@@ -75,7 +75,7 @@
 										<i class="fa fa-clock-o"></i>
 									</div>
 									<input type="text" class="form-control pull-right"
-										style="width: 270px;" id="reservationtime" ng-model="picktime">
+										style="width: 350px;" id="reservationtime" ng-model="picktime">
 								</div>
 							</div>
 							<div class="form-group">
@@ -90,20 +90,22 @@
 							  <thead>
 							    <tr>
 							      <th width="10%">任务号</th>
+<!-- 							      <th width="10%">IP</th> -->
 							      <th width="10%">状态</th>
 							      <th width="30%">进度</th>
 							      <th width="15%">文件名</th>
 							      <th width="10%">开始时间</th>
-							      <th width="10%">操作</th>
+							      <th width="15%">操作</th>
 							    </tr>
 							  </thead>
 							  
 							  <tbody   >
 							    <tr id="tr_task_{{obj.id}}" ng-repeat="obj in tasklist">
 							      <td>{{obj.id}}</td>
+<!-- 							      <td>{{obj.exqip}}</td> -->
 							      <td id="td_taskstate_{{obj.id}}" style="color: forestgreen">{{obj.state==100?'已完成':'进行中'}}</td>
 							      <td>
-							         <div class="progress progress-striped active">
+							         <div class="progress progress-striped {{obj.state<100?'active':'' }}">
 										<div id="prog_usertask_{{obj.id}}"  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{obj.state}}" aria-valuemin="0" aria-valuemax="100"  style="width: {{obj.state}}%;">
 										 <span class="sr-only">{{obj.state}}% 完成</span>
 										</div>
