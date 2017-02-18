@@ -36,56 +36,7 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 	 	   $scope.sltit=$scope.slgptit+subtit+ "-{"+ ($scope.oldnames.join(","))+"}";
    };
    
-   //
-   
-   
-   $scope.getUserTask=function(){
-	   $http.get('/i/history/getTaskByUid', { params: { uid: user.id} }).success(function (result) {
-		   $scope.tasklist=result;
-		   $scope.unfinishedtask=[];
-		   $.each($scope.tasklist, function(i, vo){
-			   if(vo.state<100){ $scope.unfinishedtask.push({id:vo.id,ip:vo.exqip,port:vo.className}); }
-		   });
-		  if($scope.unfinishedtask.length>0){
-			   clearInterval($rootScope.timeTicket);
-			   $rootScope.timeTicket = setInterval(function () { $scope.getRunTaskStatus(); }, 1000);
-			   $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
-		  }
-       });
-   };
-   $scope.getRunTaskStatus=function(){
-	   if($scope.unfinishedtask.length==0){ return;}
-	   $.each($scope.unfinishedtask, function(i, vo){
-		   $http.get('http://'+vo.ip+':'+vo.port+'/i/history/getTaskProgress', { params: { id:vo.id} }).success(function (result) {
-			   if(result>=0){
-				   $("#prog_usertask_"+vo.id).css({  width:result+"%"});
-				   $("#td_taskstate_"+ vo.id).html("<em style='color: gold;'>任务进行中!</em>");
-				   if(result==100){  
-					   $("#td_taskstate_"+ vo.id).html("<em style='color: forestgreen;'>已完成！</em>");
-					   $("#but_dow_"+ vo.id).removeAttr("disabled"); 
-					   $scope.unfinishedtask.splice(i,1);
-					}
-			   }else{
-				   $scope.unfinishedtask.splice(i,1);
-				   $("#td_taskstate_"+ vo.id).html("<em style='color: red;'>任务失败！</em>");
-			   }
-		   });
-		   
-	  });
-   };
-   
-   $scope.downloadFile=function(id,ip,port,fileName){
-	   $scope.createForm(ip,port,fileName);
-   };
-   
-   $scope.delTask=function(id){
-	   $http.get('/i/history/delTempTask', { params: { id:id} }).success(function (result) {
-		   if(result){
-			   $("#tr_task_"+id).remove();
-		   }
-	   });
-   };
-   
+   //导出数据
    $scope.expdata=function(){//导出数据
 	   $scope.hidefilter();
 	    $("#but_expdata").attr("disabled",true);
@@ -109,9 +60,67 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 			 alert("没有设置查询对象！");
 		}
    };
-
-
-
+   
+   /**
+    * 获得用户任务
+    */
+   $scope.getUserTask=function(){
+	   $http.get('/i/history/getTaskByUid', { params: { uid: user.id} }).success(function (result) {
+		   $scope.tasklist=result;
+		   $scope.unfinishedtask=[];
+		   $.each($scope.tasklist, function(i, vo){
+			   if(vo.state<100){ $scope.unfinishedtask.push({id:vo.id,ip:vo.exqip,port:vo.className}); }
+		   });
+		  if($scope.unfinishedtask.length>0){
+			   clearInterval($rootScope.timeTicket);
+			   $rootScope.timeTicket = setInterval(function () { $scope.getRunTaskStatus(); }, 1000);
+			   $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
+		  }
+       });
+   };
+   
+   /**
+    * 获取任务进度
+    */
+   $scope.getRunTaskStatus=function(){
+	   if($scope.unfinishedtask.length==0){ return;}
+	   $.each($scope.unfinishedtask, function(i, vo){
+		   $http.get('http://'+vo.ip+':'+vo.port+'/i/history/getTaskProgress', { params: { id:vo.id} }).success(function (result) {
+			   if(result>=0){
+				   $("#prog_usertask_"+vo.id).css({  width:result+"%"});
+				   $("#td_taskstate_"+ vo.id).html("<em style='color: gold;'>任务进行中!</em>");
+				   if(result==100){  
+					   $("#td_taskstate_"+ vo.id).html("<em style='color: forestgreen;'>已完成！</em>");
+					   $("#but_dow_"+ vo.id).removeAttr("disabled"); 
+					   $scope.unfinishedtask.splice(i,1);
+					}
+			   }else{
+				   $scope.unfinishedtask.splice(i,1);
+				   $("#td_taskstate_"+ vo.id).html("<em style='color: red;'>任务失败！</em>");
+			   }
+		   });
+		   
+	  });
+   };
+   
+   /*
+    * 文件下载
+    */
+   $scope.downloadFile=function(id,ip,port,fileName){
+	   $scope.createForm(ip,port,fileName);
+   };
+   
+   /*
+    * 删除任务
+    */
+   $scope.delTask=function(id){
+	   $http.get('/i/history/delTempTask', { params: { id:id} }).success(function (result) {
+		   if(result){
+			   $("#tr_task_"+id).remove();
+		   }
+	   });
+   };
+   
 	//********************************************************************事件START**********************************************************************
 	$scope.checktime=function(startDate,endDate){
 		var catime =new Date(endDate).getTime()-new Date(startDate).getTime();  
