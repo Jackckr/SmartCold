@@ -310,7 +310,7 @@ public class ExportExcelUtil {
 		Cell cell = row.createCell(1);
 		if (SetUtil.isnotNullList(list)) {
 			String datamode[] = mode[1];
-			if (list.size() > 1048576) {list.subList(0, 1048576);} // 防止数据溢出
+			if (list.size() > 1048575) {list.subList(0, 1048575);} // 防止数据溢出
 			for (int i = 0; i < list.size(); i++) { //  1663132
 				if(isprogress&&i!=0&&i%10000==0){//1663132
 				    double pr= new Double(progress[1]+1)/new Double(progress[2])*new Double(i)/list.size()*100;
