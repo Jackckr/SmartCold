@@ -79,8 +79,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			background:rgba(0,0,0,.8);
 		}
 		.angucomplete-dropdown{padding:0 0 0 6px;width:230px;font-size: 12px;max-height:280px;}
-		
-		.quanxian{  pointer-events: none; }
+		.quanxian{cursor:url(notAllowed.ico), auto;background:#000;text-decoration:line-through;}
+		.quanxian>a,.quanxian:hover>a:hover{pointer-events: none;color:#444!important;}
 		/* .skin-blue .my_sidebar>li:hover>a{
 			background: #0b2041;
 		} */
@@ -425,14 +425,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                <li onclick="activeLi(this)"><a href="#/compressorBlower/{{rdcId}}"><i class="fa fa-circle-o"></i>蒸发系统(冷风机)</a></li>
               </ul>
             </li>
-            <li class="treeview">
-<!--             	<a href="#/historyData"><i class="icon iconfont">&#xe7a2;</i><span class="menu-title">历史数据查询</span></a> -->
-            	<a><i class="icon iconfont">&#xe7a2;</i><span class="menu-title">历史数据查询</span><i class="fa fa-angle-left pull-right"></i></a>
-	            <ul class="treeview-menu">
-		           <li onclick="activeLi(this)"><a href="#/historyData"><i class="fa fa-circle-o"></i>历史曲线查询</a></li>
-		           <li onclick="activeLi(this)"><a href="#/exphistoryData" ng-click=""><i class="fa fa-circle-o"></i>历史数据导出</a></li>
-	            </ul>
-           	</li>
+            <li onclick="activeLi(this)"><a href="#/historyData"><i class="icon iconfont">&#xe7a2;</i><span class="menu-title">历史曲线查询</span></a></li>
+		    <li onclick="activeLi(this)"><a href="#/exphistoryData" ng-click=""><i class="icon iconfont">&#xe75c;</i><span class="menu-title">历史数据导出</span></a></li>
             </ul>
             </li>
             <li class="treeview">
