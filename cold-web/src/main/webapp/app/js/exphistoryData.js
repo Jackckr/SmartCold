@@ -88,9 +88,10 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 		   $http.get('http://'+vo.ip+':'+vo.port+'/i/history/getTaskProgress', { params: { id:vo.id} }).success(function (result) {
 			   if(result>=0){
 				   $("#prog_usertask_"+vo.id).css({  width:result+"%"});
-				   $("#td_taskstate_"+ vo.id).html("<em style='color: gold;'>任务进行中!</em>");
+				   $("#prog_usertask_"+vo.id).children(".sr-only").html((Math.round(result)==100)?"":Math.round(result)+"%");
+				   $("#td_taskstate_"+ vo.id).html("<font style='color: #f80;'>进行中</font>");
 				   if(result==100){  
-					   $("#td_taskstate_"+ vo.id).html("<em style='color: forestgreen;'>已完成！</em>");
+					   $("#td_taskstate_"+ vo.id).html("<font style='color: forestgreen;'>已完成</font>");
 					   $("#but_dow_"+ vo.id).removeAttr("disabled"); 
 					   $scope.unfinishedtask.splice(i,1);
 					}
