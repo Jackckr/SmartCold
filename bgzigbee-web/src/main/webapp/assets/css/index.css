@@ -100,7 +100,7 @@ body{
 	padding-left: 20px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
-.list li:hover{background: #B82E21;color: #fff;}
+.list li:hover{background: #777;color: #fff;}
 .list li:hover a{color: #fff;text-decoration: none;}
 .current { background:#f00} 
 .list li,.list li a{
@@ -110,7 +110,9 @@ body{
 .list li a:focus{
   color : #642100;
 }
-.highlight{
+.list li:active,
+.highlight,
+.list li.highlight:hover{
 	color : #fff!important;
 	background : #B82E21;
 }
