@@ -44,11 +44,12 @@ public class HistoryController extends BaseController {
 	public Object expHistoryData(HttpServletRequest request, HttpServletResponse response,String uid, String filename, String title,Integer type, String key, Integer[] oids, String[] onames, String startTime, String endTime) {
 		int taskid=0;
 		try {
+			
 			if(StringUtil.isNull(filename)||StringUtil.isNull(title)||type==0||StringUtil.isNull(key)||oids==null||onames==null||StringUtil.isNull(startTime)||StringUtil.isNull(endTime)){return  ResponseData.newFailure("参数不全！");}
 			Date date = new Date();  
 			String sid = TimeUtil.datefmlong.format(date)+uid;  
 			Date sttime = TimeUtil.dateFormat.parse(startTime);Date edTime = TimeUtil.dateFormat.parse(endTime);
-			TaskEntity task	=new TaskEntity(-1,0,Integer.parseInt(uid), request.getLocalPort()+"",sid+".zip",RemoteUtil.getServerIP());
+			TaskEntity task	=new TaskEntity(-1,0,Integer.parseInt(uid), request.getLocalPort()+"",sid+".zip",request.getServerName());
 			this.taskDao.addTempTask(task);  taskid=task.getId();ExportExcelUtil.EXPPROGRESS.put(taskid,0.00);
 			String fullname=filename + "_" + title;
 			String serverPath= request.getSession().getServletContext().getRealPath("")+File.separator+"Temp"+File.separator;
