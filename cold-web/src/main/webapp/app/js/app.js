@@ -544,3 +544,6 @@ function activeLi(ops){
 	$('.my_sidebar li').removeClass('active');
 	$(ops).addClass('active');
 }
+if($("li").hasClass("quanxian")){
+	$(".quanxian>a").attr("disabled",true);
+}
