@@ -87,6 +87,7 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 	   $.each($scope.unfinishedtask, function(i, vo){
 		   $http.get('http://'+vo.ip+':'+vo.port+'/i/history/getTaskProgress', { params: { id:vo.id} }).success(function (result) {
 			   if(result>=0){
+				   if(result==0){ $("#td_taskstate_"+ vo.id).html("<font style='color: lightseagreen;'>等待中</font>");return;}
 				   $("#prog_usertask_"+vo.id).css({  width:result+"%"});
 				   $("#prog_usertask_"+vo.id).children(".sr-only").html((Math.round(result)==100)?"":Math.round(result)+"%");
 				   $("#td_taskstate_"+ vo.id).html("<font style='color: #f80;'>进行中</font>");

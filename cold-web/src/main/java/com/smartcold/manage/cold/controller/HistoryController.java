@@ -49,7 +49,7 @@ public class HistoryController extends BaseController {
 			Date date = new Date();  
 			String sid = TimeUtil.datefmlong.format(date)+uid;  
 			Date sttime = TimeUtil.dateFormat.parse(startTime);Date edTime = TimeUtil.dateFormat.parse(endTime);
-			TaskEntity task	=new TaskEntity(-1,0,Integer.parseInt(uid), request.getLocalPort()+"",sid+".zip",request.getServerName());
+			TaskEntity task	=new TaskEntity(-1,0,Integer.parseInt(uid), request.getLocalPort()+"",sid+".zip",RemoteUtil.getServerIp());
 			this.taskDao.addTempTask(task);  taskid=task.getId();ExportExcelUtil.EXPPROGRESS.put(taskid,0.00);
 			String fullname=filename + "_" + title;
 			String serverPath= request.getSession().getServletContext().getRealPath("")+File.separator+"Temp"+File.separator;
@@ -82,7 +82,6 @@ public class HistoryController extends BaseController {
 	 @RequestMapping("/downloadFile")
 	 public void downloadFile(HttpServletRequest request, HttpServletResponse response,String fileName)  {
 	        try {
-//	        	String fileName = "2017021612325911487219579472.zip"; // 文件的默认保存名
 	        	String serverPath= request.getSession().getServletContext().getRealPath("")+File.separator+"Temp"+"/";
 	        	File file = new File(serverPath+fileName);
 	        	response.reset();

@@ -36,7 +36,9 @@ public enum SetTables {
 
 	CIRCULATINGPUMPSET(16, "circulatingpumpset", "防冻循环泵"),
 
-	WALL(17, "wallset", "冷库墙");
+	WALL(17, "wallset", "冷库墙"),
+	
+	TEMPE(18, "tempe", "温度");
 
 	private int type;
 	private String table;
