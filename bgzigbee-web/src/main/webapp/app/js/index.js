@@ -22,7 +22,9 @@ coldWeb.controller('index', function ($scope, $state, $cookies, $http, $location
 	});
 });*/
 });
+$(".sidebar").height($(document).height());
 function secLi(ops,url){
-	$(ops).addClass('highlight').siblings().removeClass('highlight');;
+	$(ops).addClass('highlight').siblings().removeClass('highlight');
+	$(".sidebar").height($(document).height());
 	window.location.href=url;
 }
