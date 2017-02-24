@@ -30,9 +30,10 @@
 						<span class="hi"><font style="size:14px">您好，</font></span> 
 						<span class="user" ng-model="admin"><font style="size:14px">{{admin.adminname}}</font></span>
 						<!-- 用户浏览量提醒207-02-18 AM-->
-						<!-- <a href="#" title="您有新的消息，请查看^_^" style="text-decoration: none;">
-							<span class="glyphicon glyphicon-bell" style="color:#f90;font-size: 20px;">
-							</span>2</a> -->
+						<a href="#" title="您有新的消息，请查看^_^" style="text-decoration: none;position: relative;">
+							<i class="fa fa-bell"></i>
+							<span class="count">10</span>
+						</a>
 					</div>
 					<!-- <div class="smartColdManage  pull-left h4">链库后台管理</div> -->
 					<div class="back  pull-left">
@@ -56,62 +57,32 @@
     							<span class="glyphicon glyphicon-user"></span>
     							<a>用户管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
     						</li>
     					
     						<li onclick="secLi(this,'#/adminlist')" ng-if="admin.role==1" >
-    							<span class="glyphicon glyphicon-user"></span>
+    							<i class="fa fa-users"></i>
     							<a>管理员管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
     						</li>
 							<li onclick="secLi(this,'#/companylist')">
-								<span class="glyphicon glyphicon-home"></span>
+								<i class="fa fa-bank"></i>
 								<a>集团管理</a>
 								<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-								<ul class="liSon">
-									<li>children</li>
-									<li>children</li>
-									<li>children</li>
-								</ul>
 							</li>
     						<li onclick="secLi(this,'#/storageManage')">
     							<span class="glyphicon glyphicon-cog"></span>
     							<a>冷库管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
     						</li>
     						<li onclick="secLi(this,'#/storageConfig')">
     							<span class="glyphicon glyphicon-th-list"></span>
     							<a>冷库配置信息</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
     						</li>
     						<li onclick="secLi(this,'#/spiderConfig')">
     							<span class="glyphicon glyphicon-wrench"></span>
     							<a>冷库360配置</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
     						</li>
     						<li onclick="secLi(this,'#/monthlyReportList')">
     							<span class="glyphicon glyphicon-stats"></span>
@@ -127,21 +98,11 @@
     							<span class="glyphicon glyphicon-pencil"></span>
     							<a>评价管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
     						</li>
     						<li onclick="secLi(this,'#/infoManage')">
-    							<span class="glyphicon glyphicon-calendar"></span>
+    							<i class="fa fa-file"></i>
     							<a>资讯管理</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
-    								<li>children</li>
-    								<li>children</li>
-    								<li>children</li>
-    							</ul>
     						</li>
     						<li onclick="secLi(this,'#/webSiteVisits')">
     							<span class="glyphicon glyphicon-stats"></span>
@@ -149,14 +110,14 @@
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
     						</li>
     						<li onclick="secLi(this,'#/operationLog')">
-    							<span class="glyphicon glyphicon-file"></span>
+    							<i class="fa fa-file-text"></i>
     							<a>操作日志</a>
     							<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-    							<ul class="liSon">
+    							<!-- <ul class="liSon">
     								<li>children</li>
     								<li>children</li>
     								<li>children</li>
-    							</ul>
+    							</ul> -->
     						</li>
     					</ul>
     				</div>
