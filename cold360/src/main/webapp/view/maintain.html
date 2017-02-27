@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>360维护</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" href="../com/css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/jqpagination.css">
+    <link rel="stylesheet" href="../com/css/layer.css" />
+    <link rel="stylesheet" href="../com/css/cold360.css" />
+    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.jqpagination.js"></script>
+	<script type="text/javascript" src="../com/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../com/js/angular.min.js"></script>
+    <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js" ></script>
+    <script type="text/javascript" src="../com/js/cold360.js" ></script>
+    <script type="text/javascript" src="../app/js/maintain.js" ></script>
+    <style>
+    	.layui-m-layercont{
+			padding: .2rem .59rem!important;
+			min-height: 5rem;
+		}
+		.layui-m-layercont{	
+			text-align: left!important;
+		}
+		.line_height{
+			line-height: 5rem;
+			text-align: center;
+		}
+		.layui-m-layerchild h3{
+			margin: 0;
+			font-size: .8rem;
+		}
+		ol, ul, p{
+		   margin-bottom:0;
+		}
+    </style>
+</head>
+<body ng-app="app" ng-controller="maintain" ng-cloak>
+    <!-- header -->
+         <header class="one">
+            <div class="area fl">
+                <a href="personal.html"><img class="userImg"></a>
+            </div>
+            <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
+                <a class="transion"><i class="iconfont">&#xe73c;</i></a>
+            </div>
+            <div class="txt omg" ng-bind="rdcName">
+            </div>
+            <ul class="rdcDropList" ng-repeat="storage in storages">
+                <li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
+            </ul>
+        </header>
+        <header class="two">
+        	<div class="area fl">
+        		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+        	</div>
+
+        	<div id="searchDara_div" class="search">
+        		<input type="text" style="color: #555;" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
+        		<i class="iconfont" >&#xe62f;</i>
+        	</div>
+	    </header>
+    <!-- header end-->
+    <section class="toggle">
+    	<div class="tempture current mylog"><i class="iconfont">&#xe79c;</i>维护提醒</div>
+    	<div class="light mylog"><i class="iconfont">&#xe7c9;</i>维修记录</div>  
+    	<div class="applyLog mylog"><i class="iconfont" style="color: #438BCB;">&#xe639;</i>维修申请</div>    	
+    </section>
+    <div class="backDrop"></div>
+    <div class="mainTainBottomL">
+	    <!-- 维护提醒html ===================*********==========***********=========-->
+		<div class="swiper-container chart temperature maintain">
+	        <div class="swiper-wrapper">
+	            <div class="swiper-slide" ng-repeat="(key,value) in  compressorGroups" ng-show="rdcId">
+	            	 <p class="actually">{{value.name}}</p>
+	            	 <div class="alarm_bg" ng-repeat="obj in  value.compressors">
+	            	 	<strong class="remain" oid="{{obj.id}}">{{obj.sytm}}</strong>
+	            	 	<p>{{obj.name}}距离下次定期保养</p>
+	            	 </div>
+	            </div>
+	        </div>
+	        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	        <!-- Add Arrows -->
+	        <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
+	        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
+	    </div>
+	  <!-- 维护提醒html  end -->
+	  
+	  <!-- 维护记录html ===================*********============*********==========-->
+		<div class="wxRecords black"  ng-show="rdcId">
+			<p>维修完结记录</p>
+			<div class="input-group">
+                 <input type="text" class="form-control" placeholder="请输入机组名" ng-model="keyword" ng-change="goSearch1()" ng-model-options="{debounce: 700}">
+                 <span class="input-group-btn">
+                     <button class="btn btn-primary" type="button" ng-click="goSearch1()">搜索</button>
+                 </span>
+             </div><br>
+			<div class="analysis alarmLog">
+				<table class="cold_warn">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>机组名称</th>
+							<th>维修原因/保养要求</th>
+							<th>预约维修时间</th>
+							<th>实际维修时间</th>
+							<th>维修详情</th>
+							<th>备注</th>
+							<th>维修评价</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="maintenance1 in Maintenances1">
+							<td class="text-center">{{$index+1}}</td>
+							<td>{{maintenance1.unitname}}</td>
+							<td>{{maintenance1.reason}}</td>
+							<td>{{maintenance1.ordertime | date:'yyyy-MM-dd'}}</td>
+							<td>{{maintenance1.fixtime | date:'yyyy-MM-dd' }}</td>
+							<td class="myNote">{{maintenance1.detail}}</td>
+							<td class="myNote">{{maintenance1.note}}</td>
+							<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-blur="change(maintenance1.id,maintenance1.appraise)"></textarea></td>
+							<td class="text-center">
+								<button class="btn btn-danger"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="pagination">
+			    <a href="#" class="first" data-action="first">首页</a>
+			    <a href="#" class="previous" data-action="previous">上页</a>
+			    <input type="text" readonly="readonly" data-max-page="40" />
+			    <a href="#" class="nexts" data-action="nexts">下页</a>
+			    <a href="#" class="last" data-action="last">末页</a>
+			</div>
+			<hr/>
+			
+			<p>待维修记录</p>
+			<div class="analysis alarmLog">
+				<table class="cold_warn">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>机组名称</th>
+							<th>维修原因/保养要求</th>
+							<th>预约维修时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="maintenance0 in Maintenances0">
+							<td class="text-center">{{$index+1}}</td>
+							<td>{{maintenance0.unitname}}</td>
+							<td class="myNote">{{maintenance0.reason}}</td>
+							<td>{{maintenance0.ordertime | date:'yyyy-MM-dd' }}</td>
+							<td class="text-center">
+								<button class="btn btn-success" ng-click="weixiuapply(maintenance0.id)">维修</button>
+								<button class="btn btn-danger"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- 维护记录html end-->  
+	  
+	  <!-- 维护申请html ===================*********============*********==========-->
+		<div class="mainApply black"  ng-show="rdcId">
+			<div class="applyKid">
+				<p>机组名称:</p>
+				<textarea placeholder="请输入需要维修机组的名称" ng-model="unitname"></textarea>
+			</div>
+			<div class="applyKid">
+				<p>维修原因/保养要求:</p>
+				<textarea colspan="10" rowspan="10" ng-model="reason" placeholder="请输入维修原因/保养要求"></textarea>
+			</div>
+			<div class="applyKid">
+				<p>预约维修时间:</p>
+				<input class="datainp" type="date" ng-model="ordertime" placeholder="请选择预约时间"/>
+			</div>
+			<button class="mybtn" ng-click="addMaintenance()">提交</button>
+		</div>
+  </div>
+  <!--rdc列表-------------------------------------------------->
+	 <section class="searchTop">
+	 	<ul class="rdcList">
+	 		<li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+	 	</ul>
+	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
+	 </section>
+	 <!--rdc列表----------------------------------------------->
+    <ul class="footer">
+        <li>           
+            <a href="cold360.html">
+                <i class="iconfont">&#xe68d;</i>
+                <p class="info">监控</p>
+            </a>
+        </li>
+        <li>           
+            <a href="analysisQuery.html">
+                <i class="iconfont">&#xe7c6;</i>
+                <p class="info">查询</p>
+            </a>
+        </li>
+        <li>            
+            <a href="analysis.html">
+                <i class="iconfont">&#xe682;</i>
+                <p class="info">分析</p>
+            </a>
+        </li>
+        <li>          
+            <a href="alarmLog.html">
+                <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
+                <p class="info">告警</p>
+                <span class="countNum" ng-if="alarmTotalCnt > 0" ng-bind="alarmTotalCnt"></span>
+            </a>
+        </li>
+        <li class="active">            
+             <a href="maintain.html">
+                <i class="iconfont">&#xe6a5;</i>
+                <p class="info">维护</p>
+            </a>
+        </li>
+    </ul>
+    <div class="goTop"><i class="iconfont">&#xe747;</i></div>
+</body>
+</html>
+<script type="text/javascript">
+</script>

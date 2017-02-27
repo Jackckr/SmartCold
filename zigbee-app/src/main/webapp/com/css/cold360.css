@@ -1,4 +1,4 @@
-/*冷库列表页  
+﻿/*冷库列表页  
  * administrator:jinghiayang
  * date:2016.7.14
  */
@@ -9,7 +9,7 @@ body{
 	font-size: 0.6rem;
 }
 header .txt{
-	font-size: .8rem;
+	font-size: .75rem;
 }
 section{
 	margin: 2.5rem 0 0.1rem;

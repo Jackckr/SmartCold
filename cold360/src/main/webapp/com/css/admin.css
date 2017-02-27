@@ -1,0 +1,630 @@
+.txt{
+	height: 100%;
+	margin:0 2rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+ 	white-space: nowrap;
+}
+.mylogin{
+	background:transparent;
+	margin: 0;
+}
+section,.list{
+	margin: 2.5rem 0 0.5rem;
+	background-color: #fff;
+	width:100%;
+	padding: 0.5rem 0.9rem;
+	box-sizing: border-box;
+	position: relative;
+}
+section.show{
+	padding: 0 0.9rem;
+}
+.img{
+	width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    text-align: center;
+    background-size: cover;
+    margin-right: 0.5rem;
+}
+.name{
+	margin-left: 0.5rem;
+	padding-left: 2.6rem;
+}
+.nameLogin{
+	height: 2.5rem;
+	line-height: 2.5rem;
+	font-size: 0.8rem;
+	color: #333;
+}
+.nameinfo{
+	margin-bottom: 0.2rem;
+	color: #333;
+	font-size: 0.8rem;
+	text-indent: -0.05rem;
+}
+.position{
+	color: #999;
+	font-size: 0.6rem;
+}
+.rightArrow{
+    height: 2.5rem;
+}
+.rightArrow a{	
+	line-height: 2.5rem;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+}
+.rightArrow i{	
+	font-size: 1rem;
+}
+.list{
+	margin-top:0;
+	padding: 0.2rem 0.9rem;
+	/*height: 25rem;*/
+}
+.list li{
+	border-bottom: 1px solid #ddd;
+}
+.myicon,.list .rightArrow{
+	width: 3rem;
+	height: 3rem;
+	line-height: 3rem;
+}
+.myicon span{
+	font-size: 0.8rem;
+}
+.list .rightArrow{
+	text-align: right;
+	width: 2rem;
+}
+.list .name{
+	padding-left: 3rem;
+	margin: 0;
+	height: 3rem;
+}
+.list_icon .myicon{
+	width: 2rem;
+}
+.list_icon .name{
+	padding-left: 2rem;
+}
+.list.list_icon{
+	margin-bottom:2.6rem;
+}
+.myicon i{
+	font-size: 1.2rem;
+	color: #919191;
+}
+.list_name{
+	color: #333;
+	font-size: 0.8rem;
+	height:100%;
+	line-height: 3rem;
+	position:relative;
+}
+
+.adminInfo .myicon,.adminInfo  .rightArrow{
+	width: 3rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+}
+.adminInfo  .rightArrow{
+	width: 2rem;
+}
+.adminInfo  .name{
+	padding-left: 3rem;
+	margin: 0;
+	height: 2.5rem;
+}
+.adminInfo .list_name{
+	text-align: right;	
+	line-height: 2.5rem;
+}
+.adminInfo+.mybtn{
+	margin-bottom: 3rem;
+}
+.commentList{	
+	margin-top:2.5rem;
+	padding-bottom: 3rem;
+}
+.commentList li{
+	background-color: #fff;
+	padding: 0.5rem 0.9rem;
+	border-bottom: 0.5rem solid #F6F5FA;
+}
+.commentList .img{
+	width: 3rem;
+	height: 3rem;
+	border-radius: 0;
+}
+.commentList .img>img{
+	border-radius: .2em;
+    background: #90CAFB;
+}
+.company{
+	font-size: 0.7rem;
+	color: #333;
+} 
+.company span{
+	font-size: 0.6rem;
+}
+.btnGroup{
+	text-align: right;
+	margin-top: 1rem;
+}
+.btnGroup button{
+	background-color: #fff;
+	padding: 0.3rem 1rem;
+	border: 1px solid #ccc;
+	font-size: 0.65rem;
+	color: #555;
+	margin-left: 0.5rem;
+}
+.btnGroup .current{
+	background-color: #438BCB;
+	color: #fff;
+	border-color: transparent;
+}
+.commentList .btnGroup{
+	border-top:1px solid #eee;
+	padding-top:0.3rem;
+}
+.position+.btnGroup button{
+	padding: 0 1rem;
+	line-height: 1.75;
+}
+.position i{
+	color: #F07409;
+}
+.img+.company+.position{
+	position: relative;
+	top: 0.6rem;
+}
+/* .orderNum{
+	 position: relative;
+	top: 0.6rem;
+} */
+/*我的订单*/
+.content{
+	padding-bottom: 3rem;
+}
+.order,.infos{
+    color: #333;
+    font-size: 0.7rem;
+    margin: 0.3rem 0;
+}
+.content h4{
+	font-size: 0.8rem;
+    color: #438BCB;
+    line-height: 1.75;
+    font-weight: 400;
+    margin: 1rem 0 0.2rem;
+}
+.date{
+    font-size: 0.7rem;
+    color: #999;
+    margin: 0 0.5rem;
+}
+.dot{
+    display: inline-block;
+    vertical-align:middle;
+    width: .3rem;
+    height: .3rem;
+    margin-right: 5px;
+    background-color: #438BCB;
+    border-radius: 50%;
+}
+.first{
+    margin-right: 10px;
+}
+.gallery{
+	height: 4.5rem;
+	overflow: hidden;
+	margin: 0.3rem 0;
+}
+.gallery a{
+	float: left;
+	width: 33%;
+	padding: 0 0.1rem;
+	box-sizing: border-box;
+	height: 4.5rem;
+	background-size: cover;
+	text-align: center;
+}
+.object li{
+	margin-bottom: 0.5rem;
+}
+.object li>p{
+	font-size: 0.7rem;
+	line-height: 1.75;
+}
+.object li>p:first-child{
+    color: #438BCB;
+    font-size: 0.75rem;
+}
+.logo{
+	width: 6.4rem;
+	height: 4rem;
+	margin: 0 auto;
+}
+.logo img{
+	max-width: 100%;
+	height: auto;
+}
+.tel .contact{
+	font-size: 0.75rem;
+	color: #438BCB;
+	margin-top:.8rem;
+}
+.tel .contact+p{
+	font-size: 0.7rem;
+	color: #555;
+	line-height: 1.75;
+}
+.tel p:last-child{
+	margin-bottom:2.6rem;
+}
+.tel .contact+p>a{
+	display: block;
+	color: #f60;
+	text-decoration: underline;
+}
+.tel p:nth-last-child(3){
+	margin-bottom: .3rem;
+}
+.gallery .fl{
+	width:33.33%
+}
+
+.contact+.gallery{
+	height:6.5rem;
+	margin-bottom: 2.3rem;
+}
+.contact+.gallery a{
+	min-height:5.2rem;
+	position: relative;
+}
+.contact+.gallery a img{
+	width:5rem;
+	height:5rem;
+}
+.contact+.gallery a:before{
+	content: attr(data-font);
+	position: absolute;
+	top:100%;
+	left:0;
+	width:100%;
+	font-size: .65rem;
+	color:#555;
+}
+#headImg{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity:0;
+}
+/*修改昵称*/
+.nopad{
+	padding: 0 0.9rem;
+}
+.editarea{
+	line-height: 2rem;
+	font-size: 0.75rem;
+	position: relative;
+}
+.editarea .input{
+	padding:0 0 2px 3.5rem;
+	height: 2rem;
+	color: #333;
+	box-sizing: border-box;
+}
+.bd{
+	border-bottom: 1px solid #eee;	
+}
+.editarea .input>input{
+	width: 100%;
+	height: 100%;
+	line-height: 2rem;
+	font-size: 0.75rem;
+}
+.deleteEdit{
+	position: absolute;
+	width: 0.8rem;
+	height: 0.8rem;
+	background-color: #c0c0c0;
+	font-size: 0.7rem;
+	color: #fff;
+	border-radius: 50%;
+	cursor: pointer;
+	text-align: center;
+	line-height: 0.8rem;
+	top: 50%;
+	right: 0.9rem;
+	margin-top: -0.4rem;
+}
+.set{
+	color: #438BCB;
+}
+.sex_set{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	appearance: none;
+	-webkit-appearance: none;
+	font-size:0.8rem;
+	color: #333;
+	background:none;
+	padding-right:2rem;
+	box-sizing:border-box;
+	direction: rtl;
+}
+.inputs{
+	padding: 0 0.9rem;
+	margin: 2.5rem 0 0.5rem;
+	background-color: #fff;
+	width:100%;
+	box-sizing: border-box;
+}
+.idcode{
+	padding: 0 0.5rem;
+	height: 1.6rem;
+	box-sizing: border-box;
+	line-height: 1.6rem;
+	margin-top: 0.2rem;
+	background-color: #438BCB;
+	font-size: 0.7rem;
+	color: #fff;
+	text-align: center;
+	border-radius: 4px;
+	outline: none;
+}
+.tel{
+	padding: 0.2rem 0;
+	box-sizing: border-box;
+	border-bottom: 2px solid #F6F5FA;
+	margin-bottom: 0.5rem;
+}
+.tel:first-child{
+	margin-bottom: 0;
+}
+.inputs .tel:last-child{
+	border-bottom: 0;
+	position:relative;
+}
+.tel i{
+	font-size: 1rem;
+	color: #B4B4B4;
+	vertical-align: middle;
+}
+.inputs .tel:last-child i{
+	position:absolute;
+	left:0;
+	top:50%;
+	-webkit-transform:translateY(-50%);
+	transform:translateY(-50%);
+}
+.tel input{
+	height: 2rem;
+	font-size: 0.8rem;
+	line-height: 2rem;
+	color: #333;
+}
+.inputs .tel:last-child input[type='text']{
+	display:block;
+	width:100%;
+	text-indent:1.25rem;
+}
+.mybtn{
+	font-size: 0.8rem;
+	width: 90%;
+	margin: 0.5rem 5%;
+	box-sizing: border-box;
+}
+.show1,.show2{
+	display: none;
+}
+/*抢单成功页面*/
+.rel {
+	padding: 0.5rem 0.9rem 0;
+}
+/*评价页*/
+.comment+.mybtn{
+	margin-bottom: 3rem;
+}
+.comment p{
+	font-size: 0.8rem;
+	line-height: 1.5;
+}
+.comment p i{
+	font-size: 1rem;
+	display: inline-block;
+	padding: 0.2rem;
+	color: #ccc;
+	cursor: pointer;
+}
+.comment p i:first-child{
+	margin-left: 0.5rem;
+}
+.comment p i.current{
+	color: #f80;
+}
+.commentInfo{
+	width: 100%;
+	margin: 0.5rem 0;
+}
+.commentInfo textarea{
+	width: 100%;
+	height: 4rem;
+	border: 1px solid #ccc;
+	outline: none;
+	padding: 6px 0 0 6px;
+	line-height: 1.5;
+	font-size: 0.75rem;
+	resize: none;
+	box-sizing: border-box;
+}
+.pic{
+	display: inline-block;
+	width: 3rem;
+	height: 3rem;
+	margin-top:0.3rem;
+	border: 3px dotted #ccc;
+	background: url(../img/plus.png) no-repeat center;
+}
+.pic+span{
+	position:relative;
+	font-size:0.8rem;
+	color:#aaa;
+	top:0.8rem;
+}
+.pic input{
+	width: 0;
+	height:0;
+}
+/*评价星级*/
+.star {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    color: #CACACA;
+    overflow: hidden;
+}
+.star li {
+    float: left;
+    padding: 0;
+    border-bottom: 0;
+}
+.filled {
+    color: #F59000;
+    background-size: cover;
+}
+/* 我的消息 */
+html,body{
+	height:100%;
+}
+.body{
+	margin-top: 2.4rem;
+	background-color: #fff;
+	min-height: 82%;
+	padding:0 .9rem 2.5rem;
+	box-sizing: border-box;
+}
+.messageList{
+	border-bottom: 1px solid #eee;
+	padding:.7rem 0;
+}
+#ul_msgsL_list .messageList{
+	padding:0;
+}
+#ul_msgsL_list .messageList>a{
+	display: block;
+	padding:.7rem 0;
+}
+.messageImg{
+	width: 2rem;
+	height: 2rem;
+	line-height:2rem;
+	background-color: #F39826;
+	text-align: center;
+	border-radius: .2rem;
+	margin-right:.3rem;
+	position: relative;
+}
+.redDot{
+	position: absolute;
+	top:-.2rem;
+	right:-.2rem;
+	width:.4rem;
+	height:.4rem;
+	background: red;
+	border-radius:50%;
+}
+.red{background-color: #F1594B;}
+.messageImg i{
+	color: #fff;
+	font-size: 1rem;
+}
+.messageInfo{
+	color: #999;
+	font-size: .7rem;
+	position: relative;
+}
+.messageInfo p.fr{
+	font-size:.7rem;
+	color:#999;
+	line-height:1.5;
+}
+.messageInfo strong{
+	color: #333;
+	font-size: .75rem;
+}
+.detail{
+	margin-top:.3rem;
+}
+/* 去掉链接触摸高亮 */	
+.newsImg li{
+	border-bottom: 2px solid #F6F5FA;
+	padding: 0.4rem;
+}
+.newsImg li a{
+	display: block;
+	position: relative;
+}
+.imgFl{
+	width: 4rem;
+	height: 3.5rem;
+	margin-right: .3rem;
+	background-size: cover;
+}
+.newsTitle{
+	font-size: 0.7rem;
+	line-height: 1.525;
+	overflow : hidden;
+    text-overflow: ellipsis;
+  	display: -webkit-box;
+  	font-size:.7rem;
+	color:#333;
+  	-webkit-line-clamp: 2;
+  	-webkit-box-orient: vertical;
+} 
+.messageInfo .newsTitle:last-child{
+	color:#999
+}
+.newsTxt span{
+	font-size: .6rem;
+	color: #999;
+	margin-right: .2rem;
+}
+.newsDate{
+	position: absolute;
+	bottom: 0;
+	left: 4.3rem;
+	font-size:.7rem;
+	color:#666;
+}
+.newsTxt .newsBd{
+	color: #BB2626;
+	border: 1px solid #BB2626;
+	border-radius: 3px;
+	display: inline-block;
+	padding: 0 .3rem;
+} 
+#version{
+	text-align: center;
+	font-weight: 400;
+	font-size: .7em;
+	color: #888888;
+	margin-top: .3rem;
+}
+#baguetteBox-overlay .full-image figcaption{
+	font-size: .75rem;
+	line-height: 2.5rem;
+}
