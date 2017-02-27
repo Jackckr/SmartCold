@@ -76,7 +76,6 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
     $scope.goFacility = function () {
         window.location.href='monitorFacility.html?storageID=' + $scope.rdcId;
     }
-
     $scope.swiper = 0;
     $scope.defaltswiper = 0;
 
@@ -430,7 +429,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
                             style: {
                                 color: 'rgba(30,144,255,0.8)',
                                 fontFamily: '微软雅黑',
-                                fontSize: 20,
+                                fontSize: ".7rem",
                                 fontWeight: 'bolder'
                             }
                         },

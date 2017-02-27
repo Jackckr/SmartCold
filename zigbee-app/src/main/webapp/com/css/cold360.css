@@ -48,9 +48,10 @@ section{
 	background-color: #fff;
 	margin-bottom: 0.1rem;
 	margin-top:2.2rem;
-	font-size: 0.8rem;
+	font-size: 0.65rem;
 	text-align: center;
 	width: 100%;
+	height:auto;
 	display: table;
 	table-layout: fixed;
 	position: relative;
@@ -58,13 +59,12 @@ section{
 }
 .toggle>div{
 	display: table-cell;
-	height: 2rem;
-	line-height: 2rem;
+	height: 1.6rem;
+	line-height: 1.6rem;
 	border-bottom: 3px solid #BDBDBD;
 }
 .toggle>div>i{
-	font-size: 0.9rem;
-	/*margin: 0.1rem 0.2rem 0;*/
+	font-size: 0.7rem;
 }
 .tempture>i{
 	color: #EB5A4A;
@@ -416,11 +416,11 @@ b{
 }
 /*查询*/
 .historyData{
-	font-size: .75rem;
+	font-size: .7rem;
 }
 .historyData strong{
 	font-weight: 700;
-	font-size: .8rem;
+	font-size: .7rem;
 }
 .historyData p{
 	margin-bottom: .2rem;
@@ -431,7 +431,7 @@ b{
 	background:#f2f2f2;
 	padding:.2rem;
 	text-align:center;
-	margin: 0 2% .8rem 0;
+	margin: 0 2% .5rem 0;
 	border-radius:3px;
 }
 .defaultSelect{
@@ -468,7 +468,7 @@ b{
 	margin:.3rem 2% .5rem 0;	
 	border-radius:3px;
 	text-align: center;
-	font-size: .75rem;
+	font-size: .7rem;
 	color:#555;
 }
 .coverBg .bottomBtn{
@@ -516,10 +516,10 @@ b{
 	display: inline-block;
 	width:40%;
 	text-align: center;
-	font-size: .75rem;
+	font-size: .7rem;
 	color:#555;
 	background:#f2f2f2;
-	padding:8px 0;
+	padding:5px 0;
 	border-radius:4px;
 	margin-bottom: .5rem;
 }

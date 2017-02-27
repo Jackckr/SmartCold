@@ -50,49 +50,7 @@
     </div>
 </header>
 <!-- header end-->
-<section class="toggle">
-    <div class="tempture other" id="temperature" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
-    		<span class="dropNext">
-    			<b>温度</b><i class="iconfont">&#xe6f7;</i>
-    		</span>
-        <ul class="otherList black">
-            <li><a href="javascript:;">超温时长统计</a></li>
-            <li><a href="javascript:;">超温因子统计</a></li>
-            <li><a href="javascript:;">保温因子统计</a></li>
-            <li><a href="javascript:;">温度周期因子统计</a></li>
-        </ul>
-    </div>
-    <div class="light" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe6ed;</i>
-            <span class="dropNext">
-                <b>运管</b><i class="iconfont">&#xe6f7;</i>
-            </span>
-        <ul class="otherList black">
-            <li><a href="javascript:;" id="door" ng-click="goDoor()">冷库门运行分析</a></li>
-            <li><a href="javascript:;" id="goods">货物因子分析</a></li>
-            <li><a href="javascript:;" id="hot">冷库日热量分析</a></li>
-        </ul>
-    </div>
-    <div class="door" id="makeCold" ng-click="goCooling()"><i class="iconfont">&#xe7b6;</i>
-            <span class="dropNext">
-                <b>制冷</b><i class="iconfont">&#xe6f7;</i>
-            </span>
-        <ul class="otherList black">
-            <li><a href="javascript:;" id="efficiency" ng-click="goDoor()">效率分析</a></li>
-            <li><a href="javascript:;" id="warn" ng-click="goWarnCount()">告警统计</a></li>
-            <li><a href="javascript:;" id="running">运行分析</a></li>
-        </ul>
-    </div>
-    <div class="current other" id="runQuery" ng-click="goQuery()"><i class="iconfont">&#xe7a2;</i>
-    		<span class="dropNext">
-    			<b>查询</b><i class="iconfont">&#xe6f7;</i>
-    		</span>
-        <ul class="otherList black">
-            <li><a href="javaScript:;" id="goHistoryData" ng-click="goHistoryData()" style="color:#5BB789;">历史数据查询</a></li>
-            <li><a href="javaScript:;" id="goReport" ng-click="goReport()">报表功能</a></li>
-        </ul>
-    </div>
-</section>
-<div class="backDrop"></div>
+<section class="toggle"></section>
 <div id="val_list_div" class="coverBg">
     <!-- 冷库温度list -->
     <div class="my_list temperatureList">
@@ -200,12 +158,18 @@
 <ul class="footer">
     <li>
         <a href="cold360.html">
-            <i class="iconfont">&#xe695;</i>
+            <i class="iconfont">&#xe68d;</i>
 
             <p class="info">监控</p>
         </a>
     </li>
-    <li class="active">
+    <li class="active">           
+        <a href="analysisQuery.html">
+            <i class="iconfont">&#xe7c6;</i>
+            <p class="info">查询</p>
+        </a>
+    </li>
+    <li>
         <a href="analysis.html">
             <i class="iconfont">&#xe682;</i>
 

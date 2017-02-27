@@ -77,15 +77,7 @@
                 <li><a href="javascript:;" id="running" ng-click="goRunAnalysis()">运行分析</a></li>
             </ul>
         </div>
-    	<div class="other"  id="runQuery" ng-click="goQuery()"><i class="iconfont">&#xe7a2;</i>
-    		<span class="dropNext">
-    			<b>查询</b><i class="iconfont">&#xe6f7;</i>
-    		</span>
-            <ul class="otherList black">
-                <li><a href="javaScript:;">历史数据查询</a></li>
-                <li><a href="javaScript:;">报表功能</a></li>
-            </ul>
-        </div>
+        <div class="other" id="runQuery" ng-click="goReport()"><i class="iconfont">&#xe7cc;</i><b>报表</b></div>
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
@@ -107,8 +99,14 @@
     <ul class="footer">
         <li>           
             <a href="cold360.html">
-                <i class="iconfont">&#xe695;</i>
+                <i class="iconfont">&#xe68d;</i>
                 <p class="info">监控</p>
+            </a>
+        </li>
+        <li>           
+            <a href="analysisQuery.html">
+                <i class="iconfont">&#xe7c6;</i>
+                <p class="info">查询</p>
             </a>
         </li>
         <li class="active">            

@@ -307,11 +307,4 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
 		isTime:true, 
 		minDate:"2008-08-08 08:08:08"
 	});
-    $scope.goHistoryData = function () {
-        window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;
-    }
-
-    $scope.goReport = function () {
-        window.location.href = 'analysisReport.html?storageID=' + $scope.rdcId;
-    }
 });

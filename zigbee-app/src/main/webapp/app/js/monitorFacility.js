@@ -95,7 +95,6 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
     $scope.goOtherMonitor = function () {
         window.location.href='monitorCooling.html?storageID=' + $scope.rdcId;
     }
-
     var getFormatTimeString = function (delta) {
         delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
         return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
@@ -177,7 +176,10 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                                     plotBorderWidth: 1
                                 },
                                 title: {
-                                    text: '冷库门开关监控'
+                                    text: '冷库门开关监控',
+                                    style: {
+                                        fontSize:'0.7rem'
+                                    }
                                 },
                                 xAxis: {
                                     type: 'datetime',
@@ -527,7 +529,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     yData.push(info.cost.toFixed(2))
                     xData.push(formatTime(info.time))
                 })
-                chart.setOption($scope.creatOption(keyDescribleMap[key], xData, yData,
+                chart.setOption($scope.creatOption("", xData, yData,
                     "耗能", "kW.h", keyDescribleMap[key], "line"))
             })
         })

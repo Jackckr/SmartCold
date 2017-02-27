@@ -86,8 +86,8 @@ app.controller('analysisTemperature', function ($scope, $location, $http) {
     $scope.goCooling = function () {
         window.location.href = 'analysisCooling.html?storageID=' + $scope.rdcId;
     }
-    $scope.goQuery = function () {
-        window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;
+    $scope.goReport = function () {
+        window.location.href = 'analysisReport.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
@@ -166,7 +166,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http) {
                     title: {
                     	text: '30日超温时间因子',
                     	textStyle: {
-                    		fontSize: 13,
+                    		fontSize: ".75rem",
                     		fontWeight: '400'
                     	}
                     },

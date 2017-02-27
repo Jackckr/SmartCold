@@ -86,8 +86,8 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
     $scope.goTransport = function () {
         window.location.href = 'analysisTransport.html?storageID=' + $scope.rdcId;
     }
-    $scope.goQuery = function () {
-        window.location.href = 'analysisQuery.html?storageID=' + $scope.rdcId;
+    $scope.goReport = function () {
+        window.location.href = 'analysisReport.html?storageID=' + $scope.rdcId;
     }
 
     $scope.swiper = 0;
