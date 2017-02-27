@@ -287,10 +287,11 @@ header>div>a>.iconfont{
 	height: 6.5rem;
 }
 .layui-m-layerbtn span{
-	font-size: .8rem!important;
+	font-size: .7rem!important;
 }
 .layui-m-layercont{
-	font-size: .8rem!important;
+	font-size: .7rem!important;
+	padding: 2rem 1rem!important;
 }
 /*icon color*/
 .blueI{
