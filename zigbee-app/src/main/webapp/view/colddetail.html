@@ -149,8 +149,8 @@
                 <li><span>性价比高</span>&nbsp;(<span id="num">120</span>)</li>
              </ul>
              <!--具体评论区域-->
-             <ul class="commentArea" ng-repeat="eva in evaList">
-                <li class="fl" >
+             <ul class="commentArea" ng-repeat="eva in evaList" ng-hide="($index>1)?true:false">
+                <li class="fl">
                     <img ng-src="{{eva.avatar}}" alt="" />
                 </li>
                 <li>

@@ -52,7 +52,7 @@
 				$scope.rdcList = data.data;//
 				$scope.rdctotal = data.total;//
 			});
-			$http.get(ER.root + "/i/comment/findCommentsByRDCId", {params: {npoint:20,rdcID:id}}).success(function(data) {//评价信息--npoint：记录条数
+			$http.get(ER.root + "/i/comment/findCommentsByRDCId", {params: {npoint:200,rdcID:id}}).success(function(data) {//评价信息--npoint：记录条数
 				$scope.evaList = data;//
 				$scope.evatotal = data.length;//
 			});
