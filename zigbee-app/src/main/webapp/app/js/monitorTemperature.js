@@ -137,7 +137,13 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                 var chart=	$('#' + mainId).highcharts();
                 chart.series[0].setData(data);
                 chart.series[1].setData(startData);
-                chart.series[2].setData(datumTempData);
+               /* chart.series[2].setData(datumTempData);*/
+                /*
+                 * 解决chart.series[2].setData(datumTempData)报错问题
+               */
+                if(chart.series.length>2){
+                	chart.series[2].setData(datumTempData);
+                }
                 $("#tm"+mainId).html(temper+"℃");
                 return;
             }

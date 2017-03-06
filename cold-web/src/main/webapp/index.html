@@ -340,12 +340,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	             <a class="text-white omg" style="font-family: cursive;" title="{{vm.choserdc.name}}" ng-bind="vm.choserdc.name"></a>
 	          </li>
             <li class="treeview">
-            <a href=""><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
+            <a href="" ng-click="openColdDiv()"><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
             <span class="menu-title text-white" style="font-size: large">监控</span></a>
             <!-- Optionally, you can add icons to the links -->
             <ul id="mlul1" class="treeview-menu">
             <li class="treeview">
-              <a href="" ng-click="openColdDiv()"><i class="icon iconfont">&#xe678;</i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
+              <a href=""><i class="icon iconfont">&#xe678;</i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                <li ng-repeat="storage in mystorages" onclick="activeLi(this)"><a ng-click="toMyStorageTemper(storage.id)">
                  <i class="fa fa-circle-o"></i>{{storage.name}}</a>

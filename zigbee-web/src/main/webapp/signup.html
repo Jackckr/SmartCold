@@ -176,25 +176,28 @@ $(function(){
 	$('#username').blur(function(){
 	    var flag;
 	    var reg=/^[a-zA-Z0-9][a-zA-Z0-9]{5,15}$/;
-	    if ($("#username").val().length>0&&reg.test($("#username").val())==false){
-			 console.log($("#username").val())
+	    if ($("#username").val().trim().length>0&&reg.test($("#username").val().trim())==false){
+			 console.log($("#username").val().length);
 			 $("#username").focus();
 			 $("#submit").attr("disabled",true);
 			 $("#username_error").html('用户名不能包含中文和特殊字符，长度不得低于6位~');
 			 return false;
 		}else{
 		    $.post('/i/user/userNameVerify',{
-				username:$('input[name=username]').val()
+				username:$('input[name=username]').val().trim()
 			}, function(data){
-				if(!data)
+				if(!data){
 				  $("#username_error").html( "用户名已存在");
+				}
 			});
-			if($("#username").val() == ""){
+			if($("#username").val().trim() == ""){
 			    $("#username_error").html( "用户名不能为空");
-			    }
-			else{
+			}else if($("#username").val().trim().length>24){
+				$("#username_error").html("用户名长度不能超过24位");
+			}else{
 				$("#username_error").html("");
 			}
+			
 		}
 	});
 	function vsphone(telephone) {// 验证手机号码
@@ -204,7 +207,7 @@ $(function(){
 	};
 	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
 	$('#text_telephone').blur(function(){
-		var telephone = $(this).val();
+		var telephone = $(this).val().trim();
 		var ct = vsphone(telephone);
 	    if(ct){
 			victdata.victtl=true;
@@ -231,20 +234,20 @@ $(function(){
 	$('#authcode').click(function(){
 		$(this).attr('disabled','disabled');
 		$.post('/i/user/telephoneVerify',{
-			telephone:$('input[name=telephone]').val()
+			telephone:$('input[name=telephone]').val().trim()
 		}, function(data){
 			alert(data.message)
 		});
 	})
 	$('#submit').click(function(){
-		userName = $("#username")[0].value;
-		var password = $('input[name=password]').val();
-		var password1 = $('input[name=password1]').val();
+		userName = $("#username").val().trim();
+		var password = $('input[name=password]').val().trim();
+		var password1 = $('input[name=password1]').val().trim();
 		//email = $('#email')[0].value;
 		/* if(email==undefined)
 		 email = ""; */
 		$.post('/i/user/userNameVerify',{
-			username:$('input[name=username]').val()
+			username:$('input[name=username]').val().trim()
 		}, function(data){
 			if(!data)
 			 alert("用户名已存在");
@@ -259,8 +262,8 @@ $(function(){
 	    				password:password,
 	    				password1:password1,
 // 	    				email:email,
-	    				telephone:$("#text_telephone").val(),
-	    				signUpCode:$('input[name=signUpCode]').val()
+	    				telephone:$("#text_telephone").val().trim(),
+	    				signUpCode:$('input[name=signUpCode]').val().trim()
 	    		},
 	    		url:"/i/user/signup?",
 	    				async:false}).success(function(data){
@@ -277,8 +280,8 @@ $(function(){
 })
 //返回true 表示有问题  
 function checkPassword(){
-	var password = $('input[name=password]').val();
-	var password1 = $('input[name=password1]').val();
+	var password = $('input[name=password]').val().trim();
+	var password1 = $('input[name=password1]').val().trim();
 	if(password == ''){
 		$("#password_error").html("密码不能为空~");
 		$('#submit').attr("disabled",true);

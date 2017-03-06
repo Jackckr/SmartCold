@@ -1,4 +1,4 @@
-coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies, Upload, $http, $location) {
+coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload, $http, $location) {
 	$scope.load = function(){
 		 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/findUser'}).success(function(data,status,config,headers){
 			//$scope.$apply(function () {
@@ -36,7 +36,7 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
     }
     $scope.load();
    
-    
+   
     function vsphone(telephone) {// 验证手机号码
 		var length = (telephone + '').length;
 		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
@@ -203,3 +203,10 @@ coldWeb.controller('personalDetail', function ($scope, $scope, $state, $cookies,
 			}		
 		};
 });
+function isEmail(strEmail) {
+	if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1){
+		return true;
+	}else{
+		alert("电子邮件地址必须包括 ( @ 和 . )");
+	}
+}

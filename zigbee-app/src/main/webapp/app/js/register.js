@@ -43,8 +43,8 @@ var app = angular.module('app', []).controller('register',function($http, $locat
     	} 
    };
    $scope.checkpwd=function(){
-	   var password = $("#txt_password").val(); 
-       var repsword = $("#txt_repsword").val(); 
+	   var password = $("#txt_password").val().trim(); 
+       var repsword = $("#txt_repsword").val().trim(); 
        if(password == ''){
 			$("#mention1").html("密码不能为空");
 			$('#app_but1').attr("disabled",true);
@@ -91,11 +91,11 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
         $.ajax({
         	type: 'POST',
-        	data:{username:$("#telNum").val(),
-				password:$("#txt_password").val(),
-				password1:$("#txt_repsword").val(),
-				telephone:$("#telNum").val(),
-				signUpCode:$("#code2").val()
+        	data:{username:$("#telNum").val().trim(),
+				password:$("#txt_password").val().trim(),
+				password1:$("#txt_repsword").val().trim(),
+				telephone:$("#telNum").val().trim(),
+				signUpCode:$("#code2").val().trim()
 		},
             url: ER.root+"/i/user/signup?",
             complete : function(e){$(me).text("注册"); $(me).delay(500).data('isLoading',false);},
