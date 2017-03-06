@@ -52,10 +52,10 @@
 		SELECT COUNT(*) FROM user u  WHERE u.`username` = #{username};
 	</select>
     <select id="findUser" parameterType="map" resultType="UserEntity">
-		SELECT u.*,rl.roleid,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN roleuser rl on u.id=rl.userid  LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username} AND u.`password` = #{password}
+		SELECT u.*,rl.roleid,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN roleuser rl on u.id=rl.userid  LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username} AND u.`password` = #{password} LIMIT 1;
 	</select>
 	<select id="findUserByName" parameterType="map" resultType="UserEntity">
-		SELECT u.*,rl.roleid,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN roleuser rl on u.id=rl.userid  LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username}
+		SELECT u.*,rl.roleid,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN roleuser rl on u.id=rl.userid  LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid WHERE u.`username` = #{username} LIMIT 1;
 	</select>
     <select id="findUserById" parameterType="map" resultType="UserEntity">
 		SELECT u.*,rl.roleid,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN roleuser rl on u.id=rl.userid  LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid  WHERE u.id = #{id}

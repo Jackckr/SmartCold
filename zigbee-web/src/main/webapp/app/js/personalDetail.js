@@ -154,6 +154,9 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 			if($scope.newPwd1.length<6){
 				$("#pwdError").html("密码长度最少6位~");return;
 			}
+			if(16<$scope.newPwd1.length){
+				$("#pwdError").html("密码最多16位~");return;
+			}
 			if($scope.newPwd1 ==  $scope.newPwd2 ){
 				$.ajax({ type : "POST", url : '/i/user/checkOldPassword', data:{pwd : $scope.oldPwd}, cache : false, async : false, success : function (result){ ckpwd =result; $scope.opwd_err=!result;	if(!result){return false;}}});
 			}else{
