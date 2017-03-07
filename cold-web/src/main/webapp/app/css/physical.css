@@ -684,3 +684,42 @@ html, body {
 #physicalstep2>.box{
 	border:1px solid #ccc;
 }
+/*风机旋转*/
+.running{
+    -webkit-animation:rotate 0.01s infinite linear;
+	-moz-animation:rotate 0.01s infinite linear;
+    -ms-animation:rotate 0.01s infinite linear;
+	animation:rotate .01s infinite linear;
+}
+@-moz-keyframes rotate{
+  0%{
+    -moz-transform:rotate(0deg);
+   }
+   100%{
+     -moz-transform:rotate(360deg);
+   }
+}
+ @-ms-keyframes rotate{
+  0%{
+    -ms-transform:rotate(0deg);
+   }
+   100%{
+     -ms-transform:rotate(360deg);
+   }
+}
+@-webkit-keyframes rotate{
+  0%{
+    -webkit-transform:rotate(0deg);
+   }
+   100%{
+     -webkit-transform:rotate(360deg);
+   }
+}
+@keyframes rotate{
+  0%{
+    transform:rotate(0deg);
+   }
+   100%{
+     transform:rotate(360deg);
+   }
+}
