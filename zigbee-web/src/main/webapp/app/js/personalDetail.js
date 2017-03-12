@@ -127,7 +127,7 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
      *同步执行（禁止异步操作）
      */
 	$scope.pwd = function() {
-		var password = $scope.newPwd1;
+		var password = $scope.newPwd1.trim();
 		if(password.length>=6){
 			if (/^(\d)\1+$/.test(password)){
 				$("#pwdError").html("密码太过简单了~");
@@ -150,24 +150,25 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 		}
 	
 	
-		if($scope.oldPwd != '' && $scope.newPwd1 != ''&& $scope.newPwd2 != ''){
-			if($scope.newPwd1.length<6){
+		if($scope.oldPwd.trim() != '' && $scope.newPwd1.trim() != ''&& $scope.newPwd2.trim() != ''){
+			if($scope.newPwd1.trim().length<6){
 				$("#pwdError").html("密码长度最少6位~");return;
 			}
-			if(16<$scope.newPwd1.length){
+			if(16<$scope.newPwd1.trim().length){
 				$("#pwdError").html("密码最多16位~");return;
 			}
-			if($scope.newPwd1 ==  $scope.newPwd2 ){
-				$.ajax({ type : "POST", url : '/i/user/checkOldPassword', data:{pwd : $scope.oldPwd}, cache : false, async : false, success : function (result){ ckpwd =result; $scope.opwd_err=!result;	if(!result){return false;}}});
+			if($scope.newPwd1.trim() ==  $scope.newPwd2.trim() ){
+				$.ajax({ type : "POST", url : '/i/user/checkOldPassword', data:{pwd : $scope.oldPwd.trim()}, cache : false, async : false, success : function (result){ ckpwd =result; $scope.opwd_err=!result;	if(!result){return false;}}});
 			}else{
 				return;
 			}
 		}else {
-			if($scope.oldPwd == '' && $scope.newPwd1 == ''&& $scope.newPwd2 == ''){
-				
+			if($scope.oldPwd.trim() == '' && $scope.newPwd1.trim() == ''&& $scope.newPwd2.trim() == ''){
+				//这里不写代码的原因是防止不修改密码情况下无法提交
 			}else {
 				alert("请输入有效密码~");return;
 			}
+			
 		}
 			if(ckvcd&&ckpwd){
 				if($scope.hometownid==undefined)
@@ -181,7 +182,7 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 					sex : $scope.sex,
 					hometownid : $scope.hometownid,
 					addressid : $scope.addressid,
-					password : $scope.newPwd1,
+					password : $scope.newPwd1.trim(),
 					email : $scope.email,
 					nickname : $scope.nickname
 				};
@@ -198,7 +199,7 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 					processData : false,
 					contentType : false,
 					success : function(data) {
-						//alert("删除成功");
+						alert("删除成功");
 						//$state.reload(); 
 						window.location.reload();
 					}

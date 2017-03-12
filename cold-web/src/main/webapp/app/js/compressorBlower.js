@@ -12,8 +12,17 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
                 "rdcId": $stateParams.rdcId
             }
         }).success(function (result) {
-            console.log("result:" + result);
+           // console.log("result:" + result);
             $scope.blowers = result;
+            angular.forEach($rootScope.mystorages,function(obj){ 
+            	var  stblower=[];
+            	angular.forEach( $scope.blowers,function(item){ 
+                         if(obj.id==item.coldStorageId){
+                        	 stblower.push(item);
+                         }
+                }); 
+            	obj.blowers=stblower;
+            }); 
             var coldCnt =0;
             var defrostCnt = 0;
             var freeCnt = 0;
@@ -44,4 +53,5 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
     $scope.$on('$destroy',function(){
     	clearInterval($rootScope.timeTicket);
     })
+   
 });
