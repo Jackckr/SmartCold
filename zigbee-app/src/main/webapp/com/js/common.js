@@ -83,14 +83,43 @@ var util = {
 /**
  * 事件
  */
+/*检查输入的数字是否为》0   2017-3-13*/
+function checkNum(){
+	var numLen = $("input[type='number']");
+	for(var i=0;i<numLen.length;i++){
+		if(numLen[i].value<0){
+			$(".mybtn").attr('disabled',true).css("backgroundColor","#ccc")
+			return false
+		}
+	}
+}
 window.onload = function(){
 	getmsg();
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
     $("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });//一键回到顶部
+	
+	/*检查输入的数字是否为》0   2017-3-13*/
+	$("input[type='number']").blur(function(){
+		if($(this).val()<0){
+			layer.open({
+	            content: '输入的数字不合法哦'
+	            ,btn: '确定'
+	        });
+			$(".mybtn").attr('disabled',true).css("backgroundColor","#ccc")
+			return false
+		}else if(checkNum()==false){
+			layer.open({
+	            content: '其他地方的输入数字不合法哦，请检查'
+	            ,btn: '确定'
+	        });
+		}else{
+			$(".mybtn").attr('disabled',false).css("backgroundColor","#438BCB")
+			return true;
+		}
+	})
 };
-
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
  * 引入 dist/vconsole.min.js 到项目中：
