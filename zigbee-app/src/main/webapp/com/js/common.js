@@ -88,8 +88,11 @@ function checkNum(){
 	var numLen = $("input[type='number']");
 	for(var i=0;i<numLen.length;i++){
 		if(numLen[i].value<0){
-			$(".mybtn").attr('disabled',true).css("backgroundColor","#ccc")
+			$(".mybtn").attr('disabled',true);
+			numLen[i].style.color = "red";
 			return false
+		}else{
+			numLen[i].style.color = "#555";
 		}
 	}
 }
@@ -102,23 +105,22 @@ window.onload = function(){
 	
 	/*检查输入的数字是否为》0   2017-3-13*/
 	$("input[type='number']").blur(function(){
-		if($(this).val()<0){
-			layer.open({
-	            content: '输入的数字不合法哦'
-	            ,btn: '确定'
-	        });
-			$(".mybtn").attr('disabled',true).css("backgroundColor","#ccc")
-			return false
-		}else if(checkNum()==false){
-			layer.open({
-	            content: '其他地方的输入数字不合法哦，请检查'
-	            ,btn: '确定'
-	        });
-		}else{
-			$(".mybtn").attr('disabled',false).css("backgroundColor","#438BCB")
-			return true;
-		}
-	})
+   		if($(this).val()<0){
+   			$(this).css("color","red")
+   			$(".mybtn").attr('disabled',true)
+   			alert('输入的数字不能为负数哦');//
+   			return false
+   		}else{
+   			$(this).css("color","#555");
+   			if(checkNum()==false){
+	   			alert('其他地方的输入数字也不能为负数哦，请检查');
+	   		}else{
+	   			$(".mybtn").attr('disabled',false);
+	   			$("input[type='number']").css("color","#555")
+	   			return true;
+	   		}
+   		}
+   	})
 };
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
