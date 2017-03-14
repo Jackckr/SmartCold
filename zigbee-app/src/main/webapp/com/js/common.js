@@ -78,7 +78,15 @@ var util = {
 		setCookie:function(a,b,c){localStorage.setItem(a, b);},getCookie:function(a) {return localStorage.getItem(a);},  delCookie:function(a) {localStorage.removeItem(a);}, 
 	    setimg: function(em, imgid, callback) { var oFile = $(em)[0].files[0];var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp"; if (!rFilter.test(oFile.type)) { /*alert("格式错误~请选择格式为" + msg + "的图片~")*/layer.open({content: "格式错误~请选择格式为" + msg + "的图片~",btn: '确定'}); return; }var oImage = document.getElementById(imgid); var oReader = new FileReader(); oReader.onload = function(e) {  oImage.src = e.target.result;};  oReader.readAsDataURL(oFile); if (callback != null) { callback();  } },
 };
-
+/*点击图片隐藏div*/
+function imgBoxHide(){
+	 document.getElementById("baguetteBox-overlay").addEventListener("click", function(e) {
+		 if (e.target.tagName == "IMG") {
+			 $("#baguetteBox-overlay").hide();
+			 return false;
+		 }
+	 }, false);
+}
 
 /**
  * 事件
