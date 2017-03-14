@@ -121,7 +121,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	 $scope.rdcsharedto = data.entity;
 	    	 $scope.typeCode = $scope.rdcsharedto.typeCode;
 	    	 $scope.title = $scope.rdcsharedto.title;
-	    	 $scope.telephone = $scope.rdcsharedto.telephone;
+	    	 $scope.telephone = $scope.rdcsharedto.telephone.trim();
 	    	 $scope.note = $scope.rdcsharedto.note;
 	    	 $scope.unitprice = parseFloat($scope.rdcsharedto.unitPrice);
 	    	 $scope.codeLave11 = $scope.rdcsharedto.codeLave1;
@@ -264,7 +264,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        	if ($scope.manageType == undefined || $scope.manageType == '') { return false;}
 	        }
 	        if ($scope.sqm == undefined || $scope.sqm == '') { return false;}
-	        if ($scope.telephone == undefined || $scope.telephone == '') { return false;}
+	        if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') { return false;}
 	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {return false;}
 	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {return false;}
 	        return true;
@@ -277,7 +277,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
 	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') { return false;}
 	        if ($scope.sqm == undefined || $scope.sqm == '') {return false;}
-	        if ($scope.telephone == undefined || $scope.telephone == '') {return false;}
+	        if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') {return false;}
 	        if ($scope.validStartTime == undefined || $scope.validStartTime == '') {return false; }
 	        if ($scope.validEndTime == undefined || $scope.validEndTime == '') {return false;}
 	        return true;
@@ -299,7 +299,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {return false; }
 	        if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {return false;}
 	        if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {return false;}
-	        if ($scope.telephone == undefined || $scope.telephone == '') { return false;}
+	        if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') { return false;}
 	        if ($scope.startTime == undefined || $scope.startTime == '') {return false;}
 	        if ($scope.arriveTime == undefined || $scope.arriveTime == '') { return false;}
 	        return true;
@@ -371,7 +371,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					unit2:toplace,
 					validStartTime:$scope.startTime,
 					validEndTime : $scope.arriveTime,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					attrvalue:releaseCarInfo.onoff?1:0,
 					attrvalue1:attr1,//设置时间类型  每天，每周，单次
@@ -431,7 +431,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
 					sqm:$scope.sqm,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					detlAddress:$scope.detlAddress
 					
@@ -505,7 +505,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					detlAddress:$scope.detlAddress
 			};

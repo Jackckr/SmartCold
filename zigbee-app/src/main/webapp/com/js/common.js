@@ -116,12 +116,12 @@ window.onload = function(){
    		if($(this).val()<0){
    			$(this).css("color","red")
    			$(".mybtn").attr('disabled',true)
-   			alert('输入的数字不能为负数哦');//
+   			layer.open({content: '输入的数字不能为负数哦',btn: '确定'});
    			return false
    		}else{
    			$(this).css("color","#555");
    			if(checkNum()==false){
-	   			alert('其他地方的输入数字也不能为负数哦，请检查');
+   				layer.open({content: '其他地方的输入数字也不能为负数哦，请检查',btn: '确定'});
 	   		}else{
 	   			$(".mybtn").attr('disabled',false);
 	   			$("input[type='number']").css("color","#555")

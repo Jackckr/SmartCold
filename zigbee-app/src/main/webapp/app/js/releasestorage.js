@@ -21,7 +21,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	});
 	$scope.totalfiles = [];
 	$scope.unit = "元/天·平方米"; 
-	$scope.telephone =  window.user.telephone;
+	$scope.telephone =  window.user.telephone.trim();
 	if(id){
 //		 $http.get(ER.root+'/i/rdc/findRDCEntityDtoByRdcId', { params: {  "rdcID": id, } }).success(function (data) {
 //	    	 $scope.rdcdto = data;
@@ -102,7 +102,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.temperType == undefined || $scope.temperType == '') {  return false;  }
         if ($scope.storageType == undefined || $scope.storageType == '') {  return false; }
         if ($scope.sqm == undefined || $scope.sqm == '') { return false;  }
-        if ($scope.telephone == undefined || $scope.telephone == '') { return false;  }
+        if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') { return false;  }
         if ($scope.validStartTime == undefined || $scope.validStartTime == '') {  return false;  }
         if ($scope.validEndTime == undefined || $scope.validEndTime == '') {  return false;  }
         return true;
@@ -112,7 +112,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') { return false; }
         if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') { return false; }
         if ($scope.sqm == undefined || $scope.sqm == '') {  return false;  }
-        if ($scope.telephone == undefined || $scope.telephone == '') {  return false; }
+        if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') {  return false; }
         if ($scope.validStartTime == undefined || $scope.validStartTime == '') { return false; }
         if ($scope.validEndTime == undefined || $scope.validEndTime == '') { return false;  }
         return true;
@@ -131,7 +131,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {  return false; }
         if ($scope.codeLave22 == undefined || $scope.codeLave22 == '') {   return false;  }
         if ($scope.codeLave33 == undefined || $scope.codeLave33 == '') {  return false; }
-        if ($scope.telephone == undefined || $scope.telephone == '') {   return false; }
+        if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') {   return false; }
         if ($scope.startTime == undefined || $scope.startTime == '') {  return false;   }
         if ($scope.arriveTime == undefined || $scope.arriveTime == '') {  return false;  }
         return true;
@@ -195,12 +195,12 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        }
 	        	layer.open({ type: 2 ,content: '努力加载中~~~' ,shadeClose:false});
 				var simdata = {
-						title:$scope.title,
+						title:$scope.title.trim(),
 						uid:window.user.id,
 						codeLave1:$scope.codeLave11,
 						codeLave2:$scope.codeLave22,
 						codeLave3:$scope.codeLave33,
-						unitPrice : $scope.unitPrice,
+						unitPrice : $scope.unitPrice.trim(),
 			            stprovinceID:$scope.stprovinceID,
 					    stcityID:$scope.stcityID,
 					    toprovinceID:$scope.toprovinceID,
@@ -209,7 +209,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 						unit2:toplace,
 						validStartTime:$scope.startTime,
 						validEndTime : $scope.arriveTime,
-						telephone:$scope.telephone,
+						telephone:$scope.telephone.trim(),
 						note : $scope.note,
 						dataType : 2,
 						typeCode : $scope.typeCode,
@@ -283,7 +283,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
 					sqm:$scope.sqm,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					dataType : 1,
 					typeCode : $scope.typeCode,
@@ -364,7 +364,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					dataType : 3,
 					typeCode : $scope.typeCode,
