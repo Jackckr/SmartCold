@@ -73,10 +73,10 @@
                     <div class="form-group rdc">
                         <label class="col-sm-4 control-label">面积：<em>*</em></label>
                         <div class="col-sm-8">
-                            <input class="form-control" placeholder="冷库面积（平方米）" type="text" name="area" ng-model="area"
+                            <input class="form-control" placeholder="冷库面积（平方米）" type="number" name="area" ng-model="area"
                                    ng-remote-validate="/i/rdc/checkArea"
                                    ng-remote-method="GET">
-                            <em ng-show="rdcForm.area.$error.ngRemoteValidate">请输入数字，单位为（平方米）</em>
+                            <em ng-show="rdcForm.area.$error.ngRemoteValidate">请输入正确的数字，单位为（平方米）</em>
                         </div>
                     </div>
 
@@ -113,10 +113,10 @@
                             <div>
                                 <div class="col-sm-9 input-group">
                                     <span class="input-group-addon">＜1.8T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck1">
+                                    <input class="form-control" type="number" ng-model="coldTruck1">
                                     <span class="input-group-addon">辆</span>
                                     <span class="input-group-addon">1.8～6T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck2">
+                                    <input class="form-control" type="number" ng-model="coldTruck2">
                                     <span class="input-group-addon">辆</span>
                                 </div>
                             </div>
@@ -125,11 +125,11 @@
                             <div>
                                 <div class="col-sm-9 input-group">
                                     <span class="input-group-addon">6～14T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck3">
+                                    <input class="form-control" type="number" ng-model="coldTruck3">
                                     <span class="input-group-addon">辆</span>
 
                                     <span class="input-group-addon">＞14T</span>
-                                    <input class="form-control" type="text" ng-model="coldTruck4">
+                                    <input class="form-control" type="number" ng-model="coldTruck4">
                                     <span class="input-group-addon">辆</span>
                                 </div>
                             </div>
@@ -208,7 +208,7 @@
                         <div class="form-group rdc">
                             <label class="col-sm-4 control-label">理货区面积：</label>
                             <div class="col-sm-8">
-                                <input class="form-control" type="text" ng-model="lihuoArea">
+                                <input class="form-control" type="number" ng-model="lihuoArea">
                             </div>
                         </div>
 
@@ -242,41 +242,41 @@
                             <div class="col-sm-8">
                                 <div class="col-sm-9 input-group">
                                     <span class="input-group-addon">12~25℃</span>
-                                    <input class="form-control" type="text" ng-model="capacity1">
+                                    <input class="form-control" type="number" ng-model="capacity1">
                                     <span class="input-group-addon">面积㎡</span>
-                                     <input class="form-control" type="text" ng-model="height1">
+                                     <input class="form-control" type="number" ng-model="height1">
                                     <span class="input-group-addon">高m</span>
                                 </div>
                               <br/>
                                 <div class="col-sm-9 input-group">
                                 <span class="input-group-addon">12~-2℃</span>
-                                   <input class="form-control" type="text" ng-model="capacity2">
+                                   <input class="form-control" type="number" ng-model="capacity2">
                                     <span class="input-group-addon">面积㎡</span>
-                                     <input class="form-control" type="text" ng-model="height2">
+                                     <input class="form-control" type="number" ng-model="height2">
                                     <span class="input-group-addon">高m</span>
                                 </div>
                                 <br/>
                                 <div class="col-sm-9 input-group">
                                     <span class="input-group-addon">-15~-22℃</span>
-                                   <input class="form-control" type="text" ng-model="capacity3">
+                                   <input class="form-control" type="number" ng-model="capacity3">
                                     <span class="input-group-addon">面积㎡</span>
-                                     <input class="form-control" type="text" ng-model="height3">
+                                     <input class="form-control" type="number" ng-model="height3">
                                     <span class="input-group-addon">高m</span>
                                 </div>
                                   <br/>
                                 <div class="col-sm-9 input-group">
                                 <span class="input-group-addon">-22~-30℃</span>
-                                   <input class="form-control" type="text" ng-model="capacity4">
+                                   <input class="form-control" type="number" ng-model="capacity4">
                                     <span class="input-group-addon">面积㎡</span>
-                                     <input class="form-control" type="text" ng-model="height4">
+                                     <input class="form-control" type="number" ng-model="height4">
                                     <span class="input-group-addon">高m</span>
                                     </div>
                                 <br/>
                                 <div class="col-sm-9 input-group">
                                     <span class="input-group-addon">&lt;-30℃</span>
-                                    <input class="form-control" type="text" ng-model="capacity5">
+                                    <input class="form-control" type="number" ng-model="capacity5">
                                     <span class="input-group-addon">面积㎡</span>
-                                     <input class="form-control" type="text" ng-model="height5">
+                                     <input class="form-control" type="number" ng-model="height5">
                                     <span class="input-group-addon">高m</span>
                                 </div>
                                 <div style="width: 400px"></div>
@@ -395,7 +395,7 @@
             
         </div>
         <div class="col-lg-8 col-lg-offset-2" style="padding-left: 30%;padding-right: 30%;padding-bottom: 10px">
-                <button class="btn btn-primary" ng-click="submit()" style="margin-left:90%;" ng-disabled="isDisabled">提交</button>
+                <button class="btn btn-primary mybtn" ng-click="submit()" style="margin-left:90%;" ng-disabled="isDisabled">提交</button>
             </div>
     </section>
 </div>

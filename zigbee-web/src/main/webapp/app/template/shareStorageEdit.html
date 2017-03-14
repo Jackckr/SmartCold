@@ -60,7 +60,7 @@
 					
 				<li>
 					<label><em>*</em>数/质/量:</label> 
-					<input type="text" id="sqm" ng-model="sqm" style="width:120px;"/>
+					<input type="number" id="sqm" ng-model="sqm" style="width:120px;"/>
 					<label class="text-center"><input type="radio" name="quality" ng-model="unit" name="unit"
 					value="元/天·吨" />吨</label>
 			    	<label class="text-center"><input type="radio" name="quality" value="元/天·平方米" ng-model="unit" name="unit" 
@@ -70,7 +70,7 @@
 			    
 				<li>
 					<label for="price">单价:</label>
-					<input type="text" id="price" name="unitPrice" placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
+					<input type="number" id="price" name="unitPrice" placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
 				<li>
 					<label for="time"><em>*</em>信息有效期:</label>
 					<div style="width:450px;margin-left: 20px;display: inline-block;">
@@ -105,7 +105,7 @@
 				</li>
 			</ul>
 		</form>
-		<button class="btn btn-primary" ng-click="submit()" style="margin-left: 180px;">确认修改</button>
+		<button class="btn btn-primary mybtn" ng-click="submit()" style="margin-left: 180px;">确认修改</button>
 		</div>
 		</div>
 </div>

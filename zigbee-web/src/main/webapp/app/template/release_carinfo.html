@@ -73,7 +73,7 @@
 			   <div class="infoList clearfix  ">
 					<div class="pull-left col-sm-4 control-label ">单价:</div>
 					<div class="pull-left">
-						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{appmode[dataType].lab[1][1]}}</span>
+						<input type="number" class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{appmode[dataType].lab[1][1]}}</span>
 					</div>
 				</div>
 				<div id="" >
@@ -157,7 +157,7 @@
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>
 					<div class="pull-left">
-						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone}}">
+						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone.trim()}}">
 					</div>
 				</div>
 				<div class="infoList clearfix">
@@ -173,6 +173,6 @@
 						  <a href="javascript:;" class="file">选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
 					</div>
 				</div>
-				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>
+				<button id="but_submit" class="btn btn-primary mybtn" ng-click="submit()">提交</button>
 			</form>
     	</div>

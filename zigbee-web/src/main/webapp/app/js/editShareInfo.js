@@ -79,9 +79,9 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
     	 $scope.rdcsharedto = data.entity;
     	 $scope.typeCode = $scope.rdcsharedto.typeCode;
     	 $scope.title = $scope.rdcsharedto.title;
-    	 $scope.telephone = $scope.rdcsharedto.telephone;
+    	 $scope.telephone = $scope.rdcsharedto.telephone.trim();
     	 $scope.note = $scope.rdcsharedto.note;
-    	 $scope.unitprice = $scope.rdcsharedto.unitPrice;
+    	 $scope.unitprice = parseFloat($scope.rdcsharedto.unitPrice);
     	 $scope.codeLave11 = $scope.rdcsharedto.codeLave1;
          $scope.codeLave22 = $scope.rdcsharedto.codeLave2;
     	 $scope.codeLave33 = $scope.rdcsharedto.codeLave3;
@@ -92,7 +92,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
     	 $scope.provinceId = $scope.rdcsharedto.provinceid;
     	 $scope.cityId = $scope.rdcsharedto.cityid;
     	 $scope.unit1 = $scope.rdcsharedto.unit1;
-    	 $scope.sqm = $scope.rdcsharedto.sqm;
+    	 $scope.sqm = parseFloat($scope.rdcsharedto.sqm);
     	 $scope.temperType =parseInt($scope.rdcsharedto.codeLave2);
     	 $scope.manageType = parseInt($scope.rdcsharedto.codeLave1);
     	 $scope.unit = $scope.rdcsharedto.unit;
@@ -426,6 +426,37 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	        }
 		}
 		 $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30,format: 'YYYY-MM-DD HH:mm'});
+		 /*检查输入的数字是否为》0   2017-3-13*/
+		   	function checkNum(){
+		   		var numLen = $("input[type='number']");
+		   		for(var i=0;i<numLen.length;i++){
+		   			if(numLen[i].value<0){
+		   				$(".mybtn").attr('disabled',true);
+		   				numLen[i].style.borderColor = "red";
+		   				return false
+		   			}else{
+		   				numLen[i].style.borderColor = "#ccc";
+		   			}
+		   		}
+		   	}
+		   	/*检查输入的数字是否为》0   2017-3-13*/
+		   	$("input[type='number']").blur(function(){
+		   		if($(this).val()<0){
+		   			alert('输入的数字不能为负数哦');//
+		   			$(this).css("borderColor","red")
+		   			$(".mybtn").attr('disabled',true)
+		   			return false
+		   		}else{
+		   			$(this).css("borderColor","#ccc");
+		   			if(checkNum()==false){
+			   			alert('其他地方的输入数字也不能为负数哦，请检查');
+			   		}else{
+			   			$(".mybtn").attr('disabled',false);
+			   			$("input[type='number']").css("borderColor","#ccc")
+			   			return true;
+			   		}
+		   		}
+		   	})
 //		 $.getScript('assets/plugins/daterangepicker2/bootstrap-datetimepicker.js',function(){  
 //		      $('#txt_sattim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0});//.on("click",function(ev){$("#txt_sattim").datetimepicker("setEndDate",  $("#txt_endtim").val());  });
 //		      $('#txt_endtim').datetimepicker({  format: 'hh:ii', language:  'fr',weekStart: 1,todayBtn:  1,autoclose: 1,todayHighlight: 1,startView: 1,minView: 0,maxView: 1,forceParse: 0}).on("click",function(ev){

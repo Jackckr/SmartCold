@@ -272,4 +272,35 @@ coldWeb.controller('releaseCarInfo',function($rootScope, $scope, $stateParams, U
         }); //加载区域数据
     };
     $scope.initdata();
+    /*检查输入的数字是否为》0   2017-3-13*/
+   	function checkNum(){
+   		var numLen = $("input[type='number']");
+   		for(var i=0;i<numLen.length;i++){
+   			if(numLen[i].value<0){
+   				$(".mybtn").attr('disabled',true);
+   				numLen[i].style.borderColor = "red";
+   				return false
+   			}else{
+   				numLen[i].style.borderColor = "#ccc";
+   			}
+   		}
+   	}
+   	/*检查输入的数字是否为》0   2017-3-13*/
+   	$("input[type='number']").blur(function(){
+   		if($(this).val()<0){
+   			alert('输入的数字不能为负数哦');//
+   			$(this).css("borderColor","red")
+   			$(".mybtn").attr('disabled',true)
+   			return false
+   		}else{
+   			$(this).css("borderColor","#ccc");
+   			if(checkNum()==false){
+	   			alert('其他地方的输入数字也不能为负数哦，请检查');
+	   		}else{
+	   			$(".mybtn").attr('disabled',false);
+	   			$("input[type='number']").css("borderColor","#ccc")
+	   			return true;
+	   		}
+   		}
+   	})
 });
