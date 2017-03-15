@@ -19,6 +19,7 @@ import com.smartcold.bgzigbee.manage.dao.PowerSetMapping;
 import com.smartcold.bgzigbee.manage.dao.PressurePlatformSetMapping;
 import com.smartcold.bgzigbee.manage.dao.RdcWeightSetMapper;
 import com.smartcold.bgzigbee.manage.dao.SetTableMapper;
+import com.smartcold.bgzigbee.manage.dao.TempSetMapper;
 import com.smartcold.bgzigbee.manage.dao.WallSetMapper;
 import com.smartcold.bgzigbee.manage.dao.WindScreenSetMapping;
 import com.smartcold.bgzigbee.manage.dto.RdcIdAndNameDTO;
@@ -26,7 +27,6 @@ import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UpdateMappingDTO;
 import com.smartcold.bgzigbee.manage.entity.ChargingPileSetEntity;
 import com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity;
-import com.smartcold.bgzigbee.manage.entity.DeviceObjectMappingEntity;
 import com.smartcold.bgzigbee.manage.entity.EvaporativeBlowerSetEntity;
 import com.smartcold.bgzigbee.manage.entity.EvaporativeSetEntity;
 import com.smartcold.bgzigbee.manage.entity.EvaporativeWaterSetEntity;
@@ -35,10 +35,10 @@ import com.smartcold.bgzigbee.manage.entity.PlatformDoorSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PowerSetEntity;
 import com.smartcold.bgzigbee.manage.entity.PressurePlatformSetEntity;
 import com.smartcold.bgzigbee.manage.entity.RDCWeightSetEntity;
+import com.smartcold.bgzigbee.manage.entity.TempSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WallSetEntity;
 import com.smartcold.bgzigbee.manage.entity.WindScreenSetEntity;
 import com.smartcold.bgzigbee.manage.enums.SetTables;
-import com.smartcold.bgzigbee.manage.service.RemoteService;
 import com.smartcold.bgzigbee.manage.service.SpiderConfigService;
 
 /**
@@ -51,6 +51,9 @@ public class SpiderConfigController {
 
 	@Autowired
 	private SetTableMapper setTableMapper;
+	
+	@Autowired
+	private TempSetMapper tempSetMapper;
 
 	@Autowired
 	private SpiderConfigService spiderConfigService;
@@ -83,8 +86,8 @@ public class SpiderConfigController {
 	private WallSetMapper wallSetDao;
 	@Autowired
 	private RdcWeightSetMapper rdcWeightSetMapper;
-	@Autowired
-	private RemoteService remoteService;
+//	@Autowired
+//	private RemoteService remoteService;
 
 	@Autowired
 	private PressurePlatformSetMapping platformDao;
@@ -213,10 +216,10 @@ public class SpiderConfigController {
 		return new ResultDto(-1, "error");
 	}
 
-	@RequestMapping(value = "/del/deviceObjectMapping", method = RequestMethod.DELETE)
-	public Object delDeviceObjectMapping(int id) {
-		return remoteService.delDeviceObjectMappingById(id);
-	}
+//	@RequestMapping(value = "/del/deviceObjectMapping", method = RequestMethod.DELETE)
+//	public Object delDeviceObjectMapping(int id) {
+//		return remoteService.delDeviceObjectMappingById(id);
+//	}
 
 	/**
 	 * 公用的添加方法，只添加rdcid 和 name
@@ -230,6 +233,22 @@ public class SpiderConfigController {
 		}
 		return new ResultDto(-1, "添加失败");
 	}
+	
+	
+	//添加温度设置
+	@RequestMapping(value = "/add/tempset", method = RequestMethod.POST)
+	public Object addtempset(@RequestBody TempSetEntity temp) {
+		if (this.tempSetMapper.addTempSet(temp)) {
+			return new ResultDto(0, "添加成功");
+		}
+		return new ResultDto(-1, "添加失败");
+	}
+	@RequestMapping("/find/findTempSetByStorageId")
+	public Object findTempSetByStorageId(int storageId) {
+		if(storageId==0){return null;}
+		return this.tempSetMapper.findTempSetByStorageId( storageId);
+	}
+	
 
 	@RequestMapping(value = "/add/windscreenset", method = RequestMethod.POST)
 	public Object addWindScreenSet(@RequestBody WindScreenSetEntity windScreenSetEntity) {
@@ -412,12 +431,13 @@ public class SpiderConfigController {
 		return wallSetDao.findByStorageId(storageId);
 	}
 
-	@RequestMapping(value = "/add/deviceObjectMapping", method = RequestMethod.POST)
-	public Object addDeviceObjectMapping(@RequestBody DeviceObjectMappingEntity deviceObjectMappingEntity) {
-		Object res = remoteService.insertDeviceObjectMapping(deviceObjectMappingEntity);
-		return res;
-
-	}
+	
+	
+//	@RequestMapping(value = "/add/deviceObjectMapping", method = RequestMethod.POST)
+//	public Object addDeviceObjectMapping(@RequestBody DeviceObjectMappingEntity deviceObjectMappingEntity) {
+//		Object res = remoteService.insertDeviceObjectMapping(deviceObjectMappingEntity);
+//		return res;
+//	}
 
 	@RequestMapping("/getSetTables")
 	public Object getStorageType() {

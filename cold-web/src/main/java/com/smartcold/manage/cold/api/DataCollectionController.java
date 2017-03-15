@@ -68,7 +68,7 @@ public class DataCollectionController extends BaseController {
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 
-		return storageDataCollectionDao.findByTime(apid, deviceid, key, startTime, endTime);
+		return storageDataCollectionDao.findByTime(apid, deviceid, key, startTime, endTime ,"DESC");
 	}
 	
 

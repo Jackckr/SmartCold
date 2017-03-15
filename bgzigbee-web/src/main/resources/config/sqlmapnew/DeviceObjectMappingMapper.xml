@@ -4,16 +4,7 @@
 <mapper namespace="com.smartcold.bgzigbee.manage.sc360.dao.DeviceObjectMappingMapper">
 
      <select id="findAllDevice" resultType="com.smartcold.bgzigbee.manage.sc360.entity.DeviceObjectMappingEntity">
-        SELECT * FROM `deviceObjectMapping`
-         <where> 
-            <if test="audit != null">
-			    status=#{audit}
-			</if>
-		    <if test="keyword != null">
-		      AND deviceid like "%"#{keyword}"%"
-		    </if>
-		 </where>
-         order by `addTime` desc
+        SELECT * FROM `deviceObjectMapping`<where>  <if test="audit != null"> status=#{audit}</if> <if test="keyword != null">  AND deviceid like "%"#{keyword}"%"</if></where> order by `addTime` desc
     </select>
 
 	<update id="upDeviceObjectStatus"  parameterType="com.smartcold.bgzigbee.manage.sc360.entity.DeviceObjectMappingEntity" >
@@ -23,5 +14,50 @@
     <delete id="delById">
         DELETE FROM `deviceObjectMapping` WHERE `id`=#{id}
     </delete>
+    
+    <select id="findByTypeOid" resultType="DeviceObjectMappingEntity" parameterType="map">
+        SELECT * FROM `deviceObjectMapping` WHERE `type` = #{type} AND `oid` = #{oid}
+    </select>
+    <select id="findInfoByfilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.sc360.entity.DeviceObjectMappingEntity" >
+           select *  from `deviceobjectmapping` d WHERE 1=1 
+         <if test="type!=null and type!=''"> and d.`type` in(${type})</if> 
+         <if test="oid !=null and oid !=''"> and d.`oid`  in(${oid})</if>  
+         <if test="status !=null and status !=''"> and d.`status` = #{status} </if> 
+         <if test="rdcid !=null and rdcid !=''"> and d.`rdcid`  in(${rdcid})</if> 
+    </select>
+    <select id="findInfoByDeviceId" resultType="DeviceObjectMappingEntity" parameterType="map">
+        SELECT * FROM `deviceObjectMapping` WHERE `deviceid` = #{deviceId}
+    </select>
+     <select id="findByTypeDeviceId" resultType="com.smartcold.bgzigbee.manage.sc360.entity.DeviceObjectMappingEntity">
+        SELECT * FROM `deviceObjectMapping`
+        WHERE `type`=#{type} and `deviceid`=#{deviceid}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `deviceObjectMapping` (`deviceid`, `oid`, `type`,`rdcid`)
+        VALUES (#{deviceid}, #{oid}, #{type},#{rdcid})
+    </insert>
+
+    <update id="upDeviceObjectMapping" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.DeviceObjectMappingEntity" >
+      update `deviceObjectMapping` 
+      <set >
+   		<if test="deviceid!=null and deviceid!=''">deviceid =#{deviceid},</if>
+   		<if test="type    !=null and type    !=''"> type    =#{type},    </if>
+   		<if test="oid     !=null and oid     !=''">oid      =#{oid},     </if>
+   		<if test="rdcid   !=null and rdcid   !=''">rdcid    =#{rdcid},   </if>
+   		<if test="addtime !=null and addtime !=''">addtime  =#{addtime}  </if>
+   		<if test="status  !=null and status  !=''">status   =#{status}   </if>
+   		<if test="addtime !=null and addtime !=''">addtime  =#{addtime } </if>
+      </set>
+      where id = #{id};
+    </update>
+  
+<!-- 	<update id="upDeviceObjectStatus" parameterType="map" > -->
+<!-- 	    update deviceobjectmapping set `status`=#{status} where rdcid=#{rdcid} and deviceid in(${deviceids}); -->
+<!-- 	</update> -->
+	  
+<!--        <delete id="delById"> -->
+<!--         DELETE FROM `deviceObjectMapping` WHERE `id`=#{id} -->
+<!--     </delete> -->
     
 </mapper>

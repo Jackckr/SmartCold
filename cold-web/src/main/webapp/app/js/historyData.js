@@ -15,7 +15,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
     '最近6小时': [moment().subtract('hours',6), moment()]
     },opens:"right",buttonClasses:["btn btn-default"],applyClass:"btn-small btn-primary blue",cancelClass:"btn-small",format:"YYYY-MM-DD HH:mm:ss",separator:" - ",locale:{applyLabel:"确定",cancelLabel:"取消",fromLabel:"起始时间",toLabel:"结束时间",customRangeLabel:"自定义",daysOfWeek:["日","一","二","三","四","五","六"],monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],firstDay:1}},function(start,end,label){$("#reportrange span").html(start.format("YYYY-MM-DD HH:mm:ss")+" - "+end.format("YYYY-MM-DD HH:mm:ss"));});
 	//开始核心内容
-	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['°C','kWh','','','kPa','°C'],type:[1,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
+	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['°C','kWh','','','kPa','°C'],type:[18,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
  //
    //设置数据模型
@@ -49,7 +49,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 			lineChart.clear(); 
 			$.ajax({
                 type: "POST",
-                url:"i/baseInfo/getKeyValueDataByFilter",traditional:true,
+                url:"i/history/getHistData",traditional:true,
                 data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.oldnames,key:$scope.typemode.key[$scope.sl_index],startTime:$scope.begin,endTime:$scope.end},//
                 success: function(data) {
                     if(data.success){
@@ -142,6 +142,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		 $scope.gettit();
 	 };
 	 $scope.inintcoldoot=function(newValue,oldValue){//初始化冷库门
+		   $http.get("/i/temp/getTempsetByRdcId",{params:{'rdcId':$scope.rdcid}}).success(function(data){ $scope.coldstorageTemp=data;});
 		   if($rootScope.mystorages!=undefined){
 			   $scope.prove={};
 			   $.each($rootScope.mystorages, function(i, vo){  $scope.prove[vo.id]=vo.name;});

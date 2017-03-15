@@ -8,6 +8,8 @@ import java.util.Date;
 public class BlowerDTO {
 
 	private int blowerId;
+	
+	private String name;
 
 	private int compressorGroupId;
 
@@ -15,6 +17,7 @@ public class BlowerDTO {
 
 	private float defrostingTemperature;
 
+	
 	private String coldStorageName;
 
 	private Date startTime;
@@ -30,6 +33,16 @@ public class BlowerDTO {
 	private int runTime;
 
 	private int defrostTime;
+
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getBlowerId() {
 		return blowerId;

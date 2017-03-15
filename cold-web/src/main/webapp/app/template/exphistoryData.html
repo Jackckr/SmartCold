@@ -36,7 +36,7 @@
 						     </ul>
 						     <div id="val_list_div">
 					            <ul id="Temp_ul_0" > <!-- 	初始化冷库 -->
-						          <li ng-repeat="obj in mystorages" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						          <li ng-repeat="obj in coldstorageTemp" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
 						        </ul>
 					            <ul id="Temp_ul_1"   class="hide"><!--  初始化电量 -->
 						          <li ng-repeat="obj in powers"     oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
@@ -76,6 +76,34 @@
 									</div>
 									<input type="text" class="form-control pull-right"
 										style="width: 350px;" id="reservationtime" ng-model="picktime">
+								</div>
+							</div>
+							<div class="form-group">
+							   <label>时间间隔：</label>
+								<div class="btn-group">
+									<button type="button" class="btn btn-default dropdown-toggle" style="width: 120px;" data-toggle="dropdown">{{intervaltimeTxt}}<span class="caret"></span></button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#"  ng-click="chinvtime(1,'默认30秒')">默认30秒</a></li>
+										<li><a href="#"  ng-click="chinvtime(2,'60秒')">60秒</a></li>
+										<li><a href="#"  ng-click="chinvtime(3,'90秒')">90秒</a></li>
+										<li class="divider"></li>
+										<li><a href="#" ng-click="chinvtime(4,'2分钟')">2分钟</a></li>
+										<li><a href="#" ng-click="chinvtime(6,'3分钟')">3分钟</a></li>
+										<li><a href="#" ng-click="chinvtime(8,'4分钟')">4分钟</a></li>
+										<li><a href="#" ng-click="chinvtime(10,'5分钟')">5分钟</a></li>
+<!-- 										<li class="divider"></li> -->
+<!-- 										<li> -->
+<!-- 											<div class="col-lg-12"> -->
+<!-- 											    <div class="col-lg-8"> -->
+<!-- 											   <div class="input-group"> -->
+<!-- 												            <input type="text" class="form-control"> -->
+<!-- 												            <span class="input-group-addon">秒</span> -->
+<!-- 												            <button type="button" class="btn btn-default" >确定</button> -->
+<!-- 												        </div>  -->
+<!-- 											    </div> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+									</ul>
 								</div>
 							</div>
 							<div class="form-group">

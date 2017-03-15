@@ -1,10 +1,6 @@
 package com.smartcold.manage.cold.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,9 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,13 +22,12 @@ import com.smartcold.manage.cold.dao.newdb.PackMapper;
 import com.smartcold.manage.cold.dao.newdb.TaskMapper;
 import com.smartcold.manage.cold.dao.newdb.UsageMapper;
 import com.smartcold.manage.cold.dao.newdb.WallMaterialMapper;
+import com.smartcold.manage.cold.dao.olddb.TempSetMapper;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
-import com.smartcold.manage.cold.entity.newdb.TaskEntity;
 import com.smartcold.manage.cold.service.GoodsService;
 import com.smartcold.manage.cold.service.StorageService;
-import com.smartcold.manage.cold.util.ExportExcelUtil;
-import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.ResponseData;
+import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
@@ -48,6 +40,8 @@ public class BaseInfoController extends BaseController {
 	private TaskMapper taskDao;
 	@Autowired
 	private UsageMapper usageDao;
+	@Autowired
+	private TempSetMapper tempSetMapper;
 	@Autowired
 	private GoodsService goodsService;
 	@Autowired
@@ -91,35 +85,9 @@ public class BaseInfoController extends BaseController {
 	public Object getKeyValueDataByTime(@RequestParam("type") Integer type, @RequestParam("oid") int oid,
 			@RequestParam("key") String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-		return storageService.findByTime(type, oid, key, startTime, endTime);
+		return storageService.findByTime(type, oid, key, startTime, endTime,"DESC");
 	}
 
-	/**
-	 * 计算两个日期之间相差的天数
-	 * 
-	 * @param smdate
-	 *            较小的时间
-	 * @param bdate
-	 *            较大的时间
-	 * @return 相差天数
-	 * @throws ParseException
-	 */
-	public int daysBetween(Date smdate, Date bdate) {
-		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			smdate = dateFormat.parse(dateFormat.format(smdate));
-			bdate = dateFormat.parse(dateFormat.format(bdate));
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(smdate);
-			long time1 = cal.getTimeInMillis();
-			cal.setTime(bdate);
-			long time2 = cal.getTimeInMillis();
-			long between_days = (time2 - time1) / (1000 * 3600 * 24);
-			return Integer.parseInt(String.valueOf(between_days));
-		} catch (Exception e) {
-			return -1;
-		}
-	}
 
 	/**
 	 * 计算两个日期之间相差的天数
@@ -161,8 +129,10 @@ public class BaseInfoController extends BaseController {
 	}
 	
 	/**
-	 * 
+	 * 历史数据查询
+	 * 此接口在下个版本删掉（2017-5-9 17:14:10）
 	 */
+	@Deprecated
 	@RequestMapping("/getKeyValueDataByFilter")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getKeyValueDataByFilter(Integer type, Boolean ismklin, String key,
@@ -170,12 +140,12 @@ public class BaseInfoController extends BaseController {
 		try {
 			System.err.println(type + "/" + key + "/" + oids + "/" + onames + "/" + startTime + "/" + endTime);
 			if (key != null && key != "" && oids != null && oids.length > 0) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date sttime = sdf.parse(startTime);
-				Date edTime = sdf.parse(endTime);
-				int daysBetween = daysBetween(sttime, edTime);
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date sttime = TimeUtil.dateFormat.parse(startTime);
+				Date edTime = TimeUtil.dateFormat.parse(endTime);
+				int daysBetween = TimeUtil.daysBetween(sttime, edTime);
 				if(daysBetween>4){return ResponseData.newFailure("时间范围最大为3天~"); }
-				String groupfm = getDateFormat(daysBetween);//用于后期优化
+				if(type==1&&"Temp".equals(key)){type=18;}//兼容旧数据
 				HashMap<String, Object> restData = new HashMap<String, Object>();
 				LinkedList<HashMap<String, Object>> restList = new LinkedList<HashMap<String, Object>>();
 				LinkedList<List<StorageKeyValue>> xtemp = new LinkedList<List<StorageKeyValue>>();
@@ -202,22 +172,32 @@ public class BaseInfoController extends BaseController {
 					int oid = oids[i];
 					String oname = onames[i];
 					if("Temp".equals(key)){//
+						type=18;
 						 Map<String, List<StorageKeyValue>> data = storageService.findTempByTime(type, oid, key, sttime, edTime);//
-						 for (String  devkey : data.keySet()) {
-							 List<StorageKeyValue> datalist = data.get(devkey);
-							 if (datalist.size() > maxsize) {index = i;}
-							linmap.put("type", "line");
-							linmap.put("data", datalist);
-							linmap.put("name", oname+devkey);
-							if (ismklin != null && ismklin) {
-								linmap.put("markLine", dttemp);
-								linmap.put("markPoint", rttemp);
+						 if(SetUtil.isNotNullMap(data)){
+							 for (String  devkey : data.keySet()) {
+								 List<StorageKeyValue> datalist = data.get(devkey);
+								 if (datalist.size() > maxsize) {index = i;}
+								linmap.put("type", "line");
+								linmap.put("data", datalist);
+								linmap.put("name", devkey);
+								if (ismklin != null && ismklin) {
+									linmap.put("markLine", dttemp);
+									linmap.put("markPoint", rttemp);
+								}
+								xtemp.add(datalist);
 							}
-							xtemp.add(datalist);
+						 }else{
+							 List<StorageKeyValue> datalist =new ArrayList<>();
+							    linmap.put("type", "line");
+								linmap.put("data", datalist);
+								linmap.put("name", onames[i]);
+								xtemp.add(datalist);
+						 }
 							restList.add(linmap);
-						}
+							i++;
 					}else{
-						  List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime,0,null," asc " );//
+						  List<StorageKeyValue> datalist = storageService.findByTimeFormat(type, oid, key, sttime, edTime,0,null,"asc" );//
 							if (datalist.size() > maxsize) {index = i;}
 							linmap.put("type", "line");//type==2||type==3?"bar":line
 							linmap.put("data", datalist);
@@ -229,13 +209,12 @@ public class BaseInfoController extends BaseController {
 							xtemp.add(datalist);
 							restList.add(linmap);
 					}
-					
 				}
 				if (index != -1) {
 					List<StorageKeyValue> list = xtemp.get(index);
 					String[] xdt = new String[list.size()];
 					for (int i = 0; i < list.size(); i++) {
-						xdt[i] = sdf.format(list.get(i).getAddtime());
+						xdt[i] = TimeUtil.dateFormat.format(list.get(i).getAddtime());
 					}
 					restData.put("xdata", xdt);
 				} else {
@@ -243,7 +222,7 @@ public class BaseInfoController extends BaseController {
 					for (int i = 0; i < daysBetween; i++) {
 						Calendar c = Calendar.getInstance();
 						c.add(Calendar.DAY_OF_MONTH, -daysBetween + i);
-						xdt[i] = sdf.format(c.getTime());
+						xdt[i] = TimeUtil.dateFormat.format(c.getTime());
 					}
 					restData.put("xdata", xdt);// 展示数据
 				}

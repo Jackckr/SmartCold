@@ -4,6 +4,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,11 +121,16 @@ public class RdcController {
 
 	@Autowired
 	private RoleUserMapper roleUserDao;
+	private static HashMap<String , Object> cache=new HashMap<String, Object>();
 
+	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
-		return rdcService.findRdcList();
+		if(cache.containsKey("findRdcList")){return cache.get("findRdcList");}
+		 List<RdcEntity> findRdcList = rdcService.findRdcList();
+		 cache.put("findRdcList", findRdcList);
+		 return findRdcList;
 	}
 
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)

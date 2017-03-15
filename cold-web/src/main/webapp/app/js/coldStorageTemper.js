@@ -2,13 +2,29 @@
  * Created by sunqiunian on 16/3/3.
  */
 coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParams, $http,$rootScope, baseTools) {
-    console.log($stateParams.storageID);
     $scope.isErr=false;
+    $scope.storageID= $stateParams.storageID;
+    Highcharts.setOptions({  global: {useUTC: false  } , colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] });
+    $scope.oids=[],$scope.names=[];
+    $scope.getTempset = function () {
+	    $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.storageID}}).success(function (data) {
+	    	if(data){
+	    	 	angular.forEach(data,function(obj,i){
+	    	 		$scope.oids.push(obj.id);
+	    	 		$scope.names.push(obj.name);
+	    	 	});
+	    	 	 $scope.load();
+	    	}else{
+	    		alert("");
+	    	}
+	    });
+    };
+    
     $scope.load = function () {
+    	if($scope.oids.length==0){return;};
     	$scope.curtemper = [];
         var endTime =  new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000), maxTime=endTime.getTime();
-        Highcharts.setOptions({  global: {useUTC: false  } , colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] });
-        $http.get('/i/coldStorage/getPCTempByTime', { params: {"oid": $stateParams.storageID,'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
+        $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
         	var yData = [], tempMap = result.tempMap,systime=result.systime;
             var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
@@ -27,7 +43,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 	                	newdata.push({ x: maxTime,y:null }); 
 	                	if(!$scope.isErr){ $scope.isErr=true;}
 	                }   //修正尾部数据短传问题2
-	               if(newdata[newdata.length-1].y!=null){ $scope.curtemper.push(newdata[newdata.length-1].y);}
+	               if(newdata[newdata.length-1].y!=null){ $scope.curtemper.push(newdata[newdata.length-1].y.toFixed(2));}
                  }else{
                 	 if(!$scope.isErr){ $scope.isErr=true;}
                 	 newdata.push({ x: startTime.getTime(),y:null });
@@ -38,6 +54,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data: [{x: startTime.getTime(),y: datumTemp},{x: endTime.getTime(),y: datumTemp}]});//处理基准温度
             $scope.initHighchart(datumTemp,yData);
           });
+         
     };
 
     $scope.initHighchart=function(datumTemp,yData ){
@@ -60,7 +77,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
               }
           });
     };
-    $scope.load();
+    $scope.getTempset(); 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () { $scope.load(); }, 30000);
     $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });

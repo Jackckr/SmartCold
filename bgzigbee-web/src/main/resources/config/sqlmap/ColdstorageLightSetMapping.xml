@@ -9,6 +9,9 @@
         SELECT *
         FROM `coldstoragelightset` WHERE `id` = #{id}
     </select>
+    <select id="findByColdStorageId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity">
+       SELECT * from coldstoragelightset where coldStorageId=#{coldStorageId};
+    </select>
 
     <select id="findByRdcId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageLightSetEntity">
         SELECT *

@@ -50,10 +50,8 @@ coldWeb.factory('adminService',['$rootScope','$http', function($rootScope,$http)
 		setAdmin: function(admin){
 	    	$rootScope.admin = admin;
 	    	$rootScope.logout = function () {
-	        	$http.get('/i/admin/logout').success(function(data){
-	        		$rootScope.admin = null;
-	            });
-	        	window.location.reload();
+	        	$http.get('/i/admin/logout').success(function(data){$rootScope.admin = null; });
+	        	window.location.href = "http://"+ window.location.host + "/login.html";//	        	window.location.reload();
 	        };
 	        $rootScope.gotoSmartCold = function(){
 	        	cookies = document.cookie.split(";")
@@ -270,7 +268,7 @@ coldWeb.filter('objectLength',function(){
 
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise("/webSiteVisits");
     //index
     $stateProvider.state('login', {
         url: '/login',

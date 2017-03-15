@@ -50,7 +50,7 @@ public class AdminController extends BaseController {
 			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
 			if (admin != null) {
 				String cookie = cookieService.insertCookie(adminName);
-			    admin.setAdminpwd("******");
+			    admin.setAdminpwd(null);
 				request.getSession().setAttribute("admin", admin);
 				return	ResponseData.newSuccess(String.format("token=%s", cookie));
 			}
@@ -64,7 +64,7 @@ public class AdminController extends BaseController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
 	public Object logout(HttpServletRequest request) {
-		request.getSession().setAttribute("admin", null);
+		request.getSession().removeAttribute("admin");
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals("token")) {
@@ -116,7 +116,7 @@ public class AdminController extends BaseController {
 					if (effectiveCookie != null) {
 						admin = adminDao.findAdminByName(effectiveCookie.getUsername());
 						if(admin==null)return ResponseData.newSuccess(new AdminEntity());
-						admin.setAdminpwd("******");
+						admin.setAdminpwd(null);
 						request.getSession().setAttribute("admin", admin);
 						return ResponseData.newSuccess(admin);
 					}

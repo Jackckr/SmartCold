@@ -14,13 +14,16 @@ import com.smartcold.manage.cold.entity.newdb.TaskEntity;
  */
 public interface TaskMapper {
 	
-	public void delTempTask(Integer id);
+	public void delAllTempTask();//删除所有临时任务 
 	
-	public List<Object> getTaskByUid(Integer uid);
+	public void delTempTaskByID(Integer id);//删除临时任务
 	
-	public void addTempTask(TaskEntity task);
+	public void addTempTask(TaskEntity task);//添加临时任务
 	
-	public void upTempState(@Param("id")Integer id,@Param("state")Integer state);
+	public boolean updateTaskStatus(Integer id);//获得任务状态->动态分配任务
 	
+	public List<Object> getTaskByUid(Integer uid);//获得用户所有有效任务
+	
+	public void upTempState(@Param("id")Integer id,@Param("state")Integer state);//更新任务状态-》进度，百分比
 	
 }

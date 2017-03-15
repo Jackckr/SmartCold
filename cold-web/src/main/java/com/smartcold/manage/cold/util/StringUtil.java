@@ -6,6 +6,7 @@
 package com.smartcold.manage.cold.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -19,6 +20,14 @@ public class StringUtil
 
 	public static final String	EMPTY_STRING	= "";
 
+	public static String getIdS(int [] oids)
+	{
+		if(oids!=null){
+			String str= Arrays.toString(oids);
+			return str.substring(1,str.length()-1);
+		}
+		return "";
+	}
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)
 	 * 
@@ -29,6 +38,10 @@ public class StringUtil
 	{
 		return (str == null || str.isEmpty());
 	}
+	
+	
+
+	
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)
 	 * 

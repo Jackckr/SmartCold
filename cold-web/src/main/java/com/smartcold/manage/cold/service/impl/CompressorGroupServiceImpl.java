@@ -71,13 +71,13 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 			entity.setCompressorGroupName(compressorGroup.getName());
 			float totalRunTime = 0;
 			List<StorageKeyValue> lRunH = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runH", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime));
+					compressor.getId(), "runH", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
 			double lH = lRunH.size() > 0 ? lRunH.get(0).getValue() : 0;
 			List<StorageKeyValue> lRunM = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runM", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime));
+					compressor.getId(), "runM", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
 			double lM = lRunM.size() > 0 ? lRunM.get(0).getValue() : 0;
 			List<StorageKeyValue> lRunS = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runS", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime));
+					compressor.getId(), "runS", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
 			double lS = lRunS.size() > 0 ? lRunS.get(0).getValue() : 0;
 			List<StorageKeyValue> runH = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
 					compressor.getId(), "runH", 1);

@@ -14,12 +14,14 @@ import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
+import com.smartcold.manage.cold.dao.olddb.TempSetMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
+import com.smartcold.manage.cold.entity.olddb.TempSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.StorageService;
@@ -29,7 +31,11 @@ import com.smartcold.manage.cold.util.SetUtil;
 public class StorageServiceImpl implements StorageService {
 
 	@Autowired
+	private TempSetMapper tempSetMapper;
+	
+	@Autowired
 	private RdcUserMapper rdcUserDao;
+	
 
 	@Autowired
 	private ColdStorageSetMapper coldStorageSetDao;
@@ -56,7 +62,10 @@ public class StorageServiceImpl implements StorageService {
 			return null;
 		return coldStorageSetDao.findByRdcId(rdcUser.getRdcid());
 	}
-
+   
+	
+	
+	
 	@Override
 	public List<StorageKeyValue> findByNums(int type, int oid, String key, int nums) {
 		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
@@ -80,27 +89,39 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime) {
+	public List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime,String orderBy) {
 		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
 		if (SetUtil.isnotNullList(deviceList)) {
-			return storageDataCollectionDao.findByTime(null,  deviceList.get(0).getDeviceid(), key, startTime, endTime);
+			return storageDataCollectionDao.findByTime(null,  deviceList.get(0).getDeviceid(), key, startTime, endTime,orderBy);
 		} else {
-			return storageKeyValueDao.findByTime(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime);
+			return storageKeyValueDao.findByTime(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,orderBy);
 		}
 	}
 	
+	@Deprecated
 	@Override
 	public Map<String, List<StorageKeyValue>> findTempByTime(int type, int oid,String key, Date startTime, Date endTime) {
 		Map<String, List<StorageKeyValue>> resdata=new HashMap<String, List<StorageKeyValue>>();
-		 List<DeviceObjectMappingEntity> devList = deviceObjectMappingDao.findByTypeOid(type, oid);
-		    if (SetUtil.isnotNullList(devList)) {
-		    	for (DeviceObjectMappingEntity dev : devList) {
-		    		resdata.put(key+dev.getDeviceid(), storageDataCollectionDao.findByTimeFormat(null, dev.getDeviceid(), key, startTime, endTime,null," asc"));
-				}
-			} else {
-				 List<StorageKeyValue> findByTime = storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oid, key, startTime,endTime,null," asc");
-				 resdata.put(key, findByTime);
+		List<TempSetEntity> tempset = this.tempSetMapper.getTempsetBycoldstorageid(oid);
+		if(SetUtil.isnotNullList(tempset)){
+			String oids="";
+			HashMap<Integer, TempSetEntity> cacher=new HashMap<Integer, TempSetEntity>();
+			for (TempSetEntity tempSetEntity : tempset) {
+				oids+=tempSetEntity.getId()+",";
+				cacher.put(tempSetEntity.getId(), tempSetEntity);
 			}
+			List<DeviceObjectMappingEntity> devList = deviceObjectMappingDao.findByTypeOids(type, oids.substring(0,oids.length()-1));
+			 if (SetUtil.isnotNullList(devList)) {
+			    	for (DeviceObjectMappingEntity dev : devList) {
+			    		resdata.put(key+cacher.get(dev.getOid()).getName(), storageDataCollectionDao.findByTimeFormat(null, dev.getDeviceid(), key, startTime, endTime,null,"asc"));
+					}
+			} else {
+				for (TempSetEntity tempSetEntity : tempset) {
+					List<StorageKeyValue> findByTime = storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), tempSetEntity.getId(), key, startTime,endTime,null,"asc");
+					 resdata.put(key+tempSetEntity.getName(), findByTime);
+				}
+		     }
+		}
 		return resdata;
 	}
 	
@@ -127,8 +148,7 @@ public class StorageServiceImpl implements StorageService {
 		HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>> result = new HashMap<String, Map<String, List<ColdStorageAnalysisEntity>>>();
 		List<ColdStorageSetEntity> storages = coldStorageSetDao.findByRdcId(rdcid);
 		for (ColdStorageSetEntity storage : storages) {
-			result.put(storage.getName(), analysisService.findValueByDateKeys(StorageType.STORAGE.getType(),
-					storage.getId(), keys, startTime, endTime));
+			result.put(storage.getName(), analysisService.findValueByDateKeys(StorageType.STORAGE.getType(),storage.getId(), keys, startTime, endTime));
 		}
 		return result;
 	}
@@ -148,7 +168,6 @@ public class StorageServiceImpl implements StorageService {
 		}
 		return result;
 	}
-
 
 	
 }

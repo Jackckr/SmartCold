@@ -33,7 +33,7 @@
 						     </ul>
 						     <div id="val_list_div">
 					            <ul id="Temp_ul_0" > <!-- 	初始化冷库 -->
-						          <li ng-repeat="obj in mystorages" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						          <li ng-repeat="obj in coldstorageTemp" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
 						        </ul>
 					            <ul id="Temp_ul_1"   class="hide"><!--  初始化电量 -->
 						          <li ng-repeat="obj in powers"     oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>

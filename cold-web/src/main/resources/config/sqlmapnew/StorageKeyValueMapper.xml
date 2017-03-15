@@ -4,14 +4,12 @@
 	<select id="findByTime" resultType="StorageKeyValue">
 		select * from ${table}
 		where `key`=#{key} AND oid=#{oid} AND
-		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime}
-        order by `addtime` desc
+		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` ${orderBy}
 	</select>
 	<select id="findByTimeFormat" resultType="StorageKeyValue">
 		select `value`,`addtime` from ${table}
 		where `key`=#{key} AND oid=#{oid} AND
-		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime}
-        order by `addtime` ${orderBy}
+		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` ${orderBy}
 	</select>
 <!-- 	<select id="findByTimeFormat1" resultType="StorageKeyValue"> -->
 <!-- 		select avg(`value`) VALUE ,DATE_FORMAT(`addtime`,#{dateFormat}) as grouptime ,addtime  from ${table} -->
@@ -23,6 +21,9 @@
  	<select id="findByNums" resultType="StorageKeyValue" >
 		select * from ${table}
 		where `key`=#{key} and oid=#{oid}
+		<if test="nums==1">
+		  and   addtime > DATE_SUB(NOW(),INTERVAL 5 MINUTE)
+		</if>
         order by `addtime` desc
         limit #{nums}
 	</select>

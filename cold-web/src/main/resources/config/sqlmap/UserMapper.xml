@@ -123,8 +123,8 @@
     select 
     <include refid="Base_Column_List" />
     from User
-    where username = #{username ,jdbcType=VARCHAR}
-    and password =#{password,jdbcType=VARCHAR}
+    where username = #{username}
+    and password =#{password}
   </select>
   <!-- 通过用户名查找用户 -->
   <select id="findUserByName" parameterType="map" resultType="UserEntity">

@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.util.RemoteUtil;
@@ -17,16 +19,17 @@ import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
+ * 沈阳设备数据 
  * @author Administrator
  *
  */
 public class SocketHandler extends IoHandlerAdapter {
 	@Autowired
 	public  WarningLogMapper warningLogMapper;
-//	@Autowired
-//	public  StorageDataCollectionMapper storageDataCollectionDao;
-    public static ConcurrentHashMap<Long, IoSession> curSessionMap = new ConcurrentHashMap<Long, IoSession>();
-    
+	@Autowired
+	public  StorageDataCollectionMapper storageDataCollectionDao;
+	
+    private static ConcurrentHashMap<Long, IoSession> curSessionMap = new ConcurrentHashMap<Long, IoSession>();
 
     
     /*
@@ -36,19 +39,75 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
     	session.closeOnFlush();
+    	curSessionMap.remove(session.getId());
+    	System.err.println(" 有异常发生时被触发exceptionCaught："+cause);
     }
-    /*
+    /*org.apache.mina.filter.codec.ProtocolDecoderException
      * (non-Javadoc)
      * 有消息到达时被触发，message代表接收到的消息。
      * @see org.apache.mina.core.service.IoHandlerAdapter#messageReceived(org.apache.mina.core.session.IoSession, java.lang.Object)
      */
     public void messageReceived(IoSession session, Object message) throws Exception {
-        session.write("200={\"status\":\"200\"}");
-//        System.err.println("收到客户端消息："+message);
-//       this.addAPdata(message.toString());
-        this.addextMsg("messageReceived", 2, message.toString());
+    	    try {
+				String msg=message+"";
+				byte[] z = msg.getBytes();
+				if(z.length>0){
+					if(z.length>1){
+						System.err.println("开始解析数据=================================================");
+						for (int i = 0; i < z.length; i++) {
+				    		  System.out.print("{"+z[i]+"}_"+String.format("%02X", z[0]) + " ");
+				    	}
+						System.err.println("解析数据完成=================================================");
+						session.write("01"+TimeUtil.getHextime());//返回服务器状态
+					}else{
+				        String type=String.format("%02X", z[0]);
+						switch (type) {
+						case "00"://数据包
+							System.err.println("收到数据包："+msg);
+							session.write(type+TimeUtil.getHextime());//返回服务器状态
+							break;
+						case "01"://状态包
+							System.err.println("收到状态包："+msg);
+							session.write(type+TimeUtil.getHextime());//返回服务器状态
+							break;
+						case "02"://校时包
+							System.err.println("收到校时包："+msg);
+							session.write(type+TimeUtil.getHextime());//返回服务器状态
+							break;
+						default:
+							System.err.println("未知数据："+msg);
+							session.write("02"+TimeUtil.getHextime());//返回服务器状态
+							break;
+						}
+					}
+  	            }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+       
+       
     }
     
+    
+    public static byte [] ioBufferToByte(Object message)   
+    {   
+          if (!(message instanceof IoBuffer))   
+          {   
+              return null;   
+          }   
+          IoBuffer ioBuffer = (IoBuffer)message;   
+          ioBuffer.flip();
+          byte[] readByte = new byte[ioBuffer.limit()];  
+          try
+          {
+            ioBuffer.get(readByte);
+          }
+          catch (Exception e) 
+          {
+          System.out.println(e.toString());
+          }
+          return readByte;   
+    }
     /*
      * (non-Javadoc)
      *   当信息已经传送给客户端后触发此方法.
@@ -57,6 +116,7 @@ public class SocketHandler extends IoHandlerAdapter {
     @Override
     public void messageSent(IoSession session, Object message) throws Exception {
     	 super.messageSent(session, message);
+    	 System.err.println("messageSent:向客户端发送："+message);
     }
     
     /*
@@ -67,6 +127,13 @@ public class SocketHandler extends IoHandlerAdapter {
     @Override
     public void sessionCreated(IoSession session) throws Exception {
     	  SocketHandler.curSessionMap.put(session.getId(), session);
+    	  
+    	  System.err.println("创建一个新连接："+session.getRemoteAddress()+"并发的个数:\t"+curSessionMap.size());
+//    	  SocketSessionConfig cfg = (SocketSessionConfig) session.getConfig();   
+//          cfg.setReceiveBufferSize(2 * 1024 * 1024);   
+//          cfg.setReadBufferSize(2 * 1024 * 1024);   
+//          cfg.setKeepAlive(true);   
+//          cfg.setSoLinger(0); //这个是根本解决问题的设置   
     }
     
     /*
@@ -76,7 +143,8 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     @Override
     public void sessionOpened(IoSession session) throws Exception {
-    	  session.write("0={'smallint':30,'intv':1800}");
+//    	  session.write("0={'smallint':30,'intv':1800}");
+        System.err.println("回话已打开:"+session.getRemoteAddress()+"\r\n准备接收数据");
     }
     
     /*
@@ -88,6 +156,7 @@ public class SocketHandler extends IoHandlerAdapter {
     public void sessionClosed(IoSession session) throws Exception {
         session.closeOnFlush();
         curSessionMap.remove(session.getId());    
+        System.err.println("关闭当前session："+session.getId()+"#"+ session.getRemoteAddress());
     }
     
     /*
@@ -144,6 +213,51 @@ public class SocketHandler extends IoHandlerAdapter {
     	
     	
     }  
+    
+    
+    
+    public static void messageSentAll( Object message) throws Exception {
+    	 
+//        System.err.println("发送消息时时被触发，即在调用IoSession.write()时被触发，message代表将要发送的消息。=" + message);
+//     // 向所有客户端发送的数据
+//        SocketModel socm=new SocketModel(new Date().getTime()+"", "", 5, message);
+//       String send=socm.toString();
+//       Collection<IoSession> sessions = users.values();
+//
+//        for (IoSession sess : sessions) {
+//
+//            sess.write(send);
+//
+//        }
+
+    }
+    public static void messageSentSingle(IoSession session, Object message) throws Exception {
+
+//        log.info("发送消息时时被触发，即在调用IoSession.write()时被触发，message代表将要发送的消息。=" + message);
+//     // 向所有客户端发送的数据
+//        Integer command=(Integer) session.getAttribute("command");
+//        SocketModel socm=new SocketModel(new Date().getTime()+"", "", command, message);
+//       String send=socm.toString();
+//       session.write(send);
+    }
+
+    public static void messageSentPart( Object message,String city_id) throws Exception {
+
+//        log.info("发送消息时时被触发，即在调用IoSession.write()时被触发，message代表将要发送的消息。=" + message);
+//        Object[] key=users.keySet().toArray();
+//        for (int i = 0; i < key.length; i++) {
+//            if(key[i].toString().contains(city_id)){
+//                IoSession iosession=users.get(key[i]);
+//                 SocketModel socm=new SocketModel(new Date().getTime()+"", "", 5, message);
+//                   String send=socm.toString();
+//                iosession.write(send);
+//            }
+//        }
+     // 向所有客户端发送的数据
+        
+        
+    }
+
 
 
 }

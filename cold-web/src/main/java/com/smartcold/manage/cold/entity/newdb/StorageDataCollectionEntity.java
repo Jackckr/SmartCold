@@ -12,7 +12,7 @@ public class StorageDataCollectionEntity {
 
 	private String key;
 
-	private String value;
+	private Object value;
 
 	private Date time;
 
@@ -22,7 +22,7 @@ public class StorageDataCollectionEntity {
 
 	}
 
-	public StorageDataCollectionEntity(String apid, String deviceid, String key, String value, Date time) {
+	public StorageDataCollectionEntity(String apid, String deviceid, String key, Object value, Date time) {
 		this.apid = apid;
 		this.deviceid = deviceid;
 		this.key = key;
@@ -62,11 +62,11 @@ public class StorageDataCollectionEntity {
 		this.key = key;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 

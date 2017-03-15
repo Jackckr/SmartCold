@@ -3,10 +3,11 @@
  * 历史数据查询
  */
 coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout,baseTools) {
+	$scope.intervaltime=1,$scope.intervaltimeTxt="默认（30秒）";
 	var stdate = new Date(); stdate.setHours(stdate.getHours () - 6);
 	$scope.rdcid=window.sessionStorage.smrdcId,$scope.showobjgroup=false,$scope.coldstoragedoor=null;
 	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= baseTools.formatTime(stdate),$scope.picktime = $scope.begin + ' - ' + $scope.end;
-    $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:2},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{
+    $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:368},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{
     "今日":[moment().startOf("day"),moment()],
     "昨日":[moment().subtract("days",1).startOf("day"),moment().subtract("days",1).endOf("day")],
     "最近3天":[moment().subtract("days",3),moment()],
@@ -14,9 +15,12 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
     '最近6小时': [moment().subtract('hours',6), moment()]
     },opens:"right",buttonClasses:["btn btn-default"],applyClass:"btn-small btn-primary blue",cancelClass:"btn-small",format:"YYYY-MM-DD HH:mm:ss",separator:" - ",locale:{applyLabel:"确定",cancelLabel:"取消",fromLabel:"起始时间",toLabel:"结束时间",customRangeLabel:"自定义",daysOfWeek:["日","一","二","三","四","五","六"],monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],firstDay:1}},function(start,end,label){$("#reportrange span").html(start.format("YYYY-MM-DD HH:mm:ss")+" - "+end.format("YYYY-MM-DD HH:mm:ss"));});
 	//开始核心内容
-	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['°C','kWh','','','kPa','°C'],type:[1,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
+	$scope.typemode={tit:['温度','电量','','','高压','排气温度'],unit:['°C','kWh','','','kPa','°C'],type:[18,10,2,11,3,5],key:['Temp','PWC','Switch','Switch','highPress','exTemp'],ismklin:[true,true,false,false,true,true]};
 	$scope.oids=[],$scope.sltit="",$scope.sl_index=0,$scope.oldnames=[],$scope.slgptit="";
- //
+	
+	$scope.chinvtime=function(itime,itxt){
+		$scope.intervaltime=itime,$scope.intervaltimeTxt=itxt;
+	};
    //设置数据模型
    $scope.gettit=function(){//自动设置标题
 	       $scope.sltit=="";
@@ -38,22 +42,22 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
    
    //导出数据
    $scope.expdata=function(){//导出数据
-	   $scope.hidefilter();
-	    $("#but_expdata").attr("disabled",true);
+	     $scope.hidefilter();
 		if($scope.oids&&$scope.oids.length>0){
 		   //记录是否在任务队列中，如果有则不计算	
 		   bothTime = $scope.picktime.split(" - ");
 		   $scope.begin = bothTime[0],$scope.end = bothTime[1];
 		   if($scope.checktime($scope.begin , $scope.end )){alert("导出数据最大时间范围为1年！");return;}
-			$.ajax({type: "POST",traditional:true, url:"i/history/expHistoryData", data:{ rdcid:$scope.rdcid,uid:user.id,filename:"历史数据",title:$scope.slgptit,type:$scope.typemode.type[$scope.sl_index],oids:$scope.oids,onames:$scope.oldnames,key:$scope.typemode.key[$scope.sl_index], startTime:$scope.begin,endTime:$scope.end},success: function(data) {
-		            if(data.success){
-		            	$scope.createForm(data.entity.exqip,data.entity.className,data.entity.methodName);//id:vo.id,ip:vo.exqip,port:vo.className
-		            }else{
-		            	alert(data.message);
-		            }
-		     }});
-			setTimeout($scope.getUserTask,500);
-			setTimeout(function(){
+			    $("#but_expdata").attr("disabled",true);
+				$.ajax({type: "POST",traditional:true, url:"i/history/expHistoryData", data:{ rdcid:$scope.rdcid,uid:user.id,filename:"历史数据",intervalTime:$scope.intervaltime, title:$scope.slgptit,type:$scope.typemode.type[$scope.sl_index],oids:$scope.oids,onames:$scope.oldnames,key:$scope.typemode.key[$scope.sl_index], startTime:$scope.begin,endTime:$scope.end},success: function(data) {
+			            if(data.success){
+			            	$scope.createForm(data.entity.exqip,data.entity.className,data.entity.methodName);//id:vo.id,ip:vo.exqip,port:vo.className
+			            }else{
+			            	alert(data.message);
+			            }
+			    }});
+				setTimeout($scope.getUserTask,2000);
+				setTimeout(function(){
 				$("#but_expdata").attr("disabled",false);
 			},3000);
 		}else{
@@ -168,6 +172,7 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 		 $scope.gettit();
 	 };
 	 $scope.inintcoldoot=function(newValue,oldValue){//初始化冷库门
+		 $http.get("/i/temp/getTempsetByRdcId",{params:{'rdcId':$scope.rdcid}}).success(function(data){ $scope.coldstorageTemp=data;});
 		   if($rootScope.mystorages!=undefined){
 			   $scope.prove={};
 			   $.each($rootScope.mystorages, function(i, vo){  $scope.prove[vo.id]=vo.name;});

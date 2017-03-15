@@ -4,8 +4,12 @@ package com.smartcold.bgzigbee.manage.enums;
  * Created by corly on 16-8-13.
  */
 public enum SetTables {
+	
+	
 	STORAGESET(1, "coldstorageset", "冷库"),
 
+	TEMPE(18, "tempset", "温度"),
+	
 	DOORSET(2, "coldstoragedoorset", "冷库门"),
 
 	COMPRESSORGROUPSET(3, "compressorgroupset", "压缩机组"),
@@ -36,9 +40,9 @@ public enum SetTables {
 
 	CIRCULATINGPUMPSET(16, "circulatingpumpset", "防冻循环泵"),
 
-	WALL(17, "wallset", "冷库墙"),
+	WALL(17, "wallset", "冷库墙");
 	
-	TEMPE(18, "tempe", "温度");
+	
 
 	private int type;
 	private String table;

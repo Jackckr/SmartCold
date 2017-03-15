@@ -19,6 +19,11 @@ import com.smartcold.manage.cold.entity.olddb.ColdStorageLightSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.StorageService;
 
+/**
+ * 温度标签
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping(value = "/coldstorageLight")
 public class ColdstorageLightSetController {

@@ -15,6 +15,7 @@ public class TaskEntity {
 	private int intervalTime;
 	private String className;
 	private String methodName;
+	private String parameter;
 	private String desc;
 	private String exqip;
 	private Date LastRunTim;
@@ -80,7 +81,13 @@ public class TaskEntity {
 	public void setMethodName(String methodName) {
 		this.methodName = methodName;
 	}
-
+	
+	public String getParameter() {
+		return parameter;
+	}
+	public void setParameter(String parameter) {
+		this.parameter = parameter;
+	}
 	public String getDesc() {
 		return desc;
 	}

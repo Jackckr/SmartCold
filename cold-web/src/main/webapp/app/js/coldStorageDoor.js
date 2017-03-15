@@ -1,70 +1,44 @@
 /**
  * Created by sunqiunian on 16/3/3.
  */
-coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams, $http,$rootScope) {
+coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams, $http,$rootScope,baseTools) {
     console.log($stateParams.storageID);
-
+    Highcharts.setOptions({ global: {useUTC: false }});
+    $scope.coldStorageDoors=[];
     $scope.load = function () {
+    	 var endTime =  new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
         $http.get('/i/coldStorageDoor/findByStorageId?storageID=' + $stateParams.storageID).success(
         		function(data,status,config,header){
         			if(data.length > 0){
-        				$scope.drawDoor(data[0].id);
+        				$scope.coldStorageDoors=data;
+        				angular.forEach(data,function(obj,i){$scope.drawDoor(obj.id,startTime,endTime);});
         			}
         		});
     };
     
-    $scope.drawDoor = function(doorid){
-    	$http.get('/i/baseInfo/getKeyValueData', {
-            params: {
-                "oid": doorid,
-                type:2,
-                key:'Switch'
-            }
-        }).success(function (result) {
+    
+    
+    
+    $scope.drawDoor = function(doorid,startTime,endTime){
+    	$http.get('/i/baseInfo/getKeyValueDataByTime', {  params: { "oid": doorid, type:2,key:'Switch' , "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)} }).success(function (result) {
         	var data = [];
             for (var i = 0; i < result.length; i++) {
                 var val = Date.parse(result[i].addtime);
                 var newDate = new Date(val).getTime();
-                data.push({
-                    x: newDate,
-                    y: result[i].value
-                });
+                data.push({x: newDate, y: result[i].value});
             }
 
             // 冷库门开关监控
             $(function () {
                 $(document).ready(function () {
-
-                    Highcharts.setOptions({
-                        global: {
-                            useUTC: false
-                        }
-                    });
-
-                    $('#storageDoorChart').highcharts({
+                    $('#storageDoorChart'+doorid).highcharts({
                         chart: {
                             type: 'column',
                             animation: Highcharts.svg, // don't animate in old IE
                             marginRight: 10,
-/*                            events: {
-                                load: function () {
-
-                                    // set up the updating of the chart each second
-                                    var series = this.series[0];
-                                    setInterval(function () {
-                                        var x = (new Date()).getTime(), // current time
-                                            y = Math.round(Math.random());
-                                        temper = y;
-                                        series.addPoint([x, y], true, true);
-                                    }, 1000);
-                                }
-                            },*/
                             backgroundColor: {
                                 linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                                stops: [
-                                    [0, 'rgb(210, 214, 222)'],
-                                    [1, 'rgb(210, 214, 222)']
-                                ]
+                                stops: [ [0, 'rgb(210, 214, 222)'], [1, 'rgb(210, 214, 222)'] ]
                             },
                             borderColor: '#d2d6de',
                             borderWidth: 2,
@@ -73,13 +47,8 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
                             plotBorderColor: '#d2d6de',
                             plotBorderWidth: 1
                         },
-                        title: {
-                            text: '冷库门开关监控'
-                        },
-                        xAxis: {
-                            type: 'datetime',
-                            tickPixelInterval:  200,
-                        },
+                        title: {text: '' },
+                        xAxis: { type: 'datetime', tickPixelInterval:  200, },
                         yAxis: {
                             allowDecimals: false,
                             labels: {
@@ -134,17 +103,6 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
                             shadow: false,
                             pointWidth:5, //柱子之间的距离值
                             data: (function () {
-                               /* // generate an array of random data
-                                var data = [],
-                                    time = (new Date()).getTime(),
-                                    i;
-
-                                for (i = -19; i <= 0; i++) {
-                                    data.push({
-                                        x: time + i * 1000,
-                                        y: Math.round(Math.random())
-                                    });
-                                }*/
                                 return data;
                             })()
                         }]
@@ -153,8 +111,8 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
 
             });
 
-        })
-    }
+        });
+    };
     $scope.load();
 
     clearInterval($rootScope.timeTicket);

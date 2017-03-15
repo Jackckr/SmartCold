@@ -37,6 +37,9 @@
 	<select id="findLastNPoint" parameterType="map" resultMap="dataResultMap">
 	    SELECT * FROM storagedatacollection
 	    WHERE 1 =1
+	    <if test="limit==1">
+		   AND addtime > DATE_SUB(NOW(),INTERVAL 5 MINUTE)
+	    </if>
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>
@@ -46,9 +49,7 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if> 
-	    ORDER BY time DESC 
-	    LIMIT #{limit} 
-	
+	    ORDER BY time DESC LIMIT #{limit} 
 	</select>
 	
 	<select id="findByTime" parameterType="map" resultMap="dataResultMap">
@@ -63,9 +64,7 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
-	    AND time > #{startTime} AND time &lt; #{endTime} 
-	    ORDER BY `time` DESC
-	
+	    AND time > #{startTime} AND time &lt; #{endTime}  order by `time` ${orderBy}   
 	</select>
 	
 	<select id="findByTimeFormat" parameterType="map" resultMap="dataResultMap">
@@ -80,7 +79,7 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
-	    AND time >= #{startTime} AND time &lt;= #{endTime}  ORDER BY  `time` ${orderBy} 
+	    AND time >= #{startTime} AND time &lt;= #{endTime} ORDER BY  `time` ${orderBy} 
 	</select>
 <!-- 	<select id="findByTimeFormat1" parameterType="map" resultMap="dataResultMap"> -->
 <!-- 	    SELECT avg(`value`) value,DATE_FORMAT(`time`, #{dateFormat})  as grouptime ,time FROM storagedatacollection   -->

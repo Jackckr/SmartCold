@@ -78,7 +78,7 @@ public class ExportExcelUtil {
 	public static void expExcel(HttpServletResponse response, String fileName, String title, String mode[][],int[][] colmode, String[] shelName, List<List> datalist) {
 		try {
 			ExportExcelUtil.setResponse(response, fileName);// 创建工作博
-			SXSSFWorkbook   wb = new SXSSFWorkbook(1000);////内存中保留 1000 条数据，以免内存溢出，其余写入 硬盘  
+			SXSSFWorkbook   wb = new SXSSFWorkbook(100);////内存中保留 1000 条数据，以免内存溢出，其余写入 硬盘  
 			CellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);//创建标题样式
 			CellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);//创建内容样式
 			OutputStream output = response.getOutputStream();
@@ -104,9 +104,9 @@ public class ExportExcelUtil {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static void expZIPXLS( int id,String sid,String serverPath,String fileName, String title, String mode[][],int[][] colmode, String[] shelName, List<List> datalist) {
+	public static void expZIPXLS( int id,String sid,String serverPath,String fileName, String title, String mode[][],int[][] colmode, String[] shelName, List<List> datalist,int intervalTime) throws Exception{
 		try {
-			SXSSFWorkbook   wb = new SXSSFWorkbook(2000);////内存中保留 2000 条数据，以免内存溢出，其余写入 硬盘 -- workbook1,100 
+			SXSSFWorkbook   wb = new SXSSFWorkbook(200);////内存中保留 500 条数据，以免内存溢出，其余写入 硬盘 -- workbook1,100 
 			CellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
 			CellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
 			if (shelName.length > 1) {
@@ -114,11 +114,11 @@ public class ExportExcelUtil {
 				for (int i = 0; i < datalist.size(); i++) {
 					System.err.println("执行第"+i+"shee");
 					list = datalist.get(i);
-					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode, list,new int[]{id,i,datalist.size()});
+					ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[i], title, mode, colmode, list,new int[]{id,i,datalist.size(),intervalTime});
 					EXPPROGRESS.put(id, new Double((i+1)/datalist.size()*100));
 				}
 			} else {
-				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,datalist,new int[]{id,1,datalist.size()});
+				ExportExcelUtil.createHSSFSheet(wb, cellStyleTitle, cellStyle, shelName[0], title, mode, colmode,datalist,new int[]{id,1,datalist.size(),intervalTime});
 			}
 			ZipEntry zipEntry = new ZipEntry(fileName+".xls");
             ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(serverPath+sid+".zip"));
@@ -130,6 +130,8 @@ public class ExportExcelUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Output   is   closed ");
+			EXPPROGRESS.put(id,-1.00);
+			throw new Exception("导出异常");
 		} finally {
 			System.gc();
 		}
@@ -209,7 +211,7 @@ public class ExportExcelUtil {
 	 * @param cellStyle
 	 * @return
 	 */
-	private static CellStyle getbodyHSSFCellStyle(SXSSFWorkbook wb, CellStyle cellStyle) {
+	public static CellStyle getbodyHSSFCellStyle(SXSSFWorkbook wb, CellStyle cellStyle) {
 		if (cellStyle != null) {
 			return cellStyle;
 		}
@@ -231,7 +233,7 @@ public class ExportExcelUtil {
 	 * @param cellStyleTitle
 	 * @return
 	 */
-	private static CellStyle getHSSFCellStyle(SXSSFWorkbook wb, CellStyle cellStyleTitle) {
+	public  static CellStyle getHSSFCellStyle(SXSSFWorkbook wb, CellStyle cellStyleTitle) {
 		// 设置单元格字体
 		if (cellStyleTitle != null) {
 			return cellStyleTitle;
@@ -310,11 +312,13 @@ public class ExportExcelUtil {
 		Cell cell = row.createCell(1);
 		if (SetUtil.isnotNullList(list)) {
 			String datamode[] = mode[1];
-			if (list.size() > 1048575) {list.subList(0, 1048575);} // 防止数据溢出
+			if (list.size() > 1048575) {list=list.subList(0, 1048574);} // 防止数据溢出
 			for (int i = 0; i < list.size(); i++) { //  1663132
-				if(isprogress&&i!=0&&i%10000==0){//1663132
-				    double pr= new Double(progress[1]+1)/new Double(progress[2])*new Double(i)/list.size()*100;
-				    EXPPROGRESS.put(progress[0], pr);
+				if(isprogress&&i!=0&&i%10000==0){
+						double pr= new Double(progress[1]+1)/new Double(progress[2])*new Double(i)/list.size()*100;
+						if(pr==100){pr=98;}
+						EXPPROGRESS.put(progress[0], pr);
+						
 				}
 				Object object = list.get(i);
 				row = sheet.createRow(i + rowinxe);

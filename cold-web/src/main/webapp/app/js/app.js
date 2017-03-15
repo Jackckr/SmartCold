@@ -207,7 +207,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             		 function(data,status,headers,config){
             			 $rootScope.platformDoors = data;
             		 })
-             // 初始化
         	}
         	
         	$rootScope.changeRdc = function(value){
@@ -535,7 +534,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/designStorage',
     	controller: 'designStorage',
         templateUrl: 'app/template/designStorage.html'
-    })
+    }).state('lightGroup',{//灯组
+    	url:'/lightGroup',
+    	controller: 'lightGroup',
+        templateUrl: 'app/template/lightGroup.html'
+    });
 });
 
 

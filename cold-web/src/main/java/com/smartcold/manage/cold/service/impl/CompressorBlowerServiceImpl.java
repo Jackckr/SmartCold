@@ -40,25 +40,22 @@ public class CompressorBlowerServiceImpl implements CompressorBlowerService {
 			for (ColdStorageSetEntity coldStorageSetEntity : storageIdList) {
 				List<BlowerSetEntity> blowerSets = blowerSetDao.findByStorageId(coldStorageSetEntity.getId());
 				if (blowerSets != null && !blowerSets.isEmpty()) {
-					for (BlowerSetEntity blowerSetEntity : blowerSets) {
+					for (BlowerSetEntity obj : blowerSets) {
 						BlowerDTO blowerDTO = new BlowerDTO();
-						blowerDTO.setBlowerId(blowerSetEntity.getId());
-						blowerDTO.setColdStorageId(blowerSetEntity.getColdStorageId());
-						blowerDTO.setCompressorGroupId(blowerSetEntity.getCompressorGroupId());
-						blowerDTO.setDefrostingTemperature(blowerSetEntity.getDefrostingTemperature());
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), blowerSetEntity.getId(),
-								"isDefrosting", 1);
+						blowerDTO.setName(obj.getName());
+						blowerDTO.setBlowerId(obj.getId());
+						blowerDTO.setColdStorageId(obj.getColdStorageId());
+						blowerDTO.setCompressorGroupId(obj.getCompressorGroupId());
+						blowerDTO.setDefrostingTemperature(obj.getDefrostingTemperature());
+						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"isDefrosting", 1);
 						blowerDTO.setIsDefrosting(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), blowerSetEntity.getId(),
-								"isRunning", 1);
+						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"isRunning", 1);
 						blowerDTO.setIsRunning(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
 						blowerDTO.setColdStorageName(coldStorageSetEntity.getName());
 						// 计算化霜累计时间/制冷累计时间
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), blowerSetEntity.getId(),
-								"totalRunning", 1);
+						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"totalRunning", 1);
 						blowerDTO.setRunTime(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), blowerSetEntity.getId(),
-								"totalDefrosting", 1);
+						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"totalDefrosting", 1);
 						blowerDTO.setDefrostTime(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
 						blowerList.add(blowerDTO);
 					}

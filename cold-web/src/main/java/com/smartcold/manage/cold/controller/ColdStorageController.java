@@ -46,18 +46,22 @@ public class ColdStorageController {
 		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
 		return storageTempDto;
 	}
-
-	@RequestMapping("/getTempByTime")
-	public Object getTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-		NewStorageTempDto storageTempDto = new NewStorageTempDto();
-		List<StorageKeyValue> tempList = storageService.findByTime(StorageType.STORAGE.getType(), oid, key, startTime,endTime);
-		storageTempDto.setList(tempList);
-		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
-		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
-		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
-		storageTempDto.setName(coldStorageSetEntity.getName());
-		return storageTempDto;
-	}
+	
+//    @Deprecated
+//	@RequestMapping("/getTempByTime")
+//	public Object getTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+//		NewStorageTempDto storageTempDto = new NewStorageTempDto();
+//		List<StorageKeyValue> tempList = storageService.findByTime(StorageType.TEMPE.getType(), oid, key, startTime,endTime);
+//		storageTempDto.setList(tempList);
+//		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
+//		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
+//		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
+//		storageTempDto.setName(coldStorageSetEntity.getName());
+//		return storageTempDto;
+//	}
+	
+	//IOS更新完成后删除该方法
+	@Deprecated
 	@RequestMapping("/getPCTempByTime")
 	public Object getPCTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 		Map<String, List<StorageKeyValue>> tempMap = storageService.findTempByTime(StorageType.STORAGE.getType(), oid, key, startTime,endTime);
@@ -70,6 +74,7 @@ public class ColdStorageController {
 		storageTempDto.setSystime(new Date().getTime());
 		return storageTempDto;
 	}
+
 
 	@RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
 	public Object findByUserId(@RequestParam int userId) {

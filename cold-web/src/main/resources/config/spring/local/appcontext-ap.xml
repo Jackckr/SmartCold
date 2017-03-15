@@ -25,9 +25,10 @@
 	<bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
 		<constructor-arg>
 			<!--构造函数的参数传入自己实现的对象 -->
-			<bean class="com.smartcold.manage.cold.util.CodeFactory">
-				<property name="bufferLength" value="1024"></property>
-				<property name="decoderMaxLineLength" value="10240"></property>
+		<!--	<bean class="com.smartcold.manage.cold.util.socket.ByteArrayCodecFactory"> -->
+	 	<bean class="com.smartcold.manage.cold.util.socket.CodeFactory"> 
+			<property name="bufferLength" value="1024"></property> 
+			<property name="decoderMaxLineLength" value="10240"></property> 
 			</bean>
 		</constructor-arg>
 	</bean>
@@ -51,7 +52,7 @@
 					<!--自己实现的编解码器filter -->
  					<entry key="codecFilter" value-ref="codecFilter" /> 
 					<!-- 拦截端口 -->
-				<entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" /> 
+			     	<entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" /> 
 					<!--日志的filter -->
 	                 <!-- <entry key="loggingFilter" value-ref="loggerFilter" /> -->
 					<!--心跳filter -->

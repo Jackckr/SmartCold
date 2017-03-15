@@ -340,7 +340,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	             <a class="text-white omg" style="font-family: cursive;" title="{{vm.choserdc.name}}" ng-bind="vm.choserdc.name"></a>
 	          </li>
             <li class="treeview">
-            <a href="" ng-click="openColdDiv()"><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
+            <a href="" ><i class="icon iconfont" style="color:#ffffff">&#xe68f;</i>
             <span class="menu-title text-white" style="font-size: large">监控</span></a>
             <!-- Optionally, you can add icons to the links -->
             <ul id="mlul1" class="treeview-menu">
@@ -400,7 +400,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href="#/about"><i class="icon iconfont">&#xe7ca;</i><span class="menu-title">库内设施</span><i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
 	             <li onclick="activeLi(this)"><a href="#/otherDevice"><i class="fa fa-circle-o"></i>其他设施</a></li>
-	             <li onclick="activeLi(this)"><a href="" ng-click="openLightDiv()"><i class="fa fa-circle-o"></i>照明</a></li>
+	             <li onclick="activeLi(this)"><a href="#/lightGroup" ><i class="fa fa-circle-o"></i>照明</a></li>
               </ul>
             </li>
             <!-- 库内设施  二级菜单 end-->
@@ -539,84 +539,85 @@ scratch. This page gets rid of all links and provides the needed markup only.
          fixed layout. -->
 </body>
 
-<script src="bower_components/pace/pace.min.js?v=1.5.7"></script>
-<script src="bower_components/angular/angular.min.js?v=1.5.7"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.min.js?v=1.5.7"></script>
+<script src="bower_components/pace/pace.min.js?v=1.5.8"></script>
+<script src="bower_components/angular/angular.min.js?v=1.5.8"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js?v=1.5.8"></script>
 <script
-	src="bower_components/angular-ui-router/release/angular-ui-router.min.js?v=1.5.7"></script>
-<script src="bower_components/angular-cookies/angular-cookies.min.js?v=1.5.7"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js?v=1.5.7"></script>
+	src="bower_components/angular-ui-router/release/angular-ui-router.min.js?v=1.5.8"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js?v=1.5.8"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js?v=1.5.8"></script>
 <script
-	src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?v=1.5.7"></script>
-<script src="bower_components/highlightjs/highlight.pack.js?v=1.5.7"></script>
+	src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?v=1.5.8"></script>
+<script src="bower_components/highlightjs/highlight.pack.js?v=1.5.8"></script>
 <script
-	src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js?v=1.5.7"></script>
-<script src="bower_components/angular-xeditable/dist/js/xeditable.js?v=1.5.7"></script>
+	src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js?v=1.5.8"></script>
+<script src="bower_components/angular-xeditable/dist/js/xeditable.js?v=1.5.8"></script>
 
-<script src="bower_components/angucomplete-alt/angucomplete-alt.js?v=1.5.7"></script>
-<script src="bower_components/at-table/dist/angular-table.min.js?v=1.5.7"></script>
+<script src="bower_components/angucomplete-alt/angucomplete-alt.js?v=1.5.8"></script>
+<script src="bower_components/at-table/dist/angular-table.min.js?v=1.5.8"></script>
 <script type="text/javascript" src="bower_components/angular-ui-select/dist/select.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap-table.js?v=1.5.7"></script>
-<script src="bower_components/angular/bootstrap-table-angular.min.js?v=1.5.7"></script>
-<script src="assets/js/three.min.js?v=1.5.7"></script>
-<script src="assets/js/OrbitControls.js?v=1.5.7"></script>
-<script src="assets/js/stats.min.js?v=1.5.7"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap-table.js?v=1.5.8"></script>
+<script src="bower_components/angular/bootstrap-table-angular.min.js?v=1.5.8"></script>
+<script src="assets/js/three.min.js?v=1.5.8"></script>
+<script src="assets/js/OrbitControls.js?v=1.5.8"></script>
+<script src="assets/js/stats.min.js?v=1.5.8"></script>
 <!-- <script src="assets/js/star.js"></script> -->
 <!-- <script src="assets/js/echarts-all.js"></script> -->
 <!-- <script src="assets/js/echarts.min.js"></script> -->
-<script src="assets/js/highcharts.js?v=1.5.7"></script>
+<script src="assets/js/highcharts.js?v=1.5.8"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=1b7XOzUYmHvOTXlchvZuDzns"></script>
 <!--  -->
 
-<script src="app/js/threeTemplate.js?v=1.5.7"></script>
-<script src="app/js/app.js?v=1.5.7"></script>
-<script src="app/js/controller-base.js?v=1.5.7"></script>
-<script src="app/js/myColdStorage.js?v=1.5.7"></script>
-<script src="app/js/coldStorageDiv.js?v=1.5.7"></script>
-<script src="app/js/coldStorageMap.js?v=1.5.7"></script>
-<script src="app/js/coldStorageMonitor.js?v=1.5.7"></script>
-<script src="app/js/coldStorageDoor.js?v=1.5.7"></script>
-<script src="app/js/coldStorageTemper.js?v=1.5.7"></script>
-<script src="app/js/coldStorageInOutGoods.js?v=1.5.7"></script>
-<script src="app/js/compressorMonitor.js?v=1.5.7"></script>
-<script src="app/js/compressorPressure.js?v=1.5.7"></script>
-<script src="app/js/compressorBlower.js?v=1.5.7"></script>
-<script src="app/js/designStorage.js?v=1.5.7"></script>
-<script src="app/js/report.js?v=1.5.7"></script>
-<script src="app/js/historyData.js?v=1.5.7"></script>
-<script src="app/js/exphistoryData.js?v=1.5.7"></script>
-<script src="app/js/rdcPower.js?v=1.5.7"></script>
-<script src="app/js/warn.js?v=1.5.7"></script>
-<script src="app/js/light.js?v=1.5.7"></script>
-<script src="app/js/power.js?v=1.5.7"></script>
-<script src="app/js/waterCost.js?v=1.5.7"></script>
-<script src="app/js/warncoldAnalysis.js?v=1.5.7"></script>
-<script src="app/js/platformDoor.js?v=1.5.7"></script>
-<script src="app/js/other.js?v=1.5.7"></script>
-<script src="app/js/coolingAnalysis.js?v=1.5.7"></script>
-<script src="app/js/reportsAnalysis.js?v=1.5.7"></script>
-<script src="app/js/analysis.js?v=1.5.7"></script>
-<script src="app/js/alarmLog.js?v=1.5.7"></script>
-<script src="app/js/waterCostGroup.js?v=1.5.7"></script>
-<script src="app/js/monthReport.js?v=1.5.7"></script>
-<script src="app/js/baoyangWeixiuApply.js?v=1.5.7"></script>
-<script src="app/js/baoyangWeixiuRecords.js?v=1.5.7"></script>
-<script src="app/js/cold360Physical.js?v=1.5.7"></script>
+<script src="app/js/threeTemplate.js?v=1.5.8"></script>
+<script src="app/js/app.js?v=1.5.8"></script>
+<script src="app/js/controller-base.js?v=1.5.8"></script>
+<script src="app/js/myColdStorage.js?v=1.5.8"></script>
+<script src="app/js/coldStorageDiv.js?v=1.5.8"></script>
+<script src="app/js/coldStorageMap.js?v=1.5.8"></script>
+<script src="app/js/coldStorageMonitor.js?v=1.5.8"></script>
+<script src="app/js/coldStorageDoor.js?v=1.5.8"></script>
+<script src="app/js/coldStorageTemper.js?v=1.5.8"></script>
+<script src="app/js/coldStorageInOutGoods.js?v=1.5.8"></script>
+<script src="app/js/compressorMonitor.js?v=1.5.8"></script>
+<script src="app/js/compressorPressure.js?v=1.5.8"></script>
+<script src="app/js/compressorBlower.js?v=1.5.8"></script>
+<script src="app/js/designStorage.js?v=1.5.8"></script>
+<script src="app/js/report.js?v=1.5.8"></script>
+<script src="app/js/historyData.js?v=1.5.8"></script>
+<script src="app/js/exphistoryData.js?v=1.5.8"></script>
+<script src="app/js/rdcPower.js?v=1.5.8"></script>
+<script src="app/js/warn.js?v=1.5.8"></script>
+<script src="app/js/light.js?v=1.5.8"></script>
+<script src="app/js/power.js?v=1.5.8"></script>
+<script src="app/js/waterCost.js?v=1.5.8"></script>
+<script src="app/js/warncoldAnalysis.js?v=1.5.8"></script>
+<script src="app/js/platformDoor.js?v=1.5.8"></script>
+<script src="app/js/other.js?v=1.5.8"></script>
+<script src="app/js/coolingAnalysis.js?v=1.5.8"></script>
+<script src="app/js/reportsAnalysis.js?v=1.5.8"></script>
+<script src="app/js/analysis.js?v=1.5.8"></script>
+<script src="app/js/alarmLog.js?v=1.5.8"></script>
+<script src="app/js/waterCostGroup.js?v=1.5.8"></script>
+<script src="app/js/monthReport.js?v=1.5.8"></script>
+<script src="app/js/baoyangWeixiuApply.js?v=1.5.8"></script>
+<script src="app/js/baoyangWeixiuRecords.js?v=1.5.8"></script>
+<script src="app/js/cold360Physical.js?v=1.5.8"></script>
+<script src="app/js/lightGroup.js?v=1.5.8"></script>
 <!--  -->
-<script src="assets/plugins/chartjs/Chart.min.js?v=1.5.7"></script>
-<script src="assets/plugins/fastclick/fastclick.min.js?v=1.5.7"></script>
-<script src="assets/js/demo.js?v=1.5.7"></script>
-<script src="assets/plugins/flot/jquery.flot.min.js?v=1.5.7"></script>
+<script src="assets/plugins/chartjs/Chart.min.js?v=1.5.8"></script>
+<script src="assets/plugins/fastclick/fastclick.min.js?v=1.5.8"></script>
+<script src="assets/js/demo.js?v=1.5.8"></script>
+<script src="assets/plugins/flot/jquery.flot.min.js?v=1.5.8"></script>
 <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
-<script src="assets/plugins/flot/jquery.flot.resize.min.js?v=1.5.7"></script>
+<script src="assets/plugins/flot/jquery.flot.resize.min.js?v=1.5.8"></script>
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-<script src="assets/plugins/flot/jquery.flot.pie.min.js?v=1.5.7"></script>
+<script src="assets/plugins/flot/jquery.flot.pie.min.js?v=1.5.8"></script>
 <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
-<script src="assets/plugins/flot/jquery.flot.categories.min.js?v=1.5.7"></script>
-<script src="assets/plugins/daterangepicker/moment.js?v=1.5.7"></script>
-<script src="assets/plugins/daterangepicker/daterangepicker.js?v=1.5.7"></script>
-<script src="assets/plugins/daterangepicker2/bootstrap-datetimepicker.js?v=1.5.7"></script>
+<script src="assets/plugins/flot/jquery.flot.categories.min.js?v=1.5.8"></script>
+<script src="assets/plugins/daterangepicker/moment.js?v=1.5.8"></script>
+<script src="assets/plugins/daterangepicker/daterangepicker.js?v=1.5.8"></script>
+<script src="assets/plugins/daterangepicker2/bootstrap-datetimepicker.js?v=1.5.8"></script>
 
-<script src="../../assets/js/jQuery.print.js?v=1.5.7"></script>
+<script src="../../assets/js/jQuery.print.js?v=1.5.8"></script>
 </html>

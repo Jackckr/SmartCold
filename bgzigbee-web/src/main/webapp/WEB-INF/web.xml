@@ -58,6 +58,17 @@
 		<url-pattern>/i/*</url-pattern>
 	</servlet-mapping>
 
+
+ <!-- session 过滤  -->
+   <filter> 
+       <filter-name>loginUserSessionFilter</filter-name> 
+       <filter-class>com.smartcold.bgzigbee.manage.interceptor.LoginUserSessionFilter</filter-class> 
+   </filter> 
+   <filter-mapping> 
+       <filter-name>loginUserSessionFilter</filter-name> 
+       <url-pattern>*.html</url-pattern> 
+   </filter-mapping>
+
 	<welcome-file-list>
 	    <welcome-file>index.html</welcome-file>
 	</welcome-file-list>

@@ -32,5 +32,12 @@
 			<mvc:mapping path="/storage/*"/>
 			<bean class="com.smartcold.bgzigbee.manage.interceptor.storageConfigLogInterceptor"/>
 		</mvc:interceptor>
+<!-- 		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/**"/> -->
+<!-- 			<bean class="com.smartcold.bgzigbee.manage.interceptor.LoginInterceptor"/> -->
+<!-- 		</mvc:interceptor> -->
 	</mvc:interceptors>
+	
+	
+	
 </beans>

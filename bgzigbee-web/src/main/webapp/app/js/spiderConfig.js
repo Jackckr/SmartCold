@@ -45,6 +45,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		return keys;
 	}
 
+	$scope.tempKeys = [];
 	$scope.coldStorageKeys = [];
 	$scope.doorKeys = [];
 	$scope.compressorGroupKeys = [];
@@ -66,13 +67,13 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	$scope.vm.choseStorage = {};
 	$scope.vm.choseStorage.mapping = [];
 	$scope.evaporativeSets=null;
-
+	$scope.tempSets=[];
 	
 	$scope.typeChanged = function(item){
 		$scope.keysData = $scope.type2Keys(item.type);
 	}
 	
-	$http.get(coldWebUrl+'storageKeys/getAllKeys').success(function(data,status,config,headers){
+	$http.get('i/storageKeys/getAllKeys').success(function(data,status,config,headers){//coldWebUrl
 	    $scope.allKeys = data;
 		angular.forEach(data,function(item,index){
 			$scope.type2Keys(item.type).push(item);
@@ -156,7 +157,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			}
 			var req = {
 				method:'post',
-				url:"/i/coldStorage/addStorageKey",
+				url:"/i/storageKeys/saveStorageKeys",
 				data:$.param(params),
 				headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 			}
@@ -177,13 +178,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.delStorageKey = function(item){
-		var req = {
-			method:'delete',
-			url:"/i/coldStorage/delStorageKey?id="+item.id
-//			data:'id='+id,
-//			headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
-		}
-		$http(req).then(function(resp){
+		$http({method:'delete',url:"/i/storageKeys/delStorageKey?id="+item.id}).then(function(resp){
 		    if (resp.data) {
                 var i = $scope.keysData.indexOf(item);
                 $scope.keysData.splice(i, 1);
@@ -227,6 +222,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                 return $scope.coldstoragelightKeys;
             case 16:
                 return $scope.circulatingpumpKeys;
+            case 18:
+            	return $scope.tempKeys;
             default:
                 return [];
         }
@@ -336,16 +333,16 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             $scope.mapping2Object($scope.forkliftSets);
         })
 
-        $http.get("/i/spiderConfig/findByRdcid?table=coldstoragelightset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
-            $scope.coldStorageLightSets = resp.data;
-            $scope.mapping2Object($scope.coldStorageLightSets);
-        })
+//        $http.get("/i/spiderConfig/findByRdcid?table=coldstoragelightset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
+//            $scope.coldStorageLightSets = resp.data;
+//            $scope.mapping2Object($scope.coldStorageLightSets);
+//        })
 
         $http.get("/i/spiderConfig/findByRdcid?table=circulatingpumpset&rdcid="+$scope.vm.choseRdc.id).then(function (resp) {
             $scope.circulatingPumpSets = resp.data;
             $scope.mapping2Object($scope.circulatingPumpSets);
         });
-		
+       
 		$scope.getmginf();
         $scope.tag.type = {};
         $scope.tagTypeChanged();
@@ -355,50 +352,75 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 		if (!$scope.vm.choseStorage){
 			return;
 		}
-		$http.get('/i/coldStorageDoor/getcoldStorageDoorByStorageId?coldStorageId=' + $scope.vm.choseStorage.id
-				).success(function(data,status,config,headers){
-					angular.forEach(data,function(item,index){
-						data[index].mapping = JSON.parse(data[index].mapping)
-					})
+		$scope.refTempset();
+		$scope.refLightSets();
+		$http.get('/i/coldStorageDoor/getcoldStorageDoorByStorageId?coldStorageId=' + $scope.vm.choseStorage.id).success(function(data,status,config,headers){
+					angular.forEach(data,function(item,index){data[index].mapping = JSON.parse(data[index].mapping);});
 					$scope.doors = data;
 					$scope.vm.choseDoor = data.length>0?data[0]:[];
                     $scope.tagTypeChanged();
-				})
-		$http.get('/i/spiderConfig/find/wallSet?storageId=' + $scope.vm.choseStorage.id
-				).success(function(data,status,config,headers){
-					angular.forEach(data,function(item,index){
-						data[index].mapping = JSON.parse(data[index].mapping)
-					})
+		});
+		$http.get('/i/spiderConfig/find/wallSet?storageId=' + $scope.vm.choseStorage.id).success(function(data,status,config,headers){
+					angular.forEach(data,function(item,index){data[index].mapping = JSON.parse(data[index].mapping);});
 					$scope.walls = data;
 					$scope.walls.storages = $scope.storages;
 					$scope.vm.choseWall = data.length>0?data[0]:[];
                     $scope.tagTypeChanged();
-				})
-		$http.get('/i/blower/getBlowerByColdStorageId?coldStorageId=' + $scope.vm.choseStorage.id
-				).success(function(data,status,config,headers){
-					angular.forEach(data,function(item,index){
-						data[index].mapping = JSON.parse(data[index].mapping)
-					})
+		});
+		$http.get('/i/blower/getBlowerByColdStorageId?coldStorageId=' + $scope.vm.choseStorage.id).success(function(data,status,config,headers){
+					angular.forEach(data,function(item,index){data[index].mapping = JSON.parse(data[index].mapping);});
 					$scope.blowers = data;
 					$scope.vm.choseBlower = data.length>0?data[0]:[];
-            $scope.tagTypeChanged();
-				})
+                    $scope.tagTypeChanged();
+		});
+		
 		$http.get('/i/blower/findItem').success(function(data,status,config,headers){
 			$scope.blowerItem = data;
 			$scope.vm.choseBlowerItem = data[0];
 			$scope.blowerItemKeys = getDistinctColumnKey($scope.blowerItem);
 			$scope.vm.choseBlowerItemKey = $scope.blowerItemKeys[0];
 			$scope.blowerItem.push($scope.handItem);
-		})
+		});
+//		$http.get('/i/temp/findItem').success(function(data,status,config,headers){
+//			$scope.tempItem = data;
+//			$scope.vm.chosetempItem = data[0];
+//			$scope.tempItemKeys = getDistinctColumnKey($scope.blowerItem);
+//			$scope.vm.choseBlowerItemKey = $scope.blowerItemKeys[0];
+//			$scope.blowerItem.push($scope.handItem);
+//		});
         // find windscreen
         $http.get('/i/spiderConfig/find/windscreenSet?storageId='+$scope.vm.choseStorage.id).then(function (resp) {
             $scope.windScreenSets = resp.data;
             angular.forEach($scope.windScreenSets, function (item, index) {
                 $scope.windScreenSets[index].mapping = JSON.parse($scope.windScreenSets[index].mapping);
-            })
+            });
             $scope.tagTypeChanged();
-        })
+        });
+		
+		
+	
+        
 	}
+	
+	
+	$scope.refTempset=function(){
+		$scope.tempSets=[];
+		 $http.get("/i/spiderConfig/find/findTempSetByStorageId?storageId="+$scope.vm.choseStorage.id).then(function (resp) {
+        	 $scope.tempSets = resp.data;
+        	 angular.forEach($scope.tempSets, function (item,index) {
+                 $scope.tempSets[index].mapping = JSON.parse($scope.tempSets[index].mapping);
+             })
+        });
+	}
+	$scope.refLightSets=function(){
+		$scope.coldStorageLightSets=[];
+		$http.get('/i/lightSet/findByColdStorageId?coldStorageId=' + $scope.vm.choseStorage.id).success(function(data,status,config,headers){
+			//angular.forEach(data,function(item,index){data[index].mapping = JSON.parse(data[index].mapping);});
+			$scope.coldStorageLightSets = data;
+            $scope.mapping2Object($scope.coldStorageLightSets);
+		});
+	}
+	
 
 	$scope.changeCompressGroup = function () {
 		$http.get('i/compressorGroup/findCompressorByGid?groupId='+$scope.vm.choseCompressGroup.id)
@@ -497,6 +519,27 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             $scope.evaporativeWaterSet = {};
         })
     }
+    
+	  /**
+	 * 添加温度对象
+	 */
+    $scope.tempSet = {};
+	$scope.addTempeSet = function () {
+		if( $scope.vm.choseStorage==undefined){alert("请设置冷库对象！");return;}
+		var object = $scope.tempSet;
+		object.rdcId = $scope.vm.choseRdc.id;
+		object.coldStorageId = $scope.vm.choseStorage.id;
+		$http.post("/i/spiderConfig/add/tempset", object).then(function (resp) {
+			if(resp.data.status == -1){
+				alert(resp.data.message);
+			}
+			$scope.refTempset();
+			$scope.tempSet = {};
+		});
+	};
+
+
+
 
     $scope.evaporativeBlowerSet = {}
     $scope.addEvaporativeBlowerSet = function () {
@@ -536,8 +579,9 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         	if(resp.data.status == -1){
 		    	alert(resp.data.message);
 		    }
-            $scope.changeRdc();
-            $scope.coldStorageLightSet = {};
+        	$scope.coldStorageLightSet = {};
+        	$scope.refLightSets();
+//            $scope.changeRdc();
         })
     }
 
@@ -565,7 +609,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
     		}
         obj.rdcid = $scope.vm.choseRdc.id;
         obj.table = table;
-        //debugger;
         $http.post("/i/spiderConfig/add/rdcidAndName", obj).then(function (resp) {
         	if(resp.data.status == -1){
 		    	alert(resp.data.message);
@@ -644,6 +687,8 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
                 return $scope.circulatingPumpSets;
             case 17:
             	return $scope.walls;
+            case 18:
+            	return $scope.tempSets;
             default:
         }
 	}
@@ -664,23 +709,19 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.realSaveStorage = function(){
-		url = '/i/coldStorage/updateMapping?coldStorageId=' + $scope.vm.choseStorage.id 
-		+ '&mapping=' + JSON.stringify($scope.vm.choseStorage.mapping);
-		$http.post(url).success(function(data,status,config,headers){
-			if(data.status == -1){
-				alert(data.message);
-			}
-		})
+		angular.forEach($scope.tempSets,function(item){$scope.realSaveTemp(item);});
+		$scope.refTempset();
+		
 		angular.forEach($scope.doors,function(item){
 			$scope.realSaveDoor(item);
-		})
+		});
 		angular.forEach($scope.blowers,function(item){
 			$scope.realSaveBlower(item);
-		})
+		});
 
         angular.forEach($scope.windScreenSets, function (item) {
             $scope.updateMapping("windscreenset", item);
-        })
+        });
 	}
 
 	$scope.updateMapping = function (table, obj) {
@@ -704,7 +745,14 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 			alert('保存成功');
 		})
 	}
+    
+    
 
+    $scope.realSaveTemp = function(temp){
+    	url = '/i/temp/updateMapping?id=' + temp.id+ '&mapping=' + JSON.stringify(temp.mapping);
+    	$http.post(url).success(function(data,status,config,headers){
+    	})
+    }
 	$scope.realSaveDoor = function(door){
 		url = '/i/coldStorageDoor/updateMapping?id=' + door.id 
 		+ '&mapping=' + JSON.stringify(door.mapping);
@@ -839,7 +887,6 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	
 	$scope.addStorage = function(){
 		$scope.storageEntity.rdcId = $scope.vm.choseRdc.id;
-		debugger;
 		$http.post("/i/coldStorage/insertStorage",$scope.storageEntity).success(function(data,status,config,headers){
 			if(data.status == -1){
 				alert(data.message);
@@ -950,7 +997,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
             oid:$scope.tag.oid.id,
             rdcid:$scope.vm.choseRdc.id
         }
-        $http.post("/i/spiderConfig/add/deviceObjectMapping", obj).then(function (resp) {
+        $http.post("/i/deviceObjectMapping/add", obj).then(function (resp) {
         	if(resp.data.status == -1){
 		    	alert(resp.data.message);
 		    }
@@ -962,7 +1009,7 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 
     $scope.changeOid = function () {
         if ($scope.tag.type && $scope.tag.oid) {
-            $http.get(coldWebUrl+'deviceObjectMapping/findByTypeOid', {
+            $http.get('i/deviceObjectMapping/findByTypeOid', {//coldWebUrl
                 params: {
                     type: $scope.tag.type.type,
                     oid: $scope.tag.oid.id
@@ -973,10 +1020,10 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
         }
     }
 
-    $scope.delDeviceObjectMapping = function (item, arrayData) {
+    $scope.delDeviceObjectMapping = function (item, arrayData) {//修改方法
         var flag = confirm("确认删除？");
         if (flag) {
-            $http.delete("/i/spiderConfig/del/deviceObjectMapping", {
+            $http.delete("/i/deviceObjectMapping/del", {
                 params: {"id": item.id}
             }).then(function (resp) {
             	if(resp.data.status == -1){

@@ -39,7 +39,7 @@ public class UserEntity {
 	}
 
 	public String getPassword() {
-		return password;
+		return null;
 	}
 
 	public void setPassword(String password) {

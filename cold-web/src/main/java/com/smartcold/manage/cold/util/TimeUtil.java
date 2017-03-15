@@ -22,6 +22,43 @@ public class TimeUtil {
 	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
 	public static String  getDateTime(Date date){return	TimeUtil.dateFormat.format(date);}
 	public static String  getFormatDate(Date date){return	TimeUtil.datefm.format(date);}
+	
+	/**
+	 * 获得16进制 Linux时间
+	 * @return
+	 */
+	public static String getHextime(){
+		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
+	}
+	
+	
+
+	/**
+	 * 计算两个日期之间相差的天数
+	 * 
+	 * @param smdate
+	 *            较小的时间
+	 * @param bdate
+	 *            较大的时间
+	 * @return 相差天数
+	 * @throws ParseException
+	 */
+	public static int daysBetween(Date smdate, Date bdate) {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			smdate = dateFormat.parse(dateFormat.format(smdate));
+			bdate = dateFormat.parse(dateFormat.format(bdate));
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(smdate);
+			long time1 = cal.getTimeInMillis();
+			cal.setTime(bdate);
+			long time2 = cal.getTimeInMillis();
+			long between_days = (time2 - time1) / (1000 * 3600 * 24);
+			return Integer.parseInt(String.valueOf(between_days));
+		} catch (Exception e) {
+			return -1;
+		}
+	}
     /**
      * Date转String
      *

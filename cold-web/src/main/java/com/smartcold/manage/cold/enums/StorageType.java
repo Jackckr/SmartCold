@@ -34,8 +34,12 @@ public enum StorageType implements Serializable{
 
 	COLDSTORAGELIGHT(15, "coldstoragelight", "灯组"),
 
-	CIRCULATINGPUMP(16, "circulatingpump", "防冻循环泵");
+	CIRCULATINGPUMP(16, "circulatingpump", "防冻循环泵"),
 
+	WALL(17, "wall", "冷库墙"),
+	
+	TEMPE(18, "temp", "温度");
+	
 
 	private int type;
 	private String table;
