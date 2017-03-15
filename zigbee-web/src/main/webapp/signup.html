@@ -177,11 +177,15 @@ $(function(){
 	    var flag;
 	    var reg=/^[a-zA-Z0-9][a-zA-Z0-9]{5,15}$/;
 	    if ($("#username").val().trim().length>0&&reg.test($("#username").val().trim())==false){
-			 console.log($("#username").val().length);
-			 $("#username").focus();
-			 $("#submit").attr("disabled",true);
-			 $("#username_error").html('用户名不能包含中文和特殊字符，长度不得低于6位~');
-			 return false;
+	    	if($("#username").val().trim().length>24){
+				$("#username_error").html("用户名长度不能超过24位");
+			}else{
+				 console.log($("#username").val().length);
+				 $("#username").focus();
+				 $("#submit").attr("disabled",true);
+				 $("#username_error").html('用户名不能包含中文和特殊字符，长度不得低于6位~');
+			}
+				 return false;
 		}else{
 		    $.post('/i/user/userNameVerify',{
 				username:$('input[name=username]').val().trim()
@@ -192,8 +196,6 @@ $(function(){
 			});
 			if($("#username").val().trim() == ""){
 			    $("#username_error").html( "用户名不能为空");
-			}else if($("#username").val().trim().length>24){
-				$("#username_error").html("用户名长度不能超过24位");
 			}else{
 				$("#username_error").html("");
 			}
@@ -290,7 +292,7 @@ function checkPassword(){
 		$("#password_error").html("密码长度最少六位~");
 		$('#submit').attr("disabled",true);
 		return false;
-	}else if(password.length>=6){
+	}else if(password.length<=16){
 		$("#password_error").html("");
 		if (/^(\d)\1+$/.test(password)){
 			$("#password_error").html("密码太过简单了~").css("color","#f80");
@@ -312,6 +314,9 @@ function checkPassword(){
 				}
 			}
 		}
+	}else{
+		$("#password_error").html("密码长度最多16位~").css("color","#f80");
+		$('#submit').attr("disabled",true);
 	}
 	//return true;
 }

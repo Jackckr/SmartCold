@@ -253,7 +253,7 @@ ul,li {
 }
 .blysj{
 	display: inline-block;
-	padding:8px 10px;
+	padding:3px 20px;
 	line-height: 24px;
 	text-align: center;
 	font-size: 14px;
@@ -269,10 +269,12 @@ ul,li {
 	margin: 0 20px 50px;
 	position: relative;
 }
+
 .remain{
 	display: inline-block;
 	width: 270px;
 	line-height: 120px;
+	height: 120px;
 	text-align: center;
 	font-size: 18px;
 }
@@ -683,4 +685,44 @@ html, body {
 }
 #physicalstep2>.box{
 	border:1px solid #ccc;
+}
+/*风机旋转*/
+.running{
+    -webkit-animation:rotate 1s infinite linear;
+	-moz-animation:rotate 1s infinite linear;
+    -ms-animation:rotate 1s infinite linear;
+	animation:rotate 1s infinite linear;
+	border-radius:50%;
+}
+@-moz-keyframes rotate{
+  0%{
+    -moz-transform:rotate(0deg);
+   }
+   100%{
+     -moz-transform:rotate(360deg);
+   }
+}
+ @-ms-keyframes rotate{
+  0%{
+    -ms-transform:rotate(0deg);
+   }
+   100%{
+     -ms-transform:rotate(360deg);
+   }
+}
+@-webkit-keyframes rotate{
+  0%{
+    -webkit-transform:rotate(0deg);
+   }
+   100%{
+     -webkit-transform:rotate(360deg);
+   }
+}
+@keyframes rotate{
+  0%{
+    transform:rotate(0deg);
+   }
+   100%{
+     transform:rotate(360deg);
+   }
 }

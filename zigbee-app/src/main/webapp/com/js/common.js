@@ -78,19 +78,58 @@ var util = {
 		setCookie:function(a,b,c){localStorage.setItem(a, b);},getCookie:function(a) {return localStorage.getItem(a);},  delCookie:function(a) {localStorage.removeItem(a);}, 
 	    setimg: function(em, imgid, callback) { var oFile = $(em)[0].files[0];var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp"; if (!rFilter.test(oFile.type)) { /*alert("格式错误~请选择格式为" + msg + "的图片~")*/layer.open({content: "格式错误~请选择格式为" + msg + "的图片~",btn: '确定'}); return; }var oImage = document.getElementById(imgid); var oReader = new FileReader(); oReader.onload = function(e) {  oImage.src = e.target.result;};  oReader.readAsDataURL(oFile); if (callback != null) { callback();  } },
 };
-
+/*点击图片隐藏div*/
+function imgBoxHide(){
+	 document.getElementById("baguetteBox-overlay").addEventListener("click", function(e) {
+		 if (e.target.tagName == "IMG") {
+			 $("#baguetteBox-overlay").hide();
+			 return false;
+		 }
+	 }, false);
+}
 
 /**
  * 事件
  */
+/*检查输入的数字是否为》0   2017-3-13*/
+function checkNum(){
+	var numLen = $("input[type='number']");
+	for(var i=0;i<numLen.length;i++){
+		if(numLen[i].value<0){
+			$(".mybtn").attr('disabled',true);
+			numLen[i].style.color = "red";
+			return false
+		}else{
+			numLen[i].style.color = "#555";
+		}
+	}
+}
 window.onload = function(){
 	getmsg();
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
     $("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });//一键回到顶部
+	
+	/*检查输入的数字是否为》0   2017-3-13*/
+	$("input[type='number']").blur(function(){
+   		if($(this).val()<0){
+   			$(this).css("color","red")
+   			$(".mybtn").attr('disabled',true)
+   			layer.open({content: '输入的数字不能为负数哦',btn: '确定'});
+   			return false
+   		}else{
+   			$(this).css("color","#555");
+   			if(checkNum()==false){
+   				layer.open({content: '其他地方的输入数字也不能为负数哦，请检查',btn: '确定'});
+	   		}else{
+	   			$(".mybtn").attr('disabled',false);
+	   			$("input[type='number']").css("color","#555")
+	   			return true;
+	   		}
+   		}
+   	})
 };
-
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
  * 引入 dist/vconsole.min.js 到项目中：

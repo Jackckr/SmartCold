@@ -64,11 +64,11 @@
                 </li>
                 <li>
                     <label for="num"><em>*</em>数量:</label>
-                    <input type="text" id="num" placeholder="吨" ng-model="sqm"/>
+                    <input type="number" id="num" placeholder="吨" ng-model="sqm"/>
                 </li>
                 <li>
                     <label for="price">单价:</label>
-                    <input type="text" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
+                    <input type="number" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
                 </li>
                 <li>
                 	<label for="time"><em>*</em>信息有效期:</label>
@@ -112,7 +112,7 @@
 				</li>
             </ul>
         </form>
-        <button class="btn btn-primary" ng-click="goodSubmit()"  style="margin-left: 180px;">确认修改</button>
+        <button class="btn btn-primary mybtn" ng-click="goodSubmit()"  style="margin-left: 180px;">确认修改</button>
 </div>
 </div>
 </div>

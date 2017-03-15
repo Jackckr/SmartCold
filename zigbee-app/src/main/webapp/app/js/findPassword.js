@@ -54,13 +54,16 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 //	}
    };
    $scope.checkData=function (){ 
-  	      var password = $("#txt_password").val(); 
-          var repsword = $("#txt_repsword").val(); 
+  	      var password = $("#txt_password").val().trim(); 
+          var repsword = $("#txt_repsword").val().trim(); 
            if (password.length!=0 && repsword.length!=0) {
-//        	   if(password.length<6){
-//        		   $("#mention2").html("密码长度不能小于6位！");
-//        		    return false;
-//        	   }
+        	   if(password.length<6){
+        		   $("#mention2").html("密码长度不能小于6位！");
+        		   return false;
+        	   }else if(password.length>16){
+        		   $("#mention2").html("密码长度最多16位！");
+       		       return false;
+        	   }
            	   if(password != repsword) {
 		         $("#mention2").html("两次密码输入不一致，请重新输入");
 		         return false;
@@ -69,11 +72,11 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 		    		$scope.savedata();
 		       }
            } else{
-        	 if(password.length==0){
+        	/* if(password.length==0){
         		 $("#txt_password").focus();
         	 }else if(repsword.length==0){
         		 $("#txt_repsword").focus();
-        	 }
+        	 }*/
            	  $("#mention2").html("密码不能为空哦，请输入密码~");
            }
   	  };
@@ -81,7 +84,7 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
         $.ajax({
         	type: 'POST',
-        	data: {key:'user_findwpd',username:$scope.telephone,toke:$scope.verrcode,password:$("#txt_repsword").val()},
+        	data: {key:'user_findwpd',username:$scope.telephone,toke:$scope.verrcode,password:$("#txt_repsword").val().trim()},
             url: ER.root+"/i/user/upPwdByTelephone",
             complete : function(e){$(me).text("确定"); $(me).delay(500).data('isLoading',false);},
             success: function(data){

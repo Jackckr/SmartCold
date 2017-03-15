@@ -24,9 +24,6 @@
               }
         });
 	};
-	$scope.initevg=function(){ 
-		$("#she_imglist li a").imgbox({'speedIn': 0,'speedOut'	: 0,'alignment'		: 'center','overlayShow'	: true,'allowMultiple'	: false});//图片
-	};
 	$scope.getVerCode=function(){
 		var length = ($scope.telephone+'').length; 
 		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
@@ -91,8 +88,7 @@
 	    	
     } ; 
 	$scope.initdata();
-	$scope.initevg();
-	$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {/*alert("33");*/ baguetteBox.run('.baguetteBoxOne', {buttons:true});});
+	$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) { baguetteBox.run('.baguetteBoxOne', {buttons:true});imgBoxHide()});
 	$('body').show();
 });
  app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});

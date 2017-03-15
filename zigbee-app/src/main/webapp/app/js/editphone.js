@@ -12,7 +12,7 @@
    		});
    		$('.edit2').click(function(){
    			countdown=0;
-   			if ($("#code1").val().length != 0) {   				
+   			if ($("#code1").val().trim().length != 0) {   				
 	   			$(".show1").hide();
 	   			$(".show2").show();
    			} else{
@@ -34,7 +34,7 @@
 	$scope.getVerCode2=function(){
 		setTime(document.getElementById("but_vercode2"));
 		//alert(11)
-		$scope.getMobileCode('user_upphone',$("#telNum").val(),'#but_vercode2');
+		$scope.getMobileCode('user_upphone',$("#telNum").val().trim(),'#but_vercode2');
 	};
 	
 	$scope.chphone=function(telephone){
@@ -100,7 +100,7 @@
 		var userName= $scope.userinfo.username;
 		var ct=$scope.chphone(userName);
 		if(ct){
-			data+="&username="+$("#telNum").val();
+			data+="&username="+$("#telNum").val().trim();
 		}
 		$.ajax({ url: ER.root+"/i/user/updateUser",type: 'POST',data: data,success: function(data) { 
 			if(data){

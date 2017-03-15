@@ -1,7 +1,7 @@
 checkLogin();
 angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldStorageAdd', function($scope,$http, Upload){
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
-	$scope.phoneNum = window.user.telephone;
+	$scope.phoneNum = window.user.telephone.trim();
 	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 0,name: "无"}];
     // 获取省列表
 	$.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:6}});
@@ -142,7 +142,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         if ($scope.temperType == undefined || $scope.temperType == '') {
             flag = false;
         }
-        if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
+        if ($scope.phoneNum.trim() == undefined || $scope.phoneNum.trim() == '') {
             flag = false;
         }
         return flag;
@@ -186,7 +186,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 coldTruck2 : $scope.coldTruck2,
                 coldTruck3 : $scope.coldTruck3,
                 coldTruck4 : $scope.coldTruck4,
-                phoneNum : $scope.phoneNum,
+                phoneNum : $scope.phoneNum.trim(),
                 remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
                // tonnage : $scope.tonnage,
                 structure: $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),

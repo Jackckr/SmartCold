@@ -37,7 +37,7 @@
       	$("#txt_nickname").val(window.user.nickname);
    		$('.deleteEdit').click(function(){$(".input input").val("").focus();});
    		$(".zoom").click(function(){
-   		  var nickname=  $("#txt_nickname").val();
+   		  var nickname=  $("#txt_nickname").val().trim();
    			if (nickname&&nickname!="") {
 		        var formdata = new FormData();
 		        formdata.append("id", window.user.id);

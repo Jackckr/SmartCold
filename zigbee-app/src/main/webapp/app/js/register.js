@@ -53,7 +53,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 			$("#mention1").html("密码长度最少六位");
 			$('#app_but1').attr("disabled",true);
 			return false;
-		}else if(password.length>=6){
+		}else if(password.length<=16){
 			$("#mention1").html("");
 			if (/^(\d)\1+$/.test(password)){
 				$("#mention1").html("密码太过简单了~").css("color","#f80");
@@ -75,6 +75,9 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 					}
 				}
 			}
+		}else if(password.length>16){
+			$("#mention1").html("密码长度最多16位~").css("color","#f80");
+			$('#app_but1').attr("disabled",true);
 		}else{
 			$("#mention2").html("输入有误，请重新输入");
 		}

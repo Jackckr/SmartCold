@@ -97,7 +97,7 @@
 				<div class="infoList clearfix infoDate ">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>{{appmode[dataType].lab[0][0]}}:</div>
 					<div class="pull-left">
-						<input type="text" placeholder="" class="form-control" name="sqm" ><span class="count" >{{appmode[dataType].lab[0][1]}} </span>
+						<input type="number" placeholder="" class="form-control" name="sqm" ><span class="count" >{{appmode[dataType].lab[0][1]}} </span>
                         <span class="mode_3 shar_none">
                              <span class="sp_radio"><input  name="unit" type="radio" value="元/天·平方米" checked="checked"  ng-model="unit" >平方米</span>
                              <span class="sp_radio"><input name="unit" type="radio" value="元/天·吨"    ng-model="unit" >吨</span>
@@ -108,7 +108,7 @@
 				<div class="infoList clearfix infoDate ">
 					<div class="pull-left col-sm-4 control-label ">{{appmode[dataType].lab[1][0]}}:</div>
 					<div class="pull-left">
-						<input type="text"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{unit}}</span><!-- {{appmode[dataType].lab[1][1]}} -->
+						<input type="number"  class="form-control" name="unitPrice"  placeholder="面议"><span class="count">{{unit}}</span><!-- {{appmode[dataType].lab[1][1]}} -->
 					</div>
 				</div>
 			
@@ -124,7 +124,7 @@
 				<div class="infoList clearfix">
 					<div class="pull-left col-sm-4 control-label "><em>*</em>联系电话:</div>
 					<div class="pull-left">
-						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone}}">
+						<input type="text" placeholder="" class="form-control" name="telephone" value="{{user.telephone.trim()}}">
 					</div>
 				</div>
 				<div class="infoList clearfix">
@@ -145,6 +145,6 @@
 					     <a href="javascript:;" class="file">选择文件<input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files" ></a>
 					</div>
 				</div>
-				<button id="but_submit" class="btn btn-primary" ng-click="submit()">提交</button>
+				<button id="but_submit" class="btn btn-primary mybtn" ng-click="submit()">提交</button>
 			</form>
     	</div>
