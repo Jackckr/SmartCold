@@ -245,27 +245,27 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
             	$state.go('coldStorageDiv',{'storageID': storageID});
             }*/
             $rootScope.openColdDiv = function (){
-                console.log("openColdDiv: "+$rootScope.rdcId);
+                //console.log("openColdDiv: "+$rootScope.rdcId);
                 $state.go('coldStorageDiv',{'storageID': $rootScope.rdcId});
             }
             $rootScope.openLightDiv = function (){
-                console.log("openLightDiv: "+$rootScope.rdcId);
+                //console.log("openLightDiv: "+$rootScope.rdcId);
                 $state.go('light',{'storageID': $rootScope.rdcId});
             }
             $rootScope.openWarn = function (){
-                console.log("openWarn: "+$rootScope.rdcId);
+               // console.log("openWarn: "+$rootScope.rdcId);
                 $state.go('warn',{'rdcId': $rootScope.rdcId});
             }
             $rootScope.toRdcPower = function () {
-                console.log($rootScope.rdcId);
+               // console.log($rootScope.rdcId);
                 $state.go('rdcPower', {'rdcId': $rootScope.rdcId});
             };
             $rootScope.toMyStorageTemper = function (storageID) {
-                console.log(storageID);
+               // console.log(storageID);
                 $state.go('coldStorageTemper', {'storageID': storageID});
             };
             $rootScope.toMyStorageDoor = function (storageID) {
-                console.log(storageID);
+               // console.log(storageID);
                 $state.go('coldStorageDoor', {'storageID': storageID});
             };
             $rootScope.toMap = function () {

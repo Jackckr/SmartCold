@@ -86,7 +86,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
         $scope.viewStorage(rdc.id);
     }
     $scope.goTempture = function () {
-        window.location.href = 'monitorTemperature.html?storageID=' + $scope.rdcId;
+        window.location.href = 'cold360.html?storageID=' + $scope.rdcId;
     }
     $scope.goFacility = function () {
         window.location.href = 'monitorFacility.html?storageID=' + $scope.rdcId;

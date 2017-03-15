@@ -615,7 +615,8 @@ b{
 .remain{
 	display: inline-block;
 	width: 7.2rem;
-	line-height: 3.5rem;
+	height: 3.5rem;
+	line-height: 3.9rem;
 	text-align: left;
 	text-indent:1.8rem;
 	font-size: .6rem;
@@ -714,3 +715,28 @@ b{
 .myNote{
 	min-width: 6rem;
 }
+
+/**
+*
+* 针对权限设置的特殊样式  
+* 2017-3-15
+* jhy
+*
+*/
+.role_limit{
+	pointer-events:none!important;
+	background-color: grey!important;
+	color: #ccc!important;
+}
+.role_limit>i{
+	color: #ccc!important;
+}
+
+
+
+
+
+
+
+
+
