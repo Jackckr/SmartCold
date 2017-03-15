@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.TempSetMapper">
+	<select id="findTempSetByStorageId" parameterType="Integer" resultType="com.smartcold.bgzigbee.manage.entity.TempSetEntity">
+		SELECT * FROM `tempset` 
+		<if test="storageId!=null and storageId!=0">
+		  WHERE `coldStorageId` = #{storageId}
+		</if>
+	</select>
+	
+	<update id="upTempMappingById" parameterType="map">
+		UPDATE `tempset` SET mapping=#{mapping} WHERE `id` = #{id}
+	</update>
+	
+	<update id="upTempSetById">
+		UPDATE `tempset` SET`name` = #{name} WHERE id=#{id}
+	</update>
+
+	<insert id="addTempSet" parameterType="com.smartcold.bgzigbee.manage.entity.TempSetEntity">
+	   INSERT INTO `tempset` (`rdcid`,`coldstorageid`,`name`)VALUES(#{rdcId},#{coldStorageId},#{name});
+	</insert>
+
+    <delete id="delTempsetById" parameterType="map">
+      DELETE FROM `tempset`  WHERE `id` = #{id}
+    </delete>
+    
+    
+    <select id="getVTempsetMapper" parameterType="Integer" resultType="com.smartcold.bgzigbee.manage.entity.TempSetEntity">
+        SELECT * from tempset where mapping!='' and mapping!='{}' ;
+	</select>
+    <select id="getValidColdMapper" parameterType="Integer" resultType="com.smartcold.bgzigbee.manage.entity.ColdStorageSetEntity">
+        SELECT * from coldstorageset where mapping!='' and mapping!='{}' ;
+	</select>
+    <update id="upcoldstoragesetMappingById" parameterType="map">
+		UPDATE `coldstorageset` SET mapping=#{mapping} WHERE `id` = #{id}
+	</update>
+    
+</mapper>

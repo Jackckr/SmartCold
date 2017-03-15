@@ -1,0 +1,17 @@
+<div class="clearfix mainHeight">
+  <div class="" style="min-height:100%;padding: 20px;">
+  		<div class="binglian "  ng-repeat="(key,value) in  mystorages" >
+  			<p><span class="blysj "  style="background-color: {{colors[$index]}};color: white;">{{value.name}}</span></p>
+  			<div class="row">
+  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center" ng-repeat="obj in  value.lightGroups" >
+  					<p><b>{{obj.name}}</b></p>
+  					<img alt="{{obj.isRunning==1?'开':'关'}}" ng-src="img/com/bulb_{{obj.isRunning}}.png" height="64">
+  				</div>
+  			</div>
+  			
+  		</div>
+  		<div ng-show='isshow'>
+  		  <div class="alert alert-info text-center">您还没有灯组信息哦</div>
+  		</div>
+  </div> 
+</div>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>洲斯设备数据接口测试</title>
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <link rel="shortcut icon" href="assets/img/favicon.ico" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <script type="text/javascript" src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+  <body>
+   <div ng-app="app"  ng-controller="zsdata">
+	<table id="loding" class="table table-bordered">
+		<caption  >
+		  <div>
+		    <span id="sp_cutttime" >{{cutttime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+		    <span > <span>离下次刷新时间还有：</span> <em id="em_diftime" style="color: red">1</em>秒</span>
+		  </div>
+		</caption>
+		<thead>
+			<tr>
+				<th>devid</th>
+				<th>apid</th>
+				<th>温度  </th>
+				<th>AU</th>
+				<th>BU</th>
+				<th>CU</th>
+				<th>AI</th>
+				<th>BI</th>
+				<th>CI</th>
+				<th>PWC</th>
+				<th>门（1开：0关）            </th>
+				<th>电池电压                           </th>
+				<th>DEV信号强度    </th>
+				<th>AP信号强度 </th>
+				<th>数据采集时间 </th>
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="obj in dataList">
+				<td>{{obj.devid}}</td>
+				<td>{{obj.datas.apid}}</td>
+				<td>{{obj.datas.Temp}}</td>
+				<td>{{obj.datas.AU}}</td>
+				<td>{{obj.datas.BU}}</td>
+				<td>{{obj.datas.CU}}</td>
+				<td>{{obj.datas.AI}}</td>
+				<td>{{obj.datas.BI}}</td>
+				<td>{{obj.datas.CI}}</td>
+				<td>{{obj.datas.PWC}}</td>
+				<td>{{obj.datas.Switch}}</td>
+				<td>{{obj.datas.DU}}</td>
+				<td>{{obj.datas.BSI}}</td>
+				<td>{{obj.datas.MSI}}</td>
+				<td>{{obj.datas.time*1000|date:'yyyy-MM-dd hh:MM:ss'}}</td>
+			</tr>
+		</tbody>
+	</table>
+   
+   </div>
+	  <script type="text/javascript">
+	  Date.prototype.Format = function (fmt) { //author: meizz 
+		    var o = {
+		        "M+": this.getMonth() + 1, //月份 
+		        "d+": this.getDate(), //日 
+		        "HH+": this.getHours(), //小时 
+		        "m+": this.getMinutes(), //分 
+		        "s+": this.getSeconds(), //秒 
+		        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+		        "S": this.getMilliseconds() //毫秒 
+		    };
+		    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		    for (var k in o)
+		    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		    return fmt;
+		};
+	    var app = angular.module('app', []); app.controller('zsdata', function($http, $location,$scope) {
+	 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+	 	
+	 	 $scope.initdata=function(){
+	 		 $("#loding").hide();
+	 		 $http.get("/i/history/getSensorhistData").success(function(data) {  
+	 				 $("#loding").show();
+	 			 if(data!=null&&data!=""){
+	 				 $scope.dataList=data.reverse(); 
+	 			 }
+	 		 }); 
+	 	 };
+	 	 
+	 	 $scope.initdata();
+	 	 $scope.cutttime=new Date();
+	 	 var i=3,cutimedm= $("#sp_cutttime"),diftim= $("#em_diftime");
+	 	 
+	 	 setInterval(function () {
+	 		 if(i>0){ i--;}else{$scope.initdata(); i=3; }
+	 		 cutimedm.html( new Date().Format("yyyy-MM-dd HH:mm:ss"));
+	 		 diftim.html(i);
+	 		 }, 1000);
+	  });
+	  </script>
+   </body>
+</html>
