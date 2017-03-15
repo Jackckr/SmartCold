@@ -2,9 +2,9 @@ coldWeb.controller('baoyangWeixiuApply', function ($rootScope, $scope, $state, $
 	function checkInput() {
 		var flag = true;
 		// 检查必须填写项
-		if ($scope.unitname == undefined || $scope.unitname == '') {
-			flag = false;
-		}
+		if ($scope.unitname == undefined || $scope.unitname == '') {flag = false;}
+		if ($scope.reason == undefined || $scope.reason == '') {flag = false;}
+		if ($scope.ordertime == undefined || $scope.ordertime == '') {flag = false;}
 		return flag;
 	}
 	
@@ -32,7 +32,7 @@ coldWeb.controller('baoyangWeixiuApply', function ($rootScope, $scope, $state, $
 	        });
 			
 		} else {
-			alert("机组名称不允许为空!");
+			alert("您有未填项哦!");
 		}
 	};
 

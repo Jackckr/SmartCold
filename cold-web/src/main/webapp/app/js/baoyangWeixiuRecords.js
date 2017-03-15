@@ -92,37 +92,37 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     
     $scope.submitfix = function(){
     	$scope.updateMaintenance0.audit = 1;
-    	if(new Date($scope.updateMaintenance0.fixtime)>=new Date($scope.updateMaintenance0.ordertime)){
-    		if($scope.updateMaintenance0.detail=='undefined')
-    			$scope.updateMaintenance0.detail = '';
-    		if($scope.updateMaintenance0.note=='undefined')
-    			$scope.updateMaintenance0.note = '';
-    	$http({
-    		'method':'POST',	
-    		'url':'/i/maintenance/updateMaintenance',
-    		'params':{
-    			"id":$scope.updateMaintenance0.id,
-    			 "detail"  :encodeURI($scope.updateMaintenance0.detail,"UTF-8"),
-    			   "fixtime" :$scope.updateMaintenance0.fixtime,
-    			   "note" :encodeURI($scope.updateMaintenance0.note,"UTF-8"),
-    			   "audit":1
-    		}
-    	}).success(function (data) {
-        	if(data){
-        		alert("提交成功");
-        		$('#myApply').modal('hide')
-        		//window.location.reload();
-        		 $scope.getMaintenances0();
-                 $scope.getMaintenances1();
-        	}
-        	else{
-        		alert("提交失败");
-        	}
-        });
-    	}
-    	else{
-    		alert("维修时间不能早于预约时间");
-    	}
+    	if($scope.updateMaintenance0.detail==undefined || $scope.updateMaintenance0.detail == ''){
+			alert("请填写维修详情");
+            return;
+		}else{
+			if(new Date($scope.updateMaintenance0.fixtime)>=new Date($scope.updateMaintenance0.ordertime)){
+				$http({
+					'method':'POST',	
+					'url':'/i/maintenance/updateMaintenance',
+					'params':{
+						"id":$scope.updateMaintenance0.id,
+						"detail"  :encodeURI($scope.updateMaintenance0.detail,"UTF-8"),
+						"fixtime" :$scope.updateMaintenance0.fixtime,
+						"note" :encodeURI($scope.updateMaintenance0.note,"UTF-8"),
+						"audit":1
+					}
+				}).success(function (data) {
+					if(data){
+						alert("提交成功");
+						$('#myApply').modal('hide')
+						//window.location.reload();
+						$scope.getMaintenances0();
+						$scope.getMaintenances1();
+					}
+					else{
+						alert("提交失败");
+					}
+				});
+			}else{
+				alert("维修时间不能早于预约时间");
+			}
+		}
     };
   
     $scope.change = function(id,appraise){

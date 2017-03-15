@@ -122,9 +122,9 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
     function checkInput() {
         var flag = true;
         // 检查必须填写项
-        if ($scope.unitname == undefined || $scope.unitname == '') {
-            flag = false;
-        }
+        if ($scope.unitname == undefined || $scope.unitname == '') {flag = false;}
+		if ($scope.reason == undefined || $scope.reason == '') {flag = false;}
+		if ($scope.ordertime == undefined || $scope.ordertime == '') {flag = false;}
         return flag;
     }
 
@@ -154,7 +154,7 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
             });
 
         } else {
-            alert("机组名称不允许为空!");
+            alert("您有未填项哦~");
         }
     };
 
@@ -284,9 +284,9 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
                 '</div>'
                 , btn: ['确认', '取消']
                 , yes: function (index) {
-                    var detail = $('#detail').val();
+                    var detail = $('#detail').val().trim();
                     var fixtime = $('#fixtime').val();
-                    var note = $('#note').val();
+                    var note = $('#note').val().trim();
                     if (detail === '') {
                         alert("请填写维修详情");
                         return;
