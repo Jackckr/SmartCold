@@ -121,7 +121,7 @@
                 </li>
                 <li>
                     <label for="phone">联系电话<em>*</em></label>
-                    <input type="text"  ng-model="phoneNum" placeholder="请输入联系方式"/>
+                    <input type="number"  ng-model="phoneNum" placeholder="请输入联系方式"/>
                 </li>
                 <li>
                     <label for="note">备注</label>
@@ -129,7 +129,8 @@
                 </li>
                 
             </ul>
-            <ul class="houseinfo black">
+<!--             <ul class="houseinfo black"> -->
+            <ul class="houseinfo">
               <!--   <li>
                     <label for="kg">吨位</label>                    
                     <div class="mySelect">
@@ -173,7 +174,7 @@
                 <li>
                     <label for="cleanarea">理货区面积</label>                    
                     <div class="mySelect">
-                        <input type="text" ng-model="lihuoArea" placeholder="面积">
+                        <input type="number" ng-model="lihuoArea" placeholder="面积" style="font-size: 0.75rem;text-indent: 1em;">
                     </div>
 <!--                     <i class="iconfont fr moreinfo">&#xe60d;</i> -->
                 </li>

@@ -32,8 +32,8 @@
 		<!-- header end-->
 		<section>
 			<div class="inputBd">
-	    		<input type="tel" id="telNum" name="telephone" placeholder="请输入注册时的手机号" ng-model="telephone" ng-change="vertelephone();"/>
-				<button id="but_vercode" class="idcode getNum fr gray " draggable="false" ng-click="getVerCode();" disabled="disabled" style="background-color: #cccccc;color: white !important;">获取验证码</button>
+	    		<input type="tel" id="telNum" name="telephone" placeholder="请输入正确的手机号" ng-model="telephone" ng-change="vertelephone();"/>
+				<button id="but_vercode" class="idcode getNum fr gray "  ng-click="getVerCode();" disabled="disabled" style="background-color: #cccccc;color: white !important;">获取验证码</button>
 	    	</div>
 	    	<div class="inputBd">
 	    		<input type="text" id="code2" placeholder="请输入手机验证码" ng-model="verrcode"  ng-change="veteleCode()" />

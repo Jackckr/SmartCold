@@ -3,7 +3,8 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
 	$scope.vsphone = function(telephone) {// 验证手机号码
 		var length = (telephone + '').length;
-		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+//		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+		var mobile = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;
 		return telephone && length == 11&& mobile.test(telephone);
 	};
 	$scope.vertelephone = function() {// 验证手机号码
@@ -19,7 +20,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 		}else{
 			 victdata.victtl=false;
 			 $("#mention1").html("请输入正确手机号码~");
-			 $("#but_vercode").attr("disabled", false).css("background-color",  "#cccccc");
+			 $("#but_vercode").attr("disabled", true).css("background-color",  "#cccccc");
 		}
 	};
 	

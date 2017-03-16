@@ -21,10 +21,13 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 	    
 	    function checkCommentSubmit(){
-	        return $scope.commentinfo!= undefined && $scope.commentinfo != '' ; // 检查必须填写项
+	        return $scope.commentinfo!= undefined && $scope.commentinfo != ''; // 检查必须填写项
 	    }
 	    
 	    $scope.submit = function(){
+	    	if(window.grade == undefined || window.locationGrade == undefined || window.facilityGrade == undefined || window.serviceGrade == undefined || window.sanitaryGrade == undefined){
+	    		layer.open({content: '评分最低分为1分哦　*^_^*',btn: '确定'});return;
+	    	}
 	    	if(checkCommentSubmit()){
 	    		layer.open({
 	        		type: 2
@@ -68,12 +71,12 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        }, function (resp) {
 	            console.log('Error status: ' + resp.status);
 	        }, function (evt) {
-	            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	            console.log('progress: ' + progressPercentage + '% ' + evt.name);
+	            //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+	            //console.log('progress: ' + progressPercentage + '% ' + evt.name);
 	        });
 		}
 	    	else{
-	    		layer.open({content: '请填写评论信息',btn: '确定'});return;
+	    		layer.open({content: '评论内容不能为空或者特殊字符~',btn: '确定'});return;
 	    	}
 	  };
 });

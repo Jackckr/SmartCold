@@ -200,7 +200,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 						codeLave1:$scope.codeLave11,
 						codeLave2:$scope.codeLave22,
 						codeLave3:$scope.codeLave33,
-						unitPrice : $scope.unitPrice.trim(),
+						unitPrice : $scope.unitPrice,
 			            stprovinceID:$scope.stprovinceID,
 					    stcityID:$scope.stcityID,
 					    toprovinceID:$scope.toprovinceID,
