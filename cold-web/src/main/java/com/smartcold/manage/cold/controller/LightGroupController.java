@@ -48,7 +48,7 @@ public class LightGroupController {
 		if(SetUtil.isnotNullList(lightList)){
 			List<StorageKeyValue> infos=null;
 			for (ItemObject obj : lightList) {
-				infos = storageService.findByNums(StorageType.COLDSTORAGELIGHT.getType(), obj.getId(),"Status", 1);//
+				infos = storageService.findByNums(StorageType.COLDSTORAGELIGHT.getType(), obj.getId(),"LS", 1);//
 				obj.setIsRunning( infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
 				allData.add(obj);
 			}

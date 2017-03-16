@@ -22,7 +22,7 @@
 		select * from ${table}
 		where `key`=#{key} and oid=#{oid}
 		<if test="nums==1">
-		  and   addtime > DATE_SUB(NOW(),INTERVAL 5 MINUTE)
+		  and   addtime > DATE_SUB(NOW(),INTERVAL 5 MINUTE) 
 		</if>
         order by `addtime` desc
         limit #{nums}

@@ -227,7 +227,7 @@ public class HistoryController extends BaseController {
 			SXSSFWorkbook   wb = new SXSSFWorkbook(200);////内存中保留 500 条数据，以免内存溢出，其余写入 硬盘 -- workbook1,100 
 			CellStyle cellStyleTitle = ExportExcelUtil.getHSSFCellStyle(wb, null);
 			CellStyle cellStyle = ExportExcelUtil.getbodyHSSFCellStyle(wb, null);
-			if (shelName.length > 1) {
+			if (shelName.length >= 1) {
 				List<StorageKeyValue> list = new ArrayList<StorageKeyValue>();
 				List<StorageKeyValue> newlist = new ArrayList<StorageKeyValue>();
 				for (int i = 0; i < oids.length; i++) {

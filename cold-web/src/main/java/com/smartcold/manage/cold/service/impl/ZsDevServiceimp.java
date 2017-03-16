@@ -43,7 +43,7 @@ public class ZsDevServiceimp implements ZsDevService {
 	    private DeviceObjectMappingMapper devMapper;
 	    @Autowired
 	    private StorageDataCollectionMapper storageDataCollectionDao;
-	    
+	    private static int errCount=0;
 	    public static String data=null;
 //	    private final static String ZSURL="http://139.196.240.174:9007/v1/channels/datapoints";
 	    private final static String ZSURL="http://10.46.17.235:9007/v1/channels/datapoints";//
@@ -57,9 +57,16 @@ public class ZsDevServiceimp implements ZsDevService {
 		 */
 	    @Scheduled(cron="0/30 * * * * ?")
 		public void checkData() {
-	    	this.saveData();
+	    	if(errCount<3){
+	    		this.saveData();
+	    	}
 		}
 	    
+	    
+		@Scheduled(cron = "0 0/30 * * * ?")
+		public void checkStatus() {
+			errCount=0;
+		}
 	    /**
 	     * 数据读取
 	     */
@@ -107,6 +114,7 @@ public class ZsDevServiceimp implements ZsDevService {
 	                result += line;
 	            }
 	        } catch (Exception e) {
+	        	errCount++;
 	            System.out.println("发送GET请求出现异常！" + e);
 	        } finally { // 使用finally块来关闭输入流
 	            try {

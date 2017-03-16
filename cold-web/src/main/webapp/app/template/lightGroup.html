@@ -1,6 +1,6 @@
 <div class="clearfix mainHeight">
   <div class="" style="min-height:100%;padding: 20px;">
-  		<div class="binglian "  ng-repeat="(key,value) in  mystorages" >
+  		<div ng-show='coldlightGroups' class="binglian "  ng-repeat="(key,value) in  coldlightGroups" >
   			<p><span class="blysj "  style="background-color: {{colors[$index]}};color: white;">{{value.name}}</span></p>
   			<div class="row">
   				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center" ng-repeat="obj in  value.lightGroups" >
@@ -10,7 +10,7 @@
   			</div>
   			
   		</div>
-  		<div ng-show='isshow'>
+  		<div ng-show='!coldlightGroups'>
   		  <div class="alert alert-info text-center">您还没有灯组信息哦</div>
   		</div>
   </div> 

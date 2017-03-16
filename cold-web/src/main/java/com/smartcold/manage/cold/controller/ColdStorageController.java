@@ -47,9 +47,9 @@ public class ColdStorageController {
 		return storageTempDto;
 	}
 	
-//    @Deprecated
-//	@RequestMapping("/getTempByTime")
-//	public Object getTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+    @Deprecated
+	@RequestMapping("/getTempByTime")
+	public Object getTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 //		NewStorageTempDto storageTempDto = new NewStorageTempDto();
 //		List<StorageKeyValue> tempList = storageService.findByTime(StorageType.TEMPE.getType(), oid, key, startTime,endTime);
 //		storageTempDto.setList(tempList);
@@ -58,13 +58,22 @@ public class ColdStorageController {
 //		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
 //		storageTempDto.setName(coldStorageSetEntity.getName());
 //		return storageTempDto;
-//	}
+    	Map<String, List<StorageKeyValue>> tempMap = storageService.findTempByTime(StorageType.TEMPE.getType(), oid, key, startTime,endTime);
+		NewStorageTempDto storageTempDto = new NewStorageTempDto();
+		storageTempDto.setTempMap(tempMap);
+		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
+		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
+		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
+		storageTempDto.setName(coldStorageSetEntity.getName());
+		storageTempDto.setSystime(new Date().getTime());
+		return storageTempDto;
+	}
 	
 	//IOS更新完成后删除该方法
 	@Deprecated
 	@RequestMapping("/getPCTempByTime")
 	public Object getPCTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-		Map<String, List<StorageKeyValue>> tempMap = storageService.findTempByTime(StorageType.STORAGE.getType(), oid, key, startTime,endTime);
+		Map<String, List<StorageKeyValue>> tempMap = storageService.findTempByTime(StorageType.TEMPE.getType(), oid, key, startTime,endTime);
 		NewStorageTempDto storageTempDto = new NewStorageTempDto();
 		storageTempDto.setTempMap(tempMap);
 		ColdStorageSetEntity coldStorageSetEntity = coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
