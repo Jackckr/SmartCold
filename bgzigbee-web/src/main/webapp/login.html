@@ -129,9 +129,10 @@
 								},
 								success : function(data) {
 									if (data.success) {
-	                                    document.cookie = data.message;window.location.reload();
+	                                    document.cookie = data.message;
 // 										if (window.location.hash != "") {backUrl = window.location.hash;} else {backUrl = "#/home";	}
-// 										window.location.href = "http://"+ window.location.host + "/"+ backUrl;
+										window.location.href = "http://"+ window.location.host + "#/webSiteVisits";
+	                                    window.location.reload();
 // 										window.Event.returnValue = false;
 									} else {
 									    $("#mention")[0].hidden = false;

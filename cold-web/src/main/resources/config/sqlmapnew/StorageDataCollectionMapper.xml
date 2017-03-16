@@ -68,7 +68,7 @@
 	</select>
 	
 	<select id="findByTimeFormat" parameterType="map" resultMap="dataResultMap">
-	    SELECT `value` ,`time` FROM storagedatacollection
+	    SELECT FORMAT(`value`,2) `value`,`time` FROM storagedatacollection
 	    WHERE 1 =1
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 

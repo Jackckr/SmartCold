@@ -7,7 +7,7 @@
 		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` ${orderBy}
 	</select>
 	<select id="findByTimeFormat" resultType="StorageKeyValue">
-		select `value`,`addtime` from ${table}
+		select FORMAT(`value`,2) `value`,`addtime` from ${table}
 		where `key`=#{key} AND oid=#{oid} AND
 		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` ${orderBy}
 	</select>

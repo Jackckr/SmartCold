@@ -1223,6 +1223,12 @@
                         <i class="fa fa-table"></i>其他配置
                     </uib-tab-heading><br/>
                     <div class="row">
+                       <form class="navbar-form">
+                            <div class="form-group">
+                                <label>冷库：</label>
+                                <select ng-options="storage.name for storage in storages" class="form-control" ng-model="vm.choseStorage" ng-change="changeStorage()"></select>
+                            </div>
+                        </form>
                         <div class="col-lg-6">
                             <mapping-table data-name="月台门" data-table="platformdoorset" object-sets="platformDoorSets" object-keys="platformdoorKeys"></mapping-table>
                         </div>

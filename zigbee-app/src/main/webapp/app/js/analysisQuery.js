@@ -11,7 +11,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]);
         return null;
-    }
+    };
 
     $scope.seletedDatas = '';
     $scope.showobjgroup = false, $scope.coldstoragedoor = null;
@@ -20,9 +20,9 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     $scope.typemode = {
         tit: ['温度', '电量', '', '', '高压', '排气温度'],
         unit: ['(°C)', '(kWh)', '', '', '(kPa)', '(°C)'],
-        type: [1, 10, 2, 11, 3, 5],
+        type: [18, 10, 2, 11, 3, 5],
         key: ['Temp', 'PWC', 'Switch', 'Switch', 'highPress', 'exTemp'],
-        ismklin: [true, true, false, false, true, true]
+        ismklin: [false, false, false, false, false, false]
     };
     $scope.oids = [], $scope.sltit = "", $scope.sl_index = 0, $scope.oldnames = [], $scope.slgptit = "";
 
@@ -57,14 +57,14 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
-            "rdcId": rdcId
-        }
-        }).success(function (data) {
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {  "rdcId": rdcId }}).success(function (data) {
             if (data && data.length > 0) {
                 $scope.alarmTotalCnt = data.length;
             }
         });
+        
+        $http.get(ER.coldroot +"/i/temp/getTempsetByRdcId",{params:{'rdcId':rdcId}}).success(function(data){ $scope.coldstorageTemp=data;});
+        
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
@@ -138,8 +138,14 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     var getFormatTimeString = function (delta) {
         delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
         return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
-    }
-    $scope.end = getFormatTimeString(), $scope.begin = $scope.end.substr(0, 10) + " 00:00:00", $scope.picktime = $scope.begin + ' - ' + $scope.end;
+    };
+    
+    $scope.end = getFormatTimeString(); 
+    $scope.begin =getFormatTimeString(- 1.5 * 60 * 60 * 1000);
+    $scope.picktime = $scope.begin + ' - ' + $scope.end;
+    
+//    startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);// $scope.end.substr(0, 10) + " 00:00:00"
+   
     $scope.goSearch = function () {//查询事件
     	//将字符串转换为日期
         var begin=new Date($("#startTime").val().replace(/-/g,"/"));
@@ -158,29 +164,18 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         if ($scope.oids && $scope.oids.length > 0) {
             lineChart.showLoading({text: '数据加载中……'});
             lineChart.clear();
-
+            
             $.ajax({
                 type: "POST",
-                url: ER.coldroot + "/i/baseInfo/getKeyValueDataByFilter", traditional: true,
-                data: {
-                    type: $scope.typemode.type[$scope.sl_index],
-                    ismklin: $scope.typemode.ismklin[$scope.sl_index],
-                    oids: $scope.oids,
-                    onames: $scope.echnames,
-                    key: $scope.typemode.key[$scope.sl_index],
-                    startTime: $("#startTime").val(),
-                    endTime: $("#endTime").val()
-                },
-                success: function (data) {
-                    if (data.success) {
-                        $scope.drawDataLine(data.entity);
-                    } else {
-                        lineChart.hideLoading();
-                        layer.open({
-                            content: data.message
-                            ,btn: '确定'
-                         });
-                    }
+                url:ER.coldroot + "/i/history/getHistData",traditional:true,
+                data:{type:$scope.typemode.type[$scope.sl_index],ismklin:$scope.typemode.ismklin[$scope.sl_index],oids:$scope.oids,onames: $scope.echnames,key:$scope.typemode.key[$scope.sl_index],startTime: $("#startTime").val(),endTime:$("#endTime").val()},//
+                success: function(data) {
+                    if(data.success){
+                    	$scope.drawDataLine(data.entity);
+                   }else{
+                	   lineChart.hideLoading();  
+                       layer.open({ content: data.message ,btn: '确定' });
+                   }
                 }
             });
         } else {
@@ -252,8 +247,8 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         var lilist = $(slemkey);
         $.each(lilist, function (index, item) {
             $scope.oids.push($(item).attr("oid"));
-            $scope.oldnames.push(item.innerText);
-            $scope.echnames.push(item.innerText + $scope.typemode.tit[$scope.sl_index]);
+            $scope.oldnames.push(item.innerText.trim() );
+            $scope.echnames.push(item.innerText.trim() );//+ $scope.typemode.tit[$scope.sl_index]
         });
         $scope.slgptit = keem.text().replace(/\s/gi, '');
         $scope.sltit = $scope.slgptit + subtit + "-{" + ($scope.oldnames.join(",")) + "}";

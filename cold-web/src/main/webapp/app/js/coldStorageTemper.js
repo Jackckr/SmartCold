@@ -15,7 +15,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 	    	 	});
 	    	 	 $scope.load();
 	    	}else{
-	    		alert("");
+	    		//alert("配置异常！");
 	    	}
 	    });
     };
