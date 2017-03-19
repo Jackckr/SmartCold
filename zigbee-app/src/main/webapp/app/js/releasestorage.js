@@ -96,7 +96,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		$scope.typeText = document.getElementById('typeText').value;
 	    $scope.rdcflag= document.getElementById('rdcflag').value;
 	    
-    function checkStorageSubmit(){ // 检查必须填写项
+    function checkStorageSubmit(){ // 检查必须填写项   仓库
         if ($scope.title == undefined || $scope.title == '' ) {  return false; }
         if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') {  return false; }
         if ($scope.temperType == undefined || $scope.temperType == '') {  return false;  }
@@ -107,7 +107,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.validEndTime == undefined || $scope.validEndTime == '') {  return false;  }
         return true;
     }
-    function checkGoodsSubmit(){ // 检查必须填写项
+    function checkGoodsSubmit(){ // 检查必须填写项    货品
         if ($scope.title == undefined || $scope.title == '' ) {  return false; }
         if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') { return false; }
         if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') { return false; }
@@ -117,7 +117,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.validEndTime == undefined || $scope.validEndTime == '') { return false;  }
         return true;
     }
-    function checkCarSubmit(){  // 检查必须填写项
+    function checkCarSubmit(){  // 检查必须填写项    冷运
         if ($scope.title == undefined || $scope.title == '' ) {   return false;  }
         if(onoff){
         	 if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false; }
@@ -183,8 +183,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcID = $scope.rdcdto.rdcID;
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
-			
-			
 			if(checkCarSubmit()){
 				if($scope.unitPrice == undefined || $scope.unitPrice == null || $scope.unitPrice == ""){
 					$scope.unitPrice = "";
@@ -255,6 +253,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			    $scope.provinceId=$scope.rdcdto.provinceid;
 			    $scope.cityId=$scope.rdcdto.cityid;
 				$scope.rdcAddress = $scope.rdcdto.address;
+			}
+			if(Date.parse($('#sttime').val().replace(/-/g,"/")) > Date.parse($('#endtime').val().replace(/-/g,"/"))){
+				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
+				return false
 			}
 			if(checkGoodsSubmit()){
 				if($scope.sqm.toString().length > 11){
@@ -338,6 +340,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.storageType = $scope.rdcdto.codeLave1;
 			}else{
 //				 $scope.storageType =$("#ls_storageType").val();
+			}
+			if(Date.parse($('#sttime').val().replace(/-/g,"/")) > Date.parse($('#endtime').val().replace(/-/g,"/"))){
+				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
+				return false
 			}
 			if(checkStorageSubmit()){
 				if($scope.sqm.toString().length > 11){
