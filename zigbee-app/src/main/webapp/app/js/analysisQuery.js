@@ -22,7 +22,8 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         unit: ['(°C)', '(kWh)', '', '', '(kPa)', '(°C)'],
         type: [18, 10, 2, 11, 3, 5],
         key: ['Temp', 'PWC', 'Switch', 'Switch', 'highPress', 'exTemp'],
-        ismklin: [false, false, false, false, false, false]
+        ismklin: [true, true, false, false, true, true]
+    
     };
     $scope.oids = [], $scope.sltit = "", $scope.sl_index = 0, $scope.oldnames = [], $scope.slgptit = "";
 
@@ -141,7 +142,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     };
     
     $scope.end = getFormatTimeString(); 
-    $scope.begin =getFormatTimeString(- 1.5 * 60 * 60 * 1000);
+    $scope.begin =getFormatTimeString(- 5* 60 * 1000);
     $scope.picktime = $scope.begin + ' - ' + $scope.end;
     
 //    startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);// $scope.end.substr(0, 10) + " 00:00:00"
@@ -188,7 +189,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
     };
 
     $scope.drawDataLine = function (chardata) {
-        var tooltipmd = {trigger: 'axis',textStyle:{fontSize:12}};
+        var tooltipmd = {trigger: 'axis',textStyle:{fontSize:10}};
         var yAxismode = {type: 'value', name: $scope.sl_unit, axisLabel: {formatter: '{value}'}};
         var s = $scope.oldnames;
         var xData = chardata.xdata, ydata = chardata.ydata;
@@ -208,8 +209,39 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         lineChart.setOption(option);
         lineChart.hideLoading();
     };
-
-
+/*
+	$scope.drawDataLine = function(chardata){
+		var xData=chardata.xdata,ydata=chardata.ydata;
+		var yAxismode= {type : 'value', axisLabel : {formatter: '{value}'}} ;
+		var tooltipmd= {trigger: 'axis',formatter:function(params){
+			var html=[]; 
+			if(params.length!=undefined){
+			  var relVal = params[0].name;  
+			  if(relVal!=undefined&&relVal!=""){html.push(relVal+"<br/>"); }
+	          for (var i = 0, l = params.length; i < l; i++) {  html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'); html.push(params[i].seriesName + ' : '+gettitval(params[i].value)+"<br/>" );} return html.join(""); 
+			}else{
+				html.push(params.name+"<br/>"); 
+				html.push('<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params.color+'"></span>'); 
+				html.push(params.seriesName + ' : '+gettitval(params.value)+"<br/>" );
+			   return html.join("");
+			}
+		}};
+		if($scope.sl_index==2||$scope.sl_index==3){yAxismode={type : 'value',splitNumber: 1, axisLabel: {formatter: function(value){return value==1?"开":"关";} } };}
+		var option = {
+				calculable : true,
+				legend: {data:$scope.oldnames},
+				title: {text: $scope.sltit.substring(0,$scope.sltit.indexOf("{")-1)+$scope.typemode.unit[$scope.sl_index]},
+			    tooltip :tooltipmd,
+			    xAxis : [{type : 'category',data : xData} ],
+			    yAxis :yAxismode,
+			    grid:{x:80,x2:80},
+			    series : ydata,
+			    toolbox: {show: true,feature: {dataZoom: {yAxisIndex: 'none'},dataView: {readOnly: false},magicType: {type: ['line', 'bar']},restore: {},saveAsImage: {}} }
+		};
+		lineChart.setOption(option);
+		lineChart.hideLoading();  
+	};
+*/
     $scope.chPress = function (vl, vtxt) {//切换高低压
         $scope.typemode.key[$scope.sl_index] = vl;
         $scope.typemode.tit[$scope.sl_index] = vtxt;

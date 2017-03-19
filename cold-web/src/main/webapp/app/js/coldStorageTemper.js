@@ -15,7 +15,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 	    	 	});
 	    	 	 $scope.load();
 	    	}else{
-	    		//alert("配置异常！");
+	    		$("#mgs_div2").removeClass("hidden");
 	    	}
 	    });
     };
@@ -53,6 +53,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             } 
             yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data: [{x: startTime.getTime(),y: datumTemp},{x: endTime.getTime(),y: datumTemp}]});//处理基准温度
             $scope.initHighchart(datumTemp,yData);
+            if( $scope.isErr){ $("#mgs_div1").removeClass("hidden");}else{ $("#mgs_div1").addClass("hidden");}
           });
          
     };

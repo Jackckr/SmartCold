@@ -71,11 +71,6 @@ public class RdcController {
 	public Object findRDCByUserid(@RequestParam int userid) {
 		return rdcService.findRdcByUserid(userid);
 	}
-	@RequestMapping(value = "/getACLByRdcID", method = RequestMethod.GET)
-	@ResponseBody
-	public Object getACLByRdcID( int rdcId) {
-		return rdcMapper.getACLByRdcID(rdcId);
-	}
 	
 	
 	//====================================================以下提供测试API====================================================

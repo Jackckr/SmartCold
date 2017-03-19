@@ -1,7 +1,6 @@
 package com.smartcold.manage.cold.entity.comm;
 
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * 基类信息

@@ -130,7 +130,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
     	if(olds.length==0){return;};
         $http.get(ER.coldroot +'/i/temp/getTempByTime', { params: {"oid": storageID, oids:olds,names:names, 'key':'Temp', "startTime": formatTime(startTime), "endTime": formatTime(endTime)}}).success(function (result) {
             var name = result.name;
-        	var curtemper=[], yData = [], tempMap = result.tempMap,systime=result.systime;
+        	var curtemper=[], yData = [], tempMap = result.tempMap,systime=result.systime, maxTime=endTime.getTime();
             var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
         	var i= 0,tempList=newdata = [],vo=cuttime=lasttime=null; 
             for(var key in tempMap) { 

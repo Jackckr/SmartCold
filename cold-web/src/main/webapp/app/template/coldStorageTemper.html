@@ -44,13 +44,13 @@
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->
         
-         <div ng-show="isErr">
+         <div id="mgs_div1" class="hidden"  >
            <div class="alert alert-danger alert-dismissable fadeInUp animated">
 				<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
 				警告！当前冷库没有最新温度信息！请检查设备！
 			</div>
         </div>    
-         <div ng-show="oids.length==0">
+         <div id="mgs_div2" class="hidden"  >
            <div class="alert alert-info alert-dismissable fadeInUp animated">
 				<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
 				当前冷库没有配置温度信息！

@@ -38,8 +38,11 @@
 	    SELECT * FROM storagedatacollection
 	    WHERE 1 =1
 	    <if test="limit==1">
-		   AND addtime > DATE_SUB(NOW(),INTERVAL 5 MINUTE)
-	    </if>
+		  and  DATE_ADD( `addtime` , INTERVAL 5 MINUTE )
+		</if>
+		<if test="limit>400">
+	    	 and  DATE_ADD( `addtime` , INTERVAL 5 HOUR )
+		</if>
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>
@@ -68,7 +71,7 @@
 	</select>
 	
 	<select id="findByTimeFormat" parameterType="map" resultMap="dataResultMap">
-	    SELECT FORMAT(`value`,2) `value`,`time` FROM storagedatacollection
+	    SELECT `value`,`time` FROM storagedatacollection
 	    WHERE 1 =1
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 

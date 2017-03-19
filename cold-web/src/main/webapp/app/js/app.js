@@ -1,22 +1,14 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select',
-                                         'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
 var user;
-
-angular.element(document).ready(function($ngCookies, $location) {
-	$.ajax({
-	      url: '/i/user/findUser',
-	      type: "GET",
-	      dataType: 'json',
-	      cache: false
-	    }).success(function(data){
-	    	user = data;
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
+angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
+	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
 	    	if(user.username == null){
 	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
 	    			document.location.href = "/login.html";
 	    		}
 	        }
 	    	angular.bootstrap(document, ['ColdWeb']);
-	    })
+	    });
 });
 
 
@@ -29,7 +21,7 @@ coldWeb.run(function(userService) {
 	  userService.setStorage();
 });
 
-
+/*
 coldWeb.config(function($httpProvider) {
 	$httpProvider.interceptors.push(function ($q,$injector) {
         return {
@@ -56,7 +48,7 @@ coldWeb.config(function($httpProvider) {
     });
 });
 
-
+*/
 coldWeb.factory('baseTools',['$rootScope',function(){
 	return {
 		getFormatTimeString: function(delta){
@@ -142,39 +134,13 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http', function ($root
         	$rootScope.initAllByRdcId = function(rdcId){
         		$rootScope.rdcId = rdcId;
         		window.sessionStorage.smrdcId=rdcId;//缓存rdcid
-        		// 初始权限
-        		$http.get('/i/rdc/getACLByRdcID?rdcId=' + rdcId).success( function(data,status,headers,config){
-        			if(data&&data!=""){
-        		        var mlacl=data.authority.split("_");
-        		        if(mlacl.length=5){
-        		        	var ml=$("#lfmenu>li.treeview"),len1= mlacl.length;
-        		        	for (var k = 0;k <len1 ; k++) {
-        		        		var acl= mlacl[k], em= ml[k], facl=acl.substr(0,1);
-        		        	    if(facl==1){
-        		        	    	if(acl.length>1){
-        		        	    		var sm=$(em).children("ul").children();
-        		        	    		var len2=sm.length;
-        		        	    		if(sm.length==len2){
-        		        	    			for (var a = 0; a <len2 ; a++) {
-            		        	    			var sacl=acl.substr(a+1,1);
-            		        	    			if(sacl==0){
-            		        	    				$(sm[a]).addClass("quanxian");
-            		        	    			}
-            		        	    		}
-        		        	    		}
-        		        	    	}
-        		        	    }else{
-        		        	    	$(em).addClass("quanxian");
-        		        	    }	
-        		        		
-        		        	}
-        		        }else{
-        		        	alert("权限配置异常！");
-        		        }
-        		        
-        		        
-        			}
-        		});
+        		// 初始化菜单
+        		$http.get('i/acl/getRUACL?rdcid='+rdcId+'&uid='+$rootScope.user.id).success( function(data){
+        			$rootScope.nacl=data.nacl;
+        			
+        			
+        			$rootScope.aclml=data.aclml;
+        		});//获得菜单和解析器
         		// 初始化冷库
         		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(
         				function(data,status,headers,config){
@@ -544,8 +510,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 
 //导航栏选中的高亮显示
 function activeLi(ops){
-	$('.my_sidebar li').removeClass('active');
-	$(ops).addClass('active');
+	$('.my_sidebar li').removeClass('active');$(ops).addClass('active');
 }
 if($("li").hasClass("quanxian")){
 	$(".quanxian>a").attr("disabled",true);

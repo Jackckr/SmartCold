@@ -19,5 +19,4 @@ public interface RdcService {
 
 	List<Rdc> findRdcsByUserId(int userId);
 	
-	Object findRdcAcl(int rdcId );
 }

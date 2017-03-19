@@ -7,7 +7,7 @@
 		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` ${orderBy}
 	</select>
 	<select id="findByTimeFormat" resultType="StorageKeyValue">
-		select FORMAT(`value`,2) `value`,`addtime` from ${table}
+		select  `value`,`addtime` from ${table}
 		where `key`=#{key} AND oid=#{oid} AND
 		`addtime` >= #{startTime} AND `addtime` <![CDATA[ < ]]> #{endTime} order by `addtime` ${orderBy}
 	</select>
@@ -22,7 +22,10 @@
 		select * from ${table}
 		where `key`=#{key} and oid=#{oid}
 		<if test="nums==1">
-		  and   addtime > DATE_SUB(NOW(),INTERVAL 5 MINUTE) 
+		  and  DATE_ADD( `addtime` , INTERVAL 5 MINUTE )
+		</if>
+		<if test="nums>400">
+	     and  DATE_ADD( `addtime` , INTERVAL 5 HOUR )
 		</if>
         order by `addtime` desc
         limit #{nums}
