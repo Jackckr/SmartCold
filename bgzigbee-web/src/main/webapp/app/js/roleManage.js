@@ -9,9 +9,9 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 	});
 	$('.role_on_off').siblings("label").children("input[type='checkbox']").click(function(event) {	
 		if(this.checked){    
-			$(this).parents(".oneFilter").siblings(".list").find(":checkbox").attr("checked", true);   
+			$(this).parents(".oneFilter").siblings(".role_list").find(":checkbox").attr("checked", true);   
 	    }else{    
-	    	$(this).parents(".oneFilter").siblings(".list").find(":checkbox").attr("checked", false); 
+	    	$(this).parents(".oneFilter").siblings(".role_list").find(":checkbox").attr("checked", false); 
 	    } 
 	});
 });
