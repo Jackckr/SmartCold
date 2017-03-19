@@ -143,7 +143,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
     $scope.powerEnergy = function () {
         clearSwiper();
         $scope.activeEnergy = 'power';
-        if ($scope.powers.length > 0) {
+        if ($scope.powers && $scope.powers.length > 0) {
             for (var m = 0; m < $scope.powers.length; m++) {
                 $scope.load($scope.powers[m]);
             }
