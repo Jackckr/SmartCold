@@ -1,0 +1,168 @@
+<div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
+	<!-- tab栏切换=========================================================================================== -->
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active"><a href="#rdc_limit" data-toggle="tab"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;权限设置</a></li>
+		<li><a href="#rdc_role" data-toggle="tab"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;角色</a></li>
+		<li><a href="#rdc_group" data-toggle="tab"><span class="glyphicon glyphicon-paperclip"></span>&nbsp;&nbsp;组</a></li>
+		<li><a href="#rdc_user" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;用户</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content role_limit">
+	<!-- 权限配置=========================================================================================== -->
+		<div class="tab-pane fade in active clearfix" id="rdc_limit">
+			<div class="btn-group role_seclect">
+				<select>
+					<option value="1">RDC</option>
+					<option value="2">用户</option>
+					<option value="3">group</option>
+					<option value="4">role</option>
+				</select>
+			</div>
+			<div class="btn-group role_seclect">
+				<select>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+				</select>
+			</div>
+			<div class="btn-group role_seclect">
+				<input type="text" placeholder="请输入关键词" id="myText" />
+				<div id="searchImg" >
+					<span class="glyphicon glyphicon-search"></span>
+				</div>
+			</div>
+			<div class="role_table col-lg-6 col-lg-md-6 col-sm-12 col-xs-12">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>产品</th>
+								<th>付款日期</th>
+								<th>状态</th>
+								<th>付款日期</th>
+								<th>状态</th>
+								<th>状态</th>
+								<th>付款日期</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>产品1</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+							</tr>
+							<tr>
+								<td>产品1</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+							</tr>
+							<tr>
+								<td>产品1</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+								<td>23/11/2013</td>
+								<td>待发货</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="role_tree col-lg-6 col-lg-md-6 col-sm-12 col-xs-12">
+				<div class="box">
+
+					<div class="filter">
+						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
+						<div class="oneFilter">
+							<span class="role_on_off"></span>
+							<label><input type="checkbox" value="">温度</label>
+						</div>
+						<!-- 二级过滤：用来刷新页面内容 -->
+						<ul class="role_list">
+							<li><label><input type="checkbox" value="">温度</label></li>
+							<li><label><input type="checkbox" value="">能耗</label></li>
+							<li><label><input type="checkbox" value="">门</label></li>
+							<li><label><input type="checkbox" value="">库内设施</label></li>
+							<li><label><input type="checkbox" value="">货物</label></li>
+							<li><label><input type="checkbox" value="">制冷系统</label></li>
+							<li><label><input type="checkbox" value="">历史曲线查询</label></li>
+							<li><label><input type="checkbox" value="">历史数据查询</label></li>
+						</ul>
+					</div>
+
+					<div class="filter">
+						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
+						<div class="oneFilter">
+							<span class="role_on_off"></span>
+							<label><input type="checkbox" value="">分析及报告</label>
+						</div>
+						<!-- 二级过滤：用来刷新页面内容 -->
+						<ul class="role_list">
+							<li><label><input type="checkbox" value="">温度分析</label></li>
+							<li><label><input type="checkbox" value="">运管分析</label></li>
+							<li><label><input type="checkbox" value="">制冷系统分析</label></li>
+							<li><label><input type="checkbox" value="">报表功能</label></li>
+							<li><label><input type="checkbox" value="">分析报告</label></li>
+						</ul>
+					</div>
+
+					<div class="filter">
+						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
+						<div class="oneFilter">
+							<span class="role_on_off"></span>
+							<label><input type="checkbox" value="">实时报警</label>
+						</div>
+						<!-- 二级过滤：用来刷新页面内容 -->
+						<ul class="role_list">
+							<li><label><input type="checkbox" value="">报警日志</label></li>
+						</ul>
+					</div>
+
+					<div class="filter">
+						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
+						<div class="oneFilter">
+							<span class="role_on_off"></span>
+							<label><input type="checkbox" value="">维护管理</label>
+						</div>
+						<!-- 二级过滤：用来刷新页面内容 -->
+						<ul class="role_list">
+							<li><label><input type="checkbox" value="">机组维护提醒</label></li>
+							<li><label><input type="checkbox" value="">故障维修提醒</label></li>
+							<li><label><input type="checkbox" value="">故障维修记录</label></li>
+						</ul>
+					</div>
+
+					<div class="filter">
+						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
+						<div class="oneFilter">
+							<span class="role_on_off"></span>
+							<label><input type="checkbox" value="">选型</label>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	<!-- 角色=========================================================================================== -->
+		<div class="tab-pane fade" id="rdc_role">
+    		<p>角色</p>
+   		</div>
+    <!-- 组=========================================================================================== -->
+   		<div class="tab-pane fade" id="rdc_group">
+   			<p>组</p>
+   		</div>
+   	<!-- 用户=========================================================================================== -->
+   		<div class="tab-pane fade" id="rdc_user">
+   			<p>用户</p>
+   		</div>
+	</div>
+</div>
