@@ -154,7 +154,7 @@
               <i class="icon iconfont"></i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i>
              </a> 
 	         <ul class="treeview-menu"> 
-	            <li ng-repeat="storage in mystorages" onclick="activeLi(this)"><a ng-click="toMyStorageTemper(storage.id)"> <i class="fa fa-circle-o"></i>{{storage.name}} </a></li> 
+	            <li ng-repeat="storage in mystorages" onclick="activeLi(this)"><a href="#/coldStorageTemper/{{storage.id}}"> <i class="fa fa-circle-o"></i>{{storage.name}} </a></li> 
 	         </ul>
          </li> 
          <li  id="ml_acl20" class="treeview">

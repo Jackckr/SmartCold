@@ -379,9 +379,13 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'monthReport',
     	params:{id:null,name:null},
         templateUrl: 'app/template/monthReport.html'
-    }).state('webSiteVisits',{//网站访问量 
+    }).state('webSiteVisits',{//网站访问量
     	url: '/webSiteVisits',
     	controller: 'webSiteVisits',
         templateUrl: 'app/template/webSiteVisits.html'
+    }).state('roleManage',{//角色权限管理 
+    	url: '/roleManage',
+    	controller: 'roleManage',
+        templateUrl: 'app/template/roleManage.html'
     });
 });
