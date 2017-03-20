@@ -130,6 +130,16 @@ window.onload = function(){
    		}
    	})
 };
+/*联系电话的验证*/
+function checkMobile(str) {
+   var  reg = /^1\d{10}$/,//手机号
+   		reg1 = /^0\d{2,3}-?\d{7,8}$/; //座机号 
+   if (reg.test(str) || reg1.test(str)) {
+       return true
+   } else {
+       return false
+   }
+}
 /*
  * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
  * 引入 dist/vconsole.min.js 到项目中：

@@ -148,6 +148,10 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         return flag;
     }
     $scope.submit = function(){
+    	if(checkMobile($scope.phoneNum.toString().trim()) == false){
+			layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
+			return false
+		}
         if (checkInput()){
         	if(parseFloat($scope.area).toFixed(2).length>11){
 				layer.open({content:'面积不合法哦~',btn: '确定'});return;
