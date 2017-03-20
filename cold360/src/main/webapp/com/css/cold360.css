@@ -620,7 +620,8 @@ b{
 .remain{
 	display: inline-block;
 	width: 7.2rem;
-	line-height: 3.5rem;
+	height: 3.5rem;
+	line-height: 3.9rem;
 	text-align: left;
 	text-indent:1.8rem;
 	font-size: .6rem;

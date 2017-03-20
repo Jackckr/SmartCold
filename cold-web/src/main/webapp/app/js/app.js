@@ -137,8 +137,8 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 				      		$rootScope.aclml=data.aclml;
 				      		$rootScope.pagstate=[];
 				      		angular.forEach(data.aclml,function(obj,i){ 
-				      			if(obj.acl&&obj.hasnode){
-				      				coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
+				      			if(obj.acl){
+				      				if(!obj.hasnode){  coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });}
 				      			}else{
 				      				$("#ml_acl"+obj.id).addClass("quanxian");
 				      			}

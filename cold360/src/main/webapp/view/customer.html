@@ -56,10 +56,20 @@
 		</div>
 	</section>    
     <script>
+  		/*点击图片隐藏div*/
+		function imgBoxHide(){
+			 document.getElementById("baguetteBox-overlay").addEventListener("click", function(e) {
+				 if (e.target.tagName == "IMG") {
+					 $("#baguetteBox-overlay").hide();
+					 return false;
+				 }
+			 }, false);
+		}
     	$(function(){
     		baguetteBox.run('.gallery', {
     		    buttons:'true'
     		});
+    		imgBoxHide();
     	})
     </script>
 </body>

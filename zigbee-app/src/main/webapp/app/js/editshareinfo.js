@@ -256,9 +256,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        
 	      };
 	    function checkStorageSubmit(){
-	        // 检查必须填写项
+	        // 检查必须填写项   仓库
 	        if ($scope.title == undefined || $scope.title == '' ) {return false; }
-	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
+	        //if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
 	        if ($scope.temperType == undefined || $scope.temperType == '') { return false;}
 	        if($scope.rdcsharedto.rdcID==null||$scope.rdcsharedto.rdcID==undefined){
 	        	if ($scope.manageType == undefined || $scope.manageType == '') { return false;}
@@ -272,7 +272,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 	    
 	    function checkGoodsSubmit(){
-	        // 检查必须填写项
+	        // 检查必须填写项   货品
 	        if ($scope.title == undefined || $scope.title == '' ) {return false;}
 	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
 	        if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') { return false;}
@@ -285,7 +285,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
 	    
 	    function checkCarSubmit(){
-	        // 检查必须填写项
+	        // 检查必须填写项   冷运
 	        if ($scope.title == undefined || $scope.title == '' ) { return false; }
 	        if(releaseCarInfo.onoff){
 	        	 if ($scope.stprovinceID == undefined || $scope.stprovinceID == '' ) { return false; }
@@ -304,8 +304,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	        if ($scope.arriveTime == undefined || $scope.arriveTime == '') { return false;}
 	        return true;
 	    }
-	    
-	    
 	    
 		$scope.carSubmit = function(){
 			var attr1=$("#sl_attrvalue1").val(),attr2=$("#sl_attrvalue2").val(),sttime=$("#startTime").val(), edtime=$("#arriveTime").val();
@@ -406,6 +404,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
+			if(Date.parse($('#sttime').val().replace(/-/g,"/")) > Date.parse($('#endtime').val().replace(/-/g,"/"))){
+				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
+				return false
+			}
 			if(checkGoodsSubmit()){
 				if($scope.sqm.length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
@@ -478,6 +480,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			 }
 			if($scope.rdcdto!=undefined)
 				$scope.storageType = $scope.rdcdto.storagetype;
+			if(Date.parse($('#sttime').val().replace(/-/g,"/")) > Date.parse($('#endtime').val().replace(/-/g,"/"))){
+				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
+				return false
+			}
 			if(checkStorageSubmit()){
 				if($scope.sqm.length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;

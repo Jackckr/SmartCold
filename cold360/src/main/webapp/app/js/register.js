@@ -3,7 +3,8 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
 	$scope.vsphone = function(telephone) {// 验证手机号码
 		var length = (telephone + '').length;
-		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+//		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+		var mobile = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;
 		return telephone && length == 11&& mobile.test(telephone);
 	};
 	$scope.vertelephone = function() {// 验证手机号码
@@ -19,7 +20,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 		}else{
 			 victdata.victtl=false;
 			 $("#mention1").html("请输入正确手机号码~");
-			 $("#but_vercode").attr("disabled", false).css("background-color",  "#cccccc");
+			 $("#but_vercode").attr("disabled", true).css("background-color",  "#cccccc");
 		}
 	};
 	
@@ -43,8 +44,8 @@ var app = angular.module('app', []).controller('register',function($http, $locat
     	} 
    };
    $scope.checkpwd=function(){
-	   var password = $("#txt_password").val(); 
-       var repsword = $("#txt_repsword").val(); 
+	   var password = $("#txt_password").val().trim(); 
+       var repsword = $("#txt_repsword").val().trim(); 
        if(password == ''){
 			$("#mention1").html("密码不能为空");
 			$('#app_but1').attr("disabled",true);
@@ -53,7 +54,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 			$("#mention1").html("密码长度最少六位");
 			$('#app_but1').attr("disabled",true);
 			return false;
-		}else if(password.length>=6){
+		}else if(password.length<=16){
 			$("#mention1").html("");
 			if (/^(\d)\1+$/.test(password)){
 				$("#mention1").html("密码太过简单了~").css("color","#f80");
@@ -75,6 +76,9 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 					}
 				}
 			}
+		}else if(password.length>16){
+			$("#mention1").html("密码长度最多16位~").css("color","#f80");
+			$('#app_but1').attr("disabled",true);
 		}else{
 			$("#mention2").html("输入有误，请重新输入");
 		}
@@ -91,11 +95,11 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
         $.ajax({
         	type: 'POST',
-        	data:{username:$("#telNum").val(),
-				password:$("#txt_password").val(),
-				password1:$("#txt_repsword").val(),
-				telephone:$("#telNum").val(),
-				signUpCode:$("#code2").val()
+        	data:{username:$("#telNum").val().trim(),
+				password:$("#txt_password").val().trim(),
+				password1:$("#txt_repsword").val().trim(),
+				telephone:$("#telNum").val().trim(),
+				signUpCode:$("#code2").val().trim()
 		},
             url: ER.root+"/i/user/signup?",
             complete : function(e){$(me).text("注册"); $(me).delay(500).data('isLoading',false);},
