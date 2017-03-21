@@ -5,6 +5,18 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 var rdcid  = getUrlParam("id");//当前rdc-id数据信息
 	 $scope.totalfiles = [];
 	 $scope.addFiles = function (files) {
+		 for(let j=0,fileLen=files.length;j<fileLen;j++){
+	    		let _file=files[j].name;
+	    		let i=_file.lastIndexOf('.');
+	    		let len=_file.length;
+	    		let extEndName=_file.substring(i+1, len);
+	    		let extName="GIF,BMP,JPG,JPEG,PNG";
+	        	//首先对格式进行验证
+	        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+	        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+	        		return false
+	        	}
+	    	}
 			if(files.length==0){return;};
 			var allfiles = $scope.totalfiles.concat(files);
 			if(allfiles.length>5){/*alert("最多选择10张！")*/ layer.open({content: '最多选择5张哦',btn: '确定'});return;}
