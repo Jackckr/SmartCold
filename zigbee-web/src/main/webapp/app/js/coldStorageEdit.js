@@ -132,7 +132,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         //$scope.companyDevice = data[0].companyDevice;
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
-        $scope.arrangePic = data[0].arrangepiclocation;
+        $scope.arrangePic = data[0].arrangePic.location;
         $scope.arrangePicShow = data[0].arrangePic;
         $scope.storagePicShow = data[0].storagePics;
         $scope.honorPicShow = data[0].honorPics;
@@ -238,19 +238,57 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         }
         return flag;
     }
-    
+//  $scope.arrangePicShow = data[0].arrangePic;//平面图
+//  $scope.storagePicShow = data[0].storagePics;//冷库图片
+//  $scope.honorPicShow = data[0].honorPics;//荣誉图
     $scope.addFiles = function (files) {
-        if($scope.totalfiles.length + files.length > 5){
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}
+    	}
+        if($scope.totalfiles.length + $scope.storagePicShow.length + files.length > 5){
             alert("最多上传五张图片");
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
     $scope.addArrangePic = function (files) {
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}
+    	}
         $scope.arrangePics = $scope.arrangePics.concat(files);
     }
     $scope.addHonorFiles = function (files) {
-        if($scope.totalhonorfiles.length + files.length > 8){
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}
+    	}
+        if($scope.totalhonorfiles.length + $scope.honorPicShow.length + files.length > 8){
             alert("最多上传八张图片");
             return;
         }

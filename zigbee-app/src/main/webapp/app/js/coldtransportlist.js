@@ -73,6 +73,7 @@ $().ready(function() {
   		    var clty=$("#cool_type_div li.active").attr("value");//温度
   			var bsty=$("#business_type_div li.active").attr("value");//业务类型
   			var adds=$("#ul_address_list li.active").attr("value");////地区
+  			var keyword=$("#searchDara_div input").val().trim();////关键字搜索
   		    var _options={
 					type:type,//类型
 					datatype:2,//请求数据类型
@@ -80,8 +81,8 @@ $().ready(function() {
 					carType:ctty, //车型	
 					provincefwID:adds,
 					businessType: bsty,//业务类型 
-					storagetempertype:clty//  温度类型 -> rdcext t
- 
+					storagetempertype:clty,//  温度类型 -> rdcext t
+					keyword:keyword
   		    };
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
@@ -127,5 +128,21 @@ $().ready(function() {
 		initevg();
 
 	};
+	searchFilter = function(){//搜索
+   		if($("#searchDara_div input").val().trim() != ""){
+   			currentPage=1;
+    		ul_select.empty();
+    		getPageData();
+    	}
+    };
+    searchFilters = function(){//搜索
+    	if($("#searchDara_div input").val().trim() == ""){
+    		alert("请输入你要搜索的内容~")
+    	}else{
+    		currentPage=1;
+    		ul_select.empty();
+    		getPageData();
+    	}
+    };
 	initData();
 });	

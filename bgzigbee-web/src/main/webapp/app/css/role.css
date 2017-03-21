@@ -7,7 +7,7 @@
 */
 
 .role_limit>.tab-pane{
-	padding: 15px;
+	padding: 10px 0;
 }
 .role_seclect{
 	height:32px;
@@ -25,10 +25,26 @@
 }
 .role_table{
 	padding: 0
+} 
+@media (min-width: 768px) {
+	.role_tree{
+		padding:0;
+		margin-top: 10px;
+	}
 }
-.role_tree{
-	padding:0 0 0 10px;
+@media (max-width: 768px) {
+	.role_tree{
+		padding:0;
+		margin-top: 10px;
+	}
 }
+@media (min-width: 992px) {
+	.role_tree{
+		padding:0 0 0 10px;
+		margin-top: 0;
+	}
+}
+
 .role_table thead>tr>th{
 	text-align: center;
 }

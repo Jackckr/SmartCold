@@ -127,26 +127,64 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
     $scope.totalhonorfiles = [];
     $scope.arrangePics = [];
     $scope.addFiles = function (files) {
-        if($scope.totalfiles.length + files.length > 5){
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}
+    	}
+    	if($scope.totalfiles.length + files.length > 5){
             alert("最多上传五张图片");
             return;
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
     $scope.addHonorFiles = function (files) {
-        if($scope.totalhonorfiles.length + files.length > 8){
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}
+    	}
+    	if($scope.totalhonorfiles.length + files.length > 8){
             alert("最多上传八张图片");
             return;
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
+        
     }
     $scope.addArrangePic = function (files) {
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}
+    	}
     	angular.forEach($scope.arrangePics,function(item, key){
             if(item == file){
                 $scope.arrangePics.splice(key,1);
             }
         })
         $scope.arrangePics = $scope.arrangePics.concat(files);
+    	
     }
 
     $scope.drop = function(file){
@@ -293,6 +331,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
 
 
     }
+   
     /*检查输入的数字是否为》0   2017-3-13*/
    	function checkNum(){
    		var numLen = $("input[type='number']");
@@ -325,3 +364,22 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
    		}
    	})
 });
+/*上传图片格式校验    2017 -3 -20*/
+function getImageType(obj) {
+	var _file=$(obj)[0];
+	var i=_file.value.lastIndexOf('.');
+	var len=_file.value.length;
+	var extEndName=_file.value.substring(i+1, len);
+	var extName="GIF,BMP,JPG,JPEG,PNG";
+	
+	//首先对格式进行验证
+	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+		//filemessage.innerHTML="*您只能输入"+extName+"格式的文件"
+		alert("只能上传"+extName+"格式的文件");
+		//$(".mybtn").attr('disabled',true)
+		return false
+	}else{
+//   			$(".mybtn").attr('disabled',false);
+		return true;
+	}
+}

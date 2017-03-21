@@ -28,9 +28,20 @@ $().ready(function() {
 		});
    	   /* $("#searchDara_div i").click();*/
    	   searchFilter = function(e){//搜索
-	    	currentPage=1;
-	  		ul_select.empty();
-	  	    getPageData();
+	   		if($("#searchDara_div input").val().trim() != ""){
+	   			currentPage=1;
+	    		ul_select.empty();
+	    		getPageData();
+	    	}
+	    };
+	    searchFilters = function(e){//搜索
+	    	if($("#searchDara_div input").val().trim() == ""){
+	    		alert("请输入你要搜索的内容~")
+	    	}else{
+	    		currentPage=1;
+	    		ul_select.empty();
+	    		getPageData();
+	    	}
 	    };
    	    $(window).scroll(function(){
      	    var scrollTop = $(this).scrollTop();
@@ -79,7 +90,7 @@ $().ready(function() {
   		    var smty=$("#ul_stty_list li.active").attr("value");//温度
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   			var adds=$("#ul_address_list li.active").attr("value");////地区
-  			var keyword=$("#searchDara_div input").val();////关键字搜索
+  			var keyword=$("#searchDara_div input").val().trim();////关键字搜索
   		    var _options={ sqm:sqm, storagetempertype: smty,managementType:sety,provinceid:adds,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
