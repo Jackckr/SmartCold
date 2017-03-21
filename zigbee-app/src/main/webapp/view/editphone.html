@@ -37,7 +37,7 @@
     <div class="inputs show1">
 		<div class="tel">
 			<i class="iconfont">&#xe608;</i>
-			<input type="tel" value="{{userinfo.telephone}}" readonly/>
+			<input type="tel" value="{{userinfo.telephone.trim()}}" readonly/>
 			<button id="but_vercode" class="idcode fr" ng-click="getVerCode();">获取验证码</button>
 		</div>
 		<div class="tel">

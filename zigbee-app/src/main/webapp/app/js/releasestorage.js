@@ -183,13 +183,15 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.rdcID = $scope.rdcdto.rdcID;
 				$scope.rdcAddress = $scope.rdcdto.address;
 			}
+			if(checkMobile($scope.telephone.trim()) == false){
+				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
+				return false
+			}
 			if(checkCarSubmit()){
 				if($scope.unitPrice == undefined || $scope.unitPrice == null || $scope.unitPrice == ""){
 					$scope.unitPrice = "";
 				}else if($scope.unitPrice.toString().trim().length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
-		        }else if($scope.telephone.trim().length != 11){
-		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
 		        }
 	        	layer.open({ type: 2 ,content: '努力加载中~~~' ,shadeClose:false});
 				var simdata = {
@@ -258,6 +260,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
 				return false
 			}
+			if(checkMobile($scope.telephone.trim()) == false){
+				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
+				return false
+			}
 			if(checkGoodsSubmit()){
 				if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
@@ -265,8 +271,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        	$scope.unitprice = "";
 		        }else if($scope.unitprice.toString().length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
-		        }else if($scope.telephone.trim().length != 11){
-		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
 		        }
 	        	layer.open({
 	        		type: 2
@@ -301,8 +305,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        headers :{ 'Content-Transfer-Encoding': 'utf-8' },
 		        data: data
 		    }).then(function (resp) {
-		    	//alert(resp.data.message);
-		    	//layer.open({content: resp.data.message,btn: '确定'});
 		    	layer.closeAll();
 		    	layer.open({
 		    		content: resp.data.message
@@ -313,7 +315,6 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    		    	   window.location.href ="releasesuccess.html?id=2"; 
 	                }
 		    	});
-		    	//window.location.href ="releasesuccess.html"; 
 		    }, function (resp) {
 		        console.log('Error status: ' + resp.status);
 		    }, function (evt) {
@@ -345,13 +346,15 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
 				return false
 			}
+			if(checkMobile($scope.telephone.trim()) == false){
+				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
+				return false
+			}
 			if(checkStorageSubmit()){
 				if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
 		        }else if(parseFloat($scope.unitprice).length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
-		        }else if($scope.telephone.trim().length != 11){
-		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
 		        }
 	        	layer.open({
 	        		type: 2

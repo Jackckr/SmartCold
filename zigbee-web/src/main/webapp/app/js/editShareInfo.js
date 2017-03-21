@@ -280,6 +280,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	        	stplace = $('.user_defined_address1').val();//出发地详细地址
 	        	toplace = $('.user_defined_address2').val();//目的地详细地址
 	        }
+	        if(checkMobile($scope.telephone.trim()) == false){
+	    		alert("请输入正确的手机号码或者座机号码~");
+	    		return false
+			}
 			if(checkCarSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
@@ -297,7 +301,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					unit2:toplace,
 					validStartTime:$scope.startTime,
 					validEndTime : $scope.arriveTime,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					attrvalue:onoff?1:0,
 					attrvalue1:attr1,
@@ -337,6 +341,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
+			if(checkMobile($scope.telephone.trim()) == false){
+	    		alert("请输入正确的手机号码或者座机号码~");
+	    		return false
+			}
 			if(checkGoodsSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
@@ -350,7 +358,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
 					sqm:$scope.sqm,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					detlAddress:$scope.detlAddress
 					
@@ -387,6 +395,10 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 			if($scope.rdcsharedto.rdcID!=''&&$scope.rdcsharedto.rdcID!=undefined&&$scope.rdcsharedto.rdcID!=0){
 				 $scope.detlAddress = $scope.rdcsharedto.detlAddress;
 			 }
+			if(checkMobile($scope.telephone.trim()) == false){
+	    		alert("请输入正确的手机号码或者座机号码~");
+	    		return false
+			}
 			if(checkStorageSubmit()){
 			var simdata = {
 					id:$scope.rdcsharedto.id,
@@ -401,7 +413,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
-					telephone:$scope.telephone,
+					telephone:$scope.telephone.trim(),
 					note : $scope.note,
 					detlAddress:$scope.detlAddress
 			};

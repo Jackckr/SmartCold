@@ -259,6 +259,10 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
 
     $scope.submit = function(){
     if(checkCommit()){
+    	if(checkMobile($scope.phoneNum.toString().trim()) == false){
+    		alert("请输入正确的手机号码或者座机号码~");
+    		return false
+		}
         if (checkInput()){
             $scope.isDisabled = true;
             data = {
