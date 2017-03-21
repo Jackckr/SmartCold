@@ -9,7 +9,8 @@
         <form class="navbar-form">
             <div class="form-group">
                 <label>RDC:&nbsp;&nbsp;</label>
-                <div isteven-multi-select selection-mode="single" input-model="rdclist" output-model="vm.choseRdcs" button-label="name" item-label="name" tick-property="isOn" helper-elements="filter" max-height="200px" on-item-click="changeRdc()" class="form-group"></div>
+                <div isteven-multi-select selection-mode="single" input-model="rdclist" output-model="vm.choseRdcs" button-label="name" item-label="name" tick-property="isOn" helper-elements="filter" max-height="200px"   on-item-click="changeRdc()" class="form-group"></div>
+<!--                     <select  class="form-control" ng-options="rdc.name for rdc in vm.limeRdcs" ng-model="vm.choserdc" ng-change="initAllByRdcId(vm.choserdc.id)"></select>  -->
             </div>
         </form>
     </div>

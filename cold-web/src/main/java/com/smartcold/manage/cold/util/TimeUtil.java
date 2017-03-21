@@ -28,7 +28,7 @@ public class TimeUtil {
 	 * @return
 	 */
 	public static String getHextime(){
-		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
+		return   (int)System.currentTimeMillis() / 1000+"";
 	}
 	
 	

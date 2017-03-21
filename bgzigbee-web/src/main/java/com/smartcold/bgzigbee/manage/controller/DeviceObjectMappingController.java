@@ -34,7 +34,7 @@ public class DeviceObjectMappingController {
         return deviceObjectMappingMapper.findByTypeOid(type, oid);
     }
 
-    @RequestMapping(value = "/del" , method = RequestMethod.POST)
+    @RequestMapping(value = "/del" , method = RequestMethod.DELETE)
     public Object delById(int id){
         if (deviceObjectMappingMapper.delById(id)) {
             return new ResultDto(0, "删除成功");

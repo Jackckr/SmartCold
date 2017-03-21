@@ -50,37 +50,41 @@ public class SocketHandler extends IoHandlerAdapter {
     public void messageReceived(IoSession session, Object message) throws Exception {
     	    try {
 				String msg=message+"";
-				byte[] z = msg.getBytes();
-				if(z.length>0){
-					if(z.length>1){
-						System.err.println("开始解析数据=================================================");
-						for (int i = 0; i < z.length; i++) {
-				    		  System.out.print("{"+z[i]+"}_"+String.format("%02X", z[0]) + " ");
-				    	}
-						System.err.println("解析数据完成=================================================");
-						session.write("01"+TimeUtil.getHextime());//返回服务器状态
-					}else{
-				        String type=String.format("%02X", z[0]);
-						switch (type) {
+				if(msg.length()==2){
+					    String time =  System.currentTimeMillis() / 1000+"";
+				        String type=msg;//String.format("%02X", msg);
+						switch (msg) {
 						case "00"://数据包
 							System.err.println("收到数据包："+msg);
-							session.write(type+TimeUtil.getHextime());//返回服务器状态
+							session.write(type+time);//返回服务器状态
 							break;
 						case "01"://状态包
 							System.err.println("收到状态包："+msg);
-							session.write(type+TimeUtil.getHextime());//返回服务器状态
+							session.write(type+time);//返回服务器状态
 							break;
 						case "02"://校时包
 							System.err.println("收到校时包："+msg);
-							session.write(type+TimeUtil.getHextime());//返回服务器状态
+							session.write(type+time);//返回服务器状态
+							
 							break;
 						default:
 							System.err.println("未知数据："+msg);
-							session.write("02"+TimeUtil.getHextime());//返回服务器状态
+							session.write("02"+time);//返回服务器状态
 							break;
 						}
-					}
-  	            }
+			    }else{
+			    	byte[] z = msg.getBytes();
+			    	if(z.length>0){
+						if(z.length>1){
+							System.err.println("开始解析数据=================================================");
+							for (int i = 0; i < z.length; i++) {
+					    		  System.out.print("{"+z[i]+"}_"+String.format("%02X", z[0]) + " ");
+					    	}
+							System.err.println("解析数据完成=================================================");
+							session.write("01"+TimeUtil.getHextime());//返回服务器状态
+						}
+			    	}
+			    }
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

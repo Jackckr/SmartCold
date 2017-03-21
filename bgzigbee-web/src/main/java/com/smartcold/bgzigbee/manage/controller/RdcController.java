@@ -4,7 +4,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +31,6 @@ import com.smartcold.bgzigbee.manage.dao.RdcAuthLogMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcUserMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcWeightSetMapper;
 import com.smartcold.bgzigbee.manage.dao.RoleUserMapper;
 import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageHonorMapper;
@@ -49,8 +47,6 @@ import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
-import com.smartcold.bgzigbee.manage.entity.PowerSetEntity;
-import com.smartcold.bgzigbee.manage.entity.RDCWeightSetEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcAuthLogEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
@@ -121,15 +117,15 @@ public class RdcController {
 
 	@Autowired
 	private RoleUserMapper roleUserDao;
-	private static HashMap<String , Object> cache=new HashMap<String, Object>();
+//	private static HashMap<String , Object> cache=new HashMap<String, Object>();
 
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
-		if(cache.containsKey("findRdcList")){return cache.get("findRdcList");}
+//		if(cache.containsKey("findRdcList")){return cache.get("findRdcList");}
 		 List<RdcEntity> findRdcList = rdcService.findRdcList();
-		 cache.put("findRdcList", findRdcList);
+//		 cache.put("findRdcList", findRdcList);
 		 return findRdcList;
 	}
 

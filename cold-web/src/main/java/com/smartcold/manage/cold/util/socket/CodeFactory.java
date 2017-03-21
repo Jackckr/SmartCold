@@ -7,7 +7,7 @@ import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 import org.apache.mina.filter.codec.textline.LineDelimiter;
-import org.apache.mina.filter.codec.textline.TextLineEncoder;
+//import org.apache.mina.filter.codec.textline.TextLineEncoder;
 //import org.apache.mina.filter.codec.textline.TextLineDecoder;
 
 public class CodeFactory implements ProtocolCodecFactory {

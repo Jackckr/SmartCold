@@ -9,69 +9,59 @@
 	<div id="myTabContent" class="tab-content role_limit">
 	<!-- 权限配置=========================================================================================== -->
 		<div class="tab-pane fade in active clearfix" id="rdc_limit">
-			<div class="btn-group role_seclect">
-				<select>
-					<option value="1">RDC</option>
-					<option value="2">用户</option>
-					<option value="3">group</option>
-					<option value="4">role</option>
-				</select>
-			</div>
-			<div class="btn-group role_seclect">
-				<select>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-				</select>
-			</div>
-			<div class="btn-group role_seclect">
-				<input type="text" placeholder="请输入关键词" id="myText" />
-				<div id="searchImg" >
-					<span class="glyphicon glyphicon-search"></span>
-				</div>
-			</div>
+		
+		
+		   <div class="alert alert-warning"> <a href="#" class="close" data-dismiss="alert">&times;</a>权限级别：RDC>User>Role>Group</div>
+			
+			
+			
+			<div class="row">
+		        <div class="col-md-1" ><span>对象</span></div>
+		        <div class="col-md-11">
+		               <div class="btn-group role_seclect text-left text-nowrap row">
+						<select class="col-lg-10">
+							<option value="1">RDC</option>
+							<option value="2">user</option>
+							<option value="3">role</option>
+							<option value="4">group</option>
+						</select></div>
+		        </div>
+		    </div>
+<!-- 			<div class="row"> -->
+<!-- 		        <div class="col-md-1" ><span>子对象</span></div> -->
+<!-- 		        <div class="col-md-11"> -->
+<!-- 		               <div class="btn-group role_seclect text-left text-nowrap row " > -->
+<!-- 						<select class="col-lg-10 " disabled="disabled"> -->
+<!-- 							<option value="1">RDC</option> -->
+<!-- 							<option value="2">用户</option> -->
+<!-- 							<option value="3">group</option> -->
+<!-- 							<option value="4">role</option> -->
+<!-- 						</select></div> -->
+<!-- 		        </div> -->
+<!-- 		    </div> -->
+			
 			<div class="role_table col-lg-6 col-lg-md-6 col-sm-12 col-xs-12">
+				
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover">
 						<thead>
+						   <tr>
+						     <th colspan="2">
+								 <div class="btn-group role_seclect">
+									<input type="text" placeholder="请输入关键词" id="myText" ng-mode="keyword" ng-change="searchdata" />
+									<div id="searchImg" ><span class="glyphicon glyphicon-search"></span></div>
+								 </div>
+						     </th>
+						   </tr>
 							<tr>
-								<th>产品</th>
-								<th>付款日期</th>
-								<th>状态</th>
-								<th>付款日期</th>
-								<th>状态</th>
-								<th>状态</th>
-								<th>付款日期</th>
+								<th>ID</th>
+								<th>name</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>产品1</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-							</tr>
-							<tr>
-								<td>产品1</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-							</tr>
-							<tr>
-								<td>产品1</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
-								<td>23/11/2013</td>
-								<td>待发货</td>
+							<tr ng-repeat="obj in objData">
+								<td>{{obj.id}}</td>
+								<td>{{obj.name}}</td>
 							</tr>
 						</tbody>
 					</table>

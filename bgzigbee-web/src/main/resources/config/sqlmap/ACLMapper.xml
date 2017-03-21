@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.ACLMapper">
+
+    <select id="getUserACLByFilter" parameterType="map" resultType="map">
+       select id, `username` `name`  from `user` 
+        <if test="keyword!=null">
+         where `username` LIKE '%#{keyword}%' or `telephone` like '%#{keyword}%' or `nickname` like '%#{keyword}%'
+       </if>
+        ORDER BY addTime DESC LIMIT 10;
+    </select>
+    
+    <select id="getRdcACLByFilter" parameterType="map" resultType="map">
+      SELECT id,`name`  FROM `rdc` 
+        <if test="keyword!=null">
+         where `name`  LIKE '%#{keyword}%' 
+       </if>
+        ORDER BY addTime DESC LIMIT 10;
+    </select>
+    
+    
+    <select id="getRoleACLByFilter" parameterType="map" resultType="map">
+      SELECT id,`name`  FROM `acl_role` 
+        <if test="keyword!=null">
+         where `name`  LIKE '%#{keyword}%' 
+       </if>
+        ORDER BY addTime DESC LIMIT 10;
+    </select>
+    
+    <select id="getGroupACLByFilter" parameterType="map" resultType="map">
+      SELECT id,`name`  FROM `acl_group` 
+        <if test="keyword!=null">
+         where `name`  LIKE '%#{keyword}%' 
+       </if>
+        ORDER BY addTime DESC LIMIT 10;
+    </select>
+    
+    <insert id="addUserAcl" parameterType="map">
+      INSERT INTO acl_user(uid,nacl)VALUES(#{uid},#{nacl});
+    </insert>
+    
+    <insert id="addRdcAcl" parameterType="map">
+      INSERT INTO acl_rdc(rdcid,nacl)VALUES(#{rdcid},#{nacl});
+    </insert>
+    
+    <select id="getNACLByID" parameterType="map" resultType="map">
+         select id,nacl from `${talbe}` where id=#{id};
+    </select>
+    
+    <update id="upACLByID" parameterType="map">
+     update `${talbe}` set nacl=#{nacl} where id=#{id};
+    </update>
+    
+    
+    
+</mapper>

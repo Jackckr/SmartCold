@@ -26,9 +26,9 @@
 		<constructor-arg>
 			<!--构造函数的参数传入自己实现的对象 -->
 		<!--	<bean class="com.smartcold.manage.cold.util.socket.ByteArrayCodecFactory"> -->
-	 	<bean class="com.smartcold.manage.cold.util.socket.CodeFactory"> 
-			<property name="bufferLength" value="1024"></property> 
-			<property name="decoderMaxLineLength" value="10240"></property> 
+		 	<bean class="com.smartcold.manage.cold.util.socket.CodeFactory"> 
+				<property name="bufferLength" value="1024"></property>  
+	 			<property name="decoderMaxLineLength" value="10240"></property>  
 			</bean>
 		</constructor-arg>
 	</bean>
