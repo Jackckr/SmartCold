@@ -1,6 +1,8 @@
 package com.smartcold.manage.cold.api;
 
 
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,6 +19,7 @@ import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
+import com.smartcold.manage.cold.util.socket.SocketStatus;
 
 /**
  * 沈阳设备数据 
@@ -32,6 +35,23 @@ public class SocketHandler extends IoHandlerAdapter {
     private static ConcurrentHashMap<Long, IoSession> curSessionMap = new ConcurrentHashMap<Long, IoSession>();
 
     
+    private static IoBuffer getstatus(String type){
+    	String msg = type+(System.currentTimeMillis()+"").substring(0, 10);
+		int length=msg.length()/2;
+		byte[] bts = new byte[length];
+		for (int i = 0; i < length; i++) {
+			bts[i]=Byte.parseByte(msg.substring(0,2));
+			msg=msg.substring(2);
+		}
+		IoBuffer buffer = IoBuffer.allocate(16);
+		buffer.put(bts);
+		buffer.flip();
+	  return buffer;
+
+    	
+    	
+    }
+
     /*
      * (non-Javadoc)
      * 有异常发生时被触发
@@ -48,46 +68,32 @@ public class SocketHandler extends IoHandlerAdapter {
      * @see org.apache.mina.core.service.IoHandlerAdapter#messageReceived(org.apache.mina.core.session.IoSession, java.lang.Object)
      */
     public void messageReceived(IoSession session, Object message) throws Exception {
-    	    try {
 				String msg=message+"";
-				if(msg.length()==2){
-					    String time =  System.currentTimeMillis() / 1000+"";
-				        String type=msg;//String.format("%02X", msg);
-						switch (msg) {
+			    System.err.println("接收到数据包："+msg);
+			    if(msg.length()>=2){
+				        String type =msg.substring(0, 2);
+						switch (type) {
 						case "00"://数据包
 							System.err.println("收到数据包："+msg);
-							session.write(type+time);//返回服务器状态
+					        session.write(getstatus(type));
 							break;
 						case "01"://状态包
 							System.err.println("收到状态包："+msg);
-							session.write(type+time);//返回服务器状态
+							session.write(getstatus(type));
 							break;
 						case "02"://校时包
-							System.err.println("收到校时包："+msg);
-							session.write(type+time);//返回服务器状态
-							
+						    System.err.println("收到校时包："+msg);
+						    session.write(getstatus(type));
 							break;
 						default:
 							System.err.println("未知数据："+msg);
-							session.write("02"+time);//返回服务器状态
 							break;
 						}
 			    }else{
-			    	byte[] z = msg.getBytes();
-			    	if(z.length>0){
-						if(z.length>1){
-							System.err.println("开始解析数据=================================================");
-							for (int i = 0; i < z.length; i++) {
-					    		  System.out.print("{"+z[i]+"}_"+String.format("%02X", z[0]) + " ");
-					    	}
-							System.err.println("解析数据完成=================================================");
-							session.write("01"+TimeUtil.getHextime());//返回服务器状态
-						}
-			    	}
+			    	return;
 			    }
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			    	
+			  
        
        
     }
@@ -131,7 +137,6 @@ public class SocketHandler extends IoHandlerAdapter {
     @Override
     public void sessionCreated(IoSession session) throws Exception {
     	  SocketHandler.curSessionMap.put(session.getId(), session);
-    	  
     	  System.err.println("创建一个新连接："+session.getRemoteAddress()+"并发的个数:\t"+curSessionMap.size());
 //    	  SocketSessionConfig cfg = (SocketSessionConfig) session.getConfig();   
 //          cfg.setReceiveBufferSize(2 * 1024 * 1024);   
@@ -148,7 +153,7 @@ public class SocketHandler extends IoHandlerAdapter {
     @Override
     public void sessionOpened(IoSession session) throws Exception {
 //    	  session.write("0={'smallint':30,'intv':1800}");
-        System.err.println("回话已打开:"+session.getRemoteAddress()+"\r\n准备接收数据");
+        System.err.println("会话已打开:"+session.getRemoteAddress()+"\r\n准备接收数据");
     }
     
     /*

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.bgzigbee.manage.dao.ACLMapper;
+import com.smartcold.bgzigbee.manage.entity.ACLTreeNode;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -45,6 +46,36 @@ public class ACLController {
 		return reapdata;
 	}
 	
+	
+//	public List<ACLTreeNode> getAllNode();
+	
+	/**
+	 * 获得动态菜单
+	 * @param uid
+	 * @param rdcid
+	 * @return
+	 */
+	@RequestMapping(value = "/getACLNode")
+	@ResponseBody
+	public List<ACLTreeNode> getACLMenus(int uid,String nacl){
+		return this.geNnodes(0,nacl);
+	}
+	
+	/**
+	 * 
+	 * @param pid
+	 * @param nacl
+	 * @return
+	 */
+	private List<ACLTreeNode> geNnodes(int pid,String nacl){
+		List<ACLTreeNode> nodes = this.aclMapper.getACLNodeByPid(pid,nacl);
+		for (ACLTreeNode node : nodes) {
+			if(node.isHasnode()){
+				node.setNodes( this.geNnodes(node.getId(), nacl));
+			}
+		}
+		return nodes;
+	}
 	
 	
 	

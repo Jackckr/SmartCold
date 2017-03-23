@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.smartcold.bgzigbee.manage.entity.ACLTreeNode;
+
+
 
 /**
  * 
- *@author Kaiqiang Jiang
  *@date:2016-6-22 上午11:11:51
  *@Description: Admin Mapper
  */
@@ -22,5 +24,9 @@ public interface ACLMapper {
 	public List<HashMap<String, Object>> getRoleACLByFilter(@Param("keyword")String keyword);
 	public List<HashMap<String, Object>> getGroupACLByFilter(@Param("keyword")String keyword);
 	
+	public List<ACLTreeNode> getAllNode();
+	public List<ACLTreeNode> getACLNodeByPid(@Param("pid")Integer pid,@Param("nacl")String nacl);
+	
 	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("id") Integer id);
+	
 }

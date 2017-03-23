@@ -111,11 +111,10 @@ public class TextLineEncoder extends ProtocolEncoderAdapter {
         IoBuffer buf = IoBuffer.allocate(value.length()).setAutoExpand(true);
         buf.putString(value, encoder);
 
-        if (buf.position() > maxLineLength) {
-            throw new IllegalArgumentException("Line length: " + buf.position());
-        }
-
-        buf.putString(delimiter.getValue(), encoder);
+//        if (buf.position() > maxLineLength) {
+//            throw new IllegalArgumentException("Line length: " + buf.position());
+//        }
+        buf.putString("", encoder);
         buf.flip();
         out.write(buf);
     }

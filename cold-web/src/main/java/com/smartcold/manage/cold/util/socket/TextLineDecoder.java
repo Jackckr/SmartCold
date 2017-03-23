@@ -208,56 +208,10 @@ public class TextLineDecoder implements ProtocolDecoder {
      * Decode a line using the default delimiter on the current system
      */
     private void decodeAuto(Context ctx, IoSession session, IoBuffer in, ProtocolDecoderOutput out)  throws CharacterCodingException, ProtocolDecoderException {
-    	
-// 	ctx.append(in);
-    	
+    	String hexdump = IoBufferHexDumper.getHexdump(in, in.limit());
         byte[] b = new byte [in.limit()];  
         in.get(b);  
-        StringBuffer stringBuffer = new StringBuffer();  
-        for (int i = 0; i < b.length; i++)  
-        {  
-         stringBuffer.append((char) b [i]);  
-        }  
-          String msg = stringBuffer.toString();  
-          writeText(session,msg, out);
-    
-//            int oldLimit = in.limit();
-//            byte[] l = new byte[oldLimit];
-//            in.get(l);
-//                int pos = in.position();
-//                in.limit(pos);
-//                in.position(0);
-//                ctx.append(in);
-//                in.limit(oldLimit);
-//                in.position(pos);
-//                if (ctx.getOverflowPosition() == 0) {
-//                    IoBuffer buf = ctx.getBuffer();
-//                    buf.flip();
-//                    buf.limit(buf.limit());
-//
-//                    try {
-//                        byte[] data = new byte[buf.limit()];
-//                        buf.get(data);
-//                        CharsetDecoder decoder = ctx.getDecoder();
-//
-//                        CharBuffer buffer = decoder.decode(ByteBuffer.wrap(data));
-//                        String str = buffer.toString();
-//                        writeText(session, str, out);
-//                    } finally {
-//                        buf.clear();
-//                    }
-//                } else {
-//                    int overflowPosition = ctx.getOverflowPosition();
-//                    ctx.reset();
-//                    throw new RecoverableProtocolDecoderException("Line is too long: " + overflowPosition);
-//                }
-//
-//        in.position(0);
-//        ctx.append(in);
-//        ctx.setMatchCount(0);
-      
-          
-    
+        writeText(session,hexdump, out);
     }
 
     /**

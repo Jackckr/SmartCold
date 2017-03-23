@@ -7,32 +7,32 @@
     <select id="getUserACLByFilter" parameterType="map" resultType="map">
        select id, `username` `name`  from `user` 
         <if test="keyword!=null">
-         where `username` LIKE '%#{keyword}%' or `telephone` like '%#{keyword}%' or `nickname` like '%#{keyword}%'
+         where `username` LIKE "%"#{keyword}"%"  or `telephone` like "%"#{keyword}"%"  or `nickname` like "%"#{keyword}"%" 
        </if>
         ORDER BY addTime DESC LIMIT 10;
     </select>
     
     <select id="getRdcACLByFilter" parameterType="map" resultType="map">
-      SELECT id,`name`  FROM `rdc` 
+      SELECT id,`name`   FROM `rdc` 
         <if test="keyword!=null">
-         where `name`  LIKE '%#{keyword}%' 
+         where `name`  LIKE  "%"#{keyword}"%" 
        </if>
         ORDER BY addTime DESC LIMIT 10;
     </select>
     
     
     <select id="getRoleACLByFilter" parameterType="map" resultType="map">
-      SELECT id,`name`  FROM `acl_role` 
+      SELECT id,`name`   FROM `acl_role` 
         <if test="keyword!=null">
-         where `name`  LIKE '%#{keyword}%' 
+         where `name`  LIKE "%"#{keyword}"%" 
        </if>
         ORDER BY addTime DESC LIMIT 10;
     </select>
     
     <select id="getGroupACLByFilter" parameterType="map" resultType="map">
-      SELECT id,`name`  FROM `acl_group` 
+      SELECT id,`name`   FROM `acl_group` 
         <if test="keyword!=null">
-         where `name`  LIKE '%#{keyword}%' 
+         where `name`  LIKE "%"#{keyword}"%" 
        </if>
         ORDER BY addTime DESC LIMIT 10;
     </select>
@@ -53,6 +53,12 @@
      update `${talbe}` set nacl=#{nacl} where id=#{id};
     </update>
     
+    <select id="getAllNode" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ACLTreeNode">
+	  SELECT * from coldmenus ;
+	</select>
     
+    <select id="getACLNodeByPid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ACLTreeNode">
+	  SELECT m.* ,  if(find_in_set(m.id,#{nacl})>0 or find_in_set(m.pid,#{nacl})>0,0,1)  as acl from coldmenus m where pid=#{pid} ;
+	</select>
     
 </mapper>

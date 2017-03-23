@@ -12,33 +12,14 @@
 		
 		
 		   <div class="alert alert-warning"> <a href="#" class="close" data-dismiss="alert">&times;</a>权限级别：RDC>User>Role>Group</div>
-			
-			
-			
 			<div class="row">
 		        <div class="col-md-1" ><span>对象</span></div>
 		        <div class="col-md-11">
 		               <div class="btn-group role_seclect text-left text-nowrap row">
-						<select class="col-lg-10">
-							<option value="1">RDC</option>
-							<option value="2">user</option>
-							<option value="3">role</option>
-							<option value="4">group</option>
-						</select></div>
+						 <select class="col-lg-10" ng-model="type"  ng-change="initData()" ><option ng-repeat="x in mode[0]" value="{{x.value}}">{{x.name}}</option></select>
+					  </div>
 		        </div>
 		    </div>
-<!-- 			<div class="row"> -->
-<!-- 		        <div class="col-md-1" ><span>子对象</span></div> -->
-<!-- 		        <div class="col-md-11"> -->
-<!-- 		               <div class="btn-group role_seclect text-left text-nowrap row " > -->
-<!-- 						<select class="col-lg-10 " disabled="disabled"> -->
-<!-- 							<option value="1">RDC</option> -->
-<!-- 							<option value="2">用户</option> -->
-<!-- 							<option value="3">group</option> -->
-<!-- 							<option value="4">role</option> -->
-<!-- 						</select></div> -->
-<!-- 		        </div> -->
-<!-- 		    </div> -->
 			
 			<div class="role_table col-lg-6 col-lg-md-6 col-sm-12 col-xs-12">
 				
@@ -48,18 +29,19 @@
 						   <tr>
 						     <th colspan="2">
 								 <div class="btn-group role_seclect">
-									<input type="text" placeholder="请输入关键词" id="myText" ng-mode="keyword" ng-change="searchdata" />
+									<input type="text" placeholder="请输入关键词" id="myText" ng-model="keyword" ng-change="searchdata()" />
 									<div id="searchImg" ><span class="glyphicon glyphicon-search"></span></div>
 								 </div>
 						     </th>
 						   </tr>
 							<tr>
+<!-- 								<th style="width: 100px;"><input type="checkbox" id="sel_all">全选</th> -->
 								<th>ID</th>
-								<th>name</th>
+								<th>{{mode[1][type]}}</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="obj in objData">
+							<tr ng-repeat="obj in objData"  ng-click="changenaclMode(obj.id)" >
 								<td>{{obj.id}}</td>
 								<td>{{obj.name}}</td>
 							</tr>

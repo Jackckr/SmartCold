@@ -22,16 +22,27 @@
 	</bean> 
 
 	<!--编解码 -->
-	<bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
+	<bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter"> 
 		<constructor-arg>
-			<!--构造函数的参数传入自己实现的对象 -->
-		<!--	<bean class="com.smartcold.manage.cold.util.socket.ByteArrayCodecFactory"> -->
-		 	<bean class="com.smartcold.manage.cold.util.socket.CodeFactory"> 
-				<property name="bufferLength" value="1024"></property>  
+<!-- 			构造函数的参数传入自己实现的对象 -->
+		<bean class="com.smartcold.manage.cold.util.socket.CodeFactory">
+				<property name="bufferLength" value="2"></property>  
 	 			<property name="decoderMaxLineLength" value="10240"></property>  
 			</bean>
 		</constructor-arg>
-	</bean>
+	</bean> 
+<!-- 	<bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">  -->
+<!-- 		<constructor-arg> -->
+<!-- 			构造函数的参数传入自己实现的对象 -->
+<!-- 		<bean class="com.smartcold.manage.cold.util.socket2.ByteArrayCodecFactory"></bean> -->
+<!-- 		</constructor-arg> -->
+<!-- 	</bean>  -->
+
+<!-- 	<bean id="codecFilter" class="com.smartcold.manage.cold.util.socket2.ByteArrayCodecFactory">
+		
+	</bean> -->
+	
+	
 	<!-- 日志级别 -->
 		<!-- 	<bean id="minaloglv" -->
 		<!-- 		class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean"> -->
@@ -78,7 +89,7 @@
         <!--绑定自己实现的handler -->
  		<property name="handler" ref="serverHandler" />  
          <!--声明过滤器的集合 -->
- 		<property name="filterChainBuilder" ref="filterChainBuilder" />  
+ 		<property name="filterChainBuilder" ref="filterChainBuilder" />   
  		<property name="reuseAddress" value="true" /> 
  	</bean>  
 

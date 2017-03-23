@@ -1,15 +1,28 @@
 coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $location) {
-	$scope.type=0,$scope.keyword=null;
-//	$scope.urlmode=["/i/admin/findRdcDTOByPage","","","",];
+	$scope.mode=[[{name:"RDC",value:"0"},{name:"user",value:"1"},{name:"role",value:"2"},{name:"Group",value:"3"}],["RDC名称","用户名","角色名称","组名称",""]];
+	$scope.type=$scope.mode[0][0].value,$scope.keyword=null;
+	
+	
 	$scope.initData=function(){
-				$http({method : 'POST',url : 'i/acl/getObjByType',params : {type : $scope.type,keyword : $scope.keyword}}).success(function(data) {
-					$scope.objData = data;
-			    	
-				});
+			$http({method : 'POST',url : 'i/acl/getObjByType',params : {type : $scope.type,keyword : $scope.keyword}}).success(function(data) {
+				$scope.objData = data;
+			});
+			$http({method : 'POST',url : 'i/acl/getObjByType',params : {type : $scope.type,keyword : $scope.keyword}}).success(function(data) {
+				$scope.objData = data;
+			});
 	};
-	$scope.searchdata=function(){
-		$scope.initData();
+	
+	
+	/**
+	 * 
+	 */
+	$scope.changenaclMode=function(){	
+		
+		
 	};
+	
+	
+	
 	
 	
 	$scope.initData();
