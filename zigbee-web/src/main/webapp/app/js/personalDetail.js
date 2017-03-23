@@ -14,7 +14,6 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 		    $scope.oldPwd = '';
 		    $scope.newPwd1 = '';
 		    $scope.newPwd2 = '';
-		    
 		    $scope.avatar = $scope.user.avatar;
 		    $scope.telephone ="";
 		    $scope.realname = $scope.user.realname;
@@ -180,6 +179,10 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 			}
 			
 		}
+		if(!flag_email){
+			alert("请输入正确的电子邮件地址~");
+			return false
+		}
 			if(ckvcd&&ckpwd){
 				if($scope.hometownid==undefined)
 					$scope.hometownid =  '';
@@ -217,10 +220,13 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 			}		
 		};
 });
+var flag_email = true
 function isEmail(strEmail) {
 	if (strEmail.search(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/) != -1){
+		flag_email = true ;
 		return true;
 	}else{
+		flag_email = false;
 		alert("请输入正确的电子邮件地址~");
 	}
 }
