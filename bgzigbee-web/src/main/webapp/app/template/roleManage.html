@@ -29,7 +29,7 @@
 						   <tr>
 						     <th colspan="2">
 								 <div class="btn-group role_seclect">
-									<input type="text" placeholder="请输入关键词" id="myText" ng-model="keyword" ng-change="searchdata()" />
+									<input type="text" placeholder="请输入关键词" id="myText" ng-model="keyword" ng-change="initData()" />
 									<div id="searchImg" ><span class="glyphicon glyphicon-search"></span></div>
 								 </div>
 						     </th>
@@ -41,7 +41,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="obj in objData"  ng-click="changenaclMode(obj.id)" >
+							<tr ng-repeat="obj in objDataList"  ng-click="changenaclMode(obj.id)" >
 								<td>{{obj.id}}</td>
 								<td>{{obj.name}}</td>
 							</tr>

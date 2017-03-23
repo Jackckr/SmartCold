@@ -28,13 +28,13 @@ public class ACLController {
 		if(type==null){return null;}
 		List<HashMap<String, Object>> reapdata=null;
 		switch (type) {
-		case 0:
+		case 0://RDC
 			reapdata= this.aclMapper.getRdcACLByFilter(keyword);
 			break;
-		case 1:
+		case 1://User
 			reapdata=this.aclMapper.getUserACLByFilter(keyword);
 			break;
-		case 2:
+		case 2://
 			reapdata=this.aclMapper.getRoleACLByFilter(keyword);
 			break;
 		case 3:
@@ -46,6 +46,29 @@ public class ACLController {
 		return reapdata;
 	}
 	
+	@RequestMapping(value = "/getObjNACLByTID", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getObjNACLByTID(Integer type, int id) {
+		if(type==null){return null;}
+		List<HashMap<String, Object>> reapdata=null;
+		switch (type) {
+		case 0:
+			reapdata= this.aclMapper.getNACLByID("ACL_RDC","RDCID",id);
+			break;
+		case 1:
+			reapdata= this.aclMapper.getNACLByID("ACL_USER","UID",id);
+			break;
+		case 2:
+			reapdata= this.aclMapper.getNACLByID("ACL_ROLE","ID",id);
+			break;
+		case 3:
+			reapdata= this.aclMapper.getNACLByID("ACL_GROUP","ID",id);
+			break;
+		default:
+			break;
+		}
+		return reapdata;
+	}
 	
 //	public List<ACLTreeNode> getAllNode();
 	

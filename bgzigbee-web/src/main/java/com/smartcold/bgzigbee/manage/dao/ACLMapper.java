@@ -27,6 +27,6 @@ public interface ACLMapper {
 	public List<ACLTreeNode> getAllNode();
 	public List<ACLTreeNode> getACLNodeByPid(@Param("pid")Integer pid,@Param("nacl")String nacl);
 	
-	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("id") Integer id);
+	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("column")String  column, @Param("id") Integer id);
 	
 }

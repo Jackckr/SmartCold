@@ -5,10 +5,7 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 	
 	$scope.initData=function(){
 			$http({method : 'POST',url : 'i/acl/getObjByType',params : {type : $scope.type,keyword : $scope.keyword}}).success(function(data) {
-				$scope.objData = data;
-			});
-			$http({method : 'POST',url : 'i/acl/getObjByType',params : {type : $scope.type,keyword : $scope.keyword}}).success(function(data) {
-				$scope.objData = data;
+				$scope.objDataList = data;
 			});
 	};
 	
@@ -16,9 +13,11 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 	/**
 	 * 
 	 */
-	$scope.changenaclMode=function(){	
-		
-		
+	$scope.changenaclMode=function(id){	
+		if(id&&id!=""){
+		$http({method : 'POST',url : 'i/acl/getObjNACLByTID',params : {type : $scope.type,id :id}}).success(function(data) {
+			$scope.objnacl = data;
+		});}
 	};
 	
 	

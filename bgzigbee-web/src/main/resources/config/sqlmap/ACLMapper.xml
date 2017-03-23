@@ -15,7 +15,7 @@
     <select id="getRdcACLByFilter" parameterType="map" resultType="map">
       SELECT id,`name`   FROM `rdc` 
         <if test="keyword!=null">
-         where `name`  LIKE  "%"#{keyword}"%" 
+         where `name`  LIKE  "%"#{keyword}"%" or id=#{keyword}
        </if>
         ORDER BY addTime DESC LIMIT 10;
     </select>
@@ -46,7 +46,7 @@
     </insert>
     
     <select id="getNACLByID" parameterType="map" resultType="map">
-         select id,nacl from `${talbe}` where id=#{id};
+         select id,nacl from `${table}` where `${column}`=#{id};
     </select>
     
     <update id="upACLByID" parameterType="map">
