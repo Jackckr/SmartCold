@@ -176,7 +176,7 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
             params: {
                 rdcId: $scope.rdcId,
                 audit: 0,
-                keyword: encodeURI($scope.keyword, "UTF-8"),
+                keyword: decodeURI(encodeURI($scope.keyword,"UTF-8"))
             }
         }).success(function (data) {
             $scope.Maintenances0 = data.list;
@@ -193,7 +193,7 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
                 pageSize: $scope.maxSize,
                 rdcId: $scope.rdcId,
                 audit: 1,
-                keyword: encodeURI($scope.keyword, "UTF-8"),
+                keyword: decodeURI(encodeURI($scope.keyword,"UTF-8"))
             }
         }).success(function (data) {
            pageNum = data.pageNum;
