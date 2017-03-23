@@ -62,6 +62,18 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     $scope.totalhonorfiles = [];
     $scope.arrangePics = [];
     $scope.addFiles = function (files) {
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+        		return false
+        	}
+    	}
         if($scope.totalfiles.length + files.length > 5){
            // alert("最多上传五张图片");
             layer.open({
@@ -73,6 +85,18 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
     $scope.addArrangePic= function (files) {
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+        		return false
+        	}
+    	}
     	if($scope.arrangePics.length + files.length > 1){
             //alert("最多上传八张图片");
         	layer.open({
@@ -84,6 +108,18 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         $scope.arrangePics = $scope.arrangePics.concat(files);
     }
     $scope.addHonorFiles = function (files) {
+    	for(let j=0,fileLen=files.length;j<fileLen;j++){
+    		let _file=files[j].name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+        		return false
+        	}
+    	}
         if($scope.totalhonorfiles.length + files.length > 8){
             //alert("最多上传八张图片");
         	layer.open({

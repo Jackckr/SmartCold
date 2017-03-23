@@ -67,7 +67,8 @@ $().ready(function() {
   	 getFilter=function(pageNum,pageSize){
   		    var adds=$("#ul_hascar_list li.active").attr("value");////地区
   			var gdty=$("#ul_goodtype_list li.active").attr("value");//商品类型
-  		    var _options={provinceid:adds, goodtype: gdty,type:type,datatype:1,rdcID:rdcid};
+  			var keyword=$("#searchDara_div input").val().trim();////关键字搜索
+  		    var _options={provinceid:adds, goodtype: gdty,type:type,datatype:1,rdcID:rdcid,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
@@ -111,5 +112,31 @@ $().ready(function() {
 		initevg();
 
 	};
+	searchFilter = function(){//搜索
+   		if($("#searchDara_div input").val().trim() != ""){
+   			currentPage=1;
+    		ul_select.empty();
+    		getPageData();
+    	}
+    };
+    searchFilters = function(){//搜索
+    	if($("#searchDara_div input").val().trim() == ""){
+    		alert("请输入你要搜索的内容~")
+    	}else{
+    		currentPage=1;
+    		ul_select.empty();
+    		getPageData();
+    	}
+    };
+    $(window).scroll(function(){
+ 	    var scrollTop = $(this).scrollTop();
+     	var scrollHeight = $(document).height();
+     	var windowHeight = $(this).height();
+     	if(scrollTop + windowHeight > scrollHeight-100){
+     		if(isLoadRB==false&&currentPage<totalPages+1){
+     		   getPageData();
+     		}
+     	};
+ 	});
 	initData();
 });	

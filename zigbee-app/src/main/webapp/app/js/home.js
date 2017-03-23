@@ -1,7 +1,7 @@
 function gordcdile(sharid){window.location.href ="view/colddetail.html?id="+sharid; };
 function goshadile(sharid){window.location.href ="view/storehousedetail.html?id="+sharid; };
-function gordclist() {var key=$("#searchdiv").val();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;};
-function gosharlist(){var key=$("#searchdiv").val();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;   };
+function gordclist() {var key=$("#searchdiv").val().trim();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;};
+function gosharlist(){var key=$("#searchdiv").val().trim();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;   };
 function goshkeylist(em){var key=$(em).attr("value");  window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/searchList.html?key="+key;};
 $().ready(function() { 
 	var province=null,sccsize=0,shear=false;
@@ -61,14 +61,23 @@ $().ready(function() {
 		 $("#searchdiv").keyup(function(event){seachList(this);});
 		 $("#del_hist").click(function (e) {$("#ul_hoist").empty();  util.delCookie("mianshdt"); });
 		 $("#city").click(function (e) {if(province){SelCity(this,e,province);$("#city").siblings('i').html('&#xe62e;');} });
-		 $("#searchdivi").click(function(){ var key=$("#searchdiv").val();$("#searchdiv").val("");addshhist(key); window.location.href ="view/searchList.html"; });
-		 $("#searchdiv").focus(function(){ _sysconfig.resize=false;if(!shear){shear=true;getSHHistory(); $("#maindiv,#hf_addres,#footer").hide();$("#seachdata,#hf_back").show();}});
+		$("#searchdivi").click(function() {
+			var key = $("#searchdiv").val().trim();
+			$("#searchdiv").val("");
+			if(key != ""){
+				addshhist(key);
+				window.location.href = "view/searchList.html";
+			}else{
+				alert("请输入你要搜索的内容~")
+			}			
+		});
+		$("#searchdiv").focus(function(){ _sysconfig.resize=false;if(!shear){shear=true;getSHHistory(); $("#maindiv,#hf_addres,#footer").hide();$("#seachdata,#hf_back").show();}});
 		 $("#hf_back").click(function(){ _sysconfig.resize=true;shear=false;$("#shearlist ul,#rdclist ul,#shartitle,#rdctitle").empty();$("#searchdiv").val("");$("#seachdata,#hf_back").hide();$("#maindiv,#hf_addres,#defseachdata,#footer").show();});
 	};
 	initdata();
 	initevg();
 	function seachList(em){
-		var key= $(em).val();
+		var key= $(em).val().trim();
 		if(key!=""){
 			$("#defseachdata").hide();
 			$("#cuttseachdata").show();
