@@ -1,0 +1,7 @@
+package protobuf;
+option java_package = "";
+      option java_outer_classname = "FirstProtobuf";
+      message testBuf  {
+      required int32 ID = 1;
+      required string Url = 2;
+}
