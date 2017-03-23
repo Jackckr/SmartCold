@@ -5,13 +5,8 @@ import javolution.io.Struct;
 
 
 public class SocketStatus extends Struct { 
-	
-public final Unsigned8 type = new Unsigned8(); 
-public final Unsigned8 time = new Unsigned8(); 
-
-
-
-
+	public final Unsigned16 type = new Unsigned16(); 
+	public final Unsigned16 time = new Unsigned16(); 
 } 
 
 
