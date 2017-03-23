@@ -19,7 +19,7 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
     	$http.get('/i/rdc/findRDCDTOByUserId', {
             params: {
                 "userID": $rootScope.user.id,
-                 keyword:$scope.keyword,
+                 keyword:$("#rdc_search").val().trim(),
                 pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize
             }
@@ -30,7 +30,12 @@ coldWeb.controller('personalRdc', function ($rootScope, $scope, $state, $cookies
 	}
 	
     $scope.goSearch = function () {
-        $scope.getRdcs();
+    	if($("#rdc_search").val().trim() != ""){
+    		$scope.getRdcs();
+    	}else{
+    		alert("请输入冷库名称~")
+    	}
+        
     }
 
 	$scope.goDetail = function (rdcID) {

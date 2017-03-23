@@ -25,9 +25,13 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
 		     $("#rdc_filter_div ._nonefilter" ).click(function(event) {  $(this).next().find("li").removeClass("active"); $(this).addClass("active");  $scope.pageChanged(); });//业务类型
 		     $("#sl_provincesl").change(function(){$scope.pageChanged();});
 		     $("#txt_seachtxt").bind("keyup", function(event) { if (event.keyCode == "13") { 
-		    	 $("#rdc_filter_div li" ).removeClass("active");
-		    	 $("#rdc_filter_div ._nonefilter" ).addClass("active");
-		    	 $scope.pageChanged(true); 
+		    	 if($(this).val().trim() == ""){
+		    		 alert("请输入冷库关键字~")
+		    	 }else{
+			    	 $("#rdc_filter_div li" ).removeClass("active");
+			    	 $("#rdc_filter_div ._nonefilter" ).addClass("active");
+			    	 $scope.pageChanged(true); 
+		    	 }
 		     } });//数据搜索事件
           });
     }
@@ -52,7 +56,7 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
 		      if(telist){tety=[]; $.each(telist, function(i, vo){tety.push($(vo).attr("value"));});tety=tety.join(",");}
 		      if(smlist){smty=[]; $.each(smlist, function(i, vo){smty.push($(vo).attr("value"));});smty=smty.join(",");}
 		      if(bslist){bsty=[]; $.each(bslist, function(i, vo){bsty.push($(vo).attr("value"));});bsty=bsty.join(",");}
-			  var _options={
+		      var _options={
 			   isKey:isKey,//true,主动搜索
                managementType    : mtty  ,//        经营类型
                storageType       : daty  ,//        存放类型
@@ -68,13 +72,27 @@ coldWeb.controller('coldStoragelist', function ($rootScope, $scope, $state, $coo
 	}
 
 	 $scope.pageChanged = function (isKey) {
-		   var _filter=  getFilter($scope.bigCurrentPage,$scope.maxSize,isKey);
-		   $.post("/i/rdc/getRDCList", _filter, function(data) {//	$("#txt_seachtxt").val(""); $scope.query="";		  
-		            $scope.$apply(function () {
-		                $scope.rdcs = data.data;
-		 			    $scope.bigTotalItems = data.total;
-		            });
-			});
+		 if(isKey){
+			 if($("#txt_seachtxt").val().trim() == ""){
+	    		 alert("请输入冷库关键字~")
+			 }else{
+				 var _filter=  getFilter($scope.bigCurrentPage,$scope.maxSize,isKey);
+				   $.post("/i/rdc/getRDCList", _filter, function(data) {
+				            $scope.$apply(function () {
+				                $scope.rdcs = data.data;
+				 			    $scope.bigTotalItems = data.total;
+				            });
+					});
+			 }
+		 }else{
+			 var _filter=  getFilter($scope.bigCurrentPage,$scope.maxSize,isKey);
+			   $.post("/i/rdc/getRDCList", _filter, function(data) {
+			            $scope.$apply(function () {
+			                $scope.rdcs = data.data;
+			 			    $scope.bigTotalItems = data.total;
+			            });
+				});
+		 }
    };
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     function addScore(rdc) {

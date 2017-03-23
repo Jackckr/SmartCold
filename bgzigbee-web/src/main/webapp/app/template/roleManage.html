@@ -11,7 +11,7 @@
 		<div class="tab-pane fade in active clearfix" id="rdc_limit">
 		
 		
-		   <div class="alert alert-warning"> <a href="#" class="close" data-dismiss="alert">&times;</a>权限级别：RDC>User>Role>Group</div>
+		   <div class="alert alert-warning" style="font-size: 2em"> <a href="#" class="close" data-dismiss="alert">&times;</a>权限级别：RDC>User>Role>Group</div>
 			<div class="row form-group">
 		        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" >对象</div>
 		        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
@@ -30,14 +30,14 @@
 						     <th colspan="2">
 								 <div class="btn-group role_seclect">
 									<input type="text" placeholder="请输入关键词" id="myText" ng-model="keyword" ng-change="initData()" />
-									<div id="searchImg" ><span class="glyphicon glyphicon-search"></span></div>
+									<div id="searchImg" ng-click="initData()"><span class="glyphicon glyphicon-search"></span></div>
 								 </div>
 						     </th>
 						   </tr>
 							<tr>
 <!-- 								<th style="width: 100px;"><input type="checkbox" id="sel_all">全选</th> -->
-								<th>ID</th>
-								<th>{{mode[1][type]}}</th>
+								<th style="background: #E4E4E4;">ID</th>
+								<th style="background: #E4E4E4;">{{mode[1][type]}}</th>
 							</tr>
 						</thead>
 						<tbody id="tb_body">
@@ -121,7 +121,7 @@
 						</div>
 					</div>
                     <div class="filter text-center">
-                       <button type="button" class="btn btn-success" ng-click="saveacl()" ng-disabled="!objnacl">保存</button>
+                       <button type="button" class="btn btn-success" ng-click="saveacl()" style="width: 100%;" ng-disabled="!objnacl">保存</button>
                     </div>
 				</div>
 			</div>

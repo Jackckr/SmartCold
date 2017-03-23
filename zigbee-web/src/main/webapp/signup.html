@@ -245,37 +245,29 @@ $(function(){
 		userName = $("#username").val().trim();
 		var password = $('input[name=password]').val().trim();
 		var password1 = $('input[name=password1]').val().trim();
-		//email = $('#email')[0].value;
-		/* if(email==undefined)
-		 email = ""; */
-		$.post('/i/user/userNameVerify',{
-			username:$('input[name=username]').val().trim()
-		}, function(data){
-			if(!data)
-			 alert("用户名已存在");
-		});
-		//if(userName == "" || checkPassword() || email == ""){
-		if(userName == ""){
-			alert("用户名不能为空");
+		var checkUserName = $("#username_error").html();
+		if(checkUserName != ""){
+			alert(checkUserName);
+		}else if(password != password1){
+			alert("两次密码不统一~")
 		}else{
 	    	$.ajax({
 	    		type:"POST",
 	    		data:{username:userName,
 	    				password:password,
 	    				password1:password1,
-// 	    				email:email,
 	    				telephone:$("#text_telephone").val().trim(),
-	    				signUpCode:$('input[name=signUpCode]').val().trim()
-	    		},
+	    				signUpCode:$('input[name=signUpCode]').val().trim()},
 	    		url:"/i/user/signup?",
-	    				async:false}).success(function(data){
-	    					alert(data.message);
-	    					if(data.status == "0"){
-	    						window.location.href = "http://" + window.location.host + "/login.html";
-	    						window.event.returnValue=false;
-	    					}
-	    				}).error(function(data){
-	    					alert("系统错误");
+	    		async:false}
+	    		).success(function(data){
+    				   alert(data.message);
+    				   if(data.status == "0"){
+    						window.location.href = "http://" + window.location.host + "/login.html";
+    						window.event.returnValue=false;
+    				   }
+    				}).error(function(data){
+    					alert("系统错误");
 	    		})
 		}
 	});

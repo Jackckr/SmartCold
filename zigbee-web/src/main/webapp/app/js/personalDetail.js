@@ -49,19 +49,29 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
     // 获取省列表
     $http.get('/i/city/findProvinceList').success(function (data) { $scope.provinces = data;});
 	$scope.setimg = function(em, imgid) {
-        var oFile = $(em)[0].files[0];
-        var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
+        let oFile = $(em)[0].files[0];
+        /* var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
         var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
         if (!rFilter.test(oFile.type)) {
             alert("格式错误~请选择格式为" + msg + "的图片~");
             return;
-        }
-        var oImage = document.getElementById(imgid);
-        var oReader = new FileReader();
-        oReader.onload = function(e) {
-            oImage.src = e.target.result;
-        };
-        oReader.readAsDataURL(oFile);
+        }*/
+    		let _file=oFile.name;
+    		let i=_file.lastIndexOf('.');
+    		let len=_file.length;
+    		let extEndName=_file.substring(i+1, len);
+    		let extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}
+	        var oImage = document.getElementById(imgid);
+	        var oReader = new FileReader();
+	        oReader.onload = function(e) {
+	            oImage.src = e.target.result;
+	        };
+	        oReader.readAsDataURL(oFile);
       
     };
 
@@ -208,9 +218,9 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 		};
 });
 function isEmail(strEmail) {
-	if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1){
+	if (strEmail.search(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/) != -1){
 		return true;
 	}else{
-		alert("电子邮件地址必须包括 ( @ 和 . )");
+		alert("请输入正确的电子邮件地址~");
 	}
 }

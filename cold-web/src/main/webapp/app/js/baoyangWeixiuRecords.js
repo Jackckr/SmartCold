@@ -54,7 +54,11 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 		$scope.getMaintenances0();
     };
 	$scope.goSearch1 = function () {
-		$scope.getMaintenances1();
+		if($scope.keyword ==""){
+    		alert("请输入需要搜索的机组名称~");
+    	}else{
+    		$scope.getMaintenances1();
+    	}
     };
 	
 	function delcfm() {

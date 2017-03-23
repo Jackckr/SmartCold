@@ -21,8 +21,8 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 			$scope.selobjid=id;
 			 $scope.objnacl = null;
 			$scope.checkall();
-			$("#tb_body tr").removeClass("warning");
-			$("#tr_row_"+id).addClass("warning");
+			$("#tb_body tr").removeClass("seclectTr");
+			$("#tr_row_"+id).addClass("seclectTr");
 		    $http({method : 'POST',url : 'i/acl/getObjNACLByTID',params : {type : $scope.type,id :id}}).success(function(data) {
 			  $scope.objnacl = data;
 			  if($scope.objnacl.length>0){
