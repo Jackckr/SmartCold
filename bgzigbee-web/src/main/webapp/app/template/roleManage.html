@@ -12,9 +12,9 @@
 		
 		
 		   <div class="alert alert-warning"> <a href="#" class="close" data-dismiss="alert">&times;</a>权限级别：RDC>User>Role>Group</div>
-			<div class="row">
-		        <div class="col-md-1" ><span>对象</span></div>
-		        <div class="col-md-11">
+			<div class="row form-group">
+		        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2" >对象</div>
+		        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
 		               <div class="btn-group role_seclect text-left text-nowrap row">
 						 <select class="col-lg-10" ng-model="type"  ng-change="initData()" ><option ng-repeat="x in mode[0]" value="{{x.value}}">{{x.name}}</option></select>
 					  </div>
@@ -56,18 +56,18 @@
 						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
 						<div class="oneFilter">
 							<span class="role_on_off"></span>
-							<label><input aid="" pid="" type="checkbox" value="">监控</label>
+							<label><input aid="1" pid="0" type="checkbox" value="">监控</label>
 						</div>
 						<!-- 二级过滤：用来刷新页面内容 -->
 						<ul class="role_list">
-							<li><label><input type="checkbox" value="">温度</label></li>
-							<li><label><input type="checkbox" value="">能耗</label></li>
-							<li><label><input type="checkbox" value="">门</label></li>
-							<li><label><input type="checkbox" value="">库内设施</label></li>
-							<li><label><input type="checkbox" value="">货物</label></li>
-							<li><label><input type="checkbox" value="">制冷系统</label></li>
-							<li><label><input type="checkbox" value="">历史曲线查询</label></li>
-							<li><label><input type="checkbox" value="">历史数据查询</label></li>
+							<li><label><input aid="10" pid="1" type="checkbox" value="">温度</label></li>
+							<li><label><input aid="20" pid="1" type="checkbox" value="">能耗</label></li>
+							<li><label><input aid="30" pid="1" type="checkbox" value="">门</label></li>
+							<li><label><input aid="40" pid="1" type="checkbox" value="">库内设施</label></li>
+							<li><label><input aid="50" pid="1" type="checkbox" value="">货物</label></li>
+							<li><label><input aid="60" pid="1" type="checkbox" value="">制冷系统</label></li>
+							<li><label><input aid="70" pid="1" type="checkbox" value="">历史曲线查询</label></li>
+							<li><label><input aid="80" pid="1" type="checkbox" value="">历史数据查询</label></li>
 						</ul>
 					</div>
 
@@ -75,15 +75,15 @@
 						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
 						<div class="oneFilter">
 							<span class="role_on_off"></span>
-							<label><input type="checkbox" value="">分析及报告</label>
+							<label><input aid="100" pid="0" type="checkbox" value="">分析及报告</label>
 						</div>
 						<!-- 二级过滤：用来刷新页面内容 -->
 						<ul class="role_list">
-							<li><label><input type="checkbox" value="">温度分析</label></li>
-							<li><label><input type="checkbox" value="">运管分析</label></li>
-							<li><label><input type="checkbox" value="">制冷系统分析</label></li>
-							<li><label><input type="checkbox" value="">报表功能</label></li>
-							<li><label><input type="checkbox" value="">分析报告</label></li>
+							<li><label><input aid="110" pid="100" type="checkbox" value="">温度分析</label></li>
+							<li><label><input aid="120" pid="100" type="checkbox" value="">运管分析</label></li>
+							<li><label><input aid="130" pid="100" type="checkbox" value="">制冷系统分析</label></li>
+							<li><label><input aid="140" pid="100" type="checkbox" value="">报表功能</label></li>
+							<li><label><input aid="150" pid="1" type="checkbox" value="">分析报告</label></li>
 						</ul>
 					</div>
 
@@ -91,11 +91,11 @@
 						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
 						<div class="oneFilter">
 							<span class="role_on_off"></span>
-							<label><input type="checkbox" value="">实时报警</label>
+							<label><input aid="200" pid="0" type="checkbox" value="">实时报警</label>
 						</div>
 						<!-- 二级过滤：用来刷新页面内容 -->
 						<ul class="role_list">
-							<li><label><input type="checkbox" value="">报警日志</label></li>
+							<li><label><input aid="210" pid="200" type="checkbox" value="">报警日志</label></li>
 						</ul>
 					</div>
 
@@ -103,13 +103,13 @@
 						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
 						<div class="oneFilter">
 							<span class="role_on_off"></span>
-							<label><input type="checkbox" value="">维护管理</label>
+							<label><input aid="300" pid="0" type="checkbox" value="">维护管理</label>
 						</div>
 						<!-- 二级过滤：用来刷新页面内容 -->
 						<ul class="role_list">
-							<li><label><input type="checkbox" value="">机组维护提醒</label></li>
-							<li><label><input type="checkbox" value="">故障维修提醒</label></li>
-							<li><label><input type="checkbox" value="">故障维修记录</label></li>
+							<li><label><input aid="310" pid="300" type="checkbox" value="">机组维护提醒</label></li>
+							<li><label><input aid="320" pid="300" type="checkbox" value="">故障维修提醒</label></li>
+							<li><label><input aid="330" pid="300" type="checkbox" value="">故障维修记录</label></li>
 						</ul>
 					</div>
 
@@ -117,7 +117,7 @@
 						<!-- 一级过滤：仅仅用来显示隐藏二级过滤 -->
 						<div class="oneFilter">
 							<span class="role_on_off"></span>
-							<label><input type="checkbox" value="">选型</label>
+							<label><input aid="400" pid="0" type="checkbox" value="">选型</label>
 						</div>
 					</div>
 
