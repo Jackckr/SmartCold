@@ -10,7 +10,7 @@
 	 SELECT nacl from acl_rdc where rdcid=#{rdcid};
 	</select>
 	<select id="getRUACL" parameterType="Integer" resultType="String">
-	 select nacl from acl_user where uid=#{uid};
+	  select CONCAT_WS(',',(SELECT nacl from acl_user u where uid=#{uid}) ,(select nacl from acl_rdc where rdcid=#{rdcid} )) as c;
 	</select>
 	<select id="getALLACLNode" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.ACLTreeNode">
 	  SELECT m.* ,  if(find_in_set(m.id,#{nacl})>0 or find_in_set(m.pid,#{nacl})>0,0,1)  as acl from coldmenus m  ;

@@ -9,15 +9,15 @@
         <if test="keyword!=null">
          where `username` LIKE "%"#{keyword}"%"  or `telephone` like "%"#{keyword}"%"  or `nickname` like "%"#{keyword}"%" 
        </if>
-        ORDER BY addTime DESC LIMIT 10;
+        ORDER BY addTime DESC LIMIT 14;
     </select>
     
     <select id="getRdcACLByFilter" parameterType="map" resultType="map">
       SELECT id,`name`   FROM `rdc` 
         <if test="keyword!=null">
-         where `name`  LIKE  "%"#{keyword}"%" or id=#{keyword}
+         where `name`  LIKE  "%"#{keyword}"%" or id LIKE  "%"#{keyword}"%" 
        </if>
-        ORDER BY addTime DESC LIMIT 10;
+        ORDER BY addTime DESC LIMIT 14;
     </select>
     
     
@@ -26,7 +26,7 @@
         <if test="keyword!=null">
          where `name`  LIKE "%"#{keyword}"%" 
        </if>
-        ORDER BY addTime DESC LIMIT 10;
+        ORDER BY addTime DESC LIMIT 14;
     </select>
     
     <select id="getGroupACLByFilter" parameterType="map" resultType="map">
@@ -34,23 +34,27 @@
         <if test="keyword!=null">
          where `name`  LIKE "%"#{keyword}"%" 
        </if>
-        ORDER BY addTime DESC LIMIT 10;
+        ORDER BY addTime DESC LIMIT 14;
     </select>
     
-    <insert id="addUserAcl" parameterType="map">
-      INSERT INTO acl_user(uid,nacl)VALUES(#{uid},#{nacl});
+    <insert id="addNaclByOid" parameterType="map">
+      INSERT INTO `${table}` (${column},nacl)VALUES(#{oid},#{nacl});
     </insert>
     
-    <insert id="addRdcAcl" parameterType="map">
-      INSERT INTO acl_rdc(rdcid,nacl)VALUES(#{rdcid},#{nacl});
-    </insert>
+    <delete id="delACLById" parameterType="map">
+      DELETE from `${table}` where id=#{id};
+    </delete>
+    
+<!--     <insert id="addRdcAcl" parameterType="map"> -->
+<!--       INSERT INTO acl_rdc(rdcid,nacl)VALUES(#{rdcid},#{nacl}); -->
+<!--     </insert> -->
     
     <select id="getNACLByID" parameterType="map" resultType="map">
          select id,nacl from `${table}` where `${column}`=#{id};
     </select>
     
     <update id="upACLByID" parameterType="map">
-     update `${talbe}` set nacl=#{nacl} where id=#{id};
+     update `${table}` set nacl=#{nacl} where id=#{id};
     </update>
     
     <select id="getAllNode" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.ACLTreeNode">

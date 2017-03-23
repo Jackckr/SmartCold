@@ -15,18 +15,20 @@ import com.smartcold.bgzigbee.manage.entity.ACLTreeNode;
  *@Description: Admin Mapper
  */
 public interface ACLMapper {
-	public void addUserAcl(@Param("uid")Integer uid,@Param("nacl")String nacl);
-	public void addRdcAcl(@Param("rdcid")Integer rdcid,@Param("nacl")String nacl);
-	public void upACLByID(@Param("table")String table, @Param("id") Integer id);
 	
 	public List<HashMap<String, Object>> getRdcACLByFilter(@Param("keyword")String keyword);
 	public List<HashMap<String, Object>> getUserACLByFilter(@Param("keyword")String keyword);
 	public List<HashMap<String, Object>> getRoleACLByFilter(@Param("keyword")String keyword);
 	public List<HashMap<String, Object>> getGroupACLByFilter(@Param("keyword")String keyword);
 	
+	public void delACLById(@Param("table")String table, @Param("id") Integer id);
+	public void upACLByID(@Param("table")String table, @Param("id") Integer id,@Param("nacl")String nacl);
+	public void addNaclByOid(@Param("table")String table,  @Param("column")String  column, @Param("oid") Integer oid,@Param("nacl")String nacl);
+	
+	
+	
 	public List<ACLTreeNode> getAllNode();
 	public List<ACLTreeNode> getACLNodeByPid(@Param("pid")Integer pid,@Param("nacl")String nacl);
-	
 	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("column")String  column, @Param("id") Integer id);
 	
 }

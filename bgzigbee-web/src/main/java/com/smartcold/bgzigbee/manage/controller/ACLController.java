@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.bgzigbee.manage.dao.ACLMapper;
 import com.smartcold.bgzigbee.manage.entity.ACLTreeNode;
+import com.smartcold.bgzigbee.manage.util.SetUtil;
+import com.smartcold.bgzigbee.manage.util.StringUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -70,6 +72,48 @@ public class ACLController {
 		return reapdata;
 	}
 	
+	
+	@RequestMapping(value = "/upObjNACLByTID", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean upObjNACLByTID(Integer type, Integer id,Integer oid,String nacl) {
+		try {
+			if(type==null){return false;}
+			String table=null;String column=null; 
+			switch (type) {
+			case 0:
+				table="ACL_RDC";column="RDCID";
+				break;
+			case 1:
+				table="ACL_USER";column="UID";
+				break;
+			case 2:
+				table="ACL_ROLE";column="ID";
+				break;
+			case 3:
+				table="ACL_GROUP";column="ID";
+				break;
+			default:
+				return false;
+			}
+			
+			if(id!=null){//修改
+				if(StringUtil.isNull(nacl)){
+					this.aclMapper.delACLById(table, id);
+				}else{
+				   this.aclMapper.upACLByID(table, id, nacl);
+				}
+			}else if(oid!=null){//添加
+				if(StringUtil.isnotNull(nacl)){
+					this.aclMapper.addNaclByOid(table, column, oid, nacl);
+				}
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
 //	public List<ACLTreeNode> getAllNode();
 	
 	/**
