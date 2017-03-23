@@ -15,7 +15,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 			params : {
 				rdcId:$rootScope.rdcId,
 				audit : 0,
-				keyword : encodeURI($scope.keyword,"UTF-8"),
+				keyword : decodeURI(encodeURI($scope.keyword,"UTF-8")),
 			}
 		}).success(function(data) {
 			$scope.Maintenances0 = data.list;
@@ -31,7 +31,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 				pageSize : $scope.maxSize,
 				rdcId:$rootScope.rdcId,
 				audit : 1,
-				keyword : encodeURI($scope.keyword,"UTF-8"),
+				keyword :decodeURI(encodeURI($scope.keyword,"UTF-8")),
 			}
 		}).success(function(data) {
 			$scope.bigTotalItems = data.total;
