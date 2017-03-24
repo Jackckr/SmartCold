@@ -40,7 +40,7 @@
           	<td ng-if="maintenance1.detail!='undefined'">{{maintenance1.detail}}</td> 	
           	<td ng-if="maintenance1.note=='undefined'"></td> 
           	<td ng-if="maintenance1.note!='undefined'">{{maintenance1.note}}</td> 	
-          	<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-change="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
+          	<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-blur="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
           	<td class="text-center">
           		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
        		</td>    
