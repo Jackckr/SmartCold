@@ -9,12 +9,12 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONArray;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
-import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -52,38 +52,27 @@ public class SocketHandler extends IoHandlerAdapter {
 	    return buffer;
     }
 //
-//    private static  int pasint(int type,Integer length,StringBuffer  buffer){
-//		String val = buffer.substring(0,length);buffer.delete(0, length);
-//		switch (type) {
-//		case 2:
-//			return Integer.parseInt(val);  
-//		case 4:
-//			return Integer.parseInt(val);  
-//		case 8:
-//			return Integer.parseInt(val, 16);  
-//		default:
-//			return -1;
-//		}
-//		
-//	}
-    
+//    if(!"02".equals(data)){
+//		 System.err.println("===========================存在粘包");
+//	    }
+
     private  void analysisData(String type,String msg){
 		switch (type) {
 		case "00"://数据包
-			System.err.println("收到{数据}包");
+//			System.err.println("收到{数据}包");
 		     APInfo apDataInfo = DataUtil.getAPDataInfo(msg);
 		     System.err.println( JSONArray.toJSONString(apDataInfo));
 			break;
 		case "01"://状态包
-			System.err.println("收到{状态}包");
+//			System.err.println("收到{状态}包");
 			DevStateInfo dev = DataUtil.getDevStateInfo(msg);
 			   System.err.println(  JSONArray.toJSONString(dev));
 			break;
 		case "02"://校时包
-		    System.err.println("收到校时包："+msg);
+//		    System.err.println("收到校时包："+msg);
 			break;
 		default:
-			System.err.println("未知数据："+msg);
+//			System.err.println("未知数据："+msg);
 			break;
 		}
     	
@@ -107,6 +96,9 @@ public class SocketHandler extends IoHandlerAdapter {
     public void messageReceived(IoSession session, Object message) throws Exception {
 		String msg=message+"";
 	    if(msg.length()>=2){
+	    	   if(!"02".equals(msg)){
+    			 System.err.println("===========================存在粘包2");
+    		    }
 		        String type =msg.substring(0, 2);
 		        session.write(getstatus(type));
 		        analysisData(type,msg);
@@ -124,7 +116,7 @@ public class SocketHandler extends IoHandlerAdapter {
     @Override
     public void messageSent(IoSession session, Object message) throws Exception {
     	 super.messageSent(session, message);
-    	 System.err.println("messageSent:向客户端发送："+message);
+//    	 System.err.println("messageSent:向客户端发送："+message);
     }
     
     /*
@@ -136,11 +128,11 @@ public class SocketHandler extends IoHandlerAdapter {
     public void sessionCreated(IoSession session) throws Exception {
     	  SocketHandler.curSessionMap.put(session.getId(), session);
     	  System.err.println("创建一个新连接："+session.getRemoteAddress()+"并发的个数:\t"+curSessionMap.size());
-//    	  SocketSessionConfig cfg = (SocketSessionConfig) session.getConfig();   
-//          cfg.setReceiveBufferSize(2 * 1024 * 1024);   
-//          cfg.setReadBufferSize(2 * 1024 * 1024);   
-//          cfg.setKeepAlive(true);   
-//          cfg.setSoLinger(0); //这个是根本解决问题的设置   
+    	  SocketSessionConfig cfg = (SocketSessionConfig) session.getConfig();   
+          cfg.setReceiveBufferSize(2 * 1024 * 1024);   
+          cfg.setReadBufferSize(2 * 1024 * 1024);   
+          cfg.setKeepAlive(true);   
+          cfg.setSoLinger(0); //这个是根本解决问题的设置   
     }
     
     /*

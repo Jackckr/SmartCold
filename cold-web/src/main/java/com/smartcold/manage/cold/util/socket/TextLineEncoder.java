@@ -1,25 +1,4 @@
 package com.smartcold.manage.cold.util.socket;
-
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
- *  "License"); you may not use this file except in compliance
- *  with the License.  You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
- *
- */
-
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
@@ -46,7 +25,54 @@ public class TextLineEncoder extends ProtocolEncoderAdapter {
 
     private int maxLineLength = Integer.MAX_VALUE;
 
-  
+    /**
+     * Creates a new instance with the current default {@link Charset}
+     * and {@link LineDelimiter#UNIX} delimiter.
+     */
+    public TextLineEncoder() {
+        this(Charset.defaultCharset(), LineDelimiter.UNIX);
+    }
+
+    /**
+     * Creates a new instance with the current default {@link Charset}
+     * and the specified <tt>delimiter</tt>.
+     * 
+     * @param delimiter The line delimiter to use
+     */
+    public TextLineEncoder(String delimiter) {
+        this(new LineDelimiter(delimiter));
+    }
+
+    /**
+     * Creates a new instance with the current default {@link Charset}
+     * and the specified <tt>delimiter</tt>.
+     * 
+     * @param delimiter The line delimiter to use
+     */
+    public TextLineEncoder(LineDelimiter delimiter) {
+        this(Charset.defaultCharset(), delimiter);
+    }
+
+    /**
+     * Creates a new instance with the specified <tt>charset</tt>
+     * and {@link LineDelimiter#UNIX} delimiter.
+     * 
+     * @param charset The {@link Charset} to use
+     */
+    public TextLineEncoder(Charset charset) {
+        this(charset, LineDelimiter.UNIX);
+    }
+
+    /**
+     * Creates a new instance with the specified <tt>charset</tt>
+     * and the specified <tt>delimiter</tt>.
+     * 
+     * @param charset The {@link Charset} to use
+     * @param delimiter The line delimiter to use
+     */
+    public TextLineEncoder(Charset charset, String delimiter) {
+        this(charset, new LineDelimiter(delimiter));
+    }
 
     /**
      * Creates a new instance with the specified <tt>charset</tt>
@@ -101,14 +127,21 @@ public class TextLineEncoder extends ProtocolEncoderAdapter {
      */
     public void encode(IoSession session, Object message, ProtocolEncoderOutput out) throws Exception {
         CharsetEncoder encoder = (CharsetEncoder) session.getAttribute(ENCODER);
+
         if (encoder == null) {
             encoder = charset.newEncoder();
             session.setAttribute(ENCODER, encoder);
         }
+
         String value = (message == null ? "" : message.toString());
         IoBuffer buf = IoBuffer.allocate(value.length()).setAutoExpand(true);
         buf.putString(value, encoder);
-        buf.putString("", encoder);
+
+        if (buf.position() > maxLineLength) {
+            throw new IllegalArgumentException("Line length: " + buf.position());
+        }
+
+        buf.putString(delimiter.getValue(), encoder);
         buf.flip();
         out.write(buf);
     }

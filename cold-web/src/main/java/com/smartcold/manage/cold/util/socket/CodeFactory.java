@@ -6,9 +6,10 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolEncoder;
-import org.apache.mina.filter.codec.textline.LineDelimiter;
+//import org.apache.mina.filter.codec.textline.LineDelimiter;
 //import org.apache.mina.filter.codec.textline.TextLineEncoder;
 //import org.apache.mina.filter.codec.textline.TextLineDecoder;
+import org.apache.mina.filter.codec.textline.LineDelimiter;
 
 public class CodeFactory implements ProtocolCodecFactory {
     private final TextLineEncoder encoder;
@@ -20,7 +21,7 @@ public class CodeFactory implements ProtocolCodecFactory {
     }
     public CodeFactory(Charset charset) {
         encoder = new TextLineEncoder(charset,LineDelimiter.UNIX);
-        decoder = new TextLineDecoder(charset, LineDelimiter.AUTO);
+        decoder = new TextLineDecoder(charset,LineDelimiter.AUTO);
     }
     public ProtocolDecoder getDecoder(IoSession arg0) throws Exception {
         return decoder;

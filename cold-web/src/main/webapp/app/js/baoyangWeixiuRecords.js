@@ -54,7 +54,11 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 		$scope.getMaintenances0();
     };
 	$scope.goSearch1 = function () {
-		$scope.getMaintenances1();
+		if($scope.keyword ==""){
+    		alert("请输入需要搜索的机组名称~");
+    	}else{
+    		$scope.getMaintenances1();
+    	}
     };
 	
 	function delcfm() {
@@ -95,8 +99,8 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     	if($scope.updateMaintenance0.detail==undefined || $scope.updateMaintenance0.detail == ''){
 			alert("请填写维修详情");
             return;
-		}else{
-			if(new Date($scope.updateMaintenance0.fixtime)>=new Date($scope.updateMaintenance0.ordertime)){
+		}else{//Date.parse($scope.updateMaintenance0.ordertime.replace(/-/g,"/"))
+			if(Date.parse($scope.updateMaintenance0.fixtime.replace(/-/g,"/"))>=Date.parse($scope.updateMaintenance0.ordertime.replace(/-/g,"/").slice(0,-2))){
 				$http({
 					'method':'POST',	
 					'url':'/i/maintenance/updateMaintenance',
@@ -110,7 +114,7 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
 				}).success(function (data) {
 					if(data){
 						alert("提交成功");
-						$('#myApply').modal('hide')
+						$('#myApply').modal('hide');
 						//window.location.reload();
 						$scope.getMaintenances0();
 						$scope.getMaintenances1();
@@ -126,15 +130,18 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     };
   
     $scope.change = function(id,appraise){
-    	$http({
-    		'method':'POST',	
-    		'url':'/i/maintenance/updateMaintenanceAppraise',
-    		'params':{
-    			'id':id,
-    			'appraise':appraise
-    		}
-    	});
+    	if(appraise==""){
+    		alert("评价内容不能为空哦~");
+    	}else{
+    		$http({
+        		'method':'POST',	
+        		'url':'/i/maintenance/updateMaintenanceAppraise',
+        		'params':{
+        			'id':id,
+        			'appraise':appraise
+        		}
+        	});
+    	}
 	};
-	
     
 });

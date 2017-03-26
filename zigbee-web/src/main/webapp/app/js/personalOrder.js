@@ -19,7 +19,7 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
     	$http.get('/i/orders/findOrdersByUserId', {
             params: {
                 "userID": $rootScope.user.id,
-                keyword:$scope.keyword,
+                keyword:$("#rdc_search").val().trim(),
                 pageNum : $scope.bigCurrentPage,
 				pageSize : $scope.maxSize
             }
@@ -35,8 +35,12 @@ coldWeb.controller('personalOrder', function ($rootScope, $scope, $state, $cooki
 	
 	
 	 $scope.goSearch = function () {
-		 $scope.getOrders();
-	    }
+		if($("#rdc_search").val().trim() != ""){
+		 	$scope.getOrders();
+    	}else{
+    		alert("请输入完整的订单号~")
+    	}
+	}
 	$scope.goShowOrder = function (obj) {
 	   
 	   $scope.appmode=[{title:["","货品","配送","冷库"]}];//1:货品 2：配送 3:仓库

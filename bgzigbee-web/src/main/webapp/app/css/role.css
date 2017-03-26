@@ -26,6 +26,13 @@
 .role_table{
 	padding: 0
 } 
+.seclectTr>td{
+	background: #24c727;
+	color:#fff;	
+}
+#tb_body>tr:hover{
+	cursor: pointer;
+}
 @media (min-width: 768px) {
 	.role_tree{
 		padding:0;

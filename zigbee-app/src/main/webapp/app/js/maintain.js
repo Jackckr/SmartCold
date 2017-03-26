@@ -127,32 +127,43 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
 		if ($scope.ordertime == undefined || $scope.ordertime == '') {flag = false;}
         return flag;
     }
-
+    function checkTime(){
+		var d = new Date();//Date.parse($scope.updateMaintenance0.ordertime.replace(/-/g,"/"))
+		var today = Date.parse((d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()).replace(/-/g,"/"));//今天的毫秒数
+		var orderDay = new Date($scope.ordertime).getTime();
+		if(orderDay < today){
+			alert("预约时间不能晚于今天哦~")
+			return false
+		}else{
+			return true
+		}
+	}
     $scope.addMaintenance = function () {
     	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
         if (checkInput()) {
-            $http({
-                method: 'POST',
-                url: ER.coldroot + '/i/maintenance/addMaintenance',
-                params: {
-                	rdcId: $scope.rdcId,
-                    unitname: encodeURI($scope.unitname, "UTF-8"),
-                    reason: encodeURI($scope.reason, "UTF-8"),
-                    ordertime: $("input[ng-model='ordertime']").val()
-                }
-            }).success(function (data) {
-                if (data) {
-                    alert("添加成功");
-//                    window.location.reload();
-                    $scope.getMaintenances0();
-                    $scope.getMaintenances1();
-                    $scope.unitname = $scope.reason=$scope.ordertime=null;
-                }
-                else {
-                    alert("添加失败");
-                }
-            });
-
+        	if (checkTime()) {
+	            $http({
+	                method: 'POST',
+	                url: ER.coldroot + '/i/maintenance/addMaintenance',
+	                params: {
+	                	rdcId: $scope.rdcId,
+	                    unitname: encodeURI($scope.unitname, "UTF-8"),
+	                    reason: encodeURI($scope.reason, "UTF-8"),
+	                    ordertime: $("input[ng-model='ordertime']").val()
+	                }
+	            }).success(function (data) {
+	                if (data) {
+	                    alert("添加成功");
+	//                    window.location.reload();
+	                    $scope.getMaintenances0();
+	                    $scope.getMaintenances1();
+	                    $scope.unitname = $scope.reason=$scope.ordertime=null;
+	                }
+	                else {
+	                    alert("添加失败");
+	                }
+	            });
+        	}
         } else {
             alert("您有未填项哦~");
         }
@@ -230,7 +241,12 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
         $scope.getMaintenances0();
     };
     $scope.goSearch1 = function () {
-        $scope.getMaintenances1();
+    	if($scope.keyword ==""){
+    		alert("请输入需要搜索的机组名称~");
+    	}else{
+    		
+    		$scope.getMaintenances1();
+    	}
     };
 
     function delcfm() {
@@ -336,14 +352,18 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
     };
 
     $scope.change = function (id, appraise) {
-        $http({
-            'method': 'POST',
-            'url': ER.coldroot + '/i/maintenance/updateMaintenanceAppraise',
-            'params': {
-                'id': id,
-                'appraise': appraise
-            }
-        });
+    	if(appraise==""){
+    		alert("评价内容不能为空哦~");
+    	}else{
+	        $http({
+	            'method': 'POST',
+	            'url': ER.coldroot + '/i/maintenance/updateMaintenanceAppraise',
+	            'params': {
+	                'id': id,
+	                'appraise': appraise
+	            }
+	        });
+    	}
     }; 
 	 $scope.initMainit=function(newValue,oldValue){
 		   if($scope.rdcId!=undefined){

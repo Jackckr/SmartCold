@@ -44,8 +44,7 @@ public class DataCollectionController extends BaseController {
 				Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
 				String deviceId = info.remove("devID").toString();
 				for (Entry<String, String> item : info.entrySet()) {
-					arrayList
-							.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+					arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
 				}
 			}
 			storageDataCollectionDao.batchInsert(arrayList);
@@ -56,6 +55,11 @@ public class DataCollectionController extends BaseController {
 
 		return new DataResultDto(200);
 	}     
+	
+	
+
+	
+	
 
 	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
 	@ResponseBody

@@ -1,4 +1,4 @@
- /*
+/*
 * @Author: Administrator
 * @Date:   2016-06-27 10:12:44
 * @Last Modified by:   jinghaiyang
@@ -139,7 +139,7 @@
 }
 
 .shareMain #files {
-	width: 65px;
+	width: 100px;
 	border: medium none;
 	margin-top: -10px;
 }

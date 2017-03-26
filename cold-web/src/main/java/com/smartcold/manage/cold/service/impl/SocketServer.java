@@ -1,24 +1,13 @@
 package com.smartcold.manage.cold.service.impl;
 
-import java.net.Socket;
-import java.net.UnknownHostException;
 
-import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service
+//@Service
 public class SocketServer {
-
+/*
 	@Autowired
 	private    NioSocketAcceptor  ioAcceptor=null;
 	private static Logger logger = LoggerFactory.getLogger(SocketServer.class);  
 
-	/**
-	 * 绑定IP和端口
-	 */
 	public synchronized void initServer(){
 		try {
 			boolean portUsing = this.isPortUsing();
@@ -37,12 +26,6 @@ public class SocketServer {
 	
 	
 	
-	/*** 
-     *  true:already in using  false:not using  
-     * @param host 
-     * @param port 
-     * @throws UnknownHostException  
-     */  
     public  boolean isPortUsing() {  
         try {  
         	if(ioAcceptor!=null){
@@ -59,6 +42,6 @@ public class SocketServer {
       
     } 
 	
-
+*/
 	
 }
