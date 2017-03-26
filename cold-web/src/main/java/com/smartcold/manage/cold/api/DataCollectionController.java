@@ -22,6 +22,7 @@ import com.smartcold.manage.cold.controller.BaseController;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 @Controller
 public class DataCollectionController extends BaseController {
@@ -59,7 +60,8 @@ public class DataCollectionController extends BaseController {
 	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findLastNDataByApid(String apid, String deviceid, String key, int n) {
-		return storageDataCollectionDao.findLastNPoint(apid, deviceid, key, n);
+		Date startTime=null;if(n==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
+		return storageDataCollectionDao.findLastNPoint(apid, deviceid, key, n,startTime);
 	}
 
 	@RequestMapping(value = "/findByTime", method = RequestMethod.GET)

@@ -208,10 +208,10 @@ public class TextLineDecoder implements ProtocolDecoder {
      * Decode a line using the default delimiter on the current system
      */
     private void decodeAuto(Context ctx, IoSession session, IoBuffer in, ProtocolDecoderOutput out)  throws CharacterCodingException, ProtocolDecoderException {
-    	String hexdump = IoBufferHexDumper.getHexdump(in, in.limit());
-        byte[] b = new byte [in.limit()];  
-        in.get(b);  
-        writeText(session,hexdump, out);
+    	String data = DataUtil.getHexdump(in, in.limit());
+    	byte[] b = new byte [in.limit()];  
+    	in.get(b);  
+        writeText(session,data, out);
     }
 
     /**

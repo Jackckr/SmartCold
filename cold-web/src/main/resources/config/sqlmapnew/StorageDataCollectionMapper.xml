@@ -36,13 +36,7 @@
 	
 	<select id="findLastNPoint" parameterType="map" resultMap="dataResultMap">
 	    SELECT * FROM storagedatacollection
-	    WHERE 1 =1
-	    <if test="limit==1">
-		  and  DATE_ADD( `addtime` , INTERVAL 5 MINUTE )
-		</if>
-		<if test="limit>400">
-	    	 and  DATE_ADD( `addtime` , INTERVAL 5 HOUR )
-		</if>
+	    WHERE  `addtime` >#{startTime}
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>

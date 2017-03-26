@@ -101,19 +101,13 @@ public class TextLineEncoder extends ProtocolEncoderAdapter {
      */
     public void encode(IoSession session, Object message, ProtocolEncoderOutput out) throws Exception {
         CharsetEncoder encoder = (CharsetEncoder) session.getAttribute(ENCODER);
-
         if (encoder == null) {
             encoder = charset.newEncoder();
             session.setAttribute(ENCODER, encoder);
         }
-
         String value = (message == null ? "" : message.toString());
         IoBuffer buf = IoBuffer.allocate(value.length()).setAutoExpand(true);
         buf.putString(value, encoder);
-
-//        if (buf.position() > maxLineLength) {
-//            throw new IllegalArgumentException("Line length: " + buf.position());
-//        }
         buf.putString("", encoder);
         buf.flip();
         out.write(buf);

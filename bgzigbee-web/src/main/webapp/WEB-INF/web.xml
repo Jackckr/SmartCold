@@ -42,11 +42,6 @@
 		<url-pattern>/i/*</url-pattern>
 	</servlet-mapping>
 
-
-
-
-
-
  <!-- session 过滤  -->
    <filter> 
        <filter-name>loginUserSessionFilter</filter-name> 

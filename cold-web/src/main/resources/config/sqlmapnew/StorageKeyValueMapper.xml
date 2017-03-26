@@ -20,14 +20,7 @@
  
  	<select id="findByNums" resultType="StorageKeyValue" >
 		select * from ${table}
-		where `key`=#{key} and oid=#{oid}
-		<if test="nums==1">
-		  and  DATE_ADD( `addtime` , INTERVAL 5 MINUTE )
-		</if>
-		<if test="nums>400">
-	     and  DATE_ADD( `addtime` , INTERVAL 5 HOUR )
-		</if>
-        order by `addtime` desc
+		where `key`=#{key} and oid=#{oid} and   `addtime` >#{startTime}  order by `addtime` desc
         limit #{nums}
 	</select>
 	

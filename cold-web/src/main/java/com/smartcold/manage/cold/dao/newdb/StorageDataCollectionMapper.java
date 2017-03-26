@@ -12,7 +12,7 @@ public interface StorageDataCollectionMapper {
 
 	void batchInsert(List<StorageDataCollectionEntity> batchEntity);
 
-	List<StorageKeyValue> findLastNPoint(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("limit") int limit);
+	List<StorageKeyValue> findLastNPoint(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("limit") int limit,@Param("startTime")Date startTime);
 
 	Integer findCounSizeByTime(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 	

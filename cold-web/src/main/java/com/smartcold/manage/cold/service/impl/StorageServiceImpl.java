@@ -26,6 +26,7 @@ import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.SetUtil;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 @Service
 public class StorageServiceImpl implements StorageService {
@@ -68,23 +69,25 @@ public class StorageServiceImpl implements StorageService {
 	
 	@Override
 	public List<StorageKeyValue> findByNums(int type, int oid, String key, int nums) {
+		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
 		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
 		if (SetUtil.isnotNullList(deviceList)) {
-			return storageDataCollectionDao.findLastNPoint(null, deviceList.get(0).getDeviceid(), key, nums);
+			return storageDataCollectionDao.findLastNPoint(null, deviceList.get(0).getDeviceid(), key, nums,startTime);
 		} else {
 			String table = StorageType.getStorageType(type).getTable();
-			List<StorageKeyValue> result = storageKeyValueDao.findByNums(table, oid, key, nums);
+			List<StorageKeyValue> result = storageKeyValueDao.findByNums(table, oid, key, nums,startTime);
 			return result;
 		}
 	}
 
 	@Override
 	public List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums) {
+		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
 		List<DeviceObjectMappingEntity> deviceList =deviceObjectMappingDao.findByTypeOid(stype.getType(), oid);
 		if (SetUtil.isnotNullList(deviceList)) {
-			return storageDataCollectionDao.findLastNPoint(null,  deviceList.get(0).getDeviceid(), key, nums);
+			return storageDataCollectionDao.findLastNPoint(null,  deviceList.get(0).getDeviceid(), key, nums,startTime);
 		} else {
-			return storageKeyValueDao.findByNums(stype.getTable(), oid, key, nums);
+			return storageKeyValueDao.findByNums(stype.getTable(), oid, key, nums,startTime);
 		}
 	}
 

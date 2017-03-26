@@ -71,19 +71,15 @@ public class ZsDevServiceimp implements ZsDevService {
 	     * 数据读取
 	     */
         private void saveData(){
-        	int i=1;
 			boolean isrun=true;
 			while (isrun) {
-				System.err.println("执行第"+i+"次");
 				String devdata = getDEVData();
 				if(!"null".equals(devdata)&&devdata.length()>10){
 					data=devdata;
-//					System.err.println(data);
 					this.addextTask(devdata);
 				}else{
 					isrun=false;
 				}
-				i++;
 			}
 		}
 		
@@ -115,7 +111,7 @@ public class ZsDevServiceimp implements ZsDevService {
 	            }
 	        } catch (Exception e) {
 	        	errCount++;
-	            System.out.println("发送GET请求出现异常！" + e);
+	            System.out.println("洲斯接口请求出现异常！。。。。");
 	        } finally { // 使用finally块来关闭输入流
 	            try {
 	                if (in != null) {

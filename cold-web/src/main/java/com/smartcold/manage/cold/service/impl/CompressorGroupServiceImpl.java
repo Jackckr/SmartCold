@@ -22,6 +22,7 @@ import com.smartcold.manage.cold.entity.olddb.CompressorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.CompressorGroupService;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-02 14:38)
@@ -55,8 +56,8 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 		CompressorGroupSetEntity compressorGroup = compressGroupSetDao.findById(groupid);
 		List<CompressorSetEntity> compressors = compressorSetDao.findCompressorByGroupid(groupid);
 		double waterCost = 0;
+		Date startTime=TimeUtil.getBeforeMinute(5);
 		CompressorGroupWaterCostEntity entity = new CompressorGroupWaterCostEntity();
-
 		for (CompressorSetEntity compressor : compressors) {
 			// 在这里可以防止compressorGroup不为null
 			Date nowDate = new Date();
@@ -70,8 +71,8 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 			}
 			entity.setCompressorGroupName(compressorGroup.getName());
 			float totalRunTime = 0;
-			List<StorageKeyValue> lRunH = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runH", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
+		
+			List<StorageKeyValue> lRunH = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),compressor.getId(), "runH", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
 			double lH = lRunH.size() > 0 ? lRunH.get(0).getValue() : 0;
 			List<StorageKeyValue> lRunM = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
 					compressor.getId(), "runM", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
@@ -80,11 +81,11 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 					compressor.getId(), "runS", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
 			double lS = lRunS.size() > 0 ? lRunS.get(0).getValue() : 0;
 			List<StorageKeyValue> runH = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runH", 1);
+					compressor.getId(), "runH", 1,startTime);
 			List<StorageKeyValue> runM = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runM", 1);
+					compressor.getId(), "runM", 1,startTime);
 			List<StorageKeyValue> runS = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runS", 1);
+					compressor.getId(), "runS", 1,startTime);
 			totalRunTime += runH.size() > 0 ? runH.get(0).getValue() - lH : 0;
 			totalRunTime += runM.size() > 0 ? (runM.get(0).getValue() - lM) / 60 : 0;
 			totalRunTime += runS.size() > 0 ? (runS.get(0).getValue() - lS) / 3600 : 0;
@@ -102,14 +103,15 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 
 	@Override
 	public List<CompressorDto> getCompressorsState(int groupId) {
+		Date startTime=TimeUtil.getBeforeMinute(5);
 		List<CompressorSetEntity> compressors = compressorSetDao.findCompressorByGroupid(groupId);
 		ArrayList<CompressorDto> result = new ArrayList<CompressorDto>();
 		for (CompressorSetEntity compressor : compressors) {
 			HashMap<String, Double> keyValues = new HashMap<String, Double>();
 			List<StorageKeyValue> infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "run", 1);
+					compressor.getId(), "run", 1,startTime);
 			keyValues.put("isRunning", infos.size() > 0 ? infos.get(0).getValue() : 0);
-			infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(), compressor.getId(), "exTemp", 1);
+			infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(), compressor.getId(), "exTemp", 1,startTime);
 			keyValues.put("exTemp", infos.size() > 0 ? infos.get(0).getValue() : 0);
 			result.add(new CompressorDto(compressor, keyValues));
 		}

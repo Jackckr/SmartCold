@@ -11,7 +11,7 @@ public interface StorageKeyValueMapper {
 	
 	boolean haveKey(@Param("table")String table, @Param("key")String key);
 	
-	List<StorageKeyValue> findByNums(@Param("table")String table , @Param("oid") Integer oid,@Param("key")String key, @Param("nums")Integer nums);
+	List<StorageKeyValue> findByNums(@Param("table")String table , @Param("oid") Integer oid,@Param("key")String key, @Param("nums")Integer nums,@Param("startTime")Date startTime);
 	
 	List<StorageKeyValue> findByTime(@Param("table")String table, @Param("oid") Integer oid,@Param("key")String key,@Param("startTime")Date startTime, @Param("endTime")Date endTime,@Param("orderBy" )String orderBy);
 	

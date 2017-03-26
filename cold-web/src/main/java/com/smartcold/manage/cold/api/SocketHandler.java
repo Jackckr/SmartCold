@@ -1,8 +1,6 @@
 package com.smartcold.manage.cold.api;
 
 
-import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,13 +11,17 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSONArray;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
+import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
-import com.smartcold.manage.cold.util.socket.SocketStatus;
+import com.smartcold.manage.cold.util.socket.DataUtil;
+import com.smartcold.manage.cold.util.socket.entity.APInfo;
+import com.smartcold.manage.cold.util.socket.entity.DevStateInfo;
 
 /**
  * 沈阳设备数据 
@@ -36,22 +38,57 @@ public class SocketHandler extends IoHandlerAdapter {
 
     
     private static IoBuffer getstatus(String type){
-    	String msg = type+(System.currentTimeMillis()+"").substring(0, 10);
-		int length=msg.length()/2;
-		byte[] bts = new byte[length];
-		for (int i = 0; i < length; i++) {
-			bts[i]=Byte.parseByte(msg.substring(0,2));
-			msg=msg.substring(2);
-		}
-		IoBuffer buffer = IoBuffer.allocate(16);
-		buffer.put(bts);
+//    	StringBuffer msg=new StringBuffer("02"+(System.currentTimeMillis()+"").substring(0, 10));
+		int ntype=Integer.parseInt(type);
+//		int time1=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
+//		int time2=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
+//		int time3=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
+//		int time4=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
+		byte[] bts1 = {(byte)ntype,(byte)0X58,(byte)0XD1,(byte)0XE2,(byte)0X60};
+//		byte[] bts = {(byte)ntype,(byte)time1,(byte)time2,(byte)time3,(byte)time4};
+		IoBuffer buffer = IoBuffer.allocate(10);
+		buffer.put(bts1);
 		buffer.flip();
-	  return buffer;
-
-    	
+	    return buffer;
+    }
+//
+//    private static  int pasint(int type,Integer length,StringBuffer  buffer){
+//		String val = buffer.substring(0,length);buffer.delete(0, length);
+//		switch (type) {
+//		case 2:
+//			return Integer.parseInt(val);  
+//		case 4:
+//			return Integer.parseInt(val);  
+//		case 8:
+//			return Integer.parseInt(val, 16);  
+//		default:
+//			return -1;
+//		}
+//		
+//	}
+    
+    private  void analysisData(String type,String msg){
+		switch (type) {
+		case "00"://数据包
+			System.err.println("收到{数据}包");
+		     APInfo apDataInfo = DataUtil.getAPDataInfo(msg);
+		     System.err.println( JSONArray.toJSONString(apDataInfo));
+			break;
+		case "01"://状态包
+			System.err.println("收到{状态}包");
+			DevStateInfo dev = DataUtil.getDevStateInfo(msg);
+			   System.err.println(  JSONArray.toJSONString(dev));
+			break;
+		case "02"://校时包
+		    System.err.println("收到校时包："+msg);
+			break;
+		default:
+			System.err.println("未知数据："+msg);
+			break;
+		}
     	
     }
-
+    
     /*
      * (non-Javadoc)
      * 有异常发生时被触发
@@ -68,56 +105,17 @@ public class SocketHandler extends IoHandlerAdapter {
      * @see org.apache.mina.core.service.IoHandlerAdapter#messageReceived(org.apache.mina.core.session.IoSession, java.lang.Object)
      */
     public void messageReceived(IoSession session, Object message) throws Exception {
-				String msg=message+"";
-			    System.err.println("接收到数据包："+msg);
-			    if(msg.length()>=2){
-				        String type =msg.substring(0, 2);
-						switch (type) {
-						case "00"://数据包
-							System.err.println("收到数据包："+msg);
-					        session.write(getstatus(type));
-							break;
-						case "01"://状态包
-							System.err.println("收到状态包："+msg);
-							session.write(getstatus(type));
-							break;
-						case "02"://校时包
-						    System.err.println("收到校时包："+msg);
-						    session.write(getstatus(type));
-							break;
-						default:
-							System.err.println("未知数据："+msg);
-							break;
-						}
-			    }else{
-			    	return;
-			    }
-			    	
-			  
-       
-       
+		String msg=message+"";
+	    if(msg.length()>=2){
+		        String type =msg.substring(0, 2);
+		        session.write(getstatus(type));
+		        analysisData(type,msg);
+	    }else{
+	    	return;
+	    }
     }
     
     
-    public static byte [] ioBufferToByte(Object message)   
-    {   
-          if (!(message instanceof IoBuffer))   
-          {   
-              return null;   
-          }   
-          IoBuffer ioBuffer = (IoBuffer)message;   
-          ioBuffer.flip();
-          byte[] readByte = new byte[ioBuffer.limit()];  
-          try
-          {
-            ioBuffer.get(readByte);
-          }
-          catch (Exception e) 
-          {
-          System.out.println(e.toString());
-          }
-          return readByte;   
-    }
     /*
      * (non-Javadoc)
      *   当信息已经传送给客户端后触发此方法.
@@ -152,7 +150,6 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     @Override
     public void sessionOpened(IoSession session) throws Exception {
-//    	  session.write("0={'smallint':30,'intv':1800}");
         System.err.println("会话已打开:"+session.getRemoteAddress()+"\r\n准备接收数据");
     }
     
@@ -176,14 +173,13 @@ public class SocketHandler extends IoHandlerAdapter {
      */
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
-    	session.write("410={\"msg\":\"会话超时\"}");
         session.closeOnFlush();
         System.err.println("关闭客户端："+session);
     }
     
-/*
 
-    private void addAPdata( String data){
+
+  /*  private void addAPdata( String data){
     	if(StringUtil.isNull(data))return;
 		System.err.println(data);
     	ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
@@ -193,7 +189,7 @@ public class SocketHandler extends IoHandlerAdapter {
 			storageDataCollectionDao.batchInsert(arrayList);
 		}
     }
-    */
+*/
     public void addextMsg(String methodName,int type,String errMsg){
 		try {
 			String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
@@ -219,8 +215,6 @@ public class SocketHandler extends IoHandlerAdapter {
        for (IoSession is : curSessionMap.values()) {
     	   is.write(config);  
 	  }
-    	
-    	
     }  
     
     
@@ -251,7 +245,6 @@ public class SocketHandler extends IoHandlerAdapter {
     }
 
     public static void messageSentPart( Object message,String city_id) throws Exception {
-
 //        log.info("发送消息时时被触发，即在调用IoSession.write()时被触发，message代表将要发送的消息。=" + message);
 //        Object[] key=users.keySet().toArray();
 //        for (int i = 0; i < key.length; i++) {
@@ -263,8 +256,6 @@ public class SocketHandler extends IoHandlerAdapter {
 //            }
 //        }
      // 向所有客户端发送的数据
-        
-        
     }
 
 
