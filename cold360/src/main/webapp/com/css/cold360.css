@@ -720,3 +720,30 @@ b{
 .myNote{
 	min-width: 6rem;
 }
+/*照明*/
+.light_show .swiper-slide>p span{
+	font-size: .75rem;
+}
+.light_show .swiper-slide>div.fl{
+	width: 50%;
+	padding: 0.5rem 2%;
+	text-align: center;
+	box-sizing: border-box;
+	font-size: .7rem;
+}
+/**
+*
+* 针对权限设置的特殊样式  
+* 2017-3-26
+* jhy
+*
+*/
+.role_limit{
+	pointer-events:none!important;
+	background-color: grey!important;
+	color: #ccc!important;
+}
+.role_limit>i{
+	color: #ccc!important;
+}
+

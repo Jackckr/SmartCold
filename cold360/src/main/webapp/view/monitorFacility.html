@@ -64,6 +64,7 @@
     			<li><a href="javascript:;" id="storageDoor" ng-click="storageDoorFacility()">冷库门</a></li>
     			<li><a href="javascript:;" id="platformDoor" ng-click="platformDoorFacility()">月台门</a></li>
     			<li><a href="javascript:;" id="hwlt" ng-click="goodsInOutOther()">货物</a></li>
+                <li><a href="javascript:;" id="lightGroup" ng-click="lightGroup()">照明</a></li>
     			<li><a href="javascript:;" id="otherFacility" ng-click="otherFacilityFacility()">其他设施</a></li>
     		</ul>
     	</div>
@@ -80,8 +81,24 @@
     	</div>
     </section>
     <div class="backDrop"></div>
-	<div class="swiper-container chart temperature">
+	<div class="swiper-container chart temperature light_hide">
 		<div class="swiper-wrapper" id="chartView"></div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
+        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
+  </div>
+  <div class="swiper-container chart temperature light_show">
+        <div class="swiper-wrapper">
+             <div class="swiper-slide" ng-show='coldlightGroups' class="binglian "  ng-repeat="(key,value) in  coldlightGroups">
+                <p><span style="color: {{colors[$index]}};">{{value.name}}</span></p>
+                <div ng-repeat="obj in  value.lightGroups" class="fl" >
+                    <p>{{obj.name}}</p>
+                    <img alt="{{obj.isRunning==1?'开':'关'}}" ng-src="app/img/bulb_{{obj.isRunning}}.png" >
+                </div>
+            </div>
+        </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
         <!-- Add Arrows -->
