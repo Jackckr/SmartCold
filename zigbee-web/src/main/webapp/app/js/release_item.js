@@ -73,12 +73,12 @@ coldWeb.controller('releaseItem',function($rootScope, $scope, $stateParams, $sta
 	       $scope.initMode();
     };
 	$scope.addFiles = function (files) {
-		for(let j=0,fileLen=files.length;j<fileLen;j++){
-    		let _file=files[j].name;
-    		let i=_file.lastIndexOf('.');
-    		let len=_file.length;
-    		let extEndName=_file.substring(i+1, len);
-    		let extName="GIF,BMP,JPG,JPEG,PNG";
+		for(var j=0,fileLen=files.length;j<fileLen;j++){
+    		var _file=files[j].name;
+    		var i=_file.lastIndexOf('.');
+    		var len=_file.length;
+    		var extEndName=_file.substring(i+1, len);
+    		var extName="GIF,BMP,JPG,JPEG,PNG";
         	//首先对格式进行验证
         	if(extName.indexOf(extEndName.toUpperCase())==-1) {
         		alert("只能上传"+extName+"格式的文件");
