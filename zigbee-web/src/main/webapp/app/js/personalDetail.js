@@ -48,18 +48,18 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
     // 获取省列表
     $http.get('/i/city/findProvinceList').success(function (data) { $scope.provinces = data;});
 	$scope.setimg = function(em, imgid) {
-        let oFile = $(em)[0].files[0];
+        var oFile = $(em)[0].files[0];
         /* var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
         var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
         if (!rFilter.test(oFile.type)) {
             alert("格式错误~请选择格式为" + msg + "的图片~");
             return;
         }*/
-    		let _file=oFile.name;
-    		let i=_file.lastIndexOf('.');
-    		let len=_file.length;
-    		let extEndName=_file.substring(i+1, len);
-    		let extName="GIF,BMP,JPG,JPEG,PNG";
+    		var _file=oFile.name;
+    		var i=_file.lastIndexOf('.');
+    		var len=_file.length;
+    		var extEndName=_file.substring(i+1, len);
+    		var extName="GIF,BMP,JPG,JPEG,PNG";
         	//首先对格式进行验证
         	if(extName.indexOf(extEndName.toUpperCase())==-1) {
         		alert("只能上传"+extName+"格式的文件");
@@ -212,7 +212,7 @@ coldWeb.controller('personalDetail', function ($scope, $state, $cookies, Upload,
 					processData : false,
 					contentType : false,
 					success : function(data) {
-						alert("删除成功");
+						alert("保存成功");
 						//$state.reload(); 
 						window.location.reload();
 					}
