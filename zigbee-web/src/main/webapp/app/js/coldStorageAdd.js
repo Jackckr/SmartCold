@@ -137,6 +137,9 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         	if(extName.indexOf(extEndName.toUpperCase())==-1) {
         		alert("只能上传"+extName+"格式的文件");
         		return false
+        	}else if(files[j].size > 10485760){
+        		alert("最大只能上传10M的图片");
+        		return false
         	}
     	}
     	if($scope.totalfiles.length + files.length > 5){
@@ -155,6 +158,9 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         	//首先对格式进行验证
         	if(extName.indexOf(extEndName.toUpperCase())==-1) {
         		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}else if(files[j].size > 10485760){
+        		alert("最大只能上传10M的图片");
         		return false
         	}
     	}
@@ -175,6 +181,9 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         	//首先对格式进行验证
         	if(extName.indexOf(extEndName.toUpperCase())==-1) {
         		alert("只能上传"+extName+"格式的文件");
+        		return false
+        	}else if(files[j].size > 10485760){
+        		alert("最大只能上传10M的图片");
         		return false
         	}
     	}
