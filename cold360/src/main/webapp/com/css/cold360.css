@@ -725,11 +725,14 @@ b{
 	font-size: .75rem;
 }
 .light_show .swiper-slide>div.fl{
-	width: 50%;
+	width: 33.333%;
 	padding: 0.5rem 2%;
 	text-align: center;
 	box-sizing: border-box;
-	font-size: .7rem;
+	font-size: .6rem;
+}
+.light_show{
+	display: none;
 }
 /**
 *

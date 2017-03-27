@@ -534,12 +534,14 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
             })
         })
     }
-    
+    var watch =$scope.$watch('mystorages', $scope.inintData,true);//监听冷库变化
+    $scope.colors=['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4','#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']; 
     $scope.drawLight = function () { //照明
     	$("#light_group").children("div").first().addClass("active");
-    	$scope.colors=['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4','#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']; 
-    	 $scope.isshow=true;
+    	$scope.isshow=true;
+	    $scope.coldlightGroups=[];
 		   if($scope.mystorages!=undefined){
+			   watch();
 			   $http.get(ER.coldroot + '/i/lightGroupController/findByRdcId', {params: {rdcId:$scope.rdcId}} ).success(function(data, status, headers, config) {   
 				   if(data.length>0){
 				      $scope.isshow=false;
@@ -549,14 +551,12 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
 						   item.lightGroups=lightGroups;
 					   }); 
 				      
-				      $scope.coldlightGroups=[];
 				      angular.forEach($scope.mystorages,function(item){ 
 						  if(item.lightGroups.length>0){ $scope.coldlightGroups.push(item);} 
 					   }); 
 				   }
 			   });
 		   }
-		   console.log("ok")
     }
 
     $scope.activeEnergy = 'storageDoor';
