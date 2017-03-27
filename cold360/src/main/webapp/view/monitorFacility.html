@@ -84,7 +84,7 @@
              <div class="swiper-slide" ng-show='coldlightGroups' ng-repeat="(key,value) in  coldlightGroups">
                 <p><span style="color: {{colors[$index]}};">{{value.name}}</span></p>
                 <div ng-repeat="obj in  value.lightGroups" class="fl" >
-                    <p>{{obj.name}}</p>
+                    <p><b>{{obj.name}}</b></p>
                     <img alt="{{obj.isRunning==1?'开':'关'}}" ng-src="app/img/bulb_{{obj.isRunning}}.png" >
                 </div>
             </div>

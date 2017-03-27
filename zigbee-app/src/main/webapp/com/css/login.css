@@ -174,3 +174,39 @@ section .inputBd input{
 	color:#f80;
 	font-size:0.75rem;
 }
+.userRadio{
+	font-size: .75rem;
+	margin: .5rem 0;
+}
+.userRadio label{
+	display: inline-block;
+	width: 40%;
+	color: #8d8d8d;
+}
+input[type='radio']{
+	width: 0.8rem;
+	height: 0.8rem;
+	-webkit-appearance:none;
+	appearance:none;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	box-sizing: border-box;
+	border-radius: 50%;
+	position: relative;	
+}
+input[type='radio']:checked:after{
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	width: 70%;
+	height: 70%;
+	background-color: #438BCB;
+	border-radius: 50%;
+	border: 0;
+}
+input[type='radio']:checked{
+	border-color: #438BCB;
+}

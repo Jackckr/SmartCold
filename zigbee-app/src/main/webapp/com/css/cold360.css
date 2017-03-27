@@ -191,7 +191,7 @@ section{
 }
 .actually{
 	text-align: left;
-	font-size: 0.8rem;
+	font-size: 0.75rem;
 	font-weight: normal;
 	color: #438BCB;
 	line-height: 1.5rem;
@@ -726,6 +726,9 @@ b{
 	text-align: center;
 	box-sizing: border-box;
 	font-size: .6rem;
+}
+.light_show .swiper-slide>div.fl b{
+	width:100%;
 }
 .light_show{
 	display: none;
