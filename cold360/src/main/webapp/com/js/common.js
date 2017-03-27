@@ -83,7 +83,7 @@ var util = {
 		if (!rFilter.test(oFile.type)) {
 			layer.open({content : "格式错误~请选择格式为" + msg + "的图片~",btn : '确定'}); return;
 		}else if(oFile.size > 10485760){
-    		layer.open({content : "最大只能上传10M的图片" + msg + "的图片~",btn : '确定'}); return;
+    		layer.open({content : "最大只能上传10M的图片",btn : '确定'}); return;
 		}
 		var oImage = document.getElementById(imgid);
 		var oReader = new FileReader();
