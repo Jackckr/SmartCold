@@ -4,21 +4,31 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.ACLMapper">
 
-    <select id="getUserACLByFilter" parameterType="map" resultType="map">
-       select id, `username` `name`  from `user` 
+    <select id="getRdcACLByFilter" parameterType="map" resultType="map">
+      SELECT id,`name`   FROM `rdc` where id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping union  SELECT `rdcid`  FROM `smartcold`.spidercollectionconfig )
         <if test="keyword!=null">
-         where `username` LIKE "%"#{keyword}"%"  or `telephone` like "%"#{keyword}"%"  or `nickname` like "%"#{keyword}"%" 
+         and `name`  LIKE  "%"#{keyword}"%" or id LIKE  "%"#{keyword}"%" 
        </if>
         ORDER BY addTime DESC LIMIT 15;
     </select>
     
-    <select id="getRdcACLByFilter" parameterType="map" resultType="map">
-      SELECT id,`name`   FROM `rdc` 
+    
+    <select id="getRUCByFilter" parameterType="map" resultType="map">
+      select id,mapper `name` from acl_ruacl
         <if test="keyword!=null">
-         where `name`  LIKE  "%"#{keyword}"%" or id LIKE  "%"#{keyword}"%" 
+         where `mapper` LIKE "%"#{keyword}"%" 
        </if>
         ORDER BY addTime DESC LIMIT 15;
     </select>
+    
+    <select id="getUserACLByFilter" parameterType="map" resultType="map">
+       select id, `username` `name`  from `user` where id in(SELECT userid FROM `roleuser` ) 
+        <if test="keyword!=null">
+         and `username` LIKE "%"#{keyword}"%"  or `telephone` like "%"#{keyword}"%"  or `nickname` like "%"#{keyword}"%" 
+       </if>
+        ORDER BY addTime DESC LIMIT 15;
+    </select>
+    
     
     
     <select id="getRoleACLByFilter" parameterType="map" resultType="map">
@@ -26,7 +36,7 @@
         <if test="keyword!=null">
          where `name`  LIKE "%"#{keyword}"%" 
        </if>
-        ORDER BY addTime DESC LIMIT 15;
+        ORDER BY id ASC LIMIT 15;
     </select>
     
     <select id="getGroupACLByFilter" parameterType="map" resultType="map">
@@ -34,8 +44,11 @@
         <if test="keyword!=null">
          where `name`  LIKE "%"#{keyword}"%" 
        </if>
-        ORDER BY addTime DESC LIMIT 15;
+        ORDER BY id ASC LIMIT 15;
     </select>
+    
+    
+    
     
     <insert id="addNaclByOid" parameterType="map">
       INSERT INTO `${table}` (${column},nacl)VALUES(#{oid},#{nacl});

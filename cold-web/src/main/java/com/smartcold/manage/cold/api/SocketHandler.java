@@ -31,6 +31,7 @@ import com.smartcold.manage.cold.util.socket.entity.DevStateInfo;
 public class SocketHandler extends IoHandlerAdapter {
 	@Autowired
 	public  WarningLogMapper warningLogMapper;
+	
 	@Autowired
 	public  StorageDataCollectionMapper storageDataCollectionDao;
 	

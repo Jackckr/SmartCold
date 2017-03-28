@@ -94,7 +94,7 @@
  	</bean>  
 
     <!-- 委托器管理服务 -->
-    <bean id="beanDefineConfigue" class="com.smartcold.manage.cold.service.impl.SocketServer" init-method="initServer"  > </bean> 
+<!--     <bean id="beanDefineConfigue" class="com.smartcold.manage.cold.service.impl.SocketServer" init-method="initServer"  > </bean>  -->
 
 
 	<!--心跳检测filter 用于定时推送消息。。。。 -->

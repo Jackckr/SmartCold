@@ -84,6 +84,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 				      		$rootScope.aclml=data.aclml;
 				      		$rootScope.pagstate=[];
 				      		$("#lfmenu .quanxian").removeClass("quanxian");
+				      		$("#lfmenu .quanxian").attr("disabled",true); 
 				      		angular.forEach(data.aclml,function(obj,i){ 
 				      			if(obj.acl){
 				      				if(!obj.hasnode){  
@@ -93,6 +94,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 				      			}else{
 				      				$("#ml_acl"+obj.id).addClass("quanxian");
 				      				$("#ml_acl"+obj.id+" *").addClass("quanxian");
+				      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
 				      			}
 				      		});
 				        });

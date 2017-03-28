@@ -111,7 +111,7 @@ public class ZsDevServiceimp implements ZsDevService {
 	            }
 	        } catch (Exception e) {
 	        	errCount++;
-	            System.out.println("洲斯接口请求出现异常！。。。。");
+	            System.out.println("洲斯接口请求出现异常！。。。。"+e.getMessage());
 	        } finally { // 使用finally块来关闭输入流
 	            try {
 	                if (in != null) {
@@ -156,8 +156,7 @@ class SubTask implements Runnable {
   public void run() {
 	    if(this.storageDataCollectionDao==null||this.devStatusMapper==null){System.err.println("数据无法保存！");return;}
 	    try {
-			Long sttime=new Date().getTime();
-			boolean isSaveDU=true;
+			boolean isSaveDU=false;
 			HashMap<String, Object> datas =null;
 			Calendar calendar = Calendar.getInstance();
 			int hours = calendar.get(Calendar.HOUR_OF_DAY); // 时
@@ -197,20 +196,21 @@ class SubTask implements Runnable {
 				if(isSaveDU){//保存设备电压
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
-					dusiList.add(new StorageDataCollectionEntity(apid, devid,"MSI",datas.get("MSI"), date));
 				}
+			}
+			if(datas!=null&&isSaveDU){
+				ArrayList<StorageDataCollectionEntity> apmsiList = new ArrayList<StorageDataCollectionEntity>();
+				apmsiList.add(new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));//保存AP信号强度
+				this.devStatusMapper.addAPStatusList(apmsiList);
 			}
 			if(SetUtil.isnotNullList(dataList)){
 				this.storageDataCollectionDao.batchInsert(dataList);
 			}
 			if(isSaveDU&&SetUtil.isnotNullList(dusiList)){
-				this.devStatusMapper.addDataList(dusiList);
+				this.devStatusMapper.addDevStatusList(dusiList);
 			}
-			Long end=new Date().getTime()-sttime;
-			System.err.println("用时："+end);
-	    	
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
   }
 }

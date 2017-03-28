@@ -9,6 +9,23 @@
 	<select id="getRDCACL" parameterType="Integer" resultType="String">
 	 SELECT nacl from acl_rdc where rdcid=#{rdcid};
 	</select>
+	<select id="getAllACLByRUID">
+	   SELECT
+		  u.groupid,u.roleid, 
+		  rdc.nacl rdcnacl,
+		  ru.nacl runacl,
+		  u.nacl unacl,
+		  r.nacl rnacl,
+		  g.nacl gnacl
+		FROM
+			acl_rdc rdc
+		LEFT JOIN acl_ruacl ru ON ru.rdcid = 1063 AND ru.userid = 1
+		LEFT JOIN acl_user  u  on u.uid=1
+		LEFT JOIN acl_role  r on r.id=u.roleid
+		LEFT JOIN acl_group g on g.id=u.groupid
+		WHERE	rdc.rdcid = #{rdcid};
+	</select>
+	
 	<select id="getRUACL" parameterType="Integer" resultType="String">
 	  select CONCAT_WS(',',(SELECT nacl from acl_user u where uid=#{uid}) ,(select nacl from acl_rdc where rdcid=#{rdcid} )) as c;
 	</select>

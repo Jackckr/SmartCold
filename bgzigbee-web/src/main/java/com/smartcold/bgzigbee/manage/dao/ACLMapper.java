@@ -16,10 +16,11 @@ import com.smartcold.bgzigbee.manage.entity.ACLTreeNode;
  */
 public interface ACLMapper {
 	
-	public List<HashMap<String, Object>> getRdcACLByFilter(@Param("keyword")String keyword);
-	public List<HashMap<String, Object>> getUserACLByFilter(@Param("keyword")String keyword);
-	public List<HashMap<String, Object>> getRoleACLByFilter(@Param("keyword")String keyword);
-	public List<HashMap<String, Object>> getGroupACLByFilter(@Param("keyword")String keyword);
+	public List<HashMap<String, Object>> getRdcACLByFilter(@Param("keyword")String keyword);//1
+	public List<HashMap<String, Object>> getRUCByFilter(@Param("keyword")String keyword);//2
+	public List<HashMap<String, Object>> getUserACLByFilter(@Param("keyword")String keyword);//3
+	public List<HashMap<String, Object>> getRoleACLByFilter(@Param("keyword")String keyword);//4
+	public List<HashMap<String, Object>> getGroupACLByFilter(@Param("keyword")String keyword);//5
 	
 	public void delACLById(@Param("table")String table, @Param("id") Integer id);
 	public void upACLByID(@Param("table")String table, @Param("id") Integer id,@Param("nacl")String nacl);

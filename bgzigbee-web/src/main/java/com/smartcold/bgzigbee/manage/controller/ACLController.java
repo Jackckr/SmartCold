@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.bgzigbee.manage.dao.ACLMapper;
 import com.smartcold.bgzigbee.manage.entity.ACLTreeNode;
-import com.smartcold.bgzigbee.manage.util.SetUtil;
 import com.smartcold.bgzigbee.manage.util.StringUtil;
 
 /**
@@ -24,6 +23,13 @@ public class ACLController {
 	@Autowired
 	private ACLMapper aclMapper;
 	
+	/**
+	 * 根据类型获得数
+	 * {name:"RDC",value:"0"},{name:"RUA",value:"1"},{name:"USER",value:"2"},{name:"ROLE",value:"3"},{name:"GROUP",value:"4"}
+	 * @param type
+	 * @param keyword
+	 * @return
+	 */
 	@RequestMapping(value = "/getObjByType", method = RequestMethod.POST)
 	@ResponseBody
 	public Object getObjByType(Integer type, String keyword) {
@@ -33,13 +39,16 @@ public class ACLController {
 		case 0://RDC
 			reapdata= this.aclMapper.getRdcACLByFilter(keyword);
 			break;
-		case 1://User
+		case 1://RU
+			reapdata=this.aclMapper.getRUCByFilter(keyword);
+			break;
+		case 2://User
 			reapdata=this.aclMapper.getUserACLByFilter(keyword);
 			break;
-		case 2://
+		case 3://
 			reapdata=this.aclMapper.getRoleACLByFilter(keyword);
 			break;
-		case 3:
+		case 4:
 			reapdata=this.aclMapper.getGroupACLByFilter(keyword);
 			break;
 		default:
@@ -58,12 +67,15 @@ public class ACLController {
 			reapdata= this.aclMapper.getNACLByID("ACL_RDC","RDCID",id);
 			break;
 		case 1:
-			reapdata= this.aclMapper.getNACLByID("ACL_USER","UID",id);
+			reapdata= this.aclMapper.getNACLByID("acl_ruacl","id",id);
 			break;
 		case 2:
-			reapdata= this.aclMapper.getNACLByID("ACL_ROLE","ID",id);
+			reapdata= this.aclMapper.getNACLByID("ACL_USER","UID",id);
 			break;
 		case 3:
+			reapdata= this.aclMapper.getNACLByID("ACL_ROLE","ID",id);
+			break;
+		case 4:
 			reapdata= this.aclMapper.getNACLByID("ACL_GROUP","ID",id);
 			break;
 		default:

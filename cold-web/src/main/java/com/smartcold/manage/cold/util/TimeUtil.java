@@ -23,14 +23,18 @@ public class TimeUtil {
 	public static String  getDateTime(Date date){return	TimeUtil.dateFormat.format(date);}
 	public static String  getFormatDate(Date date){return	TimeUtil.datefm.format(date);}
 	
+	
+	public static Long getLongtime(){
+		return Long.parseLong( (System.currentTimeMillis()+"").substring(0, 10));
+	}
 	/**
 	 * 获得16进制 Linux时间
 	 * @return
 	 */
 	public static String getHextime(){
-//		return   (int)System.currentTimeMillis() / 1000+"";
 		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
 	}
+
 	
 	
 

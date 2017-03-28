@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.api;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,19 +20,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.controller.BaseController;
+import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.util.SetUtil;
+import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 @Controller
 public class DataCollectionController extends BaseController {
 
 	@Autowired
+	public   DevStatusMapper devplset;
+	
+	@Autowired
 	private StorageDataCollectionMapper storageDataCollectionDao;
 
 	private Gson gson = new Gson();
 
+	/**
+	 *http DEV数据上传接口
+	 * @param data
+	 * @param response
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/dataCollection", method = RequestMethod.POST)
 	@ResponseBody
@@ -50,13 +63,57 @@ public class DataCollectionController extends BaseController {
 			storageDataCollectionDao.batchInsert(arrayList);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.err.println("DEV数据解析出错。。。。。。。。。。。。");
 			return new DataResultDto(500);
 		}
-
 		return new DataResultDto(200);
 	}     
 	
-	
+	/**
+	 * DEV校时
+	 * @param data
+	 * @param response
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/schoolTime", method = RequestMethod.POST)//
+	@ResponseBody
+	public Object schoolTime(@RequestBody String data, HttpServletResponse response) {
+		HashMap<String, Object> resMap=new HashMap<String, Object>();
+		resMap.put("status", 200);resMap.put("time", TimeUtil.getLongtime());
+		try {
+			if(StringUtil.isnotNull(data)){
+					Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
+					String apID = dataMap.get("apID").toString();
+					if(dataMap.containsKey("devinfos")){//数据状态包
+						Date aptime =new Date(Long.parseLong(dataMap.remove("time").toString()) * 1000);
+						ArrayList<StorageDataCollectionEntity> apsatusList = new ArrayList<StorageDataCollectionEntity>();
+						ArrayList<StorageDataCollectionEntity> devsatusList = new ArrayList<StorageDataCollectionEntity>();
+						apsatusList.add(new StorageDataCollectionEntity(apID, null,"MSI", dataMap.get("MSI").toString(), aptime));
+						apsatusList.add(new StorageDataCollectionEntity(apID, null,"LAC", dataMap.get("LAC").toString(), aptime));
+						apsatusList.add(new StorageDataCollectionEntity(apID, null,"CID", dataMap.get("CID").toString(), aptime));
+						List<Map<String, String>> devinfos = (List<Map<String, String>>) dataMap.get("devinfos");
+						for (Map<String, String> info : devinfos) {
+							Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
+							String deviceId = info.remove("devID").toString();
+							for (Entry<String, String> item : info.entrySet()) {
+								devsatusList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+							}
+						}
+						this.devplset.addAPStatusList(apsatusList);
+						this.devplset.addDevStatusList(devsatusList);
+					}else{//校时包
+						Integer appl = this.devplset.getApplByApID(apID);
+						 List<HashMap<String, Object>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
+						if(appl!=null){resMap.put("APL", appl) ; }//
+						if(SetUtil.isnotNullList(devPLbyApID)){resMap.put("infos", devPLbyApID) ;}//返回dev采集频率信息
+				   }
+		   }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resMap;
+	}  
 
 	
 	

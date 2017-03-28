@@ -1,6 +1,7 @@
 coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $location) {
-	$scope.mode=[[{name:"RDC",value:"0"},{name:"user",value:"1"},{name:"role",value:"2"},{name:"Group",value:"3"}],["RDC名称","用户名","角色名称","组名称",""]];
-	$scope.type=$scope.mode[0][0].value,$scope.keyword=null;
+	$scope.slmode=[{name:"RDC",value:"0"},{name:"RUA",value:"1"},{name:"USER",value:"2"},{name:"ROLE",value:"3"},{name:"GROUP",value:"4"}];
+	$scope.tablemode=[[["name"],["冷库名称"]],[["uname","cname"],["用户名","冷库名称"]],[["name"],["用户名"]],[["name"],["角色名称"]],[["name"],["组名称"]]];
+	$scope.type=$scope.slmode[0].value,$scope.colem1="name",$scope.colem2="name", $scope.keyword=null;
 	$scope.selobjid=null;
 	
 	$scope.checkall=function(){
@@ -12,6 +13,20 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 	$scope.initData=function(){
 		   $scope.selobjid=null; $scope.objnacl = null;
 			$http({method : 'POST',url : 'i/acl/getObjByType',params : {type : $scope.type,keyword : $scope.keyword}}).success(function(data) {
+				if( $scope.type==1){
+					$scope.colem1="name",
+					$scope.colem2="name";
+					var mapper=null,alldata=[];
+					 angular.forEach(data,function(obj,i){
+						 mapper=angular.fromJson(obj.name);
+						 obj.cname=mapper.cname;
+						 obj.uname=mapper.uname;
+						 alldata.push(obj);
+					  });
+					 data=null;data=alldata;
+				}else{
+					
+				}
 				$scope.objDataList = data;
 			});
 	};
