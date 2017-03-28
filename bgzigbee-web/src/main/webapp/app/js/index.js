@@ -25,6 +25,11 @@ coldWeb.controller('index', function ($scope, $state, $cookies, $http, $location
 $(".sidebar").height($(document).height());
 function secLi(ops,url){
 	$(ops).addClass('highlight').siblings().removeClass('highlight');
+	$(".sidebar").height(0);
 	$(".sidebar").height($(document).height());
 	window.location.href=url;
+}
+window.onresize = function(){
+	$(".sidebar").height(0);
+	$(".sidebar").height($(document).height());
 }

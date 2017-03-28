@@ -1,10 +1,10 @@
 <div class="clearfix mainHeight">
   <div class="" style="min-height:100%;padding: 20px;">
-  		<div ng-show='coldlightGroups' class="binglian "  ng-repeat="(key,value) in  coldlightGroups" >
+  		<div ng-show='coldlightGroups' class="binglian" style="margin-bottom: 5px;"  ng-repeat="(key,value) in  coldlightGroups" >
   			<p><span class="blysj "  style="background-color: {{colors[$index]}};color: white;">{{value.name}}</span></p>
   			<div class="row">
-  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center" ng-repeat="obj in  value.lightGroups" >
-  					<p><b>{{obj.name}}</b></p>
+  				<div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 text-center" ng-repeat="obj in  value.lightGroups" style="margin-bottom: 15px;">
+  					<p>{{obj.name}}</p>
   					<img alt="{{obj.isRunning==1?'开':'关'}}" ng-src="img/com/bulb_{{obj.isRunning}}.png" height="64">
   				</div>
   			</div>

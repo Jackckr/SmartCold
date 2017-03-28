@@ -191,7 +191,7 @@ section{
 }
 .actually{
 	text-align: left;
-	font-size: 0.8rem;
+	font-size: 0.75rem;
 	font-weight: normal;
 	color: #438BCB;
 	line-height: 1.5rem;
@@ -716,6 +716,23 @@ b{
 	min-width: 6rem;
 }
 
+/*照明*/
+.light_show .swiper-slide>p span{
+	font-size: .75rem;
+}
+.light_show .swiper-slide>div.fl{
+	width: 33.333%;
+	padding: 0.5rem 2%;
+	text-align: center;
+	box-sizing: border-box;
+	font-size: .6rem;
+}
+.light_show .swiper-slide>div.fl b{
+	width:100%;
+}
+.light_show{
+	display: none;
+}
 /**
 *
 * 针对权限设置的特殊样式  

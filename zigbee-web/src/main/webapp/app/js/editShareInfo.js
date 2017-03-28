@@ -193,6 +193,9 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
 	        		alert("只能上传"+extName+"格式的文件");
 	        		return false
+	        	}else if(files[j].size > 10485760){
+	        		alert("最大只能上传10M的图片");
+	        		return false
 	        	}
 	    	}
 			if(files.length==0){return;};

@@ -534,10 +534,36 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
             })
         })
     }
+    var watch =$scope.$watch('mystorages', $scope.inintData,true);//监听冷库变化
+    $scope.colors=['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4','#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']; 
+    $scope.drawLight = function () { //照明
+    	$("#light_group").children("div").first().addClass("active");
+    	$scope.isshow=true;
+	    $scope.coldlightGroups=[];
+		   if($scope.mystorages!=undefined){
+			   watch();
+			   $http.get(ER.coldroot + '/i/lightGroupController/findByRdcId', {params: {rdcId:$scope.rdcId}} ).success(function(data, status, headers, config) {   
+				   if(data.length>0){
+				      $scope.isshow=false;
+				      angular.forEach($scope.mystorages,function(item){ 
+						   var lightGroups=[];
+						   angular.forEach(data,function(obj){  if(obj.coldStorageId==item.id){ lightGroups.push(obj); } }); 
+						   item.lightGroups=lightGroups;
+					   }); 
+				      
+				      angular.forEach($scope.mystorages,function(item){ 
+						  if(item.lightGroups.length>0){ $scope.coldlightGroups.push(item);} 
+					   }); 
+				   }
+			   });
+		   }
+    }
 
     $scope.activeEnergy = 'storageDoor';
-    $scope.storageDoorFacility = function () {
+    $scope.storageDoorFacility = function () {//冷库门
         clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
         $scope.activeEnergy = 'storageDoor';
         if ($scope.mystorages && $scope.mystorages.length > 0) {
             for (var i = 0; i < $scope.mystorages.length; i++) {
@@ -546,8 +572,10 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         }
     }
 
-    $scope.platformDoorFacility = function () {
+    $scope.platformDoorFacility = function () {//月台门
         clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
         $scope.activeEnergy = 'platformDoor';
         if ($scope.platformDoors && $scope.platformDoors.length > 0) {
             for (var i = 0; i < $scope.platformDoors.length; i++) {
@@ -556,8 +584,10 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         }
     }
 
-    $scope.goodsInOutOther = function () {
+    $scope.goodsInOutOther = function () {//货物
         clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
         $scope.activeEnergy = 'drawInOutGoods';
         if ($scope.mystorages && $scope.mystorages.length > 0) {
             for (var i = 0; i < $scope.mystorages.length; i++) {
@@ -565,13 +595,22 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
             }
         }
     }
-
-    $scope.otherFacilityFacility = function () {
+    
+    $scope.lightGroup = function () {//照明
+    	$(".light_hide").hide();
+    	$(".light_show").show();
         clearSwiper();
+        $scope.activeEnergy = 'drawLight';
+        $scope.drawLight();
+    }
+
+    $scope.otherFacilityFacility = function () {//其他设施
+        clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
         $scope.activeEnergy = 'otherFacility';
         $scope.drawOther();
     }
-
     function clearSwiper() {
         $("div").remove(".swiper-slide");
         $scope.swiper = 0;
@@ -642,6 +681,9 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawInOutGoods($scope.mystorages[i]);
             }
+        }
+        if ($scope.activeEnergy == 'drawLight') {
+        	 $scope.drawLight();
         }
         if ($scope.activeEnergy == 'otherFacility') {
             $scope.drawOther();
