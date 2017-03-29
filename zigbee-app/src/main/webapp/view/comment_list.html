@@ -45,7 +45,8 @@
                         <span class="fl">打分</span>
                         <ul class='star fl'>
                             <li class="{{eva.grade>=1?'filled':''}}">★</li><li class="{{eva.grade>=2?'filled':''}}">★</li><li class="{{eva.grade>=3?'filled':''}}">★</li><li class="{{eva.grade>=4?'filled':''}}">★</li><li class="{{eva.grade>=5?'filled':''}}">★</li>
-                        </ul>
+                        </ul>                        
+                        <span class="fr">{{eva.addTime}}</span>
                     </div>
                     <p class="commentTxt">{{eva.content}}</p>
                     <div class="baguetteBoxOne gallery"  ng-if="eva.reviewPics.length>0">

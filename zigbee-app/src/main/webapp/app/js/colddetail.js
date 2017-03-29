@@ -32,7 +32,11 @@
 		$scope.initdata=function(){
 	       //获得数据
 	    	$http.get(ER.root+'/i/rdc/findRDCByID', { params: {"rdcID": id}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-	    		if(data.success){$scope.vo=data.data[0];tel() }else{
+	    		if(data.success){
+	    			$scope.vo=data.data[0];
+	    			tel();
+	    			$scope.auth_show = ($scope.isLogin(user) && $scope.vo.audit !== 2);
+    			}else{
 	    			//alert(data.message);
 	    			layer.open({
 	    		 	    content: data.message
@@ -62,6 +66,9 @@
 		};
 		$scope.initdata();
 		$scope.initevg();
+		$scope.isLogin = function (user) {
+	        return undefined!=user && user.id > 0;
+	    }
 		$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {/*alert("33");*/ baguetteBox.run('.baguetteBoxOne', {buttons:true});imgBoxHide()});
       });
      app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
