@@ -19,18 +19,20 @@ coldWeb.controller('coldStorageAuth', function ($rootScope, $scope, $cookies, $h
         	}else if(files[j].size > 10485760){
         		alert("最大只能上传10M的图片");
         		return false
+        	}else{
+        		if ($scope.totalauthfiles.length + files.length > 1) {
+                    alert("最多上传1张图片");
+                    return;
+                }
+                $scope.totalauthfiles = $scope.totalauthfiles.concat(files);
+                var objUrl = getObjectURL(files[0]) ;
+                //console.log("objUrl = "+objUrl) ;
+                if (objUrl) {
+                    $("#img0").attr("src", objUrl) ;
+                }
         	}
     	}
-        if ($scope.totalauthfiles.length + files.length > 1) {
-            alert("最多上传1张图片");
-            return;
-        }
-        $scope.totalauthfiles = $scope.totalauthfiles.concat(files);
-        var objUrl = getObjectURL(files[0]) ;
-        console.log("objUrl = "+objUrl) ;
-        if (objUrl) {
-            $("#img0").attr("src", objUrl) ;
-        }
+        
     }
 
     $scope.dropauth = function (authfile) {
@@ -67,8 +69,9 @@ coldWeb.controller('coldStorageAuth', function ($rootScope, $scope, $cookies, $h
             $scope.isDisabled = true;
             var data = {
                 authfile0: null,
-                rdcId: $stateParams.rdcID
-            }
+                rdcId: $stateParams.rdcID,
+                uid: user.id
+            };
             data["authfile" + 0] = $scope.totalauthfiles[0];
 
             Upload.upload({
@@ -79,11 +82,6 @@ coldWeb.controller('coldStorageAuth', function ($rootScope, $scope, $cookies, $h
                 $scope.isDisabled = false;
                 alert("提交成功,等待审核");
                 $state.go('coldStorageComment', {rdcID: $stateParams.rdcID});
-            }, function (resp) {
-                console.log('Error status: ' + resp.status);
-            }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.name);
             });
         } else {
             alert("请上传冷库认证图片再提交!");
