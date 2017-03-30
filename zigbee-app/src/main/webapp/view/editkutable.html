@@ -529,6 +529,21 @@ checkLogin();
     }
     
     $scope.addFiles = function (files) {
+    	for(var j=0,fileLen=files.length;j<fileLen;j++){
+    		var _file=files[j].name;
+    		var i=_file.lastIndexOf('.');
+    		var len=_file.length;
+    		var extEndName=_file.substring(i+1, len);
+    		var extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+        		return false
+        	}else if(files[j].size > 10485760){
+        		layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+        		return false
+        	}
+    	}
         if(($scope.storagePicShow.length +$scope.totalfiles.length+ files.length) > 5){
            // alert("最多上传五张图片");
              layer.open({
@@ -541,12 +556,42 @@ checkLogin();
     };
      $scope.newarrangePic=null;
     $scope.addArrangePic = function (files) {//平面图
+    	for(var j=0,fileLen=files.length;j<fileLen;j++){
+    		var _file=files[j].name;
+    		var i=_file.lastIndexOf('.');
+    		var len=_file.length;
+    		var extEndName=_file.substring(i+1, len);
+    		var extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+        		return false
+        	}else if(files[j].size > 10485760){
+        		layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+        		return false
+        	}
+    	}
        if(files!=null){
          $scope.newarrangePic=[];
           $scope.newarrangePic =$scope.newarrangePic.concat(files);
         }
     };
     $scope.addHonorFiles = function (files) {
+    	for(var j=0,fileLen=files.length;j<fileLen;j++){
+    		var _file=files[j].name;
+    		var i=_file.lastIndexOf('.');
+    		var len=_file.length;
+    		var extEndName=_file.substring(i+1, len);
+    		var extName="GIF,BMP,JPG,JPEG,PNG";
+        	//首先对格式进行验证
+        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+        		return false
+        	}else if(files[j].size > 10485760){
+        		layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+        		return false
+        	}
+    	}
         if( $scope.honorPicShow.length+ $scope.totalhonorfiles.length + files.length > 8){
             //alert("最多上传八张图片");
             layer.open({
