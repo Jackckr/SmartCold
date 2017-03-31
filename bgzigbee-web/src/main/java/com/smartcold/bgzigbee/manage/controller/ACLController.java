@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.bgzigbee.manage.dao.ACLMapper;
 import com.smartcold.bgzigbee.manage.entity.ACLTreeNode;
+import com.smartcold.bgzigbee.manage.entity.TeamTreeNode;
+import com.smartcold.bgzigbee.manage.util.SetUtil;
 import com.smartcold.bgzigbee.manage.util.StringUtil;
 
 /**
@@ -32,24 +34,25 @@ public class ACLController {
 	 */
 	@RequestMapping(value = "/getObjByType", method = RequestMethod.POST)
 	@ResponseBody
-	public Object getObjByType(Integer type, String keyword) {
+	public Object getObjByType(Integer type, String keyword, Integer row) {
 		if(type==null){return null;}
+		if(row==null){row=16;}
 		List<HashMap<String, Object>> reapdata=null;
 		switch (type) {
 		case 0://RDC
-			reapdata= this.aclMapper.getRdcACLByFilter(keyword);
+			reapdata= this.aclMapper.getRdcACLByFilter(keyword,row);
 			break;
 		case 1://RU
-			reapdata=this.aclMapper.getRUCByFilter(keyword);
+			reapdata=this.aclMapper.getRUCByFilter(keyword,row);
 			break;
 		case 2://User
-			reapdata=this.aclMapper.getUserACLByFilter(keyword);
+			reapdata=this.aclMapper.getUserACLByFilter(keyword,row);
 			break;
 		case 3://
-			reapdata=this.aclMapper.getRoleACLByFilter(keyword);
+			reapdata=this.aclMapper.getRoleACLByFilter(keyword,row);
 			break;
 		case 4:
-			reapdata=this.aclMapper.getGroupACLByFilter(keyword);
+			reapdata=this.aclMapper.getGroupACLByFilter(keyword,row);
 			break;
 		default:
 			break;
@@ -59,8 +62,7 @@ public class ACLController {
 	
 	@RequestMapping(value = "/getObjNACLByTID", method = RequestMethod.POST)
 	@ResponseBody
-	public Object getObjNACLByTID(Integer type, int id) {
-		if(type==null){return null;}
+	public Object getObjNACLByTID(int type, int id) {
 		List<HashMap<String, Object>> reapdata=null;
 		switch (type) {
 		case 0:
@@ -84,6 +86,17 @@ public class ACLController {
 		return reapdata;
 	}
 	
+	@RequestMapping(value = "/addruMapper", method = RequestMethod.POST)
+	@ResponseBody
+	public Object addruMapper(int rdcid,int userid,String mapper) {
+		List<HashMap<String, Object>> getruacls = this.aclMapper.isextruByRUID(rdcid,userid);
+		if(SetUtil.isNullList(getruacls)){
+			this.aclMapper.addMapperByOid( rdcid,  userid, mapper);
+			return true;
+		}else{
+			return getruacls;
+		}
+	}
 	
 	@RequestMapping(value = "/upObjNACLByTID", method = RequestMethod.POST)
 	@ResponseBody
@@ -96,12 +109,15 @@ public class ACLController {
 				table="ACL_RDC";column="RDCID";
 				break;
 			case 1:
-				table="ACL_USER";column="UID";
+				table="acl_ruacl";column="RDCID";
 				break;
 			case 2:
-				table="ACL_ROLE";column="ID";
+				table="ACL_USER";column="UID";
 				break;
 			case 3:
+				table="ACL_ROLE";column="ID";
+				break;
+			case 4:
 				table="ACL_GROUP";column="ID";
 				break;
 			default:
@@ -115,9 +131,7 @@ public class ACLController {
 				   this.aclMapper.upACLByID(table, id, nacl);
 				}
 			}else if(oid!=null){//添加
-				if(StringUtil.isnotNull(nacl)){
-					this.aclMapper.addNaclByOid(table, column, oid, nacl);
-				}
+				this.aclMapper.addNaclByOid(table, column, oid, nacl);
 			}
 			return true;
 		} catch (Exception e) {
@@ -126,7 +140,83 @@ public class ACLController {
 		return false;
 		
 	}
-//	public List<ACLTreeNode> getAllNode();
+	
+	@RequestMapping(value = "/getTreeNode", method = RequestMethod.POST)
+	@ResponseBody
+	public List<TeamTreeNode> getTreeNode(Integer type,Integer id,Integer pid,Boolean hastc ){
+		if(type==null){type=4;id=0;}else{if(!hastc){type=type-1;} }
+		List<TeamTreeNode> nodeList=null;
+		switch (type) {
+		case 2:
+			nodeList = this.aclMapper.getTreeUserBypid(id);
+			for (TeamTreeNode node : nodeList) {
+				node.setType(type);
+				node.setOpen(true);
+				node.setParent(false);
+		  	}
+			break;
+		case 3:
+			nodeList = this.aclMapper.getTreeRoleBypid(pid,id);//gid  pid
+			for (TeamTreeNode node : nodeList) {
+				node.setType(type);
+				node.setOpen(true);
+				node.setParent(true);
+		  	}
+			break;
+		case 4:
+			nodeList = this.aclMapper.getTreeACLGroupBypid(id);
+			for (TeamTreeNode node : nodeList) {
+				node.setType(type);
+				node.setOpen(true);
+				node.setParent(true);
+		  	}
+			break;
+		default:
+			return null;
+		}
+		return  nodeList;
+		
+		
+		
+		
+		
+//		 return getChnode(type, id);
+	}
+	
+
+	private List<TeamTreeNode> getChnode(int type,int oid){
+		String table=""; String column=null;
+		switch (type) {
+		case 2:
+			table="ACL_USER";column="roleid";
+			break;
+		case 3:
+			table="ACL_ROLE";
+			column="gid";
+			break;
+		case 4:
+			table="ACL_GROUP";column="pid";
+			break;
+		default:
+			return null;
+		}
+		boolean isparent=type==2?false:true;
+		 List<TeamTreeNode> data = this.aclMapper.getTreeObjBypid(table, column, oid,true);
+		 for (TeamTreeNode teamTreeNode : data) {
+			 teamTreeNode.setType(teamTreeNode.isHastc()?type:type-1);
+			 teamTreeNode.setOpen(true);
+			 teamTreeNode.setParent(isparent);
+	  	}
+		return  data;
+		 
+	}
+	
+	
+	
+
+	
+	
+	
 	
 	/**
 	 * 获得动态菜单
