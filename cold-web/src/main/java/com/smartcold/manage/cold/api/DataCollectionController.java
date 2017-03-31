@@ -3,6 +3,7 @@ package com.smartcold.manage.cold.api;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -67,7 +68,8 @@ public class DataCollectionController extends BaseController {
 			return new DataResultDto(500);
 		}
 		return new DataResultDto(200);
-	}     
+	} 
+	
 	
 	/**
 	 * DEV校时
@@ -79,8 +81,8 @@ public class DataCollectionController extends BaseController {
 	@RequestMapping(value = "/schoolTime", method = RequestMethod.POST)//
 	@ResponseBody
 	public Object schoolTime(@RequestBody String data, HttpServletResponse response) {
-		HashMap<String, Object> resMap=new HashMap<String, Object>();
-		resMap.put("status", 200);resMap.put("time", TimeUtil.getLongtime());
+		LinkedHashMap<String, Object> resMap=new LinkedHashMap<String, Object>();
+		resMap.put("status","200");resMap.put("time", TimeUtil.getLongtime().toString());
 		try {
 			if(StringUtil.isnotNull(data)){
 					Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
@@ -104,8 +106,8 @@ public class DataCollectionController extends BaseController {
 						this.devplset.addDevStatusList(devsatusList);
 					}else{//校时包
 						Integer appl = this.devplset.getApplByApID(apID);
-						 List<HashMap<String, Object>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
-						if(appl!=null){resMap.put("APL", appl) ; }//
+						 List<HashMap<String, String>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
+						if(appl!=null){resMap.put("APL", appl+"") ; }//
 						if(SetUtil.isnotNullList(devPLbyApID)){resMap.put("infos", devPLbyApID) ;}//返回dev采集频率信息
 				   }
 		   }

@@ -40,7 +40,7 @@ public interface ACLMapper {
 	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("column")String  column, @Param("id") Integer id);
 	
 	public List<TeamTreeNode> getTreeACLGroupBypid(@Param("oid") Integer oid);
-	public List<TeamTreeNode> getTreeRoleBypid(@Param("gid") Integer gid,@Param("pid") Integer pid);
+	public List<TeamTreeNode> getTreeRoleBypid(@Param("id") Integer id,@Param("pid") Integer pid,@Param("gid") Integer gid);
 	public List<TeamTreeNode> getTreeUserBypid(@Param("roleid") Integer roleid);
 	
 	public List<TeamTreeNode> getTreeObjBypid(@Param("table")String table,  @Param("column")String  column, @Param("oid") Integer oid,@Param("isopen")boolean isopen);

@@ -132,7 +132,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         //$scope.companyDevice = data[0].companyDevice;
         $scope.platform = data[0].platform;
         $scope.lihuoRoom = data[0].lihuoRoom;
-        $scope.arrangePic = data[0].arrangePic.location;
+        $scope.arrangePic = data[0].arrangepiclocation;
         $scope.arrangePicShow = data[0].arrangePic;
         $scope.storagePicShow = data[0].storagePics;
         $scope.honorPicShow = data[0].honorPics;

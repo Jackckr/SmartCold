@@ -72,6 +72,7 @@ html{
 }
 .search{
 	-webkit-box-flex: 1;
+	-ms-box-flex: 1;
     -ms-flex: 1;
     border-radius: .06rem;
     background: rgba(0,0,0,.15);

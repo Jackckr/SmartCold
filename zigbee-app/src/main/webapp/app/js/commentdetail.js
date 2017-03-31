@@ -3,7 +3,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	 $http.defaults.withCredentials=true;
 	 $http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	 var rdcid  = getUrlParam("id");//当前rdc-id数据信息
-	 $scope.totalfiles = [];
+	 $scope.totalfiles = [], $scope.totalauthfiles = [], $scope.isDisabled = false;
 	 $scope.addFiles = function (files) {
 		 for(var j=0,fileLen=files.length;j<fileLen;j++){
 	    		var _file=files[j].name;
@@ -94,4 +94,84 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    		layer.open({content: '评论内容不能为空或者特殊字符~',btn: '确定'});return;
 	    	}
 	  };
+	  /**
+	   * 冷库认证 js
+	   * 
+	   * 2017.3.29
+	   * 
+	  */
+	    $scope.dropauth = function (authfile) {
+	        angular.forEach($scope.totalauthfiles, function (item, key) {
+	            if (item == authfile) {
+	                $scope.totalauthfiles.splice(key, 1);
+	                return false;
+	            }
+	        })
+	    }
+	    $scope.addAuthFiles = function (files) {
+	    	for(var j=0,fileLen=files.length;j<fileLen;j++){
+	    		var _file=files[j].name;
+	    		var i=_file.lastIndexOf('.');
+	    		var len=_file.length;
+	    		var extEndName=_file.substring(i+1, len);
+	    		var extName="GIF,BMP,JPG,JPEG,PNG";
+	        	//首先对格式进行验证
+	        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
+	        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+	        		return false
+	        	}else if(files[j].size > 10485760){
+	        		layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+	        		return false
+	        	}else{
+	        		if ($scope.totalauthfiles.length + files.length > 1) {
+	        			layer.open({content: '只能上传1张图片哦',btn: '确定'});
+	                    return;
+	                }
+	                $scope.totalauthfiles = $scope.totalauthfiles.concat(files);
+	        	}
+	    	}
+	        
+	    }
+	    function checkCommit(){
+	        if($scope.totalauthfiles.length !== 1)
+	            return false;
+	        else
+	            return true;
+	    }
+	    $scope.submit_auth = function () {
+	        if (checkCommit()) {
+	        	layer.open({
+	        		type: 2
+	        		,content: '努力加载中~~~'
+	        		,shadeClose:false
+			    });
+	            $scope.isDisabled = true;
+	            var data = {
+	                authfile0: null,
+	                rdcId: rdcid,
+	                uid:window.user.id
+	            }
+	            data["authfile" + 0] = $scope.totalauthfiles[0];
+
+	            Upload.upload({
+	                url:  ER.root+'/i/rdc/authRdc',
+	                headers: {'Content-Transfer-Encoding': 'utf-8'},
+	                data: data
+	            }).then(function (resp) {
+	            	layer.closeAll();
+			    	layer.open({
+			    		content: "提交成功,等待审核"
+			    		,btn: '确定'
+		    			,shadeClose:false
+		                ,yes:function(){
+		                	if(data!=null&&data!=undefined)
+		    		    	   window.location.href ="colddetail.html?id="+rdcid;
+		                }
+			    	});
+	                $scope.isDisabled = false;
+	            });
+	        } else {
+	        	layer.open({content: '请上传冷库认证图片再提交哦',btn: '确定'});
+	        }
+	    }
 });

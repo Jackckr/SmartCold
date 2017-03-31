@@ -473,6 +473,19 @@ section{
 	margin: 1rem auto 3rem;
 	box-sizing: border-box;
 }
+.auth{
+	width:100%!important;
+	text-align: center;
+}
+.auth .mybtn{
+	display:inline-block;
+	/* width: auto; */
+	line-height: 1.75;
+	padding: 0.25rem;
+	margin: 0;
+	font-size: .65rem;
+	background-color: #0CB78A;
+}
 /*确认抢单*/
 .input{
 	/*margin: 2.6rem 0 0.5rem;*/

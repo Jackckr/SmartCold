@@ -9,6 +9,7 @@ import java.util.List;
 public class TeamTreeNode {
 	private int id;
 	private int pid;
+	private int gid;
 	private int type;
 	private String ioc;
 	private String name;
@@ -35,6 +36,12 @@ public class TeamTreeNode {
 		this.type = type;
 	}
 	
+	public int getGid() {
+		return gid;
+	}
+	public void setGid(int gid) {
+		this.gid = gid;
+	}
 	public boolean isHastc() {
 		return hastc;
 	}

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -662,14 +663,16 @@ public class RdcController {
 
 	@RequestMapping(value = "/authRdc", method = RequestMethod.POST)
 	@ResponseBody
-	public Object authRdc(HttpServletRequest request, @RequestParam(required = false) MultipartFile authfile0, int rdcId) throws Exception {
+	public Object authRdc(HttpServletRequest request, @RequestParam(required = false) MultipartFile authfile0, int rdcId,Integer uid) throws Exception {
 		MultipartFile authfile = authfile0;
 
 		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
 		String dir = String.format("%s/rdc/%s", baseDir, rdcId);
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+		if(user==null||uid==null){return new BaseDto(-1);}
+		if(uid==null){uid=user.getId();}
 		if (authfile != null) {
-			String fileName = String.format("rdc%s_%s_%s.%s", rdcId, user.getId(), new Date().getTime(), "jpg");
+			String fileName = String.format("rdc%s_%s_%s.%s", rdcId, uid, new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
 			ftpService.uploadFile(uploadFileEntity);
 			FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,

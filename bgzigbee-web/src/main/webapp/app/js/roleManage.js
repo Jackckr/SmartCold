@@ -112,7 +112,8 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 			  var id=$scope.objnacl.length>0?$scope.objnacl[0].id:null;
 			  $http({method : 'POST',url : 'i/acl/upObjNACLByTID',params : {type : $scope.type,id : id,oid:$scope.selobjid,nacl:newacl }}).success(function(data) {
 				  alert(data?"保存成功！":"保存失败！");
-				  $scope.changenaclMode($scope.selobjid);
+				  $scope.initData();
+				 // $scope.changenaclMode($scope.selobjid);
 			  });
 		  }
 //		  if( $scope.objnacl&&$scope.type){ }
@@ -146,16 +147,12 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 				async: {
 					enable: true,
 					url:"i/acl/getTreeNode",
-					autoParam: ["id","pid", "type","hastc"],
+					autoParam: ["id","pid","gid", "type","hastc"],
 				}
 			};
 		zTreeObj=$.fn.zTree.init($("#treeDemo"), setting);
 		zTreeObj.expandAll(true); 
-	
 	};
-	
-	
-	
 	
 	
 	$('.role_on_off').click(function(event) {				

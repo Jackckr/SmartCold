@@ -3,10 +3,10 @@ coldWeb.controller('coldStorageAuthAudit', function ($rootScope, $scope, $state,
     $scope.rdcId = $stateParams.rdcId;
     $scope.authUserId = undefined;
 
-        $http.get('/i/rdc/findRDCDTOByRDCId', {
-        params: {
-            "rdcID": $scope.rdcId
-        }
+    $http.get('/i/rdc/findRDCDTOByRDCId', {
+	    params: {
+	        "rdcID": $scope.rdcId
+	    }
     }).success(function (data) {
         $scope.name = data[0].name;
                 $scope.authPicShow = data[0].authPics;

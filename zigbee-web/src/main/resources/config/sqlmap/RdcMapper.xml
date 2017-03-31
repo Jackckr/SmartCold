@@ -156,7 +156,7 @@
 	</select>
 	<select id="findRDCById" parameterType="Integer" resultType="map" >
 		 select 
-            r.id, r.`name`,r.address,r.capacity,r.sqm,r.cellphone ,t.storagestruct,sgt.type struct ,r.coldtype,mt.type managetype,dt.type storagetype,te.type storagetempertype ,t.storagetruck,t.rdcscore,date_format(r.addtime, '%Y-%m-%d') addtime
+            r.id,r.audit,  r.`name`,r.address,r.capacity,r.sqm,r.cellphone ,t.storagestruct,sgt.type struct ,r.coldtype,mt.type managetype,dt.type storagetype,te.type storagetempertype ,t.storagetruck,t.rdcscore,date_format(r.addtime, '%Y-%m-%d') addtime
         from rdc r 
 		  LEFT JOIN rdcext t ON t.RDCID=r.id 
 		  LEFT JOIN storagemanagetype mt on  mt.id=t.managetype

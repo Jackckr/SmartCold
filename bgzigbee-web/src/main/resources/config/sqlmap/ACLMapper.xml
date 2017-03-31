@@ -67,9 +67,8 @@
          SELECT g.`id`,g.`pid`, g.`name`  , (SELECT COUNT(*) from `acl_group`  g1 WHERE g1.`pid` =g.id )>0  hastc   FROM `acl_group` g WHERE `pid` = #{oid} ORDER BY g.id ASC;
      </select> 
      <select id="getTreeRoleBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 
-        SELECT g.id,g.`name`,g.`pid`, (SELECT COUNT(*) from `acl_role`  g1 WHERE g1.`pid` =g.id )>0  hastc    FROM `acl_role`   g
-        <if test="pid==0"> where  g.gid=#{gid}</if>
-        <if test="pid!=0"> where  g.pid=#{pid} </if>
+        SELECT g.id,g.`name`,g.`pid`,g.`gid`, (SELECT COUNT(*) from `acl_role`  g1 WHERE g1.`pid` =g.id )>0  hastc    FROM `acl_role`   g
+      where  g.gid=#{gid} and  g.pid=#{pid} 
           ORDER BY id ASC ; 
      </select> 
  <select id="getTreeUserBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 

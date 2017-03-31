@@ -15,7 +15,7 @@ public interface DevStatusMapper {
 	
    public Integer getApplByApID(@Param("apid")String apid);
    
-	public List<HashMap<String, Object>> getDevPLbyApID(@Param("apid")String apid);
+	public List<HashMap<String, String>> getDevPLbyApID(@Param("apid")String apid);
 	
 	public void addAPStatusList(List<StorageDataCollectionEntity> batchEntity);
 	
