@@ -1,24 +1,21 @@
 package com.smartcold.manage.cold.service.impl;
 
 import java.util.List;
-import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.newdb.CompanyRdcMapper;
 import com.smartcold.manage.cold.dao.newdb.CompanyUserMapper;
-import com.smartcold.manage.cold.entity.newdb.CompanyRdc;
-import com.smartcold.manage.cold.entity.newdb.CompanyUser;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
+import com.smartcold.manage.cold.entity.newdb.CompanyRdc;
+import com.smartcold.manage.cold.entity.newdb.CompanyUser;
 import com.smartcold.manage.cold.entity.olddb.Rdc;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.service.RdcService;
-
-import org.springframework.util.CollectionUtils;
 
 @Service
 public class RdcServiceImpl implements RdcService {

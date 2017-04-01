@@ -149,20 +149,45 @@ public class ACLController {
 		List<TeamTreeNode> nodeList=null;
 		switch (type) {
 		case 2:
-//			if(rtype){
-//				
-//			}else if(){
-//				
-//			}
-//			
+			if(gid==2){
+				if(rtype==3||rtype==1){//
+					nodeList = this.aclMapper.getRoleUserByType(rtype);
+					 if(SetUtil.isnotNullList(nodeList)){
+						 for (TeamTreeNode user : nodeList) {
+							 user.setOpen(true);
+							 user.setParent(false);
+							 user.setIcon("/app/bower_components/zTree/img/user.png");
+						}
+					 }
+				}else if(rtype==2 ){
+					nodeList= this.aclMapper.getCompany();
+					 if(SetUtil.isnotNullList(nodeList)){
+						 for (TeamTreeNode node : nodeList) {
+							
+							 List<TeamTreeNode> userlist = this.aclMapper.getComptuserByCompanyId(node.getId());
+							 if(SetUtil.isnotNullList(userlist)){
+								 for (TeamTreeNode user : userlist) {
+									 user.setOpen(true);
+									 user.setParent(false);
+									 user.setIcon("/app/bower_components/zTree/img/user.png");
+								}
+								 node.setChildren(userlist);
+							 }
+							 node.setHastc(false);
+							 node.setParent(false);
+							 node.setIcon("/app/bower_components/zTree/img/compt.png");
+						}
+					 }
+				}
+				
+			}else if(gid==3){//服务商。。。
+				
+				
+				
+				
+			}
 			
 			
-			nodeList = this.aclMapper.getTreeUserBypid(id);
-			for (TeamTreeNode node : nodeList) {
-				node.setType(type);
-				node.setOpen(true);
-				node.setParent(false);
-		  	}
 			break;
 		case 3:
 			if(pid==0&&gid>0){
@@ -175,6 +200,7 @@ public class ACLController {
 				node.setType(type);
 				node.setOpen(true);
 				node.setParent(true);
+//				node.setIcon("/app/bower_components/zTree/img/role.png");
 		  	}
 			break;
 		case 4:
@@ -183,6 +209,7 @@ public class ACLController {
 				node.setType(type);
 				node.setOpen(true);
 				node.setParent(true);
+//				node.setIcon("/app/bower_components/zTree/img/role.png");
 		  	}
 			break;
 		case 5:
@@ -190,6 +217,7 @@ public class ACLController {
 			TeamTreeNode rootnodeNode=new TeamTreeNode();
 			rootnodeNode.setId(0);
 			rootnodeNode.setName("ROOT");
+			rootnodeNode.setIcon("/app/bower_components/zTree/img/root.png");
 			rootnodeNode.setOpen(true);
 			rootnodeNode.setType(5);
 			List<TeamTreeNode>	roleList = this.aclMapper.getTreeACLGroupBypid(id);
@@ -197,6 +225,7 @@ public class ACLController {
 				node.setType(4);
 				node.setOpen(true);
 				node.setParent(true);
+//				node.setIcon("/app/bower_components/zTree/img/group.png");
 		  	}
 			rootnodeNode.setChildren(roleList);
 			nodeList.add(rootnodeNode);
@@ -214,32 +243,6 @@ public class ACLController {
 	}
 	
 
-	private List<TeamTreeNode> getChnode(int type,int oid){
-		String table=""; String column=null;
-		switch (type) {
-		case 2:
-			table="ACL_USER";column="roleid";
-			break;
-		case 3:
-			table="ACL_ROLE";
-			column="gid";
-			break;
-		case 4:
-			table="ACL_GROUP";column="pid";
-			break;
-		default:
-			return null;
-		}
-		boolean isparent=type==2?false:true;
-		 List<TeamTreeNode> data = this.aclMapper.getTreeObjBypid(table, column, oid,true);
-		 for (TeamTreeNode teamTreeNode : data) {
-			 teamTreeNode.setType(teamTreeNode.isHastc()?type:type-1);
-			 teamTreeNode.setOpen(true);
-			 teamTreeNode.setParent(isparent);
-	  	}
-		return  data;
-		 
-	}
 	
 	
 	

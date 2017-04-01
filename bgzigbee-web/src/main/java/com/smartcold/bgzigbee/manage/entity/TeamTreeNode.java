@@ -12,7 +12,7 @@ public class TeamTreeNode {
 	private int gid;
 	private int type;
 	private int rtype;
-	private String ioc;
+	private String icon;
 	private String name;
 	private boolean hastc=true;
 	private boolean open=true;
@@ -56,11 +56,12 @@ public class TeamTreeNode {
 	public void setHastc(boolean hastc) {
 		this.hastc = hastc;
 	}
-	public String getIoc() {
-		return ioc;
+	
+	public String getIcon() {
+		return icon;
 	}
-	public void setIoc(String ioc) {
-		this.ioc = ioc;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	public String getName() {
 		return name;

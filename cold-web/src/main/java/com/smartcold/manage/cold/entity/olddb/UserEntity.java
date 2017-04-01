@@ -13,6 +13,8 @@ public class UserEntity {
 	private String email;
 
 	private int role;
+	
+	private int type;//1 360用户  2 服务商
 
 	public int getId() {
 		return id;
@@ -61,4 +63,13 @@ public class UserEntity {
 	public void setRole(int role) {
 		this.role = role;
 	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 }

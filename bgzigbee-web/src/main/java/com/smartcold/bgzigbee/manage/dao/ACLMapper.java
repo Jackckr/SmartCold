@@ -45,8 +45,10 @@ public interface ACLMapper {
 	public List<TeamTreeNode> getTreeACLGroupBypid(@Param("oid") Integer oid);
 	public List<TeamTreeNode> getTreeRoleBypid(@Param("id") Integer id,@Param("pid") Integer pid,@Param("gid") Integer gid);
 	public List<TeamTreeNode> getTreeUserBypid(@Param("roleid") Integer roleid);
-	public List<TeamTreeNode> getTreeObjBypid(@Param("table")String table,  @Param("column")String  column, @Param("oid") Integer oid,@Param("isopen")boolean isopen);
+//	public List<TeamTreeNode> getTreeObjBypid(@Param("table")String table,  @Param("column")String  column, @Param("oid") Integer oid,@Param("isopen")boolean isopen);
 	
 	
-	public List<HashMap<String, Object>> getCompany();//获得集团
+	public List<TeamTreeNode> getCompany();//获得集团
+	public List<TeamTreeNode> getRoleUserByType(@Param("roletype") Integer roletype);//获得集团
+	public List<TeamTreeNode> getComptuserByCompanyId(@Param("companyid") Integer companyid);//获得集团
 }

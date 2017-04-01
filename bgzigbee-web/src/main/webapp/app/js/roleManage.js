@@ -85,11 +85,11 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 
 	//zTreeObj
 	var zTreeObj=null;$scope.tretype=4;$scope.ztrmode=[[],[],[],["添加用户","删除用户"],["添加角色","删除角色"],["添加组","删除组"]];//
-	$scope.ztisnone=true;$scope.ztaddobj="";
+	$scope.ztisnone=0;$scope.ztaddobj="";
 	$scope.cksuser=function(ruu){	$("#stb_ruu_body tr").removeClass("seclectTr");$("#stting_ruu_"+ruu.id).addClass("seclectTr");$scope.glsuer=ruu;};
 	$scope.inittru=function(filter){	$scope.glsuer=null;$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :2,keyword :filter,row:20}}).success(function(data) {$scope.susers = data;});};
 	function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
-		if($scope.ztisnone){	var nodes = zTreeObj.getNodes();   for (var i = 0; i < nodes.length; i++) { zTreeObj.expandNode(nodes[i], true, false, true); }  $scope.ztisnone=false;}
+		if($scope.ztisnone<3){	var nodes = zTreeObj.getNodes();   for (var i = 0; i < nodes.length; i++) { zTreeObj.expandNode(nodes[i], true, false, true); } $scope.ztisnone++;}
 	};
 	function zTreeOnClick(event, treeId, treeNode) {
 		if(treeNode!=null){

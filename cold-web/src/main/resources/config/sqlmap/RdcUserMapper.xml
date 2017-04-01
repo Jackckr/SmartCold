@@ -84,7 +84,7 @@
     select
     <include refid="Base_Column_List" />
     from RdcUser
-    where userid = #{userid,jdbcType=INTEGER}
+    where userid = #{userid,jdbcType=INTEGER} LIMIT  1;
   </select>
 
 </mapper>

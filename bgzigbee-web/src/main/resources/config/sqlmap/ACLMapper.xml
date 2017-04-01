@@ -6,9 +6,16 @@
 
 
 
-    <select id="getCompany" resultType="map" >
-       SELECT * from company ;
+    <select id="getCompany" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode">
+       SELECT * from `sc360`.company ;
     </select>
+    <select id="getRoleUserByType" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode">
+      SELECT u.id,u.`username` name  FROM  `roleuser` r LEFT JOIN  `user`  u on r.`userid` =u.id  where `roleid` =#{roletype} and u.`username`  IS NOT NULL ;
+    </select>
+    <select id="getComptuserByCompanyId" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode">
+      SELECT u.id,u.`username` name FROM `sc360`.`companyuser` c LEFT JOIN `smartcold`.`user` u on u.id=c.`userid`   where  c.`companyid` =#{companyid} ;
+    </select>
+    
 
     <select id="getRdcACLByFilter" parameterType="map" resultType="map">
       SELECT id,`name`   FROM `rdc` where id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping union  SELECT `rdcid`  FROM `smartcold`.spidercollectionconfig )
@@ -57,23 +64,23 @@
 <!--     <select id="getTreeObjBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> -->
 <!--       SELECT id,`name` FROM `${table}`   where `${column}` =#{oid}  ORDER BY id ASC ; -->
 <!--     </select>  -->
-    <select id="getTreeObjBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode">
-	     SELECT
-		g.`id`,
-		g.`name`
-		<if test="isopen and table!='ACL_ROLE'">
-	     , (SELECT COUNT(*) from `${table}`  g1 WHERE g1.`${column}` =g.id )>0  hastc
-		</if>
-		<if test="isopen and table=='ACL_ROLE'">
-	     , (SELECT COUNT(*) from `${table}`  g1 WHERE g1.`pid` =g.id )>0  hastc
-		</if>
-	     FROM `${table}`  g WHERE `${column}` = #{oid} ORDER BY g.id ASC;
-    </select> 
+<!--     <select id="getTreeObjBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> -->
+<!-- 	     SELECT -->
+<!-- 		g.`id`, -->
+<!-- 		g.`name` -->
+<!-- 		<if test="isopen and table!='ACL_ROLE'"> -->
+<!-- 	     , (SELECT COUNT(*) from `${table}`  g1 WHERE g1.`${column}` =g.id )>0  hastc -->
+<!-- 		</if> -->
+<!-- 		<if test="isopen and table=='ACL_ROLE'"> -->
+<!-- 	     , (SELECT COUNT(*) from `${table}`  g1 WHERE g1.`pid` =g.id )>0  hastc -->
+<!-- 		</if> -->
+<!-- 	     FROM `${table}`  g WHERE `${column}` = #{oid} ORDER BY g.id ASC; -->
+<!--     </select>  -->
       <select id="getTreeACLGroupBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 
-         SELECT g.`id`,g.`pid`, g.`name`  , (SELECT COUNT(*) from `acl_group`  g1 WHERE g1.`pid` =g.id )>0  hastc   FROM `acl_group` g WHERE `pid` = #{oid} ORDER BY g.id ASC;
+         SELECT g.`id`,g.`pid`, g.`name`,g.`icon`  , (SELECT COUNT(*) from `acl_group`  g1 WHERE g1.`pid` =g.id )>0  hastc   FROM `acl_group` g WHERE `pid` = #{oid} ORDER BY g.id ASC;
      </select> 
      <select id="getTreeRoleBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 
-        SELECT g.id,g.`name`,g.`pid`,g.`gid`,g.`type` rtype, (SELECT COUNT(*) from `acl_role`  g1 WHERE g1.`pid` =g.id )>0  hastc    FROM `acl_role`   g
+        SELECT g.id,g.`name`,g.`pid`,g.`gid`,g.`type` rtype ,g.`icon`, (SELECT COUNT(*) from `acl_role`  g1 WHERE g1.`pid` =g.id )>0  hastc    FROM `acl_role`   g
       where  g.gid=#{gid} and  g.pid=#{pid} 
           ORDER BY id ASC ; 
      </select> 
