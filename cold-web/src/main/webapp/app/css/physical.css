@@ -305,21 +305,25 @@ ul,li {
 .tNum,.tUiit{
 	color: coral
 }
-@media (min-width: 768px){
-	.tNum{font-size:6em;}
-	.tUiit{font-size:4em;}
+@media (max-width: 460px){/*  <768 */
+	.tNum{font-size:3em;}
+	.tUiit{font-size:2em;}
 }
-@media (max-width: 768px){
-	.tNum{font-size:5em;}
-	.tUiit{font-size:4em;}
-}
-@media (min-width: 992px){
-	.tNum{font-size:5em;}
+@media (min-width: 460px){/*  <768 */
+	.tNum{font-size:4em;}
 	.tUiit{font-size:3em;}
 }
- @media (min-width: 1200px){
-	.tNum{font-size:6em;}
-	.tUiit{font-size:4.5em;}
+@media (min-width: 768px){/* 768<**<992 */
+	.tNum{font-size:3em;}
+	.tUiit{font-size:2em;}
+}
+@media (min-width: 992px){/* 992<**<1200 */
+	.tNum{font-size:4em;}
+	.tUiit{font-size:3m;}
+}
+ @media (min-width: 1200px){/* >1200  */
+	.tNum{font-size:5em;}
+	.tUiit{font-size:3.5em;}
 } 
 .cover_bg{
 	background: rgba(0,0,0,.8);

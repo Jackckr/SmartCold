@@ -1,4 +1,4 @@
-html{
+﻿html{
 	height: 100%;;
 }
 body{
@@ -180,7 +180,7 @@ section .inputBd input{
 }
 .userRadio label{
 	display: inline-block;
-	width: 40%;
+	width: 30%;
 	color: #8d8d8d;
 }
 input[type='radio']{
