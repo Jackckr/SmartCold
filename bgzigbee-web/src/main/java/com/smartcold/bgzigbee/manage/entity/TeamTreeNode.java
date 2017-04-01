@@ -11,6 +11,7 @@ public class TeamTreeNode {
 	private int pid;
 	private int gid;
 	private int type;
+	private int rtype;
 	private String ioc;
 	private String name;
 	private boolean hastc=true;
@@ -38,6 +39,13 @@ public class TeamTreeNode {
 	
 	public int getGid() {
 		return gid;
+	}
+	
+	public int getRtype() {
+		return rtype;
+	}
+	public void setRtype(int rtype) {
+		this.rtype = rtype;
 	}
 	public void setGid(int gid) {
 		this.gid = gid;

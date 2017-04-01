@@ -144,11 +144,19 @@ public class ACLController {
 	
 	@RequestMapping(value = "/getTreeNode", method = RequestMethod.POST)
 	@ResponseBody
-	public List<TeamTreeNode>  getTreeNode(Integer type,Integer id,Integer pid,Integer gid,Boolean hastc ){
+	public List<TeamTreeNode>  getTreeNode(Integer type,Integer rtype,Integer id,Integer pid,Integer gid,Boolean hastc ){
 		if(type==null){type=5;id=0;}else if(!hastc){	type=type-1;} 
 		List<TeamTreeNode> nodeList=null;
 		switch (type) {
 		case 2:
+//			if(rtype){
+//				
+//			}else if(){
+//				
+//			}
+//			
+			
+			
 			nodeList = this.aclMapper.getTreeUserBypid(id);
 			for (TeamTreeNode node : nodeList) {
 				node.setType(type);

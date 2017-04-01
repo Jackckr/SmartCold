@@ -19,7 +19,7 @@
                     <div class="box-body">
                         <div class="row" style="height:300px">
                             <div ng-repeat="obj in curtemper" class="col-lg-12 col-sm-12 col-xs-12 col-md-12 text-center" style="position: relative;line-height: {{240/curtemper.length}}px;">
-                             <span class="tNum">{{obj}}</span><span class="tUiit">℃</span> 
+                             <span class="tNum" val="{{boj}}">{{obj[0]}}-{{obj[1]}}</span><span class="tUiit">℃</span> 
                             </div>
                         </div>
                     </div><!-- /.box-body -->

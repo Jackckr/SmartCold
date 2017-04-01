@@ -107,7 +107,7 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 				async: {
 					enable: true,
 					url:"i/acl/getTreeNode",
-					autoParam: ["id","pid","gid", "type","hastc"],
+					autoParam: ["id","pid","gid", "type","rtype","hastc"],
 				},callback: {
 					onClick: zTreeOnClick,
 					onAsyncSuccess: zTreeOnAsyncSuccess

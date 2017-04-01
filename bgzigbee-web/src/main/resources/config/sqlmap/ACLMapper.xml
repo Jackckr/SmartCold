@@ -4,6 +4,12 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.ACLMapper">
 
+
+
+    <select id="getCompany" resultType="map" >
+       SELECT * from company ;
+    </select>
+
     <select id="getRdcACLByFilter" parameterType="map" resultType="map">
       SELECT id,`name`   FROM `rdc` where id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping union  SELECT `rdcid`  FROM `smartcold`.spidercollectionconfig )
         <if test="keyword!=null">
@@ -67,7 +73,7 @@
          SELECT g.`id`,g.`pid`, g.`name`  , (SELECT COUNT(*) from `acl_group`  g1 WHERE g1.`pid` =g.id )>0  hastc   FROM `acl_group` g WHERE `pid` = #{oid} ORDER BY g.id ASC;
      </select> 
      <select id="getTreeRoleBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 
-        SELECT g.id,g.`name`,g.`pid`,g.`gid`, (SELECT COUNT(*) from `acl_role`  g1 WHERE g1.`pid` =g.id )>0  hastc    FROM `acl_role`   g
+        SELECT g.id,g.`name`,g.`pid`,g.`gid`,g.`type` rtype, (SELECT COUNT(*) from `acl_role`  g1 WHERE g1.`pid` =g.id )>0  hastc    FROM `acl_role`   g
       where  g.gid=#{gid} and  g.pid=#{pid} 
           ORDER BY id ASC ; 
      </select> 

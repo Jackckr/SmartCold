@@ -35,12 +35,12 @@ public class MultiValueServiceImpl implements MultiValueService {
 			  for (int i = 0; i < devList.size(); i++) {
 				  DeviceObjectMappingEntity dev = devList.get(i);
 				  List<StorageKeyValue> findByTimeFormat = this.storageDataCollectionDao.findByTimeFormat(null, dev.getDeviceid(), key, startTime, endTime,null,"asc");
-				  resdata.put(key+names[i],findByTimeFormat );
+				  resdata.put(names[i],findByTimeFormat );
 		      }			 
 		} else {
 			for (int i = 0; i < oids.length; i++) {
 			 	List<StorageKeyValue> findByTime = this.storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), oids[i], key, startTime,endTime,null,"asc");
-				 resdata.put(key+names[i], findByTime);
+				 resdata.put(names[i], findByTime);
 		      }	
 	     }
 		return resdata;

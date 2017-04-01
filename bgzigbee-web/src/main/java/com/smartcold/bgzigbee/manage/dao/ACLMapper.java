@@ -16,7 +16,7 @@ import com.smartcold.bgzigbee.manage.entity.TeamTreeNode;
  *@Description: Admin Mapper
  */
 public interface ACLMapper {
-	
+	//
 	public List<HashMap<String, Object>> getRdcACLByFilter(@Param("keyword")String keyword,@Param("row")Integer row);//1
 	public List<HashMap<String, Object>> getRUCByFilter(@Param("keyword")String keyword,@Param("row")Integer row);//2
 	public List<HashMap<String, Object>> getUserACLByFilter(@Param("keyword")String keyword,@Param("row")Integer row);//3
@@ -24,6 +24,7 @@ public interface ACLMapper {
 	public List<HashMap<String, Object>> getGroupACLByFilter(@Param("keyword")String keyword,@Param("row")Integer row);//5
 	
 	public List<HashMap<String, Object>> isextruByRUID(@Param("rdcid")Integer rdcid,@Param("userid")Integer userid);//
+	
 	
 	public void delACLById(@Param("table")String table, @Param("id") Integer id);
 	public void upACLByID(@Param("table")String table, @Param("id") Integer id,@Param("nacl")String nacl);
@@ -39,10 +40,13 @@ public interface ACLMapper {
 	public List<ACLTreeNode> getACLNodeByPid(@Param("pid")Integer pid,@Param("nacl")String nacl);
 	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("column")String  column, @Param("id") Integer id);
 	
+	
+	
 	public List<TeamTreeNode> getTreeACLGroupBypid(@Param("oid") Integer oid);
 	public List<TeamTreeNode> getTreeRoleBypid(@Param("id") Integer id,@Param("pid") Integer pid,@Param("gid") Integer gid);
 	public List<TeamTreeNode> getTreeUserBypid(@Param("roleid") Integer roleid);
-	
 	public List<TeamTreeNode> getTreeObjBypid(@Param("table")String table,  @Param("column")String  column, @Param("oid") Integer oid,@Param("isopen")boolean isopen);
 	
+	
+	public List<HashMap<String, Object>> getCompany();//获得集团
 }
