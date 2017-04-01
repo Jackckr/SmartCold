@@ -1,61 +1,26 @@
 coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $location) {
-	$scope.table=1;var zTreeObj=null;
+	
 	//==================================================================================================================================================================
+	$scope.selobjid=null;$scope.gluser=null;$scope.glrdc=null;$scope.glsuer=null;
 	$scope.slmode=[{name:"RDC",value:"0"},{name:"RUA",value:"1"},{name:"USER",value:"2"},{name:"ROLE",value:"3"},{name:"GROUP",value:"4"}];
 	$scope.tablemode=[[["name"],["冷库名称"]],[["uname","cname"],["用户名","冷库名称"]],[["name"],["用户名"]],[["name"],["角色名称"]],[["name"],["组名称"]]];
 	$scope.type=$scope.slmode[0].value,$scope.colem1="name",$scope.colem2="name", $scope.keyword=null;
-	$scope.selobjid=null;
-	$scope.gluser=null;$scope.glrdc=null;$scope.glsuer=null;
 	
-	$scope.checkall=function(){
-		 var  checkAll=$("#div_ml input[type=checkbox]"); for(var i=0; i<checkAll.length; i++){ checkAll[i].checked=true;}
-	};
-	
-	$scope.changenaclruMode=function(user){
-		$scope.gluser=user;
-		$("#tb_ruu_body tr").removeClass("seclectTr");
-		$("#tr_ruu_"+user.id).addClass("seclectTr");
-		};
-		$scope.changenaclrdMode=function(rdc){
-			$scope.glrdc=rdc;
-			$("#tb_rur_body tr").removeClass("seclectTr");
-			$("#td_rur_"+rdc.id).addClass("seclectTr");
-		};
-	$scope.initruaclrdc = function(key){
-		$scope.glrdc=null;
-		$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :0,keyword : key,row:5}}).success(function(data) {
-			$scope.rurdcs = data;
-		});
-	};
-	$scope.initruacluser= function(key){
-		$scope.gluser=null;
-		$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :2,keyword :key,row:5}}).success(function(data) {
-			$scope.ruusers = data;
-		});
-	};
+	$scope.checkall=function(){ var  checkAll=$("#div_ml input[type=checkbox]"); for(var i=0; i<checkAll.length; i++){ checkAll[i].checked=true;}};
+	$scope.changenaclruMode=function(user){$scope.gluser=user;$("#tb_ruu_body tr").removeClass("seclectTr");$("#tr_ruu_"+user.id).addClass("seclectTr");};
+	$scope.changenaclrdMode=function(rdc){$scope.glrdc=rdc;$("#tb_rur_body tr").removeClass("seclectTr");$("#td_rur_"+rdc.id).addClass("seclectTr");};
+	$scope.initruaclrdc = function(key){$scope.glrdc=null;$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :0,keyword : key,row:5}}).success(function(data) {	$scope.rurdcs = data;});};
+	$scope.initruacluser= function(key){$scope.gluser=null;$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :2,keyword :key,row:5}}).success(function(data) {$scope.ruusers = data;});};
 	$scope.addruacl=function(){
 		if($scope.gluser!=null&&$scope.glrdc!=null){
 			var mapper='{"uname":"'+$scope.gluser.name+'","cname":"'+$scope.glrdc.name+'"}';
-			$http({method : 'POST',url : 'i/acl/addruMapper',params : { rdcid:$scope.glrdc.id, userid:$scope.gluser.id, mapper :mapper }}).success(function(data) {
-				if(!data){
-					alert("关联失败！已经存在关联权限！");
-				}
-				$scope.keyword=$scope.glrdc.name;
-				$scope.initData(false);
-			});
+			$http({method : 'POST',url : 'i/acl/addruMapper',params : { rdcid:$scope.glrdc.id, userid:$scope.gluser.id, mapper :mapper }}).success(function(data) {if(!data){	alert("关联失败！已经存在关联权限！");}$scope.initData(false);});
 		}
-		
 	};
-	
-	
-	
-	
 	$scope.initData=function(isrload){
 		   $scope.selobjid=null; $scope.objnacl = null;
 			$http({method : 'POST',url : 'i/acl/getObjByType',params : {type : $scope.type,keyword : $scope.keyword}}).success(function(data) {
 				if( $scope.type==1){
-//					$scope.colem1="name",
-//					$scope.colem2="name";
 					if(!isrload){
 						$scope.initruaclrdc();
 						$scope.initruacluser();
@@ -65,9 +30,6 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 						 mapper=angular.fromJson(obj.name); obj.cname=mapper.cname; obj.uname=mapper.uname; alldata.push(obj);
 					  });
 					 data=null;data=alldata;
-					 
-				}else{
-					
 				}
 				$scope.objDataList = data;
 			});
@@ -92,7 +54,6 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 		  });}
 	};
 	
-	
 	$scope.saveacl=function(){
 		  var newacl=[];
 		  var nalcinput=$("#div_ml input[type=checkbox]").not("input:checked");  
@@ -116,29 +77,28 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 				 // $scope.changenaclMode($scope.selobjid);
 			  });
 		  }
-//		  if( $scope.objnacl&&$scope.type){ }
 	};
-	
-	
 	$scope.initData();
 	$scope.checkall();
-	
-	
+	//========================================================================================================================================================================================
 
 
+	//zTreeObj
+	var zTreeObj=null;$scope.tretype=4;$scope.ztrmode=[[],[],[],["添加用户","删除用户"],["添加角色","删除角色"],["添加组","删除组"]];//
+	$scope.ztisnone=true;$scope.ztaddobj="";
+	$scope.cksuser=function(ruu){	$("#stb_ruu_body tr").removeClass("seclectTr");$("#stting_ruu_"+ruu.id).addClass("seclectTr");$scope.glsuer=ruu;};
+	$scope.inittru=function(filter){	$scope.glsuer=null;$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :2,keyword :filter,row:20}}).success(function(data) {$scope.susers = data;});};
+	function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+		if($scope.ztisnone){	var nodes = zTreeObj.getNodes();   for (var i = 0; i < nodes.length; i++) { zTreeObj.expandNode(nodes[i], true, false, true); }  $scope.ztisnone=false;}
+	};
+	function zTreeOnClick(event, treeId, treeNode) {
+		if(treeNode!=null){
+			$scope.tretype=treeNode.type;
+			$("#tre_del_obj").html($scope.ztrmode[$scope.tretype][1]);
+			$("#tre_add_obj").html($scope.ztrmode[$scope.tretype][0]);
+		}
+	};
 	
-	$scope.inittru=function(filter){
-		$scope.glsuer=null;
-		$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :2,keyword :filter,row:20}}).success(function(data) {
-			$scope.susers = data;
-		});
-	};
-	$scope.cksuser=function(ruu){
-		$("#stb_ruu_body tr").removeClass("seclectTr");
-		$("#stting_ruu_"+ruu.id).addClass("seclectTr");
-		$scope.glsuer=ruu;
-		
-	};
 	$scope.inittre=function(){
 		if(zTreeObj!=null){return;}
 		$scope.inittru();
@@ -148,10 +108,12 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 					enable: true,
 					url:"i/acl/getTreeNode",
 					autoParam: ["id","pid","gid", "type","hastc"],
+				},callback: {
+					onClick: zTreeOnClick,
+					onAsyncSuccess: zTreeOnAsyncSuccess
 				}
 			};
 		zTreeObj=$.fn.zTree.init($("#treeDemo"), setting);
-		zTreeObj.expandAll(true); 
 	};
 	
 	

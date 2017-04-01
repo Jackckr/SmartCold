@@ -1,6 +1,6 @@
 <style>
 .fillwith{width: 100%;}
-.fltit{ width: 5%;text-align: center; line-height: 31px;}
+.fltit{ width:8%;text-align: center; line-height: 31px;}
 .multiSelect > button {width: 100%;    min-height: 33px !important;}
 .multiSelect .checkboxLayer {width: 100%;}
 .role_seclect{margin-bottom: 0px;}
@@ -40,68 +40,14 @@ width: 100%;
 		   <div class="alert alert-warning" style="font-size: 14px"> <a href="#" class="close" data-dismiss="alert">&times;</a>权限级别：RDC>RUA>User>Role>Group</div>
 			<div class="row form-group">
 		        <div class="col-md-1 fltit" >对    象:</div>
-		        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10" style="width: 95%;   padding-right: 0px;">
+		        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10" style="width: {{type==1?77:92}}%;   padding-right: 0px;">
 		               <div class="btn-group role_seclect text-left text-nowrap row">
 						 <select class="col-lg-10" ng-model="type"  ng-change="initData()" ><option ng-repeat="x in slmode" value="{{x.value}}">{{x.name}}</option></select>
 					  </div>
 		        </div>
-		    </div>
-		    <div ng-if="type==1"  class="row form-group">
-		         <div class="role_table col-lg-5 col-lg-md-5 col-sm-12 col-xs-12">
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover">
-							<thead>
-							   <tr>
-							     <th colspan="2">
-									 <div class="btn-group fillwith">
-										<input type="text" placeholder="请输入关键词" class="myText" ng-model="ruukeyword"  ng-change="initruacluser(ruukeyword)" />
-										<div class="searchImg"><span class="glyphicon glyphicon-search"></span></div>
-									 </div>
-							     </th>
-							   </tr>
-								<tr style="background: #E4E4E4;">
-									<th >ID</th>
-									<th >用户名</th>
-								</tr>
-							</thead>
-							<tbody id="tb_ruu_body">
-								<tr  ng-repeat="ruu in ruusers" id="tr_ruu_{{ruu.id}}"  ng-click="changenaclruMode(ruu)"  >
-									<td>{{ruu.id}}</td>
-									<td>{{ruu.name}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				 <div class="role_table col-lg-5 col-lg-md-5 col-sm-12 col-xs-12">
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover">
-							<thead>
-							   <tr>
-							     <th colspan="2">
-									 <div class="btn-group fillwith">
-										<input type="text" placeholder="请输入关键词" class="myText" ng-model="rurkeyword" ng-change="initruaclrdc(rurkeyword)" />
-										<div class="searchImg"><span class="glyphicon glyphicon-search"></span></div>
-									 </div>
-							     </th>
-							   </tr>
-								<tr style="background: #E4E4E4;">
-									<th >ID</th>
-									<th >冷库名称</th>
-								</tr>
-							</thead>
-							<tbody id="tb_rur_body">
-								<tr  ng-repeat="rurdc in rurdcs"  id="td_rur_{{rurdc.id}}"  ng-click="changenaclrdMode(rurdc)"   >
-									<td>{{rurdc.id}}</td>
-									<td>{{rurdc.name}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div> 
-				 <div class="role_table col-lg-2 col-lg-md-2 col-sm-12 col-xs-12">
-				  <button type="button" class="btn btn-info" ng-disabled="gluser==null||glrdc==null" ng-click="addruacl()">加权</button>
-				 </div>
+		        <button  ng-if="type==1" type="button" class="btn btn-success" data-toggle="modal" data-target="#addAdmin" style="width:9%;    float: right; margin-right: 15px;">
+					<span class="glyphicon glyphicon-plus"></span>添加关联
+				</button>
 		    </div>
 		    
 			
@@ -217,24 +163,19 @@ width: 100%;
 		</div>
 	<!-- 角色=========================================================================================== -->
 		<div class="tab-pane fade" id="acl_sys">
-    		 <div class="role_table col-lg-12 col-lg-md-12 col-sm-12 col-xs-12">
-    		 <!-- 标准的按钮 -->
-				<!-- 表示一个成功的或积极的动作 -->
-				<button type="button" class="btn btn-success">添加</button>
-				<!-- 信息警告消息的上下文按钮 -->
-				<button type="button" class="btn btn-info">删除</button>
-				<!-- 表示应谨慎采取的动作 -->
-				
-    		 </div>
+    		 
     		 <div class="role_table col-lg-5 col-lg-md-5 col-sm-12 col-xs-12">
+	    		 <div class="role_table col-lg-12 col-lg-md-12 col-sm-12 col-xs-12">
+					    <button id="tre_add_obj" type="button" class="btn  btn-success btn-xs" ng-model="ztrmode[tretype][0]" >{{ztrmode[tretype][0]}}</button>
+						<button id="tre_del_obj" type="button" class="btn btn-danger btn-xs">{{ztrmode[tretype][1]}}</button>      				
+	    		 </div>
+	    		  <div class="role_table col-lg-12 col-lg-md-12 col-sm-12 col-xs-12">
     		       <ul id="treeDemo" class="ztree"></ul>
+    		       </div>
     		 </div>
     		 <div class="role_table col-lg-2 col-lg-md-2 col-sm-12 col-xs-12">
-    		     
-    		     <p> <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span></button></p>
-				<!-- 信息警告消息的上下文按钮 -->
-				<p><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span></button></p>
-    		      
+    		     <p><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left" ng-d="tretype!=3"></span></button></p>
+				 <p><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span></button></p>
     		 </div>
     		 <div class="role_table col-lg-5 col-lg-md-5 col-sm-12 col-xs-12">
     		 	<div class="table-responsive">
@@ -263,18 +204,6 @@ width: 100%;
 					</div>
     		 
     		 </div>
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    	
  
 
    		</div>
@@ -290,5 +219,87 @@ width: 100%;
    		<div class="tab-pane fade" id="rdc_user">
    			<p>用户</p>
    		</div>
+	</div>
+</div>
+<div >
+    <!--  添加管理员模态框 -->
+   	<div class="modal fade" id="addAdmin" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" 
+	               data-dismiss="modal" aria-hidden="true">
+	                  &times;
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">关联Rdc-User </h4>
+	         </div>
+	         <div class="modal-body">
+	         	<form class="form-horizontal" style="height: 205px;margin-top: -18px;">
+	               <div class="form-group">
+	            	 <div class="role_table col-lg-6 col-lg-md-6 col-sm-12 col-xs-12">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+							   <tr>
+							     <th colspan="2">
+									 <div class="btn-group fillwith">
+										<input type="text" placeholder="请输入关键词" class="myText" ng-model="ruukeyword"  ng-change="initruacluser(ruukeyword)" />
+										<div class="searchImg"><span class="glyphicon glyphicon-search"></span></div>
+									 </div>
+							     </th>
+							   </tr>
+								<tr style="background: #E4E4E4;">
+									<td >ID</td>
+									<td >用户名</td>
+								</tr>
+							</thead>
+							<tbody id="tb_ruu_body">
+								<tr  ng-repeat="ruu in ruusers" id="tr_ruu_{{ruu.id}}"  ng-click="changenaclruMode(ruu)"  >
+									<td>{{ruu.id}}</td>
+									<td>{{ruu.name}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				 <div class="role_table col-lg-6 col-lg-md-6 col-sm-12 col-xs-12">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+							   <tr>
+							     <th colspan="2">
+									 <div class="btn-group fillwith">
+										<input type="text" placeholder="请输入关键词" class="myText" ng-model="rurkeyword" ng-change="initruaclrdc(rurkeyword)" />
+										<div class="searchImg"><span class="glyphicon glyphicon-search"></span></div>
+									 </div>
+							     </th>
+							   </tr>
+								<tr style="background: #E4E4E4;">
+									<td >ID</td>
+									<td >冷库名称</td>
+								</tr>
+							</thead>
+							<tbody id="tb_rur_body">
+								<tr  ng-repeat="rurdc in rurdcs"  id="td_rur_{{rurdc.id}}"  ng-click="changenaclrdMode(rurdc)"   >
+									<td>{{rurdc.id}}</td>
+									<td>{{rurdc.name}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div> 
+				</div>
+				</form>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-default" 
+	               data-dismiss="modal">取消
+	            </button>
+	            <button type="button"  class="btn btn-success" data-dismiss="modal" ng-disabled="gluser==null||glrdc==null" ng-click="addruacl()">
+	                                                    关联
+	            </button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	</div><!-- /.modal -->
 	</div>
 </div>

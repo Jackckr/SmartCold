@@ -1,5 +1,6 @@
 package com.smartcold.bgzigbee.manage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -143,8 +144,8 @@ public class ACLController {
 	
 	@RequestMapping(value = "/getTreeNode", method = RequestMethod.POST)
 	@ResponseBody
-	public List<TeamTreeNode> getTreeNode(Integer type,Integer id,Integer pid,Integer gid,Boolean hastc ){
-		if(type==null){type=4;id=0;}else if(!hastc){	type=type-1;} 
+	public List<TeamTreeNode>  getTreeNode(Integer type,Integer id,Integer pid,Integer gid,Boolean hastc ){
+		if(type==null){type=5;id=0;}else if(!hastc){	type=type-1;} 
 		List<TeamTreeNode> nodeList=null;
 		switch (type) {
 		case 2:
@@ -175,6 +176,22 @@ public class ACLController {
 				node.setOpen(true);
 				node.setParent(true);
 		  	}
+			break;
+		case 5:
+			nodeList=new ArrayList<TeamTreeNode>();
+			TeamTreeNode rootnodeNode=new TeamTreeNode();
+			rootnodeNode.setId(0);
+			rootnodeNode.setName("ROOT");
+			rootnodeNode.setOpen(true);
+			rootnodeNode.setType(5);
+			List<TeamTreeNode>	roleList = this.aclMapper.getTreeACLGroupBypid(id);
+			for (TeamTreeNode node : roleList) {
+				node.setType(4);
+				node.setOpen(true);
+				node.setParent(true);
+		  	}
+			rootnodeNode.setChildren(roleList);
+			nodeList.add(rootnodeNode);
 			break;
 		default:
 			return null;
