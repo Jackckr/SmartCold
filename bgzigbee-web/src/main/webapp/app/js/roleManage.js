@@ -6,7 +6,11 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 	$scope.tablemode=[[["name"],["冷库名称"]],[["uname","cname"],["用户名","冷库名称"]],[["name"],["用户名"]],[["name"],["角色名称"]],[["name"],["组名称"]]];
 	$scope.type=$scope.slmode[0].value,$scope.colem1="name",$scope.colem2="name", $scope.keyword=null;
 	
-	$scope.checkall=function(){ var  checkAll=$("#div_ml input[type=checkbox]"); for(var i=0; i<checkAll.length; i++){ checkAll[i].checked=true;}};
+	$scope.checkall=function(){ var  checkAll=$("#div_ml input[type=checkbox]"); for(var i=0; i<checkAll.length; i++){ checkAll[i].checked=true; 
+	checkAll[i].disabled= false;
+	$(checkAll[i]).removeClass("ckdis");
+	
+	}};
 	$scope.changenaclruMode=function(user){$scope.gluser=user;$("#tb_ruu_body tr").removeClass("seclectTr");$("#tr_ruu_"+user.id).addClass("seclectTr");};
 	$scope.changenaclrdMode=function(rdc){$scope.glrdc=rdc;$("#tb_rur_body tr").removeClass("seclectTr");$("#td_rur_"+rdc.id).addClass("seclectTr");};
 	$scope.initruaclrdc = function(key){$scope.glrdc=null;$http({method : 'POST',url : 'i/acl/getObjByType',params : {type :0,keyword : key,row:5}}).success(function(data) {	$scope.rurdcs = data;});};
@@ -35,22 +39,30 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 			});
 	};
 	
-	$scope.changenaclMode=function(id){	
-		if(id&&id!=""){
-			$scope.selobjid=id;
+	$scope.changenaclMode=function(obj){	
+		if(obj!=null&&obj!=undefined){
+			$scope.selobjid=obj.id;
 			 $scope.objnacl = null;
 			$scope.checkall();
 			$("#tb_body tr").removeClass("seclectTr");
-			$("#tr_row_"+id).addClass("seclectTr");
-		    $http({method : 'POST',url : 'i/acl/getObjNACLByTID',params : {type : $scope.type,id :id}}).success(function(data) {
+			$("#tr_row_"+obj.id).addClass("seclectTr");
+		    $http({method : 'POST',url : 'i/acl/getObjNACLByTID',params : {type : $scope.type,id :obj.id,oid:obj.rdcid}}).success(function(data) {
 			  $scope.objnacl = data;
-			  if($scope.objnacl.length>0){
-				  if($scope.objnacl[0].nacl!=undefined&&$scope.objnacl[0].nacl!=""){
-				      var nacl=$scope.objnacl[0].nacl.split(",");
+//			  if($scope.objnacl.length>0){
+				  if($scope.objnacl.nacl!=undefined&& $scope.objnacl.nacl.length>0&&$scope.objnacl.nacl[0].nacl!=undefined&&$scope.objnacl.nacl[0].nacl!=""){
+				      var nacl=$scope.objnacl.nacl[0].nacl.split(",");
 					  angular.forEach(nacl,function(obj,i){
 						  $("#div_ml input[aid='"+obj+"']").attr("checked", false); $("#div_ml input[pid='"+obj+"']").attr("checked", false);
 					  });
-			  }}
+			      }
+			    if($scope.objnacl.dacl!=undefined&&$scope.objnacl.dacl.length>0&&$scope.objnacl.dacl[0].nacl!=undefined&&$scope.objnacl.dacl[0].nacl!=""){
+			      var nacl=$scope.objnacl.dacl[0].nacl.split(",");
+				   angular.forEach(nacl,function(obj,i){
+					  $("#div_ml input[aid='"+obj+"']").attr("checked", false).attr("disabled", true).addClass("ckdis");  // 
+					  $("#div_ml input[pid='"+obj+"']").attr("checked", false).attr("disabled", true).addClass("ckdis");
+				  });
+		        }
+//			  }
 		  });}
 	};
 	
@@ -70,7 +82,7 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 			}
 		  }
 		  if($scope.selobjid){
-			  var id=$scope.objnacl.length>0?$scope.objnacl[0].id:null;
+			  var id=$scope.objnacl.nacl.length>0?$scope.objnacl.nacl[0].id:null;
 			  $http({method : 'POST',url : 'i/acl/upObjNACLByTID',params : {type : $scope.type,id : id,oid:$scope.selobjid,nacl:newacl }}).success(function(data) {
 				  alert(data?"保存成功！":"保存失败！");
 				  $scope.initData();

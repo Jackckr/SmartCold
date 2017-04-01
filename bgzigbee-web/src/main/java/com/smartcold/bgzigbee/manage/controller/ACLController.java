@@ -63,28 +63,29 @@ public class ACLController {
 	
 	@RequestMapping(value = "/getObjNACLByTID", method = RequestMethod.POST)
 	@ResponseBody
-	public Object getObjNACLByTID(int type, int id) {
-		List<HashMap<String, Object>> reapdata=null;
+	public Object getObjNACLByTID(int type, int id,Integer oid) {
+		HashMap<String, Object> dataMap =new HashMap<String, Object>();
 		switch (type) {
 		case 0:
-			reapdata= this.aclMapper.getNACLByID("ACL_RDC","RDCID",id);
+			dataMap.put("nacl", this.aclMapper.getNACLByID("ACL_RDC","RDCID",id));
 			break;
 		case 1:
-			reapdata= this.aclMapper.getNACLByID("acl_ruacl","id",id);
+			dataMap.put("dacl", this.aclMapper.getNACLByID("ACL_RDC","RDCID",oid));
+			dataMap.put("nacl", this.aclMapper.getNACLByID("acl_ruacl","id",id));
 			break;
 		case 2:
-			reapdata= this.aclMapper.getNACLByID("ACL_USER","UID",id);
+			dataMap.put("nacl",this.aclMapper.getNACLByID("ACL_USER","UID",id));
 			break;
 		case 3:
-			reapdata= this.aclMapper.getNACLByID("ACL_ROLE","ID",id);
+			dataMap.put("nacl",this.aclMapper.getNACLByID("ACL_ROLE","ID",id));
 			break;
 		case 4:
-			reapdata= this.aclMapper.getNACLByID("ACL_GROUP","ID",id);
+			dataMap.put("nacl",this.aclMapper.getNACLByID("ACL_GROUP","ID",id));
 			break;
 		default:
 			break;
 		}
-		return reapdata;
+		return dataMap;
 	}
 	
 	@RequestMapping(value = "/addruMapper", method = RequestMethod.POST)

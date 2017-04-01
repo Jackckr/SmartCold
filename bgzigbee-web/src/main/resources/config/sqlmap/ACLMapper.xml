@@ -27,7 +27,7 @@
     
     
     <select id="getRUCByFilter" parameterType="map" resultType="map">
-      select id,mapper `name` from acl_ruacl
+      select id,rdcid,mapper `name` from acl_ruacl
         <if test="keyword!=null">
          where `mapper` LIKE "%"#{keyword}"%" 
        </if>

@@ -20,6 +20,10 @@ width: 100%;
     right: 20px;
     line-height: 32px;
 }
+.ckdis{
+background-color: 	#737373;
+    -webkit-appearance: none;
+}
 </style>
   <link rel="stylesheet" href="app/bower_components/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="app/bower_components/zTree/js/jquery.ztree.all.min.js"></script>
@@ -70,12 +74,12 @@ width: 100%;
 							</tr>
 						</thead>
 						<tbody id="tb_body">
-							<tr ng-if="type!=1"  ng-repeat="obj in objDataList"  id="tr_row_{{obj.id}}" ng-click="changenaclMode( obj.id)" >
+							<tr ng-if="type!=1"  ng-repeat="obj in objDataList"  id="tr_row_{{obj.id}}" ng-click="changenaclMode(obj)" >
 								<td>{{obj.id}}</td>
 								<td>{{obj[colem1]}}</td>
 								<td ng-if="type==1" >{{obj[colem2]}}</td>
 							</tr>
-							<tr ng-if="type==1"  ng-repeat="obj in objDataList"  id="tr_row_{{obj.id}}" ng-click="changenaclMode( obj.id)" >
+							<tr ng-if="type==1"  ng-repeat="obj in objDataList"  id="tr_row_{{obj.id}}" ng-click="changenaclMode(obj)" >
 								<td>{{obj.id}}</td>
 								<td>{{obj.uname}}</td>
 								<td>{{obj.cname}}</td>
