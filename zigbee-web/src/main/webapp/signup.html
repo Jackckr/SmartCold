@@ -163,10 +163,10 @@
 							     用户类型：
 							  </label>
 	                    	  <label class="checkbox-inline">
-							     <input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked>普通用户
+							     <input type="radio" name="usertype" id="optionsRadios3" value="0" checked>普通用户
 							  </label>
 							  <label class="checkbox-inline">
-							     <input type="radio" name="optionsRadiosinline" id="optionsRadios4" value="option2">维修商
+							     <input type="radio" name="usertype" id="optionsRadios4" value="1">维修商
 							  </label>
 	                    </div>
 	                     
@@ -186,7 +186,6 @@
 <script>
 $(function(){
 	$('#username').blur(function(){
-	    var flag;
 	    var reg=/^[a-zA-Z0-9][a-zA-Z0-9]{5,15}$/;
 	    if ($("#username").val().trim().length>0&&reg.test($("#username").val().trim())==false){
 	    	if($("#username").val().trim().length>24){
@@ -250,9 +249,9 @@ $(function(){
 		$.post('/i/user/telephoneVerify',{
 			telephone:$('input[name=telephone]').val().trim()
 		}, function(data){
-			alert(data.message)
+			alert(data.message);
 		});
-	})
+	});
 	$('#submit').click(function(){
 		userName = $("#username").val().trim();
 		var password = $('input[name=password]').val().trim();
@@ -261,13 +260,14 @@ $(function(){
 		if(checkUserName != ""){
 			alert(checkUserName);
 		}else if(password != password1){
-			alert("两次密码不统一~")
+			alert("两次密码不统一~");
 		}else{
 	    	$.ajax({
 	    		type:"POST",
-	    		data:{username:userName,
+	    		data:{  username:userName,
 	    				password:password,
 	    				password1:password1,
+	    				type:$("input[name='usertype']:checked").val(),
 	    				telephone:$("#text_telephone").val().trim(),
 	    				signUpCode:$('input[name=signUpCode]').val().trim()},
 	    		url:"/i/user/signup?",
@@ -280,10 +280,10 @@ $(function(){
     				   }
     				}).error(function(data){
     					alert("系统错误");
-	    		})
+	    		});
 		}
 	});
-})
+});
 //返回true 表示有问题  
 function checkPassword(){
 	var password = $('input[name=password]').val().trim();

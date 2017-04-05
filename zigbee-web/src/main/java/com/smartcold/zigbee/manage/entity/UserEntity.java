@@ -12,6 +12,8 @@ public class UserEntity {
 	
 	private Integer roleid;
 	
+	private Integer type;
+	
 	private String email;
 	
 	private String nickname;//-> new add  昵称
@@ -54,6 +56,14 @@ public class UserEntity {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public Integer getRole() {

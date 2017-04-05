@@ -96,8 +96,9 @@ public class TelephoneVerifyUtil {
 			req.setSmsParamString("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
 			req.setRecNum(telephone);
 			req.setSmsTemplateCode("SMS_12145749");//【链库网】验证码Q6C4，您正在注册成为lianku用户，感谢您的支持！
-			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-			System.out.println(rsp.getBody());
+//			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+//			System.out.println(rsp.getBody());
+			System.err.println("注册验证码：code"+code);
 			return code;
 		}
 		

@@ -399,7 +399,8 @@ public class RdcServiceImpl implements RdcService {
         return addFileData(rdcScoreDTOs);
     }
 
-    @Scheduled(cron = "0 */10 * * * ?")
+//    @Scheduled(cron = "0 */10 * * * ?")
+    @Scheduled(cron = "0 0 5 * * ?")
     @Override
     public void sumRdcsScore() {
         List<RdcEntity> rdcList = rdcDao.findRdcList();

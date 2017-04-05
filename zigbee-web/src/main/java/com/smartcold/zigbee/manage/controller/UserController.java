@@ -147,7 +147,7 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
-	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode) throws ApiException {
+	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode,Integer type) throws ApiException {
 		if (username == null || password == null || !password.equals(password1)) {
 			return new ResultDtoStr("-1", "用户名密码输入错误");
 		}
@@ -157,7 +157,9 @@ public class UserController extends BaseController {
 			}//跨app获得验证码
 		if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
 			return new ResultDtoStr("-1", "验证码输入错误");
+		if(type==null){type=0;}
 		UserEntity userEntity = new UserEntity();   
+		userEntity.setType(type);
 		userEntity.setUsername(username);
 		userEntity.setPassword(EncodeUtil.encodeByMD5(password));
 		userEntity.setEmail(email);
