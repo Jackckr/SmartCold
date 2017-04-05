@@ -43,8 +43,8 @@ background-color: 	#737373;
 		
 		   <div class="alert alert-warning" style="font-size: 14px"> <a href="#" class="close" data-dismiss="alert">&times;</a>权限级别：RDC>RUA>User>Role>Group</div>
 			<div class="row form-group">
-		        <div class="col-md-1 fltit" >对    象:</div>
-		        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10" style="width: {{type==1?77:92}}%;   padding-right: 0px;">
+		        <div class="col-lg-1 col-md-1 col-sm-4 col-xs-4 fltit" >对    象:</div>
+		        <div class="col-lg-11 col-md-11 col-sm-8 col-xs-8" style="width: {{type==1?77:92}}%;   padding-right: 0px;">
 		               <div class="btn-group role_seclect text-left text-nowrap row">
 						 <select class="col-lg-10" ng-model="type"  ng-change="initData()" ><option ng-repeat="x in slmode" value="{{x.value}}">{{x.name}}</option></select>
 					  </div>
@@ -168,7 +168,7 @@ background-color: 	#737373;
 	<!-- 角色=========================================================================================== -->
 		<div class="tab-pane fade" id="acl_sys">
     		 
-    		 <div class="role_table col-lg-5 col-lg-md-5 col-sm-12 col-xs-12">
+    		 <div class="role_table col-lg-5 col-lg-md-5 col-sm-6 col-xs-12">
 	    		 <div class="role_table col-lg-12 col-lg-md-12 col-sm-12 col-xs-12">
 					    <button id="tre_add_obj" type="button" class="btn  btn-success btn-xs" disabled="disabled">{{ztrmode[tretype][0]}}</button>
 						<button id="tre_del_obj" type="button" class="btn btn-danger btn-xs" disabled="disabled">{{ztrmode[tretype][1]}}</button>      				
@@ -177,7 +177,7 @@ background-color: 	#737373;
     		       <ul id="treeDemo" class="ztree"></ul>
     		       </div>
     		 </div>
-    		 <div class="role_table col-lg-2 col-lg-md-2 col-sm-12 col-xs-12">
+    		 <div class="role_table col-lg-2 col-lg-md-2 col-sm-6 col-xs-12">
     		     <p><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left" disabled="disabled"></span></button></p>
 				 <p><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right" disabled="disabled"></span></button></p>
     		 </div>
