@@ -34,18 +34,19 @@
     }
 </style>
 <div style="background-color: #F1F1F1;">
-    <div class="row" ng-if="authPicShow !== undefined">
+    <div class="row" ng-if="autherList.length>0">
         <div>
             <ul id="products">
-                <li ng-repeat="item in authPicShow">
-                    <img ng-src="{{item.authPics[0].location}}" ng-click="zoomPic(item.authPics[0])" width="100px" height="100px"/>
-                    <input type="radio" value="{{item.userId}}" name="authUser" ng-click="updateSelected(item.userId)">
-                    <span>申请人: {{item.userName}}</span>
+                <li ng-repeat="item in autherList">
+                    <img ng-src="{{item.file.location}}" ng-click="zoompic(item.file)" width="100px" height="100px"/>
+                    <span >{{item.time}}</span>
+                    <input type="radio" value="{{item.user.id}}" name="authUser" ng-click="updateSelected(item.user.id)">
+                    <span>申请人: {{item.USER.username}}</span>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="row" ng-if="authPicShow == undefined" style="min-height: 200px;margin-top: 50px">
+    <div class="row" ng-if="autherList.length==0" style="min-height: 200px;margin-top: 50px">
         <div>
             <ul style="text-align: center">
                 <h2>

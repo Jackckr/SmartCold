@@ -3,22 +3,16 @@ coldWeb.controller('coldStorageAuthAudit', function ($rootScope, $scope, $state,
     $scope.rdcId = $stateParams.rdcId;
     $scope.authUserId = undefined;
 
-    $http.get('/i/rdc/findRDCDTOByRDCId', {
-	    params: {
-	        "rdcID": $scope.rdcId
-	    }
-    }).success(function (data) {
-        $scope.name = data[0].name;
-                $scope.authPicShow = data[0].authPics;
+//    $http.get('/i/rdc/findRDCDTOByRDCId', {  params: { "rdcID": $scope.rdcId } }).success(function (data) {
+//    	$scope.name = data[0].name;
+//        $scope.authPicShow = data[0].authPics;
+//    });
+    $http.get('/i/rdc/getAuthenticationByRDCId', {  params: { "rdcID": $scope.rdcId } }).success(function (data) {
+    	$scope.autherList=data;
     });
 
-    $scope.returnStorageManage = function(){
-        $state.go('coldStoragelist', {});
-    }
-
-    $scope.updateSelected = function(userId){
-        $scope.authUserId = userId;
-    }
+    $scope.updateSelected = function(userId){ $scope.authUserId = userId; };
+    $scope.returnStorageManage = function(){  $state.go('coldStoragelist', {}); };
 
     $scope.submit = function () {
         if ($scope.authUserId == undefined){

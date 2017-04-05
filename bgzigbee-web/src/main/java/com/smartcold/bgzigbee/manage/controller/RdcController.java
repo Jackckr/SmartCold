@@ -4,6 +4,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
@@ -39,10 +41,12 @@ import com.smartcold.bgzigbee.manage.dao.StorageRefregMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageStructureTypeMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageTemperTypeMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageTypeMapper;
+import com.smartcold.bgzigbee.manage.dao.UserMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.MappingDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
+import com.smartcold.bgzigbee.manage.dto.RdcAuthDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
@@ -53,10 +57,12 @@ import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcUser;
 import com.smartcold.bgzigbee.manage.entity.RoleUser;
 import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
+import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
 import com.smartcold.bgzigbee.manage.util.ResponseData;
 import com.smartcold.bgzigbee.manage.util.SetUtil;
+import com.smartcold.bgzigbee.manage.util.TimeUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -72,6 +78,10 @@ public class RdcController {
 	@Autowired
 	private RdcMapper rdcDao;
 
+	@Autowired
+	private UserMapper userDao;
+
+	
 	@Autowired
 	private RdcExtMapper rdcExtDao;
 	
@@ -156,6 +166,32 @@ public class RdcController {
 	public Object findRDCDTOByRDCId(@RequestParam int rdcID) {
 		return rdcService.findRDCDTOByRDCId(rdcID);
 	}
+	
+
+	@RequestMapping(value = "/getAuthenticationByRDCId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getAuthenticationByRDCId(@RequestParam int rdcID) {
+		HashMap<String, Object>  autherMap=null;
+		List<Object> resDataList=new ArrayList<Object>();
+		List<FileDataEntity> authFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_AUTH_PIC);
+		if (authFiles!=null&&!CollectionUtils.isEmpty(authFiles)) {
+			for (FileDataEntity item : authFiles) {
+				String location = item.getLocation();
+				if (!StringUtils.isEmpty(location)) {
+					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, location));
+					autherMap=new HashMap<String, Object>();
+					String[] temps = location.split("_");
+					int userId = Integer.parseInt(temps[1]);
+					autherMap.put("time", TimeUtil.getDateTime(new Date(Long.parseLong(temps[temps.length-1].substring(0, 10)))));
+					autherMap.put("file", item);
+					autherMap.put("user", userDao.findUserById(userId));
+					resDataList.add(autherMap);
+				}
+			}				
+		}
+		return resDataList;
+	}
+	
 
 	@RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)
 	@ResponseBody

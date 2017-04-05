@@ -185,12 +185,15 @@ public class ACLController {
 							
 							 List<TeamTreeNode> userlist = this.aclMapper.getComptuserByCompanyId(node.getId());
 							 if(SetUtil.isnotNullList(userlist)){
+								 List<TeamTreeNode> newuserlist=new ArrayList<TeamTreeNode>();
 								 for (TeamTreeNode user : userlist) {
+									 if(user==null){continue;}
 									 user.setOpen(true);
 									 user.setParent(false);
 									 user.setIcon("/app/bower_components/zTree/img/user.png");
+									 newuserlist.add(user);
 								}
-								 node.setChildren(userlist);
+								 node.setChildren(newuserlist);
 							 }
 							 node.setHastc(false);
 							 node.setParent(false);

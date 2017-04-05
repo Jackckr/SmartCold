@@ -45,7 +45,7 @@
     
     
     <select id="getRoleACLByFilter" parameterType="map" resultType="map">
-      SELECT id,`name`   FROM `acl_role` 
+      SELECT id,`name`,`gid`   FROM `acl_role` 
         <if test="keyword!=null">
          where `name`  LIKE "%"#{keyword}"%" 
        </if>
