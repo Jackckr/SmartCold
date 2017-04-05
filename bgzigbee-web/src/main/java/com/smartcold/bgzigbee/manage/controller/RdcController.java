@@ -592,6 +592,13 @@ public class RdcController {
 		return new ResultDto(0, "资质荣誉审核成功");
 	}
 
+	/**
+	 * 冷库认证
+	 * @param request
+	 * @param rdcId
+	 * @param authUserId
+	 * @return
+	 */
 	@RequestMapping(value = "/updateRdcAuth", method = RequestMethod.POST)
 	@ResponseBody
 	public Object updateRdcAuth(HttpServletRequest request, int rdcId, int authUserId) {

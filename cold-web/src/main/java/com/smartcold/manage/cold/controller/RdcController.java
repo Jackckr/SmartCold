@@ -73,18 +73,5 @@ public class RdcController {
 	}
 	
 	
-	//====================================================以下提供测试API====================================================
-	@RequestMapping(value = "/initReckonQuantity")
-	@ResponseBody
-	public ResponseData<String> initReckonQuantity(HttpServletRequest request) {
-		this.msgService.initReckonQuantity();
-		return ResponseData.newSuccess("初始化30日Q成功！");
-	}
-	@RequestMapping(value = "/reckonQuantity")
-	@ResponseBody
-	public ResponseData<String> getReckonQuantity(HttpServletRequest request) {
-		this.msgService.reckonQuantity();
-		return ResponseData.newSuccess("初始化昨天Q成功！");
-	}
 	
 }

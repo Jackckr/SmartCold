@@ -61,6 +61,13 @@ public class ACLController {
 		return reapdata;
 	}
 	
+	/**
+	 * 代码有点乱  后期调整
+	 * @param type
+	 * @param id
+	 * @param oid
+	 * @return
+	 */
 	@RequestMapping(value = "/getObjNACLByTID", method = RequestMethod.POST)
 	@ResponseBody
 	public Object getObjNACLByTID(int type, int id,Integer oid) {
@@ -77,7 +84,9 @@ public class ACLController {
 			dataMap.put("nacl",this.aclMapper.getNACLByID("ACL_USER","UID",id));
 			break;
 		case 3:
-			dataMap.put("nacl",this.aclMapper.getNACLByID("ACL_ROLE","ID",id));
+			List<HashMap<String, Object>> naclList = this.aclMapper.getNACLByID("ACL_ROLE","ID",id);
+			if(SetUtil.isnotNullList(naclList)){naclList=this.aclMapper.getNACLByID("ACL_GROUP","ID",oid);}
+			dataMap.put("nacl",naclList);//
 			break;
 		case 4:
 			dataMap.put("nacl",this.aclMapper.getNACLByID("ACL_GROUP","ID",id));
@@ -125,7 +134,6 @@ public class ACLController {
 			default:
 				return false;
 			}
-			
 			if(id!=null){//修改
 				if(StringUtil.isNull(nacl)){
 					this.aclMapper.delACLById(table, id);
@@ -143,6 +151,16 @@ public class ACLController {
 		
 	}
 	
+	/**
+	 * 代码有点乱  后期调整
+	 * @param type
+	 * @param rtype
+	 * @param id
+	 * @param pid
+	 * @param gid
+	 * @param hastc
+	 * @return
+	 */
 	@RequestMapping(value = "/getTreeNode", method = RequestMethod.POST)
 	@ResponseBody
 	public List<TeamTreeNode>  getTreeNode(Integer type,Integer rtype,Integer id,Integer pid,Integer gid,Boolean hastc ){
@@ -184,11 +202,7 @@ public class ACLController {
 			}else if(gid==3){//服务商。。。
 				
 				
-				
-				
 			}
-			
-			
 			break;
 		case 3:
 			if(pid==0&&gid>0){
@@ -201,7 +215,6 @@ public class ACLController {
 				node.setType(type);
 				node.setOpen(true);
 				node.setParent(true);
-//				node.setIcon("/app/bower_components/zTree/img/role.png");
 		  	}
 			break;
 		case 4:
@@ -210,7 +223,6 @@ public class ACLController {
 				node.setType(type);
 				node.setOpen(true);
 				node.setParent(true);
-//				node.setIcon("/app/bower_components/zTree/img/role.png");
 		  	}
 			break;
 		case 5:
@@ -226,7 +238,6 @@ public class ACLController {
 				node.setType(4);
 				node.setOpen(true);
 				node.setParent(true);
-//				node.setIcon("/app/bower_components/zTree/img/group.png");
 		  	}
 			rootnodeNode.setChildren(roleList);
 			nodeList.add(rootnodeNode);
@@ -235,12 +246,6 @@ public class ACLController {
 			return null;
 		}
 		return  nodeList;
-		
-		
-		
-		
-		
-//		 return getChnode(type, id);
 	}
 	
 

@@ -46,7 +46,9 @@ coldWeb.controller('roleManage', function ($scope, $state, $cookies, $http, $loc
 			$scope.checkall();
 			$("#tb_body tr").removeClass("seclectTr");
 			$("#tr_row_"+obj.id).addClass("seclectTr");
-		    $http({method : 'POST',url : 'i/acl/getObjNACLByTID',params : {type : $scope.type,id :obj.id,oid:obj.rdcid}}).success(function(data) {
+		    var	oid=undefined;
+			if($scope.type==1){oid=obj.rdcid;}else if($scope.type==3){oid=obj.gid;}
+		    $http({method : 'POST',url : 'i/acl/getObjNACLByTID',params : {type : $scope.type,id :obj.id,oid:oid}}).success(function(data) {
 			  $scope.objnacl = data;
 //			  if($scope.objnacl.length>0){
 				  if($scope.objnacl.nacl!=undefined&& $scope.objnacl.nacl.length>0&&$scope.objnacl.nacl[0].nacl!=undefined&&$scope.objnacl.nacl[0].nacl!=""){

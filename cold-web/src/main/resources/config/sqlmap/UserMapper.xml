@@ -24,7 +24,7 @@
     <result column="role" property="role" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, telephone, email, role
+    id, type,username, password, telephone, email, role
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
