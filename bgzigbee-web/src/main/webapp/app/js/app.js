@@ -297,6 +297,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('coldStoragelist', {
         url: '/storageManage',
         controller: 'storageManage',
+        params:{id:null,username:null},
         templateUrl: 'app/template/storageManage.html'
     }).state('commentManage', {
         url: '/commentManage',

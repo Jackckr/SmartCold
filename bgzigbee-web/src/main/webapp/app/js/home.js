@@ -144,6 +144,11 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
     		}
     	})
     }
+    
+    $scope.setRdcandUser = function(user){
+    	 $state.go('coldStoragelist', {'id': user.id,'username':user.username});
+    };
+    
     $scope.changeAudits = function(){
     	var r=confirm("通过审核？");
     	var audit = r?1:-1

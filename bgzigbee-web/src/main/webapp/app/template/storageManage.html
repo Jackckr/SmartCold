@@ -1,7 +1,8 @@
  <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
  	<!-- 按钮操作区域开始 -->
 	<div class="operation">
-		<a  href="#/coldStorageAdd" class="btn btn-default pull-left" id="plusCold">
+	    <h6 ng-if="sluser" >已选择用户：{{sluser.username}} </h6>
+		<a ng-if="sluser==null"  href="#/coldStorageAdd" class="btn btn-default pull-left" id="plusCold">
 			<span class="glyphicon glyphicon-plus"></span>添加冷库
 		</a>
 		<div class="btn-group pull-left" id="status">
@@ -58,8 +59,9 @@
 	         <td style="width:18%;min-width:142px;">
 	         	<span class="edit"  ng-click="goEditRdc(rdc.id)"></span>
 	         	<span class="delete" ng-click="deleteRdc(rdc.id)"></span>
-	         	<button class="btn btn-primary btn-xs" ng-click="changeAudit(rdc)">审核</button>
-				<button class="btn btn-primary btn-xs" ng-click="authAudit(rdc)">认证</button>
+	         	<button  ng-if="sluser==null" class="btn btn-primary btn-xs" ng-click="changeAudit(rdc)">审核</button>
+				<button   ng-if="sluser==null" class="btn btn-primary btn-xs" ng-click="authAudit(rdc)">认证</button>
+				<button   ng-if="sluser" class="btn btn-primary btn-xs" ng-click="authAudit(rdc)">关联</button>
 	         </td>
 	      </tr>
 	   </tbody>

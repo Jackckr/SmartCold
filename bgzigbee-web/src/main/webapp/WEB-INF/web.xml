@@ -43,14 +43,14 @@
 	</servlet-mapping>
 
  <!-- session 过滤  -->
-   <filter> 
-       <filter-name>loginUserSessionFilter</filter-name> 
-       <filter-class>com.smartcold.bgzigbee.manage.interceptor.LoginUserSessionFilter</filter-class> 
-   </filter> 
-   <filter-mapping> 
-       <filter-name>loginUserSessionFilter</filter-name> 
-       <url-pattern>*.html</url-pattern> 
-   </filter-mapping>
+<!--    <filter>  -->
+<!--        <filter-name>loginUserSessionFilter</filter-name>  -->
+<!--        <filter-class>com.smartcold.bgzigbee.manage.interceptor.LoginUserSessionFilter</filter-class>  -->
+<!--    </filter>  -->
+<!--    <filter-mapping>  -->
+<!--        <filter-name>loginUserSessionFilter</filter-name>  -->
+<!--        <url-pattern>*.html</url-pattern>  -->
+<!--    </filter-mapping> -->
 
   <filter>  
 	  <filter-name>characterEncodingFilter</filter-name>  

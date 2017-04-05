@@ -1,7 +1,7 @@
 /**
  * Created by qiunian.sun on 16/4/9.
  */
-coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cookies, $http, $location) {
+coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cookies, $http, $location,$stateParams) {
 	$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	$scope.optAudit = '8';
 	// 显示最大页数
@@ -11,6 +11,10 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     // 当前页
     $scope.bigCurrentPage = 1;
 	$scope.rdcs = [];
+	$scope.sluser=undefined;
+	if($stateParams.id!=null){
+		$scope.sluser={id:$stateParams.id,username:$stateParams.username};
+	}	
 	$scope.getRdcs = function(){
 		$scope.selected = [];
 		var data = {

@@ -44,15 +44,6 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 	                	if(!$scope.isErr){ $scope.isErr=true;}
 	                }   //修正尾部数据短传问题2
 	               if(newdata[newdata.length-1].y!=null){ $scope.curtemper.push([key ,newdata[newdata.length-1].y.toFixed(2)]);}
-	               $scope.curtemper.push([key ,"-18.02"]);
-//	               $scope.curtemper.push({"0.00");               }
-	               $scope.curtemper.push([key ,"-16.00"]);
-	               $scope.curtemper.push([key ,"-11.00"]);
-	               $scope.curtemper.push([key ,"-12.00"]);
-	               $scope.curtemper.push([key ,"-12.00"]);
-	               $scope.curtemper.push([key ,"-14.00"]);
-	               $scope.curtemper.push([key ,"-13.00"]);
-//	               $scope.curtemper.push("0.00");
                  }else{
                 	 if(!$scope.isErr){ $scope.isErr=true;}
                 	 newdata.push({ x: startTime.getTime(),y:null });
