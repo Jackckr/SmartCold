@@ -684,7 +684,7 @@ public class RdcController {
 			ftpService.uploadFile(uploadFileEntity);
 			FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_AUTH_PIC, rdcEntity.getId(), fileName);
-			if(user!=null&&user.getType()==1){arrangeFile.setDescription("1");}//标志为服务商
+			if(user!=null){arrangeFile.setDescription(user.getType().toString());}//标志为服务商
 			fileDataDao.saveFileData(arrangeFile);
 		}
 		// 上传认证后更改冷库审核状态为待审核
