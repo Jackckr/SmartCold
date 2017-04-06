@@ -72,6 +72,7 @@
     	<div class="tempture current mylog"><i class="iconfont">&#xe79c;</i>维护提醒</div>
     	<div class="light mylog"><i class="iconfont">&#xe7c9;</i>维修记录</div>  
     	<div class="applyLog mylog"><i class="iconfont" style="color: #438BCB;">&#xe639;</i>维修申请</div>    	
+    	<div class="apply_log mylog"><i class="iconfont" style="color: #F39826;">&#xe639;</i>维修</div>    	
     </section>
     <div class="backDrop"></div>
     <div class="mainTainBottomL">
@@ -188,6 +189,128 @@
 				<input class="datainp" type="date" ng-model="ordertime" placeholder="请选择预约时间"/>
 			</div>
 			<button class="mybtn" ng-click="addMaintenance()">提交</button>
+		</div>
+		<!-- 维护html ===================*********============*********==========-->
+		<div class="wxRecords black"  ng-show="rdcId">
+			<p>告警列表</p>
+			<div class="analysis alarmLog">
+				<table class="cold_warn">
+					<thead>
+						<tr>
+							<th>序号</th>
+					        <th>设备名称</th>
+					        <th>故障描述</th>
+					        <th>告警时间</th>
+					        <th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+					        <td>1</td>
+					        <td>压缩机1</td>
+					        <td>高温</td>
+					        <td>2017/04/05 15:32</td>
+					        <td>
+						        <button class="btn btn-primary" ng-click="weixiu(maintenance0.id)">申维</button>
+						        <button class="btn btn-danger">删除</button>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>2</td>
+					        <td>压缩机2</td>
+					        <td>高温</td>
+					        <td>2017/04/05 16:32</td>
+					        <td>
+						        <button class="btn btn-primary" ng-click="weixiu(maintenance0.id)">申维</button>
+						        <button class="btn btn-danger">删除</button>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>3</td>
+					        <td>压缩机3</td>
+					        <td>高温</td>
+					        <td>2017/04/05 17:32</td>
+					        <td>
+						        <button class="btn btn-primary" ng-click="weixiu(maintenance0.id)">申维</button>
+						        <button class="btn btn-danger">删除</button>
+					        </td>
+					      </tr>
+					</tbody>
+				</table>
+			</div>
+			<p>维修</p>
+			<div class="input-group">
+                 <input type="text" class="form-control" placeholder="请输入设备名" ng-model="keyword" ng-change="goSearch1()" ng-model-options="{debounce: 700}">
+                 <span class="input-group-btn">
+                     <button class="btn btn-primary" type="button" ng-click="goSearch1()">搜索</button>
+                 </span>
+             </div><br>
+			<div class="analysis alarmLog">
+				<table class="cold_warn">
+					<thead>
+						<tr>
+							<th>序号</th>
+					        <th>设备名称</th>
+					        <th>维修单位</th>
+					        <th>维修人员</th>
+					        <th>故障描述</th>
+					        <th>故障原因</th>
+					        <th>告警时间</th>
+					        <th>维修时间</th>
+					        <th>维修情况</th>
+					        <th>维修确认</th>
+					        <th>验收确认</th>
+					        <th>评价详情</th>
+					        <th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+					        <td>1</td>
+					        <td>压缩机1</td>
+					        <td>睿冷</td>
+					        <td>阿三</td>
+					        <td>高温</td>
+					        <td>开机时间过长</td>
+					        <td>2017/04/05 15:32</td>
+					        <td>2017/04/06 10:20</td>
+					        <td>加水冷却ok</td>
+					        <td>阿甘</td>
+					        <td>胡汉三</td>
+					        <td>及时准确</td>
+					        <td>
+						        <button class="btn btn-primary" ng-click="comment(maintenance0.id)">评价</button>
+						        <button class="btn btn-danger">删除</button>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td>2</td>
+					        <td>压缩机1</td>
+					        <td>睿冷</td>
+					        <td>阿三</td>
+					        <td>高温</td>
+					        <td>开机时间过长</td>
+					        <td>2017/04/05 15:32</td>
+					        <td>2017/04/06 10:20</td>
+					        <td>加水冷却ok</td>
+					        <td>阿甘</td>
+					        <td>胡汉三</td>
+					        <td>及时准确</td>
+					        <td>
+						        <button class="btn btn-primary" ng-click="comment(maintenance0.id)">评价</button>
+						        <button class="btn btn-danger">删除</button>
+					        </td>
+					      </tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- <div class="pagination">
+			    <a href="#" class="first" data-action="first">首页</a>
+			    <a href="#" class="previous" data-action="previous">上页</a>
+			    <input type="text" readonly="readonly" data-max-page="40" />
+			    <a href="#" class="nexts" data-action="nexts">下页</a>
+			    <a href="#" class="last" data-action="last">末页</a>
+			</div> -->
 		</div>
   </div>
   <!--rdc列表-------------------------------------------------->

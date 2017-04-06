@@ -33,6 +33,7 @@ import com.smartcold.zigbee.manage.dao.StorageRefregMapper;
 import com.smartcold.zigbee.manage.dao.StorageStructureTypeMapper;
 import com.smartcold.zigbee.manage.dao.StorageTemperTypeMapper;
 import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
+import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
@@ -95,6 +96,9 @@ public class RdcController {
 
 	@Autowired
 	private FileDataMapper fileDataDao;
+	
+	@Autowired
+	private UserMapper userMapper;
 
     /**
      * 
@@ -669,14 +673,18 @@ public class RdcController {
 		RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
 		String dir = String.format("%s/rdc/%s", baseDir, rdcId);
 		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
-		if(user==null||uid==null){return new BaseDto(-1);}
-		if(uid==null){uid=user.getId();}
+		if(user==null&&uid==null){return new BaseDto(-1);}
+		if(uid==null){
+			uid=user.getId();
+			user= this.userMapper.findUserById(uid);
+		}
 		if (authfile != null) {
 			String fileName = String.format("rdc%s_%s_%s.%s", rdcId, uid, new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
 			ftpService.uploadFile(uploadFileEntity);
 			FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_AUTH_PIC, rdcEntity.getId(), fileName);
+			if(user!=null&&user.getType()==1){arrangeFile.setDescription("1");}//标志为服务商
 			fileDataDao.saveFileData(arrangeFile);
 		}
 		// 上传认证后更改冷库审核状态为待审核

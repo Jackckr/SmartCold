@@ -322,6 +322,85 @@ app.controller('maintain', function ($scope, $location, $http,$timeout) {
             });
         });
     };
+    $scope.weixiu = function (id) {
+		layer.open({
+			type: 1
+		    ,anim: 'up'
+		    ,style: 'position:fixed; bottom:0; left:0; overflow-y: scroll; width: 100%; height: 90%; border:none;'
+			,title: [
+			        '维修操作',
+			        'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;border-radius:0;'
+			        ]
+    		, content: '<div class="applyKid textA">' +
+    		'<p>设备名称:</p>' +
+    		'<input class="datainp" type="text" style="width:100%;" placeholder="请输入设备名称"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>维修单位:</p>' +
+    		'<input class="datainp" type="text" style="width:100%;" placeholder="请输入维修单位"/>' +
+    		'</div>' +
+    		'<div class="applyKid">' +
+    		'<p>维修时间:</p>' +
+    		'<input class="datainp" style="width:100%;" type="date"  placeholder="请选择维修时间"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>维修人员:</p>' +
+    		'<input style="width:100%;" class="datainp" type="text"  placeholder="维修人员"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>故障描述:</p>' +
+    		'<input class="datainp" style="width:100%;" type="text"  placeholder="故障描述"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>故障原因:</p>' +
+    		'<input class="datainp" style="width:100%;" type="text"  placeholder="故障原因"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>维修情况:</p>' +
+    		'<input class="datainp" style="width:100%;" type="text"  placeholder="维修情况"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>维修确认:</p>' +
+    		'<input class="datainp" style="width:100%;" type="text"  placeholder="维修确认"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>验收确认:</p>' +
+    		'<input class="datainp" style="width:100%;" type="text"  placeholder="验收确认"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>备注:</p>' +
+    		'<textarea colspan="10" rowspan="10" id="note" placeholder="请输入文字"></textarea>' +
+    		'</div>'
+    		, btn: ['确认', '取消']
+    		, yes: function (index) {
+    			alert("请输入所有文本框~");
+    		}
+    	});
+    };
+    
+    $scope.comment = function (id) {
+		layer.open({
+			type: 1
+		    ,anim: 'up'
+		    ,style: 'position:fixed; bottom:0; left:0; overflow-y: scroll; width: 100%; border:none;'
+			,title: [
+			        '维修评价',
+			        'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;border-radius:0;'
+			        ]
+    		, content: '<div class="applyKid textA">' +
+    		'<p>评价:</p>' +
+    		'<textarea colspan="10" rowspan="10" id="note" placeholder="请对此次维修做出评价~" style="height:5rem;"></textarea>' +
+    		'</div>'
+    		, btn: ['确认', '取消']
+    		, yes: function (index) {
+    			if($("#note").val().trim()==""){
+    				alert("评价内容不能为空~");
+    			}else{
+    				layer.close(index);
+    			}
+    		}
+    	});
+    };
 
     $scope.submitfix = function (detail, fixtime, note) {
         $scope.updateMaintenance0.detail = detail;

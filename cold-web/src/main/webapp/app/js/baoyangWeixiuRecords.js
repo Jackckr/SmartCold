@@ -99,6 +99,9 @@ coldWeb.controller('baoyangWeixiuRecords', function ($rootScope, $scope, $state,
     	if($scope.updateMaintenance0.detail==undefined || $scope.updateMaintenance0.detail == ''){
 			alert("请填写维修详情");
             return;
+		}else if($scope.updateMaintenance0.fixtime == undefined || $scope.updateMaintenance0.fixtime == ""){
+			alert("请填写维修时间");
+            return;
 		}else{//Date.parse($scope.updateMaintenance0.ordertime.replace(/-/g,"/"))
 			if(Date.parse($scope.updateMaintenance0.fixtime.replace(/-/g,"/"))>=Date.parse($scope.updateMaintenance0.ordertime.replace(/-/g,"/").slice(0,-2))){
 				$http({

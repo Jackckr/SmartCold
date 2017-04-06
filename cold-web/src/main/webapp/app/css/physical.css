@@ -730,3 +730,34 @@ html, body {
      transform:rotate(360deg);
    }
 }
+
+/*维修确认单*/
+legend{
+	font-size: 16px;
+}
+.applyConfirm {
+	padding: 15px;
+	border-radius: 4px;
+	background: #D1D5DE;
+	color: #555;
+	margin: 0;
+}
+.applyConfirm label{
+	font-weight: 400;
+}
+.applyConfirm textarea{
+	resize: vertical;
+}
+.applyConfirm .table>thead>tr>th,
+.applyConfirm .table>tbody>tr>th,
+.applyConfirm .table>tfoot>tr>th,
+.applyConfirm .table>thead>tr>td,
+.applyConfirm .table>tbody>tr>td,
+.applyConfirm .table>tfoot>tr>td
+{
+	border-top: 1px solid #d0d0d0;
+	vertical-align: middle!important;
+}
+.applyConfirm td>button{
+	margin-right: 15px;
+}
