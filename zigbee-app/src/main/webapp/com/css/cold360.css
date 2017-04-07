@@ -110,27 +110,27 @@ section{
 	color: #5BB789;
 	border-bottom: 3px solid #438BCB;
 }
-#runDoor.light.other.current,#runDoor.light.other>i,#runDoor.light>i,#runCooling.light>i{
+#ml_acl120.light.other.current,#ml_acl120.light.other>i,#ml_acl120.light>i,#runCooling.light>i{
 	color: #F39826;
 }
 .door.other.current{
 	color: #F39826;
 	border-bottom: 3px solid #438BCB;
 }
-#makeCold.door.other>i{
+#ml_acl130.door.other>i{
 	color: #448BCB;
 }
-#runQuery.other>i{
+#ml_acl140.other>i{
 	color: #5BB789;
 }
-#makeCold.door.other.current{
+#ml_acl130.door.other.current{
 	color: #448BCB;
 }
 .other.current{
 	color: #448BCB;
 	border-bottom: 3px solid #438BCB;
 }
-#runQuery.other.current{
+#ml_acl140.other.current{
 	color: #5BB789;
 }
 .otherList{

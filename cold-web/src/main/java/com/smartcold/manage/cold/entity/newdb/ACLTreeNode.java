@@ -9,6 +9,8 @@ import java.util.List;
 public class ACLTreeNode {
 	private int id;
 	private int pid;
+	private int mid;
+	private int mpid;
 	private String ioc;
 	private String style;
 	private String name;
@@ -36,6 +38,22 @@ public class ACLTreeNode {
 
 	public void setPid(int pid) {
 		this.pid = pid;
+	}
+
+	public int getMid() {
+		return mid;
+	}
+
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
+
+	public int getMpid() {
+		return mpid;
+	}
+
+	public void setMpid(int mpid) {
+		this.mpid = mpid;
 	}
 
 	public String getIoc() {

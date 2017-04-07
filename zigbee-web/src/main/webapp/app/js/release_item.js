@@ -32,8 +32,8 @@ var releaseItem = {
     		 $("#hl_validEndTime").val(null); 
     		 $("#hl_validStartTime").val(null);
     	}
-        //var detlAddress=releaseItem.$scope.typeCode==1?$("#rdc_address").text():$("#sl_provinceId option:selected").text()+"-"+$("#sl_cityid option:selected").text();
-    	var detlAddress = $("#sl_provinceId option:selected").text()+"-"+$("#sl_cityid option:selected").text();
+//        var detlAddress=releaseItem.$scope.typeCode==1?$("#rdc_address").text():$("#sl_provinceId option:selected").text()+"-"+$("#sl_cityid option:selected").text();
+    	var detlAddress = $("#sl_provinceId option:selected").text()=="" ?$("#rdc_address").text():$("#sl_provinceId option:selected").text()+"-"+$("#sl_cityid option:selected").text();
         $("#hide_div [name=detlAddress]").val(detlAddress);
         $("#release_main div.mode_hide:hidden").find("input,select").attr("disabled",true); 
         $("#sl_cityid,#sl_provinceId,#txt_provinceId").attr("disabled",false);

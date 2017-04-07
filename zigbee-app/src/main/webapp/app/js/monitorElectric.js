@@ -21,6 +21,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             $scope.storages = data;
             if (!rootRdcId) {
                 if (window.localStorage.rdcId) {
+                	setStorage(window.localStorage.rdcId);
                     findByRdcId(window.localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
@@ -29,7 +30,8 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                     $scope.viewStorage($scope.storages[0].id);
                 }
             } else {
-                findByRdcId(rootRdcId)
+            	setStorage(rootRdcId);
+                findByRdcId(rootRdcId);
             }
         }
     });
@@ -64,6 +66,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                 }
             }
         })
+        setStorage(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -327,4 +330,45 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
         };
         return option
     }
+    /**
+     * 权限  
+     * start
+     * 
+     * 
+    */
+    function setStorage(rootRdcId) {
+    	initAllByRdcId = function(rootRdcId){
+	        $rootScope.rdcId = rootRdcId;
+	        $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
+	      		$rootScope.aclml=data.aclml;
+	      		$rootScope.pagstate=[];
+	      		$("body .role_limit").removeClass("role_limit");
+	      		angular.forEach(data.aclml,function(obj,i){ 
+	      			if(obj.acl){
+	      				if(!obj.hasnode){  
+	      					// 技术原因，无法处理
+//			      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
+	      				}
+	      			}else{
+	      				$("#ml_acl"+obj.id).addClass("role_limit");
+	      				$("#ml_acl"+obj.id+" *").addClass("role_limit");
+	      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+	      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+	      				if(window.user.type==1){
+	      					$("#ml_acl"+obj.id+" *").addClass("hide");
+		      				$("#ml_acl"+obj.id+" *").addClass("hide");
+	      				}
+	      			}
+	      		});
+	        });
+    	};
+    	initAllByRdcId(rootRdcId)
+    };
+    
+    /**
+     * 权限
+     * 
+     * end
+     * 
+    */
 });
