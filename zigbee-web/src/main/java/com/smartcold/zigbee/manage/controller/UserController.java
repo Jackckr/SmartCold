@@ -133,6 +133,17 @@ public class UserController extends BaseController {
 		return new ResultDto(-1, "请填写手机号");
 	}
 	
+	@RequestMapping(value = "/getVerCode", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getVerCode(HttpServletRequest request, String telephone) throws ApiException {
+		if(telephone!=null&&!telephone.equals("")){
+			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
+			String signUpCode = teleVerify.signUpVerify(telephone);
+			return signUpCode ;
+		}
+		return null;
+	}
+	
 	@RequestMapping(value = "/identityVerify", method = RequestMethod.POST)
 	@ResponseBody
 	public Object identityVerify(HttpServletRequest request, String telephone) throws ApiException {

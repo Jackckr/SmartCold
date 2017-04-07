@@ -13,10 +13,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="row" ng-repeat="obj in alarmMsgs">
+        <tr class="row" ng-repeat="obj in warLog">
           <td class="col-lg-1 col-md-1 col-sm-1 text-center">{{$index+1}}</td>
           <td class="col-lg-9 col-md-8 col-sm-7">{{obj.msg}}</td>
           <td class="col-lg-2 col-md-3 col-sm-4 text-center">{{ obj.addtime }}</td>
+        </tr>
+         <tr class="row" ng-repeat="info in warInfo">
+          <td class="col-lg-1 col-md-1 col-sm-1 text-center">{{$index+1}}</td>
+          <td class="col-lg-9 col-md-8 col-sm-7">{{info.warningname}}</td>
+          <td class="col-lg-2 col-md-3 col-sm-4 text-center">{{info.addtime }}</td>
         </tr>
       </tbody>
     </table>

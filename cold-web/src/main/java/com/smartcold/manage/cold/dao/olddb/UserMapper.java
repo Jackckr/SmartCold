@@ -29,4 +29,8 @@ public interface UserMapper {
     UserEntity findUserByName(@Param("username") String username);
 	
 	List<UserEntity> findAllUsers();
+	
+    int insertUser(UserEntity user);
+    
+	public int existenceUserName(@Param("username")String username);
 }

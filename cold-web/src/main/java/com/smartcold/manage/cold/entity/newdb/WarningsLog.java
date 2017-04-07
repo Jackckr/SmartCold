@@ -1,6 +1,5 @@
 package com.smartcold.manage.cold.entity.newdb;
 
-import java.util.Date;
 
 public class WarningsLog {
 

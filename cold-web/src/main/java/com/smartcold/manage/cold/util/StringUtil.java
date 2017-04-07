@@ -1,8 +1,3 @@
-/*
- * Copyright (C) DCIS 版权所有
- * 功能描述: Utils 工具类, 提供静态工具方法 操作字符串
- * maqiag  
- */
 package com.smartcold.manage.cold.util;
 
 import java.util.ArrayList;
@@ -10,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 
-/**
+/*
  * Copyright (C) DCIS 版权所有
  * 功能描述: Utils 工具类,具类, 提供静态工具方法 操作字符串
  * Create on MaQiang 2016-6-25 09:28:36
- **/
+ */
 public class StringUtil
 {
 
@@ -38,10 +33,6 @@ public class StringUtil
 	{
 		return (str == null || str.isEmpty());
 	}
-	
-	
-
-	
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)
 	 * 
