@@ -80,30 +80,33 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         	$rootScope.initAllByRdcId = function(rdcId){
         		        $rootScope.rdcId = rdcId;
         		        window.sessionStorage.smrdcId=rdcId;//缓存rdcid
-		        		$http.get('i/acl/getRUACL?rdcid='+  $rootScope.rdcId +'&uid='+$rootScope.user.id).success( function(data){// 初始化菜单,$rootScope,$http
-				      		$rootScope.aclml=data.aclml;
-				      		$rootScope.pagstate=[];
-				      		$("#lfmenu .quanxian").removeClass("quanxian");
-				      		$("#lfmenu .hide").removeClass("hide");
-				      		$("#lfmenu .quanxian").attr("disabled",true); 
-				      		angular.forEach(data.aclml,function(obj,i){ 
-				      			if(obj.acl){
-				      				if(!obj.hasnode){  
-				      					// 技术原因，无法处理
-//				      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
-				      				}
-				      			}else{
-				      				$("#ml_acl"+obj.id).addClass("quanxian");
-				      				$("#ml_acl"+obj.id+" *").addClass("quanxian");
-				      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-				      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-				      				if(user.type==1){
-				      					$("#ml_acl"+obj.id+" *").addClass("hide");
-					      				$("#ml_acl"+obj.id+" *").addClass("hide");
-				      				}
-				      			}
-				      		});
-				        });
+		        		 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
+		        			  $rootScope.aclml=data.aclml;
+					      		$rootScope.pagstate=[];
+					      		$("#lfmenu .quanxian").removeClass("quanxian");
+					      		$("#lfmenu .hide").removeClass("hide");
+					      		$("#lfmenu .quanxian").attr("disabled",true);
+					      		var ishide=$rootScope.user.type==1?true:false;
+					      		angular.forEach(data.aclml,function(obj,i){ 
+					      			if(obj.acl){
+					      				if(!obj.hasnode){  
+//					      					debugger;
+					      					// 技术原因，无法处理
+//					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
+					      				}
+					      			}else{
+					      				$("#ml_acl"+obj.id).addClass("quanxian");
+					      				$("#ml_acl"+obj.id+" *").addClass("quanxian");
+					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+					      				if(ishide){
+					      					$("#ml_acl"+obj.id+" *").addClass("hide");
+						      				$("#ml_acl"+obj.id+" *").addClass("hide");
+					      				}
+					      			}
+					      		});
+					      		$("#lefaside").removeClass("hide");
+		        		  });
 		        		// 初始化冷库
 		        		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function(data,status,headers,config){
 		        					$rootScope.mystorages = data;
@@ -170,7 +173,8 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/cold360Physical");
-
+    coldWeb.stateProvider=$stateProvider;
+    
     //index
     $stateProvider.state('cold360Physical',{
 		url:'/cold360Physical',

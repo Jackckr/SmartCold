@@ -23,10 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.collect.Lists;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.smartcold.bgzigbee.manage.dao.ACLMapper;
 import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
 import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
 import com.smartcold.bgzigbee.manage.dao.RdcAuthLogMapper;
@@ -46,7 +49,6 @@ import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.MappingDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
-import com.smartcold.bgzigbee.manage.dto.RdcAuthDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
@@ -80,6 +82,8 @@ public class RdcController {
 
 	@Autowired
 	private UserMapper userDao;
+	@Autowired
+	private ACLMapper aclMapper;
 
 	
 	@Autowired
@@ -182,7 +186,8 @@ public class RdcController {
 					autherMap=new HashMap<String, Object>();
 					String[] temps = location.split("_");
 					int userId = Integer.parseInt(temps[1]);
-					autherMap.put("time", TimeUtil.getDateTime(new Date(Long.parseLong(temps[temps.length-1].substring(0, 10)))));
+					Long timeLong=Long.parseLong(temps[temps.length-1].substring(0, 13));
+					autherMap.put("time", TimeUtil.getDateTime(new Date(timeLong)));
 					autherMap.put("file", item);
 					autherMap.put("user", userDao.findUserById(userId));
 					resDataList.add(autherMap);
@@ -190,6 +195,41 @@ public class RdcController {
 			}				
 		}
 		return resDataList;
+	}
+	
+	@RequestMapping(value = "/getAllAuthentication", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getAllAuthentication(Integer pageNum,Integer pageSize, String keyword, String description) {
+		HashMap<String, Object>  autherMap=null;
+		PageInfo<Object> resDataList=new PageInfo<Object>();
+		List<Object> ListObj=new ArrayList<Object>();
+		pageNum = pageNum == null? 1:pageNum;
+		pageSize = pageSize==null? 12:pageSize;
+		PageHelper.startPage(pageNum, pageSize);
+		Page<FileDataEntity> authFiles= this.fileDataDao.getAuthByFile(null, FileDataMapper.CATEGORY_AUTH_PIC, description);
+		if (authFiles!=null&&!CollectionUtils.isEmpty(authFiles)) {
+			for (FileDataEntity item : authFiles) {
+				String location = item.getLocation();
+				if (!StringUtils.isEmpty(location)) {
+					item.setLocation(String.format("http://%s:%s/%s", FtpService.PUB_HOST, FtpService.READPORT, location));
+					autherMap=new HashMap<String, Object>();
+					String[] temps = location.split("_");
+					int userId = Integer.parseInt(temps[1]);
+					Long timeLong=Long.parseLong(temps[temps.length-1].substring(0, 13));
+					autherMap.put("time", TimeUtil.getDateTime(new Date(timeLong)));
+					autherMap.put("file", item);
+					autherMap.put("rdc", rdcDao.findRDCByRDCId(item.getBelongid()));
+					autherMap.put("user", userDao.findUserById(userId));
+					RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId);
+					autherMap.put("isHandle", roleUserByUserId!=null);
+					ListObj.add(autherMap);
+				}
+			}				
+		}
+		resDataList.setList(ListObj);
+		resDataList.setTotal(authFiles.getTotal());
+		return ResponseData.newSuccess(resDataList);
+		
 	}
 	
 
@@ -672,7 +712,16 @@ public class RdcController {
 			byRdcId.setUserid(authUserId);
 			rdcUserDao.updateByPrimaryKeySelective(byRdcId);
 		}
-
+		
+		UserEntity user = this.userDao.findUserById(authUserId);
+		if(user.getType()==1){//维修商
+		   List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",authUserId);
+		   if(SetUtil.isnotNullList(useracl)){
+			 this.aclMapper.upuserAcl(authUserId, 9, null);
+		   }else{
+			   this.aclMapper.adduserAcl(authUserId, 9, null);//采用默认权限。。。
+		   }
+		}
 		return new ResultDto(0, "冷库认证审核成功");
 	}
 }

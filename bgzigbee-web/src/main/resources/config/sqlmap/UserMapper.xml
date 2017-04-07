@@ -23,7 +23,7 @@
     </insert>
 
     <select id="findUser" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
-		SELECT ID,`username` ,`telephone` ,`email` ,`addTime` ,`audit`  FROM `user` WHERE `username` = #{username} AND `password` = #{password}
+		SELECT ID,`type` ,`username` ,`telephone` ,`email` ,`addTime` ,`audit`  FROM `user` WHERE `username` = #{username} AND `password` = #{password}
 	</select>
 	
 	 <select id="findAllUser" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
@@ -45,7 +45,7 @@
 	</select>
 
     <select id="findUserById" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
-		SELECT ID,`username` ,`telephone` ,`email` ,`addTime` ,`audit` 
+		SELECT ID,`type`,`username` ,`telephone` ,`email` ,`addTime` ,`audit` 
 		FROM `user` WHERE `id` = #{id}
 	</select>
     <select id="deleteUser" parameterType="map">

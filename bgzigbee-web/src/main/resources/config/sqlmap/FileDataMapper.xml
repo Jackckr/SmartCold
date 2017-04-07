@@ -3,9 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.FileDataMapper">
-
-
-
+    <select id="getAuthByFile" resultType="com.smartcold.bgzigbee.manage.entity.FileDataEntity">
+		SELECT * FROM `filedata` WHERE 1=1
+		<if test="belongid!=null"> and  belongid=#{belongid}</if>
+		<if test="category!=null"> and  category=#{category}</if>
+		<if test="description!=null and description==0"> and description is null or description=0</if>
+		<if test="description!=null and description==1"> and description= 1 </if>
+		ORDER BY id DESC
+	</select>
     <select id="findByBelongIdAndCategory" resultType="com.smartcold.bgzigbee.manage.entity.FileDataEntity">
 		SELECT *
 		FROM `filedata` WHERE `belongid` = #{belongid} AND `category` = #{category}

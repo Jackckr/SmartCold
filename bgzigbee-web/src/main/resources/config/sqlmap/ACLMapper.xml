@@ -25,6 +25,13 @@
         ORDER BY addTime DESC LIMIT #{row};
     </select>
     
+   <insert id="adduserAcl" parameterType="map">
+      INSERT INTO `acl_user` (uid,roleid,nacl)VALUES(#{uid},#{roleid},#{nacl});
+   </insert>
+   <update id="upuserAcl"  parameterType="map">
+      update `acl_user` set roleid=#{roleid} ,nacl=#{nacl} where uid=#{uid};
+   </update>
+    
     
     <select id="getRUCByFilter" parameterType="map" resultType="map">
       select id,rdcid,mapper `name` from acl_ruacl
@@ -60,22 +67,7 @@
         ORDER BY id ASC LIMIT #{row};
     </select>
     
-    
-<!--     <select id="getTreeObjBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> -->
-<!--       SELECT id,`name` FROM `${table}`   where `${column}` =#{oid}  ORDER BY id ASC ; -->
-<!--     </select>  -->
-<!--     <select id="getTreeObjBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> -->
-<!-- 	     SELECT -->
-<!-- 		g.`id`, -->
-<!-- 		g.`name` -->
-<!-- 		<if test="isopen and table!='ACL_ROLE'"> -->
-<!-- 	     , (SELECT COUNT(*) from `${table}`  g1 WHERE g1.`${column}` =g.id )>0  hastc -->
-<!-- 		</if> -->
-<!-- 		<if test="isopen and table=='ACL_ROLE'"> -->
-<!-- 	     , (SELECT COUNT(*) from `${table}`  g1 WHERE g1.`pid` =g.id )>0  hastc -->
-<!-- 		</if> -->
-<!-- 	     FROM `${table}`  g WHERE `${column}` = #{oid} ORDER BY g.id ASC; -->
-<!--     </select>  -->
+
       <select id="getTreeACLGroupBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 
          SELECT g.`id`,g.`pid`, g.`name`,g.`icon`  , (SELECT COUNT(*) from `acl_group`  g1 WHERE g1.`pid` =g.id )>0  hastc   FROM `acl_group` g WHERE `pid` = #{oid} ORDER BY g.id ASC;
      </select> 
@@ -84,7 +76,7 @@
       where  g.gid=#{gid} and  g.pid=#{pid} 
           ORDER BY id ASC ; 
      </select> 
- <select id="getTreeUserBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 
+     <select id="getTreeUserBypid" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.TeamTreeNode"> 
        SELECT id,`name`   FROM `acl_user`   where  roleid=#{roleid}   ORDER BY id ASC ;
     </select> 
     

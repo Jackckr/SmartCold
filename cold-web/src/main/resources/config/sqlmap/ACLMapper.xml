@@ -3,32 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.ACLMapper" >
-	<select id="getUserACL" parameterType="Integer" resultType="String">
-	  select nacl from acl_user where uid=#{uid};
+
+	<select id="getRdcACL" parameterType="map" resultType="java.lang.String" >
+      select nacl  from `ACL_RDC` where `RDCID`=#{oid} LIMIT 1;
 	</select>
-	<select id="getRDCACL" parameterType="Integer" resultType="String">
-	 SELECT nacl from acl_rdc where rdcid=#{rdcid};
+	<select id="getRUACL" parameterType="Integer" resultType="java.lang.String">
+	 SELECT nacl FROM `acl_ruacl`  where `rdcid` =#{rdcid} and `userid` =#{uid} LIMIT 1;
 	</select>
-	<select id="getAllACLByRUID">
-	   SELECT
-		  u.groupid,u.roleid, 
-		  rdc.nacl rdcnacl,
-		  ru.nacl runacl,
-		  u.nacl unacl,
-		  r.nacl rnacl,
-		  g.nacl gnacl
-		FROM
-			acl_rdc rdc
-		LEFT JOIN acl_ruacl ru ON ru.rdcid = 1063 AND ru.userid = 1
-		LEFT JOIN acl_user  u  on u.uid=1
-		LEFT JOIN acl_role  r on r.id=u.roleid
-		LEFT JOIN acl_group g on g.id=u.groupid
-		WHERE	rdc.rdcid = #{rdcid};
+	<select id="getUserACL" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.ACLEntity">
+      SELECT u.nacl unacl,r.nacl rnacl ,g.nacl gnacl from acl_user u LEFT JOIN acl_role r on r.id=u.roleid LEFT JOIN acl_group g on g.id=r.gid where u.uid=#{uid} LIMIT 1;
 	</select>
 	
-	<select id="getRUACL" parameterType="Integer" resultType="String">
-	  select CONCAT_WS(',',(SELECT nacl from acl_user u where uid=#{uid}) ,(select nacl from acl_rdc where rdcid=#{rdcid} )) as c;
-	</select>
+	
 	<select id="getALLACLNode" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.ACLTreeNode">
 	  SELECT m.* ,  if(find_in_set(m.id,#{nacl})>0 or find_in_set(m.pid,#{nacl})>0,0,1)  as acl from coldmenus m  ;
 	</select>

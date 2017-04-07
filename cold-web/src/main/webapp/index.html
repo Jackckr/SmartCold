@@ -140,11 +140,11 @@
      </div> 
     </nav> 
    </header> 
-   <aside class="main-sidebar"> 
+   <aside id="lefaside" class="main-sidebar hide"> 
     <section class="sidebar"> 
      <div>  <select ng-if="user.role == 2" class="form-control" ng-options="rdc.name for rdc in vm.allUserRdcs" ng-model="vm.choserdc" ng-change="initAllByRdcId(vm.choserdc.id)"></select> </div> 
      <div ng-if="user.role == 3" angucomplete-alt="" id="members" placeholder="查找RDC" pause="100" selected-object="changeRdc" remote-url="/i/rdc/searchRdc?type=1&amp;&amp;filter=" title-field="name" minlength="0" clear-selected="true" match-class="highlight" input-class="form-control form-control-small" ></div> 
-       <ul id="lfmenu" class="sidebar-menu text-white my_sidebar"> 
+       <ul  class="sidebar-menu text-white my_sidebar"> 
          <li ng-if="user.role == 3 || user.role == 1"><a class="text-white omg" style="font-family: cursive;" title="{{vm.choserdc.name}}" ng-bind="vm.choserdc.name"></a></li> 
       </ul>
     </section>

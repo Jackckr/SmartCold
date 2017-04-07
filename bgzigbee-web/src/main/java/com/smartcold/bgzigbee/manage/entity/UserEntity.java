@@ -5,6 +5,7 @@ import java.util.Date;
 public class UserEntity {
 
 	private int id;
+	private int type;
 
 	private String username;
 
@@ -24,6 +25,12 @@ public class UserEntity {
 	
 	public int getId() {
 		return id;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public void setId(int id) {

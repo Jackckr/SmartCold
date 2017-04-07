@@ -299,10 +299,15 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'storageManage',
         params:{id:null,username:null},
         templateUrl: 'app/template/storageManage.html'
-    }).state('commentManage', {
+    })
+    .state('commentManage', {
         url: '/commentManage',
         controller: 'commentManage',
         templateUrl: 'app/template/commentManage.html'
+    }).state('storageAuthentication', {
+    	url: '/storageAuthentication',
+    	controller: 'storageAuthentication',
+    	templateUrl: 'app/template/storageAuthentication.html'
     }).state('review', {
         url: '/coldStorage/{rdcID}/review',
         controller: 'review',
