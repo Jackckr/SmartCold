@@ -7,8 +7,10 @@ $(function() {
 			$this.removeClass('black');
 			$(".backDrop").show();	
 			$(this).addClass('current').siblings().removeClass('current');
+			e.stopPropagation();
 		},
-		"mouseleave":function(){
+		"mouseleave":function(e){
+			e.stopPropagation();
 			$(this).children('.otherList').addClass('black');  
 			$(".backDrop").hide();
 		}
@@ -47,23 +49,29 @@ $(function() {
 			$(this).hide();
 			//$('.rdcDropList').hide();
 		})
-	$('.otherList').click(function(e){
-		swiper.activeIndex = 0; // 回归滑动第一个位置
-		var e = e || window.event;
-		var target = e.target || e.srcElement;
-		if ($(target).next().hasClass('inner')) {
-			$(this).removeClass('black');
-			$(".backDrop").show();
-		} else{
-			$(this).prev('.dropNext').children('b').html(target.innerHTML);
-			var activeColor = $(this).css('color');
-			$(this).find('a').css({'color':'#555'});
-			target.style.color = activeColor;
-			$(this).addClass('black');
-			$(".backDrop").hide();
-		}
-		event.stopPropagation();
-	});
+	
+	// 获取父节点，并为它添加一个click事件
+	if($('.otherList')[0] == undefined){
+		console.log("$('.otherList')[0]==undefined")
+	}else{
+		$('.otherList')[0].addEventListener("click",function(e) {
+			swiper.activeIndex = 0; // 回归滑动第一个位置
+			var e = e || window.event;
+			var target = e.target || e.srcElement;
+			// 检查事件源e.targe是否为A
+			if(e.target && e.target.nodeName.toUpperCase() == "A") {
+				// 真正的处理过程在这里
+				console.log("List item ",e.target.id.replace("post-")," was clicked!");
+				$(this).prev('.dropNext').children('b').html(target.innerHTML);
+				var activeColor = $(this).css('color');
+				$(this).find('a').css({'color':'#555'});
+				target.style.color = activeColor;
+				$(this).addClass('black');
+				$(".backDrop").hide();
+			}
+			e.stopPropagation();
+		});
+	}
 	//图表切换
 	var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',

@@ -109,8 +109,8 @@
 	    </header>
     <!-- header end-->
     <section class="toggle">
-    	<div class="tempture" id="temperature" ng-click="goTempture()"><i class="iconfont">&#xe67f;</i>温度</div>
-    	<div class="light other" id="electric" ng-click="goElectric()"><i class="iconfont">&#xe6f1;</i>
+    	<div class="tempture" id="ml_acl10" ng-click="goTempture()"><i class="iconfont">&#xe67f;</i>温度</div>
+    	<div class="light other" id="ml_acl20" ng-click="goElectric()"><i class="iconfont">&#xe6f1;</i>
     		<span class="dropNext">
     			<b>能耗</b><i class="iconfont">&#xe6f7;</i>
     		</span>
@@ -120,15 +120,15 @@
     			<b>运管</b><i class="iconfont">&#xe6f7;</i>
     		</span>
     	</div>
-    	<div class="other current" id="other"><i class="iconfont">&#xe7b6;</i>
+    	<div class="other current" id="ml_acl60"><i class="iconfont">&#xe7b6;</i>
     		<span class="dropNext">
     			<b>制冷</b><i class="iconfont">&#xe6f7;</i>
     		</span>
     		<ul class="otherList black">
-				<li><a href="javascript:;" id="zljz" ng-click="compressorPressureOther()">制冷机组</a></li>
-				<li><a href="javascript:;" id="pqwd" ng-click="exhaustTemperOther()">排气温度及液位</a></li>
-				<li><a href="javascript:;" id="lnxt" ng-click="condensationOther()">冷凝系统</a></li>
-				<li><a href="javascript:;" id="zfxt" ng-click="compressorBlowerOther()">蒸发系统</a></li>
+				<li><a href="javascript:;" id="ml_acl61" ng-click="compressorPressureOther()">制冷机组</a></li>
+				<li><a href="javascript:;" id="ml_acl61" ng-click="exhaustTemperOther()">排气温度及液位</a></li>
+				<li><a href="javascript:;" id="ml_acl61" ng-click="condensationOther()">冷凝系统</a></li>
+				<li><a href="javascript:;" id="ml_acl62" ng-click="compressorBlowerOther()">蒸发系统</a></li>
     		</ul>    		
     	</div>
     </section>
@@ -150,32 +150,32 @@
 	 </section>
 	 <!--rdc列表-----------------------------------------------> 
     <ul class="footer">
-        <li class="active">           
+        <li class="active" id="ml_acl1">           
             <a href="cold360.html">
                 <i class="iconfont">&#xe68d;</i>
                 <p class="info">监控</p>
             </a>
         </li>
-        <li>           
+        <li id="ml_acl70">           
             <a href="analysisQuery.html">
                 <i class="iconfont">&#xe7c6;</i>
                 <p class="info">查询</p>
             </a>
         </li>
-        <li>            
+        <li id="ml_acl100">            
             <a href="analysis.html">
                 <i class="iconfont">&#xe682;</i>
                 <p class="info">分析</p>
             </a>
         </li>
-        <li>          
+        <li id="ml_acl200">          
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
 				<span class="countNum" ng-if="alarmTotalCnt > 0" ng-bind="alarmTotalCnt"></span>
             </a>
         </li>
-        <li>            
+        <li id="ml_acl300">            
             <a href="maintain.html">
                 <i class="iconfont">&#xe6a5;</i>
                 <p class="info">维护</p>

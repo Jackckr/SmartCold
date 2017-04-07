@@ -27,6 +27,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 	$scope.getVerCode = function() {
 		setTime(document.getElementById("but_vercode"));
 		$scope.getMobileCode('user_register', $scope.telephone,'#but_vercode');
+		$("#but_vercode").attr("disabled", true).css("background-color",  "#cccccc");		
 	};
 	$scope.getMobileCode = function(key, telephone, vcid) {//获取验证码
 		$http.get(ER.root+ "/i/ShareRdcController/sharvistPhone.json",{params : {key : 'signUpCode',telephone : telephone}}).success(function(data) {
@@ -93,7 +94,8 @@ var app = angular.module('app', []).controller('register',function($http, $locat
   	  };
    	$scope.savedata= function () {// 修改密码
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
-        $.ajax({
+		$('#app_but1').attr("disabled",true);
+		$.ajax({
         	type: 'POST',
         	data:{username:$("#telNum").val().trim(),
 				password:$("#txt_password").val().trim(),
