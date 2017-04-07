@@ -75,7 +75,7 @@ public class TelephoneVerifyUtil {
 			req.setRecNum(telephone);
 			req.setSmsTemplateCode("SMS_12145753"); //【链库网】验证码3GZ9，您正在进行链库身份验证，打死不要告诉别人哦！
 			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-			//System.out.println(rsp.getBody());
+			System.out.println(rsp.getBody());
 			return code;
 		}
 		
@@ -96,8 +96,8 @@ public class TelephoneVerifyUtil {
 			req.setSmsParamString("{\"code\":" + "\"" + code + "\"" +",\"product\":\"lianku\"}");
 			req.setRecNum(telephone);
 			req.setSmsTemplateCode("SMS_12145749");//【链库网】验证码Q6C4，您正在注册成为lianku用户，感谢您的支持！
-//			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-//			System.out.println(rsp.getBody());
+			AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+			System.out.println(rsp.getBody());
 			System.err.println("注册验证码：code"+code);
 			return code;
 		}
