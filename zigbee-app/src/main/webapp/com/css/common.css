@@ -63,7 +63,7 @@ strong {
 	zoom: 1;
 }
 a {
-	text-decoration: none;
+	text-decoration: none!important;
 	color: #969696;
 	font-family: Helvetica,Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;
 }

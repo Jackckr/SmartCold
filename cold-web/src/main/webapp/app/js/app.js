@@ -347,6 +347,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/lightGroup',
     	controller: 'lightGroup',
         templateUrl: 'app/template/lightGroup.html'
+    }).state('maintainComfirm',{//maintainComfirm
+    	url:'/maintainComfirm',
+    	controller: 'maintainComfirm',
+        templateUrl: 'app/template/maintainComfirm.html'
     });
 });
 

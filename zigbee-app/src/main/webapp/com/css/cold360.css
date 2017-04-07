@@ -201,6 +201,7 @@ section{
 	text-align: left;	
 	color: #EC594A;
 	font-size: 1.8em;
+	word-wrap:break-word;
 }
 div[id^="main"],.actually+div[id]{
 	min-height:17rem;
@@ -687,6 +688,10 @@ b{
 }
 .current.applyLog{
 	color:#438BCB;
+    border-bottom: 3px solid #438BCB;
+}
+.current.apply_log{
+	color:#F39826;
     border-bottom: 3px solid #438BCB;
 }
 .wxRecords,.mainApply{
