@@ -29,6 +29,10 @@
     	.typeCold .checkbox-inline{
     		padding-left: 0;
     	}
+    	.register-box-body form p{
+    		color:red;
+    		font-size: 12px;
+    	}
     </style>
   </head>
   <body class="hold-transition register-page">
@@ -44,22 +48,27 @@
             <input id="txt_username" type="text" class="form-control" placeholder="用户名" onblur="checkUserName()">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
+          <p class="userMsg"></p>
           <div class="form-group has-feedback">
             <input id="txt_password" type="password" class="form-control" placeholder="密码" onchange="checkpwd()">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
+          <p class="psdMsg"></p>
           <div class="form-group has-feedback">
-            <input  id="txt_refpassword" type="password" class="form-control" placeholder="重输密码" onblur="checkopwd()">
+            <input  id="txt_refpassword" type="password" class="form-control" placeholder="重输密码" onchange="checkopwd()">
             <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
           </div>
+          <p class="rePsdMsg"></p>
           <div class="form-group has-feedback">
             <input id="txt_telephone" type="text" class="form-control" placeholder="手机号" onchange="checktelephone()">
-            <span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
+            <span class="glyphicon glyphicon-earphone form-control-feedback" ></span>
           </div>
-          <div class="input-group">
+          <p class="telMsg"></p>
+          <div class="input-group form-group">
             <input id="txt_vicode" type="text" class="form-control" placeholder="输入验证码" onchange="checkcode(this)">
             <span id="sp_yzmbut" class="input-group-addon btn btn-primary" onclick="getviercode(this)">获取验证码</span>
           </div>
+          <p class="codeMsg"></p>
           <div class="clearfix typeCold">
 	      	<div style="width: 100%;">
 	      		<label>注册类型</label>
@@ -113,45 +122,111 @@
     function checkUserName(){
    	    var username=$("#txt_username").val().trim();
    	    var reg=/^[a-zA-Z0-9][a-zA-Z0-9]{5,15}$/;
-   	    if(username&&username.length>6&&username.length<24&&reg.test(username)){
+   	    if(username&&username.length>5&&username.length<17&&reg.test(username)){
    	        $.post('/i/user/existenceUserName',{userName:username}, function(data){
-				if(data){ alert( "用户名已存在");}
+				if(data){
+				   $(".userMsg").html("用户名已存在")
+				}else{
+					$(".userMsg").html("")
+				}
 				victdata.userName=data;
 			});
    	    }else{
    	       victdata.userName=false;
-//    	       $("#txt_username").focus();
-   	       alert("用户名不能包含中文和特殊字符，长度在6到16位之间~");
+			 $(".userMsg").html("用户名不能包含中文和特殊字符，长度在6到16位之间~")
    	    }
+   	    
     };
     
-    function checkcode(em){victdata.victyzm= em.value.trim().length==4&&victdata.code==em.value.trim();}
-    function getviercode(){
-    	    if(!victdata.victel){return ;}
-    		 var url=victdata.isdebugger?"http://localhost:8080/":"http://liankur.com/"; $.ajax({ type: "POST",url:url+'/i/user/getVerCode', data:{key:victdata.key,reg:window.location.pathname,telephone:$("#txt_telephone").val().trim()}, success: function(data) {victdata.code=data; }});
-    };
+    	function checkcode(em) {
+    		victdata.victyzm = em.value.trim().length == 4 && victdata.code == em.value.trim();
+    		if(victdata.victyzm){
+    			$(".codeMsg").html("")
+    		}else{
+    			$(".codeMsg").html("验证码有误~")
+    		}
+    		
+    	}
+    	function getviercode(){
+    	    if(!victdata.victel){return ;
+    		}
+    		var url = victdata.isdebugger ? "http://192.168.1.114:8080/" : "http://liankur.com/";
+    		$.ajax({
+    			type : "POST",
+    			url : url + '/i/user/getVerCode',
+    			data : {
+    				key : victdata.key,
+    				reg : window.location.pathname,
+    				telephone : $("#txt_telephone").val().trim()
+    			},
+    			success : function(data) {
+    				alert("验证码已发送~")
+    				victdata.code = data;
+    			}
+    		});
+    		};
   
     //验证手机号码
     function checktelephone(){
 		var telephone = $("#txt_telephone").val().trim();
 		var ct = vsphone(telephone);
 	    if(ct){
-			victdata.victel=true;
+			 victdata.victel=true;
+			 $(".telMsg").html("");
 			 $('#sp_yzmbut').attr('disabled',!ct);
+			 $('#submit').attr("disabled",!ct);
 		}else{
 			 victdata.victel=false;
+			 $(".telMsg").html("手机号不正确~");
 			 $('#sp_yzmbut').attr('disabled',!ct);
+			 $('#submit').attr("disabled",!ct);
 		}
 	};	
 	
 	function checkpwd(){
-		
+	   var password = $("#txt_password").val().trim(); 
+       var repsword = $("#txt_refpassword").val().trim(); 
+       if(password == ''){
+			$(".psdMsg").html("密码不能为空");
+			$('#submit').attr("disabled",true);
+			return false;
+		}else if(password.length<6){
+			$(".psdMsg").html("密码长度最少六位");
+			$('#submit').attr("disabled",true);
+			return false;
+		}else if(password.length<=16){
+			$(".psdMsg").html("");
+			if (/^(\d)\1+$/.test(password)){
+				$(".psdMsg").html("密码太过简单了~").css("color","#f80");
+				$('#submit').attr("disabled",true);
+				return false;
+			}
+		}else if(password.length>16){
+			$(".psdMsg").html("密码长度最多16位~").css("color","#f80");
+			$('#submit').attr("disabled",true);
+		}else{
+			$(".psdMsg").html("输入有误，请重新输入");
+		}
 		
 	}
 	
     function checkopwd(){
-    	 var pwd=$("#txt_password").val().trim(), pwd1=$("#txt_refpassword").val().trim();
-    	 victdata.victpwd= pwd.length>6&& pwd==pwd1;
+    	 var password=$("#txt_password").val().trim(), repsword=$("#txt_refpassword").val().trim();
+    	 if(repsword.length<6){
+			$(".rePsdMsg").html("再次输入的密码长度最少六位");
+			$('#submit').attr("disabled",true);
+			return false;
+		}else{
+			if(password != repsword){
+				$(".rePsdMsg").html("两次密码输入不一致，请重新输入");
+				$('#submit').attr("disabled",true);
+				return false;
+			}else{
+				$(".rePsdMsg").html("");
+				$('#submit').attr("disabled",false);
+			}
+		}
+		victdata.victpwd= password.length>6&& password==repsword;
 	}
 
     	

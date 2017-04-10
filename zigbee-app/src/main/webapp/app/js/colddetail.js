@@ -44,6 +44,14 @@
 	    		 	  });
 	    			}
 	    	}); 
+	    	// class="userType"
+	    	if(window.user!=null && window.user.type==1){
+	    		$("div.userType").show();
+	    		$("p.userType").hide();
+	    	}else{
+	    		$("div.userType").hide();
+	    		$("p.userType").show();
+	    	}
 	        $http.get(ER.root + "/i/ShareRdcController/getSEGDList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:1}}).success(function( data) {//货品共享
 				$scope.goodList = data.data;//
 				$scope.gdtotal = data.total;//
