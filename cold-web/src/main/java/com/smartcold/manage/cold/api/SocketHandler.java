@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONArray;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
-import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
+//import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -29,8 +29,8 @@ import com.smartcold.manage.cold.util.socket.entity.DevStateInfo;
  *
  */
 public class SocketHandler extends IoHandlerAdapter {
-	@Autowired
-	public  WarningLogMapper warningLogMapper;
+//	@Autowired
+//	public  WarningLogMapper warningLogMapper;
 	
 	@Autowired
 	public  StorageDataCollectionMapper storageDataCollectionDao;
@@ -188,10 +188,10 @@ public class SocketHandler extends IoHandlerAdapter {
 			String msg="IP:"+RemoteUtil.getServerIP()+" 时间："+TimeUtil.getDateTime()+" 开始执行："+methodName;
 			if(StringUtil.isnotNull(errMsg)){
 				if(errMsg.length()>200){errMsg=errMsg.substring(0, 200);}
-				 msg+=" 客户端消息："+errMsg; 
+//				 msg+=" 客户端消息："+errMsg; 
 				 List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
 				 errInfoList.add(new WarningsLog(-1,type,msg));
-				 this.warningLogMapper.addWarningLog(errInfoList);
+//				 this.warningLogMapper.addWarningLog(errInfoList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

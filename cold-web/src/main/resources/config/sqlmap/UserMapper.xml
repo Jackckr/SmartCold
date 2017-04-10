@@ -4,14 +4,15 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.UserMapper" >
 	<select id="findByPassword" parameterType="map" resultType="UserEntity">
-		SELECT *
-		FROM `User` WHERE `username` = #{username} AND `password` = #{password}
+		SELECT * FROM `User` WHERE `username` = #{username} AND `password` = #{password}
 	</select>
 	<select id="findById" parameterType="map" resultType="UserEntity">
 		SELECT *
 		FROM `User` WHERE `id` = #{id}
 	</select>
-  
+    <select id="existenceUserName" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM user u  WHERE u.`username` = #{username};
+	</select>
   <!--*********************************************************************************-->
   <!--xuyanan:myself of function-->
   <!--*********************************************************************************-->
@@ -44,6 +45,30 @@
       #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}
       )
   </insert>
+  <insert id="insertUser" parameterType="com.smartcold.manage.cold.entity.olddb.UserEntity">
+        INSERT INTO `user`(
+		`username`,
+		`password`,
+		`type`,
+		`telephone`,
+		`email`,
+		`realname`,
+		`addTime`
+		)
+		VALUE 
+		(
+		#{username},
+		#{password},
+		#{type},
+		#{telephone},
+		#{email},
+		#{realname},
+		now()
+		)
+   </insert>
+  
+  
+  
   <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.olddb.UserEntity" >
     insert into User
     <trim prefix="(" suffix=")" suffixOverrides="," >

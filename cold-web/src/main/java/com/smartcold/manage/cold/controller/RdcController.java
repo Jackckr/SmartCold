@@ -1,7 +1,5 @@
 package com.smartcold.manage.cold.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,13 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
-import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
-import com.smartcold.manage.cold.service.MsgService;
 import com.smartcold.manage.cold.service.RdcService;
-import com.smartcold.manage.cold.service.StorageService;
-import com.smartcold.manage.cold.util.ResponseData;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -29,15 +22,7 @@ public class RdcController {
 
 	@Autowired
 	private RdcService rdcService;
-	@Autowired
-	private StorageService storageService;
-	@Autowired
-	private MsgService msgService;
-	@Autowired
-	private DeviceObjectMappingMapper deviceMapper;
-	
-	@Autowired
-	private WarningLogMapper w;
+
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody

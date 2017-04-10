@@ -68,12 +68,13 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
  * 
  * 　　报警信息
  */
-coldWeb.controller('alarmLog', function( $scope, $http,$timeout) {
+coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
 	 //根据rdcid查询该rdc的报警信息
 	$(".mainHeight").height( $(".content-wrapper").height());
 		$scope.initData=function(){
-			$http.get('/i/warlog/findWarningLogsByRdcID', {  params: { "rdcId": window.sessionStorage.smrdcId  } }).success(function (data) {
-	            $scope.alarmMsgs = data;
+			$http.get('/i/warlog/getWarningInfoByRdcID', {  params: { "rdcId": $rootScope.rdcId  } }).success(function (data) {
+	            $scope.warLog = data.warLog;
+	            $scope.warInfo = data.warInfo;
 	        });
 		};
 		$scope.inittable=function(){

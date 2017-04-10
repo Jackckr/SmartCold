@@ -70,6 +70,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
     return {
         setUser: function (user) {
             $rootScope.user = user;
+            $rootScope.userType=$rootScope.user.type==1?true:false;
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
 	        	 $rootScope.user =window.user=user=undefined;//清除系统user;
@@ -86,7 +87,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      		$("#lfmenu .quanxian").removeClass("quanxian");
 					      		$("#lfmenu .hide").removeClass("hide");
 					      		$("#lfmenu .quanxian").attr("disabled",true);
-					      		var ishide=$rootScope.user.type==1?true:false;
+					      		
 					      		angular.forEach(data.aclml,function(obj,i){ 
 					      			if(obj.acl){
 					      				if(!obj.hasnode){  
@@ -99,7 +100,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      				$("#ml_acl"+obj.id+" *").addClass("quanxian");
 					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
 					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-					      				if(ishide){
+					      				if($rootScope.userType){
 					      					$("#ml_acl"+obj.id+" *").addClass("hide");
 						      				$("#ml_acl"+obj.id+" *").addClass("hide");
 					      				}
@@ -350,7 +351,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('maintainComfirm',{//maintainComfirm
     	url:'/maintainComfirm',
     	controller: 'maintainComfirm',
-        templateUrl: 'app/template/maintainComfirm.html'
+        templateUrl: 'app/template/maintainComfirm.html' 
+    }).state('maintenancealarm',{//维修告警
+    	url:'/maintenancealarm',
+    	controller: 'maintenancealarm',
+        templateUrl: 'app/template/maintenancealarm.html' 
     });
 });
 

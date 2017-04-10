@@ -21,6 +21,8 @@ import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
 import com.smartcold.manage.cold.service.UserService;
 import com.smartcold.manage.cold.util.EncodeUtil;
+import com.smartcold.manage.cold.util.ResponseData;
+import com.smartcold.manage.cold.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -120,5 +122,44 @@ public class UserController extends BaseController {
 		user = new UserEntity();
 
 		return user;
+	}
+	
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@ResponseBody
+	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode,Integer type) {
+		if (username == null || password == null || !password.equals(password1)) {
+			return  ResponseData.newFailure("用户名密码输入错误");
+		}
+		
+//		String sessyzm=""+request.getSession().getAttribute("signUpCode");
+//		if(StringUtil.isNull(sessyzm)||"null".endsWith(sessyzm)){
+//			sessyzm=request.getSession().getAttribute("signUpCodeshear_yzm")+"";
+//		}
+//		if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
+//			return new ResultDtoStr("-1", "验证码输入错误");
+//		
+//	   }
+		if(type==null){type=0;}
+		UserEntity userEntity = new UserEntity();   
+		userEntity.setType(type);
+		userEntity.setUsername(username);
+		userEntity.setPassword(EncodeUtil.encodeByMD5(password));
+		userEntity.setEmail(email);
+		userEntity.setTelephone(telephone);
+		userDao.insertUser(userEntity);
+		return ResponseData.newSuccess("注册成功");
+	}
+	/**
+	 * 检查用户名是否占用
+	 * @param request true：表示当前用户名已存在或为null->不能注册
+	 * @param userName
+	 * @return
+	 */
+	@RequestMapping(value = "/existenceUserName")
+	@ResponseBody
+	public boolean existenceUserName(HttpServletRequest request,String userName){
+		if(StringUtil.isNull(userName)){return false;}
+	    return this.userDao.existenceUserName(userName)>0;
 	}
 }

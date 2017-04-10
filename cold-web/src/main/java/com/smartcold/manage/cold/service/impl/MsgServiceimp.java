@@ -1,7 +1,6 @@
 package com.smartcold.manage.cold.service.impl;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -119,13 +118,16 @@ public class MsgServiceimp implements MsgService {
 	
 	
 	/**
-	 * 每天凌晨1:00点触发
+	 * 每天凌晨1:30点触发
 	 * Task:刪除临时任务
+	 * 重置dev
 	 */
-	@Scheduled(cron = "0 0 1 * * ?")
+	@Scheduled(cron = "0 30 1 * * ?")
 	public void delTempTask() {
 		ExportExcelUtil.clearTask();        
-		this.quantityMapper.delTempTask();//添加临时任务
+		boolean taskStatus = quantityMapper.updateTaskStatus(4);
+		if(!taskStatus){return ;}
+		 this.quantityMapper.delTempTask();//添加临时任务
 		 String path=this.getClass().getResource("").getPath();
     	 path= path.substring(0, path.indexOf("WEB-INF"));
     	 File file=new File(path+File.separator+"Temp");
@@ -510,12 +512,6 @@ public class MsgServiceimp implements MsgService {
 		List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
 		errInfoList.add(new WarningsLog(-1,type,msg));
 		this.warningLogMapper.addWarningLog(errInfoList);
-	}
-	
-	public static void main(String[] args) {
-		
-		
-		
 	}
 	
 	
