@@ -60,6 +60,7 @@ import com.smartcold.bgzigbee.manage.entity.RdcUser;
 import com.smartcold.bgzigbee.manage.entity.RoleUser;
 import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
+import com.smartcold.bgzigbee.manage.enums.UserVersion;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
 import com.smartcold.bgzigbee.manage.util.ResponseData;
@@ -218,10 +219,14 @@ public class RdcController {
 					Long timeLong=Long.parseLong(temps[temps.length-1].substring(0, 13));
 					autherMap.put("time", TimeUtil.getDateTime(new Date(timeLong)));
 					autherMap.put("file", item);
-					autherMap.put("rdc", rdcDao.findRDCByRDCId(item.getBelongid()));
+					autherMap.put("isHandle", false);
 					autherMap.put("user", userDao.findUserById(userId));
-					RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId);
-					autherMap.put("isHandle", roleUserByUserId!=null);
+					List<RdcEntity> findRDCByRDCId = rdcDao.findRDCByRDCId(item.getBelongid());
+					if(SetUtil.isnotNullList(findRDCByRDCId)){
+						RdcUser roleUserByUserId = this.rdcUserDao.findByRUID(userId, findRDCByRDCId.get(0).getId());
+						autherMap.put("isHandle", roleUserByUserId!=null);
+					}
+					autherMap.put("rdc", findRDCByRDCId);
 					ListObj.add(autherMap);
 				}
 			}				
@@ -714,7 +719,7 @@ public class RdcController {
 		}
 		
 		UserEntity user = this.userDao.findUserById(authUserId);
-		if(user.getType()==1){//维修商
+		if(user.getType()==UserVersion.MaintVERSION.getType()){//维修商
 		   List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",authUserId);
 		   if(SetUtil.isnotNullList(useracl)){
 			 this.aclMapper.upuserAcl(authUserId, 9, null);

@@ -84,14 +84,22 @@
     select
     <include refid="Base_Column_List" />
     from RdcUser
-    where userid = #{userid,jdbcType=INTEGER}
+    where userid = #{userid,jdbcType=INTEGER} 
   </select>
 
+
+  
   <select id="findByRdcId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from RdcUser
     where rdcid = #{rdcid,jdbcType=INTEGER}
   </select>
-
+  
+<select id="findByRUID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from RdcUser
+    where userid = #{userid,jdbcType=INTEGER}  and rdcid = #{rdcid,jdbcType=INTEGER}
+  </select>
 </mapper>

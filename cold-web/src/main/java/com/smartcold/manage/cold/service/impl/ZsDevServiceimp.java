@@ -43,9 +43,9 @@ public class ZsDevServiceimp implements ZsDevService {
 	    private DeviceObjectMappingMapper devMapper;
 	    @Autowired
 	    private StorageDataCollectionMapper storageDataCollectionDao;
+	    
 	    private static int errCount=0;
-	    public static String data=null;
-//	    private final static String ZSURL="http://139.196.240.174:9007/v1/channels/datapoints";
+	    public  static String data=null;
 	    private final static String ZSURL="http://10.46.17.235:9007/v1/channels/datapoints";//
 	    private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 		private static final ExecutorService executorService = Executors.newFixedThreadPool(100, threadFactory);//最多启动一千1000个线程

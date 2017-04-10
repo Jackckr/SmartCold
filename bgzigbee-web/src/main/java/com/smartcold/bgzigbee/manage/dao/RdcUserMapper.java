@@ -1,6 +1,8 @@
 package com.smartcold.bgzigbee.manage.dao;
 
 
+import org.apache.ibatis.annotations.Param;
+
 import com.smartcold.bgzigbee.manage.entity.RdcUser;
 
 public interface RdcUserMapper {
@@ -19,4 +21,6 @@ public interface RdcUserMapper {
     RdcUser findByUserId(Integer userid);
 
     RdcUser findByRdcId(Integer rdcid);
+    
+    RdcUser findByRUID(@Param("userid")Integer userid,@Param("rdcid")Integer rdcid);
 }
