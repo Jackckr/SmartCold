@@ -49,6 +49,35 @@
 				width:75%;
 			}
 		}
+        .running{
+            -moz-animation:rotate 0.01s infinite linear;
+            -webkit-animation:rotate 0.01s infinite linear;
+            animation:rotate 0.01s infinite linear;
+          }
+          @-moz-keyframes rotate{
+            0%{
+              -moz-transform:rotate(0deg);
+             }
+             100%{
+               -moz-transform:rotate(360deg);
+             }
+          }
+          @-webkit-keyframes rotate{
+            0%{
+              -webkit-transform:rotate(0deg);
+             }
+             100%{
+               -webkit-transform:rotate(360deg);
+             }
+          }
+          @keyframes rotate{
+            0%{
+              transform:rotate(0deg);
+             }
+             100%{
+               transform:rotate(360deg);
+             }
+          }
 	</style>
 </head>
 <body ng-app="app" ng-controller="monitorCooling" ng-cloak>

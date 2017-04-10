@@ -369,6 +369,9 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
                     '</div></div>' +
                     '</div> ';
                 $("#chartView").last().append(innerHTML);
+                if($scope.coldCnt>0){
+                    $(".fa-life-ring.bg-green").addClass("running")
+                }
                 $scope.swiper += 1;
             }
         })
