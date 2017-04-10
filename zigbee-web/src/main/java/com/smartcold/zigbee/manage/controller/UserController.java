@@ -1,6 +1,8 @@
 package com.smartcold.zigbee.manage.controller;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -135,11 +137,13 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/getVerCode", method = RequestMethod.POST)
 	@ResponseBody
-	public Object getVerCode(HttpServletRequest request, String telephone) throws ApiException {
-		if(telephone!=null&&!telephone.equals("")){
+	public Object getVerCode(HttpServletRequest request,Integer key,String reg, String telephone) throws ApiException {
+		int day=Calendar.getInstance().get(Calendar.DATE);//获取日  
+		if( key==day*2&&"/register.html".equals(reg)&&StringUtil.isnotNull(telephone)){
 			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
 			String signUpCode = teleVerify.signUpVerify(telephone);
 			return signUpCode ;
+		
 		}
 		return null;
 	}

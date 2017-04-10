@@ -127,28 +127,24 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
-	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode,Integer type) {
-		if (username == null || password == null || !password.equals(password1)) {
-			return  ResponseData.newFailure("用户名密码输入错误");
+	public Object signup(HttpServletRequest request,String username, String password,String telephone,String signUpCode,Integer type) {
+		try {
+			if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)||type==null) {
+				return  ResponseData.newFailure("请输入必填信息！");
+			}
+			UserEntity user = new UserEntity();   
+			user.setType(type);
+			user.setUsername(username);
+			user.setPassword(EncodeUtil.encodeByMD5(password));
+			user.setTelephone(telephone);
+			userDao.insertUser(user);
+			return ResponseData.newSuccess("注册成功");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return ResponseData.newFailure("注册失败！请稍后重试！");
 		
-//		String sessyzm=""+request.getSession().getAttribute("signUpCode");
-//		if(StringUtil.isNull(sessyzm)||"null".endsWith(sessyzm)){
-//			sessyzm=request.getSession().getAttribute("signUpCodeshear_yzm")+"";
-//		}
-//		if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
-//			return new ResultDtoStr("-1", "验证码输入错误");
-//		
-//	   }
-		if(type==null){type=0;}
-		UserEntity userEntity = new UserEntity();   
-		userEntity.setType(type);
-		userEntity.setUsername(username);
-		userEntity.setPassword(EncodeUtil.encodeByMD5(password));
-		userEntity.setEmail(email);
-		userEntity.setTelephone(telephone);
-		userDao.insertUser(userEntity);
-		return ResponseData.newSuccess("注册成功");
 	}
 	/**
 	 * 检查用户名是否占用
