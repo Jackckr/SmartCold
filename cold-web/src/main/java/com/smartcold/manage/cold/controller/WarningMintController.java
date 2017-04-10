@@ -25,5 +25,18 @@ public class WarningMintController extends BaseController {
 		return this.warningMintMapper.getMaintAlarmByFilter(rdcId, status, level, keyword);
 	}
 	
+	@RequestMapping(value = "/delMaintAlarmByIds", method = RequestMethod.DELETE)
+	@ResponseBody
+	public boolean delMaintAlarmByIds(String ids){
+		 this.warningMintMapper.delMaintAlarmByIds(ids);
+		 return true;
+	}
+	
+	@RequestMapping(value = "/upMaintAlarmstatuByIds", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean upMaintAlarmstatuByIds(Integer status, String ids){
+		 this.warningMintMapper.upMaintAlarmstatuByIds(status, ids);
+		 return true;
+	}
 	
 }

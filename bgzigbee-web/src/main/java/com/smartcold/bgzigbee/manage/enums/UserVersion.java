@@ -13,9 +13,10 @@ public enum UserVersion {
 	 * 版本类型
 	 */
 	MaintVERSION(2,  "维修版"),
-    BASICVERSION(3,  "基本版"),
-    WISEVERSION(4,  "聪慧版"),
-    SMARTVERSION(5,  "智能版");
+	TEMPVERSION(3,  "温度版"),
+    BASICVERSION(4,  "基本版"),
+    WISEVERSION(5,  "聪慧版"),
+    SMARTVERSION(6,  "智能版");
 	
 
 	private int type;

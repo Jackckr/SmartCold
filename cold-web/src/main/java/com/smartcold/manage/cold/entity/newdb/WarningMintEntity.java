@@ -21,7 +21,7 @@ public class WarningMintEntity {
 	 private String  warningmsg      ;
 	 private String  analysismsg     ;
 	 private String  desc            ;
-	 private Date  addtime        ;
+	 private String  addtime        ;
 	 private List<FileDataEntity> imgList;
 	public int getId() {
 		return id;
@@ -89,10 +89,11 @@ public class WarningMintEntity {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public Date getAddtime() {
+
+	public String getAddtime() {
 		return addtime;
 	}
-	public void setAddtime(Date addtime) {
+	public void setAddtime(String addtime) {
 		this.addtime = addtime;
 	}
 	public List<FileDataEntity> getImgList() {

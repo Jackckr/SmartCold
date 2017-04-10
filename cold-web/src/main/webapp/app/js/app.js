@@ -1,3 +1,4 @@
+
 var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
 angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
 	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
@@ -12,16 +13,13 @@ angular.element(document).ready(function($ngCookies, $location,$rootScope,$http)
 
 coldWeb.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  coldWeb.aclmode=[null,null,"1,100,200,400","1","1","",""];
 });
 
 coldWeb.run(function(userService) {
       userService.setUser(user);
 	  userService.setStorage();
 });
-
-
-
-
 
 coldWeb.factory('baseTools',['$rootScope',function(){
 	return {
@@ -70,7 +68,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
     return {
         setUser: function (user) {
             $rootScope.user = user;
-            $rootScope.userType=$rootScope.user.type==1?true:false;
+            $rootScope.userType=$rootScope.user.type;
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
 	        	 $rootScope.user =window.user=user=undefined;//清除系统user;
@@ -82,16 +80,14 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         		        $rootScope.rdcId = rdcId;
         		        window.sessionStorage.smrdcId=rdcId;//缓存rdcid
 		        		 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
-		        			  $rootScope.aclml=data.aclml;
+		        			    $rootScope.aclml=data.aclml;
 					      		$rootScope.pagstate=[];
 					      		$("#lfmenu .quanxian").removeClass("quanxian");
 					      		$("#lfmenu .hide").removeClass("hide");
 					      		$("#lfmenu .quanxian").attr("disabled",true);
-					      		
 					      		angular.forEach(data.aclml,function(obj,i){ 
 					      			if(obj.acl){
 					      				if(!obj.hasnode){  
-//					      					debugger;
 					      					// 技术原因，无法处理
 //					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
 					      				}
@@ -99,13 +95,21 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      				$("#ml_acl"+obj.id).addClass("quanxian");
 					      				$("#ml_acl"+obj.id+" *").addClass("quanxian");
 					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-					      				if($rootScope.userType){
-					      					$("#ml_acl"+obj.id+" *").addClass("hide");
-						      				$("#ml_acl"+obj.id+" *").addClass("hide");
-					      				}
 					      			}
 					      		});
+					      		
+					      		if(coldWeb.aclmode[$rootScope.userType]){
+					      			var acl=coldWeb.aclmode[$rootScope.userType].split(",");
+						      		if( $rootScope.userType==2){//
+						      			angular.forEach(acl,function(obj,i){$("#ml_acl"+obj).addClass("hide");});	
+						      		}else if($rootScope.userType==3){
+						      			
+						      		}else if($rootScope.userType==4){
+						      			
+						      		}else if($rootScope.userType==5||$rootScope.userType==6){
+						      			
+						      		}
+					      		}
 					      		$("#lefaside").removeClass("hide");
 		        		  });
 		        		// 初始化冷库
@@ -356,7 +360,12 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/maintenancealarm',
     	controller: 'maintenancealarm',
         templateUrl: 'app/template/maintenancealarm.html' 
-    });
+    }).state('maintenancenotice',{//服务商维修通知
+    	url:'/maintenancenotice',
+    	controller: 'maintenancenotice',
+        templateUrl: 'app/template/maintenancenotice.html' 
+    })
+    ;
 });
 
 //var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);  

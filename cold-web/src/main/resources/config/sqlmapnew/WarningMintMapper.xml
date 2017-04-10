@@ -16,14 +16,43 @@
 		},#{mapper },#{warningmsg },#{analysismsg },#{desc },now());
 	</insert>
 	
+	<delete id="delMaintAlarmByIds" parameterType="map">
+	  DELETE `warningmint` where `id` in(#{ids});
+	</delete>
+	<update id="upMaintAlarmstatuByIds">
+	  update `warningmint` set `status`=#{status} where  `id` in(#{ids});
+	</update>
+	
 	<update id="upWarningMintEntity" parameterType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
-	  
+	   update `warningmint`
+        <set >
+			<if test="refid       !=0    ">          refid                       =#{     refid           }  ,</if>      
+			<if test="rdcid       !=0    ">          rdcid                       =#{     rdcid           }  ,</if>      
+			<if test="type        !=0    ">          type                        =#{     type            }  ,</if>      
+			<if test="oid         !=0    ">          oid                         =#{     oid             }  ,</if>      
+			<if test="level       !=0    ">          level                       =#{     level           }  ,</if>      
+			<if test="status      !=0    ">          status                      =#{     status          }  ,</if>      
+			<if test="mapper      !=null and mapper      !=''   ">          mapper                      =#{     mapper          }  ,</if>      
+			<if test="warningmsg  !=null and warningmsg  !=''   ">          warningmsg                  =#{     warningmsg      }  ,</if>      
+			<if test="analysismsg !=null and analysismsg !=''   ">          analysismsg                 =#{     analysismsg     }  ,</if>      
+			<if test="desc        !=null and desc        !=''   ">          desc                        =#{     desc            }  ,</if>      
+			<if test="addtime     !=null and addtime     !=''   ">          addtime                     =#{     addtime         } </if>      
+        </set>
+        where id = #{id};
 	
 	</update>
 
 	<select id="getMaintAlarmByFilter" parameterType="map"
 		resultType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
-		select * from `warningmint` where `rdcid`=#{rdcid}
+	select
+	`id` ,
+	`rdcid` ,
+	`mapper` ,
+	`warningmsg` ,
+	`analysismsg` ,
+	`desc` ,
+	`addtime`
+	from `warningmint` where `rdcid`=#{rdcid}
 		<if test="status!=null"> and `status`=#{status} </if>
 		<if test="level!=null"> and `level`=#{level} </if>
 		<if test="keyword!=null"> and ( `warningmsg`="%"#{keyword}"%" or
