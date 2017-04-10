@@ -140,9 +140,9 @@ public class UserController extends BaseController {
 	public Object getVerCode(HttpServletRequest request,Integer key,String reg, String telephone) throws ApiException {
 		int day=Calendar.getInstance().get(Calendar.DATE);//获取日  
 		if( key==day*2&&"/register.html".equals(reg)&&StringUtil.isnotNull(telephone)){
-//			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-//			String signUpCode = teleVerify.signUpVerify(telephone);
-			return "1234" ;
+			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
+			String signUpCode = teleVerify.signUpVerify(telephone);
+			return signUpCode ;
 		
 		}
 		return null;
