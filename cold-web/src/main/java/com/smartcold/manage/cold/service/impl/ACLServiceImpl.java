@@ -23,21 +23,20 @@ public class ACLServiceImpl implements ACLService {
 	public String getRUAclByRUID(int rdcid, int uid) {
 		String naacl= this.aclMapper.getRUACL(rdcid, uid);//冷库和用户权限
 		 if(StringUtil.isnotNull(naacl)){ return naacl; } 
-		 naacl = this.aclMapper.getRdcACL(rdcid);
-		 if(StringUtil.isnotNull(naacl)){ return naacl; } 
+		 naacl = this.aclMapper.getRdcACL(rdcid);//冷库权限
 		 ACLEntity nacl =this.aclMapper.getUserACL(uid);
 		 if(nacl!=null){
 			 if(StringUtil.isnotNull(nacl.getUnacl())){
-				 return nacl.getUnacl();
+				 return  naacl+","+nacl.getUnacl();
 			 }
 			 if(StringUtil.isnotNull(nacl.getRnacl())){
-				 return nacl.getRnacl();
+				 return naacl+","+nacl.getRnacl();
 			 }
 			 if(StringUtil.isnotNull(nacl.getGnacl())){
-				 return nacl.getGnacl();
+				 return naacl+","+ nacl.getGnacl();
 			 }
 		 }
-		return null;
+		return naacl;
 	}
 	@Override
 	public List<ACLTreeNode> getALLACLNode(String nacl) {

@@ -146,7 +146,7 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/identityVerify", method = RequestMethod.POST)
 	@ResponseBody
-	public Object identityVerify(HttpServletRequest request, String telephone) throws ApiException {
+	public Object identityVerify(HttpServletRequest request,String sid, String vercode,String telephone) throws ApiException {
 		if(telephone!=null&&!telephone.equals("")){
 			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
 			String identityVerifyCode = teleVerify.identityVerify(telephone);
