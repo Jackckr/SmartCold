@@ -9,7 +9,7 @@
     </select>
     
     <select id="getDevPLbyApID" parameterType="map" resultType="map">
-      select devid,frequency from `smartcold`.`frequencyset`  where  apid=#{apid} and type=2 ORDER BY `addtime`  desc;
+      select devid as devId,frequency as PL from `smartcold`.`frequencyset`  where  apid=#{apid} and type=2 ORDER BY `addtime`  desc;
     </select>
 
 	<insert id="addAPStatusList" parameterType="StorageDataCollectionEntity">

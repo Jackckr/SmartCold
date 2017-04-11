@@ -169,7 +169,6 @@
 							     <input type="radio" name="usertype" id="optionsRadios4" value="1">VIP用户
 							  </label>
 	                    </div>
-	                     
 	                    <!-- 错误信息 popover end -->
 	                <button type="submit" id="submit" class="btn btn-form-common form-control" disabled style="margin-top: 15px;pointer-events:auto;">注册</button>
 	                <div class="checkbox no-padding">
@@ -267,7 +266,7 @@ $(function(){
 	    		data:{  username:userName,
 	    				password:password,
 	    				password1:password1,
-	    				type:$("input[name='usertype']:checked").val(),
+	    				type:0,//$("input[name='usertype']:checked").val(),
 	    				telephone:$("#text_telephone").val().trim(),
 	    				signUpCode:$('input[name=signUpCode]').val().trim()},
 	    		url:"/i/user/signup?",
