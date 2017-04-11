@@ -24,6 +24,13 @@ public class WebSiteVisitsController extends BaseController {
 	
 	private static HashMap<String, Object> cahcer=new HashMap<String, Object>();
 	
+	
+//	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron="0 0 8/1,0 * * ?")
+	public void cleraData() {
+		cahcer.clear();
+	}
+	
 	// 模块访问量
 	@RequestMapping(value = "/getModular")
 	@ResponseBody
@@ -77,10 +84,6 @@ public class WebSiteVisitsController extends BaseController {
 		return alldata;
 	}	
 	
-//	@Scheduled(cron = "0 0/30 * * * ?")
-	@Scheduled(cron="0 0 8/1,0 * * ?")
-	public void cleraData() {
-		cahcer.clear();
-	}
+
 	
 }

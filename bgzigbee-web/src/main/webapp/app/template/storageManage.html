@@ -1,7 +1,10 @@
  <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
  	<!-- 按钮操作区域开始 -->
+	  
 	<div class="operation">
-	    <h6 ng-if="sluser" >已选择用户：{{sluser.username}} </h6>
+	    <div ng-if="sluser"  class="pull-left">
+            <label style="font-size: 20px">已选择用户：{{sluser.username}}</label>
+        </div>
 		<a ng-if="sluser==null"  href="#/coldStorageAdd" class="btn btn-default pull-left" id="plusCold">
 			<span class="glyphicon glyphicon-plus"></span>添加冷库
 		</a>
@@ -14,7 +17,7 @@
 		  	<option value="2">已认证</option>
 		  </select>
 		</div>
-		<div id="search">								
+		<div id="search" class="pull-left">								
 			<input type="text" ng-model="keyword" placeholder="请输入关键词" id="myText" />
 			<div id="searchImg" ng-click="goSearch()" >
 				<span class="glyphicon glyphicon-search"></span>
@@ -57,11 +60,12 @@
 	         <td>{{rdc.addtime}}</td>
 	         <td ng-bind="getAudit(rdc.audit)"></td>
 	         <td style="width:18%;min-width:142px;">
-	         	<span class="edit"  ng-click="goEditRdc(rdc.id)"></span>
-	         	<span class="delete" ng-click="deleteRdc(rdc.id)"></span>
-	         	<button  ng-if="sluser==null" class="btn btn-primary btn-xs" ng-click="changeAudit(rdc)">审核</button>
-				<button   ng-if="sluser==null" class="btn btn-primary btn-xs" ng-click="authAudit(rdc)">认证</button>
-				<button   ng-if="sluser" class="btn btn-primary btn-xs" ng-click="authAudit(rdc)">关联</button>
+		          <span ng-if="sluser==null">	<span class="edit"  ng-click="goEditRdc(rdc.id)"></span>
+		         	<span class="delete" ng-click="deleteRdc(rdc.id)"></span>
+		         	<button   class="btn btn-primary btn-xs" ng-click="changeAudit(rdc)">审核</button>
+					<button   class="btn btn-primary btn-xs" ng-click="authAudit(rdc)">认证</button>
+				</span>
+				<button   ng-if="sluser" class="btn btn-primary btn-xs" ng-click="relationru(rdc)">关联</button>
 	         </td>
 	      </tr>
 	   </tbody>

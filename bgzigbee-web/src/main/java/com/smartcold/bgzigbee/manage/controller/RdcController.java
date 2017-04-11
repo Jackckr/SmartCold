@@ -683,50 +683,55 @@ public class RdcController {
 	@RequestMapping(value = "/updateRdcAuth", method = RequestMethod.POST)
 	@ResponseBody
 	public Object updateRdcAuth(HttpServletRequest request, int rdcId, int authUserId) {
-		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
-		rdcEntity.setUserId(authUserId);
-		rdcEntity.setAudit(2); // 已认证
-		rdcDao.updateRdc(rdcEntity);
+		try {
+			RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
+			rdcEntity.setUserId(authUserId);
+			rdcEntity.setAudit(2); // 已认证
+			rdcDao.updateRdc(rdcEntity);
 
-		RdcAuthLogEntity rdcAuthLogEntity = new RdcAuthLogEntity();
-		AdminEntity admin = (AdminEntity) request.getSession().getAttribute("admin");
-		rdcAuthLogEntity.setType("认证审核");
-		rdcAuthLogEntity.setAuthuserid(admin.getId()); // 审核人
-		rdcAuthLogEntity.setApplyuserid(authUserId); // 申请人
-		rdcAuthLogEntity.setChangeduserid(rdcEntity.getUserId()); // 被替换人
-		rdcAuthLogEntity.setDesc("审核通过,更新冷库库主");
-		rdcAuthLogDao.insert(rdcAuthLogEntity);
+			RdcAuthLogEntity rdcAuthLogEntity = new RdcAuthLogEntity();
+			AdminEntity admin = (AdminEntity) request.getSession().getAttribute("admin");
+			rdcAuthLogEntity.setType("认证审核");
+			rdcAuthLogEntity.setAuthuserid(admin.getId()); // 审核人
+			rdcAuthLogEntity.setApplyuserid(authUserId); // 申请人
+			rdcAuthLogEntity.setChangeduserid(rdcEntity.getUserId()); // 被替换人
+			rdcAuthLogEntity.setDesc("审核通过,更新冷库库主");
+			rdcAuthLogDao.insert(rdcAuthLogEntity);
 
-		RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(authUserId); // 默认用户账号与管理员账号不会重复
-		if (roleUserByUserId == null) {
-			RoleUser roleUser = new RoleUser();
-			roleUser.setRoleid(1); // op
-			roleUser.setUserid(authUserId);
-			roleUser.setAddtime(new Date());
-			roleUserDao.insertSelective(roleUser);
-		}
+			RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(authUserId); // 默认用户账号与管理员账号不会重复
+			if (roleUserByUserId == null) {
+				RoleUser roleUser = new RoleUser();
+				roleUser.setRoleid(1); // op
+				roleUser.setUserid(authUserId);
+				roleUser.setAddtime(new Date());
+				roleUserDao.insertSelective(roleUser);
+			}
 
-		RdcUser byRdcId = rdcUserDao.findByRdcId(rdcId);
-		if (byRdcId == null) {
-			RdcUser rdcUser = new RdcUser();
-			rdcUser.setRdcid(rdcId);
-			rdcUser.setUserid(authUserId);
-			rdcUser.setAddtime(new Date());
-			rdcUserDao.insertSelective(rdcUser);
-		} else {
-			byRdcId.setUserid(authUserId);
-			rdcUserDao.updateByPrimaryKeySelective(byRdcId);
+			RdcUser byRdcId = rdcUserDao.findByRdcId(rdcId);
+			if (byRdcId == null) {
+				RdcUser rdcUser = new RdcUser();
+				rdcUser.setRdcid(rdcId);
+				rdcUser.setUserid(authUserId);
+				rdcUser.setAddtime(new Date());
+				rdcUserDao.insertSelective(rdcUser);
+			} else {
+				byRdcId.setUserid(authUserId);
+				rdcUserDao.updateByPrimaryKeySelective(byRdcId);
+			}
+			UserEntity user = this.userDao.findUserById(authUserId);
+			if(user.getType()==UserVersion.MaintVERSION.getType()){//维修商
+			   List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",authUserId);
+			   if(SetUtil.isnotNullList(useracl)){
+				 this.aclMapper.upuserAcl(authUserId, 9, null);
+			   }else{
+				   this.aclMapper.adduserAcl(authUserId, 9, null);//采用默认权限。。。
+			   }
+			}
+			return new ResultDto(0, "冷库认证审核成功！");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResultDto(-1, "冷库认证审核失败！请稍后重试！");
 		}
-		
-		UserEntity user = this.userDao.findUserById(authUserId);
-		if(user.getType()==UserVersion.MaintVERSION.getType()){//维修商
-		   List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",authUserId);
-		   if(SetUtil.isnotNullList(useracl)){
-			 this.aclMapper.upuserAcl(authUserId, 9, null);
-		   }else{
-			   this.aclMapper.adduserAcl(authUserId, 9, null);//采用默认权限。。。
-		   }
-		}
-		return new ResultDto(0, "冷库认证审核成功");
 	}
 }

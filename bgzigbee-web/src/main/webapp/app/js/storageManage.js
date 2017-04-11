@@ -41,7 +41,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     // 获取当前冷库的列表
     $scope.auditChanged = function(optAudiet){
     	$scope.getRdcs();
-    }
+    };
 
     $http.get('/i/city/findProvinceList').success(function (data) {
         $scope.provinces = data;
@@ -75,16 +75,16 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 
     $scope.goRdcMap = function () {
         $state.go('coldStorageMap', {});
-    }
+    };
 
     $scope.goSearch = function () {
         $scope.getRdcs();
-    }
+    };
 
 
     $scope.goEditRdc = function (rdcID) {
         $state.go('coldStorageEdit', {"rdcID": rdcID});
-    }
+    };
     
     $scope.deleteRdc = function(rdcID){
     	var r=confirm("删除冷库？");
@@ -97,7 +97,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     			}
     		}).success(resDelRdc);
     	}
-    }
+    };
     
     $scope.deleteRdcs = function(){
     	var r=confirm("批量删除冷库？");
@@ -113,7 +113,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 	    		}).success(resDelRdc);
 	    	}
     	}
-    }
+    };
     
     $scope.getrdcIDsFromSelected = function(audit){
     	var rdcIDs = [];
@@ -123,7 +123,7 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     		rdcIDs.push($scope.selected[i].id);
     	}
     	return rdcIDs;
-    }
+    };
     
     function resDelRdc(data){
     	if(data.status == 0){
@@ -131,7 +131,6 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 			location.reload();
 		}
     }
-
 	$scope.getAudit = function (i) {
 		if (i == 0)
 			return '待审核';
@@ -142,14 +141,14 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
 		} else {
 			return '未通过';
 		}
-	}
+	};
     
     $scope.changeAudit = function(rdc){
 		$state.go('coldStorageAudit', {"rdcID": rdc.id});
-    }
+    };
     $scope.changeAudits = function(){
     	var r=confirm("通过审核？");
-    	var audit = r?1:-1
+    	var audit = r?1:-1;
     	var rdcIDs = $scope.getrdcIDsFromSelected(audit);
     	if(rdcIDs.length >0 ){
     		$http({
@@ -161,7 +160,8 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
     			}
     		});
     	}
-    }
+    };
+    
     
     $scope.goAddRdc = function () {
         $http.get('/i/user/findUser').success(function(data){
@@ -172,9 +172,27 @@ coldWeb.controller('storageManage', function ($rootScope, $scope, $state, $cooki
             } else {
                 $location.path("/coldStorageAdd");
             }
-        })
-    }
+        });
+    };
 	$scope.authAudit = function(rdc){
 		$state.go('coldStorageAuthAudit', {"rdcId": rdc.id});
-	}
+	};
+	//关联冷库
+	$scope.relationru= function(rdc){
+	    	if(confirm("确定关联？")){
+	    		  $http({  
+	    			    method:'POST',  
+	    			    url:'i/rdc/updateRdcAuth',  
+	    			    params:{rdcId:rdc.id,authUserId:$scope.sluser.id}  
+	    			}).success(function(req){  
+	    				alert(req.message);
+	    				$state.go('home');
+//	    			   if(req.status==0){
+//	    			   } else{
+//	    				   alert("认证失败！请稍后重试！");
+//	    			   } 
+	    			}) ;
+	    		
+	    	}
+    };
 });

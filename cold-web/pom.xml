@@ -156,16 +156,16 @@
 		    <artifactId>mina-core</artifactId>
 		    <version>2.0.13</version>
 		</dependency>
-		<dependency>
-		    <groupId>javolution</groupId>
-		    <artifactId>javolution</artifactId>
-		    <version>5.5.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.google.protobuf</groupId>
-		    <artifactId>protobuf-java</artifactId>
-		    <version>2.5.0</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 		    <groupId>javolution</groupId> -->
+<!-- 		    <artifactId>javolution</artifactId> -->
+<!-- 		    <version>5.5.1</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 		    <groupId>com.google.protobuf</groupId> -->
+<!-- 		    <artifactId>protobuf-java</artifactId> -->
+<!-- 		    <version>2.5.0</version> -->
+<!-- 		</dependency> -->
 		
 		
 
