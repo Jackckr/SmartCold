@@ -251,7 +251,6 @@
    	    }else{
    	    	if(!victdata.userName||!victdata.victpwd||!victdata.victyzm)
     		$.ajax({
-<<<<<<< HEAD
     	    		type:"POST",
     	    		url:"/i/user/signup",
     	    		data:{  
@@ -269,26 +268,7 @@
         				   }
         		   });
     		}
-=======
- 	    		type:"POST",
- 	    		url:"/i/user/signup",
- 	    		data:{  
-	    				username:$("#txt_username").val().trim(),
-	    				password: $("#txt_password").val().trim(),
-	    				telephone: $("#txt_telephone").val().trim(),
-	    				signUpCode:$("#txt_vicode").val().trim(),
-	    				type:$("input[name='coldType']:checked").val().trim(),
- 	    			}
- 	    		}).success(function(data){
-  				   alert(data.message);
-  				   if(data.success){
-  						window.location.href = "http://" + window.location.host + "/login.html";
-  						window.event.returnValue=false;
-    				}
-     		});
-   	    }
-    }
->>>>>>> a76952b63a53c983b65e7d0557d3a1ac569adcf6
+	}
 
     </script>
   </body>
