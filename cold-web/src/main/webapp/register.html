@@ -132,7 +132,8 @@
 				victdata.userName=data;
 			});
    	    }else{
-   	       victdata.userName=false;
+   	         victdata.userName=false;
+   	          $("#submit").attr("disabled",true);
 			 $(".userMsg").html("用户名不能包含中文和特殊字符，长度在6到16位之间~")
    	    }
    	    
@@ -231,25 +232,40 @@
 
     	
     function reguser(){
-    		if(!victdata.userName||!victdata.victpwd||!victdata.victyzm)
+   		var userMsg = $('.userMsg').html().trim(),
+   			psdMsg = $('.psdMsg').html().trim(),
+   			rePsdMsg = $('.rePsdMsg').html().trim(),
+   			telMsg = $('.telMsg').html().trim(),
+   			codeMsg = $('.codeMsg').html().trim();
+   	    if(userMsg != ""){
+   	    	alert(userMsg)
+   	    }else if(psdMsg != "" || rePsdMsg != ""){
+   	    	alert("密码输入不符合要求，请检查~")
+   	    }else if(telMsg != ""){
+   	    	alert(telMsg)
+   	    }else if(codeMsg != ""){
+   	    	alert(codeMsg)
+   	    }else{
+   	    	if(!victdata.userName||!victdata.victpwd||!victdata.victyzm)
     		$.ajax({
-    	    		type:"POST",
-    	    		url:"/i/user/signup",
-    	    		data:{  
-    	    				username:$("#txt_username").val().trim(),
-    	    				password: $("#txt_password").val().trim(),
-    	    				telephone: $("#txt_telephone").val().trim(),
-    	    				signUpCode:$("#txt_vicode").val().trim(),
-    	    				type:$("input[name='coldType']:checked").val().trim(),
-    	    				}
-    	    		}).success(function(data){
-        				   alert(data.message);
-        				   if(data.success){
-        						window.location.href = "http://" + window.location.host + "/login.html";
-        						window.event.returnValue=false;
-        				   }
-        		   });
-    		}
+ 	    		type:"POST",
+ 	    		url:"/i/user/signup",
+ 	    		data:{  
+	    				username:$("#txt_username").val().trim(),
+	    				password: $("#txt_password").val().trim(),
+	    				telephone: $("#txt_telephone").val().trim(),
+	    				signUpCode:$("#txt_vicode").val().trim(),
+	    				type:$("input[name='coldType']:checked").val().trim(),
+ 	    			}
+ 	    		}).success(function(data){
+  				   alert(data.message);
+  				   if(data.success){
+  						window.location.href = "http://" + window.location.host + "/login.html";
+  						window.event.returnValue=false;
+    				}
+     		});
+   	    }
+    }
 
     </script>
   </body>
