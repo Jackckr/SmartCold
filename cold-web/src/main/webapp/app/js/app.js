@@ -13,7 +13,7 @@ angular.element(document).ready(function($ngCookies, $location,$rootScope,$http)
 
 coldWeb.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-  coldWeb.aclmode=[null,null,"1,100,200,400","1","1","",""];
+//  coldWeb.aclmode=[null,null,"1,100,200,400","1","1","",""];
 });
 
 coldWeb.run(function(userService) {
@@ -95,21 +95,30 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      				$("#ml_acl"+obj.id).addClass("quanxian");
 					      				$("#ml_acl"+obj.id+" *").addClass("quanxian");
 					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+					      				if($rootScope.userType!=0){
+					      					$("#ml_acl"+obj.id).addClass("hide");
+					      				}
 					      			}
 					      		});
-					      		
-					      		if(coldWeb.aclmode[$rootScope.userType]){
-					      			var acl=coldWeb.aclmode[$rootScope.userType].split(",");
-						      		if( $rootScope.userType==2){//
-						      			angular.forEach(acl,function(obj,i){$("#ml_acl"+obj).addClass("hide");});	
-						      		}else if($rootScope.userType==3){
-						      			
-						      		}else if($rootScope.userType==4){
-						      			
-						      		}else if($rootScope.userType==5||$rootScope.userType==6){
-						      			
-						      		}
-					      		}
+//					      		if($rootScope.userType==0){
+//					      			
+//					      		}else{
+//					      			
+//					      			
+//					      			
+//					      		}
+//					      		if(coldWeb.aclmode[$rootScope.userType]){
+////					      			var acl=coldWeb.aclmode[$rootScope.userType].split(",");
+//						      		if( $rootScope.userType==2){//维修版
+////						      			angular.forEach(acl,function(obj,i){$("#ml_acl"+obj).addClass("hide");});	
+//						      		}else if($rootScope.userType==3){//温度版
+//						      			
+//						      		}else if($rootScope.userType==4){//基本版
+//						      			
+//						      		}else if($rootScope.userType==5||$rootScope.userType==6){//聪慧版智能版
+//						      			
+//						      		}
+//					      		}
 					      		$("#lefaside").removeClass("hide");
 		        		  });
 		        		// 初始化冷库
