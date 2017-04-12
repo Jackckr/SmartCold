@@ -6,20 +6,24 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     $scope.storageID= $stateParams.storageID;
     Highcharts.setOptions({  global: {useUTC: false  } , colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] });
     $scope.oids=[],$scope.names=[];
-    $scope.getTempset = function () {
-	    $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.storageID}}).success(function (data) {
-	    	if(data){
-	    	 	angular.forEach(data,function(obj,i){
-	    	 		$scope.oids.push(obj.id);
-	    	 		$scope.names.push(obj.name);
-	    	 	});
-	    	 	 $scope.load();
-	    	}else{
-	    		$("#mgs_div2").removeClass("hidden");
-	    	}
-	    });
-    };
     
+    $scope.getTempset = function () {
+    	if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
+    		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;$scope.names=$rootScope.Tempset[$scope.storageID].names;$scope.load();
+    	}else{
+    		 $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.storageID}}).success(function (data) {
+    		    	if(data){
+    		    	 	angular.forEach(data,function(obj,i){
+    		    	 		$scope.oids.push(obj.id);$scope.names.push(obj.name);
+    		    	 	});
+    		    	 	 $rootScope.Tempset[$scope.storageID]={oids:$scope.oids,names:$scope.names };
+    		    	 	 $scope.load();
+    		    	}else{
+    		    		$("#mgs_div2").removeClass("hidden");
+    		    	}
+    		    });	
+    	}
+    };
     $scope.load = function () {
     	if($scope.oids.length==0){return;};
     	$scope.curtemper = [];

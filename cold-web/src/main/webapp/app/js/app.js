@@ -123,8 +123,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		        		  });
 		        		// 初始化冷库
 		        		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function(data,status,headers,config){
-		        					$rootScope.mystorages = data;
-		        					$rootScope.storageModal = data[0];
+		        			$rootScope.Tempset=[];$rootScope.mystorages = data;$rootScope.storageModal = data[0];
 		        		});
 		        		$http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function(data){
 		        			$rootScope.hasDoorStorages = data;
