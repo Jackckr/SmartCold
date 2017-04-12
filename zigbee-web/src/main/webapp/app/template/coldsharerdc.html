@@ -183,7 +183,11 @@
 			         	<div class="position" style="text-align: left;"><span class="glyphicon glyphicon-map-marker"></span>{{vo.unit2}}</div>
 			         </td>
 			         <td>{{vo.codeLave1}}</td>
-			         <td > <span ng-if="vo.attrvalue1!=5">{{vo.validStartTime}}发车--{{vo.validEndTime}}到达</span><span ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</span>  </td>
+			         <td >
+			         	<span ng-if="vo.attrvalue1!=5&&vo.attrvalue1!=3">{{vo.validStartTime}}发车--{{vo.validEndTime}}到达</span>
+			         	<span ng-if="vo.attrvalue1==3">{{vo.validEndTime}}发车--{{vo.validStartTime}}到达</span>
+			         	<span ng-if="vo.attrvalue1==5">{{vo.validStartTime}}</span>
+			         </td>
 			         <td>
 			         	<button class="btn btn-primary" >详情</button>
 			         </td>

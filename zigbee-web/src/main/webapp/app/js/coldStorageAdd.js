@@ -187,13 +187,12 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         		return false
         	}
     	}
-    	angular.forEach($scope.arrangePics,function(item, key){
-            if(item == file){
-                $scope.arrangePics.splice(key,1);
-            }
-        })
-        $scope.arrangePics = $scope.arrangePics.concat(files);
-    	
+		if($scope.arrangePics.length + files.length > 1){
+			$scope.arrangePics = [];
+			$scope.arrangePics = $scope.arrangePics.concat(files);
+        }else{
+        	$scope.arrangePics = $scope.arrangePics.concat(files);
+        }
     }
 
     $scope.drop = function(file){

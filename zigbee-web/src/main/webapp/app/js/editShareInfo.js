@@ -128,7 +128,8 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	            }
 	        }).success(function (data) {
 	            $scope.citys = data;
-	            $scope.cityId = data[0].cityID;
+	            console.log($scope.cityId)
+	            $scope.cityId = $scope.cityId;
 	        });
 	    }
 	    // 根据出发地省ID查询城市列表
@@ -220,7 +221,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 	    function checkStorageSubmit(){
 	        // 检查必须填写项
 	        if ($scope.title == undefined || $scope.title == '' ) { return false;}
-	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
+//	        if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
 	        if ($scope.temperType == undefined || $scope.temperType == '') {return false;}
 	        if ($scope.manageType == undefined || $scope.manageType == '') { return false;}
 	        if ($scope.sqm == undefined || $scope.sqm == '') {return false;}
