@@ -421,7 +421,7 @@ coldWeb.controller('editShareInfo', function ($rootScope, $scope, $state, $cooki
 					uid:window.user.id,
 					title:$scope.title,
 					provinceid : $scope.provinceId,
-					cityid : $scope.cityId,
+					cityid : parseInt($("#city").attr("val")),
 					codeLave2 : $scope.temperType,
 					codeLave1:$scope.manageType,
 					unit : $scope.unit,

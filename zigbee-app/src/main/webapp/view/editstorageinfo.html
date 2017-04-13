@@ -79,7 +79,7 @@ $(function() {
                  <li class="offershow"  ng-if="typeCode==2">
                     <label for="city">市</label><em>*</em>
                     <div class="mySelect">
-	                    <select id="city" ng-model="cityId" name="cityid"
+	                    <select id="city" ng-model="cityId" name="cityid" val="{{cityId}}"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
@@ -88,15 +88,20 @@ $(function() {
 				<li ng-if="rdcdto==null||rdcdto==undefined"><label for="manageType">经营类型</label>
 				<em>*</em>
 					<div class="mySelect">
-						 <select ng-model="manageType"
-                                    ng-change="ManageTypeSelected(manageType)"
-                                    ng-options="x.id as x.type for x in manageTypes"></select>
+<!-- 					<select ng-model="manageType" ng-change="ManageTypeSelected(manageType)"  ng-options="x.id as x.type for x in manageTypes"></select> -->
+                         <select id="manageType" ng-model="manageType" val="{{manageType}}">
+                         	<option ng-repeat="x in manageTypes" value="{{x.id}}">{{x.type}}</option>
+                         </select>   
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 					
 				<li><label for="temperatureType">冷库温度类型</label>
 				<em>*</em>
 					<div class="mySelect">
-						   <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
+<!-- 						   <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select> -->
+						   <select ng-model="temperType">
+						   	  <option ng-repeat="x in temperTypes" value="{{x.id}}">{{x.type}}</option>
+						   </select>
+						   
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 					
 				<li><label>数/质/量</label> 
