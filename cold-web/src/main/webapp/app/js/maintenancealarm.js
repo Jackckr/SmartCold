@@ -18,13 +18,13 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope, $state, $co
     };
     //删除
     $scope.tol_del=function(id){
-    	 if(!confirm("你确信要刪除这条告警吗？")){return;}
+    	 if(!confirm("您确信要刪除这条告警吗？")){return;}
     	$http({method:'DELETE',url:'/i/warningMint/delMaintAlarmByIds',params:{'ids': id}}).success(function (data) {$scope.initData(); });
     };
     //忽略
-    $scope.tol_ignore=function(id){
-    	if(!confirm("你确信要忽略这条告警吗？")){return;}
-    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids :id,status:4}}).success(function (data) { $scope.initData();});
+    $scope.tol_ignore=function(id,status,msg){
+    	if(!confirm(msg)){return;}
+    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids :id,status:status}}).success(function (data) { $scope.initData();});
     };
     //合并处理
     $scope.tol_batch=function(){
