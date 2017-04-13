@@ -53,7 +53,7 @@
 	`desc` ,
 	`addtime`
 	from `warningmint` where `rdcid`=#{rdcid}
-		<if test="status!=null"> and `status`=#{status} </if>
+		<if test="status!=null"> and `status` in( ${status}) </if>
 		<if test="level!=null"> and `level`=#{level} </if>
 		<if test="keyword!=null"> and ( `warningmsg`="%"#{keyword}"%" or
 			`desc`="%"#{keyword}"%" ) </if>

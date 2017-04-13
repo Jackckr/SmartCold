@@ -1,5 +1,5 @@
-//var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
-var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router',  'xeditable']);
+var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
+//var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router','ui.select',   'xeditable']);
 angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
 	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
 	    	if(user.username == null){document.location.href = "/login.html";return; }
@@ -198,13 +198,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/historyData',
     	controller: 'historyData',
         templateUrl: 'app/template/historyData.html'
-    })
-    .state('exphistoryData',{
+    }).state('exphistoryData',{
     	url:'/exphistoryData',
     	controller: 'exphistoryData',
     	templateUrl: 'app/template/exphistoryData.html'
-    })
-    .state('power',{
+    }).state('power',{
     	url:'/power/{powerid}',
     	controller: 'power',
         templateUrl: 'app/template/power.html'

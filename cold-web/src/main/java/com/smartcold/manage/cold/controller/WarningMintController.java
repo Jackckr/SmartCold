@@ -21,7 +21,7 @@ public class WarningMintController extends BaseController {
 	
 	@RequestMapping(value = "/getWarningMintByRdcId", method = RequestMethod.GET)
 	@ResponseBody
-	public List<WarningMintEntity> getWarningMintByRdcId(int rdcId,Integer status,Integer level,String keyword){
+	public List<WarningMintEntity> getWarningMintByRdcId(int rdcId,String status,Integer level,String keyword){
 		return this.warningMintMapper.getMaintAlarmByFilter(rdcId, status, level, keyword);
 	}
 	

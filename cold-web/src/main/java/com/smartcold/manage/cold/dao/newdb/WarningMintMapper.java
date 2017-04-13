@@ -19,7 +19,7 @@ public interface WarningMintMapper {
 	public void upMaintAlarmstatuByIds( @Param("status")int status,  @Param("ids")String ids);
 	
 	
-	public List<WarningMintEntity> getMaintAlarmByFilter(@Param("rdcid")int rdcid, @Param("status")Integer status,@Param("level")Integer level,@Param("keyword")String keyword);
+	public List<WarningMintEntity> getMaintAlarmByFilter(@Param("rdcid")int rdcid, @Param("status")String status,@Param("level")Integer level,@Param("keyword")String keyword);
 	
 	
 	

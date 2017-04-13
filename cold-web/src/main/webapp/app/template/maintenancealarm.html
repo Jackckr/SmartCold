@@ -7,10 +7,11 @@
 			    <thead>
 			      <tr>
 			        <th><input  type="checkbox"  > </th>
-			        <th>序号</th>
+			        <th>告警ID</th>
 			        <th>告警消息</th>
 			        <th>分析结果</th>
 			        <th>告警时间</th>
+			        <th>状态</th>
 			        <th >操作</th>
 			     </tr>
 			    </thead>
@@ -21,10 +22,16 @@
 			        <td>{{obj.warningmsg}}</td>
 			        <td>{{obj.analysismsg}}</td>
 			        <td>{{obj.addtime.substring(0,19)}}</td>
+			        <td>{{stmode[obj.status]}}</td>
 			        <td class="text-center">
+			           <span ng-if="obj.status==0">
 					        <button class="btn btn-xs btn-primary " ng-click="tol_forMaint(obj)">申维</button>
 					        <button class="btn btn-xs btn-danger  "  ng-click="tol_del(obj.id)">删除</button>
 					        <button class="btn btn-xs btn-warning "  ng-click="tol_ignore(obj.id)">忽略</button>
+			           </span>
+			           <span  ng-if="obj.status==1">
+			             <button class="btn btn-xs btn-warning "  ng-click="tol_ignore(obj.id)">撤回</button>
+			           </span>
 			        </td>
 			      </tr>
 			    </tbody>
