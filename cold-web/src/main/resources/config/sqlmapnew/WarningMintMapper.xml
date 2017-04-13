@@ -57,7 +57,7 @@
 		<if test="level!=null"> and `level`=#{level} </if>
 		<if test="keyword!=null"> and ( `warningmsg`="%"#{keyword}"%" or
 			`desc`="%"#{keyword}"%" ) </if>
-		ORDER BY `addtime` desc LIMIT 20;
+		ORDER BY `id` desc LIMIT 20;
 	</select>
 
 

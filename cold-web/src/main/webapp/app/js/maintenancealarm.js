@@ -32,7 +32,7 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope, $state, $co
     };
     
     $scope.tol_submit=function(){
-    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids:$scope.sqobj.id ,status:1}}).success(function (data) { $scope.initData();});
+    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids:$scope.sqobj.id ,status:1}}).success(function (data) {  $scope.tol_back(); $scope.initData();});
     };
     
     $scope.tol_back=function(){
