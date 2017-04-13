@@ -111,8 +111,8 @@
 				<li style="width:100%;"><span class="type">出发地址：</span><span class="text">{{vo.unit1 }}</span><span class="text" ng-if="vo.staddress&&vo.attrvalue!=0">({{vo.staddress}})</span></li>
 				<li style="width:100%;"><span class="type">目的地址：</span><span class="text">{{vo.unit2 }}</span><span class="text" ng-if="vo.toaddress&&vo.attrvalue!=0">({{vo.toaddress}})</span></li>
 				<li  ng-if="vo.attrvalue1==5" style="width:100%;"><span class="type">始发信息：</span><span class="text">{{vo.validStartTime }}</span></li>
-				<li  ng-if="vo.attrvalue1==3" style="width:100%;"><span class="type">出发时间：</span><span class="text">{{vo.validStartTime |date:"yyyy-MM-dd" }}</span></li>
-			    <li  ng-if="vo.attrvalue1==3" style="width:100%;"><span class="type">到达时间：</span><span class="text">{{vo.validEndTime |date:"yyyy-MM-dd" }}</span></li>
+				<li  ng-if="vo.attrvalue1==3" style="width:100%;"><span class="type">出发时间：</span><span class="text">{{vo.validEndTime |date:"yyyy-MM-dd" }}</span></li>
+			    <li  ng-if="vo.attrvalue1==3" style="width:100%;"><span class="type">到达时间：</span><span class="text">{{vo.validStartTime |date:"yyyy-MM-dd" }}</span></li>
 				<li ng-if="vo.attrvalue1==1||vo.attrvalue1==2||vo.attrvalue1==4" style="width:100%;"><span class="type">出发时间：</span><span class="text">{{vo.validStartTime  }}</span></li>
 				<li ng-if="vo.attrvalue1==1||vo.attrvalue1==2||vo.attrvalue1==4" style="width:100%;"><span class="type">到达时间：</span><span class="text">{{vo.validEndTime }}</span></li>
 			</ul>

@@ -170,7 +170,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
             }
         }).success(function (data) {
             $scope.citys = data;
-            $scope.cityId = data[0].cityID;
+            $scope.cityId = $scope.cityId;
         });
     });
     
@@ -279,7 +279,17 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
         		return false
         	}
     	}
-        $scope.arrangePics = $scope.arrangePics.concat(files);
+    	if($scope.arrangePicShow == null){
+    		if($scope.arrangePics.length + files.length > 1){
+                alert("最多上传1张图片");
+                return;
+            }
+    		 $scope.arrangePics = $scope.arrangePics.concat(files);
+    	}else{
+    		 alert("最多上传1张图片");
+             return;
+    	}
+       
     }
     $scope.addHonorFiles = function (files) {
     	for(var j=0,fileLen=files.length;j<fileLen;j++){

@@ -45,7 +45,7 @@
 	    			}
 	    	}); 
 	    	// class="userType"
-	    	if(window.user!=null && window.user.type==1){
+	    	if(window.user!=null && window.user.type!=0){
 	    		$("div.userType").show();
 	    		$("p.userType").hide();
 	    	}else{
