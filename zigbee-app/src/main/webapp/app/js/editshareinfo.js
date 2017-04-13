@@ -165,7 +165,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	            }
 	        }).success(function (data) {
 	            $scope.citys = data;
-	            $scope.cityId = data[0].cityID;
+	            $scope.cityId = $scope.cityId;
 	        });
 	    };
 	    // 根据出发地省ID查询城市列表
@@ -199,7 +199,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    // 获取冷库经营类型
 	    $http.get(ER.root+"/i/rdc/findAllManageType").success(function (data) {
 	        $scope.manageTypes = data;
-	        $scope.manageType = data[0].id;
+	        //$scope.manageType = $scope.manageType;
 	    });
 
 	    $scope.ManageTypeSelected = function () {
@@ -208,7 +208,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    // 获取商品温度类型
 	    $http.get(ER.root+"/i/rdc/findAllTemperType").success(function (data) {
 	        $scope.temperTypes = data;
-	        $scope.temperType = data[0].id;
+	       // $scope.temperType = $scope.temperType;
 	    });
 
 	    $scope.TemperTypeSelected = function () {
@@ -448,7 +448,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
 					codeLave1:$scope.codeLave11,
-					unit1 : $scope.unit1,
+					unit1 : $("#boss").val(),
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,
 					validEndTime : $scope.validEndTime,
@@ -488,6 +488,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		}
 		
 		$scope.submit = function(){
+			console.log($("#manageType").attr("val"))
 			$scope.rdcID = '';
 			$scope.validStartTime = $("#sttime").val();
 			$scope.validEndTime = $("#endtime").val();
@@ -522,9 +523,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					uid:window.user.id,
 					title:$scope.title,
 					provinceid : $scope.provinceId,
-					cityid : $scope.cityId,
+					cityid : parseInt($("#city").attr("val")),//$scope.cityId,city
 					codeLave2 : $scope.temperType,
-					codeLave1:$scope.storageType,
+					codeLave1:parseInt($("#manageType").attr("val")),
 					unit : $scope.unit,
 					sqm:$scope.sqm,
 					unitPrice : $scope.unitprice,

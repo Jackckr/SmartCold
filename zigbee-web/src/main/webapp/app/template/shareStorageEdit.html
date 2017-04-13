@@ -45,7 +45,7 @@
                  </li>
                  <li class="offershow"  ng-if="typeCode==2">
                     <label for="city"><em>*</em>市:</label>
-	                    <select id="city" ng-model="cityId" name="cityid"
+	                    <select id="city" ng-model="cityId" name="cityid" val="{{cityId}}"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
                  </li>
