@@ -10,10 +10,7 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
     $scope.initdata=function(){
     	   $http.get('/i/coldStorageDoor/findByStorageId?storageID=' + $stateParams.storageID).success(
         		function(data,status,config,header){
-        			if(data.length > 0){
-        				$scope.coldStorageDoors=data;
-        				 $scope.load();
-        			}
+        			if(data.length > 0){	$scope.coldStorageDoors=data; $scope.load();}
         		});
     	
     };
@@ -56,7 +53,10 @@ coldWeb.controller('coldStorageDoor', function ($scope, $location, $stateParams,
                     exporting: { enabled: false},
                     credits: { enabled: false  },
                     plotOptions: {  area: {stacking: 'percent',marker: { enabled: false}} },
-                    series: [{name: 'DoorState', data: data, }]
+                    series: [{
+                    	name: 'DoorState', 
+                    	data: data,
+                    }]
              });
         });
     };
