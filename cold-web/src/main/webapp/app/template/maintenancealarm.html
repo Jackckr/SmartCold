@@ -27,10 +27,10 @@
 			           <span ng-if="obj.status==0">
 					        <button class="btn btn-xs btn-primary " ng-click="tol_forMaint(obj)">申维</button>
 					        <button class="btn btn-xs btn-danger  "  ng-click="tol_del(obj.id)">删除</button>
-					        <button class="btn btn-xs btn-warning "  ng-click="tol_ignore(obj.id)">忽略</button>
+					        <button class="btn btn-xs btn-default "  ng-click="tol_ignore(obj.id)">忽略</button>
 			           </span>
 			           <span  ng-if="obj.status==1">
-			             <button class="btn btn-xs btn-warning "  ng-click="tol_ignore(obj.id)">撤回</button>
+			             <button class="btn btn-xs btn-warning "  ng-click="tol_del(obj.id)">撤回</button>
 			           </span>
 			        </td>
 			      </tr>
@@ -79,6 +79,7 @@
 			    </div>
 			    <div class="form-group">
 			       <button class="btn  btn-primary " ng-click="tol_submit()">提交</button>
+			       <button class="btn  btn-primary " ng-click="tol_back()">返回</button>
 			    </div>
 			</form>	
 	</div>

@@ -49,7 +49,7 @@
 	`rdcid` ,
 	`mapper` ,
 	`warningmsg` ,
-	`analysismsg` ,
+	`analysismsg` , `status`,
 	`desc` ,
 	`addtime`
 	from `warningmint` where `rdcid`=#{rdcid}
