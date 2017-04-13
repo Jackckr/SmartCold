@@ -740,7 +740,7 @@ legend{
 	border-radius: 4px;
 	background: #D1D5DE;
 	color: #555;
-	margin: 0;
+	margin: 0 15px;
 }
 .applyConfirm label{
 	font-weight: 400;
@@ -760,4 +760,24 @@ legend{
 }
 .applyConfirm td>button{
 	margin-right: 15px;
+}
+.wx_file{
+	position: relative;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    line-height: 29px;
+    width: 85px;
+    height: 29px;
+    text-indent: 2em;
+    font-size: 9pt;
+    background: url(../../assets/img/image-upload.png) #f7f7f7 no-repeat center;
+}
+.wx_file input{
+	position: absolute;
+    font-size: 75pt;
+    right: 0;
+    top: 0;
+    opacity: 0;
 }
