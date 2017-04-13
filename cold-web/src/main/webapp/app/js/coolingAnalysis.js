@@ -33,7 +33,7 @@ coldWeb.controller('hotAnalysis', function ($scope, $location, $http,$rootScope)
 	$scope.rdcid =$rootScope.rdcId;
 	$scope.initdata=function(){
 			$http.get('/i/AnalysisController/getQAnalysis',{params: {rdcId:$scope.rdcid}} ).success(function(data,status,headers,config){
-				if(data.success){
+				if(data.success&&data.entity){
 					var quinisisdata=	data.entity.allseries;
 					if(quinisisdata!=undefined){
 						var nonedata=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -63,7 +63,7 @@ coldWeb.controller('hotAnalysis', function ($scope, $location, $http,$rootScope)
 						$scope.createhech(piedata,series,pxAxis);
 					}
                 }else{
-                	alert(data.message);
+//                	alert(data.message);
                 }
 			});
 	};

@@ -87,14 +87,14 @@ public class DataCollectionController extends BaseController {
 			if(StringUtil.isnotNull(data)){
 					Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 					String apID = dataMap.get("apID").toString();
-					if(dataMap.containsKey("devinfos")){//数据状态包
+					if(dataMap.containsKey("infos")){//数据状态包
 						Date aptime =new Date(Long.parseLong(dataMap.remove("time").toString()) * 1000);
 						ArrayList<StorageDataCollectionEntity> apsatusList = new ArrayList<StorageDataCollectionEntity>();
 						ArrayList<StorageDataCollectionEntity> devsatusList = new ArrayList<StorageDataCollectionEntity>();
 						apsatusList.add(new StorageDataCollectionEntity(apID, null,"MSI", dataMap.get("MSI").toString(), aptime));
-						apsatusList.add(new StorageDataCollectionEntity(apID, null,"LAC", dataMap.get("LAC").toString(), aptime));
-						apsatusList.add(new StorageDataCollectionEntity(apID, null,"CID", dataMap.get("CID").toString(), aptime));
-						List<Map<String, String>> devinfos = (List<Map<String, String>>) dataMap.get("devinfos");
+						if(dataMap.containsKey("LAC")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"LAC", dataMap.get("LAC").toString(), aptime));}
+						if(dataMap.containsKey("CID")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"CID", dataMap.get("CID").toString(), aptime));}
+						List<Map<String, String>> devinfos = (List<Map<String, String>>) dataMap.get("infos");
 						for (Map<String, String> info : devinfos) {
 							Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
 							String deviceId = info.remove("devID").toString();
@@ -117,8 +117,6 @@ public class DataCollectionController extends BaseController {
 		return resMap;
 	}  
 
-	
-	
 
 	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
 	@ResponseBody

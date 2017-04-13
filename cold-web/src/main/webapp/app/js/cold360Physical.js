@@ -3,7 +3,7 @@
  * Created by maqiang34 on 16/10/18.
  * 360体检
  */
-coldWeb.controller('base', function( $scope, $rootScope,$http,$timeout,baseTools ) {
+coldWeb.controller('cold360Physical', function( $scope, $rootScope,$http,$timeout,baseTools ) {
 	//初始化页面
 	$scope.pageindex=1;
 	$scope.rdcId=$rootScope.rdcId;

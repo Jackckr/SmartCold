@@ -1,25 +1,18 @@
-
-var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
+//var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
+var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router',  'xeditable']);
 angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
 	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
-	    	if(user.username == null){
-	    		if(window.location.pathname != "/login.html" && window.location.pathname != '/register.html'){
-	    			document.location.href = "/login.html";
-	    		}
-	        }
+	    	if(user.username == null){document.location.href = "/login.html";return; }
 	    	angular.bootstrap(document, ['ColdWeb']);
 	    });
 });
 
-coldWeb.run(function(editableOptions) {
-  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-//  coldWeb.aclmode=[null,null,"1,100,200,400","1","1","",""];
-});
-
-coldWeb.run(function(userService) {
+coldWeb.run(function(editableOptions,userService) {
       userService.setUser(user);
 	  userService.setStorage();
+	  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
+
 
 coldWeb.factory('baseTools',['$rootScope',function(){
 	return {
@@ -67,24 +60,19 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootScope, $state,$http) {
     return {
         setUser: function (user) {
-            $rootScope.user = user;
-            $rootScope.userType=$rootScope.user.type;
+            $rootScope.user = user, $rootScope.userType=$rootScope.user.type;
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
-	        	 $rootScope.user =window.user=user=undefined;//清除系统user;
+	        	 $rootScope.user =window.user=user=undefined; window.sessionStorage.removeItem("sikey");
 	        	 window.location.href="login.html";
 	        };
         },
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
-        		        $rootScope.rdcId = rdcId;
-        		        window.sessionStorage.smrdcId=rdcId;//缓存rdcid
-		        		 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
+        		     $rootScope.rdcId = rdcId;window.sessionStorage.smrdcId=rdcId;//缓存rdcid
+		        	 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
 		        			    $rootScope.aclml=data.aclml;
-					      		$rootScope.pagstate=[];
-					      		$("#lfmenu .quanxian").removeClass("quanxian");
-					      		$("#lfmenu .hide").removeClass("hide");
-					      		$("#lfmenu .quanxian").attr("disabled",true);
+					      		$("#lfmenu .quanxian").attr("disabled",true).removeClass("quanxian").removeClass("hide");
 					      		angular.forEach(data.aclml,function(obj,i){ 
 					      			if(obj.acl){
 					      				if(!obj.hasnode){  
@@ -92,80 +80,44 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 //					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
 					      				}
 					      			}else{
-					      				$("#ml_acl"+obj.id).addClass("quanxian");
-					      				$("#ml_acl"+obj.id+" *").addClass("quanxian");
-					      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-					      				if($rootScope.userType!=0){
-					      					$("#ml_acl"+obj.id).addClass("hide");
-					      				}
+					      				$("#ml_acl"+obj.id).addClass("quanxian");$("#ml_acl"+obj.id+" *").addClass("quanxian");$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+					      				if($rootScope.user.type!=0){$("#ml_acl"+obj.id).addClass("hide");}
 					      			}
 					      		});
-//					      		if($rootScope.userType==0){
-//					      			
-//					      		}else{
-//					      			
-//					      			
-//					      			
-//					      		}
-//					      		if(coldWeb.aclmode[$rootScope.userType]){
-////					      			var acl=coldWeb.aclmode[$rootScope.userType].split(",");
-//						      		if( $rootScope.userType==2){//维修版
-////						      			angular.forEach(acl,function(obj,i){$("#ml_acl"+obj).addClass("hide");});	
-//						      		}else if($rootScope.userType==3){//温度版
-//						      			
-//						      		}else if($rootScope.userType==4){//基本版
-//						      			
-//						      		}else if($rootScope.userType==5||$rootScope.userType==6){//聪慧版智能版
-//						      			
-//						      		}
-//					      		}
 					      		$("#lefaside").removeClass("hide");
-		        		  });
-		        		// 初始化冷库
-		        		$http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function(data,status,headers,config){
+		        	});
+		        		
+		        	 $http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function(data,status,headers,config){// 初始化冷库
 		        			$rootScope.Tempset=[];$rootScope.mystorages = data;$rootScope.storageModal = data[0];
-		        		});
-		        		$http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function(data){
+		        	 });
+		        	 $http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function(data){
 		        			$rootScope.hasDoorStorages = data;
-		        		});
-		        		// 初始化压缩机组
-		        		$http.get('/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(function(data,status,headers,config){
-		        					$rootScope.compressorGroups = data;
-		        					angular.forEach($rootScope.compressorGroups,function(item){	// 初始化压缩机
-		        						$http.get('/i/compressor/findBygroupId?groupId=' + item.id).success(function(data,status,headers,config){
-		        									item.compressors = data;
-		        						});
-		        					});
-		        	  });
-		        	  // 初始化电量
-		        	  $http.get('/i/power/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){
+		        	 });
+		        	 $http.get('/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(function(data,status,headers,config){// 初始化压缩机组
+    					$rootScope.compressorGroups = data;
+    					angular.forEach($rootScope.compressorGroups,function(item){	$http.get('/i/compressor/findBygroupId?groupId=' + item.id).success(function(data,status,headers,config){item.compressors = data;});});
+		        	 });
+		        	 $http.get('/i/power/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){ // 初始化电量
 		        				  $rootScope.powers = data;
 		        	 });
-		        	 //  初始化月台门
-		             $http.get('/i/platformDoor/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){
+		             $http.get('/i/platformDoor/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){ //  初始化月台门
 		            			 $rootScope.platformDoors = data;
 		             });
         	};
         	$rootScope.changeRdc = function(value){
         		if(value){
-        			if(value.originalObject == $rootScope.vm.choserdc){
-        				return
-        			}
+        			if(value.originalObject == $rootScope.vm.choserdc){return;}
             		$rootScope.vm.choserdc = value.originalObject;
         		}
         		$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
         	};
         	
-        	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
-            	$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(
-            			function(data,status,headers,config){
-            				if(data.length == 0){
-            					document.location.href = "/notAudit.html";
-            				}
+            	$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
+            				if(data.length == 0){document.location.href = "/notAudit.html";return;}
             				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
             				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
-            			});
+            	});
             }
 
             $rootScope.toMyCompressor = function (compressorID) {  $state.go('compressorPressure', {'compressorID': compressorID}); };
@@ -176,22 +128,18 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.toRdcPower = function () { $state.go('rdcPower', {'rdcId': $rootScope.rdcId}); };
             $rootScope.toMyStorageTemper = function (storageID) {$state.go('coldStorageTemper', {'storageID': storageID});};
             $rootScope.toMyStorageDoor = function (storageID) {$state.go('coldStorageDoor', {'storageID': storageID});};
-            $rootScope.toMap = function () { $state.go('coldStorageMap', {}); };
-            $rootScope.toReport = function () { var time = 'daily';var item = 'data';$state.go('report', {'time':time,'item':item});
-           };
+//            $rootScope.toMap = function () { $state.go('coldStorageMap', {}); };
+//            $rootScope.toReport = function () { var time = 'daily';var item = 'data';$state.go('report', {'time':time,'item':item});};
         },
     };
 }]);
-
-
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/cold360Physical");
     coldWeb.stateProvider=$stateProvider;
-    
     //index
     $stateProvider.state('cold360Physical',{
 		url:'/cold360Physical',
-		controller: 'base',
+		controller: 'cold360Physical',
 	    templateUrl: 'app/template/cold360Physical.html'
     }).state('about',{
     	url:'/about',
@@ -209,18 +157,6 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/warncoldAnalysis/{rdcId}',
         controller: 'warncoldAnalysis',
         templateUrl: 'app/template/warncoldAnalysis.html'
-    }).state('myColdStorage',{
-    	url:'/myColdStorage/:storageID',
-    	controller: 'myColdStorage',
-        templateUrl: 'app/template/myColdStorage.html'
-    }).state('report',{
-    	url:'/report-{time}-{item}',
-    	controller: 'report',
-        templateUrl: 'app/template/report.html'
-    }).state('coldStorageMap', {
-        url: '/coldStorageMap/:storageID',
-        controller: 'coldStorageMap',
-        templateUrl: 'app/template/coldStorageMap.html'
     }).state('coldStorageMonitor', {
         url: '/coldStorageMonitor/:storageID',
         controller: 'coldStorageMonitor',
@@ -372,100 +308,32 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/maintenancenotice',
     	controller: 'maintenancenotice',
         templateUrl: 'app/template/maintenancenotice.html' 
-    })
-    ;
+    }) ;
+    //    .state('myColdStorage',{
+//    	url:'/myColdStorage/:storageID',
+//    	controller: 'myColdStorage',
+//        templateUrl: 'app/template/myColdStorage.html'
+//    })
+//    .state('report',{//月度报表
+//    	url:'/report-{time}-{item}',
+//    	controller: 'report',
+//        templateUrl: 'app/template/report.html'
+//    })
+//    .state('coldStorageMap', {//冷库地图
+//        url: '/coldStorageMap/:storageID',
+//        controller: 'coldStorageMap',
+//        templateUrl: 'app/template/coldStorageMap.html'
+//    })
+   
 });
 
 //var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);  
 //var locationChangeSuccessOff = $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);  
+initacl=function(){
+	
+}
 
 
-coldWeb.filter('objectCount', function () {
-    return function (input) {
-        var size = 0, key;
-        for (key in input) {
-            if (input.hasOwnProperty(key)) size++;
-        }
-        return size;
-    };
-});
-
-coldWeb.filter('toArray', function () {
-    'use strict';
-
-    return function (obj) {
-        if (!(obj instanceof Object)) {
-            return obj;
-        }
-
-        return Object.keys(obj).filter(function (key) {
-            if (key.charAt(0) !== "$") {
-                return key;
-            }
-        }).map(function (key) {
-            if (!(obj[key] instanceof Object)) {
-                obj[key] = {value: obj[key]};
-            }
-
-            return Object.defineProperty(obj[key], '$key', {__proto__: null, value: key});
-        });
-    };
-});
-
-coldWeb.directive('snippet', function () {
-    return {
-        restrict: 'E',
-        template: '<pre><div class="hidden code" ng-transclude></div><code></code></pre>',
-        replace: true,
-        transclude: true,
-        link: function (scope, elm, attrs) {
-            scope.$watch(function () {
-                return elm.find('.code').text();
-            }, function (newValue, oldValue) {
-                if (newValue != oldValue) {
-                    elm.find('code').html(hljs.highlightAuto(newValue).value);
-                }
-            });
-        }
-    };
-});
-
-coldWeb.directive('activeLink', ['$location','$filter', function (location,filter) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs, controller) {
-            var clazz = attrs.activeLink;
-            var path = element.children().attr('href') + "";
-            path = filter('limitTo')(path,path.length - 1 ,1);
-            scope.location = location;
-            scope.$watch('location.path()', function (newPath) {
-                if (newPath.indexOf(path) > -1) {
-                    element.addClass(clazz);
-                } else {
-                    element.removeClass(clazz);
-                }
-            });
-        }
-    };
-}]);
-
-coldWeb.filter('sizeformat',function(){
-    return function(size){
-        if(size / (1024 * 1024 * 1024) > 1)
-            return (size/(1024*1024*1024)).toFixed(2)+'G';
-        else if(size / (1024*1024) > 1)
-            return (size/(1024*1024)).toFixed(2)+'M';
-        else if(size / 1024 > 1)
-            return (size/1024).toFixed(2)+'K';
-        else
-            return size+'B'
-    }
-});
 
 //导航栏选中的高亮显示
-function activeLi(ops){
-	$('.my_sidebar li').removeClass('active');$(ops).addClass('active');
-}
-if($("li").hasClass("quanxian")){
-	$(".quanxian>a").attr("disabled",true);
-}
+function activeLi(ops){$('.my_sidebar li').removeClass('active');$(ops).addClass('active');}

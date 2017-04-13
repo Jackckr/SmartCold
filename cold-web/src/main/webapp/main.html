@@ -27,81 +27,16 @@
 <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css" />
 <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-table.min.css" />
 <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker-bs3.css" />
-<!--   <link rel="stylesheet" href="assets/plugins/daterangepicker2/bootstrap-datetimepicker.min.css" />  -->
-<style type="text/css">
-a.disabled {
-	color: #aaa !important;
-	cursor: not-allowed;
-	pointer-events: none;
-	text-decoration: none
-}
-
-.menu-title {
-	margin-left: 10px
-}
-
-.iconfont {
-	font-family: "iconfont" !important;
-	font-size: 16px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: .2px;
-	-moz-osx-font-smoothing: grayscale
-}
-
-.page-header {
-	margin: 0 0 20px 0
-}
-
-.omg {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap
-}
-
-.tooltip-inner {
-	text-align: left;
-	color: #fff;
-	background: rgba(0, 0, 0, .8)
-}
-
-.angucomplete-dropdown {
-	padding: 0 0 0 6px;
-	width: 230px;
-	font-size: 12px;
-	max-height: 280px
-}
-
-.quanxian {
-	background: #000;
-	cursor: not-allowed;
-}
-
-.quanxian>a,.quanxian:hover>a:hover {
-	pointer-events: none;
-	color: #444 !important
-}
-
-.quanxian>a span,.quanxian>a i {
-	pointer-events: none;
-	color: #444 !important;
-}
-
-.skin-blue .sidebar-menu>li.quanxian:hover>a {
-	background: transparent !important;
-	border-left-color: transparent !important;
-}
-</style>
+<script id="ckecklogin" type="text/javascript"> if(window.sessionStorage.sikey==undefined){document.location.href = "/login.html";}</script>
+<style type="text/css">a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-events:none}.menu-title{margin-left:10px}.iconfont{font-style:normal;font-size:1pc;font-family:iconfont!important;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.page-header{margin:0 0 20px}.omg{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tooltip-inner{background:rgba(0,0,0,.8);color:#fff;text-align:left}.angucomplete-dropdown{padding:0 0 0 6px;width:230px;max-height:280px;font-size:9pt}.quanxian{background:#000;cursor:not-allowed}.quanxian:hover>a:hover,.quanxian>a,.quanxian>a i,.quanxian>a span{color:#444!important;pointer-events:none}.skin-blue .sidebar-menu>li.quanxian:hover>a{background:transparent!important;border-left-color:transparent!important}</style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" oncontextmenu=self.event.returnValue=false onselectstart="return false">
 	<div class="wrapper">
 		<!-- Main Header -->
 		<header class="main-header">
-			<a href="#/cold360Physical" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-				<span class="logo-mini"><span
-					class="glyphicon glyphicon-home"></span></span> <!-- logo for regular state and mobile devices -->
-				<span class="logo-lg"><b><span
-						class="glyphicon glyphicon-home"></span>&nbsp;SMART</b>COLD</span>
+			<a href="#/cold360Physical" class="logo"> 
+				<span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span> 
+				<span class="logo-lg"><b><span class="glyphicon glyphicon-home"></span>&nbsp;SMART</b>COLD</span>
 			</a>
 			<!-- Header Navbar -->
 			<nav class="navbar navbar-static-top" role="navigation">
@@ -475,11 +410,9 @@ a.disabled {
 		</aside>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper body-color">
-			<!-- Main content -->
 			<div class="main-content body-color text-white">
 				<div ui-view=""></div>
 			</div>
-			<!-- 			<canvas id="mycanvas" style="position: absolute;width: 100%;height:100%;top:0;left:0;z-index: 0"></canvas> -->
 		</div>
 		<!-- /.content-wrapper -->
 		<!-- Main Footer -->
@@ -499,28 +432,29 @@ a.disabled {
 		document.write("<scr"+"ipt src=\"assets/plugins/jQuery/jQuery-2.1.4.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/js/bootstrap.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/js/app.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"bower_components/pace/pace.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"bower_components/pace/pace.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular/angular.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular-sanitize/angular-sanitize.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular-ui-router/release/angular-ui-router.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular-cookies/angular-cookies.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular-bootstrap/ui-bootstrap.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"bower_components/highlightjs/highlight.pack.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"bower_components/highlightjs/highlight.pack.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular-xeditable/dist/js/xeditable.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"bower_components/angucomplete-alt/angucomplete-alt.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"bower_components/at-table/dist/angular-table.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"bower_components/angucomplete-alt/angucomplete-alt.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"bower_components/at-table/dist/angular-table.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular-ui-select/dist/select.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"bower_components/bootstrap/dist/js/bootstrap-table.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"bower_components/bootstrap/dist/js/bootstrap-table.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"bower_components/angular/bootstrap-table-angular.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/js/three.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/js/OrbitControls.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"assets/js/three.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"assets/js/OrbitControls.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/js/stats.min.js\"></sc"+"ript>");
 		//  <!-- document.write("<scr"+"ipt src=\"assets/js/star.js\"></sc"+"ript>")-->                                                       ;
 // 		document.write("<scr"+"ipt src=\"assets/js/echarts.min.js\"></sc"+"ript>");
-// 		<!-- document.write("<scr"+"ipt src=\"assets/js/echarts-all.js\"></sc"+"ript>")-->                                                ;
+// 		 document.write("<scr"+"ipt src=\"assets/js/echarts-all.js\"></sc"+"ript>")                                             ;
 		document.write("<scr"+"ipt src=\"assets/js/highcharts.js\"></sc"+"ript>");
+		
 		document.write("<scr"+"ipt src=\"app/js/app.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/threeTemplate.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/controller-base.js\"></sc"+"ript>");
@@ -559,13 +493,14 @@ a.disabled {
 		document.write("<scr"+"ipt src=\"app/js/maintainComfirm.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/maintenancealarm.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/maintenancenotice.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/plugins/chartjs/Chart.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/plugins/fastclick/fastclick.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/js/demo.js\"></sc"+"ript>");
+		
+// 		document.write("<scr"+"ipt src=\"assets/plugins/chartjs/Chart.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"assets/plugins/fastclick/fastclick.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"assets/js/demo.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/plugins/flot/jquery.flot.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/plugins/flot/jquery.flot.resize.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/plugins/flot/jquery.flot.pie.min.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"assets/plugins/flot/jquery.flot.categories.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"assets/plugins/flot/jquery.flot.resize.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"assets/plugins/flot/jquery.flot.pie.min.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"assets/plugins/flot/jquery.flot.categories.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/plugins/daterangepicker/moment.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/plugins/daterangepicker/daterangepicker.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/plugins/daterangepicker2/bootstrap-datetimepicker.js\"></sc"+"ript>");

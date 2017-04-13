@@ -56,7 +56,7 @@
 	        </div>
 	        <div class="row">
 		         <div class="col-xs-12" style="text-align: left;height: 30px;font-size: 12px;">
-		           <a style="color:red" hidden=true id="mention"></a>
+		           <a style="color:red"  id="mention"></a>
 		         </div>
 	         </div>
 	        <div class="clearfix">
@@ -80,7 +80,7 @@
 	<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 // 	$("#loginCopyR").animate({"margin-left":"60%"}, 600);
-	var mainHeight=$(window).height();$(".loginBody").height(mainHeight-160);window.onresize=function(){var mainHeight=$(window).height();$(".loginBody").height(mainHeight-160)};function showErrorInfo(msg){var msgEl=$("#mention");if(msg==null||msg==""){msgEl.hide();msgEl.html("")}else{msgEl.show();msgEl.html(msg)}}function login(){var me="#submit";if($(me).data("isLoading")===true){return}showErrorInfo("");userName=$("#username").val();password=$("#password").val();if(userName==""){showErrorInfo("用户名不能为空！");$("#username").focus();return}else{if(password==""){showErrorInfo("密码不能为空！");$("#password").focus();return}}$(me).text("登录中...");$(me).data("isLoading",true);$.ajax({type:"POST",dataType:"json",url:"/i/user/login",data:{userName:userName,password:password},complete:function(e){$(me).text("登录");$(me).delay(500).data("isLoading",false)},success:function(data){if(data.status==0){document.cookie=data.message;if(window.location.hash!=""){backUrl=window.location.hash}else{backUrl="#/cold360Physical"}window.location.href="http://"+window.location.host+"/main.html"+backUrl;window.Event.returnValue=false;}else{$("#mention")[0].hidden=false;showErrorInfo(data.message)}}})}$(document).on({keyup:function(e){if(e.keyCode=="13"){login();}}});
+	  var  mainHeight=$(window).height();$(".loginBody").height(mainHeight-160);window.onresize=function(){var mainHeight=$(window).height();$(".loginBody").height(mainHeight-160);};function showErrorInfo(msg){var msgEl=$("#mention");if(msg==null||msg==""){msgEl.hide();msgEl.html("");}else{msgEl.show();msgEl.html(msg);}};window.sessionStorage.removeItem("sikey");function login(){var me="#submit";if($(me).data("isLoading")===true){return;}showErrorInfo("");userName=$("#username").val();password=$("#password").val();if(userName==""){showErrorInfo("用户名不能为空！");$("#username").focus();return;}else{if(password==""){showErrorInfo("密码不能为空！");$("#password").focus();return;}}$(me).text("登录中...");$(me).data("isLoading",true);$.ajax({type:"POST",dataType:"json",url:"/i/user/login",data:{userName:userName,password:password},complete:function(e){$(me).text("登录");$(me).delay(500).data("isLoading",false);},success:function(data){if(data.status==0){document.cookie=data.message; window.sessionStorage.sikey=data.message; if(window.location.hash!=""){backUrl=window.location.hash;}else{backUrl="#/cold360Physical";}window.location.href="http://"+window.location.host+"/main.html"+backUrl;window.Event.returnValue=false;}else{$("#mention")[0].hidden=false;showErrorInfo(data.message);}}});}$(document).on({keyup:function(e){if(e.keyCode=="13"){login();}}});
 	</script>
   </body>
 </html>
