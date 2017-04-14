@@ -19,6 +19,11 @@ import com.smartcold.manage.cold.entity.olddb.MaintenanceEntity;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
+/**
+ * 维修。。。。。old
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping(value = "/maintenance")
 public class MaintenanceController {

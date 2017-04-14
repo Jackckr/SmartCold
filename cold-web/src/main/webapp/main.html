@@ -374,33 +374,18 @@
 
 						<ul class="treeview-menu">
 							<li id="ml_acl310" onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont">   </i><span class="menu-title">机组维护提醒</span></a></li>
-							<li id="ml_acl320" onclick="activeLi(this)"><a href="#/baoyangWeixiuApply"><i class="icon iconfont">  </i><span class="menu-title">故障维修申请</span></a></li>
-							<li id="ml_acl330" onclick="activeLi(this)"><a href="#/baoyangWeixiuRecords"><i class="icon iconfont"></i><span class="menu-title">故障维修记录</span></a></li>
+<!-- 							<li id="ml_acl320" onclick="activeLi(this)"><a href="#/baoyangWeixiuApply"><i class="icon iconfont">  </i><span class="menu-title">故障维修申请</span></a></li> -->
+<!-- 							<li id="ml_acl330" onclick="activeLi(this)"><a href="#/baoyangWeixiuRecords"><i class="icon iconfont"></i><span class="menu-title">故障维修记录</span></a></li> -->
 							<!--         <li id="ml_acl340" onclick="activeLi(this)"><a href="#/maintainComfirm"><i class="icon iconfont"></i><span class="menu-title">维修确认单</span></a></li>  -->
-						 <li id="ml_acl340" onclick="activeLi(this)"><a href="#/maintenancealarm"><i class="icon iconfont"></i><span class="menu-title">维修告警</span></a></li>  
-						</ul> <!--        <ul  ng-if="userType==2" class="treeview-menu">  -->
-						<!--                <li id="ml_acl320" onclick="activeLi(this)"><a href="#/baoyangWeixiuApply"><i class="icon iconfont"></i><span class="menu-title">故维修申请</span></a></li>  -->
-						<!--            <li id="ml_acl330" onclick="activeLi(this)"><a href="#/baoyangWeixiuRecords"><i class="icon iconfont"></i><span class="menu-title">故障维修记录</span></a></li>  -->
-						<!--          <li  onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修管理</span></a></li>  -->
-						<!--         <li id="ml_acl310" onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont"></i><span class="menu-title">机组维护提醒</span></a></li>  -->
-						<!--         <li id="ml_acl320" onclick="activeLi(this)"><a href="#/baoyangWeixiuApply"><i class="icon iconfont"></i><span class="menu-title">故障维修申请</span></a></li>  -->
-						<!--         <li id="ml_acl330" onclick="activeLi(this)"><a href="#/baoyangWeixiuRecords"><i class="icon iconfont"></i><span class="menu-title">故障维修记录</span></a></li>  -->
-						<!--        </ul> --></li>
+						   <li ng-if="user.type!=2"  id="ml_acl340" onclick="activeLi(this)"><a href="#/maintenancealarm"><i class="icon iconfont"></i><span class="menu-title">维修告警</span></a></li>  
+					       <li ng-if="user.type==2" onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修管理</span></a></li> 
+						</ul> 
+					</li>
 					<li id="ml_acl400" class="treeview"><a href="#designStorage"><i
 							class="icon iconfont" style="color:#ffffff"></i> <span
 							id="mlul5" class="menu-title text-white" style="font-size: large">选型</span></a></li>
 				</ul>
-				<!-- Sidebar Menu -->
-				<!--<ul class="sidebar-menu" ng-if="user.role == 3">-->
-				<!--<li class="header">导航</li>-->
-				<!--&lt;!&ndash; Optionally, you can add icons to the links &ndash;&gt;-->
-				<!--<li class="active"><a href="" ng-click="toMap()"><i class="fa fa-link"></i> <span>地图模式</span></a></li>-->
-				<!--<li class="active"><a href="" ng-click="toReport()"><i class="fa fa-link"></i> <span>报表</span></a></li>-->
-				<!--<li class="active"><a href=""><i class="fa fa-link"></i> <span>分析</span></a></li>-->
-				<!--<li class="active"><a href=""><i class="fa fa-link"></i> <span>设置</span></a></li>-->
-				<!--</ul>&lt;!&ndash; /.sidebar-menu &ndash;&gt;-->
 			</section>
-			<!-- /.sidebar -->
 		</aside>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper body-color">
@@ -408,20 +393,12 @@
 				<div ui-view=""></div>
 			</div>
 		</div>
-		<!-- /.content-wrapper -->
-		<!-- Main Footer -->
 		<footer class="main-footer text-white">
-			<!-- Default to the left -->
 			<strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.
 			</strong>备案号：沪ICP备 16004753
 		</footer>
-		<!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
 	</div>
-	<!-- ./wrapper -->
-	<!-- REQUIRED JS SCRIPTS -->
-	<!-- jQuery 2.1.4 -->
 	<script type="text/javascript">
 		document.write("<scr"+"ipt src=\"assets/plugins/jQuery/jQuery-2.1.4.min.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"assets/js/bootstrap.min.js\"></sc"+"ript>");

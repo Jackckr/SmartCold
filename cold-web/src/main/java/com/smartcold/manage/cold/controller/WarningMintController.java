@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.manage.cold.dao.newdb.WarningMintMapper;
 import com.smartcold.manage.cold.entity.newdb.WarningMintEntity;
 
+
+/**
+ * 维修
+ * @author Administrator
+ *
+ */
+
 @Controller
 @RequestMapping(value = "/warningMint")
 public class WarningMintController extends BaseController {

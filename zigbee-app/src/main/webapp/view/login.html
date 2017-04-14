@@ -88,6 +88,7 @@
 					  $.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:token}, url:ER.root + "/i/user/findUser",success:function(userdata) {if (userdata && userdata.id != 0) {
 						util.setCookie("username",userName,"d7");
 						window.localStorage.lkuser=JSON.stringify(userdata);
+						window.localStorage.logtime=new Date().getTime();
 // 						window.sessionStorage.lkuser=window.localStorage.lkuser; 
 						util.setCookie("token",token,"d7");
 						if (window.location.hash != "") {

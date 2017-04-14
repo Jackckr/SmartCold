@@ -1,8 +1,8 @@
 coldWeb.controller('maintenancealarm', function ($rootScope, $scope, $state, $cookies, $http, $location,baseTools) {
-	$scope.setp=1; $scope.stmode=["未处理 ","待处理","处理中 ","已处理 ","已忽略"];//0:未处理 1：待处理  2:处理中 3已处理 4:已忽略
+	$scope.setp=1; $scope.stmode=["未处理 ","待维修","维修中 ","已完成 ","已忽略"];//0:未处理 1：待处理  2:处理中 3已处理 4:已忽略
 	$scope.status="0,1"; $scope.level=undefined; $scope.keyword=undefined;$scope.sqobj=undefined;
     $scope.initData=function(){
-    	$scope.sqobj=undefined;
+      $scope.sqobj=undefined;
 	  $http.get('/i/warningMint/getWarningMintByRdcId',{params: {rdcId: $rootScope.rdcId,status:$scope.status,level:$scope.level,keyword:$scope.keyword}}).success(function(data,status,config,header){
 		  $scope.maintdata=data;
   	  });
