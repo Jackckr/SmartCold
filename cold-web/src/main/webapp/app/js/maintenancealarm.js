@@ -12,9 +12,6 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope, $state, $co
     $scope.tol_forMaint=function(obj){
     	$scope.setp=2;
     	$scope.sqobj=obj;
-//    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids:$scope.sqobj.id ,status:1}}).success(function (data) { 
-//    		alert("维修信息已经提交！等待维修商处理");$scope.initData();
-//    	});
     };
     //删除
     $scope.tol_del=function(id){
