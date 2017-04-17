@@ -1,5 +1,4 @@
 var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
-//var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router','ui.select',   'xeditable']);
 angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
 	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
 	    	if(user.username == null){document.location.href = "/login.html";return; }
@@ -63,7 +62,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.user = user, $rootScope.userType=$rootScope.user.type;
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
-	        	 $rootScope.user =window.user=user=undefined; window.sessionStorage.removeItem("sikey");
+	        	 $rootScope.user =window.user=user=undefined;  window.sessionStorage.clear();
 	        	 window.location.href="login.html";
 	        };
         },
@@ -109,15 +108,26 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         			if(value.originalObject == $rootScope.vm.choserdc){return;}
             		$rootScope.vm.choserdc = value.originalObject;
         		}
+        		window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
         		$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
+        		
         	};
         	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
-            	$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
-            				if(data.length == 0){document.location.href = "/notAudit.html";return;}
-            				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
-            				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
-            	});
+            	if(window.sessionStorage.cactrdcdata&&window.sessionStorage.cactrdc){
+            		var data=JSON.parse(window.sessionStorage.cactrdcdata);
+            		var cutrdc=JSON.parse(window.sessionStorage.cactrdc);
+            		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
+    				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
+            	}else{
+            		$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
+        				if(data.length == 0){document.location.href = "/notAudit.html";return;}
+        				window.sessionStorage.cactrdcdata=JSON.stringify(data);
+        				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
+        				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
+        	       });
+            	}
+            	
             }
 
             $rootScope.toMyCompressor = function (compressorID) {  $state.go('compressorPressure', {'compressorID': compressorID}); };

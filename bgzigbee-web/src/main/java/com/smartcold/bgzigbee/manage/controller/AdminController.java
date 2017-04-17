@@ -2,11 +2,15 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +26,6 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.CookieEntity;
-import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.CookieService;
 import com.smartcold.bgzigbee.manage.util.EncodeUtil;
 import com.smartcold.bgzigbee.manage.util.ResponseData;
@@ -42,16 +45,32 @@ public class AdminController extends BaseController {
 	@Autowired
 	private CookieService cookieService;
 
-	@RequestMapping(value = "/login")
+	private static Map<String,Integer> Blacklist=new HashMap<String, Integer>();
+	
+	@Scheduled(cron = "0 30 1 * * ?")
+	public void checkAPStatus() {
+		Blacklist.clear();//清除黑名单
+	}
+	
+	
+	@RequestMapping(value = "/login",method= RequestMethod.POST)
 	@ResponseBody
-	public Object login(HttpServletRequest request, String adminName, String adminPwd, Integer adminRole) {
+	public Object login(HttpServletRequest request, String adminName, String adminPwd,int sik) {
 		try {
+			if(sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return ResponseData.newFailure("登录过于频繁，请24小时后再试!");}
+			String remoteAddr = request.getRemoteAddr();
+			if(Blacklist.containsKey(remoteAddr)){
+				Integer count = Blacklist.get(remoteAddr);count++;Blacklist.put(remoteAddr,count);if(count>3){ return ResponseData.newFailure("登录过于频繁，请24小时后再试");}
+			}else{
+				Blacklist.put(remoteAddr,1);
+			}
 			adminPwd = EncodeUtil.encodeByMD5(adminPwd);
-			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd,adminRole);
+			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd);
 			if (admin != null) {
 				String cookie = cookieService.insertCookie(adminName);
 			    admin.setAdminpwd(null);
 				request.getSession().setAttribute("admin", admin);
+				Blacklist.remove(remoteAddr);
 				return	ResponseData.newSuccess(String.format("token=%s", cookie));
 			}
 			return ResponseData.newFailure("用户名或者密码不正确！");

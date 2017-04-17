@@ -10,9 +10,10 @@ coldWeb.run(function (editableOptions, naviService,adminService, $location) {
     naviService.setNAVI();
     $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
       	admin = data.entity;
-      	if(admin == null || admin.id == 0){
+      	if(admin == null || admin.id == 0||admin.role<0){
   			url = "http://" + $location.host() + ":" + $location.port() + "/login.html";
   			window.location.href = url;
+  			return;
   		}
   		adminService.setAdmin(admin);
       });
@@ -51,6 +52,7 @@ coldWeb.factory('adminService',['$rootScope','$http', function($rootScope,$http)
 	    	$rootScope.admin = admin;
 	    	$rootScope.logout = function () {
 	        	$http.get('/i/admin/logout').success(function(data){$rootScope.admin = null; });
+	        	window.sessionStorage.clear();
 	        	window.location.href = "http://"+ window.location.host + "/login.html";//	        	window.location.reload();
 	        };
 	        $rootScope.gotoSmartCold = function(){

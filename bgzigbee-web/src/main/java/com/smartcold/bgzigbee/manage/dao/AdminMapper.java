@@ -12,7 +12,7 @@ import com.smartcold.bgzigbee.manage.entity.AdminEntity;
  */
 public interface AdminMapper {
 
-	AdminEntity findAdmin(@Param("adminname") String adminname, @Param("adminpwd") String adminpwd, @Param("adminRole") Integer adminRole);
+	AdminEntity findAdmin(@Param("adminname") String adminname, @Param("adminpwd") String adminpwd);
 
 	AdminEntity findAdminByName(@Param("adminname") String adminname);
 

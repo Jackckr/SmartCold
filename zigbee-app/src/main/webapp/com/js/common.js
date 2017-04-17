@@ -9,7 +9,9 @@ var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"}
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){
-	if(window.localStorage.logtime&&(new Date().getTime()-window.localStorage.logtime)/600000>1){checktoken();}
+	if(window.localStorage.logtime&&(new Date().getTime()-window.localStorage.logtime)/60000>1){
+		checktoken();
+	}
 	var userjson=window.localStorage.lkuser;
 	if(userjson){window.user=JSON.parse(userjson);userjson=undefined;
 }else{

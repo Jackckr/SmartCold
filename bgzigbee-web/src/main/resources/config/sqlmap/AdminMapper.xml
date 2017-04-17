@@ -23,8 +23,7 @@
     </insert>
 
     <select id="findAdmin" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.AdminEntity">
-		SELECT *
-		FROM `admin` WHERE `adminname` = #{adminname} AND `adminpwd` = #{adminpwd} AND `role` = #{adminRole}
+		SELECT * FROM `admin` WHERE `adminname` = #{adminname} AND `adminpwd` = #{adminpwd}
 	</select>
 	
 	
