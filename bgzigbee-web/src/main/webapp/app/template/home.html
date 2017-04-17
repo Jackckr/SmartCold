@@ -47,7 +47,7 @@
 				         </th>
 				         <th>id</th>
 				         <th>用户账号</th>
-				         <th>用户类型</th>
+<!-- 				         <th>用户类型</th> -->
 				         <th>手机号</th>
 				         <th>邮箱</th>
 				         <th>添加时间</th>
@@ -63,7 +63,7 @@
 				         </td>
 				         <td>{{user.id}}</td>
 				         <td>{{user.username}}</td>
-				         <td>{{userTypeMode[user.type]}}</td>
+<!-- 				         <td>{{userTypeMode[user.type]}}</td> -->
 				         <td>{{user.telephone}}</td>
 				         <td>{{user.email}}</td>
 				         <td>{{user.addTime}}</td>
@@ -71,7 +71,7 @@
 				         <td>
 				         	<button class="delete" ng-click="goDeleteUser(user.id)"></button>
 				            <button class="btn btn-primary btn-xs" ng-click="changeAudit(user)">审核</button>
-				            <button class="btn btn-danger btn-xs" ng-click="changeUserType(user)" data-toggle="modal" data-target="#changUserType" >授权</button>
+<!-- 				            <button class="btn btn-danger btn-xs" ng-click="changeUserType(user)" data-toggle="modal" data-target="#changUserType" >授权</button> -->
 				            <button class="btn btn-success btn-xs" ng-click="setRdcandUser(user)">关联冷库</button>
 				         </td>
 				      </tr>

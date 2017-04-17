@@ -48,10 +48,10 @@
 						<li class="dropdown messages-menu">
 							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fa fa-envelope-o"
-								style="color: #fff"></i> <span class="label label-success">4</span>
+								style="color: #fff"></i> <span class="label label-success">0</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">You have 4 messages</li>
+								<li class="header">You have 0 messages</li>
 								<li>
 									<!-- inner menu: contains the messages -->
 									<ul class="menu">
@@ -63,7 +63,7 @@
 														alt="User Image" />
 												</div> <!-- Message title and timestamp -->
 												<h4>
-													Support Team <small><i class="fa fa-clock-o"></i> 5
+													Support Team <small><i class="fa fa-clock-o"></i> 0
 														mins</small>
 												</h4> <!-- The message -->
 												<p>Why not buy a new awesome theme?</p>
@@ -80,7 +80,7 @@
 						<li class="dropdown notifications-menu">
 							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fa fa-bell-o"
-								style="color: #fff"></i> <span class="label label-warning">10</span>
+								style="color: #fff"></i> <span class="label label-warning">0</span>
 						</a>
 							<ul class="dropdown-menu">
 								<li class="header">You have 10 notifications</li>
@@ -103,7 +103,7 @@
 						<li class="dropdown tasks-menu">
 							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fa fa-flag-o"
-								style="color: #fff"></i> <span class="label label-danger">9</span>
+								style="color: #fff"></i> <span class="label label-danger">0</span>
 						</a>
 							<ul class="dropdown-menu">
 								<li class="header">You have 9 tasks</li>
@@ -376,6 +376,8 @@
 							<!--         <li id="ml_acl340" onclick="activeLi(this)"><a href="#/maintainComfirm"><i class="icon iconfont"></i><span class="menu-title">维修确认单</span></a></li>  -->
 						   <li ng-if="user.type!=2"  id="ml_acl340" onclick="activeLi(this)"><a href="#/maintenancealarm"><i class="icon iconfont"></i><span class="menu-title">维修告警</span></a></li>  
 					       <li ng-if="user.type==2" onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修管理</span></a></li> 
+					       <li onclick="activeLi(this)"><a href="#/maintainRequest"><i class="icon iconfont"></i><span class="menu-title">维修通知单</span></a></li> 
+					       <li onclick="activeLi(this)"><a href="#/maintainRepair"><i class="icon iconfont"></i><span class="menu-title">维修确认单</span></a></li> 
 						</ul> 
 					</li>
 					<li id="ml_acl400" class="treeview"><a href="#designStorage"><i

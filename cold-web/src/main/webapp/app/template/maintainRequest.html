@@ -1,0 +1,152 @@
+<div>
+	<div class="form-horizontal applyConfirm" role="form" >
+		<fieldset  class="clearfix applyTable" style="margin-top: 15px;">
+	    	<legend>维修通知单</legend>
+			<div class="form-group db" style="width: 100%;">
+				<label class="control-label dbc" style="width: 10%;">单位名称&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" class="form-control" placeholder="请输入单位名称">
+				</div>
+				<label class="dbc control-label" style="width: 10%;">单位地址&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" class="form-control" placeholder="请输入单位地址">
+				</div>
+			</div>
+			<div class="form-group db" style="width: 100%;">
+				<label class="dbc control-label" style="width: 10%;">联系人&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" placeholder="请选择" class="form-control">
+				</div>
+				<label class="dbc control-label" style="width: 10%;">联系电话&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" class="form-control" placeholder="请输入联系电话">
+				</div>
+			</div>
+			<div class="form-group db" style="width: 50%;">
+				<label for="wx" class="dbc control-label" style="width: 20%;">保修时间&nbsp;</label>
+				<div class="dbc" style="width: 80%;">
+					<input id="wx" type="text" placeholder="请选择"  readonly class="form-control">
+				</div>
+			</div>
+			<div class="form-group db" style="width: 100%;">
+				<label class="control-label dbc" style="vertical-align: top;width: 10%;">故障现象&nbsp;</label>
+				<div class="dbc" style="overflow: hidden;">
+					<div class="addSeclect form-inline">
+						<select  class="form-control">
+							<option value="1">温度超温过长</option>
+							<option value="2">机组故障</option>
+							<option value="3">油压过低</option>
+						</select><select  class="form-control">
+							<option value="11">压缩机超温过长</option>
+							<option value="22">电表超温过长</option>
+							<option value="33">电池超温过长</option>
+						</select>
+						<span class="addBtn form-control" onclick="addSelect(this)">+</span>
+						<span class="addBtn form-control" onclick="removerSelect(this)">-</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group db" style="width: 50%;">
+				<label for="wx" class="dbc control-label" style="width: 20%;">故障补充&nbsp;</label>
+				<div class="dbc" style="width: 80%;">
+					<input type="text" placeholder="请输入文字/选填" class="form-control">
+				</div>
+			</div>
+			<div class="form-group db" style="width: 100%;">
+				<label class="dbc control-label" style="width: 10%;">使用单位发送&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" placeholder="发送人姓名" class="form-control">
+				</div>
+				<label for="orderTime" class="dbc control-label" style="width: 10%;">预约上门时间&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input id="orderTime" type="text" placeholder="请选择"  readonly class="form-control">
+				</div>
+			</div>
+			<div class="form-group db" style="width: 100%;">
+				<label class="dbc control-label" style="width: 10%;">维修单位确认&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" placeholder="维修单位确认人姓名" class="form-control">
+				</div>
+				<label class="dbc control-label" style="width: 10%;">预估维修费用&nbsp;</label>
+				<div class="input-group" style="width: 100%;">
+					<input type="number" placeholder="预估维修金额" class="form-control">
+					<span class="input-group-addon">¥</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label" style="width: 10%;">选择服务性质&nbsp;</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="1">三包
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="2">改造
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="3">维修
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="4">零件
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="5">保养
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="6">巡检
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="7">移交
+				</label>
+<!-- 				<p>备注：三包内免费，其他性质填写，也可以待填</p> -->
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-5">
+				<button class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6">发送维修申请</label>
+			</div>
+		</fieldset>
+		
+	</div>
+</div>
+<!-- <script type="text/javascript" src="assets/plugins/jedate/jquery-1.7.2.js"></script> -->
+<script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
+<link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">
+<script type="text/javascript">
+	$("#wx,#orderTime").jeDate({
+		isinitVal:true,
+	    skinCell:"jedateblue",
+	    festival: true,
+	    minDate: '2016-01-01 00:00:00', 
+	    format: 'YYYY年MM月DD日 hh:mm'
+	});
+	function tableShow(){
+		$(".applyTable").show()
+	}
+	function commentShow(){
+		$(".commentTable").show()
+	}
+	
+	var oSelect = '<div class="addSeclect form-inline">'+
+						'<select  class="form-control">'+
+							'<option value="1">温度超温过长</option>'+
+							'<option value="2">机组故障</option>'+
+							'<option value="3">油压过低</option>'+
+						'</select>'+
+						'<select  class="form-control">'+
+							'<option value="11">压缩机超温过长</option>'+
+							'<option value="22">电表超温过长</option>'+
+							'<option value="33">电池超温过长</option>'+
+						'</select>'+
+						' <span class="addBtn form-control" onclick="addSelect(this)">+</span>'+
+						' <span class="addBtn form-control" onclick="removerSelect(this)">-</span>'+
+					'</div>';
+	function addSelect(ops){
+		$(ops).parents(".dbc").append(oSelect);
+	}
+	
+	function removerSelect(ops){
+		if($(ops).parents(".dbc").children().length==1){
+			alert("故障描述最少一条~")
+		}else{
+			$(ops).parents(".addSeclect").remove();
+		}
+	}
+	
+</script>
