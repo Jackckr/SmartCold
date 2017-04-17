@@ -1,103 +1,220 @@
 <div>
-	<div class="form-horizontal row applyConfirm row" role="form" >
-		<fieldset  class="col-lg-12 col-md-12 col-sm-12 col-xs-12 black applyTable" style="margin-top: 15px;">
-	    	<legend>维修通知单</legend>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="devname" class="col-sm-2 control-label">设备名称</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="devname" placeholder="请输入设备名称">
+	<div class="form-horizontal applyConfirm" role="form" >
+		<fieldset  class="clearfix applyTable" style="margin-top: 15px;">
+	    	<legend>维修确认单</legend>
+			<div class="form-group db" style="width: 100%;">
+				<label class="control-label dbc" style="width: 10%;">单位名称&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" class="form-control" placeholder="请输入单位名称">
+				</div>
+				<label class="dbc control-label" style="width: 10%;">单位地址&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" class="form-control" placeholder="请输入单位地址">
 				</div>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="firstname" class="col-sm-2 control-label">维修单位</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="firstname" placeholder="请输入维修单位名称">
+			<div class="form-group db" style="width: 100%;">
+				<label class="dbc control-label" style="width: 10%;">联系人&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" placeholder="请选择" class="form-control">
+				</div>
+				<label class="dbc control-label" style="width: 10%;">联系电话&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" class="form-control" placeholder="请输入联系电话">
 				</div>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="wx" class="col-sm-2 control-label">维修时间</label>
-				<div class="col-sm-10">
-					<input id="wx" type="text" placeholder="请选择"  readonly class="form-control">
+			<div class="form-group db" style="width: 100%;">
+				<label for="begin" class="dbc control-label" style="width: 10%;">开工时间&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input id="begin" type="text" placeholder="请选择"  readonly class="form-control">
+				</div>
+				<label for="end" class="dbc control-label" style="width: 10%;">结束时间&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input id="end" type="text" placeholder="请选择"  readonly class="form-control">
 				</div>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="firstname" class="col-sm-2 control-label">维修人员</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="firstname"
-						placeholder="请输入维修人员名字">
+			<div class="form-group db" style="width: 100%;">
+				<label class="control-label dbc" style="vertical-align: top;width: 10%;">实际故障现象&nbsp;</label>
+				<div class="dbc" style="overflow: hidden;">
+					<div class="addSeclect form-inline">
+						<select  class="form-control">
+							<option value="1">温度超温过长</option>
+							<option value="2">机组故障</option>
+							<option value="3">油压过低</option>
+						</select><select  class="form-control">
+							<option value="11">压缩机超温过长</option>
+							<option value="22">电表超温过长</option>
+							<option value="33">电池超温过长</option>
+						</select>
+						<span class="addBtn form-control" onclick="addSelect(this)">+</span>
+						<span class="addBtn form-control" onclick="removerSelect(this)">-</span>
+					</div>
 				</div>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="troubleDetail" class="col-sm-2 control-label">故障描述</label>
-				<div class="col-sm-10">
-					<textarea type="text" class="form-control" id="troubleDetail" placeholder="请描述故障详情"></textarea>
+			<div class="form-group db" style="width: 100%;">
+				<label class="control-label dbc" style="vertical-align: top;width: 10%;">维修处理结果&nbsp;</label>
+				<div class="dbc" style="overflow: hidden;">
+					<div class="addSeclect form-inline">
+						<select  class="form-control">
+							<option value="1">温度超温过长</option>
+							<option value="2">机组故障</option>
+							<option value="3">油压过低</option>
+						</select><select  class="form-control">
+							<option value="11">压缩机超温过长</option>
+							<option value="22">电表超温过长</option>
+							<option value="33">电池超温过长</option>
+						</select>
+						<span class="addBtn form-control" onclick="addSelect(this)">+</span>
+						<span class="addBtn form-control" onclick="removerSelect(this)">-</span>
+					</div>
 				</div>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="troubleReason" class="col-sm-2 control-label">故障原因</label>
-				<div class="col-sm-10">
-					<textarea type="text" class="form-control" id="troubleReason" placeholder="请描述故障详情"></textarea>
+			<div class="form-group db" style="width: 100%;">
+				<label class="control-label dbc" style="vertical-align: top;width: 10%;">维修费用清单&nbsp;</label>
+				<table class="table table-bordered">
+				  <thead>
+				    <tr class="success">
+				      <th>序号</th>
+				      <th>一级项目</th>
+				      <th>二级项目</th>
+				      <th>数量</th>
+				      <th>单位</th>
+				      <th>单价/元</th>
+				      <th>小计金额</th>
+				      <th>操作</th>
+				   </tr>
+				  </thead>
+					<tbody>
+						<tr class="warning">
+							<td>1</td>
+							<td><select class="form-control">
+									<option value="1">温度超温过长</option>
+									<option value="2">机组故障</option>
+									<option value="3">油压过低</option>
+							</select></td>
+							<td><select class="form-control">
+									<option value="1">温度超温过长</option>
+									<option value="2">机组故障</option>
+									<option value="3">油压过低</option>
+							</select></td>
+							<td><input type="number" class="form-control" placeholder="12"></td>
+							<td>个</td>
+							<td><input type="number" class="form-control" placeholder="100"></td>
+							<td><input type="number" class="form-control" placeholder="1200"></td>
+							<td>
+								<span class="addBtn form-control" onclick="addTr(this)">+</span>
+								<span class="addBtn form-control" onclick="removerTr(this)">-</span>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr class="success">
+							<td>合计金额</td>
+							<td colspan="8"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="form-group db" style="width: 50%;">
+				<label for="wx" class="dbc control-label" style="width: 20%;">维修补充&nbsp;</label>
+				<div class="dbc" style="width: 80%;">
+					<input type="text" placeholder="请输入文字/选填" class="form-control">
 				</div>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="troubleResult" class="col-sm-2 control-label">维修情况</label>
-				<div class="col-sm-10">
-					<textarea type="text" class="form-control" id="troubleResult" placeholder="请描述故障详情，例如：维修耗费多少人、财、物、时间，维修结果怎样等"></textarea>
+			<div class="form-group db" style="width: 100%;">
+				<label for="wx" class="dbc control-label" style="width: 10%;">维修评价&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<ul class="stars">
+						<li><span class="glyphicon glyphicon-star-empty"></span></li>
+						<li><span class="glyphicon glyphicon-star-empty"></span></li>
+						<li><span class="glyphicon glyphicon-star-empty"></span></li>
+						<li><span class="glyphicon glyphicon-star-empty"></span></li>
+						<li><span class="glyphicon glyphicon-star-empty"></span></li>
+					</ul>
+				</div>
+				<label for="wx" class="dbc control-label" style="width: 10%;">原因&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<textarea class="form-control" placeholder="请输入评价原因/选填"></textarea>
 				</div>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="applyCon" class="col-sm-2 control-label">维修确认</label>
-				<div class="col-sm-10">
-					<textarea type="text" class="form-control" id="applyCon" placeholder="维修负责人确认"></textarea>
-				</div>
+			<div class="form-group">
+				<label class="control-label" style="width: 10%;">选择服务性质&nbsp;</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="1">三包，工作完成
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="2">维修，工作完成，不收费
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="3">维修，工作完成，待开票
+				</label>
+				<label class="checkbox-inline">
+				    <input type="checkbox" name="service" value="4">维修，工作完成，现场支付
+				</label>
 			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="checkCon" class="col-sm-2 control-label">验收确认</label>
-				<div class="col-sm-10">
-					<textarea type="text" class="form-control" id="checkCon" placeholder="验收人员确认"></textarea>
+			<div class="form-group db" style="width: 100%;">
+				<label class="dbc control-label" style="width: 10%;">维修发送&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" placeholder="发送人姓名" class="form-control">
 				</div>
-			</div>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="mark" class="col-sm-2 control-label">备注</label>
-				<div class="col-sm-10">
-					<textarea type="text" class="form-control" id="mark" placeholder="备注内容"></textarea>
+				<label class="dbc control-label" style="width: 10%;">使用单位确认&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" placeholder="使用单位确认人姓名" class="form-control">
 				</div>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-5">
-				<button class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6">提交维修</label>
+				<button class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6">提交维修申请</label>
 			</div>
 		</fieldset>
 		
-		<fieldset  class="col-lg-12 col-md-12 col-sm-12 col-xs-12 black commentTable" style="margin-top: 15px;">
-	    	<legend>维修评价</legend>
-			<div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<label for="comment" class="col-sm-2 control-label">评价</label>
-				<div class="col-sm-10">
-					<textarea type="text" class="form-control" id="comment" placeholder="请对此次维修做出评价"></textarea>
-				</div>
-			</div>
-			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-5">
-				<button class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6">提交评价</label>
-			</div>
-		</fieldset>
 	</div>
 </div>
 <!-- <script type="text/javascript" src="assets/plugins/jedate/jquery-1.7.2.js"></script> -->
 <script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
 <link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">
 <script type="text/javascript">
-	$("#wx,#devHappenTime,#devApplyTime").jeDate({
+	$("#begin,#end").jeDate({
 		isinitVal:true,
 	    skinCell:"jedateblue",
 	    festival: true,
 	    minDate: '2016-01-01 00:00:00', 
 	    format: 'YYYY年MM月DD日 hh:mm'
 	});
-	function tableShow(){
-		$(".applyTable").show()
-	}
-	function commentShow(){
-		$(".commentTable").show()
+	
+	var oTr = '<tr class="warning">'+
+						'<td>1</td>'+
+						'<td><select class="form-control">'+
+								'<option value="1">温度超温过长</option>'+
+								'<option value="2">机组故障</option>'+
+								'<option value="3">油压过低</option>'+
+						'</select></td>'+
+						'<td><select class="form-control">'+
+							'<option value="1">温度超温过长</option>'+
+							'<option value="2">机组故障</option>'+
+							'<option value="3">油压过低</option>'+
+						'</select></td>'+
+						'<td><input type="number" class="form-control" placeholder="12"></td>'+
+						'<td>个</td>'+
+						'<td><input type="number" class="form-control" placeholder="100"></td>'+
+						'<td><input type="number" class="form-control" placeholder="1200"></td>'+
+						'<td>'+
+							'<span class="addBtn form-control" onclick="addTr(this)">+</span>'+
+							'<span class="addBtn form-control" onclick="removerTr(this)">-</span>'+
+						'</td>'+
+					'</tr>';
+	function addTr(ops){
+		$(ops).parents("tbody").append(oTr);
 	}
 	
+	function removerTr(ops){
+		if($(ops).parents("tbody").children().length==1){
+			alert("免费维修啊~")
+		}else{
+			$(ops).parents("tr").remove();
+		}
+	}
+	$(function(){
+		$(".stars li").click(function(){
+			$(this).toggleClass("gold");
+		})
+	})
 </script>
