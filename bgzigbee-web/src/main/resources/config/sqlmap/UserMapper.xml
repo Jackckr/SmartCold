@@ -27,10 +27,13 @@
 	</select>
 	
 	 <select id="findAllUser" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
-         SELECT ID,`username` ,`telephone` ,`email` ,`addTime` ,`audit`  FROM `user`
+         SELECT ID,`username` ,`type`,`telephone` ,`email` ,`addTime` ,`audit`  FROM `user`
 		 <where> 
 			<if test="audit != null">
 			    audit=#{audit}
+			</if>
+			<if test="type != null">
+			    type=#{type}
 			</if>
 		    <if test="keyword != null">
 		        AND username like "%"#{keyword}"%"  or `telephone`  like "%"#{keyword}"%" 
@@ -40,7 +43,7 @@
     </select>
 	
 	<select id="findUserByName" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
-		SELECT ID,`username` ,`telephone` ,`email` ,`addTime` ,`audit` 
+		SELECT ID,`username`,`type`,`telephone` ,`email` ,`addTime` ,`audit` 
 		FROM `user` WHERE `username` = #{username}
 	</select>
 
@@ -55,5 +58,9 @@
 	<update id="changeAudit">
 		update user set audit=#{audit}
 		where id=#{userID}
+	</update>
+	
+	<update id="changeUserType" parameterType="map">
+	  update user set type=#{type} where id in(${ids});
 	</update>
 </mapper>

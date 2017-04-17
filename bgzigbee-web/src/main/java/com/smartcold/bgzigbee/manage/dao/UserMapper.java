@@ -18,9 +18,11 @@ public interface UserMapper {
 
 	UserEntity findUserById(@Param("id") int id);
 	
-	Page<UserEntity> findAllUser(@Param("audit")Integer audit, @Param("keyword")String keyword);
+	Page<UserEntity> findAllUser(@Param("audit")Integer audit,@Param("type")Integer type, @Param("keyword")String keyword);
 
 	int changeAudit(@Param("userID") int userID,@Param("audit") int audit);
+	
+	int changeUserType(@Param("ids")String ids, @Param("type")int type);
 	
 	void insertUser(UserEntity userEntity);
 	

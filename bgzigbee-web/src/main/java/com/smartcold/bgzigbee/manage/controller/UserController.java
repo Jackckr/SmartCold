@@ -33,20 +33,13 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object findUserList(@RequestParam(value="pageNum",required=false) Integer pageNum,
 			@RequestParam(value="pageSize") Integer pageSize, 
-			@RequestParam(value="audit", required=false) Integer audit,
-			@RequestParam(value="keyword", required=false) String keyword) throws UnsupportedEncodingException {
-		if( !(audit == -1 || audit == 1 || audit == 0) ){
-			audit = null;
-		}
+			@RequestParam(value="audit", required=false) Integer audit,@RequestParam(value="type", required=false) Integer type,
+			@RequestParam(value="keyword", required=false) String keyword) {
+		if( !(audit == -1 || audit == 1 || audit == 0) ){audit = null;}
 		pageNum = pageNum == null? 1:pageNum;
-		pageSize = pageSize==null? 12:pageSize;
+		pageSize = pageSize==null? 10:pageSize;
 		PageHelper.startPage(pageNum, pageSize);
-		if(keyword.equals("undefined"))
-			keyword = null;
-		else{
-		keyword = URLDecoder.decode(keyword, "UTF-8");
-		}
-		Page<UserEntity> allUser = userDao.findAllUser(audit,keyword);
+		Page<UserEntity> allUser = userDao.findAllUser(audit,type,keyword);
 		return new PageInfo<UserEntity>(allUser);
 		
 	}
@@ -72,6 +65,17 @@ public class UserController extends BaseController {
 	public Object changeAudit(int userID, int audit){
 		userDao.changeAudit(userID, audit);
 		return new BaseDto(0);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeUserType", method=RequestMethod.POST)
+	public Object changeUserType(String ids, int type){
+		try {
+			userDao.changeUserType(ids, type);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	@ResponseBody
