@@ -738,7 +738,8 @@ legend{
 .applyConfirm {
 	padding: 15px;
 	border-radius: 4px;
-	background: #D1D5DE;
+	background: #D1D5DE; 
+	
 	color: #555;
 	margin: 0 15px;
 }
@@ -781,3 +782,40 @@ legend{
     top: 0;
     opacity: 0;
 }
+.addBtn{
+	display: inline-block;
+	width: 30px!important;
+	height: 30px;
+	background: #00c0ef;
+	color:#fff;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 50%;
+	font-size: 28px;
+	cursor: pointer;
+	padding: 0;
+	border:0;
+}
+.db{
+	display: table;
+}
+.dbc{
+	display: table-cell;
+	vertical-align: middle;
+}
+.addSeclect{
+	margin-bottom: 10px;
+}
+.addSeclect select{
+	margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+

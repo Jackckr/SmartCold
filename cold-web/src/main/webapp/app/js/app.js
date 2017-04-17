@@ -316,8 +316,16 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/maintenancenotice',
     	controller: 'maintenancenotice',
         templateUrl: 'app/template/maintenancenotice.html' 
-    }) ;
-    //    .state('myColdStorage',{
+    }).state('maintainRequest',{//冷库维修通知单
+    	url:'/maintainRequest',
+    	controller: 'maintainRequest',
+        templateUrl: 'app/template/maintainRequest.html' 
+    }).state('maintainRepair',{//冷库维修确认单
+    	url:'/maintainRepair',
+    	controller: 'maintainRepair',
+        templateUrl: 'app/template/maintainRepair.html' 
+    });
+    //    .state('myColdStorage',{维修确认单
 //    	url:'/myColdStorage/:storageID',
 //    	controller: 'myColdStorage',
 //        templateUrl: 'app/template/myColdStorage.html'
