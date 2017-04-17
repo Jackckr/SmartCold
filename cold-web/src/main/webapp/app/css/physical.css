@@ -809,7 +809,15 @@ legend{
 .addSeclect select{
 	margin-right: 10px;
 }
-
+.stars li{
+	float: left;
+	font-size: 28px;
+	color:#999;
+	cursor: pointer;
+}
+.stars li.gold{
+	color:#f80;
+}
 
 
 
