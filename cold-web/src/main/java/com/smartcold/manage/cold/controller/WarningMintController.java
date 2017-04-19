@@ -16,6 +16,7 @@ import com.smartcold.manage.cold.dao.newdb.WarningMintMapper;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.entity.newdb.MaintenanceInfo;
 import com.smartcold.manage.cold.entity.newdb.WarningMintEntity;
+import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 
@@ -70,7 +71,7 @@ public class WarningMintController extends BaseController {
 	@RequestMapping(value = "/upMaintAlarmstatuByIds", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean upMaintAlarmstatuByIds(String ids,Integer userId, Integer status,String node){
-		 this.warningMintMapper.upMaintAlarmstatuByIds(ids,userId,status,node);
+		 this.warningMintMapper.upMaintAlarmstatuByIds(ids,null,userId,status,node);
 		 return true;
 	}
 	
@@ -90,17 +91,39 @@ public class WarningMintController extends BaseController {
 			obj.setRepairtime(repairtime);
 			obj.setBookingtime(bookingtime);
 			obj.setAddtime(TimeUtil.getDateTime());
+			obj.setServertype(servertype);
 			this.maintenanceMapper.addMaintenanceInfo(obj);
-		    this.warningMintMapper.upMaintAlarmstatuByIds(warmappid,null,2,null);
-			
+		    this.warningMintMapper.upMaintAlarmstatuByIds(warmappid,obj.getId(),null,2,null);
 		    return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
+	@RequestMapping(value = "/getMaintenanceById", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getMaintenanceById(int id){
+		 List<MaintenanceInfo> maintenanceInfoList = this.maintenanceMapper.getMaintenanceById(id);
+		if(SetUtil.isnotNullList(maintenanceInfoList)){
+			HashMap<String, Object> resMap=new HashMap<String, Object>();
+		     MaintenanceInfo maintenanceInfo = maintenanceInfoList.get(0);
+			 List<WarningMintEntity> warList = this.warningMintMapper.getWarningMintById(maintenanceInfo.getWarmappid());
+			 resMap.put("warData", warList);
+			 resMap.put("data",  maintenanceInfo );
+			 return resMap;
+		}else{
+			return null;
+		}
+		
+	}
 	
+	@RequestMapping(value = "/rejectMaintenanceByWarId", method = RequestMethod.POST)
+	@ResponseBody
+	public Object rejectMaintenanceById(Boolean isreject,String wid,Integer mid,Integer status){
+		 if(isreject){ this.maintenanceMapper.delMaintenanceById(mid);}
+		 this.warningMintMapper.upMaintAlarmstatuByIds(wid,null,null,status,null);//降级处理
+		 return true;
+	}
 	
 	
 	

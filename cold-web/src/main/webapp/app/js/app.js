@@ -318,11 +318,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'maintenancenotice',
         templateUrl: 'app/template/maintenancenotice.html' 
     }).state('maintainRequest',{//冷库维修通知单
-    	url:'/maintainRequest/{ids}',
+    	url:'/maintainRequest/{ids}_{st}',
     	controller: 'maintainRequest',
         templateUrl: 'app/template/maintainRequest.html' 
     }).state('maintainRepair',{//冷库维修确认单
-    	url:'/maintainRepair',
+    	url:'/maintainRepair{ids}_{st}',
     	controller: 'maintainRepair',
         templateUrl: 'app/template/maintainRepair.html' 
     }).state('warningMsg',{//冷库维修确认单

@@ -21,9 +21,10 @@
 	</delete>
 	<update id="upMaintAlarmstatuByIds">
 	  update `warningmint` set `status`=#{status}
-	  <if test="userId!=null and userId!=''"> ,`userId`=#{userId}</if>
+	 <if test="userId!=null and userId!=''"> ,`userId`=#{userId}</if>
+	 <if test="maintid!=null and maintid!=0"> ,`maintid`=#{maintid}</if>
 	 <if test="desc!=null and desc!=''">,`desc`=#{desc} </if> 
-	  where  `id` in(#{ids});
+	  where  `id` in(${ids});
 	</update>
 	
 	<update id="upWarningMintEntity" parameterType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
@@ -65,6 +66,7 @@
 	`id` ,
 	`rdcid` ,
 	`mapper` ,
+	`maintid` ,
 	`warningmsg` ,
 	`analysismsg` , `status`,
 	`desc` ,

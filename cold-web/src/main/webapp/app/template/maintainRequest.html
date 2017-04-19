@@ -1,5 +1,4 @@
-<div>
-	<div class="form-horizontal applyConfirm" role="form" >
+	<div id="div_maintainRequest" class="form-horizontal applyConfirm" role="form" >
 		<fieldset  class="clearfix applyTable" style="margin-top: 15px;">
 	    	<legend>维修通知单</legend>
 			<div class="form-group db" style="width: 100%;">
@@ -64,7 +63,7 @@
 			<div class="form-group db" style="width: 100%;">
 				<label class="dbc control-label" style="width: 10%;">维修单位确认&nbsp;</label>
 				<div class="dbc" style="width: 40%;">
-					<input type="text" placeholder="维修单位确认人姓名" class="form-control" ng-model="user.username">
+					<input type="text" placeholder="维修单位确认人姓名" class="form-control" ng-model="maintuser.username">
 				</div>
 				<label class="dbc control-label" style="width: 10%;">预估维修费用&nbsp;</label>
 				<div class="input-group" style="width: 100%;">
@@ -74,48 +73,31 @@
 			</div>
 			<div class="form-group">
 				<label class="control-label" style="width: 10%;">选择服务性质&nbsp;</label>
-				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="1">三包
-				</label>
-				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="2">改造
-				</label>
-				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="3">维修
-				</label>
-				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="4">零件
-				</label>
-				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="5">保养
-				</label>
-				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="6">巡检
-				</label>
-				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="7">移交
-				</label>
+				<label class="checkbox-inline"><input id="ck_server1" type="checkbox" name="service" value="1">三包</label>
+				<label class="checkbox-inline"><input id="ck_server2" type="checkbox" name="service" value="2">改造</label>
+				<label class="checkbox-inline"><input id="ck_server3" type="checkbox" name="service" value="3">维修</label>
+				<label class="checkbox-inline"><input id="ck_server4" type="checkbox" name="service" value="4">零件</label>
+				<label class="checkbox-inline"><input id="ck_server5" type="checkbox" name="service" value="5">保养</label>
+				<label class="checkbox-inline"><input id="ck_server6" type="checkbox" name="service" value="6">巡检</label>
+				<label class="checkbox-inline"><input id="ck_server7" type="checkbox" name="service" value="7">移交</label>
 <!-- 				<p>备注：三包内免费，其他性质填写，也可以待填</p> -->
 			</div>
-			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-5">
-				<button class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6" ng-click="submit()">发送维修申请</label>
+			<div class="form-group" style="width: 100%;">
+				<label class="control-label" style="width: 10%; ">流程当前状态:&nbsp;</label>
+				<span style="color: green;">{{stmode[cuttstatus]}}</span>
+			</div>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+				<button ng-if="st==0&&userType==2" class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6 col-md-offset-3" ng-click="submit()">发送维修申请</button>
+				<button ng-if="st==1&&userType!=2" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,3,'您确定要提交该维修确认单吗？')">同意</button>
+				<button ng-if="st==1&&userType!=2" class="btn btn-danger col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-2" ng-click="tol_advice(true,2,'您确定驳回该维修确认单吗？')">驳回</button>
 			</div>
 		</fieldset>
 		
 	</div>
-</div>
 <!-- <script type="text/javascript" src="assets/plugins/jedate/jquery-1.7.2.js"></script> -->
 <script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
 <link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">
 <script type="text/javascript">
-	$("#wx,#orderTime").jeDate({
-		isinitVal:true,
-	    skinCell:"jedateblue",
-	    festival: true,
-	    minDate: '2016-01-01 00:00:00', 
-	    format: 'YYYY年MM月DD日 hh:mm'
-	});
-	
 	var oSelect = '<div class="addSeclect form-inline">'+
 						'<select  class="form-control">'+
 							'<option value="1">温度超温过长</option>'+
