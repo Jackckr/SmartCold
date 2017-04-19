@@ -11,7 +11,7 @@ public class MaintenanceInfo {
 	private String warMapper  ;
 	private Double cost             ;
 	private String servertype             ;
-	private String mappid           ;
+	private String warmappid           ;
 	private Integer state            ;
 	private String addtime          ;
 	public int getId() {
@@ -74,11 +74,12 @@ public class MaintenanceInfo {
 	public void setServertype(String servertype) {
 		this.servertype = servertype;
 	}
-	public String getMappid() {
-		return mappid;
+
+	public String getWarmappid() {
+		return warmappid;
 	}
-	public void setMappid(String mappid) {
-		this.mappid = mappid;
+	public void setWarmappid(String warmappid) {
+		this.warmappid = warmappid;
 	}
 	public Integer getState() {
 		return state;

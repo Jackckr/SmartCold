@@ -77,20 +77,22 @@ public class WarningMintController extends BaseController {
 	//==========================================================2.维修商确认维修并发起维修申请==========================================================
 	@RequestMapping(value = "/addMaintenance", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean addMaintenance( String waruser,String  maintuser,String companyinfo,String warMapper,String mappid,String note,Double cost,String repairtime,String bookingtime,String servertype ){
+	public boolean addMaintenance( String waruser,String  maintuser,String companyinfo,String warMapper,String warmappid,String note,Double cost,String repairtime,String bookingtime,String servertype ){
 		try {
 			MaintenanceInfo obj=new MaintenanceInfo();
 			obj.setWaruser(waruser);
 			obj.setMaintuser(maintuser);
 			obj.setCompanyinfo(companyinfo);
 			obj.setWarMapper(warMapper);
-			obj.setMappid(mappid);
+			obj.setWarmappid(warmappid);
 			obj.setNote(note);
 			obj.setCost(cost);
 			obj.setRepairtime(repairtime);
 			obj.setBookingtime(bookingtime);
 			obj.setAddtime(TimeUtil.getDateTime());
 			this.maintenanceMapper.addMaintenanceInfo(obj);
+		    this.warningMintMapper.upMaintAlarmstatuByIds(warmappid,null,2,null);
+			
 		    return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

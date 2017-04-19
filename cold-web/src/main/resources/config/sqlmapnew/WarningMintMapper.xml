@@ -20,7 +20,8 @@
 	  DELETE `warningmint` where `id` in(#{ids});
 	</delete>
 	<update id="upMaintAlarmstatuByIds">
-	  update `warningmint` set `status`=#{status} ,`userId`=#{userId}
+	  update `warningmint` set `status`=#{status}
+	  <if test="userId!=null and userId!=''"> ,`userId`=#{userId}</if>
 	 <if test="desc!=null and desc!=''">,`desc`=#{desc} </if> 
 	  where  `id` in(#{ids});
 	</update>

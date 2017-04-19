@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.MaintenanceInfoMapper">
  <insert id="addMaintenanceInfo">
-	INSERT INTO `maintenance` (`waruser`,`maintuser`,`companyinfo`,`note`,`repairtime`,`bookingtime`,`cost`,`servertype`,`mappid`,`state`,`addtime` ) VALUES(#{waruser},#{maintuser},#{companyinfo},#{note}, #{repairtime},#{bookingtime},#{cost},#{servertype},#{mappid}, #{state},#{addtime});
+	INSERT INTO `maintenance` (`waruser`,`maintuser`,`companyinfo`,`note`,`repairtime`,`bookingtime`,`cost`,`servertype`,`warmappid`,`state`,`addtime` ) VALUES(#{waruser},#{maintuser},#{companyinfo},#{note}, #{repairtime},#{bookingtime},#{cost},#{servertype},#{warmappid}, #{state},#{addtime});
  </insert>
  
 
