@@ -33,12 +33,28 @@
     		color:red;
     		font-size: 12px;
     	}
+    	body.register-page{
+    		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45d7fb), color-stop(100%,rgb(0, 91, 130)));
+    		background: -moz-gradient(linear, left top, left bottom, color-stop(0%,#45d7fb), color-stop(100%,rgb(0, 91, 130)));
+    		background: -ms-gradient(linear, left top, left bottom, color-stop(0%,#45d7fb), color-stop(100%,rgb(0, 91, 130)));
+    		background: -o-gradient(linear, left top, left bottom, color-stop(0%,#45d7fb), color-stop(100%,rgb(0, 91, 130)));
+    		background: gradient(linear, left top, left bottom, color-stop(0%,#45d7fb), color-stop(100%,rgb(0, 91, 130)));
+    	}
+    	.register-box-body{
+    		background: rgba(255,255,255,.5);
+    	}
+    	.register-box-body label,.login-box-msg{
+    		color:#555;
+    	}
+    	.register-logo label{
+    		color:#f4f4f4;
+    	}
     </style>
   </head>
   <body class="hold-transition register-page">
     <div class="register-box" style="width:400px;">
       <div class="register-logo">
-        <label href=""><b>冷库360</b>SmartCold</label>
+        <label>冷库360·SmartCold</label>
       </div>
 
       <div class="register-box-body">
@@ -100,7 +116,10 @@
 		 	 </div>
 	    </div>
           <div>
-              <button id="submit" type="button" class="btn btn-primary btn-block btn-flat" onclick="reguser()">注册</button>
+              <button id="submit" type="button" class="btn btn-primary btn-block btn-flat" disabled onclick="reguser()">注册</button>
+          </div>
+          <div class="text-right" style="margin-top: 10px;">
+          	  <a href="login.html">已经注册</a>
           </div>
         </form>
 
@@ -132,6 +151,7 @@
 				   $(".userMsg").html("用户名已存在");
 				}else{
 					$(".userMsg").html("");
+					$("#submit").attr("disabled",false);
 				}
 				victdata.userName=data;
 			});
@@ -233,6 +253,13 @@
 
     	
     function reguser(){
+    	var inputArry = $("input[type='text']"),i=0,len = inputArry.length;
+    	for(i; i<len; i++){
+	    	if(inputArry.eq(i).val().trim()==""){
+	    		alert("请填写完整再注册~");
+	    		return
+	    	}
+    	}
     	var me = "#submit"; if ($(me).data("isLoading") === true) { return; }
    		var userMsg = $('.userMsg').html().trim(),
    			psdMsg = $('.psdMsg').html().trim(),
@@ -250,7 +277,7 @@
    	    }else{
    	        $(me).text("注册中...");
    	        $(me).data("isLoading", true);
-   	    	if(victdata.userName&&victdata.victpwd&&victdata.victyzm){
+   	    	if(!victdata.userName&&!victdata.victpwd&&victdata.victyzm){
     		   $.ajax({
     	    		type:"POST",
     	    		url:"/i/user/signup",
