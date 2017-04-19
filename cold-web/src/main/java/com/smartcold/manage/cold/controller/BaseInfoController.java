@@ -109,6 +109,7 @@ public class BaseInfoController extends BaseController {
 			return "%Y-%m-%d";
 		
 	}
+	@Deprecated
 	@RequestMapping("/ios_getKeyValueDataByFilter")
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> ios_getKeyValueDataByFilter(Integer type, Boolean ismklin, String key, String oids, String onames, String startTime, String endTime) {

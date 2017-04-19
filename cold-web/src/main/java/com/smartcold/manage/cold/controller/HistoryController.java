@@ -115,6 +115,26 @@ public class HistoryController extends BaseController {
 			}
 	}
 	 
+	 
+	 @RequestMapping("/ios_getKeyValueDataByFilter")
+		@ResponseBody
+		public ResponseData<HashMap<String, Object>> ios_getKeyValueDataByFilter(Integer type, Boolean ismklin, String key, String oids, String onames, String startTime, String endTime) {
+			if(StringUtil.isnotNull(oids)&&StringUtil.isnotNull(onames)){
+				String []newoid=StringUtil.splitfhString(oids);
+				String []newonames= StringUtil.splitfhString(onames);
+				if (newoid.length==newonames.length) {
+					Integer [] newoids=new Integer[newoid.length];
+					for (int i = 0; i < newoid.length; i++) {
+						newoids[i]=Integer.parseInt(newoid[i]);
+					}	
+					return getHistData( type,  ismklin,  key,  newoids,  newonames,  startTime,  endTime);
+				}else{
+					return ResponseData.newFailure("参数不全！");
+				}
+			}
+			return ResponseData.newFailure("参数不全！");
+		}
+	 
 	 /**
 		 * 历史数据查询
 		 */
