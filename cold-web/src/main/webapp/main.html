@@ -83,20 +83,19 @@
 								style="color: #fff"></i> <span class="label label-warning">0</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">You have 10 notifications</li>
+								<li class="header">您有10条报警信息</li>
 								<li>
 									<!-- Inner Menu: contains the notifications -->
 									<ul class="menu">
 										<li>
-											<!-- start notification --> <a href="#"> <i
-												class="fa fa-users text-aqua"></i> 5 new members joined
-												today
+											<a href="#/warningMsg"> <i class="fa fa-users text-red"></i> 
+											今天有五条报警
 										</a>
 										</li>
 										<!-- end notification -->
 									</ul>
 								</li>
-								<li class="footer"><a href="#">View all</a></li>
+								<li class="footer"><a href="#/warningMsg">浏览全部</a></li>
 							</ul>
 						</li>
 						<!-- Tasks Menu -->
@@ -170,7 +169,7 @@
 				</div>
 			</nav>
 		</header>
-		<aside id="lefaside" class="main-sidebar hide">
+		<aside id="lefaside" class="main-sidebar hide">        
 			<section class="sidebar">
 				<div>
 					<select ng-if="user.role == 2" class="form-control"

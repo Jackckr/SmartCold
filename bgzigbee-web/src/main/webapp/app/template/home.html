@@ -1,20 +1,21 @@
     <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
     	<!-- 按钮操作区域开始 -->
-			<div class="operation">
-				<button type="button" class="btn btn-default pull-left" id="plusCold" data-toggle="modal" data-target="#addUser">
-					<span class="glyphicon glyphicon-plus"></span>添加用户
-				</button>
-		<div  class="btn-group pull-left" >
-			<span class="pull-left">审核状态：</span> 
-			<select class="pull-left" ng-model="optAudit" ng-change="initData()">
+		<div class="operation row">
+			<button type="button" class="btn btn-default col-lg-3 col-md-3 col-sm-6 col-xs-6" id="plusCold" data-toggle="modal" data-target="#addUser">
+				<span class="glyphicon glyphicon-plus"></span>添加用户
+			</button>    
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 row" >
+			<span class="col-lg-4 col-md-6 col-sm-6 col-xs-6 text-right" style="line-height: 2.5;font-size: 14px;">审核状态：</span> 
+			<select class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-control" ng-model="optAudit" style="width:auto" ng-change="initData()">
 				<option value="8">所有</option>
 				<option value="0">待审核</option>
 				<option value="1">已审核</option>
 				<option value="-1">未通过</option>
 			</select>
 		</div>
-		<div  class="btn-group pull-left" >
-			用户类型：<select ng-model="userType" ng-change="initData()">
+		<div  class="col-lg-3  col-md-3 col-sm-6 col-xs-6 row" >
+			<span class="col-lg-4 col-md-6 col-sm-6 col-xs-6 text-right" style="line-height: 2.5;font-size: 14px;">用户类型：</span> 
+			<select ng-model="userType" class="col-lg-6  col-md-6 col-sm-6 col-xs-6 form-control" style="width:auto" ng-change="initData()">
 				<option value="">所有</option>
 				<option value="0">普通用户</option>
 				<option value="1">VIP用户</option>
@@ -26,8 +27,8 @@
 			</select>
 		</div>
 		
-		<div id="search">								
-					<input type="text" ng-model="keyword" placeholder="请输入关键词" id="myText" />
+		<div id="search" class="col-lg-3  col-md-3 col-sm-6 col-xs-6" style="margin-left: 10px;">								
+					<input type="text" ng-model="keyword" class="form-control"  placeholder="请输入关键词" id="myText" />
 					<div id="searchImg" ng-click="initData()">
 						<span class="glyphicon glyphicon-search"></span>
 					</div>

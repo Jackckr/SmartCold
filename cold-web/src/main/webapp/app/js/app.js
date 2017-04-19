@@ -325,6 +325,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/maintainRepair',
     	controller: 'maintainRepair',
         templateUrl: 'app/template/maintainRepair.html' 
+    }).state('warningMsg',{//冷库维修确认单
+    	url:'/warningMsg',
+    	controller: 'warningMsg',
+        templateUrl: 'app/template/warningMsg.html' 
     });
     //    .state('myColdStorage',{维修确认单
 //    	url:'/myColdStorage/:storageID',
