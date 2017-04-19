@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +23,8 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * @author Administrator
  *
  */
-@Controller
-@RequestMapping(value = "/maintenance")
+//@Controller
+//@RequestMapping(value = "/maintenance")
 public class MaintenanceController {
 
 	@Autowired

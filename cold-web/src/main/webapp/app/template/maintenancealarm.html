@@ -6,7 +6,7 @@
 			  <table class="table table-bordered table-striped table-condensed">
 			    <thead>
 			      <tr>
-			        <th><input  type="checkbox"  > </th>
+			        <th><input ng-model="isselall" type="checkbox" ng-click="tol_selallevt(isselall)" > </th>
 			        <th>告警ID</th>
 			        <th>告警消息</th>
 			        <th>分析结果</th>
@@ -15,9 +15,9 @@
 			        <th >操作</th>
 			     </tr>
 			    </thead>
-			    <tbody>
+			    <tbody id="tb_body">
 			      <tr ng-repeat="obj in maintdata">
-			        <td><input id="ckobj_{{obj.id}}" type="checkbox" ></td>
+			        <td><input id="ckobj_{{obj.id}}" name="ck_obj" value="{{obj.id}}" type="checkbox" ></td>
 			        <td>{{obj.id}}</td>
 			        <td>{{obj.warningmsg}}</td>
 			        <td>{{obj.analysismsg}}</td>
@@ -76,8 +76,7 @@
 			     <div class="form-group">
 			      <label for="disabledTextInput" class="col-sm-2 control-label">备注</label>
 			      <div class="col-sm-8">
-			        <textarea  class="form-control" >
-			        </textarea>
+			        <textarea id="tex_node" class="form-control" ></textarea>
 			      </div>
 			    </div>
 			    <div class="form-group text-center">

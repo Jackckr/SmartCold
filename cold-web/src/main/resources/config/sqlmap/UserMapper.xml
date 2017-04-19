@@ -19,13 +19,13 @@
   <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.olddb.UserEntity" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
+<!--     <result column="password" property="password" jdbcType="VARCHAR" /> -->
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type,username, password, telephone, email, role
+    id, type,username,  telephone, email, role
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

@@ -4,9 +4,9 @@
 coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParams, $http,$rootScope, baseTools) {
     $scope.isErr=false;
     $scope.storageID= $stateParams.storageID;
+    console.log("storageID:"+$scope.storageID);
     Highcharts.setOptions({  global: {useUTC: false  } , colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] });
     $scope.oids=[],$scope.names=[];
-    
     $scope.getTempset = function () {
     	if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
     		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;$scope.names=$rootScope.Tempset[$scope.storageID].names;$scope.load();

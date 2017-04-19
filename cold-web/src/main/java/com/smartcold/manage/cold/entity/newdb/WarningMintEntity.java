@@ -1,6 +1,5 @@
 package com.smartcold.manage.cold.entity.newdb;
 
-import java.util.Date;
 import java.util.List;
 
 import com.smartcold.manage.cold.entity.olddb.FileDataEntity;
@@ -11,23 +10,31 @@ import com.smartcold.manage.cold.entity.olddb.FileDataEntity;
  */
 public class WarningMintEntity {
 	 private int  id              ;
+	 private int  userId             ;
 	 private int  refid           ;
 	 private int  rdcid           ;
 	 private int  type            ;
 	 private int  oid             ;
 	 private int  level           ;
 	 private int  status          ;
-	 private String  mapper          ;
-	 private String  warningmsg      ;
-	 private String  analysismsg     ;
-	 private String  desc            ;
-	 private String  addtime        ;
+	 private int  warningtype     ;
+	 private String  mapper       ;
+	 private String  warningmsg   ;
+	 private String  analysismsg  ;
+	 private String  desc         ;
+	 private String  addtime      ;
 	 private List<FileDataEntity> imgList;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public int getRefid() {
 		return refid;
@@ -65,6 +72,12 @@ public class WarningMintEntity {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	public int getWarningtype() {
+		return warningtype;
+	}
+	public void setWarningtype(int warningtype) {
+		this.warningtype = warningtype;
+	}
 	public String getMapper() {
 		return mapper;
 	}
@@ -89,7 +102,6 @@ public class WarningMintEntity {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
 	public String getAddtime() {
 		return addtime;
 	}
@@ -102,5 +114,5 @@ public class WarningMintEntity {
 	public void setImgList(List<FileDataEntity> imgList) {
 		this.imgList = imgList;
 	}
-	 
+	
 }

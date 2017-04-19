@@ -21,19 +21,28 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope, $state, $co
     //忽略
     $scope.tol_ignore=function(id,status,msg){
     	if(!confirm(msg)){return;}
-    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids :id,status:status}}).success(function (data) { $scope.initData();});
+    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids :id,userId: $rootScope.user.id,status:status}}).success(function (data) { $scope.initData();});
     };
     //合并处理
     $scope.tol_batch=function(){
 	   
     };
     
-    $scope.tol_submit=function(){
-    	$http({method: 'POST',url: '/i/warningMint/upMaintAlarmstatuByIds',params: {ids:$scope.sqobj.id ,status:1}}).success(function (data) {  $scope.tol_back(); $scope.initData();});
+    $scope.tol_submit=function(){//
+    	$http({
+    		method: 'POST',
+    		url: '/i/warningMint/upMaintAlarmstatuByIds',
+    		params: {ids:$scope.sqobj.id ,userId: $rootScope.user.id,status:1,node:$("#tex_node").val()}
+    	}).success(function (data) {  $scope.tol_back(); $scope.initData();});
     };
     
     $scope.tol_back=function(){
     	$scope.setp=1;	$scope.sqobj=undefined;
+    };
+    
+    $scope.isselall=false;
+    $scope.tol_selallevt=function(isck){
+//    	$('#tb_body input[name="ck_obj"]').attr("checked",true);
     };
 
     

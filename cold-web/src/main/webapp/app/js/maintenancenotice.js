@@ -8,10 +8,7 @@ coldWeb.controller('maintenancenotice', function ($rootScope, $scope, $state, $c
     };
     $scope.initData();
     //申请维修
-    $scope.tol_forMaint=function(obj){
-    	
-    };
-    
+    $scope.tol_forMaint=function(obj){$state.go('maintainRequest', {'ids': obj.id}); };
     //合并处理
     $scope.tol_batch=function(){
 	   

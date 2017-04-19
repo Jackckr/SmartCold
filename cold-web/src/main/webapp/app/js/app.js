@@ -68,6 +68,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         },
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
+        		     console.log("rdc:"+rdcId);
         		     $rootScope.rdcId = rdcId;window.sessionStorage.smrdcId=rdcId;//缓存rdcid
 		        	 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
 		        			    $rootScope.aclml=data.aclml;
@@ -317,7 +318,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'maintenancenotice',
         templateUrl: 'app/template/maintenancenotice.html' 
     }).state('maintainRequest',{//冷库维修通知单
-    	url:'/maintainRequest',
+    	url:'/maintainRequest/{ids}',
     	controller: 'maintainRequest',
         templateUrl: 'app/template/maintainRequest.html' 
     }).state('maintainRepair',{//冷库维修确认单
@@ -345,9 +346,6 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 
 //var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);  
 //var locationChangeSuccessOff = $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);  
-initacl=function(){
-	
-}
 
 
 

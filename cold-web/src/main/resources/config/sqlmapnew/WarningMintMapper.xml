@@ -20,7 +20,9 @@
 	  DELETE `warningmint` where `id` in(#{ids});
 	</delete>
 	<update id="upMaintAlarmstatuByIds">
-	  update `warningmint` set `status`=#{status} where  `id` in(#{ids});
+	  update `warningmint` set `status`=#{status} ,`userId`=#{userId}
+	 <if test="desc!=null and desc!=''">,`desc`=#{desc} </if> 
+	  where  `id` in(#{ids});
 	</update>
 	
 	<update id="upWarningMintEntity" parameterType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
@@ -42,6 +44,20 @@
 	
 	</update>
 
+	<select id="getWarningMintById" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
+			select
+			`id` ,
+			`userId` ,
+			`rdcid` ,
+			`mapper` ,
+			`warningtype` ,
+			`warningmsg` ,
+			`analysismsg` , `status`,
+			`desc` ,
+			`addtime`
+			from `warningmint` where `id` in(${ids})	ORDER BY `id` desc ;
+	</select>
+	
 	<select id="getMaintAlarmByFilter" parameterType="map"
 		resultType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
 	select
