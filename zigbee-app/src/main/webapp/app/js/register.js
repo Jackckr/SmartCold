@@ -101,7 +101,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 				password:$("#txt_password").val().trim(),
 				password1:$("#txt_repsword").val().trim(),
 				telephone:$("#telNum").val().trim(),
-				type:$("input[name='usertype']:checked").val(),
+//				type:$("input[name='usertype']:checked").val(),
 				signUpCode:$("#code2").val().trim()
 		},
             url: ER.root+"/i/user/signup?",
