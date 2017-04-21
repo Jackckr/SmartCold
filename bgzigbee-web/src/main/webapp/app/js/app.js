@@ -1,5 +1,4 @@
-var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',
-    'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation']);
+var coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox',  'ngCookies', 'xeditable', 'isteven-multi-select', 'angucomplete', 'angular-table','ngFileUpload','remoteValidation']);
 coldWeb.constant('coldWebUrl', 'http://www.smartcold.org.cn/i/');
 // coldWeb.constant('coldWebUrl', 'http://localhost:8081/i/');
 angular.element(document).ready(function ($ngCookies, $http, $rootScope) {
@@ -39,7 +38,6 @@ coldWeb.config(function ($httpProvider) {
                         }
                     }
                 });
-
                 return $q.reject(rejection);
             }
         };

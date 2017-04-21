@@ -81,6 +81,7 @@ public class DataCollectionController extends BaseController {
 	@RequestMapping(value = "/schoolTime", method = RequestMethod.POST)//
 	@ResponseBody
 	public Object schoolTime(@RequestBody String data, HttpServletResponse response) {
+		System.err.println("收到校时数据包："+data);
 		LinkedHashMap<String, Object> resMap=new LinkedHashMap<String, Object>();
 		resMap.put("status","200");resMap.put("time", TimeUtil.getLongtime().toString());
 		try {
