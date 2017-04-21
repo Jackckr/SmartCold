@@ -65,6 +65,7 @@ public class DataCollectionController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("DEV数据解析出错。。。。。。。。。。。。");
+			System.err.println(data);
 			return new DataResultDto(500);
 		}
 		return new DataResultDto(200);
@@ -81,11 +82,11 @@ public class DataCollectionController extends BaseController {
 	@RequestMapping(value = "/schoolTime", method = RequestMethod.POST)//
 	@ResponseBody
 	public Object schoolTime(@RequestBody String data, HttpServletResponse response) {
-		System.err.println("收到校时数据包："+data);
 		LinkedHashMap<String, Object> resMap=new LinkedHashMap<String, Object>();
 		resMap.put("status","200");resMap.put("time", TimeUtil.getLongtime().toString());
 		try {
 			if(StringUtil.isnotNull(data)){
+				    System.err.println("收到状态数据包："+data);
 					Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 					String apID = dataMap.get("apID").toString();
 					if(dataMap.containsKey("infos")){//数据状态包
@@ -106,12 +107,14 @@ public class DataCollectionController extends BaseController {
 						this.devplset.addAPStatusList(apsatusList);
 						this.devplset.addDevStatusList(devsatusList);
 					}else{//校时包
+						 System.err.println("收到校时包："+data);
 						Integer appl = this.devplset.getApplByApID(apID);
 						 List<HashMap<String, String>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
 						if(appl!=null){resMap.put("APL", appl+"") ; }//
 						if(SetUtil.isnotNullList(devPLbyApID)){resMap.put("infos", devPLbyApID) ;}//返回dev采集频率信息
 				   }
 		   }
+		   System.err.println("返回数据："+resMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
