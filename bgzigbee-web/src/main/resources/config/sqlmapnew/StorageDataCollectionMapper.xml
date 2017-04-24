@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.bgzigbee.manage.sc360.dao.StorageDataCollectionMapper">
+	
+	<select id="findDTByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity">
+	   SELECT * FROM `storagedatacollection`
+	    WHERE 1 =1
+	    <if test="deviceid != null and deviceid!=''">
+		    AND `deviceid` = #{deviceid} 
+	    </if>
+	    <if test="key != null and key!=''">
+		    AND `key` in(${key}) 
+	    </if>
+	    AND time > #{startTime} AND time &lt; #{endTime} 
+	</select>
+	
+	<select id="findAPByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity"> 
+	   SELECT * FROM `apstatus` where `apid`=#{apid} 
+	    <if test="key != null and key!=''">
+		    AND `key` in(${key}) 
+	    </if> AND time > #{startTime} AND time &lt; #{endTime}
+	</select> 
+	<select id="findDVByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity"> 
+	   SELECT * FROM `devstatus` where  `deviceid` =#{deviceid} 
+	   <if test="key != null and key!=''">  AND `key` in(${key})  </if> 
+	    AND time > #{startTime} AND time &lt; #{endTime}
+	</select> 
+</mapper>

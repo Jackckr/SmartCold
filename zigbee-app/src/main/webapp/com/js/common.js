@@ -5,7 +5,7 @@ var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //var ER = {root:"http://liankur.com/",coldroot:"http://www.smartcold.org.cn/"};
 //var ER = {root:"http://192.168.1.137:8080/",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"};
+var ER = {root:"http://192.168.1.116:8080",coldroot:"http://192.168.1.116:8889"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){
@@ -32,7 +32,7 @@ function getmsg(){if(window.user&&window.user.id!=0){$.post(ER.root+"/i/message/
 	});
 }}
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
-function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(); } return true; }else{ window.user = null;window.location.href = "login.html#" + window.location.href; return false;}}
+function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(); } return true; }else{ window.user = null;window.location.href = "login.html"; return false;}}
 function goback() {
 	if (typeof ios_gohome == 'function') {
 		ios_gohome();return;

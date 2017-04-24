@@ -31,8 +31,9 @@ $().ready(function() {
      	    var scrollTop = $(this).scrollTop();
 	     	var scrollHeight = $(document).height();
 	     	var windowHeight = $(this).height();
+	     	console.log(scrollTop +'//'+ windowHeight+'//'+(scrollTop + windowHeight)+'//'+scrollHeight)
 	     	if(scrollTop + windowHeight > scrollHeight-100){
-	     		if(isLoadRB==false&&currentPage<totalPages){
+	     		if(isLoadRB==false&&currentPage<=totalPages){
 	     		   getPageData();
 	     		}
 	     	};

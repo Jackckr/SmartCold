@@ -55,7 +55,7 @@
 		}else{
 			 victdata.victtl=false;
 			 $("#mention1").html("请输入正确手机号码~");
-			 $("#but_vercode2").attr("disabled", false).css("background-color", "#cccccc");
+			 $("#but_vercode2").attr("disabled", true).css("background-color", "#cccccc");
 		}
 	};
 	$scope.getMobileCode=function(key,telephone,vcid){

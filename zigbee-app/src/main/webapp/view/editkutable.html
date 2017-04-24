@@ -606,6 +606,10 @@ checkLogin();
     $scope.submit = function(){
     if(checkCommit()){
         if (checkInput()){
+        	if(checkMobile($scope.phoneNum.toString().trim()) == false){
+				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
+				return false
+			}
         	layer.open({
         		type: 2
         		,content: '努力加载中~~~'

@@ -158,7 +158,7 @@
 	                            <div class="text-danger" id="password_error1"></div>
 	                        </div>
 	                    </div>
-	                    <div  class="alert alert-info" style="padding: 6px;margin: 15px 0 3px;">
+	                    <!-- <div  class="alert alert-info" style="padding: 6px;margin: 15px 0 3px;">
 	                    	   <label class="checkbox-inline">
 							     用户类型：
 							  </label>
@@ -168,7 +168,7 @@
 							  <label class="checkbox-inline">
 							     <input type="radio" name="usertype" id="optionsRadios4" value="1">VIP用户
 							  </label>
-	                    </div>
+	                    </div> -->
 	                    <!-- 错误信息 popover end -->
 	                <button type="submit" id="submit" class="btn btn-form-common form-control" disabled style="margin-top: 15px;pointer-events:auto;">注册</button>
 	                <div class="checkbox no-padding">
@@ -266,7 +266,7 @@ $(function(){
 	    		data:{  username:userName,
 	    				password:password,
 	    				password1:password1,
-	    				type:0,//$("input[name='usertype']:checked").val(),
+// 	    				type:0,//$("input[name='usertype']:checked").val(),
 	    				telephone:$("#text_telephone").val().trim(),
 	    				signUpCode:$('input[name=signUpCode]').val().trim()},
 	    		url:"/i/user/signup?",
