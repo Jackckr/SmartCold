@@ -14,10 +14,11 @@
 	    <link rel="stylesheet" type="text/css" media="all" href="assets/jedate/skin/jedate.css" />
 	    <script type="text/javascript" src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	    	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?"></script>
 	    <script type="text/javascript" src="assets/jedate/jquery.jedate.js"></script>
 	       <style>
          #deiv_ml *{margin-left: 10px;    display: inline;}
-         #deiv_ml select,#deiv_ml input{height: 30px;border-radius: 5px;}
+         #deiv_ml select,#deiv_ml input{height: 30px;border-radius: 5px;}.alert {margin-bottom: 0px;}
     </style>
     </head>
 	<body>
@@ -70,13 +71,14 @@
 			   </div>
 
 		       <div id="dev_center" ng-show="sid!=null" >
-				    <div class="text-center"><h2>设备数据查询</h2><span ng-click="loginout()">{{sid.username}}退出</span> </div>
+		       		<div class="text-center"><h2>设备数据查询<span class="btn btn-warning pull-right" ng-click="loginout()">{{sid.username}}退出</span></h2></div>
+<!-- 				    <div class="text-center"><h2>设备数据查询</h2><span ng-click="loginout()">{{sid.username}}退出</span> </div> -->
 				    <div id="deiv_ml"  class="alert alert-info" >
 				      <div >
 					      <label>数据类型：</label>
 					      <select id="sl_datatype" ng-model="datatype" ng-options="obj.val as obj.text for obj in datatypeMode" ></select>
 				      </div>
-				      <div >
+				      <div  ng-show="datatype==1">
 					      <label >APID:</label>
 					      <input  ng-model="apid" >
 				      </div>
@@ -84,10 +86,11 @@
 					      <label >DEVID:</label>
 					      <input  ng-model="devid" >
 				      </div>
-				      <div ng-show="datatype!=1">
-					      <label>设备类型:</label>
-					       <select id="sl_timetype" ng-model="devtype" ng-options="obj.val as obj.text for obj in devtypeMode">
-					       </select>
+				      <div>
+					      <label>设备值:</label>
+					       <select id="sl_timetype" ng-model="devkey" ng-options="obj.val as obj.text for obj in keyMode[datatype]">
+					       <option value="" selected="selected">===全部===</option>
+					        </select>
 				      </div>
 				      <div >
 					      <label >时间范围:</label>
@@ -95,23 +98,23 @@
 				      </div>
 				      <div ng-show="timetype==5">
 					      <label >开始时间:</label>
-					      <input id="start_time" type="text" class="workinput wicon"  placeholder="请选择" readonly>
+					      <input id="start_time" type="text" class="workinput wicon"  placeholder="请选择" readonly ng-model="starttime">
 				      </div>
 				      <div ng-show="timetype==5">
 					      <label >结束时间:</label>
-					      <input id="end_time" type="text" placeholder="请选择"  readonly>
+					      <input id="end_time" type="text" placeholder="请选择"  readonly ng-model="endtime">
 				      </div>
 				     <div ng-show="timetype==1"  class="checkbox">
-				         <label> <input type="checkbox" ng-model="retdata" ng-checked="retdata" style="margin: 0px 0px 0px -20px;">自动查询（10秒查询一次） </label>
+				         <label> <input type="checkbox" ng-model="retdata" ng-checked="retdata" ng-change="clintref()" style="margin: 0px 0px 0px -20px;" >自动查询（30秒查询一次） </label>
 				      </div>
-				      <button type="button" class="btn btn-info" ng-click="loadData(datatype,devtype,timetype)">查询</button>
+				      <button type="button" class="btn btn-info" ng-click="loadData()">查询</button>
 				    </div>
 				    <div id="div_table1">
 				      	<table id="loding" class="table table-bordered">
-								<caption  ng-if="timetype==1&&retdata" >
+								<caption  ng-show="timetype==1&&retdata&&reftime" >
 								  <div>
-								    <span id="sp_cutttime" >{{cutttime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
-								    <span > <span>离下次刷新时间还有：</span> <em id="em_diftime" style="color: red">1</em>秒</span>
+								    <span id="sp_cutttime" ></span>
+								    <span > <span>离下次刷新时间还有：</span><em id="em_diftime" style="color: red">30</em>秒</span>
 								  </div>
 								</caption>
 								<thead>
@@ -120,31 +123,83 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="obj in dataList"></td>
+									<tr ng-repeat="obj in dataList">
+									    <td>{{obj.id}}</td>
+									    <td>{{obj.apid}}</td>
+									    <td ng-if="datatype!=1"> {{obj.devid}}</td>
+									    <td>{{obj.key}}</td>
+									    <td>{{obj.value}}</td>
+									    <td>{{obj.time}}</td>
+									    <td>{{obj.addtime}}</td>
 									</tr>
 								</tbody>
 							</table>
-				    </div>
+				    
+                        </div>
+				           <!-- 翻页功能 -->
+		                  <div class="row" style="text-align:center">
+		                    <pagination ng-change="loadData()" total-items="bigTotalItems"  ng-model="bigCurrentPage" max-size="pageSize" class="pagination-sm"   boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+		                 </div>
 			  </div>
         </div>
 	</body>
 	<script type="text/javascript">
+	 var sp_cutttime=$("#sp_cutttime"),em_diftime=$("#em_diftime"), cuindex=30;
+	  Date.prototype.Format = function (fmt) { //author: meizz 
+		    var o = {
+		        "M+": this.getMonth() + 1, //月份 
+		        "d+": this.getDate(), //日 
+		        "HH+": this.getHours(), //小时 
+		        "m+": this.getMinutes(), //分 
+		        "s+": this.getSeconds(), //秒 
+		        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+		        "S": this.getMilliseconds() //毫秒 
+		    };
+		    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		    for (var k in o)
+		    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		    return fmt;
+		};
 	  var app = angular.module('app', []);
 	   app.controller('zsdata', function($http, $location,$scope) {
 		 $http({method:'GET',url:'/i/admin/findAdmin'}).success(function(data){admin = data.entity;  if(admin == null || admin.id == 0){ $scope.sid=undefined;}else{ $scope.usertype=admin.role;$scope.sid=admin;window.sessionStorage.devuser=admin;}$("#div_main").show();  }) ;
-	    $scope.usertype=null;
+	    $scope.usertype=null; $scope.apid='';$scope.devid='';
 	    $scope.datatypeMode=[{val:"1",text:"AP设备状态"},{val:"2",text:"DEV设备状态"},{val:"3",text:"DEV数据状态"}];
+	    $scope.timetypevl=[1,1,3,6,12,24];
 	    $scope.timetypeMode=[{val:1,text:"近一小时"},{val:2,text:"近3小时"},{val:3,text:"近6小时"},{val:4,text:"近一天"}];
-	    $scope.devtypeMode= [{val:null,text:"====请选择==="},{val:"'Temp'",text:"温度"},{"'Switch'":2,text:"门"},{val:"'AU','BU','CU','AI','BI','CI','PWC'",text:"电量"}];
+	    $scope.keyMode= [[],
+	                     [{val:"'MSI'",text:"MSI"},{val:"'LAC'",text:"LAC"},{val:"'CID'",text:"CID"}],
+	                     [{val:"'BSI'",text:"BSI"},{val:"'DU'",text:"DU"}],
+	                     [{val:"'Temp'",text:"温度"},{"'Switch'":2,text:"门"},{val:"'AU','BU','CU'",text:"电压"},{val:"'AI','BI','CI'",text:"电流"},{val:"'PWC'",text:"电量"}]
+	    ];
 	    $scope.datatype=$scope.datatypeMode[0].val;  
-	    $scope.timetype= $scope.timetypeMode[0].val;// devtype 
-	    $scope.devtype= $scope.devtypeMode[0].val;
+	    $scope.timetype= $scope.timetypeMode[0].val;// devkey 
+	    $scope.devkey= $scope.keyMode[1].val;
+	    $scope.dataList=undefined;
+	    $scope.pageSize = 100; $scope.bigTotalItems = 0;$scope.bigCurrentPage = 1; 
+	   
+	    sp_cutttime.html(new Date().Format("yyyy-MM-dd HH:mm:ss"));
 	    $scope.tablemode=[{},
 	                      {title:["ID","APID","采集名称","采集值","采集时间","上传时间"],node:['id','apid','key','value','time','addtime'] },
 	                      {title:["ID","APID","DEVID","采集名称","采集值","采集时间","上传时间"],node:['id','apid','deviceid','key','value','time','addtime'] },
 	                      {title:["ID","APID","DEVID","采集名称","采集值","采集时间","上传时间"],node:['id','apid','deviceid','key','value','time','addtime'] }
 	                      ];
 	    if($scope.usertype==-2||$scope.usertype>=0){$scope.timetypeMode.push({val:5,text:"自定义"});}
+	    
+	    function getFormatTimeString(delta){
+			return delta.toISOString().replace("T", " ").replace(/\..*/,"");
+		}
+	    
+	    
+	    function getNowFormatDate(date) {
+	        var seperator1 = "-",seperator2 = ":", month = date.getMonth() + 1, strDate = date.getDate();
+	        if (month >= 1 && month <= 9) {  month = "0" + month;  }
+	        if (strDate >= 0 && strDate <= 9) { strDate = "0" + strDate;  }
+	        return date.getFullYear() + seperator1 + month + seperator1 + strDate
+	                + " " + date.getHours() + seperator2 + date.getMinutes()
+	                + seperator2 + date.getSeconds();
+	    }
+	    
 	    function showErrorInfo(msg){var msgEl = $("#mention");if(msg == null || msg == ''){  msgEl.hide();msgEl.html('');}else{msgEl.show();msgEl.html(msg);};}
 		$scope.loginout=function() { $http.get('/i/admin/logout').success(function(data){$scope.sid=undefined;window.sessionStorage.clear();}); };
 		$scope.login=function() {
@@ -175,12 +230,83 @@
 			};
 			
 			$scope.loadData=function(){
-				alert($scope.datatype+":"+$scope.selected);
+				var stime=null,etime=null;
+				if($scope.datatype==1){//AP状态数据
+					if($scope.apid==null||$scope.apid==""){alert("请输入apid!")   ;  $scope.resttime();  return;}
+				}else if($scope.datatype==2){//DEV数据
+					if($scope.devid==null||$scope.devid==""){alert("请输入devid!"); $scope.resttime();return;}
+				}else if($scope.datatype==3){//DEV采集数据
+					if($scope.devid==null||$scope.devid==""){alert("请输入devid!"); $scope.resttime();return;}
+				}
+				if($scope.timetype<5){
+					etime= new Date(),etimes= etime.getTime(),stime=new Date(etimes-3600000*$scope.timetypevl[$scope.timetype]);
+					etime=	getNowFormatDate(etime),stime=	getNowFormatDate(stime);
+				}else{
+					etime=$scope.endtime;
+					stime=$scope.starttime;
+				}
+				if($scope.retdata){//
+					if($scope.reftime){
+						 cuindex=30; 
+					}else{
+						 $scope.refdata();
+					}
+		         }else{
+		        	 $scope.resttime();
+			     }
+				
+				if(etime==null||stime==null){alert("请设置时间");return;}
+				$http({
+					method:'POST',
+					url:'/i/Datar/findDataByFilter',
+					params:{
+						 pageNum   :     $scope.bigCurrentPage         ,
+						 pageSize  :     $scope.pageSize        ,
+						 dataType  :     $scope.datatype        ,
+						 apid      :     $scope.apid       ,
+						 devid     :     $scope.devid         ,
+						 key       :     $scope.devkey       ,
+						 startTime     :     stime       ,
+						 endTime     :     etime           
+						} 
+				   }).success(function(data){ 
+				     if(data.success){
+				    	 $scope.dataList=data.data;
+				    	 $scope.bigTotalItems=data.total;
+				     }else{
+				    	 $scope.dataList=undefined;
+				    	 $scope.bigTotalItems=0;
+				     }
+				});
+				
 			};
 			
+			$scope.clintref=function(){
+				if(!$scope.retdata&&$scope.reftime){
+					$scope.resttime();
+				}
+			};
+			$scope.resttime=function(){
+				$scope.retdata=false;
+				if($scope.reftime){clearInterval( $scope.reftime);}
+				cuindex=30;
+			};
+			$scope.refdata=function(){
+						$scope.reftime=setInterval(function () {
+							sp_cutttime.html(new Date().Format("yyyy-MM-dd HH:mm:ss"));
+					 		 if(cuindex>0){ 
+					 			cuindex--;
+					 		 }else{
+					 			 $scope.loadData(); cuindex=30; 
+					 		  }
+					 		em_diftime.html(cuindex);
+					 	 }, 1000);
+			};
+			// var sp_cutttime=$("#sp_cutttime"),em_diftime=$("#em_diftime");
 			var start = {
 				    format: 'YYYY-MM-DD hh:mm:ss',
-				    minDate: $.nowDate(0), //设定最小日期为当前日期
+				    minDate: $.nowDate(-3),
+				    initAddVal:[-1,"hh"],   //初始化日期加2小时
 				    isinitVal:true,
 				    festival:true,
 				    ishmsVal:false,
@@ -193,26 +319,13 @@
 				    format: 'YYYY年MM月DD日 hh:mm:ss',
 				    minDate: $.nowDate(0), //设定最小日期为当前日期
 				    festival:true,
-				    maxDate: '2099-06-16 23:59:59', //最大日期
+				    maxDate: $.nowDate(0), //最大日期
 				    choosefun: function(elem,datas){
 				        start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
 				    }
 				};
 				$('#start_time').jeDate(start);
 				$('#end_time').jeDate(end);
-	 		
-			
-			
-			
 	  });
-	
-	$.jeDate("#indate",{
-	    format:"YYYY-MM-DD",
-	    isTime:false,
-	    minDate:"2014-09-19 00:00:00"
-	});
-	
-	
-	
 	</script>
 </html>
