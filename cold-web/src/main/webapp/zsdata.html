@@ -41,7 +41,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="obj in dataList">
+			<tr  ng-repeat="obj in dataList">
 				<td>{{obj.devid}}</td>
 				<td>{{obj.datas.apid}}</td>
 				<td>{{obj.datas.Temp}}</td>
@@ -58,6 +58,10 @@
 				<td>{{obj.datas.MSI}}</td>
 				<td>{{obj.datas.time*1000|date:'yyyy-MM-dd hh:MM:ss'}}</td>
 			</tr>
+			<tr ng-show="dataList==null">
+		    	<div class="alert alert-danger">沒有查到数据信息！</div>
+			</tr>
+			
 		</tbody>
 	</table>
    

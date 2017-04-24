@@ -43,7 +43,6 @@ public class DatarController extends BaseController {
 //		if( request.getSession().getAttribute("admin")==null){ return ResponseData.newFailure("你想干嘛？");}
 		if(key!=null&&key.length()>15){return ResponseData.newFailure("!!!");}
 		Page<StorageDataCollectionEntity> dataHashMaps=null;
-		PageHelper.startPage(pageNum, pageSize);
 		switch (dataType) {
 		case 1:
 			dataHashMaps = this.dataserver.findAPByFilter(apid, key, startTime, endTime);
@@ -52,6 +51,7 @@ public class DatarController extends BaseController {
 			dataHashMaps=this.dataserver.findDVByFilter(apid, devid, key, startTime, endTime);
 			break;
 		case 3:
+			PageHelper.startPage(pageNum, pageSize);
 			dataHashMaps=this.dataserver.findDTByFilter(apid, devid, key, startTime, endTime);
 			break;
 		default:

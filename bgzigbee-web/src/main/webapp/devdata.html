@@ -14,7 +14,7 @@
 	    <link rel="stylesheet" type="text/css" media="all" href="assets/jedate/skin/jedate.css" />
 	    <script type="text/javascript" src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-	    	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?"></script>
+	    	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	    <script type="text/javascript" src="assets/jedate/jquery.jedate.js"></script>
 	       <style>
          #deiv_ml *{margin-left: 10px;    display: inline;}
@@ -76,7 +76,7 @@
 				    <div id="deiv_ml"  class="alert alert-info" >
 				      <div >
 					      <label>数据类型：</label>
-					      <select id="sl_datatype" ng-model="datatype" ng-options="obj.val as obj.text for obj in datatypeMode" ></select>
+					      <select id="sl_datatype" ng-model="datatype" ng-options="obj.val as obj.text for obj in datatypeMode" ng-change="changeMode()" ></select>
 				      </div>
 				      <div  ng-show="datatype==1">
 					      <label >APID:</label>
@@ -92,7 +92,7 @@
 					       <option value="" selected="selected">===全部===</option>
 					        </select>
 				      </div>
-				      <div >
+				      <div ng-show="datatype==3">
 					      <label >时间范围:</label>
 					       <select id="sl_timetype" ng-model="timetype" ng-options="obj.val as obj.text for obj in timetypeMode"></select>
 				      </div>
@@ -134,7 +134,7 @@
 									</tr>
 								</tbody>
 							</table>
-				    
+				          <div ng-show="dataList.length==0" class="alert alert-danger">沒有查到数据信息！</div>
                         </div>
 				           <!-- 翻页功能 -->
 		                  <div class="row" style="text-align:center">
@@ -164,7 +164,7 @@
 	   app.controller('zsdata', function($http, $location,$scope) {
 		 $http({method:'GET',url:'/i/admin/findAdmin'}).success(function(data){admin = data.entity;  if(admin == null || admin.id == 0){ $scope.sid=undefined;}else{ $scope.usertype=admin.role;$scope.sid=admin;window.sessionStorage.devuser=admin;}$("#div_main").show();  }) ;
 	    $scope.usertype=null; $scope.apid='';$scope.devid='';
-	    $scope.datatypeMode=[{val:"1",text:"AP设备状态"},{val:"2",text:"DEV设备状态"},{val:"3",text:"DEV数据状态"}];
+	    $scope.datatypeMode=[{val:"3",text:"DEV数据状态"},{val:"2",text:"DEV设备状态"},{val:"1",text:"AP设备状态"}];
 	    $scope.timetypevl=[1,1,3,6,12,24];
 	    $scope.timetypeMode=[{val:1,text:"近一小时"},{val:2,text:"近3小时"},{val:3,text:"近6小时"},{val:4,text:"近一天"}];
 	    $scope.keyMode= [[],
@@ -174,10 +174,16 @@
 	    ];
 	    $scope.datatype=$scope.datatypeMode[0].val;  
 	    $scope.timetype= $scope.timetypeMode[0].val;// devkey 
-	    $scope.devkey= $scope.keyMode[1].val;
+	    $scope.devkey= 0;//$scope.keyMode[$scope.datatype].val;
 	    $scope.dataList=undefined;
 	    $scope.pageSize = 100; $scope.bigTotalItems = 0;$scope.bigCurrentPage = 1; 
 	   
+	    $scope.changeMode=function(){
+	    	$scope.resttime();
+	    	 $scope.dataList=undefined;
+	    	 $scope.bigTotalItems=0;
+	    };
+	    
 	    sp_cutttime.html(new Date().Format("yyyy-MM-dd HH:mm:ss"));
 	    $scope.tablemode=[{},
 	                      {title:["ID","APID","采集名称","采集值","采集时间","上传时间"],node:['id','apid','key','value','time','addtime'] },
@@ -242,8 +248,8 @@
 					etime= new Date(),etimes= etime.getTime(),stime=new Date(etimes-3600000*$scope.timetypevl[$scope.timetype]);
 					etime=	getNowFormatDate(etime),stime=	getNowFormatDate(stime);
 				}else{
-					etime=$scope.endtime;
-					stime=$scope.starttime;
+					etime=$('#end_time').val();
+					stime=$('#start_time').val();
 				}
 				if($scope.retdata){//
 					if($scope.reftime){
@@ -316,7 +322,7 @@
 				    }
 				};
 				var end = {
-				    format: 'YYYY年MM月DD日 hh:mm:ss',
+				    format: 'YYYY-MM-DD hh:mm:ss',
 				    minDate: $.nowDate(0), //设定最小日期为当前日期
 				    festival:true,
 				    maxDate: $.nowDate(0), //最大日期

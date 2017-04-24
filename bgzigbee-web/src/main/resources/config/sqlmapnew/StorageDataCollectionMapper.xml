@@ -20,11 +20,14 @@
 	   SELECT * FROM `apstatus` where `apid`=#{apid} 
 	    <if test="key != null and key!=''">
 		    AND `key` in(${key}) 
-	    </if> AND time > #{startTime} AND time &lt; #{endTime}
+	    </if> 
+	    ORDER BY id desc LIMIT 0,20 ;
+<!-- 	    AND time > #{startTime} AND time &lt; #{endTime} -->
 	</select> 
 	<select id="findDVByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity"> 
 	   SELECT * FROM `devstatus` where  `deviceid` =#{deviceid} 
 	   <if test="key != null and key!=''">  AND `key` in(${key})  </if> 
-	    AND time > #{startTime} AND time &lt; #{endTime}
+	   ORDER BY id desc LIMIT 0,20 ;
+<!-- 	    AND time > #{startTime} AND time &lt; #{endTime} -->
 	</select> 
 </mapper>
