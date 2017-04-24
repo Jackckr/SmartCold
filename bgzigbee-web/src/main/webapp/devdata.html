@@ -21,7 +21,7 @@
          #deiv_ml select,#deiv_ml input{height: 30px;border-radius: 5px;}.alert {margin-bottom: 0px;}
     </style>
     </head>
-	<body>
+	<body style="padding: 0 2%;">
 		 <div id="div_main" ng-app="app"  ng-controller="zsdata" style="display: none;" >
 			   <div id="dev_login" ng-if="sid==null" >
 			            <!-- 登录START -->
@@ -137,7 +137,7 @@
 				          <div ng-show="dataList.length==0" class="alert alert-danger">沒有查到数据信息！</div>
                         </div>
 				           <!-- 翻页功能 -->
-		                  <div class="row" style="text-align:center">
+		                  <div ng-show="datatype==3" class="row" style="text-align:center">
 		                    <pagination ng-change="loadData()" total-items="bigTotalItems"  ng-model="bigCurrentPage" max-size="pageSize" class="pagination-sm"   boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 		                 </div>
 			  </div>
@@ -160,7 +160,7 @@
 		    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
 		    return fmt;
 		};
-	  var app = angular.module('app', []);
+	  var app = angular.module('app', ['ui.bootstrap']);
 	   app.controller('zsdata', function($http, $location,$scope) {
 		 $http({method:'GET',url:'/i/admin/findAdmin'}).success(function(data){admin = data.entity;  if(admin == null || admin.id == 0){ $scope.sid=undefined;}else{ $scope.usertype=admin.role;$scope.sid=admin;window.sessionStorage.devuser=admin;}$("#div_main").show();  }) ;
 	    $scope.usertype=null; $scope.apid='';$scope.devid='';
@@ -278,10 +278,10 @@
 				   }).success(function(data){ 
 				     if(data.success){
 				    	 $scope.dataList=data.data;
-				    	 $scope.bigTotalItems=data.total;
+				    	 $scope.totalPages=data.total;
 				     }else{
 				    	 $scope.dataList=undefined;
-				    	 $scope.bigTotalItems=0;
+				    	 $scope.totalPages=0;
 				     }
 				});
 				
