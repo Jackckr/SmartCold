@@ -126,7 +126,7 @@
 									<tr ng-repeat="obj in dataList">
 									    <td>{{obj.id}}</td>
 									    <td>{{obj.apid}}</td>
-									    <td ng-if="datatype!=1"> {{obj.devid}}</td>
+									    <td ng-if="datatype!=1"> {{obj.deviceid}}</td>
 									    <td>{{obj.key}}</td>
 									    <td>{{obj.value}}</td>
 									    <td>{{obj.time}}</td>
@@ -170,7 +170,7 @@
 	    $scope.keyMode= [[],
 	                     [{val:"'MSI'",text:"MSI"},{val:"'LAC'",text:"LAC"},{val:"'CID'",text:"CID"}],
 	                     [{val:"'BSI'",text:"BSI"},{val:"'DU'",text:"DU"}],
-	                     [{val:"'Temp'",text:"温度"},{"'Switch'":2,text:"门"},{val:"'AU','BU','CU'",text:"电压"},{val:"'AI','BI','CI'",text:"电流"},{val:"'PWC'",text:"电量"}]
+	                     [{val:"'Temp'",text:"温度"},{val:"'Switch'",text:"门"},{val:"'AU','BU','CU'",text:"电压"},{val:"'AI','BI','CI'",text:"电流"},{val:"'PWC'",text:"电量"}]
 	    ];
 	    $scope.datatype=$scope.datatypeMode[0].val;  
 	    $scope.timetype= $scope.timetypeMode[0].val;// devkey 

@@ -13,7 +13,7 @@
 	    <if test="key != null and key!=''">
 		    AND `key` in(${key}) 
 	    </if>
-	    AND time > #{startTime} AND time &lt; #{endTime} 
+	    AND time > #{startTime} AND time &lt; #{endTime}  ORDER BY time desc
 	</select>
 	
 	<select id="findAPByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity"> 

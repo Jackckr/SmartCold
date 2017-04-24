@@ -40,7 +40,7 @@ public class DatarController extends BaseController {
 	@RequestMapping(value = "/findDataByFilter", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findAPByFilter(HttpServletRequest request,int pageNum,int pageSize,int dataType, String apid,String devid,String key,String startTime, String endTime) {
-//		if( request.getSession().getAttribute("admin")==null){ return ResponseData.newFailure("你想干嘛？");}
+		if( request.getSession().getAttribute("admin")==null){ return ResponseData.newFailure("你想干嘛？");}
 		if(key!=null&&key.length()>15){return ResponseData.newFailure("!!!");}
 		Page<StorageDataCollectionEntity> dataHashMaps=null;
 		switch (dataType) {
