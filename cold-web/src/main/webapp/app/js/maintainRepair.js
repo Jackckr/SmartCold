@@ -19,6 +19,8 @@ coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$state
 //			  if(servers.length>0){ angular.forEach(servers,function(obj,i){  $("#ck_server"+obj).attr("checked", true); }); }
 //		  }
 	});
+	
+	
 	$scope.cost=0.00;
 	$scope.detailedList=[];
 	$scope.uplist=function(isadd,index){

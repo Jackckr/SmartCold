@@ -512,6 +512,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         } else {
             if ($rootScope.user.id==$scope.rdcUserId){
                 if ($scope.rdcAudit === 2) {
+                	var files=[];
+                   	 angular.forEach($scope.rdcinfo.storagePics,function(obj,i){
+                   		files.push(obj.location);
+                   	 });
+                   	$scope.rdcinfo.files=	files;
                     $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 3});
                 } else {
                     alert("当前冷库尚未通过认证,无法发布信息!");
@@ -529,6 +534,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
         } else {
             if ($rootScope.user.id==$scope.rdcUserId){
                 if ($scope.rdcAudit === 2) {
+                	var files=[];
+                  	 angular.forEach($scope.rdcinfo.storagePics,function(obj,i){
+                  		files.push(obj.location);
+                  	 });
+                  	$scope.rdcinfo.files=	files;
                     $state.go('releaseItem',{data:$scope.rdcinfo,dataid:0, _cuttid: 1});
                 } else {
                     alert("当前冷库尚未通过认证,无法发布信息!");
