@@ -20,7 +20,6 @@ coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$state
 //		  }
 	});
 	
-	
 	$scope.cost=0.00;
 	$scope.detailedList=[];
 	$scope.uplist=function(isadd,index){
@@ -31,8 +30,11 @@ coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$state
 			$scope.detailedList.drop(index);
 		}
 	};
+	
+	var watch =$scope.$watch('detailedList', function(){
+		  $scope.cost=0;
+		  angular.forEach($scope.detailedList,function(obj,i){  $scope.cost+=obj.number*obj.price;});
+	  },true);//监听
 
-
-	 
-    
+	 $scope.$on('$destroy',function(){  watch;});
 });
