@@ -29,10 +29,13 @@
 						        <button class="btn btn-xs btn-warning " ng-click="tol_ignore(obj.id,-2,'确定要解除故障吗?')">解除故障</button>
 				        </span>
 				         <span ng-if="obj.status==2">
-						        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_forMaint(obj.maintid,1)">详情</button>
+						        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_forMaint(obj.id,1)">详情</button>
 				        </span>
 				         <span ng-if="obj.status==3">
-						        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_gotRepair(obj.maintid,0)">维修清单确认</button>
+						        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_gotRepair(obj.id,0)">维修清单确认</button>
+				        </span>
+				        <span ng-if="obj.status==5">
+						        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_gotRepair(obj.id,1)">查看维修清单</button>
 				        </span>
 			        </td>
 			      </tr>

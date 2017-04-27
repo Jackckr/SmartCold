@@ -17,7 +17,6 @@ public class WarningMintEntity {
 	 private int  oid             ;
 	 private int  level           ;
 	 private int  status          ;
-	 private int  maintid     ;
 	 private int  warningtype     ;
 	 private String  mapper       ;
 	 private String  warningmsg   ;
@@ -72,12 +71,6 @@ public class WarningMintEntity {
 	}
 	public void setStatus(int status) {
 		this.status = status;
-	}
-	public int getMaintid() {
-		return maintid;
-	}
-	public void setMaintid(int maintid) {
-		this.maintid = maintid;
 	}
 	public int getWarningtype() {
 		return warningtype;

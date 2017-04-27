@@ -4,8 +4,13 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.MaintenanceInfoMapper">
  <insert id="addMaintenanceInfo" parameterType="MaintenanceInfo" useGeneratedKeys="true" keyProperty="id">
-	INSERT INTO `maintenance` (`waruser`,`maintuser`,`companyinfo`,`note`,`repairtime`,`bookingtime`,`cost`,`servertype`,`warmappid`,`state`,`addtime` ) VALUES(#{waruser},#{maintuser},#{companyinfo},#{note}, #{repairtime},#{bookingtime},#{cost},#{servertype},#{warmappid}, #{state},#{addtime});
+	INSERT INTO `maintenance` (`rdcId` ,`warmappid` ,`faultmapper` ,`note` ,`repairtime` ,`bookingtime` ,`cost` ,`servertype`  ,`addtime`)VALUES(#{rdcId},#{warmappid},#{faultmapper},#{note}, #{repairtime},#{bookingtime},#{cost},#{servertype},now());
  </insert>
+ <update id="upMaintenancesCoreById" parameterType="map">
+   update maintenance set score=#{score},evaluate=#{evaluate} where id = #{id};
+ </update>
+ 
+ 
  
  <delete id="delMaintenanceById" parameterType="map">
    DELETE from `maintenance` where `id`=#{id};
@@ -14,8 +19,16 @@
  <select id="getMaintenanceById" resultType="MaintenanceInfo">
   select * from `maintenance` where `id`=#{id};
  </select>
+ <select id="getMaintenanceByWId" resultType="MaintenanceInfo">
+  select * from `maintenance` where `warmappid`=#{wid};
+ </select>
  
-
+	<select id="getMaintconFirmaByMid" parameterType="map" resultType="MaintconFirma">
+		 select * from maintconfirma where maintid=#{maintid};
+	</select>
+	<select id="getMaintorderByMid" parameterType="map" resultType="MaintorderEntity">
+		 select * from maintorder where maintid=#{maintid};
+	</select>
 	
 
 

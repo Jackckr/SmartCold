@@ -5,9 +5,8 @@
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.WarningMintMapper">
 
 
-	<insert id="addWarningMintEntity"
-		parameterType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
-		INSERT INTO warningmint(`refid `,`rdcid `,`type `,`oid
+	<insert id="addWarningMintEntity" parameterType="com.smartcold.manage.cold.entity.newdb.WarningMintEntity">
+		INSERT INTO `warningmint`(`refid `,`rdcid `,`type `,`oid
 		`,`level
 		`,`status `,`mapper `,`warningmsg `,`analysismsg `,`desc
 		`,`addtime
@@ -22,7 +21,6 @@
 	<update id="upMaintAlarmstatuByIds">
 	  update `warningmint` set `status`=#{status}
 	 <if test="userId!=null and userId!=''"> ,`userId`=#{userId}</if>
-	 <if test="maintid!=null and maintid!=0"> ,`maintid`=#{maintid}</if>
 	 <if test="desc!=null and desc!=''">,`desc`=#{desc} </if> 
 	  where  `id` in(${ids});
 	</update>
@@ -66,7 +64,6 @@
 	`id` ,
 	`rdcid` ,
 	`mapper` ,
-	`maintid` ,
 	`warningmsg` ,
 	`analysismsg` , `status`,
 	`desc` ,
@@ -78,6 +75,23 @@
 			`desc`="%"#{keyword}"%" ) </if>
 		ORDER BY `id` desc LIMIT 20;
 	</select>
+	
+	<select id="getWarningType" parameterType="map" resultType="map">
+	  select * from warningtype where pid=#{pid};
+	</select>
+	<insert id="addMaintconFirma" parameterType="map" >
+	  INSERT INTO `maintconfirma` (`rdcId`,`maintid`,`starttime` ,`endtime` ,`phenomena` ,`maintresult`,`cost` ,`note` ,`serverType` )  values(#{rdcId },#{maintid},#{starttime},#{endtime},#{phenomena},#{maintresult},#{cost},#{note},#{serverType});
+	</insert>
+	
+	<insert id="addMaintorder"  parameterType="com.smartcold.manage.cold.entity.newdb.MaintorderEntity">
+		INSERT INTO `maintorder`(`rdcid`,`maintid`,`wpid`,`wid`,`number`,`unit`,`price`,`addtime`)VALUES
+		<foreach collection="list" item="model" separator=","> 
+          (   #{model.rdcId},#{model.maintid},#{model.wpid},#{model.wid},#{model.number},#{model.unit},#{model.price} ,now() )   
+        </foreach>
+	</insert>
+	
 
-
+	
+	
+	
 </mapper>
