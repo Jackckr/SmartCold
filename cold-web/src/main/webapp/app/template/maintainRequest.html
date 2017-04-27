@@ -24,50 +24,47 @@
 			<div class="form-group db" style="width: 50%;">
 				<label for="wx" class="dbc control-label" style="width: 20%;">报修时间&nbsp;</label>
 				<div class="dbc" style="width: 80%;">
-					<input id="wx" type="text" placeholder="请选择"  readonly class="form-control">
+					<input id="wx" type="text" placeholder="请选择"  readonly class="form-control" ng-mode="maintenance.repairtime">
 				</div>
 			</div>
+			
 			<div class="form-group db" style="width: 100%;">
 				<label class="control-label dbc" style="vertical-align: top;width: 10%;">故障现象&nbsp;</label>
 				<div class="dbc" style="overflow: hidden;">
-					<div class="addSeclect form-inline">
+				    <div class="addSeclect form-inline" ng-repeat="item in wardata">
 						<span ng-repeat="item in wardata">
-							<select  class="form-control" >
+							<select  class="form-control" disabled="disabled">
 								<option value="0">{{item.analysismsg}}</option>
 							</select>
-							<select  class="form-control">
+							<select  class="form-control" disabled="disabled">
 								<option value="0">{{item.warningmsg}}</option>
 							</select>
                           </span>
-						<span class="addBtn form-control" onclick="addSelect(this)">+</span>
-						<span class="addBtn form-control" onclick="removerSelect(this)">-</span>
+						<span ng-if="st==0&&userType==2" class="addBtn form-control" ng-click="addSelect(this)">+</span>
+					</div>
+					<div class="addSeclect form-inline" ng-repeat="item in nwardata" >
+						<span >
+							<select  class="form-control" ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changepwartype($index,item)" ng-disabled="st==1"></select>
+							<select  class="form-control" ng-model="item.id"   ng-options="obj.id as obj.name for obj in swartype[$index]" ng-disabled="st==1"></select>
+                         </span>
+						<span ng-if="st==0&&userType==2" class="addBtn form-control" ng-click="removerSelect($index)">-</span>
 					</div>
 				</div>
 			</div>
 			<div class="form-group db" style="width: 50%;">
 				<label for="wx" class="dbc control-label" style="width: 20%;">故障补充&nbsp;</label>
 				<div class="dbc" style="width: 80%;">
-					<input type="text" placeholder="请输入文字/选填" class="form-control"  ng-model="note">
+					<input type="text" placeholder="请输入文字/选填" class="form-control"  ng-model="maintenance.note">
 				</div>
 			</div>
 			<div class="form-group db" style="width: 100%;">
-				<label class="dbc control-label" style="width: 10%;">使用单位发送&nbsp;</label>
-				<div class="dbc" style="width: 40%;">
-					<input type="text" placeholder="发送人姓名" class="form-control" ng-model="wuser.username">
-				</div>
 				<label for="orderTime" class="dbc control-label" style="width: 10%;">预约上门时间&nbsp;</label>
 				<div class="dbc" style="width: 40%;">
-					<input id="orderTime" type="text" placeholder="请选择"  readonly class="form-control">
-				</div>
-			</div>
-			<div class="form-group db" style="width: 100%;">
-				<label class="dbc control-label" style="width: 10%;">维修单位确认&nbsp;</label>
-				<div class="dbc" style="width: 40%;">
-					<input type="text" placeholder="维修单位确认人姓名" class="form-control" ng-model="maintuser.username">
+					<input id="orderTime" type="text" placeholder="请选择"  readonly class="form-control" ng-mode="maintenance.bookingtime" >
 				</div>
 				<label class="dbc control-label" style="width: 10%;">预估维修费用&nbsp;</label>
 				<div class="input-group" style="width: 100%;">
-					<input type="number" placeholder="预估维修金额" class="form-control"  ng-model="cost">
+					<input type="number" placeholder="预估维修金额" class="form-control"  ng-model="maintenance.cost">
 					<span class="input-group-addon">¥</span>
 				</div>
 			</div>
@@ -97,31 +94,3 @@
 <!-- <script type="text/javascript" src="assets/plugins/jedate/jquery-1.7.2.js"></script> -->
 <script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
 <link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">
-<script type="text/javascript">
-	var oSelect = '<div class="addSeclect form-inline">'+
-						'<select  class="form-control">'+
-							'<option value="1">温度超温过长</option>'+
-							'<option value="2">机组故障</option>'+
-							'<option value="3">油压过低</option>'+
-						'</select>'+
-						'<select  class="form-control">'+
-							'<option value="11">压缩机超温过长</option>'+
-							'<option value="22">电表超温过长</option>'+
-							'<option value="33">电池超温过长</option>'+
-						'</select>'+
-						' <span class="addBtn form-control" onclick="addSelect(this)">+</span>'+
-						' <span class="addBtn form-control" onclick="removerSelect(this)">-</span>'+
-					'</div>';
-	function addSelect(ops){
-		$(ops).parents(".dbc").append(oSelect);
-	}
-	
-	function removerSelect(ops){
-		if($(ops).parents(".dbc").children().length==1){
-			alert("故障描述最少一条~");
-		}else{
-			$(ops).parents(".addSeclect").remove();
-		}
-	}
-	
-</script>

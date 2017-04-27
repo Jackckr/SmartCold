@@ -1,4 +1,5 @@
-<div>
+<style>#star{    width: 400px !important;} #star img{height: 30px;}</style>
+<div id="div_maintainRepair" >
 	<div class="form-horizontal applyConfirm" role="form" >
 		<fieldset  class="clearfix applyTable" style="margin-top: 15px;">
 	    	<legend>维修确认单</legend>
@@ -35,35 +36,36 @@
 			<div class="form-group db" style="width: 100%;">
 				<label class="control-label dbc" style="vertical-align: top;width: 10%;">实际故障现象&nbsp;</label>
 				<div class="dbc" style="overflow: hidden;">
-					<div class="addSeclect form-inline">
-						<select  class="form-control">
-							<option value="1">温度超温过长</option>
-							<option value="2">机组故障</option>
-							<option value="3">油压过低</option>
-						</select><select  class="form-control">
-							<option value="11">压缩机超温过长</option>
-							<option value="22">电表超温过长</option>
-							<option value="33">电池超温过长</option>
-						</select>
-						<span class="addBtn form-control" onclick="addSelect(this)">+</span>
-						<span class="addBtn form-control" onclick="removerSelect(this)">-</span>
+                   <div class="addSeclect form-inline" ng-repeat="item in wardata">
+						<span ng-repeat="item in wardata">
+							<select  class="form-control" disabled="disabled">
+								<option value="0">{{item.analysismsg}}</option>
+							</select>
+							<select  class="form-control" disabled="disabled">
+								<option value="0">{{item.warningmsg}}</option>
+							</select>
+                          </span>
+						<span ng-if="st==0" class="addBtn form-control" ng-click="addfSelect()">+</span>
+					</div>
+					<div class="addSeclect form-inline" ng-repeat="item in faultmapper" >
+						<span >
+							<select  class="form-control" ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changefselecttype($index,item)" ng-disabled="st==1"></select>
+							<select  class="form-control" ng-model="item.id"   ng-options="obj.id as obj.name for obj in swartype[$index]" ng-disabled="st==1"></select>
+                         </span>
+						<span ng-if="st==0" class="addBtn form-control" ng-click="removerfSelect($index)">-</span>
 					</div>
 				</div>
 			</div>
 			<div class="form-group db" style="width: 100%;">
 				<label class="control-label dbc" style="vertical-align: top;width: 10%;">维修处理结果&nbsp;</label>
 				<div class="dbc" style="overflow: hidden;">
-					<div class="addSeclect form-inline">
-						<span ng-repeat="item in wardata">
-							<select  class="form-control" >
-								<option value="0">{{item.analysismsg}}</option>
-							</select>
-							<select  class="form-control">
-								<option value="0">{{item.warningmsg}}</option>
-							</select>
-                          </span>
-						<span class="addBtn form-control" onclick="addSelect(this)">+</span>
-						<span class="addBtn form-control" onclick="removerSelect(this)">-</span>
+                    <span ng-if="st==0" class="addBtn form-control" ng-click="addmSelect()">+</span>
+					<div class="addSeclect form-inline" ng-repeat="item in maintresult" >
+						<span >
+							<select  class="form-control" ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changemselecttype($index,item)" ng-disabled="st==1"></select>
+							<select  class="form-control" ng-model="item.id"   ng-options="obj.id as obj.name for obj in mwartype[$index]" ng-disabled="st==1"></select>
+                         </span>
+						  <span ng-if="st==0" class="addBtn form-control" ng-click="removermSelect($index)">-</span>
 					</div>
 				</div>
 			</div>
@@ -79,39 +81,26 @@
 				      <th>单位</th>
 				      <th>单价/元</th>
 				      <th>小计金额</th>
-				      <th>操作<span class="addBtn form-control" ng-click="uplist(true,$index)">+</span></th>
+				      <th>操作<span class="addBtn form-control" ng-click="uplist(true,$index)" ng-if="st==0">+</span></th>
 				   </tr>
 				  </thead>
 					<tbody>
 						<tr class="warning" ng-repeat="obj in detailedList">
 							<td>{{$index+1}}</td>
 							<td>
-							<select ng-model="obj.pid"  class="form-control">
-									<option value="1">温度超温过长</option>
-									<option value="2">机组故障</option>
-									<option value="3">油压过低</option>
-							</select>
+						     	<select ng-model="obj.wpid"  class="form-control" ng-options="item.id as item.name for item in pwartype"  ng-change="changeordertype($index,obj)"  ng-disabled="st==1"></select>
 							</td>
-							<td><select ng-model="obj.id" class="form-control">
-									<option value="1">温度超温过长</option>
-									<option value="2">机组故障</option>
-									<option value="3">油压过低</option>
-							</select>
-							</td>
-							<td><input type="number" class="form-control" placeholder="1" ng-model="obj.number"></td>
 							<td>
-							  <select ng-model="obj.unit" class="form-control">
-									<option value="1">个</option>
-									<option value="2">套</option>
-									<option value="3">台</option>
-							
-							 </select>
+							     <select  class="form-control" ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
 							</td>
-							<td><input type="number" class="form-control" placeholder="0" ng-model="obj.price"></td>
-							<td  ng-init="obj.xj=obj.number*obj.price">{{obj.number*obj.price}}<span class="hide" > </span></td>
+							<td><input type="number" class="form-control" placeholder="1" ng-model="obj.number"  ng-disabled="st==1"></td>
 							<td>
-                                 <span class="addBtn form-control" ng-click="uplist(true,$index)">+</span>
-                                 <span class="addBtn form-control" ng-click="uplist(false,$index)">-</span>
+							  <select ng-model="obj.unit" class="form-control" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
+							</td>
+							<td><input type="number" class="form-control" placeholder="0" ng-model="obj.price"  ng-disabled="st==1"></td>
+							<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
+							<td>
+                                 <span ng-if="st==0" class="addBtn form-control" ng-click="uplist(false,$index)">-</span>
 							</td>
 						</tr>
 					</tbody>
@@ -126,36 +115,47 @@
 			<div class="form-group db" style="width: 50%;">
 				<label for="wx" class="dbc control-label" style="width: 20%;">维修补充&nbsp;</label>
 				<div class="dbc" style="width: 80%;">
-					<input type="text" placeholder="请输入文字/选填" class="form-control">
+					<input type="text" placeholder="请输入文字/选填" class="form-control" ng-model="note">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label" style="width: 10%;">选择服务性质&nbsp;</label>
 				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="1">三包，工作完成
+				    <input id="radio_service1" type="radio" name="service" value="1">三包，工作完成
 				</label>
 				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="2">维修，工作完成，不收费
+				    <input id="radio_service2" type="radio" name="service" value="2">维修，工作完成，不收费
 				</label>
 				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="3">维修，工作完成，待开票
+				    <input id="radio_service3" type="radio" name="service" value="3">维修，工作完成，待开票
 				</label>
 				<label class="checkbox-inline">
-				    <input type="checkbox" name="service" value="4">维修，工作完成，现场支付
+				    <input id="radio_service4" type="radio" name="service" value="4">维修，工作完成，现场支付
 				</label>
 			</div>
-			<div class="form-group db" style="width: 100%;">
-				<label class="dbc control-label" style="width: 10%;">维修发送&nbsp;</label>
-				<div class="dbc" style="width: 40%;">
-					<input type="text" placeholder="发送人姓名" class="form-control" ng-model="maintuser.username">
-				</div>
-				<label class="dbc control-label" style="width: 10%;">使用单位确认&nbsp;</label>
-				<div class="dbc" style="width: 40%;">
-					<input type="text" placeholder="使用单位确认人姓名" class="form-control" ng-model="wuser.username">
+			<div class="form-group" style="width: 100%;">
+				<label class="control-label" style="width: 10%; ">流程当前状态:&nbsp;</label>
+				<span style="color: green;">{{stmode[cuttstatus]}}</span>
+			</div>
+			
+			<div ng-if="cuttusertype" class="form-group db" style="width: 50%;">
+				<label for="wx" class="dbc control-label" style="width: 20%;">评分：&nbsp;</label>
+				<div class="dbc" style="width: 80%;">
+					<div id="star"></div>
 				</div>
 			</div>
+			<div ng-if="cuttusertype" class="form-group db" style="width: 50%;">
+				<label for="wx" class="dbc control-label" style="width: 20%;">评价：&nbsp;</label>
+				<div class="dbc" style="width: 80%;">
+					<textarea id="txt_evaluate" placeholder="请输入文字/选填" class="form-control" >
+					</textarea>
+				</div>
+			</div>
+			
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-5">
-				<button class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6">提交维修申请</label>
+			   	<button ng-if="st==0&&userType==2" class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6 col-md-offset-3" ng-click="addMaintenance()">发送维修申请</button>
+				<button ng-if="cuttusertype" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,6,'您确定签字？')">同意</button>
+<!-- 				<button ng-if="cuttusertype" class="btn btn-danger col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-2" ng-click="tol_advice(true,4,'您确定驳回该维修清单吗？')">驳回</button> -->
 			</div>
 		</fieldset>
 		
@@ -164,19 +164,4 @@
 <!-- <script type="text/javascript" src="assets/plugins/jedate/jquery-1.7.2.js"></script> -->
 <script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
 <link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">
-<script type="text/javascript">
-	$("#begin,#end").jeDate({
-		isinitVal:true,
-	    skinCell:"jedateblue",
-	    festival: true,
-	    minDate: '2016-01-01 00:00:00', 
-	    format: 'YYYY年MM月DD日 hh:mm'
-	});
-	
-	
-	$(function(){
-		$(".stars li").click(function(){
-			$(this).toggleClass("gold");
-		})
-	})
-</script>
+<script type="text/javascript" src="assets/plugins/raty-2.5.2/lib/jquery.raty.js"></script>
