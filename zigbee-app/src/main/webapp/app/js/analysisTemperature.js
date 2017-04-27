@@ -290,8 +290,8 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                 var chart = echarts.init($('#' + mainId).get(0));
                 angular.forEach(storage['JiangWenYinZi'], function (item, index) {
                     xData.unshift(formatTime(item['date']).split(" ")[0])
-                    yData1.unshift(0 - storage['JiangWenYinZi'][index]['value'].toFixed(2))
-                    yData2.unshift(storage['ShengWenYinZi'][index]['value'].toFixed(2))
+                    yData1.unshift(0 - storage['JiangWenYinZi'][index]['value'])
+                    yData2.unshift(storage['ShengWenYinZi'][index]['value'])
                 })
                 var option = {
                 	backgroundColor: '#D2D6DE',

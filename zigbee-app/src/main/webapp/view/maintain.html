@@ -70,9 +70,9 @@
     <!-- header end-->
     <section class="toggle">
     	<div class="tempture current mylog"><i class="iconfont">&#xe79c;</i>维护提醒</div>
-    	<div class="light mylog"><i class="iconfont">&#xe7c9;</i>维修记录</div>  
-    	<div class="applyLog mylog"><i class="iconfont" style="color: #438BCB;">&#xe639;</i>维修申请</div>    	
-<!--     	<div class="apply_log mylog"><i class="iconfont" style="color: #F39826;">&#xe639;</i>维修</div>    	 -->
+<!--     	<div class="light mylog"><i class="iconfont">&#xe7c9;</i>维修记录</div>   -->
+<!--     	<div class="applyLog mylog"><i class="iconfont" style="color: #438BCB;">&#xe639;</i>维修申请</div>    	 -->
+    	<div class="apply_log mylog"><i class="iconfont" style="color: #F39826;">&#xe639;</i>维修</div>    	
     </section>
     <div class="backDrop"></div>
     <div class="mainTainBottomL">
@@ -96,7 +96,7 @@
 	  <!-- 维护提醒html  end -->
 	  
 	  <!-- 维护记录html ===================*********============*********==========-->
-		<div class="wxRecords black"  ng-show="rdcId">
+		<!-- <div class="wxRecords black"  ng-show="rdcId">
 			<p>维修完结记录</p>
 			<div class="input-group">
                  <input type="text" class="form-control" placeholder="请输入机组名" ng-model="keyword" ng-change="goSearch1()" ng-model-options="{debounce: 700}">
@@ -171,11 +171,11 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
+		</div> -->
 		<!-- 维护记录html end-->  
 	  
 	  <!-- 维护申请html ===================*********============*********==========-->
-		<div class="mainApply black"  ng-show="rdcId">
+		<!-- <div class="mainApply black"  ng-show="rdcId">
 			<div class="applyKid">
 				<p>机组名称:</p>
 				<textarea placeholder="请输入需要维修机组的名称" ng-model="unitname"></textarea>
@@ -189,53 +189,49 @@
 				<input class="datainp" type="date" ng-model="ordertime" placeholder="请选择预约时间"/>
 			</div>
 			<button class="mybtn" ng-click="addMaintenance()">提交</button>
-		</div>
+		</div> -->
 		<!-- 维护html ===================*********============*********==========-->
 		<div class="wxRecords black"  ng-show="rdcId">
 			<p style="text-align: left;">告警列表</p>
 			<div class="analysis alarmLog">
 				<table class="cold_warn">
-					<thead>
-						<tr>
-							<th>序号</th>
-					        <th>设备名称</th>
-					        <th>故障描述</th>
-					        <th>告警时间</th>
-					        <th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-					        <td>1</td>
-					        <td>压缩机1</td>
-					        <td>高温</td>
-					        <td>2017/04/05 15:32</td>
-					        <td>
-						        <button class="btn btn-primary" ng-click="weixiu(maintenance0.id)">申维</button>
-						        <button class="btn btn-danger">删除</button>
-					        </td>
-					      </tr>
-					      <tr>
-					        <td>2</td>
-					        <td>压缩机2</td>
-					        <td>高温</td>
-					        <td>2017/04/05 16:32</td>
-					        <td>
-						        <button class="btn btn-primary" ng-click="weixiu(maintenance0.id)">申维</button>
-						        <button class="btn btn-danger">删除</button>
-					        </td>
-					      </tr>
-					      <tr>
-					        <td>3</td>
-					        <td>压缩机3</td>
-					        <td>高温</td>
-					        <td>2017/04/05 17:32</td>
-					        <td>
-						        <button class="btn btn-primary" ng-click="weixiu(maintenance0.id)">申维</button>
-						        <button class="btn btn-danger">删除</button>
-					        </td>
-					      </tr>
-					</tbody>
+					 <thead>
+				      <tr>
+				        <th><input ng-model="isselall" type="checkbox" ng-click="tol_selallevt(isselall)" > </th>
+				        <th>告警ID</th>
+				        <th>告警消息</th>
+				        <th>分析结果</th>
+				        <th>告警时间</th>
+				        <th>状态</th>
+				        <th >操作</th>
+				     </tr>
+				    </thead>
+				    <tbody id="tb_body">
+				      <tr ng-repeat="obj in maintdata">
+				        <td><input id="ckobj_{{obj.id}}" name="ck_obj" value="{{obj.id}}" type="checkbox" ></td>
+				        <td>{{obj.id}}</td>
+				        <td>{{obj.warningmsg}}</td>
+				        <td>{{obj.analysismsg}}</td>
+				        <td>{{obj.addtime.substring(0,19)}}</td>
+				        <td>{{stmode[obj.status]}}</td>
+				        <td class="text-center">
+				           <span ng-if="obj.status==0">
+						        <button class="btn btn-xs btn-primary " ng-click="tol_forMaint(obj)">申维</button>
+						        <button class="btn btn-xs btn-danger"  ng-click="tol_del(obj.id)">删除</button>
+						        <button class="btn btn-xs btn-info"  ng-click="tol_ignore(obj.id,-1,'您确信要忽略这条告警吗？')">忽略</button>
+				           </span>
+				           <span  ng-if="obj.status==1">
+				             <button class="btn btn-xs btn-warning" style="width:114px" ng-click="tol_ignore(obj.id,0,'您确定要撤回这条维修申请吗？')">撤回</button>
+				           </span>
+				           <span  ng-if="obj.status==2">
+				             <button class="btn btn-xs btn-success" style="width:114px" ng-click="tol_goMaint(obj.maintid,1)">查看/确认</button>
+				           </span>
+				           <span  ng-if="obj.status==3">
+				             <span class="btn btn-xs btn-success" style="width:114px">请等待</span>
+				           </span>
+				        </td>
+				      </tr>
+				    </tbody>
 				</table>
 			</div><hr>
 			<p style="text-align: left;">维修</p>

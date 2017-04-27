@@ -121,6 +121,100 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
         $scope.alarmTotalCnt = 0;
         $scope.viewStorage(rdc.id);
     }
+    /**
+     * 
+     * 新版维修
+     * 2017-04-26
+     * 
+     *      
+     */
+    $scope.setp=1;
+	$scope.stmode=["未处理 ","待维修","等确认","维修中","维修确认","已完成 ","已忽略"];
+	$scope.status="0,1,2,3,4,5,6"; $scope.level=undefined; $scope.keyword=undefined;$scope.sqobj=undefined;
+    $scope.initData=function(){
+      $scope.sqobj=undefined;
+	  $http.get(ER.coldroot + '/i/warningMint/getWarningMintByRdcId',{params: {rdcId:window.localStorage.rdcId,status:$scope.status,level:$scope.level,keyword:$scope.keyword}}).success(function(data,status,config,header){
+		  $scope.maintdata=data;
+  	  });
+    };
+    $scope.initData();
+    //申请维修
+    $scope.tol_forMaint=function(obj){
+    	$scope.setp=2;
+    	$scope.sqobj=obj;
+    };
+    //删除
+    $scope.tol_del=function(id){
+    	if(!confirm("您确信要刪除这条告警吗？")){return;}
+    	$http({method:'DELETE',url:ER.coldroot + '/i/warningMint/delMaintAlarmByIds',params:{'ids': window.localStorage.rdcId}}).success(function (data) {$scope.initData(); });
+    };
+    //忽略
+    $scope.tol_ignore=function(id,status,msg){
+    	if(!confirm(msg)){return;}
+    	$http({method: 'POST',url: ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',params: {ids :id,userId: user.id,status:status}}).success(function (data) { $scope.initData();});
+    };
+    
+    $scope.tol_goMaint=function(id,st){$state.go('maintainRequest', {'ids': id,st:st}); };
+    
+    //合并处理
+    $scope.tol_batch=function(){
+	   
+    };
+    
+    $scope.tol_submit=function(){//
+    	$http({
+    		method: 'POST',
+    		url: ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',
+    		params: {ids:$scope.sqobj.id ,userId: user.id,status:1,node:$("#tex_node").val()}
+    	}).success(function (data) {  $scope.tol_back(); $scope.initData();});
+    };
+    
+    $scope.tol_back=function(){
+    	$scope.setp=1; layer.closeAll();	$scope.sqobj=undefined;
+    };
+    
+    $scope.isselall=false;
+    $scope.tol_selallevt=function(isck){
+    };
+
+    $scope.tol_forMaint = function (obj) {
+    	$scope.setp=2;
+    	$scope.sqobj=obj;
+		layer.open({
+			type: 1
+		    ,anim: 'up'
+		    ,style: 'position:fixed; bottom:0; left:0; overflow-y: scroll; width: 100%; border:none;'
+			,title: [
+			        '维修操作','background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;border-radius:0;'
+			        ]
+    		, content: '<div class="applyKid textA">' +
+    		'<p>告警消息:</p>' +
+    		'<input class="datainp" type="text" disabled value="'+obj.warningmsg+'"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>分析结果:</p>' +
+    		'<input class="datainp" type="text" disabled  value="'+obj.analysismsg+'"/>' +
+    		'</div>' +
+    		'<div class="applyKid">' +
+    		'<p>告警时间:</p>' +
+    		'<input class="datainp" type="type" disabled value="'+obj.addtime.substring(0,19)+'"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>附件:</p>' +
+    		'<input style="width:100%;" type="file"/>' +
+    		'</div>' +
+    		'<div class="applyKid textA">' +
+    		'<p>备注:</p>' +
+    		'<textarea colspan="10" rowspan="10"  id="tex_node" placeholder="请输入文字"></textarea>' +
+    		'</div>'
+    		, btn: ['提交', '返回']
+    		, yes: function (index) {
+    			$scope.tol_submit()
+    		},no: function(index){
+    			$scope.tol_back()
+    		}
+    	});
+    };
 
     function checkInput() {
         var flag = true;
@@ -130,8 +224,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 		if ($scope.ordertime == undefined || $scope.ordertime == '') {flag = false;}
         return flag;
     }
-    function checkTime(){
-		var d = new Date();//Date.parse($scope.updateMaintenance0.ordertime.replace(/-/g,"/"))
+    /*function checkTime(){
+		var d = new Date();
 		var today = Date.parse((d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()).replace(/-/g,"/"));//今天的毫秒数
 		var orderDay = new Date($scope.ordertime).getTime();
 		if(orderDay < today){
@@ -157,7 +251,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 	            }).success(function (data) {
 	                if (data) {
 	                    alert("添加成功");
-	//                    window.location.reload();
 	                    $scope.getMaintenances0();
 	                    $scope.getMaintenances1();
 	                    $scope.unitname = $scope.reason=$scope.ordertime=null;
@@ -183,7 +276,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     $scope.Maintenances1 = [];
     $scope.updateMaintenance0 = {};
     $scope.getMaintenances0 = function () {
-//    	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
         $http({
             method: 'POST',
             url: ER.coldroot + '/i/maintenance/findAllMaintenance',
@@ -198,7 +290,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     };
 
     $scope.getMaintenances1 = function () {
-//    	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
         $http({
             method: 'POST',
             url: ER.coldroot + '/i/maintenance/findMaintenanceList',
@@ -266,7 +357,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                     "id": id
                 }
             }).success(function (data) {
-//                window.location.reload();
             	 $scope.getMaintenances0();
                  $scope.getMaintenances1();
             });
@@ -325,61 +415,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             });
         });
     };
-    $scope.weixiu = function (id) {
-		layer.open({
-			type: 1
-		    ,anim: 'up'
-		    ,style: 'position:fixed; bottom:0; left:0; overflow-y: scroll; width: 100%; height: 90%; border:none;'
-			,title: [
-			        '维修操作',
-			        'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;border-radius:0;'
-			        ]
-    		, content: '<div class="applyKid textA">' +
-    		'<p>设备名称:</p>' +
-    		'<input class="datainp" type="text" style="width:100%;" placeholder="请输入设备名称"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>维修单位:</p>' +
-    		'<input class="datainp" type="text" style="width:100%;" placeholder="请输入维修单位"/>' +
-    		'</div>' +
-    		'<div class="applyKid">' +
-    		'<p>维修时间:</p>' +
-    		'<input class="datainp" style="width:100%;" type="date"  placeholder="请选择维修时间"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>维修人员:</p>' +
-    		'<input style="width:100%;" class="datainp" type="text"  placeholder="维修人员"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>故障描述:</p>' +
-    		'<input class="datainp" style="width:100%;" type="text"  placeholder="故障描述"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>故障原因:</p>' +
-    		'<input class="datainp" style="width:100%;" type="text"  placeholder="故障原因"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>维修情况:</p>' +
-    		'<input class="datainp" style="width:100%;" type="text"  placeholder="维修情况"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>维修确认:</p>' +
-    		'<input class="datainp" style="width:100%;" type="text"  placeholder="维修确认"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>验收确认:</p>' +
-    		'<input class="datainp" style="width:100%;" type="text"  placeholder="验收确认"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>备注:</p>' +
-    		'<textarea colspan="10" rowspan="10" id="note" placeholder="请输入文字"></textarea>' +
-    		'</div>'
-    		, btn: ['确认', '取消']
-    		, yes: function (index) {
-    			alert("请输入所有文本框~");
-    		}
-    	});
-    };
+   
     
     $scope.comment = function (id) {
 		layer.open({
@@ -452,7 +488,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 			    $scope.getMaintenances0();
                 $scope.getMaintenances1();
 		   }
-	  };
+	  };*/
 	  $scope.$watch('rdcId',$scope.initMainit,true);//监听冷库变化
 	  /**
 	     * 权限  

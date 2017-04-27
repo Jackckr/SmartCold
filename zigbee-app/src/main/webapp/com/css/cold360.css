@@ -379,11 +379,13 @@ b{
 .cold_warn{
 	width:100%;
 	border-collapse: collapse;
+	word-break:keep-all;
+	white-space: nowrap;
 	border:1px solid #337ab7;
 }
 .cold_warn td,.cold_warn th{
 	border:1px solid #337ab7;
-	text-align: center;
+	text-align:left;
 	font-size: .75rem;
 	line-height: 2;
 	padding: 2px 0;
@@ -655,6 +657,10 @@ b{
 }
 .applyKid{
 	margin-bottom: .3rem;
+}
+.applyKid .datainp{
+	width:100%;
+	color:#000;
 }
 .applyKid p{
 	font-size: .75rem;
