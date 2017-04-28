@@ -16,7 +16,7 @@
 	</insert>
 	
 	<delete id="delMaintAlarmByIds" parameterType="map">
-	  DELETE `warningmint` where `id` in(#{ids});
+	  DELETE FROM `warningmint` where `id` in(#{ids});
 	</delete>
 	<update id="upMaintAlarmstatuByIds">
 	  update `warningmint` set `status`=#{status}

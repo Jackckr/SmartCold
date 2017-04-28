@@ -132,6 +132,7 @@ public class MsgServiceimp implements MsgService {
     	 path= path.substring(0, path.indexOf("WEB-INF"));
     	 File file=new File(path+File.separator+"Temp");
     	 deleteFile(file);
+    	 
 	}
 	
 	
