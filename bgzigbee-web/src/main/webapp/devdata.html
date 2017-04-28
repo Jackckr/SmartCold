@@ -21,7 +21,7 @@
          #deiv_ml select,#deiv_ml input{height: 30px;border-radius: 5px;}.alert {margin-bottom: 0px;}
     </style>
     </head>
-	<body style="padding: 0 2%;">
+	<body >
 		 <div id="div_main" ng-app="app"  ng-controller="zsdata" style="display: none;" >
 			   <div id="dev_login" ng-if="sid==null" >
 			            <!-- 登录START -->
@@ -70,7 +70,7 @@
 				      <!-- 登录END -->
 			   </div>
 
-		       <div id="dev_center" ng-show="sid!=null" >
+		       <div id="dev_center" ng-show="sid!=null" style="padding: 0 2%;">
 		       		<div class="text-center"><h2>设备数据查询<span class="btn btn-warning pull-right" ng-click="loginout()">{{sid.username}}退出</span></h2></div>
 <!-- 				    <div class="text-center"><h2>设备数据查询</h2><span ng-click="loginout()">{{sid.username}}退出</span> </div> -->
 				    <div id="deiv_ml"  class="alert alert-info" >
@@ -78,7 +78,7 @@
 					      <label>数据类型：</label>
 					      <select id="sl_datatype" ng-model="datatype" ng-options="obj.val as obj.text for obj in datatypeMode" ng-change="changeMode()" ></select>
 				      </div>
-				      <div  ng-show="datatype==1">
+				      <div>
 					      <label >APID:</label>
 					      <input  ng-model="apid" >
 				      </div>
@@ -163,7 +163,7 @@
 	  var app = angular.module('app', ['ui.bootstrap']);
 	   app.controller('zsdata', function($http, $location,$scope) {
 		 $http({method:'GET',url:'/i/admin/findAdmin'}).success(function(data){admin = data.entity;  if(admin == null || admin.id == 0){ $scope.sid=undefined;}else{ $scope.usertype=admin.role;$scope.sid=admin;window.sessionStorage.devuser=admin;}$("#div_main").show();  }) ;
-	    $scope.usertype=null; $scope.apid='';$scope.devid='';
+	    $scope.usertype=null; $scope.apid="";$scope.devid="";
 	    $scope.datatypeMode=[{val:"3",text:"DEV数据状态"},{val:"2",text:"DEV设备状态"},{val:"1",text:"AP设备状态"}];
 	    $scope.timetypevl=[1,1,3,6,12,24];
 	    $scope.timetypeMode=[{val:1,text:"近一小时"},{val:2,text:"近3小时"},{val:3,text:"近6小时"},{val:4,text:"近一天"}];
@@ -239,10 +239,8 @@
 				var stime=null,etime=null;
 				if($scope.datatype==1){//AP状态数据
 					if($scope.apid==null||$scope.apid==""){alert("请输入apid!")   ;  $scope.resttime();  return;}
-				}else if($scope.datatype==2){//DEV数据
-					if($scope.devid==null||$scope.devid==""){alert("请输入devid!"); $scope.resttime();return;}
-				}else if($scope.datatype==3){//DEV采集数据
-					if($scope.devid==null||$scope.devid==""){alert("请输入devid!"); $scope.resttime();return;}
+				}else if($scope.datatype==2||$scope.datatype==3){//DEV状态数据
+					if($scope.apid==""&&$scope.devid==""){alert("请输入devid或者apid!"); $scope.resttime();return;}
 				}
 				if($scope.timetype<5){
 					etime= new Date(),etimes= etime.getTime(),stime=new Date(etimes-3600000*$scope.timetypevl[$scope.timetype]);
@@ -269,8 +267,8 @@
 						 pageNum   :     $scope.bigCurrentPage         ,
 						 pageSize  :     $scope.pageSize        ,
 						 dataType  :     $scope.datatype        ,
-						 apid      :     $scope.apid       ,
-						 devid     :     $scope.devid         ,
+						 apid      :     $scope.apid.trim()       ,
+						 devid     :     $scope.devid.trim()           ,
 						 key       :     $scope.devkey       ,
 						 startTime     :     stime       ,
 						 endTime     :     etime           
@@ -282,6 +280,10 @@
 				     }else{
 				    	 $scope.dataList=undefined;
 				    	 $scope.totalPages=0;
+				    	 if(data.message==-1){
+				    		 alert("回话过期！请重新登录!");
+				    		 $scope.loginout();
+				    	 }
 				     }
 				});
 				

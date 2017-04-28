@@ -40,25 +40,30 @@ public class DatarController extends BaseController {
 	@RequestMapping(value = "/findDataByFilter", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findAPByFilter(HttpServletRequest request,int pageNum,int pageSize,int dataType, String apid,String devid,String key,String startTime, String endTime) {
-		if( request.getSession().getAttribute("admin")==null){ return ResponseData.newFailure("你想干嘛？");}
-		if(key!=null&&key.length()>15){return ResponseData.newFailure("!!!");}
-		Page<StorageDataCollectionEntity> dataHashMaps=null;
-		switch (dataType) {
-		case 1:
-			dataHashMaps = this.dataserver.findAPByFilter(apid, key, startTime, endTime);
-			break;
-		case 2:
-			dataHashMaps=this.dataserver.findDVByFilter(apid, devid, key, startTime, endTime);
-			break;
-		case 3:
-			PageHelper.startPage(pageNum, pageSize);
-			dataHashMaps=this.dataserver.findDTByFilter(apid, devid, key, startTime, endTime);
-			break;
-		default:
-			break;
+		try {
+			if( request.getSession().getAttribute("admin")==null){ return ResponseData.newFailure("-1");}
+			if(key!=null&&key.length()>15){return ResponseData.newFailure("!!!");}
+			Page<StorageDataCollectionEntity> dataHashMaps=null;
+			switch (dataType) {
+			case 1:
+				dataHashMaps = this.dataserver.findAPByFilter(apid, key, startTime, endTime);
+				break;
+			case 2:
+				dataHashMaps=this.dataserver.findDVByFilter(apid, devid, key, startTime, endTime);
+				break;
+			case 3:
+				PageHelper.startPage(pageNum, pageSize);
+				dataHashMaps=this.dataserver.findDTByFilter(apid, devid, key, startTime, endTime);
+				break;
+			default:
+				break;
+			}
+			PageInfo<StorageDataCollectionEntity> datas=	new PageInfo<StorageDataCollectionEntity>(dataHashMaps);
+			return ResponseData.newSuccess(datas);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		PageInfo<StorageDataCollectionEntity> datas=	new PageInfo<StorageDataCollectionEntity>(dataHashMaps);
-		return ResponseData.newSuccess(datas);
+		return ResponseData.newFailure("0");
 	}
 	
 	
