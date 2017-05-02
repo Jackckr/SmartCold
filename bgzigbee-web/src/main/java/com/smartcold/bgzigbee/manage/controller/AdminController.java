@@ -58,19 +58,19 @@ public class AdminController extends BaseController {
 	public Object login(HttpServletRequest request, @RequestParam(value="adminName",required=true) String adminName,@RequestParam(value="adminPwd",required=true) String adminPwd,@RequestParam(value="sik",required=true)  Integer sik) {
 		try {
 			if(sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return ResponseData.newFailure("登录过于频繁，请24小时后再试!");}
-			String remoteAddr = request.getRemoteAddr();
-			if(Blacklist.containsKey(remoteAddr)){
-				Integer count = Blacklist.get(remoteAddr);count++;Blacklist.put(remoteAddr,count);if(count>3){ return ResponseData.newFailure("登录过于频繁，请24小时后再试");}
-			}else{
-				Blacklist.put(remoteAddr,1);
-			}
+//			String remoteAddr = request.getRemoteAddr();
+//			if(Blacklist.containsKey(remoteAddr)){
+//				Integer count = Blacklist.get(remoteAddr);count++;Blacklist.put(remoteAddr,count);if(count>3){ return ResponseData.newFailure("登录过于频繁，请24小时后再试");}
+//			}else{
+//				Blacklist.put(remoteAddr,1);
+//			}
 			adminPwd = EncodeUtil.encodeByMD5(adminPwd);
 			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd);
 			if (admin != null&&admin.getRole()>=0) {
 				String cookie = cookieService.insertCookie(adminName);
 			    admin.setAdminpwd(null);
 				request.getSession().setAttribute("admin", admin);
-				Blacklist.remove(remoteAddr);
+//				Blacklist.remove(remoteAddr);
 				return	ResponseData.newSuccess(String.format("token=%s", cookie));
 			}
 			return ResponseData.newFailure("用户名或者密码不正确！");
@@ -85,19 +85,19 @@ public class AdminController extends BaseController {
 	public Object userlogin(HttpServletRequest request,@RequestParam(value="adminName",required=true) String adminName,@RequestParam(value="adminPwd",required=true) String adminPwd,@RequestParam(value="sik",required=true)  Integer sik) {
 		try {
 			if(sik==null||sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return ResponseData.newFailure("登录过于频繁，请24小时后再试!");}
-			String remoteAddr = request.getRemoteAddr();
-			if(Blacklist.containsKey(remoteAddr)){
-				Integer count = Blacklist.get(remoteAddr);count++;Blacklist.put(remoteAddr,count);if(count>3){ return ResponseData.newFailure("登录过于频繁，请24小时后再试");}
-			}else{
-				Blacklist.put(remoteAddr,1);
-			}
+//			String remoteAddr = request.getRemoteAddr();
+//			if(Blacklist.containsKey(remoteAddr)){
+//				Integer count = Blacklist.get(remoteAddr);count++;Blacklist.put(remoteAddr,count);if(count>3){ return ResponseData.newFailure("登录过于频繁，请24小时后再试");}
+//			}else{
+//				Blacklist.put(remoteAddr,1);
+//			}
 			adminPwd = EncodeUtil.encodeByMD5(adminPwd);
 			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd);
 			if (admin != null) {
 				String cookie = cookieService.insertCookie(adminName);
 			    admin.setAdminpwd(null);
 				request.getSession().setAttribute("admin", admin);
-				Blacklist.remove(remoteAddr);
+//				Blacklist.remove(remoteAddr);
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", admin);
 				resdata.put("token", String.format("token=%s", cookie));
