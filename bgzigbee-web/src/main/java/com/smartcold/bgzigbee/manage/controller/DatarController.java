@@ -16,7 +16,11 @@ import com.smartcold.bgzigbee.manage.sc360.dao.StorageDataCollectionMapper;
 import com.smartcold.bgzigbee.manage.util.ResponseData;
 
 
-
+/**
+ * 设备数据查询
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping(value = "/Datar")
 public class DatarController extends BaseController {
