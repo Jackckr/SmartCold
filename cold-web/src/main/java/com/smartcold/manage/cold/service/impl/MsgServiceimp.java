@@ -70,9 +70,6 @@ public class MsgServiceimp implements MsgService {
 	private ColdStorageAnalysisMapper sisMapper;
 
 	
-     
-   
-	
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
@@ -81,7 +78,7 @@ public class MsgServiceimp implements MsgService {
 	public void checkData() {
 	    boolean taskStatus=	quantityMapper.updateTaskStatus(1);
 	    if(!taskStatus){return ;}
-			this.getERRinfo();
+		this.getERRinfo();
 	}
 
      /**
@@ -90,14 +87,15 @@ public class MsgServiceimp implements MsgService {
  	 * 超过系统规定时间 ，发送短信通知。。
  	 * 
  	 */
-	@Scheduled(cron = "0 0/30 * * * ?")
+//	@Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron="0 0/5 * * * ?")
 	public void checkAPStatus() {
-		boolean taskStatus = quantityMapper.updateTaskStatus(2);
-		if(!taskStatus){return ;}
+//		boolean taskStatus = quantityMapper.updateTaskStatus(2);
+//		if(!taskStatus){return ;}
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
-		List<Rdc> rdcList = this.rdcMapper.searchRdcByfilter(null);
+		List<Rdc> rdcList = this.rdcMapper.getDEVRdc(false);
 		if (SetUtil.isnotNullList(rdcList)) {
 			for (Rdc rdc : rdcList) {
 		      this.sendMsg(rdc,  startTime, endTime);	
@@ -112,11 +110,11 @@ public class MsgServiceimp implements MsgService {
 	 * 重置dev
 	 */
 //	@Scheduled(cron = "0 30 1 * * ?")
-	@Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron="0 0/10 * * * ?")
 	public void delTempTask() {
-		ExportExcelUtil.clearTask();        
-		boolean taskStatus = quantityMapper.updateTaskStatus(4);
-		if(!taskStatus){return ;}
+//		ExportExcelUtil.clearTask();        
+//		boolean taskStatus = quantityMapper.updateTaskStatus(4);
+//		if(!taskStatus){return ;}
 		this.delTempfile();
     	this.resetDevStatus();
     	this.LowbatteryAlarm();
@@ -186,10 +184,14 @@ public class MsgServiceimp implements MsgService {
 	//低电量 
 	private void LowbatteryAlarm(){
         try {
-			List<HashMap<String, Object>> lowPower = this.deviceMapper.getLowPower(null,TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12)));
+			List<HashMap<String, Object>> lowPower = this.deviceMapper.getLowPower(TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12)));
 			if(SetUtil.isnotNullList(lowPower)){
-				String msg= "系统在"+TimeUtil.getDateTime()+"检测到设备电压过低"+ JSONArray.toJSON(lowPower);
-				this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV低电量告警",msg));//添加至系统通知
+				StringBuffer msg=new StringBuffer("以下设备电压低于标准工作电压,请及时检查！");
+				for (HashMap<String, Object> hashMap : lowPower) {
+					msg.append("设备:"+hashMap.get("deviceid")+"电压:"+hashMap.get("value")+",/r/n");
+				}
+					msg.delete(msg.length()-5,msg.length());
+				this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV低电量告警",msg.toString()));//添加至系统通知
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -244,7 +246,7 @@ public class MsgServiceimp implements MsgService {
 				msg.append("{"+split[0]+"}{Dev="+split[1]+"}");
 				rdctype=split[0]+",";deviceid+=split[1]+",";
 			}
-			msg.delete(0, msg.length()-1);
+			msg.deleteCharAt(msg.length() - 1);
 			msg.append("已经超过30分钟未上报数据，请注意检查!");
 			HashMap<String, Object>	updata = new HashMap<String, Object>();
 			
@@ -257,10 +259,10 @@ public class MsgServiceimp implements MsgService {
 			String tel= this.rdcMapper.findRdcManger(rdcid);
 			if(StringUtil.isnotNull(tel)){
 					updata.put("rdc", "\nRDC={" + rdcName + "}");
-					updata.put("rdctype","deviceidtyoe={" +rdctype.substring(0, rdctype.length()-1) + "}");
+					updata.put("rdctype","deviceidtype={" +rdctype.substring(0, rdctype.length()-1) + "}");
 					updata.put("dev", "deviceid={"        + deviceid.substring(0, deviceid.length()-1)+ "}");
 					updata.put("telephone", tel);
-					RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele",updata);
+//					RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele",updata);
 			}
 		}
 	}

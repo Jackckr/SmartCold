@@ -63,8 +63,8 @@
         DELETE FROM `deviceObjectMapping` WHERE `id`=#{id}
     </delete>
     
-    <select id="getLowPower" parameterType="map">
-     SELECT concat_ws('-' ,`deviceid` ,`value`) msg  from devstatus where   `key`='DU' and `value` &lt;3 and `addtime` >#{starttime} GROUP BY `deviceid`  ;
+    <select id="getLowPower" resultType="map" parameterType="map">
+     SELECT `deviceid` ,`value`  from devstatus where   `key`='DU' and `value` &lt;3 and `addtime` >#{starttime} GROUP BY `deviceid`  ORDER BY `addtime` desc  ;
     </select>
     
 </mapper>

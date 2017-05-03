@@ -29,5 +29,5 @@ public interface DeviceObjectMappingMapper {
 	
 	public List<DeviceObjectMappingEntity> findByTypeDeviceId(@Param("type") int type, @Param("deviceid")String deviceid);
 	
-	public List<HashMap<String, Object>> getLowPower(@Param("deviceid")String deviceid, @Param("starttime")String starttime);
+	public List<HashMap<String, Object>> getLowPower( @Param("starttime")String starttime);
 }

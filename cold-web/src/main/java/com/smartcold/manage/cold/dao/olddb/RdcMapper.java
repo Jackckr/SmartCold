@@ -21,17 +21,14 @@ public interface RdcMapper {
 
 	List<Rdc> findRdcList();
 	
+	//获得冷库的管理者电话号码
 	String findRdcManger(@Param("rdcID") Integer rdcID );
-
+     
 	List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);
-
+    //根据name 获得所有冷库
 	List<Rdc> searchRdc(@Param("filter") String filter);
-	
-	/**
-	 * 360获得有效冷库
-	 * @param filter
-	 * @return
-	 */
+	//根据名称获得有效360冷库
 	List<Rdc> searchRdcByfilter(@Param("filter") String filter);
-	
+	//true:dev+plc false:dev
+    List<Rdc> getDEVRdc(@Param("isall") Boolean isall);
 }
