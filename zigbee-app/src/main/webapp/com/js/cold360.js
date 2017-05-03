@@ -52,7 +52,7 @@ $(function() {
 	
 	// 获取父节点，并为它添加一个click事件
 	if($('.otherList')[0] == undefined){
-		console.log("$('.otherList')[0]==undefined")
+//		console.log("$('.otherList')[0]==undefined")
 	}else{
 		$('.otherList')[0].addEventListener("click",function(e) {
 			swiper.activeIndex = 0; // 回归滑动第一个位置

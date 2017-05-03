@@ -87,11 +87,10 @@ public class MsgServiceimp implements MsgService {
  	 * 超过系统规定时间 ，发送短信通知。。
  	 * 
  	 */
-//	@Scheduled(cron = "0 0/30 * * * ?")
-    @Scheduled(cron="0 0/5 * * * ?")
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkAPStatus() {
-//		boolean taskStatus = quantityMapper.updateTaskStatus(2);
-//		if(!taskStatus){return ;}
+		boolean taskStatus = quantityMapper.updateTaskStatus(2);
+		if(!taskStatus){return ;}
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
@@ -109,12 +108,11 @@ public class MsgServiceimp implements MsgService {
 	 * Task:刪除临时任务
 	 * 重置dev
 	 */
-//	@Scheduled(cron = "0 30 1 * * ?")
-    @Scheduled(cron="0 0/10 * * * ?")
+	@Scheduled(cron = "0 30 1 * * ?")
 	public void delTempTask() {
-//		ExportExcelUtil.clearTask();        
-//		boolean taskStatus = quantityMapper.updateTaskStatus(4);
-//		if(!taskStatus){return ;}
+		ExportExcelUtil.clearTask();        
+		boolean taskStatus = quantityMapper.updateTaskStatus(4);
+		if(!taskStatus){return ;}
 		this.delTempfile();
     	this.resetDevStatus();
     	this.LowbatteryAlarm();

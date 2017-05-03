@@ -18,7 +18,9 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
 	};
 
 	$scope.initData();
-    
+	$scope.pageChanged = function () {
+		$scope.initData();
+   }
 	 $scope.changeUserType=function(user){
 		 $scope.licuser=user;
 		 $("#ut_"+user.type).attr('checked', 'true');
@@ -47,7 +49,8 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
     $scope.goDeleteUser = function (userID) {
     	if(delcfm()){
     	 $http.get('/i/user/deleteUser', { params: {   "userID": userID } }).success(function (data) {  });
-    	 $state.initData();
+	    	 $scope.initData();
+	    	 window.location.reload(); 
     	}
     };
     
@@ -55,7 +58,8 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
     	if(delcfm()){
     	 var userIDs = [];for(i in $scope.selected){userIDs.push($scope.selected[i].id);}
     	 if(userIDs.length >0 ){$http({method:'DELETE',url:'/i/user/deleteByUserIDs',params:{'userIDs': userIDs}}).success(function (data) {});}
-    	  $state.initData();
+	    	 $scope.initData();
+	    	 window.location.reload(); 
     	}
     };
    

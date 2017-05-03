@@ -702,3 +702,58 @@ footer{
     z-index: 1;
     display: none;
 }
+/*
+*告警样式
+*2017-5-3
+*/
+.warnBox{
+	position: absolute;
+	width: 300px;
+	height: 100%;
+	padding-top: 60px;
+	box-sizing: border-box;
+	z-index: 1;
+	top:0;
+	right: 0;
+	overflow-y: scroll;
+}
+.warnList{
+	border-left: 1px solid #999;
+	border-bottom: 1px solid #999;
+	background: #fff;
+}
+.warnUl li{
+	position: relative;
+	padding-left: 2em;
+	border-bottom: 1px solid #eee;
+}
+.warnUl li:last-child{
+	border-bottom:0;
+}
+.warnUl li>i.fa{
+	position: absolute;
+	top:0;
+	left: 0;
+	font-size: 1.5em;
+	min-height: 30px;	
+}
+.warnBody{
+	max-height:400px;
+	overflow-y: scroll;
+}
+.warnTxt,.warnUl li>i.fa-bell{
+	color:#a94442;
+}
+.noteTxt,.warnUl li>i.fa-envelope{
+	color:#2eab31;
+}
+
+
+
+
+
+
+
+
+
+
