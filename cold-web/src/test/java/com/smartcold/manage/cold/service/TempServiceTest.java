@@ -78,7 +78,7 @@ public class TempServiceTest {
 	//低电量 
 	private void LowbatteryAlarm(){
         try {
-			List<HashMap<String, Object>> lowPower = this.deviceMapper.getLowPower(null,TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12)));
+			List<HashMap<String, Object>> lowPower = this.deviceMapper.getLowPower(TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12)));
 			if(SetUtil.isnotNullList(lowPower)){
 				String msg= "系统在"+TimeUtil.getDateTime()+"检测到设备电压过低"+ JSONArray.toJSON(lowPower);
 				this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV低电量告警",msg));//添加至系统通知

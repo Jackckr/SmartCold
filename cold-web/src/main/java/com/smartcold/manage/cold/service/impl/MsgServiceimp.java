@@ -241,7 +241,7 @@ public class MsgServiceimp implements MsgService {
 			String rdctype="";String deviceid="";
 			for (int id : coldNameMap.keySet()) {
 				String[] split = coldNameMap.get(id).split("-");
-				msg.append("{"+split[0]+"}{Dev="+split[1]+"}");
+				msg.append("{"+split[0]+"}{Dev="+split[1]+"},");
 				rdctype=split[0]+",";deviceid+=split[1]+",";
 			}
 			msg.deleteCharAt(msg.length() - 1);
