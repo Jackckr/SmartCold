@@ -73,7 +73,7 @@ coldWeb.controller('maintainRequest', function ($rootScope, $scope, $state,$stat
 			if(!confirm(msg)){return;}
 			$http({method: 'POST',url: '/i/warningMint/rejectMaintenanceByWarId',params: {isreject:isreject, wid:$scope.warids, mid:$scope.maintenance.id, status:status}}).success(function (data) { 
 				if(data){alert("提交成功！");}else{alert("提交失敗！流程已锁定！");}
-				   $state.go("maintenancealarm");
+				   $state.go("maintenancealarm", {'st': 1});
 			});
 		};
 		

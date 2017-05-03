@@ -136,18 +136,22 @@ coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$state
 				  }
 			  });
 			  $("#div_maintainRepair input").attr({"disabled":true});
-			  $("#txt_evaluate").attr({"disabled":false});
-			  if($scope.cuttusertype){
-				  $('#star').raty({precision: true ,score: 5, size     : 24, });
-				  $scope.tol_advice=function(isreback,status,msg){
-					  $http({method: 'POST',url: '/i/warningMint/rejectMaintconfirmaById',
-						  params: {  isreback:isreback, wid:$scope.wids, mid:$scope.maintid, status:status, score :$("#star input").val(), evaluate:$("#txt_evaluate").val()}}).success(function (data) { 
-							if(data){alert("维修完成！");}else{alert("提交失敗！流程已锁定！");}
-							   $state.go("maintenancealarm");
-						});
-					  
-				  };
-			  }
+			
+			  if($scope.cuttstatus==6){
+				  $('#star').raty({precision: true ,score: $scope.maintenance.score, size     : 24 });
+				  $("#txt_evaluate").val($scope.maintenance.evaluate);
+			  }else if($scope.cuttusertype){
+					  $("#txt_evaluate").attr({"disabled":false});
+					  $('#star').raty({precision: true ,score: 5, size     : 24, });
+					  $scope.tol_advice=function(isreback,status,msg){
+						  $http({method: 'POST',url: '/i/warningMint/rejectMaintconfirmaById',
+							  params: {  isreback:isreback, wid:$scope.wids, mid:$scope.maintid, status:status, score :$("#star input").val(), evaluate:$("#txt_evaluate").val()}}).success(function (data) { 
+								if(data){alert("维修完成！");}else{alert("提交失敗！流程已锁定！");}
+								   $state.go("maintenancealarm", {'st': 1});
+							});
+						  
+					  };
+				  }
 		}   
     };
 	

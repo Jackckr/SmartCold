@@ -1,8 +1,10 @@
-coldWeb.controller('maintenancealarm', function ($rootScope, $scope, $state, $cookies, $http, $location,baseTools) {
+coldWeb.controller('maintenancealarm', function ($rootScope, $scope,$stateParams, $state, $cookies, $http, $location,baseTools) {
+	$scope.st=$stateParams.st;
+	if($scope.st==1||$scope.st==2){var statusmode=["0","0,1,2,3,4,5","6"];$scope.status=statusmode[$scope.st];}else{return;}
 	$scope.setp=1;
-	$scope.stmode=["未处理 ","待维修","等确认","维修中","维修清单确认","清单审核","已完成 "];//正常流程
 	$scope.remode=["未处理 ","已忽略 ","解除故障","放弃维修"];//终止流程
-	$scope.status="0,1,2,3,4,5"; $scope.level=undefined; $scope.keyword=undefined;$scope.sqobj=undefined;
+	$scope.stmode=["未处理 ","待维修","等确认","维修中","维修清单确认","清单审核","已完成 "];//正常流程
+	$scope.level=undefined; $scope.keyword=undefined;$scope.sqobj=undefined;
     $scope.initData=function(){
       $scope.sqobj=undefined;
 	  $http.get('/i/warningMint/getWarningMintByRdcId',{params: {rdcId: $rootScope.rdcId,status:$scope.status,level:$scope.level,keyword:$scope.keyword}}).success(function(data,status,config,header){
@@ -30,6 +32,10 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope, $state, $co
     //合并处理
     $scope.tol_batch=function(){
 	   
+    };
+    //查看维修结果
+    $scope.tol_ckrest=function(id){
+    	$state.go('maintainRepair', {'ids':id,'st':1});
     };
     
     $scope.tol_submit=function(){//

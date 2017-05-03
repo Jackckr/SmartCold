@@ -371,14 +371,14 @@
 
 						<ul class="treeview-menu" ng-if="user.type==2">
 					       <li  onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">待维修项目</span></a></li> 
-					       <li  onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修历史</span></a></li> 
+					       <li  onclick="activeLi(this)"><a ng-click="tomaintenancehist()" ><i class="icon iconfont"></i><span class="menu-title">维修历史</span></a></li> 
 						   <li  onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont">   </i><span class="menu-title">设备保养提醒</span></a></li>
 						   <li  onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont">   </i><span class="menu-title">巡检与回访</span></a></li>
 						</ul> 
 						<ul class="treeview-menu" ng-if="user.type!=2">
-						   <li onclick="activeLi(this)"><a href="#/maintenancealarm"><i class="icon iconfont"></i><span class="menu-title">维修告警</span></a></li>  
+						   <li onclick="activeLi(this)"><a ng-click="tomaintenancealarm()"><i class="icon iconfont"></i><span class="menu-title">维修告警</span></a></li>  
 <!-- 					       <li onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修管理</span></a></li>  -->
-						    <li  onclick="activeLi(this)"><a href="#/histmaintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修历史</span></a></li> 
+						    <li  onclick="activeLi(this)"><a ng-click="tomaintenancehist()" ><i class="icon iconfont"></i><span class="menu-title">维修历史</span></a></li> 
 						   <li onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont"></i><span class="menu-title">机组维护提醒</span></a></li>
 						</ul> 
 					</li>
@@ -468,7 +468,6 @@
 		document.write("<scr"+"ipt src=\"app/js/maintenancenotice.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/maintainRequest.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/maintainRepair.js\"></sc"+"ript>");
-// 		document.write("<scr"+"ipt src=\"app/js/maintenancealarmhist.js\"></sc"+"ript>");
 		
 		document.write("<scr"+"ipt src=\"assets/plugins/chartjs/Chart.min.js\"></sc"+"ript>");//
 		document.write("<scr"+"ipt src=\"assets/plugins/fastclick/fastclick.min.js\"></sc"+"ript>");//

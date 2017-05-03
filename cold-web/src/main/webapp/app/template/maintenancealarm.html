@@ -29,17 +29,12 @@
 					        <button class="btn btn-xs btn-danger"  ng-click="tol_del(obj.id)">删除</button>
 					        <button class="btn btn-xs btn-info"  ng-click="tol_ignore(obj.id,-1,'您确信要忽略这条告警吗？')">忽略</button>
 			           </span>
-			           <span  ng-if="obj.status==1">
-			             <button class="btn btn-xs btn-warning" style="width: 120px;"  ng-click="tol_ignore(obj.id,0,'您确定要撤回这条维修申请吗？')">撤回</button>
-			           </span>
-			           <span  ng-if="obj.status==2">
-			             <button class="btn btn-xs btn-success"  style="width: 120px;"  ng-click="tol_goMaint(obj.id,1)">查看/确认</button>
-			           </span>
-			           <span  ng-if="obj.status==3">
-			             <span class="btn btn-xs btn-success"  style="width: 120px;" >请等待</span>
-			           </span>
-			            <span  ng-if="obj.status==5">
-			             <span class="btn btn-xs btn-success"  style="width: 120px;"  ng-click="tol_goMaintRepair(obj.id,1)" >维修清单审核</span>
+			           <span  ng-if="obj.status>0">
+			             <span ng-if="obj.status==1" class="btn btn-xs btn-warning" style="width: 120px;"  ng-click="tol_ignore(obj.id,0,'您确定要撤回这条维修申请吗？')">撤回</span>
+			             <span ng-if="obj.status==2" class="btn btn-xs btn-success"  style="width: 120px;"  ng-click="tol_goMaint(obj.id,1)">查看/确认</span>
+			             <span ng-if="obj.status==3" class="btn btn-xs btn-success"  style="width: 120px;" >请等待</span>
+			             <span ng-if="obj.status==5" class="btn btn-xs btn-success"  style="width: 120px;"  ng-click="tol_goMaintRepair(obj.id,1)" >维修清单审核</span>
+			             <span ng-if="obj.status==6" class="btn btn-xs btn-success"  style="width: 120px;"  ng-click="tol_ckrest(obj.id)" >查看</span>
 			           </span>
 			        </td>
 			      </tr>

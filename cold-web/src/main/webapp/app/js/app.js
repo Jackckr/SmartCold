@@ -139,6 +139,8 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.toRdcPower = function () { $state.go('rdcPower', {'rdcId': $rootScope.rdcId}); };
             $rootScope.toMyStorageTemper = function (storageID) {$state.go('coldStorageTemper', {'storageID': storageID});};
             $rootScope.toMyStorageDoor = function (storageID) {$state.go('coldStorageDoor', {'storageID': storageID});};
+            $rootScope.tomaintenancealarm = function () {$state.go('maintenancealarm', {'st': 1});};
+            $rootScope.tomaintenancehist = function () {$state.go('maintenancealarm', {'st':2});};
 //            $rootScope.toMap = function () { $state.go('coldStorageMap', {}); };
 //            $rootScope.toReport = function () { var time = 'daily';var item = 'data';$state.go('report', {'time':time,'item':item});};
         },
@@ -310,7 +312,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'maintainComfirm',
         templateUrl: 'app/template/maintainComfirm.html' 
     }).state('maintenancealarm',{//维修告警
-    	url:'/maintenancealarm',
+    	url:'/maintenancealarm/{st}',
     	controller: 'maintenancealarm',
         templateUrl: 'app/template/maintenancealarm.html' 
     }).state('maintenancenotice',{//服务商维修通知

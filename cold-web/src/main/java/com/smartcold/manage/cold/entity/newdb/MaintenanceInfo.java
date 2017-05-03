@@ -11,6 +11,9 @@ public class MaintenanceInfo {
 	private Double cost             ;
 	private String servertype             ;
 	private Integer state            ;
+	private double score	;
+	private String evaluate	;
+
 	private String addtime          ;
 	public int getId() {
 		return id;
@@ -71,6 +74,20 @@ public class MaintenanceInfo {
 	}
 	public void setState(Integer state) {
 		this.state = state;
+	}
+	
+	
+	public double getScore() {
+		return score;
+	}
+	public void setScore(double score) {
+		this.score = score;
+	}
+	public String getEvaluate() {
+		return evaluate;
+	}
+	public void setEvaluate(String evaluate) {
+		this.evaluate = evaluate;
 	}
 	public String getAddtime() {
 		return addtime;
