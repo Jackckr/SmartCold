@@ -379,9 +379,11 @@ b{
 .cold_warn{
 	width:100%;
 	border-collapse: collapse;
+	border:1px solid #337ab7;
+}
+.wxRecords .cold_warn{
 	word-break:keep-all;
 	white-space: nowrap;
-	border:1px solid #337ab7;
 }
 .cold_warn td,.cold_warn th{
 	border:1px solid #337ab7;
@@ -574,6 +576,7 @@ b{
 	overflow-y: hidden;
 	width: 100%;
 	border: 1px solid #ddd;
+	margin-bottom: 1rem;
 }
 .analysis caption{
 	text-align:left;
