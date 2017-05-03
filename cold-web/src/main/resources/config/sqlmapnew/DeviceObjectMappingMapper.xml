@@ -50,6 +50,10 @@
       </set>
       where id = #{id};
     </update>
+    
+    <update id="resetDevByID" parameterType="map">
+      update `deviceObjectMapping`  set `status` =0 where `id` in(${ids});
+    </update>
   
 	<update id="upDeviceObjectStatus" parameterType="map" >
 	    update deviceobjectmapping set `status`=#{status} where rdcid=#{rdcid} and deviceid in(${deviceids});
@@ -58,5 +62,9 @@
     <delete id="delById">
         DELETE FROM `deviceObjectMapping` WHERE `id`=#{id}
     </delete>
+    
+    <select id="getLowPower" parameterType="map">
+     SELECT concat_ws('-' ,`deviceid` ,`value`) msg  from devstatus where   `key`='DU' and `value` &lt;3 and `addtime` >#{starttime} GROUP BY `deviceid`  ;
+    </select>
     
 </mapper>

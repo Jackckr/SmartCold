@@ -7,8 +7,12 @@
         SELECT c.id,c.`rdcid` ,c.`name` ,r.`name` rdcname  FROM `${table}set` c  LEFT JOIN  `rdc` r ON r.id=c.`rdcid`   where c.id=#{oid};
     </select>
     
-    <insert id="addwarningmessage" parameterType="map">
-      insert into `warningmessage` (type,typeName ,rdcid,telephone,message) values (#{type},#{typeName},#{rdcid},#{telephone},#{message});
+    <insert id="addwarningmessage" parameterType="WarningMsgEntity">
+     insert into `warningmessage` (type,typeName ,rdcid,telephone,message) values (#{type},#{typeName},#{rdcid},#{telephone},#{message});
+    </insert>
+    
+    <insert id="addsystemInform" parameterType="SystemInformEntity">
+        INSERT INTO `systemInform` (`type`,`rdcid`,`uid`,`level`,`isread`,`state`,`tit`,`msg`)VALUES(#{type},#{rdcid},#{uid},#{level},#{isread},#{state},#{tit},#{msg});
     </insert>
     
 </mapper>

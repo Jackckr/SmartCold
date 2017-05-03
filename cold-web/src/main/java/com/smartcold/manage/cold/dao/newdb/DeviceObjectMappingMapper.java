@@ -10,6 +10,8 @@ import java.util.List;
 public interface DeviceObjectMappingMapper {
 	
 	public boolean delById(@Param("id") int id);
+	
+	public boolean resetDevByID(@Param("ids") String ids);
 
 	public boolean insert(DeviceObjectMappingEntity deviceObjectMappingEntity);
 
@@ -26,4 +28,6 @@ public interface DeviceObjectMappingMapper {
 	public List<DeviceObjectMappingEntity> findByTypeOids(@Param("type") int type, @Param("oid")String oid);
 	
 	public List<DeviceObjectMappingEntity> findByTypeDeviceId(@Param("type") int type, @Param("deviceid")String deviceid);
+	
+	public List<HashMap<String, Object>> getLowPower(@Param("deviceid")String deviceid, @Param("starttime")String starttime);
 }

@@ -30,6 +30,10 @@
 		SELECT * FROM `ColdStorageSet` where 1=1  
 		<if test="iunbalance!=null"> and overtempalarm>${iunbalance}</if> 
 	</select>
+	
+	<select id="findByTID" parameterType="map" resultType="ColdStorageSetEntity">
+    	SELECT st.`id`  ,st.`name`   FROM `smartcold`.`tempset` ts LEFT JOIN `smartcold`.`coldstorageset` st on st.id=ts.`coldstorageid`  where ts.id=#{tid} ;
+	</select>
     
     <select id="findHasDoorStorage" resultType="ColdStorageSetEntity">
         select distinct c.*  

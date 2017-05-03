@@ -4,19 +4,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
-import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
@@ -25,8 +23,9 @@ import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
-import com.smartcold.manage.cold.entity.olddb.WarningMsgEntity;
-import com.smartcold.manage.cold.enums.StorageType;
+import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
+import com.smartcold.manage.cold.entity.olddb.Rdc;
+import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
 import com.smartcold.manage.cold.service.MsgService;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
@@ -45,15 +44,15 @@ public class MsgServiceimp implements MsgService {
 	@Autowired
 	private RdcMapper rdcMapper;
 	@Autowired
-	private MessageMapper megMapper;
+	private MessageMapper msMappergMapper;
 	@Autowired
 	private ColdStorageSetMapper coldStorageSetMapper;
 	@Autowired
 	private PowerSetMapping powerSetMapping;
 	@Autowired
 	private StorageService storageService;
-	@Autowired
-	private WarningsInfoMapper warningsInfoMapper;
+//	@Autowired
+//	private WarningsInfoMapper warningsInfoMapper;
 	@Autowired
 	private WarningLogMapper warningLogMapper;
 	@Autowired
@@ -84,13 +83,13 @@ public class MsgServiceimp implements MsgService {
 	    if(!taskStatus){return ;}
 			this.getERRinfo();
 	}
-	/**
-	 * 半小时执行一次
-	 * Task:检查AP
-	 * stupe 1.检查哪些库进行关联配置 2.将配置对象放进线程池进行监听保护 StorageService-》findByTime
-	 * 3.超过系统规定时间 ，发送短信通知。。
-	 * 
-	 */
+
+     /**
+ 	 * 半小时执行一次
+ 	 * Task:检查AP
+ 	 * 超过系统规定时间 ，发送短信通知。。
+ 	 * 
+ 	 */
 	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkAPStatus() {
 		boolean taskStatus = quantityMapper.updateTaskStatus(2);
@@ -98,43 +97,32 @@ public class MsgServiceimp implements MsgService {
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
-		List<Map<String, Object>> findRdcManger = this.rdcMapper.findRdcManger();// 查找监听保护对象
-		Map<Integer, String> telMap = new HashMap<Integer, String>();
-		if (SetUtil.isnotNullList(findRdcManger)) {
-			HashMap<String, Object> filter = new HashMap<String, Object>();
-			String rdcidlist = "";
-			for (Map<String, Object> map : findRdcManger) {
-				int rdcid = (Integer) map.get("rdcid");
-				rdcidlist += rdcid + ",";
-				telMap.put(rdcid, map.get("telephone").toString());
+		List<Rdc> rdcList = this.rdcMapper.searchRdcByfilter(null);
+		if (SetUtil.isnotNullList(rdcList)) {
+			for (Rdc rdc : rdcList) {
+		      this.sendMsg(rdc,  startTime, endTime);	
 			}
-			filter.put("status", 1);// 检查正常的devcice是否正常工作
-			filter.put("rdcid", rdcidlist.substring(0, rdcidlist.length() - 1));
-			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
-			sendMsg(devciceList, telMap,startTime,endTime);
 		}
+		
 	}
-	
-	
 	
 	/**
 	 * 每天凌晨1:30点触发
 	 * Task:刪除临时任务
 	 * 重置dev
 	 */
-	@Scheduled(cron = "0 30 1 * * ?")
+//	@Scheduled(cron = "0 30 1 * * ?")
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void delTempTask() {
 		ExportExcelUtil.clearTask();        
 		boolean taskStatus = quantityMapper.updateTaskStatus(4);
 		if(!taskStatus){return ;}
-		 this.quantityMapper.delTempTask();//添加临时任务
-		 String path=this.getClass().getResource("").getPath();
-    	 path= path.substring(0, path.indexOf("WEB-INF"));
-    	 File file=new File(path+File.separator+"Temp");
-    	 deleteFile(file);
-    	 
+		this.delTempfile();
+    	this.resetDevStatus();
+    	this.LowbatteryAlarm();
 	}
 	
+
 	
 	/**
 	 * 每天凌晨3:30点触发
@@ -142,7 +130,7 @@ public class MsgServiceimp implements MsgService {
 	 */
 	@Scheduled(cron = "0 30 3 * * ?")
 	public void reckonQuantity() {
-	   boolean taskStatus = quantityMapper.updateTaskStatus(3);
+	    boolean taskStatus = quantityMapper.updateTaskStatus(3);
 		if(!taskStatus){return ;}
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
 		Date dateTime = TimeUtil.parseYMD(time);
@@ -153,6 +141,60 @@ public class MsgServiceimp implements MsgService {
 		this.setQctdoor(time, dateTime, startTime, endtime);//Q門
 	}
   
+	
+	/**
+	 * 删除临时目录
+	 */
+	private void delTempfile(){
+		try {
+			this.quantityMapper.delTempTask();//添加临时任务
+			String path=this.getClass().getResource("").getPath();
+			path= path.substring(0, path.indexOf("WEB-INF"));
+  	        File file=new File(path+File.separator+"Temp");
+			this.deleteFile(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * 重置DEV
+	 */
+	private void resetDevStatus(){
+        try {
+			HashMap<String, Object> filter  = new HashMap<String, Object>();
+			filter.put("status", 0);filter.put("type", 18);// 仅检查温度
+			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
+			if(SetUtil.isnotNullList(devciceList)){
+				Date endTime = new Date();Date startTime = TimeUtil.getBeforeMinute(30);
+				StringBuffer devmapid=new StringBuffer();
+				StringBuffer devid=new StringBuffer();
+				for (DeviceObjectMappingEntity obj : devciceList) {
+					Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "Temp", startTime, endTime);//keyval.get(obj.getType())
+					if(size>0){devmapid.append(obj.getId()+",");devid.append(obj.getDeviceid()+",");}
+				}
+				if(devmapid.length()>0){
+					this.deviceMapper.resetDevByID(devmapid.substring(0, devmapid.length()-1));
+					String msg= "系统在"+TimeUtil.getDateTime()+"自动重置{"+devid.subSequence(0, devid.length()-1)+"}设备！";
+					this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV自动重置",msg));//添加至系统通知
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//低电量 
+	private void LowbatteryAlarm(){
+        try {
+			List<HashMap<String, Object>> lowPower = this.deviceMapper.getLowPower(null,TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12)));
+			if(SetUtil.isnotNullList(lowPower)){
+				String msg= "系统在"+TimeUtil.getDateTime()+"检测到设备电压过低"+ JSONArray.toJSON(lowPower);
+				this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV低电量告警",msg));//添加至系统通知
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 删除文件夹
 	 * @param file
@@ -173,6 +215,56 @@ public class MsgServiceimp implements MsgService {
 		}
 	}
     
+	private void sendMsg(Rdc rdc,Date startTime,Date endTime) {
+		int rdcid=rdc.getId();
+		String rdcName=rdc.getName();
+		//开始逻辑
+		HashMap<String, Object> filter  = new HashMap<String, Object>();
+		filter.put("status", 1);// 检查正常的devcice是否正常工作
+		filter.put("type", 18);// 仅检查温度,
+		filter.put("rdcid",rdcid);
+		List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
+		HashMap<Integer, String> coldNameMap=new HashMap<Integer, String>();//冷库信息
+		for (DeviceObjectMappingEntity obj : devciceList) {
+			Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "Temp", startTime, endTime);//keyval.get(obj.getType())
+			if (size == null || size == 0) {
+				ColdStorageSetEntity storageSetEntity = this.coldStorageSetMapper.findByTID(obj.getOid());
+				if(coldNameMap.containsKey(storageSetEntity.getId())){//存在报警
+					coldNameMap.put(storageSetEntity.getId(), coldNameMap.get(storageSetEntity.getId())+","+obj.getDeviceid())	;
+				}else{
+					coldNameMap.put(storageSetEntity.getId(), storageSetEntity.getName()+"-"+obj.getDeviceid());
+				}
+        	}
+        }
+		if(coldNameMap.size()>0){
+			StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
+			String rdctype="";String deviceid="";
+			for (int id : coldNameMap.keySet()) {
+				String[] split = coldNameMap.get(id).split("-");
+				msg.append("{"+split[0]+"}{Dev="+split[1]+"}");
+				rdctype=split[0]+",";deviceid+=split[1]+",";
+			}
+			msg.delete(0, msg.length()-1);
+			msg.append("已经超过30分钟未上报数据，请注意检查!");
+			HashMap<String, Object>	updata = new HashMap<String, Object>();
+			
+			this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 1, rdcid, null, 3, 0, 0, "DEV断线告警",msg.toString()));//添加至系统通知
+		    updata.clear();
+			updata.put("rdcid", rdcid);//
+			updata.put("status", 0);
+			updata.put("deviceids",  deviceid.substring(0, deviceid.length()-1));
+			this.deviceMapper.upDeviceObjectStatus(updata);//
+			String tel= this.rdcMapper.findRdcManger(rdcid);
+			if(StringUtil.isnotNull(tel)){
+					updata.put("rdc", "\nRDC={" + rdcName + "}");
+					updata.put("rdctype","deviceidtyoe={" +rdctype.substring(0, rdctype.length()-1) + "}");
+					updata.put("dev", "deviceid={"        + deviceid.substring(0, deviceid.length()-1)+ "}");
+					updata.put("telephone", tel);
+					RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele",updata);
+			}
+		}
+	}
+	
     /**
      *跑完之前的值
      * Task:计算热量
@@ -215,73 +307,7 @@ public class MsgServiceimp implements MsgService {
 		try { 	this.chdoorstatus();  } catch (Exception e) { e.printStackTrace(); }  //DEV -SWith门常开报警
 	}
 
-	/**
-	 * 定义消息组件
-	 * 
-	 * @param devciceList
-	 * @param telMap
-	 */
-	private void sendMsg(List<DeviceObjectMappingEntity> devciceList, Map<Integer, String> telMap,Date startTime,Date endTime) {
-		if (SetUtil.isnotNullList(devciceList)) {
-			Map<String, Object> resMap = null;
-			LinkedHashMap<Integer, Map<String, Object>> tempData = new LinkedHashMap<Integer, Map<String, Object>>();
-			for (DeviceObjectMappingEntity obj : devciceList) {
-				resMap = new HashMap<String, Object>();
-				Integer size = storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), null, startTime, endTime);
-				if (size == null || size == 0) {
-					String oidname = "";
-					List<HashMap<String, Object>> oidobj = this.megMapper .findObjsetByOid( StorageType.getStorageType(obj.getType()) .getTable(), obj.getOid());
-					if (SetUtil.isnotNullList(oidobj)) {
-						oidname = (String) oidobj.get(0).get("name");
-					}
-					if (tempData.containsKey(obj.getRdcid())) {
-						resMap = tempData.get(obj.getRdcid());
-						resMap.put("devicetype", resMap.get("devicetype") + "," + oidname);
-						resMap.put("deviceid", resMap.get("deviceid") + ","
-								+ obj.getDeviceid());
-					} else {
-						resMap.put("rdcname", this.rdcMapper .selectByPrimaryKey(obj.getRdcid()).getName());
-						resMap.put("deviceid", obj.getDeviceid());
-						resMap.put("devicetype", oidname);
-					}
-					tempData.put(obj.getRdcid(), resMap);
-				}
-			}
-			//发送短信和通知
-			if (tempData.size() > 0) {
-				try {
-					WarningMsgEntity info = null;
-					HashMap<String, Object> updata = null;
-					for (int rdcid : tempData.keySet()) {
-						Map<String, Object> map = tempData.get(rdcid);
-						String tels = telMap.get(rdcid);
-						String msg = "【Warning】{RDC=" + map.get("rdcname")
-								+ "}{" + map.get("devicetype") + "}{Dev="
-								+ map.get("deviceid") + "}已经超过30分钟未上报数据，请注意检查";
-						info = new WarningMsgEntity(0, rdcid, "告警通知", tels, msg);
-						this.megMapper.addwarningmessage(info);
-						updata = new HashMap<String, Object>();
-						updata.put("rdcid", rdcid);//
-						updata.put("status", 0);
-						updata.put("deviceids", map.get("deviceid"));
-						this.deviceMapper.upDeviceObjectStatus(updata);
-						updata.clear();
-						updata.put("rdc", "\nRDC={" + map.get("rdcname") + "}");
-						updata.put("rdctype",
-								"deviceidtyoe={" + map.get("devicetype") + "}");
-						updata.put("dev", "deviceid={" + map.get("deviceid")
-								+ "}");
-						updata.put("telephone", tels);
-						RemoteUtil.httpPost(
-								"http://liankur.com/i/warning/warningTele",
-								updata);
-					}
-				} catch (Exception e) {
-					addextMsg("sendMsg", 2,e.getMessage());//记录日志
-				}
-			}
-		}
-	}
+
 
 
    /**
@@ -514,6 +540,7 @@ public class MsgServiceimp implements MsgService {
 		errInfoList.add(new WarningsLog(-1,type,msg));
 		this.warningLogMapper.addWarningLog(errInfoList);
 	}
+	
 	
 	
 }

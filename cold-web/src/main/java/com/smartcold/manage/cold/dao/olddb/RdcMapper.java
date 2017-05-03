@@ -1,11 +1,10 @@
 package com.smartcold.manage.cold.dao.olddb;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.smartcold.manage.cold.entity.olddb.Rdc;
-
-import java.util.List;
-import java.util.Map;
 
 public interface RdcMapper {
 	int deleteByPrimaryKey(Integer id);
@@ -22,7 +21,7 @@ public interface RdcMapper {
 
 	List<Rdc> findRdcList();
 	
-	List<Map<String, Object>> findRdcManger();
+	String findRdcManger(@Param("rdcID") Integer rdcID );
 
 	List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);
 
