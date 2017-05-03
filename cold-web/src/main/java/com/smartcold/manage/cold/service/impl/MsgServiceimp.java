@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONArray;
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
@@ -259,7 +258,7 @@ public class MsgServiceimp implements MsgService {
 					updata.put("rdc", "\nRDC={" + rdcName + "}");
 					updata.put("rdctype","deviceidtype={" +rdctype.substring(0, rdctype.length()-1) + "}");
 					updata.put("dev", "deviceid={"        + deviceid.substring(0, deviceid.length()-1)+ "}");
-					updata.put("telephone", tel);
+					updata.put(" telephone", tel);
 //					RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele",updata);
 			}
 		}

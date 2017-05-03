@@ -57,9 +57,4 @@ public class TempController {
 		return storageTempDto;
 	}
 	
-	
-	
-	
-	
-	
 }

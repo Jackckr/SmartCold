@@ -99,12 +99,12 @@ public class HistoryController extends BaseController {
 	        	response.addHeader("Content-Length", "" + file.length());
 	        	response.addHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
               if(!file.exists()){
-           	   ServletOutputStream out = response.getOutputStream();  
-           	   OutputStreamWriter ow = new OutputStreamWriter(out,"GB2312");  
-           	   ow.write("这是测试");  
-           	   ow.flush();  
-           	   ow.close();  
-           	   return;
+	           	   ServletOutputStream out = response.getOutputStream();  
+	           	   OutputStreamWriter ow = new OutputStreamWriter(out,"GB2312");  
+	           	   ow.write("数据异常！");  
+	           	   ow.flush();  
+	           	   ow.close();  
+	           	   return;
 	        	}
 				InputStream inStream = new FileInputStream(serverPath+fileName);// 文件的存放路径
 				int len;byte[] b = new byte[2000];

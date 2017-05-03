@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.smartcold.manage.cold.dto.SearchMeta;
 
+@Deprecated
 public interface HistorySearchService {
 
 	List<SearchMeta> getSearchItems(int rdcId);

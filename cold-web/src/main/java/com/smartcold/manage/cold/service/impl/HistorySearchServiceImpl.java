@@ -20,6 +20,7 @@ import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.HistorySearchService;
 
+@Deprecated
 @Service
 public class HistorySearchServiceImpl implements HistorySearchService {
 

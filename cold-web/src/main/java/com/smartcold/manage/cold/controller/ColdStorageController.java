@@ -46,7 +46,7 @@ public class ColdStorageController {
 		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());
 		return storageTempDto;
 	}
-	
+	/*
     @Deprecated
 	@RequestMapping("/getTempByTime")
 	public Object getTempByTime(Integer oid, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
@@ -83,7 +83,7 @@ public class ColdStorageController {
 		storageTempDto.setSystime(new Date().getTime());
 		return storageTempDto;
 	}
-
+*/
 
 	@RequestMapping(value = "/findByUserId", method = RequestMethod.GET)
 	public Object findByUserId(@RequestParam int userId) {

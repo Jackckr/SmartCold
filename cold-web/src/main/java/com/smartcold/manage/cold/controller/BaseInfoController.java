@@ -89,7 +89,7 @@ public class BaseInfoController extends BaseController {
 	}
 
 
-	/**
+     /*
 	 * 计算两个日期之间相差的天数
 	 * 
 	 * @param smdate
@@ -98,7 +98,7 @@ public class BaseInfoController extends BaseController {
 	 *            较大的时间
 	 * @return 相差天数
 	 * @throws ParseException
-	 */
+	
 	public String getDateFormat(int day) {
 		System.err.println(day);
 		if (day <= 3)
@@ -129,10 +129,10 @@ public class BaseInfoController extends BaseController {
 		return ResponseData.newFailure("参数不全！");
 	}
 	
-	/**
+
 	 * 历史数据查询
 	 * 此接口在下个版本删掉（2017-5-9 17:14:10）
-	 */
+	
 	@Deprecated
 	@RequestMapping("/getKeyValueDataByFilter")
 	@ResponseBody
@@ -235,6 +235,6 @@ public class BaseInfoController extends BaseController {
 		}
 		return ResponseData.newFailure();
 	}
-
+*/
 
 }

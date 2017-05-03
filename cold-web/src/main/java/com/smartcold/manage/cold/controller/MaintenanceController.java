@@ -25,8 +25,9 @@ import com.smartcold.manage.cold.util.TimeUtil;
  */
 //@Controller
 //@RequestMapping(value = "/maintenance")
+@Deprecated
 public class MaintenanceController {
-
+/*
 	@Autowired
 	private MaintenanceMapper maintenanceMapper;
 
@@ -105,5 +106,5 @@ public class MaintenanceController {
 		maintenanceMapper.updateMaintenance(maintenanceEntity);
 		return true;
 	}
-	
+	*/
 }
