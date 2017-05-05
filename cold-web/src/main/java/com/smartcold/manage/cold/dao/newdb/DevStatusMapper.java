@@ -1,6 +1,5 @@
 package com.smartcold.manage.cold.dao.newdb;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -13,9 +12,7 @@ import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
  */
 public interface DevStatusMapper {
 	
-   public Integer getApplByApID(@Param("apid")String apid);
-   
-	public List<HashMap<String, String>> getDevPLbyApID(@Param("apid")String apid);
+    public Integer getPLByDEVName(@Param("name")String name,@Param("type")Integer type);
 	
 	public void addAPStatusList(List<StorageDataCollectionEntity> batchEntity);
 	

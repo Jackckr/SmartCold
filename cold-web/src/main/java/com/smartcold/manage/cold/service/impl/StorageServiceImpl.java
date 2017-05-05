@@ -101,32 +101,6 @@ public class StorageServiceImpl implements StorageService {
 		}
 	}
 	
-	@Deprecated
-	@Override
-	public Map<String, List<StorageKeyValue>> findTempByTime(int type, int oid,String key, Date startTime, Date endTime) {
-		Map<String, List<StorageKeyValue>> resdata=new HashMap<String, List<StorageKeyValue>>();
-		List<TempSetEntity> tempset = this.tempSetMapper.getTempsetBycoldstorageid(oid);
-		if(SetUtil.isnotNullList(tempset)){
-			String oids="";
-			HashMap<Integer, TempSetEntity> cacher=new HashMap<Integer, TempSetEntity>();
-			for (TempSetEntity tempSetEntity : tempset) {
-				oids+=tempSetEntity.getId()+",";
-				cacher.put(tempSetEntity.getId(), tempSetEntity);
-			}
-			List<DeviceObjectMappingEntity> devList = deviceObjectMappingDao.findByTypeOids(type, oids.substring(0,oids.length()-1));
-			 if (SetUtil.isnotNullList(devList)) {
-			    	for (DeviceObjectMappingEntity dev : devList) {
-			    		resdata.put(key+cacher.get(dev.getOid()).getName(), storageDataCollectionDao.findByTimeFormat(null, dev.getDeviceid(), key, startTime, endTime,null,"asc"));
-					}
-			} else {
-				for (TempSetEntity tempSetEntity : tempset) {
-					List<StorageKeyValue> findByTime = storageKeyValueDao.findByTimeFormat(StorageType.getStorageType(type).getTable(), tempSetEntity.getId(), key, startTime,endTime,null,"asc");
-					 resdata.put(key+tempSetEntity.getName(), findByTime);
-				}
-		     }
-		}
-		return resdata;
-	}
 	
 	
 	@Override

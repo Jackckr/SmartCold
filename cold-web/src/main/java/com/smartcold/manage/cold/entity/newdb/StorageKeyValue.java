@@ -7,6 +7,7 @@ public class StorageKeyValue {
 	private Integer oid;
 	private String key;
 	private Double value;
+	private Date time;
 	private Date addtime;
 	public Integer getId() {
 		return id;
@@ -31,6 +32,13 @@ public class StorageKeyValue {
 	}
 	public void setValue(Double value) {
 		this.value = value;
+	}
+	
+	public Date getTime() {
+		return time;
+	}
+	public void setTime(Date time) {
+		this.time = time;
 	}
 	public Date getAddtime() {
 		return addtime;

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartcold.manage.cold.dao.newdb.TempWarningMapper">
+	
+	
+	<select id="getCountOverTempByDevId" parameterType="map" resultType="Integer">
+	     SELECT count(*) cont FROM `storagedatacollection`  where `deviceid` =#{deviceid} and `key` ='Temp'  and `addtime` >#{starttime}; 
+	</select>
+	<select id="getMaxTempByDevId" parameterType="map" resultType="Double">
+	     SELECT MAX(`value` )  cont FROM `storagedatacollection`  where `deviceid` =#{deviceid} and `key` ='Temp' and `value` >#{minvalue} and `addtime` >#{starttime}; 
+	</select>	
+	<select id="getOverTempByDevId" parameterType="map" resultType="StorageKeyValue" >
+	     SELECT * FROM `storagedatacollection`  where `deviceid` =#{deviceid} and `key` ='Temp' 
+	     <if test="minvalue!=null">  and `value`   &gt;#{minvalue}</if>    
+	     <if test="maxvalue!=null">  and `value`   &lt;#{maxvalue}</if>    
+	     <if test="starttime!=null"> and `addtime` &gt;#{starttime}</if>    
+	     <if test="endtime!=null">   and `addtime` &lt;#{endtime}</if>; 
+	</select>	
+	
+	
+	<insert id="addSyswarningsinfo">
+		INSERT INTO `syswarningsinfo` (
+			`rdcid`,
+			`objid`,
+			`type`,
+			`level`,
+			`longtime`,
+			`warnigmsg`,
+			`addtime`
+		)VALUES
+		 <foreach collection="list" item="model" index="index"  separator="," >  
+		  (#{model.rdcid}, #{model.objid}, #{model.type},#{model.level}, #{model.longtime}, #{model.warnigmsg}, #{model.addtime})
+		 </foreach>
+	</insert>
+	
+	
+</mapper>

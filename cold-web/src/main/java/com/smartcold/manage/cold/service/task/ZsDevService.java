@@ -1,4 +1,4 @@
-package com.smartcold.manage.cold.service.impl;
+package com.smartcold.manage.cold.service.task;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -25,17 +25,16 @@ import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.ZSDevDataEntity;
-import com.smartcold.manage.cold.service.ZsDevService;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
- * 洲斯数据采集
+ * 洲斯数据采集定时任务  自带线程同步
  * Copyright (C) DCIS 版权所有 功能描述: ZsDevServiceimp Create on MaQiang
  * 2016年9月27日11:55:45
  **/
 @Service
-public class ZsDevServiceimp implements ZsDevService {
+public class ZsDevService  {
 	
 		@Autowired
 		private DevStatusMapper devStatusMapper;
@@ -53,7 +52,7 @@ public class ZsDevServiceimp implements ZsDevService {
 		
 		
 		/**
-		 * 数据抓取
+		 * 数据抓取30秒
 		 */
 	    @Scheduled(cron="0/30 * * * * ?")
 		public void checkData() {
@@ -62,7 +61,9 @@ public class ZsDevServiceimp implements ZsDevService {
 	    	}
 		}
 	    
-	    
+	    /**
+	     * 半小时重置错误统计
+	     */
 		@Scheduled(cron = "0 0/30 * * * ?")
 		public void checkStatus() {
 			errCount=0;
@@ -90,7 +91,7 @@ public class ZsDevServiceimp implements ZsDevService {
 		 */
 		public  void addextTask(String data ){
 			 SubTask subTask=new SubTask(data, this.storageDataCollectionDao,this.devStatusMapper,this.devMapper);
-			 ZsDevServiceimp.executorService.submit(subTask);
+			 ZsDevService.executorService.submit(subTask);
 		}
 		
 	    public static String getDEVData() {
@@ -139,13 +140,13 @@ class SubTask implements Runnable {
   
   
   public  Integer getDevType(String devID){
-	  if(ZsDevServiceimp.devTypecache.containsKey(devID)){
-		  return ZsDevServiceimp.devTypecache.get(devID);
+	  if(ZsDevService.devTypecache.containsKey(devID)){
+		  return ZsDevService.devTypecache.get(devID);
 	  }else{
 		  DeviceObjectMappingEntity devObj = this.devMapper.findInfoByDeviceId(devID);
 		  	if(devObj!=null){
 		  		int type = devObj.getType();
-		  		ZsDevServiceimp.devTypecache.put(devID, type);
+		  		ZsDevService.devTypecache.put(devID, type);
 		  		return type;
 		  	}
 		  	return null;

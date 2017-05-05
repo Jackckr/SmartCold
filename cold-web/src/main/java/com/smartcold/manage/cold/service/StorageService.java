@@ -19,10 +19,6 @@ public interface StorageService {
 
 	List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime,String orderBy);
 	
-	//支持多温
-	@Deprecated
-	Map<String, List<StorageKeyValue>> findTempByTime(int type, int oid, String key, Date startTime, Date endTime);
-	
 	Integer findCounSizeByTime(int type, int oid, String deviceid,String key, Date startTime, Date endTime);
     
     Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findDoorSisByRdcidKeyDate(int rdcid, List<String> keys, Date startTime, Date endTime) ;

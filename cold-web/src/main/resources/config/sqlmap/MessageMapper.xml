@@ -12,7 +12,7 @@
     </insert>
     
     <insert id="addsystemInform" parameterType="SystemInformEntity">
-        INSERT INTO `systemInform` (`type`,`rdcid`,`uid`,`level`,`isread`,`state`,`tit`,`msg`)VALUES(#{type},#{rdcid},#{uid},#{level},#{isread},#{state},#{tit},#{msg});
+        INSERT INTO `systemInform` (`type`,`stype`,`rdcid`,`uid`,`level`,`isread`,`state`,`tit`,`msg`,`addtime`)VALUES(#{type},#{stype},#{rdcid},#{uid},#{level},#{isread},#{state},#{tit},#{msg},now());
     </insert>
     
 </mapper>

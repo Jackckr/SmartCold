@@ -1,4 +1,4 @@
-package com.smartcold.manage.cold.service.impl;
+package com.smartcold.manage.cold.service.task;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
-import com.smartcold.manage.cold.dao.olddb.PowerSetMapping;
 import com.smartcold.manage.cold.dao.olddb.QuantitySetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
@@ -25,7 +24,6 @@ import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.Rdc;
 import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
-import com.smartcold.manage.cold.service.MsgService;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.RemoteUtil;
@@ -34,11 +32,12 @@ import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
- * Copyright (C) DCIS 版权所有 功能描述: MsgServiceimp Create on MaQiang
+ * 热量定时计算
+ * Copyright (C) DCIS 版权所有 功能描述: QuantityService Create on MaQiang
  * 2016年9月27日11:55:45
  **/
 @Service
-public class MsgServiceimp implements MsgService {
+public class QuantityService  {
 
 	@Autowired
 	private RdcMapper rdcMapper;
@@ -47,11 +46,7 @@ public class MsgServiceimp implements MsgService {
 	@Autowired
 	private ColdStorageSetMapper coldStorageSetMapper;
 	@Autowired
-	private PowerSetMapping powerSetMapping;
-	@Autowired
 	private StorageService storageService;
-//	@Autowired
-//	private WarningsInfoMapper warningsInfoMapper;
 	@Autowired
 	private WarningLogMapper warningLogMapper;
 	@Autowired
@@ -65,10 +60,9 @@ public class MsgServiceimp implements MsgService {
 	private QuantityMapper quantityMapper;
 	@Autowired
 	private QuantitySetMapper quantitySetMapper;
-	@Autowired
-	private ColdStorageAnalysisMapper sisMapper;
 
 	
+	private static HashMap<Integer, ColdStorageSetEntity> coldStoragecache=new HashMap<Integer, ColdStorageSetEntity>();//
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
@@ -112,6 +106,7 @@ public class MsgServiceimp implements MsgService {
 		ExportExcelUtil.clearTask();        
 		boolean taskStatus = quantityMapper.updateTaskStatus(4);
 		if(!taskStatus){return ;}
+		coldStoragecache.clear();
 		this.delTempfile();
     	this.resetDevStatus();
     	this.LowbatteryAlarm();
@@ -214,6 +209,8 @@ public class MsgServiceimp implements MsgService {
 		}
 	}
     
+
+	
 	private void sendMsg(Rdc rdc,Date startTime,Date endTime) {
 		int rdcid=rdc.getId();
 		String rdcName=rdc.getName();
@@ -224,10 +221,17 @@ public class MsgServiceimp implements MsgService {
 		filter.put("rdcid",rdcid);
 		List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
 		HashMap<Integer, String> coldNameMap=new HashMap<Integer, String>();//冷库信息
+		
 		for (DeviceObjectMappingEntity obj : devciceList) {
 			Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "Temp", startTime, endTime);//keyval.get(obj.getType())
 			if (size == null || size == 0) {
-				ColdStorageSetEntity storageSetEntity = this.coldStorageSetMapper.findByTID(obj.getOid());
+				ColdStorageSetEntity storageSetEntity = null;
+				if(coldStoragecache.containsKey(obj.getOid())){
+					storageSetEntity=coldStoragecache.get(obj.getOid());
+				}else{
+					 storageSetEntity = this.coldStorageSetMapper.findByTID(obj.getOid());
+					 coldStoragecache.put(obj.getOid(), storageSetEntity);
+				}
 				if(coldNameMap.containsKey(storageSetEntity.getId())){//存在报警
 					coldNameMap.put(storageSetEntity.getId(), coldNameMap.get(storageSetEntity.getId())+","+obj.getDeviceid())	;
 				}else{

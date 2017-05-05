@@ -1,22 +1,4 @@
 package com.smartcold.manage.cold.controller;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.text.ParseException;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.smartcold.manage.cold.dao.olddb.MaintenanceMapper;
-import com.smartcold.manage.cold.entity.olddb.MaintenanceEntity;
-import com.smartcold.manage.cold.util.StringUtil;
-import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
  * 维修。。。。。old

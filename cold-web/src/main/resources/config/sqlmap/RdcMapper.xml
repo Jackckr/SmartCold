@@ -94,7 +94,7 @@
   </select>
   
   <select id="getDEVRdc" parameterType="map" resultType="Rdc">
-    SELECT `id`,`name` FROM `smartcold`.`rdc`   where   id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping <if test="isall"> union  SELECT `rdcid`  FROM `smartcold`.spidercollectionconfig </if> ) and ID IS NOT NULL ;
+    SELECT `id`,`name` FROM `smartcold`.`rdc`   where   id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping where `status`=1 GROUP BY rdcid <if test="isall"> union  SELECT `rdcid`  FROM `smartcold`.spidercollectionconfig </if> ) and ID IS NOT NULL ;
   </select>
   
   <select id="searchRdcByfilter" parameterType="map" resultType="Rdc">

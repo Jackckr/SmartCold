@@ -64,6 +64,20 @@ public class TimeUtil {
 			return -1;
 		}
 	}
+	
+	/**
+	 * 获得两个时间差
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static long secondBetween(Date start, Date end) {
+		try {
+			   return (end.getTime()-start.getTime())/1000;//除以1000是为了转换成秒
+		} catch (Exception e) {
+			return -1;
+		}
+	}
     /**
      * Date转String
      *

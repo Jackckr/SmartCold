@@ -105,10 +105,11 @@ public class DataCollectionController extends BaseController {
 						this.devplset.addAPStatusList(apsatusList);
 						this.devplset.addDevStatusList(devsatusList);
 					}else{//校时包
-						Integer appl = this.devplset.getApplByApID(apID);
-						 List<HashMap<String, String>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
-						if(appl!=null){resMap.put("APL", appl+"") ; }//
-						if(SetUtil.isnotNullList(devPLbyApID)){resMap.put("infos", devPLbyApID) ;}//返回dev采集频率信息
+						//getApplByName
+//						Integer appl = this.devplset.getApplByApID(apID);
+//						 List<HashMap<String, String>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
+//						if(appl!=null){resMap.put("APL", appl+"") ; }//
+//						if(SetUtil.isnotNullList(devPLbyApID)){resMap.put("infos", devPLbyApID) ;}//返回dev采集频率信息
 				   }
 		   }
 		} catch (Exception e) {

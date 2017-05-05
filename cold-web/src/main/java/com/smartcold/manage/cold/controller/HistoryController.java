@@ -31,7 +31,7 @@ import com.smartcold.manage.cold.dao.olddb.TempSetMapper;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.newdb.TaskEntity;
 import com.smartcold.manage.cold.service.StorageService;
-import com.smartcold.manage.cold.service.impl.ZsDevServiceimp;
+import com.smartcold.manage.cold.service.task.ZsDevService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.ResponseData;
@@ -54,7 +54,7 @@ public class HistoryController extends BaseController {
 	 @RequestMapping("/getSensorhistData")
 	 @ResponseBody
 	 public Object getSensorhistData()  {
-		return ZsDevServiceimp.data;
+		return ZsDevService.data;
 	 }
 	 
 	

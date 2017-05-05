@@ -4,13 +4,10 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.newdb.DevStatusMapper">
     
-    <select id="getApplByApID" parameterType="map" resultType="Integer">
-      select frequency from `smartcold`.`frequencyset`  where  apid=#{apid} and type=1 ORDER BY `addtime`  desc LIMIT 1;
+    <select id="getPLByDEVName" parameterType="map" resultType="Integer">
+      select frequency from `smartcold`.`frequencyset`  where  name=#{name} and type=#{type} ORDER BY `addtime`  desc LIMIT 1;
     </select>
     
-    <select id="getDevPLbyApID" parameterType="map" resultType="map">
-      select devid as devID,frequency as PL from `smartcold`.`frequencyset`  where  apid=#{apid} and type=2 ORDER BY `addtime`  desc;
-    </select>
 
 	<insert id="addAPStatusList" parameterType="StorageDataCollectionEntity">
 		INSERT INTO `apstatus`

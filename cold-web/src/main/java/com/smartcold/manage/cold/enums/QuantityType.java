@@ -16,6 +16,8 @@ public enum QuantityType implements Serializable{
 	Qblower(4, "Qblower", "Q风"),
 	Qctdoor(2, "Qctdoor", "Q门"),//2     换气
 	Qlighting(2, "Qlighting", "Q照");//2->15
+	
+	
 	private int type;
 	private String key;
 	private String desc;
