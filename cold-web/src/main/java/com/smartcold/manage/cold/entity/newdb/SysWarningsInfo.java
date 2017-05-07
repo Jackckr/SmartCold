@@ -8,9 +8,29 @@ public class SysWarningsInfo {
 	private int objid;
 	private int type;
 	private int level;
+	
 	private double longtime;
 	private String warnigmsg;
 	private String addtime;
+	private String endtime;
+	private String starttime;
+	
+	public SysWarningsInfo() {
+		super();
+	}
+
+	public SysWarningsInfo(int rdcid, int objid, int type, int level,String starttime,String endtime,double longtime, String warnigmsg, String addtime) {
+		super();
+		this.rdcid = rdcid;
+		this.objid = objid;
+		this.type = type;
+		this.level = level;
+		this.longtime = longtime;
+		this.warnigmsg = warnigmsg;
+		this.addtime = addtime;
+		this.starttime = starttime;
+		this.endtime = endtime;
+	}
 
 	public int getId() {
 		return id;
@@ -50,6 +70,22 @@ public class SysWarningsInfo {
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
 	}
 
 	public double getLongtime() {

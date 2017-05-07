@@ -2,7 +2,6 @@ package com.smartcold.manage.cold.api;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,6 @@ import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
-import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 

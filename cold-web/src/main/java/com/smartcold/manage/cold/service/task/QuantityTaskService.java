@@ -37,7 +37,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 2016年9月27日11:55:45
  **/
 @Service
-public class QuantityService  {
+public class QuantityTaskService  {
 
 	@Autowired
 	private RdcMapper rdcMapper;
@@ -231,6 +231,10 @@ public class QuantityService  {
 				}else{
 					 storageSetEntity = this.coldStorageSetMapper.findByTID(obj.getOid());
 					 coldStoragecache.put(obj.getOid(), storageSetEntity);
+				}
+				if(storageSetEntity==null){
+					
+					continue; 
 				}
 				if(coldNameMap.containsKey(storageSetEntity.getId())){//存在报警
 					coldNameMap.put(storageSetEntity.getId(), coldNameMap.get(storageSetEntity.getId())+","+obj.getDeviceid())	;
