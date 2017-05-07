@@ -23,7 +23,7 @@
                             </div>  
                         </div>
                         <div class="row" style="height:320px" ng-if="curtemper.length>1">                          
-                            <div ng-repeat="obj in curtemper" class="col-lg-6 col-sm-6 col-xs-12 col-md-12 text-left omg" style="line-height: {{320/curtemper.length}}px;color:{{$scope.colors[$index]}} ">
+                            <div ng-repeat="obj in curtemper" class="col-lg-6 col-sm-6 col-xs-12 col-md-12 text-left omg" style="line-height: {{320/curtemper.length}}px;">
                              	<span class="tNum" style="font-size: 2em;" >{{obj[0]}}:{{obj[1]}}</span><span class="tUiit" style="font-size: 1.5em;">℃</span> 
                             </div>
                         </div>

@@ -36,7 +36,7 @@ coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$state
     $scope.initMode=function(){
 		if( $scope.st==0){//服务新建维修单
 			 $scope.cuttstatus=4;
-			$("#begin,#end").jeDate({isinitVal:true, skinCell:"jedateblue", minDate:  $.nowDate(0),  format: 'YYYY-MM-DD-hh:mm'});
+			$("#begin,#end").jeDate({isinitVal:true, skinCell:"jedateblue", minDate:  $.nowDate(0),  format: 'YYYY-MM-DD hh:mm'});
 			//1.实际故障联动
 			$scope.addfSelect=function(){//添加故障
 		 		var item={id:2,pid:1};

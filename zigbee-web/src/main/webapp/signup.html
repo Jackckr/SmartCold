@@ -253,11 +253,15 @@ $(function(){
 	});
 	$('#submit').click(function(){
 		userName = $("#username").val().trim();
-		var password = $('input[name=password]').val().trim();
+		var password_error = $('input[name=password]').val().trim();
 		var password1 = $('input[name=password1]').val().trim();
 		var checkUserName = $("#username_error").html();
+		var password_error = $("#password_error").html();
+		var password_error1 = $("#password_error1").html();
 		if(checkUserName != ""){
 			alert(checkUserName);
+		}else if(password_error!=""||password_error1!=""){
+			alert(password_error);
 		}else if(password != password1){
 			alert("两次密码不统一~");
 		}else{

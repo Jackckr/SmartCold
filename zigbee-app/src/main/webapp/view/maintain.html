@@ -9,17 +9,19 @@
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../com/css/jqpagination.css">
-    <link rel="stylesheet" href="../com/css/layer.css" />
+<!--     <link rel="stylesheet" type="text/css" href="../com/css/jqpagination.css"> -->
+<!--     <link rel="stylesheet" href="../com/css/layer.css" /> -->
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/jquery.jqpagination.js"></script>
+<!--     <script type="text/javascript" src="../com/js/jquery.jqpagination.js"></script> -->
 	<script type="text/javascript" src="../com/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/js/layer.js" ></script>
+    <script type="text/javascript" src="../com/js/jquery.raty.js"></script>
+<!--     <script type="text/javascript" src="../com/js/layer.js" ></script> -->
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
+    <script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
     <script type="text/javascript" src="../app/js/maintain.js" ></script>
     <style>
     	.layui-m-layercont{
@@ -39,6 +41,36 @@
 		}
 		ol, ul, p{
 		   margin-bottom:0;
+		}
+		.applyKid .checkbox-inline{
+			margin:0 .5rem .5rem 0;
+		}
+		.addSeclect{
+			margin-bottom: 1rem;
+		}
+		.addSeclect select{
+			width: 42%;
+			display: inline-block;
+		}
+		.addBtn{
+			width: 10%;
+			padding:0; 
+			height:1.2rem;
+			line-height:1.2rem;
+			font-size: 1rem;
+			float:right;
+		}
+		#star{
+			width: auto!important;
+			text-align: center;
+		}
+		#star img{
+			height: 1.5rem;
+			width: auto!important;
+		}
+		#txt_evaluate{
+			width: 100%;
+			height:3rem;
 		}
     </style>
 </head>
@@ -70,9 +102,8 @@
     <!-- header end-->
     <section class="toggle">
     	<div class="tempture current mylog"><i class="iconfont">&#xe79c;</i>维护提醒</div>
-<!--     	<div class="light mylog"><i class="iconfont">&#xe7c9;</i>维修记录</div>   -->
-<!--     	<div class="applyLog mylog"><i class="iconfont" style="color: #438BCB;">&#xe639;</i>维修申请</div>    	 -->
     	<div class="apply_log mylog"><i class="iconfont" style="color: #F39826;">&#xe639;</i>维修</div>    	
+    	<div class="light mylog"><i class="iconfont">&#xe7c9;</i>维修记录</div> 
     </section>
     <div class="backDrop"></div>
     <div class="mainTainBottomL">
@@ -94,221 +125,570 @@
 	        <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
 	    </div>
 	  <!-- 维护提醒html  end -->
-	  
-	  <!-- 维护记录html ===================*********============*********==========-->
-		<!-- <div class="wxRecords black"  ng-show="rdcId">
-			<p>维修完结记录</p>
-			<div class="input-group">
-                 <input type="text" class="form-control" placeholder="请输入机组名" ng-model="keyword" ng-change="goSearch1()" ng-model-options="{debounce: 700}">
-                 <span class="input-group-btn">
-                     <button class="btn btn-primary" type="button" ng-click="goSearch1()">搜索</button>
-                 </span>
-             </div><br>
-			<div class="analysis alarmLog">
-				<table class="cold_warn">
-					<thead>
-						<tr>
-							<th>序号</th>
-							<th>机组名称</th>
-							<th>维修原因/保养要求</th>
-							<th>预约维修时间</th>
-							<th>实际维修时间</th>
-							<th>维修详情</th>
-							<th>备注</th>
-							<th>维修评价</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="maintenance1 in Maintenances1">
-							<td class="text-center">{{$index+1}}</td>
-							<td>{{maintenance1.unitname}}</td>
-							<td>{{maintenance1.reason}}</td>
-							<td>{{maintenance1.ordertime | date:'yyyy-MM-dd'}}</td>
-							<td>{{maintenance1.fixtime | date:'yyyy-MM-dd' }}</td>
-							<td class="myNote">{{maintenance1.detail}}</td>
-							<td class="myNote">{{maintenance1.note}}</td>
-							<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-blur="change(maintenance1.id,maintenance1.appraise)"></textarea></td>
-							<td class="text-center">
-								<button class="btn btn-danger"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+		<!--告警列表  =============-->
+		<div class="wxRecords black">
+			<!------------------ 维修商-------------------->
+			<div ng-if="user.type==2">
+				<div ng-if="st!=0&&st!=1">
+					<p style="text-align: left;">维修列表</p>
+					<div class="analysis alarmLog">
+						<table class="cold_warn">
+							 <thead>
+						      <tr>
+						        <th><input type="checkbox"> </th>
+						        <th>序号</th>
+						        <th>故障消息</th>
+						        <th>分析结果</th>
+						        <th>状态</th>
+						        <th>告警时间</th>
+						        <th >操作</th>
+						     </tr>
+						    </thead>
+						    <tbody>
+						      <tr ng-repeat="obj in maintdata_notice">
+						        <td><input id="ckobj_{{obj.id}}" type="checkbox" ></td>
+						        <td>{{obj.id}}</td>
+						        <td>{{obj.warningmsg}}</td>
+						        <td>{{obj.analysismsg}}</td>
+						        <td>{{stmode[obj.status]}}</td>
+						        <td>{{obj.addtime.substring(0,19)}}</td>
+						        <td class="text-center">
+							        <span ng-if="obj.status==1">
+								        <button  class="btn btn-xs btn-primary " ng-click="tol_forMaint_notice(obj.id,0,0)">维修确认</button>
+								        <button class="btn btn-xs btn-warning " ng-click="tol_ignore_notice(obj.id,-2,'确定要解除故障吗?')">解除故障</button>
+							        </span>
+							         <span ng-if="obj.status==2">
+								        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_forMaint_notice(obj.id,1,0)">详情</button>
+							        </span>
+							         <span ng-if="obj.status==3">
+								        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_gotRepair_notice(obj.id,0,1)">维修清单确认</button>
+							        </span>
+							        <span ng-if="obj.status==5">
+								        <button  class="btn btn-xs btn-primary " style="width: 120px;" ng-click="tol_gotRepair_notice(obj.id,1,1)">查看维修清单</button>
+							        </span>
+						        </td>
+						      </tr>
+						    </tbody>
+						    <tr>
+						  </table>
+						</div>
+						<button class="btn btn-info btn-block" ng-click="tol_batch_notice()">合并维修</button>
+				</div>
+			<!------------------ 维修通知单---------------------->
+				<div ng-if="rep==0">
+<!-- 				<div ng-if="st==0&&sh!=1&&rep==0 || st==1"> -->
+					<p>维修通知单</p>
+					<div class="applyKid textA">
+						<p>单位名称:</p>
+						<input class="datainp" type="text" ng-model="company.name" />
+					</div>
+					<div class="applyKid textA">
+						<p>单位地址:</p>
+						<input class="datainp" type="text" ng-model="company.address" />
+					</div>
+					<div class="applyKid">
+						<p>联系人:</p>
+						<input class="datainp" type="text" ng-model="wuser.username" />
+					</div>
+					<div class="applyKid">
+						<p>联系电话:</p>
+						<input class="datainp" type="text" ng-model="wuser.telephone" />
+					</div>
+					<div class="applyKid">
+						<p>报修时间:</p>
+						<input class="datainp" id="wx" readonly type="text" ng-model="maintenance.repairtime" />
+					</div>
+					<div class="applyKid">
+						<p>故障现象:</p>
+						<div class="addSeclect form-inline" ng-repeat="item in wardata">
+							<span ng-repeat="item in wardata">
+								<select disabled="disabled">
+									<option value="0">{{item.analysismsg}}</option>
+								</select>
+								<select disabled="disabled">
+									<option value="0">{{item.warningmsg}}</option>
+								</select>
+	                          </span>
+							<span ng-if="st==0&&user.type==2" class="addBtn btn btn-info" ng-click="addSelect(this)">+</span>
+						</div>
+						<div class="addSeclect form-inline" ng-repeat="item in nwardata" >
+							<span >
+								<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changepwartype($index,item)" ng-disabled="st==1"></select>
+								<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in swartype[$index]" ng-disabled="st==1"></select>
+	                         </span>
+							<span ng-if="st==0&&user.type==2" class="addBtn btn btn-primary" ng-click="removerSelect($index)">-</span>
+						</div>
+					</div>
+					<div class="applyKid">
+						<p>故障补充:</p>
+						<input class="datainp" type="text" ng-model="maintenance.note" />
+					</div>
+					<div class="applyKid">
+						<p>预约上门时间:</p>
+						<input class="datainp" id="orderTime" readonly type="text" ng-model="maintenance.bookingtime" />
+					</div>
+					<div class="applyKid">
+						<p>预估维修费用:</p>
+						<input class="datainp" type="number" ng-model="maintenance.cost" />
+					</div>
+					<div class="applyKid">
+						<p>选择服务性质:</p>
+						<label class="checkbox-inline"><input id="ck_server1" type="checkbox" name="service" value="1">三包</label>
+						<label class="checkbox-inline"><input id="ck_server2" type="checkbox" name="service" value="2">改造</label>
+						<label class="checkbox-inline"><input id="ck_server3" type="checkbox" name="service" value="3">维修</label>
+						<label class="checkbox-inline"><input id="ck_server4" type="checkbox" name="service" value="4">零件</label>
+						<label class="checkbox-inline"><input id="ck_server5" type="checkbox" name="service" value="5">保养</label>
+						<label class="checkbox-inline"><input id="ck_server6" type="checkbox" name="service" value="6">巡检</label>
+						<label class="checkbox-inline"><input id="ck_server7" type="checkbox" name="service" value="7">移交</label>
+					</div>
+					<div class="applyKid textA">
+						<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
+					</div>
+					<div class="applyKid textA clearfix">
+						<button ng-if="st==0&&user.type==2" class="btn btn-success btn-block" ng-click="submit()">发送维修申请</button>
+						<button ng-if="st==1&&user.type!=2" class="btn btn-success col-xs-5 col-sm-5" ng-click="tol_advice(false,3,'您确定要提交该维修确认单吗？')">同意</button>
+						<button ng-if="st==1&&user.type!=2" class="btn btn-danger col-xs-5 col-sm-5 col-xs-offset-2" ng-click="tol_advice(true,1,'您确定驳回该维修确认单吗？')">驳回</button>
+					</div>
+				</div>			
+			<!------------------ 维修通知单end---------------------->
+				<!------------------ 维修清单确认---------------------->
+				<div ng-if="rep==1">
+<!-- 				<div ng-if="st==0&&sh==1&&rep==1||st==1&&sh==1&&rep==1"> -->
+					<p>维修清单确认</p>
+					<div class="applyKid textA">
+						<p>单位名称:</p>
+						<input class="datainp" type="text" ng-model="company.name" />
+					</div>
+					<div class="applyKid textA">
+						<p>单位地址:</p>
+						<input class="datainp" type="text" ng-model="company.address" />
+					</div>
+					<div class="applyKid">
+						<p>联系人:</p>
+						<input class="datainp" type="text" ng-model="wuser.username" />
+					</div>
+					<div class="applyKid">
+						<p>联系电话:</p>
+						<input class="datainp" type="text" ng-model="wuser.telephone" />
+					</div>
+					<div class="applyKid">
+						<p>开工时间:</p>
+						<input class="datainp" id="begin" readonly type="text"/>
+					</div>
+					<div class="applyKid">
+						<p>结束时间:</p>
+						<input class="datainp" id="end" readonly type="text" />
+					</div>
+					<div class="applyKid">
+						<p>实际故障现象:</p>
+						<div class="addSeclect form-inline" ng-repeat="item in wardata">
+							<span ng-repeat="item in wardata">
+								<select disabled="disabled">
+									<option value="0">{{item.analysismsg}}</option>
+								</select>
+								<select disabled="disabled">
+									<option value="0">{{item.warningmsg}}</option>
+								</select>
+	                          </span>
+							<span ng-if="st==0" class="addBtn btn btn-info" ng-click="addfSelect()">+</span>
+						</div>
+                         <div class="addSeclect form-inline" ng-repeat="item in faultmapper" >
+							<span >
+								<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changefselecttype($index,item)" ng-disabled="st==1"></select>
+								<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in swartype[$index]" ng-disabled="st==1"></select>
+	                         </span>
+							<span ng-if="st==0" class="addBtn btn btn-primary" ng-click="removerfSelect($index)">-</span>
+						</div>
+					</div>
+					<div class="applyKid">
+						<p style="margin-bottom: 0.5rem;">维修处理结果:<span ng-if="st==0" class="addBtn btn btn-info" style="float: none;" ng-click="addmSelect()">+</span></p>
+						<div class="addSeclect form-inline" ng-repeat="item in maintresult">
+							<span >
+								<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changemselecttype($index,item)" ng-disabled="st==1"></select>
+								<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in mwartype[$index]" ng-disabled="st==1"></select>
+	                         </span>
+							  <span ng-if="st==0" class="addBtn btn btn-primary" ng-click="removermSelect($index)">-</span>
+						</div>
+					</div>
+					<div class="applyKid table-responsive">
+						<p>维修费用清单:</p>
+						<table class="table table-bordered">
+						  <thead>
+						    <tr class="success">
+						      <th>序号</th>
+						      <th>一级项目</th>
+						      <th>二级项目</th>
+						      <th>数量</th>
+						      <th>单位</th>
+						      <th>单价/元</th>
+						      <th>小计金额</th>
+						      <th>操作<span class="btn btn-info" ng-click="uplist(true,$index)" ng-if="st==0">+</span></th>
+						   </tr>
+						  </thead>
+							<tbody>
+								<tr class="warning" ng-repeat="obj in detailedList">
+									<td>{{$index+1}}</td>
+									<td>
+								     	<select ng-model="obj.wpid" ng-options="item.id as item.name for item in pwartype"  ng-change="changeordertype($index,obj)"  ng-disabled="st==1"></select>
+									</td>
+									<td>
+									     <select ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
+									</td>
+									<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td>
+									  <select ng-model="obj.unit" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
+									</td>
+									<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
+									<td>
+		                                 <span ng-if="st==0" class="btn btn-primary" ng-click="uplist(false,$index)">-</span>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr class="success">
+									<td>合计金额</td>
+									<td colspan="8">{{cost}}</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="applyKid">
+						<p>维修补充:</p>
+						<input class="datainp" type="text" id="notes" ng-model="note"/>
+					</div>
+					<div class="applyKid">
+						<p>选择服务性质:</p>
+						<div class="checkbox"><label><input id="radio_service1" type="radio" name="service" value="1">三包，工作完成</label></div>
+						<div class="checkbox"><label><input id="radio_service2" type="radio" name="service" value="2">维修，工作完成，不收费</label></div>
+						<div class="checkbox"><label><input id="radio_service3" type="radio" name="service" value="3">维修，工作完成，待开票</label></div>
+						<div class="checkbox"><label><input id="radio_service4" type="radio" name="service" value="4">维修，工作完成，现场支付</labe></div>
+					</div>
+					<div class="applyKid textA">
+						<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
+					</div>
+					<div ng-if="cuttusertype" class="form-group db" style="width: 50%;">
+						<label class="dbc control-label" style="width: 20%;">评分：&nbsp;</label>
+						<div class="dbc" style="width: 80%;">
+							<div id="star"></div>
+						</div>
+					</div>
+					<div ng-if="cuttusertype" class="form-group db" style="width: 50%;">
+						<label class="dbc control-label" style="width: 20%;">评价：&nbsp;</label>
+						<div class="dbc" style="width: 80%;">
+							<textarea id="txt_evaluate" placeholder="请输入文字/选填" class="form-control" >
+							</textarea>
+						</div>
+					</div>
+					<div class="applyKid textA clearfix">
+						<button ng-if="st==0&&user.type==2" class="btn btn-success btn-block" ng-click="addMaintenance()">发送维修申请</button>
+						<button ng-if="cuttusertype" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,6,'您确定签字？')">同意</button>
+					</div>
+				</div>			
+			<!------------------ 维修清单确认end---------------------->
 			</div>
-			<div class="pagination">
-			    <a href="#" class="first" data-action="first">首页</a>
-			    <a href="#" class="previous" data-action="previous">上页</a>
-			    <input type="text" readonly="readonly" data-max-page="40" />
-			    <a href="#" class="nexts" data-action="nexts">下页</a>
-			    <a href="#" class="last" data-action="last">末页</a>
-			</div>
-			<hr/>
-			
-			<p>待维修记录</p>
-			<div class="analysis alarmLog">
-				<table class="cold_warn">
-					<thead>
-						<tr>
-							<th>序号</th>
-							<th>机组名称</th>
-							<th>维修原因/保养要求</th>
-							<th>预约维修时间</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="maintenance0 in Maintenances0">
-							<td class="text-center">{{$index+1}}</td>
-							<td>{{maintenance0.unitname}}</td>
-							<td class="myNote">{{maintenance0.reason}}</td>
-							<td>{{maintenance0.ordertime | date:'yyyy-MM-dd' }}</td>
-							<td class="text-center">
-								<button class="btn btn-success" ng-click="weixiuapply(maintenance0.id)">维修</button>
-								<button class="btn btn-danger"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div> -->
-		<!-- 维护记录html end-->  
-	  
-	  <!-- 维护申请html ===================*********============*********==========-->
-		<!-- <div class="mainApply black"  ng-show="rdcId">
-			<div class="applyKid">
-				<p>机组名称:</p>
-				<textarea placeholder="请输入需要维修机组的名称" ng-model="unitname"></textarea>
-			</div>
-			<div class="applyKid">
-				<p>维修原因/保养要求:</p>
-				<textarea colspan="10" rowspan="10" ng-model="reason" placeholder="请输入维修原因/保养要求"></textarea>
-			</div>
-			<div class="applyKid">
-				<p>预约维修时间:</p>
-				<input class="datainp" type="date" ng-model="ordertime" placeholder="请选择预约时间"/>
-			</div>
-			<button class="mybtn" ng-click="addMaintenance()">提交</button>
-		</div> -->
-		<!-- 维护html ===================*********============*********==========-->
-		<div class="wxRecords black"  ng-show="rdcId">
-			<p style="text-align: left;">告警列表</p>
-			<div class="analysis alarmLog">
-				<table class="cold_warn">
-					 <thead>
-				      <tr>
-				        <th><input ng-model="isselall" type="checkbox" ng-click="tol_selallevt(isselall)" > </th>
-				        <th>告警ID</th>
-				        <th>告警消息</th>
-				        <th>分析结果</th>
-				        <th>告警时间</th>
-				        <th>状态</th>
-				        <th >操作</th>
-				     </tr>
-				    </thead>
-				    <tbody id="tb_body">
-				      <tr ng-repeat="obj in maintdata">
-				        <td><input id="ckobj_{{obj.id}}" name="ck_obj" value="{{obj.id}}" type="checkbox" ></td>
-				        <td>{{obj.id}}</td>
-				        <td>{{obj.warningmsg}}</td>
-				        <td>{{obj.analysismsg}}</td>
-				        <td>{{obj.addtime.substring(0,19)}}</td>
-				        <td>{{stmode[obj.status]}}</td>
-				        <td class="text-center">
-				           <span ng-if="obj.status==0">
-						        <button class="btn btn-xs btn-primary " ng-click="tol_forMaint(obj)">申维</button>
-						        <button class="btn btn-xs btn-danger"  ng-click="tol_del(obj.id)">删除</button>
-						        <button class="btn btn-xs btn-info"  ng-click="tol_ignore(obj.id,-1,'您确信要忽略这条告警吗？')">忽略</button>
-				           </span>
-				           <span  ng-if="obj.status==1">
-				             <button class="btn btn-xs btn-warning" style="width:114px" ng-click="tol_ignore(obj.id,0,'您确定要撤回这条维修申请吗？')">撤回</button>
-				           </span>
-				           <span  ng-if="obj.status==2">
-				             <button class="btn btn-xs btn-success" style="width:114px" ng-click="tol_goMaint(obj.maintid,1)">查看/确认</button>
-				           </span>
-				           <span  ng-if="obj.status==3">
-				             <span class="btn btn-xs btn-success" style="width:114px">请等待</span>
-				           </span>
-				        </td>
-				      </tr>
-				    </tbody>
-				</table>
-			</div><hr>
-			<p style="text-align: left;">维修</p>
-			<div class="input-group">
-                 <input type="text" class="form-control" placeholder="请输入设备名" ng-model="keyword" ng-change="goSearch1()" ng-model-options="{debounce: 700}">
-                 <span class="input-group-btn">
-                     <button class="btn btn-primary" type="button" ng-click="goSearch1()">搜索</button>
-                 </span>
-             </div><br>
-			<div class="analysis alarmLog">
-				<table class="cold_warn">
-					<thead>
-						<tr>
-							<th>序号</th>
-					        <th>设备名称</th>
-					        <th>维修单位</th>
-					        <th>维修人员</th>
-					        <th>故障描述</th>
-					        <th>故障原因</th>
-					        <th>告警时间</th>
-					        <th>维修时间</th>
-					        <th>维修情况</th>
-					        <th>维修确认</th>
-					        <th>验收确认</th>
-					        <th>评价详情</th>
-					        <th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-					        <td>1</td>
-					        <td>压缩机1</td>
-					        <td>睿冷</td>
-					        <td>阿三</td>
-					        <td>高温</td>
-					        <td>开机时间过长</td>
-					        <td>2017/04/05 15:32</td>
-					        <td>2017/04/06 10:20</td>
-					        <td>加水冷却ok</td>
-					        <td>阿甘</td>
-					        <td>胡汉三</td>
-					        <td>及时准确</td>
-					        <td>
-						        <button class="btn btn-primary" ng-click="comment(maintenance0.id)">评价</button>
-						        <button class="btn btn-danger">删除</button>
-					        </td>
-					      </tr>
-					      <tr>
-					        <td>2</td>
-					        <td>压缩机1</td>
-					        <td>睿冷</td>
-					        <td>阿三</td>
-					        <td>高温</td>
-					        <td>开机时间过长</td>
-					        <td>2017/04/05 15:32</td>
-					        <td>2017/04/06 10:20</td>
-					        <td>加水冷却ok</td>
-					        <td>阿甘</td>
-					        <td>胡汉三</td>
-					        <td>及时准确</td>
-					        <td>
-						        <button class="btn btn-primary" ng-click="comment(maintenance0.id)">评价</button>
-						        <button class="btn btn-danger">删除</button>
-					        </td>
-					      </tr>
-					</tbody>
-				</table>
-			</div>
-			<!-- <div class="pagination">
-			    <a href="#" class="first" data-action="first">首页</a>
-			    <a href="#" class="previous" data-action="previous">上页</a>
-			    <input type="text" readonly="readonly" data-max-page="40" />
-			    <a href="#" class="nexts" data-action="nexts">下页</a>
-			    <a href="#" class="last" data-action="last">末页</a>
-			</div> -->
+<!---------------------------------- 维修商 end----------------------------------------------------------------------->
+<!------------------------------------冷库主---------------------------------------------------------------------------------->
+			<div ng-if="user.type!=2">
+				<div ng-if="setp==1&&st!=1">
+					<p style="text-align: left;">告警列表</p>
+					<div class="analysis alarmLog">
+						<table class="cold_warn">
+							 <thead>
+						      <tr>
+						        <th><input ng-model="isselall" type="checkbox" ng-click="tol_selallevt(isselall)" > </th>
+						        <th>告警ID</th>
+						        <th>告警消息</th>
+						        <th>分析结果</th>
+						        <th>告警时间</th>
+						        <th>状态</th>
+						        <th >操作</th>
+						     </tr>
+						    </thead>
+						    <tbody id="tb_body">
+						      <tr ng-repeat="obj in maintdata">
+						        <td><input id="ckobj_{{obj.id}}" name="ck_obj" value="{{obj.id}}" type="checkbox" ></td>
+						        <td>{{obj.id}}</td>
+						        <td>{{obj.warningmsg}}</td>
+						        <td>{{obj.analysismsg}}</td>
+						        <td>{{obj.addtime.substring(0,19)}}</td>
+						        <td>{{stmode[obj.status]}}</td>
+						        <td class="text-center">
+						           <span ng-if="obj.status==0">
+								        <button class="btn btn-xs btn-primary " ng-click="tol_forMaint(obj)">申维</button>
+								        <button class="btn btn-xs btn-danger"  ng-click="tol_del(obj.id)">删除</button>
+								        <button class="btn btn-xs btn-info"  ng-click="tol_ignore(obj.id,-1,'您确信要忽略这条告警吗？')">忽略</button>
+						           </span>
+						           <span  ng-if="obj.status==1">
+						             <button class="btn btn-xs btn-warning" style="width:114px" ng-click="tol_ignore(obj.id,0,'您确定要撤回这条维修申请吗？')">撤回</button>
+						           </span>
+						           <span  ng-if="obj.status==2">
+						             <button class="btn btn-xs btn-success" style="width:114px" ng-click="tol_goMaint(obj.id,1,1)">查看/确认</button>
+						           </span>
+						           <span  ng-if="obj.status==3">
+						             <span class="btn btn-xs btn-success" style="width:114px">请等待</span>
+						           </span>
+						           <span  ng-if="obj.status==5">
+						             <span class="btn btn-xs btn-success"  style="width: 120px;"  ng-click="tol_goMaintRepair(obj.id,1,2)" >维修清单审核</span>
+						           </span>
+						        </td>
+						      </tr>
+						    </tbody>
+						</table>
+					</div>
+					<button class="btn btn-info btn-block"  ng-click="tol_batch()">合并申维</button>
+				</div>
+			<!--告警列表 end  =============-->
+			<!------------------ 告警消息---------------------->
+				<div ng-if="setp==2">
+					<div class="applyKid textA">
+						<p>告警消息:</p>
+						<input class="datainp" type="text" disabled ng-model="sqobj.warningmsg" />
+					</div>
+					<div class="applyKid textA">
+						<p>分析结果:</p>
+						<input class="datainp" type="text" disabled ng-model="sqobj.analysismsg" />
+					</div>
+					<div class="applyKid">
+						<p>告警时间:</p>
+						<input class="datainp" type="type" disabled value="{{sqobj.addtime.substring(0,19)}}" />
+					</div>
+					<div class="applyKid textA">
+						<p>附件:</p>
+						<input style="width:100%;" type="file" />
+					</div>
+					<div class="applyKid textA">
+						<p>备注:</p>
+						<textarea colspan="10" rowspan="10" id="tex_node" placeholder="请输入文字"></textarea>
+					</div>
+					<div class="form-group text-center clearfix">
+				       <button class="btn  btn-success col-xs-5 col-sm-5" ng-click="tol_submit()">提交</button>
+				       <button class="btn btn-primary col-xs-5 col-sm-5 col-xs-offset-2" ng-click="tol_back()">返回</button>
+				    </div>
+				</div>
+			<!------------------ 告警消息end---------------------->
+			<!------------------查看/确认---------------------->
+				<div ng-if="st==1&&rep==1">
+					<p>维修通知单</p>
+					<div class="applyKid textA">
+						<p>单位名称:</p>
+						<input class="datainp" type="text" disabled ng-model="company.name" />
+					</div>
+					<div class="applyKid textA">
+						<p>单位地址:</p>
+						<input class="datainp" type="text" disabled ng-model="company.address" />
+					</div>
+					<div class="applyKid">
+						<p>联系人:</p>
+						<input class="datainp" type="text" disabled ng-model="wuser.username" />
+					</div>
+					<div class="applyKid">
+						<p>联系电话:</p>
+						<input class="datainp" type="text" disabled ng-model="wuser.telephone" />
+					</div>
+					<div class="applyKid">
+						<p>报修时间:</p>
+						<input class="datainp" id="wx" readonly type="text" ng-model="maintenance.repairtime" />
+					</div>
+					<div class="applyKid">
+						<p>故障现象:</p>
+						<div class="addSeclect form-inline" ng-repeat="item in wardata">
+							<span ng-repeat="item in wardata">
+								<select disabled="disabled">
+									<option value="0">{{item.analysismsg}}</option>
+								</select>
+								<select disabled="disabled">
+									<option value="0">{{item.warningmsg}}</option>
+								</select>
+	                          </span>
+							<span ng-if="st==0&&user.type==2" class="addBtn btn btn-primary" ng-click="addSelect(this)">+</span>
+						</div>
+						<div class="addSeclect form-inline" ng-repeat="item in nwardata" >
+							<span >
+								<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changepwartype($index,item)" ng-disabled="st==1"></select>
+								<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in swartype[$index]" ng-disabled="st==1"></select>
+	                         </span>
+							<span ng-if="st==0&&user.type==2" class="addBtn btn btn-primary" ng-click="removerSelect($index)">-</span>
+						</div>
+					</div>
+					<div class="applyKid">
+						<p>故障补充:</p>
+						<input class="datainp" type="text" disabled ng-model="maintenance.note" />
+					</div>
+					<div class="applyKid">
+						<p>预约上门时间:</p>
+						<input class="datainp" id="orderTime" readonly type="text" ng-model="maintenance.bookingtime" />
+					</div>
+					<div class="applyKid">
+						<p>预估维修费用:</p>
+						<input class="datainp" type="number" disabled ng-model="maintenance.cost" />
+					</div>
+					<div class="applyKid">
+						<p>选择服务性质:</p>
+						<label class="checkbox-inline"><input id="ck_server1" type="checkbox" disabled name="service" value="1">三包</label>
+						<label class="checkbox-inline"><input id="ck_server2" type="checkbox" disabled name="service" value="2">改造</label>
+						<label class="checkbox-inline"><input id="ck_server3" type="checkbox" disabled name="service" value="3">维修</label>
+						<label class="checkbox-inline"><input id="ck_server4" type="checkbox" disabled name="service" value="4">零件</label>
+						<label class="checkbox-inline"><input id="ck_server5" type="checkbox" disabled name="service" value="5">保养</label>
+						<label class="checkbox-inline"><input id="ck_server6" type="checkbox" disabled name="service" value="6">巡检</label>
+						<label class="checkbox-inline"><input id="ck_server7" type="checkbox" disabled name="service" value="7">移交</label>
+					</div>
+					<div class="applyKid textA">
+						<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
+					</div>
+					<div class="applyKid textA clearfix">
+						<button ng-if="st==0&&user.type==2" class="btn btn-success btn-block" ng-click="submit()">发送维修申请</button>
+						<button ng-if="st==1&&user.type!=2" class="btn btn-success col-xs-5 col-sm-5" ng-click="tol_advice(false,3,'您确定要提交该维修确认单吗？')">同意</button>
+						<button ng-if="st==1&&user.type!=2" class="btn btn-danger col-xs-5 col-sm-5 col-xs-offset-2" ng-click="tol_advice(true,1,'您确定驳回该维修确认单吗？')">驳回</button>
+					</div>
+				</div>			
+			<!------------------ 查看/确认end---------------------->
+			<!------------------ 维修清单确认---------------------->
+				<div ng-if="st==1&&cuttusertype&&rep==2">
+					<p>维修清单确认</p>
+					<div class="applyKid textA">
+						<p>单位名称:</p>
+						<input class="datainp" type="text" disabled ng-model="company.name" />
+					</div>
+					<div class="applyKid textA">
+						<p>单位地址:</p>
+						<input class="datainp" type="text" disabled ng-model="company.address" />
+					</div>
+					<div class="applyKid">
+						<p>联系人:</p>
+						<input class="datainp" type="text" disabled ng-model="wuser.username" />
+					</div>
+					<div class="applyKid">
+						<p>联系电话:</p>
+						<input class="datainp" type="text" disabled ng-model="wuser.telephone" />
+					</div>
+					<div class="applyKid">
+						<p>开工时间:</p>
+						<input class="datainp" id="begin" readonly type="text"/>
+					</div>
+					<div class="applyKid">
+						<p>结束时间:</p>
+						<input class="datainp" id="end" readonly type="text" />
+					</div>
+					<div class="applyKid">
+						<p>实际故障现象:</p>
+						<div class="addSeclect form-inline" ng-repeat="item in wardata">
+							<span ng-repeat="item in wardata">
+								<select disabled="disabled">
+									<option value="0">{{item.analysismsg}}</option>
+								</select>
+								<select disabled="disabled">
+									<option value="0">{{item.warningmsg}}</option>
+								</select>
+	                          </span>
+							<span ng-if="st==0" class="addBtn btn btn-info" ng-click="addfSelect()">+</span>
+						</div>
+                         <div class="addSeclect form-inline" ng-repeat="item in faultmapper" >
+							<span >
+								<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changefselecttype($index,item)" ng-disabled="st==1"></select>
+								<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in swartype[$index]" ng-disabled="st==1"></select>
+	                         </span>
+							<span ng-if="st==0" class="addBtn btn btn-primary" ng-click="removerfSelect($index)">-</span>
+						</div>
+					</div>
+					<div class="applyKid">
+						<p style="margin-bottom: 0.5rem;">维修处理结果:<span ng-if="st==0" class="addBtn btn btn-info" style="float: none;" ng-click="addmSelect()">+</span></p>
+						<div class="addSeclect form-inline" ng-repeat="item in maintresult">
+							<span >
+								<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changemselecttype($index,item)" ng-disabled="st==1"></select>
+								<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in mwartype[$index]" ng-disabled="st==1"></select>
+	                         </span>
+							  <span ng-if="st==0" class="addBtn btn btn-primary" ng-click="removermSelect($index)">-</span>
+						</div>
+					</div>
+					<div class="applyKid table-responsive">
+						<p>维修费用清单:</p>
+						<table class="table table-bordered">
+						  <thead>
+						    <tr class="success">
+						      <th>序号</th>
+						      <th>一级项目</th>
+						      <th>二级项目</th>
+						      <th>数量</th>
+						      <th>单位</th>
+						      <th>单价/元</th>
+						      <th>小计金额</th>
+						      <th>操作<span class="btn btn-info" ng-click="uplist(true,$index)" ng-if="st==0">+</span></th>
+						   </tr>
+						  </thead>
+							<tbody>
+								<tr class="warning" ng-repeat="obj in detailedList">
+									<td>{{$index+1}}</td>
+									<td>
+								     	<select ng-model="obj.wpid" ng-options="item.id as item.name for item in pwartype"  ng-change="changeordertype($index,obj)"  ng-disabled="st==1"></select>
+									</td>
+									<td>
+									     <select ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
+									</td>
+									<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td>
+									  <select ng-model="obj.unit" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
+									</td>
+									<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
+									<td>
+		                                 <span ng-if="st==0" class="btn btn-primary" ng-click="uplist(false,$index)">-</span>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr class="success">
+									<td>合计金额</td>
+									<td colspan="8">{{cost}}</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="applyKid">
+						<p>维修补充:</p>
+						<input class="datainp" type="text" disabled ng-model="note"/>
+					</div>
+					<div class="applyKid">
+						<p>选择服务性质:</p>
+						<label class="checkbox-inline">
+						    <input id="radio_service1" type="radio" disabled name="service" value="1">三包，工作完成
+						</label>
+						<label class="checkbox-inline">
+						    <input id="radio_service2" type="radio" disabled name="service" value="2">维修，工作完成，不收费
+						</label>
+						<label class="checkbox-inline">
+						    <input id="radio_service3" type="radio" disabled name="service" value="3">维修，工作完成，待开票
+						</label>
+						<label class="checkbox-inline">
+						    <input id="radio_service4" type="radio" disabled name="service" value="4">维修，工作完成，现场支付
+						</label>
+					</div>
+					<div class="applyKid textA">
+						<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
+					</div>
+					<div ng-if="cuttusertype">
+						<label>评分：&nbsp;</label>
+						<div>
+							<div id="star"></div>
+						</div>
+					</div>
+					<div ng-if="cuttusertype">
+						<label>评价：&nbsp;</label>
+						<div>
+							<textarea id="txt_evaluate" placeholder="请输入文字/选填" class="datainp"></textarea>
+						</div>
+					</div>
+					<div class="applyKid textA clearfix">
+						<button ng-if="st==0&&user.type==2" class="btn btn-success btn-block" ng-click="addMaintenance()">发送维修申请</button>
+						<button ng-if="cuttusertype" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,6,'您确定签字？')">同意</button>
+					</div>
+				</div>			
+			<!------------------ 维修清单确认end---------------------->
 		</div>
   </div>
+	<div class="mainApply black">
+		维修历史开发中.....
+	</div>
   <!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
 	 	<ul class="rdcList">
@@ -350,8 +730,5 @@
             </a>
         </li>
     </ul>
-    <div class="goTop"><i class="iconfont">&#xe747;</i></div>
 </body>
 </html>
-<script type="text/javascript">
-</script>

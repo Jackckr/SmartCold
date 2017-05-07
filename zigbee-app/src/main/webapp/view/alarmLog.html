@@ -52,10 +52,15 @@
 					<th>报警信息</th>
 					<th>报警时间</th>
 				</tr>
-				<tr ng-repeat="alarmMsg in alarmMsgs">
+				<tr ng-repeat="alarmMsg in warLog">
 					<td>{{$index+1}}</td>
 					<td>{{alarmMsg.msg}}</td>
 					<td>{{alarmMsg.addtime}}</td>
+				</tr>
+				<tr ng-repeat="info in warInfo">
+					<td>{{$index+1}}</td>
+					<td>{{info.warningname}}</td>
+					<td>{{info.addtime}}</td>
 				</tr>
 			</tbody>
 		</table>

@@ -107,13 +107,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             });
         }
     }
-
-    /*tab切换*/
-    $(".mylog").click(function (event) {
-        var $index = $(this).index();
-        $('.mainTainBottomL>div').eq($index).show().siblings().hide();
-        $(this).addClass('current').siblings().removeClass('current');
-    })
+    
     $scope.changeRdc = function (rdc) {
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
@@ -128,9 +122,17 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
      * 
      *      
      */
+    
     $scope.setp=1;
-	$scope.stmode=["未处理 ","待维修","等确认","维修中","维修确认","已完成 ","已忽略"];
-	$scope.status="0,1,2,3,4,5,6"; $scope.level=undefined; $scope.keyword=undefined;$scope.sqobj=undefined;
+    $scope.remode=["未处理 ","已忽略 ","解除故障","放弃维修"];//终止流程
+    $scope.stmode=["未处理 ","待维修","等确认","维修中","维修清单确认","维修签字","已完成 "];
+	  if( $scope.user.type==2){
+		  $scope.status="1,2,3,4,5"; 
+	  }else{
+		  $scope.status="0,1,2,3,4,5"; 
+	  }
+	
+	$scope.level=undefined; $scope.keyword=undefined;$scope.sqobj=undefined;
     $scope.initData=function(){
       $scope.sqobj=undefined;
 	  $http.get(ER.coldroot + '/i/warningMint/getWarningMintByRdcId',{params: {rdcId:window.localStorage.rdcId,status:$scope.status,level:$scope.level,keyword:$scope.keyword}}).success(function(data,status,config,header){
@@ -140,83 +142,509 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     $scope.initData();
     //申请维修
     $scope.tol_forMaint=function(obj){
-    	$scope.setp=2;
-    	$scope.sqobj=obj;
+    	$scope.setp=2;$scope.sqobj=obj;
     };
     //删除
     $scope.tol_del=function(id){
-    	if(!confirm("您确信要刪除这条告警吗？")){return;}
-    	$http({method:'DELETE',url:ER.coldroot + '/i/warningMint/delMaintAlarmByIds',params:{'ids': window.localStorage.rdcId}}).success(function (data) {$scope.initData(); });
+    	 if(!confirm("您确信要刪除这条告警吗？")){return;}$http({method:'DELETE',url:ER.coldroot + '/i/warningMint/delMaintAlarmByIds',params:{'ids': id}}).success(function (data) {$scope.initData(); });
     };
     //忽略
     $scope.tol_ignore=function(id,status,msg){
-    	if(!confirm(msg)){return;}
-    	$http({method: 'POST',url: ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',params: {ids :id,userId: user.id,status:status}}).success(function (data) { $scope.initData();});
+    	if(!confirm(msg)){return;}$http({method: 'POST',url: ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',params: {ids :id,userId: user.id,status:status}}).success(function (data) { $scope.initData();});
     };
-    
-    $scope.tol_goMaint=function(id,st){$state.go('maintainRequest', {'ids': id,st:st}); };
-    
-    //合并处理
-    $scope.tol_batch=function(){
+    //确定维修 ~维修确认
+    $scope.tol_goMaint=function(id,st,rep){
+/*start*/
+    	$scope.warids=id;$scope.st=st;$scope.rep=rep;
+		if(!$scope.warids){return;}
+		$scope.maintenance={note:"", cost:0.00,repairtime:null, bookingtime:null };
+		$scope.initdata_first=function(){
+			$http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 0}}).success(function(data){
+		    	 $scope.pwartype=data;
+		  	});
+		    $http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 1}}).success(function(data){
+		    	 $scope.subwartype=data;//默认二级菜单
+		  	});
+		    $http.get(ER.coldroot + '/i/warningMint/getWarningMintById',{params: {ids: $scope.warids,rdcId: window.localStorage.rdcId}}).success(function(data,status,config,header){
+				  $scope.company=data.company;//公司信息
+				  $scope.wuser=data.user;//维修人员信息
+				  $scope.maintuser=$rootScope.user;//维修人
+				  $scope.wardata=data.warData;//初始告警信息
+				  $scope.cuttstatus=$scope.wardata[0].status;
+		  	 });
+		   
+		};
+		$scope.initdata_first();
+		
+		$scope.swartype=new Array();    $scope.nwardata=new Array();
+		//查看/确认
+			$http.get(ER.coldroot + '/i/warningMint/getMaintenanceByWId',{params: {wid: $scope.warids}}).success(function(data){
+				$scope.maintenance=data;
+				$("#wx").val($scope.maintenance.repairtime);
+				$("#orderTime").val($scope.maintenance.bookingtime);
+				$scope.nwardata=JSON.parse($scope.maintenance.faultmapper);
+				angular.forEach($scope.maintenance.servertype.split(","),function(obj,i){
+					$("#ck_server"+obj).attr("checked",true);
+				});
+				angular.forEach($scope.nwardata,function(obj,i){
+					$http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(data){
+			    		 $scope.swartype[i]=data;
+				  	 });
+				}); 
+			});
+			
+			$scope.tol_advice=function(isreject,status,msg){
+				if(!confirm(msg)){return;}
+				$http({method: 'POST',url: ER.coldroot + '/i/warningMint/rejectMaintenanceByWarId',params: {isreject:isreject, wid:$scope.warids, mid:$scope.maintenance.id, status:status}}).success(function (data) { 
+					if(data){
+						alert("提交成功！");
+					}else{
+						alert("提交失敗！流程已锁定！");
+					}
+					$scope.st=null;
+					$scope.step=1;
+					$scope.initData();
+				});
+			};
+/*end*/
+    };
+	//维修清单签字确认
+	$scope.tol_goMaintRepair = function(id, st,rep) {
+		$scope.unit=[{id:1,name:'个'},{id:2,name:'套'},{id:3,name:'台'}];
+		$scope.swartype=new Array();  $scope.faultmapper=new Array();//实际故障
+		$scope.mwartype=new Array();  $scope.maintresult=new Array();//实际处理结果
+		$scope.ordertype=new Array(); $scope.detailedList=new Array();//订单结果
+		$scope.wids=id,$scope.st=st;$scope.maintid=null;
+		$scope.cuttusertype=($scope.st==1&&(user.type==0||user.type>2));
+		$scope.rep=rep;
+		$http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 0}}).success(function(data){
+	    	 $scope.pwartype=data;
+	  	});
+	    $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 1}}).success(function(data){
+	    	 $scope.subwartype=data;//默认二级菜单
+	  	});
+	    //获得初始异常消息
+	    $http.get( ER.coldroot + '/i/warningMint/getWarningMintById',{params: {ids: $scope.wids,rdcId:  $rootScope.rdcId}}).success(function(data,status,config,header){
+			  $scope.company=data.company;//公司信息
+			  $scope.wuser=data.user;//维修人员信息
+			  $scope.maintuser=$rootScope.user;//维修人
+			  $scope.wardata=data.warData;//初始告警信息
+			  $scope.cuttstatus=$scope.wardata[0].status;
+	  	 });
+	    //获得附加异常消息   
+	    $http.get( ER.coldroot + '/i/warningMint/getMaintenanceByWId',{params: {wid:$scope.wids}}).success(function(data){
+			$scope.maintenance=data;
+			$scope.maintid=$scope.maintenance.id;
+			$scope.faultmapper=JSON.parse($scope.maintenance.faultmapper);
+			angular.forEach($scope.faultmapper,function(obj,i){
+				$http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(data){
+		    		 $scope.swartype[i]=data;
+			  	 });
+			}); 
+			 $scope.initMode();
+		});
+	    $scope.initMode=function(){
+			$http.get( ER.coldroot + '/i/warningMint/getMaintconFirmaByMid',{params: {mid:$scope.maintid}}).success(function(data){
+				if(data&&data.length>0){
+					  $scope.maintconfirma=data[0];
+					  $scope.cost=$scope.maintconfirma.cost;
+					  $scope.note=$scope.maintconfirma.note;
+					  $("#radio_service"+$scope.maintconfirma.serverType).attr("checked",true);
+					  $("#begin").val( $scope.maintconfirma.starttime);
+					  $("#end").val( $scope.maintconfirma.endtime);
+					  $scope.phenomena=JSON.parse($scope.maintconfirma.phenomena);//实际现象
+					  $scope.maintresult=JSON.parse($scope.maintconfirma.maintresult);//实际结果
+					  if( $scope.maintresult.length>0){
+						  angular.forEach( $scope.maintresult,function(obj,i){ 
+							  $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(req){
+						    		 $scope.mwartype[i]=req;
+							  	 });
+						  });
+					  }
+				  }
+			  });
+			  //获得订单详情
+			  $http.get( ER.coldroot + '/i/warningMint/getMaintorderByMid',{params: {mid:$scope.maintid}}).success(function(data){
+				  if(data.length>0){
+					  angular.forEach(data,function(obj,i){ 
+						  $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.wpid}}).success(function(req){
+					    		 $scope.ordertype[i]=req;
+						  	 });
+					  });
+					  $scope.detailedList=data;
+				  }
+			  });
+			  $("#div_maintainRepair input").attr({"disabled":true});
+			  $("#txt_evaluate").attr({"disabled":false});
+			  if($scope.cuttusertype){
+				  $('#star').raty({precision: true ,score: 5, size     : 24, });
+				  $scope.tol_advice=function(isreback,status,msg){
+					  $http({method: 'POST',url:  ER.coldroot + '/i/warningMint/rejectMaintconfirmaById',
+						  params: {  isreback:isreback, wid:$scope.wids, mid:$scope.maintid, status:status, score :$("#star input").val(), evaluate:$("#txt_evaluate").val()}}).success(function (data) { 
+							if(data){alert("维修完成！");}else{alert("提交失敗！流程已锁定！");}
+							$scope.st=null;
+							$scope.initData();
+						});
+					  
+				  };
+			  }
+	    }
+	};
+
+	//合并处理
+	$scope.tol_batch=function(){
 	   
     };
     
     $scope.tol_submit=function(){//
     	$http({
     		method: 'POST',
-    		url: ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',
+    		url:ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',
     		params: {ids:$scope.sqobj.id ,userId: user.id,status:1,node:$("#tex_node").val()}
     	}).success(function (data) {  $scope.tol_back(); $scope.initData();});
     };
     
     $scope.tol_back=function(){
-    	$scope.setp=1; layer.closeAll();	$scope.sqobj=undefined;
+    	$scope.setp=1;	$scope.sqobj=undefined;
     };
     
     $scope.isselall=false;
     $scope.tol_selallevt=function(isck){
     };
+    
+    
+    /*tab切换*/
+   $(".mylog").click(function (event) {
+        var $index = $(this).index();
+       /* if($index==1){
+        	window.location.reload();
+        	$('.mainTainBottomL>div').eq($index).show().siblings().hide();
+        	$(this).addClass('current').siblings().removeClass('current');
+        }else{*/
+        	$('.mainTainBottomL>div').eq($index).show().siblings().hide();
+        	$(this).addClass('current').siblings().removeClass('current');
+        /*}*/
+    })
 
-    $scope.tol_forMaint = function (obj) {
-    	$scope.setp=2;
-    	$scope.sqobj=obj;
-		layer.open({
-			type: 1
-		    ,anim: 'up'
-		    ,style: 'position:fixed; bottom:0; left:0; overflow-y: scroll; width: 100%; border:none;'
-			,title: [
-			        '维修操作','background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;border-radius:0;'
-			        ]
-    		, content: '<div class="applyKid textA">' +
-    		'<p>告警消息:</p>' +
-    		'<input class="datainp" type="text" disabled value="'+obj.warningmsg+'"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>分析结果:</p>' +
-    		'<input class="datainp" type="text" disabled  value="'+obj.analysismsg+'"/>' +
-    		'</div>' +
-    		'<div class="applyKid">' +
-    		'<p>告警时间:</p>' +
-    		'<input class="datainp" type="type" disabled value="'+obj.addtime.substring(0,19)+'"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>附件:</p>' +
-    		'<input style="width:100%;" type="file"/>' +
-    		'</div>' +
-    		'<div class="applyKid textA">' +
-    		'<p>备注:</p>' +
-    		'<textarea colspan="10" rowspan="10"  id="tex_node" placeholder="请输入文字"></textarea>' +
-    		'</div>'
-    		, btn: ['提交', '返回']
-    		, yes: function (index) {
-    			$scope.tol_submit()
-    		},no: function(index){
-    			$scope.tol_back()
-    		}
-    	});
+	/**
+	 * 
+	 * 
+	 * 维修商js
+	 * 
+	 * 
+	 */
+    
+    /**
+     * maintenancenotice
+     */
+	$scope.initData_notice = function() {
+		$http.get(ER.coldroot + '/i/warningMint/getWarningMintByRdcId', {
+			params : {
+				rdcId : window.localStorage.rdcId,
+				status : $scope.status,
+				level : $scope.level,
+				keyword : $scope.keyword
+			}
+		}).success(function(data, status, config, header) {
+			$scope.maintdata_notice = data;
+		});
+	};
+	$scope.initData_notice();
+	//申请维修
+	$scope.tol_forMaint_notice = function(id, st,rep) {
+		/**
+		 * 维修商初步确认
+		 */
+		$scope.warids=id;$scope.st=st;$scope.rep=rep;
+		if(!$scope.warids){return;}
+		$scope.maintenance={note:"", cost:0.00,repairtime:null, bookingtime:null };
+		$scope.initdata_first=function(){
+			$http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 0}}).success(function(data){
+		    	 $scope.pwartype=data;
+		  	});
+		    $http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 1}}).success(function(data){
+		    	 $scope.subwartype=data;//默认二级菜单
+		  	});
+		    $http.get(ER.coldroot + '/i/warningMint/getWarningMintById',{params: {ids: $scope.warids,rdcId: window.localStorage.rdcId}}).success(function(data,status,config,header){
+				  $scope.company=data.company;//公司信息
+				  $scope.wuser=data.user;//维修人员信息
+				  $scope.maintuser=$rootScope.user;//维修人
+				  $scope.wardata=data.warData;//初始告警信息
+				  $scope.cuttstatus=$scope.wardata[0].status;
+				  if(st==0){
+					  jeDate({
+						dateCell:"#wx",isinitVal:true,isTime:true, 
+						format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"
+					  })
+					  jeDate({
+						dateCell:"#orderTime",isinitVal:true,isTime:true, 
+						format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"
+					  })
+				  }
+		  	 });
+		};
+		$scope.initdata_first();
+		
+		$scope.swartype=new Array();    $scope.nwardata=new Array();
+		if($scope.st==0){//查看or 审批
+		 	$scope.addSelect=function(){//添加故障
+		 		var item={id:2,pid:1};
+		 		var index=  $scope.nwardata.push(item);
+		 		$scope.swartype[index-1]=$scope.subwartype;
+		     };
+		     $scope.removerSelect=function(index){ $scope.nwardata.splice(index,1); };
+		     $scope.changepwartype=function(index,item){//修改类型
+		    	 $http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: item.pid}}).success(function(data){
+		    		 $scope.swartype[index]=data;
+		    		 item.id=$scope.swartype[index][0].id;
+			  	 });
+		     };
+			$scope.submit=function(){
+				var servertype="";
+				var em_servertype=$("[name ='service']:checked");
+				if(em_servertype.length>0){for(var i=0;i<em_servertype.length;i++){servertype += em_servertype[i].value +","; } servertype=servertype.substring(0,servertype.length-1);}
+				$scope.maintenance.servertype=servertype;
+				$scope.maintenance.rdcid=$rootScope.rdcId;
+				$scope.maintenance.warmappid=$scope.warids;
+				$scope.maintenance.repairtime=$("#wx").val();
+				$scope.maintenance.bookingtime=$("#orderTime").val();
+				$scope.maintenance.faultmapper=JSON.stringify( $scope.nwardata);
+			    $.ajax({type: 'POST',data: $scope.maintenance,url: ER.coldroot + "/i/warningMint/addMaintenance",success: function(data){
+			            alert("维修确认单已发送！");
+			            $scope.st = 2;
+			            $scope.rep = null;
+			            $scope.initData_notice();
+			   }});				
+			}
+		}else{
+			 //查看
+			$http.get(ER.coldroot + '/i/warningMint/getMaintenanceByWId',{params: {wid: $scope.warids}}).success(function(data){
+				$scope.maintenance=data;
+				$("#wx").val($scope.maintenance.repairtime);
+				$("#orderTime").val($scope.maintenance.bookingtime);
+				$scope.nwardata=JSON.parse($scope.maintenance.faultmapper);
+				angular.forEach($scope.maintenance.servertype.split(","),function(obj,i){
+					$("#ck_server"+obj).attr("checked",true);
+				});
+				angular.forEach($scope.nwardata,function(obj,i){
+					$http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(data){
+			    		 $scope.swartype[i]=data;
+				  	 });
+				}); 
+			});
+			
+			$("#div_sh input").attr({"disabled":true});
+			$scope.tol_advice=function(isreject,status,msg){
+				if(!confirm(msg)){return;}
+				$http({method: 'POST',url:ER.coldroot + '/i/warningMint/rejectMaintenanceByWarId',params: {isreject:isreject, wid:$scope.warids, mid:$scope.maintenance.id, status:status}}).success(function (data) { 
+					if(data){alert("提交成功！");}else{alert("提交失敗！流程已锁定！");}
+				});
+			};
+		}
+		/*
+		 * 初步确认end
+		 * */
+	};
+	//维修清单确认
+	$scope.tol_gotRepair_notice = function(id, st,rep) {
+		/**
+		 * 维修商进一步确认
+		 */
+		$scope.unit=[{id:1,name:'个'},{id:2,name:'套'},{id:3,name:'台'}];
+		$scope.swartype=new Array();  $scope.faultmapper=new Array();//实际故障
+		$scope.mwartype=new Array();  $scope.maintresult=new Array();//实际处理结果
+		$scope.ordertype=new Array(); $scope.detailedList=new Array();//订单结果
+		$scope.wids=id,$scope.st=st;$scope.maintid=null;$scope.rep=rep;
+		$scope.cuttusertype=($scope.st==1&&(user.type==0||user.type>2));
+		$http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 0}}).success(function(data){
+	    	 $scope.pwartype=data;
+	  	});
+	    $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 1}}).success(function(data){
+	    	 $scope.subwartype=data;//默认二级菜单
+	  	});
+	    //获得初始异常消息
+	    $http.get( ER.coldroot + '/i/warningMint/getWarningMintById',{params: {ids: $scope.wids,rdcId:  $rootScope.rdcId}}).success(function(data,status,config,header){
+			  $scope.company=data.company;//公司信息
+			  $scope.wuser=data.user;//维修人员信息
+			  $scope.maintuser=$rootScope.user;//维修人
+			  $scope.wardata=data.warData;//初始告警信息
+			  $scope.cuttstatus=$scope.wardata[0].status;
+	  	 });
+	    //获得附加异常消息   
+	    $http.get( ER.coldroot + '/i/warningMint/getMaintenanceByWId',{params: {wid:$scope.wids}}).success(function(data){
+			$scope.maintenance=data;
+			$scope.maintid=$scope.maintenance.id;
+			$scope.faultmapper=JSON.parse($scope.maintenance.faultmapper);
+			angular.forEach($scope.faultmapper,function(obj,i){
+				$http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(data){
+		    		 $scope.swartype[i]=data;
+			  	 });
+			}); 
+			 $scope.init_repair();
+		});
+		
+	    $scope.init_repair=function(){
+	 		if( $scope.st==0){//服务新建维修单
+				 $scope.cuttstatus=4;
+				 jeDate({dateCell:"#begin",isinitVal:true,isTime:true, format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"})
+			 	 jeDate({dateCell:"#end",isinitVal:true,isTime:true, format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"})
+				//1.实际故障联动
+				$scope.addfSelect=function(){//添加故障
+			 		var item={id:2,pid:1};
+			 		var index=  $scope.faultmapper.push(item);
+			 		$scope.swartype[index-1]=$scope.subwartype;
+			     };
+			     $scope.removerfSelect=function(index){ $scope.faultmapper.pop(index); };
+			     $scope.changefselecttype=function(index,item){//修改类型
+			    	 $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: item.pid}}).success(function(data){
+			    		 $scope.swartype[index]=data;
+			    		 item.id=$scope.swartype[index][0].id;
+				  	 });
+			     };
+			     //2.实际维修联动
+			     $scope.addmSelect=function(){//添加故障
+				 		var item={id:2,pid:1};
+				 		var index=  $scope.maintresult.push(item);
+				 		$scope.mwartype[index-1]=$scope.subwartype;
+			    };
+				$scope.removermSelect=function(index){ $scope.maintresult.pop(index); };
+				$scope.changemselecttype=function(index,item){
+					 $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: item.pid}}).success(function(data){
+			    		 $scope.mwartype[index]=data;
+			    		 item.id=$scope.mwartype[index][0].id;
+				  	 });
+				};
+				//3.订单详情order
+				 $scope.uplist=function(isadd,index){
+					if(isadd){	
+						var obj={wpid:1,wid:2,number:1,price:0.00,unit:1,rdcId:$rootScope.rdcId,maintid:$scope.maintenance.id};
+						 index=$scope.detailedList.push(obj);
+						 $scope.ordertype[index-1]=$scope.subwartype;
+					}else{
+						$scope.detailedList.pop(index);
+				 }};
+		         $scope.changeordertype=function(index,item){//修改清单父级选项
+		        	 $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: item.wpid}}).success(function(data){
+			    		 $scope.ordertype[index]=data;
+			    		 item.wid=$scope.ordertype[index][0].id;
+				  	 });
+			     };
+			     $scope.note="";
+				$scope.cost=0.00;
+				var watch =$scope.$watch('detailedList', function(){ $scope.cost=0; angular.forEach($scope.detailedList,function(obj,i){  $scope.cost+=obj.number*obj.price;}); },true);//监听
+				$scope.$on('$destroy',function(){  watch;});
+				//提交维修清单 
+				$scope.addMaintenance=function(){
+					var servertype="";
+					var em_servertype=$("[name ='service']:checked");
+					if(em_servertype.length>0){for(var i=0;i<em_servertype.length;i++){servertype += em_servertype[i].value +","; } servertype=servertype.substring(0,servertype.length-1);}
+					var vo ={ 
+							wids:$scope.wids,
+							 rdcId:$rootScope.rdcId ,
+							 maintid:$scope.maintid,
+							 starttime:$("#begin").val(),
+							 endtime:$("#end").val(),
+							 phenomena:JSON.stringify($scope.faultmapper),
+							 maintresult:JSON.stringify($scope.maintresult),
+							 detaileds:JSON.stringify($scope.detailedList),
+							 cost:$scope.cost,
+							 note:$("#notes").val(),
+							 serverType:servertype
+				  };
+				  $http({ method:'POST', params: vo,  url: ER.coldroot + '/i/warningMint/addMaintConfirma' }).success(function(data){ 
+					  alert(data?"提交成功！":"提交失败");
+					  $scope.st = $scope.rep =null;
+					  $scope.initData_notice();
+					 // $state.go("maintenancenotice");
+				  }) ;
+				}; 
+			}else{//查看
+			  $http.get( ER.coldroot + '/i/warningMint/getMaintconFirmaByMid',{params: {mid:$scope.maintid}}).success(function(data){
+				if(data&&data.length>0){
+					  $scope.maintconfirma=data[0];
+					  $scope.cost=$scope.maintconfirma.cost;
+					  $scope.note=$scope.maintconfirma.note;
+					  $("#radio_service"+$scope.maintconfirma.serverType).attr("checked",true);
+					  $("#begin").val( $scope.maintconfirma.starttime);
+					  $("#end").val( $scope.maintconfirma.endtime);
+					  $scope.phenomena=JSON.parse($scope.maintconfirma.phenomena);//实际现象
+					  $scope.maintresult=JSON.parse($scope.maintconfirma.maintresult);//实际结果
+					  if( $scope.maintresult.length>0){
+						  angular.forEach( $scope.maintresult,function(obj,i){ 
+							  $http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(req){
+						    		 $scope.mwartype[i]=req;
+							  	 });
+						  });
+					  }
+				  }
+			  });
+			  //获得订单详情
+			  $http.get( ER.coldroot + '/i/warningMint/getMaintorderByMid',{params: {mid:$scope.maintid}}).success(function(data){
+				  if(data.length>0){
+					  angular.forEach(data,function(obj,i){ 
+						  $http.get('/i/warningMint/getWarningType',{params: {pid: obj.wpid}}).success(function(req){
+					    		 $scope.ordertype[i]=req;
+						  	 });
+					  });
+					  $scope.detailedList=data;
+				  }
+			  });
+			  $("#div_maintainRepair input").attr({"disabled":true});
+			
+			  if($scope.cuttstatus==6){
+				  $('#star').raty({precision: true ,score: $scope.maintenance.score, size     : 24 });
+				  $("#txt_evaluate").val($scope.maintenance.evaluate);
+			  }else if($scope.cuttusertype){
+				  $("#txt_evaluate").attr({"disabled":false});
+				  $('#star').raty({precision: true ,score: 5, size     : 24, });
+				  $scope.tol_advice=function(isreback,status,msg){
+					  $http({method: 'POST',url:  ER.coldroot + '/i/warningMint/rejectMaintconfirmaById',
+						  params: {  isreback:isreback, wid:$scope.wids, mid:$scope.maintid, status:status, score :$("#star input").val(), evaluate:$("#txt_evaluate").val()}}).success(function (data) { 
+							if(data){alert("维修完成！");}else{alert("提交失敗！流程已锁定！");}
+							$scope.initData_notice();
+							// $state.go("maintenancealarm", {'st': 1});
+						});
+					  
+				  };
+			  }
+			} 
+	    };
+		/*
+		 * 进一步确认end
+		 * */
+	};
+	//清除故障
+	$scope.tol_ignore_notice = function(id, status, msg) {
+		if (!confirm(msg)) {
+			return;
+		}
+		$http({
+			method : 'POST',
+			url : ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',
+			params : {
+				ids : id,
+				userId : null,
+				status : status
+			}
+		}).success(function(data) {
+			$scope.initData_notice();
+		});
+	};
+	//合并处理
+    $scope.tol_batch_notice=function(){
+	   alert('开发ing')
     };
-
-    function checkInput() {
+	 /**
+     * maintenancenotice
+     */
+	/**
+	 * 
+	 * 
+	 * 维修商js end
+	 * 
+	 * 
+	 */
+	function checkInput() {
         var flag = true;
         // 检查必须填写项
         if ($scope.unitname == undefined || $scope.unitname == '') {flag = false;}
@@ -224,272 +652,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 		if ($scope.ordertime == undefined || $scope.ordertime == '') {flag = false;}
         return flag;
     }
-    /*function checkTime(){
-		var d = new Date();
-		var today = Date.parse((d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()).replace(/-/g,"/"));//今天的毫秒数
-		var orderDay = new Date($scope.ordertime).getTime();
-		if(orderDay < today){
-			alert("预约时间不能晚于今天哦~")
-			return false
-		}else{
-			return true
-		}
-	}
-    $scope.addMaintenance = function () {
-    	if($scope.rdcId==undefined||$scope.rdcId==null||$scope.rdcId==''){return;}
-        if (checkInput()) {
-        	if (checkTime()) {
-	            $http({
-	                method: 'POST',
-	                url: ER.coldroot + '/i/maintenance/addMaintenance',
-	                params: {
-	                	rdcId: $scope.rdcId,
-	                    unitname: encodeURI($scope.unitname, "UTF-8"),
-	                    reason: encodeURI($scope.reason, "UTF-8"),
-	                    ordertime: $("input[ng-model='ordertime']").val()
-	                }
-	            }).success(function (data) {
-	                if (data) {
-	                    alert("添加成功");
-	                    $scope.getMaintenances0();
-	                    $scope.getMaintenances1();
-	                    $scope.unitname = $scope.reason=$scope.ordertime=null;
-	                }
-	                else {
-	                    alert("添加失败");
-	                }
-	            });
-        	}
-        } else {
-            alert("您有未填项哦~");
-        }
-    };
-
-    // 显示最大页数
-    $scope.maxSize = 6;
-    // 总条目数(默认每页十条)
-    $scope.bigTotalItems = 6;
-    // 当前页
-    $scope.bigCurrentPage = 1;
-    $scope.bigCurrentPage1 = 1;
-    $scope.Maintenances0 = [];
-    $scope.Maintenances1 = [];
-    $scope.updateMaintenance0 = {};
-    $scope.getMaintenances0 = function () {
-        $http({
-            method: 'POST',
-            url: ER.coldroot + '/i/maintenance/findAllMaintenance',
-            params: {
-                rdcId: $scope.rdcId,
-                audit: 0,
-                keyword: decodeURI(encodeURI($scope.keyword,"UTF-8"))
-            }
-        }).success(function (data) {
-            $scope.Maintenances0 = data.list;
-        });
-    };
-
-    $scope.getMaintenances1 = function () {
-        $http({
-            method: 'POST',
-            url: ER.coldroot + '/i/maintenance/findMaintenanceList',
-            params: {
-                pageNum: $scope.bigCurrentPage1,
-                pageSize: $scope.maxSize,
-                rdcId: $scope.rdcId,
-                audit: 1,
-                keyword: decodeURI(encodeURI($scope.keyword,"UTF-8"))
-            }
-        }).success(function (data) {
-           pageNum = data.pageNum;
-          totalPages = data.pages;
-          
-          $scope.Maintenances1 = data.list;
-          $('.pagination').jqPagination({
-        	  link_string : '/?page={page_number}',
-        	  current_page: pageNum, //设置当前页 默认为1
-        	  max_page : totalPages , //设置最大页 默认为1
-        	  page_string : '当前第'+pageNum+'页,共'+totalPages+'页',
-        	  paged : function(page) {
-        		  $scope.bigCurrentPage1=page;
-        		  $scope.getMaintenances1();
-        	      }
-        	});
-          
-        });
-    };
-
-  
-    $scope.pageChanged0 = function () {
-        $scope.getMaintenances0();
-    };
-    $scope.pageChanged1 = function () {
-        $scope.getMaintenances1();
-    };
-
-    $scope.auditChanged = function (optAudiet) {
-        $scope.getMaintenances0();
-        $scope.getMaintenances1();
-    };
-    $scope.goSearch0 = function () {
-        $scope.getMaintenances0();
-    };
-    $scope.goSearch1 = function () {
-    	if($scope.keyword ==""){
-    		alert("请输入需要搜索的机组名称~");
-    	}else{
-    		
-    		$scope.getMaintenances1();
-    	}
-    };
-
-    function delcfm() {
-        if (!confirm("确认要删除？")) {
-            return false;
-        }
-        return true;
-    }
-
-    $scope.goDeleteMaintenance = function (id) {
-        if (delcfm()) {
-            $http.get(ER.coldroot + '/i/maintenance/deleteMaintenance', {
-                params: {
-                    "id": id
-                }
-            }).success(function (data) {
-            	 $scope.getMaintenances0();
-                 $scope.getMaintenances1();
-            });
-        }
-    };
-
-    $scope.weixiuapply = function (id) {
-        $http.get(ER.coldroot + '/i/maintenance/findMaintenanceByID', {
-            params: {
-                "id": id
-            }
-        }).success(function (data) {
-            $scope.updateMaintenance0 = data;
-            layer.open({
-                title: [
-                    '维修操作',
-                    'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;'
-                ]
-                , content: '<div class="applyKid textA">' +
-                '<p>机组名称:</p>' +
-                '<textarea disabled>' + $scope.updateMaintenance0.unitname + '</textarea>' +
-                '</div>' +
-                '<div class="applyKid textA">' +
-                '<p>维修详情:</p>' +
-                '<textarea colspan="10" rowspan="10" id="detail" placeholder="请输入维修详情"></textarea>' +
-                '</div>' +
-                '<div class="applyKid">' +
-                '<p>实际维修时间:</p>' +
-                '<input class="datainp" style="width:100%;" type="date" id="fixtime" placeholder="请选择维修时间"/>' +
-                '</div>' +
-                '<div class="applyKid textA">' +
-                '<p>备注:</p>' +
-                '<textarea colspan="10" rowspan="10" id="note"" placeholder="请输入文字"></textarea>' +
-                '</div>'
-                , btn: ['确认', '取消']
-                , yes: function (index) {
-                    var detail = $('#detail').val().trim();
-                    var fixtime = $('#fixtime').val();
-                    var note = $('#note').val().trim();
-                    if (detail === '') {
-                        alert("请填写维修详情");
-                        return;
-                    }
-                    if (fixtime === '') {
-                        alert("请填写维修时间");
-                        return;
-                    }
-                    if(fixtime>=$scope.updateMaintenance0.ordertime.split(' ',1)){
-                    	$scope.submitfix(detail, fixtime, note);
-                        layer.close(index);
-                    }else{
-                    	alert("维修时间不能早于预约时间");
-                    }
-                    
-                }
-            });
-        });
-    };
-   
     
-    $scope.comment = function (id) {
-		layer.open({
-			type: 1
-		    ,anim: 'up'
-		    ,style: 'position:fixed; bottom:0; left:0; overflow-y: scroll; width: 100%; border:none;'
-			,title: [
-			        '维修评价',
-			        'background-color:#40AFFE; color:#fff;height:2.2rem;line-height:2.2rem;border-radius:0;'
-			        ]
-    		, content: '<div class="applyKid textA">' +
-    		'<p>评价:</p>' +
-    		'<textarea colspan="10" rowspan="10" id="note" placeholder="请对此次维修做出评价~" style="height:5rem;"></textarea>' +
-    		'</div>'
-    		, btn: ['确认', '取消']
-    		, yes: function (index) {
-    			if($("#note").val().trim()==""){
-    				alert("评价内容不能为空~");
-    			}else{
-    				layer.close(index);
-    			}
-    		}
-    	});
-    };
-
-    $scope.submitfix = function (detail, fixtime, note) {
-        $scope.updateMaintenance0.detail = detail;
-        $scope.updateMaintenance0.fixtime = fixtime;
-        $scope.updateMaintenance0.note = note;
-        $scope.updateMaintenance0.audit = 1;
-        $http({
-            'method': 'POST',
-            'url': ER.coldroot + '/i/maintenance/updateMaintenance',
-            'params': {
-                "id": $scope.updateMaintenance0.id,
-                "detail": encodeURI($scope.updateMaintenance0.detail, "UTF-8"),
-                "fixtime": $scope.updateMaintenance0.fixtime,
-                "note": encodeURI($scope.updateMaintenance0.note, "UTF-8"),
-                "audit": 1
-            }
-        }).success(function (data) {
-            if (data) {
-                alert("提交成功");
-//                window.location.reload();
-                $scope.getMaintenances0();
-                $scope.getMaintenances1();
-            }
-            else {
-                alert("提交失败");
-            }
-        });
-    };
-
-    $scope.change = function (id, appraise) {
-    	if(appraise==""){
-    		alert("评价内容不能为空哦~");
-    	}else{
-	        $http({
-	            'method': 'POST',
-	            'url': ER.coldroot + '/i/maintenance/updateMaintenanceAppraise',
-	            'params': {
-	                'id': id,
-	                'appraise': appraise
-	            }
-	        });
-    	}
-    }; 
-	 $scope.initMainit=function(newValue,oldValue){
-		   if($scope.rdcId!=undefined){
-			    $scope.getMaintenances0();
-                $scope.getMaintenances1();
-		   }
-	  };*/
-	  $scope.$watch('rdcId',$scope.initMainit,true);//监听冷库变化
+    $scope.$watch('rdcId',$scope.initMainit,true);//监听冷库变化
 	  /**
 	     * 权限  
 	     * start
