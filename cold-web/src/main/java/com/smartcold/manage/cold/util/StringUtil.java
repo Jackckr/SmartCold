@@ -23,6 +23,21 @@ public class StringUtil
 		}
 		return "";
 	}
+	public static int [] getIdS(String oids)
+	{
+		if(isnotNull(oids)){
+			String[] ids = splitfhString(oids);
+			int [] newids=new int[ids.length];
+			for (int i = 0; i <ids.length; i++) {
+				newids[i]=Integer.parseInt(ids[i]);
+			}
+			return newids;
+		}
+		return null;
+	}
+	
+	
+	
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)
 	 * 
