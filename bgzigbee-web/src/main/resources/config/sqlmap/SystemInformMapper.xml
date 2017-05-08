@@ -5,9 +5,5 @@
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.SystemInformMapper">
 
 
-<select id="" parameterType="" resultType="">
-
-</select>
-
 
 </mapper>

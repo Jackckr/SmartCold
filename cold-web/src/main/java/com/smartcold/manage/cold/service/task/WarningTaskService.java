@@ -1,9 +1,6 @@
 package com.smartcold.manage.cold.service.task;
 
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
  * 告警服务
