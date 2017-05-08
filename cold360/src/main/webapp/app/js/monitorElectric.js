@@ -171,7 +171,8 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                         });
                         var currentWater = '';
                         if (data.length > 0) {
-                            currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value).toFixed(1) : '';
+                        	 currentWater = data[0] ? parseFloat(data[0].value).toFixed(1) : '';
+                           // currentWater = data[data.length - 1] ? parseFloat(data[data.length - 1].value).toFixed(1) : '';
                         }
                         $scope.currentWater = currentWater;
 
