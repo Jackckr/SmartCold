@@ -20,7 +20,7 @@ public class SystemInformController {
 	
 	@RequestMapping(value = "/getSystemInform", method = RequestMethod.POST)
 	@ResponseBody
-	public Object getObjByType(Integer type,Integer stype, String keyword, Integer pageNum,Integer pageSize ) {
+	public Object getObjByType(Integer type,Integer stype,Integer isread, Integer status, String keyword, Integer pageNum,Integer pageSize ) {
 		
 		
 		
