@@ -31,7 +31,7 @@
 						<!-- 用户浏览量提醒207-02-18 AM-->
 						<a href="#warnBox" title="您有新的消息，请查看^_^"  data-toggle="modal" style="text-decoration: none;position: relative;">
 							<i class="fa fa-bell"></i>
-							<span class="count">10</span>
+							<span class="count">{{systemInform.length}}</span>
 						</a>
 					</div>
 					<!-- <div class="smartColdManage  pull-left h4">链库后台管理</div> -->
@@ -131,6 +131,11 @@
     								<li>children</li>
     							</ul> -->
     						</li>
+							<li onclick="secLi(this,'#/systemInform')">
+								<span class="glyphicon glyphicon-exclamation-sign"></span>
+								<a>报警列表</a>
+								<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+							</li>
     					</ul>
     				</div>
 				<!-- 侧栏区域结构结束-->
@@ -257,6 +262,7 @@
 <script src="app/js/monthlyReportList.js?v=1.1.2"></script>
 <script src="app/js/webSiteVisits.js?v=1.1.2"></script>
 <script src="app/js/roleManage.js?v=1.1.2"></script>
+<script src="app/js/systemInform.js?v=1.1.2"></script>
 
 
 

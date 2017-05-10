@@ -393,5 +393,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/roleManage',
     	controller: 'roleManage',
         templateUrl: 'app/template/roleManage.html'
+    }).state('systemInform',{//警告栏显示
+        url: '/systemInform',
+        controller: 'systemInform',
+        templateUrl: 'app/template/systemInform.html'
     });
 });

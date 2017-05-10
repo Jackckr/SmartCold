@@ -3,7 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.SystemInformMapper">
-
-
-
+    <select id="getSystemInform" resultType="java.util.HashMap">
+        SELECT * FROM `systeminform` <where>
+        <if test="status != null">
+            and `state`=#{status}
+        </if>
+        <if test="isRead != null">
+            and `isread`=#{isRead}
+        </if>
+        <if test="stype != null">
+            and `stype`=#{stype}
+        </if>
+        <if test="type != null">
+            and `type`=#{type}
+        </if>
+        <if test="keyword != null">
+            and `tit` like #{keyword} or `msg` like #{keyword}
+        </if>
+    </where>
+        ORDER BY `id` DESC
+    </select>
 </mapper>
