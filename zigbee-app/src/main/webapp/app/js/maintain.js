@@ -115,8 +115,37 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
         $scope.alarmTotalCnt = 0;
         $scope.viewStorage(rdc.id);
     }
+    
+    
+    /*tab切换*/
+   $(".mylog").click(function (event) {
+        var _index = $(this).index();
+        $('.mainTainBottomL>div').eq(_index).show().siblings().hide();
+        $(this).addClass('current').siblings().removeClass('current');
+        $scope.setp=1;$scope.st=null;$scope.rep=null;
+       if(_index==2){
+        	//维修记录
+        	$scope.status="6"; 
+        	$scope.initData();
+        }else{
+        //维修
+	        if( $scope.user.type==2){
+	       	  //维修商
+	      	  $scope.status="1,2,3,4,5"; 
+	      	  $scope.initData_notice();
+	      	}else{
+	      	  //冷库主
+	      	  $scope.status="0,1,2,3,4,5"; 
+	      	  $scope.initData();
+	      	}
+	    }
+       console.log($scope.step)
+       console.log($scope.st)
+       console.log($scope.rep)
+       console.log($scope.step==1&&$scope.st!=1)
+    })
     /**
-     * 
+     * **********************************************************************222**********************************************************************
      * 新版维修
      * 2017-04-26
      * 
@@ -126,12 +155,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     $scope.setp=1;
     $scope.remode=["未处理 ","已忽略 ","解除故障","放弃维修"];//终止流程
     $scope.stmode=["未处理 ","待维修","等确认","维修中","维修清单确认","维修签字","已完成 "];
-	  if( $scope.user.type==2){
-		  $scope.status="1,2,3,4,5"; 
-	  }else{
-		  $scope.status="0,1,2,3,4,5"; 
-	  }
-	
 	$scope.level=undefined; $scope.keyword=undefined;$scope.sqobj=undefined;
     $scope.initData=function(){
       $scope.sqobj=undefined;
@@ -139,7 +162,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 		  $scope.maintdata=data;
   	  });
     };
-    $scope.initData();
     //申请维修
     $scope.tol_forMaint=function(obj){
     	$scope.setp=2;$scope.sqobj=obj;
@@ -183,8 +205,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 				$("#wx").val($scope.maintenance.repairtime);
 				$("#orderTime").val($scope.maintenance.bookingtime);
 				$scope.nwardata=JSON.parse($scope.maintenance.faultmapper);
+				$("input[id^='ck_server']").attr("disabled",true);
 				angular.forEach($scope.maintenance.servertype.split(","),function(obj,i){
 					$("#ck_server"+obj).attr("checked",true);
+					$("#ck_server"+obj).parent().addClass("on");
 				});
 				angular.forEach($scope.nwardata,function(obj,i){
 					$http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(data){
@@ -214,9 +238,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 		$scope.swartype=new Array();  $scope.faultmapper=new Array();//实际故障
 		$scope.mwartype=new Array();  $scope.maintresult=new Array();//实际处理结果
 		$scope.ordertype=new Array(); $scope.detailedList=new Array();//订单结果
-		$scope.wids=id,$scope.st=st;$scope.maintid=null;
+		$scope.wids=id,$scope.st=st;$scope.maintid=null;$scope.rep=rep;
 		$scope.cuttusertype=($scope.st==1&&(user.type==0||user.type>2));
-		$scope.rep=rep;
 		$http.get( ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: 0}}).success(function(data){
 	    	 $scope.pwartype=data;
 	  	});
@@ -275,8 +298,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 				  }
 			  });
 			  $("#div_maintainRepair input").attr({"disabled":true});
-			  $("#txt_evaluate").attr({"disabled":false});
-			  if($scope.cuttusertype){
+			  if($scope.cuttstatus==6){
+				  $('#star').raty({precision: true ,score: $scope.maintenance.score, size     : 24 });
+				  $("#txt_evaluate").val($scope.maintenance.evaluate);
+			  }else if($scope.cuttusertype){
 				  $('#star').raty({precision: true ,score: 5, size     : 24, });
 				  $scope.tol_advice=function(isreback,status,msg){
 					  $http({method: 'POST',url:  ER.coldroot + '/i/warningMint/rejectMaintconfirmaById',
@@ -287,10 +312,9 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 						});
 					  
 				  };
-			  }
+			  }			  		  
 	    }
 	};
-
 	//合并处理
 	$scope.tol_batch=function(){
 	   
@@ -308,26 +332,28 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     	$scope.setp=1;	$scope.sqobj=undefined;
     };
     
-    $scope.isselall=false;
+    $scope.isselall=false;//默认未选中
     $scope.tol_selallevt=function(isck){
+    	for(var i=0;i<$scope.maintdata.length;i++){  
+            if(isck===true){  
+                $scope.maintdata[i].state=true;  
+            }else {  
+                $scope.maintdata[i].state=false;  
+            }  
+          } 
     };
-    
-    
-    /*tab切换*/
-   $(".mylog").click(function (event) {
-        var $index = $(this).index();
-       /* if($index==1){
-        	window.location.reload();
-        	$('.mainTainBottomL>div').eq($index).show().siblings().hide();
-        	$(this).addClass('current').siblings().removeClass('current');
-        }else{*/
-        	$('.mainTainBottomL>div').eq($index).show().siblings().hide();
-        	$(this).addClass('current').siblings().removeClass('current');
-        /*}*/
-    })
+    $scope.tol_selall_wx=function(isck){
+    	for(var i=0;i<$scope.maintdata_notice.length;i++){  
+    		if(isck===true){  
+    			$scope.maintdata_notice[i].state=true;  
+    		}else {  
+    			$scope.maintdata_notice[i].state=false;  
+    		}  
+    	} 
+    };
 
-	/**
-	 * 
+    /**
+	 * **********************************************************************888**********************************************************************
 	 * 
 	 * 维修商js
 	 * 
@@ -349,7 +375,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 			$scope.maintdata_notice = data;
 		});
 	};
-	$scope.initData_notice();
+	//$scope.initData_notice();
 	//申请维修
 	$scope.tol_forMaint_notice = function(id, st,rep) {
 		/**
@@ -423,8 +449,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 				$("#wx").val($scope.maintenance.repairtime);
 				$("#orderTime").val($scope.maintenance.bookingtime);
 				$scope.nwardata=JSON.parse($scope.maintenance.faultmapper);
+				$("input[id^='ck_server']").attr("disabled",true);
 				angular.forEach($scope.maintenance.servertype.split(","),function(obj,i){
 					$("#ck_server"+obj).attr("checked",true);
+					$("#ck_server"+obj).parent().addClass("on");
 				});
 				angular.forEach($scope.nwardata,function(obj,i){
 					$http.get(ER.coldroot + '/i/warningMint/getWarningType',{params: {pid: obj.pid}}).success(function(data){
@@ -446,6 +474,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 		 * */
 	};
 	//维修清单确认
+	//查看维修结果
+    $scope.tol_ckrest=function(id){
+    	$state.go('maintainRepair', {'ids':id,'st':1});
+    };
 	$scope.tol_gotRepair_notice = function(id, st,rep) {
 		/**
 		 * 维修商进一步确认
@@ -592,19 +624,17 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 			  $("#div_maintainRepair input").attr({"disabled":true});
 			
 			  if($scope.cuttstatus==6){
-				  $('#star').raty({precision: true ,score: $scope.maintenance.score, size     : 24 });
+				  $('#star').raty({precision: true ,score: $scope.maintenance.score, size: 24 });
 				  $("#txt_evaluate").val($scope.maintenance.evaluate);
 			  }else if($scope.cuttusertype){
 				  $("#txt_evaluate").attr({"disabled":false});
-				  $('#star').raty({precision: true ,score: 5, size     : 24, });
+				  $('#star').raty({precision: true ,score: 5, size: 24, });
 				  $scope.tol_advice=function(isreback,status,msg){
 					  $http({method: 'POST',url:  ER.coldroot + '/i/warningMint/rejectMaintconfirmaById',
 						  params: {  isreback:isreback, wid:$scope.wids, mid:$scope.maintid, status:status, score :$("#star input").val(), evaluate:$("#txt_evaluate").val()}}).success(function (data) { 
 							if(data){alert("维修完成！");}else{alert("提交失敗！流程已锁定！");}
 							$scope.initData_notice();
-							// $state.go("maintenancealarm", {'st': 1});
 						});
-					  
 				  };
 			  }
 			} 
@@ -638,7 +668,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
      * maintenancenotice
      */
 	/**
-	 * 
+	 * **********************************************************************666**********************************************************************
 	 * 
 	 * 维修商js end
 	 * 

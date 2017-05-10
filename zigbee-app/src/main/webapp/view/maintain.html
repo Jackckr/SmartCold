@@ -24,54 +24,12 @@
     <script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
     <script type="text/javascript" src="../app/js/maintain.js" ></script>
     <style>
-    	.layui-m-layercont{
-			padding: .2rem .59rem!important;
-			min-height: 5rem;
-		}
-		.layui-m-layercont{	
-			text-align: left!important;
-		}
-		.line_height{
-			line-height: 5rem;
-			text-align: center;
-		}
-		.layui-m-layerchild h3{
-			margin: 0;
-			font-size: .8rem;
-		}
-		ol, ul, p{
-		   margin-bottom:0;
-		}
-		.applyKid .checkbox-inline{
-			margin:0 .5rem .5rem 0;
-		}
-		.addSeclect{
-			margin-bottom: 1rem;
-		}
-		.addSeclect select{
-			width: 42%;
-			display: inline-block;
-		}
-		.addBtn{
-			width: 10%;
-			padding:0; 
-			height:1.2rem;
-			line-height:1.2rem;
-			font-size: 1rem;
-			float:right;
-		}
-		#star{
-			width: auto!important;
-			text-align: center;
-		}
-		#star img{
-			height: 1.5rem;
-			width: auto!important;
-		}
-		#txt_evaluate{
-			width: 100%;
-			height:3rem;
-		}
+    	.layui-m-layercont{padding:.2rem .59rem!important;min-height:5rem}
+		.layui-m-layercont{text-align:left!important}
+		.line_height{line-height:5rem;text-align:center}
+		.layui-m-layerchild h3{margin:0;font-size:.8rem}
+		ol,p,ul{margin-bottom:0}
+		.applyKid>p{font-size: .7rem!important;}
     </style>
 </head>
 <body ng-app="app" ng-controller="maintain" ng-cloak>
@@ -135,7 +93,12 @@
 						<table class="cold_warn">
 							 <thead>
 						      <tr>
-						        <th><input type="checkbox"> </th>
+						        <th>
+						        	<div class="check_icon" ng-class="{true: 'on', false: ''}[isselall]">
+						        		<input ng-model="isselall" type="checkbox" ng-click="tol_selall_wx(isselall)" >
+						        		<i class="iconfont">&#xe6e3;</i>
+						        	</div>
+						        </th>
 						        <th>序号</th>
 						        <th>故障消息</th>
 						        <th>分析结果</th>
@@ -146,7 +109,12 @@
 						    </thead>
 						    <tbody>
 						      <tr ng-repeat="obj in maintdata_notice">
-						        <td><input id="ckobj_{{obj.id}}" type="checkbox" ></td>
+						        <td>
+						        	<div class="check_icon"  ng-class="{true: 'on', false: ''}[obj.state]">
+						        		<input id="ckobj_{{obj.id}}" name="ck_obj" ng-model="obj.state" ng-checked="isselall" value="{{obj.id}}" type="checkbox">
+						        		<i class="iconfont">&#xe6e3;</i>
+						        	</div>
+						        </td>
 						        <td>{{obj.id}}</td>
 						        <td>{{obj.warningmsg}}</td>
 						        <td>{{obj.analysismsg}}</td>
@@ -176,7 +144,6 @@
 				</div>
 			<!------------------ 维修通知单---------------------->
 				<div ng-if="rep==0">
-<!-- 				<div ng-if="st==0&&sh!=1&&rep==0 || st==1"> -->
 					<p>维修通知单</p>
 					<div class="applyKid textA">
 						<p>单位名称:</p>
@@ -233,13 +200,41 @@
 					</div>
 					<div class="applyKid">
 						<p>选择服务性质:</p>
-						<label class="checkbox-inline"><input id="ck_server1" type="checkbox" name="service" value="1">三包</label>
-						<label class="checkbox-inline"><input id="ck_server2" type="checkbox" name="service" value="2">改造</label>
-						<label class="checkbox-inline"><input id="ck_server3" type="checkbox" name="service" value="3">维修</label>
-						<label class="checkbox-inline"><input id="ck_server4" type="checkbox" name="service" value="4">零件</label>
-						<label class="checkbox-inline"><input id="ck_server5" type="checkbox" name="service" value="5">保养</label>
-						<label class="checkbox-inline"><input id="ck_server6" type="checkbox" name="service" value="6">巡检</label>
-						<label class="checkbox-inline"><input id="ck_server7" type="checkbox" name="service" value="7">移交</label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck1]">
+			        		<input ng-model="ischeck1" type="checkbox" id="ck_server1" name="service" value="1">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">三包</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck2]">
+			        		<input ng-model="ischeck2" type="checkbox" id="ck_server2" name="service" value="2">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">改造</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck3]">
+			        		<input ng-model="ischeck3" type="checkbox" id="ck_server3" name="service" value="3">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">维修</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck4]">
+			        		<input ng-model="ischeck4" type="checkbox" id="ck_server4" name="service" value="4">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">零件</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck5]">
+			        		<input ng-model="ischeck5" type="checkbox" id="ck_server5" name="service" value="5">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">保养</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck6]">
+			        		<input ng-model="ischeck6" type="checkbox" id="ck_server6" name="service" value="6">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">巡检</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck7]">
+			        		<input ng-model="ischeck7" type="checkbox" id="ck_server7" name="service" value="7">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">移交</span>
+				        </label>
 					</div>
 					<div class="applyKid textA">
 						<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
@@ -253,7 +248,6 @@
 			<!------------------ 维修通知单end---------------------->
 				<!------------------ 维修清单确认---------------------->
 				<div ng-if="rep==1">
-<!-- 				<div ng-if="st==0&&sh==1&&rep==1||st==1&&sh==1&&rep==1"> -->
 					<p>维修清单确认</p>
 					<div class="applyKid textA">
 						<p>单位名称:</p>
@@ -334,11 +328,11 @@
 									<td>
 									     <select ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
 									</td>
-									<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
 									<td>
 									  <select ng-model="obj.unit" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
 									</td>
-									<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
 									<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
 									<td>
 		                                 <span ng-if="st==0" class="btn btn-primary" ng-click="uplist(false,$index)">-</span>
@@ -358,11 +352,11 @@
 						<input class="datainp" type="text" id="notes" ng-model="note"/>
 					</div>
 					<div class="applyKid">
-						<p>选择服务性质:</p>
-						<div class="checkbox"><label><input id="radio_service1" type="radio" name="service" value="1">三包，工作完成</label></div>
-						<div class="checkbox"><label><input id="radio_service2" type="radio" name="service" value="2">维修，工作完成，不收费</label></div>
-						<div class="checkbox"><label><input id="radio_service3" type="radio" name="service" value="3">维修，工作完成，待开票</label></div>
-						<div class="checkbox"><label><input id="radio_service4" type="radio" name="service" value="4">维修，工作完成，现场支付</labe></div>
+						<p>选择服务性质:</p> 
+						<div class="checkbox userRadio"><label><input id="radio_service1" type="radio" name="service" value="1">三包，工作完成</label></div>
+						<div class="checkbox userRadio"><label><input id="radio_service2" type="radio" name="service" value="2">维修，工作完成，不收费</label></div>
+						<div class="checkbox userRadio"><label><input id="radio_service3" type="radio" name="service" value="3">维修，工作完成，待开票</label></div>
+						<div class="checkbox userRadio"><label><input id="radio_service4" type="radio" name="service" value="4">维修，工作完成，现场支付</labe></div>
 					</div>
 					<div class="applyKid textA">
 						<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
@@ -388,7 +382,7 @@
 			<!------------------ 维修清单确认end---------------------->
 			</div>
 <!---------------------------------- 维修商 end----------------------------------------------------------------------->
-<!------------------------------------冷库主---------------------------------------------------------------------------------->
+<!------------------------------------冷库主 start---------------------------------------------------------------------------------->
 			<div ng-if="user.type!=2">
 				<div ng-if="setp==1&&st!=1">
 					<p style="text-align: left;">告警列表</p>
@@ -396,7 +390,12 @@
 						<table class="cold_warn">
 							 <thead>
 						      <tr>
-						        <th><input ng-model="isselall" type="checkbox" ng-click="tol_selallevt(isselall)" > </th>
+						        <th>
+						        	<div class="check_icon" ng-class="{true: 'on', false: ''}[isselall]">
+						        		<input ng-model="isselall" type="checkbox" ng-click="tol_selallevt(isselall)" >
+						        		<i class="iconfont">&#xe6e3;</i>
+						        	</div>
+						        </th>
 						        <th>告警ID</th>
 						        <th>告警消息</th>
 						        <th>分析结果</th>
@@ -407,7 +406,12 @@
 						    </thead>
 						    <tbody id="tb_body">
 						      <tr ng-repeat="obj in maintdata">
-						        <td><input id="ckobj_{{obj.id}}" name="ck_obj" value="{{obj.id}}" type="checkbox" ></td>
+						        <td>
+						        	<div class="check_icon"  ng-class="{true: 'on', false: ''}[obj.state]">
+						        		<input id="ckobj_{{obj.id}}" name="ck_obj" ng-model="obj.state" ng-checked="isselall" value="{{obj.id}}" type="checkbox">
+						        		<i class="iconfont">&#xe6e3;</i>
+						        	</div>
+						        </td>
 						        <td>{{obj.id}}</td>
 						        <td>{{obj.warningmsg}}</td>
 						        <td>{{obj.analysismsg}}</td>
@@ -525,13 +529,41 @@
 					</div>
 					<div class="applyKid">
 						<p>选择服务性质:</p>
-						<label class="checkbox-inline"><input id="ck_server1" type="checkbox" disabled name="service" value="1">三包</label>
-						<label class="checkbox-inline"><input id="ck_server2" type="checkbox" disabled name="service" value="2">改造</label>
-						<label class="checkbox-inline"><input id="ck_server3" type="checkbox" disabled name="service" value="3">维修</label>
-						<label class="checkbox-inline"><input id="ck_server4" type="checkbox" disabled name="service" value="4">零件</label>
-						<label class="checkbox-inline"><input id="ck_server5" type="checkbox" disabled name="service" value="5">保养</label>
-						<label class="checkbox-inline"><input id="ck_server6" type="checkbox" disabled name="service" value="6">巡检</label>
-						<label class="checkbox-inline"><input id="ck_server7" type="checkbox" disabled name="service" value="7">移交</label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck1]">
+			        		<input ng-model="ischeck1" type="checkbox" id="ck_server1" name="service" value="1">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">三包</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck2]">
+			        		<input ng-model="ischeck2" type="checkbox" id="ck_server2" name="service" value="2">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">改造</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck3]">
+			        		<input ng-model="ischeck3" type="checkbox" id="ck_server3" name="service" value="3">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">维修</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck4]">
+			        		<input ng-model="ischeck4" type="checkbox" id="ck_server4" name="service" value="4">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">零件</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck5]">
+			        		<input ng-model="ischeck5" type="checkbox" id="ck_server5" name="service" value="5">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">保养</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck6]">
+			        		<input ng-model="ischeck6" type="checkbox" id="ck_server6" name="service" value="6">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">巡检</span>
+				        </label>
+						<label class="checkbox-inline check_icon" ng-class="{true: 'on', false: ''}[ischeck7]">
+			        		<input ng-model="ischeck7" type="checkbox" id="ck_server7" name="service" value="7">
+			        		<i class="iconfont">&#xe6e3;</i>
+			        		<span class="check-text">移交</span>
+				        </label>
 					</div>
 					<div class="applyKid textA">
 						<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
@@ -625,11 +657,11 @@
 									<td>
 									     <select ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
 									</td>
-									<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
 									<td>
 									  <select ng-model="obj.unit" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
 									</td>
-									<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;"></td>
+									<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
 									<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
 									<td>
 		                                 <span ng-if="st==0" class="btn btn-primary" ng-click="uplist(false,$index)">-</span>
@@ -686,9 +718,168 @@
 			<!------------------ 维修清单确认end---------------------->
 		</div>
   </div>
-	<div class="mainApply black">
-		维修历史开发中.....
+	<div class="wxRecords black">
+	<!-- 维修历史记录 -->
+		<div ng-if="st!=1">
+			<p style="text-align: left;">维修历史记录</p>
+			<div class="analysis alarmLog">
+				<table class="cold_warn">
+					 <thead>
+				      <tr>
+				        <th>告警ID</th>
+				        <th>告警消息</th>
+				        <th>分析结果</th>
+				        <th>告警时间</th>
+				        <th>状态</th>
+				        <th >操作</th>
+				     </tr>
+				    </thead>
+				    <tbody id="tb_body">
+				      <tr ng-repeat="obj in maintdata">
+				        <td>{{obj.id}}</td>
+				        <td>{{obj.warningmsg}}</td>
+				        <td>{{obj.analysismsg}}</td>
+				        <td>{{obj.addtime.substring(0,19)}}</td>
+				        <td>{{stmode[obj.status]}}</td>
+				        <td class="text-center">
+				          <span ng-if="obj.status==6" class="btn btn-xs btn-success"  style="width: 120px;"  ng-click="tol_gotRepair_notice(obj.id,1,10)" >查看</span>
+				        </td>
+				      </tr>
+				    </tbody>
+				</table>
+			</div>
+		</div>
+		<div>
+			<div ng-if="st==1&&rep==10"><!-- 查看维修历史 -->
+				<p>维修清单确认</p>
+				<div class="applyKid textA">
+					<p>单位名称:</p>
+					<input class="datainp" type="text" ng-model="company.name" />
+				</div>
+				<div class="applyKid textA">
+					<p>单位地址:</p>
+					<input class="datainp" type="text" ng-model="company.address" />
+				</div>
+				<div class="applyKid">
+					<p>联系人:</p>
+					<input class="datainp" type="text" ng-model="wuser.username" />
+				</div>
+				<div class="applyKid">
+					<p>联系电话:</p>
+					<input class="datainp" type="text" ng-model="wuser.telephone" />
+				</div>
+				<div class="applyKid">
+					<p>开工时间:</p>
+					<input class="datainp" id="begin" readonly type="text"/>
+				</div>
+				<div class="applyKid">
+					<p>结束时间:</p>
+					<input class="datainp" id="end" readonly type="text" />
+				</div>
+				<div class="applyKid">
+					<p>实际故障现象:</p>
+					<div class="addSeclect form-inline" ng-repeat="item in wardata">
+						<span ng-repeat="item in wardata">
+							<select disabled="disabled">
+								<option value="0">{{item.analysismsg}}</option>
+							</select>
+							<select disabled="disabled">
+								<option value="0">{{item.warningmsg}}</option>
+							</select>
+                          </span>
+						<span ng-if="st==0" class="addBtn btn btn-info" ng-click="addfSelect()">+</span>
+					</div>
+                        <div class="addSeclect form-inline" ng-repeat="item in faultmapper" >
+						<span >
+							<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changefselecttype($index,item)" ng-disabled="st==1"></select>
+							<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in swartype[$index]" ng-disabled="st==1"></select>
+                         </span>
+						<span ng-if="st==0" class="addBtn btn btn-primary" ng-click="removerfSelect($index)">-</span>
+					</div>
+				</div>
+				<div class="applyKid">
+					<p style="margin-bottom: 0.5rem;">维修处理结果:<span ng-if="st==0" class="addBtn btn btn-info" style="float: none;" ng-click="addmSelect()">+</span></p>
+					<div class="addSeclect form-inline" ng-repeat="item in maintresult">
+						<span >
+							<select ng-model="item.pid"  ng-options="obj.id as obj.name for obj in pwartype" ng-change="changemselecttype($index,item)" ng-disabled="st==1"></select>
+							<select ng-model="item.id"   ng-options="obj.id as obj.name for obj in mwartype[$index]" ng-disabled="st==1"></select>
+                         </span>
+						  <span ng-if="st==0" class="addBtn btn btn-primary" ng-click="removermSelect($index)">-</span>
+					</div>
+				</div>
+				<div class="applyKid table-responsive">
+					<p>维修费用清单:</p>
+					<table class="table table-bordered">
+					  <thead>
+					    <tr class="success">
+					      <th>序号</th>
+					      <th>一级项目</th>
+					      <th>二级项目</th>
+					      <th>数量</th>
+					      <th>单位</th>
+					      <th>单价/元</th>
+					      <th>小计金额</th>
+					      <th>操作<span class="btn btn-info" ng-click="uplist(true,$index)" ng-if="st==0">+</span></th>
+					   </tr>
+					  </thead>
+						<tbody>
+							<tr class="warning" ng-repeat="obj in detailedList">
+								<td>{{$index+1}}</td>
+								<td>
+							     	<select ng-model="obj.wpid" ng-options="item.id as item.name for item in pwartype"  ng-change="changeordertype($index,obj)"  ng-disabled="st==1"></select>
+								</td>
+								<td>
+								     <select ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
+								</td>
+								<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
+								<td>
+								  <select ng-model="obj.unit" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
+								</td>
+								<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
+								<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
+								<td>
+	                                 <span ng-if="st==0" class="btn btn-primary" ng-click="uplist(false,$index)">-</span>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr class="success">
+								<td>合计金额</td>
+								<td colspan="8">{{cost}}</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="applyKid">
+					<p>维修补充:</p>
+					<input class="datainp" type="text" id="notes" ng-model="note"/>
+				</div>
+				<div class="applyKid">
+					<p>选择服务性质:</p> 
+					<div class="checkbox userRadio"><label><input id="radio_service1" type="radio" name="service" value="1">三包，工作完成</label></div>
+					<div class="checkbox userRadio"><label><input id="radio_service2" type="radio" name="service" value="2">维修，工作完成，不收费</label></div>
+					<div class="checkbox userRadio"><label><input id="radio_service3" type="radio" name="service" value="3">维修，工作完成，待开票</label></div>
+					<div class="checkbox userRadio"><label><input id="radio_service4" type="radio" name="service" value="4">维修，工作完成，现场支付</labe></div>
+				</div>
+				<div class="applyKid textA">
+					<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
+				</div>
+				<div ng-if="cuttusertype">
+					<label>评分：&nbsp;</label>
+					<div>
+						<div id="star"></div>
+					</div>
+				</div>
+				<div ng-if="cuttusertype">
+					<label>评价：&nbsp;</label>
+					<div>
+						<textarea id="txt_evaluate" placeholder="请输入文字/选填" class="datainp"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
   <!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
 	 	<ul class="rdcList">
