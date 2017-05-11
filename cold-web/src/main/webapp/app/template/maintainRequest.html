@@ -1,24 +1,34 @@
-	<div id="div_maintainRequest" class="form-horizontal applyConfirm" role="form" >
+	<style>
+		.dbc{position: relative;}
+		._error{position: absolute;top: 9px;right:8px;font-size: 12px;color:red;}
+	</style>
+	<form id="div_maintainRequest" onsubmit="return false;" class="form-horizontal applyConfirm" role="form" name="oForm" novalidate>
 		<fieldset  class="clearfix applyTable" style="margin-top: 15px;">
 	    	<legend>维修通知单</legend>
 			<div class="form-group db" style="width: 100%;">
 				<label class="control-label dbc" style="width: 10%;">单位名称&nbsp;</label>
 				<div class="dbc" style="width: 40%;">
-					<input type="text" class="form-control" placeholder="请输入单位名称" ng-model="company.name">
+					<input type="text" class="form-control" placeholder="请输入单位名称" name="name" ng-model="company.name" required>
+					<span class="_error" ng-show="oForm.name.$dirty && oForm.name.$invalid">单位名称是必须的</span>
 				</div>
 				<label class="dbc control-label" style="width: 10%;">单位地址&nbsp;</label>
 				<div class="dbc" style="width: 40%;">
-					<input type="text" class="form-control" placeholder="请输入单位地址"  ng-model="company.address">
+					<input type="text" class="form-control" placeholder="请输入单位地址" name="address" ng-model="company.address" required>
+					<span class="_error" ng-show="oForm.address.$dirty && oForm.address.$invalid">单位地址是必须的</span>
 				</div>
 			</div>
 			<div class="form-group db" style="width: 100%;">
 				<label class="dbc control-label" style="width: 10%;">联系人&nbsp;</label>
 				<div class="dbc" style="width: 40%;">
-					<input type="text" placeholder="请选择" class="form-control" ng-model="wuser.username">
+					<input type="text" placeholder="请选择" class="form-control" name="username" ng-model="wuser.username" required>
+					<span class="_error" ng-show="oForm.username.$dirty && oForm.username.$invalid">联系人是必须的</span>
 				</div>
 				<label class="dbc control-label" style="width: 10%;">联系电话&nbsp;</label>
 				<div class="dbc" style="width: 40%;">
-					<input type="text" class="form-control" placeholder="请输入联系电话" ng-model="wuser.telephone">
+					<input type="text" class="form-control" placeholder="请输入联系电话" name="tel" 
+					ng-pattern="/(^1\d{10}$)|(^0\d{2,3}-?\d{7,8}$)/" 
+					ng-model="wuser.telephone" required>
+					<span class="_error" ng-show="oForm.tel.$dirty && oForm.tel.$invalid">联系电话必须合法</span>
 				</div>
 			</div>
 			<div class="form-group db" style="width: 50%;">
@@ -70,7 +80,7 @@
 			</div>
 			<div class="form-group">
 				<label class="control-label" style="width: 10%;">选择服务性质&nbsp;</label>
-				<label class="checkbox-inline"><input id="ck_server1" type="checkbox" name="service" value="1">三包</label>
+				<label class="checkbox-inline"><input id="ck_server1" type="checkbox" name="service" checked value="1">三包</label>
 				<label class="checkbox-inline"><input id="ck_server2" type="checkbox" name="service" value="2">改造</label>
 				<label class="checkbox-inline"><input id="ck_server3" type="checkbox" name="service" value="3">维修</label>
 				<label class="checkbox-inline"><input id="ck_server4" type="checkbox" name="service" value="4">零件</label>
@@ -84,13 +94,17 @@
 				<span style="color: green;">{{stmode[cuttstatus]}}</span>
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-				<button ng-if="st==0&&userType==2" class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6 col-md-offset-3" ng-click="submit()">发送维修申请</button>
+				<button ng-if="st==0&&userType==2" class="btn btn-success col-lg-6 col-md-6 col-sm-6 col-xs-6 col-md-offset-3"
+				ng-disabled="oForm.name.$dirty && oForm.name.$invalid ||
+				 oForm.address.$dirty && oForm.address.$invalid ||
+				 oForm.username.$dirty && oForm.username.$invalid || 
+				 oForm.tel.$dirty && oForm.tel.$invalid"
+				 ng-click="submit()">发送维修申请</button>
 				<button ng-if="st==1&&userType!=2" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,3,'您确定要提交该维修确认单吗？')">同意</button>
 				<button ng-if="st==1&&userType!=2" class="btn btn-danger col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-2" ng-click="tol_advice(true,2,'您确定驳回该维修确认单吗？')">驳回</button>
 			</div>
 		</fieldset>
 		
-	</div>
-<!-- <script type="text/javascript" src="assets/plugins/jedate/jquery-1.7.2.js"></script> -->
+	</form>
 <script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
 <link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">

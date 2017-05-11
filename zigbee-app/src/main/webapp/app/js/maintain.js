@@ -139,10 +139,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 	      	  $scope.initData();
 	      	}
 	    }
-       console.log($scope.step)
-       console.log($scope.st)
-       console.log($scope.rep)
-       console.log($scope.step==1&&$scope.st!=1)
     })
     /**
      * **********************************************************************222**********************************************************************

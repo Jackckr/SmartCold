@@ -818,7 +818,14 @@ legend{
 .stars li.gold{
 	color:#f80;
 }
-
+/*个人中心*/
+.person_a{
+	display: inline-block!important;
+	padding: 0!important;
+}
+.person_a:hover{
+	background-color: transparent!important;
+}
 
 
 

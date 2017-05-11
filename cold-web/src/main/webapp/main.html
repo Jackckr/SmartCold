@@ -128,7 +128,7 @@
 										<!-- end task item -->
 									</ul>
 								</li>
-								<li class="footer"><a href="#">View all tasks</a></li>
+								<li class="footer"><a href="#/coldStorageDiv">View all tasks</a></li>
 							</ul>
 						</li>
 						<!-- User Account Menu -->
@@ -139,23 +139,24 @@
 						</a>
 							<ul class="dropdown-menu">
 								<!-- The user image in the menu -->
-								<li class="user-header"><img
-									src="assets/img/user2-160x160.jpg" class="img-circle"
-									alt="User Image" />
+								<li class="user-header">
+									<img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
 									<p>
 										{{user.username}}<small>Smart Cold Nov. 2016</small>
-									</p></li>
+									</p>
+									
+								</li>
 								<!-- Menu Body -->
 								<li class="user-body">
-									<div class="col-xs-4 text-center">
-										<a href="#">Followers</a>
+									<div class="col-xs-6 text-center" style="padding: 0;">
+										<a href="#/personInfo">个人中心</a>
 									</div>
-									<div class="col-xs-4 text-center">
-										<a href="#">Sales</a>
+									<div class="col-xs-6 text-center" style="padding: 0;">
+										<a href="#editPassword" data-toggle="modal">修改密码</a>
 									</div>
-									<div class="col-xs-4 text-center">
+									<!-- <div class="col-xs-4 text-center" style="padding: 0;">
 										<a href="#">Friends</a>
-									</div>
+									</div> -->
 								</li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
@@ -395,10 +396,42 @@
 				<div ui-view=""></div>
 			</div>
 		</div>
-		<footer class="main-footer text-white">
-			<strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.
-			</strong>备案号：沪ICP备 16004753
-		</footer>
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="editPassword" tabindex="-1" role="dialog" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+		            </div>
+		            <div class="modal-body form-horizontal">
+		            	<div class="form-group">
+							<labe class="col-sm-2 control-label">旧密码</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" placeholder="请输旧密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">新密码</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" placeholder="请输入新密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">再次输入</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" placeholder="请再次输入新密码">
+							</div>
+						</div>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		                <button type="button" class="btn btn-primary">提交更改</button>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal -->
+		</div>
+		<footer class="main-footer text-white"><strong>Copyright &copy; 2016 <a href="#">SmartCold</a>.</strong>备案号：沪ICP备 16004753</footer>
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<script type="text/javascript">
