@@ -50,7 +50,7 @@
 	
     <div class="inputs show2">
 		<div class="tel">
-			<form id="datafrom" action="">		
+			<form id="datafrom"  onsubmit="return false;">		
 			<input type="hidden" name="id" value="{{userinfo.id}}">
 			<i class="iconfont">&#xe608;</i>
 				<input type="tel" id="telNum" name="telephone" placeholder="请输入新手机号" ng-model="telephone" ng-change="vertelephone();"/>

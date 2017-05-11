@@ -199,15 +199,14 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'compressorBlower',
         templateUrl: 'app/template/compressorBlower.html'
     }).state('coldStorageDiv', {
-        url: '/coldStorageDiv/:storageID',
+        url: '/coldStorageDiv',
         controller: 'coldStorageDiv',
         templateUrl: 'app/template/coldStorageDiv.html'
     }).state('rdcPower', {
         url: '/rdcPower/:rdcId',
         controller: 'rdcPower',
         templateUrl: 'app/template/rdcPower.html'
-    })
-    .state('historyData',{
+    }).state('historyData',{
     	url:'/historyData',
     	controller: 'historyData',
         templateUrl: 'app/template/historyData.html'
@@ -327,6 +326,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/maintainRepair/{ids}_{st}',
     	controller: 'maintainRepair',
         templateUrl: 'app/template/maintainRepair.html' 
+    }).state('personInfo',{//冷库维修确认单
+    	url:'/personInfo',
+    	controller: 'personInfo',
+        templateUrl: 'app/template/personInfo.html' 
     });
     //    .state('myColdStorage',{维修确认单
 //    	url:'/myColdStorage/:storageID',

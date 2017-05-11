@@ -729,7 +729,128 @@ b{
 .myNote{
 	min-width: 6rem;
 }
+.applyKid .checkbox-inline {
+	margin: 0 .5rem .5rem 0
+}
+.addSeclect {
+	margin-bottom: 1rem
+}
+.addSeclect select {
+	width: 42%;
+	display: inline-block
+}
+.addBtn {
+	width: 10%;
+	padding: 0;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	font-size: 1rem;
+	float: right
+}
+#star {
+	width: auto !important;
+	text-align: center
+}
+#star img {
+	height: 1.5rem;
+	width: auto !important
+}
 
+#txt_evaluate {
+	width: 100%;
+	height: 3rem
+}
+.check_icon{
+    height: 1.2rem; 
+    border: 0.5px solid #DADADA;
+    border-radius: .2rem;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+.check_icon input {
+    width: 100%;
+    height: 100%;
+    margin: 0!important;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    cursor: pointer;
+    display: block;
+    -webkit-box-sizing: border-box!important;
+    -moz-box-sizing: border-box!important;
+    box-sizing: border-box!important;
+}
+.check_icon i {
+    width: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    display: inline-block;   
+    background-color: #fff;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #DFDFDF;
+    text-align: center;
+    float: left;
+}
+.check_icon.on i {
+    background-color: #fff;
+    color: #5eb95e;
+}
+.check_icon.on{
+	border-color:#5eb95e;
+	color: #5eb95e;
+}
+.check_icon.on .check-text{
+	background-color: #5eb95e;
+    color: #ffffff;
+}
+.check-text{
+	height: 1.2rem;
+    line-height: 1.2rem;
+    display: inline-block;
+    float: left;
+    padding: 0 0.3rem;
+    background-color: #F6F6F6;
+    overflow: hidden;
+}
+.userRadio{
+	margin: 1rem 0;
+}
+input[type='radio']{
+	width: 0.8rem;
+	height: 0.8rem;
+	-webkit-appearance:none;
+	appearance:none;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	box-sizing: border-box;
+	border-radius: 50%;
+	position: relative;	
+	margin: 0 .5rem 0 0!important;
+}
+input[type='radio']:checked:after{
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	width: 70%;
+	height: 70%;
+	background-color: #5eb95e;
+	border-radius: 50%;
+	border: 0;
+}
+input[type='radio']:checked{
+	border-color: #5eb95e;
+}
 /*照明*/
 .light_show .swiper-slide>p span{
 	font-size: .75rem;
