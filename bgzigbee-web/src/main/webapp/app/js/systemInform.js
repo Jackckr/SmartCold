@@ -22,14 +22,41 @@ coldWeb.controller('systemInform', function ($scope, $state, $cookies, $http, $l
             $scope.bigTotalItems = data.total;
             $scope.systemInform = data.list;
         });
-    }
-
+    };
+    $scope.readSystemInform=function (id) {
+        $http({
+            method:'POST',
+            url:'/i/systemInform/getNewSystemInform',
+            params:{
+                id:id
+            }}).success(function (data) {
+            $("span[class='count']").html(data.length);
+        });
+        $state.go('systemInformInfo', {"sysId":id});
+    };
+    $scope.manage=function (id) {
+        var r=confirm("确认处理?");
+        if (!r) {
+            return;
+        }
+        var option = $("input:checked");
+        var checkId="";
+        for(var i=0;i<option.length;i++){
+            checkId+=option[i].value+",";
+        }
+        $http({
+            method: 'POST',
+            url: '/i/systemInform/manageSystemInform',
+            params: {
+                id: id,
+                checkId:checkId
+            }
+        }).success(function () {
+            history.go(0);
+        });
+    };
     $scope.pageChanged = function () {
         $scope.getSystemInform();
     }
     $scope.getSystemInform();
-
-    $scope.goSearch = function(){
-        $scope.getComments();
-    };
 });
