@@ -24,6 +24,7 @@ import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
@@ -100,8 +101,12 @@ public class DataCollectionController extends BaseController {
 								devsatusList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
 							}
 						}
-						this.devplset.addAPStatusList(apsatusList);
-						this.devplset.addDevStatusList(devsatusList);
+						if(SetUtil.isNullList(apsatusList)){
+							this.devplset.addAPStatusList(apsatusList);
+						}
+						if(SetUtil.isnotNullList(devsatusList)){
+							this.devplset.addDevStatusList(devsatusList);
+						}
 					}else{//校时包
 						//getApplByName
 //						Integer appl = this.devplset.getApplByApID(apID);

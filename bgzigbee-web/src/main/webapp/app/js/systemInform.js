@@ -22,14 +22,9 @@ coldWeb.controller('systemInform', function ($scope, $state, $cookies, $http, $l
             $scope.bigTotalItems = data.total;
             $scope.systemInform = data.list;
         });
-    }
+    };
 
-    $scope.pageChanged = function () {
-        $scope.getSystemInform();
-    }
+  
     $scope.getSystemInform();
 
-    $scope.goSearch = function(){
-        $scope.getComments();
-    };
 });

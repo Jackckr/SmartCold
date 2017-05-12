@@ -8,8 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * 
+
+/*
+ * Copyright (C) DCIS 版权所有
+ * 功能描述: TimeUtil 工具类,具类, 提供静态工具方法 操作字符串
+ * Create on MaQiang 2016-6-25 09:28:36
  */
 public class TimeUtil {
 

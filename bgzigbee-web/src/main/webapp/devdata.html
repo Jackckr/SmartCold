@@ -137,7 +137,7 @@
 				          <div ng-show="dataList.length==0" class="alert alert-danger">沒有查到数据信息！</div>
 				           <!-- 翻页功能 -->
 		                  <div ng-show="datatype==3" class="row" style="text-align:center">
-		                    <pagination ng-change="loadData()" total-items="bigTotalItems"  ng-model="bigCurrentPage" max-size="pageSize" class="pagination-sm"   boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+		                    <pagination ng-change="loadData()" total-items="bigTotalItems"  ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"   boundary-links="true" rotate="false" num-pages="numPages"></pagination>
 		                 </div>
                         </div>
 <!-- 		                 <div> -->
@@ -211,7 +211,7 @@
 	    $scope.timetype= $scope.timetypeMode[0].val;// devkey 
 	    $scope.devkey= 0;//$scope.keyMode[$scope.datatype].val;
 	    $scope.dataList=undefined;
-	    $scope.pageSize = 100; $scope.bigTotalItems = 0;$scope.bigCurrentPage = 1; 
+	    $scope.maxSize = 100; $scope.bigTotalItems = 0;$scope.bigCurrentPage = 1; 
 	   
 	    $scope.changeMode=function(){
 	    	$scope.resttime();
@@ -294,13 +294,11 @@
 		        	 $scope.resttime();
 			     }
 				
-				if(etime==null||stime==null){alert("请设置时间");return;}
-				$http({
-					method:'POST',
-					url:'/i/Datar/findDataByFilter',
+				if(etime==""||stime==""){alert("请设置时间");return;}
+				$http({method:'POST',url:'/i/Datar/findDataByFilter',
 					params:{
 						 pageNum   :     $scope.bigCurrentPage         ,
-						 pageSize  :     $scope.pageSize        ,
+						 pageSize  :     $scope.maxSize        ,
 						 dataType  :     $scope.datatype        ,
 						 apid      :     $scope.apid.trim()       ,
 						 devid     :     $scope.devid.trim()           ,
@@ -310,13 +308,13 @@
 						} 
 				   }).success(function(data){ 
 				     if(data.success){
+				    	 $scope.bigTotalItems=data.total;
 				    	 $scope.dataList=data.data;
-				    	 $scope.totalPages=data.total;
 				     }else{
 				    	 $scope.dataList=undefined;
-				    	 $scope.totalPages=0;
+				    	 $scope.bigTotalItems=0;
 				    	 if(data.message==-1){
-				    		 alert("回话过期！请重新登录!");
+				    		 alert("会话过期！请重新登录!");
 				    		 $scope.loginout();
 				    	 }
 				     }
