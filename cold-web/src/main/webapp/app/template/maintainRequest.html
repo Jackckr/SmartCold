@@ -101,7 +101,7 @@
 				 oForm.tel.$dirty && oForm.tel.$invalid"
 				 ng-click="submit()">发送维修申请</button>
 				<button ng-if="st==1&&userType!=2" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,3,'您确定要提交该维修确认单吗？')">同意</button>
-				<button ng-if="st==1&&userType!=2" class="btn btn-danger col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-2" ng-click="tol_advice(true,2,'您确定驳回该维修确认单吗？')">驳回</button>
+				<button ng-if="st==1&&userType!=2" class="btn btn-danger col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-2" ng-click="tol_advice(true,1,'您确定驳回该维修确认单吗？')">驳回</button>
 			</div>
 		</fieldset>
 		

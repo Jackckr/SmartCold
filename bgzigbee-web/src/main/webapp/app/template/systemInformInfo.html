@@ -1,0 +1,75 @@
+<div>
+    <div>
+        <section>
+            <div class="row" style="height: 75px;width: 100%"></div>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-1">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <div class="row" style="padding-top: 10px;">
+                            <ul class="breadcrumb" style="padding-left: 45px;text-align: center;">
+                                <h3><strong>{{systemInformObject.tit}}</strong></h3>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-group rdc" style="margin-top:40px">
+                        <label class="col-sm-4 control-label">警报类型：</label>
+                        <div class="col-sm-8" ng-switch="systemInformObject.type">
+                            <input ng-switch-when="0" class="form-control" type="text" value="系统消息" ng-disabled="true"/>
+                            <input ng-switch-when="1" class="form-control" type="text" value="系统通知" ng-disabled="true"/>
+                            <input ng-switch-when="2" class="form-control" type="text" value="系统告警" ng-disabled="true"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group rdc" style="padding-top:140px">
+                        <label class="col-sm-4 control-label">stype：</label>
+                        <div class="col-sm-8" ng-switch="systemInformObject.stype">
+                            <input ng-switch-when="1" class="form-control" type="text" value="系统通知" ng-disabled="true"/>
+                            <input ng-switch-when="2" class="form-control" type="text" value="DEV重置通知"
+                                   ng-disabled="true"/>
+                            <input ng-switch-when="3" class="form-control" type="text" value="冷库认证通知"
+                                   ng-disabled="true"/>
+                            <input ng-switch-when="4" class="form-control" type="text" value="冷库绑定通知"
+                                   ng-disabled="true"/>
+                            <input ng-switch-when="5" class="form-control" type="text" value="冷库认证服务商通知"
+                                   ng-disabled="true"/>
+                            <input ng-switch-when="6" class="form-control" type="text" value="冷库绑定货主通知"
+                                   ng-disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group rdc" style="padding-top:70px">
+                        <label class="col-sm-4 control-label">警报等级：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" value="{{systemInformObject.level}}"
+                                   ng-disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group rdc" style="padding-top:70px">
+                        <label class="col-sm-4 control-label">警报时间：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" value="{{systemInformObject.addtime}}"
+                                   ng-disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group rdc" style="padding-top:70px">
+                        <label class="col-sm-4 control-label">是否处理：</label>
+                        <div class="col-sm-8" ng-switch="systemInformObject.state">
+                            <input ng-switch-when="0" class="form-control" type="text" value="未处理" ng-disabled="true"/>
+                            <input ng-switch-when="1" class="form-control" type="text" value="已处理" ng-disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group rdc" style="padding-top:70px">
+                        <label class="col-sm-4 control-label">报警内容：</label>
+                        <div class="col-sm-8"><textarea class="form-control" type="text" ng-disabled="true"
+                                                        style="height: 150px">{{systemInformObject.msg}}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+    </section>
+</div>
+</div>

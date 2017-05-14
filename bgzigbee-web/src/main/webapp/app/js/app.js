@@ -17,7 +17,11 @@ coldWeb.run(function (editableOptions, naviService,adminService, $location) {
   		adminService.setAdmin(admin);
       });
 });
-
+coldWeb.run(function () {
+    $.ajax({type:"post",cache: false,dataType:'json',url:"/i/systemInform/getNewSystemInform"}).success(function (data) {
+        $("span[class='count']").html(data.length);
+    })
+})
 coldWeb.config(function ($httpProvider) {
 	//$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.interceptors.push(function ($q, $injector) {
@@ -227,7 +231,6 @@ coldWeb.directive('star', function () {
     }
   };
 });
-
 coldWeb.directive('activeLink', ['$location', '$filter', function (location, filter) {
     return {
         restrict: 'A',
@@ -397,5 +400,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/systemInform',
         controller: 'systemInform',
         templateUrl: 'app/template/systemInform.html'
+    }).state('systemInformInfo',{//警告栏详细信息显示
+        url: '/systemInformInfo/:sysId',
+        controller: 'systemInformInfo',
+        templateUrl: 'app/template/systemInformInfo.html'
     });
 });

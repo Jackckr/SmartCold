@@ -17,4 +17,12 @@ public interface SystemInformMapper {
      */
     List<HashMap<String,Object>> getSystemInform(@Param("type") Integer type, @Param("stype") Integer stype,
            @Param("isRead") Integer isRead , @Param("status")Integer status, @Param("keyword") String keyword);
+
+    List<HashMap<String,Object>> getNoReadSystemInform();
+
+    void changeIsRead(Integer id);
+
+    void changeState(Integer id);
+
+    HashMap<String,Object> getSystemInformByID(Integer id);
 }
