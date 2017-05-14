@@ -1,17 +1,22 @@
+<style>
+.operation select{width:auto;height: 30px;border-radius: 4px;}
+.operation>div{width: 20%;float: left;}
+.operation>div>span{line-height: 2.5;font-size: 14px;}
+</style>
 <div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
-    <div class="operation row">
-        <div class="pull-left" style="width: 20%;">
-            <span style="line-height: 2.5;font-size: 14px;">消息类型：</span>
-            <select  ng-model="type" style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
+    <div class="operation">
+        <div>
+            <span>消息类型：</span>
+            <select  ng-model="type" ng-change="getSystemInform()">
                 <option value="-2">全部</option>
                 <option value="0">系统消息</option>
                 <option value="1">系统通知</option>
                 <option value="2">系统告警</option>
             </select>
         </div>
-       <div class="pull-left" style="width: 20%;">
-            <span style="line-height: 2.5;font-size: 14px;">stype：</span>
-            <select ng-model="stype"  style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
+       <div>
+            <span>通知类型：</span>
+            <select ng-model="stype" ng-change="getSystemInform()">
                 <option value="-2">全部</option>
                 <option value="1">系统通知</option>
                 <option value="2">DEV重置通知</option>
@@ -21,24 +26,24 @@
                 <option value="6">冷库绑定货主通知</option>
             </select>
         </div>
-       <div class="pull-left" style="width: 20%;">
-            <span style="line-height: 2.5;font-size: 14px;">isread：</span>
-            <select ng-model="isRead" style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
-                <option value="-2">全部</option>
-                <option value="1">已读</option>
-                <option value="0">未读</option>
-            </select>
-        </div>
-        <div class="pull-left" style="width: 20%;">
-            <span style="line-height: 2.5;font-size: 14px;">status：</span>
-            <select ng-model="status"  style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
+        <div>
+            <span>处理情况：</span>
+            <select ng-model="status" ng-change="getSystemInform()">
                 <option value="-2">全部</option>
                 <option value="1">已忽略</option>
                 <option value="0">未处理</option>
 
             </select>
         </div>
-        <div id="search" class="pull-left" style="width: 20%!important;margin-left: 0;">
+       <div>
+            <span>阅读状态：</span>
+            <select ng-model="isRead" ng-change="getSystemInform()">
+                <option value="-2">全部</option>
+                <option value="1">已读</option>
+                <option value="0">未读</option>
+            </select>
+        </div>
+        <div id="search" style="width: 20%!important;margin-left: 0;">
             <input type="text" ng-model="keyword" placeholder="请输入关键词" id="myText">
             <div id="searchImg" ng-click="getSystemInform()">
                 <span class="glyphicon glyphicon-search"></span>
@@ -51,13 +56,13 @@
             <tr>
                 <th></th>
                 <th>消息类型</th>
-                <th>stype</th>
+                <th>通知类型</th>
+                <th>级别</th>
+                <th>标题</th>
+                <th>内容</th>                
                 <th>处理者</th>
                 <th>处理情况</th>
-                <th>级别</th>
-                <th>是否阅读</th>
-                <th>标题</th>
-                <th>内容</th>
+                <th>阅读状态</th>
                 <th>时间</th>
                 <th>操作</th>
             </tr>
@@ -78,18 +83,18 @@
                     <span ng-switch-when="5">冷库认证服务商通知</span>
                     <span ng-switch-when="6">冷库绑定货主通知</span>
                 </td>
+                <td>{{item.level}}</td>
+                <td>{{item.tit}}</td>
+                <td style="text-align: left;width:320px;">{{item.msg}}</td>
                 <td>{{item.uid}}</td>
                 <td ng-switch="item.state">
                     <span ng-switch-when="0">未处理</span>
                     <span ng-switch-when="-1">已忽略</span>
                 </td>
-                <td>{{item.level}}</td>
                 <td ng-switch="item.isread">
                     <span ng-switch-when="0">未读</span>
                     <span ng-switch-when="1">已读</span>
                 </td>
-                <td>{{item.tit}}</td>
-                <td style="text-align: left;">{{item.msg}}</td>
                 <td>{{item.addtime}}</td>
                 <td>
                     <button type="button" class="btn btn-info" ng-click="readSystemInform(item.id)">查看详情</button>
