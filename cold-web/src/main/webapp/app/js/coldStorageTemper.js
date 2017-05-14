@@ -5,7 +5,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     $scope.isErr=false;
     $scope.storageID= $stateParams.storageID;
     console.log("storageID:"+$scope.storageID);
-    $scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'] 
+    $scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']; 
     Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
     $scope.oids=[],$scope.names=[];
     $scope.getTempset = function () {
@@ -33,18 +33,18 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             $scope.isErr=false;$scope.name = result.name;
         	var yData = [], tempMap = result.tempMap,systime=result.systime;
             var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
-        	var i= 0,tempList=newdata = [],vo=cuttime=lasttime=null; 
+        	var i= 0,tempList=newdata = [],vo=cuttime=null; 
             for(var key in tempMap) { 
-             	 vo=cuttime=null, tempList=tempMap[key], newdata = [],lasttime=startTime.getTime();
+             	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
                  if( tempList.length>0){
 	                 for ( i = 0; i < tempList.length; i++) {
 						 vo=tempList[i];
-						 if(i>0){ lasttime=newdata[newdata.length-1].x;}
+//						 if(i>0){ lasttime=newdata[newdata.length-1].x;}
 						 cuttime=new Date(vo.addtime).getTime();
-	                	 if(cuttime-lasttime>120000){ newdata.push({ x: lasttime+60000,y: null });} //修正中间数据短传问题1
+//	                	 if(cuttime-lasttime>120000){ newdata.push({ x: lasttime+60000,y: null });} //修正中间数据短传问题1
 	                	 newdata.push({ x: cuttime,y: vo.value });
 					}
-	                if( systime-cuttime>1800000&&systime-maxTime<600000){//大于半个小时。。提醒
+	                if( systime-cuttime>1800000&&systime-maxTime<1200000){//大于半个小时。。提醒
 	                	newdata.push({ x: maxTime,y:null }); 
 	                	if(!$scope.isErr){ $scope.isErr=true;}
 	                }   //修正尾部数据短传问题2

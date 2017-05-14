@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>洲斯设备数据接口测试</title>
+    <title>洲斯设备状态接口测试</title>
     <meta name="keywords" content="keyword1,keyword2,keyword3">
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=UTF-8">
@@ -21,42 +21,36 @@
 		</caption>
 		<thead>
 			<tr>
-				<th>devid</th>
-				<th>apid</th>
-				<th>温度  </th>
-				<th>AU</th>
-				<th>BU</th>
-				<th>CU</th>
-				<th>AI</th>
-				<th>BI</th>
-				<th>CI</th>
-				<th>PWC</th>
-				<th>门（1开：0关）            </th>
-				<th>电池电压                           </th>
-				<th>DEV信号强度    </th>
-				<th>AP信号强度 </th>
-				<th>数据采集时间 </th>
-				
-				
+				<th>APID</th><th>AP信号强度 </th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr  ng-repeat="obj in dataList">
-				<td>{{obj.devid}}</td>
-				<td>{{obj.datas.apid}}</td>
-				<td>{{obj.datas.Temp}}</td>
-				<td>{{obj.datas.AU}}</td>
-				<td>{{obj.datas.BU}}</td>
-				<td>{{obj.datas.CU}}</td>
-				<td>{{obj.datas.AI}}</td>
-				<td>{{obj.datas.BI}}</td>
-				<td>{{obj.datas.CI}}</td>
-				<td>{{obj.datas.PWC}}</td>
-				<td>{{obj.datas.Switch}}</td>
-				<td>{{obj.datas.DU}}</td>
-				<td>{{obj.datas.BSI}}</td>
-				<td>{{obj.datas.MSI}}</td>
-				<td>{{obj.datas.time*1000|date:'yyyy-MM-dd hh:MM:ss'}}</td>
+			<tr  ng-repeat="(key,value) in apmsimap">
+				<td>{{key}}</td><td>{{value}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table id="loding" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>DEVID</th><th>DEV信号强度</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr  ng-repeat="(key,value) in devmsimap">
+				<td>{{key}}</td><td>{{value}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table id="loding" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>DEVID</th><th>DEV电池电压</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr  ng-repeat="(key,value) in devdumap">
+				<td>{{key}}</td><td>{{value}}V</td>
 			</tr>
 		</tbody>
 	</table>
@@ -83,10 +77,12 @@
 	 	
 	 	 $scope.initdata=function(){
 	 		 $("#loding").hide();
-	 		 $http.get("/i/util/getSensorhistData").success(function(data) {  
-	 				 $("#loding").show();
-	 			 if(data!=null&&data!=""){
-	 				 $scope.dataList=data.reverse(); 
+	 		 $http.get("/i/util/getZsDevStatus").success(function(data) {  
+	 			 $("#loding").show();
+	 			 if(data!=null){
+	 				 $scope.devdumap=data.DU; 
+	 				 $scope.devmsimap=data.MSI; 
+	 				 $scope.apmsimap=data.APMSI; 
 	 			 }
 	 		 }); 
 	 	 };
@@ -98,8 +94,7 @@
 	 	 setInterval(function () {
 	 		 if(i>0){ i--;}else{$scope.initdata(); i=3; }
 	 		 cutimedm.html( new Date().Format("yyyy-MM-dd HH:mm:ss"));
-	 		 diftim.html(i);
-	 		 }, 1000);
+	 		 diftim.html(i); }, 1000);
 	  });
 	  </script>
    </body>

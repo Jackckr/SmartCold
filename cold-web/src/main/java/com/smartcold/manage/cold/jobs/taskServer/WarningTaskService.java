@@ -1,6 +1,15 @@
 package com.smartcold.manage.cold.jobs.taskServer;
 
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.smartcold.manage.cold.jobs.taskutil.CronExpConversion;
+import com.smartcold.manage.cold.jobs.taskutil.QuartzJobFactory;
+import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
+import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
 
 /**
  * 告警服务
@@ -10,18 +19,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class WarningTaskService  {
 	
-	
+	 private static final Logger log = Logger.getLogger(WarningTaskService.class);  
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
-	
+	*/
      @Scheduled(cron="0 0/1 * * * ?")
 	public void checkData() {
-	   Integer msgId=System.currentTimeMillis()
-    	 
-    	 
+    	 long msgId=System.currentTimeMillis();
     	 String jobName=msgId+"_job";
-         String cron = CronExpConversion.getQuartzTime(sendTime);//获得quartz时间表达式，此方法自己写 //Util.toString(sendTime) 
+    	 long sendTime=msgId+120000;
+         String cron = CronExpConversion.getQuartzTime(sendTime);//2
          ScheduleJob job = new ScheduleJob();  
          job.setId( msgId);  
          job.setName(jobName );  
@@ -37,13 +45,11 @@ public class WarningTaskService  {
                   QuartzManager.addJob(jobName, QuartzJobFactory.class, cron,job);  //添加定时任务 
               }
             
-             return true;  
          } catch (Exception e) {  
              log.info("加载定时器错误："+e);  
-             return false;  
          }  
 	}
-	 */
+	
 	
     
   

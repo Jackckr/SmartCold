@@ -1,55 +1,66 @@
 package com.smartcold.manage.cold.test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import com.alibaba.fastjson.JSONArray;
+import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.entity.newdb.ZSDevDataEntity;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
 		
-		String s="";
-   byte[] bytes = s.getBytes();
-   System.err.println(bytes.length);
-//		
-//		try {
-//			//客户端
-//			//1、创建客户端Socket，指定服务器地址和端口
-//			Socket socket =new Socket("127.0.0.1",2196);
-//			//2、获取输出流，向服务器端发送信息
-//			OutputStream os = socket.getOutputStream();//字节输出流
-//			PrintWriter pw =new PrintWriter(os);//将输出流包装成打印流
-//			pw.write("用户名：admin；密码：admin");
-//			pw.flush();
-//			socket.shutdownOutput();
-//			//3、获取输入流，并读取服务器端的响应信息
-//			InputStream is = socket.getInputStream();
-//			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//			String info = null;
-//			while(br.readLine()!=null){
-//			 System.out.println("Hello,我是客户端，服务器说："+info);
-//			}
-//			  
-//			//4、关闭资源
-//			br.close();
-//			is.close();
-//			pw.close();
-//			os.close();
-//			socket.close();
-//		} catch (UnknownHostException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
+		
+			  boolean	isSaveDU=false;
+			String devData="[{\"devid\":\"00210005\",\"datas\":{\"time\":1494729138,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.26,\"BSI\":-47.5,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210001\",\"datas\":{\"time\":1494729139,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.17,\"BSI\":-56.5,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210003\",\"datas\":{\"time\":1494729142,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.23,\"BSI\":-48,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210006\",\"datas\":{\"time\":1494729130,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.26,\"BSI\":-45,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210002\",\"datas\":{\"time\":1494729141,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.21,\"BSI\":-41.5,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210004\",\"datas\":{\"time\":1494729144,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.17,\"BSI\":-50.5,\"apid\":\"00200001\",\"MSI\":22}}]";
+			Calendar calendar = Calendar.getInstance();
+			int hours = calendar.get(Calendar.HOUR_OF_DAY); // 时
+			int minutes = calendar.get(Calendar.MINUTE);    // 分
+			int seconds = calendar.get(Calendar.SECOND);    // 秒
+			if(hours%6==0&minutes==0&&seconds<30){ isSaveDU=true; System.err.println(TimeUtil.getDateTime()); }
+			ArrayList<StorageDataCollectionEntity> dataList = new ArrayList<StorageDataCollectionEntity>();
+			ArrayList<StorageDataCollectionEntity> dusiList = new ArrayList<StorageDataCollectionEntity>();
+		    List<ZSDevDataEntity> parseArray = JSONArray.parseArray(devData,ZSDevDataEntity.class);  
+		    String devid=null;String apid=null;Date date=null; 	HashMap<String, Object> datas =null;
+			for (ZSDevDataEntity zsDevDataEntity : parseArray) {
+				datas=zsDevDataEntity.getDatas();
+				devid=Integer.parseInt(zsDevDataEntity.getDevid())+"";
+				Integer type = 18;//无效设备
+				if(type==null||type==-1){continue;}//无效设备
+				apid=((Integer)datas.get("apid"))+"";
+				date =new Date( (Integer)datas.get("time")*1000L);
+				switch (type) {
+				case 18://温度
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"Temp",  datas.get("Temp"), date));
+					break;
+				case 2://冷库门
+					dataList.add(new StorageDataCollectionEntity(apid, devid,"Switch",  datas.get("Switch"), date));
+					break;
+				case 10://电量
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"AU",  datas.get("AU"),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"BU",  datas.get("BU"),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"CU",  datas.get("CU"),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"AI",  datas.get("AI"),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"BI",  datas.get("BI"),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"CI",  datas.get("CI"),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"PWC", datas.get("PWC"), date));
+					break;
+				default:
+					break;
+				}
+				if(isSaveDU){//保存设备电压
+					dusiList.add(new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
+					dusiList.add(new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
+				}
+			}
+			
 		
 		
 		

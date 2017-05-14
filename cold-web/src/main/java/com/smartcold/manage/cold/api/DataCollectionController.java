@@ -50,6 +50,7 @@ public class DataCollectionController extends BaseController {
 	@ResponseBody
 	public Object storageDataCollection(@RequestBody String data, HttpServletResponse response) {
 		try {
+			if(StringUtil.isNull(data)){new DataResultDto(500);}
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String apID = dataCollectionBatchEntity.get("apID").toString();
 			ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
@@ -60,10 +61,11 @@ public class DataCollectionController extends BaseController {
 					arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
 				}
 			}
-			storageDataCollectionDao.batchInsert(arrayList);
+			if(SetUtil.isnotNullList(arrayList)){
+				storageDataCollectionDao.batchInsert(arrayList);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("DEV数据解析出错。。。。。。。。。。。。");
+			System.err.println("DEV数据解析出错。。。。。。。。。。。。\r\n"+data);
 			return new DataResultDto(500);
 		}
 		return new DataResultDto(200);
@@ -116,7 +118,7 @@ public class DataCollectionController extends BaseController {
 				   }
 		   }
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("dev状态数据解析异常："+data);
 		}
 		return resMap;
 	}  

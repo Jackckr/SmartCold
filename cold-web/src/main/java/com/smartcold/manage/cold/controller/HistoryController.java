@@ -51,11 +51,7 @@ public class HistoryController extends BaseController {
 	private StorageService storageService;
 
 	
-	 @RequestMapping("/getSensorhistData")
-	 @ResponseBody
-	 public Object getSensorhistData()  {
-		return ZsDevService.data;
-	 }
+
 	 
 	
 	 @RequestMapping("/getTaskProgress")
