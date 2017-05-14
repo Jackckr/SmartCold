@@ -14,6 +14,7 @@ jhy
 }
 .panel-header{padding:0 0 0 15px;}
 #cc>div>div{background: #fff!important;}
+#cc>div>.modal{background: rgba(0,0,0,0.1)!important;}
 .logo{
 	width:45px;
 	height: 45px;

@@ -198,6 +198,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 		//查看/确认
 			$http.get(ER.coldroot + '/i/warningMint/getMaintenanceByWId',{params: {wid: $scope.warids}}).success(function(data){
 				$scope.maintenance=data;
+				$scope.maintenance.repairtime=$scope.maintenance.repairtime.slice(0,19)
+				$scope.maintenance.bookingtime=$scope.maintenance.bookingtime.slice(0,19)
 				$("#wx").val($scope.maintenance.repairtime);
 				$("#orderTime").val($scope.maintenance.bookingtime);
 				$scope.nwardata=JSON.parse($scope.maintenance.faultmapper);
@@ -269,8 +271,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 					  $scope.cost=$scope.maintconfirma.cost;
 					  $scope.note=$scope.maintconfirma.note;
 					  $("#radio_service"+$scope.maintconfirma.serverType).attr("checked",true);
-					  $("#begin").val( $scope.maintconfirma.starttime);
-					  $("#end").val( $scope.maintconfirma.endtime);
+					  $("#begin").val( $scope.maintconfirma.starttime.slice(0,19));
+					  $("#end").val( $scope.maintconfirma.endtime.slice(0,19));
 					  $scope.phenomena=JSON.parse($scope.maintconfirma.phenomena);//实际现象
 					  $scope.maintresult=JSON.parse($scope.maintconfirma.maintresult);//实际结果
 					  if( $scope.maintresult.length>0){
@@ -396,11 +398,11 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 				  if(st==0){
 					  jeDate({
 						dateCell:"#wx",isinitVal:true,isTime:true, 
-						format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"
+						format:"YYYY-MM-DD hh:mm:ss",minDate:jeDate.now(-7),maxDate: jeDate.now(0)
 					  })
 					  jeDate({
 						dateCell:"#orderTime",isinitVal:true,isTime:true, 
-						format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"
+						format:"YYYY-MM-DD hh:mm:ss",minDate: jeDate.now(0)
 					  })
 				  }
 		  	 });
@@ -442,8 +444,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 			 //查看
 			$http.get(ER.coldroot + '/i/warningMint/getMaintenanceByWId',{params: {wid: $scope.warids}}).success(function(data){
 				$scope.maintenance=data;
-				$("#wx").val($scope.maintenance.repairtime);
-				$("#orderTime").val($scope.maintenance.bookingtime);
+				$scope.maintenance.repairtime=$scope.maintenance.repairtime.slice(0,19);
+				$scope.maintenance.bookingtime=$scope.maintenance.bookingtime.slice(0,19);
+//				$("#wx").val($scope.maintenance.repairtime.slice(0,19));
+//				$("#orderTime").val($scope.maintenance.bookingtime.slice(0,19));
 				$scope.nwardata=JSON.parse($scope.maintenance.faultmapper);
 				$("input[id^='ck_server']").attr("disabled",true);
 				angular.forEach($scope.maintenance.servertype.split(","),function(obj,i){
@@ -514,8 +518,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 	    $scope.init_repair=function(){
 	 		if( $scope.st==0){//服务新建维修单
 				 $scope.cuttstatus=4;
-				 jeDate({dateCell:"#begin",isinitVal:true,isTime:true, format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"})
-			 	 jeDate({dateCell:"#end",isinitVal:true,isTime:true, format:"YYYY-MM-DD hh:mm",minDate:"2008-08-08 08:08:08"})
+				 jeDate({dateCell:"#begin",isinitVal:true,isTime:true, format:"YYYY-MM-DD hh:mm:ss",minDate: jeDate.now(-7),maxDate: jeDate.now(0)})
+			 	 jeDate({dateCell:"#end",isinitVal:true,isTime:true, format:"YYYY-MM-DD hh:mm:ss",minDate: jeDate.now(0)})
 				//1.实际故障联动
 				$scope.addfSelect=function(){//添加故障
 			 		var item={id:2,pid:1};
@@ -593,8 +597,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 					  $scope.cost=$scope.maintconfirma.cost;
 					  $scope.note=$scope.maintconfirma.note;
 					  $("#radio_service"+$scope.maintconfirma.serverType).attr("checked",true);
-					  $("#begin").val( $scope.maintconfirma.starttime);
-					  $("#end").val( $scope.maintconfirma.endtime);
+					  $("#begin").val( $scope.maintconfirma.starttime.slice(0,19));
+					  $("#end").val( $scope.maintconfirma.endtime.slice(0,19));
 					  $scope.phenomena=JSON.parse($scope.maintconfirma.phenomena);//实际现象
 					  $scope.maintresult=JSON.parse($scope.maintconfirma.maintresult);//实际结果
 					  if( $scope.maintresult.length>0){

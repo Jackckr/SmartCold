@@ -199,7 +199,8 @@
 					</div>
 					<div class="applyKid">
 						<p>预估维修费用:</p>
-						<input class="datainp" type="number" ng-model="maintenance.cost" />
+						<input class="datainp" type="number" ng-model="maintenance.cost" name="cost" ng-pattern="/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/"/>
+						<span class="_error" ng-show="oForm.cost.$dirty && oForm.cost.$invalid">费用不能小于0元</span>
 					</div>
 					<div class="applyKid">
 						<p>选择服务性质:</p>
@@ -247,6 +248,7 @@
 						ng-disabled="oForm.name.$dirty && oForm.name.$invalid ||
 						 oForm.address.$dirty && oForm.address.$invalid ||
 						 oForm.username.$dirty && oForm.username.$invalid || 
+						 oForm.cost.$dirty && oForm.cost.$invalid ||
 						 oForm.tel.$dirty && oForm.tel.$invalid" 
 						ng-click="submit()">发送维修申请</button>
 						<button ng-if="st==1&&user.type!=2" class="btn btn-success col-xs-5 col-sm-5" ng-click="tol_advice(false,3,'您确定要提交该维修确认单吗？')">同意</button>
@@ -343,11 +345,19 @@
 									<td>
 									     <select ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
 									</td>
-									<td><input type="number" placeholder="1" ng-model="obj.number"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
+									<td style="position: relative;">
+										<input type="number" placeholder="1" ng-model="obj.number" name="costNUm" 
+								   		ng-pattern="/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/" ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;">
+								   		<span class="_error" ng-show="aForm.costNUm.$dirty && aForm.costNUm.$invalid" style="right:0;top:75%;font-size: 10px;z-index: 1;">数量不能小于0</span>
+									</td>
 									<td>
 									  <select ng-model="obj.unit" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
 									</td>
-									<td><input type="number" placeholder="0" ng-model="obj.price"  ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;"></td>
+									<td style="position: relative;">
+										<input type="number" placeholder="0" ng-model="obj.price" name="price"
+										ng-pattern="/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/" ng-disabled="st==1" style=" appearance:none;-webkit-appearance:none;width: 100%; height: 100%;">
+										<span class="_error" ng-show="aForm.price.$dirty && aForm.price.$invalid" style="right:0;top:75%;font-size: 10px;z-index: 1;">价格不能小于0</span>
+									</td>
 									<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
 									<td>
 		                                 <span ng-if="st==0" class="btn btn-primary" ng-click="uplist(false,$index)">-</span>
@@ -393,7 +403,9 @@
 						<button ng-if="st==0&&user.type==2" class="btn btn-success btn-block" 
 						ng-disabled="aForm.name.$dirty && aForm.name.$invalid ||
 						 aForm.address.$dirty && aForm.address.$invalid ||
-						 aForm.username.$dirty && aForm.username.$invalid || 
+						 aForm.username.$dirty && aForm.username.$invalid ||
+						 aForm.costNUm.$dirty && aForm.costNUm.$invalid ||
+						 aForm.price.$dirty && aForm.price.$invalid || 
 						 aForm.tel.$dirty && aForm.tel.$invalid" 
 						ng-click="addMaintenance()">发送维修申请</button>
 						<button ng-if="cuttusertype" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,6,'您确定签字？')">同意</button>

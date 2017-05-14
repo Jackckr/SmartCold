@@ -36,7 +36,8 @@ coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$state
     $scope.initMode=function(){
 		if( $scope.st==0){//服务新建维修单
 			 $scope.cuttstatus=4;
-			$("#begin,#end").jeDate({isinitVal:true, skinCell:"jedateblue", minDate:  $.nowDate(0),  format: 'YYYY-MM-DD hh:mm'});
+			$("#begin").jeDate({isinitVal:true, skinCell:"jedateblue", minDate:  $.nowDate(-7), maxDate:  $.nowDate(-0), format: 'YYYY-MM-DD hh:mm'});
+			$("#end").jeDate({isinitVal:true, skinCell:"jedateblue", minDate:  $.nowDate(0),  format: 'YYYY-MM-DD hh:mm'});
 			//1.实际故障联动
 			$scope.addfSelect=function(){//添加故障
 		 		var item={id:2,pid:1};
@@ -111,8 +112,8 @@ coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$state
 					  $scope.cost=$scope.maintconfirma.cost;
 					  $scope.note=$scope.maintconfirma.note;
 					  $("#radio_service"+$scope.maintconfirma.serverType).attr("checked",true);
-					  $("#begin").val( $scope.maintconfirma.starttime);
-					  $("#end").val( $scope.maintconfirma.endtime);
+					  $("#begin").val( $scope.maintconfirma.starttime.slice(0,19));
+					  $("#end").val( $scope.maintconfirma.endtime.slice(0,19));
 					  $scope.phenomena=JSON.parse($scope.maintconfirma.phenomena);//实际现象
 					  $scope.maintresult=JSON.parse($scope.maintconfirma.maintresult);//实际结果
 					  if( $scope.maintresult.length>0){

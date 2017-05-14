@@ -73,9 +73,10 @@
 					<input id="orderTime" type="text" placeholder="请选择"  readonly class="form-control" ng-mode="maintenance.bookingtime" >
 				</div>
 				<label class="dbc control-label" style="width: 10%;">预估维修费用&nbsp;</label>
-				<div class="input-group" style="width: 100%;">
-					<input type="number" placeholder="预估维修金额" class="form-control"  ng-model="maintenance.cost">
+				<div class="input-group" style="width: 100%;position: relative;">
+					<input type="number" placeholder="预估维修金额" class="form-control"  ng-model="maintenance.cost" name="cost" ng-pattern="/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/">
 					<span class="input-group-addon">¥</span>
+					<span class="_error" ng-show="oForm.cost.$dirty && oForm.cost.$invalid" style="right:60px;z-index:2;">费用不能小于0元</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -98,6 +99,7 @@
 				ng-disabled="oForm.name.$dirty && oForm.name.$invalid ||
 				 oForm.address.$dirty && oForm.address.$invalid ||
 				 oForm.username.$dirty && oForm.username.$invalid || 
+				 oForm.cost.$dirty && oForm.cost.$invalid ||
 				 oForm.tel.$dirty && oForm.tel.$invalid"
 				 ng-click="submit()">发送维修申请</button>
 				<button ng-if="st==1&&userType!=2" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,3,'您确定要提交该维修确认单吗？')">同意</button>

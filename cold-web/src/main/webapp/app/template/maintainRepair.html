@@ -102,11 +102,18 @@
 							<td>
 							     <select  class="form-control" ng-model="obj.wid"   ng-options="item.id as item.name for item in ordertype[$index]" ng-disabled="st==1"></select>
 							</td>
-							<td><input type="number" class="form-control" placeholder="1" ng-model="obj.number"  ng-disabled="st==1"></td>
+							<td style="position: relative;">
+								<input type="number" class="form-control" placeholder="1" name="costNUm" 
+								ng-pattern="/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/" ng-model="obj.number"  ng-disabled="st==1">
+								<span class="_error" ng-show="oForm.costNUm.$dirty && oForm.costNUm.$invalid" style="right:40px;top:16px;">数量不能小于0</span>
+							</td>
 							<td>
 							  <select ng-model="obj.unit" class="form-control" ng-options="obj.id as obj.name for obj in unit" ng-disabled="st==1"></select>
 							</td>
-							<td><input type="number" class="form-control" placeholder="0" ng-model="obj.price"  ng-disabled="st==1"></td>
+							<td style="position: relative;"><input type="number" class="form-control" placeholder="0" name="price"
+								ng-pattern="/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/" ng-model="obj.price"  ng-disabled="st==1">
+								<span class="_error" ng-show="oForm.price.$dirty && oForm.price.$invalid" style="right:40px;top:16px;">价格不能小于0</span>
+							</td>
 							<td>{{obj.number*obj.price}}<span class="hide" > </span></td>
 							<td>
                                  <span ng-if="st==0" class="addBtn form-control" ng-click="uplist(false,$index)">-</span>
@@ -165,6 +172,8 @@
 				 ng-disabled="oForm.name.$dirty && oForm.name.$invalid ||
 				 oForm.address.$dirty && oForm.address.$invalid ||
 				 oForm.username.$dirty && oForm.username.$invalid || 
+				 oForm.costNUm.$dirty && oForm.costNUm.$invalid ||
+				 oForm.price.$dirty && oForm.price.$invalid ||
 				 oForm.tel.$dirty && oForm.tel.$invalid"
 			   	 ng-click="addMaintenance()">发送维修申请</button>
 				<button ng-if="cuttusertype" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;" ng-click="tol_advice(false,6,'您确定签字？')">同意</button>
