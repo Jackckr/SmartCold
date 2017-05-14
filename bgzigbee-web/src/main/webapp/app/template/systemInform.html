@@ -1,17 +1,17 @@
-<div>
+<div style="padding: 28px 30px 0 30px;background-color: #F1F1F1;">
     <div class="operation row">
-        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6 row">
-            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right" style="line-height: 2.5;font-size: 14px;">消息类型：</span>
-            <select class="col-lg-6 col-md-6 col-sm-6 col-xs-6 form-control ng-pristine ng-valid ng-touched" ng-model="type" style="width:auto" ng-change="getSystemInform()">
+        <div class="pull-left" style="width: 20%;">
+            <span style="line-height: 2.5;font-size: 14px;">消息类型：</span>
+            <select  ng-model="type" style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
                 <option value="-2">全部</option>
                 <option value="0">系统消息</option>
                 <option value="1">系统通知</option>
                 <option value="2">系统告警</option>
             </select>
         </div>
-        <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6 row">
-            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right" style="line-height: 2.5;font-size: 14px;">stype：</span>
-            <select ng-model="stype" class="col-lg-6  col-md-6 col-sm-6 col-xs-6 form-control ng-pristine ng-untouched ng-valid" style="width:auto" ng-change="getSystemInform()">
+       <div class="pull-left" style="width: 20%;">
+            <span style="line-height: 2.5;font-size: 14px;">stype：</span>
+            <select ng-model="stype"  style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
                 <option value="-2">全部</option>
                 <option value="1">系统通知</option>
                 <option value="2">DEV重置通知</option>
@@ -21,25 +21,25 @@
                 <option value="6">冷库绑定货主通知</option>
             </select>
         </div>
-        <div class="col-lg-2  col-md-3 col-sm-6 col-xs-6 row">
-            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right" style="line-height: 2.5;font-size: 14px;">isread：</span>
-            <select ng-model="isRead" class="col-lg-6  col-md-6 col-sm-6 col-xs-6 form-control ng-pristine ng-untouched ng-valid" style="width:auto" ng-change="getSystemInform()">
+       <div class="pull-left" style="width: 20%;">
+            <span style="line-height: 2.5;font-size: 14px;">isread：</span>
+            <select ng-model="isRead" style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
                 <option value="-2">全部</option>
                 <option value="1">已读</option>
                 <option value="0">未读</option>
             </select>
         </div>
-        <div class="col-lg-2  col-md-3 col-sm-6 col-xs-6 row">
-            <span class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right" style="line-height: 2.5;font-size: 14px;">status：</span>
-            <select ng-model="status" class="col-lg-6  col-md-6 col-sm-6 col-xs-6 form-control ng-pristine ng-untouched ng-valid" style="width:auto" ng-change="getSystemInform()">
+        <div class="pull-left" style="width: 20%;">
+            <span style="line-height: 2.5;font-size: 14px;">status：</span>
+            <select ng-model="status"  style="width:auto;height: 30px;border-radius: 4px;" ng-change="getSystemInform()">
                 <option value="-2">全部</option>
                 <option value="1">已忽略</option>
                 <option value="0">未处理</option>
 
             </select>
         </div>
-        <div id="search" class="col-lg-2  col-md-3 col-sm-6 col-xs-6 row" style="margin-left: 10px;">
-            <input type="text" ng-model="keyword" class="form-control ng-pristine ng-untouched ng-valid" placeholder="请输入关键词" id="myText">
+        <div id="search" class="pull-left" style="width: 20%!important;margin-left: 0;">
+            <input type="text" ng-model="keyword" placeholder="请输入关键词" id="myText">
             <div id="searchImg" ng-click="getSystemInform()">
                 <span class="glyphicon glyphicon-search"></span>
             </div>
@@ -89,7 +89,7 @@
                     <span ng-switch-when="1">已读</span>
                 </td>
                 <td>{{item.tit}}</td>
-                <td>{{item.msg}}</td>
+                <td style="text-align: left;">{{item.msg}}</td>
                 <td>{{item.addtime}}</td>
                 <td>
                     <button type="button" class="btn btn-info" ng-click="readSystemInform(item.id)">查看详情</button>
