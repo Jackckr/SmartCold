@@ -31,4 +31,6 @@ public interface RdcMapper {
 	List<Rdc> searchRdcByfilter(@Param("filter") String filter);
 	//true:dev+plc false:dev
     List<Rdc> getDEVRdc(@Param("isall") Boolean isall);
+    //根据日期查询倒序查询10条360冷库
+	List<Rdc> getRdcByDate();
 }

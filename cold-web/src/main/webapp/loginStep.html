@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="assets/plugins/select2/select2.min.css">
 	<link rel="stylesheet" href="assets/plugins/jquery-step/css/jquery.step.css">
 </head>
-<body>
+<body ng-app="app" ng-controller="loginStep">
 	<div class="step-body" id="myStep">
 
 		<div class="step-header" style="width:80%">
@@ -26,26 +26,21 @@
 		</div>
 		<div class="step-content">
 			<div class="step-list btn_c">
-				<p class="btn_p"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
-				<p class="btn_p"><button type="button" class="btn btn-warning btn-lg">我是货主</button>         </p>
-				<p class="btn_p"><button type="button" class="btn btn-success btn-lg">我是维修商</button>       </p>
+				<p class="btn_p" val="1"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
+				<p class="btn_p" val="2"><button type="button" class="btn btn-warning btn-lg">我是货主</button>         </p>
+				<p class="btn_p" val="3"><button type="button" class="btn btn-success btn-lg">我是维修商</button>       </p>
 			</div>
 			<div class="step-list">
 				<div class="coldDiv">
 					<p>说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！</p>
-					 <select class="select_gallery" style="width:100%;">  
-		                <option value="0">打野</option>  
-		                <option value="1">土豪</option>  
-		                <option value="2">屌丝</option>  
-		                <option value="3">单身dog</option>  
-		                <option value="4">苹果粉</option>  
-		                <option value="5">苦逼程序员</option>  
+					 <select id="rdcShow" class="select_gallery" style="width:100%;">
+
 			        </select>
 					<div class="clearfix btn_c">
 						<span class="btn_prep bp"><button type="button"
 								class="btn btn-warning">上一步</button></span> <span class="btn_back bp"><button
-								type="button" class="btn btn-success">下一步</button></span> <span
-							class="bp"><button type="button" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>
+								type="button" class="btn btn-success" id="attestationRdc">下一步</button></span> <span
+							class="bp"><button type="button" onclick="$('.addRdc').show()" id="addRdc" class="btn btn-primary">添加冷库</button></span>
 					</div>
 					
 					
@@ -461,6 +456,49 @@
 	<script src="assets/plugins/select2/select2.min.js"></script>
 	<script src="assets/plugins/jquery-step/js/jquery.step.js"></script>
 	<script type="text/javascript">
+		$(function () {
+		    var roleType="";
+            $("p[class=btn_p]").click(function () {
+				 roleType = $("p[class=btn_p]").attr("val");
+				 $.ajax({
+                     type: "POST",
+                     dataType: "json",
+                     url: "/i/loginStep/getAllRdc",
+                     success:function (data) {
+                         var val = "";
+                         for (var i=0;i<data.length;i++){
+                             val+="<option value='"+data[i].id+"'>"+data[i].name+"</option>"
+						 }
+						 $("#rdcShow").empty().html(val);
+                     }
+				 })
+            });
+			$("#attestationRdc").click(function () {
+				var $rdcShow = $("#rdcShow option:selected");
+                $.ajax({
+                    type: "POST",
+					data:{
+                        rdcId:$rdcShow.val(),
+						roleType:roleType
+					},
+                    dataType: "json",
+                    url: "/i/loginStep/attestationRdc",
+					success:function (data) {
+
+                    }
+                })
+            });
+			$("#addRdc").click(function () {
+				$.ajax({
+					type:"post",
+					url:"http://192.168.1.196:8080/i/user/findUser",
+					data:sessionStorage.sikey,
+					success:function (data) {
+                        /*window.location.href="http://192.168.1.114:8080/#/coldStorageAdd";*/
+                    }
+				})
+            })
+        });
 	$(function() {
 		$(".select_gallery").select2();
 		
