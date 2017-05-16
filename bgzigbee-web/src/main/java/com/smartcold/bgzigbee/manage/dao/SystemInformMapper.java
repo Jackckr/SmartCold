@@ -1,9 +1,12 @@
 package com.smartcold.bgzigbee.manage.dao;
 
-import org.apache.ibatis.annotations.Param;
-
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 
@@ -15,8 +18,6 @@ public interface SystemInformMapper {
     /**
      * @return
      */
-    List<HashMap<String,Object>> getSystemInform(@Param("type") Integer type, @Param("stype") Integer stype,
-           @Param("isRead") Integer isRead , @Param("status")Integer status, @Param("keyword") String keyword);
 
     List<HashMap<String,Object>> getNoReadSystemInform();
 
@@ -25,4 +26,6 @@ public interface SystemInformMapper {
     void changeState(Integer id);
 
     HashMap<String,Object> getSystemInformByID(Integer id);
+    
+    Page<HashMap<String,Object>> getSystemInform(@Param("type") Integer type, @Param("stype") Integer stype,@Param("isRead") Integer isRead , @Param("status")Integer status, @Param("keyword") String keyword);
 }

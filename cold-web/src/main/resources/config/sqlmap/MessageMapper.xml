@@ -3,13 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.MessageMapper">
-    <select id="findObjsetByOid" parameterType="map" resultType="map">
-        SELECT c.id,c.`rdcid` ,c.`name` ,r.`name` rdcname  FROM `${table}set` c  LEFT JOIN  `rdc` r ON r.id=c.`rdcid`   where c.id=#{oid};
-    </select>
-    
-    <insert id="addwarningmessage" parameterType="WarningMsgEntity">
-     insert into `warningmessage` (type,typeName ,rdcid,telephone,message) values (#{type},#{typeName},#{rdcid},#{telephone},#{message});
-    </insert>
+   
     
     <insert id="addsystemInform" parameterType="SystemInformEntity">
         INSERT INTO `systemInform` (`type`,`stype`,`rdcid`,`uid`,`level`,`isread`,`state`,`tit`,`msg`,`addtime`)VALUES(#{type},#{stype},#{rdcid},#{uid},#{level},#{isread},#{state},#{tit},#{msg},now());

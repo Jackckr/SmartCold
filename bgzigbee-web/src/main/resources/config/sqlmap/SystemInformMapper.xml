@@ -9,24 +9,26 @@
     <update id="changeState">
         UPDATE `systeminform` SET  `state`=-1 WHERE `id`=#{id}
     </update>
+    
     <select id="getSystemInform" resultType="java.util.HashMap">
-        SELECT * FROM `systeminform` <where>
-        <if test="status != null">
-            and `state`=#{status}
-        </if>
-        <if test="isRead != null">
-            and `isread`=#{isRead}
-        </if>
-        <if test="stype != null">
-            and `stype`=#{stype}
-        </if>
-        <if test="type != null">
-            and `type`=#{type}
-        </if>
-        <if test="keyword != null">
-            and `tit` like #{keyword} or `msg` like #{keyword}
-        </if>
-    </where>
+        SELECT * FROM `systeminform` 
+        <where>
+	        <if test="status != null">
+	            and `state`=#{status}
+	        </if>
+	        <if test="isRead != null">
+	            and `isread`=#{isRead}
+	        </if>
+	        <if test="stype != null">
+	            and `stype`=#{stype}
+	        </if>
+	        <if test="type != null">
+	            and `type`=#{type}
+	        </if>
+	        <if test="keyword != null">
+	            and `tit` like #{keyword} or `msg` like #{keyword}
+	        </if>
+        </where>
         ORDER BY `id` DESC
     </select>
     <select id="getNoReadSystemInform" resultType="java.util.HashMap">

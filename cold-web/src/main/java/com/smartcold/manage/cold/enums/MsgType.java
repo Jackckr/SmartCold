@@ -32,5 +32,5 @@ public enum MsgType implements Serializable{
 //============================================2 告警
 //1		DEV断线告警											
 //2		DEV低电量告警											
-	
+//3     DEV 空配置告警	
 }

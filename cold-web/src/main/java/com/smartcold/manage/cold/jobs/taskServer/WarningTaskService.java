@@ -19,13 +19,16 @@ import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
 @Service
 public class WarningTaskService  {
 	
+	private static  boolean isexcute = false;  
 	 private static final Logger log = Logger.getLogger(WarningTaskService.class);  
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
 	*/
-     @Scheduled(cron="0 0/1 * * * ?")
+	@Scheduled(cron="0/30 * * * * ?")
 	public void checkData() {
+		if(isexcute){return;}
+		isexcute=true;
     	 long msgId=System.currentTimeMillis();
     	 String jobName=msgId+"_job";
     	 long sendTime=msgId+120000;
@@ -37,13 +40,12 @@ public class WarningTaskService  {
          job.setCroTime("");  
          job.setGroup("MY_JOBGROUP_NAME");  
          try {  
-         	 if(sendTime <=System.currentTimeMillis() ) {//
-                
-         		 
-              } else {
+         		
                   QuartzManager.removeJob(jobName);   //删除已有的定时任务 
                   QuartzManager.addJob(jobName, QuartzJobFactory.class, cron,job);  //添加定时任务 
-              }
+//                  if(sendTime <=System.currentTimeMillis()){
+//                	  QuartzManager.startDelayed
+//                  }
             
          } catch (Exception e) {  
              log.info("加载定时器错误："+e);  
