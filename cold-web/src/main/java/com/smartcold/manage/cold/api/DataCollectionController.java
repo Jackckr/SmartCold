@@ -94,8 +94,7 @@ public class DataCollectionController extends BaseController {
 			    	ArrayList<StorageDataCollectionEntity> apsatusList = new ArrayList<StorageDataCollectionEntity>();
 					Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 					String apID = dataMap.get("apID").toString();
-					Date aptime =new Date(Long.parseLong(dataMap.remove("time").toString()) * 1000);
-					apsatusList.add(new StorageDataCollectionEntity(apID, null,"MSI", dataMap.get("MSI").toString(), aptime));
+					apsatusList.add(new StorageDataCollectionEntity(apID, null,"MSI", dataMap.get("MSI").toString(), new Date(Long.parseLong(dataMap.remove("time").toString()) * 1000)));
 //					if(dataMap.containsKey("LAC")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"LAC", dataMap.get("LAC").toString(), aptime));}
 //					if(dataMap.containsKey("CID")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"CID", dataMap.get("CID").toString(), aptime));}
 					if(dataMap.containsKey("infos")){//数据状态包
@@ -114,13 +113,7 @@ public class DataCollectionController extends BaseController {
 						if(SetUtil.isnotNullList(devsatusList)){
 							this.devplset.addDevStatusList(devsatusList);
 						}
-					}else{//校时包
-						//getApplByName
-//						Integer appl = this.devplset.getApplByApID(apID);
-//						 List<HashMap<String, String>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
-//						if(appl!=null){resMap.put("APL", appl+"") ; }//
-//						if(SetUtil.isnotNullList(devPLbyApID)){resMap.put("infos", devPLbyApID) ;}//返回dev采集频率信息
-				   }
+					}
 		   }
 		} catch (Exception e) {
 			System.err.println("dev状态数据解析异常："+data);
