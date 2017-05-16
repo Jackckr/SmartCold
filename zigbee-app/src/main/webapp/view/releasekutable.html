@@ -41,11 +41,11 @@
                 <li>
                     <label for="name">名称<em>*</em></label>
                     <form name="rdcForm" class="fr" style="width:85%;"> 
-                    <input type="text" ng-model="name" ng-disabled="editable" name="name"
-                                   ng-remote-validate="http://liankur.com/i/rdc/checkName"
-                                   ng-remote-method="GET" placeholder="请输入冷库名称">
-                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;" ng-bind="againTxt='冷库名已被用'"></em>
-                            </form>
+	                    <input type="text" ng-model="name" ng-disabled="editable" name="name"
+	                                   ng-remote-validate="http://liankur.com/i/rdc/checkName"
+	                                   ng-remote-method="GET" placeholder="请输入冷库名称">
+	                    <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;float:right;" ng-bind="againTxt='冷库名已被用'"></em>
+                    </form>
                 </li>
                 <li>
                     <label for="province">省<em>*</em></label>
