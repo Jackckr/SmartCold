@@ -80,10 +80,10 @@ public class QuantityTaskService  {
  	 * 超过系统规定时间 ，发送短信通知。。
  	 * 
  	 */
-	@Scheduled(cron = "0 0/5 * * * ?")
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkAPStatus() {
-//		boolean taskStatus = quantityMapper.updateTaskStatus(2);
-//		if(!taskStatus){return ;}
+		boolean taskStatus = quantityMapper.updateTaskStatus(2);
+		if(!taskStatus){return ;}
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
@@ -238,7 +238,7 @@ public class QuantityTaskService  {
 			return null;
 		}
 		ItemObject obj = this.utilMapper.findObjByID(table, oid);
-		if(obj!=null){
+		if(obj!=null&&StringUtil.isnotNull(obj.getName())){
 			return new String[]{obj.getId()+"",obj.getName()};
 		}
 	    return null;
@@ -248,70 +248,73 @@ public class QuantityTaskService  {
 	private void sendMsg(Rdc rdc,Date startTime,Date endTime) {
 		int rdcid=rdc.getId();
 		String rdcName=rdc.getName();
-		//开始逻辑
-		HashMap<String, Object> filter  = new HashMap<String, Object>();
-		filter.put("status", 1);// 检查正常的devcice是否正常工作
-//		filter.put("type", 18);// 仅检查温度,
-		filter.put("rdcid",rdcid);
-		List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
+		String objname[] = null;String key = null;
 		StringBuffer devconferrMsg =new StringBuffer();
+		StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
 		HashMap<String, String> coldNameMap=new HashMap<String, String>();//冷库信息
-		String objname[] = null;
-		String key = null;
-		for (DeviceObjectMappingEntity obj : devciceList) {
-			Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(),this.getkey(obj.getType()), startTime, endTime);//keyval.get(obj.getType())
-			if (size == null || size == 0) {
-				 objname = null; key=obj.getType()+"_"+obj.getOid();
-				if(coldStoragecache.containsKey(key)){
-					objname=coldStoragecache.get(obj.getOid());
-				}else{
-					objname = this.getkeyval(obj.getType(),obj.getOid());
-					 coldStoragecache.put(key, objname);
+		HashMap<String, Object> tempMap  = new HashMap<String, Object>();
+		try {
+			tempMap.put("status", 1);// 检查正常的devcice是否正常工作
+			tempMap.put("rdcid",rdcid);
+			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(tempMap);
+			for (DeviceObjectMappingEntity obj : devciceList) {
+				Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(),this.getkey(obj.getType()), startTime, endTime);//keyval.get(obj.getType())
+				if ( size == 0) {
+					 objname = null; key=obj.getType()+"_"+obj.getOid();
+					if(coldStoragecache.containsKey(key)){
+						objname=coldStoragecache.get(obj.getOid());
+					}else{
+						objname = this.getkeyval(obj.getType(),obj.getOid());
+						 coldStoragecache.put(key, objname);
+					}
+					if(objname!=null){
+						if(coldNameMap.containsKey(key)){//存在报警
+							coldNameMap.put(key, coldNameMap.get(key)+","+obj.getDeviceid())	;
+						}else{
+							coldNameMap.put(key, objname[1]+";"+obj.getDeviceid());
+						}
+					}else{
+						devconferrMsg.append(obj.getDeviceid()+",");
+					}
 				}
-				if(objname==null){
-					devconferrMsg.append(obj.getDeviceid()+",");
-					continue; 
-				}
-				if(coldNameMap.containsKey(key)){//存在报警
-					coldNameMap.put(key, coldNameMap.get(key)+","+obj.getDeviceid())	;
-				}else{
-					coldNameMap.put(key, objname[1]+"-"+obj.getDeviceid());
-				}
-        	}
-        }
-		if(devconferrMsg.length()>0){
-			devconferrMsg.deleteCharAt(devconferrMsg.length() - 1);
-			devconferrMsg.append("}配置异常，建议删除！请及时处理");
-			this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 3, rdcid, null, 3, 0, 0, "DEV配置错误","【Warning】{RDC=" + rdcName+ "}{DEV="+devconferrMsg.toString()));//添加至系统通知
-		}
-		if(coldNameMap.size()>0){
-			StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
-			String rdctype="";String deviceid="";
-			for (String newkey : coldNameMap.keySet()) {
-				String[] split = coldNameMap.get(newkey).split("-");
-				msg.append("{"+split[0]+"}{Dev="+split[1]+"},");
-				rdctype=split[0]+",";
-				deviceid+=split[1]+",";
 			}
-			msg.deleteCharAt(msg.length() - 1);
-			msg.append("已经超过30分钟未上报数据，请注意检查!");
-			HashMap<String, Object>	updata = new HashMap<String, Object>();
-			
-			this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 1, rdcid, null, 3, 0, 0, "DEV断线告警",msg.toString()));//添加至系统通知
-			
-		    updata.clear();
-			updata.put("rdcid", rdcid);//
-			updata.put("status", 0);
-			updata.put("deviceids",  deviceid.substring(0, deviceid.length()-1));
-			this.deviceMapper.upDeviceObjectStatus(updata);//
-			String tel= this.rdcMapper.findRdcManger(rdcid);
-			if(StringUtil.isnotNull(tel)){
-					updata.put("rdc", "\nRDC={" + rdcName + "}");
-					updata.put("rdctype","deviceidtype={" +rdctype.substring(0, rdctype.length()-1) + "}");
-					updata.put("dev", "deviceid={"        + deviceid.substring(0, deviceid.length()-1)+ "}");
-					updata.put(" telephone", tel);
-//					RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele",updata);
+			if(devconferrMsg.length()>0){
+				devconferrMsg.deleteCharAt(devconferrMsg.length() - 1);
+				devconferrMsg.append("}配置异常，建议删除！请及时处理");
+				this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 3, rdcid, null, 3, 0, 0, "DEV配置错误","【Warning】{RDC=" + rdcName+ "}{DEV="+devconferrMsg.toString()));//添加至系统通知
 			}
+			if(coldNameMap.size()>0){
+			
+				String rdctype="";String deviceid="";
+				for (String newkey : coldNameMap.keySet()) {
+					String[] split = coldNameMap.get(newkey).split(";");
+					msg.append(split[0]+"Dev={"+split[1]+"},");
+					rdctype=split[0]+",";
+					deviceid+=split[1]+",";
+				}
+				msg.deleteCharAt(msg.length() - 1);
+				msg.append("已经超过30分钟未上报数据，请注意检查!");
+				this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 1, rdcid, null, 3, 0, 0, "DEV断线告警",msg.toString()));//添加至系统通知
+				tempMap.clear();
+				tempMap.put("rdcid", rdcid);//
+				tempMap.put("status", 0);
+				tempMap.put("deviceids",  deviceid.substring(0, deviceid.length()-1));
+				this.deviceMapper.upDeviceObjectStatus(tempMap);//
+				String tel= this.rdcMapper.findRdcManger(rdcid);
+				if(StringUtil.isnotNull(tel)){
+					tempMap.clear();
+					tempMap.put("rdc", "\nRDC={" + rdcName + "}");
+					tempMap.put("rdctype","deviceidtype={" +rdctype.substring(0, rdctype.length()-1) + "}");
+					tempMap.put("dev", "deviceid={"        + deviceid.substring(0, deviceid.length()-1)+ "}");
+					tempMap.put(" telephone", tel);
+					RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele",tempMap);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("DEV告警解析异常！rdcid="+rdc);
+			System.err.println(coldNameMap);
+			System.err.println(msg.toString());
 		}
 	}
 	

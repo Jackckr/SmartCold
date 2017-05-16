@@ -16,15 +16,15 @@ import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
  * Copyright (C) DCIS 版权所有 功能描述: TempWarningService Create on MaQiang
  * 2016年9月27日11:55:45
  **/
-@Service
+//@Service
 public class WarningTaskService  {
-	
+	/*
 	private static  boolean isexcute = false;  
 	 private static final Logger log = Logger.getLogger(WarningTaskService.class);  
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
-	*/
+	
 	@Scheduled(cron="0/30 * * * * ?")
 	public void checkData() {
 		if(isexcute){return;}
@@ -51,7 +51,7 @@ public class WarningTaskService  {
              log.info("加载定时器错误："+e);  
          }  
 	}
-	
+	*/
 	
     
   

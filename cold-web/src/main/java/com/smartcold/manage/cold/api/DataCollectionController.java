@@ -70,6 +70,7 @@ public class DataCollectionController extends BaseController {
 				storageDataCollectionDao.batchInsert(arrayList);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("DEV数据解析出错。。。。。。。。。。。。\r\n"+data);
 			return new DataResultDto(500);
 		}
@@ -116,6 +117,7 @@ public class DataCollectionController extends BaseController {
 					}
 		   }
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("dev状态数据解析异常："+data);
 		}
 		return resMap;
