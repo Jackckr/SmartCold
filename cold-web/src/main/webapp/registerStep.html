@@ -21,6 +21,13 @@
     <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="assets/plugins/iCheck/square/blue.css">
+    <style type="text/css">
+    	form>p{color:red;}
+    	.registerDiv{width:400px;margin: 0 auto;}
+    	.typeCold{margin-bottom: 10px;}
+    	.typeCold .pull-left{width:20%;}
+    	.typeCold .pull-left .checkbox-inline{padding-left: 0;}
+    </style>
 </head>
 <body>
 <div class="step-body" id="myStep">
@@ -35,7 +42,7 @@
     </div>
     <div class="step-content">
         <div class="step-list btn_c">
-            <div class="register-box" style="width:400px;">
+            <div class="registerDiv">
                 <div class="register-logo">
                     <label>冷库360·SmartCold</label>
                 </div>
@@ -118,6 +125,9 @@
             <p class="btn_p"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
             <p class="btn_p"><button type="button" class="btn btn-warning btn-lg">我是货主</button>         </p>
             <p class="btn_p"><button type="button" class="btn btn-success btn-lg">我是维修商</button>       </p>
+            <p class="btn_p"><span class="btn_prep bp" style="float:none;">
+            	<button type="button" class="btn btn-warning btn-lg" style="width: 300px;">上一步</button></span>
+           	</p>
         </div>
         <div class="step-list">
             <div class="coldDiv">
@@ -131,10 +141,9 @@
                     <option value="5">苦逼程序员</option>
                 </select>
                 <div class="clearfix btn_c">
-						<span class="btn_prep bp"><button type="button"
-                                                          class="btn btn-warning">上一步</button></span> <span class="btn_back bp"><button
-                        type="button" class="btn btn-success">下一步</button></span> <span
-                        class="bp"><button type="button" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>
+						<span class="btn_prep bp"><button type="button" class="btn btn-warning">上一步</button></span>
+						<span class="btn_back bp"><button type="button" class="btn btn-success">下一步</button></span>
+						<span class="bp"><button type="button" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>
                 </div>
                 <div class="addRdc black">
                     <div class="row">
