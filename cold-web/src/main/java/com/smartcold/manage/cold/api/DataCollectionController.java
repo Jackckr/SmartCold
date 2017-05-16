@@ -70,6 +70,7 @@ public class DataCollectionController extends BaseController {
 				storageDataCollectionDao.batchInsert(arrayList);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("DEV数据解析出错。。。。。。。。。。。。\r\n"+data);
 			return new DataResultDto(500);
 		}
@@ -91,15 +92,14 @@ public class DataCollectionController extends BaseController {
 		resMap.put("status","200");resMap.put("time", TimeUtil.getLongtime().toString());
 		try {
 			if(StringUtil.isnotNull(data)){
+			    	ArrayList<StorageDataCollectionEntity> apsatusList = new ArrayList<StorageDataCollectionEntity>();
 					Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 					String apID = dataMap.get("apID").toString();
+					apsatusList.add(new StorageDataCollectionEntity(apID, null,"MSI", dataMap.get("MSI").toString(), new Date(Long.parseLong(dataMap.remove("time").toString()) * 1000)));
+//					if(dataMap.containsKey("LAC")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"LAC", dataMap.get("LAC").toString(), aptime));}
+//					if(dataMap.containsKey("CID")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"CID", dataMap.get("CID").toString(), aptime));}
 					if(dataMap.containsKey("infos")){//数据状态包
-						Date aptime =new Date(Long.parseLong(dataMap.remove("time").toString()) * 1000);
-						ArrayList<StorageDataCollectionEntity> apsatusList = new ArrayList<StorageDataCollectionEntity>();
 						ArrayList<StorageDataCollectionEntity> devsatusList = new ArrayList<StorageDataCollectionEntity>();
-						apsatusList.add(new StorageDataCollectionEntity(apID, null,"MSI", dataMap.get("MSI").toString(), aptime));
-						if(dataMap.containsKey("LAC")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"LAC", dataMap.get("LAC").toString(), aptime));}
-						if(dataMap.containsKey("CID")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"CID", dataMap.get("CID").toString(), aptime));}
 						List<Map<String, String>> devinfos = (List<Map<String, String>>) dataMap.get("infos");
 						for (Map<String, String> info : devinfos) {
 							Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
@@ -114,15 +114,10 @@ public class DataCollectionController extends BaseController {
 						if(SetUtil.isnotNullList(devsatusList)){
 							this.devplset.addDevStatusList(devsatusList);
 						}
-					}else{//校时包
-						//getApplByName
-//						Integer appl = this.devplset.getApplByApID(apID);
-//						 List<HashMap<String, String>> devPLbyApID = this.devplset.getDevPLbyApID(apID);
-//						if(appl!=null){resMap.put("APL", appl+"") ; }//
-//						if(SetUtil.isnotNullList(devPLbyApID)){resMap.put("infos", devPLbyApID) ;}//返回dev采集频率信息
-				   }
+					}
 		   }
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("dev状态数据解析异常："+data);
 		}
 		return resMap;
