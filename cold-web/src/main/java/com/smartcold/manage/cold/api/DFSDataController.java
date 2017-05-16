@@ -12,12 +12,12 @@ import com.smartcold.manage.cold.controller.BaseController;
 import com.smartcold.manage.cold.dto.DataResultDto;
 
 /**
- * 丹弗斯DEV数据接口
- * @author Administrator
+ * (DANFOSS)丹弗斯DEV数据接口
+ * @author maqiang34
  *
  */
 @Controller
-public class DanversDataController extends BaseController {
+public class DFSDataController extends BaseController {
 
 
 	/**
@@ -26,7 +26,7 @@ public class DanversDataController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/danversDataCol", method = RequestMethod.POST)
+	@RequestMapping(value = "/dfsDataCollection", method = RequestMethod.POST)
 	@ResponseBody
 	public Object storageDataCollection(@RequestBody String data, HttpServletResponse response) {
 		
