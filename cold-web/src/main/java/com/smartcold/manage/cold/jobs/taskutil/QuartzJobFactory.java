@@ -23,6 +23,7 @@ public class QuartzJobFactory implements Job {
             //ScheduleJob任务运行时具体参数，可自定义  
             ScheduleJob scheduleJob =(ScheduleJob) context.getMergedJobDataMap().get("scheduleJob");  
             System.err.println(scheduleJob.getName());
+            System.err.println(scheduleJob.getName());
         }catch (Exception e) {  
             log.info("捕获异常==="+e);  
         }  

@@ -14,14 +14,14 @@ coldWeb.run(function (editableOptions, naviService,adminService, $location) {
   			window.location.href = url;
   			return;
   		}
+      	$.ajax({type:"post",cache: false,dataType:'json',url:"/i/systemInform/getNewSystemInform"}).success(function (data) {
+      		admin.msgCount=data.length;
+	    });
+      	
   		adminService.setAdmin(admin);
       });
 });
-coldWeb.run(function () {
-    $.ajax({type:"post",cache: false,dataType:'json',url:"/i/systemInform/getNewSystemInform"}).success(function (data) {
-        $("span[class='count']").html(data.length);
-    })
-})
+
 coldWeb.config(function ($httpProvider) {
 	//$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.interceptors.push(function ($q, $injector) {
@@ -52,13 +52,19 @@ coldWeb.factory('adminService',['$rootScope','$http', function($rootScope,$http)
 	return {
 		setAdmin: function(admin){
 	    	$rootScope.admin = admin;
+	    	
 	    	$rootScope.logout = function () {
 	        	$http.get('/i/admin/logout').success(function(data){$rootScope.admin = null; });
 	        	window.sessionStorage.clear();
 	        	window.location.href = "http://"+ window.location.host + "/login.html";//	        	window.location.reload();
 	        };
+	        $rootScope.getMsgCount = function () {
+	        	$.ajax({type:"post",cache: false,dataType:'json',url:"/i/systemInform/getNewSystemInform"}).success(function (data) {
+        	        $rootScope.admin.msgCount=data.length;
+        	  });
+	        };
 	        $rootScope.gotoSmartCold = function(){
-	        	cookies = document.cookie.split(";")
+	        	cookies = document.cookie.split(";");
 	        	url = "http://www.smartcold.net";
 	        	angular.forEach(cookies,function(item){
 	        		item = item.trim();
@@ -68,7 +74,9 @@ coldWeb.factory('adminService',['$rootScope','$http', function($rootScope,$http)
 	        	})
 	        	window.open(url);
 	        }
+	        
 	    },
+	   
 	}
 }])
 
@@ -109,7 +117,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 		}
 	}
 }]);
-
+/*
 coldWeb.filter('objectCount', function () {
     return function (input) {
         var size = 0, key;
@@ -268,7 +276,7 @@ coldWeb.filter('objectLength',function(){
         return Object.keys(obj).length + (len?len:0);
     }
 });
-
+*/
 
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/webSiteVisits");

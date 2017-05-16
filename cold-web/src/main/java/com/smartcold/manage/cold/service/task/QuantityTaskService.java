@@ -14,14 +14,14 @@ import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
-import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.QuantitySetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.dao.olddb.UtilMapper;
+import com.smartcold.manage.cold.entity.comm.ItemObject;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
-import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.Rdc;
 import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
 import com.smartcold.manage.cold.service.StorageService;
@@ -42,9 +42,9 @@ public class QuantityTaskService  {
 	@Autowired
 	private RdcMapper rdcMapper;
 	@Autowired
-	private MessageMapper msMappergMapper;
+	private UtilMapper utilMapper;
 	@Autowired
-	private ColdStorageSetMapper coldStorageSetMapper;
+	private MessageMapper msMappergMapper;
 	@Autowired
 	private StorageService storageService;
 	@Autowired
@@ -62,7 +62,7 @@ public class QuantityTaskService  {
 	private QuantitySetMapper quantitySetMapper;
 
 	
-	private static HashMap<Integer, ColdStorageSetEntity> coldStoragecache=new HashMap<Integer, ColdStorageSetEntity>();//
+	private static HashMap<String, String[]> coldStoragecache=new HashMap<String, String[]>();//
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
@@ -80,10 +80,10 @@ public class QuantityTaskService  {
  	 * 超过系统规定时间 ，发送短信通知。。
  	 * 
  	 */
-	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkAPStatus() {
-		boolean taskStatus = quantityMapper.updateTaskStatus(2);
-		if(!taskStatus){return ;}
+//		boolean taskStatus = quantityMapper.updateTaskStatus(2);
+//		if(!taskStatus){return ;}
 		long currentTime = System.currentTimeMillis() - 1800000;
 		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
@@ -209,6 +209,40 @@ public class QuantityTaskService  {
 		}
 	}
     
+	private String getkey(int type){
+		switch (type) {
+		case 18:
+			return "Temp";
+		case 2:
+		case 11:
+			return "Switch";
+		case 10:
+			return "AU";
+		default:
+			break;
+		}
+		return null;
+	}
+	private String[] getkeyval(int type,int oid){
+		String table=null;
+		switch (type) {
+		case 18:
+			table= "coldstorageset";break;
+		case 2:
+			table= "coldstoragedoorset";break;
+		case 11:
+			table= "platformdoorset";break;
+		case 10:
+			table= "powerset";break;
+		default:
+			return null;
+		}
+		ItemObject obj = this.utilMapper.findObjByID(table, oid);
+		if(obj!=null){
+			return new String[]{obj.getId()+"",obj.getName()};
+		}
+	    return null;
+	}
 
 	
 	private void sendMsg(Rdc rdc,Date startTime,Date endTime) {
@@ -217,45 +251,54 @@ public class QuantityTaskService  {
 		//开始逻辑
 		HashMap<String, Object> filter  = new HashMap<String, Object>();
 		filter.put("status", 1);// 检查正常的devcice是否正常工作
-		filter.put("type", 18);// 仅检查温度,
+//		filter.put("type", 18);// 仅检查温度,
 		filter.put("rdcid",rdcid);
 		List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
-		HashMap<Integer, String> coldNameMap=new HashMap<Integer, String>();//冷库信息
-		
+		StringBuffer devconferrMsg =new StringBuffer();
+		HashMap<String, String> coldNameMap=new HashMap<String, String>();//冷库信息
+		String objname[] = null;
+		String key = null;
 		for (DeviceObjectMappingEntity obj : devciceList) {
-			Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "Temp", startTime, endTime);//keyval.get(obj.getType())
+			Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(),this.getkey(obj.getType()), startTime, endTime);//keyval.get(obj.getType())
 			if (size == null || size == 0) {
-				ColdStorageSetEntity storageSetEntity = null;
-				if(coldStoragecache.containsKey(obj.getOid())){
-					storageSetEntity=coldStoragecache.get(obj.getOid());
+				 objname = null; key=obj.getType()+"_"+obj.getOid();
+				if(coldStoragecache.containsKey(key)){
+					objname=coldStoragecache.get(obj.getOid());
 				}else{
-					 storageSetEntity = this.coldStorageSetMapper.findByTID(obj.getOid());
-					 coldStoragecache.put(obj.getOid(), storageSetEntity);
+					objname = this.getkeyval(obj.getType(),obj.getOid());
+					 coldStoragecache.put(key, objname);
 				}
-				if(storageSetEntity==null){
-					
+				if(objname==null){
+					devconferrMsg.append(obj.getDeviceid()+",");
 					continue; 
 				}
-				if(coldNameMap.containsKey(storageSetEntity.getId())){//存在报警
-					coldNameMap.put(storageSetEntity.getId(), coldNameMap.get(storageSetEntity.getId())+","+obj.getDeviceid())	;
+				if(coldNameMap.containsKey(key)){//存在报警
+					coldNameMap.put(key, coldNameMap.get(key)+","+obj.getDeviceid())	;
 				}else{
-					coldNameMap.put(storageSetEntity.getId(), storageSetEntity.getName()+"-"+obj.getDeviceid());
+					coldNameMap.put(key, objname[1]+"-"+obj.getDeviceid());
 				}
         	}
         }
+		if(devconferrMsg.length()>0){
+			devconferrMsg.deleteCharAt(devconferrMsg.length() - 1);
+			devconferrMsg.append("}配置异常，建议删除！请及时处理");
+			this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 3, rdcid, null, 3, 0, 0, "DEV配置错误","【Warning】{RDC=" + rdcName+ "}{DEV="+devconferrMsg.toString()));//添加至系统通知
+		}
 		if(coldNameMap.size()>0){
 			StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
 			String rdctype="";String deviceid="";
-			for (int id : coldNameMap.keySet()) {
-				String[] split = coldNameMap.get(id).split("-");
+			for (String newkey : coldNameMap.keySet()) {
+				String[] split = coldNameMap.get(newkey).split("-");
 				msg.append("{"+split[0]+"}{Dev="+split[1]+"},");
-				rdctype=split[0]+",";deviceid+=split[1]+",";
+				rdctype=split[0]+",";
+				deviceid+=split[1]+",";
 			}
 			msg.deleteCharAt(msg.length() - 1);
 			msg.append("已经超过30分钟未上报数据，请注意检查!");
 			HashMap<String, Object>	updata = new HashMap<String, Object>();
 			
 			this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 1, rdcid, null, 3, 0, 0, "DEV断线告警",msg.toString()));//添加至系统通知
+			
 		    updata.clear();
 			updata.put("rdcid", rdcid);//
 			updata.put("status", 0);
