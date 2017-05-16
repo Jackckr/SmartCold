@@ -21,6 +21,7 @@ public enum MsgType implements Serializable{
 		this.key = table;
 		this.desc = desc;
 	}
+	//
 //============================================1通知
 //1		系统通知					msgtype						
 //2		DEV重置通知											

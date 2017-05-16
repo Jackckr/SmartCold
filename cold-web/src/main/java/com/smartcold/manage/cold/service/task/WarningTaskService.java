@@ -33,7 +33,7 @@ public class WarningTaskService  {
 		isexcute=true;
    	 long msgId=System.currentTimeMillis();
    	 String jobName=msgId+"_job";
-   	 long sendTime=msgId+120000;
+   	 long sendTime=msgId+60000;
         String cron = CronExpConversion.getQuartzTime(sendTime);//2
         ScheduleJob job = new ScheduleJob();  
         job.setId( msgId);  
