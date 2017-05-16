@@ -28,6 +28,11 @@ import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
+/**
+ * 北京中威DEV数据接口
+ * @author Administrator
+ *
+ */
 @Controller
 public class DataCollectionController extends BaseController {
 
