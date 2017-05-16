@@ -17,7 +17,7 @@ import com.smartcold.manage.cold.dto.DataResultDto;
  *
  */
 @Controller
-public class DFSDataController extends BaseController {
+public class DFSCollectionController extends BaseController {
 
 
 	/**
