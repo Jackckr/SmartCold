@@ -41,12 +41,7 @@ public class SocketHandler extends IoHandlerAdapter {
     private static IoBuffer getstatus(String type){
 //    	StringBuffer msg=new StringBuffer("02"+(System.currentTimeMillis()+"").substring(0, 10));
 		int ntype=Integer.parseInt(type);
-//		int time1=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
-//		int time2=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
-//		int time3=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
-//		int time4=Integer.parseInt(msg.substring(0,2));msg.delete(0, 2);
 		byte[] bts1 = {(byte)ntype,(byte)0X58,(byte)0XD1,(byte)0XE2,(byte)0X60};
-//		byte[] bts = {(byte)ntype,(byte)time1,(byte)time2,(byte)time3,(byte)time4};
 		IoBuffer buffer = IoBuffer.allocate(10);
 		buffer.put(bts1);
 		buffer.flip();
