@@ -26,9 +26,9 @@
 		</div>
 		<div class="step-content">
 			<div class="step-list btn_c">
-				<p class="btn_p" val="1"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
+				<p class="btn_p" val="3"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
 				<p class="btn_p" val="2"><button type="button" class="btn btn-warning btn-lg">我是货主</button>         </p>
-				<p class="btn_p" val="3"><button type="button" class="btn btn-success btn-lg">我是维修商</button>       </p>
+				<p class="btn_p" val="4"><button type="button" class="btn btn-success btn-lg">我是维修商</button>       </p>
 			</div>
 			<div class="step-list">
 				<div class="coldDiv">
@@ -459,7 +459,7 @@
 		$(function () {
 		    var roleType="";
             $("p[class=btn_p]").click(function () {
-				 roleType = $("p[class=btn_p]").attr("val");
+				 roleType = $(this).attr("val");
 				 $.ajax({
                      type: "POST",
                      dataType: "json",

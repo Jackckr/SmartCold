@@ -119,12 +119,11 @@
                     <a href="login.html" class="text-center"></a>
                 </div><!-- /.form-box -->
             </div>
-            <p class="btn_p"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
         </div>
         <div class="step-list">
-            <p class="btn_p"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
-            <p class="btn_p"><button type="button" class="btn btn-warning btn-lg">我是货主</button>         </p>
-            <p class="btn_p"><button type="button" class="btn btn-success btn-lg">我是维修商</button>       </p>
+            <p class="btn_p" name="chooseRole" val="3"><button type="button" class="btn btn-primary btn-lg">我是冷库主</button>       </p>
+            <p class="btn_p" name="chooseRole" val="2"><button type="button" class="btn btn-warning btn-lg">我是货主</button>         </p>
+            <p class="btn_p" name="chooseRole" val="4"><button type="button" class="btn btn-success btn-lg">我是维修商</button>       </p>
             <p class="btn_p"><span class="btn_prep bp" style="float:none;">
             	<button type="button" class="btn btn-warning btn-lg" style="width: 300px;">上一步</button></span>
            	</p>
@@ -132,17 +131,12 @@
         <div class="step-list">
             <div class="coldDiv">
                 <p>说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！</p>
-                <select class="select_gallery" style="width:100%;">
-                    <option value="0">打野</option>
-                    <option value="1">土豪</option>
-                    <option value="2">屌丝</option>
-                    <option value="3">单身dog</option>
-                    <option value="4">苹果粉</option>
-                    <option value="5">苦逼程序员</option>
+                <select id="rdcShow" class="select_gallery" style="width:100%;">
+
                 </select>
                 <div class="clearfix btn_c">
 						<span class="btn_prep bp"><button type="button" class="btn btn-warning">上一步</button></span>
-						<span class="btn_back bp"><button type="button" class="btn btn-success">下一步</button></span>
+						<span class="btn_back bp"><button type="button" class="btn btn-success" id="attestationRdc">下一步</button></span>
 						<span class="bp"><button type="button" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>
                 </div>
                 <div class="addRdc black">
@@ -152,7 +146,7 @@
                                 <div class="form-group rdc">
                                     <label class="col-sm-4 control-label">名称：<em>*</em></label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text" ng-model="name"
+                                        <input class="form-control" type="text" ng-model="name" value="{{name}}"
                                                ng-disabled="editable" name="name"
                                                ng-remote-validate="/i/rdc/checkName"
                                                ng-remote-method="GET"> <em
@@ -182,7 +176,7 @@
                                 <div class="form-group rdc">
                                     <label class="col-sm-4 control-label">地理位置：<em>*</em></label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text" ng-model="address">
+                                        <input class="form-control" type="text" ng-model="address" value="{{address}}">
                                     </div>
                                 </div>
 
@@ -256,7 +250,7 @@
                                 <div class="form-group rdc">
                                     <label class="col-sm-4 control-label">联系电话：<em>*</em></label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text" name="phoneNum"
+                                        <input class="form-control" type="text" name="phoneNum" value="{{phone}}"
                                                ng-model="phoneNum">
                                     </div>
                                 </div>
@@ -266,7 +260,7 @@
                                     <div class="col-sm-8">
 											<textarea class="form-control" type="text" ng-model="remark"
                                                       name="remark" ng-remote-validate="/i/rdc/checkRemark"
-                                                      ng-remote-method="GET">
+                                                      ng-remote-method="GET" value="{{remark}}">
 				                        </textarea>
                                         <em ng-show="rdcForm.remark.$error.ngRemoteValidate">备注不能超过250个字符</em>
                                     </div>
@@ -556,7 +550,7 @@
 <script src="assets/plugins/select2/select2.min.js"></script>
 <script src="assets/plugins/jquery-step/js/jquery.step.js"></script>
 <script type="text/javascript">
-    $(function() {
+
         $(".select_gallery").select2();
 
         var step= $("#myStep").step({
@@ -594,12 +588,9 @@
 
         });
 
-    });
     function addMore(){
         $(".moreInfo").toggle()
     }
-</script>
-<script type="text/javascript">
     jQuery.ajaxSetup({xhrFields:{withCredentials:true}});
     var victdata={code:null,key:new Date().getDate()*2, userName:false,victpwd:false,victel:false,victyzm:false};
     function vsphone(telephone) {// 验证手机号码
@@ -642,7 +633,8 @@
         if(!victdata.victel){return ;}
         $.ajax({
             type : "POST",
-            url : "http://liankur.com/" + '/i/user/getVerCode',
+            /*url : "http://liankur.com/" + '/i/user/getVerCode',*/
+            url : "http://localhost:8081/" + 'i/user/getVerCode',
             data : {
                 key : victdata.key,
                 reg : window.location.pathname,
@@ -743,7 +735,7 @@
         }else{
             $(me).text("注册中...");
             $(me).data("isLoading", true);
-            if(!victdata.userName&&!victdata.victpwd&&victdata.victyzm){
+            if(!victdata.userName&&victdata.victpwd&&victdata.victyzm){
                 $.ajax({
                     type:"POST",
                     url:"/i/user/signup",
@@ -761,14 +753,55 @@
                 }).success(function(data){
                     alert(data.message);
                     if(data.success){
-                        window.location.href = "http://" + window.location.host + "/notAudit.html";
-                        window.event.returnValue=false;
+                        /*window.location.href = "http://" + window.location.host + "/notAudit.html";
+                         window.event.returnValue=false;*/
+                        var yes=step.nextStep();//下一步
                     }
                 });
             }
         }
     }
+        var roleType="";
+        $("p[name=chooseRole]").click(function () {
+            roleType = $(this).attr("val");
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/i/loginStep/getAllRdc",
+                success:function (data) {
+                    var val = "";
+                    for (var i=0;i<data.length;i++){
+                        val+="<option value='"+data[i].id+"'>"+data[i].name+"</option>"
+                    }
+                    $("#rdcShow").empty().html(val);
+                }
+            })
+        });
+        $("#attestationRdc").click(function () {
+            var $rdcShow = $("#rdcShow option:selected");
+            $.ajax({
+                type: "POST",
+                data:{
+                    rdcId:$rdcShow.val(),
+                    roleType:roleType
+                },
+                dataType: "json",
+                url: "/i/loginStep/attestationRdc",
+                success:function (data) {
 
+                }
+            })
+        });
+        $("#addRdc").click(function () {
+            $.ajax({
+                type:"post",
+                url:"http://192.168.1.196:8080/i/user/findUser",
+                data:sessionStorage.sikey,
+                success:function (data) {
+                    /*window.location.href="http://192.168.1.114:8080/#/coldStorageAdd";*/
+                }
+            })
+        })
 </script>
 </body>
 </html>

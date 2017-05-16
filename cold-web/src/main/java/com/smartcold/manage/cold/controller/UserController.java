@@ -3,6 +3,7 @@ package com.smartcold.manage.cold.controller;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -138,6 +139,9 @@ public class UserController extends BaseController {
 			user.setPassword(EncodeUtil.encodeByMD5(password));
 			user.setTelephone(telephone);
 			userDao.insertUser(user);
+			UserEntity userByName = userDao.findUserByName(username);
+			HttpSession session = request.getSession();
+			session.setAttribute("user",userByName);
 			return ResponseData.newSuccess("注册成功");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
