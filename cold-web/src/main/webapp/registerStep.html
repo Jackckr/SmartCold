@@ -75,7 +75,7 @@
                             <span id="sp_yzmbut" class="input-group-addon btn btn-primary" onclick="getviercode(this)">获取验证码</span>
                         </div>
                         <p class="codeMsg"></p>
-                        <div class="clearfix typeCold">
+                        <!--<div class="clearfix typeCold">
                             <div style="width: 100%;">
                                 <label>注册类型</label>
                             </div>
@@ -104,7 +104,7 @@
                                     <input type="radio" name="coldType" value="2">维修版
                                 </label>
                             </div>
-                        </div>
+                        </div>-->
                         <div>
                             <button id="submit" type="button" class="btn btn-primary btn-block btn-flat" disabled onclick="reguser()">注册</button>
                         </div>
@@ -137,7 +137,7 @@
                 <div class="clearfix btn_c">
 						<span class="btn_prep bp"><button type="button" class="btn btn-warning">上一步</button></span>
 						<span class="btn_back bp"><button type="button" class="btn btn-success" id="attestationRdc">下一步</button></span>
-						<span class="bp"><button type="button" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>
+						<span class="bp"><button type="button" id="addRdc" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>
                 </div>
                 <div class="addRdc black">
                     <div class="row">
@@ -634,7 +634,7 @@
         $.ajax({
             type : "POST",
             /*url : "http://liankur.com/" + '/i/user/getVerCode',*/
-            url : "http://localhost:8081/" + 'i/user/getVerCode',
+            url : "http://www.liankur.com/" + 'i/user/getVerCode',
             data : {
                 key : victdata.key,
                 reg : window.location.pathname,
@@ -744,15 +744,15 @@
                         password: $("#txt_password").val().trim(),
                         telephone: $("#txt_telephone").val().trim(),
                         signUpCode:$("#txt_vicode").val().trim(),
-                        type:$("input[name='coldType']:checked").val().trim(),
                     },
                     complete: function(e) {
                         $(me).text("注册");
                         $(me).delay(500).data("isLoading", false)
                     }
                 }).success(function(data){
-                    alert(data.message);
                     if(data.success){
+                        alert("注册成功！");
+                        window.localStorage.sikey=data.message;
                         /*window.location.href = "http://" + window.location.host + "/notAudit.html";
                          window.event.returnValue=false;*/
                         var yes=step.nextStep();//下一步
@@ -795,10 +795,10 @@
         $("#addRdc").click(function () {
             $.ajax({
                 type:"post",
-                url:"http://192.168.1.196:8080/i/user/findUser",
-                data:sessionStorage.sikey,
+                url:"http://www.liankur.com/i/user/findUser",
+                data:localStorage.sikey,
                 success:function (data) {
-                    /*window.location.href="http://192.168.1.114:8080/#/coldStorageAdd";*/
+                    window.location.href="http://www.liankur.com/#/coldStorageAdd";
                 }
             })
         })

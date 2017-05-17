@@ -142,7 +142,9 @@ public class UserController extends BaseController {
 			UserEntity userByName = userDao.findUserByName(username);
 			HttpSession session = request.getSession();
 			session.setAttribute("user",userByName);
-			return ResponseData.newSuccess("注册成功");
+			String cookie = cookieService.insertCookie(username);
+			userByName.setPassword(null);
+			return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
