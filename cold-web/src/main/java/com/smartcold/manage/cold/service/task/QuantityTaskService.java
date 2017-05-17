@@ -152,6 +152,7 @@ public class QuantityTaskService  {
 	 */
 	private void resetDevStatus(){
         try {
+        	StringBuffer devconferrMsg =new StringBuffer();
 			HashMap<String, Object> filter  = new HashMap<String, Object>();
 			filter.put("status", 0);filter.put("type", 18);// 仅检查温度
 			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
@@ -160,6 +161,10 @@ public class QuantityTaskService  {
 				StringBuffer devmapid=new StringBuffer();
 				StringBuffer devid=new StringBuffer();
 				for (DeviceObjectMappingEntity obj : devciceList) {
+					if(StringUtil.isNull(obj.getDeviceid())){
+						devconferrMsg.append("id="+obj.getId()+",");
+						continue;
+					}
 					Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "Temp", startTime, endTime);//keyval.get(obj.getType())
 					if(size>0){devmapid.append(obj.getId()+",");devid.append(obj.getDeviceid()+",");}
 				}
@@ -167,6 +172,9 @@ public class QuantityTaskService  {
 					this.deviceMapper.resetDevByID(devmapid.substring(0, devmapid.length()-1));
 					String msg= "系统在"+TimeUtil.getDateTime()+"自动重置{"+devid.subSequence(0, devid.length()-1)+"}设备！";
 					this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV自动重置",msg));//添加至系统通知
+				}
+				if(devconferrMsg.length()>0){
+					this.msMappergMapper.addsystemInform(new SystemInformEntity(2,3, null, null, 0, 0, 0,"DEV配置异常！","系统在"+TimeUtil.getDateTime()+"检测的DEV_MAPP_ID={"+devconferrMsg+"}配置存在异常！建议删除！"));//添加至系统通知
 				}
 			}
 		} catch (Exception e) {
@@ -208,41 +216,7 @@ public class QuantityTaskService  {
 			System.out.println("所删除的文件不存在");
 		}
 	}
-    
-	private String getkey(int type){
-		switch (type) {
-		case 18:
-			return "Temp";
-		case 2:
-		case 11:
-			return "Switch";
-		case 10:
-			return "AU";
-		default:
-			break;
-		}
-		return null;
-	}
-	private String[] getkeyval(int type,int oid){
-		String table=null;
-		switch (type) {
-		case 18:
-			table= "coldstorageset";break;
-		case 2:
-			table= "coldstoragedoorset";break;
-		case 11:
-			table= "platformdoorset";break;
-		case 10:
-			table= "powerset";break;
-		default:
-			return null;
-		}
-		ItemObject obj = this.utilMapper.findObjByID(table, oid);
-		if(obj!=null&&StringUtil.isnotNull(obj.getName())){
-			return new String[]{obj.getId()+"",obj.getName()};
-		}
-	    return null;
-	}
+
 
 	
 	private void sendMsg(Rdc rdc,Date startTime,Date endTime) {
@@ -258,6 +232,9 @@ public class QuantityTaskService  {
 			tempMap.put("rdcid",rdcid);
 			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(tempMap);
 			for (DeviceObjectMappingEntity obj : devciceList) {
+				if(StringUtil.isNull(obj.getDeviceid())||obj.getOid()==0){
+					continue;
+				}
 				Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(),this.getkey(obj.getType()), startTime, endTime);//keyval.get(obj.getType())
 				if ( size == 0) {
 					 objname = null; key=obj.getType()+"_"+obj.getOid();
@@ -274,7 +251,7 @@ public class QuantityTaskService  {
 							coldNameMap.put(key, objname[1]+";"+obj.getDeviceid());
 						}
 					}else{
-						devconferrMsg.append(obj.getDeviceid()+",");
+						devconferrMsg.append("dev="+obj.getDeviceid()+",");
 					}
 				}
 			}
@@ -284,7 +261,6 @@ public class QuantityTaskService  {
 				this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 3, rdcid, null, 3, 0, 0, "DEV配置错误","【Warning】{RDC=" + rdcName+ "}{DEV="+devconferrMsg.toString()));//添加至系统通知
 			}
 			if(coldNameMap.size()>0){
-			
 				String rdctype="";String deviceid="";
 				for (String newkey : coldNameMap.keySet()) {
 					String[] split = coldNameMap.get(newkey).split(";");
@@ -312,7 +288,7 @@ public class QuantityTaskService  {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("DEV告警解析异常！rdcid="+rdc);
+			System.err.println("DEV告警解析异常!rdcid="+rdcid+",name"+rdcName);
 			System.err.println(coldNameMap);
 			System.err.println(msg.toString());
 		}
@@ -362,7 +338,41 @@ public class QuantityTaskService  {
 
 
 
-
+    
+	private String getkey(int type){
+		switch (type) {
+		case 18:
+			return "Temp";
+		case 2:
+		case 11:
+			return "Switch";
+		case 10:
+			return "AU";
+		default:
+			break;
+		}
+		return null;
+	}
+	private String[] getkeyval(int type,int oid){
+		String table=null;
+		switch (type) {
+		case 18:
+			table= "coldstorageset";break;
+		case 2:
+			table= "coldstoragedoorset";break;
+		case 11:
+			table= "platformdoorset";break;
+		case 10:
+			table= "powerset";break;
+		default:
+			return null;
+		}
+		ItemObject obj = this.utilMapper.findObjByID(table, oid);
+		if(obj!=null&&StringUtil.isnotNull(obj.getName())){
+			return new String[]{obj.getId()+"",obj.getName()};
+		}
+	    return null;
+	}
    /**
     * 组建键值对
     * @param blids
