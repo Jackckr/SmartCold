@@ -1,0 +1,143 @@
+var _menus = {
+	"menus": [{
+		"menuid": "1",
+		"icon": "icon-sys",
+		"menuname": "链库管理",
+		"menus": [{
+			"menuid": "12",
+			"menuname": "链库管理",
+			"icon": "icon-add",
+			"url": "demo.html",
+			"child": [{
+				"menuid": "120",
+				"menuname": "用户管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "121",
+				"menuname": "冷库管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "122",
+				"menuname": "认证管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "123",
+				"menuname": "冷库配置",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "124",
+				"menuname": "共享管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "125",
+				"menuname": "资讯管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			}]
+		},
+		{
+			"menuid": "13",
+			"menuname": "设备管理",
+			"icon": "icon-add",
+			"url": "demo.html",
+			"child": [{
+				"menuid": "130",
+				"menuname": "设备管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "131",
+				"menuname": "设备查询",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "133",
+				"menuname": "数据管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "134",
+				"menuname": "Device配置",
+				"icon": "icon-role",
+				"url": "Login.html"
+			}]
+		},
+		{
+			"menuid": "14",
+			"menuname": "冷库360管理",
+			"icon": "icon-add",
+			"url": "demo.html",
+			"child": [{
+				"menuid": "140",
+				"menuname": "集团管理",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "141",
+				"menuname": "权限配置",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "142",
+				"menuname": "360配置",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "143",
+				"menuname": "冷库报表",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "144",
+				"menuname": "报警列表",
+				"icon": "icon-role",
+				"url": "Login.html"
+			}]
+		},
+		{
+			"menuid": "15",
+			"menuname": "网站统计",
+			"icon": "icon-add",
+			"url": "demo.html",
+			"child": [{
+				"menuid": "150",
+				"menuname": "网站统计",
+				"icon": "icon-role",
+				"url": "Login.html"
+			},{
+				"menuid": "151",
+				"menuname": "操作日志",
+				"icon": "icon-role",
+				"url": "Login.html"
+			}]
+		}]
+	},
+	{
+		"menuid": "8",
+		"icon": "icon-sys",
+		"menuname": "设备管理",
+		"menus": [{
+			"menuid": "22",
+			"menuname": "数据管理",
+			"icon": "icon-nav",
+			"url": "demo1.html",
+			"child": [{
+				"menuid": "221",
+				"menuname": "Device管理",
+				"icon": "icon-nav",
+				"url": "demo.html"
+			},
+			{
+				"menuid": "222",
+				"menuname": "视频监控 3",
+				"icon": "icon-nav",
+				"url": "demo1.html"
+			}]
+		}]
+	}]
+};

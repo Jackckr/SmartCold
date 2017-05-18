@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>系统登录界面</title>
+    <link href="Content/easyui/bootstrap/easyui.css"  rel="stylesheet"/>
+    <link href="Content/easyui/icon.css"  rel="stylesheet"/>
+    <link href="Content/style.css" rel="stylesheet" />
+    <script language="javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script language="javascript" src="js/jquery.easyui.min.js"></script>
+    <script language="javascript" src="js/easyui-lang-zh_CN.js"></script>
+    <script language="javascript" src="js/LayerFunction.js"></script>
+    <script language="javascript">
+        $(function () {
+            $(".loginerror").text("");
+        });
+
+        function checkLogin() {
+            if ($("#username").val() == "") {
+				Tips("请输入您的用户名","username");
+                return false;
+            }
+            if ($("#password").val() == "") {
+				Tips("请输入您的密码","password");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body class="loginbody">
+ <div class="login">
+<form action="do.html" method="post" onsubmit="return checkLogin()">
+        <!--[if IE 6]>
+        <style type="text/css">
+        .ie6{ width:750px; margin:auto; margin-top:30px;}
+        .ie6 ul li{ float:left; margin-right:30px;}
+        .ie6 ul li dt {text-align:center; }
+        .ie6 ul li dd {text-align:left;}
+        .ie6 ul li dd a{ color:#000; float:left; width:290px; font-size:20px; font-weight:bold; text-align:center;}
+        </style>
+        <div style="height:600px; width:100%; background:#fff;">
+        <div style="margin-top:80px;"><center style="font-size:35px; color:#000;  font-weight:bold; text-align:center;">对不起，你使用的浏览器版本过低，不能正常使用我们的系统，请升级您的浏览器。</center></div>
+        <div class="ie6">
+            <ul>
+                <li>
+                <dt><a href="http://windows.microsoft.com/zh-cn/internet-explorer/ie-8-worldwide-languages" target="_blank"><img src="/Content/images/ie8.jpg" /></a><dt>
+                <dd><a href="http://windows.microsoft.com/zh-cn/internet-explorer/ie-8-worldwide-languages" target="_blank">下载最新IE8浏览器</a></dd>
+                </li>
+                <li>
+                <dt style="padding-bottom:10px;"><a href="https://www.google.com/intl/zh-CN/chrome/browser/" target="_blank"><img src="/Content/images/guge.jpg" /></a><dt>
+                <dd><a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe" target="_blank">下载最新谷歌浏览器</a></dd>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <![endif]-->
+        <!--[if gte IE 7]>
+                <div class="username">
+                    <input name="username" id="username" type="text" /></div>
+                <div class="password">
+                    <input name="password" id="password" type="password" /></div>
+                <div class="submitbtn">
+                    <input name="" type="submit" value="登 录" class="btn" /></div>
+                <div class="error loginerror">
+                </div>
+        <![endif]-->
+    <!--[if !IE]><!-->
+            <div class="username">
+                <input name="username" id="username" type="text" />
+            </div>
+            <div class="password">
+                <input name="password" id="password" type="password" />
+            </div>
+            <div class="submitbtn">
+                <input name="" type="submit" value="登 录" class="btn" />
+            </div>
+            <div class="error loginerror">
+            </div>
+    <!--<![endif]-->
+    </form>
+    <div class="loginHead">
+    链库智能管理平台 <sup>Beta</sup>
+    </div>
+    </div>
+</body>
+</html>
