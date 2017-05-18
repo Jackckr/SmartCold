@@ -294,10 +294,14 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/hotAnalysis',
     	controller: 'hotAnalysis',
         templateUrl: 'app/template/hotAnalysis.html'
-    }).state('alarmLog',{
+    }).state('alarmLog',{//告警日志
     	url:'/alarmLog',
     	controller: 'alarmLog',
         templateUrl: 'app/template/alarmLog.html'
+    }).state('alarmTem',{//温度告警
+    	url:'/alarmTem',
+    	controller: 'alarmTem',
+        templateUrl: 'app/template/alarmTem.html'
     }).state('designStorage',{//选型
     	url:'/designStorage',
     	controller: 'designStorage',

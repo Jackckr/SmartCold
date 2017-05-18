@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.api;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,10 @@ import com.smartcold.manage.cold.dto.DataResultDto;
 @Controller
 public class DFSCollectionController extends BaseController {
 
-
+	
+	
+	
+	private static final Logger log = Logger.getLogger(DFSCollectionController.class);
 	/**
 	 *http DEV数据上传接口
 	 * @param data
@@ -29,10 +33,9 @@ public class DFSCollectionController extends BaseController {
 	@RequestMapping(value = "/dfsDataCollection", method = RequestMethod.POST)
 	@ResponseBody
 	public Object storageDataCollection(@RequestBody String data, HttpServletResponse response) {
-		
+		log.error("丹弗斯:"+data);
 		return new DataResultDto(200);
 	} 
-	
 	
 
 

@@ -38,9 +38,46 @@ public class TimeUtil {
 		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
 	}
 
-	
-	
+	/**
+	 * 获得两个时间差(秒)
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static long secondBetween(Date start, Date end) {
+		try {
+			   return (end.getTime()-start.getTime())/1000;//除以1000是为了转换成秒
+		} catch (Exception e) {
+			return -1;
+		}
+	}
 
+	/**
+	 * 获得两个时间差(分钟)
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static long minuteBetween(Date start, Date end) {
+		try {
+			   return (end.getTime()-start.getTime())/60000;//除以1000是为了转换成秒
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	/**
+	 * 获得两个时间差(分钟)
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static long hourBetween(Date start, Date end) {
+		try {
+			   return (end.getTime()-start.getTime())/60000;//除以1000是为了转换成秒
+		} catch (Exception e) {
+			return -1;
+		}
+	}
 	/**
 	 * 计算两个日期之间相差的天数
 	 * 
@@ -51,32 +88,10 @@ public class TimeUtil {
 	 * @return 相差天数
 	 * @throws ParseException
 	 */
-	public static int daysBetween(Date smdate, Date bdate) {
+	public static int daysBetween(Date start, Date end) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			smdate = dateFormat.parse(dateFormat.format(smdate));
-			bdate = dateFormat.parse(dateFormat.format(bdate));
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(smdate);
-			long time1 = cal.getTimeInMillis();
-			cal.setTime(bdate);
-			long time2 = cal.getTimeInMillis();
-			long between_days = (time2 - time1) / (1000 * 3600 * 24);
-			return Integer.parseInt(String.valueOf(between_days));
-		} catch (Exception e) {
-			return -1;
-		}
-	}
-	
-	/**
-	 * 获得两个时间差
-	 * @param start
-	 * @param end
-	 * @return
-	 */
-	public static long secondBetween(Date start, Date end) {
-		try {
-			   return (end.getTime()-start.getTime())/1000;//除以1000是为了转换成秒
+			long between_days = (end.getTime()-start.getTime())/86400;
+			return (int) between_days;
 		} catch (Exception e) {
 			return -1;
 		}

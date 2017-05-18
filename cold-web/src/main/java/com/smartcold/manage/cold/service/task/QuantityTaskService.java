@@ -61,8 +61,9 @@ public class QuantityTaskService  {
 	@Autowired
 	private QuantitySetMapper quantitySetMapper;
 
-	
+	private static ArrayList<String> errDevList=new ArrayList<String>(); 
 	private static HashMap<String, String[]> coldStoragecache=new HashMap<String, String[]>();//
+	
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
@@ -84,9 +85,8 @@ public class QuantityTaskService  {
 	public void checkAPStatus() {
 		boolean taskStatus = quantityMapper.updateTaskStatus(2);
 		if(!taskStatus){return ;}
-		long currentTime = System.currentTimeMillis() - 1800000;
-		Date startTime = new Date(currentTime);
 		Date endTime = new Date();
+		Date startTime = new Date( System.currentTimeMillis() - 1800000);
 		List<Rdc> rdcList = this.rdcMapper.getDEVRdc(false);
 		if (SetUtil.isnotNullList(rdcList)) {
 			for (Rdc rdc : rdcList) {
@@ -103,13 +103,15 @@ public class QuantityTaskService  {
 	 */
 	@Scheduled(cron = "0 30 1 * * ?")
 	public void delTempTask() {
-		ExportExcelUtil.clearTask();        
+		ExportExcelUtil.clearTask();     
+		QuantityTaskService.coldStoragecache.clear();
 		boolean taskStatus = quantityMapper.updateTaskStatus(4);
 		if(!taskStatus){return ;}
-		coldStoragecache.clear();
 		this.delTempfile();
     	this.resetDevStatus();
     	this.LowbatteryAlarm();
+    	if(errDevList.size()>2000){errDevList.clear();}
+    	if(coldStoragecache.size()>2000){coldStoragecache.clear();}
 	}
 	
 
@@ -174,7 +176,7 @@ public class QuantityTaskService  {
 					this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV自动重置",msg));//添加至系统通知
 				}
 				if(devconferrMsg.length()>0){
-					this.msMappergMapper.addsystemInform(new SystemInformEntity(2,3, null, null, 0, 0, 0,"DEV配置异常！","系统在"+TimeUtil.getDateTime()+"检测的DEV_MAPP_ID={"+devconferrMsg+"}配置存在异常！建议删除！"));//添加至系统通知
+					this.msMappergMapper.addsystemInform(new SystemInformEntity(2,3, null, null, 0, 0, 0,"DEV配置异常！","系统在"+TimeUtil.getDateTime()+"检测到dev配置空白,DEV_MAPP_ID={"+devconferrMsg+"}配置存在异常！建议删除！"));//添加至系统通知
 				}
 			}
 		} catch (Exception e) {
@@ -197,6 +199,8 @@ public class QuantityTaskService  {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	/**
 	 * 删除文件夹
 	 * @param file
@@ -223,8 +227,8 @@ public class QuantityTaskService  {
 		int rdcid=rdc.getId();
 		String rdcName=rdc.getName();
 		String objname[] = null;String key = null;
-		StringBuffer devconferrMsg =new StringBuffer();
 		StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
+		StringBuffer devconferrMsg =new StringBuffer();
 		HashMap<String, String> coldNameMap=new HashMap<String, String>();//冷库信息
 		HashMap<String, Object> tempMap  = new HashMap<String, Object>();
 		try {
@@ -251,7 +255,10 @@ public class QuantityTaskService  {
 							coldNameMap.put(key, objname[1]+";"+obj.getDeviceid());
 						}
 					}else{
-						devconferrMsg.append("dev="+obj.getDeviceid()+",");
+						if(!errDevList.contains(obj.getDeviceid())){
+							errDevList.add(obj.getDeviceid());
+							devconferrMsg.append(obj.getDeviceid()+",");
+						}
 					}
 				}
 			}

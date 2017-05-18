@@ -2,6 +2,8 @@ package com.smartcold.manage.cold.jobs.taskutil;
 
 import static org.quartz.JobBuilder.newJob;
 
+import java.util.HashMap;
+
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
@@ -13,6 +15,8 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
+
+import com.smartcold.manage.cold.service.task.QuartzJobFactory;
   
 /*
  * Copyright (C) DCIS 版权所有
@@ -23,7 +27,9 @@ public class QuartzManager {
     private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();    
     private static String JOB_GROUP_NAME = "MY_JOBGROUP_NAME";    
     private static String TRIGGER_GROUP_NAME = "MY_TRIGGERGROUP_NAME";    
-    
+    //当前任务
+	private static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
+	
     /** 
      * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名 
      * @param jobName 任务名 
@@ -31,28 +37,9 @@ public class QuartzManager {
      * @param time 时间设置，参考quartz说明文档  
      * qgw 2016年1月21日 下午3:30:10 ^_^ 
      */  
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void addJob(String jobName, Class cls, String time,Object scheduleJob) {    
-        try {    
-            Scheduler sched = gSchedulerFactory.getScheduler();    
-            JobDetail job = newJob(cls).withIdentity(jobName, JOB_GROUP_NAME).build();  
-            // 添加具体任务方法  
-            job.getJobDataMap().put("scheduleJob", scheduleJob);  
-            // 表达式调度构建器  
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(time);  
-            // 按新的cronExpression表达式构建一个新的trigger  
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, TRIGGER_GROUP_NAME).withSchedule(scheduleBuilder).build();  
-  
-            //交给scheduler去调度  
-            sched.scheduleJob(job, trigger);  
-              
-            // 启动    
-            if (!sched.isShutdown()) {    
-                sched.start();    
-            }    
-        } catch (Exception e) {    
-            throw new RuntimeException(e);    
-        }    
+	@SuppressWarnings("rawtypes")
+	public static void addJob(Integer key,String jobName, Class cls, Long time) { 
+    	QuartzManager.addJob(key,jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, cls, time);
     }    
     /** 
      * @Description: 添加一个定时任务  
@@ -65,22 +52,18 @@ public class QuartzManager {
      * qgw 2016年1月21日 下午3:27:00 ^_^ 
      */  
     @SuppressWarnings({ "rawtypes", "unchecked" })  
-    public static void addJob(String jobName, String jobGroupName,  String triggerName, String triggerGroupName, Class jobClass, String time) {    
+    public static void addJob(Integer key,String jobName, String jobGroupName,  String triggerName, String triggerGroupName, Class jobClass, Long time) {    
         try {    
             Scheduler sched = gSchedulerFactory.getScheduler();    
             JobDetail job = newJob(jobClass).withIdentity(jobName, jobGroupName).build();  
-            // 表达式调度构建器  
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(time);  
+            job.getJobDataMap().put("sid", key);  
+            // 表达式调度构建器 
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(CronExpConversion.getQuartzTime(time));  
             // 按新的cronExpression表达式构建一个新的trigger  
-            Trigger trigger = TriggerBuilder  
-                    .newTrigger()  
-                    .withIdentity(triggerName, triggerGroupName)  
-                            .withSchedule(scheduleBuilder).build();  
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(triggerName, triggerGroupName).withSchedule(scheduleBuilder).build();  
             sched.scheduleJob(job, trigger);   
             // 启动    
-            if (!sched.isShutdown()) {    
-                sched.start();    
-            }    
+            if (!sched.isShutdown()) { sched.start(); }    
         } catch (Exception e) {    
             throw new RuntimeException(e);    
         }    
@@ -92,26 +75,8 @@ public class QuartzManager {
      * @param time 
      * qgw 2016年1月21日 下午3:28:34 ^_^ 
      */  
-    public static void modifyJobTime(String jobName, String time) {   
-        TriggerKey triggerKey = TriggerKey.triggerKey(jobName, TRIGGER_GROUP_NAME);  
-        try {    
-            Scheduler sched = gSchedulerFactory.getScheduler();    
-            CronTrigger trigger =(CronTrigger) sched.getTrigger(triggerKey);  
-            if (trigger == null) {    
-                return;    
-            }    
-            String oldTime = trigger.getCronExpression();    
-            if (!oldTime.equalsIgnoreCase(time)) {  
-                CronScheduleBuilder scheduleBuilder =CronScheduleBuilder.cronSchedule(time);  
-                //按新的cronExpression表达式重新构建trigger  
-                trigger = trigger.getTriggerBuilder().withIdentity(triggerKey)  
-                .withSchedule(scheduleBuilder).build();  
-                //按新的trigger重新设置job执行  
-                sched.rescheduleJob(triggerKey, trigger);  
-            }    
-        } catch (Exception e) {    
-            throw new RuntimeException(e);    
-        }    
+    public static void modifyJobTime(String jobName, String time) {  
+    	QuartzManager.modifyJobTime(jobName, TRIGGER_GROUP_NAME, time);
     }    
     
     /** 
@@ -122,26 +87,17 @@ public class QuartzManager {
      * @author qgw  
      * @date 2016年1月27日 下午4:45:15 ^_^ 
      */  
-    public static void modifyJobTime(String triggerName,    
-            String triggerGroupName, String time) {   
-        TriggerKey triggerKey = TriggerKey.triggerKey(  
-                triggerName, triggerGroupName);  
+    public static void modifyJobTime(String triggerName,  String triggerGroupName, String time) {   
+        TriggerKey triggerKey = TriggerKey.triggerKey(  triggerName, triggerGroupName);  
         try {    
             Scheduler sched = gSchedulerFactory.getScheduler();    
             CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerKey);    
-            if (trigger == null) {    
-                return;    
-            }    
+            if (trigger == null) {   return;    }    
             String oldTime = trigger.getCronExpression();    
             if (!oldTime.equalsIgnoreCase(time)) {    
-                // trigger已存在，则更新相应的定时设置  
-                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder  
-              .cronSchedule(time);  
-                // 按新的cronExpression表达式重新构建trigger  
-                trigger = trigger.getTriggerBuilder().withIdentity(triggerKey)  
-                        .withSchedule(scheduleBuilder).build();  
-                // 按新的trigger重新设置job执行  
-                sched.resumeTrigger(triggerKey);  
+                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(time);    // trigger已存在，则更新相应的定时设置 
+                trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();   // 按新的cronExpression表达式重新构建trigger 
+                sched.resumeTrigger(triggerKey);    // 按新的trigger重新设置job执行 
             }    
         } catch (Exception e) {    
             throw new RuntimeException(e);    
@@ -207,7 +163,6 @@ public class QuartzManager {
             Scheduler sched = gSchedulerFactory.getScheduler();  
             sched.pauseJob(jobKey);  
         } catch (SchedulerException e) {  
-            // TODO Auto-generated catch block  
             e.printStackTrace();  
         }  
     }  
@@ -256,5 +211,56 @@ public class QuartzManager {
         }    
     }
 	 
+    
+    
+    public static synchronized HashMap<Integer, ScheduleJob> getTempListen() {
+		return tempListen;
+	}
+    
+	public static void setTempListen(HashMap<Integer, ScheduleJob> tempListen) {
+		QuartzManager.tempListen = tempListen;
+	}
+	/**
+     * 
+     */
+    public static ScheduleJob getJob(int key) {
+		return QuartzManager.tempListen.get(key);
+	}
+    
+    public static void upJob(int key,ScheduleJob job){
+    	QuartzManager.tempListen.remove(key);
+    	QuartzManager.tempListen.put(key, job);
+    	if(job.isTask()){
+    		QuartzManager.modifyJobTime(job.getName(),CronExpConversion.getQuartzTime(job.getCroStartTime()));
+    	}else{
+    		QuartzManager.removeJob(job.getName());
+    	}
+    }
+    
+    /**
+	 * 同步添加或者删除任务
+	 * @param oid
+	 * @param job
+	 */
+	public static synchronized void addJob(int key,ScheduleJob job){
+		QuartzManager.tempListen.put(key, job);
+		if(job.isTask()){
+      		QuartzManager.addJob(key,job.getName(), QuartzJobFactory.class, job.getCroStartTime());
+		}
+	}
+	
+	/**
+	 * 删除任务
+	 * @param oid
+	 */
+	public static synchronized void removeJob(int key){
+		if(QuartzManager.tempListen.containsKey(key)){
+			ScheduleJob job = QuartzManager.tempListen.get(key);
+			if(job.isTask()){//如果是任务 删除定时任务
+				QuartzManager.removeJob(job.getName());
+			}
+			QuartzManager.tempListen.remove(key);
+		}
+	}
      
 }  
