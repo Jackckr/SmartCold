@@ -71,19 +71,98 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
 coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
 	 //根据rdcid查询该rdc的报警信息
 	$(".mainHeight").height( $(".content-wrapper").height());
-		$scope.initData=function(){
-			$http.get('/i/warlog/getWarningInfoByRdcID', {  params: { "rdcId": $rootScope.rdcId  } }).success(function (data) {
-	            $scope.warLog = data.warLog;
-	            $scope.warInfo = data.warInfo;
-	        });
-		};
-		$scope.inittable=function(){
-			$("#alarmLog").DataTable();
-		};
-	    $scope.changerdc=function(){
-	    	$scope.initData();
-	    	$timeout($scope.initData,60000);
-	    };
-	    $scope.$watch('rdcId', $scope.changerdc,true);//监听冷库变化
+	$scope.initData=function(){
+		$http.get('/i/warlog/getWarningInfoByRdcID', {  params: { "rdcId": $rootScope.rdcId  } }).success(function (data) {
+            $scope.warLog = data.warLog;
+            $scope.warInfo = data.warInfo;
+        });
+	};
+	$scope.inittable=function(){
+		$("#alarmLog").DataTable();
+	};
+    $scope.changerdc=function(){
+    	$scope.initData();
+    	$timeout($scope.initData,60000);
+    };
+    $scope.$watch('rdcId', $scope.changerdc,true);//监听冷库变化
+});
+//温度告警
+coldWeb.controller('alarmTem', function($rootScope, $scope, $http,$timeout) {
+	 //根据rdcid查询该rdc的报警信息
+	$(".mainHeight").height( $(".content-wrapper").height());
+	$scope.initData=function(){
+		$http.get('', {  params: { "rdcId": null  } }).success(function (data) {
+
+		});
+	};
+	var myChart = echarts.init(document.getElementById('tem_div'));
+
+    // 指定图表的配置项和数据
+    var option = {
+//		    backgroundColor:'#f2f2e6',
+    	    tooltip: {
+    	        trigger: 'axis',
+    	        axisPointer: {
+    	            type: 'cross',
+    	            crossStyle: {
+    	                color: '#999'
+    	            }
+    	        }
+    	    },
+    	    legend: {
+    	        data:['次数','时长']
+    	    },
+    	    xAxis: [
+    	        {
+    	            type: 'category',
+    	            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    	            axisPointer: {
+    	                type: 'shadow'
+    	            }
+    	        }
+    	    ],
+    	    yAxis: [
+    	        {
+    	            type: 'value',
+    	            name: '次数/次',
+    	            min: 0,
+    	            max: 250,
+    	            interval: 50,
+    	            axisLabel: {
+    	                formatter: '{value}'
+    	            }
+    	        },
+    	        {
+    	            type: 'value',
+    	            name: '时长/min',
+    	            min: 0,
+    	            max: 25,
+    	            interval: 5,
+    	            axisLabel: {
+    	                formatter: '{value}'
+    	            }
+    	        }
+    	    ],
+    	    series: [
+    	        {
+    	            name:'次数',
+    	            type:'bar',
+    	            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+    	        },
+    	        {
+    	            name:'时长',
+    	            type:'line',
+    	            yAxisIndex: 1,
+    	            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+    	        }
+    	    ]
+    	};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    window.onresize = myChart.resize;
+    $(".show-more").click(function(){
+    	$(this).parents(".timeline-title").next(".timeline-content-more").toggle()
+    })
 });
 
