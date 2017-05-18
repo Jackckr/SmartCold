@@ -258,6 +258,25 @@
 				</div>
 	    	</div>
 	    </div>
+	     <!-- 告警分析部分 -->
+	    <hr>
+	    <div class="print_part chart_gap">
+	    	<p class="tac w60"><span class="bgPink">告警分析</span></p>
+	    	<div class="clearfix partP">
+	    		<div class="chartPart w60">
+	    			<div id="tem_div" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="tem_div_img"  ng-show="!isnotprint"></div>
+	    		</div>
+	    		<div class="textPart w40">
+	    			<p><strong >本DC（冷库）的告警统计</strong></p>
+    				<ul> 
+<!--     					<li ng-repeat="obj in charrestmsg[9]"> -->
+<!--     						<span >{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh</span> -->
+<!-- 						</li> -->
+    				</ul>
+				</div>
+	    	</div>
+	    </div>
 	</div>
 	
 	<div class="col-lg-12 text-center" ng-show="isloaderr">
@@ -279,5 +298,5 @@
                                 正在生成报表，请稍后！
       </div>
 </div>
-
+<div class="goTop" title="返回顶部"><i class="iconfont">&#xe744;</i></div>
 <script type="text/javascript" src="../../assets/js/echarts-all.js"></script>

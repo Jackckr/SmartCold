@@ -893,4 +893,19 @@ legend{
 	display: none;
 	margin-top: 10px;
 }
-
+.goTop{
+	display:none;
+	position: fixed;
+	bottom: 5em;
+	right:10px;
+	cursor:pointer;
+	width: 2.5rem;
+	height:3em;
+	line-height: 3em;
+	background: #00a1cb;
+	border-radius: 3px;
+}
+.goTop .iconfont{
+	font-size: 2em;
+	color: #f4f4f4;	
+}

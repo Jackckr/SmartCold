@@ -231,5 +231,82 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });
 		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
 	 };
-    
+	 $('.goTop').click(function(event) {
+			$('html,body').stop().animate({'scrollTop':0}, 200);
+	});
+	$(window).scroll(function(event) {
+		if ($(window).scrollTop() >= $(window).height()) {
+			$('.goTop').show();
+		} else {
+			$('.goTop').hide();
+		}
+	});//一键回到顶部
+	
+	/*告警统计*/
+	var myCharts = echarts.init(document.getElementById('tem_div'));
+
+    // 指定图表的配置项和数据
+    var option = {
+//		    backgroundColor:'#f2f2e6',
+    	    tooltip: {
+    	        trigger: 'axis',
+    	        axisPointer: {
+    	            type: 'cross',
+    	            crossStyle: {
+    	                color: '#999'
+    	            }
+    	        }
+    	    },
+    	    legend: {
+    	        data:['次数','时长']
+    	    },
+    	    xAxis: [
+    	        {
+    	            type: 'category',
+    	            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    	            axisPointer: {
+    	                type: 'shadow'
+    	            }
+    	        }
+    	    ],
+    	    yAxis: [
+    	        {
+    	            type: 'value',
+    	            name: '次数/次',
+    	            min: 0,
+    	            max: 250,
+    	            interval: 50,
+    	            axisLabel: {
+    	                formatter: '{value}'
+    	            }
+    	        },
+    	        {
+    	            type: 'value',
+    	            name: '时长/min',
+    	            min: 0,
+    	            max: 25,
+    	            interval: 5,
+    	            axisLabel: {
+    	                formatter: '{value}'
+    	            }
+    	        }
+    	    ],
+    	    series: [
+    	        {
+    	            name:'次数',
+    	            type:'bar',
+    	            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+    	        },
+    	        {
+    	            name:'时长',
+    	            type:'line',
+    	            yAxisIndex: 1,
+    	            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+    	        }
+    	    ]
+    	};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myCharts.setOption(option);
+    window.onresize = myCharts.resize;
 });
