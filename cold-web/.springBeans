@@ -9,7 +9,7 @@
 	<configs>
 		<config>src/main/resources/config/spring/local/appcontext-db.xml</config>
 		<config>src/main/resources/config/spring/local/appcontext1-ap.xml</config>
-		<config>src/main/resources/config/spring/local/appcontext1-job.xml</config>
+		<config>src/main/resources/config/spring/local/appcontext-job.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

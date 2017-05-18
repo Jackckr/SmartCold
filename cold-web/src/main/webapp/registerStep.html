@@ -631,20 +631,20 @@
     }
     function getviercode(){
         if(!victdata.victel){return ;}
-        $.ajax({
-            type : "POST",
-            /*url : "http://liankur.com/" + '/i/user/getVerCode',*/
-            url : "http://localhost:8081/" + 'i/user/getVerCode',
-            data : {
-                key : victdata.key,
-                reg : window.location.pathname,
-                telephone : $("#txt_telephone").val().trim()
-            },
-            success : function(data) {
-                alert("验证码已发送~");
-                victdata.code = data;
-            }
-        });
+//         $.ajax({
+//             type : "POST",
+//             /*url : "http://liankur.com/" + '/i/user/getVerCode',*/
+//             url : "http://localhost:8081/" + 'i/user/getVerCode',
+//             data : {
+//                 key : victdata.key,
+//                 reg : window.location.pathname,
+//                 telephone : $("#txt_telephone").val().trim()
+//             },
+//             success : function(data) {
+//                 alert("验证码已发送~");
+                victdata.code = 1234;
+//             }
+//         });
     };
 
     //验证手机号码

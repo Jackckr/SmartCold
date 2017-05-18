@@ -12,6 +12,8 @@ public class ColdStorageSetEntity {
 	private int rdcId;
 
 	private String name;
+	
+	private String deviceid;//附加属性 
 
 	private float startTemperature;
 
@@ -67,6 +69,14 @@ public class ColdStorageSetEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDeviceid() {
+		return deviceid;
+	}
+
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
 	}
 
 	public float getStartTemperature() {

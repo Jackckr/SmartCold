@@ -20,20 +20,20 @@ import com.smartcold.manage.cold.util.TimeUtil;
 @RequestMapping(value = "/util")
 public class UtilController extends BaseController {
 	
-	
-	 private boolean verifyToken(String toke){
-		   if(StringUtil.isnotNull(toke)){
-			   return EncodeUtil.encodeByMD5("admin"+TimeUtil.getDateHour(new Date())).equals(toke);
-		   }
-		   return true;
-	}
-	 
+	 /**
+	  * 
+	  * @return
+	  */
+	 @Deprecated
 	 @RequestMapping("/getSensorhistData")
 	 @ResponseBody
 	 public Object getSensorhistData()  {
 		return ZsDevService.data;
 	 }
 	
+	 
+	 
+	 @Deprecated 
     @RequestMapping(value = "/del_devcache",method=  RequestMethod.GET)
     @ResponseBody
     public boolean deldevcache(String toke){
@@ -41,7 +41,7 @@ public class UtilController extends BaseController {
 			ZsDevService.clerCache();	return true;
 //			}return false;
     }
-    
+	@Deprecated
     @RequestMapping(value = "/getZsDevStatus",method=  RequestMethod.GET)
     @ResponseBody
     public Object getZsDevStatus(){
@@ -52,6 +52,14 @@ public class UtilController extends BaseController {
     	return resMap;
     }
     
+    
+    
+    public synchronized static boolean verifyToken(String toke){
+		   if(StringUtil.isnotNull(toke)){
+			   return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour(new Date())).equals(toke);
+		   }
+		   return true;
+	}
     
     
     
