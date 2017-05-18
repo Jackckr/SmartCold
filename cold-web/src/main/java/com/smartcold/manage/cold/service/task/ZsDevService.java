@@ -32,7 +32,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 洲斯数据采集定时任务  自带线程同步
  * Copyright (C) DCIS 版权所有 功能描述: ZsDevService Create on MaQiang
  * 2016年9月27日11:55:45
- * 数据存在重复
+ * 数据存在重复（准备处理）
  * 
  **/
 @Service

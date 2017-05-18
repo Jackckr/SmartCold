@@ -17,6 +17,6 @@ public interface TempWarningService {
 	List<ColdStorageSetEntity> getAllMonitorTempSet();
 	
 	//2.获得最大温度dev
-	ItemValue getMAITempData(int tid,int cid,int typpe,String deviceid,String starttime,String endtime);
+	ItemValue getMAITempData(int tid,int typpe,String deviceid,String starttime,String endtime);
 		
 }

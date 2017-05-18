@@ -14,21 +14,21 @@
 		  FROM `smartcold`.`tempset` t
 		  LEFT JOIN `smartcold`.`coldstorageset` c on t.`coldstorageid`= c.`id`
 		  LEFT JOIN `sc360`.`deviceobjectmapping` d on d.`oid` =t.id  and d.`type` =18
-		 where `startTemperature`> 0
-		   AND `tempdiff`> 0  ;
+		 where `startTemperature`!= 0
+		   AND `tempdiff`!=0  and t.id in(62,63);
 	</select>
 	
 	<select id="getMAITempData" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
 	     SELECT `id`, ${mv} `value` ,`addtime`  FROM ${table} where 
 	     <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
 	     <if test="deviceid==null or deviceid==''"> `oid` = #{cid} and </if>
-	      `key` ='Temp' and `addtime` >#{starttime} and `addtime` &lt;#{starttime}; 
+	      `key` ='Temp' and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
 	</select>	
 	
 	
 	
 	<select id="getTolTempByDevId" parameterType="map" resultType="Integer">
-	     SELECT count(*) cont FROM `storagedatacollection`  where `deviceid` =#{deviceid} and `key` ='Temp' and `addtime`>#{starttime} and `addtime` &lt;#{starttime}; 
+	     SELECT count(*) cont FROM `storagedatacollection`  where `deviceid` =#{deviceid} and `key` ='Temp' and `addtime`>#{starttime} and `addtime` &lt;#{endtime}; 
 	</select>
 	
 	

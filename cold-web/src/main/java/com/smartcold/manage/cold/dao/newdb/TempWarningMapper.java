@@ -19,8 +19,12 @@ public interface TempWarningMapper {
 	//1.获得监控温度的冷库信息
 	List<ColdStorageSetEntity> getAllMonitorTempSet();
 	//2.
+	// SELECT `id`, ${mv} `value` ,`addtime`  FROM ${table} where 
+//    <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
+//    <if test="deviceid==null or deviceid==''"> `oid` = #{cid} and </if>
+//     `key` ='Temp' and `addtime` >#{starttime} and `addtime` &lt;#{starttime}; 
 	// 获得最大/最小溫度
-	ItemValue getMAITempData(@Param("table")String table,@Param("mv")String mv,@Param("deviceid")String deviceid,@Param("starttime")String starttime, @Param("endtime")String endtime);
+	ItemValue getMAITempData(@Param("table")String table,@Param("mv")String mv,@Param("deviceid")String deviceid, @Param("cid") Integer cid,    @Param("starttime")String starttime, @Param("endtime")String endtime);
 	
 	Integer getTolTempByDevId(@Param("deviceid")String deviceid,@Param("starttime")String starttime,@Param("endtime")String endtime);
 	

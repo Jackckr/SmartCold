@@ -228,7 +228,7 @@ public class QuantityTaskService  {
 		String rdcName=rdc.getName();
 		String objname[] = null;String key = null;
 		StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
-		StringBuffer devconferrMsg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
+		StringBuffer devconferrMsg =new StringBuffer();
 		HashMap<String, String> coldNameMap=new HashMap<String, String>();//冷库信息
 		HashMap<String, Object> tempMap  = new HashMap<String, Object>();
 		try {
