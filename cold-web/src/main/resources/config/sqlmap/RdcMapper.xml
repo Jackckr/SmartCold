@@ -104,6 +104,12 @@
      select  m.aTelephone as telephone from rdcmanageinfo m where m.`aTelephone` IS NOT NULL and m.`aTelephone`  !='' <if test="rdcID!=null and rdcID!=0"> and  `rdcid`  =#{rdcID}  </if> LIMIT  1 ;
   </select>
   <select id="getRdcByDate" resultType="com.smartcold.manage.cold.entity.olddb.Rdc">
-    SELECT * FROM `Rdc` ORDER BY `addtime` DESC limit 0,9
+    SELECT * FROM `Rdc`
+    <where>
+    <if test="words!=null">
+      `name` LIKE #{words}
+    </if>
+  </where>
+    ORDER BY `addtime` DESC limit 0,9
   </select>
 </mapper>

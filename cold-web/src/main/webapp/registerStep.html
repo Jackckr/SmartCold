@@ -131,13 +131,49 @@
         <div class="step-list">
             <div class="coldDiv">
                 <p>说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！</p>
+                <div class="col-lg-6">
+                    <div class="input-group" style="margin-left: -15px" >
+                        <input class="form-control" placeholder="请输入您要查找的冷库名" id="rdcName"/>
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="searchRdc"><span class="glyphicon glyphicon-search">搜索</span></button>
+                    </span>
+                    </div>
+                </div>
                 <select id="rdcShow" class="select_gallery" style="width:100%;">
 
                 </select>
+                <div class="row">
+                    <div>
+                        <middle>
+                            <ul>温馨提示：</ul>
+                            <ul>1、为提高冷库信息质量，如果您是冷库负责人，请上传该冷库的<b>营业执照</b>。经审核通过后，你的账号即为认证账号，并会成为该冷库的管理者。</ul>
+                            <ul>2、认证通过的用户，即可修改对应冷库，同时可以在冷库发布库、仓位、货品交易和租赁信息，同时账号认证，也是接入冷库360的全方位智能管理和云服务的前提。</ul>
+                            <ul>3、账号认证时间为1~3工作日，请您耐心等待。</ul>
+                            <ul>4、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</ul>
+                        </middle>
+                    </div>
+                    <div style="height: 270px;">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"
+                             style="position:relative;top: 100px;bottom: 100px;left: 50px">
+                            <button class="btn btn-success" ngf-select="addAuthFiles($files)" type="file"
+                                    ng-model="authfiles"
+                                    name="authfiles">上传图片
+                            </button>
+                            <small class="text-warning" style="margin-left:30px;">*仅1张(必须为.jpg,.png,.jpeg格式)</small>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <img id="img0" style="position:relative;left: 80px;top: 20px;max-height: 250px;max-width: 250px;">
+                        </div>
+                    </div>
+                    <label ng-repeat="authfile in totalauthfiles" style="margin-left: 50px"><span
+                            ng-bind="authfile.name"></span>
+                        <i class="fa fa-times danger" style="margin-right:10px;color:red;" ng-click="dropauth(authfile)"></i>
+                    </label>
+                </div>
                 <div class="clearfix btn_c">
 						<span class="btn_prep bp"><button type="button" class="btn btn-warning">上一步</button></span>
 						<span class="btn_back bp"><button type="button" class="btn btn-success" id="attestationRdc">下一步</button></span>
-						<span class="bp"><button type="button" id="addRdc" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>
+						<!--<span class="bp"><button type="button" id="addRdc" onclick="$('.addRdc').show()" class="btn btn-primary">添加冷库</button></span>-->
                 </div>
                 <div class="addRdc black">
                     <div class="row">
@@ -634,7 +670,7 @@
         $.ajax({
             type : "POST",
             /*url : "http://liankur.com/" + '/i/user/getVerCode',*/
-            url : "http://www.liankur.com/" + 'i/user/getVerCode',
+            url : "http://localhost:8081/" + 'i/user/getVerCode',
             data : {
                 key : victdata.key,
                 reg : window.location.pathname,
@@ -762,11 +798,13 @@
         }
     }
         var roleType="";
-        $("p[name=chooseRole]").click(function () {
+        $("p[class=btn_p],#searchRdc").click(function () {
             roleType = $(this).attr("val");
+            var words = $("#rdcName").val();
             $.ajax({
                 type: "POST",
                 dataType: "json",
+                data:{"words":words},
                 url: "/i/loginStep/getAllRdc",
                 success:function (data) {
                     var val = "";
@@ -792,16 +830,16 @@
                 }
             })
         });
-        $("#addRdc").click(function () {
-            $.ajax({
-                type:"post",
-                url:"http://www.liankur.com/i/user/findUser",
-                data:localStorage.sikey,
-                success:function (data) {
-                    window.location.href="http://www.liankur.com/#/coldStorageAdd";
-                }
-            })
-        })
+        /*$("#addRdc").click(function () {
+         $.ajax({
+         type:"post",
+         url:"http://www.liankur.com/i/user/findUser",
+         data:sessionStorage.sikey,
+         success:function (data) {
+         window.location.href="http://www.liankur.com/#/coldStorageAdd";
+         }
+         })
+         });*/
 </script>
 </body>
 </html>
