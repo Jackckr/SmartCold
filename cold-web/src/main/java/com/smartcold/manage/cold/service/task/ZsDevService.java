@@ -32,6 +32,8 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 洲斯数据采集定时任务  自带线程同步
  * Copyright (C) DCIS 版权所有 功能描述: ZsDevService Create on MaQiang
  * 2016年9月27日11:55:45
+ * 数据存在重复
+ * 
  **/
 @Service
 public class ZsDevService  {
@@ -49,15 +51,15 @@ public class ZsDevService  {
 //	    private final static String ZSURL="http://139.196.240.174:9007/v1/channels/datapoints";//
 	    private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 		private static final ExecutorService executorService = Executors.newFixedThreadPool(100, threadFactory);//最多启动一千1000个线程
-		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
-		public static HashMap<String, Object> MSI=new HashMap<String, Object>();
-		public static HashMap<String, Object> DU=new HashMap<String, Object>();
+		
+		public static HashMap<String, Object> DU=new HashMap<String, Object>();//电压缓存
+		public static HashMap<String, Object> MSI=new HashMap<String, Object>();//MSI缓存
 		public static HashMap<String, Object> APMSI=new HashMap<String, Object>();
+		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
 		
 		
 		public static void clerCache() {
 			ZsDevService.devTypecache.clear();
-			
 		}
 
 		/**
@@ -183,7 +185,7 @@ class SubTask implements Runnable {
 				Integer type = this.getDevType(devid);//无效设备
 				if(type==null||type==-1){continue;}//无效设备
 				apid=(String) datas.get("apid");
-				date =new Date( (Integer)datas.get("time")*1000L);
+				date =new Date((Integer)datas.get("time")*1000L);
 				switch (type) {
 				case 18://温度
 					 dataList.add(new StorageDataCollectionEntity(apid, devid,"Temp",  datas.get("Temp"), date));

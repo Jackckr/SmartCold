@@ -491,10 +491,10 @@
 			$("#addRdc").click(function () {
 				$.ajax({
 					type:"post",
-					url:"http://192.168.1.196:8080/i/user/findUser",
+					url:"http://www.liankur.com/i/user/findUser",
 					data:sessionStorage.sikey,
 					success:function (data) {
-                        /*window.location.href="http://192.168.1.114:8080/#/coldStorageAdd";*/
+                        window.location.href="http://www.liankur.com/#/coldStorageAdd";
                     }
 				})
             })
