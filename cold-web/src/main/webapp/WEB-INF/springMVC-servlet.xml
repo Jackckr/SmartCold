@@ -26,5 +26,12 @@
 	<task:scheduler id="TaskScheduler" pool-size="100" />  
 	<!-- 默认的注解映射的支持 -->  
 	<mvc:annotation-driven />
-	
+	<!-- 配置springMVC的上传文件配置，SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<!-- 指定所上传文件的总大小。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+		<property name="maxUploadSize" value="20000000"/>
+	</bean>
+
+
 </beans>
