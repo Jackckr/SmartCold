@@ -45,7 +45,7 @@
 	    </header>
     <!-- header end-->
     <section class="toggle">
-    	<div class="tempture" id="ml_acl10" ng-click="goTempture()"><i class="iconfont">&#xe67f;</i>温度</div>
+    	<div class="tempture" id="ml_acl10" ng-click="goTempture()" ng-hide="user.type==1"><i class="iconfont">&#xe67f;</i>温度</div>
     	<div class="light other current" id="ml_acl20"><i class="iconfont">&#xe6f1;</i>
     		<span class="dropNext">
     			<b>能耗</b><i class="iconfont">&#xe6f7;</i>
@@ -55,7 +55,7 @@
     			<li id="ml_acl22"><a href="javascript:;" ng-click="waterEnergy()">水耗</a></li>
     		</ul> 
     	</div>
-    	<div class="door other" id="opendoor" ng-click="goFacility()"><i class="iconfont">&#xe6ed;</i>
+    	<div class="door other" id="opendoor" ng-click="goFacility()" ng-hide="user.type==1||user.type==2"><i class="iconfont">&#xe6ed;</i>
     		<span class="dropNext">
     			<b>运管</b><i class="iconfont">&#xe6f7;</i>
     		</span>

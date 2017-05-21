@@ -84,3 +84,37 @@ $(function() {
     });
 
 });
+/**
+ * 
+ * app.js
+ * 公共服务在此显示
+ * 2017-5.21
+ */
+var app = angular.module('app', []);
+app.service('userService', function($rootScope,  $http) {
+	 initAllByRdcId= function(rootRdcId){
+        $rootScope.rdcId = rootRdcId;
+        $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
+      		$rootScope.aclml=data.aclml;
+      		$rootScope.pagstate=[];
+      		$("body .role_limit").attr("disabled",true).removeClass("role_limit").removeClass("role_hide");
+      		angular.forEach(data.aclml,function(obj,i){ 
+      			if(obj.acl){
+      				if(!obj.hasnode){  
+      					// 技术原因，无法处理
+//				      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
+      				}
+      			}else{
+      				$("#ml_acl"+obj.id).addClass("role_limit");
+      				$("#ml_acl"+obj.id+" *").addClass("role_limit");
+      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+      				if(user.type==1 || user.type==2){
+      					$("#ml_acl"+obj.id).addClass("role_hide");
+	      				$("#ml_acl"+obj.id+" *").addClass("role_hide");
+      				}
+      			}
+      		});
+		});
+	 }
+})
+

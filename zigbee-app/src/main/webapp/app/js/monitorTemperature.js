@@ -1,7 +1,6 @@
 checkLogin();
-var app = angular.module('app', []);
-app.controller('monitorTemperature', function ($scope, $location, $http, $rootScope) {
-	$scope.user = window.user;
+app.controller('monitorTemperature',function ($scope, $location, $http, $rootScope, userService) {
+	$scope.user = user;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
@@ -9,17 +8,17 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
 
     $.getUrlParam = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
+        var r = location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]); return null;
     }
     var rootRdcId = $.getUrlParam('storageID');
-    $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
+    $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
             if (!rootRdcId) {
-                if (window.localStorage.rdcId) {
-                	setStorage(window.localStorage.rdcId);
-                    findByRdcId(window.localStorage.rdcId);
+                if (localStorage.rdcId) {
+                	initAllByRdcId(localStorage.rdcId);
+                    findByRdcId(localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
                     $scope.rdcId = $scope.storages[0].id;
@@ -27,54 +26,12 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                     $scope.viewStorage($scope.storages[0].id);
                 }
             } else {
-                setStorage(rootRdcId);
+            	initAllByRdcId(rootRdcId);
                 findByRdcId(rootRdcId);
             }
         }
     });
     
-    /**
-     * 权限  
-     * start
-     * 
-     * 
-    */
-    function setStorage(rootRdcId) {
-    	initAllByRdcId = function(rootRdcId){
-	        $rootScope.rdcId = rootRdcId;
-	        $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
-    		//$http.get(ER.coldroot + '/i/acl/getRUACL?rdcid='+  $rootScope.rdcId +'&uid='+window.user.id).success( function(data){// 初始化菜单,$rootScope,$http
-	      		$rootScope.aclml=data.aclml;
-	      		$rootScope.pagstate=[];
-	      		$("body .role_limit").removeClass("role_limit");
-	      		angular.forEach(data.aclml,function(obj,i){ 
-	      			if(obj.acl){
-	      				if(!obj.hasnode){  
-	      					// 技术原因，无法处理
-//			      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
-	      				}
-	      			}else{
-	      				$("#ml_acl"+obj.id).addClass("role_limit");
-	      				$("#ml_acl"+obj.id+" *").addClass("role_limit");
-	      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-	      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-	      				if(window.user.type==1){
-	      					$("#ml_acl"+obj.id+" *").addClass("hide");
-		      				$("#ml_acl"+obj.id+" *").addClass("hide");
-	      				}
-	      			}
-	      		});
-	        });
-    	};
-    	initAllByRdcId(rootRdcId)
-    };
-    
-    /**
-     * 权限
-     * 
-     * end
-     * 
-    */
     function findByRdcId(rootRdcId) {
         $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
             $scope.currentRdc = data[0];
@@ -85,7 +42,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
     }
 
     $scope.viewStorage = function (rdcId) {
-        window.localStorage.rdcId = $scope.rdcId;
+        localStorage.rdcId = $scope.rdcId;
         //查询温度配置
         $http.get(ER.coldroot + '/i/temp/getTempsetByRdcId', {params: {"rdcId": rdcId } }).success(function (data) {
         		$scope.tempsets = data;
@@ -104,7 +61,7 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
                 }
             }
         });
-        setStorage(rdcId);
+        initAllByRdcId(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -128,13 +85,13 @@ app.controller('monitorTemperature', function ($scope, $location, $http, $rootSc
     };
 
     $scope.goElectric = function () {
-        window.location.href='monitorElectric.html?storageID=' + $scope.rdcId;
+        location.href='monitorElectric.html?storageID=' + $scope.rdcId;
     };
     $scope.goFacility = function () {
-        window.location.href='monitorFacility.html?storageID=' + $scope.rdcId;
+        location.href='monitorFacility.html?storageID=' + $scope.rdcId;
     };
     $scope.goOtherMonitor = function () {
-        window.location.href='monitorCooling.html?storageID=' + $scope.rdcId;
+        location.href='monitorCooling.html?storageID=' + $scope.rdcId;
     };
 
     var formatTime = function (timeString) {
