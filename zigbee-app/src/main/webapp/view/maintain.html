@@ -28,6 +28,7 @@
 		.applyKid>p{font-size: .7rem!important;}
 		.applyKid{position: relative;}
 		._error{position: absolute;top: 2rem;right:0.5rem;font-size: .65rem;color:red;}
+		.oTd{    min-width: 8rem;; max-width: 8rem;; width: 8rem;;white-space: normal;word-break: break-all;}
     </style>
 </head>
 <body ng-app="app" ng-controller="maintain" ng-cloak>
@@ -114,8 +115,8 @@
 						        	</div>
 						        </td>
 						        <td>{{obj.id}}</td>
-						        <td>{{obj.warningmsg}}</td>
-						        <td>{{obj.analysismsg}}</td>
+						        <td class="oTd">{{obj.warningmsg}}</td>
+						        <td  class="oTd">{{obj.analysismsg}}</td>
 						        <td>{{stmode[obj.status]}}</td>
 						        <td>{{obj.addtime.substring(0,19)}}</td>
 						        <td class="text-center">
@@ -446,8 +447,8 @@
 						        	</div>
 						        </td>
 						        <td>{{obj.id}}</td>
-						        <td>{{obj.warningmsg}}</td>
-						        <td>{{obj.analysismsg}}</td>
+						        <td  class="oTd">{{obj.warningmsg}}</td>
+						        <td  class="oTd">{{obj.analysismsg}}</td>
 						        <td>{{obj.addtime.substring(0,19)}}</td>
 						        <td>{{stmode[obj.status]}}</td>
 						        <td class="text-center">
