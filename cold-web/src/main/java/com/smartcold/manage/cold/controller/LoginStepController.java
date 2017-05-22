@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.controller;
 
 import com.smartcold.manage.cold.dao.olddb.*;
+import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.dto.UploadFileEntity;
 import com.smartcold.manage.cold.entity.olddb.*;
 import com.smartcold.manage.cold.service.FtpService;
@@ -47,7 +48,7 @@ public class LoginStepController {
 
     @RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
     @ResponseBody
-    public void attestationRdc( MultipartFile authfile0,
+    public Object attestationRdc( MultipartFile authfile0,
                                 @RequestParam(value = "rdcId", required = false) Integer rdcId,
                                 @RequestParam(value = "roleType", required = false) Integer roleType,
                                 HttpSession session) {
@@ -74,6 +75,7 @@ public class LoginStepController {
                         FileDataMapper.CATEGORY_AUTH_PIC, rdcEntity.getId(), fileName);
                 if(user!=null){arrangeFile.setDescription(user.getType()+"");}//标志为服务商
                 fileDataDao.saveFileData(arrangeFile);
+                return new ResultDto(1,"尊敬的用户，您已提交成功，受理编号为<span id=\"proNo\">"+filename+"</span>。") ;
             }		// 上传认证后更改冷库审核状态为待审核
         }else {
             MessageRecord messageRecord = new MessageRecord();
@@ -83,6 +85,8 @@ public class LoginStepController {
             messageRecord.setMessage(user.getUsername()+"请求冷库认证");
             messageRecord.setAddTime(new Date());
             messageRecordMapping.insertMessageRecord(messageRecord);
+            return new ResultDto(2,"您的申请已提交成功！等待冷库主审核！");
         }
+        return new ResultDto(0,"");
     }
 }

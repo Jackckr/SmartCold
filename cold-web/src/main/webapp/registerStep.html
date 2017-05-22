@@ -153,7 +153,7 @@
                                 <ul>4、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</ul>
                             </middle>
                         </div>
-                        <div style="height: 270px;">
+                        <div style="height: 270px;" id="picPut">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"
                                  style="position:relative;top: 100px;bottom: 100px;left: 50px">
                                 <button class="btn btn-success" ngf-select="addAuthFiles($files)" type="file"
@@ -179,7 +179,7 @@
                     </div>
                 </div>
 
-                <div class="addRdc black">
+                <!--<div class="addRdc black">
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-1">
                             <form class="form-horizontal" name="rdcForm">
@@ -561,7 +561,7 @@
                         <button class="btn btn-primary mybtn" ng-click="submit()" style="width: 150px" ng-disabled="isDisabled">提交</button>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 
@@ -807,6 +807,11 @@
         var roleType="";
         $("p[class=btn_p],#searchRdc").click(function () {
             roleType = $(this).attr("val");
+            if(roleType==0){
+                $("#picPut").attr("style","height: 270px;display: block");
+            }else {
+                $("#picPut").attr("style","height: 270px;display: none");
+            }
             var words = $("#rdcName").val();
             $.ajax({
                 type: "POST",
@@ -938,7 +943,6 @@
                     alert("请上传冷库认证图片再提交!");
                 }
             }
-
         });
 </script>
 </body>
