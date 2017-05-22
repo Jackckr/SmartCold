@@ -17,6 +17,10 @@ public interface TempWarningService {
 	List<ColdStorageSetEntity> getAllMonitorTempSet();
 	
 	//2.获得最大温度dev
-	ItemValue getMAITempData(int tid,int typpe,String deviceid,String starttime,String endtime);
+	ItemValue getMAITempData(int oid,int typpe,String deviceid,String starttime,String endtime);
+	//3.超温后获得超温时间
+	ItemValue getOverStrtTime(int oid,float mintemp, String deviceid,String starttime,String endtime);
+	
+	List<ItemValue> getOverTempList(int oid,Float mintemp, String deviceid,String starttime,String endtime);
 		
 }

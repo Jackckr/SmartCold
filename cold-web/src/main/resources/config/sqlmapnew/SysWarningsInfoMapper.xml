@@ -5,7 +5,7 @@
 	<insert id="addSyswarningsinfo" parameterType="SysWarningsInfo">
 		INSERT INTO `syswarningsinfo` (
 			`rdcid`,
-			`objid`,
+			`oid`,
 			`type`,
 			`level`,
 			`longtime`,

@@ -7,8 +7,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
-import com.google.gson.JsonArray;
-import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
@@ -28,8 +26,21 @@ import com.smartcold.manage.cold.util.TimeUtil;
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
-	@Autowired
-    private SysWarningsInfoMapper  sysWarningsInfoMapper;
+
+	
+	/**
+	 * 每天凌晨1:30点触发
+	 * Task:刪除临时任务
+	 * 重置dev
+	 */
+	@Scheduled(cron = "0 10 1 * * ?")
+	public void delTempTask() {
+		System.err.println("清除任务===============================");
+		System.err.println("清除任务："+JSONArray.toJSONString(QuartzManager.getTempListen()));
+		QuartzManager.shutdownJobs();
+		System.err.println("清除任务===============================");
+	}
+	
 	/**
 	 * 单任务模式
 	 * 检查温度报警
@@ -37,8 +48,9 @@ public class WarningTaskService  {
 	 * 定时定点监听
 	 * 1.查询当前冷库的基准温度，计算max min 临界值时间温度 
 	*/
-	@Scheduled(cron="0/30 * * * * ?")
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkData() {
+		 long cutttTime=System.currentTimeMillis();
 		System.err.println(JSONArray.toJSONString(QuartzManager.getTempListen()));
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(TimeUtil.getBeforeMinute(30));
@@ -46,61 +58,55 @@ public class WarningTaskService  {
 		int key=0;float baseTemp=0;
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
 			key=colditem.getId(); baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;//基线温度
-			ItemValue minTempData = this.tempWarningServer.getMAITempData(key, 1, colditem.getDeviceid(),starttime, endtime);//升溫后最小值
-			if(minTempData==null){continue;	}//故障  没时间
+			ItemValue maxTempData = this.tempWarningServer.getMAITempData(key, 0, colditem.getDeviceid(),starttime, endtime);//升溫后最小值
+			if(maxTempData==null){continue;	}//故障  没数据
+			ItemValue minTempData = this.tempWarningServer.getMAITempData(key, 1,TimeUtil.getDateTime(maxTempData.getAddtime()), starttime, endtime);
 			ScheduleJob job = QuartzManager.getJob(key);
-			if(minTempData.getValue()-baseTemp>0){//最低温度超过警戒
-				ItemValue maxTempData = this.tempWarningServer.getMAITempData(key, 0, colditem.getDeviceid(), starttime, endtime);
-				if(job==null){
-					 long croStartTime=System.currentTimeMillis();
-					 double diff= minTempData.getValue()-baseTemp;
-					 if(diff>8){ 
-						 croStartTime=croStartTime+3600000;//延迟一个小时
-					  }else{
-						  croStartTime=croStartTime+14400000;//4个小时
-					  }
-				   	  String jobName=croStartTime+"_job";
-				      job = new ScheduleJob(key,"MY_JOBGROUP_NAME", jobName, croStartTime);
-					  job.setTask(diff>8);
-					  job.setColdStorageSetEntity(colditem);
-            		  job.setMaxval(maxTempData.getValue());
-            		  job.setMinval(minTempData.getValue());
-//            		  job.setWarcount(1);
-            		  job.setEndTime(minTempData.getAddtime());//
-            		  job.setStartTime(maxTempData.getAddtime());
-            		  QuartzManager.upJob(key,  job);// 
-				}else{
+		    double	lastminval= minTempData.getValue()-baseTemp;
+			if(lastminval<0){//超温后温度下降正常 移除超温监听
+				if(job!=null&&job.getMaxval()-baseTemp<8){
+					  QuartzManager.removeJob(key);
+				}else{//之前出现过超温  立即检测
+					 long croStartTime=cutttTime+60000;
 					 job.setMaxval(maxTempData.getValue());
-					 long minuteBetween = TimeUtil.minuteBetween(minTempData.getAddtime(), job.getStartTime());
-					 if(job.getMaxval()>8){//&&minuteBetween>60
-						 if(minuteBetween>60){
-							 long croStartTime=System.currentTimeMillis()+60000;
-							 job.setCroStartTime(croStartTime);
-							 job.setTask(true);
-							 QuartzManager.upJob(key,  job);// 
-						 }
-					 }else{
-//						 job.setWarcount(job.getWarcount()+1);
-//						 if(job.getWarcount()<6){ job.setTask(false);}else{job.setTask(true); }
-//						 job.setCroStartTime(System.currentTimeMillis()+14400000);//4个小时
-//						 QuartzManager.upJob(key,  job);// 
-					 }
+					 job.setCroStartTime(croStartTime);
+					 job.setEndTime(minTempData.getAddtime());
+					 job.setTask(true);
+					 QuartzManager.upJob(key,  job);// 
 				}
-			}else{
+			}else{//持续升温中
 				if(job!=null){
-					 if(job.getMaxval()>8){
-						 long croStartTime=System.currentTimeMillis()+60000;//一分钟后执行
-						 job.setEndTime(minTempData.getAddtime());
-						 job.setCroStartTime(croStartTime);
-						 QuartzManager.upJob(key,  job);// 
-					 }else{
-						 QuartzManager.removeJob(key);
-					 }
+					job.setMaxval(maxTempData.getValue());//只能升级--不做降级
+					job.setMinval(minTempData.getValue());
+					long downMint = TimeUtil.getDownMint(job.getCroStartTime());
+		    		System.err.println(job.getName() +"剩余时间："+downMint);
+		    		if(downMint>10){//
+		    			int level = job.getLevel();
+		    			if(level<3){
+		    				job.setWarcount(job.getWarcount()+1);
+		    				if(job.getWarcount()>6){job.setTask(true);}
+		    			}else{
+		    				job.setTask(true);
+		    			}
+		    			QuartzManager.upJob(key, job);
+		    		}
+				}else{
+				   double diffTemp=   	maxTempData.getValue()-baseTemp;//
+				   int lavel=  (int) (diffTemp/2);
+				   long croStartTime=cutttTime+(lavel>3 ?3600000:14400000);//1个小时后执行 ：4个小时后执行
+				   ItemValue overStrtTime = this.tempWarningServer.getOverStrtTime(key, baseTemp, colditem.getDeviceid(), starttime, TimeUtil.getDateTime(maxTempData.getAddtime()));
+				   String jobName=croStartTime+"_job";//延迟一个小时执行
+				   job = new ScheduleJob(key,1,baseTemp,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);
+				   job.setStartTime(overStrtTime.getAddtime());
+				   job.setTask(lavel>3);
+				   job.setColdStorageSetEntity(colditem);
+           		   job.setMaxval(maxTempData.getValue());
+           		   job.setMinval(minTempData.getValue());
+           		   QuartzManager.addJob(key,  job);// 
 				}
 			}
 		}
-	}
-	
+	}	
 	/**
 	 * 单任务模式
 	 * 检查温度报警

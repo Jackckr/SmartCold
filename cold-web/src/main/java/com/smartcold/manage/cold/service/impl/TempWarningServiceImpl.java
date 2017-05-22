@@ -29,11 +29,20 @@ public class TempWarningServiceImpl  implements TempWarningService  {
 	}
 
 	@Override
-	public ItemValue getMAITempData(int tid, int typpe,String deviceid, String starttime, String endtime) {
-		String mv=typpe==0?" MAX(`value`) ":"MIN(`value`) ";String 
-		table=StringUtil.isnotNull(deviceid)?"`storagedatacollection`":" `temp`";
-	    return	this.tempWarningMapper.getMAITempData(table,mv, deviceid,tid,  starttime, endtime);
+	public ItemValue getOverStrtTime(int oid,  float mintemp,String deviceid, String starttime, String endtime) {
+		return	this.tempWarningMapper.getOverStrtTime(StringUtil.isnotNull(deviceid)?"storagedatacollection":"temp", deviceid, oid, mintemp, starttime, endtime);
 	}
+	
+	@Override
+	public ItemValue getMAITempData(int oid, int typpe,String deviceid, String starttime, String endtime) {
+	    return	this.tempWarningMapper.getMAITempData(StringUtil.isnotNull(deviceid)?"storagedatacollection":"temp",typpe==0?" MAX(`value`) ":" MIN(`value`) ", deviceid,oid,  starttime, endtime);
+	}
+
+	@Override
+	public List<ItemValue> getOverTempList(int oid, Float mintemp,String deviceid, String starttime, String endtime) {
+		  return	this.tempWarningMapper.getOverTempList(StringUtil.isnotNull(deviceid)?"storagedatacollection":"temp", deviceid,oid, mintemp, starttime, endtime);
+	}
+
 
 	
 	

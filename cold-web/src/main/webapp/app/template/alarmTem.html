@@ -1,60 +1,33 @@
 <div class="page-header">
   &nbsp;&nbsp;温度告警
 </div>
-<div style="margin: 0 15px;">
-	<select class="form-control" style="width: 30%;display: inline-block;">
-		<option>6小时</option>
-		<option>一天</option>
-		<option>两天</option>
-		<option>三天</option>
-		<option>七天</option>
-	</select>
-</div>
+<!-- <div style="margin: 0 15px;"> -->
+<!-- 	<select class="form-control" style="width: 30%;display: inline-block;"> -->
+<!-- 		<option>6小时</option> -->
+<!-- 		<option>一天</option> -->
+<!-- 		<option>两天</option> -->
+<!-- 		<option>三天</option> -->
+<!-- 		<option>七天</option> -->
+<!-- 	</select> -->
+<!-- </div> -->
 <div class="box baoyang_bg" style="color:#333">
 	<div id="tem_div" style="height:300px;"></div>
 	<div id="timeline">
-		<div class="timeline-block"><!-- time  start -->
+		<div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
 			<div class="timeline-txt">
-				2017-05-17 22:21
+				{{obj.time}}
 			</div>
-			<div class="timeline-dot"></div>
+			<div class="timeline-dot" style="{{obj.style}}"></div>
 			<div class="timeline-content">
 				<div class="timeline-title">
-					<h4 class="pull-left">HTML5+CSS3实现的响应式垂直时间轴</h4>
-					<h4 class="pull-right"><button class="show-more btn btn-info btn-xs">详细</button></h4>
+					<h4 class="pull-left">{{obj.msg}}</h4>
+					<h4 ng-if="obj.count" class="pull-right"><button class="show-more btn btn-info btn-xs">详细</button></h4>
 				</div>
-				<div class="timeline-content-more">我们在网上购物提交订单时，在网页上一般会有一个选择数量的控件，要求买家选择购买商品的件数，开发者会把该控件做成可以通过点击实现加减等微调操作，当然也可以直接输入数字件数。本文将介绍常见的几种使用spinner数字微调器来实现数字加减的功能的方法
-				</div>
-			</div>
-		</div><!-- time  end -->
-		<div class="timeline-block"><!-- time  start -->
-			<div class="timeline-txt">
-				2017-05-17 22:21
-			</div>
-			<div class="timeline-dot"></div>
-			<div class="timeline-content">
-				<div class="timeline-title">
-					<h4 class="pull-left">HTML5+CSS3实现的响应式垂直时间轴</h4>
-					<h4 class="pull-right"><button class="show-more btn btn-info btn-xs">详细</button></h4>
-				</div>
-				<div class="timeline-content-more">我们在网上购物提交订单时，在网页上一般会有一个选择数量的控件，要求买家选择购买商品的件数，开发者会把该控件做成可以通过点击实现加减等微调操作，当然也可以直接输入数字件数。本文将介绍常见的几种使用spinner数字微调器来实现数字加减的功能的方法
+				<div class="timeline-content-more">
+				   
 				</div>
 			</div>
-		</div><!-- time  end -->
-		<div class="timeline-block"><!-- time  start -->
-			<div class="timeline-txt">
-				2017-05-17 22:21
-			</div>
-			<div class="timeline-dot"></div>
-			<div class="timeline-content">
-				<div class="timeline-title">
-					<h4 class="pull-left">HTML5+CSS3实现的响应式垂直时间轴</h4>
-					<h4 class="pull-right"><button class="show-more btn btn-info btn-xs">详细</button></h4>
-				</div>
-				<div class="timeline-content-more">我们在网上购物提交订单时，在网页上一般会有一个选择数量的控件，要求买家选择购买商品的件数，开发者会把该控件做成可以通过点击实现加减等微调操作，当然也可以直接输入数字件数。本文将介绍常见的几种使用spinner数字微调器来实现数字加减的功能的方法
-				</div>
-			</div>
-		</div><!-- time  end -->
+		</div>
 	</div>
 </div>
 <script src="../../assets/js/echarts-all.js"></script>

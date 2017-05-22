@@ -19,17 +19,26 @@
 	</select>
 	
 	<select id="getMAITempData" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
-	     SELECT `id`, ${mv} `value` ,`addtime`  FROM ${table} where 
+	     SELECT `id`, ${mv} `value` , <if test="table=='storagedatacollection'">`time`</if> `addtime`  FROM `${table}` where 
 	     <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
-	     <if test="deviceid==null or deviceid==''"> `oid` = #{cid} and </if>
+	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>
 	      `key` ='Temp' and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
 	</select>	
+
+	<select id="getOverStrtTime" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
+	     SELECT MIN(`id`) id, `value`  ,<if test="table=='storagedatacollection'">`time`</if> `addtime` FROM ${table} where 
+	     <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
+	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>
+	     and `value`>#{minTemp} and  `key` ='Temp'  and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
+	</select>	
 	
-	
-	
-	<select id="getTolTempByDevId" parameterType="map" resultType="Integer">
-	     SELECT count(*) cont FROM `storagedatacollection`  where `deviceid` =#{deviceid} and `key` ='Temp' and `addtime`>#{starttime} and `addtime` &lt;#{endtime}; 
-	</select>
+	<select id="getOverTempList" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
+	     SELECT `id`,  `value` ,<if test="table=='storagedatacollection'">`time`</if> `addtime` FROM ${table} where 
+	     <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
+	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>
+	     <if test="minTemp!=null ">  `value`>#{minTemp} and</if>
+	       `key` ='Temp'  and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
+	</select>	
 	
 	
 	<select id="getOverTempByDevId" parameterType="map" resultType="StorageKeyValue" >

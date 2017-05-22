@@ -27,6 +27,8 @@ public class TimeUtil {
 	public static String  getFormatDate(Date date){return	TimeUtil.datefm.format(date);}
 	
 	
+	
+	
 	public static Long getLongtime(){
 		return Long.parseLong( (System.currentTimeMillis()+"").substring(0, 10));
 	}
@@ -38,6 +40,35 @@ public class TimeUtil {
 		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
 	}
 
+	
+	/**
+	 *时间差(分钟)
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static long minuteBetween(Long start) {
+		try {
+			   return (new Date().getTime()-start)/60000;//除以1000是为了转换成秒
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	
+	/**
+	 * 获得剩余分钟数
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static long getDownMint(Long excute) {
+		try {
+			   return (excute-new Date().getTime())/60000;//除以1000是为了转换成秒
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+	
 	/**
 	 * 获得两个时间差(秒)
 	 * @param start
@@ -51,6 +82,7 @@ public class TimeUtil {
 			return -1;
 		}
 	}
+
 
 	/**
 	 * 获得两个时间差(分钟)
@@ -140,6 +172,18 @@ public class TimeUtil {
 		}  
         return null;
     } 
+    
+    public static Date  stringToDate(String datetime){
+    	Date date = new Date();
+        try {
+            date = dateFormat.parse(datetime);
+        } catch (ParseException e) {
+            logger.error("日期转换出错", e);
+        }
+        return date;
+    	
+    
+    }
     /**
      * String转Date
      *
@@ -276,8 +320,6 @@ public class TimeUtil {
 		return datefm.format(c.getTime())+" 23:59:59";
 	}
 	
-	public static void main(String[] args) {
-		System.err.println(getBeforeMonthTime(1));
-	}
+	
 	
 }

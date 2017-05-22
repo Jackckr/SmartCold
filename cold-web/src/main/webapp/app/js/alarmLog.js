@@ -90,79 +90,109 @@ coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
 coldWeb.controller('alarmTem', function($rootScope, $scope, $http,$timeout) {
 	 //根据rdcid查询该rdc的报警信息
 	$(".mainHeight").height( $(".content-wrapper").height());
+	 $scope.tempwarLog=[];
+	 var myChart = echarts.init(document.getElementById('tem_div'));
 	$scope.initData=function(){
-		$http.get('', {  params: { "rdcId": null  } }).success(function (data) {
-
+		var oids=""; angular.forEach($rootScope.mystorages,function(storage){ oids+=storage.id+",";  });
+		oids=oids.substr(0,oids.length-1);
+		$http.get('i/AlarmController/getOverTempAnalysis', {  params: { "oids": oids  } }).success(function (data) {
+			 $scope.tempwarLog=[];
+           if(data.success){
+        	 var datalist=  data.entity,xAxis=[],count=[],time=[];
+        	 angular.forEach(datalist,function(item,i){
+        		 xAxis.push(i); 
+        		 time.push(item[0]);
+        		 count.push(item[1]);
+        		 if(item[1]>0){
+        			 var msg=new Object();
+        			 msg.time=i;
+        			 msg.style="background:#ED3F1D";
+        			 msg.count=item[1];
+        			 msg.msg="当前所有冷库累计"+item[1]+"次告警,累计时长："+item[0]+"分钟";
+        			 $scope.tempwarLog.push(msg);
+        		 }
+        	 });
+        	 if( $scope.tempwarLog.length==0){
+    			 var msg=new Object();
+    			 msg.time=time[7];
+    			 msg.msg="暂无告警信息";
+    			 msg.count=0;
+    			 $scope.tempwarLog.push(msg);
+    		 }
+        	 $scope.dwechar(xAxis, count, time); 
+           }
 		});
-	};
-	var myChart = echarts.init(document.getElementById('tem_div'));
+	}; 
+	  
+	
+	  $scope.dwechar=function(xAxis,count,time){
+		  
+		  // 指定图表的配置项和数据
+		    var option = {
+		    		legend: { data:['告警次数','告警时长'] },
+		    	    tooltip: {  trigger: 'axis', axisPointer: { type: 'cross', crossStyle: { color: '#999'  }}  },
+		    	    xAxis: [
+		    	        {
+		    	            type: 'category',
+		    	            axisPointer: {  type: 'shadow' },
+		    	            data: xAxis
+		    	        }
+		    	    ],
+		    	    yAxis: [
+		    	        {
+		    	            type: 'value',
+		    	            name: '次数/次',
+		    	            min: 0,max: 250,interval: 50,
+		    	            axisLabel: { formatter: '{value}' }
+		    	        },
+		    	        {
+		    	            type: 'value',
+		    	            name: '时长/min',
+		    	            min: 0,
+		    	            max: 25,
+		    	            interval: 5,
+		    	            axisLabel: {
+		    	                formatter: '{value}'
+		    	            }
+		    	        }
+		    	    ],
+		    	    plotOptions: {
+		                column: {
+		                    pointPadding: 0.2,
+		                    borderWidth: 0
+		                }
+		            },
+		    	    series: [
+		    	        {
+		    	            name:'告警次数',
+		    	            type:'bar',
+		    	            data:count
+		    	        },
+		    	        {
+		    	            name:'告警时长',
+		    	            type:'line',
+		    	            yAxisIndex: 1,
+		    	            data:time
+		    	        }
+		    	    ]
+		    	};
 
-    // 指定图表的配置项和数据
-    var option = {
-//		    backgroundColor:'#f2f2e6',
-    	    tooltip: {
-    	        trigger: 'axis',
-    	        axisPointer: {
-    	            type: 'cross',
-    	            crossStyle: {
-    	                color: '#999'
-    	            }
-    	        }
-    	    },
-    	    legend: {
-    	        data:['次数','时长']
-    	    },
-    	    xAxis: [
-    	        {
-    	            type: 'category',
-    	            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-    	            axisPointer: {
-    	                type: 'shadow'
-    	            }
-    	        }
-    	    ],
-    	    yAxis: [
-    	        {
-    	            type: 'value',
-    	            name: '次数/次',
-    	            min: 0,
-    	            max: 250,
-    	            interval: 50,
-    	            axisLabel: {
-    	                formatter: '{value}'
-    	            }
-    	        },
-    	        {
-    	            type: 'value',
-    	            name: '时长/min',
-    	            min: 0,
-    	            max: 25,
-    	            interval: 5,
-    	            axisLabel: {
-    	                formatter: '{value}'
-    	            }
-    	        }
-    	    ],
-    	    series: [
-    	        {
-    	            name:'次数',
-    	            type:'bar',
-    	            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-    	        },
-    	        {
-    	            name:'时长',
-    	            type:'line',
-    	            yAxisIndex: 1,
-    	            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-    	        }
-    	    ]
-    	};
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+		    // 使用刚指定的配置项和数据显示图表。
+		    myChart.setOption(option);
+		  
+		  
+	  }
+	  
+	
+	  $scope.changeStorages=function(){
+		   if($rootScope.mystorages!=undefined){
+			   $scope.initData();
+		   }
+	    };
+	
+	  $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
+  
     window.onresize = myChart.resize;
-    $(".show-more").click(function(){
-    	$(this).parents(".timeline-title").next(".timeline-content-more").toggle()
-    })
+   // $(".show-more").click(function(){	$(this).parents(".timeline-title").next(".timeline-content-more").toggle(); })
 });
 

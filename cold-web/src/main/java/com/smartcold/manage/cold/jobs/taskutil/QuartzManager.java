@@ -100,7 +100,7 @@ public class QuartzManager {
                 sched.resumeTrigger(triggerKey);    // 按新的trigger重新设置job执行 
             }    
         } catch (Exception e) {    
-            throw new RuntimeException(e);    
+            System.err.println(e.getMessage());;    
         }    
     }    
     
@@ -231,9 +231,9 @@ public class QuartzManager {
     	QuartzManager.tempListen.remove(key);
     	QuartzManager.tempListen.put(key, job);
     	if(job.isTask()){
-    		QuartzManager.modifyJobTime(job.getName(),CronExpConversion.getQuartzTime(job.getCroStartTime()));
-    	}else{
     		QuartzManager.removeJob(job.getName());
+    		QuartzManager.addJob(key,job.getName(), QuartzJobFactory.class, job.getCroStartTime());
+    		QuartzManager.modifyJobTime(job.getName(),CronExpConversion.getQuartzTime(job.getCroStartTime()));
     	}
     }
     

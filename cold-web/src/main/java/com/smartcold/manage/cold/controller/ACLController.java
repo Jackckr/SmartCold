@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.manage.cold.entity.newdb.ACLTreeNode;
 import com.smartcold.manage.cold.service.ACLService;
 
+/**
+ * 权限控制类
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping(value = "/acl")
 public class ACLController extends BaseController {

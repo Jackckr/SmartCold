@@ -9,6 +9,18 @@ public class ItemValue {
 	private double value;
 
 	private Date addtime;
+	
+	
+	public ItemValue() {
+		super();
+	}
+
+	public ItemValue(int id, double value, Date addtime) {
+		super();
+		this.id = id;
+		this.value = value;
+		this.addtime = addtime;
+	}
 
 	public int getId() {
 		return id;

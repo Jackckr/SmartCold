@@ -54,7 +54,7 @@ public class WarningController extends BaseController {
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> getWarncoldAnalysis(Integer rdcId) {
 		try {
-			if (rdcId == null) { return ResponseData.newFailure("非法访问！"); }
+			if (rdcId == null) { return ResponseData.newFailure(); }
 			HashMap<String, Object> allDataMap = new HashMap<String, Object>();
 			String stTime = TimeUtil.getBeginDay()+" 00:00:00";String edTime = TimeUtil.getDateTime();//当月起止时间
 			String lstTime = TimeUtil.getBeforeMonthTime(1);String ledTime =TimeUtil.getEndMonthTime(1);//上月起止时间
@@ -68,4 +68,7 @@ public class WarningController extends BaseController {
 			return ResponseData.newFailure("查询错误！请稍后重试！");
 		}
 	}
+
+	
+
 }
