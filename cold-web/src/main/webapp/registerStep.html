@@ -677,7 +677,7 @@
         $.ajax({
             type : "POST",
             /*url : "http://liankur.com/" + '/i/user/getVerCode',*/
-            url : "http://localhost:8081/" + 'i/user/getVerCode',
+            url : "http://localhost:8080/" + 'i/user/getVerCode',
             data : {
                 key : victdata.key,
                 reg : window.location.pathname,
@@ -778,7 +778,7 @@
         }else{
             $(me).text("注册中...");
             $(me).data("isLoading", true);
-            if(!victdata.userName&&victdata.victpwd&&victdata.victyzm){
+            if(!victdata.userName&&!victdata.victpwd&&victdata.victyzm){
                 $.ajax({
                     type:"POST",
                     url:"/i/user/signup",
