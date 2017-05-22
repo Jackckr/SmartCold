@@ -101,7 +101,7 @@
 				</a>
 			</div>
 			<div class="grid_kid">
-				<a href="view/cold360.html">
+				<a href="JavaScript:;" onclick="checkUserType()">
 					<i class="iconfont greenI">&#xe66c;</i>
 					<p class="info">冷库360</p>					
 				</a>
@@ -178,15 +178,17 @@
     <script type="text/javascript" src="com/js/common.js"></script>
     <script type="text/javascript" src="app/js/home.js"></script>
     <script type="text/javascript">
-    	/* function checkUserType(){//gds
+    	 function checkUserType(){//gds
 			if(user == null){
 				location.href = "view/login.html"
-			}else if(user.roleid==undefined ){
-				alert("您的账号还没有认证，不能登录冷库360。 请到链库网主站进行认证~")
-			}else{
+			}else if(user.type==1 ){//货主--温度版
+				location.href = "temp/cold360.html"
+			}else if(user.type==2 ){//维修商--维修版
+				location.href = "maintaince/cold360.html"
+			}else{//库主--360所有版本 
 				location.href = "view/cold360.html"
 			}
-		} */
+		} 
     </script>
 </body>
 </html>
