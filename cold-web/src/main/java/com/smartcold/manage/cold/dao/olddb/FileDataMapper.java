@@ -38,4 +38,6 @@ public interface FileDataMapper {
 	int deleteByBelongIdAndCategory(@Param("belongid")int belongid, @Param("category")String category);
 
 	int deleteById(@Param("id") Integer id);
+
+	FileDataEntity findByName(@Param("name") String name);
 }

@@ -58,16 +58,10 @@ public class LoginStepController {
 
         if (roleType==0){
             MultipartFile authfile = authfile0;
-            String filename = authfile.getOriginalFilename();
-            ColdStorageCertification coldStorageCertification = new ColdStorageCertification();
-            coldStorageCertification.setUid(user.getId());
-            coldStorageCertification.setRdcId(rdcId);
-            coldStorageCertification.setCertFile(filename);
-            coldStorageCertification.setAddTime(new Date());
-            coldStorageCertificationMapping.insertCertification(coldStorageCertification);
-            Rdc rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
-            String dir = String.format("%s/rdc/%s", baseDir, rdcId);
+
             if (authfile != null) {
+                Rdc rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
+                String dir = String.format("%s/rdc/%s", baseDir, rdcId);
                 String fileName = String.format("rdc%s_%s_%s.%s", rdcId, user.getId(), new Date().getTime(), "jpg");
                 UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
                 ftpService.uploadFile(uploadFileEntity);
@@ -75,7 +69,15 @@ public class LoginStepController {
                         FileDataMapper.CATEGORY_AUTH_PIC, rdcEntity.getId(), fileName);
                 if(user!=null){arrangeFile.setDescription(user.getType()+"");}//标志为服务商
                 fileDataDao.saveFileData(arrangeFile);
-                return new ResultDto(1,"尊敬的用户，您已提交成功，受理编号为<span id=\"proNo\">"+filename+"</span>。") ;
+                FileDataEntity fileDataEntity = fileDataDao.findByName(fileName);
+
+                ColdStorageCertification coldStorageCertification = new ColdStorageCertification();
+                coldStorageCertification.setUid(user.getId());
+                coldStorageCertification.setRdcId(rdcId);
+                coldStorageCertification.setCertFile(fileDataEntity.getId()+"");
+                coldStorageCertification.setAddTime(new Date());
+                coldStorageCertificationMapping.insertCertification(coldStorageCertification);
+                return new ResultDto(1,"尊敬的用户，您已提交成功，受理编号为<span id=\"proNo\">"+fileDataEntity.getId()+"</span>。") ;
             }		// 上传认证后更改冷库审核状态为待审核
         }else {
             MessageRecord messageRecord = new MessageRecord();

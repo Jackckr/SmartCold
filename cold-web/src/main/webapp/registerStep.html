@@ -572,7 +572,7 @@
                 <p class="apply-finish-msg">恭喜您，提交成功！</p>
             </div>
             <div class="apply-finish-footer">
-                <p>
+                <p id="auCode">
                     尊敬的用户，您已提交成功，受理编号为<span id="proNo">LS23423432</span>。
                 </p>
                 <p class="btn_p"><a href="login.html" class="btn btn-success">返回登录页</a>       </p>
@@ -937,7 +937,7 @@
                         data: data
                     }).then(function (resp) {
                         $scope.isDisabled = false;
-                        alert("提交成功,等待审核");
+                        $("#auCode").html(resp.data.message);
                     });
                 } else {
                     alert("请上传冷库认证图片再提交!");

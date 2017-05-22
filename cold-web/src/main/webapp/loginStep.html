@@ -673,8 +673,7 @@
                     data: data
                 }).then(function (resp) {
                     $scope.isDisabled = false;
-                    $("#auCode").html(resp);
-                    alert("提交成功,等待审核");
+                    $("#auCode").html(resp.data.message);
                 });
             } else {
                 alert("请上传冷库认证图片再提交!");
