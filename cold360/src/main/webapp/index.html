@@ -82,7 +82,14 @@
 						if (window.location.hash != "") {
 							backUrl = window.location.hash.substring(1);
 						} else {
-							backUrl = "view/cold360.html";
+//							backUrl = "view/cold360.html";
+                            if(userdata.type==1 ){//货主--温度版
+                                backUrl = "temp/cold360.html"
+                            }else if(userdata.type==2 ){//维修商--维修版
+                                backUrl = "maintaince/cold360.html"
+                            }else{//库主--360所有版本
+                                backUrl = "view/cold360.html"
+                            }
 						}
 						window.location.href = backUrl;
 						window.Event.returnValue = false;

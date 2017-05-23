@@ -138,7 +138,10 @@
       role = #{role,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!-- ourself -->
+    <update id="updateTypeById">
+        UPDATE `user` SET `type`=#{type} where `id`=#{id}
+    </update>
+    <!-- ourself -->
   <!-- 通过用户名与密码查找用户 -->
   <select id="findUserByNAndP" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

@@ -128,13 +128,12 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
-	public Object signup(HttpServletRequest request,String username, String password,String telephone,String signUpCode,Integer type) {
+	public Object signup(HttpServletRequest request,String username, String password,String telephone,String signUpCode) {
 		try {
-			if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)||type==null) {
+			if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)) {
 				return  ResponseData.newFailure("请输入必填信息！");
 			}
-			UserEntity user = new UserEntity();   
-			user.setType(type);
+			UserEntity user = new UserEntity();
 			user.setUsername(username);
 			user.setPassword(EncodeUtil.encodeByMD5(password));
 			user.setTelephone(telephone);

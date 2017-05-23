@@ -11,7 +11,10 @@
 		FROM `filedata` WHERE `belongid` = #{belongid} AND `category` = #{category}
 		ORDER BY id DESC
 	</select>
-	
+	<select id="findByName" resultType="com.smartcold.manage.cold.entity.olddb.FileDataEntity">
+		SELECT * FROM `filedata` WHERE `name`=#{name}
+	</select>
+
 	<insert id="saveFileData" parameterType="FileDataEntity">
 		INSERT into `filedata`(`type`, `location`, `category`, `belongid`, `name`, `description`) values
 		(#{type}, #{location}, #{category}, #{belongid}, #{name}, #{description})

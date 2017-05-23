@@ -1,21 +1,18 @@
 package com.smartcold.manage.cold.controller;
 
-import com.smartcold.manage.cold.dao.olddb.RdcMapper;
-import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
-import com.smartcold.manage.cold.dao.olddb.RoleUserMapper;
-import com.smartcold.manage.cold.entity.olddb.RdcUser;
-import com.smartcold.manage.cold.entity.olddb.RoleUser;
-import com.smartcold.manage.cold.entity.olddb.UserEntity;
+import com.smartcold.manage.cold.dao.olddb.*;
+import com.smartcold.manage.cold.dto.ResultDto;
+import com.smartcold.manage.cold.dto.UploadFileEntity;
+import com.smartcold.manage.cold.entity.olddb.*;
+import com.smartcold.manage.cold.service.FtpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -25,33 +22,73 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/loginStep")
 public class LoginStepController {
+    private static String baseDir = "picture";
     @Resource
     private RdcMapper rdcMapper;
     @Resource
-    private RoleUserMapper roleUserMapper;
+    private UserMapper userMapper;
     @Resource
-    private RdcUserMapper rdcUserMapper;
+    private FtpService ftpService;
+    @Resource
+    private FileDataMapper fileDataDao;
+    @Resource
+    private MessageRecordMapping messageRecordMapping;
+    @Resource
+    private ColdStorageCertificationMapping coldStorageCertificationMapping;
     @RequestMapping(value = "/getAllRdc",method = RequestMethod.POST)
     @ResponseBody
-    public Object getAllRdc() {
-        return rdcMapper.getRdcByDate();
+    public Object getAllRdc(String words) {
+        if (words!=null && words.trim().equals("")){
+            words=null;
+        }else if (words!=null && !words.trim().equals("")){
+            words="%"+words+"%";
+        }
+        return rdcMapper.getRdcByDate(words);
     }
 
     @RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
     @ResponseBody
-    public void attestationRdc(@RequestParam(value = "rdcId", required = false) Integer rdcId,
-                                 @RequestParam(value = "roleType", required = false) Integer roleType,
-                                 HttpSession session) {
+    public Object attestationRdc( MultipartFile authfile0,
+                                @RequestParam(value = "rdcId", required = false) Integer rdcId,
+                                @RequestParam(value = "roleType", required = false) Integer roleType,
+                                HttpSession session) {
         UserEntity user = (UserEntity) session.getAttribute("user");
-        RoleUser roleUser = new RoleUser();
-        roleUser.setUserid(user.getId());
-        roleUser.setRoleid(roleType);
-        roleUser.setAddtime(new Date());
-        roleUserMapper.insert(roleUser);
-        RdcUser rdcUser = new RdcUser();
-        rdcUser.setUserid(user.getId());
-        rdcUser.setRdcid(rdcId);
-        rdcUser.setAddtime(new Date());
-        rdcUserMapper.insert(rdcUser);
+        user.setType(roleType);
+        userMapper.updateTypeById(user);
+
+        if (roleType==0){
+            MultipartFile authfile = authfile0;
+
+            if (authfile != null) {
+                Rdc rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
+                String dir = String.format("%s/rdc/%s", baseDir, rdcId);
+                String fileName = String.format("rdc%s_%s_%s.%s", rdcId, user.getId(), new Date().getTime(), "jpg");
+                UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
+                ftpService.uploadFile(uploadFileEntity);
+                FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,
+                        FileDataMapper.CATEGORY_AUTH_PIC, rdcEntity.getId(), fileName);
+                if(user!=null){arrangeFile.setDescription(user.getType()+"");}//标志为服务商
+                fileDataDao.saveFileData(arrangeFile);
+                FileDataEntity fileDataEntity = fileDataDao.findByName(fileName);
+
+                ColdStorageCertification coldStorageCertification = new ColdStorageCertification();
+                coldStorageCertification.setUid(user.getId());
+                coldStorageCertification.setRdcId(rdcId);
+                coldStorageCertification.setCertFile(fileDataEntity.getId()+"");
+                coldStorageCertification.setAddTime(new Date());
+                coldStorageCertificationMapping.insertCertification(coldStorageCertification);
+                return new ResultDto(1,"尊敬的用户，您已提交成功，受理编号为<span id=\"proNo\">"+fileDataEntity.getId()+"</span>。") ;
+            }		// 上传认证后更改冷库审核状态为待审核
+        }else {
+            MessageRecord messageRecord = new MessageRecord();
+            messageRecord.setUid(user.getId());
+            messageRecord.setRdcId(rdcId);
+            messageRecord.setTitle("请求冷库认证");
+            messageRecord.setMessage(user.getUsername()+"请求冷库认证");
+            messageRecord.setAddTime(new Date());
+            messageRecordMapping.insertMessageRecord(messageRecord);
+            return new ResultDto(2,"您的申请已提交成功！等待冷库主审核！");
+        }
+        return new ResultDto(0,"");
     }
 }

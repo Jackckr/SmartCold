@@ -1,6 +1,5 @@
 checkLogin();
-var app = angular.module('app', []);
-app.controller('monitorCooling', function ($scope, $location, $http, $rootScope) {
+app.controller('monitorCooling', function ($scope, $location, $http, $rootScope, userService) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -18,6 +17,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
             $scope.storages = data;
             if (!rootRdcId) {
                 if (window.localStorage.rdcId) {
+                    initAllByRdcId(window.localStorage.rdcId);
                     findByRdcId(window.localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
@@ -26,6 +26,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
                     $scope.initCompressorPressure($scope.rdcId);
                 }
             } else {
+                initAllByRdcId(rootRdcId);
                 findByRdcId(rootRdcId);
             }
         }
@@ -65,6 +66,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope)
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.initCompressorPressure(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 
     $scope.goTempture = function () {

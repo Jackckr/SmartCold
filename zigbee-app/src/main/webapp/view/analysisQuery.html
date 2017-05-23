@@ -123,11 +123,11 @@
 
         <div class="project clearfix">
             <div kval="0" class="default">冷库温度</div>
-            <div kval="1" class="default">冷库电量</div>
-            <div kval="2" class="default">冷库门</div>
-            <div kval="3" class="default">月台门</div>
-            <div kval="4" class="default">压缩机组</div>
-            <div kval="5" class="default">压缩机-排气温度</div>
+            <div kval="1" class="default" ng-hide="user.type==1||user.type==2">冷库电量</div>
+            <div kval="2" class="default" ng-hide="user.type==1||user.type==2">冷库门</div>
+            <div kval="3" class="default" ng-hide="user.type==1||user.type==2">月台门</div>
+            <div kval="4" class="default" ng-hide="user.type==1||user.type==2">压缩机组</div>
+            <div kval="5" class="default" ng-hide="user.type==1||user.type==2">压缩机-排气温度</div>
         </div>
         <p><strong>您所选的项目是：</strong></p>
 

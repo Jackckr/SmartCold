@@ -33,4 +33,6 @@ public interface UserMapper {
     int insertUser(UserEntity user);
     
 	public int existenceUserName(@Param("username")String username);
+
+	void updateTypeById(UserEntity userEntity);
 }

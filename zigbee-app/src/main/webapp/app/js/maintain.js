@@ -1,6 +1,5 @@
 checkLogin();
-var app = angular.module('app', []);
-app.controller('maintain', function ($scope, $location, $http, $timeout, $rootScope) {
+app.controller('maintain', function ($scope, $location, $http, $timeout, $rootScope, userService) {
 	var pageNum =  totalPages = 0;
     $scope.user = window.user;
     $http.defaults.withCredentials = true;
@@ -22,7 +21,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             $scope.storages = data;
             if (!rootRdcId) {
                 if (window.localStorage.rdcId) {
-                	setStorage(window.localStorage.rdcId);
+                	initAllByRdcId(window.localStorage.rdcId);
                     findByRdcId(window.localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
@@ -31,7 +30,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                     $scope.viewStorage($scope.storages[0].id);
                 }
             } else {
-            	setStorage(rootRdcId);
+            	initAllByRdcId(rootRdcId);
                 findByRdcId(rootRdcId);
             }
         }
@@ -79,7 +78,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                 });
             });
         });
-        setStorage(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -114,6 +112,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
         $scope.searchContent = "";
         $scope.alarmTotalCnt = 0;
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
     
     
@@ -684,46 +683,4 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     }
     
     $scope.$watch('rdcId',$scope.initMainit,true);//监听冷库变化
-	  /**
-	     * 权限  
-	     * start
-	     * 
-	     * 
-	    */
-	    function setStorage(rootRdcId) {
-	    	initAllByRdcId = function(rootRdcId){
-		        $rootScope.rdcId = rootRdcId;
-		        $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
-		      		$rootScope.aclml=data.aclml;
-		      		$rootScope.pagstate=[];
-		      		$("body .role_limit").removeClass("role_limit");
-		      		angular.forEach(data.aclml,function(obj,i){ 
-		      			if(obj.acl){
-		      				if(!obj.hasnode){  
-		      					// 技术原因，无法处理
-//				      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
-		      				}
-		      			}else{
-		      				$("#ml_acl"+obj.id).addClass("role_limit");
-		      				$("#ml_acl"+obj.id+" *").addClass("role_limit");
-		      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-		      				$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-		      				if(window.user.type==1){
-		      					$("#ml_acl"+obj.id+" *").addClass("hide");
-			      				$("#ml_acl"+obj.id+" *").addClass("hide");
-		      				}
-		      			}
-		      		});
-		        });
-	    	};
-	    	initAllByRdcId(rootRdcId)
-	    };
-	    
-	    /**
-	     * 权限
-	     * 
-	     * end
-	     * 
-	    */
-
 });
