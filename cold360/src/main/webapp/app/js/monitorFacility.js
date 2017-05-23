@@ -1,6 +1,5 @@
 checkLogin();
-var app = angular.module('app', []);
-app.controller('monitorFacility', function ($scope, $location, $http, $rootScope, $sce) {
+app.controller('monitorFacility', function ($scope, $location, $http, $rootScope, $sce,userService) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -17,6 +16,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
             $scope.storages = data;
             if (!rootRdcId) {
                 if (window.localStorage.rdcId) {
+                    itAllByRdcId(window.localStorage.rdcId);
                     findByRdcId(window.localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
@@ -25,6 +25,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     $scope.viewStorage($scope.storages[0].id);
                 }
             } else {
+                initAllByRdcId(rootRdcId);
                 findByRdcId(rootRdcId)
             }
         }
@@ -62,7 +63,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     $scope.drawDoor($scope.mystorages[i]);
                 }
             }
-            });
+        });
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -84,6 +85,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 
     $scope.goTempture = function () {
@@ -119,28 +121,28 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
 
         $http.get(ER.coldroot + '/i/coldStorageDoor/findByStorageId?storageID=' + storage.id).success(function (data) {
             if (data.length > 0) {
-                var doorId = data[0].id;
-                $http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
-                    params: {
-                        "oid": doorId,
-                        type: 2,
-                        key: 'Switch'
-                    }
-                }).success(function (result) {
-                    var data = [];
-                    for (var i = 0; i < result.length; i++) {
-                        var val = Date.parse(result[i].addtime);
-                        var newDate = new Date(val).getTime();
-                        data.push({
-                            x: newDate,
-                            y: result[i].value
-                        });
-                    }
+                $scope.coldStorageDoors=data;
+                if($scope.coldStorageDoors){
+                    angular.forEach($scope.coldStorageDoors,function(obj,i){
+                        var doorId = obj.id;
+                        $http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
+                            params: {
+                                "oid": doorId,
+                                type: 2,
+                                key: 'Switch'
+                            }
+                        }).success(function (result) {
+                            var data = [];
+                            for (var i = 0; i < result.length; i++) {
+                                var val = Date.parse(result[i].addtime);
+                                var newDate = new Date(val).getTime();
+                                data.push({
+                                    x: newDate,
+                                    y: result[i].value
+                                });
+                            }
 
-                    // 冷库门开关监控
-                    $(function () {
-                        $(document).ready(function () {
-
+                            // 冷库门开关监控
                             Highcharts.setOptions({
                                 global: {
                                     useUTC: false
@@ -148,105 +150,55 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                             });
 
                             var mainId = 'door' + doorId;
-                            if ($scope.swiper < $scope.mystorages.length) {
+                            if ($scope.swiper < $scope.coldStorageDoors.length * $scope.mystorages.length) {
+                                if($scope.coldStorageDoors.length==1){
+                                    $scope.doorName= storage.name
+                                }else{
+                                    $scope.doorName= storage.name+'·'+obj.name
+                                }
                                 var innerHTML = '<div class="swiper-slide">' +
-                                    '<p class="actually">' + storage.name + '</p>' +
+                                    '<p class="actually">' +$scope.doorName+ '</p>' +
                                     '<div id=' + mainId + '></div> ';
                                 $("#chartView").last().append(innerHTML);
                                 $scope.swiper += 1;
                             }
 
                             $('#' + mainId).highcharts({
-                                chart: {
-                                    type: 'column',
-                                    animation: Highcharts.svg, // don't animate in old IE
-                                    marginRight: 10,
-                                    backgroundColor: {
-                                        linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
-                                        stops: [
-                                            [0, 'rgb(210, 214, 222)'],
-                                            [1, 'rgb(210, 214, 222)']
-                                        ]
-                                    },
-                                    borderColor: '#d2d6de',
-                                    borderWidth: 2,
-                                    className: 'dark-container',
-                                    plotBackgroundColor: 'rgba(210, 214, 222, .1)',
-                                    plotBorderColor: '#d2d6de',
-                                    plotBorderWidth: 1
-                                },
-                                title: {
-                                    text: '冷库门开关监控',
-                                    style: {
-                                        fontSize:'0.7rem'
-                                    }
-                                },
-                                xAxis: {
-                                    type: 'datetime',
-                                    tickPixelInterval: 200,
-                                },
+                                chart: {type: 'area'},
+                                title: {text: '冷库门开关监控',style: { fontSize:'0.7rem'}},
+                                xAxis: {type: 'datetime',tickPixelInterval: 200},
                                 yAxis: {
                                     allowDecimals: false,
                                     labels: {
                                         formatter: function () {
-                                            if (this.value === 0) {
-                                                return "关";
-                                            } else if (this.value === 1) {
-                                                return "开";
-                                            }
+                                            return this.value===0?"关":"开";
                                         }
                                     },
-                                    title: {
-                                        text: 'DoorState(0关1开)'
-                                    },
-                                    plotLines: [{
-                                        value: 0,
-                                        width: 1,
-                                        color: '#808080'
-                                    }],
+                                    title: {text: 'DoorState(0关1开)'},
+                                    plotLines: [{value: 0,width: 1,color: '#808080'}],
                                     max: 1,
                                     min: 0,
                                 },
                                 tooltip: {
                                     formatter: function () {
-                                        var state = undefined;
-                                        if (this.y === 1) {
-                                            state = '冷库处于开门状态';
-                                        } else {
-                                            state = '冷库处于关门状态';
-                                        }
-
+                                        var state =this.y === 1? '冷库处于开门状态': '冷库处于关门状态';
                                         return '<b>' + this.series.name + '</b><br/>' +
                                             Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
                                             state;
                                     }
                                 },
-                                legend: {
-                                    enabled: false
-                                },
-                                exporting: {
-                                    enabled: false
-                                },
-                                credits: {
-                                    enabled: false // 禁用版权信息
-                                },
+                                legend: {enabled: false},
+                                exporting: {enabled: false},
+                                credits: {enabled: false },
+                                plotOptions: {  area: {stacking: 'percent',marker: { enabled: false}} },
                                 series: [{
                                     name: 'DoorState',
-                                    pointPadding: 0, //数据点之间的距离值
-                                    groupPadding: 0, //分组之间的距离值
-                                    borderWidth: 0,
-                                    shadow: false,
-                                    pointWidth: 1, //柱子之间的距离值
-                                    data: (function () {
-                                        return data;
-                                    })()
+                                    data: data
                                 }]
                             });
                         });
-
                     });
-
-                });
+                }
             } else {
                 var mainId = 'defalt' + $scope.defaltswiper;
                 if ($scope.swiper < $scope.mystorages.length) {
@@ -279,113 +231,54 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     y: result[i].value
                 });
             }
-
-            $(function () {
-                $(document).ready(function () {
-
-                    Highcharts.setOptions({
-                        global: {
-                            useUTC: false
-                        }
-                    });
-
-                    var mainId = 'platform' + doorId;
-                    if ($scope.swiper < $scope.platformDoors.length) {
-                        var innerHTML = '<div class="swiper-slide">' +
-                            '<p class="actually">' + door.name + '</p>' +
-                            '<div id=' + mainId + '></div> ';
-                        $("#chartView").last().append(innerHTML);
-                        $scope.swiper += 1;
-                    }
-
-                    $('#' + mainId).highcharts({
-                        chart: {
-                            type: 'column',
-                            animation: Highcharts.svg, // don't animate in old IE
-                            marginRight: 10,
-                            backgroundColor: {
-                                linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
-                                stops: [
-                                    [0, 'rgb(210, 214, 222)'],
-                                    [1, 'rgb(210, 214, 222)']
-                                ]
-                            },
-                            borderColor: '#d2d6de',
-                            borderWidth: 2,
-                            className: 'dark-container',
-                            plotBackgroundColor: 'rgba(210, 214, 222, .1)',
-                            plotBorderColor: '#d2d6de',
-                            plotBorderWidth: 1
-                        },
-                        title: {
-                            text: '月台门开关监控'
-                        },
-                        xAxis: {
-                            type: 'datetime',
-                            tickPixelInterval: 200,
-                        },
-                        yAxis: {
-                            allowDecimals: false,
-                            labels: {
-                                formatter: function () {
-                                    if (this.value === 0) {
-                                        return "关";
-                                    } else if (this.value === 1) {
-                                        return "开";
-                                    }
-                                }
-                            },
-                            title: {
-                                text: 'DoorState(0关1开)'
-                            },
-                            plotLines: [{
-                                value: 0,
-                                width: 1,
-                                color: '#808080'
-                            }],
-                            max: 1,
-                            min: 0,
-                        },
-                        tooltip: {
-                            formatter: function () {
-                                var state = undefined;
-                                if (this.y === 1) {
-                                    state = '冷库处于开门状态';
-                                } else {
-                                    state = '冷库处于关门状态';
-                                }
-
-                                return '<b>' + this.series.name + '</b><br/>' +
-                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                                    state;
-                                //Highcharts.numberFormat(this.y, 2);
-                            }
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        exporting: {
-                            enabled: false
-                        },
-                        credits: {
-                            enabled: false // 禁用版权信息
-                        },
-                        series: [{
-                            name: 'DoorState',
-                            pointPadding: 0, //数据点之间的距离值
-                            groupPadding: 0, //分组之间的距离值
-                            borderWidth: 0,
-                            shadow: false,
-                            pointWidth: 1, //柱子之间的距离值
-                            data: (function () {
-                                return data;
-                            })()
-                        }]
-                    });
-                });
-
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
             });
 
+            var mainId = 'platform' + doorId;
+            if ($scope.swiper < $scope.platformDoors.length) {
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">' + door.name + '</p>' +
+                    '<div id=' + mainId + '></div> ';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper += 1;
+            }
+
+            $('#' + mainId).highcharts({
+                chart: {type: 'area'},
+                title: {text: '月台门开关监控'},
+                xAxis: {type: 'datetime',tickPixelInterval: 200 },
+                yAxis: {
+                    allowDecimals: false,
+                    labels: {
+                        formatter: function () {
+                            return this.value===0?"关":"开";
+                        }
+                    },
+                    title: { text: 'DoorState(0关1开)' },
+                    plotLines: [{value: 0,width: 1,color: '#808080'}],
+                    max: 1,
+                    min: 0,
+                },
+                tooltip: {
+                    formatter: function () {
+                        var state =this.y === 1? '月台门于开门状态': '月台门处于关门状态';
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            state;
+                    }
+                },
+                legend: {enabled: false},
+                exporting: {enabled: false},
+                credits: {enabled: false},
+                plotOptions: {  area: {stacking: 'percent',marker: { enabled: false}} },
+                series: [{
+                    name: 'DoorState',
+                    data: data
+                }]
+            });
         })
     }
     Date.prototype.Format = function (fmt) { //author: meizz

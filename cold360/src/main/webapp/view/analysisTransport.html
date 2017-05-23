@@ -47,27 +47,27 @@
 	    </header>
     <!-- header end-->
     <section class="toggle">
-    	<div class="tempture other" id="temperature" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
-    		<span class="dropNext">
+        <div class="tempture other" id="ml_acl110" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
+            <span class="dropNext">
     			<b>温度</b><i class="iconfont">&#xe6f7;</i>
     		</span>
-    	</div>
-        <div class="light current other" id="runDoor" ng-click="goTransport()"><i class="iconfont">&#xe6ed;</i>
+        </div>
+        <div class="light current other" id="ml_acl120" ng-click="goTransport()"><i class="iconfont">&#xe6ed;</i>
             <span class="dropNext">
                 <b>运管</b><i class="iconfont">&#xe6f7;</i>
             </span>
             <ul class="otherList black">
-                <li><a href="javascript:;"  id="light" ng-click="goDoorRunAnalysis()">冷库门运行分析</a></li>
-                <li><a href="javascript:;" id="goods" ng-click="goGoodsYZAnalysis()">货物因子分析</a></li>
-                <li><a href="javascript:;" id="hot" ng-click="goHotAnalysis()">冷库日热量分析</a></li>
+                <li id="ml_acl121"><a href="javascript:;"  id="light" ng-click="goDoorRunAnalysis()">冷库门运行分析</a></li>
+                <li id="ml_acl122"><a href="javascript:;" id="goods" ng-click="goGoodsYZAnalysis()">货物因子分析</a></li>
+                <li id="ml_acl123"><a href="javascript:;" id="hot" ng-click="goHotAnalysis()">冷库日热量分析</a></li>
             </ul>
         </div>
-        <div class="door" id="makeCold" ng-click="goCooling()"><i class="iconfont">&#xe7b6;</i>
+        <div class="door" id="ml_acl130" ng-click="goCooling()"><i class="iconfont">&#xe7b6;</i>
             <span class="dropNext">
                 <b>制冷</b><i class="iconfont">&#xe6f7;</i>
             </span>
         </div>
-        <div class="other" id="runQuery" ng-click="goReport()"><i class="iconfont">&#xe7cc;</i><b>报表</b></div>
+        <div class="other" id="ml_acl140" ng-click="goReport()"><i class="iconfont">&#xe7cc;</i><b>报表</b></div>
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
@@ -87,32 +87,32 @@
 	 </section>
 	 <!--rdc列表----------------------------------------------->
     <ul class="footer">
-        <li>           
+        <li id="ml_acl1">
             <a href="cold360.html">
                 <i class="iconfont">&#xe68d;</i>
                 <p class="info">监控</p>
             </a>
         </li>
-        <li>           
+        <li id="ml_acl70">
             <a href="analysisQuery.html">
                 <i class="iconfont">&#xe7c6;</i>
                 <p class="info">查询</p>
             </a>
         </li>
-        <li class="active">            
+        <li class="active" id="ml_acl100">
             <a href="analysis.html">
                 <i class="iconfont">&#xe682;</i>
                 <p class="info">分析</p>
             </a>
         </li>
-        <li>          
+        <li id="ml_acl200">
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
                 <span class="countNum" ng-if="alarmTotalCnt > 0" ng-bind="alarmTotalCnt"></span>
             </a>
         </li>
-        <li>            
+        <li id="ml_acl300">
             <a href="maintain.html">
                 <i class="iconfont">&#xe6a5;</i>
                 <p class="info">维护</p>

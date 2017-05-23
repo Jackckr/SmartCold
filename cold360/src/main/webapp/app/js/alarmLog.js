@@ -1,6 +1,5 @@
 checkLogin();
-var app = angular.module('app', []);
-app.controller('alarmLog', function ($scope, $location, $http) {
+app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userService) {
     $scope.user = window.user;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -21,6 +20,7 @@ app.controller('alarmLog', function ($scope, $location, $http) {
             $scope.storages = data;
             if (!rootRdcId) {
                 if (window.localStorage.rdcId) {
+                    initAllByRdcId(window.localStorage.rdcId);
                     findByRdcId(window.localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
@@ -29,6 +29,7 @@ app.controller('alarmLog', function ($scope, $location, $http) {
                     $scope.viewStorage($scope.storages[0].id);
                 }
             } else {
+                initAllByRdcId(rootRdcId);
                 findByRdcId(rootRdcId);
             }
         }
@@ -46,14 +47,14 @@ app.controller('alarmLog', function ($scope, $location, $http) {
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
         //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
+        $http.get(ER.coldroot + '/i/warlog/getWarningInfoByRdcID', {
             params: {
                 "rdcId": rdcId
             }
         }).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.alarmTotalCnt = data.length;
-                $scope.alarmMsgs = data;
+            if (data) {
+                $scope.warLog = data.warLog;
+                $scope.warInfo = data.warInfo;
             }
         });
         $(".one").show();
@@ -76,5 +77,6 @@ app.controller('alarmLog', function ($scope, $location, $http) {
         $scope.searchContent = "";
         $scope.alarmTotalCnt = 0;
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 });

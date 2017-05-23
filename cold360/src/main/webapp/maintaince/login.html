@@ -10,22 +10,24 @@
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="Cache" content="no-cache">
     <title>登录</title>
-    <link rel="shortcut icon" href="com/img/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="com/css/common.css">
-	<link rel="stylesheet" type="text/css" href="com/css/layer.css">
-    <link rel="stylesheet" type="text/css" href="com/css/login.css">
-    <script type="text/javascript" src="com/js/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="com/js/common.js"></script>
-    <script type="text/javascript" src="com/js/layer.js"></script>
-    <script type="text/javascript">if(window.user!=null){window.location.href="view/cold360.html";}</script>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/login.css">
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script type="text/javascript">if(window.user!=null){window.location.href="../index.html";}</script>
 </head>
 <body>
  		<header>	    		
         	<div class="area fl">
         		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
         	</div>
+        	<!--<div class="zoom fr">
+        		<a href="search.html"><i class="iconfont">&#xe62f;</i></a>
+        	</div>-->
         	<div class="txt">
-        		<em style="color:#438BCB;font-style: italic;margin: 0 .2rem;letter-spacing: 1px;font-weight: 700; ">smartcold</em>
+        		登录
         	</div>
 	    </header>
     <div class="login">
@@ -40,12 +42,21 @@
 		 <div class="warnInfo">
 		    <a hidden=true id="mention"></a>
 	     </div>
-		<button id="btn_login" class="mybtn" type="button" onclick="login()">登录</button>
+		<button id="btn_login" class="mybtn" type="button" onclick="login();">登录</button>
 		<div class="register">
-			<div class="fl"><a href="view/findpasswordfir.html">找回密码</a></div>
-			<div class="fr"><a href="view/register.html">新用户注册</a></div>
+			<div class="fl"><a href="findpasswordfir.html">找回密码</a></div>
+			<div class="fr"><a href="register.html">新用户注册</a></div>
 		</div>
     </div>
+    <!-- 第三方登录暂时不做 -->
+	<!-- <footer>
+		<div class="line"><span>或</span></div>
+		<div class="three">
+			<div><a href="javascript:;"><i class="iconfont">&#xe707;</i></a></div>
+			<div><a href="javascript:;"><i class="iconfont">&#xe6bf;</i></a></div>
+			<div><a href="javascript:;"><i class="iconfont">&#xe6c0;</i></a></div>
+		</div>
+	</footer> -->
 	<script  type="text/javascript">
 	if(!navigator.cookieEnabled){ /* alert("请打开手机Cookie"); */layer.open({content: '请打开手机Cookie~',btn: '确定'});}
       try { window.localStorage.sfhide = "foobar";} catch(_) {layer.open({content: '请关闭隐身模式再浏览……',btn: '确定'});}
@@ -82,14 +93,7 @@
 						if (window.location.hash != "") {
 							backUrl = window.location.hash.substring(1);
 						} else {
-//							backUrl = "view/cold360.html";
-                            if(userdata.type==1 ){//货主--温度版
-                                backUrl = "temp/cold360.html"
-                            }else if(userdata.type==2 ){//维修商--维修版
-                                backUrl = "maintaince/cold360.html"
-                            }else{//库主--360所有版本
-                                backUrl = "view/cold360.html"
-                            }
+							backUrl = "../index.html";
 						}
 						window.location.href = backUrl;
 						window.Event.returnValue = false;

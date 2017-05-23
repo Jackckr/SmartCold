@@ -58,7 +58,6 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                 $scope.drawOverTemperature();
             }
         });
-        initAllByRdcId(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -80,6 +79,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 
     $scope.goTransport = function () {

@@ -61,7 +61,6 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
                 }
             }
         });
-        initAllByRdcId(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -82,6 +81,7 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     };
 
     $scope.goElectric = function () {

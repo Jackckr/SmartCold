@@ -58,7 +58,6 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                 $scope.drawDoor();
             }
         });
-        initAllByRdcId(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -80,6 +79,7 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 
     $scope.goTemperature = function () {

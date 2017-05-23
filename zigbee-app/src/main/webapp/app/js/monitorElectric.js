@@ -65,7 +65,6 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                 }
             }
         })
-        initAllByRdcId(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -86,6 +85,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
     $scope.goTempture = function () {
         window.location.href = 'cold360.html?storageID=' + $scope.rdcId;

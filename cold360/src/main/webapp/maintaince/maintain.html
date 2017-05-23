@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-	<title>360维护</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>360维护</title>
 	<link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	<link rel="stylesheet" href="../com/css/swiper.min.css" />
 	<link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
@@ -19,23 +19,20 @@
 	<script type="text/javascript" src="../com/js/cold360.js" ></script>
 	<script type="text/javascript" src="../com/js/jedate/jedate.js"></script>
 	<script type="text/javascript" src="../app/js/maintain.js" ></script>
-	<style>
-		.layui-m-layercont{padding:.2rem .59rem!important;min-height:5rem}
-		.layui-m-layercont{text-align:left!important}
-		.line_height{line-height:5rem;text-align:center}
-		.layui-m-layerchild h3{margin:0;font-size:.8rem}
+    <style>
+		-m-layerchild h3{margin:0;font-size:.8rem}
 		ol,p,ul{margin-bottom:0}
 		.applyKid>p{font-size: .7rem!important;}
 		.applyKid{position: relative;}
 		._error{position: absolute;top: 2rem;right:0.5rem;font-size: .65rem;color:red;}
-		.oTd{min-width: 8rem;; max-width: 8rem;; width: 8rem;;white-space: normal;word-break: break-all;}
-	</style>
+		.oTd{    min-width: 8rem;; max-width: 8rem;; width: 8rem;;white-space: normal;word-break: break-all;}
+    </style>
 </head>
 <body ng-app="app" ng-controller="maintain" ng-cloak>
     <!-- header -->
          <header class="one">
             <div class="area fl">
-                <a href="personal.html"><img class="userImg"></a>
+                <a href="../view/personal.html"><img class="userImg"></a>
             </div>
             <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
                 <a class="transion"><i class="iconfont">&#xe73c;</i></a>
@@ -379,10 +376,10 @@
 						</div>
 						<div class="applyKid">
 							<p>选择服务性质:</p>
-							<div class="checkbox userRadio"><label><input id="radio_service1" type="radio" name="service" checked value="1"/>三包，工作完成</label></div>
-							<div class="checkbox userRadio"><label><input id="radio_service2" type="radio" name="service" value="2"/>维修，工作完成，不收费</label></div>
-							<div class="checkbox userRadio"><label><input id="radio_service3" type="radio" name="service" value="3"/>维修，工作完成，待开票</label></div>
-							<div class="checkbox userRadio"><label><input id="radio_service4" type="radio" name="service" value="4"/>维修，工作完成，现场支付</labe></div>
+							<div class="checkbox userRadio"><label><input id="radio_service1" type="radio" name="service" checked value="1">三包，工作完成</label></div>
+							<div class="checkbox userRadio"><label><input id="radio_service2" type="radio" name="service" value="2">维修，工作完成，不收费</label></div>
+							<div class="checkbox userRadio"><label><input id="radio_service3" type="radio" name="service" value="3">维修，工作完成，待开票</label></div>
+							<div class="checkbox userRadio"><label><input id="radio_service4" type="radio" name="service" value="4">维修，工作完成，现场支付</labe></div>
 						</div>
 						<div class="applyKid textA">
 							<p>流程当前状态:<span style="color: green;">{{stmode[cuttstatus]}}</span></p>
@@ -933,12 +930,6 @@
 			<a href="analysisQuery.html">
 				<i class="iconfont">&#xe7c6;</i>
 				<p class="info">查询</p>
-			</a>
-		</li>
-		<li id="ml_acl100">
-			<a href="analysis.html">
-				<i class="iconfont">&#xe682;</i>
-				<p class="info">分析</p>
 			</a>
 		</li>
 		<li id="ml_acl200">

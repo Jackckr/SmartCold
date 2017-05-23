@@ -26,7 +26,7 @@
 <!-- header -->
 <header class="one">
     <div class="area fl">
-        <a href="personal.html"><img class="userImg"></a>
+        <a href="../view/personal.html"><img class="userImg"></a>
     </div>
     <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
         <a class="transion"><i class="iconfont">&#xe73c;</i></a>
@@ -60,53 +60,6 @@
             </li>
         </ul>
     </div>
-    <!-- 冷库电量list -->
-    <div class="my_list lightList">
-        <ul id="Temp_ul_1">
-            <li ng-repeat="obj in powers" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
-                {{obj.name}}
-            </li>
-        </ul>
-    </div>
-    <!-- 冷库门list -->
-    <div class="my_list doorList">
-        <ul id="Temp_ul_2">
-            <li ng-repeat="obj in coldstoragedoor" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
-                {{prove[obj.coldStorageId]+"-"+obj.name}}
-            </li>
-        </ul>
-    </div>
-
-    <!-- 月台门list -->
-    <div class="my_list platdoorList">
-        <ul id="Temp_ul_3">
-            <li ng-repeat="obj in platformDoors" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
-                {{obj.name}}
-            </li>
-        </ul>
-    </div>
-
-    <!-- 压缩机list -->
-    <div id="Temp_ul_4" class="my_list ysjList">
-        <label><input type="radio" name="cmsbkey" ng-click="chPress('highPress','高压')" checked>高压</label>
-        <label><input type="radio" name="cmsbkey" ng-click="chPress('lowPress','低压' )">低压</label>
-        <ul>
-            <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selectTemper($event)" class="selectLi">
-                {{obj.name}}
-            </li>
-        </ul>
-    </div>
-
-    <!-- 排气温度list -->
-    <div class="my_list ysjPqList" class="hide" key="exTemp" id="Temp_ul_5">
-        <label ng-repeat="obj in compressorGroups"><input type="radio" name="cmptkey" value="{{obj.id}}"
-                                                          ng-click="chexTemp($event)">{{obj.name}}</label>
-        <ul id="Temp_ul_5_key_span_{{selectedCompressorGroupId}}">
-            <li ng-repeat="obj in selectedCompressors" ng-click="selectTemper($event)" oid="{{obj.id}}"
-                class="selectLi">{{obj.name}}
-            </li>
-        </ul>
-    </div>
     <span class="closeCover">&times;</span>
 
     <div class="bottomBtn">
@@ -123,11 +76,6 @@
 
         <div class="project clearfix">
             <div kval="0" class="default">冷库温度</div>
-            <div kval="1" class="default" ng-hide="user.type==1||user.type==2">冷库电量</div>
-            <div kval="2" class="default" ng-hide="user.type==1||user.type==2">冷库门</div>
-            <div kval="3" class="default" ng-hide="user.type==1||user.type==2">月台门</div>
-            <div kval="4" class="default" ng-hide="user.type==1||user.type==2">压缩机组</div>
-            <div kval="5" class="default" ng-hide="user.type==1||user.type==2">压缩机-排气温度</div>
         </div>
         <p><strong>您所选的项目是：</strong></p>
 
@@ -169,26 +117,12 @@
             <p class="info">查询</p>
         </a>
     </li>
-    <li id="ml_acl100">
-        <a href="analysis.html">
-            <i class="iconfont">&#xe682;</i>
-
-            <p class="info">分析</p>
-        </a>
-    </li>
     <li id="ml_acl200">
         <a href="alarmLog.html">
             <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
 
             <p class="info">告警</p>
             <span class="countNum" ng-if="alarmTotalCnt > 0" ng-bind="alarmTotalCnt"></span>
-        </a>
-    </li>
-    <li id="ml_acl300">
-        <a href="maintain.html">
-            <i class="iconfont">&#xe6a5;</i>
-
-            <p class="info">维护</p>
         </a>
     </li>
 </ul>

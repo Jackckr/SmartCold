@@ -78,7 +78,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                 });
             });
         });
-        initAllByRdcId(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -113,6 +112,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
         $scope.searchContent = "";
         $scope.alarmTotalCnt = 0;
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
     
     

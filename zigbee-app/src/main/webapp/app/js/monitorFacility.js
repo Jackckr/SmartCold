@@ -63,8 +63,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     $scope.drawDoor($scope.mystorages[i]);
                 }
             }
-            });
-        initAllByRdcId(rdcId);
+        });
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -86,6 +85,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 
     $scope.goTempture = function () {
@@ -121,84 +121,84 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
 
         $http.get(ER.coldroot + '/i/coldStorageDoor/findByStorageId?storageID=' + storage.id).success(function (data) {
             if (data.length > 0) {
-            	$scope.coldStorageDoors=data;
-            	if($scope.coldStorageDoors){ 
-     	    	   angular.forEach($scope.coldStorageDoors,function(obj,i){
- 	    		   	var doorId = obj.id;
-                	$http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
-                        params: {
-                            "oid": doorId,
-                            type: 2,
-                            key: 'Switch'
-                        }
-                    }).success(function (result) {
-                        var data = [];
-                        for (var i = 0; i < result.length; i++) {
-                            var val = Date.parse(result[i].addtime);
-                            var newDate = new Date(val).getTime();
-                            data.push({
-                                x: newDate,
-                                y: result[i].value
-                            });
-                        }
-
-                        // 冷库门开关监控
-                        Highcharts.setOptions({
-                            global: {
-                                useUTC: false
+                $scope.coldStorageDoors=data;
+                if($scope.coldStorageDoors){
+                    angular.forEach($scope.coldStorageDoors,function(obj,i){
+                        var doorId = obj.id;
+                        $http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
+                            params: {
+                                "oid": doorId,
+                                type: 2,
+                                key: 'Switch'
                             }
-                        });
+                        }).success(function (result) {
+                            var data = [];
+                            for (var i = 0; i < result.length; i++) {
+                                var val = Date.parse(result[i].addtime);
+                                var newDate = new Date(val).getTime();
+                                data.push({
+                                    x: newDate,
+                                    y: result[i].value
+                                });
+                            }
 
-                        var mainId = 'door' + doorId;
-                        if ($scope.swiper < $scope.coldStorageDoors.length * $scope.mystorages.length) {
-                        	if($scope.coldStorageDoors.length==1){
-                        		$scope.doorName= storage.name
-                        	}else{
-                        		$scope.doorName= storage.name+'·'+obj.name
-                        	}
-                            var innerHTML = '<div class="swiper-slide">' +
-                                '<p class="actually">' +$scope.doorName+ '</p>' +
-                                '<div id=' + mainId + '></div> ';
-                            $("#chartView").last().append(innerHTML);
-                            $scope.swiper += 1;
-                        }
+                            // 冷库门开关监控
+                            Highcharts.setOptions({
+                                global: {
+                                    useUTC: false
+                                }
+                            });
 
-                        $('#' + mainId).highcharts({
-                            chart: {type: 'area'},
-                            title: {text: '冷库门开关监控',style: { fontSize:'0.7rem'}},
-                            xAxis: {type: 'datetime',tickPixelInterval: 200},
-                            yAxis: {
-                                allowDecimals: false,
-                                labels: {
+                            var mainId = 'door' + doorId;
+                            if ($scope.swiper < $scope.coldStorageDoors.length * $scope.mystorages.length) {
+                                if($scope.coldStorageDoors.length==1){
+                                    $scope.doorName= storage.name
+                                }else{
+                                    $scope.doorName= storage.name+'·'+obj.name
+                                }
+                                var innerHTML = '<div class="swiper-slide">' +
+                                    '<p class="actually">' +$scope.doorName+ '</p>' +
+                                    '<div id=' + mainId + '></div> ';
+                                $("#chartView").last().append(innerHTML);
+                                $scope.swiper += 1;
+                            }
+
+                            $('#' + mainId).highcharts({
+                                chart: {type: 'area'},
+                                title: {text: '冷库门开关监控',style: { fontSize:'0.7rem'}},
+                                xAxis: {type: 'datetime',tickPixelInterval: 200},
+                                yAxis: {
+                                    allowDecimals: false,
+                                    labels: {
+                                        formatter: function () {
+                                            return this.value===0?"关":"开";
+                                        }
+                                    },
+                                    title: {text: 'DoorState(0关1开)'},
+                                    plotLines: [{value: 0,width: 1,color: '#808080'}],
+                                    max: 1,
+                                    min: 0,
+                                },
+                                tooltip: {
                                     formatter: function () {
-                                    	return this.value===0?"关":"开";
+                                        var state =this.y === 1? '冷库处于开门状态': '冷库处于关门状态';
+                                        return '<b>' + this.series.name + '</b><br/>' +
+                                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                            state;
                                     }
                                 },
-                                title: {text: 'DoorState(0关1开)'},
-                                plotLines: [{value: 0,width: 1,color: '#808080'}],
-                                max: 1,
-                                min: 0,
-                            },
-                            tooltip: {
-                                formatter: function () {
-                                    var state =this.y === 1? '冷库处于开门状态': '冷库处于关门状态';
-                                    return '<b>' + this.series.name + '</b><br/>' +
-                                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                                        state;
-                                }
-                            },
-                            legend: {enabled: false},
-                            exporting: {enabled: false},
-                            credits: {enabled: false },
-                            plotOptions: {  area: {stacking: 'percent',marker: { enabled: false}} },
-                            series: [{
-                                name: 'DoorState',
-                                data: data
-                            }]
+                                legend: {enabled: false},
+                                exporting: {enabled: false},
+                                credits: {enabled: false },
+                                plotOptions: {  area: {stacking: 'percent',marker: { enabled: false}} },
+                                series: [{
+                                    name: 'DoorState',
+                                    data: data
+                                }]
+                            });
                         });
                     });
-    		   	   });
-     	       }
+                }
             } else {
                 var mainId = 'defalt' + $scope.defaltswiper;
                 if ($scope.swiper < $scope.mystorages.length) {
@@ -254,7 +254,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                     allowDecimals: false,
                     labels: {
                         formatter: function () {
-                        	return this.value===0?"关":"开";
+                            return this.value===0?"关":"开";
                         }
                     },
                     title: { text: 'DoorState(0关1开)' },

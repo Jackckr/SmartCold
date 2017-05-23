@@ -57,7 +57,6 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
 	            $scope.warInfo = data.warInfo;
             }
         });
-        initAllByRdcId(rdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -78,5 +77,6 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
         $scope.searchContent = "";
         $scope.alarmTotalCnt = 0;
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 });

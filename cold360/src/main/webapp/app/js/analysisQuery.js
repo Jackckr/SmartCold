@@ -1,6 +1,5 @@
 checkLogin();
-var app = angular.module('app', []);
-app.controller('analysisQuery', function ($scope, $location, $http) {
+app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, userService) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -32,6 +31,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
             $scope.storages = data;
             if (!rootRdcId) {
                 if (window.localStorage.rdcId) {
+                    initAllByRdcId(window.localStorage.rdcId);
                     findByRdcId(window.localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
@@ -40,6 +40,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
                     $scope.viewStorage($scope.storages[0].id);
                 }
             } else {
+                initAllByRdcId(rootRdcId);
                 findByRdcId(rootRdcId);
             }
         }
@@ -100,8 +101,8 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
                                 $scope.selectedCompressors = item.compressors;
                             }
                         })
-                })
             })
+        })
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -122,6 +123,7 @@ app.controller('analysisQuery', function ($scope, $location, $http) {
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 
     $scope.goTemperature = function () {

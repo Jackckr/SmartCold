@@ -45,7 +45,6 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
         for (var i = 0; i < $scope.compressorGroups.length; i++) {
             $scope.drawCompressorPressure($scope.compressorGroups[i]);
         }
-        initAllByRdcId(rootRdcId);
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -67,6 +66,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.initCompressorPressure(rdc.id);
+        initAllByRdcId(rdc.id);
     }
 
     $scope.goTempture = function () {

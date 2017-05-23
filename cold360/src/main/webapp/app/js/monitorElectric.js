@@ -1,6 +1,5 @@
 checkLogin();
-var app = angular.module('app', []);
-app.controller('monitorElectric', function ($scope, $location, $http, $rootScope) {
+app.controller('monitorElectric', function ($scope, $location, $http, $rootScope ,userService) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -21,6 +20,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
             $scope.storages = data;
             if (!rootRdcId) {
                 if (window.localStorage.rdcId) {
+                    initAllByRdcId(window.localStorage.rdcId);
                     findByRdcId(window.localStorage.rdcId);
                 } else {
                     $scope.currentRdc = $scope.storages[0];
@@ -29,6 +29,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                     $scope.viewStorage($scope.storages[0].id);
                 }
             } else {
+                initAllByRdcId(rootRdcId);
                 findByRdcId(rootRdcId)
             }
         }
@@ -63,7 +64,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
                     $scope.load($scope.powers[i]);
                 }
             }
-        })
+        });
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
@@ -84,6 +85,7 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
         $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
     }
     $scope.goTempture = function () {
         window.location.href = 'monitorTemperature.html?storageID=' + $scope.rdcId;
