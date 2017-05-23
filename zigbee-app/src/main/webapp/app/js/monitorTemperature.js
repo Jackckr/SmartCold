@@ -24,6 +24,7 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
                     $scope.rdcId = $scope.storages[0].id;
                     $scope.rdcName = $scope.storages[0].name;
                     $scope.viewStorage($scope.storages[0].id);
+                    initAllByRdcId($scope.rdcId);
                 }
             } else {
             	initAllByRdcId(rootRdcId);

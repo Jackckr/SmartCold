@@ -62,7 +62,6 @@ $(function() {
             // 检查事件源e.targe是否为A
             if(e.target && e.target.nodeName.toUpperCase() == "A") {
                 // 真正的处理过程在这里
-                console.log("List item ",e.target.id.replace("post-")," was clicked!");
                 $(this).prev('.dropNext').children('b').html(target.innerHTML);
                 var activeColor = $(this).css('color');
                 $(this).find('a').css({'color':'#555'});
