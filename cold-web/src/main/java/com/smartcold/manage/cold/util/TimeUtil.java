@@ -98,14 +98,14 @@ public class TimeUtil {
 		}
 	}
 	/**
-	 * 获得两个时间差(分钟)
+	 * 获得两个时间差(小时)
 	 * @param start
 	 * @param end
 	 * @return
 	 */
 	public static long hourBetween(Date start, Date end) {
 		try {
-			   return (end.getTime()-start.getTime())/60000;//除以1000是为了转换成秒
+			   return (end.getTime()-start.getTime())/3600000;//除以1000是为了转换成秒
 		} catch (Exception e) {
 			return -1;
 		}
@@ -122,7 +122,7 @@ public class TimeUtil {
 	 */
 	public static int daysBetween(Date start, Date end) {
 		try {
-			long between_days = (end.getTime()-start.getTime())/86400;
+			long between_days = (end.getTime()-start.getTime())/86400000;
 			return (int) between_days;
 		} catch (Exception e) {
 			return -1;
