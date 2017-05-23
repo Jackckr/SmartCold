@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +46,27 @@ public class DFSCollectionController extends BaseController {
 	
 	
 	/**
+	 *清除缓存
+	 * @param uid
+	 * @param rdcid
+	 * @return
+	 */
+	@RequestMapping(value = "/delconfig")
+	@ResponseBody
+	public Object delconfig(String toke,String rdcid){
+		if(StringUtil.verifyToken(toke)){
+			if(StringUtil.isnotNull(rdcid)){
+				configchcateHashMap.remove(rdcid);
+			}else{
+				configchcateHashMap.clear();
+			}
+			return true;
+		}
+		return false;
+	}
+
+	
+	/**
 	 *http DEV数据上传接口
 	 * @param data
 	 * @param response
@@ -57,7 +77,6 @@ public class DFSCollectionController extends BaseController {
 	@ResponseBody
 	public Object storageDataCollection(@RequestBody String data) {
         try {
-			System.err.println("丹弗斯："+data);
 			if(StringUtil.isNull(data)){ return new DataResultDto(500);};
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String rdcid = dataCollectionBatchEntity.get("rdcId").toString();
@@ -85,6 +104,12 @@ public class DFSCollectionController extends BaseController {
 		}
 	} 
 	
+	/**
+	 * 获得冷库所以键值对信息
+	 * @param table
+	 * @param rdcId
+	 * @return
+	 */
 	private List<HashMap<String, Object>> getCofingMapping(String table,String rdcId){
 		switch (table) {
 		case "blowerset":

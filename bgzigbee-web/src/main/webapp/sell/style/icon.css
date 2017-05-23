@@ -1,0 +1,28 @@
+﻿@charset "utf-8";
+
+.icon-reload{background:url('icons/refresh.gif') no-repeat;}
+
+/*main*/
+.icon-tb{width: 16px;height: 16px; margin-top: 2px;display: inline-block;}
+.icon-online{background:url('icons/start.png') no-repeat;}    
+.icon-offline{background:url('icons/stop.png') no-repeat;}    
+         
+
+.icon-def{background:url('icons/vs.gif') no-repeat;}     /*默认图标*/
+.icon-user{background:url('icons/user.gif') no-repeat;}  /*用户*/
+.icon-cold{background:url('icons/4.png') no-repeat;}    /*冷库图标*/
+.icon-authe{background:url('icons/5.png') no-repeat;}    /*认证图标*/
+.icon-coldcf{background:url('icons/6.png') no-repeat;}    /*冷库选型*/
+.icon-sel{background:url('icons/7.png') no-repeat;}     /*默认查看*/
+
+
+.icon_add   {background:url('icons/1.png') no-repeat;}
+.icon_add1  {background:url('icons/1_1.png') no-repeat;}
+.icon_rem   {background:url('icons/2.png') no-repeat;}
+.icon_rem2  {background:url('icons/2_1.png') no-repeat;}
+.icon_edit  {background:url('icons/3.png') no-repeat;background-size:14px 15px;}
+
+
+/*消息中心*/
+.objicon{display: inline-block;width: 20px;height: 20px;}
+.icon-msgType{    background: url(img/icos.png) no-repeat scroll -1350px -391px rgba(0, 0, 0, 0);} 

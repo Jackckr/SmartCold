@@ -4,95 +4,52 @@
     <title>系统消息</title>
     <meta name="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
     <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
     <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
-    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
-    <style type="text/css">
-		  .radiusdiv{padding:5px;margin-right:5px;border-radius:5px;}
-		  *{margin: 0px;padding: 0px;}
-		  .panel-header,.window{background-color:transparent;}
-		  .window-shadow {background:  none;background-color:red;box-shadow: none; opacity:0.4;}
-		    .datagrid{background-color: white;}
-		      .layout-split-west{border-right: 2px solid transparent;}
-    </style>
-    <script type="text/javascript">
-    
-    
-    
-    
-    
-    </script>
+    <script type="text/javascript"  src="../app/comm.js"></script>
+    <script type="text/javascript"  src="../app/msg.js"></script>
   </head>
   </head>
   <body  class="easyui-layout" >
-	<div  data-options="region:'west',split:true" style="width:140px;" class="radiusdiv">
+	<div  data-options="region:'west',split:true,iconCls:'icon-msgType', title:'消息分类'" style="width:300px;" >
       <div id="objTreediv">
-         <span class="icon-home" style="padding: 0px 0px 50px 20px">消息中心</span>
          <ul id="objtree" class="easyui-tree"></ul>
       </div>
 	</div>
-	<div data-options="region:'center'" class="radiusdiv" >
-  	        <table id="objTable" ></table>
-		    <div id="heidendiv" style="display: none;">
-		        <div id="chisred" class="chml">
-					<div><span class="ml weidu" title="未读" value=0>未读</span></div>
-					<div ><span class="ml yidu" title="已读" value=1>已读</span></div>
-		        </div>
-		        <div id="chisdeal" class="chml">
-					<div><span class="ml nobz" title="未处理" value=0>未处理</span></div>
-					<div ><span class="ml okbz" title="已处理" value=1>已处理</span></div>
-		        </div>
-		        <div id="chlevel" class="chml">
-					<div><span class="ml" title="普通" value=0>普通</span></div>
-					<div ><span class="ml" title="一般" value=1>一般</span></div>
-					<div ><span class="ml" title="重要" value=2>重要</span></div>
-					<div ><span class="ml" title="紧急" value=3>紧急</span></div>
-		        </div>
-		        <div id="chmark" class="chml">
-					<div><span class="ml" style="background: url(style/msg/img/bj1.png) no-repeat;" title="红色" value=1>红色</span></div>
-					<div><span class="ml" style="background: url(style/msg/img/bj2.png) no-repeat;" title="水红色" value=2>水红色</span></div>
-					<div><span class="ml" style="background: url(style/msg/img/bj3.png) no-repeat;" title="粉红色" value=3>粉红色</span></div>
-					<div><span class="ml" style="background: url(style/msg/img/bj4.png) no-repeat;" title="紫色" value=4>紫色</span></div>
-					<div><span class="ml" style="background: url(style/msg/img/bj5.png) no-repeat;" title="蓝色" value=5>蓝色</span></div>
-					<div><span class="ml" style="background: url(style/msg/img/bj6.png) no-repeat;" title="黄色" value=6>黄色</span></div>
-					<div><span class="ml" style="background: url(style/msg/img/bj7.png) no-repeat;" title="白色" value=7>白色</span></div>
-		        </div>
-		    </div>
+	<div  data-options="region:'center'"  >
+  	        <table id="objTable" class="fill"></table>
+	</div>
+			 <div id="heidendiv" style="display: none;">
+			        <div id="chisread" class="chml">
+						<div><span class="ml weidu" title="未读" value=0>未读</span></div>
+						<div ><span class="ml yidu" title="已读" value=1>已读</span></div>
+			        </div>
+			        <div id="chstate" class="chml">
+						<div><span class="ml nobz" title="未处理" value=0>未处理</span></div>
+						<div ><span class="ml okbz" title="已处理" value=1>已处理</span></div>
+			        </div>
+			 </div>
 		    <div id="cdmm" style="display: none;">
-			    <div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
-					<div data-options="name:'addem',iconCls:'adem'">写信</div>
-					<div data-options="name:'ryem',iconCls:'edem'">回复</div>
-					<div data-options="name:'delem',iconCls:'rmem'">删除</div>
-					<div data-options="name:'delem',iconCls:'rmem'">彻底删除</div>
-					<div data-options="name:'mkem',iconCls:'weidu'">
-				        <span>设为</span>
-			            <div style="width:150px;">
-							<div data-options="name:'标记',iconCls:'yidu'">已读</div>
-							<div data-options="name:'标记',iconCls:'weidu'">未读</div>
-			            </div>
-					</div>
-					<div data-options="name:'mkem',iconCls:'mark1'">
-					   <span>标记</span>
-				            <div style="width:150px;">
-								<div data-options="name:'标记',iconCls:'mark1'">红色</div>
-								<div data-options="name:'标记',iconCls:'mark2'">水红色</div>
-								<div data-options="name:'标记',iconCls:'mark3'">粉红色</div>
-								<div data-options="name:'标记',iconCls:'mark4'">紫色</div>
-								<div data-options="name:'标记',iconCls:'mark5'">蓝色</div>
-								<div data-options="name:'标记',iconCls:'mark6'">黄色色</div>
-								<div data-options="name:'标记',iconCls:'mark7'">白色</div>
-				            </div>
-					</div>
-					<div data-options="name:'move'">
-					   <span>移动至</span>
-				            <div style="width:150px;">
-								<div data-options="name:'标记'">收件箱</div>
-								<div data-options="name:'标记'">发件箱</div>
-								<div data-options="name:'标记'">垃圾箱</div>
-				            </div>
-					</div>
+			    <div id="datamenu" class="easyui-menu"  style="width:120px;">
+					<div data-options="name:'delem',iconCls:'icon-reload'" onclick="reloaddata()">刷新</div>
 			    </div>
 		    </div>
-	</div>
+		    <div id="div_filter" style="display: none;">
+			    <div id="div_filteri" style="padding:2px 5px;">
+					Date From: <input class="easyui-datebox" style="width:110px">
+					To: <input class="easyui-datebox" style="width:110px">
+					Language: 
+					<select class="easyui-combobox" panelHeight="auto" style="width:100px">
+						<option value="java">Java</option>
+						<option value="c">C</option>
+						<option value="basic">Basic</option>
+						<option value="perl">Perl</option>
+						<option value="python">Python</option>
+					</select>
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+				 </div>
+		    </div>
   </body>
 </html>

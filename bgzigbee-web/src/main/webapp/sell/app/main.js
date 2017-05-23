@@ -4,94 +4,57 @@ var user={id:1,type:1,name:'lxj'};
 var usermenus=[
           {"menuid": "1","icon": "icon-sys","menuname": "链库管理"
         	  ,"child": [
-        	             {"menuid": "1_1","menuname": "用户管理","icon": "icon-role","url": "/sell/viwe/usermager.html"},
-        	             {"menuid": "1_2","menuname": "冷库管理","icon": "icon-role","url": "Login.html"},
-        	             {"menuid": "1_3","menuname": "认证管理","icon": "icon-role","url": "Login.html"},
-        	             {"menuid": "1_4","menuname": "冷库配置","icon": "icon-role","url": "Login.html"},
+        	             {"menuid": "1_1","menuname": "用户管理","icon": "icon-user","url": "/sell/viwe/usermager.html"},
+        	             {"menuid": "1_2","menuname": "冷库管理","icon": "icon-cold","url": "Login.html"},
+        	             {"menuid": "1_3","menuname": "认证管理","icon": "icon-authe","url": "Login.html"},
+        	             {"menuid": "1_4","menuname": "冷库配置","icon": "icon-coldcf","url": "Login.html"},
         	             {"menuid": "1_5","menuname": "共享管理","icon": "icon-role","url": "Login.html"},
         	             {"menuid": "1_6","menuname": "资讯管理","icon": "icon-role","url": "Login.html"}]
           } ,
-          
           {
-  			"menuid": "13",
+  			"menuid": "2",
   			"menuname": "设备管理",
   			"icon": "icon-add",
   			"url": "demo.html",
-  			"child": [{
-  				"menuid": "130",
-  				"menuname": "设备管理",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "131",
-  				"menuname": "设备查询",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "133",
-  				"menuname": "数据管理",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "134",
-  				"menuname": "Device配置",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			}]
+  			"child": [{"menuid": "2_0","menuname": "设备管理","icon": "icon-role","url": "Login.html"},
+  			          {"menuid": "2_1","menuname": "设备查询","icon": "icon-role","url": "Login.html"},
+  			          {"menuid": "2_4","menuname": "设备检测","icon": "icon-role","url": "Login.html"},
+  			          {"menuid": "2_3","menuname": "数据管理","icon": "icon-role","url": "Login.html"},
+  			         ]
   		},
   		{
-  			"menuid": "14",
+  			"menuid": "3",
   			"menuname": "冷库360管理",
   			"icon": "icon-add",
   			"url": "demo.html",
-  			"child": [{
-  				"menuid": "140",
-  				"menuname": "集团管理",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "141",
-  				"menuname": "权限配置",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "142",
-  				"menuname": "360配置",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "143",
-  				"menuname": "冷库报表",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "144",
-  				"menuname": "报警列表",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			}]
+  			"child": [
+  			          {"menuid": "3_0","menuname": "集团管理","icon": "icon-role","url": "Login.html"},
+  			          {"menuid": "3_1","menuname": "权限配置","icon": "icon-role","url": "Login.html"},
+  			          {"menuid": "3_2","menuname": "360配置","icon": "icon-role","url": "Login.html"},
+  			          {"menuid": "3_3","menuname":"冷库报表","icon":"icon-role","url":"Login.html"},
+  			          {"menuid": "3_4","menuname":"报警列表","icon":"icon-role","url":"Login.html"}
+  			          ]
   		},
   		{
-  			"menuid": "15",
+  			"menuid": "4",
   			"menuname": "网站统计",
   			"icon": "icon-add",
   			"url": "demo.html",
-  			"child": [{
-  				"menuid": "150",
-  				"menuname": "网站统计",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			},{
-  				"menuid": "151",
-  				"menuname": "操作日志",
-  				"icon": "icon-role",
-  				"url": "Login.html"
-  			}]
+  			"child": [
+						{"menuid":"4_0","menuname":"网站统计","icon":"icon-role","url":"Login.html"},
+						{"menuid":"4_1","menuname":"操作日志","icon":"icon-role","url":"Login.html"}
+  			          ]
+  		},
+  		{
+  			"menuid": "5",
+  			"menuname": "系统管理",
+  			"icon": "icon-add",
+  			"url": "demo.html",
+  			"child": [
+                       {"menuid":"5_0","menuname":"设备消息","icon":"icon-role","url":"/sell/viwe/sysmessage.html"},
+  			          ]
   		}
-          
-          
-          
-      ];
+];
 
 
 //删除菜单
@@ -221,7 +184,7 @@ function closeTab(action) {
     var allTabtitle = [];
     $.each(alltabs, function (i, n) {
         allTabtitle.push($(n).panel('options').title);
-    })
+    });
 
     switch (action) {
         case "refresh":

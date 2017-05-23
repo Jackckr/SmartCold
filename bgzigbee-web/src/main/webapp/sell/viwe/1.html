@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>1.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+       <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <style type="text/css">
+ .radiusdiv{padding:5px;margin-right:5px;border-radius:5px;}
+
+  .panel-header,.window{background-color:transparent;}
+  .window-shadow {background:  none;background-color:red;box-shadow: none; opacity:0.4;}
+    .datagrid{background-color: white;}
+      .layout-split-west{border-right: 2px solid transparent;}
+      
+      
+      
+ </style>
+ <script type="text/javascript">
+ var objtree,objTable,tablesize, stablesize; 
+ var levelarr=['普通', '一般','重要',  '紧急'];
+ /**
+  * 加载左边树形结构，加载右边数据
+  */
+ function initlefttree(url){objtree=$('#objtree').tree({url:url,method:'post',animate:true,lines:true, onSelect:treeselect});}
+ function gettit(img,tit){return '<div class="panel-icon" style="width:auto;"><img src="'+img+'" height="18px" width="auto"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>';}
+ function getObjTable(tit,ico,url,tol,col){if(tablesize<10){tablesize=stablesize=10;}
+   objTable=$('#objTable').datagrid({
+ 	  url:url,
+ 	  method:'post',
+ 	  fit:true,
+ 	  fitColumns:true,
+ 	  remoteSort: false, 
+ 	  striped:true,
+ 	  rownumbers:true,
+ 	  pagination:true,pageSize:stablesize,pageList:[tablesize,1,10,20,30,50,100],toolbar:tol,columns:col,
+                 onLoadError:function(){$('#objTable').datagrid('loadData',{total:0,rows:[]})},onDblClickRow:datagridcl}); $("#objTable").datagrid("getPager").pagination({beforePageText:"第",afterPageText:"页    共 {pages} 页",displayMsg:"当前显示 {from} - {to} 条记录   共 {total} 条记录",onChangePageSize:function(size){stablesize=size;}});crspsh();}
+ function crspsh(){$('.datagrid-toolbar').append("<div id=\"seache\"style=\"margin-top:-24px;float:right;margin-right:20px;\"><input id=\"fddata\"class=\"easyui-searchbox\" val=\"ml\" data-options=\"prompt:'请输入搜索条件...',searcher:finddatatb\"style=\"width:300px;display:inline;\"></input><div id=\"mm\"style=\"width:100px\" ></div></div>");var muits='';var fields=$('#objTable').datagrid('getColumnFields');for(var i=0;i<fields.length;i++){var opts=$('#objTable').datagrid('getColumnOption',fields[i]);if(opts.field=='ck'||opts.hidden||opts.field=='hand'||opts.field=='ck'||opts.field=='img'||opts.field=='st'){continue}muits+="<div id='"+fields[i]+"' name='"+fields[i]+"'  onclick='chclip(this);' data-options=\"iconCls:'icon-"+fields[i]+"'\">"+opts.title+"</div>"}$('#mm').html(muits);$('#fddata').searchbox({menu:'#mm'});$('#seache').appendTo('.datagrid-toolbar');}//简单查询
+ function finddatatb(value,name){var val=null;if(value.trim()!=""&&name!=""){val=name+" LIKE '%"+value+"%'";}$('#objTable').datagrid('reload',{filter:val});} //简单查找数据
+ function chclip(em){
+ 	$("#seache input[placeholder='请输入搜索条件...']").hide();
+ 	$("#seache span[class='textbox combo']").remove();
+ 	$("#scvlcc").remove();
+ 	$("#seache input[class='textbox-value']").attr("value","");$("#seache input[class='textbox-value']").attr("name",em.id);if(em.id=="isred"||em.id=="isdeal"||em.id=="mark"||em.id=="level"){var magrlef=(em.id=="mark"||em.id=="level")?'70px':'94px';var width=(em.id=="mark"||em.id=="level")?'190px':'180px';var id="#ch"+em.id;var html='<select id="scvlcc"  style="width: '+width+';height:18px;"></select>';$("#seache input[placeholder='请输入搜索条件...']").after(html);$('#scvlcc').combo({editable:false});$("#scvlcc").next().css({'margin-left':magrlef,'margin-right':'18px','padding-bottom':'2px'});$(id).appendTo($('#scvlcc').combo('panel'));$(id+' span').click(function(){$('#scvlcc').combo('setValue',$(this).attr("value")).combo('setText',$(this).text()).combo('hidePanel');$("#seache input[class='textbox-value']").attr("name",em.id);$("#seache input[class='textbox-value']").attr("value",$(this).attr("value"))});setTimeout("lytext()",0);}else{$("#seache input[placeholder='请输入搜索条件...']").show();
+ //$("#seache .searchbox-button").css("height","25px");
+ //$("#seache a.m-btn-small").css('height','25px');
+
+ }}
+ function lytext(){$("span[class='textbox combo']").find("input[type='text']").css({'margin-left':'0px'});}
+ /**
+  * 
+  * @param {Object} value
+  * @param {Object} row
+  * @param {Object} index
+  * @return {TypeName} 
+  */
+ function isred(value ,row,index){return value=="1"?'<span class="tp yidu" title="已读"></span>':'<span class="tp weidu" title="未读"></span>';}
+ function isdeal(value,row,index){return value=="1"?'<span class="tp okbz" title="已处理"></span>':'<span class="tp nobz" title="未处理"></span>';}
+ function level(value,row,index){ return levelarr[value];}
+ function mark(value,row,index){if(value!=null){return '<span class="tp" ><img  src="style/msg/img/bj'+value+'.png"></span>'; }else{return "";}}
+ function sexsyle(value,row,index){return value==0?'男':'女';};
+ function ststyle(value,row){return value=="1"?"<span class='isqys'>启用</span>":"<span class='isjys'>停用</span>";};
+ function cellStyler(value,row){var pgtool="";pgtool+='<a href="javascript:void(0)" onclick="ck('+ row.id+')">[查看]</a>   ';pgtool+='<a href="javascript:void(0)" onclick="ed('+ row.id+')">[编辑]</a>   ';pgtool+='<a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a>';return pgtool;}
+ function reloaddata(){$('#objTable').datagrid("reload");}
+ /**
+  * 选择shuttle节点操作
+  * @param {Object} node
+  */
+ function treeselect(node){if(node!=null){ $("#centdiv #showcon").remove();$("#centdiv .datagrid-wrap").show(); $('#objTable').datagrid('load',{id:node.id,hsch:(node.hach==null?false:node.hach)});}}
+ /**
+   * 双击表格操作
+  * @param {Object} index
+  * @param {Object} field
+  */
+ function datagridcl(index,field){
+ 	$("#showcon").show();
+ }
+
+
+ $().ready(function() {
+ 	   var tol=[{'iconCls': 'adem','handler': 'getuse','text':'写信'},
+ 		        {'iconCls': 'edem','handler': 'getuse','text':'回复'},
+ 		        {'iconCls': 'rmem','handler': 'getuse','text':'删除'},
+ 		        {'iconCls': 'delem','handler': 'getuse','text':'彻底删除'},
+ 		    "-",{'iconCls': 'icon-reload','handler': 'reloaddata','text':'刷新'},"-"];
+ 	   var col=[[ 
+     	  { field:'ck',checkbox:true},
+     	  {field:'id',title:'id',hidden:true,sortable:true},   
+     	  {field:'name',title:'发件人',width:80,align:'center',sortable:true},   
+     	  {field:'tit',title:'标题',width:80,align:'center',sortable:true},   
+           {field:'isred',title:'是否已读',width:40,align:'center',sortable:true,formatter:isred},   
+           {field:'isdeal', title:'是否处理',width:40,align:'center',sortable:true,formatter:isdeal},   
+           {field:'mark',title:'标识',width:40,align:'center',sortable:true,formatter:mark},   
+           {field:'level',title:'级别',width:40,align:'center',sortable:true,formatter:level},   
+           {field:'msg',title:'内容',width:120,align:'center',sortable:true,},   
+           {field:'ct',title:'创建时间',width:80,align:'center',sortable:true,},
+           {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler} 
+        ]];
+ 	  tablesize= stablesize = parseInt((($("#centdiv").height() -80) / 26));
+ 	  initlefttree("../MsgController/msg_getmsgtype.jcp");//
+ 	  getObjTable(gettit( 'style/info/img/icon_7_1.png','消息中心'),null,'../MsgController/msg_getmsg.jcp',tol,col);
+ 	  $('#centdiv .datagrid-view').bind('contextmenu',function(e){e.preventDefault();$('#mm').menu('show', {left: e.pageX,top: e.pageY});});
+ 	  
+ });//初始化数据
+
+
+
+ function menuHandler(item){
+ 			$('#log').prepend('<p>Click Item: '+item.name+'</p>');
+ 		}
+
+ function getuse(node){
+ 	//alert(node.id);
+ 	   var url="sell!getUser?id="+node.id;
+ 	  $('#userlist').load(url);  
+ }
+ 
+ 
+ </script>
+  </head>
+  <body  class="easyui-layout" >
+	<div  data-options="region:'west',split:true" style="width:140px;" class="radiusdiv">
+      <div id="objTreediv">
+         <span class="icon-home" style="padding: 0px 0px 50px 20px">消息中心</span>
+        <ul id="objtree" class="easyui-tree"></ul>
+      </div>
+	</div>
+	<div data-options="region:'center'" class="radiusdiv" >
+	   <div  id="centdiv" class="easyui-layout" data-options="fit:true">
+			<div data-options="region:'center'">
+				    	            <table id="objTable" ></table>
+								    <div id="heidendiv" style="display: none;">
+								        <div id="chisred" class="chml">
+											<div><span class="ml weidu" title="未读" value=0>未读</span></div>
+											<div ><span class="ml yidu" title="已读" value=1>已读</span></div>
+								        </div>
+								        <div id="chisdeal" class="chml">
+											<div><span class="ml nobz" title="未处理" value=0>未处理</span></div>
+											<div ><span class="ml okbz" title="已处理" value=1>已处理</span></div>
+								        </div>
+								        <div id="chlevel" class="chml">
+											<div><span class="ml" title="普通" value=0>普通</span></div>
+											<div ><span class="ml" title="一般" value=1>一般</span></div>
+											<div ><span class="ml" title="重要" value=2>重要</span></div>
+											<div ><span class="ml" title="紧急" value=3>紧急</span></div>
+								        </div>
+								        <div id="chmark" class="chml">
+											<div><span class="ml" style="background: url(style/msg/img/bj1.png) no-repeat;" title="红色" value=1>红色</span></div>
+											<div><span class="ml" style="background: url(style/msg/img/bj2.png) no-repeat;" title="水红色" value=2>水红色</span></div>
+											<div><span class="ml" style="background: url(style/msg/img/bj3.png) no-repeat;" title="粉红色" value=3>粉红色</span></div>
+											<div><span class="ml" style="background: url(style/msg/img/bj4.png) no-repeat;" title="紫色" value=4>紫色</span></div>
+											<div><span class="ml" style="background: url(style/msg/img/bj5.png) no-repeat;" title="蓝色" value=5>蓝色</span></div>
+											<div><span class="ml" style="background: url(style/msg/img/bj6.png) no-repeat;" title="黄色" value=6>黄色</span></div>
+											<div><span class="ml" style="background: url(style/msg/img/bj7.png) no-repeat;" title="白色" value=7>白色</span></div>
+								        </div>
+								    </div>
+								    <div id="cdmm" style="display: none;">
+									    <div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
+											<div data-options="name:'addem',iconCls:'adem'">写信</div>
+											<div data-options="name:'ryem',iconCls:'edem'">回复</div>
+											<div data-options="name:'delem',iconCls:'rmem'">删除</div>
+											<div data-options="name:'delem',iconCls:'rmem'">彻底删除</div>
+											<div data-options="name:'mkem',iconCls:'weidu'">
+										        <span>设为</span>
+									            <div style="width:150px;">
+													<div data-options="name:'标记',iconCls:'yidu'">已读</div>
+													<div data-options="name:'标记',iconCls:'weidu'">未读</div>
+									            </div>
+											</div>
+											<div data-options="name:'mkem',iconCls:'mark1'">
+											   <span>标记</span>
+										            <div style="width:150px;">
+														<div data-options="name:'标记',iconCls:'mark1'">红色</div>
+														<div data-options="name:'标记',iconCls:'mark2'">水红色</div>
+														<div data-options="name:'标记',iconCls:'mark3'">粉红色</div>
+														<div data-options="name:'标记',iconCls:'mark4'">紫色</div>
+														<div data-options="name:'标记',iconCls:'mark5'">蓝色</div>
+														<div data-options="name:'标记',iconCls:'mark6'">黄色色</div>
+														<div data-options="name:'标记',iconCls:'mark7'">白色</div>
+										            </div>
+											</div>
+											<div data-options="name:'move'">
+											   <span>移动至</span>
+										            <div style="width:150px;">
+														<div data-options="name:'标记'">收件箱</div>
+														<div data-options="name:'标记'">发件箱</div>
+														<div data-options="name:'标记'">垃圾箱</div>
+										            </div>
+											</div>
+									    </div>
+								    </div>
+				</div>
+			</div>
+	</div>
+  </body>
+</html>

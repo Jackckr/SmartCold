@@ -1,7 +1,6 @@
 package com.smartcold.manage.cold.controller;
 
 
-import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
@@ -10,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.service.task.ZsDevService;
-import com.smartcold.manage.cold.util.EncodeUtil;
-import com.smartcold.manage.cold.util.StringUtil;
-import com.smartcold.manage.cold.util.TimeUtil;
 
 
-
+/**
+ * 系統工具類
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping(value = "/util")
 public class UtilController extends BaseController {
@@ -54,12 +54,7 @@ public class UtilController extends BaseController {
     
     
     
-    public synchronized static boolean verifyToken(String toke){
-		   if(StringUtil.isnotNull(toke)){
-			   return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour(new Date())).equals(toke);
-		   }
-		   return true;
-	}
+  
     
     
     

@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -15,6 +16,15 @@ public class StringUtil
 
 	public static final String	EMPTY_STRING	= "";
 
+	
+	
+	 public synchronized static boolean verifyToken(String toke){
+		   if(isnotNull(toke)){
+			   return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour(new Date())).equals(toke);
+		   }
+		   return false;
+	}
+	
 	public static String getIdS(int [] oids)
 	{
 		if(oids!=null){

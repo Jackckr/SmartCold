@@ -227,7 +227,6 @@ public class QuantityTaskService  {
 		int rdcid=rdc.getId();
 		String rdcName=rdc.getName();
 		String objname[] = null;String key = null;
-		StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
 		StringBuffer devconferrMsg =new StringBuffer();
 		HashMap<String, String> coldNameMap=new HashMap<String, String>();//冷库信息
 		HashMap<String, Object> tempMap  = new HashMap<String, Object>();
@@ -241,7 +240,8 @@ public class QuantityTaskService  {
 				}
 				Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(),this.getkey(obj.getType()), startTime, endTime);//keyval.get(obj.getType())
 				if ( size == 0) {
-					 objname = null; key=obj.getType()+"_"+obj.getOid();
+					 objname = null;
+					 key=obj.getType()+"_"+obj.getOid();
 					if(coldStoragecache.containsKey(key)){
 						objname=coldStoragecache.get(obj.getOid());
 					}else{
@@ -268,6 +268,7 @@ public class QuantityTaskService  {
 				this.msMappergMapper.addsystemInform(new SystemInformEntity(2, 3, rdcid, null, 3, 0, 0, "DEV配置错误","【Warning】{RDC=" + rdcName+ "}{DEV="+devconferrMsg.toString()));//添加至系统通知
 			}
 			if(coldNameMap.size()>0){
+				StringBuffer msg =new StringBuffer( "【Warning】{RDC=" + rdcName+ "}");
 				String rdctype="";String deviceid="";
 				for (String newkey : coldNameMap.keySet()) {
 					String[] split = coldNameMap.get(newkey).split(";");
@@ -296,8 +297,6 @@ public class QuantityTaskService  {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("DEV告警解析异常!rdcid="+rdcid+",name"+rdcName);
-			System.err.println(coldNameMap);
-			System.err.println(msg.toString());
 		}
 	}
 	
@@ -364,7 +363,7 @@ public class QuantityTaskService  {
 		String table=null;
 		switch (type) {
 		case 18:
-			table= "coldstorageset";break;
+			table= "tempset";break;
 		case 2:
 			table= "coldstoragedoorset";break;
 		case 11:
