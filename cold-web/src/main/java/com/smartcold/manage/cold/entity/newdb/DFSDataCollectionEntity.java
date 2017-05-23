@@ -12,7 +12,7 @@ public class DFSDataCollectionEntity {
 
 	private Object value;
 
-	private Date time;//采集时间
+	private String time;//采集时间
 
 	private Date addtime;
 
@@ -22,14 +22,11 @@ public class DFSDataCollectionEntity {
 
 	
 	
-	public DFSDataCollectionEntity(String table, String key, Object value,
-			Date time, Date addtime) {
+	public DFSDataCollectionEntity(int id,String table, String key) {
 		super();
+		this.id=id;
 		this.table = table;
 		this.key = key;
-		this.value = value;
-		this.time = time;
-		this.addtime = addtime;
 	}
 
 
@@ -65,13 +62,31 @@ public class DFSDataCollectionEntity {
 		this.value = value;
 	}
 
-	public Date getTime() {
+
+
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+
+
+	public void setTime(String time) {
 		this.time = time;
 	}
+
+
+
+	public Date getAddtime() {
+		return addtime;
+	}
+
+
+
+	public void setAddtime(Date addtime) {
+		this.addtime = addtime;
+	}
+
+
 
 
 }

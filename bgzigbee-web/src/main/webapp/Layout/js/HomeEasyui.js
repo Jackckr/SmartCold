@@ -46,24 +46,22 @@ function InitLeftMenu() {
 			$.each(n.menus, function(j, o) {
 				var menulist ='';
 				menulist +='<ul class="navlist">';
-				
 				if(o.child && o.child.length>0)
 				{
 					$.each(o.child,function(k,p){
-						menulist += '<li><div><a ref="'+p.menuid+'" href="#" rel="' + p.url + '" ><span class="icon '+p.icon+'" >&nbsp;</span><span class="nav">' + p.menuname + '</span></a></div> </li>'
+						menulist += '<li><div><a ref="'+p.menuid+'" href="#" rel="' + p.url + '" ><span class="icon '+p.icon+'" >&nbsp;</span><span class="nav">' + p.menuname + '</span></a></div> </li>';
 					});
 				}
 				menulist += '</ul>';
-				
 				$('#menu').accordion('add', {
 					title: o.menuname,
 					content: menulist,
 					border:false,
 					iconCls: 'icon ' + o.icon
 				});
-	
-				if(j==0)
+				if(j==0){
 					selectedPanelname =o.menuname;
+				}
 		
 			});
 		}

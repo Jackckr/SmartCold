@@ -283,13 +283,13 @@ public class QuantityTaskService  {
 				tempMap.put("status", 0);
 				tempMap.put("deviceids",  deviceid.substring(0, deviceid.length()-1));
 				this.deviceMapper.upDeviceObjectStatus(tempMap);//
-				String tel= this.rdcMapper.findRdcManger(rdcid);
+				String tel=this.rdcMapper.findRdcManger(rdcid);
 				if(StringUtil.isnotNull(tel)){
 					tempMap.clear();
 					tempMap.put("rdc", "\nRDC={" + rdcName + "}");
 					tempMap.put("rdctype","deviceidtype={" +rdctype.substring(0, rdctype.length()-1) + "}");
 					tempMap.put("dev", "deviceid={"        + deviceid.substring(0, deviceid.length()-1)+ "}");
-					tempMap.put(" telephone", tel);
+					tempMap.put("telephone", tel);
 					RemoteUtil.httpPost("http://liankur.com/i/warning/warningTele",tempMap);
 				}
 			}

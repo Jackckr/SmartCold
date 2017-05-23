@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../assets/img/favicon.ico" />
+<title>链库智能管理平台</title>
+<link rel="stylesheet" type="text/css" href="sell/style/main/main.css"  />
+<link rel="stylesheet" type="text/css" href="comm/jquery/themes/default/easyui.css"  />
+<script type="text/javascript"  src="comm/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"  src="comm/jquery/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="sell/app/main.js"></script>
+</head>
+
+<body class="easyui-layout">
+    <div data-options="region:'north',border:false" style="height: 60px; background: #29bfea; overflow:hidden;">
+        <div id="all"><div id="banner">  <h1>   链库智能管理平台 <sup>Beta</sup></h1> </div> </div>
+    </div>
+    <div data-options="region:'west',split:false,title:'导航菜单'" style="width: 220px; overflow: hidden;">
+        <div id="menu">
+        </div>
+    </div>
+    
+    <div data-options="region:'center'" id="mainPanle">
+        <div id="tabs" class="easyui-tabs" fit="true" border="false">
+            <div title="首页" href=""></div>
+        </div>
+    </div>
+    <div data-options="region:'south',border:false" style="height: 25px; line-height:25px;" class="main">
+         <div id="welcome" > <span id="showtime"></span></div>
+        <div class="fr">当前在线人数：10人&nbsp;&nbsp;</div>
+    </div>
+    <!--tabs邮件菜单-->
+    <div id="mm" class="easyui-menu display" style="width:150px;">
+        <div id="tabupdate">刷新</div>
+        <div class="menu-sep"></div>
+        <div id="close">关闭</div>
+        <div id="closeall">全部关闭</div>
+        <div id="closeother">除此之外全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="closeright">当前页右侧全部关闭</div>
+        <div id="closeleft">当前页左侧全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="exit">退出</div>
+    </div>
+</body>
+</html>

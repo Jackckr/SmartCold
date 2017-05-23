@@ -36,13 +36,15 @@ import com.smartcold.manage.cold.util.TimeUtil;
 @Controller
 public class DataCollectionController extends BaseController {
 
+	private static Gson gson = new Gson();
+	
 	@Autowired
 	public   DevStatusMapper devplset;
 	
 	@Autowired
 	private StorageDataCollectionMapper storageDataCollectionDao;
 
-	private Gson gson = new Gson();
+	
 
 	/**
 	 *http DEV数据上传接口
