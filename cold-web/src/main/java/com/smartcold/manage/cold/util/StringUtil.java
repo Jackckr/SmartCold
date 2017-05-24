@@ -17,13 +17,7 @@ public class StringUtil
 	public static final String	EMPTY_STRING	= "";
 
 	
-	
-	 public synchronized static boolean verifyToken(String toke){
-		   if(isnotNull(toke)){
-			   return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour(new Date())).equals(toke);
-		   }
-		   return false;
-	}
+
 	
 	public static String getIdS(int [] oids)
 	{
@@ -47,6 +41,12 @@ public class StringUtil
 	}
 	
 	
+	 public synchronized static boolean verifyToken(String toke){
+		   if(isnotNull(toke)){
+			   return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour(new Date())).equals(toke);
+		   }
+		   return false;
+	}
 	
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)

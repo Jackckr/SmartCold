@@ -50,7 +50,7 @@ public class WarningTaskService  {
 	*/
 	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkData() {
-		 long cutttTime=System.currentTimeMillis();
+		
 		System.err.println(JSONArray.toJSONString(QuartzManager.getTempListen()));
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(TimeUtil.getBeforeMinute(30));
@@ -61,8 +61,10 @@ public class WarningTaskService  {
 			ItemValue maxTempData = this.tempWarningServer.getMAITempData(key, 0, colditem.getDeviceid(),starttime, endtime);//升溫后最小值
 			if(maxTempData==null){continue;	}//故障  没数据
 			ItemValue minTempData = this.tempWarningServer.getMAITempData(key, 1,TimeUtil.getDateTime(maxTempData.getAddtime()), starttime, endtime);
+			if(minTempData==null){minTempData=maxTempData;}
 			ScheduleJob job = QuartzManager.getJob(key);
 		    double	lastminval= minTempData.getValue()-baseTemp;
+		    long cutttTime=System.currentTimeMillis();
 			if(lastminval<0){//超温后温度下降正常 移除超温监听
 				if(job!=null&&job.getMaxval()-baseTemp<8){
 					  QuartzManager.removeJob(key);
@@ -95,6 +97,7 @@ public class WarningTaskService  {
 				   int lavel=  (int) (diffTemp/2);
 				   long croStartTime=cutttTime+(lavel>3 ?3600000:14400000);//1个小时后执行 ：4个小时后执行
 				   ItemValue overStrtTime = this.tempWarningServer.getOverStrtTime(key, baseTemp, colditem.getDeviceid(), starttime, TimeUtil.getDateTime(maxTempData.getAddtime()));
+				   if(overStrtTime==null){overStrtTime=maxTempData;}
 				   String jobName=croStartTime+"_job";//延迟一个小时执行
 				   job = new ScheduleJob(key,1,baseTemp,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);
 				   job.setStartTime(overStrtTime.getAddtime());

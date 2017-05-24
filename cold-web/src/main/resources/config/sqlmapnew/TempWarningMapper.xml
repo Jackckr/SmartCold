@@ -29,7 +29,7 @@
 	     SELECT MIN(`id`) id, `value`  ,<if test="table=='storagedatacollection'">`time`</if> `addtime` FROM ${table} where 
 	     <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
 	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>
-	     and `value`>#{minTemp} and  `key` ='Temp'  and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
+	      `value`>#{minTemp} and  `key` ='Temp'  and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
 	</select>	
 	
 	<select id="getOverTempList" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">

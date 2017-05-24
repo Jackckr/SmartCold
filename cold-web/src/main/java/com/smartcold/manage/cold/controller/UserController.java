@@ -62,23 +62,28 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/login")
 	@ResponseBody
-	public Object login(HttpServletRequest request, String userName, String password, HttpServletResponse response) {
-		// UserEntity user = userDao.findByPassword(userName, password);
+	public Object login(HttpServletRequest request, HttpServletResponse response, String userName, String password) {
+		if(StringUtil.isNull(userName)||StringUtil.isNull(password)){return new ResultDto(1, "用户名或密码错误！");}
 		UserEntity user = userService.getUserByNAndP(userName, EncodeUtil.encodeByMD5(password));
 		if (user.getId() != 0) {
 			String cookie = cookieService.insertCookie(userName);
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
-			if(roleUser==null) return new ResultDto(2, String.format("token=%s", cookie));
-//			Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
+			if(roleUser==null){//判断有没有申请
+				
+				return new ResultDto(2, String.format("token=%s", cookie));//未授权
+//				return new ResultDto(3, String.format("token=%s", cookie));//未认证
+			}
 			user.setPassword(null);
 			user.setRole(roleUser.getRoleid());
-//			user.setType(roleUser.getType());
 			return new ResultDto(0, String.format("token=%s", cookie));
 		}
 		return new ResultDto(1, "用户名或密码错误！");
 	}
+	
+	
+
 	
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

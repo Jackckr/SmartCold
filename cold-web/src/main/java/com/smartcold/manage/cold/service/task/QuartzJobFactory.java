@@ -26,9 +26,11 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * Copyright (C) DCIS 版权所有
  * 功能描述: QuartzJobFactory 
  * Create on MaQiang34 2017-5-11 15:06:34
+ *  * 仅238执行
+ * 
  */
-//@Service
-//@DisallowConcurrentExecution
+@Service
+@DisallowConcurrentExecution
 public class QuartzJobFactory implements Job {
 
 	@Autowired

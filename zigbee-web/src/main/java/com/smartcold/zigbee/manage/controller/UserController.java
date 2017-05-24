@@ -142,7 +142,7 @@ public class UserController extends BaseController {
 		if( key==day*2&&("/register.html".equals(reg)||"/registerStep.html".equals(reg))&&StringUtil.isnotNull(telephone)){
 			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
 			String signUpCode = teleVerify.signUpVerify(telephone);
-			return signUpCode ;
+			return EncodeUtil.encodeByMD5(signUpCode) ;
 		}
 		return null;
 	}

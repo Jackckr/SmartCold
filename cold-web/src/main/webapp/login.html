@@ -180,7 +180,7 @@
         </div>
         <div class="clearfix">
             <p class="pull-left"><a href="passwordEdit.html">忘记密码</a></p>
-            <p class="pull-right"><a href="registerStep.html">免费注册</a></p>
+            <p class="pull-right"><a href="register.html">免费注册</a></p>
         </div>
         <div class="row noM">
             <div class="col-xs-12 col-lg-12">
@@ -200,6 +200,7 @@
 <script type="text/javascript">
     // 	$("#loginCopyR").animate({"margin-left":"60%"}, 600);
     var mainHeight = $(window).height();
+    var url=["/main.html" +( window.location.hash != ""?window.location.hash:"#/cold360Physical"),"","/audit.html","/autIdentity.html"];
     $(".loginBody").height(mainHeight - 160);
     window.onresize = function () {
         var mainHeight = $(window).height();
@@ -241,30 +242,17 @@
             dataType: "json",
             url: "/i/user/login",
             data: {userName: userName, password: password},
-            complete: function (e) {
-                $(me).text("登录");
-                $(me).delay(500).data("isLoading", false);
-            },
+            complete: function (e) { $(me).text("登录"); $(me).delay(500).data("isLoading", false); },
             success: function (data) {
-                if (data.status == 0) {
-                    document.cookie = data.message;
+                if (data.status==1) {
+                	 $("#mention")[0].hidden = false;
+                     showErrorInfo(data.message);
+                }else{
+                	document.cookie = data.message;
                     window.sessionStorage.sikey = data.message;
-                    if (window.location.hash != "") {
-                        backUrl = window.location.hash;
-                    } else {
-                        backUrl = "#/cold360Physical";
-                    }
-                    window.location.href = "http://" + window.location.host + "/main.html" + backUrl;
+                    window.location.href =url[data.status];
                     window.Event.returnValue = false;
-                }else if (data.status ==2){
-                        document.cookie = data.message;
-                        window.sessionStorage.sikey = data.message;
-                        window.location.href = "http://" + window.location.host + "/loginStep.html";
-                        return;
-                }else {
-                    $("#mention")[0].hidden = false;
-                    showErrorInfo(data.message);
-                }
+                }	
             }
         });
     }
