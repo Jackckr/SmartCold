@@ -3,208 +3,37 @@
 body{
 	margin: 0;
 	padding: 0;
-	font: "宋体", "Arial";
+	font: "微软雅黑", "Arial";
 	font-size: 12px;
 }
 
 
 img {
-	border: 0
-}
-
-p {
-	margin: 0;
-	padding: 0
-}
-
-li {
-	list-style-type: none
-}
-
-
-.fixTable {
-	width: 100%;
-	table-layout: fixed
+	border: 0;
+	opacity: 0.5;
 }
 
 .clear {
 	clear: both
 }
 
-.redBox {
-	width: 100%;
-	height: auto;
-	background: url(img/Success_bg.png) repeat-x
-}
-
-.redBox_bg {
-	width: 960px;
-	height: 450px;
-	background: url(img/SuccessBox_bg.png) center top;
-	position: relative
-}
-
-.redBoxContent {
-	width: 820px;
-	height: auto;
-	position: absolute;
-	top: 160px;
-	left: 70px
-}
-
-.redBoxContent .redTitle {
-	width: auto;
-	height: 50px;
-	line-height: 50px;
-	color: #000;
-	font-size: 16px;
-	font-weight: bold;
-	background: url(img/ptico.gif) no-repeat 5px 17px;
-	padding-left: 30px
-}
-
-.redBoxContent .redText {
-	width: 820px;
-	height: auto;
-	padding: 10px 0 0 10px
-}
-
-.redBoxContent .redText .pOne {
-	font-size: 16px;
-	color: #f10000;
-	line-height: 30px;
-	height: 30px
-}
-
-.redBoxContent .redText .pOne a {
-	color: #008bdb;
-	text-decoration: none
-}
-
-.redBoxContent .redText .pOne a:hover {
-	text-decoration: underline;
-	color: #24a8f4
-}
-
-.redBoxContent .redText .pTwo {
-	color: #000;
-	font-weight: bold;
-	height: 30px;
-	line-height: 30px
-}
-
-.redBoxContent .redText .pThree {
-	background: url(img/cIco.gif) no-repeat 0 6px;
-	padding-left: 20px;
-	line-height: 20px
-}
-
-.redBoxContent .redText .pfour {
-	background: url(img/cIco.gif) no-repeat 0 11px;
-	padding-left: 20px;
-	height: 30px;
-	line-height: 30px
-}
-
-.redBoxContent .redText .actPanel {
-	line-height: 30px
-}
-
-.redBoxContent .redText .intoSite {
-	display: block
-}
-
-.redBoxContent .redText .intoSite img {
-	margin-top: 10px
-}
-
-.redBoxContent .actText {
-	width: auto;
-	height: auto;
-	padding: 60px 0 0 50px
-}
-
-.redBoxContent .actText .apOne {
-	background: url(img/cIco.gif) no-repeat 0 10px;
-	padding-left: 15px;
-	line-height: 30px
-}
-
-.redBoxContent .actText .apTwo {
-	background: url(img/cIco.gif) no-repeat 0 10px;
-	padding-left: 15px;
-	line-height: 30px
-}
-
-.again {
-	color: #005a84
-}
-
-.again:hover {
-	color: #1697d3
-}
-
-.notColor {
-	color: #d10005;
-	text-decoration: none
-}
-
-.notColor:hover {
-	text-decoration: underline
-}
-
 .indexBody {
 	background: url(img/bg.png) repeat-x #3a90e6
 }
 
-.manageBox {
-	width: 100%
-}
-
-.manageBox_bg {
-	width: 960px;
-	background: url(img/Managebg.png) 0 -2px no-repeat;
-	position: relative;
-	margin-left: 10%;
-}
-
-.loginfank {
-	width:300px;
-	height: 402px;
-	position: absolute;
-	top: 280px;
-	left: -80px;
-	background: url("img/fank.png") no-repeat;
-	background-size:100%; 
-}
-.loginfank3 {
-	width:300px;
-	height: 402px;
-	position: absolute;
-	top: 226px;
-	left: -80px;
-	background: url("img/fank3.png") no-repeat;
-	background-size:100%; 
-}
-
-.loginHelp {
-	width: 151px;
-	height: 40px;
-	position: absolute;
-	top: 420px;
-	right: 0
-}
-
 .LoginBox {
-	width: 564px;
+	width: 545px;
 	height: auto;
 	position: absolute;
-	top: 170px;
-	left: 242px
+	top: 25%;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
 }
 
 .LoginBoxSub {
-	width: 564px;
+	width: 545px;
 	height: 299px;
 	background: url(img/LoginBox.png)
 }
@@ -216,12 +45,12 @@ li {
 	text-align: center;
 	font-size: 30px;
 	color: #fff;
-	font-family: "方正准圆简体";
+	font-family: "微软雅黑";
 	text-shadow: 1px 1px #002b61
 }
 
 .LoginBoxSub .subContent {
-	width: 564px;
+	width: 545px;
 	height: auto;
 	margin-top:-10px;
 }
@@ -237,46 +66,24 @@ li {
 	text-align: right
 }
 
-.LoginBoxSub .subContent .subteable .input1 {
-	width: 159px;
-	height: 24px;
-	line-height: 24px;
-	background: url(img/qiye_inpt.png) left no-repeat;
-	_background-attachment: fixed;
-	border: 0;
-	padding-left: 24px; *
-	line-height: 24px
-}
-
 .LoginBoxSub .subContent .subteable .input2 {
-	width: 159px;
-	height: 24px;
-	line-height: 24px;
+	width: 132px;
+	height: 22px;
+	line-height: 22px;
 	background: url(img/yg_input.png) no-repeat;
 	_background-attachment: fixed;
 	border: 0;
 	padding-left: 24px; *
-	line-height: 24px
 }
 
 .LoginBoxSub .subContent .subteable .input3 {
-	width: 159px;
-	height: 24px;
+	width: 132px;
+	height: 22px;
 	background: url(img/mima_input.png) no-repeat;
 	_background-attachment: fixed;
 	border: 0;
 	padding-left: 24px; *
-	line-height: 24px
-}
-
-.LoginBoxSub .subContent .subteable .input4 {
-	width: 80px;
-	height: 24px;
-	background: url(img/yzm_input.png) no-repeat;
-	_background-attachment: fixed;
-	border: 0; *
-	line-height: 24px;
-	padding-left: 5px
+	line-height: 22px
 }
 
 .LoginBoxSub .subContent .subteable .validateImg {

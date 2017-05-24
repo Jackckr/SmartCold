@@ -17,6 +17,7 @@ coldWeb.controller('storageAuthentication', function ($scope, $state, $cookies, 
 	        } else {
 	            $http({method: 'POST', url: '/i/rdc/updateRdcAuth', params: {'rdcId': rdcid,'authUserId': userid } }).success(function (data) {
 	                alert(data.message);
+                    window.location.reload();
 	            });
 	        }
 	 };
