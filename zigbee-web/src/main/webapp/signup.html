@@ -105,16 +105,6 @@
 	                        </div>
 	                    </div>
 	                    <!-- 错误信息 popover end -->
-	                 <!-- <div class="form-group">
-	                    <input type="text" class="form-control" name="email" id="email" placeholder='电子邮箱'>
-	                    错误信息 popover
-	                    <div class="err-popover-out">
-	                        <div class="">
-	                            <div class="text-danger" id="email_error"></div>
-	                        </div>
-	                    </div>
-	                    错误信息 popover end
-	                </div>  -->
 	                <div class="form-group">
 	                    <input type="password" class="form-control password" name="password" placeholder='密码' onblur="checkPassword()">
 	                </div>
@@ -192,7 +182,6 @@ $(function(){
 			}else{
 				 console.log($("#username").val().length);
 				 $("#username").focus();
-				 $("#submit").attr("disabled",true);
 				 $("#username_error").html('用户名不能包含中文和特殊字符，长度不得低于6位~');
 			}
 				 return false;
@@ -227,7 +216,6 @@ $(function(){
                 victdata.extname=!data;
                 $("#phone").html(data?"该手机已经注册":"");
                 $('#authcode').attr('disabled',data);
-                $('#submit').attr("disabled",data);
 			});
 		}else{
 			 victdata.victtl=false;
@@ -291,42 +279,24 @@ $(function(){
 //返回true 表示有问题  
 function checkPassword(){
 	var password = $('input[name=password]').val().trim();
-	var password1 = $('input[name=password1]').val().trim();
-	if(password == ''){
-		$("#password_error").html("密码不能为空~");
-		$('#submit').attr("disabled",true);
-		return false;
-	}else if(password.length<6){
-		$("#password_error").html("密码长度最少六位~");
-		$('#submit').attr("disabled",true);
-		return false;
-	}else if(password.length<=16){
-		$("#password_error").html("");
-		if (/^(\d)\1+$/.test(password)){
-			$("#password_error").html("密码太过简单了~").css("color","#f80");
-			$('#submit').attr("disabled",true);
-			return false;
-		}else{
-			if(password1.length<6){
-				$("#password_error1").html("再次输入的密码长度最少六位~");
-				$('#submit').attr("disabled",true);
-				return false;
-			}else if(password1.length>=6){
-				if(password != password1){
-					$("#password_error1").html("两次密码不一致~");
-					$('#submit').attr("disabled",true);
-					return false;
-				}else{
-					$("#password_error1").html("");
-					$('#submit').attr("disabled",false);
-				}
-			}
-		}
-	}else{
-		$("#password_error").html("密码长度最多16位~").css("color","#f80");
-		$('#submit').attr("disabled",true);
-	}
-	//return true;
+	var repsword = $('input[name=password1]').val().trim();
+    if(password == ''){
+        $("#password_error").html("密码不能为空");
+        return false;
+    }else if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(password)){
+        if(password != repsword){
+            $("#password_error").html("两次密码输入不一致，请重新输入");
+            $('#submit').attr("disabled",true);
+            return false;
+        }else{
+            $("#password_error").html("");
+            $('#submit').attr("disabled",false);
+        }
+        $("#password_error").html("");
+    }else{
+        $("#password_error").html("密码长度6-16位,必须是数字字母组合");
+        return false;
+    }
 }
  $(function() {
         $('.navShow>li').hover(function() {
