@@ -48,10 +48,10 @@ var usermenus=[
   		{
   			"menuid": "5",
   			"menuname": "系统管理",
-  			"icon": "icon-add",
+  			"icon": "icon-sys",
   			"url": "demo.html",
   			"child": [
-                       {"menuid":"5_0","menuname":"设备消息","icon":"icon-role","url":"/sell/viwe/sysmessage.html"},
+                       {"menuid":"5_0","menuname":"系统消息","icon":"icon-role","url":"/sell/viwe/sysmessage.html"},
   			          ]
   		}
 ];

@@ -47,10 +47,10 @@ public class AdminController extends BaseController {
 
 	private static Map<String,Integer> Blacklist=new HashMap<String, Integer>();
 	
-	@Scheduled(cron = "0 30 1 * * ?")
-	public void checkAPStatus() {
-		Blacklist.clear();//清除黑名单
-	}
+//	@Scheduled(cron = "0 30 1 * * ?")
+//	public void checkAPStatus() {
+//		Blacklist.clear();//清除黑名单
+//	}
 	
 	
 	@RequestMapping(value = "/login",method= RequestMethod.POST)

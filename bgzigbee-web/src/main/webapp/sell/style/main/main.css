@@ -77,7 +77,7 @@ ul { list-style:none;}
 .third_ul{ list-style-type:none;margin:0px; padding:0px; display:none;}
 .third_ul li{ padding-left:20px;}
 
-.icon{ background:url(images/tabicons.png) no-repeat;width:18px; margin-right:5px; line-height:18px; display:inline-block;}
+.icon{ background:url(../img/icons.png) no-repeat;width:18px; margin-right:5px; line-height:18px; display:inline-block;}
 .icon-sys{ background-position:0px -220px;}
 .icon-set{ background-position:-380px -200px;}
 .icon-add{background-position: -20px 0px;}

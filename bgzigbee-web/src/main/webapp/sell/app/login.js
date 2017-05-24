@@ -63,20 +63,24 @@ function login() {
         password.focus();
         return false;
     }
+    $("#input_sik").val(new Date().getHours());
     $.ajax({
         url: '/i/admin/login',
         type: 'POST',
         data: $('#sellloginform').serialize(),
         error: function() {  clsyle("#ui", 2, '服务异常！'); },
         success: function(data) {
-            if (data.success) {
-                 window.location.href="sell/main.jsp"; return;
-            } else {
-                clsyle("#ui", 4, data.message);
-                changCodeImg();
-                $("#codeyzm").val('');
-                removelallsyle("#yimg", "");
-            }
+        	if (data.success) {
+                document.cookie = data.message;
+                window.sessionStorage.asikey=data.message;
+                window.location.href = "main.htm";
+                return;
+			} else {
+				 clsyle("#ui", 4, data.message);
+               changCodeImg();
+               $("#codeyzm").val('');
+               removelallsyle("#yimg", "");
+			}
         }
     });
 
