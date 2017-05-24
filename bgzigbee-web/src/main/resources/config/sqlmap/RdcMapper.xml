@@ -34,7 +34,10 @@
 	<select id="getRdcMangtlConfig" parameterType="map" resultType="map">
            select m.rdcid, concat_ws(";",m.mtelephone,m.uTelephone,m.aTelephone) as telephone from rdcmanageinfo m where rdcid=#{rdcid};
 	</select>
-	 <insert id="addRdcMangConfig" parameterType="map" >
+	<select id="getRdcById" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
+		SELECT * FROM `rdc` WHERE `id`=#{id}
+	</select>
+	<insert id="addRdcMangConfig" parameterType="map" >
         INSERT rdcmanageinfo (rdcid, muid,uuid,mtelephone,uTelephone,aTelephone) values (#{rdcid}, #{muid},#{uuid},#{mtelephone},#{uTelephone},#{aTelephone});
      </insert>
 	 <insert id="upRdcMangConfig" parameterType="map" >

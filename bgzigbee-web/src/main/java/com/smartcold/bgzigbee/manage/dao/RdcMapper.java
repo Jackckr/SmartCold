@@ -35,5 +35,6 @@ public interface RdcMapper {
 	void addRdcMangConfig(@Param("rdcid")Integer rdcid ,@Param("muid")String muid,@Param("uuid")String uuid,@Param("mtelephone")String mtelephone,@Param("uTelephone")String uTelephone,@Param("aTelephone")String aTelephone);
 	
 	void upRdcMangConfig(@Param("id")Integer id ,@Param("rdcid")Integer rdcid ,@Param("muid")String muid,@Param("uuid")String uuid,@Param("mtelephone")String mtelephone,@Param("uTelephone")String uTelephone,@Param("aTelephone")String aTelephone);
-	
+
+	RdcEntity getRdcById (Integer id);
 }
