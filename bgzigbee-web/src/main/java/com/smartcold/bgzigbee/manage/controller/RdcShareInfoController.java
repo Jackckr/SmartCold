@@ -10,9 +10,13 @@ import com.smartcold.bgzigbee.manage.util.TableData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +36,8 @@ public class RdcShareInfoController {
             Integer dataType,
             Integer stype,
             Integer province,
+            String startTime,
+            String endTime,
             String  keyword,
             String type,
             int     page,
@@ -41,9 +47,16 @@ public class RdcShareInfoController {
         }else{
             keyword=null;
         }
-
+        startTime="2017-01-01 00:00:00";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date parse =null;
+        try {
+            parse = simpleDateFormat.parse(startTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         PageHelper.startPage(page, rows);
-        List<RdcSharedInfoEntity> shareInfo = rdcShareInfoMapper.findShareInfo();
+        List<RdcSharedInfoEntity> shareInfo = rdcShareInfoMapper.findShareInfo(parse);
         PageInfo pageInfo=new PageInfo(shareInfo);
         return TableData.newSuccess(pageInfo);
     }

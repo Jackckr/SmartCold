@@ -84,8 +84,12 @@ function chclip(em) {
         $("#seache input[placeholder='请输入搜索条件...']").show();
     }
 }
-function onSelect(date){
+function startTime(date){
     queryParams.startTime=date;
+    reloaddata(queryParams);
+}
+function endTime(date){
+    queryParams.endTime=date;
     reloaddata(queryParams);
 }
 //初始化数据
@@ -93,8 +97,8 @@ $().ready(function() {
     init_table();
     $("#sel_type").combobox({
         onSelect: function(date){
-            var $val = $("#sel_type option:selected").val();
-            queryParams.type=$val;
+            var val =date.value;
+            queryParams.type=val;
             reloaddata(queryParams);
         }
     });
