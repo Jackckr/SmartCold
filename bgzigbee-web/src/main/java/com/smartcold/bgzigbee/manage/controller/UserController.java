@@ -2,6 +2,7 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.util.EncodeUtil;
+import com.smartcold.bgzigbee.manage.util.StringUtil;
+import com.smartcold.bgzigbee.manage.util.TableData;
 
 
 
@@ -29,6 +32,17 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserMapper userDao;
+	
+	 //
+    @RequestMapping(value = "/getUserByFilter", method = RequestMethod.POST)
+    @ResponseBody
+    public TableData<UserEntity> getUserByFilter(Integer type,Integer audit, String  keyword,int  page,int rows) {
+    	PageHelper.startPage(page, rows);
+    	Page<UserEntity> userList  = userDao.findAllUser(audit,type,keyword);
+    	return TableData.newSuccess(new PageInfo<UserEntity>(userList) );
+    }
+	
+	
 	@RequestMapping(value = "/findUserList", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findUserList(@RequestParam(value="pageNum",required=false) Integer pageNum,

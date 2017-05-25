@@ -21,7 +21,7 @@ function init_table(){
            {field:'addtime',title:'时间',width:40,align:'center',sortable:true},   
            {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler} 
 	         ]];
-	  initTable(gecssttit("系统消息告警","icon-msgType"), null, "POST", "../../i/systemInform/getSysByFilter", queryParams,tol, col,true, onDblClickRow);
+	  initTable(gecssttit("系统消息告警","icon-msgType"), null, "POST", "../../i/systemInform/getSysByFilter", queryParams,tol,tol, col,true, onDblClickRow);
 	  
  	  $('.datagrid-row').bind('contextmenu',function(e){e.preventDefault();$('#datamenu').menu('show', {left: e.pageX,top: e.pageY});});
 	  crspsh();

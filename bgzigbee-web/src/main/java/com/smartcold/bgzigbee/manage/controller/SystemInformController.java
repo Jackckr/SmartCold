@@ -33,6 +33,8 @@ public class SystemInformController {
         return "[{\"id\":1,\"type\":0,\"text\":\"系统消息\",\"children\":[{\"id\":11,\"stype\":0,\"iconCls\":\"icon-remove\",\"text\":\"系统消息\"}]},{\"id\":2,\"type\":1,\"text\":\"系统通知\",\"children\":[{\"id\":21,\"stype\":1,\"text\":\"系统通知\"},{\"id\":22,\"stype\":2,\"text\":\"DEV重置通知\"},{\"id\":23,\"stype\":3,\"text\":\"冷库认证通知\"},{\"id\":24,\"stype\":4,\"text\":\"冷库绑定通知\"},{\"id\":25,\"stype\":5,\"text\":\"冷库认证服务商通知\"},{\"id\":26,\"stype\":6,\"text\":\"冷库绑定货主通知\"}]},{\"id\":3,\"type\":2,\"text\":\"系统告警\",\"children\":[{\"id\":31,\"stype\":1,\"text\":\"DEV断线告警\"},{\"id\":32,\"stype\":2,\"text\":\"DEV低电量告警\"},{\"id\":33,\"stype\":3,\"text\":\"DEV配置异常告警\"}]}]";
     }
     
+    
+    
     @RequestMapping(value = "/getSysByFilter", method = RequestMethod.POST)
     @ResponseBody
     public TableData<HashMap<String, Object>> getSysByFilter(Integer type,Integer stype, Integer state, Integer isRead,String  keyword,String sort,String order, int  page,int rows) {
@@ -42,6 +44,19 @@ public class SystemInformController {
     	return TableData.newSuccess(new PageInfo<HashMap<String, Object>>(systemInformList) );
     }
     
+    
+    /**
+     * 在新的系統上线后去掉
+     * @param type
+     * @param stype
+     * @param status
+     * @param isRead
+     * @param keyword
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Deprecated
     @RequestMapping(value = "/getSystemInform", method = RequestMethod.POST)
     @ResponseBody
     public Page<HashMap<String, Object>> getObjByType(

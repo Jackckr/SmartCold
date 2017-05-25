@@ -37,12 +37,17 @@ function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isauto
 			  pagination:true,
 			  pageSize:stablesize,
 			  pageList:[tablesize,10,50,100,200,500],
-			  toolbar:tol,
-			  footer:fottol,
+			  toolbar:toptol,
+//			  footer:fottol,
 			  columns:col,
 		      onLoadError:onLoadError,
 		      onDblClickRow:onDblClickRow
 		   });
+		   if(fottol){
+			   var pager = objTable.datagrid().datagrid('getPager');	// get the pager of datagrid
+				pager.pagination(fottol);		
+		   }  
+		     
 }
 
 
