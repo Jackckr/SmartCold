@@ -53,33 +53,27 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 //		});
 //	}
    };
-   $scope.checkData=function (){ 
-  	      var password = $("#txt_password").val().trim(); 
-          var repsword = $("#txt_repsword").val().trim(); 
-           if (password.length!=0 && repsword.length!=0) {
-        	   if(password.length<6){
-        		   $("#mention2").html("密码长度不能小于6位！");
-        		   return false;
-        	   }else if(password.length>16){
-        		   $("#mention2").html("密码长度最多16位！");
-       		       return false;
-        	   }
-           	   if(password != repsword) {
-		         $("#mention2").html("两次密码输入不一致，请重新输入");
-		         return false;
-		       }
-		       else {
-		    		$scope.savedata();
-		       }
-           } else{
-        	/* if(password.length==0){
-        		 $("#txt_password").focus();
-        	 }else if(repsword.length==0){
-        		 $("#txt_repsword").focus();
-        	 }*/
-           	  $("#mention2").html("密码不能为空哦，请输入密码~");
-           }
-  	  };
+   $scope.checkData=function ($event){
+	   var password = $("#txt_password").val().trim();
+	   var repsword = $("#txt_repsword").val().trim();
+	   if(password.length==""){
+           $("#mention2").html("密码不能为空~");
+		   $('.edit3').attr("disabled",true);
+		   return false;
+	   }else if(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(password)){
+		   if(password != repsword){
+               $("#mention2").html("两次密码输入不一致，请重新输入");
+               $('.edit3').attr("disabled",true);
+			   return false;
+		   }else{
+               $("#mention2").html("");
+               $('.edit3').attr("disabled",false);
+		   }
+	   }else{
+           $("#mention2").html("密码长度6-12位,必须是数字字母组合");
+           $('.edit3').attr("disabled",true);
+	   }
+  };
    	$scope.savedata= function () {// 修改密码
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
         $.ajax({

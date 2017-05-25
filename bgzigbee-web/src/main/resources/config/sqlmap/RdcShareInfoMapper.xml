@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcShareInfoMapper" >
+    <resultMap id="shareInfo" type="RdcSharedInfoEntity">
+        <association property="rdcEntity" column="rdcID" select="com.smartcold.bgzigbee.manage.dao.RdcMapper.getRdcById"></association>
+    </resultMap>
+    <select id="findShareInfo" resultMap="shareInfo">
+        SELECT * FROM `shared_info`
+        <where>
+            <if test="startTime!=null and startTime!=''">
+                `updateTime` &gt; #{startTime}
+            </if>
+        </where>
+        ORDER BY `id` DESC
+    </select>
+
+</mapper>

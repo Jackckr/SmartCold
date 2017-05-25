@@ -8,7 +8,7 @@ var usermenus=[
         	             {"menuid": "1_2","menuname": "冷库管理","icon": "icon-cold","url": "Login.html"},
         	             {"menuid": "1_3","menuname": "认证管理","icon": "icon-authe","url": "Login.html"},
         	             {"menuid": "1_4","menuname": "冷库配置","icon": "icon-coldcf","url": "Login.html"},
-        	             {"menuid": "1_5","menuname": "共享管理","icon": "icon-role","url": "Login.html"},
+        	             {"menuid": "1_5","menuname": "共享管理","icon": "icon-role","url": "/sell/viwe/rdcShareInfo.html"},
         	             {"menuid": "1_6","menuname": "资讯管理","icon": "icon-role","url": "Login.html"}]
           } ,
           {
