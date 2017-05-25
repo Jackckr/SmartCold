@@ -2,15 +2,6 @@
 var timefile, objtree,objTable,tablesize, stablesize; 
 
 
-$.fn.datebox.defaults.formatter = function(date){
-	var y = date.getFullYear();
-	var m = date.getMonth()+1;
-	var d = date.getDate();
-	var h = date.gethours();
-	        date.get
-	return m+'-'+d+'-'+y ;
-}
-
 
 function geimgttit(tit,img){
 	return '<div class="panel-icon" style="width:auto;"><img src="'+img+'" height="18px" width="auto"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>';
@@ -27,7 +18,7 @@ function initTree(url,onSelect){
 function reloaddata(){objTable.datagrid("reload");};
 function reloaddata(queryParams){objTable.datagrid( { queryParams:queryParams });};
 function onLoadError(){objTable.datagrid('loadData',{total:0,rows:[]});};
-function initTable(title,iconCls,method,url,queryParams,tol,col,isautosize,onDblClickRow){
+function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isautosize,onDblClickRow){
          	if(isautosize){ 
          		tablesize= stablesize = parseInt((($("#objTable").height() -80) / 26));
          	}
@@ -47,6 +38,7 @@ function initTable(title,iconCls,method,url,queryParams,tol,col,isautosize,onDbl
 			  pageSize:stablesize,
 			  pageList:[tablesize,10,50,100,200,500],
 			  toolbar:tol,
+			  footer:fottol,
 			  columns:col,
 		      onLoadError:onLoadError,
 		      onDblClickRow:onDblClickRow
