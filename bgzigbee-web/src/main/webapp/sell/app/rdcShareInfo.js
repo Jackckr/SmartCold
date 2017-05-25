@@ -1,5 +1,14 @@
 var  queryParams={type:null,stype:null,startTime:null, endTime:null,keyword:null};
 
+
+function getRdcAttr(value) {
+	if (value!=undefined){
+	   return value.name;
+	}else {
+		return "暂无";
+	}
+}
+
 function cellStyler(value,row){
     return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[查看]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a>';
 }
@@ -17,7 +26,7 @@ function init_table(){
         {field:'typeText',title:'共享类型',width:40,align:'center',sortable:true},
         {field:'telephone',title:'联系电话',width:40,align:'center',sortable:true},
         {field:'detlAddress', title:'详细地址',width:40,align:'center',sortable:true},
-        {field:'updatetime',title:'更新时间',width:40,align:'center',sortable:true},
+        {field:'updatetime',title:'更新时间',width:40,align:'center',sortable:true,formatter:col_format },
         {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler}
     ]];
     initTable("冷库信息共享","icon-msgType", "POST", "../../i/rdcShareInfo/getRdcShareInfo", queryParams,"#div_filteri", col,true, onDblClickRow);
