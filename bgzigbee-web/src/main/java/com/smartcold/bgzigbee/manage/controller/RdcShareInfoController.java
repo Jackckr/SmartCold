@@ -1,23 +1,19 @@
 package com.smartcold.bgzigbee.manage.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dao.RdcShareInfoMapper;
 import com.smartcold.bgzigbee.manage.entity.RdcSharedInfoEntity;
 import com.smartcold.bgzigbee.manage.util.StringUtil;
 import com.smartcold.bgzigbee.manage.util.TableData;
+import com.smartcold.bgzigbee.manage.util.TimeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,10 +28,7 @@ public class RdcShareInfoController {
 
     @RequestMapping(value = "/getRdcShareInfo", method = RequestMethod.POST)
     @ResponseBody
-    public TableData getObjByType(
-            Integer dataType,
-            Integer stype,
-            Integer province,
+    public TableData getRdcShareInfo(
             String startTime,
             String endTime,
             String  keyword,
@@ -47,17 +40,30 @@ public class RdcShareInfoController {
         }else{
             keyword=null;
         }
-        startTime="2017-01-01 00:00:00";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date parse =null;
-        try {
-            parse = simpleDateFormat.parse(startTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Date sTime=null;
+        Date eTime=null;
+        if (StringUtil.isnotNull(startTime)){
+            sTime= TimeUtil.parseYMD(startTime);
+        }
+        if (StringUtil.isnotNull(endTime)){
+            eTime= TimeUtil.parseYMD(endTime);
         }
         PageHelper.startPage(page, rows);
-        List<RdcSharedInfoEntity> shareInfo = rdcShareInfoMapper.findShareInfo(parse);
+        List<RdcSharedInfoEntity> shareInfo = rdcShareInfoMapper.findShareInfo(type,keyword,sTime,eTime);
         PageInfo pageInfo=new PageInfo(shareInfo);
         return TableData.newSuccess(pageInfo);
+    }
+
+    @RequestMapping(value = "/getRdcShareInfoById", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getRdcShareInfoById(Integer id){
+        RdcSharedInfoEntity shareInfoById = rdcShareInfoMapper.findShareInfoById(id);
+        return shareInfoById;
+    }
+
+    @RequestMapping(value = "/delRdcShareInfoById", method = RequestMethod.POST)
+    @ResponseBody
+    public void delRdcShareInfoById(Integer id){
+        rdcShareInfoMapper.delShareInfoById(id);
     }
 }

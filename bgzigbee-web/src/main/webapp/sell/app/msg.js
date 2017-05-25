@@ -16,12 +16,12 @@ function init_table(){
 	       	  {field:'id',title:'ID',sortable:true},   
 	       	  {field:'tit',title:'标题',width:80,align:'center',sortable:true},   
 	       	  {field:'msg',title:'内容',width:80,align:'center',sortable:true},   
-           {field:'isread',title:'是否已读',width:40,align:'center',sortable:true,formatter:isred},   
-           {field:'state', title:'是否处理',width:40,align:'center',sortable:true,formatter:isdeal},   
-           {field:'addtime',title:'时间',width:40,align:'center',sortable:true},   
-           {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler} 
+              {field:'isread',title:'是否已读',width:40,align:'center',sortable:true,formatter:tool.col_isdealisred},   
+              {field:'state', title:'是否处理',width:40,align:'center',sortable:true,formatter:tool.col_isdeal},   
+              {field:'addtime',title:'时间',width:40,align:'center',sortable:true,formatter:tool.col_format},   
+              {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler} 
 	         ]];
-	  initTable(gecssttit("系统消息告警","icon-msgType"), null, "POST", "../../i/systemInform/getSysByFilter", queryParams,tol,tol, col,true, onDblClickRow);
+	  initTable(tool.gecssttit("系统消息告警","icon-msgType"), null, "POST", "../../i/systemInform/getSysByFilter", queryParams,tol,tol, col,true, onDblClickRow);
 	  
  	  $('.datagrid-row').bind('contextmenu',function(e){e.preventDefault();$('#datamenu').menu('show', {left: e.pageX,top: e.pageY});});
 	  crspsh();

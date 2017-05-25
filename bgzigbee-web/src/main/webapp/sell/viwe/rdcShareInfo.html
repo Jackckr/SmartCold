@@ -34,9 +34,9 @@
 </div>
 <div id="div_filter" style="display: none;">
     <div id="div_filteri" style="padding:2px 5px;">
-        Date From: <input class="easyui-datebox" data-options="onSelect:startTime" style="width:110px">
-        To: <input class="easyui-datebox" data-options="onSelect:endTime" style="width:110px">
-        Language:
+        Date From: <input class="easyui-datebox" id="startTime" style="width:110px"><!--data-options="onSelect:startTime"-->
+        To: <input class="easyui-datebox" id="endTime" style="width:110px">
+        共享类型:
         <select id="sel_type" class="easyui-combobox" panelHeight="auto" style="width:100px">
             <option value="">全部</option>
             <option value="出租">出租</option>
@@ -45,8 +45,41 @@
             <option value="找车">找车</option>
             <option value="求租">求租</option>
         </select>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+        <input id="search" type="text" class="easyui-textbox" data-options="prompt:'请输入关键字'" style="width:200px">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchData()">Search</a>
     </div>
 </div>
+<div id="showShareInfo" class="easyui-dialog" title="共享信息详情" style="width: 900px; height: 700px;text-align:center"
+     data-options="iconCls:'icon-save',resizable:true,modal:false,closed:true">
+        <table>
+            <tr><td>标题:</td><td id="share_title"></td></tr>
+            <tr><td>冷库名称:</td><td id="share_coldName"></td></tr>
+            <tr><td>共享类型:</td><td id="share_type"></td></tr>
+            <tr><td>单价/费用:</td><td id="share_pay"></td></tr>
+            <tr><td>车型:</td><td id="share_car"></td></tr>
+            <tr><td>详细地址:</td><td id="share_address"></td></tr>
+            <tr><td>申请量:</td><td id="share_filings"></td></tr>
+            <tr><td>联系电话:</td><td id="share_phone"></td></tr>
+            <tr><td>备注:</td><td id="share_note"></td></tr>
+        </table>
+</div>
+<!--<div id="tb" style="padding:5px;height:auto">
+    <div style="margin-bottom:5px">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
+    </div>
+    <div>
+        Date From: <input class="easyui-datebox" style="width:80px">
+        To: <input class="easyui-datebox" style="width:80px">
+        Language:
+        <input class="easyui-combobox" style="width:100px"
+               url="data/combobox_data.json"
+               valueField="id" textField="text">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+    </div>
+</div>-->
 </body>
 </html>
