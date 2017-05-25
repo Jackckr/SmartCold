@@ -375,10 +375,13 @@ function reguser(){
 	    	            $(me).delay(500).data("isLoading", false);
 	    	      }
 	    		}).success(function(data){
-    				   alert(data.message);
     				   if(data.success){
-    						window.location.href = "/autIdentity.html";
+    					    document.cookie = data.message;
+    	                    window.sessionStorage.sikey = data.message;
+    	                    window.location.href  = "/autIdentity.html";
     						window.event.returnValue=false;
+    				   }else{
+    					   alert(dta.message);
     				   }
     		   });
 		}

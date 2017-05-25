@@ -3,7 +3,6 @@ package com.smartcold.manage.cold.controller;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.smartcold.manage.cold.dao.olddb.RdcauthMapping;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.entity.olddb.CookieEntity;
@@ -35,56 +35,15 @@ public class UserController extends BaseController {
 	private RoleService roleService;
 	@Autowired
 	private RoleUserService roleUserService;
+	
+	@Autowired
+	private RdcauthMapping rdcauthMapping;
 
 	@Autowired
 	private UserMapper userDao;
 
 	@Autowired
 	private CookieService cookieService;
-
-	/**
-	 * @param @param
-	 *            userName
-	 * @param @param
-	 *            password
-	 * @param @param
-	 *            request
-	 * @param @param
-	 *            response
-	 * @param @return
-	 *            ModelAndView
-	 * @param @throws
-	 *            Exception
-	 * @return true/false
-	 * @throws @Title:
-	 *             login UserController
-	 * @Description: 用户登录
-	 */
-	@RequestMapping(value = "/login")
-	@ResponseBody
-	public Object login(HttpServletRequest request, HttpServletResponse response, String userName, String password) {
-		if(StringUtil.isNull(userName)||StringUtil.isNull(password)){return new ResultDto(1, "用户名或密码错误！");}
-		UserEntity user = userService.getUserByNAndP(userName, EncodeUtil.encodeByMD5(password));
-		if (user.getId() != 0) {
-			String cookie = cookieService.insertCookie(userName);
-			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
-			request.getSession().setAttribute("user", user);
-			response.addCookie(new Cookie("token", cookie));
-			if(roleUser==null){//判断有没有申请
-				
-				return new ResultDto(2, String.format("token=%s", cookie));//未授权
-//				return new ResultDto(3, String.format("token=%s", cookie));//未认证
-			}
-			user.setPassword(null);
-			user.setRole(roleUser.getRoleid());
-			return new ResultDto(0, String.format("token=%s", cookie));
-		}
-		return new ResultDto(1, "用户名或密码错误！");
-	}
-	
-	
-
-	
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
@@ -98,6 +57,29 @@ public class UserController extends BaseController {
 		}
 		return true;
 	}
+	
+	@RequestMapping(value = "/login")
+	@ResponseBody
+	public Object login(HttpServletRequest request, HttpServletResponse response, String userName, String password) {
+		if(StringUtil.isNull(userName)||StringUtil.isNull(password)){return new ResultDto(1, "用户名或密码错误！");}
+		UserEntity user = userService.getUserByNAndP(userName, EncodeUtil.encodeByMD5(password));
+		if (user.getId() != 0) {
+			String cookie = cookieService.insertCookie(userName);
+			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
+			user.setPassword(null);
+			user.setRole(roleUser==null?0:roleUser.getRoleid());
+			request.getSession().setAttribute("user", user);
+			response.addCookie(new Cookie("token", cookie));
+			if(roleUser==null){//判断有没有申请
+				return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==null?3:2, String.format("token=%s", cookie));//未授权
+			}
+			return new ResultDto(0, String.format("token=%s", cookie));
+		}
+		return new ResultDto(1, "用户名或密码错误！");
+	}
+	
+
+
 
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
@@ -134,23 +116,16 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
 	public Object signup(HttpServletRequest request,String username, String password,String telephone,String signUpCode) {
+		if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)) {return  ResponseData.newFailure("请输入必填信息！");}
 		try {
-			if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)) {
-				return  ResponseData.newFailure("请输入必填信息！");
-			}
 			UserEntity user = new UserEntity();
 			user.setUsername(username);
 			user.setPassword(EncodeUtil.encodeByMD5(password));
 			user.setTelephone(telephone);
-			userDao.insertUser(user);
-			UserEntity userByName = userDao.findUserByName(username);
-			HttpSession session = request.getSession();
-			session.setAttribute("user",userByName);
-			String cookie = cookieService.insertCookie(username);
-			userByName.setPassword(null);
+			this.userDao.insertUser(user);
+			String cookie = this.cookieService.insertCookie(username);
 			return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ResponseData.newFailure("注册失败！请稍后重试！");

@@ -4,6 +4,10 @@ public class UserEntity {
 
 	private int id;
 
+	private int role;//1 普通用户 2 集团用户 3 超级管理员
+	
+	private int type;//0:360用户 1:货主  2 :服务商
+	
 	private String username;
 
 	private String password;
@@ -12,9 +16,28 @@ public class UserEntity {
 
 	private String email;
 
-	private int role;
 	
-	private int type;//1 360用户  2 服务商
+	
+	public UserEntity() {
+		super();
+	}
+
+	public UserEntity(int id, int type) {
+		super();
+		this.id = id;
+		this.type = type;
+	}
+
+	public UserEntity(int role, int type, String username,
+			String password, String telephone, String email) {
+		super();
+		this.role = role;
+		this.type = type;
+		this.username = username;
+		this.password = password;
+		this.telephone = telephone;
+		this.email = email;
+	}
 
 	public int getId() {
 		return id;

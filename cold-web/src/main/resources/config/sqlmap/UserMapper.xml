@@ -139,7 +139,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
     <update id="updateTypeById">
-        UPDATE `user` SET `type`=#{type} where `id`=#{id}
+        UPDATE `user` SET `type`=#{type} where `id`=#{id};
     </update>
     <!-- ourself -->
   <!-- 通过用户名与密码查找用户 -->

@@ -5,6 +5,8 @@ import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.dto.UploadFileEntity;
 import com.smartcold.manage.cold.entity.olddb.*;
 import com.smartcold.manage.cold.service.FtpService;
+import com.smartcold.manage.cold.util.SetUtil;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
+import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by qiangzi on 2017/5/14.
@@ -33,62 +38,47 @@ public class LoginStepController {
     private FileDataMapper fileDataDao;
     @Resource
     private MessageRecordMapping messageRecordMapping;
+    
     @Resource
-    private ColdStorageCertificationMapping coldStorageCertificationMapping;
-    @RequestMapping(value = "/getAllRdc",method = RequestMethod.POST)
-    @ResponseBody
-    public Object getAllRdc(String words) {
-        if (words!=null && words.trim().equals("")){
-            words=null;
-        }else if (words!=null && !words.trim().equals("")){
-            words="%"+words+"%";
-        }
-        return rdcMapper.getRdcByDate(words);
-    }
+    private RdcauthMapping rdcauthMapping;
+  
 
     @RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
     @ResponseBody
-    public Object attestationRdc( MultipartFile authfile0,
-                                @RequestParam(value = "rdcId", required = false) Integer rdcId,
-                                @RequestParam(value = "roleType", required = false) Integer roleType,
-                                HttpSession session) {
-        UserEntity user = (UserEntity) session.getAttribute("user");
-        user.setType(roleType);
-        userMapper.updateTypeById(user);
-
-        if (roleType==0){
-            MultipartFile authfile = authfile0;
-
-            if (authfile != null) {
-                Rdc rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
-                String dir = String.format("%s/rdc/%s", baseDir, rdcId);
-                String fileName = String.format("rdc%s_%s_%s.%s", rdcId, user.getId(), new Date().getTime(), "jpg");
-                UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
-                ftpService.uploadFile(uploadFileEntity);
-                FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,
-                        FileDataMapper.CATEGORY_AUTH_PIC, rdcEntity.getId(), fileName);
-                if(user!=null){arrangeFile.setDescription(user.getType()+"");}//标志为服务商
-                fileDataDao.saveFileData(arrangeFile);
-                FileDataEntity fileDataEntity = fileDataDao.findByName(fileName);
-
-                ColdStorageCertification coldStorageCertification = new ColdStorageCertification();
-                coldStorageCertification.setUid(user.getId());
-                coldStorageCertification.setRdcId(rdcId);
-                coldStorageCertification.setCertFile(fileDataEntity.getId()+"");
-                coldStorageCertification.setAddTime(new Date());
-                coldStorageCertificationMapping.insertCertification(coldStorageCertification);
-                return new ResultDto(1,"尊敬的用户，您已提交成功，受理编号为<span id=\"proNo\">"+fileDataEntity.getId()+"</span>。") ;
-            }		// 上传认证后更改冷库审核状态为待审核
-        }else {
-            MessageRecord messageRecord = new MessageRecord();
-            messageRecord.setUid(user.getId());
-            messageRecord.setRdcId(rdcId);
-            messageRecord.setTitle("请求冷库认证");
-            messageRecord.setMessage(user.getUsername()+"请求冷库认证");
-            messageRecord.setAddTime(new Date());
-            messageRecordMapping.insertMessageRecord(messageRecord);
-            return new ResultDto(2,"您的申请已提交成功！等待冷库主审核！");
-        }
-        return new ResultDto(0,"");
+    public Object attestationRdc(int userId,String userName, int rdcId,  int type,MultipartFile authfile) {
+    	try {
+			this.userMapper.updateTypeById(new UserEntity(userId,type));
+			if (type==0){
+			    if (authfile != null) {
+			        String dir = String.format("%s/rdc/%s", baseDir, rdcId);
+			        String fileName = String.format("rdc%s_%s_%s.%s", rdcId,userId, new Date().getTime(), "jpg");
+			        UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
+			        this.ftpService.uploadFile(uploadFileEntity);
+			        FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,FileDataMapper.CATEGORY_AUTH_PIC, rdcId, fileName);
+	                arrangeFile.setDescription(type+"");
+	                this.fileDataDao.saveFileData(arrangeFile);
+			        RdcAuthEntity auchedata = new RdcAuthEntity();
+			        auchedata.setType(type);
+			        auchedata.setUid(userId);
+			        auchedata.setRdcid(rdcId);
+			        auchedata.setImgurl(dir + File.separator + fileName);
+			        this.rdcauthMapping.insertCertification(auchedata);
+			        return new ResultDto(1,"尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。") ;
+			    }	// 上传认证后更改冷库审核状态为待审核
+			    return new ResultDto(0,"");
+			}else {
+			    MessageRecord messageRecord = new MessageRecord();
+			    messageRecord.setUid(userId);
+			    messageRecord.setRdcId(rdcId);
+			    messageRecord.setTitle("请求冷库认证");
+			    messageRecord.setMessage(userName+"请求成为您的"+(type==1?"货主":"维修商")+",请及时处理！");
+			    messageRecord.setAddTime(new Date());
+			    this.messageRecordMapping.insertMessageRecord(messageRecord);
+			    return new ResultDto(1,"您的申请已提交成功！请耐心等待！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultDto(0,"");
+		}
     }
 }

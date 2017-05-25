@@ -57,6 +57,15 @@ public class RdcController {
 		return rdcService.findRdcByUserid(userid);
 	}
 	
-	
+	  @RequestMapping(value = "/getAllRdc",method = RequestMethod.POST)
+	  @ResponseBody
+	  public Object getAllRdc(String words) {
+	        if (words!=null && words.trim().equals("")){
+	            words=null;
+	        }else if (words!=null && !words.trim().equals("")){
+	            words="%"+words+"%";
+	        }
+	        return rdcMapper.getRdcByDate(words);
+	    }
 	
 }
