@@ -44,7 +44,9 @@
 		                    </div>
 		                </div>-->
 		                <strong>选择冷库：</strong>
-		                <select id="rdcShow" class="select_gallery" style="width:50%;"> </select>
+		                <select id="rdcShow" class="select_gallery" style="width:50%;">
+		                  <option  ng-repeat="rdc in rdclist" value="{{rdc.id}}">{{rdc.text}}</option>
+		                </select>
 		                <div >
 		                    <div>
 		                        <div class="text-left">
@@ -55,15 +57,15 @@
 		                            <p>4、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
 		                        </div>
 		                        <div style="height: 270px;" id="picPut">
-		                            <div >
+		                            <div  class="col-md-3">
+		                                <img id="img0" style="position:relative;left: 80px;top: 20px;max-height: 250px;max-width: 250px;">
+		                            </div>
+		                            <div class="col-md-8">
 		                                <button class="btn btn-success" ngf-select="addAuthFiles($files)" type="file"
 		                                        ng-model="authfiles"
 		                                        name="authfiles">上传图片
 		                                </button>
 		                                <small class="text-warning" style="margin-left:30px;">*仅1张(必须为.jpg,.png,.jpeg格式)</small>
-		                            </div>
-		                            <div>
-		                                <img id="img0" style="position:relative;left: 80px;top: 20px;max-height: 250px;max-width: 250px;">
 		                            </div>
 		                        </div>
 		                        <label ng-repeat="authfile in totalauthfiles"><span
@@ -74,7 +76,6 @@
 		                    <div class="clearfix btn_c">
 								<span class="btn_prep bp"><button type="button"  class="btn btn-warning">上一步</button></span>
 		                        <span class="btn_back bp"><button type="button" class="btn btn-success" id="attestationRdc" ng-click="submit()">下一步</button></span>
-		                        <!--<span class="bp"><button type="button" onclick="$('.addRdc').show()" id="addRdc" class="btn btn-primary">添加冷库</button></span>-->
 		                    </div>
 		                </div>
 		        </div>
@@ -104,24 +105,19 @@
 <script src="assets/plugins/select2/select2.min.js"></script>
 <script src="assets/plugins/jquery-step/js/jquery.step.js"></script>
 <script type="text/javascript">
-        var roleType=0;
-        $(".select_gallery").select2();
         var step= $("#myStep").step({  animate:true,initStep:1,  speed:1000 });
         $(".btn_prep>button").click(function(event) { step.preStep(); });
-       
         $("#applyBtn,#submitBtn,.btn_back>.btn").click(function(event) { step.nextStep(); });
         $("#goBtn").click(function(event) { step.goStep(3);});
        function addMore(){ $(".moreInfo").toggle(); }
-       
+       $(".select_gallery").select2({ ajax: {cache: true, url: "/i/rdc/getRdcByName",dataType: 'json',delay: 250,  data: function (params) {  return {  keywords: params.term, }; }, processResults: function (data) { return { results: data }; } }  });
        var app=angular.module('app',['ngFileUpload']);
         app.controller("autIdentity", function ($rootScope, $scope, $http, Upload) {
     	$scope.user=undefined;
-    	$scope.words=undefined;
-    	
+    	$scope.words=null;
     	$scope.finduser=function(){ $http({method:'GET',url:'/i/user/findUser'}).success(function (data) { 
     	 if(data.id!=0){ 
     		$scope.user=data;
-    		$scope.checkuser();
     	}else{
 //     		window.location.href ="login.html";return; 
     		}}); };
@@ -130,35 +126,103 @@
        		$scope.user.type=type;
        		step.nextStep();
        	};	
-    	$scope.getrdcList=function(){
-//     		 var words = $("#rdcName").val();
-//              $.ajax({
-//                  type: "POST",
-//                  dataType: "json",
-//                  data:{"words":words},
-//                  url: "/i/loginStep/getAllRdc",
-//                  success:function (data) {
-//                      var val = "";
-//                      for (var i=0;i<data.length;i++){
-//                          val+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
-//                      }
-//                      $("#rdcShow").empty().html(val);
-//                  }
-//              })
+       	
+       	
+       	
+        $scope.totalauthfiles = [];
+        $scope.isDisabled = false;
 
-    		$http.get('/i/rdc/getRdcByFilter',{params: {keywords:$scope.words}}).success(function(data,status,config,headers){
-    			$scope.rdclist = data;
-//     			$scope.vm.choseRdc = data[0];
-//     			$scope.rdclist[0].isOn = true;
-//     			$scope.changeRdc();
-    		});
-    	};
-    	
-    	
+        $scope.addAuthFiles = function (files) {
+            for(var j=0,fileLen=files.length;j<fileLen;j++){
+                var _file=files[j].name;
+                var i=_file.lastIndexOf('.');
+                var len=_file.length;
+                var extEndName=_file.substring(i+1, len);
+                var extName="GIF,BMP,JPG,JPEG,PNG";
+                //首先对格式进行验证
+                if(extName.indexOf(extEndName.toUpperCase())==-1) {
+                    alert("只能上传"+extName+"格式的文件");
+                    return false
+                }else if(files[j].size > 10485760){
+                    alert("最大只能上传10M的图片");
+                    return false;
+                }else{
+                    if ($scope.totalauthfiles.length + files.length > 1) {
+                        $scope.totalauthfiles = [];
+                    }
+                    $scope.totalauthfiles = $scope.totalauthfiles.concat(files);
+                    var objUrl = getObjectURL(files[0]) ;
+                    //console.log("objUrl = "+objUrl) ;
+                    if (objUrl) {
+                        $("#img0").attr("src", objUrl) ;
+                    }
+                }
+            }
+
+        }
+
+        $scope.dropauth = function (authfile) {
+            angular.forEach($scope.totalauthfiles, function (item, key) {
+                if (item == authfile) {
+                    $scope.totalauthfiles.splice(key, 1);
+                    $("#img0").removeAttr("src") ;
+                }
+            })
+        }
+
+        //建立一个可存取到该file的url
+        function getObjectURL(file) {
+            var url = null ;
+            if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            } else if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            }
+            return url ;
+        }
+
+        function checkCommit(){
+            if($scope.totalauthfiles.length !== 1)
+                return false;
+            else
+                return true;
+        }
+
+        $scope.submit = function () {
+        	debugger;
+            var $rdcShow= $("#rdcShow option:selected");
+            if(confirm("你要提交认证的冷库是:"+$rdcShow[0].innerHTML)){
+                if ($scope.totalauthfiles.length) {
+                    $scope.isDisabled = true;
+                    var data = {
+                        authfile0: null,
+                        rdcId:$rdcShow.val(),
+                        roleType:roleType
+                    };
+                    data["authfile" + 0] = $scope.totalauthfiles[0];
+
+                    Upload.upload({
+                        url: '/i/authenUser/attestationRdc',
+                        headers: {'Content-Transfer-Encoding': 'utf-8'},
+                        data: data
+                    }).then(function (resp) {
+                        $scope.isDisabled = false;
+                        $("#auCode").html(resp.data.message);
+                    });
+                } else {
+                    alert("请上传冷库认证图片再提交!");
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        };
+       	
+       	
+       	
         $scope.finduser();
-    	
-    	
-
        });
 </script>
 </body>

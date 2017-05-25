@@ -80,7 +80,6 @@ public class UserController extends BaseController {
 	
 
 
-
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request) {

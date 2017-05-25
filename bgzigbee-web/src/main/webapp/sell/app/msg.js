@@ -1,49 +1,63 @@
+//设置模型
+var isredMode=[{val:-1,text:"===全部==="},{val:0,text:"未读"},{val:1,text:"已读"}];//isRead
+var isHandleMode=[{val:-1,text:"===全部==="},{val:0,text:"未处理"},{val:1,text:"已处理"}];//status
+var MsgtypeMode=[{val:-1,text:"===全部==="},{val:0,text:"系统消息"},{val:1,text:"系统通知"},{val:2,text:"系统告警"}];//type
+var MsgstypeMode= [[],
+                   [{val:-1,text:"======全部======"},{val:"1",text:"系统通知"},{val:"2",text:"DEV重置通知"},{val:"3",text:"冷库认证通知"},{val:"4",text:"冷库绑定通知"},{val:"5",text:"冷库认证服务商通知"},{val:"6",text:"冷库绑定货主通知"}],
+                   [{val:-1,text:"======全部======"},{val:"1",text:"DEV断线告警"},{val:"2",text:"DEV低电量告警"},{val:"3",text:"DEV配置异常告警"}]];//stype
+//查询模型
 var  queryParams={type:null,stype:null,isRead:null, state:null,keyword:null};
-
-function cellStyler(value,row){
+function row_Tool(value,row){
 	return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[查看]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a>';
  }
 
-function init_tree(){
-	initTree("../../i/systemInform/getMsgType",treeselect);//
+
+function initsel_lister(){
+	  $("#sel_isread").combobox({data:isredMode,value:-1,   onChange:function(isRead){ queryParams.isRead=isRead==-1?null:isRead; reloaddata(queryParams);}});
+	  $("#sel_state").combobox({data:isHandleMode,value:-1, onChange:function(state){ queryParams.state=state==-1?null:state; reloaddata(queryParams);}});
+	  $('#sel_stype').combobox({data:[{val:-1,text:"======全部======"}],value:-1, onChange:function(stype){ queryParams.stype=stype==-1?null:stype;reloaddata(queryParams);}});
+	  $('#sel_type').combobox({  
+          data:MsgtypeMode,value:-1, 
+          onChange:function(val){  
+        	  if(val==-1||val==0){
+        		  if(val==0){ queryParams.type=0;}else{ queryParams.type=null; }
+        		  $("#sel_stype").combobox({data: [{val:-1,text:"======全部======"}],value:-1});
+        	  }else{
+        		  queryParams.type=val;
+        		  $("#sel_stype").combobox({data: MsgstypeMode[val] });
+        	  }
+        	  reloaddata(queryParams);
+          } 
+       });  
 }
 function init_table(){
-	   var tol=[
-	            {'iconCls': 'icon_rem','handler': '','text':'删除'},
-		    "-",{'iconCls': 'icon-reload','handler': 'reloaddata','text':'刷新'},"-"];
+	   var fottol=[ {'iconCls': 'icon_rem','handler': '','text':'删除'}, {'iconCls': 'icon_rem','handler': '','text':'全部删除'}, "-",];
 	   var col=[[ 
-	       	  { field:'ck',checkbox:true},
-	       	  {field:'id',title:'ID',sortable:true},   
-	       	  {field:'tit',title:'标题',width:80,align:'center',sortable:true},   
-	       	  {field:'msg',title:'内容',width:80,align:'center',sortable:true},   
-              {field:'isread',title:'是否已读',width:40,align:'center',sortable:true,formatter:tool.col_isdealisred},   
-              {field:'state', title:'是否处理',width:40,align:'center',sortable:true,formatter:tool.col_isdeal},   
-              {field:'addtime',title:'时间',width:40,align:'center',sortable:true,formatter:tool.col_format},   
-              {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler} 
+	       	   {field:'ck',checkbox:true},
+	       	   {field:'id',title:'ID',sortable:true},   
+	       	   {field:'tit',title:'标题',width:10,sortable:true},   
+	       	   {field:'msg',title:'内容',width:40,sortable:true},   
+               {field:'isread',title:'是否已读',width:5,align:'center',sortable:true,formatter:tool.col_isdealisred},   
+               {field:'state', title:'是否处理',width:5,align:'center',sortable:true,formatter:tool.col_isdeal},   
+               {field:'addtime',title:'时间',width:5,align:'center',sortable:true,formatter:tool.col_format},   
+               {field:'hand',title:'操作',width:10,align:'center',formatter:row_Tool} 
 	         ]];
-	  initTable(tool.gecssttit("系统消息告警","icon-msgType"), null, "POST", "../../i/systemInform/getSysByFilter", queryParams,tol,tol, col,true, onDblClickRow);
+	  initTable(tool.gecssttit("系统消息告警","icon-msgType"), null, "POST", "../../i/systemInform/getSysByFilter", queryParams,"#div_filteri",null, col,true, onDblClickRow);
 	  
  	  $('.datagrid-row').bind('contextmenu',function(e){e.preventDefault();$('#datamenu').menu('show', {left: e.pageX,top: e.pageY});});
 	  crspsh();
 }
 
-function treeselect(node){
-	if(node!=null){ 
-		if(node.type){
-			queryParams.type=node.type;queryParams.stype=null;
-		}else if(node.stype){
-			queryParams.type=null;queryParams.stype=node.stype;
-		}
-		reloaddata(queryParams);
-	}
+function onDblClickRow(index,field){
+	
+	
 }
-function onDblClickRow(index,field){}
 
 /**
  * 动态组件 无需关心
  */
 function crspsh() {
-    $('.datagrid-toolbar').append("<div id=\"seache\"style=\"margin-top:-24px;float:right;margin-right:20px;\"><input id=\"fddata\"class=\"easyui-searchbox\" val=\"ml\" data-options=\"prompt:'请输入搜索条件...',searcher:finddatatb\"style=\"width:300px;display:inline;\"></input><div id=\"mm\"style=\"width:100px\" ></div></div>");
+    $('.datagrid-toolbar').append("<div id=\"seache\"style=\"float:right;margin-right:20px;\"><input id=\"fddata\"class=\"easyui-searchbox\" val=\"ml\" data-options=\"prompt:'请输入搜索条件...',searcher:finddatatb\"style=\"width:300px;display:inline;\"></input><div id=\"mm\"style=\"width:100px\" ></div></div>");
     var muits = new Array(); 
     var fields = $('#objTable').datagrid('getColumnFields');
     for (var i = 0; i < fields.length; i++) {
@@ -55,7 +69,7 @@ function crspsh() {
     }
     $('#mm').html(String.prototype.concat.apply("", muits));
     $('#fddata').searchbox({menu: '#mm' });
-    $('#seache').appendTo('.datagrid-toolbar');
+    $('#seache').appendTo('#div_filteri');
 } //简单查询
 function finddatatb(value, name) {
     if (value.trim() != "" && name != "") { objTable.datagrid('reload', {coleam:name,colval:name});}
@@ -91,6 +105,6 @@ function chclip(em) {
 
 //初始化数据
 $().ready(function() {
-	   init_tree();
-       init_table();
+	initsel_lister();
+    init_table();
 });//初始化数据

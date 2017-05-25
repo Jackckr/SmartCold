@@ -58,10 +58,9 @@ public class RdcController {
 		return rdcService.findRdcByUserid(userid);
 	}
 	
-	  @RequestMapping(value = "/getRdcByFilter",method = RequestMethod.POST)
+	  @RequestMapping(value = "/getRdcByName",method = RequestMethod.GET)
 	  @ResponseBody
 	  public Object getRdcByName(String keywords) {
-	        if (StringUtil.isnotNull(keywords)){keywords="%"+keywords+"%"; }else {keywords=null;}
 	        return rdcMapper.getRdcByName(keywords);
 	    }
 	

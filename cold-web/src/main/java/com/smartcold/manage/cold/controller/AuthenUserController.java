@@ -1,32 +1,35 @@
 package com.smartcold.manage.cold.controller;
 
-import com.smartcold.manage.cold.dao.olddb.*;
-import com.smartcold.manage.cold.dto.ResultDto;
-import com.smartcold.manage.cold.dto.UploadFileEntity;
-import com.smartcold.manage.cold.entity.olddb.*;
-import com.smartcold.manage.cold.service.FtpService;
-import com.smartcold.manage.cold.util.SetUtil;
+import java.io.File;
+import java.util.Date;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-
-import java.io.File;
-import java.util.Date;
-import java.util.List;
+import com.smartcold.manage.cold.dao.olddb.FileDataMapper;
+import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
+import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcauthMapping;
+import com.smartcold.manage.cold.dao.olddb.UserMapper;
+import com.smartcold.manage.cold.dto.ResultDto;
+import com.smartcold.manage.cold.dto.UploadFileEntity;
+import com.smartcold.manage.cold.entity.olddb.FileDataEntity;
+import com.smartcold.manage.cold.entity.olddb.MessageRecord;
+import com.smartcold.manage.cold.entity.olddb.RdcAuthEntity;
+import com.smartcold.manage.cold.entity.olddb.UserEntity;
+import com.smartcold.manage.cold.service.FtpService;
 
 /**
  * Created by qiangzi on 2017/5/14.
  */
 @Controller
-@RequestMapping(value = "/loginStep")
-public class LoginStepController {
+@RequestMapping(value = "/authenUser")
+public class AuthenUserController {
     private static String baseDir = "picture";
     @Resource
     private RdcMapper rdcMapper;
