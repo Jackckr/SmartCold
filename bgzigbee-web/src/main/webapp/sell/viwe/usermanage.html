@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>用户管理</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../app/comm.js"></script>
+    <script type="text/javascript"  src="../app/usermanage.js"></script>
+  </head>
+  
+ <body>
+    <div id="user_filter" style="padding:5px 0;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_add'" onclick="$('#userForm').dialog('open')">添加用户</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
+        <a href="#" class="easyui-linkbutton">Text Button</a>
+    </div>
+    <form id="userForm" class="easyui-dialog" title="添加用户" closed="true"
+         data-options=" iconCls:'icon-save',
+                        buttons: [{
+                            text:'提交',
+                            iconCls:'icon-ok',
+                            handler:function(){
+                                $('#userForm').submit();
+                            }
+                        },{
+                            text:'取消',
+                            handler:function(){
+                                $('#userForm').dialog('close');
+                            }
+                        }]"
+         style="width:400px;padding:10px;display: none;">
+        <table width="366">
+            <tr>
+                <td>用户名:</td>
+                <td><input class="easyui-validatebox textbox" name="username" id="username"
+                           data-options="prompt:'请输入用户名.',required:true,validType:'length[6,24]'"
+                           style="width: 100%;height: 24px;">
+                    <!--validType="remote['../../i/user/checkUserName','value']"
+                    invalidMessage="用户名已存在"-->
+                </td>
+            </tr>
+            <tr>
+                <td>密码:</td>
+                <td><input class="easyui-validatebox textbox" type="password" name="password"
+                           data-options="prompt:'请输入密码.',required:true,validType:'length[6,16]'"
+                           style="width: 100%;height: 24px;">
+                </td>
+            </tr>
+            <tr>
+                <td>手机号:</td>
+                <td><input class="easyui-validatebox textbox" name="telephone"
+                           data-options="prompt:'请输入手机号',required:true,validType:'length[11,11]'"
+                           style="width: 100%;height: 24px;">
+                </td>
+            </tr>
+            <tr>
+                <td>邮箱:</td>
+                <td><input class="easyui-validatebox textbox" name="email"
+                           data-options="prompt:'请输入邮箱.',required:false,validType:'email'"
+                           style="width: 100%;height: 24px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="objTable" class="fill"></table>
+
+ </body>
+   <script type="text/javascript">
+
+    </script>
+</html>

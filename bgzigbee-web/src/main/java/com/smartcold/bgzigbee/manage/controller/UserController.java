@@ -111,9 +111,9 @@ public class UserController extends BaseController {
 		userDao.insertUser(user);
 		return new BaseDto(0);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/checkUserName", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkUserName")
 	public Object checkUserName(@RequestParam("value") String username) {
 		username = StringUtils.trimAllWhitespace(username);
 		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();

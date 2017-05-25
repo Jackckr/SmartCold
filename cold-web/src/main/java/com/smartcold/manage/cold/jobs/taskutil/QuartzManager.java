@@ -16,7 +16,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 
-import com.smartcold.manage.cold.service.task.QuartzJobFactory;
+import com.smartcold.manage.cold.service.task想·.QuartzJobFactory;
   
 /*
  * Copyright (C) DCIS 版权所有

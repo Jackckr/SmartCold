@@ -4,7 +4,7 @@ var user={id:1,type:1,name:'lxj'};
 var usermenus=[
           {"menuid": "1","icon": "icon-sys","menuname": "链库管理"
         	  ,"child": [
-        	             {"menuid": "1_1","menuname": "用户管理","icon": "icon-user","url": "/sell/viwe/usermager.html"},
+        	             {"menuid": "1_1","menuname": "用户管理","icon": "icon-user","url": "/sell/viwe/usermanage.html"},
         	             {"menuid": "1_2","menuname": "冷库管理","icon": "icon-cold","url": "Login.html"},
         	             {"menuid": "1_3","menuname": "认证管理","icon": "icon-authe","url": "Login.html"},
         	             {"menuid": "1_4","menuname": "冷库配置","icon": "icon-coldcf","url": "Login.html"},

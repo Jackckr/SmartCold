@@ -21,8 +21,13 @@
 .icon_rem   {background:url('icons/2.png') no-repeat;}
 .icon_rem2  {background:url('icons/2_1.png') no-repeat;}
 .icon_edit  {background:url('icons/3.png') no-repeat;background-size:14px 15px;}
+.icon-ok{
+    background:url('icons/ok.png') no-repeat center center;
+}
 
 
 /*消息中心*/
 .objicon{display: inline-block;width: 20px;height: 20px;}
-.icon-msgType{    background: url(img/icos.png) no-repeat scroll -1350px -391px rgba(0, 0, 0, 0);} 
+.icon-msgType{    background: url(img/icos.png) no-repeat scroll -1350px -391px rgba(0, 0, 0, 0);}
+
+
