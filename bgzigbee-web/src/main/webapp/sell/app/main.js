@@ -280,11 +280,13 @@ function Time() {
     setTimeout(Time, 1000);
 }
 
+
+
+
 $(function () {
     tabClose();
     tabCloseEven();
 	Time();
-
 	$("#navmain li").first().addClass("active");
     $('#navmain li').click(function () {
         $('#navmain li').removeClass("active");
@@ -293,4 +295,4 @@ $(function () {
         InitLeftMenu();
     });
 	InitLeftMenu();
-})
+});

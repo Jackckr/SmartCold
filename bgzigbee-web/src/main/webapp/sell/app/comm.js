@@ -1,8 +1,7 @@
 ﻿var curr_time = new Date(); 
 var timefile, objtree,objTable,tablesize, stablesize; 
-
-
-Date.prototype.Format = function (fmt) { 
+if(Date.prototype.Format==undefined){
+Date.prototype.Format = function (fmt) { //author: meizz 
     var o = {
         "M+": this.getMonth() + 1, //月份 
         "d+": this.getDate(), //日 
@@ -17,27 +16,24 @@ Date.prototype.Format = function (fmt) {
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 };
-
-
-function geimgttit(tit,img){
-	return '<div class="panel-icon" style="width:auto;"><img src="'+img+'" height="18px" width="auto"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>';
-}
-function gecssttit(tit,imgcss){
-	return '<div class="panel-icon '+imgcss+' " style="height: 20px; width: 20px;"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>';
 }
 
-
-function initTree(url,onSelect){
-	objtree=$('#objtree').tree({url:url,method:'post',animate:true,lines:true, onSelect:onSelect});
+var tool={
+		col_format:function(val){return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间
+		geimgttit:function(tit,img){return '<div class="panel-icon" style="width:auto;"><img src="'+img+'" height="18px" width="auto"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>'; },
+		gecssttit:function(tit,imgcss){return '<div class="panel-icon '+imgcss+' " style="height: 20px; width: 20px;"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>'; },
+		col_isred:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已读"></span>':'<span class="icon-tb icon-offline" title="未读"></span>';},
+        col_isdeal:function(value,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已处理"></span>':'<span class="icon-tb icon-offline" title="未处理"></span>';},
 };
 
+
+
+function initTree(url,onSelect){objtree=$('#objtree').tree({url:url,method:'post',animate:true,lines:true, onSelect:onSelect});};
 function reloaddata(){objTable.datagrid("reload");};
 function reloaddata(queryParams){objTable.datagrid( { queryParams:queryParams });};
 function onLoadError(){objTable.datagrid('loadData',{total:0,rows:[]});};
 function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isautosize,onDblClickRow){
-         	if(isautosize){ 
-         		tablesize= stablesize = parseInt((($("#objTable").height() -80) / 26));
-         	}
+         	if(isautosize){ tablesize= stablesize = parseInt((($("#objTable").height() -80) / 26));	}
 			if(tablesize<10){tablesize=stablesize=10;}
 		     objTable=$('#objTable').datagrid({
 			  url:url,
@@ -65,16 +61,6 @@ function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isauto
 		   }  
 		     
 }
-
-
-var tool={
-		col_format:function(time){time.Format("yyyy-MM-dd HH:mm:ss");},
-		col_isred:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已读"></span>':'<span class="icon-tb icon-offline" title="未读"></span>';},
-        col_isdeal:function(value,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已处理"></span>':'<span class="icon-tb icon-offline" title="未处理"></span>';},
-};
-
-
-
 
 
 

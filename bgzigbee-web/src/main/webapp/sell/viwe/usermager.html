@@ -6,9 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
     <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
     <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
-    <style type="text/css">
-    *{margin: 0px;padding: 0px;}
-    </style>
+    
   </head>
   
  <body>
@@ -28,8 +26,8 @@
       	   {field:'id',title:'id',sortable:true},   
       	   {field:'name',title:'发件人',width:80,align:'center',sortable:true},   
       	   {field:'tit',title:'标题',width:80,align:'center',sortable:true},   
-            {field:'isred',title:'是否已读',width:40,align:'center',sortable:true,formatter:isred},   
-            {field:'isdeal', title:'是否处理',width:40,align:'center',sortable:true,formatter:isdeal},   
+            {field:'isred',title:'是否已读',width:40,align:'center',sortable:true,formatter:tool.isred},   
+            {field:'isdeal', title:'是否处理',width:40,align:'center',sortable:true,formatter:tool.isdeal},   
             {field:'mark',title:'标识',width:40,align:'center',sortable:true,formatter:mark},   
             {field:'level',title:'级别',width:40,align:'center',sortable:true,formatter:level},   
             {field:'msg',title:'内容',width:120,align:'center',sortable:true,},   
