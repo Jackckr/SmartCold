@@ -4,14 +4,29 @@
     <resultMap id="shareInfo" type="RdcSharedInfoEntity">
         <association property="rdcEntity" column="rdcID" select="com.smartcold.bgzigbee.manage.dao.RdcMapper.getRdcById"></association>
     </resultMap>
+    <delete id="delShareInfoById">
+        DELETE FROM `shared_info` WHERE `id`=#{id}
+    </delete>
     <select id="findShareInfo" resultMap="shareInfo">
         SELECT * FROM `shared_info`
         <where>
             <if test="startTime!=null and startTime!=''">
-                `updateTime` &gt; #{startTime}
+                `updateTime` >= #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and `updateTime` &lt;= #{endTime}
+            </if>
+            <if test="type!=null and type!=''">
+                and `typeText`=#{type}
+            </if>
+            <if test="keyword !=null and keyword !=''">
+                and `title` like #{keyword} or `detlAddress` like #{keyword} or `note` like #{keyword}
             </if>
         </where>
         ORDER BY `id` DESC
+    </select>
+    <select id="findShareInfoById" resultMap="shareInfo">
+        SELECT * FROM `shared_info` WHERE `id` =#{id}
     </select>
 
 </mapper>

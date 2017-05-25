@@ -1,4 +1,4 @@
-var  queryParams={type:null,stype:null,startTime:null, endTime:null,keyword:null};
+var  queryParams={type:null,startTime:null, endTime:null,keyword:null};
 
 
 function getRdcAttr(value) {
@@ -26,10 +26,10 @@ function init_table(){
         {field:'typeText',title:'共享类型',width:40,align:'center',sortable:true},
         {field:'telephone',title:'联系电话',width:40,align:'center',sortable:true},
         {field:'detlAddress', title:'详细地址',width:40,align:'center',sortable:true},
-        {field:'updatetime',title:'更新时间',width:40,align:'center',sortable:true,formatter:col_format },
+        {field:'updatetime',title:'更新时间',width:40,align:'center',sortable:true,formatter:tool.col_format},
         {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler}
     ]];
-    initTable("冷库信息共享","icon-msgType", "POST", "../../i/rdcShareInfo/getRdcShareInfo", queryParams,"#div_filteri", col,true, onDblClickRow);
+    initTable("冷库信息共享","icon-msgType", "POST", "../../i/rdcShareInfo/getRdcShareInfo", queryParams,"#div_filteri",null, col,true, onDblClickRow);
 
 }
 
@@ -93,22 +93,70 @@ function chclip(em) {
         $("#seache input[placeholder='请输入搜索条件...']").show();
     }
 }
-function startTime(date){
+/*function startTime(date){
     queryParams.startTime=date;
     reloaddata(queryParams);
 }
 function endTime(date){
     queryParams.endTime=date;
     reloaddata(queryParams);
+}*/
+function searchData() {
+    queryParams.startTime=$("#startTime").val();
+    queryParams.endTime=$("#endTime").val();
+    queryParams.type=$("#sel_type option:selected").val();
+    queryParams.keyword=$("#search").val();
+    reloaddata(queryParams);
+}
+function getRdcAttr(value) {
+    if (value!=undefined){
+        return value.name;
+    }else {
+        return "暂无";
+    }
+}
+function ck(id) {
+    $.ajax({
+        url:"/i/rdcShareInfo/getRdcShareInfoById",
+        type:"post",
+        data:{"id":id},
+        dataType:"json",
+        success:function (data) {
+            $("#share_title").html(data.title);
+            if(data.rdcEntity!=undefined){
+                $("#share_coldName").html(data.rdcEntity.name);
+            }
+            $("#share_type").html(data.typeText);
+            $("#share_pay").html(data.unit1);
+            $("#share_car").html(data.attrvalue);
+            $("#share_address").html(data.detlAddress);
+            $("#share_filings").html(data.bookings);
+            $("#share_phone").html(data.telephone);
+            $("#share_note").html(data.note);
+        }
+    })
+    $('#showShareInfo').dialog('open');
+}
+function dl(id) {
+    var flag = confirm("确认删除？");
+    if(!flag){return;}
+    $.ajax({
+        url:"/i/rdcShareInfo/delRdcShareInfoById",
+        type:"post",
+        data:{"id":id},
+        success:function () {
+            reloaddata(queryParams);
+        }
+    });
 }
 //初始化数据
 $().ready(function() {
     init_table();
-    $("#sel_type").combobox({
+    /*$("#sel_type").combobox({
         onSelect: function(date){
             var val =date.value;
             queryParams.type=val;
             reloaddata(queryParams);
         }
-    });
+    });*/
 });//初始化数据
