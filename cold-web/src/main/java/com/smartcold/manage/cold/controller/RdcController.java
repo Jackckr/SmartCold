@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.service.RdcService;
+import com.smartcold.manage.cold.util.StringUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -57,15 +58,11 @@ public class RdcController {
 		return rdcService.findRdcByUserid(userid);
 	}
 	
-	  @RequestMapping(value = "/getAllRdc",method = RequestMethod.POST)
+	  @RequestMapping(value = "/getRdcByFilter",method = RequestMethod.POST)
 	  @ResponseBody
-	  public Object getAllRdc(String words) {
-	        if (words!=null && words.trim().equals("")){
-	            words=null;
-	        }else if (words!=null && !words.trim().equals("")){
-	            words="%"+words+"%";
-	        }
-	        return rdcMapper.getRdcByDate(words);
+	  public Object getRdcByName(String keywords) {
+	        if (StringUtil.isnotNull(keywords)){keywords="%"+keywords+"%"; }else {keywords=null;}
+	        return rdcMapper.getRdcByName(keywords);
 	    }
 	
 }

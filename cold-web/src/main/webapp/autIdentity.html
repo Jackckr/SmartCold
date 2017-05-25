@@ -44,9 +44,7 @@
 		                    </div>
 		                </div>-->
 		                <strong>选择冷库：</strong>
-		                <select id="rdcShow" class="select_gallery" style="width:50%;">
-		
-		                </select>
+		                <select id="rdcShow" class="select_gallery" style="width:50%;"> </select>
 		                <div >
 		                    <div>
 		                        <div class="text-left">
@@ -107,29 +105,53 @@
 <script src="assets/plugins/jquery-step/js/jquery.step.js"></script>
 <script type="text/javascript">
         var roleType=0;
+        $(".select_gallery").select2();
         var step= $("#myStep").step({  animate:true,initStep:1,  speed:1000 });
         $(".btn_prep>button").click(function(event) { step.preStep(); });
        
         $("#applyBtn,#submitBtn,.btn_back>.btn").click(function(event) { step.nextStep(); });
         $("#goBtn").click(function(event) { step.goStep(3);});
        function addMore(){ $(".moreInfo").toggle(); }
+       
        var app=angular.module('app',['ngFileUpload']);
         app.controller("autIdentity", function ($rootScope, $scope, $http, Upload) {
     	$scope.user=undefined;
-    	$scope.setType=function(type){
-    		$scope.user.type=type;
-    		step.nextStep();
-    	};
+    	$scope.words=undefined;
+    	
     	$scope.finduser=function(){ $http({method:'GET',url:'/i/user/findUser'}).success(function (data) { 
-    	 if(data.id==0){ 
+    	 if(data.id!=0){ 
     		$scope.user=data;
     		$scope.checkuser();
     	}else{
 //     		window.location.href ="login.html";return; 
     		}}); };
-    	$scope.checkuser=function(){
     		
-    		
+   		$scope.setType=function(type){
+       		$scope.user.type=type;
+       		step.nextStep();
+       	};	
+    	$scope.getrdcList=function(){
+//     		 var words = $("#rdcName").val();
+//              $.ajax({
+//                  type: "POST",
+//                  dataType: "json",
+//                  data:{"words":words},
+//                  url: "/i/loginStep/getAllRdc",
+//                  success:function (data) {
+//                      var val = "";
+//                      for (var i=0;i<data.length;i++){
+//                          val+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+//                      }
+//                      $("#rdcShow").empty().html(val);
+//                  }
+//              })
+
+    		$http.get('/i/rdc/getRdcByFilter',{params: {keywords:$scope.words}}).success(function(data,status,config,headers){
+    			$scope.rdclist = data;
+//     			$scope.vm.choseRdc = data[0];
+//     			$scope.rdclist[0].isOn = true;
+//     			$scope.changeRdc();
+    		});
     	};
     	
     	

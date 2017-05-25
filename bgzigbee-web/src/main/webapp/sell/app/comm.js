@@ -1,5 +1,17 @@
 ﻿var curr_time = new Date(); 
 var timefile, objtree,objTable,tablesize, stablesize; 
+
+
+$.fn.datebox.defaults.formatter = function(date){
+	var y = date.getFullYear();
+	var m = date.getMonth()+1;
+	var d = date.getDate();
+	var h = date.gethours();
+	        date.get
+	return m+'-'+d+'-'+y ;
+}
+
+
 function geimgttit(tit,img){
 	return '<div class="panel-icon" style="width:auto;"><img src="'+img+'" height="18px" width="auto"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>';
 }
