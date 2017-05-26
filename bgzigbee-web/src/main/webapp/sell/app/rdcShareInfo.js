@@ -33,16 +33,6 @@ function init_table(){
 
 }
 
-function treeselect(node){
-    if(node!=null){
-        if(node.type){
-            queryParams.type=node.type;queryParams.stype=null;
-        }else if(node.stype){
-            queryParams.type=null;queryParams.stype=node.stype;
-        }
-        reloaddata(queryParams);
-    }
-}
 function onDblClickRow(index,field){}
 
 /**
