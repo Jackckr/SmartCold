@@ -1,14 +1,19 @@
 var  queryParams={page:null,rows:null,audit:'8', type:null,keyword:null};
 
 function cellStyler(value,row){
-    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[审核]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[关联冷库]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a>';
+    return '<button class="btn" onclick="changeAudit('+ row.id+','+row.audit+')">审核' +
+        '</button><button class="btn btn-info" onclick="setRdcandUser('+ row.id+')">关联冷库' +
+        '</button><button class="btn btn-delete" onclick="goDeleteUser('+ row.id+')">删除</button>';
 }
-
+/*
+* <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
+ <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
+* */
 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
     var admin = data.entity;
     if (admin == null || admin.id == 0) {
         var url = "http://" + location.host + "/login.html";
-        window.location.href = url;
+        top.location.href = url;
     }
 });
 var getAudit = function(i) {
@@ -19,7 +24,68 @@ var getAudit = function(i) {
     } else {
         return '未通过';
     }
-}
+};
+var userType = function(i) {
+    if (i == 0)
+        return '基本用户';
+    else if (i ==1) {
+        return '温度版';
+    } else if(i==2) {
+        return '维修版';
+    }
+};
+function delcfm() { if (!confirm("确认要删除？")) { return false; }return true;}
+var goDeleteUser = function (userID) {
+    if(delcfm()){
+        $.ajax({
+            type : 'GET',
+            url : '../../i/user/deleteUser',
+            data : {
+                "userID" : userID
+            },
+            success : function(data) {console.log(data)}
+        });
+        reloaddata();
+    }
+};
+var deleteUsers = function () {
+    var checkedItems = $('#objTable').datagrid('getChecked');
+    var userID = [];
+    $.each(checkedItems, function(index, item){
+        userID.push(item.id);
+    });
+    if (userID.length > 0) {
+        if(delcfm()){
+            $.ajax({
+                type : 'DELETE',
+                url : '../../i/user/deleteByUserIDs',
+                data : {
+                    "userIDs" : userID
+                },
+                success : function(data) {console.log(data)}
+            });
+            reloaddata();
+        }
+    }else{
+        alert("您还没有选择用户哦")
+    }
+
+};
+var changeAudit = function(id,audit){
+    if(audit==1){
+        alert("已是通过状态了")
+        return false
+    }
+    var r=confirm("通过审核？");
+    audit = r?1:-1;
+    $.post('../../i/user/changeAudit', {'userID':id,'audit':audit},function () {
+         reloaddata();
+    });
+};
+var setRdcandUser = function (user) {
+    alert("开发中")
+    //$state.go('coldStoragelist', {'id': user.id, 'username': user.username});
+};
 function init_table(){
     var tol=[
         {'iconCls': 'icon_rem','handler': '','text':'删除'},
@@ -29,13 +95,14 @@ function init_table(){
         {field:'id',title:'ID',sortable:true},
         {field:'username',title:'用户名',width:80,align:'center',sortable:true},
         {field:'telephone',title:'手机号',width:80,align:'center',sortable:true},
+        {field:'type',title:'用户类型',width:80,align:'center',sortable:true,formatter:userType},
         {field:'email',title:'邮箱',width:80,align:'center',sortable:true},
         {field:'addTime',title:'添加时间',width:80,align:'center',sortable:true,formatter:tool.col_format},
         {field:'audit',title:'状态',width:80,align:'center',sortable:true,formatter:getAudit},
         {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler}
     ]];
     initTable("用户管理", "icon-user", "POST", "../../i/user/getUserByFilter", queryParams, "#user_filter", null,col, true, onDblClickRow);
-
+    crspsh();
 }
 
 function treeselect(node){
@@ -55,7 +122,7 @@ function onDblClickRow(index,field){}
  * 动态组件 无需关心
  */
 function crspsh() {
-    $('.datagrid-toolbar').append("<div id=\"seache\"style=\"margin-top:-24px;float:right;margin-right:20px;\"><input id=\"fddata\"class=\"easyui-searchbox\" val=\"ml\" data-options=\"prompt:'请输入搜索条件...',searcher:finddatatb\"style=\"width:300px;display:inline;\"></input><div id=\"mm\"style=\"width:100px\" ></div></div>");
+    $('.datagrid-toolbar').append("<div id=\"seache\"style=\"float:right;margin-right:20px;\"><input id=\"fddata\"class=\"easyui-searchbox\" val=\"ml\" data-options=\"prompt:'请输入搜索条件...',searcher:finddatatb\"style=\"width:300px;display:inline;\"></input><div id=\"mm\"style=\"width:100px\" ></div></div>");
     var muits = new Array();
     var fields = $('#objTable').datagrid('getColumnFields');
     for (var i = 0; i < fields.length; i++) {
@@ -148,7 +215,8 @@ $().ready(function() {
         },
         success:function(data){
             $('#userForm').dialog('close');
-            window.location.reload();
+            reloaddata();
+            $.messager.progress('close');
         }
     });
 });//初始化数据

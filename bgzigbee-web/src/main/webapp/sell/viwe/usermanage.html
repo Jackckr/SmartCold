@@ -15,10 +15,7 @@
  <body>
     <div id="user_filter" style="padding:5px 0;">
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_add'" onclick="$('#userForm').dialog('open')">添加用户</a>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
-        <a href="#" class="easyui-linkbutton">Text Button</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-delete'" onclick="deleteUsers()">合并删除</a>
     </div>
     <form id="userForm" class="easyui-dialog" title="添加用户" closed="true"
          data-options=" iconCls:'icon-save',

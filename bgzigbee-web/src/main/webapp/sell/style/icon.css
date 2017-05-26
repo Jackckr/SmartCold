@@ -24,6 +24,9 @@
 .icon-ok{
     background:url('icons/ok.png') no-repeat center center;
 }
+.icon-delete{
+    background:url('icons/delete.png') no-repeat center center;
+}
 
 
 /*消息中心*/
