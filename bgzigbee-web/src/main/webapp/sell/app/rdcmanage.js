@@ -111,38 +111,12 @@ function addCold() {
                 option+="<option value='"+data[i].provinceId+"'>"+data[i].provinceName+"</option>";
             }
             $("#province").empty().append(option);
-        }
-    });
-    $.ajax({
-        url:"/i/city/findCitysByProvinceId",
-        data:{"provinceID":1},
-        type:"get",
-        success:function (data) {
-            var option="";
-            for(var i=0;i<data.length;i++){
-                option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
-            }
-            $("#city").empty().append(option);
+            $("#province").combobox({});
         }
     });
     $('#addCold').dialog('open');
 }
 
-function changeCity() {
-    var id = $("#province option:selected").val();
-    $.ajax({
-        url:"/i/city/findCitysByProvinceId",
-        data:{"provinceID":id},
-        type:"get",
-        success:function (data) {
-            var option="";
-            for(var i=0;i<data.length;i++){
-                option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
-            }
-            $("#city").empty().append(option);
-        }
-    });
-}
 
 function dl(id) {
     var flag = confirm("确认删除？");
@@ -159,11 +133,21 @@ function dl(id) {
 //初始化数据
 $().ready(function() {
     init_table();
-    /*$("#sel_type").combobox({
-     onSelect: function(date){
-     var val =date.value;
-     queryParams.type=val;
-     reloaddata(queryParams);
-     }
-     });*/
+    $("#province").combobox({
+        onSelect:function(record){
+            $.ajax({
+                url:"/i/city/findCitysByProvinceId",
+                data:{"provinceID":record.value},
+                type:"get",
+                success:function (data) {
+                    var option="";
+                    for(var i=0;i<data.length;i++){
+                        option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
+                    }
+                    $("#city").empty().append(option);
+                    $("#city").combobox({});
+                }
+            });
+        }
+    });
 });//初始化数据
