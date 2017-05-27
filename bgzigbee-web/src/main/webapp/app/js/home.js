@@ -59,7 +59,7 @@ coldWeb.controller('home', function ($rootScope, $scope, $state, $cookies, $http
     	 var userIDs = [];for(i in $scope.selected){userIDs.push($scope.selected[i].id);}
     	 if(userIDs.length >0 ){$http({method:'DELETE',url:'/i/user/deleteByUserIDs',params:{'userIDs': userIDs}}).success(function (data) {});}
 	    	 $scope.initData();
-	    	 window.location.reload(); 
+	    	 //window.location.reload();
     	}
     };
    

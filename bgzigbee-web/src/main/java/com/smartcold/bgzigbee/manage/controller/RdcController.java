@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.bgzigbee.manage.dto.*;
+import com.smartcold.bgzigbee.manage.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +47,6 @@ import com.smartcold.bgzigbee.manage.dao.StorageStructureTypeMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageTemperTypeMapper;
 import com.smartcold.bgzigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.bgzigbee.manage.dao.UserMapper;
-import com.smartcold.bgzigbee.manage.dto.BaseDto;
-import com.smartcold.bgzigbee.manage.dto.MappingDto;
-import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
-import com.smartcold.bgzigbee.manage.dto.RdcAddDTO;
-import com.smartcold.bgzigbee.manage.dto.ResultDto;
-import com.smartcold.bgzigbee.manage.dto.UploadFileEntity;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
 import com.smartcold.bgzigbee.manage.entity.RdcAuthLogEntity;
@@ -63,9 +59,6 @@ import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.enums.UserVersion;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
-import com.smartcold.bgzigbee.manage.util.ResponseData;
-import com.smartcold.bgzigbee.manage.util.SetUtil;
-import com.smartcold.bgzigbee.manage.util.TimeUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)
@@ -144,6 +137,19 @@ public class RdcController {
 		 return findRdcList;
 	}
 
+	@RequestMapping(value = "/getRdcDTOByPage", method = RequestMethod.POST)
+	@ResponseBody
+	public TableData getRdcDTOByPage(
+			String  keyword,
+			Integer audit,
+			int     page,
+			int     rows) {
+		if(!StringUtil.isnotNull(keyword)){keyword=null;}
+		if(audit!=null&&audit==8){audit=null;}
+		PageInfo pageInfo = rdcService.findRdcDTOByPage(page, rows, audit, keyword);
+		return TableData.newSuccess(pageInfo);
+	}
+/*框架完毕后需要删除*/
 	@RequestMapping(value = "/findRdcDTOByPage", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findRdcDTOByPage(@RequestParam(value = "pageNum", required = false) Integer pageNum,

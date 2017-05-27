@@ -1,16 +1,20 @@
-var  queryParams={type:null,startTime:null, endTime:null,keyword:null};
+var  queryParams={audit:null,keyword:null};
 
 
-function getRdcAttr(value) {
-	if (value!=undefined){
-	   return value.name;
-	}else {
-		return "暂无";
-	}
+function getRdcAudit(value) {
+    if (value == 0)
+        return '待审核';
+    else if (value == 1) {
+        return '通过';
+    }else if (value == 2) {
+        return '已认证';
+    } else if (value==-1){
+        return '未通过';
+    }
 }
 
 function cellStyler(value,row){
-    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[查看]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a>';
+    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[修改]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[审核]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[认证]</a>';
 }
 
 function init_table(){
@@ -20,16 +24,14 @@ function init_table(){
     var col=[[
         { field:'ck',checkbox:true},
         {field:'id',title:'ID',sortable:true},
-        {field:'rdcEntity',title:'冷库名称',width:80,align:'center',sortable:true,formatter:getRdcAttr},
-        {field:'title',title:'标题',width:80,align:'center',sortable:true},
-        {field:'note',title:'内容',width:80,align:'center',sortable:true},
-        {field:'typeText',title:'共享类型',width:40,align:'center',sortable:true},
-        {field:'telephone',title:'联系电话',width:40,align:'center',sortable:true},
-        {field:'detlAddress', title:'详细地址',width:40,align:'center',sortable:true},
-        {field:'updatetime',title:'更新时间',width:40,align:'center',sortable:true,formatter:tool.col_format},
+        {field:'name',title:'冷库名称',width:80,align:'center',sortable:true},
+        {field:'username',title:'添加人',width:80,align:'center',sortable:true},
+        {field:'cellphone',title:'联系方式',width:80,align:'center',sortable:true},
+        {field:'addtime',title:'添加时间',width:40,align:'center',sortable:true,formatter:tool.col_format},
+        {field:'audit',title:'状态',width:40,align:'center',sortable:true,formatter:getRdcAudit},
         {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler}
     ]];
-    initTable("冷库信息共享","icon-msgType", "POST", "../../i/rdcShareInfo/getRdcShareInfo", queryParams,"#div_filteri",null, col,true, onDblClickRow);
+    initTable("冷库管理","icon-msgType", "POST", "../../i/rdc/getRdcDTOByPage", queryParams,"#div_filteri",null, col,true, onDblClickRow);
 
 }
 
@@ -84,49 +86,64 @@ function chclip(em) {
     }
 }
 /*function startTime(date){
-    queryParams.startTime=date;
-    reloaddata(queryParams);
-}
-function endTime(date){
-    queryParams.endTime=date;
-    reloaddata(queryParams);
-}*/
+ queryParams.startTime=date;
+ reloaddata(queryParams);
+ }
+ function endTime(date){
+ queryParams.endTime=date;
+ reloaddata(queryParams);
+ }*/
 function searchData() {
-    queryParams.startTime=$("#startTime").val();
-    queryParams.endTime=$("#endTime").val();
-    queryParams.type=$("#sel_type option:selected").val();
+    queryParams.audit=$("#sel_audit option:selected").val();
     queryParams.keyword=$("#search").val();
     reloaddata(queryParams);
 }
-function getRdcAttr(value) {
-    if (value!=undefined){
-        return value.name;
-    }else {
-        return "暂无";
-    }
-}
 function ck(id) {
-    $.ajax({
-        url:"/i/rdcShareInfo/getRdcShareInfoById",
-        type:"post",
-        data:{"id":id},
-        dataType:"json",
-        success:function (data) {
-            $("#share_title").html(data.title);
-            if(data.rdcEntity!=undefined){
-                $("#share_coldName").html(data.rdcEntity.name);
-            }
-            $("#share_type").html(data.typeText);
-            $("#share_pay").html(data.unit1);
-            $("#share_car").html(data.attrvalue);
-            $("#share_address").html(data.detlAddress);
-            $("#share_filings").html(data.bookings);
-            $("#share_phone").html(data.telephone);
-            $("#share_note").html(data.note);
-        }
-    })
-    $('#showShareInfo').dialog('open');
+
 }
+function addCold() {
+    $.ajax({
+        url:"/i/city/findProvinceList",
+        type:"get",
+        success:function (data) {
+            var option="";
+            for(var i=0;i<data.length;i++){
+                option+="<option value='"+data[i].provinceId+"'>"+data[i].provinceName+"</option>";
+            }
+            $("#province").empty().append(option);
+        }
+    });
+    $.ajax({
+        url:"/i/city/findCitysByProvinceId",
+        data:{"provinceID":1},
+        type:"get",
+        success:function (data) {
+            var option="";
+            for(var i=0;i<data.length;i++){
+                option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
+            }
+            $("#city").empty().append(option);
+        }
+    });
+    $('#addCold').dialog('open');
+}
+
+function changeCity() {
+    var id = $("#province option:selected").val();
+    $.ajax({
+        url:"/i/city/findCitysByProvinceId",
+        data:{"provinceID":id},
+        type:"get",
+        success:function (data) {
+            var option="";
+            for(var i=0;i<data.length;i++){
+                option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
+            }
+            $("#city").empty().append(option);
+        }
+    });
+}
+
 function dl(id) {
     var flag = confirm("确认删除？");
     if(!flag){return;}
@@ -143,10 +160,10 @@ function dl(id) {
 $().ready(function() {
     init_table();
     /*$("#sel_type").combobox({
-        onSelect: function(date){
-            var val =date.value;
-            queryParams.type=val;
-            reloaddata(queryParams);
-        }
-    });*/
+     onSelect: function(date){
+     var val =date.value;
+     queryParams.type=val;
+     reloaddata(queryParams);
+     }
+     });*/
 });//初始化数据
