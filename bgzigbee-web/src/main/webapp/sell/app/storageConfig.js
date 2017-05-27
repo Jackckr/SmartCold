@@ -3,20 +3,16 @@ var  queryParams={audit:0};
 function cellStyler(value,row){
     return '<button class="btn btn-delete" onclick="deleteConfig('+ row.id+',0)">删除</button>';
 }
-function delcfm() { if (!confirm("确认要删除？")) { return false; }return true;}
 var deleteConfig = function (configID) {
-    if(delcfm()){
-        $.get('../../i/storage/deleteConfig',{"configID": configID,'audit': 0},function(data){
-            /*for(var i=0;i<$scope.configs.length;i++)
-            {
-                if($scope.configs[i].id==configID)
-                {
-                    $scope.configs.splice(i,2);
-                }
-            }*/
-        })
-    }
-}
+    var valType = $("#valType option:selected").val();
+    $.messager.confirm('删除确认', '你确认要删除吗?', function (r) {
+        if (r) {
+            $.get('../../i/storage/deleteConfig',{"configID": configID,'audit': valType},function(data){
+                reloaddata();
+            })
+        }
+    });
+};
 
 function init_table(){
     var tol=[
@@ -28,19 +24,26 @@ function init_table(){
         {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler}
     ]];
     initTable("冷库配置信息", "icon-coldcf", "POST", "../../i/storage/findRdcConfig", queryParams, "#div_tool",null,col, true, onDblClickRow);
-    //crspsh();
 }
 
 function onDblClickRow(index,field){}
-
-
-/**
- * 动态组件 无需关心
- */
-
-function onSelect(date){
-    queryParams.startTime=date;
-    reloaddata(queryParams);
+function openWindow() {
+    $('#typeForm').window('open');
+    $("#opsAudit").html($("#valType").combobox('getText'))
+}
+function submit_config(){
+    var valType = $("#valType option:selected").val();
+    if($("#oConfig").val().trim()==null || $("#oConfig").val().trim()==''){
+        $.messager.alert('警告', '请填写需要添加的类型', 'info');
+    }else{
+        $.messager.progress();
+        alert(valType)
+        $.get('../../i/storage/addConfig',{'config':$("#oConfig").val().trim(),'audit':valType},function(){
+            $('#typeForm').window('close');
+            reloaddata();
+            $.messager.progress('close');
+        })
+    }
 }
 //初始化数据
 $().ready(function() {

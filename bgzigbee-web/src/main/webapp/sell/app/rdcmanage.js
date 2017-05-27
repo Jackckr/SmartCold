@@ -137,7 +137,7 @@ function addCold() {
             $("#province").combobox({});
         }
     });
-    $('#addCold').dialog('open');
+    $('#addCold').window('open');
 }
 
 

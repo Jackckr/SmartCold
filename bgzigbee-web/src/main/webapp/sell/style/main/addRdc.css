@@ -1,0 +1,31 @@
+﻿@charset "utf-8";
+.oDiv {
+    margin-bottom: 20px;
+    text-align: left;
+    width: 500px;
+}
+.oDiv em{
+    color: red;
+}
+.oDiv>label>span{
+    display: inline-block;
+    width: 120px;
+    text-align: left;
+}
+.labels>div{
+    height:30px;
+}
+.labels label{
+    float: left;
+}
+.labels label>input{
+    width: 100px;
+    float: right;
+}
+.oDiv select,
+.oDiv>label>input{
+    width: 300px!important;
+}
+.labels>div{
+    margin-left: 50px;
+}
