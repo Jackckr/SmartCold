@@ -2,7 +2,6 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.util.EncodeUtil;
-import com.smartcold.bgzigbee.manage.util.StringUtil;
+import com.smartcold.bgzigbee.manage.util.SetUtil;
 import com.smartcold.bgzigbee.manage.util.TableData;
 
 
@@ -69,7 +68,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object deleteByUserIDs(Integer[] userIDs) {
 		for(Integer userID:userIDs){
-			userDao.deleteUser(userID);
+//			userDao.deleteUser(userID);
 		}
 		return new BaseDto(0);
 	}

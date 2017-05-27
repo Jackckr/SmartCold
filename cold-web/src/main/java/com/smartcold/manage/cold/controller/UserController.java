@@ -71,7 +71,11 @@ public class UserController extends BaseController {
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
 			if(roleUser==null){//判断有没有申请
-				return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==null?3:2, String.format("token=%s", cookie));//未授权
+				if(user.getType()==0){
+					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==null?3:2, String.format("token=%s", cookie));//未授权
+				}else{
+					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==null?3:2, String.format("token=%s", cookie));//未授权
+				}
 			}
 			return new ResultDto(0, String.format("token=%s", cookie));
 		}

@@ -1,4 +1,4 @@
-package com.smartcold.zigbee.manage.controller;
+ package com.smartcold.zigbee.manage.controller;
 
 import java.util.HashMap;
 import java.util.List;

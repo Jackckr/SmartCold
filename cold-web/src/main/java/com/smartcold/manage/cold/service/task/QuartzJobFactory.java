@@ -101,7 +101,7 @@ public class QuartzJobFactory implements Job {
 					}
 			}
 		} catch (Exception e) {
-			log.info("捕获异常===" + e);
+			log.info("捕获异常===" + e.getMessage());
 		}
 	}
 
