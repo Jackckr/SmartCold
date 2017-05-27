@@ -8,4 +8,15 @@
         VALUES
         (#{uid},#{rdcId},#{type},#{sType},#{title},#{message},#{addTime})
     </insert>
+    <select id="getFiveNewMessage" resultType="java.util.HashMap">
+        SELECT * FROM `messagerecord` WHERE `rdcid` IN
+        (SELECT r.id FROM `rdc` AS r WHERE `userid`=#{userId})
+        and `isread`=0
+        order by `addtime` desc limit 0,5
+    </select>
+    <select id="getNoReadByUserId" resultType="java.lang.Integer">
+        SELECT count(*) FROM `messagerecord` WHERE `rdcid` IN
+        (SELECT r.id FROM `rdc` AS r WHERE `userid`=#{userId})
+        and `isread`=0
+    </select>
 </mapper>

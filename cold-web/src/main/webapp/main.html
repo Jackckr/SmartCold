@@ -49,60 +49,20 @@
 						<li class="dropdown messages-menu">
 							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fa fa-envelope-o"
-								style="color: #fff"></i> <span class="label label-success">5</span>
+								style="color: #fff"></i> <span class="label label-success">{{notReadMessage}}</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">你有 5 条信息</li>
+								<li class="header">你有 {{notReadMessage}} 条信息</li>
 								<li>
 									<!-- inner menu: contains the messages -->
 									<ul class="menu">
-										<li>
+										<li ng-repeat="item in messageList">
 											<a href="#/allWarning" style="padding: 5px 10px;">
 												<div class="pull-left">
 													<i class="fa fa-envelope-o" style="color: #f39c12;font-size: 20px;"></i>
 												</div>
 												<h4 style="line-height: normal;">
-													压缩机超温报警
-												</h4>
-											</a>
-										</li>
-										<li>
-											<a href="#/allWarning" style="padding: 5px 10px;">
-												<div class="pull-left">
-													<i class="fa fa-envelope-o" style="color: #f39c12;font-size: 20px;"></i>
-												</div>
-												<h4 style="line-height: normal;">
-													压缩机超温报警
-												</h4>
-											</a>
-										</li>
-										<li>
-											<a href="#/allWarning" style="padding: 5px 10px;">
-												<div class="pull-left">
-													<i class="fa fa-envelope-o" style="color: #f39c12;font-size: 20px;"></i>
-												</div>
-												<h4 style="line-height: normal;">
-													压缩机超温报警
-												</h4>
-											</a>
-										</li>
-										<li>
-											<a href="#/allWarning" style="padding: 5px 10px;">
-												<div class="pull-left">
-													<i class="fa fa-envelope-o" style="color: #f39c12;font-size: 20px;"></i>
-												</div>
-												<h4 style="line-height: normal;">
-													压缩机超温报警
-												</h4>
-											</a>
-										</li>
-										<li>
-											<a href="#/allWarning" style="padding: 5px 10px;">
-												<div class="pull-left">
-													<i class="fa fa-envelope-o" style="color: #f39c12;font-size: 20px;"></i>
-												</div>
-												<h4 style="line-height: normal;">
-													压缩机超温报警
+													{{item.title}}
 												</h4>
 											</a>
 										</li>

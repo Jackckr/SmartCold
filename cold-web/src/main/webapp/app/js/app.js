@@ -86,7 +86,13 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      		});
 					      		$("#lefaside").removeClass("hide");
 		        	});
-		        		
+
+                $http({method:'POST',url:'i/messageRecord/getNewMessage',params:{"userId":$rootScope.user.id}}).success(function (data) {
+                	$rootScope.messageList=data;
+                });
+                $http({method:'POST',url:'i/messageRecord/getAllNoReadMessage',params:{"userId":$rootScope.user.id}}).success(function (data) {
+                    $rootScope.notReadMessage=data;
+                });
 		        	 $http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function(data,status,headers,config){// 初始化冷库
 		        			$rootScope.Tempset=[];$rootScope.mystorages = data;$rootScope.storageModal = data[0];
 		        	 });
