@@ -65,6 +65,9 @@ var deleteUsers = function () {
     $.each(checkedItems, function (index, item) {
         userID.push(item.id+"");
     });
+    
+    
+
     if (userID.length > 0) {
         $.messager.confirm('删除确认', '你确认要删除吗?', function (r) {
             if (r) {
