@@ -14,7 +14,7 @@ function getRdcAudit(value) {
 }
 
 function cellStyler(value,row){
-    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[修改]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[审核]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[认证]</a>';
+    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[修改]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[审核]</a><a href="javascript:void(0)" onclick="rz('+ row.id+')">[认证]</a>';
 }
 
 function init_table(){
@@ -100,6 +100,26 @@ function searchData() {
 }
 function ck(id) {
 
+}
+function rz(id) {
+    $.ajax({
+        url:"/i/rdc/getAuthenticationByRDCId",
+        data:{"rdcID":id},
+        type:"get",
+        success:function (data) {
+            var ele="";
+            $("#cerBtn").attr("style","display='none'");
+            for(var i=0;i<data.length;i++){
+                if(data[i].user){
+                    ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"<br/><input type='radio' value='"+data[i].user.id+"'>"+data[i].user.username+"</div>";
+                }else {
+                    ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"</div>";
+                }
+            }
+            $("#certificationImg").empty().append(ele);
+        }
+    });
+    $("#certificationCold").dialog('open');
 }
 function addCold() {
     $.ajax({
