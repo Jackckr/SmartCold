@@ -1,4 +1,4 @@
-var queryParams = {page: null, rows: null, audit: '8', type: null, keyword: null};
+var queryParams = {page: null, rows: null, audit: null, type: null, keyword: null};
 
 function cellStyler(value, row) {
     return '<button class="btn" onclick="changeAudit(' + row.id + ',' + row.audit + ')">审核' +
@@ -65,9 +65,6 @@ var deleteUsers = function () {
     $.each(checkedItems, function (index, item) {
         userID.push(item.id+"");
     });
-    
-    
-
     if (userID.length > 0) {
         $.messager.confirm('删除确认', '你确认要删除吗?', function (r) {
             if (r) {
@@ -77,7 +74,7 @@ var deleteUsers = function () {
                     traditional :true, 
                     data: { userIDs: userID },
                     success: function (data) {
-                    	 if(data==1){
+                    	 if(data.status==1){
                     		 reloaddata();
                          }else{
 //                        	 $.messager.("错误","删除失败！");
@@ -216,7 +213,7 @@ $().ready(function () {
             return isValid;
         },
         success: function (data) {
-            $('#userForm').dialog('close');
+            $('#userForm').window('close');
             reloaddata();
             $.messager.progress('close');
         }

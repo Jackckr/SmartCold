@@ -334,6 +334,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/personInfo',
     	controller: 'personInfo',
         templateUrl: 'app/template/personInfo.html' 
+    }).state('allWarning',{//所有告警信息
+        url:'/allWarning',
+        controller: 'allWarning',
+        templateUrl: 'app/template/allWarning.html'
     });
     //    .state('myColdStorage',{维修确认单
 //    	url:'/myColdStorage/:storageID',
