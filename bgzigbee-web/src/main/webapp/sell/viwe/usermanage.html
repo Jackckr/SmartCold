@@ -36,7 +36,8 @@
             <tr>
                 <td>用户名:</td>
                 <td><input class="easyui-validatebox textbox" name="username" id="username"
-                           data-options="prompt:'请输入用户名.',required:true,validType:'length[6,24]'"
+                           data-options="prompt:'请输入用户名.',required:true"
+                           validType="username[username]"
                            style="width: 100%;height: 24px;">
                     <!--validType="remote['../../i/user/checkUserName','value']"
                     invalidMessage="用户名已存在"-->
@@ -52,7 +53,8 @@
             <tr>
                 <td>手机号:</td>
                 <td><input class="easyui-validatebox textbox" name="telephone"
-                           data-options="prompt:'请输入手机号',required:true,validType:'length[11,11]'"
+                           data-options="prompt:'请输入手机号',required:true"
+                           validType="mobile[telephone]"
                            style="width: 100%;height: 24px;">
                 </td>
             </tr>
@@ -68,7 +70,4 @@
     <table id="objTable" class="fill"></table>
 
  </body>
-   <script type="text/javascript">
-
-    </script>
 </html>

@@ -7,7 +7,7 @@ var usermenus=[
         	             {"menuid": "1_1","menuname": "用户管理","icon": "icon-user","url": "/sell/viwe/usermanage.html"},
         	             {"menuid": "1_2","menuname": "冷库管理","icon": "icon-cold","url": "/sell/viwe/rdcmanage.html"},
         	             {"menuid": "1_3","menuname": "认证管理","icon": "icon-authe","url": "Login.html"},
-        	             {"menuid": "1_4","menuname": "冷库配置","icon": "icon-coldcf","url": "Login.html"},
+        	             {"menuid": "1_4","menuname": "冷库配置","icon": "icon-coldcf","url": "/sell/viwe/storageConfig.html"},
         	             {"menuid": "1_5","menuname": "共享管理","icon": "icon-role","url": "/sell/viwe/rdcShareInfo.html"},
         	             {"menuid": "1_6","menuname": "资讯管理","icon": "icon-role","url": "Login.html"}]
           } ,

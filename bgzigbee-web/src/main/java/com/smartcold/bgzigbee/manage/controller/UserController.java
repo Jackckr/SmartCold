@@ -68,8 +68,10 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/deleteByUserIDs", method=RequestMethod.DELETE)
 	@ResponseBody
 	public Object deleteByUserIDs(Integer[] userIDs) {
-		for(Integer userID:userIDs){
-			userDao.deleteUser(userID);
+	   if(userIDs!=null&&userIDs.length>0){
+			for (Integer userID : userIDs) {
+			//	userDao.deleteUser(userID);
+			}
 		}
 		return new BaseDto(0);
 	}
