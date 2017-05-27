@@ -108,12 +108,15 @@ function rz(id) {
         type:"get",
         success:function (data) {
             var ele="";
-            $("#cerBtn").attr("style","display='none'");
-            for(var i=0;i<data.length;i++){
-                if(data[i].user){
-                    ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"<br/><input type='radio' value='"+data[i].user.id+"'>"+data[i].user.username+"</div>";
-                }else {
-                    ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"</div>";
+            if (data.length==0){
+                ele="还没有用户发布营业执照,无法进行冷库认证!";
+            }else {
+                for(var i=0;i<data.length;i++){
+                    if(data[i].user){
+                        ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"<br/><input type='radio' value='"+data[i].user.id+"'>"+data[i].user.username+"</div>";
+                    }else {
+                        ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"</div>";
+                    }
                 }
             }
             $("#certificationImg").empty().append(ele);
