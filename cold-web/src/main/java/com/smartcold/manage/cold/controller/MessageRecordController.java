@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
 import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 
 /**
@@ -21,6 +22,7 @@ public class MessageRecordController {
     @RequestMapping(value = "/getNewMessage",method = RequestMethod.POST)
     @ResponseBody
     public Object getNewMessage (Integer userId,Integer type,Integer stype, Integer isRead,Integer status, int  page,int rows){
+    	PageHelper.startPage(page, rows);
        return messageRecordMapping.getNewMessage(userId);
     }
     
