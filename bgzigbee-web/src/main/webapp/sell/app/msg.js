@@ -31,7 +31,6 @@ function initsel_lister(){
        });  
 }
 function init_table(){
-	   var fottol=[ {'iconCls': 'icon_rem','handler': '','text':'删除'}, {'iconCls': 'icon_rem','handler': '','text':'全部删除'}, "-",];
 	   var col=[[ 
 	       	   {field:'ck',checkbox:true},
 	       	   {field:'id',title:'ID',sortable:true},   

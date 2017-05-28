@@ -59,21 +59,23 @@ public class DataCollectionController extends BaseController {
 		try {
 			if(StringUtil.isNull(data)){new DataResultDto(500);}
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
-			String apID = dataCollectionBatchEntity.get("apID").toString();
-			ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
-			for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
-				Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
-				String deviceId = info.remove("devID").toString();
-				for (Entry<String, String> item : info.entrySet()) {
-					arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+			if(dataCollectionBatchEntity.containsKey("infos")){
+				String apID = dataCollectionBatchEntity.get("apID").toString();
+				ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
+				for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
+					Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
+					String deviceId = info.remove("devID").toString();
+					for (Entry<String, String> item : info.entrySet()) {
+						arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+					}
 				}
-			}
-			if(SetUtil.isnotNullList(arrayList)){
-				storageDataCollectionDao.batchInsert(arrayList);
+				if(SetUtil.isnotNullList(arrayList)){
+					storageDataCollectionDao.batchInsert(arrayList);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("DEV数据解析出错。。。。。。。。。。。。\r\n"+data);
+			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到DEV数据解析异常：\r\n"+data);
 			return new DataResultDto(500);
 		}
 		return new DataResultDto(200);

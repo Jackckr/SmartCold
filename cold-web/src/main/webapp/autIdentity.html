@@ -9,11 +9,9 @@
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="shortcut icon" href="assets/img/favicon.ico" />
-	<!-- Bootstrap 3.3.5 -->
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/plugins/select2/select2.min.css">
 	<link rel="stylesheet" href="assets/plugins/jquery-step/css/jquery.step.css">
-	<!-- Font Awesome -->
 	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
 </head>
 <body ng-app="app" ng-controller="autIdentity">
@@ -35,14 +33,6 @@
 		<div class="step-list">
 				  <div class="coldDiv">
 		                <p>说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！</p>
-		                <!--<div class="col-lg-6">
-		                    <div class="input-group" style="margin-left: -15px" >
-		                        <input class="form-control" placeholder="请输入您要查找的冷库名" id="rdcName"/>
-		                        <span class="input-group-btn">
-		                        <button class="btn btn-default" type="button" id="searchRdc"><span class="glyphicon glyphicon-search">搜索</span></button>
-		                    </span>
-		                    </div>
-		                </div>-->
 		                <strong>选择冷库：</strong>
 		                <select id="rdcShow" class="select_gallery" style="width:50%;">
 		                  <option  ng-repeat="rdc in rdclist" value="{{rdc.id}}">{{rdc.text}}</option>
@@ -115,23 +105,11 @@
         app.controller("autIdentity", function ($rootScope, $scope, $http, Upload) {
     	$scope.user=undefined;
     	$scope.words=null;
-    	$scope.finduser=function(){ $http({method:'GET',url:'/i/user/findUser'}).success(function (data) { 
-    	 if(data.id!=0){ 
-    		$scope.user=data;
-    	}else{
-//     		window.location.href ="login.html";return; 
-    		}}); };
-    		
-   		$scope.setType=function(type){
-       		$scope.user.type=type;
-       		step.nextStep();
-       	};	
-       	
-       	
+   		$scope.setType=function(type){$scope.user.type=type;step.nextStep();	};	
+    	$scope.finduser=function(){ $http({method:'GET',url:'/i/user/findUser'}).success(function (data) {if(data.id!=0){ $scope.user=data;}else{window.location.href ="login.html";return; }}); };
        	
         $scope.totalauthfiles = [];
         $scope.isDisabled = false;
-
         $scope.addAuthFiles = function (files) {
             for(var j=0,fileLen=files.length;j<fileLen;j++){
                 var _file=files[j].name;
@@ -190,36 +168,32 @@
         }
 
         $scope.submit = function () {
-//         	debugger;
-            var $rdcShow= $("#rdcShow option:selected");
-            if(confirm("你要提交认证的冷库是:"+$rdcShow.text())){
-                if ($scope.totalauthfiles.length) {
-                    $scope.isDisabled = true;
-                    var data = {
-                        authfile0: null,
-                        rdcId:$rdcShow.val(),
-                        type:$scope.user.type,
-                        userId:$scope.user.id,
-                        userName:$scope.user.username,
-                    };
-                    data["authfile" + 0] = $scope.totalauthfiles[0];
-
-                    Upload.upload({
-                        url: '/i/authenUser/attestationRdc',
-                        headers: {'Content-Transfer-Encoding': 'utf-8'},
-                        data: data
-                    }).then(function (resp) {
-                        $scope.isDisabled = false;
-                        $("#auCode").html(resp.data.message);
-                        step.nextStep();    
-                    });
-                } else {
-                    alert("请上传冷库认证图片再提交!");
-                    return false;
-                }
-            }else{
-                return false;
+        	if($scope.isDisabled){return;}
+             var $rdcShow=  $("#rdcShow").val();
+            if( $rdcShow==null){
+            	alert("请选择认证的冷库！");return;
             }
+            if($scope.user.type==0&&$scope.totalauthfiles.length==0){alert("请提交证书！");return;}
+            if(!confirm("您确定要提交申请吗？")){return ;};
+      			   $scope.isDisabled = true;
+                     var data = {
+                         rdcId:$rdcShow,
+                         type:$scope.user.type,
+                         userId:$scope.user.id,
+                         userName:$scope.user.username,
+                     };
+                     if($scope.user.type==0){
+                       data.authfile = $scope.totalauthfiles[0];
+                     }
+                     Upload.upload({
+                         data: data,
+                         url: '/i/authenUser/attestationRdc',
+                         headers: {'Content-Transfer-Encoding': 'utf-8'}
+                     }).then(function (resp) {
+                         $scope.isDisabled = false;
+                         $("#auCode").html(resp.data.message);
+                         step.nextStep();    
+                     });
         };
         $scope.finduser();
        });

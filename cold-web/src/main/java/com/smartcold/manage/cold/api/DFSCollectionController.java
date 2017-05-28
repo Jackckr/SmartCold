@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.controller.BaseController;
 import com.smartcold.manage.cold.dao.newdb.DFSDataCollectionMapper;
@@ -54,15 +53,15 @@ public class DFSCollectionController extends BaseController {
 	@RequestMapping(value = "/delconfig")
 	@ResponseBody
 	public Object delconfig(String toke,String rdcid){
-		if(StringUtil.verifyToken(toke)){
+//		if(StringUtil.verifyToken(toke)){
 			if(StringUtil.isnotNull(rdcid)){
 				configchcateHashMap.remove(rdcid);
 			}else{
 				configchcateHashMap.clear();
 			}
 			return true;
-		}
-		return false;
+//		}
+//		return false;
 	}
 
 	
@@ -78,6 +77,7 @@ public class DFSCollectionController extends BaseController {
 	public Object storageDataCollection(@RequestBody String data) {
         try {
 			if(StringUtil.isNull(data)){ return new DataResultDto(500);};
+			System.err.println("=====================收到丹弗斯数据==================\r\n"+data);
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String rdcid = dataCollectionBatchEntity.get("rdcId").toString();
             if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.getConfig(rdcid);}
@@ -98,7 +98,7 @@ public class DFSCollectionController extends BaseController {
 				}
 			}
 			return new DataResultDto(200);
-		} catch (JsonSyntaxException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new DataResultDto(500);
 		}
@@ -154,4 +154,6 @@ public class DFSCollectionController extends BaseController {
 			DFSCollectionController.configchcateHashMap.put(rdcId, null);
 		}
 	}
+	
+	
 }

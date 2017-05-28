@@ -48,9 +48,9 @@ public class WarningTaskService  {
 	 * 定时定点监听
 	 * 1.查询当前冷库的基准温度，计算max min 临界值时间温度 
 	*/
-	@Scheduled(cron = "0 0/30 * * * ?")
+//	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData() {
-		
 		System.err.println(JSONArray.toJSONString(QuartzManager.getTempListen()));
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(TimeUtil.getBeforeMinute(30));
@@ -88,6 +88,7 @@ public class WarningTaskService  {
 		    				job.setWarcount(job.getWarcount()+1);
 		    				if(job.getWarcount()>6){job.setTask(true);}
 		    			}else{
+		    				job.setCroStartTime(job.getCroStartTime()+3600000);//更新为半个小时后启动
 		    				job.setTask(true);
 		    			}
 		    			QuartzManager.upJob(key, job);

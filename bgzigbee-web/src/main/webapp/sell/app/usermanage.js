@@ -1,21 +1,22 @@
 var queryParams = {page: null, rows: null, audit: '8', type: null, keyword: null};
 
+//
 function cellStyler(value, row) {
-    return '<button class="btn" onclick="changeAudit(' + row.id + ',' + row.audit + ')">审核' +
-        '</button><button class="btn btn-info" onclick="setRdcandUser(' + row.id + ')">关联冷库' +
-        '</button><button class="btn btn-delete" onclick="goDeleteUser(' + row.id + ')">删除</button>';
+	return ['<button class="btn" onclick="changeAudit(' , row.id ,',' , row.audit , ')">审核</button>' ,
+	        '<button class="btn btn-info" onclick="setRdcandUser(' ,+ row.id ,')">关联冷库</button>' ,
+	        '<button class="btn btn-delete" onclick="goDeleteUser(' , row.id , ')">删除</button>'].join("");
 }
 /*
  * <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
  <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
  * */
-$.ajax({type: "GET", cache: false, dataType: 'json', url: '/i/admin/findAdmin'}).success(function (data) {
-    var admin = data.entity;
-    if (admin == null || admin.id == 0) {
-        var url = "http://" + location.host + "/login.html";
-        top.location.href = url;
-    }
-});
+//$.ajax({type: "GET", cache: false, dataType: 'json', url: '/i/admin/findAdmin'}).success(function (data) {
+//    var admin = data.entity;
+//    if (admin == null || admin.id == 0) {
+//        var url = "http://" + location.host + "/login.html";
+//        top.location.href = url;
+//    }
+//});
 var getAudit = function (i) {
     if (i == 0)
         return '待审核';
@@ -106,9 +107,6 @@ var setRdcandUser = function () {
     self.parent.addTab("冷库管理", "/sell/viwe/rdcmanage.html", 'icon-cold');
 };
 function init_table() {
-    var tol = [
-        {'iconCls': 'icon_rem', 'handler': '', 'text': '删除'},
-        "-", {'iconCls': 'icon-reload', 'handler': 'reloaddata', 'text': '刷新'}, "-"];
     var col = [[
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},

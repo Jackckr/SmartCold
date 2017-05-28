@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>系统消息</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../app/comm.js"></script>
+    <script type="text/javascript"  src="../app/msg.js"></script>
+  </head>
+  </head>
+  <body  >
+<!--    class="easyui-layout" -->
+<!-- 	<div  data-options="region:'west',split:true,iconCls:'icon-msgType', title:'消息分类'" style="width:300px;" > -->
+<!--       <div id="objTreediv"> -->
+<!--          <ul id="objtree" class="easyui-tree"></ul> -->
+<!--       </div> -->
+<!-- 	</div> -->
+<!-- 	<div  data-options="region:'center'"  > -->
+  	        <table id="objTable" class="fill"></table>
+<!-- 	</div> -->
+			 <div id="heidendiv" style="display: none;">
+			        <div id="chisread" class="chml">
+						<div><span class="ml weidu" title="未读" value=0>未读</span></div>
+						<div ><span class="ml yidu" title="已读" value=1>已读</span></div>
+			        </div>
+			        <div id="chstate" class="chml">
+						<div><span class="ml nobz" title="未处理" value=0>未处理</span></div>
+						<div ><span class="ml okbz" title="已处理" value=1>已处理</span></div>
+			        </div>
+			 </div>
+		    <div id="cdmm" style="display: none;">
+			    <div id="datamenu" class="easyui-menu"  style="width:120px;">
+					<div data-options="name:'delem',iconCls:'icon-reload'" onclick="reloaddata()">刷新</div>
+			    </div>
+		    </div>
+		    <div id="div_filter" style="display: none;">
+			    <div id="div_filteri" style="padding:2px 5px;">
+					消息类型：
+					<select id="sel_type"  name="type"  class="easyui-combobox" data-options="valueField:'val', textField:'text', panelHeight:'auto'" style="width:120px" ></select>
+					<select id="sel_stype" name="stype" class="easyui-combobox" data-options="valueField:'val', textField:'text', panelHeight:'auto'" style="width:150px">	       </select>
+					是否已读：<select id="sel_isread" name="isread" class="easyui-combobox" data-options="valueField:'val', textField:'text', panelHeight:'auto'" style="width:120px">	</select>
+					是否处理：<select id="sel_state" name="state" class="easyui-combobox" data-options="valueField:'val', textField:'text', panelHeight:'auto'" style="width:120px">	</select>
+					<a href="#" class="easyui-linkbutton" iconCls="icon_search" onclick=" reloaddata(queryParams)">Search</a>
+				 </div>
+		    </div>
+  </body>
+</html>

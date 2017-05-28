@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcauthMapping;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
@@ -38,6 +39,8 @@ public class UserController extends BaseController {
 	
 	@Autowired
 	private RdcauthMapping rdcauthMapping;
+	@Autowired
+	private MessageRecordMapping messageRecordMapping;
 
 	@Autowired
 	private UserMapper userDao;
@@ -72,9 +75,9 @@ public class UserController extends BaseController {
 			response.addCookie(new Cookie("token", cookie));
 			if(roleUser==null){//判断有没有申请
 				if(user.getType()==0){
-					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==null?3:2, String.format("token=%s", cookie));//未授权
+					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())>0?3:2, String.format("token=%s", cookie));//未授权
 				}else{
-					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==null?3:2, String.format("token=%s", cookie));//未授权
+					return new ResultDto(this.messageRecordMapping.getUserAuth(user.getId())>0?3:2, String.format("token=%s", cookie));//未授权
 				}
 			}
 			return new ResultDto(0, String.format("token=%s", cookie));
