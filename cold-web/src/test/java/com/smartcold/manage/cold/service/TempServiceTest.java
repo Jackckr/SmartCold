@@ -1,3 +1,4 @@
+/*
 package com.smartcold.manage.cold.service;
 
 import java.util.Date;
@@ -21,10 +22,12 @@ import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
+*/
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-08-18 09:28)
- */
+ *//*
+
 @Transactional(rollbackFor = Exception.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:config/spring/local/appcontext*.xml"})
@@ -49,9 +52,11 @@ public class TempServiceTest {
     }
 
     
-    /**
+    */
+/**
 	 * 重置DEV
-	 */
+	 *//*
+
 	private void resetDevStatus(){
         try {
 			HashMap<String, Object> filter  = new HashMap<String, Object>();
@@ -88,3 +93,4 @@ public class TempServiceTest {
 		}
 	}
 }
+*/

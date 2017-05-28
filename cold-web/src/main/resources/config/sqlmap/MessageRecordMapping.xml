@@ -2,16 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.MessageRecordMapping" >
 
-   <select id="getUserAuth" parameterType="Integer" resultType="Integer">
-    SELECT COUNT(`id`) from `messagerecord` where `uid`=#{userId} and `type`=1 and `stype` in(1,2) and `state`=1;
-   </select>
-
-    <insert id="insertMessageRecord">
+    <insert id="insertMessageRecord" parameterType="MessageRecord">
         INSERT INTO `messagerecord`
         (`uid`,`rdcid`,`type`,`stype`,`title`,`message`,`addtime`)
         VALUES
         (#{uid},#{rdcId},#{type},#{sType},#{title},#{message},#{addTime})
     </insert>
+
+   <select id="getUserAuth" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+     SELECT COUNT(`id`) from `messagerecord` where `uid`=#{userId} and `type`=1 and `stype` in(1,2) and `state`=1;
+   </select>
+  
+  <select id="getNoReadByUserId" resultType="java.lang.Integer">
+        SELECT count(`id`) FROM `messagerecord` WHERE `rdcid` IN  (SELECT r.id FROM `rdc` AS r WHERE `userid`=#{userId})  and `isread`=0
+   </select>
+
+  <select id="getFiveNewMessage" resultType="java.util.HashMap">
+        SELECT * FROM `messagerecord` WHERE `rdcid` IN
+        (SELECT r.id FROM `rdc` AS r WHERE `userid`=#{userId})
+        and `isread`=0
+        order by `addtime` desc limit 0,5
+    </select>
+
+
+
+   
     
-    
+
 </mapper>

@@ -13,35 +13,34 @@
   </head>
   
  <body>
-    <div id="user_filter" style="padding:5px 0;">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_add'" onclick="$('#userForm').dialog('open')">添加用户</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_rem'" onclick="deleteUsers()">批量删除</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="reloaddata()">刷新</a>
-    </div>
-    <form id="userForm" class="easyui-dialog" title="添加用户" closed="true"
-         data-options=" iconCls:'icon-save',
-                        buttons: [{
-                            text:'提交',
-                            iconCls:'icon-ok',
-                            handler:function(){
-                                $('#userForm').submit();
-                            }
-                        },{
-                            text:'取消',
-                            handler:function(){
-                                $('#userForm').dialog('close');
-                            }
-                        }]"
-         style="width:400px;padding:10px;display: none;">
+    <table id="objTable" class="fill"></table>
+    <div class="none">
+	     <div id="user_filter" style="padding:5px 0;">
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_add'" onclick="$('#userForm').dialog('open')">添加用户</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_rem'" onclick="deleteUsers()">批量删除</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="reloaddata()">刷新</a>
+	    </div>
+    	 <form id="userForm" class="easyui-window" title="添加用户"
+          data-options="modal:true,closed:true,iconCls:'icon-save'"
+          style="width:400px;padding:10px;" closed="true">
         <table width="366">
             <tr>
                 <td>用户名:</td>
                 <td><input class="easyui-validatebox textbox" name="username" id="username"
                            data-options="prompt:'请输入用户名.',required:true"
                            validType="username[username]"
-                           style="width: 100%;height: 24px;">
+                           style="width: 100%;height: 24px;text-align: left;">
                     <!--validType="remote['../../i/user/checkUserName','value']"
                     invalidMessage="用户名已存在"-->
+                </td>
+            </tr><tr>
+                <td>所在集团:</td>
+                <td>
+                    <select class="easyui-combobox" name="state" id="valType" style="width:100%;">
+                        <option value="0"></option>
+                        <option value="1"></option>
+                        <option value="-1"></option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -66,9 +65,14 @@
                            style="width: 100%;height: 24px;">
                 </td>
             </tr>
+            <tr style="height: 20px;"></tr>
+            <tr>
+                <td><input type="button" value="提交" onclick="$('#userForm').submit()" class="btn btn-info" style="width: 150px;"></td>
+                <td style="text-align: right;"><input type="button" value="取消" onclick="$('#userForm').window('close')" class="btn" style="width: 150px;"></td>
+            </tr>
         </table>
     </form>
-    <table id="objTable" class="fill"></table>
-
+	</div>
+    
  </body>
 </html>

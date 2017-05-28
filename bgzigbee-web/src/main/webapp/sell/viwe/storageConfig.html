@@ -12,12 +12,24 @@
     <script type="text/javascript"  src="../app/storageConfig.js"></script>
 </head>
 <body>
-    <div>
+    <div id="div_tool" style="display: none">
         <select class="easyui-combobox" name="state" id="valType" style="width:200px;">
             <option value="0">经营类型</option>
             <option value="1">商品存放类型</option>
             <option value="-1">温度类型</option>
         </select>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_add'" onclick="openWindow()">添加类型</a>
+        <div id="typeForm" class="easyui-window" title="添加用户"
+              data-options="modal:true,closed:true,iconCls:'icon-save'"
+              style="width:400px;padding:10px 10px 30px;" closed="true">
+            <label style="width: 100%;">
+                <span id="opsAudit"></span>：
+                <input class="easyui-validatebox textbox" type="text" name="config" id="oConfig"
+                       style="width: 70%;height: 30px;">
+            </label>
+            <button data-options="iconCls:'icon_add'" class="btn" style="display: block;margin-top: 30px;width: 100%;height: 30px;line-height: 30px;"
+                    onclick="submit_config()">提交</button>
+        </div>
     </div>
     <table id="objTable" class="fill"></table>
 </body>

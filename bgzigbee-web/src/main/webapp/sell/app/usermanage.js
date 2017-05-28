@@ -1,83 +1,30 @@
-var queryParams = {page: null, rows: null, audit: '8', type: null, keyword: null};
+var queryParams = {page: null, rows: null, audit: null, type: null, keyword: null};
 
+
+
+//======================================================================格式化col=======================================================
+var col_audit = function (i) { switch(i){case -1:return '未通过';case 0:return '待审核';default: return '通过';}};
+var col_userType = function (i) {switch(i){case 0:return '平台用户';case 1:return '货主用户';case 2: return '服务商';}};
+function col_cellStyler(value, row) {return ['<button class="btn" onclick="changeAudit(' , row.id ,',' , row.audit , ')">审核</button>' , '<button class="btn btn-info" onclick="setRdcandUser(' ,+ row.id ,')">关联冷库</button>' ,'<button class="btn btn-delete" onclick="goDeleteUser(' , row.id, ',\'',row.username,'\')">删除</button>'].join("");}
+//======================================================================菜单事件function=======================================================
 //
-function cellStyler(value, row) {
-	return ['<button class="btn" onclick="changeAudit(' , row.id ,',' , row.audit , ')">审核</button>' ,
-	        '<button class="btn btn-info" onclick="setRdcandUser(' ,+ row.id ,')">关联冷库</button>' ,
-	        '<button class="btn btn-delete" onclick="goDeleteUser(' , row.id , ')">删除</button>'].join("");
-}
-/*
- * <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
- <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
- * */
-//$.ajax({type: "GET", cache: false, dataType: 'json', url: '/i/admin/findAdmin'}).success(function (data) {
-//    var admin = data.entity;
-//    if (admin == null || admin.id == 0) {
-//        var url = "http://" + location.host + "/login.html";
-//        top.location.href = url;
-//    }
-//});
-var getAudit = function (i) {
-    if (i == 0)
-        return '待审核';
-    else if (i > 0) {
-        return '通过';
-    } else {
-        return '未通过';
-    }
+var setRdcandUser = function () { self.parent.addTab("冷库管理", "/sell/viwe/rdcmanage.html", 'icon-cold');};
+//删除单个用户
+var goDeleteUser = function (uid,username) {
+    $.messager.confirm('删除确认', '你确认要<er>删除'+username+'</er>吗?', function (r) {if (r) {$.ajax({ type: 'GET', url: '../../i/user/deleteUser',data: {"userID": uid }, success: function (data) {reloaddata(); }}); }});
 };
-var userType = function (i) {
-    if (i == 0)
-        return '基本用户';
-    else if (i == 1) {
-        return '温度版';
-    } else if (i == 2) {
-        return '维修版';
-    }
-};
-function delcfm() {
-    $.messager.confirm('删除确认', '你确认要删除吗?', function (r) {
-        if (!r) {
-            return false;
-        }
-        return true;
-    });
-}
-
-var goDeleteUser = function (userID) {
-    $.messager.confirm('删除确认', '你确认要删除吗?', function (r) {
-        if (r) {
-            $.ajax({
-                type: 'GET',
-                url: '../../i/user/deleteUser',
-                data: {
-                    "userID": userID
-                },
-                success: function (data) {
-                	 reloaddata();
-                }
-            });
-        }
-    });
-};
+//批量删除用户
 var deleteUsers = function () {
     var userID =  getTableChecked();
     if (userID.length > 0) {
-        $.messager.confirm('删除确认', '你确认要删除吗?', function (r) {
+        $.messager.confirm('删除确认', '你确认要<er>删除</er>这<er>'+userID.length+'</er>条用户信息吗?', function (r) {
             if (r) {
                 $.ajax({
                     type: 'POST',
                     url: '../../i/user/deleteByUserIDs',
                     traditional :true, 
                     data: { userIDs: userID },
-                    success: function (data) {
-                    	 if(data==1){
-                    		 reloaddata();
-                         }else{
-//                        	 $.messager.("错误","删除失败！");
-                         }
-                       
-                    }
+                    success: function (data) { if(data.status==1){ reloaddata();}else{ $.messager.alert('错误', '删除用户失败！', 'error'); } }
                 });
             }
         });
@@ -87,57 +34,73 @@ var deleteUsers = function () {
 
 };
 var changeAudit = function (id, audit) {
-    if (audit == 1) {
-        $.messager.alert('审核状态', '已是通过状态了', 'info');
-        return false
-    };
-    $.messager.confirm('通过审核', '你确定要给该用户通过审核？', function(r){
-        if(r){
-            audit = 1
-        }else{
-            audit = -1;
-        }
-        $.post('../../i/user/changeAudit', {'userID': id, 'audit': audit}, function () {
-            reloaddata();
-        });
-    });
+    if (audit == 1) { $.messager.alert('审核状态', '已是通过状态了', 'info'); return false;};
+    $.messager.confirm('通过审核', '你确定要给该用户通过审核？', function(r){var audit =  r?1:-1; $.post('../../i/user/changeAudit', {'userID': id, 'audit': audit}, function () { reloaddata();});});
 
 };
-var setRdcandUser = function () {
-    self.parent.addTab("冷库管理", "/sell/viwe/rdcmanage.html", 'icon-cold');
-};
+
+function onDblClickRow(index, field) {
+	$('#userForm').form('clear');
+	$('#userForm').form('load',{
+		name:'myname',
+		email:'mymail@gmail.com',
+		subject:'subject',
+		message:'message',
+		language:'en'
+	});
+}
+//======================================================================格式化col=======================================================
 function init_table() {
     var col = [[
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},
         {field: 'username', title: '用户名', width: 80, align: 'center', sortable: true},
         {field: 'telephone', title: '手机号', width: 80, align: 'center', sortable: true},
-        {field: 'type', title: '用户类型', width: 80, align: 'center', sortable: true, formatter: userType},
+        {field: 'type', title: '用户类型', width: 80, align: 'center', sortable: true, formatter: col_userType},
         {field: 'email', title: '邮箱', width: 80, align: 'center', sortable: true},
         {field: 'addTime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format},
-        {field: 'audit', title: '状态', width: 80, align: 'center', sortable: true, formatter: getAudit},
-        {field: 'hand', title: '操作', width: 100, align: 'center', formatter: cellStyler}
+        {field: 'audit', title: '状态', width: 80, align: 'center', sortable: true, formatter: col_audit},
+        {field: 'hand', title: '操作', width: 100, align: 'center', formatter: col_cellStyler}
     ]];
     initTable("用户管理", "icon-user", "POST", "../../i/user/getUserByFilter", queryParams, "#user_filter", null, col, true, onDblClickRow);
     crspsh();
 }
 
-function treeselect(node) {
-    if (node != null) {
-        if (node.type) {
-            queryParams.type = node.type;
-            queryParams.stype = null;
-        } else if (node.stype) {
-            queryParams.type = null;
-            queryParams.stype = node.stype;
+function init_add_user(){
+	$('#userForm').form({
+        url: '../../i/user/addUser',
+        onSubmit: function () {
+            $.messager.progress();
+            var isValid = $(this).form('validate');
+            if (!isValid) {
+                $.messager.progress('close');
+            }
+            return isValid;
+        },
+        success: function (data) {
+            $('#userForm').window('close');
+            reloaddata();
+            $.messager.progress('close');
         }
-        reloaddata(queryParams);
-    }
+    });
 }
-function onDblClickRow(index, field) {
-}
+//======================================================================初始化数据=======================================================
+//初始化数据
+$().ready(function () {
+  init_table();
+  init_add_user();
+});
+//======================================================================初始化数据=======================================================
+
+//<tr>
+//<td><input type="button" value="提交" onclick="" class="btn btn-info" style="width: 150px;"></td>
+//<td style="text-align: right;"><input type="button" value="取消" onclick="$('#userForm').window('close')" class="btn" style="width: 150px;"></td>
+//</tr>
 
 
+function submitForm(){$('#userForm').submit();}
+function clearForm(){$('#userForm').window('close');}
+function adduser(){$("#add_user_dig").dialog('open');}
 /**
  * 动态组件 无需关心
  */
@@ -189,27 +152,5 @@ function chclip(em) {
     }
 }
 function onSelect(date) {
-    queryParams.startTime = date;
-    reloaddata(queryParams);
+    queryParams.startTime = date; reloaddata(queryParams);
 }
-
-//初始化数据
-$().ready(function () {
-    init_table();
-    $('#userForm').form({
-        url: '../../i/user/addUser',
-        onSubmit: function () {
-            $.messager.progress();
-            var isValid = $(this).form('validate');
-            if (!isValid) {
-                $.messager.progress('close');
-            }
-            return isValid;
-        },
-        success: function (data) {
-            $('#userForm').dialog('close');
-            reloaddata();
-            $.messager.progress('close');
-        }
-    });
-});//初始化数据

@@ -38,7 +38,7 @@
 		                  <option  ng-repeat="rdc in rdclist" value="{{rdc.id}}">{{rdc.text}}</option>
 		                </select>
 		                <div >
-		                    <div>
+		                    <div ng-if="user.type==0">
 		                        <div class="text-left">
 		                            <h4>温馨提示：</h4>
 		                            <p>1、为提高冷库信息质量，如果您是冷库负责人，请上传该冷库的<b>营业执照</b>。经审核通过后，你的账号即为认证账号，并会成为该冷库的管理者。</p>
@@ -53,7 +53,7 @@
 		                            <div class="col-md-8">
 		                                <button class="btn btn-success" ngf-select="addAuthFiles($files)" type="file"
 		                                        ng-model="authfiles"
-		                                        name="authfiles">上传图片
+		                                        name="authfiles">上传证书
 		                                </button>
 		                                <small class="text-warning" style="margin-left:30px;">*仅1张(必须为.jpg,.png,.jpeg格式)</small>
 		                            </div>
@@ -62,6 +62,14 @@
 		                                ng-bind="authfile.name"></span>
 		                            <i class="fa fa-times danger" style="margin-right:10px;color:red;" ng-click="dropauth(authfile)"></i>
 		                        </label>
+		                    </div>
+		                     <div ng-if="user.type!=0">
+		                        <div class="text-left">
+		                            <h4>温馨提示：</h4>
+		                            <p>1、该认证需要库主授权，授权后方可进行操作。</p>
+		                            <p>2、账号认证时间为1~3工作日，请您耐心等待。</p>
+		                            <p>3、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
+		                        </div>
 		                    </div>
 		                    <div class="clearfix btn_c">
 								<span class="btn_prep bp"><button type="button"  class="btn btn-warning">上一步</button></span>

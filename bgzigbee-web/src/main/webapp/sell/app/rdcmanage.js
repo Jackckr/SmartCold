@@ -14,7 +14,7 @@ function getRdcAudit(value) {
 }
 
 function cellStyler(value,row){
-    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[修改]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[审核]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[认证]</a>';
+    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[修改]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[审核]</a><a href="javascript:void(0)" onclick="rz('+ row.id+')">[认证]</a>';
 }
 
 function init_table(){
@@ -101,6 +101,29 @@ function searchData() {
 function ck(id) {
 
 }
+function rz(id) {
+    $.ajax({
+        url:"/i/rdc/getAuthenticationByRDCId",
+        data:{"rdcID":id},
+        type:"get",
+        success:function (data) {
+            var ele="";
+            if (data.length==0){
+                ele="还没有用户发布营业执照,无法进行冷库认证!";
+            }else {
+                for(var i=0;i<data.length;i++){
+                    if(data[i].user){
+                        ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"<br/><input type='radio' value='"+data[i].user.id+"'>"+data[i].user.username+"</div>";
+                    }else {
+                        ele+="<div style='float: left;margin-left: 60px'><img src='"+data[i].file.location+"' style='height: 100px;width:100px'/><br/>"+data[i].time+"</div>";
+                    }
+                }
+            }
+            $("#certificationImg").empty().append(ele);
+        }
+    });
+    $("#certificationCold").dialog('open');
+}
 function addCold() {
     $.ajax({
         url:"/i/city/findProvinceList",
@@ -111,38 +134,12 @@ function addCold() {
                 option+="<option value='"+data[i].provinceId+"'>"+data[i].provinceName+"</option>";
             }
             $("#province").empty().append(option);
+            $("#province").combobox({});
         }
     });
-    $.ajax({
-        url:"/i/city/findCitysByProvinceId",
-        data:{"provinceID":1},
-        type:"get",
-        success:function (data) {
-            var option="";
-            for(var i=0;i<data.length;i++){
-                option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
-            }
-            $("#city").empty().append(option);
-        }
-    });
-    $('#addCold').dialog('open');
+    $('#addCold').window('open');
 }
 
-function changeCity() {
-    var id = $("#province option:selected").val();
-    $.ajax({
-        url:"/i/city/findCitysByProvinceId",
-        data:{"provinceID":id},
-        type:"get",
-        success:function (data) {
-            var option="";
-            for(var i=0;i<data.length;i++){
-                option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
-            }
-            $("#city").empty().append(option);
-        }
-    });
-}
 
 function dl(id) {
     var flag = confirm("确认删除？");
@@ -159,11 +156,21 @@ function dl(id) {
 //初始化数据
 $().ready(function() {
     init_table();
-    /*$("#sel_type").combobox({
-     onSelect: function(date){
-     var val =date.value;
-     queryParams.type=val;
-     reloaddata(queryParams);
-     }
-     });*/
+    $("#province").combobox({
+        onSelect:function(record){
+            $.ajax({
+                url:"/i/city/findCitysByProvinceId",
+                data:{"provinceID":record.value},
+                type:"get",
+                success:function (data) {
+                    var option="";
+                    for(var i=0;i<data.length;i++){
+                        option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
+                    }
+                    $("#city").empty().append(option);
+                    $("#city").combobox({});
+                }
+            });
+        }
+    });
 });//初始化数据
