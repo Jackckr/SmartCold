@@ -1,17 +1,13 @@
 package com.smartcold.manage.cold.controller;
 
-import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
-import com.smartcold.manage.cold.dao.olddb.RdcMapper;
-import com.smartcold.manage.cold.entity.olddb.Rdc;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
+import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 
 /**
  * Created by qiangzi on 2017/5/27.
@@ -24,9 +20,14 @@ public class MessageRecordController {
 
     @RequestMapping(value = "/getNewMessage",method = RequestMethod.POST)
     @ResponseBody
+    public Object getNewMessage (Integer userId,Integer type,Integer stype, Integer isRead,Integer status, int  page,int rows){
+       return messageRecordMapping.getNewMessage(userId);
+    }
+    
+    @RequestMapping(value = "/getNewMessage",method = RequestMethod.POST)
+    @ResponseBody
     public Object getNewMessage (Integer userId){
-        List<HashMap<String, Object>> message = messageRecordMapping.getFiveNewMessage(userId);
-        return message;
+       return messageRecordMapping.getFiveNewMessage(userId);
     }
 
     @RequestMapping(value = "/getAllNoReadMessage",method = RequestMethod.POST)

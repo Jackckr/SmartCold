@@ -43,7 +43,7 @@ public class QuartzJobFactory implements Job {
 	@Override
 	public void execute(JobExecutionContext context)throws JobExecutionException {
 		try {
-			System.err.println("=======================================");
+			System.err.println("开始任务=======================================");
 			int key = (int) context.getMergedJobDataMap().get("sid");
 			ScheduleJob job = QuartzManager.getJob(key);
 			if (job != null) {

@@ -69,7 +69,8 @@
 
 									</ul> <!-- /.menu -->
 								</li>
-								<li class="footer"><a href="#/allWarning">查看全部</a></li>
+								<li class="footer" ng-if="notReadMessage>0"><a href="#/message">查看全部</a></li>
+								<li class="footer" ng-if="notReadMessage==0"><a href="#/message">查看历史消息</a></li>
 							</ul>
 						</li>
 						<!-- /.messages-menu -->
@@ -498,6 +499,7 @@
 		document.write("<scr"+"ipt src=\"app/js/maintenancenotice.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/maintainRequest.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/maintainRepair.js\"></sc"+"ript>");
+		document.write("<scr"+"ipt src=\"app/js/message.js\"></sc"+"ript>");
 		
 		document.write("<scr"+"ipt src=\"assets/plugins/chartjs/Chart.min.js\"></sc"+"ript>");//
 		document.write("<scr"+"ipt src=\"assets/plugins/fastclick/fastclick.min.js\"></sc"+"ript>");//

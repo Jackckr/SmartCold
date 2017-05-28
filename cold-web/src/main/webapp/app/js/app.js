@@ -87,12 +87,12 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      		$("#lefaside").removeClass("hide");
 		        	});
 
-                $http({method:'POST',url:'i/messageRecord/getNewMessage',params:{"userId":$rootScope.user.id}}).success(function (data) {
-                	$rootScope.messageList=data;
-                });
-                $http({method:'POST',url:'i/messageRecord/getAllNoReadMessage',params:{"userId":$rootScope.user.id}}).success(function (data) {
-                    $rootScope.notReadMessage=data;
-                });
+	                $http({method:'POST',url:'i/messageRecord/getNewMessage',params:{"userId":$rootScope.user.id}}).success(function (data) {
+	                	$rootScope.messageList=data;
+	                });
+	                $http({method:'POST',url:'i/messageRecord/getAllNoReadMessage',params:{"userId":$rootScope.user.id}}).success(function (data) {
+	                    $rootScope.notReadMessage=data;
+	                });
 		        	 $http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function(data,status,headers,config){// 初始化冷库
 		        			$rootScope.Tempset=[];$rootScope.mystorages = data;$rootScope.storageModal = data[0];
 		        	 });
@@ -340,10 +340,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/personInfo',
     	controller: 'personInfo',
         templateUrl: 'app/template/personInfo.html' 
-    }).state('allWarning',{//所有告警信息
-        url:'/allWarning',
-        controller: 'allWarning',
-        templateUrl: 'app/template/allWarning.html'
+    }).state('message',{//所有告警信息
+        url:'/message',
+        controller: 'message',
+        templateUrl: 'app/template/message.html'
     });
     //    .state('myColdStorage',{维修确认单
 //    	url:'/myColdStorage/:storageID',

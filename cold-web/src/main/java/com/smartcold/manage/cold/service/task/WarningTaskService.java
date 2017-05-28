@@ -60,13 +60,14 @@ public class WarningTaskService  {
 			key=colditem.getId(); baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;//基线温度
 			ItemValue maxTempData = this.tempWarningServer.getMAITempData(key, 0, colditem.getDeviceid(),starttime, endtime);//升溫后最小值
 			if(maxTempData==null){continue;	}//故障  没数据
-			ItemValue minTempData = this.tempWarningServer.getMAITempData(key, 1,TimeUtil.getDateTime(maxTempData.getAddtime()), starttime, endtime);
+			ItemValue minTempData = this.tempWarningServer.getMAITempData(key, 1,colditem.getDeviceid(),TimeUtil.getDateTime(maxTempData.getAddtime()),  endtime);
 			if(minTempData==null){minTempData=maxTempData;}
 			ScheduleJob job = QuartzManager.getJob(key);
 		    double	lastminval= minTempData.getValue()-baseTemp;
 		    long cutttTime=System.currentTimeMillis();
 			if(lastminval<0){//超温后温度下降正常 移除超温监听
 				if(job!=null&&job.getMaxval()-baseTemp<8){
+					  System.err.println("刪除任务。。。。。。。");
 					  QuartzManager.removeJob(key);
 				}else{//之前出现过超温  立即检测
 					 long croStartTime=cutttTime+60000;
@@ -75,6 +76,7 @@ public class WarningTaskService  {
 					 job.setEndTime(minTempData.getAddtime());
 					 job.setTask(true);
 					 QuartzManager.upJob(key,  job);// 
+					 System.err.println("校验任务。。。。。。。");
 				}
 			}else{//持续升温中
 				if(job!=null){
@@ -88,11 +90,12 @@ public class WarningTaskService  {
 		    				job.setWarcount(job.getWarcount()+1);
 		    				if(job.getWarcount()>6){job.setTask(true);}
 		    			}else{
-		    				job.setCroStartTime(job.getCroStartTime()+3600000);//更新为半个小时后启动
+//		    				job.setCroStartTime(job.getCroStartTime()+3600000);//更新为半个小时后启动
 		    				job.setTask(true);
 		    			}
-		    			QuartzManager.upJob(key, job);
 		    		}
+		    		QuartzManager.upJob(key, job);
+		    		System.err.println("更新任务。。。。。。。。。。");
 				}else{
 				   double diffTemp=   	maxTempData.getValue()-baseTemp;//
 				   int lavel=  (int) (diffTemp/2);
@@ -107,8 +110,10 @@ public class WarningTaskService  {
            		   job.setMaxval(maxTempData.getValue());
            		   job.setMinval(minTempData.getValue());
            		   QuartzManager.addJob(key,  job);// 
+		    		System.err.println("创建任务。。。。。。。。。。");
 				}
 			}
+			System.err.println(JSONArray.toJSONString(job));
 		}
 	}	
 	/**
