@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smartcold.bgzigbee.manage.dto.*;
 import com.smartcold.bgzigbee.manage.util.*;
 import org.slf4j.Logger;
@@ -313,6 +314,16 @@ public class RdcController {
 			e.printStackTrace();
 		}
 		return ResponseData.newFailure("修改失败！请稍后重试！");
+	}
+
+	@RequestMapping(value = "/newAddRdc", method = RequestMethod.POST)
+	@ResponseBody
+	public void addRdc(HttpServletRequest request, String empStr){
+		if (StringUtils.isEmpty(empStr)) {
+
+		} else {
+			RdcAddDTO emp= JSONObject.parseObject(empStr, RdcAddDTO.class);
+		}
 	}
 
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)

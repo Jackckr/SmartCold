@@ -140,6 +140,37 @@ function addCold() {
     $('#addCold').window('open');
 }
 
+function addColdSubmit() {
+    var honorfiles = $("input[name=honorfiles]");
+    var arrangePic = $("input[name=arrangePic]");
+    var files = $("input[name=files]");
+    var parnArray = $("#addColdForm").serializeArray();
+    var vo ={};
+    var formdata = new FormData();
+    $.each(honorfiles,function(index,item){
+        formdata.append('honor'+index,item.files[index]);
+    });
+    $.each(arrangePic,function(index,item){
+        formdata.append('arrangePics',item.files[0]);
+    });
+    $.each(files,function(index,item){
+        formdata.append('file'+(index+1),item.files[index]);
+    });
+    $.each(parnArray,function(index,item){
+        vo[item.name] = item.value;
+    });
+    formdata.append("empStr",JSON.stringify(vo));
+    $.ajax({
+        url: "/i/rdc/newAddRdc",
+        data: formdata,
+        processData: false,
+        contentType: false,
+        type: 'POST',
+        success: function(data){
+           alert(data);
+        }
+    });
+}
 
 function dl(id) {
     var flag = confirm("确认删除？");

@@ -67,13 +67,18 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
     $scope.searchRdcs = function (searchContent) {
         $(".searchTop").show();
         // 超管特殊处理
-        if ($scope.user.roleid == 3) {
+        /*if ($scope.user.roleid == 3) {
             $http.get(ER.coldroot + '/i/rdc/searchRdc?type=1&filter=' + searchContent).success(function (data) {
                 if (data && data.length > 0) {
                     $scope.storages = data;
                 }
             });
-        }
+        }*/
+        $http.get(ER.coldroot + '/i/rdc/getRdcByName?keywords=' + searchContent).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.storages = data;
+            }
+        });
     };
     $scope.addAuthFiles = function (files) {
         for(var j=0,fileLen=files.length;j<fileLen;j++){
@@ -109,7 +114,7 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
         $(".searchTop").hide();
         $scope.step = 2;
         $scope.rdcId = rdc.id;
-        $scope.rdcName = rdc.name;
+        $scope.rdcName = rdc.text;
         $scope.searchContent = "";
     };
     $scope.goOtherMonitor = function () {
