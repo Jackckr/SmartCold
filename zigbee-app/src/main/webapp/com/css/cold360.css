@@ -946,7 +946,7 @@ input[type='radio']:checked{
 	margin: 1rem 0;
 }
 .role_img img{
-	width: 50%;
+	width: 7rem;
 }
 .choose_cold{
 	border: 0.5px solid #00A1CB;
