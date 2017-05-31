@@ -4,8 +4,6 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper">
     
-
-    
     <select id="findLastNPoint" parameterType="map" resultType="ColdStorageSetEntity">
         SELECT *
         FROM `ColdStorageSet` WHERE `id` = #{id} limit #{npoint}

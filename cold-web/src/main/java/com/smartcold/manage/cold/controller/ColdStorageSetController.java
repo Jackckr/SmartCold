@@ -30,6 +30,18 @@ public class ColdStorageSetController {
 	public Object findStorageSetByRdcId(int rdcID) {
 		return coldStorageSetDao.findByRdcId(rdcID);
 	}
+	@RequestMapping(value = "/findStorageSetByUserId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findStorageSetByUserId(int rdcId,int userId,int type) {
+		if(type==1){//温度版
+//			coldstoragetempset
+		}else{//
+			return coldStorageSetDao.findByRdcId(rdcId);
+		}
+		
+		return null;
+//		return coldStorageSetDao.findByRdcId(rdcID);
+	}
 
 	@RequestMapping(value = "/findHasDoorStorageSetByRdcId", method = RequestMethod.GET)
 	@ResponseBody

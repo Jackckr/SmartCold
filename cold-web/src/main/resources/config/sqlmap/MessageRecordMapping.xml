@@ -8,21 +8,26 @@
         VALUES
         (#{uid},#{rdcId},#{type},#{sType},#{title},#{message},#{addTime})
     </insert>
-
    <select id="getUserAuth" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-     SELECT COUNT(`id`) from `messagerecord` where `uid`=#{userId} and `type`=1 and `stype` in(1,2) and `state`=0;
+     SELECT COUNT(`id`) from `messagerecord` where `type`=1 and `uid`=#{userId}  and `stype` in(1,2) and `state`=0;
+   </select>
+   <select id="getMsgCountByRdcId" parameterType="Integer" resultType="Integer">
+     SELECT COUNT(`id`) from `messagerecord` where `rdcid`=#{rdcId} and `isread`=0;
+   </select>
+   <select id="getTallMsgByRdcId" parameterType="java.lang.Integer" resultType="MessageRecord">
+     SELECT * from `messagerecord` where `rdcid`=#{rdcId} and `isread`=0 limit 5;
+   </select>
+   <select id="getMsgByFilter" parameterType="Map" resultType="MessageRecord">
+     SELECT * from messagerecord where  `rdcid`=#{rdcId}
+      <if test="uid!=null"> and `uid`=#{uid} </if>
+      <if test="type!=null"> and `type`=#{type} </if>
+      <if test="stype!=null"> and `stype`=#{stype} </if>
+      <if test="state!=null"> and `stype`=#{state} </if>
+      <if test="isread!=null"> and `isread`=#{isread} </if>
+      <if test="keyword!=null and keyword!=''"> and `title` like CONCAT('%',#{keyword!},'%') or `message` like   CONCAT('%',#{keyword!},'%')   </if>
+      ORDER BY addtime DESC
    </select>
   
-  <select id="getNoReadByUserId" resultType="java.lang.Integer">
-        SELECT count(`id`) FROM `messagerecord` WHERE `rdcid` IN  (SELECT r.id FROM `rdc` AS r WHERE `userid`=#{userId})  and `isread`=0
-   </select>
-    <select id="getNewMessage" resultType="MessageRecord">
-        SELECT * FROM `messagerecord` WHERE `rdcid` IN (SELECT r.id FROM `rdc` AS r WHERE `userid`=#{userId}) and `isread`=0  order by `addtime` desc 
-    </select>
-    <select id="getFiveNewMessage" resultType="MessageRecord">
-        SELECT * FROM `messagerecord` WHERE `rdcid` IN (SELECT r.id FROM `rdc` AS r WHERE `userid`=#{userId}) and `isread`=0  order by `addtime` desc limit 5;
-    </select>
-    
     
 
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,23 +22,31 @@ import com.smartcold.manage.cold.entity.olddb.MessageRecord;
 public class MessageRecordController {
     @Resource
     private MessageRecordMapping messageRecordMapping;
-
-    @RequestMapping(value = "/getNewMessage",method = RequestMethod.POST)
+    
+    @RequestMapping(value = "/getMsgCountByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public List<MessageRecord> getNewMessage (Integer userId,Integer type,Integer stype, Integer isRead,Integer status, int  page,int rows){
-    	PageHelper.startPage(page, rows);
-       return messageRecordMapping.getNewMessage(userId);
+    public Integer getMsgCountByRdcId(Integer rdcId){
+    	return messageRecordMapping.getMsgCountByRdcId(rdcId);
     }
     
-    @RequestMapping(value = "/getFiveNewMessage",method = RequestMethod.POST)
+    @RequestMapping(value = "/getTallMsgByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public List<MessageRecord> getFiveNewMessage (Integer userId){
-       return messageRecordMapping.getFiveNewMessage(userId);
+    public List<MessageRecord>  getTallMsgByRdcId(Integer rdcId){
+    	return messageRecordMapping.getTallMsgByRdcId(rdcId);
     }
-
-    @RequestMapping(value = "/getAllNoReadMessage",method = RequestMethod.POST)
+    @RequestMapping(value = "/getMessageList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getAllNoReadMessage (Integer userId){
-      return  messageRecordMapping.getNoReadByUserId(userId);
+    public List<MessageRecord> getMessageList (Integer rdcId,Integer userId,Integer type,Integer stype, Integer isRead,Integer status,String keyword, int  page,int rows){
+    	PageHelper.startPage(page, rows);
+       return messageRecordMapping.getMsgByFilter(rdcId, userId, type, stype, status, isRead, keyword);
     }
+	
+//	Integer getMsgCountByRdcId(@Param("rdcId")Integer rdcId);//获得冷库未读消息
+	
+//	List<MessageRecord> getTallMsgByRdcId(@Param("rdcId")Integer rdcId);//获得冷库未前5条消息
+	
+//	List<MessageRecord> getMsgByFilter(@Param("rdcId")Integer rdcId);//
+	
+//    void insertMessageRecord(MessageRecord messageRecord);//添加消息
+    
 }

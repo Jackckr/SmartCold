@@ -9,13 +9,15 @@ import java.util.Date;
 public class MessageRecord {
     private Integer id;
     private Integer uid;//用户id
+    private int   tid         ;
     private Integer rdcId;//冷库id
     private Integer type;//消息类型
     private Integer sType;//子集ID
     private String title;//消息标题
     private String message;//消息内容
-    private Date addTime;//消息添加时间
-
+    private int   state       ;
+    private int   level       ;
+    private String addTime;//消息添加时间
     public Integer getId() {
         return id;
     }
@@ -72,11 +74,37 @@ public class MessageRecord {
         this.message = message;
     }
 
-    public Date getAddTime() {
-        return addTime;
-    }
+   
+	public String getAddTime() {
+		return addTime;
+	}
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
+	public void setAddTime(String addTime) {
+		this.addTime = addTime;
+	}
+
+	public int getTid() {
+		return tid;
+	}
+
+	public void setTid(int tid) {
+		this.tid = tid;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+    
 }

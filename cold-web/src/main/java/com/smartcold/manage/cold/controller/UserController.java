@@ -85,6 +85,31 @@ public class UserController extends BaseController {
 		return new ResultDto(1, "用户名或密码错误！");
 	}
 	
+	/**
+	 * 身份校验
+	 * @param request
+	 * @param userId
+	 * @param type
+	 * @return
+	 */
+	@RequestMapping(value = "/getUserAuthen")
+	@ResponseBody
+	public Object getUserAuthen(HttpServletRequest request, int userId,int type) {
+			try {
+				RoleUser roleUser = roleUserService.getRoleIdByUserId(userId);
+				if(roleUser==null){//判断有没有申请
+					if(type==0){
+						return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(userId)==0?2:3, "");//未授权
+					}else{
+						return new ResultDto(this.messageRecordMapping.getUserAuth(userId)==0?2:3, "");//未授权
+					}
+				}
+				return new ResultDto(0,"身份验证成功");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return new ResultDto(1,"身份验证失败！");
+	}
 
 
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
