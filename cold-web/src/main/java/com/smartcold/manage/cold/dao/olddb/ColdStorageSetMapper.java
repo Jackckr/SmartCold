@@ -17,6 +17,8 @@ public interface ColdStorageSetMapper {
 	
     List<ColdStorageSetEntity> findAllColdStorage();
 
+    List<ColdStorageSetEntity> findByIds(@Param("ids") String ids);
+    
 	List<ColdStorageSetEntity> findByRdcId(@Param("rdcId") int rdcId);
 	
 	List<ColdStorageSetEntity> findHasDoorStorage(@Param("rdcId") int rdcId);

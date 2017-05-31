@@ -94,7 +94,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/getUserAuthen")
 	@ResponseBody
-	public Object getUserAuthen(HttpServletRequest request, int userId,int type) {
+	public Object getUserAuthen(int userId,int type) {
 			try {
 				RoleUser roleUser = roleUserService.getRoleIdByUserId(userId);
 				if(roleUser==null){//判断有没有申请

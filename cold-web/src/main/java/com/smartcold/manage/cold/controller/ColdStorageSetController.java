@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdstorageTempsetMapper;
+import com.smartcold.manage.cold.util.StringUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-05-01 23:23)
@@ -18,6 +20,8 @@ public class ColdStorageSetController {
 
 	@Autowired
 	private ColdStorageSetMapper coldStorageSetDao;
+	@Autowired
+	private ColdstorageTempsetMapper coldstorageTempsetMapper;
 
 	@RequestMapping(value = "/findSetByStorageId", method = RequestMethod.GET)
 	@ResponseBody
@@ -30,17 +34,19 @@ public class ColdStorageSetController {
 	public Object findStorageSetByRdcId(int rdcID) {
 		return coldStorageSetDao.findByRdcId(rdcID);
 	}
+	
 	@RequestMapping(value = "/findStorageSetByUserId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findStorageSetByUserId(int rdcId,int userId,int type) {
 		if(type==1){//温度版
-//			coldstoragetempset
+			String oids = this.coldstorageTempsetMapper.getColdStorageidByUserId(rdcId, userId);
+			if(StringUtil.isnotNull(oids)){
+				return coldStorageSetDao.findByIds(oids);
+			}
 		}else{//
 			return coldStorageSetDao.findByRdcId(rdcId);
 		}
-		
 		return null;
-//		return coldStorageSetDao.findByRdcId(rdcID);
 	}
 
 	@RequestMapping(value = "/findHasDoorStorageSetByRdcId", method = RequestMethod.GET)
