@@ -29,6 +29,7 @@
 </header>
 <section class="searchTop">
     <ul class="rdcList">
+        <li class="omg" ng-if="rdcList==1"><i class='iconfont'>&#xe62f;</i><span>没有搜到相关冷库~</span></li>
         <li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.text}}</span></li>
     </ul>
     <p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
