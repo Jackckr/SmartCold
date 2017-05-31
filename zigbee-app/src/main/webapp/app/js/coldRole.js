@@ -19,6 +19,10 @@ app.controller('coldRole',function ($scope, $location, $http, $rootScope, userSe
     $scope.goStep4 = function () {
         $scope.step = 4;
     };
+    $scope.cancel = function () {
+        $(".searchTop").hide();
+        $scope.step = 2;
+    };
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
