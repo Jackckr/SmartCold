@@ -18,11 +18,11 @@
 </head>
 <body ng-app="app" ng-controller="coldRole" ng-cloak>
 <header ng-if="step==4">
-    <div class="area fr" ng-click="cancel()">
-        <a class="cancel"><i class="iconfont">&times;</i></a>
+    <div class="area fl" ng-click="cancel()">
+        <a class="cancel"><i class="iconfont">&#xe60e;</i></a>
     </div>
 
-    <div id="searchDara_div" class="search" style="margin: 0 1.5rem 0 0;">
+    <div id="searchDara_div" class="search">
         <input type="text" placeholder="查找冷库..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
         <i class="iconfont" >&#xe62f;</i>
     </div>
