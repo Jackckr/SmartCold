@@ -38,9 +38,9 @@
    <div class="role_choose" ng-if="step==1">
        <h3>请先选择您的角色：</h3>
        <div class="role_div">
-           <button class="rolo_btn role_k" ng-click="goStep2()">我是库主</button>
-           <button class="rolo_btn role_h" ng-click="goStep2()">我是货主</button>
-           <button class="rolo_btn role_wx" ng-click="goStep2()">我是维修商</button>
+           <button class="rolo_btn role_k" ng-click="goStep2(0)">我是库主</button>
+           <button class="rolo_btn role_h" ng-click="goStep2(1)">我是货主</button>
+           <button class="rolo_btn role_wx" ng-click="goStep2(2)">我是维修商</button>
            <button class="rolo_btn role_home" onclick="location.href='../index.html'">返回首页</button>
        </div>
    </div>
@@ -57,7 +57,7 @@
             <p>1、该认证需要库主授权，授权后方可进行操作。</p>
             <p>2、账号认证时间为1~3工作日，请您耐心等待。</p>
             <p>3、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
-            <label class="pic fl"> <input input type="file" id="files" ngf-select="addAuthFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  /></label>
+            <label class="pic fl" ng-hide="selImgFlag"> <input input type="file" id="files" ngf-select="addAuthFiles($files)" ng-model="files"  ngf-multiple="true" name="files"/></label>
             <output id="img_list1" class="img_list fl"><span ng-repeat="authfile in totalauthfiles"><img class="thumb" ngf-src="authfile" title="{{authfile.name}}"><i ng-click="dropauth(authfile)">×</i></span></output>
         </div>
         <div class="role_div clearfix" style="margin-top: 1rem;">
@@ -71,7 +71,7 @@
             <img src="../com/img/success.png" alt="">
         </div>
         <h3>恭喜您，提交成功！
-            <p>
+            <p id="auCode">
                 请耐心等待，我们会尽快为您处理~
             </p>
         </h3>
