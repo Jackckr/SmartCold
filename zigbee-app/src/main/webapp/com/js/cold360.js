@@ -90,7 +90,7 @@ $(function() {
  * 公共服务在此显示
  * 2017-5.21
  */
-var app = angular.module('app', ['ngFileUpload']);
+var app = angular.module('app', []);
 app.service('userService', function($rootScope,  $http) {
 	 initAllByRdcId= function(rootRdcId){
         $rootScope.rdcId = rootRdcId;

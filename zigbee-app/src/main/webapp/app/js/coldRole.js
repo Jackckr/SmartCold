@@ -1,5 +1,6 @@
 checkLogin();
-app.controller('coldRole',function ($scope, $location, $http, $rootScope,Upload,userService) {
+var myApp = angular.module('app', ['ngFileUpload']);
+myApp.controller('coldRole',function ($scope, $http, Upload) {
     $scope.totalauthfiles = [];
 	$scope.user = user;
     $http.defaults.withCredentials = true;

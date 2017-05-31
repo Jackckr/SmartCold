@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/coldRole.js" ></script>
 </head>
-<body ng-app="app" ng-controller="coldRole" ng-cloak class="obg">
+<body ng-app="myApp" ng-controller="coldRole" ng-cloak class="obg">
 <header ng-if="step==4">
     <div class="area fl" ng-click="cancel()">
         <a class="cancel"><i class="iconfont">&#xe60e;</i></a>
@@ -45,7 +45,7 @@
        </div>
    </div>
 <!--第二步：选择冷库-->
-    <div class="role_choose"  ng-if="step==2">
+    <div class="role_choose auth_txt"  ng-if="step==2">
         <h3>冷库认证：</h3>
         <p>
             说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！
