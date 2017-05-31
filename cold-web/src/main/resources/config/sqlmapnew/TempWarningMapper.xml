@@ -25,7 +25,7 @@
 	      `key` ='Temp' and `addtime` >#{starttime} and `addtime` &lt;#{endtime}
 	      and `value`=(SELECT ${mv} `value`   FROM `${table}`   where
 	        <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
-	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>   `key` ='Temp' and  `addtime` >#{starttime} and `addtime` &lt;#{endtime})
+	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>   `key` ='Temp' and  `addtime` >#{starttime} and `addtime` &lt;#{endtime})  LIMIT 1
 	      ; 
 	</select>	
 

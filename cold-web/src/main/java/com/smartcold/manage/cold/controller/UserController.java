@@ -77,7 +77,7 @@ public class UserController extends BaseController {
 				if(user.getType()==0){
 					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
 				}else{
-					return new ResultDto(this.messageRecordMapping.getUserAuth(user.getId())==0?3:3, String.format("token=%s", cookie));//未授权
+					return new ResultDto(this.messageRecordMapping.getUserAuth(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
 				}
 			}
 			return new ResultDto(0, String.format("token=%s", cookie));
@@ -124,6 +124,7 @@ public class UserController extends BaseController {
 	public Object signup(HttpServletRequest request,String username, String password,String telephone,String signUpCode) {
 		if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)) {return  ResponseData.newFailure("请输入必填信息！");}
 		try {
+			this.logout(request);//q
 			UserEntity user = new UserEntity();
 			user.setUsername(username);
 			user.setPassword(EncodeUtil.encodeByMD5(password));

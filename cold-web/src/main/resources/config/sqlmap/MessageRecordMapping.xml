@@ -10,7 +10,7 @@
     </insert>
 
    <select id="getUserAuth" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-     SELECT COUNT(`id`) from `messagerecord` where `uid`=#{userId} and `type`=1 and `stype` in(1,2) and `state`=1;
+     SELECT COUNT(`id`) from `messagerecord` where `uid`=#{userId} and `type`=1 and `stype` in(1,2) and `state`=0;
    </select>
   
   <select id="getNoReadByUserId" resultType="java.lang.Integer">

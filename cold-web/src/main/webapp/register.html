@@ -222,10 +222,29 @@ window.onresize = function () {
     var mainHeight = $(window).height();
     $(".loginBody").height(mainHeight - 160);
 };
-
 jQuery.ajaxSetup({xhrFields:{withCredentials:true}});
-var victdata={code:null,key:new Date().getDate()*2, userName:false,victpwd:false,victel:false,victyzm:false};
 
+function getCookie(name) 
+{ 
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+ 
+    if(arr=document.cookie.match(reg))
+ 
+        return unescape(arr[2]); 
+    else 
+        return null; 
+} 
+function delCookie(name) 
+{ 
+    var exp = new Date(); 
+    exp.setTime(exp.getTime() - 1); 
+    var cval=getCookie(name); 
+    if(cval!=null) 
+        document.cookie= name + "="+cval+";expires="+exp.toGMTString(); 
+} 
+delCookie("token");
+$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});//清除服务器和本地缓存
+var victdata={code:null,key:new Date().getDate()*2, userName:false,victpwd:false,victel:false,victyzm:false};
 
 function checkinfo(){
 	var vis=victdata.userName&&victdata.victpwd&&victdata.victel&&victdata.victyzm;

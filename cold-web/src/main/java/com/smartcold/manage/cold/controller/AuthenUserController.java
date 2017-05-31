@@ -57,8 +57,8 @@ public class AuthenUserController {
 			if (type==0){
 				String dir =null;String fileName=null;
 				if (authfile != null) {//
-						 dir = String.format("%s/rdc/%s", baseDir, rdcId);
-						 fileName = String.format("rdc%s_%s_%s.%s", rdcId,userId, new Date().getTime(), "jpg");
+					    dir = String.format("%s/rdc/%s", baseDir, rdcId);
+						fileName = String.format("rdc%s_%s_%s.%s", rdcId,userId, new Date().getTime(), "jpg");
 						UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
 						this.ftpService.uploadFile(uploadFileEntity);
 						FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,FileDataMapper.CATEGORY_AUTH_PIC, rdcId, fileName);
