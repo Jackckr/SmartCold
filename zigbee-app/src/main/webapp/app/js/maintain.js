@@ -425,7 +425,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 			$scope.submit=function(){
 				var servertype="";
 				var em_servertype=$("[name ='service']:checked");
-				if(em_servertype.length>0){for(var i=0;i<em_servertype.length;i++){servertype += em_servertype[i].value +","; } servertype=servertype.substring(0,servertype.length-1);}
+				if(em_servertype.length>0){for(var i=0;i<em_servertype.length;i++){servertype += em_servertype[i].value +","; } servertype=servertype.substring(0,servertype.length-1);}else{
+					alert("请选择服务性质再提交~");
+					return false
+				}
 				$scope.maintenance.servertype=servertype;
 				$scope.maintenance.rdcid=$rootScope.rdcId;
 				$scope.maintenance.warmappid=$scope.warids;

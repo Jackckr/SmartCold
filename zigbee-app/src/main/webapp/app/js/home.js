@@ -3,7 +3,7 @@ function goshadile(sharid){window.location.href ="view/storehousedetail.html?id=
 function gordclist() {var key=$("#searchdiv").val().trim();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;};
 function gosharlist(){var key=$("#searchdiv").val().trim();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;   };
 function goshkeylist(em){var key=$(em).attr("value");  window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/searchList.html?key="+key;};
-$().ready(function() { 
+$().ready(function() {
 	var province=null,sccsize=0,shear=false;
 	if(window.localStorage.appLocalCity ){
     	 document.getElementById ("city").innerHTML =JSON.parse(window.localStorage.appLocalCity).cityName;
@@ -123,6 +123,33 @@ $().ready(function() {
 	}
 });
 localStorage.removeItem("list_cache_coldlist");
+function checkUserType(){//gds
+    if(user == null){
+        location.href = "view/login.html"
+    }else{
+        $.ajax({
+            type: "GET",
+            url: ER.coldroot + '/i/user/getUserAuthen',
+            data: {userId:user.id, type: user.type},
+            success: function(data){
+                var oStatus = data.status;
+                if(oStatus == 0){//进入360
+                    if(user.type == 1 ){//货主--温度版
+                        location.href = "temp/cold360.html"
+                    }else if(user.type == 2 ){//维修商--维修版
+                        location.href = "maintaince/cold360.html"
+                    }else{//库主--360所有版本
+                        location.href = "view/cold360.html"
+                    }
+                }else if(oStatus == 2){//角色认证
+                    location.href = "view/coldRole.html"
+                }else if(oStatus == 3){//审核中
+                    location.href = "view/audit.html"
+                }
+            }
+        });
+    }
+}
 
 
 	
