@@ -887,8 +887,115 @@ input[type='radio']:checked{
 .role_hide{
 	display: none!important;
 }
-
-
+/*
+*角色选择
+*/
+.oH2{
+	text-align: center;
+	font-size:1.2rem;
+	font-style: italic;
+	color: #337ab7;
+	margin: 1rem 0;
+}
+.role_choose{
+	padding:0.9rem;
+}
+.role_choose h3{
+	margin: .5rem 0;
+	font-size: .75rem;
+	line-height:1.5;
+}
+.rolo_btn{
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	border-radius: .2rem;
+	padding: 0.5rem;
+	font-size: .8rem;
+	margin-bottom: 1.5rem;
+}
+.role_h{
+	background-color: #f0ad4e;
+	border-color: #eea236;
+}
+.role_wx{
+	background-color: #449d44;
+	border-color: #398439;
+}
+ .role_home{
+	 background-color: #F1594B;
+	 border-color: #F1383C;
+ }
+.role_prev,.role_next{
+	width: 45%;
+	padding:.3rem;
+}
+.role_choose p{
+	font-size: .7rem;
+	line-height: 1.5;
+	font-weight:400;
+}
+.role_img{
+	text-align: center;
+	margin: 1rem 0;
+}
+.role_img img{
+	width: 60%;
+}
+.choose_cold{
+	border: 0.5px solid #00A1CB;
+	border-radius: .2rem;
+	width: 100%;
+	line-height: 2rem;
+	height: 2rem;
+	-webkit-appearance: none;
+	appearance: none;
+	text-indent: .5rem;
+	font-size: .75rem;
+}
+.pic{
+	display: inline-block;
+	width: 3rem;
+	height: 3rem;
+	margin-top:0.3rem;
+	border: 3px dotted #ccc;
+	background: url(../img/plus.png) no-repeat center;
+}
+.pic+span{
+	position:relative;
+	font-size:0.8rem;
+	color:#aaa;
+	top:0.8rem;
+}
+.pic input{
+	width: 0;
+	height:0;
+}
+.auth_txt{
+	font-size: .7rem;
+	height: 90vh;
+}
+.auth_txt b{
+	color:#438BCB;
+}
+.auth_txt p,.auth_txt h1{
+	margin-bottom: 0.3rem;
+}
+.auth_txt .img_list{
+	display: inline-block;
+	margin-left: 1.5rem;
+}
+.auth_txt img{
+	width:3.3rem;
+	height: 3.3rem;
+}
+.audit_p{
+	font-size:0.75rem;
+	margin: 0.6rem 0 1.5rem;
+}
 
 
 

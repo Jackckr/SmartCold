@@ -98,7 +98,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 //		        			$rootScope.mystorages = data;
 //		        			$rootScope.storageModal = data[0];
 //		        	 });
-		        	 $http.get('/i/coldStorageSet/findStorageSetByRdcId' ,{params: {rdcId:rdcId,userId:$rootScope.user.id} ).success(function(data,status,headers,config){// 初始化冷库
+		        	 $http.get('/i/coldStorageSet/findStorageSetByRdcId' ,{params: {rdcId:rdcId,userId:$rootScope.user.id}} ).success(function(data,status,headers,config){// 初始化冷库
 		        		 $rootScope.Tempset=[];
 		        		 $rootScope.mystorages = data;
 		        		 $rootScope.storageModal = data[0];
