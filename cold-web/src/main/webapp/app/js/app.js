@@ -86,26 +86,18 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      		});
 					      		$("#lefaside").removeClass("hide");
 		        	});
-		        	  $http({method:'POST',url:'i/messageRecord/getTallMsgByRdcId',params:{"rdcId": $rootScope.rdcId}}).success(function (data) {$rootScope.messageList=data; });
-		              $http({method:'POST',url:'i/messageRecord/getMsgCountByRdcId',params:{"rdcId":$rootScope.rdcId}}).success(function (data) {$rootScope.notReadMessage=data;});
-//		        	 $http.get('/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function(data,status,headers,config){// 初始化冷库
-//		        			$rootScope.Tempset=[];
-//		        			$rootScope.mystorages = data;
-//		        			$rootScope.storageModal = data[0];
-//		        	 });
+		        	  $http({method:'POST',url:'i/messageRecord/getTallMsgByRdcId',params:{"rdcId": $rootScope.rdcId}}).success(function (data) {
+		        		  $rootScope.messageList=data;
+		        	  });
+		              $http({method:'POST',url:'i/messageRecord/getMsgCountByRdcId',params:{"rdcId":$rootScope.rdcId}}).success(function (data) {
+		            	  $rootScope.notReadMessage=data;
+		              });
 
 		        	 $http.get('/i/coldStorageSet/findStorageSetByUserId' ,{params: {rdcId:rdcId,userId:$rootScope.user.id,type:$rootScope.user.type}} ).success(function(data,status,headers,config){// 初始化冷库
 		        		 $rootScope.Tempset=[];
 		        		 $rootScope.mystorages = data;
 		        		 $rootScope.storageModal = data[0];
 		        	 });
-		        		 
-		        		 
-//		        	 $http.get('/i/coldStorageSet/findStorageSetByRdcId' ,{params: {rdcId:rdcId,userId:$rootScope.user.id}} ).success(function(data,status,headers,config){// 初始化冷库
-//		        		 $rootScope.Tempset=[];
-//		        		 $rootScope.mystorages = data;
-//		        		 $rootScope.storageModal = data[0];
-//		        	 });
 		        	 $http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function(data){
 		        			$rootScope.hasDoorStorages = data;
 		        	 });

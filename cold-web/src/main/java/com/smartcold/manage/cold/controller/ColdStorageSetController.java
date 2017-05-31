@@ -39,7 +39,7 @@ public class ColdStorageSetController {
 	@ResponseBody
 	public Object findStorageSetByUserId(int rdcId,int userId,int type) {
 		if(type==1){//温度版
-			String oids = this.coldstorageTempsetMapper.getColdStorageidByUserId(rdcId, userId);
+			String oids = this.coldstorageTempsetMapper.getItem(rdcId, userId);
 			if(StringUtil.isnotNull(oids)){
 				return coldStorageSetDao.findByIds(oids);
 			}

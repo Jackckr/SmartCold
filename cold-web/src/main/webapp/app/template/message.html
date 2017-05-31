@@ -1,5 +1,6 @@
 <style>
 #msgdialog *{color: black;}
+.modal-footer button{    color: white;}
 </style>
 <div class="" style="min-height: 946px;">
 	<!-- Main content -->
@@ -87,20 +88,11 @@
 					<div class="box-footer no-padding">
 						<div class="mailbox-controls">
 							<!-- Check all button -->
-							<button type="button"
-								class="btn btn-default btn-sm checkbox-toggle">
-								<i class="fa fa-square-o"></i>
-							</button>
+							<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
 							<div class="btn-group">
-								<button type="button" class="btn btn-default btn-sm">
-									<i class="fa fa-trash-o"></i>
-								</button>
-								<button type="button" class="btn btn-default btn-sm">
-									<i class="fa fa-reply"></i>
-								</button>
-								<button type="button" class="btn btn-default btn-sm">
-									<i class="fa fa-share"></i>
-								</button>
+								<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+								<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+								<button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
 							</div>
 							<!-- /.btn-group -->
 							<button type="button" class="btn btn-default btn-sm">
@@ -135,27 +127,17 @@
 				<div class="modal-body">
 					{{currmsg.message}}
 				</div>
-				<div >
-					<ul class="list-group">
-					    <li class="list-group-item">免费域名注册</li>
-					    <li class="list-group-item">免费 Window 空间托管</li>
-					    <li class="list-group-item">图像的数量</li>
-					    <li class="list-group-item">
-					        <span class="badge">新</span>
-					        24*7 支持
-					    </li>
-					    <li class="list-group-item">每年更新成本</li>
-					    <li class="list-group-item">
-					        <span class="badge">新</span>
-					        折扣优惠
-					    </li>
+				<div ng-if="currmsg.type==1&&currmsg.sType==1" >
+				    <ul class="treeview-menu">
+						<li ng-repeat="storage in mystorages" >
+								     	<label class="checkbox-inline"> <input type="checkbox" id="inlineCheckbox1" value="option1">{{storage.name}}</label>
+						</li>
 					</ul>
-				
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">同意</button>
-					<button type="button" class="btn btn-primary">拒绝</button>
+					<button ng-if="currmsg.type==1" type="button" class="btn btn-primary" ng-clicke="agree()">同意</button>
+					<button ng-if="currmsg.type==1" type="button" class="btn btn-danger" ng-clicke="refuse()">拒绝</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal -->

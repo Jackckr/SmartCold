@@ -20,10 +20,15 @@ coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
 	};
 	$scope.showmsg=function(idex){
 		$scope.currmsg=$rootScope.msgList[idex];
-		$("#msgdialog").modal();
+		$("#msgdialog").modal(idex);
 	};
-	
-	
-	
+	//同意
+	$scope.agree=function(){
+		
+	};
+	//拒絕
+    $scope.refuse=function(){
+		
+	};
 	$scope.initmsg();
 });

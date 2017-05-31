@@ -73,7 +73,7 @@ public class AuthenUserController {
 			        if(authfile!=null){
 			         auchedata.setImgurl(dir + File.separator + fileName);
 			        }
-			        this.rdcauthMapping.insertCertification(auchedata);
+			        this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
 			        msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
 			}else {
 			    MessageRecord msgMessageRecord = new MessageRecord();
@@ -94,4 +94,30 @@ public class AuthenUserController {
 			return new ResultDto(0,"");
 		}
     }
+    
+    /**
+     * 授权
+     * @param userId
+     * @param rdcId
+     * @param status
+     * @return
+     */
+    @RequestMapping(value = "/authorUserByRdcId",method = RequestMethod.POST)
+    @ResponseBody
+    public Object authorUserByRdcId(int userId,int type, int rdcId, int status,String oids) {
+    	if(type==1){//申请温度版
+    		
+    	}else if(type==2){//申请维修版
+    		
+    	}else{//你想上天？
+    
+    	}
+    	
+    	
+    	
+    	
+    	return null;
+    }
+    
+    
 }
