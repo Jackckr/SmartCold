@@ -17,7 +17,6 @@
     <script type="text/javascript" src="com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="com/js/common.js"></script>
     <script type="text/javascript" src="com/js/layer.js"></script>
-    <script type="text/javascript">if(window.user!=null){window.location.href="view/cold360.html";}</script>
 </head>
 <body>
  		<header>	    		
@@ -46,74 +45,97 @@
 			<div class="fr"><a href="view/register.html">新用户注册</a></div>
 		</div>
     </div>
-	<script  type="text/javascript">
-	if(!navigator.cookieEnabled){ /* alert("请打开手机Cookie"); */layer.open({content: '请打开手机Cookie~',btn: '确定'});}
-      try { window.localStorage.sfhide = "foobar";} catch(_) {layer.open({content: '请关闭隐身模式再浏览……',btn: '确定'});}
-	  $("#username").val(util.getCookie("username"));
-	function login() {
-	    var me = "#btn_login";
-	    if ($(me).data('isLoading') === true) return; //防止再次点击登录
-	    showErrorInfo("");
-	    userName = $("#username").val();
-	    password = $("#password").val();
-	    if (userName == '') {
-	        showErrorInfo("用户名不能为空~");
-	        return;
-	    } else if (password == '') {
-	        showErrorInfo("密码不能为空~");
-	        return;
-	    }
-	    $(me).text("登录中...");
-	    $(me).data('isLoading', true);
-	       $.ajax({
-				type : "POST",
-				dataType : "json",
-				url : ER.root+"/i/user/login",
-				data : {userName : userName,password : password},
-				complete : function(e){$(me).text("登录"); $(me).delay(500).data('isLoading',false);},
-				success : function(data) {
-					if (data.success) {
-					var token=data.message.substr(6);
-					  $.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:token}, url:ER.root + "/i/user/findUser",success:function(userdata) {if (userdata && userdata.id != 0) {
-						util.setCookie("username",userName,"d7");
-						window.localStorage.lkuser=JSON.stringify(userdata);
-// 						window.sessionStorage.lkuser=window.localStorage.lkuser; 
-						util.setCookie("token",token,"d7");
-						if (window.location.hash != "") {
-							backUrl = window.location.hash.substring(1);
-						} else {
-//							backUrl = "view/cold360.html";
-                            if(userdata.type==1 ){//货主--温度版
-                                backUrl = "temp/cold360.html"
-                            }else if(userdata.type==2 ){//维修商--维修版
-                                backUrl = "maintaince/cold360.html"
-                            }else{//库主--360所有版本
-                                backUrl = "view/cold360.html"
-                            }
-						}
-						window.location.href = backUrl;
-						window.Event.returnValue = false;
+	<script type="text/javascript">
+		if (!navigator.cookieEnabled) { /* alert("请打开手机Cookie"); */
+			layer.open({content: '请打开手机Cookie~', btn: '确定'});
+		}
+		try {
+			window.localStorage.sfhide = "foobar";
+		} catch (_) {
+			layer.open({content: '请关闭隐身模式再浏览……', btn: '确定'});
+		}
+		$("#username").val(util.getCookie("username"));
+		function login() {
+			var me = "#btn_login";
+			if ($(me).data('isLoading') === true) return; //防止再次点击登录
+			showErrorInfo("");
+			userName = $("#username").val();
+			password = $("#password").val();
+			if (userName == '') {
+				showErrorInfo("用户名不能为空~");
+				return;
+			} else if (password == '') {
+				showErrorInfo("密码不能为空~");
+				return;
+			}
+			$(me).text("登录中...");
+			$(me).data('isLoading', true);
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: ER.coldroot + "/i/user/login",
+				data: {userName: userName, password: password},
+				complete: function (e) {
+					$(me).text("登录");
+					$(me).delay(500).data('isLoading', false);
+				},
+				success: function (data) {
+					var oStatus = data.status;
+					if (oStatus != 1) {
+						var token = data.message.substr(6);
+                        if(oStatus == 0){//进入360
+                            $.ajax({
+                                type: "GET",
+                                cache: false,
+                                timeout: 5000,
+                                dataType: "json",
+                                data: {token: token},
+                                url: ER.root + "/i/user/findUser",
+                                success: function (userdata) {
+                                    if (userdata && userdata.id != 0) {
+                                        util.setCookie("username", userName, "d7");
+                                        window.localStorage.lkuser = JSON.stringify(userdata);
+                                        util.setCookie("token", token, "d7");
+                                        if (window.location.hash != "") {
+                                            backUrl = window.location.hash.substring(1);
+                                        } else {
+                                            if (userdata.type == 1) {//货主--温度版
+                                                backUrl = "temp/cold360.html"
+                                            } else if (userdata.type == 2) {//维修商--维修版
+                                                backUrl = "maintaince/cold360.html"
+                                            } else {//库主--360所有版本
+                                                backUrl = "view/cold360.html"
+                                            }
+                                        }
+                                        window.location.href = backUrl;
+                                        window.Event.returnValue = false;
+                                    } else {
+                                        window.user = null;
+                                        window.localStorage.removeItem("lkuser");
+                                        $("#mention")[0].hidden = false;
+                                        showErrorInfo("服务异常！请联系管理员！");
+                                    }
+                                }
+                            });
+                        }else if(oStatus == 2){//角色认证
+                            location.href = "view/coldRole.html"
+                        }else if(oStatus == 3){//审核中
+                            location.href = "view/audit.html"
+                        }
 					} else {
-						window.user = null;
-						window.localStorage.removeItem("lkuser");
-						 $("#mention")[0].hidden = false;
-						 showErrorInfo("服务异常！请联系管理员！");
-					}} });
-					} else {
-					    $("#mention")[0].hidden = false;
 						showErrorInfo(data.message);
 					}
 				}
 			});
-	};
+		};
 
-	$(document).on({
-	    keyup: function(e) {
-	        if (e.keyCode == '13') {
-	            login();
-	        }
-	    }
-	});
-</script>
+		$(document).on({
+			keyup: function (e) {
+				if (e.keyCode == '13') {
+					login();
+				}
+			}
+		});
+	</script>
 </body>
 </html>
