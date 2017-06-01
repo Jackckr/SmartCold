@@ -326,7 +326,7 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
             }).then(function (resp) {
                 $scope.isDisabled = false;
                 alert("添加成功");
-                $state.go('personalConnect', {});
+                $state.go('coldStoragelist', {});
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
