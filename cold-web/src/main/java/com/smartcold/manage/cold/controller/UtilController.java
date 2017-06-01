@@ -3,12 +3,14 @@ package com.smartcold.manage.cold.controller;
 
 import java.util.HashMap;
 
+import org.hamcrest.core.Is;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.service.task.ZsDevService;
+import com.smartcold.manage.cold.util.StringUtil;
 
 
 /**
@@ -19,6 +21,31 @@ import com.smartcold.manage.cold.service.task.ZsDevService;
 @Controller
 @RequestMapping(value = "/util")
 public class UtilController extends BaseController {
+	
+	
+	
+	 /**
+	  *  获得洲斯服务状态
+	  * @return
+	  */
+	 @RequestMapping("/getZSserStatus")
+	 @ResponseBody
+	 public Boolean getZSserStatus()  {
+		return ZsDevService.isRuning();
+	 }
+	
+	 @RequestMapping("/setZSserStatus")
+	 @ResponseBody
+	 public Boolean setZSserStatus(boolean isRuning,String toke )  {
+		 if(StringUtil.verifyToken(toke)){
+			 ZsDevService.setRuning(isRuning);
+			 return ZsDevService.isRuning();
+		 }else{
+			return false;
+		 }
+		
+	 }
+	 
 	
 	 /**
 	  * 
