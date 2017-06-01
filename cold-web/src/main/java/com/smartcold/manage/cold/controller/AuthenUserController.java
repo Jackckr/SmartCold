@@ -1,12 +1,10 @@
 package com.smartcold.manage.cold.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.mockito.internal.matchers.VarargMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.dao.olddb.ACLMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdstorageTempsetMapper;
 import com.smartcold.manage.cold.dao.olddb.FileDataMapper;
@@ -27,7 +24,6 @@ import com.smartcold.manage.cold.dao.olddb.RoleUserMapper;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.dto.UploadFileEntity;
-import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.FileDataEntity;
 import com.smartcold.manage.cold.entity.olddb.MessageRecord;
 import com.smartcold.manage.cold.entity.olddb.Rdc;
@@ -106,7 +102,11 @@ public class AuthenUserController {
 			        this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
 			        msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
 			}else {
+				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 			    MessageRecord msgMessageRecord = new MessageRecord();
+			    if(rdc!=null&&rdc.getUserid()!=0){
+			    	msgMessageRecord.setUid(rdc.getUserid());
+			    }
 			    msgMessageRecord.setType(1);
 			    msgMessageRecord.setsType(type);
 			    msgMessageRecord.setUid(userId);
@@ -136,52 +136,57 @@ public class AuthenUserController {
     @RequestMapping(value = "/authorUserByRdcId",method = RequestMethod.POST)
     @ResponseBody
     public boolean authorUserByRdcId(int id,int userId,int stype, int rdcId, int status,String oids) {
-    	if(status==-1){
-    		this.messageRecordMapping.updateState(id, 1, -1);
-    	}else{
-    		if(stype==1){//申请温度版
-        		String item = this.coldstorageTempsetMapper.getItem(rdcId, userId);
-        		if(StringUtil.isnotNull(item)){
-        			this.coldstorageTempsetMapper.upItem(rdcId, userId, oids);
-        		}else{
-        			this.coldstorageTempsetMapper.addItem(rdcId, userId, oids);
-        		}
-        	}
-        	RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId); // 默认用户账号与管理员账号不会重复
-    		if (roleUserByUserId == null) {
-    			RoleUser roleUser = new RoleUser();
-    			roleUser.setRoleid(2); // op
-    			roleUser.setUserid(userId);
-    			roleUser.setAddtime(new Date());
-    			this.roleUserDao.insertSelective(roleUser);
-    		}
-    		RdcUser byRdcId = rdcUserMapper.findByUserId(userId);
-    		if (byRdcId == null) {
-    			RdcUser rdcUser = new RdcUser();
-    			rdcUser.setRdcid(rdcId);
-    			rdcUser.setUserid(userId);
-    			rdcUser.setAddtime(new Date());
-    			this.rdcUserMapper.insertSelective(rdcUser);
-    		} 
-    		if(stype==1||stype==2){
-    			int rolid=stype==1?10:9;
-    			List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",userId);
-  			   if(SetUtil.isnotNullList(useracl)){
-  				   this.aclMapper.upuserAcl(userId, rolid, null);
-  			   }else{
-  				   this.aclMapper.adduserAcl(userId, rolid, null);//采用默认权限。。。
-  			   }
-    		}else{//这是什么鬼
-    	
-    		}
-    		UserEntity user = this.userMapper.findById(userId);
-    		Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
-    		String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
-    	    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
-    		SystemInformEntity sysWarningsInfo=new SystemInformEntity(1, stype==1?6:5, rdcId, null, 0, 0, 0, title, msg);
-    		this.msMappergMapper.addsystemInform(sysWarningsInfo);
-    		this.messageRecordMapping.updateState(id, 1,1);
-    	}
+    	try {
+			if(status==-1){
+				this.messageRecordMapping.updateState(id, 1, -1);
+			}else{
+				if(stype==1){//申请温度版
+					String item = this.coldstorageTempsetMapper.getItem(rdcId, userId);
+					if(StringUtil.isnotNull(item)){
+						this.coldstorageTempsetMapper.upItem(rdcId, userId, oids);
+					}else{
+						this.coldstorageTempsetMapper.addItem(rdcId, userId, oids);
+					}
+				}
+				RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId); // 默认用户账号与管理员账号不会重复
+				if (roleUserByUserId == null) {
+					RoleUser roleUser = new RoleUser();
+					roleUser.setRoleid(2); // op
+					roleUser.setUserid(userId);
+					roleUser.setAddtime(new Date());
+					this.roleUserDao.insertSelective(roleUser);
+				}
+				RdcUser byRdcId = rdcUserMapper.findByUserId(userId);
+				if (byRdcId == null) {
+					RdcUser rdcUser = new RdcUser();
+					rdcUser.setRdcid(rdcId);
+					rdcUser.setUserid(userId);
+					rdcUser.setAddtime(new Date());
+					this.rdcUserMapper.insertSelective(rdcUser);
+				} 
+				if(stype==1||stype==2){
+					int rolid=stype==1?10:9;
+					List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",userId);
+				   if(SetUtil.isnotNullList(useracl)){
+					   this.aclMapper.upuserAcl(userId, rolid, null);
+				   }else{
+					   this.aclMapper.adduserAcl(userId, rolid, null);//采用默认权限。。。
+				   }
+				}else{//这是什么鬼
+			
+				}
+				UserEntity user = this.userMapper.findById(userId);
+				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
+				String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
+			    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
+				SystemInformEntity sysWarningsInfo=new SystemInformEntity(1, stype==1?6:5, rdcId, null, 0, 0, 0, title, msg);
+				this.msMappergMapper.addsystemInform(sysWarningsInfo);
+				
+				this.messageRecordMapping.updateState(id, 1,1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     	return true;
     }
     

@@ -723,18 +723,18 @@ public class RdcController {
 				roleUser.setAddtime(new Date());
 				roleUserDao.insertSelective(roleUser);
 			}
-
-			RdcUser byRdcId = rdcUserDao.findByRdcId(rdcId);
-			if (byRdcId == null) {
+//
+//			RdcUser byRdcId = rdcUserDao.findByRdcId(rdcId);//邏輯修改
+//			if (byRdcId == null) {
 				RdcUser rdcUser = new RdcUser();
 				rdcUser.setRdcid(rdcId);
 				rdcUser.setUserid(authUserId);
 				rdcUser.setAddtime(new Date());
 				rdcUserDao.insertSelective(rdcUser);
-			} else {
-				byRdcId.setUserid(authUserId);
-				rdcUserDao.updateByPrimaryKeySelective(byRdcId);
-			}
+//			} else {
+//				byRdcId.setUserid(authUserId);
+//				rdcUserDao.updateByPrimaryKeySelective(byRdcId);
+//			}
 			UserEntity user = this.userDao.findUserById(authUserId);
 			if(user.getType()==UserVersion.MaintVERSION.getType()){//维修商
 			   List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",authUserId);

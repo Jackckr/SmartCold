@@ -27,6 +27,10 @@
 .icon-ok{ background:url('icons/ok.png') no-repeat center center; }                     
 
 
+
+.user_add{  background: url(img/icons.png) no-repeat scroll -123px -241px rgba(0, 0, 0, 0);}; 
+.user_rem{  background: url(img/icons.png) no-repeat scroll -242px -392px rgba(0, 0, 0, 0);}; 
+
 /*消息中心*/
 .objicon{display: inline-block;width: 20px;height: 20px;}
 .icon-msgType{    background: url(img/icos.png) no-repeat scroll -1350px -391px rgba(0, 0, 0, 0);}

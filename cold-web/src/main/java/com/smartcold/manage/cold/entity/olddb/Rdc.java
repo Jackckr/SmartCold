@@ -7,6 +7,8 @@ public class Rdc {
 
     private String name;
 
+    private int userid;
+    
     private String address;
 
     private Date addtime;
@@ -40,8 +42,16 @@ public class Rdc {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    public int getUserid() {
+		return userid;
+	}
 
-    public String getName() {
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+	
+	public String getName() {
         return name;
     }
 
