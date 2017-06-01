@@ -20,15 +20,30 @@ coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
 	};
 	$scope.showmsg=function(idex){
 		$scope.currmsg=$rootScope.msgList[idex];
-		$("#msgdialog").modal(idex);
+		$("#msgdialog").modal();
 	};
 	//同意
 	$scope.agree=function(){
-		
+		var str=[],oid="";  
+		if($scope.currmsg.sType==1){
+			$("#ul_storage input[type='checkbox']:checked").each(function(){  
+				str.push($(this).val());  
+			});
+			if(str.length==0){
+				alert("请选择授权的冷库！");
+			}else{oid=str.toString();}
+		}
+		$http({method:'POST',url:'i/authenUser/authorUserByRdcId',params:{ id:$scope.currmsg.id,userId:$scope.currmsg.uid,stype:$scope.currmsg.sType,rdcId:$scope.currmsg.rdcId, status:1,oids:oid  }}).success(function (data) {
+			$scope.initmsg();
+			$("#msgdialog").modal('hide');
+        });
 	};
 	//拒絕
     $scope.refuse=function(){
-		
+    	$http({method:'POST',url:'i/authenUser/authorUserByRdcId',params:{ id:$scope.currmsg.id,userId:$scope.currmsg.uid,stype:$scope.currmsg.sType,rdcId:$scope.currmsg.rdcId, status:-1,oids:""   }}).success(function (data) {
+    		$scope.initmsg();
+    		$("#msgdialog").modal('hide');
+        });
 	};
 	$scope.initmsg();
 });

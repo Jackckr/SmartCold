@@ -9,7 +9,6 @@
 	</select>
 	<delete id="delItem">
 	
-	
 	</delete>
 	
     <insert id="addItem" parameterType="map">
@@ -17,11 +16,7 @@
     </insert>
     
     <update id="upItem" parameterType="map">
-	     update coldstoragetempset  set                                   
-	     <if test="rdcId!=null"> `rdcId`=#{rdcId} </if>
-	     <if test="userId!=null"> `userId`=#{userId} </if>
-	     <if test="oids!=null and oids!=''"> `oids`=#{oids} </if>
-	     where id=#{id};
+	     update coldstoragetempset  set    `oids`=#{oids}   where `rdcId`=#{rdcId} and `userId`=#{userId} ;
     </update>
     
 	

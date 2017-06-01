@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.service.RdcService;
-import com.smartcold.manage.cold.util.StringUtil;
 
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-04-29 00:12)

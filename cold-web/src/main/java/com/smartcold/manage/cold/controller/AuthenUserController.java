@@ -2,6 +2,8 @@ package com.smartcold.manage.cold.controller;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.smartcold.manage.cold.dao.olddb.ACLMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdstorageTempsetMapper;
 import com.smartcold.manage.cold.dao.olddb.FileDataMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcauthMapping;
+import com.smartcold.manage.cold.dao.olddb.RoleUserMapper;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.dto.UploadFileEntity;
@@ -22,8 +27,11 @@ import com.smartcold.manage.cold.entity.olddb.FileDataEntity;
 import com.smartcold.manage.cold.entity.olddb.MessageRecord;
 import com.smartcold.manage.cold.entity.olddb.RdcAuthEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
+import com.smartcold.manage.cold.entity.olddb.RoleUser;
 import com.smartcold.manage.cold.entity.olddb.UserEntity;
 import com.smartcold.manage.cold.service.FtpService;
+import com.smartcold.manage.cold.util.SetUtil;
+import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
@@ -36,8 +44,12 @@ import com.smartcold.manage.cold.util.TimeUtil;
 @RequestMapping(value = "/authenUser")
 public class AuthenUserController {
     private static String baseDir = "picture";
+    
+    
     @Autowired
     private RdcMapper rdcMapper;
+    @Autowired
+    private  ACLMapper aclMapper;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -45,9 +57,16 @@ public class AuthenUserController {
     @Autowired
     private FileDataMapper fileDataDao;
     @Autowired
-    private MessageRecordMapping messageRecordMapping;
+    private  RoleUserMapper roleUserDao;
+    @Autowired
+    private  RdcUserMapper rdcUserMapper;
     @Autowired
     private RdcauthMapping rdcauthMapping;
+    @Autowired
+    private MessageRecordMapping messageRecordMapping;
+    @Autowired
+    private  ColdstorageTempsetMapper coldstorageTempsetMapper;
+
     
 
     @RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
@@ -102,21 +121,52 @@ public class AuthenUserController {
      * @param status
      * @return
      */
+    //id=1&oid=212,213&rdcId=1911&status=1&userId=8
     @RequestMapping(value = "/authorUserByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public Object authorUserByRdcId(int userId,int type, int rdcId, int status,String oids) {
-    	if(type==1){//申请温度版
-    		
-    	}else if(type==2){//申请维修版
-    		
-    	}else{//你想上天？
-    
+    public boolean authorUserByRdcId(int id,int userId,int stype, int rdcId, int status,String oids) {
+    	if(status==-1){
+    		this.messageRecordMapping.updateState(id, 1, -1);
+    	}else{
+    		if(stype==1){//申请温度版
+        		String item = this.coldstorageTempsetMapper.getItem(rdcId, userId);
+        		if(StringUtil.isnotNull(item)){
+        			this.coldstorageTempsetMapper.upItem(rdcId, userId, oids);
+        		}else{
+        			this.coldstorageTempsetMapper.addItem(rdcId, userId, oids);
+        		}
+        	}
+        	RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId); // 默认用户账号与管理员账号不会重复
+    		if (roleUserByUserId == null) {
+    			RoleUser roleUser = new RoleUser();
+    			roleUser.setRoleid(2); // op
+    			roleUser.setUserid(userId);
+    			roleUser.setAddtime(new Date());
+    			this.roleUserDao.insertSelective(roleUser);
+    		}
+    		RdcUser byRdcId = rdcUserMapper.findByUserId(userId);
+    		if (byRdcId == null) {
+    			RdcUser rdcUser = new RdcUser();
+    			rdcUser.setRdcid(rdcId);
+    			rdcUser.setUserid(userId);
+    			rdcUser.setAddtime(new Date());
+    			this.rdcUserMapper.insertSelective(rdcUser);
+    		} 
+    		UserEntity user = this.userMapper.findById(userId);
+    		if(user.getType()==1||user.getType()==2){
+    			int rolid=user.getType()==1?10:9;
+    			 List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",userId);
+  			   if(SetUtil.isnotNullList(useracl)){
+  				   this.aclMapper.upuserAcl(userId, rolid, null);
+  			   }else{
+  				   this.aclMapper.adduserAcl(userId, rolid, null);//采用默认权限。。。
+  			   }
+    		}else{//这是什么鬼
+    	
+    		}
+    		this.messageRecordMapping.updateState(id, 1,1);
     	}
-    	
-    	
-    	
-    	
-    	return null;
+    	return true;
     }
     
     

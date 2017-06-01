@@ -21,7 +21,7 @@
     
     
     <select id="findByIds" parameterType="map" resultType="ColdStorageSetEntity">
-        SELECT * FROM `ColdStorageSet` WHERE `id` in ${ids};
+        SELECT * FROM `ColdStorageSet` WHERE `id` in (${ids});
     </select>
     
     <select id="findAllColdStorage" parameterType="map" resultType="ColdStorageSetEntity">

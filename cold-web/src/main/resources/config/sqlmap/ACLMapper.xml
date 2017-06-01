@@ -21,7 +21,15 @@
 	<select id="getACLNodeByPid" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.ACLTreeNode">
 	  SELECT m.* ,  if(find_in_set(m.id,#{nacl})>0 or find_in_set(m.pid,#{nacl})>0,0,1)  as acl from coldmenus m where pid=#{pid} ;
 	</select>
-	
+	 <select id="getNACLByID" parameterType="map" resultType="map">
+         select id,nacl from `${table}` where `${column}`=#{id};
+    </select>
+      <insert id="adduserAcl" parameterType="map">
+      INSERT INTO `acl_user` (uid,roleid,nacl)VALUES(#{uid},#{roleid},#{nacl});
+   </insert>
+   <update id="upuserAcl"  parameterType="map">
+      update `acl_user` set roleid=#{roleid} ,nacl=#{nacl} where uid=#{uid};
+   </update>
 	
 	
 </mapper>

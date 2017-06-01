@@ -128,16 +128,16 @@
 					{{currmsg.message}}
 				</div>
 				<div ng-if="currmsg.type==1&&currmsg.sType==1" >
-				    <ul class="treeview-menu">
+				    <ul id="ul_storage" class="treeview-menu">
 						<li ng-repeat="storage in mystorages" >
-								     	<label class="checkbox-inline"> <input type="checkbox" id="inlineCheckbox1" value="option1">{{storage.name}}</label>
+								     	<label class="checkbox-inline"> <input type="checkbox"  value="{{storage.id}}">{{storage.name}}</label>
 						</li>
 					</ul>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button ng-if="currmsg.type==1" type="button" class="btn btn-primary" ng-clicke="agree()">同意</button>
-					<button ng-if="currmsg.type==1" type="button" class="btn btn-danger" ng-clicke="refuse()">拒绝</button>
+					<button ng-if="currmsg.type==1" type="button" class="btn btn-primary" ng-click="agree()">同意</button>
+					<button ng-if="currmsg.type==1" type="button" class="btn btn-danger" ng-click="refuse()">拒绝</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal -->

@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.dao.olddb;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -22,5 +23,9 @@ public interface ACLMapper {
 	public List<ACLTreeNode> getALLACLNode(@Param("nacl")String nacl);
 	
 	public List<ACLTreeNode> getACLNodeByPid(@Param("pid")Integer pid,@Param("nacl")String nacl);
+	
+	public void upuserAcl(@Param("uid")int uid,@Param("roleid")int roleid,@Param("nacl")String nacl);//更新权限或者继承权限
+	public void adduserAcl(@Param("uid")int uid,@Param("roleid")int roleid,@Param("nacl")String nacl);//加入权限或者继承权限
+	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("column")String  column, @Param("id") Integer id);
 	
 }

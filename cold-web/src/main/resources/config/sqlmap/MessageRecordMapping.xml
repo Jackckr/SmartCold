@@ -27,6 +27,10 @@
       <if test="keyword!=null and keyword!=''"> and `title` like CONCAT('%',#{keyword!},'%') or `message` like   CONCAT('%',#{keyword!},'%')   </if>
       ORDER BY addtime DESC
    </select>
+   
+   <update id="updateState" parameterType="map">
+     update `messagerecord` set  `isread`=#{isread} , `state`=#{state} where `id`=#{id};
+   </update>
   
     
 

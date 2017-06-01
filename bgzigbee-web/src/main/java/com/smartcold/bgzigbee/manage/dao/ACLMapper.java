@@ -25,32 +25,22 @@ public interface ACLMapper {
 	
 	public List<HashMap<String, Object>> isextruByRUID(@Param("rdcid")Integer rdcid,@Param("userid")Integer userid);//
 	
-	
-	
 	public void delACLById(@Param("table")String table, @Param("id") Integer id);
 	public void upACLByID(@Param("table")String table, @Param("id") Integer id,@Param("nacl")String nacl);
 	public void addMapperByOid(@Param("rdcid")Integer rdcid, @Param("userid")Integer userid, @Param("mapper")String mapper);
 	public void addNaclByOid(@Param("table")String table,  @Param("column")String  column, @Param("oid") Integer oid,@Param("nacl")String nacl);
 	
-	
 	public void upuserAcl(@Param("uid")int uid,@Param("roleid")int roleid,@Param("nacl")String nacl);//更新权限或者继承权限
 	public void adduserAcl(@Param("uid")int uid,@Param("roleid")int roleid,@Param("nacl")String nacl);//加入权限或者继承权限
-	
-	
-	
-	
 	
 	public List<ACLTreeNode> getAllNode();
 	public List<ACLTreeNode> getACLNodeByPid(@Param("pid")Integer pid,@Param("nacl")String nacl);
 	public List<HashMap<String, Object>> getNACLByID(@Param("table")String table, @Param("column")String  column, @Param("id") Integer id);
 	
-	
-	
 	public List<TeamTreeNode> getTreeACLGroupBypid(@Param("oid") Integer oid);
 	public List<TeamTreeNode> getTreeRoleBypid(@Param("id") Integer id,@Param("pid") Integer pid,@Param("gid") Integer gid);
 	public List<TeamTreeNode> getTreeUserBypid(@Param("roleid") Integer roleid);
 //	public List<TeamTreeNode> getTreeObjBypid(@Param("table")String table,  @Param("column")String  column, @Param("oid") Integer oid,@Param("isopen")boolean isopen);
-	
 	
 	public List<TeamTreeNode> getCompany();//获得集团
 	public List<TeamTreeNode> getRoleUserByType(@Param("roletype") Integer roletype);//获得集团
