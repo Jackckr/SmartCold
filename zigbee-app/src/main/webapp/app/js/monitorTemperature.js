@@ -72,6 +72,7 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
             $http.get(ER.coldroot + '/i/rdc/searchRdc?type=1&filter=' + searchContent).success(function (data) {
                 if (data && data.length > 0) {
                     $scope.storages = data;
+                    $('.searchTop').show();
                 }
             });
         }
