@@ -175,41 +175,6 @@
 <!-- footer end-->
     <script type="text/javascript" src="com/js/Popt.js"></script>
     <script type="text/javascript" src="com/js/citySet.js"></script>
-    <script type="text/javascript" src="com/js/common.js"></script>
     <script type="text/javascript" src="app/js/home.js"></script>
-    <script type="text/javascript">
-    	 function checkUserType(){//gds
-			 var oStatus = null;
-             if(user == null){
-                 location.href = "view/login.html"
-             }else{
-                 $.ajax({
-                     type: "GET",
-                     url: ER.coldroot + '/i/user/getUserAuthen',
-                     data: {userId:user.id, type: user.type},
-                     success: function(data){
-                         oStatus = data.status;
-                         alert(data)
-                     }
-                 });
-                 if(oStatus==0){//进入360
-                     if(user.type==1 ){//货主--温度版
-                         location.href = "temp/cold360.html"
-                     }else if(user.type==2 ){//维修商--维修版
-                         location.href = "maintaince/cold360.html"
-                     }else{//库主--360所有版本
-                         location.href = "view/cold360.html"
-                     }
-				 }else if(oStatus==2){//角色认证
-
-				 }else if(oStatus==3){//审核中
-                     location.href = "view/audit.html"
-				 }
-
-             }
-
-
-		} 
-    </script>
 </body>
 </html>

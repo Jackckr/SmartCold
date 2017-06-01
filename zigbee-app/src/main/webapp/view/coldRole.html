@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/coldRole.js" ></script>
 </head>
-<body ng-app="app" ng-controller="coldRole" ng-cloak>
+<body ng-app="app" ng-controller="coldRole" ng-cloak class="obg">
 <header ng-if="step==4">
     <div class="area fl" ng-click="cancel()">
         <a class="cancel"><i class="iconfont">&#xe60e;</i></a>
@@ -29,7 +29,8 @@
 </header>
 <section class="searchTop">
     <ul class="rdcList">
-        <li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+        <li class="omg" ng-if="rdcList==1"><i class='iconfont'>&#xe62f;</i><span>没有搜到相关冷库~</span></li>
+        <li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.text}}</span></li>
     </ul>
     <p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 </section>
@@ -45,7 +46,7 @@
        </div>
    </div>
 <!--第二步：选择冷库-->
-    <div class="role_choose"  ng-if="step==2">
+    <div class="role_choose auth_txt"  ng-if="step==2">
         <h3>冷库认证：</h3>
         <p>
             说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！

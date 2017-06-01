@@ -1,6 +1,8 @@
 checkLogin();
-app.controller('coldRole',function ($scope, $location, $http, $rootScope,Upload,userService) {
+var myApp = angular.module('app', ['ngFileUpload']);
+myApp.controller('coldRole',function ($scope, $http, Upload) {
     $scope.totalauthfiles = [];
+    $scope.rdcList=0;
 	$scope.user = user;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -65,14 +67,14 @@ app.controller('coldRole',function ($scope, $location, $http, $rootScope,Upload,
     });
     $scope.searchRdcs = function (searchContent) {
         $(".searchTop").show();
-        // 超管特殊处理
-        if ($scope.user.roleid == 3) {
-            $http.get(ER.coldroot + '/i/rdc/searchRdc?type=1&filter=' + searchContent).success(function (data) {
-                if (data && data.length > 0) {
-                    $scope.storages = data;
-                }
-            });
-        }
+        $http.get(ER.coldroot + '/i/rdc/getRdcByName?keywords=' + searchContent).success(function (data) {
+            $scope.storages = data;
+            if (data && data.length > 0) {
+                $scope.rdcList=0;
+            }else{
+                $scope.rdcList=1;
+            }
+        });
     };
     $scope.addAuthFiles = function (files) {
         for(var j=0,fileLen=files.length;j<fileLen;j++){
@@ -108,7 +110,7 @@ app.controller('coldRole',function ($scope, $location, $http, $rootScope,Upload,
         $(".searchTop").hide();
         $scope.step = 2;
         $scope.rdcId = rdc.id;
-        $scope.rdcName = rdc.name;
+        $scope.rdcName = rdc.text;
         $scope.searchContent = "";
     };
     $scope.goOtherMonitor = function () {

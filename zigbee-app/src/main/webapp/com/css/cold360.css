@@ -890,6 +890,9 @@ input[type='radio']:checked{
 /*
 *角色选择
 */
+.obg{
+	background-color: #fff;
+}
 .oH2{
 	text-align: center;
 	font-size:1.2rem;
@@ -925,10 +928,10 @@ input[type='radio']:checked{
 	background-color: #449d44;
 	border-color: #398439;
 }
- .role_home{
-	 background-color: #F1594B;
-	 border-color: #F1383C;
- }
+.role_home{
+	background-color: #F1594B;
+	border-color: #F1383C;
+}
 .role_prev,.role_next{
 	width: 45%;
 	padding:.3rem;
@@ -943,10 +946,10 @@ input[type='radio']:checked{
 	margin: 1rem 0;
 }
 .role_img img{
-	width: 60%;
+	width: 7rem;
 }
 .choose_cold{
-	border: 0.5px solid #00A1CB;
+	border: 1px solid #00A1CB;
 	border-radius: .2rem;
 	width: 100%;
 	line-height: 2rem;

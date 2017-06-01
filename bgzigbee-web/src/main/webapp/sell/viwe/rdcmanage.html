@@ -33,9 +33,10 @@
         <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchData()">Search</a>
     </div>
 </div>
-<div id="addCold" class="easyui-window" title="添加冷库" style="width:600px;height:600px"
+<div id="addCold" class="easyui-window" title="添加冷库" style="width:600px;height:300px"
      data-options="iconCls:'icon-save',modal:true" closed="true">
-    <div style="width:400px;padding:30px 70px 50px 70px">
+    <div style="width:400px;padding:30px">
+        <form id="addColdForm">
         <div class="oDiv">
             <label>
                 <span>名称：<em>*</em></span>
@@ -46,32 +47,31 @@
         <div class="oDiv">
             <label>
                 <span>省：<em>*</em></span>
-                <select id="province" class="easyui-combobox"></select>
+                <select id="province" class="easyui-combobox" name="provinceId"></select>
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>市：<em>*</em></span>
-                <select id="city" class="easyui-combobox"></select>
+                <select id="city" class="easyui-combobox" name="cityId"></select>
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>地理位置：<em>*</em></span>
-                <input class="easyui-textbox" type="text">
-
+                <input class="easyui-textbox" name="address" type="text">
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>面积：<em>*</em></span>
-                <input class="easyui-textbox" placeholder="冷库面积（平方米）" type="text">
+                <input class="easyui-textbox" placeholder="冷库面积（平方米）" type="text" name="area">
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>冷库经营类型：<em>*</em></span>
-                <select id="coldType" class="easyui-combobox">
+                <select id="coldType" class="easyui-combobox" name="manageType">
                     <option value="1">产地型</option>
                     <option value="2">市场型</option>
                     <option value="3">仓储型</option>
@@ -86,7 +86,7 @@
         <div class="oDiv">
             <label>
                 <span>商品存放类型：<em>*</em></span>
-                <select id="shopType" class="easyui-combobox">
+                <select id="shopType" class="easyui-combobox" name="storageType">
                     <option value="1">货架存放</option>
                     <option value="2">非货架存放</option>
                 </select>
@@ -95,7 +95,7 @@
         <div class="oDiv">
             <label>
                 <span>冷库温度类型：<em>*</em></span>
-                <select id="coldTempType" class="easyui-combobox">
+                <select id="coldTempType" class="easyui-combobox" name="temperType">
                     <option value="1">冷藏库</option>
                     <option value="2">冷冻库</option>
                     <option value="3">超低温库</option>
@@ -106,27 +106,27 @@
         </div>
         <div class="oDiv labels">
             <p>冷藏车数量：</p>
-            <div><label>＜1.8T<input type="text" class="easyui-textbox" style="width: 340px!important;">辆</label></div>
-            <div><label>＜1.8T<input type="text" class="easyui-textbox" style="width: 340px!important;">辆</label></div>
-            <div><label>6～14T<input type="text" class="easyui-textbox" style="width: 340px!important;">辆</label></div>
-            <div><label> ＞14T<input type="text" class="easyui-textbox" style="width: 340px!important;">辆</label></div>
+            <div><label>＜1.8T<input type="text" class="easyui-textbox" name="coldTruck1" style="width: 340px!important;">辆</label></div>
+            <div><label>＜1.8T<input type="text" class="easyui-textbox" name="coldTruck2" style="width: 340px!important;">辆</label></div>
+            <div><label>6～14T<input type="text" class="easyui-textbox" name="coldTruck3" style="width: 340px!important;">辆</label></div>
+            <div><label> ＞14T<input type="text" class="easyui-textbox" name="coldTruck4" style="width: 340px!important;">辆</label></div>
         </div>
         <div class="oDiv">
             <label>
                 <span>联系电话：<em>*</em></span>
-                <input class="easyui-textbox" type="text">
+                <input class="easyui-textbox" type="text" name="phoneNum">
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>备注：</span>
-                <input class="easyui-textbox" data-options="multiline:true" style="width:300px;height:40px">
+                <input class="easyui-textbox" data-options="multiline:true" name="remark" style="width:300px;height:40px">
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>建筑结构：</span>
-                <select id="buildingStructure" class="easyui-combobox">
+                <select id="buildingStructure" class="easyui-combobox" name="structure">
                     <option value="1">土建型</option>
                     <option value="2">钢结构型</option>
                 </select>
@@ -135,7 +135,7 @@
         <div class="oDiv">
             <label>
                 <span>是否有封闭月台：</span>
-                <select id="isCloseMoon" class="easyui-combobox">
+                <select id="isCloseMoon" class="easyui-combobox" name="platform">
                     <option value="1">有</option>
                     <option value="2" selected="selected">无</option>
                 </select>
@@ -144,7 +144,7 @@
         <div class="oDiv">
             <label>
                 <span>是否有理货区：</span>
-                <select id="isCleanArea" class="easyui-combobox">
+                <select id="isCleanArea" class="easyui-combobox" name="lihuoRoom">
                     <option value="1">有</option>
                     <option value="2" selected="selected">无</option>
                 </select>
@@ -153,13 +153,13 @@
         <div class="oDiv">
             <label>
                 <span>理货区面积：</span>
-                <input type="text" id="lihuoArea" class="easyui-textbox">
+                <input type="text" id="lihuoArea" class="easyui-textbox" name="lihuoArea">
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>理货区有无温控：</span>
-                <select id="isTempLihuoArea" class="easyui-combobox">
+                <select id="isTempLihuoArea" class="easyui-combobox" name="lihuoTemperCtr">
                     <option value="1">有</option>
                     <option value="2" selected="selected">无</option>
                 </select>
@@ -167,8 +167,8 @@
         </div>
         <div class="oDiv">
             <label>
-                <span>制冷类型：</span>
-                <select id="refrigerationType" class="easyui-combobox">
+                <span>制冷剂类型：</span>
+                <select id="refrigerationType" class="easyui-combobox" name="storageRefreg">
                     <option value="1">氨制冷</option>
                     <option value="2">氟利昂制冷</option>
                     <option value="3">氨氟都有</option>
@@ -179,7 +179,7 @@
         <div class="oDiv">
             <label>
                 <span>有无温度记录：</span>
-                <select id="isTempRecord" class="easyui-combobox">
+                <select id="isTempRecord" class="easyui-combobox" name="temperRecord">
                     <option value="1">有</option>
                     <option value="2" selected="selected">无</option>
                 </select>
@@ -187,41 +187,42 @@
         </div>
         <div class="oDiv labels">
             <p>冷库容积：</p>
-            <div><label>12度至25度:<input type="text" class="easyui-textbox"/>面积（平方）</label><label><input class="easyui-textbox" type="text"/>高度（米）</label></div>
-            <div><label>12度至-2度:<input type="text" class="easyui-textbox">面积（平方）</label><label><input type="text" class="easyui-textbox">高度（米）</label></div>
-            <div><label>-15度至-22度:<input type="text" class="easyui-textbox">面积（平方）</label><label><input type="text" class="easyui-textbox">高度（米）</label></div>
-            <div><label>-22至-30度:<input type="text" class="easyui-textbox">面积（平方）</label><label><input type="text" class="easyui-textbox">高度（米）</label></div>
-            <div><label>-30度以下:<input type="text" class="easyui-textbox">面积（平方）</label><label><input type="text" class="easyui-textbox">高度（米）</label></div>
+            <div><label>12度至25度:<input type="text" class="easyui-textbox" name="capacity1"/>面积（平方）</label><label><input class="easyui-textbox" type="text" name="height1"/>高度（米）</label></div>
+            <div><label>12度至-2度:<input type="text" class="easyui-textbox" name="capacity2">面积（平方）</label><label><input type="text" class="easyui-textbox" name="height2">高度（米）</label></div>
+            <div><label>-15度至-22度:<input type="text" class="easyui-textbox" name="capacity3">面积（平方）</label><label><input type="text" class="easyui-textbox" name="height3">高度（米）</label></div>
+            <div><label>-22至-30度:<input type="text" class="easyui-textbox" name="capacity4">面积（平方）</label><label><input type="text" class="easyui-textbox" name="height4">高度（米）</label></div>
+            <div><label>-30度以下:<input type="text" class="easyui-textbox" name="capacity5">面积（平方）</label><label><input type="text" class="easyui-textbox" name="height5">高度（米）</label></div>
         </div>
         <div class="oDiv">
             <label>
                 <span>周边设施：</span>
                 <input type="text" class="easyui-textbox"
                        data-options="multiline:true,prompt:'交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等..'"
-                       style="width:300px;height:50px"/>
+                       style="width:300px;height:50px" name="facility"/>
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>资质荣誉图：</span>
-                <input class="easyui-filebox" name="file1" multiple>*最多八张
+                <input class="easyui-filebox" name="honorfiles" multiple>*最多八张
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>功能平面布置图：</span>
-                <input class="easyui-filebox" name="file1">
+                <input class="easyui-filebox" name="arrangePic">
             </label>
         </div>
         <div class="oDiv">
             <label>
                 <span>冷库图片：</span>
-                <input class="easyui-filebox" name="file1" multiple>*最多五张
+                <input class="easyui-filebox" name="files" multiple>*最多五张
             </label>
         </div>
         <div>
-            <a href="#" class="easyui-linkbutton btn" style="width:100%">添加冷库</a>
+            <a href="#" onclick="addColdSubmit()" class="easyui-linkbutton btn" style="width:100%">添加冷库</a>
         </div>
+        </form>
     </div>
 </div>
 <div id="certificationCold" class="easyui-dialog" title="冷库认证" style="width: 900px; height: 700px;text-align:center"

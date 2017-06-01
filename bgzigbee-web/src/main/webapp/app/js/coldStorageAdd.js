@@ -262,7 +262,5 @@ coldWeb.controller('coldStorageAdd', function ($rootScope, $scope, $state, $cook
         } else {
             alert("请填写标记<em>*<em>的必选项在提交!");
         }
-
-
     }
 });
