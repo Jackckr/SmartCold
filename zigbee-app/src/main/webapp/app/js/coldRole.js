@@ -55,6 +55,8 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
     };
     $scope.goStep4 = function () {
         $scope.step = 4;
+        $scope.searchRdcs('');
+
     };
     $scope.cancel = function () {
         $(".searchTop").hide();
@@ -113,8 +115,4 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
         $scope.rdcName = rdc.text;
         $scope.searchContent = "";
     };
-    $scope.goOtherMonitor = function () {
-        location.href='monitorCooling.html?storageID=' + $scope.rdcId;
-    };
-
 });
