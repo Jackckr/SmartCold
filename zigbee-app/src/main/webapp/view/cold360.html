@@ -25,7 +25,7 @@
                 <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
             </div>
             <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
-                <a class="transion"><i class="iconfont">&#xe73c;</i></a>
+                <a class="transion" ng-click="searchRdcs('')"><i class="iconfont">&#xe73c;</i></a>
             </div>
             <div class="txt omg">
                 {{rdcName}}
@@ -71,7 +71,7 @@
         <!-- Add Arrows -->
         <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
         <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
-  </div>
+    </div>
 	<!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
 	 	<ul class="rdcList">

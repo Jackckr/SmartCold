@@ -36,10 +36,10 @@
 	    		<input type="text" id="code2" placeholder="请输入手机验证码" ng-model="verrcode"  ng-change="veteleCode()" />
 	    	</div>
 	    	<div class="inputBd">
-	    		<input type="password" name="" id="txt_password" ng-blur="checkpwd()" value="" placeholder="密码为6-24位数字、英文或下划线两种的组合"/>
+	    		<input type="password" name="" id="txt_password" ng-blur="checkpwd()" value="" placeholder="密码为6-16位数字、英文两种的组合"/>
 	    	</div>
 	    	<div class="inputBd">
-	    		<input type="password" name="" id="txt_repsword" ng-blur="checkpwd()" value="" placeholder="确认密码"/>
+	    		<input type="password" name="" id="txt_repsword" ng-change="checkpwd()" value="" placeholder="确认密码"/>
 	    	</div>
 	    	<!-- <div class="userRadio">
 			   <label>用户类型：</label>

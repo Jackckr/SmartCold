@@ -45,43 +45,24 @@ var app = angular.module('app', []).controller('register',function($http, $locat
    };
    $scope.checkpwd=function(){
 	   var password = $("#txt_password").val().trim(); 
-       var repsword = $("#txt_repsword").val().trim(); 
+       var repsword = $("#txt_repsword").val().trim();
        if(password == ''){
-			$("#mention1").html("密码不能为空");
-			$('#app_but1').attr("disabled",true);
-			return false;
-		}else if(password.length<6){
-			$("#mention1").html("密码长度最少六位");
-			$('#app_but1').attr("disabled",true);
-			return false;
-		}else if(password.length<=16){
-			$("#mention1").html("");
-			if (/^(\d)\1+$/.test(password)){
-				$("#mention1").html("密码太过简单了~").css("color","#f80");
-				$('#app_but1').attr("disabled",true);
-				return false;
-			}else{
-				if(repsword.length<6){
-					$("#mention1").html("再次输入的密码长度最少六位");
-					$('#app_but1').attr("disabled",true);
-					return false;
-				}else{
-					if(password != repsword){
-						$("#mention1").html("两次密码输入不一致，请重新输入");
-						$('#app_but1').attr("disabled",true);
-						return false;
-					}else{
-						$("#mention1").html("");
-						$('#app_but1').attr("disabled",false);
-					}
-				}
-			}
-		}else if(password.length>16){
-			$("#mention1").html("密码长度最多16位~").css("color","#f80");
-			$('#app_but1').attr("disabled",true);
-		}else{
-			$("#mention2").html("输入有误，请重新输入");
-		}
+           $("#mention1").html("密码不能为空");
+           $('#app_but1').attr("disabled",true);
+           return false;
+       }else if(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(password)){
+           if(password != repsword){
+               $("#mention1").html("两次密码输入不一致，请重新输入");
+               $('#app_but1').attr("disabled",true);
+               return false;
+           }else{
+               $("#mention1").html("");
+               $('#app_but1').attr("disabled",false);
+           }
+       }else{
+           $("#mention1").html("密码长度6-12位,必须是数字字母组合");
+           $('#app_but1').attr("disabled",true);
+       }
    }
    $scope.checkData=function (){ 
 	      $("#mention1").html();

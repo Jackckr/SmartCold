@@ -15,6 +15,11 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
     }
     var rootRdcId = $.getUrlParam('storageID');
 
+    $(".mylog").click(function (event) {
+        var _index = $(this).index();
+        $('.warn_sec>div').eq(_index).show().siblings().hide();
+        $(this).addClass('current').siblings().removeClass('current');
+    })
     $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
         if (data && data.length > 0) {
             $scope.storages = data;
