@@ -4,7 +4,7 @@
  * 显示消息
  */
 coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
-	$scope.params={userId:null,rdcId:$rootScope.rdcId, type:null,stype:null,isRead:null,status:null, page:1, rows:10};
+	$scope.params={userId:$rootScope.user.id,rdcId:$rootScope.rdcId, type:null,stype:null,isRead:null,status:null, page:1, rows:10};
 	$scope.notReadMessage=$rootScope.notReadMessage;
 	$scope.modestate=['待处理','已处理'];
 	$scope.changType  =function(type,  em){$scope.changestyle(em);$scope.params.type=type;$scope.initmsg();};

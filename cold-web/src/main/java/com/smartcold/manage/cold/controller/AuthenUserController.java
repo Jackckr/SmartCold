@@ -1,10 +1,12 @@
 package com.smartcold.manage.cold.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.mockito.internal.matchers.VarargMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.dao.olddb.ACLMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdstorageTempsetMapper;
 import com.smartcold.manage.cold.dao.olddb.FileDataMapper;
+import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
@@ -23,11 +27,14 @@ import com.smartcold.manage.cold.dao.olddb.RoleUserMapper;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.dto.UploadFileEntity;
+import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.FileDataEntity;
 import com.smartcold.manage.cold.entity.olddb.MessageRecord;
+import com.smartcold.manage.cold.entity.olddb.Rdc;
 import com.smartcold.manage.cold.entity.olddb.RdcAuthEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
 import com.smartcold.manage.cold.entity.olddb.RoleUser;
+import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
 import com.smartcold.manage.cold.entity.olddb.UserEntity;
 import com.smartcold.manage.cold.service.FtpService;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -55,6 +62,8 @@ public class AuthenUserController {
     @Autowired
     private FtpService ftpService;
     @Autowired
+    private MessageMapper msMappergMapper;
+    @Autowired
     private FileDataMapper fileDataDao;
     @Autowired
     private  RoleUserMapper roleUserDao;
@@ -67,6 +76,8 @@ public class AuthenUserController {
     @Autowired
     private  ColdstorageTempsetMapper coldstorageTempsetMapper;
 
+    
+    
     
 
     @RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
@@ -152,10 +163,9 @@ public class AuthenUserController {
     			rdcUser.setAddtime(new Date());
     			this.rdcUserMapper.insertSelective(rdcUser);
     		} 
-    		UserEntity user = this.userMapper.findById(userId);
-    		if(user.getType()==1||user.getType()==2){
-    			int rolid=user.getType()==1?10:9;
-    			 List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",userId);
+    		if(stype==1||stype==2){
+    			int rolid=stype==1?10:9;
+    			List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",userId);
   			   if(SetUtil.isnotNullList(useracl)){
   				   this.aclMapper.upuserAcl(userId, rolid, null);
   			   }else{
@@ -164,6 +174,12 @@ public class AuthenUserController {
     		}else{//这是什么鬼
     	
     		}
+    		UserEntity user = this.userMapper.findById(userId);
+    		Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
+    		String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
+    	    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
+    		SystemInformEntity sysWarningsInfo=new SystemInformEntity(1, stype==1?6:5, rdcId, null, 0, 0, 0, title, msg);
+    		this.msMappergMapper.addsystemInform(sysWarningsInfo);
     		this.messageRecordMapping.updateState(id, 1,1);
     	}
     	return true;

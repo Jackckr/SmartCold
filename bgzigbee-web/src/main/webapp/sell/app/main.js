@@ -53,7 +53,7 @@ var usermenus=[
   			"child": [
                        {"menuid":"5_0","menuname":"系统消息","icon":"icon-role","url":"/sell/viwe/sys_msg.html"},
                        {"menuid":"5_1","menuname":"系统状态","icon":"icon-role","url":"/sell/viwe/sys_state.html"},
-                       {"menuid":"5_1","menuname":"缓存调度","icon":"icon-role","url":"/sell/viwe/sysmessage.html"},
+                       {"menuid":"5_1","menuname":"缓存管理","icon":"icon-role","url":"/sell/viwe/sysmessage.html"},
   			          ]
   		}
 ];

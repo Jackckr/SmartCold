@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,13 +24,13 @@ public class MessageRecordController {
     
     @RequestMapping(value = "/getMsgCountByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public Integer getMsgCountByRdcId(Integer rdcId){
+    public Integer getMsgCountByRdcId(int userId,int rdcId){
     	return messageRecordMapping.getMsgCountByRdcId(rdcId);
     }
     
     @RequestMapping(value = "/getTallMsgByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public List<MessageRecord>  getTallMsgByRdcId(Integer rdcId){
+    public List<MessageRecord>  getTallMsgByRdcId(int userId,Integer rdcId){
     	return messageRecordMapping.getTallMsgByRdcId(rdcId);
     }
     @RequestMapping(value = "/getMessageList",method = RequestMethod.POST)
