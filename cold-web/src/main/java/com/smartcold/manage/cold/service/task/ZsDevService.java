@@ -58,6 +58,7 @@ public class ZsDevService  {
 //		public static HashMap<String, Object> MSI=new HashMap<String, Object>();//MSI缓存
 //		public static HashMap<String, Object> APMSI=new HashMap<String, Object>();
 		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
+		public static ArrayList<StorageDataCollectionEntity> dataListcache = new ArrayList<StorageDataCollectionEntity>();
 		
 		public static boolean isRuning() {return isRuning&&errCount<3;}
 		public static void clerCache() {ZsDevService.devTypecache.clear();}
@@ -227,6 +228,8 @@ class SubTask implements Runnable {
 //				}
 			}
 			if(SetUtil.isnotNullList(dataList)){
+				ZsDevService.dataListcache.clear();
+				ZsDevService.dataListcache.addAll(dataList);
 				this.storageDataCollectionDao.batchInsert(dataList);
 			}
 			if(isSaveDU&&SetUtil.isnotNullList(dusiList)){

@@ -202,7 +202,14 @@ public class TimeUtil {
         return date;
     }
 
-  
+    public static int getDay() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+    public static int getDateHour() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
     /**
      * 获取日期的小时
      *

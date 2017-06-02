@@ -41,10 +41,10 @@ public class DFSCollectionController extends BaseController {
 	@Autowired
 	private DFSDataCollectionMapper dataservice;
 	
+	public static ArrayList<DFSDataCollectionEntity> dataListcache = new ArrayList<DFSDataCollectionEntity>();
+	
 	public static  HashMap<String,HashMap<String,DFSDataCollectionEntity>> configchcateHashMap=new HashMap<String,HashMap<String,DFSDataCollectionEntity>>();
 	
-	
-
 	
 	/**
 	 *http DEV数据上传接口
@@ -58,24 +58,33 @@ public class DFSCollectionController extends BaseController {
 	public Object storageDataCollection(@RequestBody String data) {
         try {
 			if(StringUtil.isNull(data)){ return new DataResultDto(500);};
-			System.err.println("=====================收到丹弗斯数据==================\r\n"+data);
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String rdcid = dataCollectionBatchEntity.get("rdcId").toString();
             if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.getConfig(rdcid);}
 			HashMap<String, DFSDataCollectionEntity> config = configchcateHashMap.get(rdcid);
 		    if(config==null){return new DataResultDto(200);}
-		    ArrayList<DFSDataCollectionEntity> dataList = new ArrayList<DFSDataCollectionEntity>();
+		    String table =null;
+		    ArrayList<DFSDataCollectionEntity> dataList = null;
+		    HashMap<String, ArrayList<DFSDataCollectionEntity>> tempMap=new HashMap<String, ArrayList<DFSDataCollectionEntity>>();
 		    for (Map<String, String> info :  ((List<Map<String, String>>) dataCollectionBatchEntity.get("infos"))) {
 				DFSDataCollectionEntity newdata = config.get(info.get("tagname"));
 				if(newdata!=null){
-					newdata.setValue(info.get("currentvalue"));//更新数据
-					newdata.setTime(info.get("lasttime"));
-					dataList.add(newdata);
+					 newdata.setValue(info.get("currentvalue"));//更新数据
+					 newdata.setTime( info.get("lasttime"));
+					 table = newdata.getTable();
+					if(tempMap.containsKey(table)){
+						tempMap.get(table).add(newdata);
+					}else{
+						 dataList = new ArrayList<DFSDataCollectionEntity>();
+						 dataList.add(newdata);
+						 tempMap.put(table, dataList);
+					}
 				}
 			}
-			if(SetUtil.isnotNullList(dataList)){
-				for (DFSDataCollectionEntity item : dataList) {
-					this.dataservice.batchInsert(item);
+			if(SetUtil.isNotNullMap(tempMap)){
+				for (String key : tempMap.keySet()) {
+					ArrayList<DFSDataCollectionEntity> dataList1 = tempMap.get(key);
+					this.dataservice.adddataList(key, dataList1);
 				}
 			}
 			return new DataResultDto(200);
@@ -135,6 +144,7 @@ public class DFSCollectionController extends BaseController {
 			DFSCollectionController.configchcateHashMap.put(rdcId, null);
 		}
 	}
+	
 	
 	
 }

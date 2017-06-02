@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.enums;
 
 /**
+ * 供丹弗斯/PLC读取配置
  * Created by corly on 16-8-13.
  */
 public enum SetTables {

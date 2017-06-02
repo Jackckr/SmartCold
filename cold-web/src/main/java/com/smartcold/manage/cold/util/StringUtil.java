@@ -43,7 +43,7 @@ public class StringUtil
 	
 	 public synchronized static boolean verifyToken(String toke){
 		   if(isnotNull(toke)){
-			   String mdtokn = EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour(new Date()));
+			   String mdtokn = EncodeUtil.encodeByMD5("toke"+TimeUtil.getDay());
 			   return mdtokn.equals(toke);
 		   }
 		   return false;

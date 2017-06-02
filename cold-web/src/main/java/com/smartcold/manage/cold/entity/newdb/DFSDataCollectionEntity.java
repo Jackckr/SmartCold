@@ -4,38 +4,30 @@ import java.util.Date;
 
 public class DFSDataCollectionEntity {
 
-	private int id;
-	
+	private int oid;
 	private String table;//指向映射表
-
 	private String key;
-
 	private Object value;
-
 	private String time;//采集时间
-
 	private Date addtime;
 
 	public DFSDataCollectionEntity() {
 
 	}
-
 	
-	
-	public DFSDataCollectionEntity(int id,String table, String key) {
+	public DFSDataCollectionEntity(int oid,String table, String key) {
 		super();
-		this.id=id;
+		this.oid=oid;
 		this.table = table;
 		this.key = key;
 	}
 
-
-	public int getId() {
-		return id;
+	public int getOid() {
+		return oid;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setOid(int oid) {
+		this.oid = oid;
 	}
 
 	public String getTable() {
@@ -62,25 +54,17 @@ public class DFSDataCollectionEntity {
 		this.value = value;
 	}
 
-
-
 	public String getTime() {
 		return time;
 	}
-
-
 
 	public void setTime(String time) {
 		this.time = time;
 	}
 
-
-
 	public Date getAddtime() {
 		return addtime;
 	}
-
-
 
 	public void setAddtime(Date addtime) {
 		this.addtime = addtime;
