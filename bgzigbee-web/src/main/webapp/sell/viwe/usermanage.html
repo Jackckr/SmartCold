@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
     <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
     <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <style type="text/css">
+    form tr{height:35px;}
+    </style>
     <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
     <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
     <script type="text/javascript"  src="../app/comm.js"></script>
@@ -17,28 +20,72 @@
     
     <div class="none">
 	    <div id="user_filter" style="padding:5px 0;">
-	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_add'" onclick="$('#userForm').dialog('open')">添加</a>
-	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_edit'" onclick="deleteUsers()">编辑</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_add'" onclick="adduser('user_add','添加用户信息');">添加</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_edit'" onclick="edituser('user_edit','修改用户信息')">编辑</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_del'" onclick="deleteUsers()">删除</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="reloaddata()">刷新</a>
 	    </div>
-    	 <div id="dlg" class="easyui-dialog" title="Toolbar and Buttons" style="width:400px;height:200px;padding:10px"
-			data-options="
-				iconCls: 'user_add',
-				buttons: [{
-					text:'保存',
-					iconCls:'icon-ok1',
-					handler:function(){
-						alert('ok');
-					}
-				},{
-					text:'取消',
-					iconCls:'icon-cancel1',
-					handler:function(){
-						alert('cancel');;
-					}
-				}]
-			">
+    	 <div id="userdialog" class="easyui-dialog"  data-options="modal: true,closed: false,width:350,height:350,buttons: [{text:'保存',iconCls:'icon-ok1',handler:saveUser},{text:'取消',iconCls:'icon-cancel1',handler:function(){$('#userdialog').dialog('close');}}]"  >
+    	     <form id="userForm" style="padding:10px 20px;" >
+			        <table class="fill" >
+			            <tr>
+			                <td>用户名:</td>
+			                <td><input class="easyui-validatebox textbox" name="username" id="username" data-options="prompt:'请输入用户名.',required:true"  validType="username[username]" style="width: 100%;height: 24px;text-align: left;">
+			                    <!--validType="remote['../../i/user/checkUserName','value']"
+			                    invalidMessage="用户名已存在"-->
+			                </td>
+			            </tr>
+<!-- 			            <tr> -->
+<!-- 			                <td>所在集团:</td> -->
+<!-- 			                <td> -->
+<!-- 			                    <select class="easyui-combobox" name="state" id="valType" style="width:100%;"> -->
+<!-- 			                        <option value="0"></option> -->
+<!-- 			                        <option value="1"></option> -->
+<!-- 			                        <option value="-1"></option> -->
+<!-- 			                    </select> -->
+<!-- 			                </td> -->
+<!-- 			            </tr> -->
+			            <tr>
+			                <td>密码:</td>
+			                <td><input id="input_userpwd" class="easyui-validatebox textbox" type="password" name="password"
+			                           data-options="prompt:'请输入密码.',required:false,validType:'length[6,16]'"
+			                           style="width: 100%;height: 24px;">
+			                </td>
+			            </tr>
+			           
+			            <tr>
+			                <td>手机号:</td>
+			                <td><input class="easyui-validatebox textbox" name="telephone"
+			                           data-options="prompt:'请输入手机号',required:true"
+			                           validType="mobile[telephone]"
+			                           style="width: 100%;height: 24px;">
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>邮箱:</td>
+			                <td><input class="easyui-validatebox textbox" name="email"
+			                           data-options="prompt:'请输入邮箱.',required:false,validType:'email'"
+			                           style="width: 100%;height: 24px;">
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>用户类型:</td>
+			                <td>
+			                    <label><input type="radio" name="type" value="1">货主   </label>  
+			                    <label><input type="radio" name="type" value="0" checked="checked">平台/360用户</label> 
+			                    <label><input type="radio" name="type" value="2">维修商 </label>  
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>状   态:</td>
+			                <td>
+			                    <label><input type="radio" name="audit" value="-1" >未通过 </label>  
+			                    <label><input type="radio" name="audit" value="0"  checked="checked">未审核   </label>  
+			                    <label><input type="radio" name="audit" value="1">已审核   </label>  
+			                </td>
+			            </tr>
+			        </table>
+           </form>
 		</div>
 	</div>
  </body>

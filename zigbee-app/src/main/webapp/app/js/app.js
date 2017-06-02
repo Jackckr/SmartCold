@@ -81,143 +81,143 @@ coldWeb.factory('naviService', ['$rootScope', '$state', function ($rootScope, $s
     };
 }]);
 
-coldWeb.filter('objectCount', function () {
-    return function (input) {
-        var size = 0, key;
-        for (key in input) {
-            if (input.hasOwnProperty(key)) size++;
-        }
-        return size;
-    }
-});
-
-coldWeb.filter('toArray', function () {
-    'use strict';
-
-    return function (obj) {
-        if (!(obj instanceof Object)) {
-            return obj;
-        }
-
-        return Object.keys(obj).filter(function (key) {
-            if (key.charAt(0) !== "$") {
-                return key;
-            }
-        }).map(function (key) {
-            if (!(obj[key] instanceof Object)) {
-                obj[key] = {value: obj[key]};
-            }
-
-            return Object.defineProperty(obj[key], '$key', {__proto__: null, value: key});
-        });
-    };
-});
-
-
-coldWeb.directive('snippet', function () {
-    return {
-        restrict: 'E',
-        template: '<pre><div class="hidden code" ng-transclude></div><code></code></pre>',
-        replace: true,
-        transclude: true,
-        link: function (scope, elm, attrs) {
-            scope.$watch(function () {
-                return elm.find('.code').text();
-            }, function (newValue, oldValue) {
-                if (newValue != oldValue) {
-                    elm.find('code').html(hljs.highlightAuto(newValue).value);
-                }
-            });
-        }
-    };
-});
-
-
-coldWeb.directive('star', function () {
-  return {
-    template: '<ul class="rating" ng-mouseleave="leave(order)">' +
-        '<li ng-repeat="star in stars" ng-class="star" ng-click="click(order,$index + 1)" ng-mouseover="over(order,$index + 1)">' +
-        '\u2605' +
-        '</li>' +
-        '</ul>{{overVal?overVal:ratingVal}} 分',
-    scope: {
-      ratingValue: '=',
-      max: '=',
-      order: '=',
-      readonly: '@',
-      onClick: '='
-    },
-    controller: function($scope){
-      $scope.ratingValue = $scope.ratingValue || 0;
-      $scope.max = $scope.max || 5;
-	  $scope.ratingVal = 0;
-	  $scope.overVal = null;
-	  $scope.stars = [];
-	  for(var i=0; i< $scope.max;i++){
-		  $scope.stars.push({
-              filled: i < $scope.ratingVal
-            });
-	  }
-	  var updateStars = function (val) {
-          for (var i = 0; i < $scope.max; i++) {
-            $scope.stars[i].filled = i < val;
-          }
-        };
-      $scope.click = function(i,val){
-        $scope.ratingVal = val;
-    	updateStars(val);
-        $scope.onClick(i,val);
-      };
-      $scope.over = function(i,val){
-    	$scope.overVal = val;
-    	updateStars(val);
-      };
-      $scope.leave = function(i){
-    	  $scope.overVal = null;
-    	updateStars($scope.ratingVal);
-      }
-      updateStars(0);
-    },
-    link: function (scope, elem, attrs) {
-      elem.css("text-align", "center");
- 
-    }
-  };
-});
-
-coldWeb.directive('activeLink', ['$location', '$filter', function (location, filter) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs, controller) {
-            var clazz = attrs.activeLink;
-            var path = element.children().attr('href') + "";
-            path = filter('limitTo')(path, path.length - 1, 1);
-            scope.location = location;
-            scope.$watch('location.path()', function (newPath) {
-                if (newPath.indexOf(path) > -1) {
-                    element.addClass(clazz);
-                } else {
-                    element.removeClass(clazz);
-                }
-            });
-        }
-    };
-}]);
-
-coldWeb.filter('sizeformat', function () {
-    return function (size) {
-        if (size / (1024 * 1024 * 1024) > 1)
-            return (size / (1024 * 1024 * 1024)).toFixed(2) + 'G';
-        else if (size / (1024 * 1024) > 1)
-            return (size / (1024 * 1024)).toFixed(2) + 'M';
-        else if (size / 1024 > 1)
-            return (size / 1024).toFixed(2) + 'K';
-        else
-            return size + 'B'
-    }
-});
-
-
+//coldWeb.filter('objectCount', function () {
+//    return function (input) {
+//        var size = 0, key;
+//        for (key in input) {
+//            if (input.hasOwnProperty(key)) size++;
+//        }
+//        return size;
+//    }
+//});
+//
+//coldWeb.filter('toArray', function () {
+//    'use strict';
+//
+//    return function (obj) {
+//        if (!(obj instanceof Object)) {
+//            return obj;
+//        }
+//
+//        return Object.keys(obj).filter(function (key) {
+//            if (key.charAt(0) !== "$") {
+//                return key;
+//            }
+//        }).map(function (key) {
+//            if (!(obj[key] instanceof Object)) {
+//                obj[key] = {value: obj[key]};
+//            }
+//
+//            return Object.defineProperty(obj[key], '$key', {__proto__: null, value: key});
+//        });
+//    };
+//});
+//
+//
+//coldWeb.directive('snippet', function () {
+//    return {
+//        restrict: 'E',
+//        template: '<pre><div class="hidden code" ng-transclude></div><code></code></pre>',
+//        replace: true,
+//        transclude: true,
+//        link: function (scope, elm, attrs) {
+//            scope.$watch(function () {
+//                return elm.find('.code').text();
+//            }, function (newValue, oldValue) {
+//                if (newValue != oldValue) {
+//                    elm.find('code').html(hljs.highlightAuto(newValue).value);
+//                }
+//            });
+//        }
+//    };
+//});
+//
+//
+//coldWeb.directive('star', function () {
+//  return {
+//    template: '<ul class="rating" ng-mouseleave="leave(order)">' +
+//        '<li ng-repeat="star in stars" ng-class="star" ng-click="click(order,$index + 1)" ng-mouseover="over(order,$index + 1)">' +
+//        '\u2605' +
+//        '</li>' +
+//        '</ul>{{overVal?overVal:ratingVal}} 分',
+//    scope: {
+//      ratingValue: '=',
+//      max: '=',
+//      order: '=',
+//      readonly: '@',
+//      onClick: '='
+//    },
+//    controller: function($scope){
+//      $scope.ratingValue = $scope.ratingValue || 0;
+//      $scope.max = $scope.max || 5;
+//	  $scope.ratingVal = 0;
+//	  $scope.overVal = null;
+//	  $scope.stars = [];
+//	  for(var i=0; i< $scope.max;i++){
+//		  $scope.stars.push({
+//              filled: i < $scope.ratingVal
+//            });
+//	  }
+//	  var updateStars = function (val) {
+//          for (var i = 0; i < $scope.max; i++) {
+//            $scope.stars[i].filled = i < val;
+//          }
+//        };
+//      $scope.click = function(i,val){
+//        $scope.ratingVal = val;
+//    	updateStars(val);
+//        $scope.onClick(i,val);
+//      };
+//      $scope.over = function(i,val){
+//    	$scope.overVal = val;
+//    	updateStars(val);
+//      };
+//      $scope.leave = function(i){
+//    	  $scope.overVal = null;
+//    	updateStars($scope.ratingVal);
+//      }
+//      updateStars(0);
+//    },
+//    link: function (scope, elem, attrs) {
+//      elem.css("text-align", "center");
+// 
+//    }
+//  };
+//});
+//
+//coldWeb.directive('activeLink', ['$location', '$filter', function (location, filter) {
+//    return {
+//        restrict: 'A',
+//        link: function (scope, element, attrs, controller) {
+//            var clazz = attrs.activeLink;
+//            var path = element.children().attr('href') + "";
+//            path = filter('limitTo')(path, path.length - 1, 1);
+//            scope.location = location;
+//            scope.$watch('location.path()', function (newPath) {
+//                if (newPath.indexOf(path) > -1) {
+//                    element.addClass(clazz);
+//                } else {
+//                    element.removeClass(clazz);
+//                }
+//            });
+//        }
+//    };
+//}]);
+//
+//coldWeb.filter('sizeformat', function () {
+//    return function (size) {
+//        if (size / (1024 * 1024 * 1024) > 1)
+//            return (size / (1024 * 1024 * 1024)).toFixed(2) + 'G';
+//        else if (size / (1024 * 1024) > 1)
+//            return (size / (1024 * 1024)).toFixed(2) + 'M';
+//        else if (size / 1024 > 1)
+//            return (size / 1024).toFixed(2) + 'K';
+//        else
+//            return size + 'B'
+//    }
+//});
+//
+/*
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/home");
     //index
@@ -298,26 +298,26 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 
 });
 
-
+*/
 //    var p = navigator.platform; 
 //   var system = {  win: p.indexOf("Win") == 0, mac: p.indexOf("Mac") == 0,  xll: (p == "X11") || (p.indexOf("Linux") == 0), ipad:(navigator.userAgent.match(/iPad/i) != null)?true:false,isComputer:false,isphone:false  }; 
 //    if (system.win || system.mac || system.xll||system.ipad) {  system.isComputer=true;} else {system.isphone=true; } 
-    var browser = { 
-            versions : function() {  var u = navigator.userAgent, app = navigator.appVersion; 
-                return {        
-                trident : u.indexOf('Trident') > -1, //IE内核                                  
-                presto : u.indexOf('Presto') > -1, //opera内核                                  
-                webKit : u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核                                  
-                gecko : u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核                                 
-                mobile : !!u.match(/AppleWebKit.*Mobile.*/)  || !!u.match(/AppleWebKit/), //是否为移动终端                                  
-                ios : !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端                  
-                android : u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器                                  
-                iPhone : u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器                     
-                iPad: u.indexOf('iPad') > -1, //是否iPad        
-                webApp : u.indexOf('Safari') == -1,//是否web应该程序，没有头部与底部 
-                google:u.indexOf('Chrome')>-1 
-            }; 
-        }(), 
-        language : (navigator.browserLanguage || navigator.language).toLowerCase() 
-        } ;
+//    var browser = { 
+//            versions : function() {  var u = navigator.userAgent, app = navigator.appVersion; 
+//                return {        
+//                trident : u.indexOf('Trident') > -1, //IE内核                                  
+//                presto : u.indexOf('Presto') > -1, //opera内核                                  
+//                webKit : u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核                                  
+//                gecko : u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核                                 
+//                mobile : !!u.match(/AppleWebKit.*Mobile.*/)  || !!u.match(/AppleWebKit/), //是否为移动终端                                  
+//                ios : !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端                  
+//                android : u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器                                  
+//                iPhone : u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器                     
+//                iPad: u.indexOf('iPad') > -1, //是否iPad        
+//                webApp : u.indexOf('Safari') == -1,//是否web应该程序，没有头部与底部 
+//                google:u.indexOf('Chrome')>-1 
+//            }; 
+//        }(), 
+//        language : (navigator.browserLanguage || navigator.language).toLowerCase() 
+//        } ;
 //        document.writeln("语言版本: "+browser.language+" 是否为移动终端: "+browser.versions.mobile); 

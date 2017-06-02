@@ -41,28 +41,9 @@ public class DFSCollectionController extends BaseController {
 	@Autowired
 	private DFSDataCollectionMapper dataservice;
 	
-	private static  HashMap<String,HashMap<String,DFSDataCollectionEntity>> configchcateHashMap=new HashMap<String,HashMap<String,DFSDataCollectionEntity>>();
+	public static  HashMap<String,HashMap<String,DFSDataCollectionEntity>> configchcateHashMap=new HashMap<String,HashMap<String,DFSDataCollectionEntity>>();
 	
 	
-	/**
-	 *清除缓存
-	 * @param uid
-	 * @param rdcid
-	 * @return
-	 */
-	@RequestMapping(value = "/delconfig")
-	@ResponseBody
-	public Object delconfig(String toke,String rdcid){
-//		if(StringUtil.verifyToken(toke)){
-			if(StringUtil.isnotNull(rdcid)){
-				configchcateHashMap.remove(rdcid);
-			}else{
-				configchcateHashMap.clear();
-			}
-			return true;
-//		}
-//		return false;
-	}
 
 	
 	/**

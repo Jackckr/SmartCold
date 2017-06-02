@@ -15,29 +15,45 @@ var goDeleteUser = function (uid,username) {
 };
 //批量删除用户
 var deleteUsers = function () {
-    var userID =  getTableChecked();
-    if (userID.length > 0) {
-        $.messager.confirm('删除确认', '你确认要<er>删除</er>这<er>'+userID.length+'</er>条用户信息吗?', function (r) {
-            if (r) {
-                $.ajax({
-                    type: 'POST',
-                    url: '../../i/user/deleteByUserIDs',
-                    traditional :true, 
-                    data: { userIDs: userID },
-                    success: function (data) { if(data.status==1){ reloaddata();}else{ $.messager.alert('错误', '删除用户失败！', 'error'); } }
-                });
-            }
+    var userIDs =  getTableCheckedID();
+    if (userIDs.length > 0) {
+        $.messager.confirm('删除确认', '你确认要<er>删除</er>这<er>'+userIDs.length+'</er>条用户信息吗?', function (r) {
+            if (r) {  $.ajax({  type: 'POST', url: '../../i/user/deleteByUserIDs', traditional :true,  data: { userIDs: userIDs },success: function (data) { if(data.status==1){ reloaddata();}else{ $.messager.alert('错误', '删除用户失败！', 'error'); } }}); }
         });
-    } else {
-        $.messager.alert('删除用户', '您还没有选择用户哦', 'info');
-    }
+    } else {  $.messager.alert('删除用户', '您还没有选择用户哦', 'info'); }
 
 };
 var changeAudit = function (id, audit) {
     if (audit == 1) { $.messager.alert('审核状态', '已是通过状态了', 'info'); return false;};
     $.messager.confirm('通过审核', '你确定要给该用户通过审核？', function(r){var audit =  r?1:-1; $.post('../../i/user/changeAudit', {'userID': id, 'audit': audit}, function () { reloaddata();});});
-
 };
+
+function adduser(ioc,tit){
+	$("$input_userpwd").
+	$('#userForm').form('clear');
+	$('#userdialog').dialog({title:tit,iconCls:ioc,closed: false});
+}
+function edituser(ioc,tit){
+	var selusers=getTableChecked();
+	if(selusers.length>0){
+		var user=selusers[0];
+		user.password=null;
+		editByuser(ioc, tit, user);
+	}else{
+		 alert_infomsg("请选择一个用户进行操作");
+	}
+}
+
+function editByuser(ioc,tit,user){
+	$('#userForm').form('load',user);
+	$('#userdialog').dialog({title:tit,iconCls:ioc,closed: false});
+}
+
+function saveUser(){
+	$('#userdialog').dialog('close');
+}
+
+
 
 function onDblClickRow(index, field) {
 	$('#userForm').form('clear');
@@ -63,6 +79,7 @@ function init_table() {
         {field: 'hand', title: '操作', width: 100, align: 'center', formatter: col_cellStyler}
     ]];
     initTable("用户管理", "icon-user", "POST", "../../i/user/getUserByFilter", queryParams, "#user_filter", null, col, true, onDblClickRow);
+//    objTable.datagrid({singleSelect: true});//设置为单选
     crspsh();
 }
 
@@ -100,7 +117,7 @@ $().ready(function () {
 
 function submitForm(){$('#userForm').submit();}
 function clearForm(){$('#userForm').window('close');}
-function adduser(){$("#add_user_dig").dialog('open');}
+//function adduser(){$("#add_user_dig").dialog('open');}
 /**
  * 动态组件 无需关心
  */

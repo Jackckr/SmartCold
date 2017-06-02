@@ -109,7 +109,7 @@ public class QuantityTaskService  {
 		if(!taskStatus){return ;}
 		this.delTempfile();
     	this.resetDevStatus();
-    	this.LowbatteryAlarm();
+    	this.LowbatteryAlarm();//北京中威低电量
     	if(errDevList.size()>2000){errDevList.clear();}
     	if(coldStoragecache.size()>2000){coldStoragecache.clear();}
 	}
@@ -186,7 +186,9 @@ public class QuantityTaskService  {
 	//低电量 
 	private void LowbatteryAlarm(){
         try {
-			List<HashMap<String, Object>> lowPower = this.deviceMapper.getLowPower(TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12)));
+        	String dateTime = TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12));
+			List<HashMap<String, Object>> lowPower = this.deviceMapper.getBJLowPower(dateTime);
+			lowPower.addAll(this.deviceMapper.getZSLowPower(dateTime));
 			if(SetUtil.isnotNullList(lowPower)){
 				StringBuffer msg=new StringBuffer("以下设备电压低于标准工作电压,请及时检查！");
 				for (HashMap<String, Object> hashMap : lowPower) {

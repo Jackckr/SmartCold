@@ -54,25 +54,14 @@ public class ZsDevService  {
 	    private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 		private static final ExecutorService executorService = Executors.newFixedThreadPool(100, threadFactory);//最多启动一千1000个线程
 		
-		public static HashMap<String, Object> DU=new HashMap<String, Object>();//电压缓存
-		public static HashMap<String, Object> MSI=new HashMap<String, Object>();//MSI缓存
-		public static HashMap<String, Object> APMSI=new HashMap<String, Object>();
+//		public static HashMap<String, Object> DU=new HashMap<String, Object>();//电压缓存
+//		public static HashMap<String, Object> MSI=new HashMap<String, Object>();//MSI缓存
+//		public static HashMap<String, Object> APMSI=new HashMap<String, Object>();
 		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
 		
-		
-		
-		
-		public static boolean isRuning() {
-			return isRuning&&errCount<3;
-		}
-
-		public static void setRuning(boolean isRuning) {
-			ZsDevService.isRuning = isRuning;
-		}
-
-		public static void clerCache() {
-			ZsDevService.devTypecache.clear();
-		}
+		public static boolean isRuning() {return isRuning&&errCount<3;}
+		public static void clerCache() {ZsDevService.devTypecache.clear();}
+		public static void setRuning(boolean isRuning) {ZsDevService.isRuning = isRuning;if(isRuning){ZsDevService.errCount=0;}}
 
 		/**
 		 * 数据抓取30秒
@@ -221,19 +210,21 @@ class SubTask implements Runnable {
 				if(isSaveDU){//保存设备电压
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
-				}else{
-					ZsDevService.DU.put(devid, datas.get("DU") );
-					ZsDevService.MSI.put(devid, datas.get("BSI") );
 				}
+//				else{
+//					ZsDevService.DU.put(devid, datas.get("DU") );
+//					ZsDevService.MSI.put(devid, datas.get("BSI") );
+//				}
 			}
 			if(datas!=null){
 				if(isSaveDU){
 					ArrayList<StorageDataCollectionEntity> apmsiList = new ArrayList<StorageDataCollectionEntity>();
 					apmsiList.add(new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));//保存AP信号强度
 					this.devStatusMapper.addAPStatusList(apmsiList);
-				}else{
-					ZsDevService.APMSI.put(apid, datas.get("MSI"));
 				}
+//				else{
+//					ZsDevService.APMSI.put(apid, datas.get("MSI"));
+//				}
 			}
 			if(SetUtil.isnotNullList(dataList)){
 				this.storageDataCollectionDao.batchInsert(dataList);

@@ -35,12 +35,13 @@ var tool={
     col_isred:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已读"></span>':'<span class="icon-tb icon-offline" title="未读"></span>';},
     col_isdeal:function(value,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已处理"></span>':'<span class="icon-tb icon-offline" title="未处理"></span>';},
 };
-
+function alert_infomsg(msg){ $.messager.alert('提示', msg, 'info');}
 function initTree(url,onSelect){objtree=$('#objtree').tree({url:url,method:'post',animate:true,lines:true, onSelect:onSelect});};
 function reloaddata(){objTable.datagrid("reload");};
 function reloaddata(queryParams){objTable.datagrid( { queryParams:queryParams });};
 function onLoadError(){objTable.datagrid('loadData',{total:0,rows:[]});};
-function getTableChecked(){ var userID =[],checkedItems = objTable.datagrid('getChecked'); $.each(checkedItems, function (index, item) { userID.push(item.id); }); return userID;}
+function getTableChecked(){ return objTable.datagrid('getChecked');}
+function getTableCheckedID(){ var userID =[],checkedItems = objTable.datagrid('getChecked'); $.each(checkedItems, function (index, item) { userID.push(item.id); }); return userID;}
 
 function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isautosize,onDblClickRow){
     if(isautosize){ tablesize= stablesize = parseInt((($("#objTable").height() -80) / 26));	}

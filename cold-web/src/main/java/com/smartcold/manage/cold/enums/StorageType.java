@@ -3,7 +3,7 @@ package com.smartcold.manage.cold.enums;
 import java.io.Serializable;
 
 public enum StorageType implements Serializable{
-
+	
 	STORAGE(1, "coldstorage", "冷库"),
 	
 	DOOR(2, "coldstoragedoor", "冷库门"),
