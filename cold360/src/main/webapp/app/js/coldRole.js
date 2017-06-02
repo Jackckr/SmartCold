@@ -55,7 +55,7 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
     };
     $scope.goStep4 = function () {
         $scope.step = 4;
-        $scope.searchRdcs()
+        $scope.searchRdcs('');
     };
     $scope.cancel = function () {
         $(".searchTop").hide();
@@ -70,11 +70,11 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
         $(".searchTop").show();
         $http.get(ER.coldroot + '/i/rdc/getRdcByName?keywords=' + searchContent).success(function (data) {
             $scope.storages = data;
-            /*if (data && data.length > 0) {
+            if (data && data.length > 0) {
                 $scope.rdcList=0;
             }else{
                 $scope.rdcList=1;
-            }*/
+            }
         });
     };
     $scope.addAuthFiles = function (files) {

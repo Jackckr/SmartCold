@@ -25,11 +25,15 @@
 .icon-delete{ background:url('icons/delete.png') no-repeat center center;}           /*删除按钮3*/
 .icon_edit  {background:url('icons/3.png') no-repeat;background-size:14px 15px;}     /*编辑按钮1*/
 .icon-ok{ background:url('icons/ok.png') no-repeat center center; }                     
+.icon-cancel{ background:url('icons/cancel.png') no-repeat center center; }           /*取消按钮1*/            
+.icon-ok1{ background: url(img/icons.png) no-repeat scroll -1021px -661px rgba(0, 0, 0, 0); }                     
+.icon-cancel1 {background: url(img/icons.png) no-repeat scroll -991px -661px rgba(0, 0, 0, 0);}
 
 
 
-.user_add{  background: url(img/icons.png) no-repeat scroll -123px -241px rgba(0, 0, 0, 0);}; 
-.user_rem{  background: url(img/icons.png) no-repeat scroll -242px -392px rgba(0, 0, 0, 0);}; 
+.user_add {background: url(img/icons.png) no-repeat scroll -121px -241px rgba(0, 0, 0, 0);}
+.user_edit{background: url(img/icons.png) no-repeat scroll -422px -241px rgba(0, 0, 0, 0);}
+.user_del {background: url(img/icons.png) no-repeat scroll -391px -241px rgba(0, 0, 0, 0);}
 
 /*消息中心*/
 .objicon{display: inline-block;width: 20px;height: 20px;}

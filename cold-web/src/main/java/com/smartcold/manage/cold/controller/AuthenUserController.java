@@ -105,7 +105,7 @@ public class AuthenUserController {
 				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 			    MessageRecord msgMessageRecord = new MessageRecord();
 			    if(rdc!=null&&rdc.getUserid()!=0){
-			    	msgMessageRecord.setUid(rdc.getUserid());
+			    	msgMessageRecord.setTid(rdc.getUserid());
 			    }
 			    msgMessageRecord.setType(1);
 			    msgMessageRecord.setsType(type);

@@ -37,7 +37,7 @@ public class MessageRecordController {
     @ResponseBody
     public List<MessageRecord> getMessageList (Integer rdcId,Integer userId,Integer type,Integer stype, Integer isRead,Integer status,String keyword, int  page,int rows){
     	PageHelper.startPage(page, rows);
-       return messageRecordMapping.getMsgByFilter(rdcId, userId, type, stype, status, isRead, keyword);
+       return messageRecordMapping.getMsgByFilter(rdcId, null, type, stype, status, isRead, keyword);
     }
 	
 //	Integer getMsgCountByRdcId(@Param("rdcId")Integer rdcId);//获得冷库未读消息

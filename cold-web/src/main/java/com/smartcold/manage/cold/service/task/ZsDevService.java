@@ -38,6 +38,8 @@ import com.smartcold.manage.cold.util.TimeUtil;
 @Service
 public class ZsDevService  {
 	
+	
+	    private static boolean isRuning=true;
 		@Autowired
 		private DevStatusMapper devStatusMapper;
 	    @Autowired
@@ -58,6 +60,16 @@ public class ZsDevService  {
 		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
 		
 		
+		
+		
+		public static boolean isRuning() {
+			return isRuning&&errCount<3;
+		}
+
+		public static void setRuning(boolean isRuning) {
+			ZsDevService.isRuning = isRuning;
+		}
+
 		public static void clerCache() {
 			ZsDevService.devTypecache.clear();
 		}
@@ -67,7 +79,7 @@ public class ZsDevService  {
 		 */
 	    @Scheduled(cron="0/30 * * * * ?")
 		public void checkData() {
-	    	if(errCount<3){
+	    	if(errCount<3&&isRuning){
 	    		this.saveData();
 	    	}
 		}

@@ -929,8 +929,8 @@ input[type='radio']:checked{
 	border-color: #398439;
 }
 .role_home{
-	background-color: #F1594B;
-	border-color: #F1383C;
+	background-color: #00acd6;
+	border-color: #058fb1;
 }
 .role_prev,.role_next{
 	width: 45%;
