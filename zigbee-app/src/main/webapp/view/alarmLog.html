@@ -15,6 +15,7 @@
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/alarmLog.js"></script>
+    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
 </head>
 <body ng-app="app" ng-controller="alarmLog" ng-cloak>
     <!-- header -->
@@ -50,7 +51,25 @@
         <div class="other mylog"><i class="iconfont">&#xe7c9;</i>告警日志</div>
     </section>
     <div class="warn_sec alarmLog" style="padding: .9rem;min-height: 66vh;">
-        <div>温度告警</div>
+        <div><div id="tem_div" style="height:300px;width: 350px"></div>
+            <div id="timeline">
+           <div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
+               <div class="timeline-txt">
+                   {{obj.time}}
+               </div>
+               <div class="timeline-dot" style="{{obj.style}}"></div>
+               <div class="timeline-content">
+                   <div class="timeline-title">
+                       <h4 class="pull-left">{{obj.msg}}</h4>
+                       <h4 ng-if="obj.count" class="pull-right"><button class="show-more btn btn-info btn-xs">详细</button></h4>
+                   </div>
+                   <div class="timeline-content-more">
+
+                   </div>
+               </div>
+           </div>
+       </div>
+        </div>
         <div class="black">运管告警</div>
         <div class="black">制冷告警</div>
     	<div class="black">
