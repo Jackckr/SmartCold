@@ -65,18 +65,39 @@
 			        <input type="text" class="form-control" value="{{sqobj.addtime.substring(0,19)}}" disabled>
 			      </div>
 			    </div>
-			     <div class="form-group">
+			     <!--<div class="form-group">
 			      <label for="disabledTextInput" class="col-sm-2 control-label">附件</label>
 			      <div class="col-sm-4">
-			      	<!-- <a href="javascript:;" class="wx_file">选择文件
+			      	&lt;!&ndash; <a href="javascript:;" class="wx_file">选择文件
 						<input id="headImg" type="file" >
-					</a> -->
+					</a> &ndash;&gt;
 			        <input type="text" class="form-control"  >
 			      </div>
 			      <div class="col-sm-1">
 			        <input type="file">
 			      </div>
-			    </div>
+			    </div>-->
+					<div class="form-group">
+						<label class="col-sm-2 control-label">附件</label>
+						<div class="col-sm-8">
+							<div class="row">
+								<div class="col-sm-5 divCSS">
+									<input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles"
+										   ngf-multiple="true" name="honorfiles">
+								</div>
+								<div class="col-sm-3 divCSS">
+									<small class="text-warning" style="width: 100px">*最多八张</small>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12 col-lg-offset-2">
+						<label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
+							<i class="fa fa-times danger" style="margin-right:10px;color:red;"
+							   ng-click="drophonor(honorfile)"></i>
+						</label>
+					</div>
+
 			     <div class="form-group">
 			      <label for="disabledTextInput" class="col-sm-2 control-label">备注</label>
 			      <div class="col-sm-8">

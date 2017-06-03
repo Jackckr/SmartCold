@@ -1,4 +1,4 @@
-coldWeb.controller('maintenancealarm', function ($rootScope, $scope,$stateParams, $state, $cookies, $http, $location,baseTools) {
+coldWeb.controller('maintenancealarm', function ($rootScope, $scope,$stateParams, $state, $cookies, $http, $location,baseTools,Upload) {
 	$scope.st=$stateParams.st;
 	if($scope.st==1||$scope.st==2){var statusmode=["0","0,1,2,3,4,5","6"];$scope.status=statusmode[$scope.st];}else{return;}
 	$scope.setp=1;
@@ -37,13 +37,56 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope,$stateParams
     $scope.tol_ckrest=function(id){
     	$state.go('maintainRepair', {'ids':id,'st':1});
     };
-    
+    //图片上传
+    $scope.totalhonorfiles = [];
+    $scope.addHonorFiles = function (files) {
+        if($scope.totalhonorfiles.length + files.length > 10){
+            alert("最多上传十张图片");
+            return;
+        }
+        $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
+    }
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalhonorfiles,function(item, key){
+            if(item == honorfile){
+                $scope.totalhonorfiles.splice(key,1);
+            }
+        })
+    }
     $scope.tol_submit=function(){//
-    	$http({
+       data={
+            pic0:null,
+            pic1:null,
+            pic2:null,
+            pic3:null,
+            pic4:null,
+            pic5:null,
+            pic6:null,
+            pic7:null,
+            pic8:null,
+            pic9:null,
+            rdcId:$rootScope.rdcId,
+            ids:$scope.sqobj.id ,
+            userId: $rootScope.user.id,
+            status:1,
+            node:$("#tex_node").val()
+        }
+        for(i = 0; i < $scope.totalhonorfiles.length; i++){
+            data["pic" + i] = $scope.totalhonorfiles[i];
+        }
+        Upload.upload({
+            data: data,
+            method:'post',
+            url: '/i/warningMint/addMaintAlarmstatuByIds',
+            headers: {'Content-Transfer-Encoding': 'utf-8'}
+        }).then(function (resp) {
+            $scope.tol_back(); $scope.initData();
+        });
+    	/*$http({
     		method: 'POST',
     		url: '/i/warningMint/upMaintAlarmstatuByIds',
     		params: {ids:$scope.sqobj.id ,userId: $rootScope.user.id,status:1,node:$("#tex_node").val()}
-    	}).success(function (data) {  $scope.tol_back(); $scope.initData();});
+    	}).success(function (data) {  $scope.tol_back(); $scope.initData();});*/
     };
     
     $scope.tol_back=function(){

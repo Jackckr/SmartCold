@@ -37,6 +37,8 @@ coldWeb.controller('maintainRequest', function($rootScope, $scope, $state, $stat
 			$scope.maintuser = $rootScope.user; //维修人
 			$scope.wardata = data.warData; //初始告警信息
 			$scope.cuttstatus = $scope.wardata[0].status;
+			$scope.desc = $scope.wardata[0].desc;
+			$scope.picPath = $scope.wardata[0].picPath.split(",");
 		});
 	};
 	$scope.initdata();
