@@ -45,6 +45,7 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope,$stateParams
             return;
         }
         $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
+        getpics();
     }
     $scope.drophonor = function(honorfile){
         angular.forEach($scope.totalhonorfiles,function(item, key){
@@ -52,6 +53,28 @@ coldWeb.controller('maintenancealarm', function ($rootScope, $scope,$stateParams
                 $scope.totalhonorfiles.splice(key,1);
             }
         })
+        getpics();
+    }
+    //建立一个可存取到该file的url
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        } else if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+    function getpics() {
+        $scope.pics=[];
+        angular.forEach($scope.totalhonorfiles,function (item, index) {
+            var pic=new Object();
+            pic.path = getObjectURL(item);
+            pic.file=item;
+            $scope.pics = $scope.pics.concat(pic);
+        });
     }
     $scope.tol_submit=function(){//
        data={

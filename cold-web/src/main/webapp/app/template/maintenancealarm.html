@@ -86,16 +86,21 @@
 										   ngf-multiple="true" name="honorfiles">
 								</div>
 								<div class="col-sm-3 divCSS">
-									<small class="text-warning" style="width: 100px">*最多八张</small>
+									<small class="text-warning" style="width: 100px">*最多十张</small>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-12 col-lg-offset-2">
-						<label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"><span ng-bind="honorfile.name"></span>
-							<i class="fa fa-times danger" style="margin-right:10px;color:red;"
-							   ng-click="drophonor(honorfile)"></i>
-						</label>
+						<div ng-repeat="pic in pics" style="width: 100px;float: left">
+							<label style="padding-left:50px">
+								<i class="fa fa-times danger" style="color:red;"
+								   ng-click="drophonor(pic.file)"></i>
+							</label>
+							<div  class="col-md-3">
+								<img id="img0" src="{{pic.path}}" style="max-height: 60px;max-width: 60px;">
+							</div>
+						</div>
 					</div>
 
 			     <div class="form-group">
