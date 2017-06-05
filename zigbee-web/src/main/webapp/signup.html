@@ -148,6 +148,13 @@
 	                            <div class="text-danger" id="password_error1"></div>
 	                        </div>
 	                    </div>
+					<div class="form-group">
+						<label style="font-weight: 400;">
+							<input id="agreement" type="checkbox" checked>
+							我已阅读并同意
+							<a id="regAgreement" target="_blank" href="announcement.html">《链库使用协议》</a>
+						</label>
+					</div>
 	                    <!-- <div  class="alert alert-info" style="padding: 6px;margin: 15px 0 3px;">
 	                    	   <label class="checkbox-inline">
 							     用户类型：
@@ -253,6 +260,8 @@ $(function(){
 			alert(password_error);
 		}else if(password != password1){
 			alert("两次密码不统一~");
+		}else if($('#agreement').is(':checked')==false){
+            alert("请确认您已同意链库使用协议~");
 		}else{
 	    	$.ajax({
 	    		type:"POST",
