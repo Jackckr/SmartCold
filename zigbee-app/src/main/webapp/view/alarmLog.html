@@ -46,32 +46,35 @@
     <!-- header end-->
     <section class="toggle">
         <div class="tempture current mylog"><i class="iconfont">&#xe79c;</i>温度告警</div>
-        <div class="apply_log mylog"><i class="iconfont" style="color: #F39826;">&#xe639;</i>运管告警</div>
-        <div class="light mylog"><i class="iconfont">&#xe7c9;</i>制冷告警</div>
+        <!--<div class="apply_log mylog"><i class="iconfont" style="color: #F39826;">&#xe639;</i>运管告警</div>
+        <div class="light mylog"><i class="iconfont">&#xe7c9;</i>制冷告警</div>-->
         <div class="other mylog"><i class="iconfont">&#xe7c9;</i>告警日志</div>
     </section>
     <div class="warn_sec alarmLog" style="padding: .9rem;min-height: 66vh;">
-        <div><div id="tem_div" style="height:300px;width: 350px"></div>
+        <div>
+            <div id="tem_div" style="height:12.5rem;"></div>
             <div id="timeline">
-           <div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
-               <div class="timeline-txt">
-                   {{obj.time}}
-               </div>
-               <div class="timeline-dot" style="{{obj.style}}"></div>
-               <div class="timeline-content">
-                   <div class="timeline-title">
-                       <h4 class="pull-left">{{obj.msg}}</h4>
-                       <h4 ng-if="obj.count" class="pull-right"><button class="show-more btn btn-info btn-xs">详细</button></h4>
-                   </div>
-                   <div class="timeline-content-more">
+                <div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
+                    <div class="timeline-txt">
+                        {{obj.time}}
+                    </div>
+                    <div class="timeline-dot" style="{{obj.style}}"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">
+                            <h4 class="fl">{{obj.msg}}</h4>
+                            <h4 ng-if="obj.count" class="fr">
+                                <button class="show-more mybtn" style="padding: 0.1rem 0.5rem;">详细</button>
+                            </h4>
+                        </div>
+                        <div class="timeline-content-more">
 
-                   </div>
-               </div>
-           </div>
-       </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="black">运管告警</div>
-        <div class="black">制冷告警</div>
+        <!--<div class="black">运管告警</div>
+        <div class="black">制冷告警</div>-->
     	<div class="black">
             <p class="actually">报警日志</p>
             <table class="cold_warn">
