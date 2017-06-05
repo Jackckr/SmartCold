@@ -1,5 +1,39 @@
 checkLogin();
-app.controller('maintain', function ($scope, $location, $http, $timeout, $rootScope, userService) {
+var app = angular.module('app', ['ngFileUpload']);
+app.directive('onFinishRenderFilters', function ($timeout) {
+    return {
+        restrict: 'A', link: function (scope, element, attr) {
+            $timeout(function () {
+                scope.$emit('ngRepeatFinished');
+            }, 100);
+        }
+    };
+});
+app.service('userService', function($rootScope,  $http) {
+    initAllByRdcId= function(rootRdcId){
+        $rootScope.rdcId = rootRdcId;
+        console.log(rootRdcId)
+        $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
+            $rootScope.aclml=data.aclml;
+            $rootScope.pagstate=[];
+            $("body .role_limit").attr("disabled",true).removeClass("role_limit").removeClass("role_hide");
+            angular.forEach(data.aclml,function(obj,i){
+                if(obj.acl){
+                    if(!obj.hasnode){}
+                }else{
+                    $("#ml_acl"+obj.id).addClass("role_limit");
+                    $("#ml_acl"+obj.id+" *").addClass("role_limit");
+                    $("#ml_acl"+obj.id+" *").attr("disabled",true);
+                    if(user.type==1 || user.type==2){
+                        $("#ml_acl"+obj.id).addClass("role_hide");
+                        $("#ml_acl"+obj.id+" *").addClass("role_hide");
+                    }
+                }
+            });
+        });
+    }
+})
+app.controller('maintain', function ($scope, $location, $http, $timeout, $rootScope, Upload, userService) {
     var pageNum =  totalPages = 0;
     $scope.user = window.user;
     $http.defaults.withCredentials = true;
@@ -188,6 +222,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                 $scope.maintuser=$rootScope.user;//维修人
                 $scope.wardata=data.warData;//初始告警信息
                 $scope.cuttstatus=$scope.wardata[0].status;
+                $scope.desc = $scope.wardata[0].desc;
+                $scope.picPath = $scope.wardata[0].picPath.split(",");
             });
 
         };
@@ -316,13 +352,64 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     $scope.tol_batch=function(){
 
     };
-
+    $scope.totalfiles = [];
+    $scope.addFiles = function (files) {
+        for(var j=0,fileLen=files.length;j<fileLen;j++){
+            var _file=files[j].name;
+            var i=_file.lastIndexOf('.');
+            var len=_file.length;
+            var extEndName=_file.substring(i+1, len);
+            var extName="GIF,BMP,JPG,JPEG,PNG";
+            //首先对格式进行验证
+            if(extName.indexOf(extEndName.toUpperCase())==-1) {
+                alert("只能上传"+extName+"格式的文件");
+                return false
+            }else if(files[j].size > 10485760){
+                alert("最大只能上传10M的图片");
+                return false
+            }
+        }
+        if(files.length==0){return;};
+        var allfiles = $scope.totalfiles.concat(files);
+        if(allfiles.length>10){alert("最多选择10张！");return;}
+        $scope.totalfiles=allfiles;
+    };
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalfiles,function(item, key){
+            if(item == honorfile){
+                $scope.totalfiles.splice(key,1);
+                return false;
+            }
+        });
+    };
     $scope.tol_submit=function(){//
-        $http({
-            method: 'POST',
-            url:ER.coldroot + '/i/warningMint/upMaintAlarmstatuByIds',
-            params: {ids:$scope.sqobj.id ,userId: user.id,status:1,node:$("#tex_node").val()}
-        }).success(function (data) {  $scope.tol_back(); $scope.initData();});
+        layer.open({
+            type: 2
+            ,content: '图片提交中，请稍后~~~'
+            ,shadeClose:false
+        });
+        data={
+            pic0:null,pic1:null,pic2:null,pic3:null,pic4:null,
+            pic5:null,pic6:null,pic7:null,pic8:null,pic9:null,
+            rdcId:$rootScope.rdcId,
+            ids:$scope.sqobj.id ,
+            userId: user.id,
+            status:1,
+            node:$("#tex_node").val()
+        };
+        for(i = 0; i < $scope.totalfiles.length; i++){
+            data["pic" + i] = $scope.totalfiles[i];
+        };
+        Upload.upload({
+            data: data,
+            method:'post',
+            url: ER.coldroot + '/i/warningMint/addMaintAlarmstatuByIds',
+            headers: {'Content-Transfer-Encoding': 'utf-8'}
+        }).then(function (resp) {
+            layer.closeAll();
+            alert('提交成功');
+            $scope.tol_back(); $scope.initData();
+        });
     };
 
     $scope.tol_back=function(){
@@ -394,6 +481,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                 $scope.maintuser=$rootScope.user;//维修人
                 $scope.wardata=data.warData;//初始告警信息
                 $scope.cuttstatus=$scope.wardata[0].status;
+                $scope.desc = $scope.wardata[0].desc;
+                $scope.picPath = $scope.wardata[0].picPath.split(",");
                 if(st==0){
                     jeDate({
                         dateCell:"#wx",isinitVal:true,isTime:true,
@@ -500,6 +589,8 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             $scope.maintuser=$rootScope.user;//维修人
             $scope.wardata=data.warData;//初始告警信息
             $scope.cuttstatus=$scope.wardata[0].status;
+            $scope.desc = $scope.wardata[0].desc;
+            $scope.picPath = $scope.wardata[0].picPath.split(",");
         });
         //获得附加异常消息
         $http.get( ER.coldroot + '/i/warningMint/getMaintenanceByWId',{params: {wid:$scope.wids}}).success(function(data){
@@ -683,4 +774,12 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     }
 
     $scope.$watch('rdcId',$scope.initMainit,true);//监听冷库变化
+    $scope.initPic = function () {
+        baguetteBox.run('.baguetteBoxOne', {animation: 'slideIn', buttons: true});
+    };
+    $scope.initPic();
+    $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+        baguetteBox.run('.baguetteBoxOne', {buttons: true});
+        imgBoxHide()
+    });
 });

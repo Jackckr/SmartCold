@@ -8,11 +8,14 @@
     <title>360维护</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
-    <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
 	<script type="text/javascript" src="../com/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
+	<script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/jquery.raty.js"></script>
@@ -168,6 +171,17 @@
 					<div class="applyKid">
 						<p>报修时间:</p>
 						<input class="datainp" id="wx" readonly type="text" ng-model="maintenance.repairtime" />
+					</div>
+					<div class="applyKid">
+						<p>备注:</p>
+						<input class="datainp" id="wx" readonly type="text" name="desc" ng-model="desc" />
+					</div>
+					<div class="applyKid clearfix baguetteBoxOne gallery" on-finish-render-filters><!--&lt;!&ndash;图片list&ndash;&gt;-->
+						<a ng-repeat="obj in picPath" href="{{obj}}"
+						   style="width: 60px;height: 60px;float: left;margin-right: 10px;margin-bottom: 10px;"
+						   data-caption="{{($index+1)+'/'+picPath.length}}">
+							<img ng-src="{{obj}}"/>
+						</a>
 					</div>
 					<div class="applyKid">
 						<p>故障现象:</p>
@@ -492,8 +506,18 @@
 						<input class="datainp" type="type" disabled value="{{sqobj.addtime.substring(0,19)}}" />
 					</div>
 					<div class="applyKid textA">
-						<p>附件:</p>
-						<input style="width:100%;" type="file" />
+						<p>附件:(<small class="text-warning">*最多10张</small>)</p>
+						<label class="pic" style="width: 2rem;height: 2rem;border-width: .1rem;">
+							<input input type="file" id="files"
+								   ngf-select="addFiles($files)"
+								   ng-model="files" ngf-multiple="true" name="files"/>
+						</label>
+						<output id="img_list1" class="img_list">
+							<span ng-repeat="honorfile in totalfiles" style="margin-bottom: .5rem;">
+								<img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}">
+								<i ng-click="drophonor(honorfile)">×</i>
+							</span>
+						</output>
 					</div>
 					<div class="applyKid textA">
 						<p>备注:</p>

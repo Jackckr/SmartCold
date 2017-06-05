@@ -92,7 +92,15 @@ var util = {
 		if (callback != null) {callback();}
 	},
 };
-
+/*点击图片隐藏div*/
+function imgBoxHide(){
+    document.getElementById("baguetteBox-overlay").addEventListener("click", function(e) {
+        if (e.target.tagName == "IMG") {
+            $("#baguetteBox-overlay").hide();
+            return false;
+        }
+    }, false);
+}
 /**
  * 事件
  */
