@@ -83,6 +83,10 @@ coldWeb.controller('maintainRequest', function($rootScope, $scope, $state, $stat
 				item.id = $scope.swartype[index][0].id;
 			});
 		};
+        $scope.zoomPic = function(item){
+        	$scope.showPicPath=item;
+        	$("#picModal").modal();
+        };
 		$scope.submit = function() {
 			var servertype = "";
 			var em_servertype = $("[name ='service']:checked");
@@ -160,6 +164,5 @@ coldWeb.controller('maintainRequest', function($rootScope, $scope, $state, $stat
 				});
 			});
 		};
-
 	}
 });
