@@ -50,7 +50,6 @@ public class ZsDevService  {
 	    private static int errCount=0;
 	    public  static String data=null;
 	    private final static String ZSURL="http://10.46.17.235:9007/v1/channels/datapoints";//
-//	    private final static String ZSURL="http://139.196.240.174:9007/v1/channels/datapoints";//
 	    private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 		private static final ExecutorService executorService = Executors.newFixedThreadPool(100, threadFactory);//最多启动一千1000个线程
 		
@@ -171,6 +170,7 @@ class SubTask implements Runnable {
 	    if(this.storageDataCollectionDao==null||this.devStatusMapper==null){System.err.println("数据无法保存！");return;}
 	    try {
 			boolean isSaveDU=false;
+			
 			HashMap<String, Object> datas =null;
 			Calendar calendar = Calendar.getInstance();
 			int hours = calendar.get(Calendar.HOUR_OF_DAY); // 时
@@ -207,33 +207,29 @@ class SubTask implements Runnable {
 				default:
 					break;
 				}
-				
 				if(isSaveDU){//保存设备电压
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
 				}
-				else{
-					ZsDevService.DU.put(devid, datas.get("DU") );
-					ZsDevService.MSI.put(devid, datas.get("BSI") );
-				}
+				ZsDevService.DU.put(devid, datas.get("DU") );
+				ZsDevService.MSI.put(devid, datas.get("BSI") );
 			}
-			if(datas!=null){
-				if(isSaveDU){
-					ArrayList<StorageDataCollectionEntity> apmsiList = new ArrayList<StorageDataCollectionEntity>();
-					apmsiList.add(new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));//保存AP信号强度
-					this.devStatusMapper.addAPStatusList(apmsiList);
-				}
-				else{
-					ZsDevService.APMSI.put(apid, datas.get("MSI"));
-				}
-			}
-			if(SetUtil.isnotNullList(dataList)){
+			
+			if(SetUtil.isnotNullList(dataList)){//保存数据
 				ZsDevService.dataListcache.clear();
 				ZsDevService.dataListcache.addAll(dataList);
 				this.storageDataCollectionDao.batchInsert(dataList);
 			}
 			if(isSaveDU&&SetUtil.isnotNullList(dusiList)){
 				this.devStatusMapper.addDevStatusList(dusiList);
+			}
+			if(datas!=null){//AP status
+				ZsDevService.APMSI.put(apid, datas.get("MSI"));
+				if(isSaveDU){
+					ArrayList<StorageDataCollectionEntity> apmsiList = new ArrayList<StorageDataCollectionEntity>();
+					apmsiList.add(new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));//保存AP信号强度
+					this.devStatusMapper.addAPStatusList(apmsiList);
+				}
 			}
 		} catch (Exception e) {
 			System.err.println("洲斯接解析口出现异常:"+this.devData);
