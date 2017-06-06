@@ -45,6 +45,7 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
                 url: ER.coldroot+'/i/authenUser/attestationRdc',
                 headers: {'Content-Transfer-Encoding': 'utf-8'}
             }).then(function (resp) {
+                updateUser();
                 $scope.isDisabled = false;
                 $("#auCode").html(resp.data.message);
             });
