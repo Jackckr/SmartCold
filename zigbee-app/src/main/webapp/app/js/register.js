@@ -73,9 +73,10 @@ angular.module('myapp', []).controller('oregister',function($http, $location, $s
 	      $scope.savedata();
 
   };
-   	$scope.savedata= function () {// 修改密码
-        if($('#agreement').is(':checked')==false){
-            alert("请确认您已同意链库使用协议~");
+    $scope.ischeck=true;
+    $scope.savedata= function () {// 修改密码
+        if($scope.ischeck==false){
+            alert("请确认您已同意冷库360使用协议~");
             return
         }
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击

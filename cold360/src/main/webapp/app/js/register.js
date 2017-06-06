@@ -72,8 +72,9 @@ var app = angular.module('app', []).controller('register',function($http, $locat
 	      $scope.savedata();
   	      
   	  };
+    $scope.ischeck=true;
    	$scope.savedata= function () {// 修改密码
-        if($('#agreement').is(':checked')==false){
+        if($scope.ischeck==false){
             alert("请确认您已同意冷库360使用协议~");
             return
         }

@@ -646,3 +646,14 @@ html,body{
 	font-size: .75rem;
 	line-height: 2.5rem;
 }
+/*
+	系统通知6-6
+*/
+.sys_tab>.fl{
+	width: 33.333%;
+	line-height:1.8;
+	font-size: .75rem;
+	text-align: center;
+	border-bottom: 1px solid #00B9E8;
+	box-sizing: border-box;
+}
