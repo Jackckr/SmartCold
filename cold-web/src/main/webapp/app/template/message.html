@@ -1,8 +1,162 @@
 <style>
-#msgdialog *{color: black;}
-.modal-footer button{    color: white;}
+    #msgdialog *{color: black;}
+    .modal-footer button{    color: white;}
+    .sysUi{
+        background-color: #f7f7f7;
+        min-height: 80vh;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .sysTab{
+        height:90px;
+        -webkit-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+        background-color: #fff;
+        margin-bottom: 15px;
+        width: 48%;
+        color: #0A0A0A;
+    }
+    .sysTab .iconfont{
+        font-size: 2.5em;
+        color: #2393cb;
+    }
+    .sysTab p{
+        font-size: 14px;
+    }
+    .sysTab ul{
+        padding:0;
+    }
+    .sysTab li{
+        float: left;
+        padding-top: 10px;
+        width: 33%;
+        box-sizing: border-box;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+    }
+    .dotCount{
+        position: absolute;
+        top:12px;
+        right:45px;
+        font-size: 12px;
+        background-color: #f00;
+        color: #fff;
+        padding: 0 5px;
+        border-radius: 50%;
+    }
+    .sysTab li:nth-child(1):before,
+    .sysTab li:nth-child(2):before{
+        content: '';
+        width: 2px;
+        height: 46px;
+        background-color: #f1f1f1;
+        position: absolute;
+        top:22px;
+        right: 0;
+    }
+
+    @media (max-width: 768px) {
+        .sysTab{
+            width: 100%;
+        }
+    }
+    .sysTable{
+        padding: 20px;
+        background-color: #fff;
+        -webkit-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+    }
+    .sysTable tbody{
+
+    }
+    .sysTable tbody td{
+        text-align: center;
+        border-top: 0;
+        border-bottom: 1px solid #dbdee5;
+    }
+    .sysTr{
+        background-color: #a3b5be;
+        color: #fff;
+    }
+    .sysTr>th{
+        text-align: center;
+        font-weight:400;
+    }
+    .sysTr>th:first-child{
+        border-bottom-left-radius: 4px;
+        border-top-left-radius:4px;
+    }
+    .sysTr>th:last-child{
+        border-bottom-right-radius: 4px;
+        border-top-right-radius:4px;
+    }
 </style>
-<div class="" style="min-height: 946px;">
+<!--新设计page-->
+<div class="sysUi">
+    <div class="clearfix">
+        <div class="pull-left sysTab">
+            <ul class="clearfix">
+                <li ng-click="allmsg($event)"><i class="iconfont">&#xe808;</i><p>全部消息</p>
+                    <span class="dotCount" ng-if="notReadMessage>0">{{notReadMessage}}</span>
+                </li>
+                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe7fd;</i><p>未读消息</p></li>
+                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe802;</i><p>已读消息</p></li>
+            </ul>
+        </div>
+        <div class="pull-right sysTab">
+            <ul class="clearfix">
+                <li ng-click="allmsg($event)"><i class="iconfont">&#xe6ef;</i><p>系统消息</p>
+                    <span class="dotCount" ng-if="notReadMessage>0">{{notReadMessage}}</span>
+                </li>
+                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe806;</i><p>系统警告</p></li>
+                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe6e5;</i><p>其他告警</p></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="sysTable">
+        <table class="table">
+            <thead>
+                <tr class="sysTr">
+                    <th>序号</th>
+                    <th>请求认证</th>
+                    <th>内容</th>
+                    <th>状态</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="msg in msgList" ng-click="showmsg($index)" ng-hide="msg.state==-1">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td><a href="#">{{msg.title}}</a></td>
+                    <td style="text-align: left;"><a href="#">{{msg.message}}</a></td>
+                    <td>
+                        <a href="#" ng-if="msg.state==1">{{modestate[msg.state]}}</a>
+                        <a href="#" ng-if="msg.state==0" style="color: red;">{{modestate[msg.state]}}</a>
+                    </td>
+                    <td><a href="#">{{msg.addTime}}</a></td>
+                    <td><i class="fa fa-trash-o" style="color:#a3b5be;cursor: pointer;font-size: 18px"></i></td>
+                </tr>
+               <!-- <tr>
+                    <td class="text-center" colspan="7">
+                        <img src="assets/img/nomsg.png" style="width: 20%;">
+                    </td>
+                </tr>-->
+            </tbody>
+        </table>
+        <div class="text-center" colspan="7" style="margin: 100px 0"  ng-if="msgList.length==0">
+            <img src="assets/img/nomsg.png" style="width: 350px;">
+        </div>
+    </div>
+</div>
+
+
+<!--新设计page-->
+<div class="" style="min-height: 946px;" ng-if="msgList.length==-1">
 	<!-- Main content -->
 	<section class="content">
 		<div class="row">

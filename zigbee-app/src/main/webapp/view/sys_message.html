@@ -16,26 +16,29 @@
     <script type="text/javascript" src="../app/js/sys_message.js" ></script>
     <script type="text/javascript">var type=0; checkLogin(null,initdata);</script>
 </head>
-<body >
-    <header ng-app="message" ng-controller="message">
+<body ng-app="message" ng-controller="message" ng-cloak>
+    <header>
     	<div class="area fl">
     		<a href="user.html"><i class="iconfont">&#xe60e;</i></a>
     	</div>
     	<div class="txt">系统通知</div>
     </header>
      <section class="sys">
-         <div class="sys_tab clearfix">
-             <div class="fl" style="border-right:1px solid #00B9E8;">全部</div>
-             <div class="fl" style="border-right:1px solid #00B9E8;">已读</div>
-             <div class="fl">未读</div>
+         <div class="sys_center" ng-if="tabNum==1">
+             <div>全部</div>
+             <div>已读</div>
+             <div>未读</div>
          </div>
-
-
+         <div class="classify" ng-if="tabNum==2">
+             <div>系统消息</div>
+             <div>系统告警</div>
+             <div>其他告警</div>
+         </div>
      </section>
     <div id="" class="nodata black" style="margin-top: 0;"> <img src="../com/img/nodata.jpg" alt=""><p>您还没有发布冷库哦~~</p></div>
     <ul class="footer">
-        <li><a><i class="iconfont">&#xe65a;</i><p class="info">消息中心</p></a></li>
-        <li><a><i class="iconfont">&#xe6f8;</i><p class="info">消息分类</p></a></li>
+        <li ng-click="tab(1)"><a><i class="iconfont">&#xe65a;</i><p class="info">消息中心</p></a></li>
+        <li ng-click="tab(2)"><a><i class="iconfont">&#xe6f8;</i><p class="info">消息分类</p></a></li>
     </ul>
 </body>
 </html>

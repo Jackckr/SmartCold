@@ -649,11 +649,27 @@ html,body{
 /*
 	系统通知6-6
 */
-.sys_tab>.fl{
-	width: 33.333%;
-	line-height:1.8;
-	font-size: .75rem;
-	text-align: center;
-	border-bottom: 1px solid #00B9E8;
+
+.sys{
+	padding: 0;
 	box-sizing: border-box;
+	background-color: #fff;
+	margin-bottom: 0.1rem;
+	margin-top:2.2rem;
+	font-size: 0.7rem;
+}
+.sys>div{
+	text-align: center;
+	width: 100%;
+	height:auto;
+	display: table;
+	table-layout: fixed;
+	position: relative;
+	z-index: 3;
+}
+.sys>div>div{
+	display: table-cell;
+	height: 1.6rem;
+	line-height: 1.6rem;
+	border-bottom: 3px solid #BDBDBD;
 }
