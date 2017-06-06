@@ -22,20 +22,27 @@ public class MessageRecordController {
     @Resource
     private MessageRecordMapping messageRecordMapping;
     
+    /**
+     * 
+     * @param userId
+     * @param type
+     * @param rdcId
+     * @return
+     */
     @RequestMapping(value = "/getMsgCountByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public Integer getMsgCountByRdcId(int userId,int rdcId){
-    	return messageRecordMapping.getMsgCountByRdcId(rdcId);
+    public Integer getMsgCountByRdcId(int userId,int type,int rdcId){
+    	return messageRecordMapping.getMsgCountByRdcId(rdcId,type);
     }
     
     @RequestMapping(value = "/getTallMsgByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public List<MessageRecord>  getTallMsgByRdcId(int userId,Integer rdcId){
-    	return messageRecordMapping.getTallMsgByRdcId(rdcId);
+    public List<MessageRecord>  getTallMsgByRdcId(int userId,int type,Integer rdcId){
+    	return messageRecordMapping.getTallMsgByRdcId(rdcId,type);
     }
     @RequestMapping(value = "/getMessageList",method = RequestMethod.POST)
     @ResponseBody
-    public List<MessageRecord> getMessageList (Integer rdcId,Integer userId,Integer type,Integer stype, Integer isRead,Integer status,String keyword, int  page,int rows){
+    public List<MessageRecord> getMessageList (Integer rdcId,Integer userId,Integer utype,Integer type,Integer stype, Integer isRead,Integer status,String keyword, int  page,int rows){
     	PageHelper.startPage(page, rows);
        return messageRecordMapping.getMsgByFilter(rdcId, null, type, stype, status, isRead, keyword);
     }

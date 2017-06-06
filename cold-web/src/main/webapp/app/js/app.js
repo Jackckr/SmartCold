@@ -86,10 +86,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      		});
 					      		$("#lefaside").removeClass("hide");
 		        	});
-		        	  $http({method:'POST',url:'i/messageRecord/getTallMsgByRdcId',params:{userId: $rootScope.user.id, rdcId: $rootScope.rdcId}}).success(function (data) {
+		        	  $http({method:'POST',url:'i/messageRecord/getTallMsgByRdcId',params:{userId: $rootScope.user.id,type: $rootScope.user.type, rdcId: $rootScope.rdcId}}).success(function (data) {
 		        		  $rootScope.messageList=data;
 		        	  });
-		              $http({method:'POST',url:'i/messageRecord/getMsgCountByRdcId',params:{userId: $rootScope.user.id, rdcId: $rootScope.rdcId}}).success(function (data) {
+		              $http({method:'POST',url:'i/messageRecord/getMsgCountByRdcId',params:{userId: $rootScope.user.id,type: $rootScope.user.type, rdcId: $rootScope.rdcId}}).success(function (data) {
 		            	  $rootScope.notReadMessage=data;
 		              });
 

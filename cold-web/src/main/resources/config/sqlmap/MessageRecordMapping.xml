@@ -12,10 +12,12 @@
      SELECT COUNT(`id`) from `messagerecord` where `type`=1 and `uid`=#{userId}  and `stype` in(1,2) and `state`=0;
    </select>
    <select id="getMsgCountByRdcId" parameterType="Integer" resultType="Integer">
-     SELECT COUNT(`id`) from `messagerecord` where `rdcid`=#{rdcId} and `isread`=0;
+     SELECT COUNT(`id`) from `messagerecord` where `rdcid`=#{rdcId}  <if test="type!=0"> and `type`!=1 </if> and `isread`=0;
    </select>
    <select id="getTallMsgByRdcId" parameterType="java.lang.Integer" resultType="MessageRecord">
-     SELECT * from `messagerecord` where `rdcid`=#{rdcId} and `isread`=0 limit 5;
+     SELECT * from `messagerecord` where `rdcid`=#{rdcId} and `isread`=0 
+     <if test="type!=0"> and `type`!=1 </if>
+     limit 5;
    </select>
    <select id="getMsgByFilter" parameterType="Map" resultType="MessageRecord">
      SELECT * from messagerecord where  `rdcid`=#{rdcId}
