@@ -12,19 +12,26 @@ import com.smartcold.bgzigbee.manage.entity.UserEntity;
  */
 public interface UserMapper {
 
-	UserEntity findUser(@Param("username") String username, @Param("password") String password);
-
-	UserEntity findUserByName(@Param("username") String username);
-
-	UserEntity findUserById(@Param("id") int id);
+	void deleteUser(@Param("id") int id);
 	
-	Page<UserEntity> findAllUser(@Param("audit")Integer audit,@Param("type")Integer type, @Param("keyword")String keyword);
-
-	int changeAudit(@Param("userID") int userID,@Param("audit") int audit);
-	
-	int changeUserType(@Param("ids")String ids, @Param("type")int type);
+	void deleteUsers(@Param("ids") String ids);
 	
 	void insertUser(UserEntity userEntity);
 	
-	void deleteUser(@Param("id") int id);
+	void updateUser(UserEntity userEntity);
+	
+	UserEntity findUserById(@Param("id") int id);
+
+	UserEntity findUserByName(@Param("username") String username);
+	
+	
+	int changeUserType(@Param("ids")String ids, @Param("type")int type);
+
+	int changeAudit(@Param("userID") int userID,@Param("audit") int audit);
+	
+	UserEntity findUser(@Param("username") String username, @Param("password") String password);
+	
+	Page<UserEntity> findAllUser(@Param("audit")Integer audit,@Param("type")Integer type, @Param("keyword")String keyword);
+	
+	Page<UserEntity> findUserByFilter(@Param("type")Integer type,@Param("audit")Integer audit,@Param("coleam")String coleam,@Param("colval")String colval);
 }

@@ -16,7 +16,7 @@
 .icon-authe{background:url('icons/5.png') no-repeat;}                                /*认证图标*/
 .icon-coldcf{background:url('icons/6.png') no-repeat;}                               /*冷库选型*/
 .icon-sel{background:url('icons/7.png') no-repeat;}                                  /*默认查看*/
-
+.icon_filter{background: url(img/icons.png) no-repeat scroll -1201px -602px rgba(0, 0, 0, 0);}
 
 .icon_add   {background:url('icons/1.png') no-repeat;}                               /*添加按钮1*/
 .icon_add1  {background:url('icons/1_1.png') no-repeat;}                             /*添加按钮2*/
@@ -25,16 +25,22 @@
 .icon-delete{ background:url('icons/delete.png') no-repeat center center;}           /*删除按钮3*/
 .icon_edit  {background:url('icons/3.png') no-repeat;background-size:14px 15px;}     /*编辑按钮1*/
 .icon-ok{ background:url('icons/ok.png') no-repeat center center; }                     
-.icon-cancel{ background:url('icons/cancel.png') no-repeat center center; }           /*取消按钮1*/            
 .icon-ok1{ background: url(img/icons.png) no-repeat scroll -1021px -661px rgba(0, 0, 0, 0); }                     
+.icon-cancel{ background:url('icons/cancel.png') no-repeat center center; }           /*取消按钮1*/            
 .icon-cancel1 {background: url(img/icons.png) no-repeat scroll -991px -661px rgba(0, 0, 0, 0);}
+.icon-cancel2 {background: url(img/icons.png) no-repeat scroll -421px -691px rgba(0, 0, 0, 0);}
 
 
+/*=====================================main导航=====================================================*/
 
+
+/*=====================================用户图标=====================================================*/
+.user_audit{background: url(img/icons.png) no-repeat scroll -961px -659px rgba(0, 0, 0, 0);}
 .user_add {background: url(img/icons.png) no-repeat scroll -121px -241px rgba(0, 0, 0, 0);}
 .user_edit{background: url(img/icons.png) no-repeat scroll -422px -241px rgba(0, 0, 0, 0);}
 .user_del {background: url(img/icons.png) no-repeat scroll -391px -241px rgba(0, 0, 0, 0);}
 
+/*====================================rdc图标=====================================================*/
 /*消息中心*/
 .objicon{display: inline-block;width: 20px;height: 20px;}
 .icon-msgType{    background: url(img/icos.png) no-repeat scroll -1350px -391px rgba(0, 0, 0, 0);}

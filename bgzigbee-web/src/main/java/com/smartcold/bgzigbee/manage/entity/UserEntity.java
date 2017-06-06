@@ -5,7 +5,8 @@ import java.util.Date;
 public class UserEntity {
 
 	private int id;
-	private int type;
+	private int type;//类型：0 360/平台用户  ,1：货主 ,2：服务商
+	private int level;//级别
 
 	private String username;
 
@@ -37,6 +38,12 @@ public class UserEntity {
 		this.id = id;
 	}
 
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	public String getUsername() {
 		return username;
 	}

@@ -41,6 +41,19 @@
 		 </where>
          order by `addTime` desc
     </select>
+	 <select id="findUserByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
+         SELECT ID,`username` ,`type`,`telephone` ,`email` ,`addTime` ,`audit`  FROM `user` where 1=1  
+			<if test="audit != null">
+			  and  `audit`=#{audit} 
+			</if>
+			<if test="type != null">
+			  and  `type`=#{type} 
+			</if>
+		    <if test="coleam!=null and coleam !='' and colval!=''">
+		      and  `${coleam}` like "%"#{colval}"%"   
+		    </if>
+         order by `addTime` desc
+    </select>
 	
 	<select id="findUserByName" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
 		SELECT ID,`username`,`type`,`telephone` ,`email` ,`addTime` ,`audit` 
@@ -63,4 +76,24 @@
 	<update id="changeUserType" parameterType="map">
 	  update user set type=#{type} where id in(${ids});
 	</update>
+   <update id="updateUser" parameterType="UserEntity" >
+        update user
+        <set>
+	         <if test="role       !=null">role       =#{role      },</if>
+	         <if test="sex        !=null">sex        =#{sex       },</if>
+	         <if test="addressid  !=null">addressid  =#{addressid },</if>
+	         <if test="hometownid !=null">hometownid =#{hometownid},</if>
+	         <if test="username   !=null and username !=''">username   =#{username  },</if>
+	         <if test="password   !=null and password !=''">password   =#{password  },</if>
+	         <if test="telephone  !=null and telephone!=''">telephone  =#{telephone },</if>
+	         <if test="realname   !=null and realname !=''"> realname  =#{realname  },</if>
+	         <if test="nickname   !=null and nickname !=''"> nickname  =#{nickname  },</if> 
+	         <if test="email      !=null and email    !=''">   email   =#{email     },</if>
+	         <if test="avatar     !=null and avatar   !=''">   avatar  =#{avatar    },</if>
+	         <if test="addTime    !=null and addTime  !=''">addTime    =#{addTime   },</if>
+	         <if test="updateTime !=null and updateTime!=''">updateTime=#{updateTime}</if>
+        </set>
+        where id = ${id}
+    </update>
+	
 </mapper>

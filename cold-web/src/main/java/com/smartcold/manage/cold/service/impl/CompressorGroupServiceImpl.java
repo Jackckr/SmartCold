@@ -103,7 +103,7 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 
 	@Override
 	public List<CompressorDto> getCompressorsState(int groupId) {
-		Date startTime=TimeUtil.getBeforeMinute(5);
+		Date startTime=TimeUtil.getBeforeMinute(30);
 		List<CompressorSetEntity> compressors = compressorSetDao.findCompressorByGroupid(groupId);
 		ArrayList<CompressorDto> result = new ArrayList<CompressorDto>();
 		for (CompressorSetEntity compressor : compressors) {

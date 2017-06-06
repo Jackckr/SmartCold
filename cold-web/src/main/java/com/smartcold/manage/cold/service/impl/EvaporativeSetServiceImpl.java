@@ -38,8 +38,7 @@ public class EvaporativeSetServiceImpl implements EvaporativeSetService {
 		List<EvaporativeBlowerSetEntity> evaBlowers = evaBlowerDao.findByGroupid(groupid);
 
 		for (EvaporativeBlowerSetEntity entity : evaBlowers) {
-			List<StorageKeyValue> infos = storageService.findByNums(StorageType.EVAPORATIVEBLOWER.getType(),
-					entity.getId(), "run", 1);
+			List<StorageKeyValue> infos = storageService.findByNums(StorageType.EVAPORATIVEBLOWER.getType(),entity.getId(), "run", 1);
 			blowers.add(new EvaporativeBlowerDto(entity, infos.size() > 0 ? infos.get(0).getValue().intValue() : 0));
 		}
 		List<EvaporativeWaterSetEntity> evaWater = evaWaterDao.findByGroupid(groupid);

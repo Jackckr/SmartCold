@@ -20,7 +20,7 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.util.EncodeUtil;
-import com.smartcold.bgzigbee.manage.util.SetUtil;
+import com.smartcold.bgzigbee.manage.util.StringUtil;
 import com.smartcold.bgzigbee.manage.util.TableData;
 
 
@@ -35,13 +35,13 @@ public class UserController extends BaseController {
 	 //
     @RequestMapping(value = "/getUserByFilter", method = RequestMethod.POST)
     @ResponseBody
-    public TableData<UserEntity> getUserByFilter(Integer type,Integer audit, String  keyword,int  page,int rows) {
+    public TableData<UserEntity> getUserByFilter(Integer type,Integer audit,String coleam,String colval,int  page,int rows) {
     	PageHelper.startPage(page, rows);
-    	Page<UserEntity> userList  = userDao.findAllUser(audit,type,keyword);
+    	Page<UserEntity> userList  = userDao.findUserByFilter( type, audit, coleam, colval);
     	return TableData.newSuccess(new PageInfo<UserEntity>(userList) );
     }
 	
-	
+	@Deprecated
 	@RequestMapping(value = "/findUserList", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findUserList(@RequestParam(value="pageNum",required=false) Integer pageNum,
@@ -84,6 +84,13 @@ public class UserController extends BaseController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/changeLevel", method=RequestMethod.POST)
+	public Object changeLevel(int userID, int level){
+		//userDao.changeAudit(userID, audit);
+		return new BaseDto(0);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/changeUserType", method=RequestMethod.POST)
 	public Object changeUserType(String ids, int type){
 		try {
@@ -102,18 +109,37 @@ public class UserController extends BaseController {
 		return new BaseDto(0);
 	}
 	
-	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/addUser")
 	@ResponseBody
 	public Object addUser(UserEntity user) throws UnsupportedEncodingException {
-		if (user.getUsername() == null || user.getPassword() == null) {
-			return new ResultDto(-1, "用户名和密码不能为空");
-		}
+		if (StringUtil.isNull(user.getUsername())|| StringUtil.isNull(user.getPassword())) {return new ResultDto(-1, "用户名和密码不能为空");}
 		user.setUsername(URLDecoder.decode(user.getUsername(), "UTF-8"));
 		user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 		userDao.insertUser(user);
 		return new BaseDto(0);
 	}
+	
+	
+	
+	@RequestMapping(value = "/addorupdateUser",method=RequestMethod.POST)
+	@ResponseBody
+	public Object addorupdateUser(UserEntity user) {
+		try {
+			if (StringUtil.isNull(user.getUsername())|| StringUtil.isNull(user.getPassword())) {return new ResultDto(-1, "用户名和密码不能为空");}
+			if(user.getId()==0){
+				user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
+				userDao.insertUser(user);
+			}else{
+				userDao.updateUser(user);
+			}
+			return new BaseDto(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new BaseDto(-1);
+		}
+	}
 
+	@Deprecated
 	@ResponseBody
 	@RequestMapping(value = "/checkUserName")
 	public Object checkUserName(@RequestParam("value") String username) {
@@ -122,4 +148,12 @@ public class UserController extends BaseController {
 		ngRemoteValidateDTO.setValid(userDao.findUserByName(username)==null? true:false);
 		return ngRemoteValidateDTO;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/vistUserName")
+	public Object vistUserName(String username) {
+		if(StringUtil.isNull(username)){return true;}
+	    return this.userDao.findUserByName(username)==null? true:false;
+	}
+	
 }

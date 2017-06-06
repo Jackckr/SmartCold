@@ -89,7 +89,7 @@ public class DFSCollectionController extends BaseController {
 			}
 			return new DataResultDto(200);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("丹弗斯数据解析异常："+data+"\r\n"+e.getMessage());
 			return new DataResultDto(500);
 		}
 	} 
