@@ -31,13 +31,23 @@
 					<span class="_error" ng-show="oForm.tel.$dirty && oForm.tel.$invalid">联系电话必须合法</span>
 				</div>
 			</div>
-			<div class="form-group db" style="width: 50%;">
-				<label for="wx" class="dbc control-label" style="width: 20%;">报修时间&nbsp;</label>
-				<div class="dbc" style="width: 80%;">
+			<div class="form-group db" style="width: 100%;">
+				<label for="wx" class="dbc control-label" style="width: 10%;">报修时间&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
 					<input id="wx" type="text" placeholder="请选择"  readonly class="form-control" ng-mode="maintenance.repairtime">
 				</div>
+				<label class="dbc control-label" style="width: 10%;">备注&nbsp;</label>
+				<div class="dbc" style="width: 40%;">
+					<input type="text" class="form-control" name="desc" ng-model="desc">
+				</div>
 			</div>
-			
+			<div class="form-group db" style="width: 100%">
+				<label class="dbc control-label" style="width: 10%;"></label>
+				<div ng-repeat="obj in picPath">
+					<img ng-src="{{obj}}" style="width: 60px;height: 60px;float: left;margin-right: 10px;margin-bottom: 10px;" ng-click="zoomPic(obj)">
+				</div>
+
+			</div>
 			<div class="form-group db" style="width: 100%;">
 				<label class="control-label dbc" style="vertical-align: top;width: 10%;">故障现象&nbsp;</label>
 				<div class="dbc" style="overflow: hidden;">
@@ -108,5 +118,19 @@
 		</fieldset>
 		
 	</form>
-<script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="picModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<img ng-src="{{showPicPath}}" width="100%" height="100%">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+	<script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
 <link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">

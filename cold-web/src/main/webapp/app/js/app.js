@@ -1,4 +1,4 @@
-var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','angucomplete-alt','angular-table', 'bsTable']);
+var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','ngFileUpload','angucomplete-alt','angular-table', 'bsTable']);
 angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
 	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
 	    	if(user.username == null){document.location.href = "/login.html";return; }

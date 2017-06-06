@@ -25,7 +25,7 @@ public interface WarningMintMapper {
 	
 	public List<WarningMintEntity> getMaintAlarmByFilter(@Param("rdcid")int rdcid, @Param("status")String status,@Param("level")Integer level,@Param("keyword")String keyword);
 	
-	public void upMaintAlarmstatuByIds( @Param("ids") String ids,@Param("userId") Integer userId, @Param("status") Integer status,@Param("desc") String desc);
+	public void upMaintAlarmstatuByIds( @Param("ids") String ids,@Param("userId") Integer userId, @Param("status") Integer status,@Param("desc") String desc,@Param("picPath")String picPath);
 	
 	public void addMaintconFirma( @Param("rdcId") int rdcId,   @Param("maintid") int  maintid,@Param("starttime") String starttime,@Param("endtime") String endtime,@Param("phenomena") String phenomena,@Param("maintresult") String maintresult,@Param("cost") Double	cost,@Param("note") String	note,@Param("serverType") String	serverType);
 	

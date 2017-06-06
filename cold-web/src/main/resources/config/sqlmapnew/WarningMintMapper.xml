@@ -22,6 +22,7 @@
 	  update `warningmint` set `status`=#{status}
 	 <if test="userId!=null and userId!=''"> ,`userId`=#{userId}</if>
 	 <if test="desc!=null and desc!=''">,`desc`=#{desc} </if> 
+	 <if test="picPath!=null and picPath!=''">,`picPath`=#{picPath} </if>
 	  where  `id` in(${ids});
 	</update>
 	
@@ -54,7 +55,7 @@
 			`warningmsg` ,
 			`analysismsg` , `status`,
 			`desc` ,
-			`addtime`
+			`addtime`,`picPath`
 			from `warningmint` where `id` in(${ids})	ORDER BY `id` desc ;
 	</select>
 	

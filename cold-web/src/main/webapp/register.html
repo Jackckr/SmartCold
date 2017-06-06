@@ -21,7 +21,7 @@
             -webkit-text-stroke-width: .2px;
             -moz-osx-font-smoothing: grayscale
         }
-.register-box-body form p{
+        .register-box-body form p{
     		color:red;
     		font-size: 12px;
     	}
@@ -196,6 +196,13 @@
             <span id="sp_yzmbut" class="input-group-addon btn btn-primary" onclick="getviercode(this)">获取验证码</span>
           </div>
           <p class="codeMsg"></p>
+            <div class="input-group form-group">
+                <label style="font-weight: 400;">
+                    <input id="agreement" type="checkbox" checked>
+                    我已阅读并同意
+                    <a id="regAgreement" target="_blank" href="announcement.html">《冷库360使用协议》</a>
+                </label>
+            </div>
           <div>
               <button id="submit" type="button" class="btn btn-primary btn-block btn-flat" disabled onclick="reguser()">注册</button>
           </div>
@@ -324,32 +331,25 @@ function checkpwd(){
    var password = $("#txt_password").val().trim(); 
    if(password == ''){
 		$(".psdMsg").html("密码不能为空");
-	}else if(password.length<6){
-		$(".psdMsg").html("密码长度最少六位");
-	}else if(password.length<=16){
-		$(".psdMsg").html("");
-		if (/^(\d)\1+$/.test(password)){
-			$(".psdMsg").html("密码太过简单了~").css("color","#f80");
-		}
-	}else if(password.length>16){
-		$(".psdMsg").html("密码长度最多16位~").css("color","#f80");
-	}else {
-		$(".psdMsg").html("");
-		victdata.victpwd=true;
-	}
+   }else if(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(password)){
+       $(".psdMsg").html("");
+       victdata.victpwd=true;
+   }else{
+       $(".psdMsg").html("密码长度6-16位,必须是数字字母组合");
+   }
     checkinfo();
 }
 
 function checkopwd(){
-	    var password=$("#txt_password").val().trim(), repsword=$("#txt_refpassword").val().trim();
-		if(password != repsword){
-			$(".rePsdMsg").html("两次密码输入不一致，请重新输入");
-			victdata.victpwd=false;
-		}else{
-			$(".rePsdMsg").html("");
-			victdata.victpwd=true;
-		}
-		checkinfo();
+    var password=$("#txt_password").val().trim(), repsword=$("#txt_refpassword").val().trim();
+    if(password != repsword){
+        $(".rePsdMsg").html("两次密码输入不一致，请重新输入");
+        victdata.victpwd=false;
+    }else{
+        $(".rePsdMsg").html("");
+        victdata.victpwd=true;
+    }
+    checkinfo();
 }
 
 	
@@ -361,6 +361,11 @@ function reguser(){
     		return
     	}
 	}
+	if($('#agreement').is(':checked')){
+    }else{
+        alert("请确认您已同意冷库360协议~");
+        return
+    }
 	var me = "#submit"; 
 	if ($(me).data("isLoading") === true) { return; }
 		var userMsg = $('.userMsg').html().trim(),

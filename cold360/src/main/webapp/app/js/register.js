@@ -73,8 +73,13 @@ var app = angular.module('app', []).controller('register',function($http, $locat
   	      
   	  };
    	$scope.savedata= function () {// 修改密码
+        if($('#agreement').is(':checked')==false){
+            alert("请确认您已同意冷库360使用协议~");
+            return
+        }
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
-        $.ajax({
+        $('#app_but1').attr("disabled",true);
+		$.ajax({
         	type: 'POST',
         	data:{username:$("#telNum").val().trim(),
 				password:$("#txt_password").val().trim(),
@@ -92,7 +97,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
     				    content: data.message
     				    ,btn: '确定'
     				  });
-            		window.location.href = "login.html";
+            		window.location.href = "../index.html";
             	}else{
             		$("#mention1").html(data.message);
             	} }

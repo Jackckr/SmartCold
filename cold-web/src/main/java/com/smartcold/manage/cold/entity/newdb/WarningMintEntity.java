@@ -23,6 +23,7 @@ public class WarningMintEntity {
 	 private String  analysismsg  ;
 	 private String  desc         ;
 	 private String  addtime      ;
+	 private String  picPath      ;
 	 private List<FileDataEntity> imgList;
 	public int getId() {
 		return id;
@@ -114,5 +115,10 @@ public class WarningMintEntity {
 	public void setImgList(List<FileDataEntity> imgList) {
 		this.imgList = imgList;
 	}
-	
+	public String getPicPath() {
+		return picPath;
+	}
+	public void setPicPath(String picPath) {
+		this.picPath = picPath;
+	}
 }
