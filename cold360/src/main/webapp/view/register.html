@@ -42,11 +42,14 @@
 	    		<input type="password" name="" id="txt_repsword" ng-keyup="checkpwd()" value="" placeholder="确认密码"/>
 	    	</div>
 			<div class="inputBd">
-				<label style="font-weight: 400;font-size: .7rem;">
-					<input id="agreement" type="checkbox" checked style="display: inline-block;width: auto;">
+				<p style="font-size: .7rem;line-height: 1.75;margin-top: .8rem;">
+					<label class="check_icon on" ng-class="{true: 'on', false: ''}[ischeck1]">
+						<input ng-model="ischeck1" type="checkbox" id="agreement" name="service" value="1" >
+						<i class="iconfont"></i>
+					</label>
 					我已阅读并同意
 					<a id="regAgreement" target="_blank" href="announcement.html">《冷库360使用协议》</a>
-				</label>
+				</p>
 			</div>
 	    	<!--<div class="userRadio">
 	    		<label>用户类型：</label>

@@ -97,7 +97,7 @@ var app = angular.module('app', []).controller('register',function($http, $locat
     				    content: data.message
     				    ,btn: '确定'
     				  });
-            		window.location.href = "login.html";
+            		window.location.href = "../index.html";
             	}else{
             		$("#mention1").html(data.message);
             	} }
