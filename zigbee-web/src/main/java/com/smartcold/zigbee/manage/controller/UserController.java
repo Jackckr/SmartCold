@@ -78,11 +78,11 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser")
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token,Boolean isupdate) {
-		UserEntity user =null;
-		if(isupdate==null||!isupdate){
-			 user = (UserEntity)request.getSession().getAttribute("user");
-			if(user!=null){return user;}
-		}
+		UserEntity user =new UserEntity();
+//		if(isupdate==null||!isupdate){
+//			 user = (UserEntity)request.getSession().getAttribute("user");
+//			if(user!=null){return user;}
+//		}
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();
 			if(cookies!=null&&cookies.length>0){
@@ -102,7 +102,6 @@ public class UserController extends BaseController {
 				}
 			}
 		}
-		user = new UserEntity();
 		return user;
 	}
 
