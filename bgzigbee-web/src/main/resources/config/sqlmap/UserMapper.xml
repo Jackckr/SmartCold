@@ -52,7 +52,7 @@
 		    <if test="coleam!=null and coleam !='' and colval!=''">
 		      and  `${coleam}` like "%"#{colval}"%"   
 		    </if>
-         order by `addTime` desc
+         order by `id` desc
     </select>
 	
 	<select id="findUserByName" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">

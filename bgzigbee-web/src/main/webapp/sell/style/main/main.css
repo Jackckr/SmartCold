@@ -76,7 +76,7 @@ ul { list-style:none;}
 .navlist li div.selected a{color:#416AA3; font-weight:bold;}
 .third_ul{ list-style-type:none;margin:0px; padding:0px; display:none;}
 .third_ul li{ padding-left:20px;}
-
+/*
 .icon{ background:url(../img/icons.png) no-repeat;width:18px; margin-right:5px; line-height:18px; display:inline-block;}
 .icon-sys{ background-position:0px -220px;}
 .icon-set{ background-position:-380px -200px;}
@@ -95,6 +95,7 @@ ul { list-style:none;}
 
 
 .icon-arrow{ background:url('../images/arrow.gif') no-repeat right;}
+*/
 /*
 #menu ul {padding:0; margin: 0; list-style: none;}
 #menu ul li { list-style-type:none; margin-bottom:3px; width:150px;  line-height: 21px; text-align:left;}

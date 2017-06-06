@@ -179,7 +179,7 @@ public class AuthenUserController {
 				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 				String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
 			    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
-				SystemInformEntity sysWarningsInfo=new SystemInformEntity(1, stype==1?6:5, rdcId, null, 0, 0, 0, title, msg);
+				SystemInformEntity sysWarningsInfo=new SystemInformEntity(0, stype, rdcId, null, 0, 0, 0, title, msg);
 				this.msMappergMapper.addsystemInform(sysWarningsInfo);
 				
 				this.messageRecordMapping.updateState(id, 1,1);

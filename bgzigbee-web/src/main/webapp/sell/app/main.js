@@ -2,58 +2,66 @@
 //动态菜单
 var user={id:1,type:1,name:'lxj'};
 var usermenus=[
-          {"menuid": "1","icon": "icon-sys","menuname": "链库管理"
+          {"menuid": "1","icon": "main_platform","menuname": "链库管理"
         	  ,"child": [
         	             {"menuid": "1_1","menuname": "用户管理","icon": "icon-user","url": "/sell/viwe/usermanage.html"},
         	             {"menuid": "1_2","menuname": "冷库管理","icon": "icon-cold","url": "/sell/viwe/rdcmanage.html"},
-        	             {"menuid": "1_3","menuname": "认证管理","icon": "icon-authe","url": "Login.html"},
-        	             {"menuid": "1_4","menuname": "冷库配置","icon": "icon-coldcf","url": "/sell/viwe/storageConfig.html"},
-        	             {"menuid": "1_5","menuname": "共享管理","icon": "icon-role","url": "/sell/viwe/rdcShareInfo.html"},
-        	             {"menuid": "1_6","menuname": "资讯管理","icon": "icon-role","url": "Login.html"}]
+        	             {"menuid": "1_3","menuname": "认证管理","icon": "icon-authe","url": ""},
+        	             {"menuid": "1_4","menuname": "共享管理","icon": "main_share","url": "/sell/viwe/rdcShareInfo.html"},
+        	             {"menuid": "1_5","menuname": "资讯管理","icon": "main_infmation","url": ""},
+        	             {"menuid": "1_6","menuname": "冷库配置","icon": "icon-coldcf","url": "/sell/viwe/storageConfig.html"},
+        	             ]
           } ,
           {
   			"menuid": "2",
   			"menuname": "设备管理",
-  			"icon": "icon-add",
-  			"url": "demo.html",
-  			"child": [{"menuid": "2_0","menuname": "设备管理","icon": "icon-role","url": "Login.html"},
-  			          {"menuid": "2_1","menuname": "设备查询","icon": "icon-role","url": "Login.html"},
-  			          {"menuid": "2_4","menuname": "设备检测","icon": "icon-role","url": "Login.html"},
-  			          {"menuid": "2_3","menuname": "数据管理","icon": "icon-role","url": "Login.html"},
+  			"icon": "main_dev",
+  			"child": [
+  			          {"menuid": "2_0","menuname": "设备管理","icon": "icon-role","url": ""},
+  			          {"menuid": "2_1","menuname": "设备查询","icon": "icon-role","url": ""},
+  			          {"menuid": "2_2","menuname": "设备检测","icon": "icon-role","url": ""},
+  			          {"menuid": "2_3","menuname": "数据管理","icon": "icon-role","url": ""},
+  			          {"menuid": "2_3","menuname": "设备告警","icon": "dev_warning","url": "/sell/viwe/dev_msg.html"},
   			         ]
   		},
   		{
   			"menuid": "3",
-  			"menuname": "冷库360管理",
-  			"icon": "icon-add",
-  			"url": "demo.html",
+  			"menuname": "360管理",
+  			"icon": "main_360",
   			"child": [
-  			          {"menuid": "3_0","menuname": "集团管理","icon": "icon-role","url": "Login.html"},
-  			          {"menuid": "3_1","menuname": "权限配置","icon": "icon-role","url": "Login.html"},
-  			          {"menuid": "3_2","menuname": "360配置","icon": "icon-role","url": "Login.html"},
-  			          {"menuid": "3_3","menuname":"冷库报表","icon":"icon-role","url":"Login.html"},
-  			          {"menuid": "3_4","menuname":"报警列表","icon":"icon-role","url":"Login.html"}
+  			          {"menuid": "3_0","menuname": "集团管理","icon": "icon-role","url": ""},
+  			          {"menuid": "3_1","menuname": "权限配置","icon": "icon-role","url": ""},
+  			          {"menuid": "3_2","menuname": "360配置","icon": "icon-role","url": ""},
+  			          {"menuid": "3_3","menuname":"冷库报表","icon":"icon-role","url":""},
+  			          {"menuid": "3_4","menuname":"报警列表","icon":"main_warning","url":""}
   			          ]
   		},
   		{
   			"menuid": "4",
   			"menuname": "网站统计",
-  			"icon": "icon-add",
-  			"url": "demo.html",
+  			"icon": "main_coun",
   			"child": [
-						{"menuid":"4_0","menuname":"网站统计","icon":"icon-role","url":"Login.html"},
-						{"menuid":"4_1","menuname":"操作日志","icon":"icon-role","url":"Login.html"}
+						{"menuid":"4_0","menuname":"网站统计","icon":"icon-role","url":""},
+						{"menuid":"4_1","menuname":"操作日志","icon":"icon-role","url":""}
   			          ]
   		},
   		{
   			"menuid": "5",
   			"menuname": "系统管理",
-  			"icon": "icon-sys",
-  			"url": "demo.html",
+  			"icon": "main_sys",
   			"child": [
                        {"menuid":"5_0","menuname":"系统消息","icon":"icon-role","url":"/sell/viwe/sys_msg.html"},
                        {"menuid":"5_1","menuname":"系统状态","icon":"icon-role","url":"/sell/viwe/sys_state.html"},
                        {"menuid":"5_1","menuname":"缓存管理","icon":"icon-role","url":"/sell/viwe/sysmessage.html"},
+  			          ]
+  		},{
+  			"menuid": "6",
+  			"menuname": "开发管理",
+  			"icon": "main_debug",
+  			"child": [
+                       {"menuid":"6_0","menuname":"系统消息","icon":"icon-role","url":"/sell/viwe/sys_msg.html"},
+                       {"menuid":"6_1","menuname":"系统状态","icon":"icon-role","url":"/sell/viwe/sys_state.html"},
+                       {"menuid":"6_1","menuname":"缓存管理","icon":"icon-role","url":"/sell/viwe/sysmessage.html"},
   			          ]
   		}
 ];

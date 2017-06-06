@@ -1,7 +1,7 @@
 ﻿@charset "utf-8";
-
+.icon{ background:url(img/icons.png)  no-repeat scroll -601px -2px rgba(0, 0, 0, 0);width:18px; margin-right:5px; line-height:18px; display:inline-block;}
 .icon-reload{background:url('icons/refresh.gif') no-repeat;}                         /*默认刷新*/
-.icon_search{background:url('icons/search.png' ) no-repeat;}                         /*默认搜索*/
+.icon_search,.icon-search{background:url('icons/search.png' ) no-repeat;}                         /*默认搜索*/
 
 
 /*main*/
@@ -13,7 +13,7 @@
 .icon-def{background:url('icons/vs.gif') no-repeat;}                                 /*默认图标*/
 .icon-user{background:url('icons/user.gif') no-repeat;}                              /*用户*/
 .icon-cold{background:url('icons/4.png') no-repeat;}                                 /*冷库图标*/
-.icon-authe{background:url('icons/5.png') no-repeat;}                                /*认证图标*/
+.icon-authe{background: url(img/icons.png) no-repeat scroll -540px -632px rgba(0, 0, 0, 0);}                                /*认证图标*/
 .icon-coldcf{background:url('icons/6.png') no-repeat;}                               /*冷库选型*/
 .icon-sel{background:url('icons/7.png') no-repeat;}                                  /*默认查看*/
 .icon_filter{background: url(img/icons.png) no-repeat scroll -1201px -602px rgba(0, 0, 0, 0);}
@@ -32,7 +32,17 @@
 
 
 /*=====================================main导航=====================================================*/
+.main_platform {background: url(img/icons.png) no-repeat scroll -481px -242px rgba(0, 0, 0, 0);}/*平台管理*/
+.main_dev {background: url(img/icons.png) no-repeat scroll -660px -32px rgba(0, 0, 0, 0);}/*设备管理*/
+.main_360 {background: url(img/icons.png) no-repeat scroll -961px -423px rgba(0, 0, 0, 0);}/*冷库360*/
+.main_coun {background: url(img/icons.png) no-repeat scroll -1px -361px rgba(0, 0, 0, 0);}/*网站统计*/
+.main_sys {background: url(img/icons.png) no-repeat scroll -60px -270px rgba(0, 0, 0, 0);}/*系统管理*/
+.main_fwq {background: url(img/icons.png) no-repeat scroll -960px -60px rgba(0, 0, 0, 0);}/*服务管理*/
+.main_debug {background: url(img/icons.png) no-repeat scroll -1172px -62px rgba(0, 0, 0, 0);}/*服务管理*/
 
+.main_share {background: url(img/icons.png) no-repeat scroll -1440px -455px rgba(0, 0, 0, 0);}/*共享*/
+.main_infmation {background: url(img/icons.png) no-repeat scroll -631px -571px rgba(0, 0, 0, 0);}/*资讯*/
+.dev_warning {background: url(img/icons.png) no-repeat scroll -1082px -30px rgba(0, 0, 0, 0);}/*资讯*/
 
 /*=====================================用户图标=====================================================*/
 .user_audit{background: url(img/icons.png) no-repeat scroll -961px -659px rgba(0, 0, 0, 0);}

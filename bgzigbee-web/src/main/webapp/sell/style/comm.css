@@ -39,3 +39,4 @@
     border-color: #057909;
 }
 .messager-body er{color: red;}
+.textbox,.l-btn {margin-left:2px; -webkit-border-radius: 0px; border-radius: 0px; }
