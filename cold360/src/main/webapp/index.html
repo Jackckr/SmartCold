@@ -67,7 +67,7 @@
 			} else if (password == '') {
 				showErrorInfo("密码不能为空~");
 				return;
-			}
+			};
 			$(me).text("登录中...");
 			$(me).data('isLoading', true);
 			$.ajax({
@@ -83,22 +83,22 @@
 					var oStatus = data.status;
 					if (oStatus != 1) {
 						var token = data.message.substr(6);
-                        if(oStatus == 0){//进入360
-                            $.ajax({
-                                type: "GET",
-                                cache: false,
-                                timeout: 5000,
-                                dataType: "json",
-                                data: {token: token},
-                                url: ER.root + "/i/user/findUser",
-                                success: function (userdata) {
-                                    if (userdata && userdata.id != 0) {
-                                        util.setCookie("username", userName, "d7");
-                                        window.localStorage.lkuser = JSON.stringify(userdata);
-                                        util.setCookie("token", token, "d7");
-                                        if (window.location.hash != "") {
-                                            backUrl = window.location.hash.substring(1);
-                                        } else {
+                        $.ajax({
+                            type: "GET",
+                            cache: false,
+                            timeout: 5000,
+                            dataType: "json",
+                            data: {token: token},
+                            url: ER.root + "/i/user/findUser",
+                            success: function (userdata) {
+                                if (userdata && userdata.id != 0) {
+                                    util.setCookie("username", userName, "d7");
+                                    window.localStorage.lkuser = JSON.stringify(userdata);
+                                    util.setCookie("token", token, "d7");
+                                    if (window.location.hash != "") {
+                                        backUrl = window.location.hash.substring(1);
+                                    } else {
+                                        if(oStatus == 0){//进入360
                                             if (userdata.type == 1) {//货主--温度版
                                                 backUrl = "temp/cold360.html"
                                             } else if (userdata.type == 2) {//维修商--维修版
@@ -106,22 +106,22 @@
                                             } else {//库主--360所有版本
                                                 backUrl = "view/cold360.html"
                                             }
+                                        }else if(oStatus == 2){//角色认证
+                                            location.href = "view/coldRole.html"
+                                        }else if(oStatus == 3){//审核中
+                                            location.href = "view/audit.html"
                                         }
-                                        window.location.href = backUrl;
-                                        window.Event.returnValue = false;
-                                    } else {
-                                        window.user = null;
-                                        window.localStorage.removeItem("lkuser");
-                                        $("#mention")[0].hidden = false;
-                                        showErrorInfo("服务异常！请联系管理员！");
                                     }
+                                    window.location.href = backUrl;
+                                    window.Event.returnValue = false;
+                                } else {
+                                    window.user = null;
+                                    window.localStorage.removeItem("lkuser");
+                                    $("#mention")[0].hidden = false;
+                                    showErrorInfo("服务异常！请联系管理员！");
                                 }
-                            });
-                        }else if(oStatus == 2){//角色认证
-                            location.href = "view/coldRole.html"
-                        }else if(oStatus == 3){//审核中
-                            location.href = "view/audit.html"
-                        }
+                            }
+                        });
 					} else {
 						showErrorInfo(data.message);
 					}
