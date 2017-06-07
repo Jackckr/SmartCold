@@ -10,12 +10,12 @@
      <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/alarmLog.js"></script>
-    <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 </head>
 <body ng-app="app" ng-controller="alarmLog" ng-cloak>
     <!-- header -->
@@ -37,7 +37,6 @@
         	<div class="area fl">
         		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
         	</div>
-
         	<div id="searchDara_div" class="search">
         		<input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
         		<i class="iconfont" >&#xe62f;</i>
@@ -52,19 +51,19 @@
     </section>
     <div class="warn_sec alarmLog" style="padding: .9rem;min-height: 66vh;">
         <div>
-            <div id="tem_div" style="height:12.5rem;width: 120%;margin-left: -30px"></div>
+            <div id="tem_div" style="height:12.5rem;"></div>
             <div id="timeline">
                 <div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
-                    <div class="timeline-txt">
-                        {{obj.time}}
-                    </div>
                     <div class="timeline-dot" style="{{obj.style}}"></div>
                     <div class="timeline-content">
                         <div class="timeline-title">
-                            <h4 class="fl">{{obj.msg}}</h4>
-                            <h4 ng-if="obj.count" class="fr">
-                                <button class="show-more mybtn" style="padding: 0.1rem 0.5rem;">详细</button>
-                            </h4>
+                            <div class="clearfix">
+                                <span class="fl" style="font-size: .6rem;">{{obj.time}}</span>
+                                <h4 ng-if="obj.count" class="fr">
+                                    <button class="show-more mybtn" style="padding: 0.1rem 0.5rem;">详细</button>
+                                </h4>
+                            </div>
+                            <h4>{{obj.msg}}</h4>
                         </div>
                         <div class="timeline-content-more">
 
