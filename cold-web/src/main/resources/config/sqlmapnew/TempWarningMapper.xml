@@ -15,7 +15,7 @@
 		  LEFT JOIN `smartcold`.`coldstorageset` c on t.`coldstorageid`= c.`id`
 		  LEFT JOIN `sc360`.`deviceobjectmapping` d on d.`oid` =t.id  and d.`type` =18
 		 where `startTemperature`!= 0
-		   AND `tempdiff`!=0  and t.id in(62,63);
+		   AND `tempdiff`!=0  ;
 	</select>
 	
 	<select id="getMAITempData" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">

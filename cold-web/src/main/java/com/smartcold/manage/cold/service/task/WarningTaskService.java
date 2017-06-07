@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.service.task;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-//@Service
+@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -52,15 +53,13 @@ public class WarningTaskService  {
 	 * 定时定点监听
 	 * 1.查询当前冷库的基准温度，计算max min 临界值时间温度 
 	*/
-//	@Scheduled(cron = "0 0/30 * * * ?")
-	@Scheduled(cron = "0 0/5 * * * ?")
+	@Scheduled(cron = "0 0/30 * * * ?")
+//	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData() {
-		if(QuartzManager.tempWarningServer==null){
-			QuartzManager.tempWarningServer=this.tempWarningServer;
-			QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
-		}
+		if(QuartzManager.tempWarningServer==null){QuartzManager.tempWarningServer=this.tempWarningServer;QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;}
+		Date sttime = TimeUtil.getBeforeMinute(30);
 		String endtime =TimeUtil.getDateTime();
-		String starttime =TimeUtil.getDateTime(TimeUtil.getBeforeMinute(30));
+		String starttime =TimeUtil.getDateTime(sttime);
 		List<ColdStorageSetEntity> allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		int key=0;float baseTemp=0;
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
@@ -97,7 +96,6 @@ public class WarningTaskService  {
 		    				job.setWarcount(job.getWarcount()+1);
 		    				if(job.getWarcount()>6){job.setTask(true);}
 		    			}else{
-//		    				job.setCroStartTime(job.getCroStartTime()+3600000);//更新为半个小时后启动
 		    				job.setTask(true);
 		    			}
 		    		}else if (downMint<0) {
@@ -108,9 +106,12 @@ public class WarningTaskService  {
 				}else{
 				   double diffTemp=   	maxTempData.getValue()-baseTemp;//
 				   int lavel=  (int) (diffTemp/2);
-//				   long croStartTime=cutttTime+(lavel>3 ?3600000:14400000);//1个小时后执行 ：4个小时后执行
-				   long croStartTime=cutttTime+30000;//1个小时后执行 ：4个小时后执行
-				   ItemValue overStrtTime = this.tempWarningServer.getOverStrtTime(key, baseTemp, colditem.getDeviceid(), starttime, TimeUtil.getDateTime(maxTempData.getAddtime()));
+				   long croStartTime=cutttTime+(lavel>3 ?3600000:14400000);//1个小时后执行 ：4个小时后执行
+//				   long croStartTime=cutttTime+30000;//1个小时后执行 ：4个小时后执行
+				   ItemValue overStrtTime =null;
+				   if(TimeUtil.minuteBetween(sttime, maxTempData.getAddtime())>5){
+					    overStrtTime = this.tempWarningServer.getOverStrtTime(key, baseTemp, colditem.getDeviceid(), starttime, TimeUtil.getDateTime(maxTempData.getAddtime()));
+				   }
 				   if(overStrtTime==null){overStrtTime=maxTempData;}
 				   String jobName=croStartTime+"_job";//延迟一个小时执行
 				   job = new ScheduleJob(key,1,baseTemp,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);

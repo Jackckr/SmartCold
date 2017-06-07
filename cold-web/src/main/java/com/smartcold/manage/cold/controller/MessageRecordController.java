@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 import com.smartcold.manage.cold.entity.olddb.MessageRecord;
+import com.smartcold.manage.cold.util.ResponseData;
 
 /**
  * Created by qiangzi on 2017/5/27.
@@ -42,17 +45,11 @@ public class MessageRecordController {
     }
     @RequestMapping(value = "/getMessageList",method = RequestMethod.POST)
     @ResponseBody
-    public List<MessageRecord> getMessageList (Integer rdcId,Integer userId,Integer utype,Integer type,Integer stype, Integer isRead,Integer status,String keyword, int  page,int rows){
+    public ResponseData<MessageRecord> getMessageList (Integer rdcId,Integer userId,Integer utype,Integer type,Integer stype, Integer isRead,Integer status,String keyword, int  page,int rows){
     	PageHelper.startPage(page, rows);
-       return messageRecordMapping.getMsgByFilter(rdcId, null, type, stype, status, isRead, keyword);
+    	Page<MessageRecord> datalist = messageRecordMapping.getMsgByFilter(rdcId, null, type, stype, status, isRead, keyword);
+		PageInfo<MessageRecord> data = new PageInfo<MessageRecord>(datalist);
+		return ResponseData.newSuccess(data);
     }
 	
-//	Integer getMsgCountByRdcId(@Param("rdcId")Integer rdcId);//获得冷库未读消息
-	
-//	List<MessageRecord> getTallMsgByRdcId(@Param("rdcId")Integer rdcId);//获得冷库未前5条消息
-	
-//	List<MessageRecord> getMsgByFilter(@Param("rdcId")Integer rdcId);//
-	
-//    void insertMessageRecord(MessageRecord messageRecord);//添加消息
-    
 }
