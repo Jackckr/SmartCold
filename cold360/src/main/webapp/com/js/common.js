@@ -24,7 +24,7 @@ function getmsg(){if(window.user&&window.user.id!=0){$.post(ER.root+"/i/message/
 	});
 }}
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
-function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(); } return true; }else{ window.user = null;window.location.href = "login.html"; return false;}}
+function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(); } return true; }else{ window.user = null;window.location.href = "../index.html"; return false;}}
 function goback() {
 	if (typeof ios_gohome == 'function') {
 		ios_gohome();return;
