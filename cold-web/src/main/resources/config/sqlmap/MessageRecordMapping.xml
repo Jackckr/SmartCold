@@ -24,7 +24,7 @@
       <if test="uid!=null"> and `uid`=#{uid} </if>
       <if test="type!=null"> and `type`=#{type} </if>
       <if test="stype!=null"> and `stype`=#{stype} </if>
-      <if test="state!=null"> and `stype`=#{state} </if>
+      <if test="state!=null"> and `state`=#{state} </if>
       <if test="isread!=null"> and `isread`=#{isread} </if>
       <if test="keyword!=null and keyword!=''"> and `title` like CONCAT('%',#{keyword!},'%') or `message` like   CONCAT('%',#{keyword!},'%')   </if>
       ORDER BY addtime DESC

@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
     <script type="text/javascript" src="../com/js/cold360.js" ></script>
     <script type="text/javascript" src="../app/js/alarmLog.js"></script>
-    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+    <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 </head>
 <body ng-app="app" ng-controller="alarmLog" ng-cloak>
     <!-- header -->
@@ -52,7 +52,7 @@
     </section>
     <div class="warn_sec alarmLog" style="padding: .9rem;min-height: 66vh;">
         <div>
-            <div id="tem_div" style="height:12.5rem;"></div>
+            <div id="tem_div" style="height:12.5rem;width: 120%;margin-left: -30px"></div>
             <div id="timeline">
                 <div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
                     <div class="timeline-txt">
