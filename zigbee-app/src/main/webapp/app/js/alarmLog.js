@@ -142,8 +142,8 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
                     type: 'value',
                     name: '时长/min',
                     min: 0,
-                    max: 25,
-                    interval: 5,
+                    max: 60,
+                    interval: 12,
                     axisLabel: {
                         formatter: '{value}'
                     }
