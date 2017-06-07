@@ -1,98 +1,31 @@
 <style>
-    #msgdialog *{color: black;}
-    .modal-footer button{    color: white;}
-    .sysUi{
-        background-color: #f7f7f7;
-        min-height: 80vh;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    .sysTab{
-        height:90px;
-        -webkit-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
-        -moz-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
-        box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
-        background-color: #fff;
-        margin-bottom: 15px;
-        width: 48%;
-        color: #0A0A0A;
-    }
-    .sysTab .iconfont{
-        font-size: 2.5em;
-        color: #2393cb;
-    }
-    .sysTab p{
-        font-size: 14px;
-    }
-    .sysTab ul{
-        padding:0;
-    }
-    .sysTab li{
-        float: left;
-        padding-top: 10px;
-        width: 33%;
-        box-sizing: border-box;
-        text-align: center;
-        cursor: pointer;
-        position: relative;
-    }
-    .dotCount{
-        position: absolute;
-        top:12px;
-        right:45px;
-        font-size: 12px;
-        background-color: #f00;
-        color: #fff;
-        padding: 0 5px;
-        border-radius: 50%;
-    }
-    .sysTab li:nth-child(1):before,
-    .sysTab li:nth-child(2):before{
-        content: '';
-        width: 2px;
-        height: 46px;
-        background-color: #f1f1f1;
-        position: absolute;
-        top:22px;
-        right: 0;
-    }
-
-    @media (max-width: 768px) {
-        .sysTab{
-            width: 100%;
-        }
-    }
-    .sysTable{
-        padding: 20px;
-        background-color: #fff;
-        -webkit-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
-        -moz-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
-        box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
-    }
-    .sysTable tbody{
-
-    }
-    .sysTable tbody td{
-        text-align: center;
-        border-top: 0;
-        border-bottom: 1px solid #dbdee5;
-    }
-    .sysTr{
-        background-color: #a3b5be;
-        color: #fff;
-    }
-    .sysTr>th{
-        text-align: center;
-        font-weight:400;
-    }
-    .sysTr>th:first-child{
-        border-bottom-left-radius: 4px;
-        border-top-left-radius:4px;
-    }
-    .sysTr>th:last-child{
-        border-bottom-right-radius: 4px;
-        border-top-right-radius:4px;
-    }
+    .sysUi{background-color: #f7f7f7;min-height: 80vh;padding: 20px;box-sizing: border-box;color: #777;}
+    .sysTab{height:90px;-webkit-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);-moz-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);background-color: #fff;margin-bottom: 15px;width: 48%;color: #0A0A0A;}
+    .sysTab .iconfont{font-size: 2.5em;color: #2393cb;}
+    .sysTab p{font-size: 14px;}
+    .sysTab ul{padding:0;}
+    .sysTab li{float: left;padding-top: 10px;width: 33%;box-sizing: border-box;text-align: center;cursor: pointer;position: relative;}
+    .dotCount{position: absolute;top:12px;right:45px;font-size: 12px;background-color: #f00;color: #fff;padding: 0 5px;border-radius: 50%;}
+    .sysTab li:nth-child(1):before, .sysTab li:nth-child(2):before{content: '';width: 2px;height: 46px;background-color: #f1f1f1;position: absolute;top:22px;right: 0;}
+    @media (max-width: 768px){.sysTab{width: 100%;}} .sysTable{padding: 20px;background-color: #fff;-webkit-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);-moz-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);}
+    .sysTable tbody{}
+    .sysTable tbody td{text-align: center;border-top: 0;border-bottom: 1px solid #dbdee5;}
+    .sysTr{background-color: #a3b5be;color: #fff;}
+    .sysTr>th{text-align: center;font-weight:400;}
+    .sysTr>th:first-child{border-bottom-left-radius: 4px;border-top-left-radius:4px;}
+    .sysTr>th:last-child{border-bottom-right-radius: 4px;border-top-right-radius:4px;}
+    .sysModal{width: 100vw;height:100vh;background-color: rgba(0,0,0,.6);position: absolute;top:0;left:0;z-index:820;}
+    .sysModalMain{position: absolute;top: 20%;left: 50%;width: 450px;margin-left: -225px;border-radius: 8px;background: #fff;color: #000;font-size: 14px;}
+    .sysModalHeader{width: 380px;margin: 0 auto;}
+    .sysModalHeader h4{font-weight:700;font-size: 16px;}
+    .sysModalHeader img{border-bottom: 2px solid #696868;}
+    .sysModalBody{min-height: 20px;padding: 8px 0;}
+    .sysModalFooter{border-top:1px solid #c5c5c5;width: 100%;height: 40px;line-height:40px;text-align: center;}
+    .sysModalFooter>div{width: 33.3333%;color:#2e8bbb;font-size: 16px;cursor: pointer;box-sizing: border-box;}
+    .sysModalFooter>div:nth-child(1), .sysModalFooter>div:nth-child(2){border-right:1px solid #c5c5c5;}
+    .sysClose{position: absolute;top: -20px;right: -20px;width: 40px;height: 40px;line-height: 40px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;background-color: #fff;color: #a0cfe7;font-weight: 700;font-size: 38px;text-align: center;cursor: pointer;}
+    .sysFoot .btn-warning{padding: 2px 15px;margin-left: 10px;}
+    .sysFoot{padding-left: 18px;}
 </style>
 <!--新设计page-->
 <div class="sysUi">
@@ -103,7 +36,7 @@
                     <span class="dotCount" ng-if="notReadMessage>0">{{notReadMessage}}</span>
                 </li>
                 <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe7fd;</i><p>未读消息</p></li>
-                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe802;</i><p>已读消息</p></li>
+                <li ng-click="changstatus(1,$event)"><i class="iconfont">&#xe802;</i><p>已读消息</p></li>
             </ul>
         </div>
         <div class="pull-right sysTab">
@@ -112,7 +45,7 @@
                     <span class="dotCount" ng-if="notReadMessage>0">{{notReadMessage}}</span>
                 </li>
                 <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe806;</i><p>系统警告</p></li>
-                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe6e5;</i><p>其他告警</p></li>
+                <li ng-click="changstatus(1,$event)"><i class="iconfont">&#xe6e5;</i><p>其他告警</p></li>
             </ul>
         </div>
 
@@ -130,170 +63,64 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="msg in msgList" ng-click="showmsg($index)" ng-hide="msg.state==-1">
+                <tr ng-repeat="msg in msgList" ng-hide="msg.state==-1">
                     <td><input type="checkbox" name="" id=""></td>
-                    <td><a href="#">{{msg.title}}</a></td>
-                    <td style="text-align: left;"><a href="#">{{msg.message}}</a></td>
+                    <td>{{msg.title}}</td>
+                    <td style="text-align: left;"  ng-click="showmsg($index)"><a href="#">{{msg.message}}</a></td>
                     <td>
-                        <a href="#" ng-if="msg.state==1">{{modestate[msg.state]}}</a>
-                        <a href="#" ng-if="msg.state==0" style="color: red;">{{modestate[msg.state]}}</a>
+                        <span ng-if="msg.state==1">{{modestate[msg.state]}}</span>
+                        <span ng-if="msg.state==0" style="color: red;">{{modestate[msg.state]}}</span>
                     </td>
-                    <td><a href="#">{{msg.addTime}}</a></td>
+                    <td>{{msg.addTime}}</td>
                     <td><i class="fa fa-trash-o" style="color:#a3b5be;cursor: pointer;font-size: 18px"></i></td>
                 </tr>
-               <!-- <tr>
-                    <td class="text-center" colspan="7">
-                        <img src="assets/img/nomsg.png" style="width: 20%;">
-                    </td>
-                </tr>-->
             </tbody>
         </table>
-        <div class="text-center" colspan="7" style="margin: 100px 0"  ng-if="msgList.length==0">
+        <div class="sysFoot clearfix">
+            <div class="pull-left">
+                <input type="checkbox" name="" >
+                <button class="btn btn-warning">批量删除</button>
+            </div>
+            <div class="pull-right">
+                <ul class="pagination" style="margin: 0;">
+                    <li><a href="#"><</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center" style="margin: 100px 0"  ng-if="msgList.length==0">
             <img src="assets/img/nomsg.png" style="width: 350px;">
         </div>
     </div>
 </div>
-
+<div class="sysModal black"><!--遮罩层-->
+    <div class="sysModalMain"><!--主题区域显示-->
+        <div class="sysModalHeader text-center">
+            <img src="assets/img/modalBg.png" style="width: 340px;" alt="">
+            <h4>{{currmsg.title}}</h4>
+            <p>{{currmsg.message}}</p>
+        </div>
+        <div class="sysModalBody">
+            <div ng-if="currmsg.type==1&&currmsg.sType==1" >
+                <ul id="ul_storage" class="clearfix">
+                    <li ng-repeat="storage in mystorages" class="pull-left" style="width: 33.33%;">
+                        <label class="checkbox-inline"> <input type="checkbox"  value="{{storage.id}}">{{storage.name}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="sysModalFooter clearfix">
+            <div class="pull-left" ng-click="off()">关闭</div>
+            <div class="pull-left" ng-if="currmsg.type==1" ng-click="agree()">同意</div>
+            <div class="pull-left" ng-if="currmsg.type==1" ng-click="refuse()">拒绝</div>
+        </div>
+        <div class="sysClose" ng-click="off()">&times;</div>
+    </div>
+</div>
 
 <!--新设计page-->
-<div class="" style="min-height: 946px;" ng-if="msgList.length==-1">
-	<!-- Main content -->
-	<section class="content">
-		<div class="row">
-			<div class="col-md-3">
-				<div class="box box-solid">
-					<div class="box-header with-border">
-						<h3 class="box-title">消息中心</h3>
-						<div class="box-tools">
-							<button type="button" class="btn btn-box-tool"
-								data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body no-padding">
-						<ul id="ul_msgtype" class="nav nav-pills nav-stacked">
-							<li class="active"  ng-click="allmsg($event)"><a href="#"><i class="fa fa-inbox"></i>全部消息 <span class="label label-primary pull-right">{{notReadMessage}}</span></a></li>
-							<li          ng-click="changstatus(0,$event)"><a href="#"><i class="fa fa-envelope-o"></i>未读消息</a></li>
-							<li          ng-click="changstatus(0,$event)"><a href="#" ><i class="fa fa-file-text-o"></i>已读消息</a></li>
-						</ul>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<div class="box box-solid">
-					<div class="box-header with-border">
-						<h3 class="box-title">消息分类</h3>
-						<div class="box-tools">
-							<button type="button" class="btn btn-box-tool"
-								data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-					</div>
-					<div class="box-body no-padding">
-						<ul id="ul_msgtype" class="nav nav-pills nav-stacked">
-							<li class="active"  ng-click="allmsg($event)"><a href="#"><i class="fa fa-inbox"></i>系统消息 <span class="label label-primary pull-right">{{notReadMessage}}</span></a></li>
-							<li          ng-click="changstatus(0,$event)"><a href="#"><i class="fa fa-envelope-o"></i>系统告警</a></li>
-							<li          ng-click="changstatus(0,$event)"><a href="#" ><i class="fa fa-file-text-o"></i>其他告警</a></li>
-						</ul>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /. box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-md-9">
-				<div class="box box-primary">
-					<div class="box-header with-border">
-						<h3 class="box-title">Inbox</h3>
-
-						<div class="box-tools pull-right">
-							<div class="has-feedback">
-								<input type="text" class="form-control input-sm"
-									placeholder="Search Mail"> <span
-									class="glyphicon glyphicon-search form-control-feedback"></span>
-							</div>
-						</div>
-						<!-- /.box-tools -->
-					</div>
-					<!-- /.box-header -->
-					<div class="box-body no-padding">
-						<div class="table-responsive mailbox-messages">
-							<table class="table table-hover table-striped">
-								<tbody>
-									<tr ng-repeat="msg in msgList" ng-click="showmsg($index)">
-										<td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-										<td class="mailbox-name"><a href="#">{{msg.title}}</a></td>
-										<td class="mailbox-name"><a href="#">{{msg.message}}</a></td>
-										<td class="mailbox-name"><a href="#">{{modestate[msg.state]}}</a></td>
-										<td class="mailbox-name"><a href="#">{{msg.addTime}}</a></td>
-									</tr>
-									<tr ng-if="msgList.length==0">
-									   <td><div class="alert alert-info">暂无消息！</div></td>
-									</tr>
-
-								</tbody>
-							</table>
-							<!-- /.table -->
-						</div>
-						<!-- /.mail-box-messages -->
-					</div>
-					<!-- /.box-body -->
-					<div class="box-footer no-padding">
-						<div class="mailbox-controls">
-							<!-- Check all button -->
-							<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
-							<div class="btn-group">
-								<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-								<button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-								<button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-							</div>
-							<!-- /.btn-group -->
-							<button type="button" class="btn btn-default btn-sm">
-								<i class="fa fa-refresh"></i>
-							</button>
-							<div class="pull-right">
-								1-50/200
-								<div class="btn-group">
-									<button type="button" class="btn btn-default btn-sm">
-										<i class="fa fa-chevron-left"></i>
-									</button>
-									<button type="button" class="btn btn-default btn-sm">
-										<i class="fa fa-chevron-right"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</div>
-<div style="height: 0px;">
-	<div class="modal fade" id="msgdialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">{{currmsg.title}}</h4>
-				</div>
-				<div class="modal-body">
-					{{currmsg.message}}
-				</div>
-				<div ng-if="currmsg.type==1&&currmsg.sType==1" >
-				    <ul id="ul_storage" class="treeview-menu">
-						<li ng-repeat="storage in mystorages" >
-								     	<label class="checkbox-inline"> <input type="checkbox"  value="{{storage.id}}">{{storage.name}}</label>
-						</li>
-					</ul>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button ng-if="currmsg.type==1" type="button" class="btn btn-primary" ng-click="agree()">同意</button>
-					<button ng-if="currmsg.type==1" type="button" class="btn btn-danger" ng-click="refuse()">拒绝</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal -->
-	</div>
-</div>
