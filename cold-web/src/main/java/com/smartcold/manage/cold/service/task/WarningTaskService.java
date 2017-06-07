@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
@@ -22,11 +23,14 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-@Service
+//@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
-
+	@Autowired
+	private SysWarningsInfoMapper sysWarningsInfoMapper;
+	
+	
 	
 	/**
 	 * 每天凌晨1:30点触发
@@ -51,6 +55,10 @@ public class WarningTaskService  {
 //	@Scheduled(cron = "0 0/30 * * * ?")
 	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData() {
+		if(QuartzManager.tempWarningServer==null){
+			QuartzManager.tempWarningServer=this.tempWarningServer;
+			QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
+		}
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(TimeUtil.getBeforeMinute(30));
 		List<ColdStorageSetEntity> allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息

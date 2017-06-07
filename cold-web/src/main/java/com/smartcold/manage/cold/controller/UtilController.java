@@ -1,8 +1,6 @@
 package com.smartcold.manage.cold.controller;
 
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.api.DFSCollectionController;
-import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.service.task.ZsDevService;
 import com.smartcold.manage.cold.util.EncodeUtil;
 import com.smartcold.manage.cold.util.StringUtil;

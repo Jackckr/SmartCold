@@ -2,7 +2,9 @@ package com.smartcold.manage.cold.jobs.taskutil;
 
 import java.util.Date;
 
+import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
+import com.smartcold.manage.cold.service.TempWarningService;
 /*
  * Copyright (C) DCIS 版权所有
  * 功能描述: QuartzJobFactory 
@@ -121,17 +123,17 @@ public class ScheduleJob {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	public ColdStorageSetEntity getColdStorageSetEntity() {
-		return coldStorageSetEntity;
-	}
-	public void setColdStorageSetEntity(ColdStorageSetEntity coldStorageSetEntity) {
-		this.coldStorageSetEntity = coldStorageSetEntity;
-	}
 	public Long getAddTime() {
 		return addTime;
 	}
 	public void setAddTime(Long addTime) {
 		this.addTime = addTime;
+	}
+	public ColdStorageSetEntity getColdStorageSetEntity() {
+		return coldStorageSetEntity;
+	}
+	public void setColdStorageSetEntity(ColdStorageSetEntity coldStorageSetEntity) {
+		this.coldStorageSetEntity = coldStorageSetEntity;
 	}
 
 	
