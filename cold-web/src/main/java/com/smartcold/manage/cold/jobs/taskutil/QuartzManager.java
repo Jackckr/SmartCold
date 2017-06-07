@@ -16,6 +16,8 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
+import com.smartcold.manage.cold.service.TempWarningService;
 import com.smartcold.manage.cold.service.task.QuartzJobFactory;
   
 /*
@@ -27,6 +29,8 @@ public class QuartzManager {
     private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();    
     private static String JOB_GROUP_NAME = "MY_JOBGROUP_NAME";    
     private static String TRIGGER_GROUP_NAME = "MY_TRIGGERGROUP_NAME";    
+    public static TempWarningService tempWarningServer;
+	public static SysWarningsInfoMapper sysWarningsInfoMapper;
     //当前任务
 	private static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
 	

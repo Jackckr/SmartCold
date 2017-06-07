@@ -54,7 +54,7 @@ public class CronExpConversion {
     public static String getQuartzTime(Long time) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(time);
-	    return  CronExpConversion.convertDateToCronExp("userDefined", new Integer[]{cal.get(Calendar.SECOND), cal.get(Calendar.MINUTE), cal.get(Calendar.HOUR)}, null, null, TimeUtil.getFormatDate(cal.getTime()));
+	    return  CronExpConversion.convertDateToCronExp("userDefined", new Integer[]{cal.get(Calendar.SECOND), cal.get(Calendar.MINUTE), cal.get(Calendar.HOUR_OF_DAY )}, null, null, TimeUtil.getFormatDate(cal.getTime()));
 	}
 	
 	
