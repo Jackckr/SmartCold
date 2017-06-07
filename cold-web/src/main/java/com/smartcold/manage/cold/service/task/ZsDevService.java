@@ -53,11 +53,7 @@ public class ZsDevService  {
 	    private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 		private static final ExecutorService executorService = Executors.newFixedThreadPool(100, threadFactory);//最多启动一千1000个线程
 		
-		public static HashMap<String, Object> DU=new HashMap<String, Object>();//电压缓存
-		public static HashMap<String, Object> MSI=new HashMap<String, Object>();//MSI缓存
-		public static HashMap<String, Object> APMSI=new HashMap<String, Object>();
 		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
-		public static ArrayList<StorageDataCollectionEntity> dataListcache = new ArrayList<StorageDataCollectionEntity>();
 		
 		public static boolean isRuning() {return isRuning&&errCount<3;}
 		public static void clerCache() {ZsDevService.devTypecache.clear();}
@@ -95,7 +91,6 @@ public class ZsDevService  {
 				}
 			}
 		}
-		
 		
 		/**
 		 * 添加线程队列
@@ -170,7 +165,6 @@ class SubTask implements Runnable {
 	    if(this.storageDataCollectionDao==null||this.devStatusMapper==null){System.err.println("数据无法保存！");return;}
 	    try {
 			boolean isSaveDU=false;
-			
 			HashMap<String, Object> datas =null;
 			Calendar calendar = Calendar.getInstance();
 			int hours = calendar.get(Calendar.HOUR_OF_DAY); // 时
@@ -211,24 +205,16 @@ class SubTask implements Runnable {
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
 					dusiList.add(new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
 				}
-				ZsDevService.DU.put(devid, datas.get("DU") );
-				ZsDevService.MSI.put(devid, datas.get("BSI") );
 			}
-			
 			if(SetUtil.isnotNullList(dataList)){//保存数据
-				ZsDevService.dataListcache.clear();
-				ZsDevService.dataListcache.addAll(dataList);
 				this.storageDataCollectionDao.batchInsert(dataList);
 			}
-			if(isSaveDU&&SetUtil.isnotNullList(dusiList)){
-				this.devStatusMapper.addDevStatusList(dusiList);
-			}
-			if(datas!=null){//AP status
-				ZsDevService.APMSI.put(apid, datas.get("MSI"));
-				if(isSaveDU){
-					ArrayList<StorageDataCollectionEntity> apmsiList = new ArrayList<StorageDataCollectionEntity>();
-					apmsiList.add(new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));//保存AP信号强度
-					this.devStatusMapper.addAPStatusList(apmsiList);
+			if(isSaveDU){//dev/ap 状态数据
+				ArrayList<StorageDataCollectionEntity> apmsiList = new ArrayList<StorageDataCollectionEntity>();
+				apmsiList.add(new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));//保存AP信号强度
+				this.devStatusMapper.addAPStatusList(apmsiList);
+				if(SetUtil.isnotNullList(dusiList)){
+					this.devStatusMapper.addDevStatusList(dusiList);
 				}
 			}
 		} catch (Exception e) {

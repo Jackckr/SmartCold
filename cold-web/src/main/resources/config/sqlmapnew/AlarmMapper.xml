@@ -4,12 +4,12 @@
 
 
      <select id="getSumValueByFilter" parameterType="map" resultType="ColdStorageAnalysisEntity">
-	  select SUM(`value`)`value` ,`date` from `coldstorageanalysis`
+	  select SUM(`value`)`value`,`key` ,`date` from `coldstorageanalysis`
 		where `type` = #{type} 
 		<if test="keys !=null">AND `key` in (${keys})</if>
 		<if test="oids !=null">AND `oid` in (${oids}) </if>
 		<if test="startTime != null and endTime!=null" >  AND `date` >= #{startTime} AND `date` <![CDATA[ <= ]]> #{endTime}  </if>
-		GROUP BY `date`;
+		GROUP BY `date`,`key`;
 	</select>
 	
 	

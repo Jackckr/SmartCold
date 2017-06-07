@@ -87,7 +87,7 @@ coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
     $scope.$watch('rdcId', $scope.changerdc,true);//监听冷库变化
 });
 //温度告警
-coldWeb.controller('alarmTem', function($rootScope, $scope, $http,$timeout) {
+coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
 	 //根据rdcid查询该rdc的报警信息
 	$(".mainHeight").height( $(".content-wrapper").height());
 	 $scope.tempwarLog=[];
@@ -142,15 +142,15 @@ coldWeb.controller('alarmTem', function($rootScope, $scope, $http,$timeout) {
 		    	        {
 		    	            type: 'value',
 		    	            name: '次数/次',
-		    	            min: 0,max: 250,interval: 50,
+		    	            min: 0,max: 20,interval: 1,
 		    	            axisLabel: { formatter: '{value}' }
 		    	        },
 		    	        {
 		    	            type: 'value',
 		    	            name: '时长/min',
 		    	            min: 0,
-		    	            max: 25,
-		    	            interval: 5,
+		    	            max: 240,
+		    	            interval: 30,
 		    	            axisLabel: {
 		    	                formatter: '{value}'
 		    	            }

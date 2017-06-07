@@ -1,7 +1,5 @@
 package com.smartcold.manage.cold.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -52,19 +50,13 @@ public class AlarmController extends BaseController {
 				Calendar c = Calendar.getInstance(); c.add(Calendar.DAY_OF_MONTH, -7 + i); 
 				dataHashMap.put(TimeUtil.getFormatDate(c.getTime()), new double[]{0,0});
 			}
-            List<ColdStorageAnalysisEntity> timeMap = this.alarmMapper.getSumValueByFilter(1, oids, "'OverTempTime'", TimeUtil.getDateTime(TimeUtil.getBeforeDay(7)), TimeUtil.getDateTime());
+            List<ColdStorageAnalysisEntity> timeMap = this.alarmMapper.getSumValueByFilter(1, oids, "'OverTempTime','OverTempCount'", TimeUtil.getDateTime(TimeUtil.getBeforeDay(7)), TimeUtil.getDateTime());
            if(SetUtil.isnotNullList(timeMap)){
-        	   for (ColdStorageAnalysisEntity item : timeMap) {
-               	dataHashMap.get(item.getDate())[0]=	 item.getValue();
+           for (ColdStorageAnalysisEntity item : timeMap) {
+        			dataHashMap.get(TimeUtil.getFormatDate(item.getDate()))["OverTempTime".equals(item.getKey())?0:1]=	 item.getValue();
+               
    			} 
            }
-            
-            List<ColdStorageAnalysisEntity> countMap = this.alarmMapper.getSumValueByFilter(1, oids, "'OverTempCount'", TimeUtil.getDateTime(TimeUtil.getBeforeDay(7)), TimeUtil.getDateTime());
-            if(SetUtil.isnotNullList(countMap)){
-            for (ColdStorageAnalysisEntity item : countMap) {
-				dataHashMap.get(item.getDate())[1]=	 item.getValue();
-			}
-            }
 			return ResponseData.newSuccess(dataHashMap);
 		} catch (Exception e) {
 			e.printStackTrace();

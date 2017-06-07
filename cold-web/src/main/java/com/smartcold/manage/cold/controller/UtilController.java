@@ -40,8 +40,8 @@ public class UtilController extends BaseController {
 	 public Boolean getZSserStatus()  {	return ZsDevService.isRuning();}
 	 @RequestMapping("/setZSserStatus")//修改服务状态
 	 public Object setZSserStatus(boolean isRuning,String toke )  {if(StringUtil.verifyToken(toke)){ ZsDevService.setRuning(isRuning); return ZsDevService.isRuning();}else{return -1;}}// 
-	 @RequestMapping("/setZSDataList") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
-	 public ArrayList<StorageDataCollectionEntity> setZSDataList()  {return ZsDevService.dataListcache;}
+	 @RequestMapping("/getZSData") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
+	 public String getZSData()  {return ZsDevService.data;}
 	 @RequestMapping(value = "/del_devcache")//删除缓存
 	 public Object deldevcache(String toke){if(StringUtil.verifyToken(toke)){ZsDevService.clerCache();	return true;}return -1;}
 	 @RequestMapping(value = "/getZsDevStatus")

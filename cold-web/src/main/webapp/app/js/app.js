@@ -306,10 +306,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/alarmLog',
     	controller: 'alarmLog',
         templateUrl: 'app/template/alarmLog.html'
-    }).state('alarmTem',{//温度告警
-    	url:'/alarmTem',
-    	controller: 'alarmTem',
-        templateUrl: 'app/template/alarmTem.html'
+    }).state('alarmTemp',{//温度告警
+    	url:'/alarmTemp',
+    	controller: 'alarmTemp',
+        templateUrl: 'app/template/alarmTemp.html'
     }).state('designStorage',{//选型
     	url:'/designStorage',
     	controller: 'designStorage',

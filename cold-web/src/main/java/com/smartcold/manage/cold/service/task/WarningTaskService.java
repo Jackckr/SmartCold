@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
@@ -21,7 +22,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-//@Service
+@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -47,8 +48,8 @@ public class WarningTaskService  {
 	 * 定时定点监听
 	 * 1.查询当前冷库的基准温度，计算max min 临界值时间温度 
 	*/
-	@Scheduled(cron = "0 0/30 * * * ?")
-//	@Scheduled(cron = "0 0/5 * * * ?")
+//	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData() {
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(TimeUtil.getBeforeMinute(30));
@@ -91,13 +92,16 @@ public class WarningTaskService  {
 //		    				job.setCroStartTime(job.getCroStartTime()+3600000);//更新为半个小时后启动
 		    				job.setTask(true);
 		    			}
-		    		}
+		    		}else if (downMint<0) {
+		    			job.setCroStartTime(job.getCroStartTime()+30000);//过期后立即启动
+					}
 		    		QuartzManager.upJob(key, job);
 		    		System.err.println("更新任务。。。。。。。。。。");
 				}else{
 				   double diffTemp=   	maxTempData.getValue()-baseTemp;//
 				   int lavel=  (int) (diffTemp/2);
-				   long croStartTime=cutttTime+(lavel>3 ?3600000:14400000);//1个小时后执行 ：4个小时后执行
+//				   long croStartTime=cutttTime+(lavel>3 ?3600000:14400000);//1个小时后执行 ：4个小时后执行
+				   long croStartTime=cutttTime+30000;//1个小时后执行 ：4个小时后执行
 				   ItemValue overStrtTime = this.tempWarningServer.getOverStrtTime(key, baseTemp, colditem.getDeviceid(), starttime, TimeUtil.getDateTime(maxTempData.getAddtime()));
 				   if(overStrtTime==null){overStrtTime=maxTempData;}
 				   String jobName=croStartTime+"_job";//延迟一个小时执行
