@@ -4,7 +4,7 @@
  * 显示消息
  */
 coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
-	$scope.params={userId:$rootScope.user.id,utype:$rootScope.user.type,rdcId:$rootScope.rdcId, type:null,stype:null,isRead:null,status:null, page:1, rows:10};
+	$scope.params={userId:$rootScope.user.id,utype:$rootScope.user.type,rdcId:$rootScope.rdcId, type:null,stype:null,isRead:null,status:null, page:1, rows:10,total:0,totalPages:0};
 	$scope.notReadMessage=$rootScope.notReadMessage;
 	$scope.modestate=['待处理','已处理'];
 	$scope.changType  =function(type,  em){$scope.changestyle(em);$scope.params.type=type;$scope.initmsg();};
@@ -15,9 +15,12 @@ coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
 	
 	$scope.initmsg=function(){
 		 $http({method:'POST',url:'i/messageRecord/getMessageList',params:$scope.params}).success(function (data) {
-             $rootScope.msgList=data;
+             $scope.params.total=data.total;
+             $scope.params.totalPages=data.totalPages;
+             $rootScope.msgList=data.data;
          });
 	};
+
 	$scope.showmsg=function(idex){
 		$scope.currmsg=$rootScope.msgList[idex];
 		if($scope.currmsg.state==1){
@@ -53,5 +56,9 @@ coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
     $scope.off=function(){
         $(".sysModal").fadeOut();
     };
-	$scope.initmsg();
+
+    $scope.initmsg();
+    $scope.pageChanged = function () {
+        $scope.initmsg();
+    }
 });
