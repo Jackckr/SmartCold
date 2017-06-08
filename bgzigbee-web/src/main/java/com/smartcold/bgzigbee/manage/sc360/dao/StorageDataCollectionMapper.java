@@ -7,10 +7,10 @@ import com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity;
 
 public interface StorageDataCollectionMapper {
 	//AP状态数据
-	Page<StorageDataCollectionEntity> findAPByFilter(@Param("apid") String apid,@Param("key") String key,@Param("startTime") String startTime,@Param("endTime") String endTime);
+	Page<StorageDataCollectionEntity> findAPByFilter(@Param("apid") String apid,@Param("key") String key,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("desc") Boolean desc);
     //DEV状态数据
-	Page<StorageDataCollectionEntity> findDVByFilter(@Param("apid") String apid,@Param("deviceid") String deviceid,@Param("key") String key,@Param("startTime") String startTime,@Param("endTime") String endTime);
+	Page<StorageDataCollectionEntity> findDVByFilter(@Param("apid") String apid,@Param("deviceid") String deviceid,@Param("key") String key,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("desc") Boolean desc);
 	//DEV数据
-	Page<StorageDataCollectionEntity> findDTByFilter(@Param("apid") String apid,@Param("deviceid") String deviceid,@Param("key") String key,@Param("startTime") String startTime,@Param("endTime") String endTime);
+	Page<StorageDataCollectionEntity> findDTByFilter(@Param("apid") String apid,@Param("deviceid") String deviceid,@Param("key") String key,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("desc") Boolean desc);
    
 }

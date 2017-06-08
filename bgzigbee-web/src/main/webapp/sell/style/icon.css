@@ -1,11 +1,13 @@
 ﻿@charset "utf-8";
-.icon{ background:url(img/icons.png)  no-repeat scroll -601px -2px rgba(0, 0, 0, 0);width:18px; margin-right:5px; line-height:18px; display:inline-block;}    /*默认图标*/
+.panel-icon, .panel-tool { height: 20px;width: 20px;}
+.icon{ background:url(img/icons.png)  no-repeat scroll -601px -2px rgba(0, 0, 0, 0);width:20px; margin-right:5px; line-height:20px; display:inline-block;}    /*默认图标*/
 .icon-reload{background:url('icons/refresh.gif') no-repeat;}                         /*默认刷新*/
 .icon_search,.icon-search{background:url('icons/search.png' ) no-repeat;}                         /*默认搜索*/
 
 
+
 /*main*/
-.icon-tb{width: 16px;height: 16px; margin-top: 2px;display: inline-block;}
+.icon-tb{width: 20px;height: 20px; margin-top: 2px;display: inline-block;}
 .icon-online{background:url('icons/ok.png') no-repeat;}    
 .icon-offline{background:url('icons/2.png') no-repeat;}    
          
@@ -42,7 +44,8 @@
 .main_share {background: url(img/icons.png) no-repeat scroll -1440px -455px rgba(0, 0, 0, 0);}/*共享*/
 .main_infmation {background: url(img/icons.png) no-repeat scroll -631px -571px rgba(0, 0, 0, 0);}/*资讯*/
 
-.dev_warning {background: url(img/icons.png) no-repeat scroll -1082px -30px rgba(0, 0, 0, 0);}/*设备*/
+.dev_warning {background: url(img/icons.png) no-repeat scroll -1082px -30px rgba(0, 0, 0, 0);}/*设备告警*/
+.dev_data {background: url(img/icons.png) no-repeat scroll -990px -29px rgba(0, 0, 0, 0);}/*设备数据*/
 
 /*=====================================用户图标=====================================================*/
 .user_audit{background: url(img/icons.png) no-repeat scroll -961px -659px rgba(0, 0, 0, 0);}

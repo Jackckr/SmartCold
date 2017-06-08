@@ -14,8 +14,11 @@ public class AdminEntity {
 	private String adminpwd;
 	private String telephone;
 	private String email;
-	private Date addtime;
 	private Integer role;
+	private int type;
+	private String acl;
+	private Date addtime;
+	
 	public int getId() {
 		return id;
 	}
@@ -58,5 +61,18 @@ public class AdminEntity {
 	public void setRole(Integer role) {
 		this.role = role;
 	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public String getAcl() {
+		return acl;
+	}
+	public void setAcl(String acl) {
+		this.acl = acl;
+	}
+	
 	
 }

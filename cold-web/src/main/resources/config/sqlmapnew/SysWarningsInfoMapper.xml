@@ -9,11 +9,12 @@
 			`type`,
 			`level`,
 			`longtime`,
+			`title`,
 			`warnigmsg`,
 			`addtime`
 		)VALUES
 		 <foreach collection="list" item="model" index="index"  separator="," >  
-		  (#{model.rdcid}, #{model.objid}, #{model.type},#{model.level}, #{model.longtime}, #{model.warnigmsg}, #{model.addtime})
+		  (#{model.rdcid}, #{model.objid}, #{model.type},#{model.level}, #{model.longtime}, #{model.title}, #{model.warnigmsg}, #{model.addtime})
 		 </foreach>
 	</insert>
 	
