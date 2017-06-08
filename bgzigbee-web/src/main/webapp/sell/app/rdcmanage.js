@@ -98,23 +98,11 @@ function ck(id) {
         data:{"rdcID":id.id},
         success:function (data) {
             var rdc=data[0];
+            loadProvince();
+            loadCityByProId(rdc.provinceId);
             $("#name").textbox("setValue",rdc.name);
-            $.ajax({
-                url:"/i/city/findProvinceById",
-                data:{"provinceID":rdc.provinceId},
-                type:"get",
-                success:function (data) {
-                    $("#provinceId").textbox("setValue",data.provinceName);
-                }
-            });
-            $.ajax({
-                url:"/i/city/findCityById",
-                data:{"CityID":rdc.cityId},
-                type:"get",
-                success:function (data) {
-                    $("#cityId").textbox("setValue",data.cityName);
-                }
-            });
+            $("#provinceId").combobox({value:rdc.provinceId});
+            $("#cityId").combobox({value:rdc.cityId});
             $("#manageType").combobox({value:rdc.manageType});
             $("#address").textbox("setValue",rdc.address);
             $("#area").textbox("setValue",rdc.area);
@@ -147,7 +135,7 @@ function ck(id) {
             $("#facility").textbox("setValue",rdc.facility);
             $("#lihuoArea").textbox("setValue",rdc.lihuoArea);
             $("#coldButton").html("修改冷库信息");
-            $("#coldButton").attr("onclick","doUpdateCold()");
+            $("#coldButton").attr("onclick","doUpdateCold("+id.id+")");
             $('#addCold').window('open');
         }
     });
@@ -170,20 +158,11 @@ function sh(id,name,audit) {
 /*添加冷库*/
 function addCold() {
     $('#addColdForm').form('clear');
-    $.ajax({
-        url:"/i/city/findProvinceList",
-        type:"get",
-        success:function (data) {
-            var option="";
-            for(var i=0;i<data.length;i++){
-                option+="<option value='"+data[i].provinceId+"'>"+data[i].provinceName+"</option>";
-            }
-            $("#provinceId").empty().append(option);
-            $("#provinceId").combobox({});
-        }
-    });
+    loadProvince();
     $("#coldButton").html("添加冷库");
     $('#addCold').window('open');
+    $("#provinceId").combobox({value:""});
+    $("#cityId").combobox({value:""});
 }
 /*检查冷库名字是否重复*/
 var addRdcFlag=true;
@@ -277,7 +256,7 @@ function addColdSubmit() {
     }
 }
 /*提交修改冷库信息*/
-function doUpdateCold() {
+function doUpdateCold(id) {
     var honorfiles = $("input[name=honorfiles]").prop("files");
     var arrangePic = $("input[name=arrangePic]");
     var files = $("input[name=files]").prop("files");
@@ -287,6 +266,7 @@ function doUpdateCold() {
         vo[item.name] = item.value;
     });
     var flag=coldValidation(honorfiles,files,vo);
+    vo.rdcId=id;
     if(flag){
         var formdata = new FormData();
         $.each(honorfiles,function(index,item){
@@ -322,6 +302,37 @@ function dl() {
         });
     } else {  $.messager.alert('删除冷库', '您还没有选择冷库哦', 'info'); }
 }
+/*加载省*/
+function loadProvince() {
+    $.ajax({
+        url:"/i/city/findProvinceList",
+        type:"get",
+        success:function (data) {
+            var option="";
+            for(var i=0;i<data.length;i++){
+                option+="<option value='"+data[i].provinceId+"'>"+data[i].provinceName+"</option>";
+            }
+            $("#provinceId").empty().append(option);
+            $("#provinceId").combobox({});
+        }
+    });
+}
+/*通过省id加载市*/
+function loadCityByProId(id){
+    $.ajax({
+        url:"/i/city/findCitysByProvinceId",
+        data:{"provinceID":id},
+        type:"get",
+        success:function (data) {
+            var option="";
+            for(var i=0;i<data.length;i++){
+                option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
+            }
+            $("#cityId").empty().append(option);
+            $("#cityId").combobox({});
+        }
+    });
+}
 //初始化数据
 $().ready(function() {
     init_table();
@@ -340,20 +351,8 @@ $().ready(function() {
         }
     });
     $("#provinceId").combobox({
-        onSelect:function(record){
-            $.ajax({
-                url:"/i/city/findCitysByProvinceId",
-                data:{"provinceID":record.value},
-                type:"get",
-                success:function (data) {
-                    var option="";
-                    for(var i=0;i<data.length;i++){
-                        option+="<option value='"+data[i].cityID+"'>"+data[i].cityName+"</option>";
-                    }
-                    $("#city,#cityId").empty().append(option);
-                    $("#city,#cityId").combobox({});
-                }
-            });
+        onSelect:function (record) {
+            loadCityByProId(record.value);
         }
     });
 });//初始化数据
