@@ -37,4 +37,7 @@
     <select id="getSystemInformByID" resultType="java.util.HashMap">
         SELECT * FROM `systeminform` WHERE `id`=#{id}
     </select>
+    <update id="changeSysMsgStatus" parameterType="map">
+           UPDATE `systeminform` SET   `isread`=#{isRead} <if test="state!=null">,`state`=#{state} </if> WHERE `id`=#{id}
+    </update>
 </mapper>

@@ -4,11 +4,7 @@ var timefile, objtree,objTable,tablesize, stablesize;
 * 检查是否登录
 * */
 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
-    var admin = data.entity;
-    if (admin == null || admin.id == 0) {
-        var url = "http://" + location.host + "/login.html";
-        top.location.href = url;
-    }
+    var admin = data.entity; if (admin == null || admin.id == 0) {  var url = "http://" + location.host + "/login.html"; top.location.href = url; }
 });
 if(Date.prototype.Format==undefined){
 Date.prototype.Format = function (fmt) { //author: meizz
@@ -30,8 +26,8 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间
-    geimgttit:function(tit,img){return '<div class="panel-icon" style="width:auto;"><img src="'+img+'" height="18px" width="auto"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>'; },
-    gecssttit:function(tit,imgcss){return '<div class="panel-icon '+imgcss+' " style="height: 20px; width: 20px;"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>'; },
+//    geimgttit:function(tit,img){return '<div class="panel-icon" style="width:auto;"><img src="'+img+'" height="18px" width="auto"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>'; },
+//    gecssttit:function(tit,imgcss){return '<div class="panel-icon '+imgcss+' " style="height: 20px; width: 20px;"></div><h3 style="margin:0px 0px 5px 28px;">'+tit+'</h3>'; },
     col_isred:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已读"></span>':'<span class="icon-tb icon-offline" title="未读"></span>';},
     col_isdeal:function(value,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已处理"></span>':'<span class="icon-tb icon-offline" title="未处理"></span>';},
 };
@@ -42,6 +38,7 @@ function reloaddata(queryParams){objTable.datagrid( { queryParams:queryParams })
 function onLoadError(){objTable.datagrid('loadData',{total:0,rows:[]});};
 function getTableChecked(){ return objTable.datagrid('getChecked');}
 function getTableCheckedID(){ var userID =[],checkedItems = objTable.datagrid('getChecked'); $.each(checkedItems, function (index, item) { userID.push(item.id); }); return userID;}
+function getFormData(id){var vo ={},parnArray = $(id).serializeArray();$.each(parnArray,function(index,item){ vo[item.name] = item.value; }); return vo;}
 
 function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isautosize,onDblClickRow){
     if(isautosize){ tablesize= stablesize = parseInt((($("#objTable").height() -80) / 26));	}

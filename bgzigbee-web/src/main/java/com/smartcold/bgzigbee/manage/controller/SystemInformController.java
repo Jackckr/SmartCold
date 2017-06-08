@@ -27,21 +27,25 @@ public class SystemInformController {
     private SystemInformMapper systemInformMapper;
 
     
-    @RequestMapping(value = "/getMsgType", method = RequestMethod.POST)
+    
+    @RequestMapping(value = "/getSysMsgByFilter", method = RequestMethod.POST)
     @ResponseBody
-    public String getMsgType(){
-        return "[{\"id\":1,\"type\":0,\"text\":\"系统消息\",\"children\":[{\"id\":11,\"stype\":0,\"iconCls\":\"icon-remove\",\"text\":\"系统消息\"}]},{\"id\":2,\"type\":1,\"text\":\"系统通知\",\"children\":[{\"id\":21,\"stype\":1,\"text\":\"系统通知\"},{\"id\":22,\"stype\":2,\"text\":\"DEV重置通知\"},{\"id\":23,\"stype\":3,\"text\":\"冷库认证通知\"},{\"id\":24,\"stype\":4,\"text\":\"冷库绑定通知\"},{\"id\":25,\"stype\":5,\"text\":\"冷库认证服务商通知\"},{\"id\":26,\"stype\":6,\"text\":\"冷库绑定货主通知\"}]},{\"id\":3,\"type\":2,\"text\":\"系统告警\",\"children\":[{\"id\":31,\"stype\":1,\"text\":\"DEV断线告警\"},{\"id\":32,\"stype\":2,\"text\":\"DEV低电量告警\"},{\"id\":33,\"stype\":3,\"text\":\"DEV配置异常告警\"}]}]";
-    }
-    
-    
-    
-    @RequestMapping(value = "/getSysByFilter", method = RequestMethod.POST)
-    @ResponseBody
-    public TableData<HashMap<String, Object>> getSysByFilter(Integer type,Integer stype, Integer state, Integer isRead,String  keyword,String sort,String order, int  page,int rows) {
+    public TableData<HashMap<String, Object>> getSysMsgByFilter(Integer type,Integer stype, Integer state, Integer isRead,String  keyword,String sort,String order, int  page,int rows) {
     	if(StringUtil.isnotNull(keyword)){keyword = "%" + keyword + "%";}else{keyword=null;}
     	PageHelper.startPage(page, rows);
     	Page<HashMap<String, Object>> systemInformList = this.systemInformMapper.getSystemInform(type, stype, isRead, state, keyword);
     	return TableData.newSuccess(new PageInfo<HashMap<String, Object>>(systemInformList) );
+    }
+    @RequestMapping(value = "/changeSysMsgStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean changeSysMsgStatus(Integer id, Integer isRead,Integer state) {
+    	try {
+			this.systemInformMapper.changeSysMsgStatus(id,  isRead,state);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return false;
     }
     
     
@@ -80,9 +84,7 @@ public class SystemInformController {
     @RequestMapping(value = "/getNewSystemInform", method = RequestMethod.POST)
     @ResponseBody
     public Object getNewSystemInform(@RequestParam(value = "id", required = false) Integer id) {
-        if (id != null) {
-            systemInformMapper.changeIsRead(id);
-        }
+        if (id != null) { systemInformMapper.changeIsRead(id); }
         return systemInformMapper.getNoReadSystemInform();
     }
 

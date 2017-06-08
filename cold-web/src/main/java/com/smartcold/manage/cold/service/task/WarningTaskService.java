@@ -72,17 +72,19 @@ public class WarningTaskService  {
 		    double	lastminval= minTempData.getValue()-baseTemp;
 		    long cutttTime=System.currentTimeMillis();
 			if(lastminval<0){//超温后温度下降正常 移除超温监听
-				if(job!=null&&job.getMaxval()-baseTemp<8){
-					  System.err.println("刪除任务。。。。。。。");
-					  QuartzManager.removeJob(key);
-				}else{//之前出现过超温  立即检测
-					 long croStartTime=cutttTime+60000;
-					 job.setMaxval(maxTempData.getValue());
-					 job.setCroStartTime(croStartTime);
-					 job.setEndTime(minTempData.getAddtime());
-					 job.setTask(true);
-					 QuartzManager.upJob(key,  job);// 
-					 System.err.println("校验任务。。。。。。。");
+				if(job!=null){
+					if(job.getMaxval()-baseTemp<8){
+						  System.err.println("刪除任务。。。。。。。");
+						  QuartzManager.removeJob(key);
+					}else{//之前出现过超温  立即检测
+						 long croStartTime=cutttTime+60000;
+						 job.setMaxval(maxTempData.getValue());
+						 job.setCroStartTime(croStartTime);
+						 job.setEndTime(minTempData.getAddtime());
+						 job.setTask(true);
+						 QuartzManager.upJob(key,  job);// 
+						 System.err.println("校验任务。。。。。。。");
+					}
 				}
 			}else{//持续升温中
 				if(job!=null){
