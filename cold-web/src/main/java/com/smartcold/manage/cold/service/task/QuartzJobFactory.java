@@ -38,10 +38,7 @@ public class QuartzJobFactory implements Job {
 		try {
 			 TempWarningService tempWarningServer=QuartzManager.tempWarningServer;
 			 SysWarningsInfoMapper sysWarningsInfoMapper=QuartzManager.sysWarningsInfoMapper;
-			if(tempWarningServer==null||sysWarningsInfoMapper==null){
-				System.err.println("警告！无服务！");
-				return;
-			}
+			if(tempWarningServer==null||sysWarningsInfoMapper==null){System.err.println("警告！无服务！");return;}
 			System.err.println("开始温度数据检查=======================================");
 			int key = (int) context.getMergedJobDataMap().get("sid");
 			ScheduleJob job = QuartzManager.getJob(key);
@@ -63,9 +60,6 @@ public class QuartzJobFactory implements Job {
 							if(temp.getValue()<basTemp){ Lv =new int[]{ 0, 0, 0, 0, 0 };continue;}//温度恢复后
 							int leve = (int) Math.floor(temp.getValue() - basTemp+0.5 )/ 2;
 							if (leve > 4) {leve = 4;}
-							
-							
-							
 							for (int i = 0; i <=leve; i++) {//记录同级超温次数
 								 Lv[i] ++;//Lv[i] =
 								if (Lt[i] == null) {Lt[i] = temp.getAddtime();}
@@ -76,7 +70,7 @@ public class QuartzJobFactory implements Job {
 										double overtime = Tv[i];//不同级别超温数据不定
 										long minuteBetween = TimeUtil.minuteBetween(Lt[i],temp.getAddtime());
 						                 if(minuteBetween >=overtime){
-						            		 warningList.add(new SysWarningsInfo(colditem.getRdcId(), colditem.getColdStorageID(), 1,1, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(temp.getAddtime()),minuteBetween, "", TimeUtil.getDateTime()));
+						            		 warningList.add(new SysWarningsInfo(colditem.getRdcId(), colditem.getColdStorageID(), 1,1, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(temp.getAddtime()),minuteBetween,  colditem.getName()+"发生超温1级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
 						            		 isreturn=true;
 						            		 break;
 						            	 }
@@ -91,22 +85,16 @@ public class QuartzJobFactory implements Job {
 							for (int i = 4; i>=0;i--) {//记录同级超温次数
 								if(Lv[i]>0){
 									double overtime = Tv[i];//不同级别超温数据不定
-									long minuteBetween = TimeUtil.minuteBetween(Lt[i],endtime);
+									long minuteBetween = TimeUtil.minuteBetween(Lt[i],endtime)+1;
 					                 if(minuteBetween >=overtime){
-					            		 warningList.add(new SysWarningsInfo(colditem.getRdcId(), colditem.getColdStorageID(), 1,0, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, "超温", TimeUtil.getDateTime()));
+					            		 warningList.add(new SysWarningsInfo(colditem.getRdcId(), colditem.getColdStorageID(), 1,i>2?1:0, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"发生超温"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
 					            		 break;
 					            	 }
 								}
 							}
-						}else{
-							//starttime
-							Date endtime=tempList.get(tempList.size()-1).getAddtime();
-							
-							
-							
 						}
 						if(SetUtil.isnotNullList(warningList)){
-							
+							sysWarningsInfoMapper.addSyswarningsinfo(warningList);
 						}
 					}
 			}

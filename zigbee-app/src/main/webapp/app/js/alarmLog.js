@@ -124,6 +124,10 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
         var option = {
             legend: { data:['告警次数','告警时长'] },
             tooltip: {  trigger: 'axis', axisPointer: { type: 'cross', crossStyle: { color: '#999'  }}  },
+            grid:{
+                x:"40",
+                x2:'40'
+            },
             xAxis: [
                 {
                     type: 'category',
@@ -142,8 +146,8 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
                     type: 'value',
                     name: '时长/min',
                     min: 0,
-                    max: 60,
-                    interval: 12,
+                    max: 240,
+                    interval: 48,
                     axisLabel: {
                         formatter: '{value}'
                     }

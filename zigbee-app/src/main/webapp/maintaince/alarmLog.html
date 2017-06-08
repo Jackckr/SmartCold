@@ -10,7 +10,7 @@
      <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+    <script type="text/javascript" src="../com/js/echarts-all.js" ></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
@@ -55,16 +55,16 @@
             <div id="tem_div" style="height:12.5rem;"></div>
             <div id="timeline">
                 <div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
-                    <div class="timeline-txt">
-                        {{obj.time}}
-                    </div>
                     <div class="timeline-dot" style="{{obj.style}}"></div>
                     <div class="timeline-content">
                         <div class="timeline-title">
-                            <h4 class="fl">{{obj.msg}}</h4>
-                            <h4 ng-if="obj.count" class="fr">
-                                <button class="show-more mybtn" style="padding: 0.1rem 0.5rem;">详细</button>
-                            </h4>
+                            <div class="clearfix">
+                                <span class="fl" style="font-size: .6rem;">{{obj.time}}</span>
+                                <h4 ng-if="obj.count" class="fr">
+                                    <button class="show-more mybtn" style="padding: 0.1rem 0.5rem;">详细</button>
+                                </h4>
+                            </div>
+                            <h4>{{obj.msg}}</h4>
                         </div>
                         <div class="timeline-content-more">
 

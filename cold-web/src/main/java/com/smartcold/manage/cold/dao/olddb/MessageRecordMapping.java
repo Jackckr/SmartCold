@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.github.pagehelper.Page;
 import com.smartcold.manage.cold.entity.olddb.MessageRecord;
 
 /**
@@ -22,9 +23,7 @@ public interface MessageRecordMapping {
     
     void updateState(@Param("id")Integer id ,@Param("isread")Integer isread,@Param("state")Integer state);
     
-    List<MessageRecord> getMsgByFilter(@Param("rdcId")Integer rdcId,@Param("uid")Integer uid,@Param("type")Integer type,@Param("stype")Integer stype,@Param("state")Integer state,@Param("isread")Integer isread,@Param("keyword")String keyword);//
-    
-    
+    Page<MessageRecord> getMsgByFilter(@Param("rdcId")Integer rdcId,@Param("uid")Integer uid,@Param("type")Integer type,@Param("stype")Integer stype,@Param("state")Integer state,@Param("isread")Integer isread,@Param("keyword")String keyword);//
   
     
 }

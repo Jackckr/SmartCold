@@ -34,6 +34,7 @@ public class DataCollectionController extends BaseController {
 
 	private Gson gson = new Gson();
 
+	@Deprecated
 	@RequestMapping(value = "/dataCollection_old", method = RequestMethod.POST)
 	@ResponseBody
 	public Object dataCollection(String data) {
@@ -51,7 +52,7 @@ public class DataCollectionController extends BaseController {
 
 		return new BaseDto(200);
 	}
-
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/dataCollection", method = RequestMethod.POST)
 	@ResponseBody

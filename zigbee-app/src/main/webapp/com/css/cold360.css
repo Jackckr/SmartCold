@@ -1052,7 +1052,6 @@ input[type='radio']:checked{
 	border-right: 7px solid rgba(0, 0, 0, 0.18);
 }
 .timeline-title{
-	height: 22px;
 }
 .timeline-title h4{
 	margin: 0;
