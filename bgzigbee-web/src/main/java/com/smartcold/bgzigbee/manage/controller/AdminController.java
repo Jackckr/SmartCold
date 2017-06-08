@@ -2,8 +2,10 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -24,11 +26,13 @@ import com.smartcold.bgzigbee.manage.dao.AdminMapper;
 import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.entity.ACLAdminNode;
 import com.smartcold.bgzigbee.manage.entity.AdminEntity;
 import com.smartcold.bgzigbee.manage.entity.CookieEntity;
 import com.smartcold.bgzigbee.manage.service.CookieService;
 import com.smartcold.bgzigbee.manage.util.EncodeUtil;
 import com.smartcold.bgzigbee.manage.util.ResponseData;
+import com.smartcold.bgzigbee.manage.util.StringUtil;
 /**
  * 
  *@author Kaiqiang Jiang
@@ -195,6 +199,88 @@ public class AdminController extends BaseController {
 		NgRemoteValidateDTO ngRemoteValidateDTO = new NgRemoteValidateDTO();
 		ngRemoteValidateDTO.setValid(adminDao.findAdminByName(adminname)==null? true:false);
 		return ngRemoteValidateDTO;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/getUserMenu")
+	public List<ACLAdminNode> getUserMenu(HttpServletRequest request) {
+		AdminEntity admin = (AdminEntity)request.getSession().getAttribute("admin");
+		if(admin!=null&&admin.getId()!=0){
+			return getml(admin.getAcl());
+		}
+		return null;
+	}
+	
+	public List<ACLAdminNode> getml(String alc) {
+		if(StringUtil.isNull(alc)){return null;}
+		List<ACLAdminNode> ml=new ArrayList<ACLAdminNode>();
+		ACLAdminNode pml = new ACLAdminNode("0","main_platform",      "链库管理");
+		List<ACLAdminNode> mlList=new ArrayList<ACLAdminNode>();
+		mlList.add(new ACLAdminNode("0_0","icon-user",   "用户管理",      "usermanage.html"       ));
+		mlList.add(new ACLAdminNode("0_1","icon-cold",   "冷库管理",      "rdcmanage.html"        ));
+		mlList.add(new ACLAdminNode("0_2","main_share",  "共享管理",      "rdcShareInfo.html"     ));
+		mlList.add(new ACLAdminNode("0_3","icon-authe",  "认证管理",       ""      ));
+		mlList.add(new ACLAdminNode("0_4","main_infmation", "资讯管理",    ""      ));
+		mlList.add(new ACLAdminNode("0_5","icon-coldcf", "冷库配置"   ,    "storageConfig.html"      ));
+		pml.setChild(mlList);ml.add(pml);
+		
+	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");mlList.clear();
+		mlList.add(new ACLAdminNode("1_0","icon-role",    "设备管理",     ""     ));
+		mlList.add(new ACLAdminNode("1_1","icon-role",    "设备查询",     ""     ));
+		mlList.add(new ACLAdminNode("1_2","icon-role",    "设备检测",     ""     ));
+		mlList.add(new ACLAdminNode("1_3","dev_data",     "数据管理",     "dev_data.html" ));
+		mlList.add(new ACLAdminNode("1_4","dev_warning" , "设备告警",     "dev_msg.html"  ));
+		pml.setChild(mlList); ml.add(pml);
+		
+		pml  = new ACLAdminNode("2"  ,"main_360",  "360管理");mlList.clear();
+		mlList.add(new ACLAdminNode("2_0","icon-role",    "集团管理", "" ));
+		mlList.add(new ACLAdminNode("2_1","icon-role",    "权限配置", "" ));
+		mlList.add(new ACLAdminNode("2_2","icon-role",    "360配置",  "" ));
+		mlList.add(new ACLAdminNode("2_3","icon-role",     "报表管理", "" ));
+		mlList.add(new ACLAdminNode("2_4","icon-role" , "关联管理", "" ));
+		pml.setChild(mlList);  ml.add(pml);
+		
+		pml  = new ACLAdminNode("3"  ,"main_coun",  "网站统计");mlList.clear();
+		mlList.add(new ACLAdminNode("3_0","icon-role",    "网站统计", "" ));
+		mlList.add(new ACLAdminNode("3_1","icon-role",    "轨迹分析", "" ));
+		mlList.add(new ACLAdminNode("3_2","icon-role",    "用户体验",  "" ));
+		pml.setChild(mlList);     ml.add(pml);
+		
+		pml  = new ACLAdminNode("4"  ,"main_sys",     "系统管理");mlList.clear();
+		mlList.add(new ACLAdminNode("4_0","icon-role",    "系统消息", "sys_msg.html" ));
+		mlList.add(new ACLAdminNode("4_1","icon-role",    "系统状态", "sys_state.html" ));
+		pml.setChild(mlList);    ml.add(pml);
+		
+		pml  = new ACLAdminNode("5"  ,"main_debug",    "开发人员");mlList.clear();
+		mlList.add(new ACLAdminNode("5_0","icon-role",    "日志查询", "sys_msg.html" ));
+		mlList.add(new ACLAdminNode("5_1","icon-role",    "缓存管理", "sys_state.html" ));
+		mlList.add(new ACLAdminNode("5_2","icon-role",    "系统调度", "sysmessage.html" ));
+		pml.setChild(mlList);      ml.add(pml);
+		
+		List<ACLAdminNode> nml=new ArrayList<ACLAdminNode>();
+		String[] split = alc.split("-");
+		String pacl=split[0];
+		String[] cacl=split[1].split("@");
+		int index=0,sindex=0,mlsize=ml.size();
+		if(pacl.length()!=cacl.length){System.err.println("无效权限！");return null;}
+		for (char fix : pacl.toCharArray()) {
+			index=Integer.parseInt(fix+"");
+			if(index<mlsize){
+				ACLAdminNode aclAdminNode = ml.get(index);
+				List<ACLAdminNode> child = aclAdminNode.getChild();
+				List<ACLAdminNode> nchild = new ArrayList<ACLAdminNode>();
+				for (char sfix : cacl[index].toCharArray()) {
+					sindex=Integer.parseInt(sfix+"");
+					if(sindex<child.size()){
+						nchild.add(child.get(sindex));
+					}
+			    }
+				aclAdminNode.setChild(nchild);
+				nml.add(aclAdminNode);
+			}
+		}
+		return nml;
 	}
 	
 }

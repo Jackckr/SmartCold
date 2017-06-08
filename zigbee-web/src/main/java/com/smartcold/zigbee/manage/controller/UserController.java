@@ -46,6 +46,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public ResponseData<String> login(HttpServletRequest request, String userName, String password) {
 		if(StringUtil.isnotNull(userName)&&StringUtil.isnotNull(password)){
+			this.logout(request);
 			UserEntity user = userDao.findUser(userName, EncodeUtil.encodeByMD5(password));
 			if (user != null) {
 				String cookie = cookieService.insertCookie(userName);
@@ -79,10 +80,10 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token,Boolean isupdate) {
 		UserEntity user =new UserEntity();
-//		if(isupdate==null||!isupdate){
-//			 user = (UserEntity)request.getSession().getAttribute("user");
-//			if(user!=null){return user;}
-//		}
+		if(isupdate==null||!isupdate){
+			 user = (UserEntity)request.getSession().getAttribute("user");
+			if(user!=null){return user;}
+		}
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();
 			if(cookies!=null&&cookies.length>0){

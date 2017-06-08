@@ -10,6 +10,7 @@ public class SysWarningsInfo {
 	private int level;
 	
 	private double longtime;
+	private String title;
 	private String warnigmsg;
 	private String addtime;
 	private String endtime;
@@ -19,13 +20,14 @@ public class SysWarningsInfo {
 		super();
 	}
 
-	public SysWarningsInfo(int rdcid, int objid, int type, int level,String starttime,String endtime,double longtime, String warnigmsg, String addtime) {
+	public SysWarningsInfo(int rdcid, int objid, int type, int level,String starttime,String endtime,double longtime, String title,String warnigmsg, String addtime) {
 		super();
 		this.rdcid = rdcid;
 		this.objid = objid;
 		this.type = type;
 		this.level = level;
 		this.longtime = longtime;
+		this.title=title;
 		this.warnigmsg = warnigmsg;
 		this.addtime = addtime;
 		this.starttime = starttime;
@@ -90,6 +92,14 @@ public class SysWarningsInfo {
 
 	public double getLongtime() {
 		return longtime;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setLongtime(double longtime) {

@@ -157,17 +157,7 @@
 </div>
 </div>
 <script  type="text/javascript">
-// 	$(document).ready(function() {
-// 	    $.ajax({
-// 	        url: "/i/user/findUser",
-// 	        async: false,
-// 	        cache: false
-// 	    }).success(function(data) {
-// 	        if (data.success && data.entity.id != 0) {
-// 	            window.location.href = "http://" + window.location.host + "/#/home";
-// 	        }
-// 	    });
-// 	});
+    $.ajax({ url: "/i/user/logout"});
 	function showErrorInfo(msg) {
 	    var msgEl = $("#mention");
 	    if (msg == null || msg == '') {
