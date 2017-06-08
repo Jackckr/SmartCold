@@ -54,7 +54,8 @@
 .user_del {background: url(img/icons.png) no-repeat scroll -391px -241px rgba(0, 0, 0, 0);}
 
 /*====================================rdc图标=====================================================*/
-
+.rdc_add {background: url(img/icons.png) no-repeat scroll -1052px -392px rgba(0, 0, 0, 0);}
+.rdc_del {background: url(img/icons.png) no-repeat scroll -1082px -393px rgba(0, 0, 0, 0);}
 /*消息中心*/
 .objicon{display: inline-block;width: 20px;height: 20px;}
 .icon-msgType{    background: url(img/icos.png) no-repeat scroll -1350px -391px rgba(0, 0, 0, 0);}
