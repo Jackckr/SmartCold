@@ -64,13 +64,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="msg in msgList" ng-hide="msg.state==-1">
+                <tr ng-repeat="msg in msgList">
                     <td><input type="checkbox" name="" id=""></td>
                     <td>{{msg.title}}</td>
                     <td style="text-align: left;"  ng-click="showmsg($index)"><a href="#">{{msg.message}}</a></td>
                     <td>
                         <span ng-if="msg.state==1">{{modestate[msg.state]}}</span>
                         <span ng-if="msg.state==0" style="color: red;">{{modestate[msg.state]}}</span>
+                        <span ng-if="msg.state==-1">已拒绝</span>
                     </td>
                     <td>{{msg.addTime}}</td>
                     <td><i class="fa fa-trash-o" style="color:#a3b5be;cursor: pointer;font-size: 18px"></i></td>

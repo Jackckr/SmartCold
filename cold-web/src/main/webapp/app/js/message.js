@@ -23,7 +23,7 @@ coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
 
 	$scope.showmsg=function(idex){
 		$scope.currmsg=$rootScope.msgList[idex];
-		if($scope.currmsg.state==1){
+		if($scope.currmsg.state==1 || $scope.currmsg.state==-1){
 		    alert("该条内容您已处理完毕了~")
             return
         }
