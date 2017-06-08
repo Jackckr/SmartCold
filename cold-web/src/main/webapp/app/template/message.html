@@ -26,6 +26,7 @@
     .sysClose{position: absolute;top: -20px;right: -20px;width: 40px;height: 40px;line-height: 40px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;background-color: #fff;color: #a0cfe7;font-weight: 700;font-size: 38px;text-align: center;cursor: pointer;}
     .sysFoot .btn-warning{padding: 2px 15px;margin-left: 10px;}
     .sysFoot{padding-left: 18px;}
+    .sysFoot ul{margin: 0;}
 </style>
 <!--新设计page-->
 <div class="sysUi">
@@ -63,13 +64,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="msg in msgList" ng-hide="msg.state==-1">
+                <tr ng-repeat="msg in msgList">
                     <td><input type="checkbox" name="" id=""></td>
                     <td>{{msg.title}}</td>
                     <td style="text-align: left;"  ng-click="showmsg($index)"><a href="#">{{msg.message}}</a></td>
                     <td>
                         <span ng-if="msg.state==1">{{modestate[msg.state]}}</span>
                         <span ng-if="msg.state==0" style="color: red;">{{modestate[msg.state]}}</span>
+                        <span ng-if="msg.state==-1">已拒绝</span>
                     </td>
                     <td>{{msg.addTime}}</td>
                     <td><i class="fa fa-trash-o" style="color:#a3b5be;cursor: pointer;font-size: 18px"></i></td>
@@ -82,15 +84,9 @@
                 <button class="btn btn-warning">批量删除</button>
             </div>
             <div class="pull-right">
-                <ul class="pagination" style="margin: 0;">
-                    <li><a href="#"><</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">></a></li>
-                </ul>
+                <pagination ng-change="pageChanged()" total-items="params.total"
+                            ng-model="params.page" class="pagination-sm"
+                            boundary-links="true" rotate="false" ></pagination>
             </div>
         </div>
         <div class="text-center" style="margin: 100px 0"  ng-if="msgList.length==0">
