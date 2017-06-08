@@ -316,16 +316,6 @@ public class RdcController {
 		return ResponseData.newFailure("修改失败！请稍后重试！");
 	}
 
-	@RequestMapping(value = "/newAddRdc", method = RequestMethod.POST)
-	@ResponseBody
-	public void addRdc(HttpServletRequest request, String empStr){
-		if (StringUtils.isEmpty(empStr)) {
-
-		} else {
-			RdcAddDTO emp= JSONObject.parseObject(empStr, RdcAddDTO.class);
-		}
-	}
-
 	@RequestMapping(value = "/addRdc", method = RequestMethod.POST)
 	@ResponseBody
 	public Object add(HttpServletRequest request, @RequestParam(required = false) MultipartFile honor0,
@@ -335,7 +325,10 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile honor7, @RequestParam(required = false) MultipartFile file0,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO) throws Exception {
+			@RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO, String empStr) throws Exception {
+		if (!StringUtils.isEmpty(empStr)) {
+			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
+		}
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
 		MultipartFile[] honorfiles = { honor7, honor6, honor5, honor4, honor3, honor2, honor1, honor0 };
 		MultipartFile arrangePic = arrangePics;
@@ -454,9 +447,12 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
 			@RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
 			@RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
-			@RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7)
+			@RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7
+			, String empStr)
 					throws Exception {
-
+		if (!StringUtils.isEmpty(empStr)) {
+			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
+		}
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
 		MultipartFile[] honorfiles = { honor7, honor6, honor5, honor4, honor3, honor2, honor1, honor0 };
 		MultipartFile arrangePic = arrangePics;
@@ -621,7 +617,7 @@ public class RdcController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteByRdcIDs", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteByRdcIDs")
 	public Object deleteByRdcIDs(Integer[] rdcIDs) {
 		log.info("delete rdcID in:" + Arrays.toString(rdcIDs));
 		for (Integer rdcID : rdcIDs) {

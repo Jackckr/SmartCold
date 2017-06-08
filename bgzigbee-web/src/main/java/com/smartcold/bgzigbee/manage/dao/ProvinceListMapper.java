@@ -12,4 +12,6 @@ public interface ProvinceListMapper {
 
     List<ProvinceListEntity> findProvinceList();
 
+    ProvinceListEntity findProvinceById(Integer proId);
+
 }

@@ -8,5 +8,8 @@
         SELECT *
         FROM `provincelist` WHERE `ProvinceID` &lt;= 34
     </select>
+    <select id="findProvinceById" resultType="com.smartcold.bgzigbee.manage.entity.ProvinceListEntity">
+        SELECT * FROM `provincelist` WHERE `ProvinceID`=#{proId}
+    </select>
 
 </mapper>
