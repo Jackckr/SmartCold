@@ -170,7 +170,7 @@ function ck(id) {
             $("#honorfilesImg").empty().append(honorPicImg);
             $("#filesImg").empty().append(filesImg);
             $("#coldButton").attr("onclick", "doUpdateCold(" + id.id + ")");
-            $('#addCold').window('open');
+            $('#addCold').dialog('open');
         }
     });
 }
@@ -202,7 +202,7 @@ function addCold() {
     $('#addColdForm').form('clear');
     loadProvince();
     $("#coldButton").html("添加冷库");
-    $('#addCold').window('open');
+    $('#addCold').dialog('open');
     $("#provinceId").combobox({value: ""});
     $("#cityId").combobox({value: ""});
     $("#arrangePicSpan").show();
@@ -298,7 +298,7 @@ function addColdSubmit() {
             type: 'POST',
             success: function (data) {
                 alert("添加成功！");
-                $('#addCold').window('close');
+                $('#addCold').dialog('close');
                 reloaddata();
             }
         });
@@ -337,7 +337,7 @@ function doUpdateCold(id) {
             type: 'POST',
             success: function (data) {
                 alert("修改成功！");
-                $('#addCold').window('close');
+                $('#addCold').dialog('close');
                 reloaddata();
             }
         });

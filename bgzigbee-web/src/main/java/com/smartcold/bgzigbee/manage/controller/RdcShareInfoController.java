@@ -3,6 +3,7 @@ package com.smartcold.bgzigbee.manage.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.smartcold.bgzigbee.manage.dao.RdcShareInfoMapper;
+import com.smartcold.bgzigbee.manage.dto.BaseDto;
 import com.smartcold.bgzigbee.manage.entity.RdcSharedInfoEntity;
 import com.smartcold.bgzigbee.manage.util.StringUtil;
 import com.smartcold.bgzigbee.manage.util.TableData;
@@ -65,5 +66,14 @@ public class RdcShareInfoController {
     @ResponseBody
     public void delRdcShareInfoById(Integer id){
         rdcShareInfoMapper.delShareInfoById(id);
+    }
+
+    @RequestMapping(value = "/delRdcShareInfoByIds", method = RequestMethod.POST)
+    @ResponseBody
+    public Object delRdcShareInfoByIds(int[] rdcShares){
+        for (int rdcShare:rdcShares){
+            rdcShareInfoMapper.delShareInfoById(rdcShare);
+        }
+        return new BaseDto(0);
     }
 }

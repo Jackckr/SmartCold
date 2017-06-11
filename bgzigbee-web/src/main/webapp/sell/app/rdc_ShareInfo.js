@@ -10,7 +10,7 @@ function getRdcAttr(value) {
 }
 
 function cellStyler(value,row){
-    return '<a href="javascript:void(0)" onclick="ck('+ row.id+')">[查看]</a><a href="javascript:void(0)" onclick="dl('+ row.id+')">[删除]</a>';
+    return '<button class="btn" onclick="ck('+ row.id+')">查看</button><button class="btn btn-delete" onclick="dl('+ row.id+')">删除</button>';
 }
 
 function init_table(){
@@ -33,7 +33,9 @@ function init_table(){
 
 }
 
-function onDblClickRow(index,field){}
+function onDblClickRow(index,field){
+    ck(field.id);
+}
 
 /**
  * 动态组件 无需关心
@@ -99,12 +101,38 @@ function searchData() {
     reloaddata(queryParams);
 }
 function getRdcAttr(value) {
-    if (value!=undefined){
+    if (value){
         return value.name;
     }else {
         return "暂无";
     }
 }
+/*批量删除*/
+function delRdcShares() {
+    var rdcShares = getTableCheckedID();
+    if (rdcShares.length > 0) {
+        $.messager.confirm('删除确认', '你确认要<er>删除</er>这<er>' + rdcShares.length + '</er>条冷库共享信息吗?', function (r) {
+            if (r) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/i/rdcShareInfo/delRdcShareInfoByIds',
+                    traditional: true,
+                    data: {'rdcShares': rdcShares},
+                    success: function (data) {
+                        if (data.status == 0) {
+                            reloaddata();
+                        } else {
+                            $.messager.alert('错误', '删除冷库共享信息失败！', 'error');
+                        }
+                    }
+                });
+            }
+        });
+    } else {
+        $.messager.alert('删除冷库共享信息', '您还没有选择冷库共享信息哦', 'info');
+    }
+}
+/*查看冷库共享详细信息*/
 function ck(id) {
     $.ajax({
         url:"/i/rdcShareInfo/getRdcShareInfoById",
@@ -115,6 +143,8 @@ function ck(id) {
             $("#share_title").html(data.title);
             if(data.rdcEntity!=undefined){
                 $("#share_coldName").html(data.rdcEntity.name);
+            }else {
+                $("#share_coldName").html("");
             }
             $("#share_type").html(data.typeText);
             $("#share_pay").html(data.unit1);
