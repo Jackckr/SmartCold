@@ -1,8 +1,9 @@
-package com.smartcold.manage.cold.entity.olddb;
-
+package com.smartcold.bgzigbee.manage.entity;
 
 /**
- * Created by qiangzi on 2017/5/18.
+ * 
+ * @author Administrator
+ *
  */
 /*冷库认证实体类*/
 public class RdcAuthEntity {

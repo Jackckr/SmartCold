@@ -82,7 +82,11 @@ public class UserController extends BaseController {
 		UserEntity user =new UserEntity();
 		if(isupdate==null||!isupdate){
 			 user = (UserEntity)request.getSession().getAttribute("user");
-			if(user!=null){return user;}
+			if(user!=null){
+			   return user;
+			}else{
+				user =new UserEntity();
+			}
 		}
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();

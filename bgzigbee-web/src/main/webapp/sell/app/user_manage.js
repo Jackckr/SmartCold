@@ -6,14 +6,14 @@ function col_cellStyler(value, row) {
 	return [
 	        '<button class="btn" onclick="user_audit(' , row.id,',',row.audit,',\'',row.username, '\')">审核</button>' , 
 	        '<button class="btn" onclick="user_level(' , row.id,',',row.level,',\'',row.username,'\')">升/降级</button>' , 
-	        '<button class="btn btn-info" onclick="setRdcandUser(' ,+ row.id ,')">关联冷库</button>' ,
+//	        '<button class="btn btn-info" onclick="setRdcandUser(' ,+ row.id ,')">关联冷库</button>' ,
 	        '<button class="btn btn-delete" onclick="goDeleteUser(' , row.id, ',\'',row.username,'\')">删除</button>'
 	        ].join("");
 	}
 
 //======================================================================菜单事件function=======================================================
 //
-var setRdcandUser = function () { self.parent.addTab("冷库管理", "/sell/viwe/rdcmanage.html", 'icon-cold');};
+//var setRdcandUser = function () { self.parent.addTab("冷库管理", "/sell/viwe/rdcmanage.html", 'icon-cold');};
 //删除单个用户
 var goDeleteUser = function (uid,username) {
     $.messager.confirm('删除确认', '你确认要<er>删除</er>用户<er>'+username+'</er>吗?', function (r) {if (r) {$.ajax({ type: 'GET', url: '../../i/user/deleteUser',data: {"userID": uid }, success: function (data) {reloaddata(); }}); }});

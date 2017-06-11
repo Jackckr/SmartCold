@@ -1,5 +1,5 @@
 var isyzok = false,remote_ip_info = "";
-if (location.href != top.location.href) { top.location.href = "../login.jsp";}
+if (location.href != top.location.href) { top.location.href = "../login.htm";}
 //登录
 function ckfsstyle(type) {
     if (type == 1) {
@@ -65,22 +65,23 @@ function login() {
     }
     $("#input_sik").val(new Date().getHours());
     $.ajax({
-        url: '/i/admin/login',
+        url: '/i/admin/userlogin',
         type: 'POST',
         data: $('#sellloginform').serialize(),
         error: function() {  clsyle("#ui", 2, '服务异常！'); },
         success: function(data) {
         	if (data.success) {
-                document.cookie = data.message;
-                window.sessionStorage.asikey=data.message;
+        		window.sessionStorage.sysadmin=data.entity.user;
+				window.sessionStorage.asikey=data.entity.token;
+			    document.cookie = data.entity.token;
                 window.location.href = "main.htm";
                 return;
 			} else {
-				 clsyle("#ui", 4, data.message);
-               changCodeImg();
-               $("#codeyzm").val('');
-               removelallsyle("#yimg", "");
+				clsyle("#ui", 4, data.message);
 			}
+        	
+        	
+        	
         }
     });
 

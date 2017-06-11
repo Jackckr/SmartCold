@@ -14,9 +14,15 @@ public class AdminEntity {
 	private String adminpwd;
 	private String telephone;
 	private String email;
-	private Integer role;
-	private int type;
-	private String acl;
+	private int type;//用户类型 0:设备服务商 1: 北京运营  2:上海应用部 3 管理员 4 超级管理员及开发人员
+	private Integer role;//角色 1：查看 2查看，添加  3：查看，添加 删除，编辑 
+	private String acl;//菜单权限
+	private String token;//
+	//登录安全检查信息
+	private boolean loginRisk;//当前登录环境是否正常
+	private String  lastlogininfo;//上的登录环境信息
+	private String  cuttlogininfo;//本次登录环境信息
+	
 	private Date addtime;
 	
 	public int getId() {
@@ -73,6 +79,31 @@ public class AdminEntity {
 	public void setAcl(String acl) {
 		this.acl = acl;
 	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public boolean isLoginRisk() {
+		return loginRisk;
+	}
+	public void setLoginRisk(boolean loginRisk) {
+		this.loginRisk = loginRisk;
+	}
+	public String getLastlogininfo() {
+		return lastlogininfo;
+	}
+	public void setLastlogininfo(String lastlogininfo) {
+		this.lastlogininfo = lastlogininfo;
+	}
+	public String getCuttlogininfo() {
+		return cuttlogininfo;
+	}
+	public void setCuttlogininfo(String cuttlogininfo) {
+		this.cuttlogininfo = cuttlogininfo;
+	}
+
 	
 	
 }

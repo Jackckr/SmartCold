@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.alibaba.fastjson.JSONObject;
 import com.smartcold.bgzigbee.manage.dto.*;
 import com.smartcold.bgzigbee.manage.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -747,4 +748,6 @@ public class RdcController {
 			return new ResultDto(-1, "冷库认证审核失败！请稍后重试！");
 		}
 	}
+
+	
 }

@@ -81,6 +81,7 @@ public class AuthenUserController {
     public Object attestationRdc(int userId,String userName, int rdcId,  int type, MultipartFile authfile) {
     	try {
     		String msg="";
+    		Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 			if (type==0){
 				String dir =null;String fileName=null;
 				if (authfile != null) {//
@@ -96,13 +97,14 @@ public class AuthenUserController {
 			        auchedata.setType(type);
 			        auchedata.setUid(userId);
 			        auchedata.setRdcid(rdcId);
+			        auchedata.setMsg(userName+"认证冷库"+rdc.getName()+"!请及时处理！");
 			        if(authfile!=null){
 			         auchedata.setImgurl(dir + File.separator + fileName);
 			        }
 			        this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
 			        msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
 			}else {
-				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
+				
 			    MessageRecord msgMessageRecord = new MessageRecord();
 			    if(rdc!=null&&rdc.getUserid()!=0){
 			    	msgMessageRecord.setTid(rdc.getUserid());
