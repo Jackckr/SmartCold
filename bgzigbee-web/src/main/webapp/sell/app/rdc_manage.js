@@ -31,11 +31,8 @@ function init_table() {
         {field: 'audit', title: '状态', width: 40, align: 'center', sortable: true, formatter: getRdcAudit},
         {field: 'hand', title: '操作', width: 100, align: 'center', formatter: cellStyler}
     ]];
-<<<<<<< HEAD:bgzigbee-web/src/main/webapp/sell/app/rdc_manage.js
     initTable("冷库管理","icon-cold", "POST", "../../i/rdc/getRdcDTOByPage", queryParams,"#div_filteri",null, col,true, onDblClickRow);
-=======
-    initTable("冷库管理", "icon-msgType", "POST", "../../i/rdc/getRdcDTOByPage", queryParams, "#div_filteri", null, col, true, onDblClickRow);
->>>>>>> 1f79d237a2d51b1d0c70667a0d0325e65acf5245:bgzigbee-web/src/main/webapp/sell/app/rdcmanage.js
+
 
 }
 

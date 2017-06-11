@@ -2,7 +2,6 @@
 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
     var admin = data.entity; 
     if (admin == null || admin.id == 0) {var url = "http://" + location.host + "/login.html"; top.location.href = url;  }
-    getacl();
 });
 
 var tool={
