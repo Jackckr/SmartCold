@@ -14,31 +14,135 @@
     <script type="text/javascript" src="../com/js/common.js"></script>
      <script type="text/javascript" src="../com/js/layer.js"></script>
     <script type="text/javascript" src="../app/js/sys_message.js" ></script>
-    <script type="text/javascript">var type=0; checkLogin(null,initdata);</script>
 </head>
 <body ng-app="message" ng-controller="message" ng-cloak>
-    <header>
-    	<div class="area fl">
-    		<a href="user.html"><i class="iconfont">&#xe60e;</i></a>
-    	</div>
-    	<div class="txt">系统通知</div>
+    <header class="one" ng-if="prev==0">
+        <div class="area fl">
+            <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+        </div>
+        <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
+            <a class="transion" ng-click="searchRdcs('')"><i class="iconfont">&#xe73c;</i></a>
+        </div>
+        <div class="txt omg">
+            {{rdcName}}
+        </div>
     </header>
-     <section class="sys">
-         <div class="sys_center" ng-if="tabNum==1">
-             <div>全部</div>
-             <div>已读</div>
-             <div>未读</div>
+    <header class="two black" ng-if="prev==0">
+        <div class="area fl">
+            <a class="cancel"><i class="iconfont">&#xe60e;</i></a>
+        </div>
+
+        <div id="searchDara_div" class="search">
+            <input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
+            <i class="iconfont" >&#xe62f;</i>
+        </div>
+    </header>
+    <!----------------------prev==1-->
+    <header class="three" ng-if="prev==1">
+        <div class="area fl">
+            <a ng-click="goprev()"><i class="iconfont">&#xe60e;</i></a>
+        </div>
+        <div class="zoom fr">
+            <a class="transion myedit" ng-click="edit($event)">编辑</a>
+        </div>
+        <div class="txt omg">
+            全部
+        </div>
+    </header>
+    <!--rdc列表-------------------------------------------------->
+    <section class="searchTop">
+        <ul class="rdcList">
+            <li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+        </ul>
+        <p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
+    </section>
+    <!--rdc列表----------------------------------------------->
+     <section class="sys" ng-if="prev==0">
+         <div class="allMsg">
+             <div class="msgStatus"><a ng-click="allmsg($event)"><i class="all"></i><p class="info">全部</p></a></div>
+             <div class="msgStatus"><a ng-click="changstatus(0,$event)"><i class="noread"></i><p class="info">未读</p></a></div>
+             <div class="msgStatus"><a ng-click="changstatus(1,$event)"><i class="isread"></i><p class="info">已读</p></a></div>
+             <div class="msgStatus"><a ng-click="allmsg($event)"><i class="system"></i><p class="info">系统消息</p></a></div>
          </div>
-         <div class="classify" ng-if="tabNum==2">
-             <div>系统消息</div>
-             <div>系统告警</div>
-             <div>其他告警</div>
+         <div class="allMsg">
+             <div class="msgStatus"><a ng-click="changstatus(0,$event)"><i class="deal"></i><p class="info">待处理</p></a></div>
+             <div class="msgStatus"><a ng-click="changstatus(1,$event)"><i class="isdeal"></i><p class="info">已处理</p></a></div>
+             <div class="msgStatus"><a ng-click="changstatus(1,$event)"><i class="syswarn"></i><p class="info">系统警告</p></a></div>
+             <div class="msgStatus"><a ng-click="changstatus(1,$event)"><i class="otherwarn"></i><p class="info">其他警告</p></a></div>
          </div>
      </section>
-    <div id="" class="nodata black" style="margin-top: 0;"> <img src="../com/img/nodata.jpg" alt=""><p>您还没有发布冷库哦~~</p></div>
-    <ul class="footer">
-        <li ng-click="tab(1)"><a><i class="iconfont">&#xe65a;</i><p class="info">消息中心</p></a></li>
-        <li ng-click="tab(2)"><a><i class="iconfont">&#xe6f8;</i><p class="info">消息分类</p></a></li>
-    </ul>
+     <p class="newmsg" ng-if="prev==0">最新消息</p>
+
+     <div class="sysInfo" ng-repeat="msg in msgList" ng-hide="($index>1)?true:false" ng-if="prev==0">
+         <a ng-click="showmsg($index)">
+             <p class="clearfix">
+                 <b class="fl">{{msg.title}}</b>
+                 <span class="fr" ng-if="msg.state==1">{{modestate[msg.state]}}</span>
+                 <span class="fr" ng-if="msg.state==0" style="color: red;">{{modestate[msg.state]}}</span>
+                 <span class="fr" ng-if="msg.state==-1">已拒绝</span>
+             </p>
+             <p>{{msg.message}}</p>
+             <p class="msgTime">{{msg.addTime}}</p>
+         </a>
+     </div>
+    <!--点击顶部模块显示-->
+    <section class="sys" ng-if="msgList.length==0"><!--没有消息-->
+        <div class="nowarn">
+            <img src="../com/img/nomsg.png" style="width: 11.2rem;height:10rem;">
+        </div>
+    </section>
+    <div ng-if="prev==1" style="margin-top: 2.5rem" id="loadList"
+         infinite-scroll='demo.nextPage()'
+         infinite-scroll-disabled='demo.busy'
+         infinite-scroll-distance='1'>
+        <div class="sysInfo" ng-repeat="msg in msgList" >
+            <a ng-click="showmsg($index)">
+                <p class="clearfix">
+                    <label class="check_icon on fl editSys black" ng-class="{true: 'on', false: ''}[ischeck]">
+                        <input ng-model="ischeck" type="checkbox">
+                        <i class="iconfont"></i>
+                    </label>
+                    <b class="fl">{{msg.title}}</b>
+                    <span class="fr" ng-if="msg.state==1">{{modestate[msg.state]}}</span>
+                    <span class="fr" ng-if="msg.state==0" style="color: red;">{{modestate[msg.state]}}</span>
+                    <span class="fr" ng-if="msg.state==-1">已拒绝</span>
+                </p>
+                <p>{{msg.message}}</p>
+                <p class="msgTime">{{msg.addTime}}</p>
+            </a>
+        </div>
+    </div>
+    <div class="checkAll black">
+        <label class="check_icon on fl" ng-class="{true: 'on', false: ''}[ischeck]">
+            <input ng-model="ischeck" type="checkbox">
+            <i class="iconfont"></i>全选
+        </label>
+        <button class="fr">删除</button>
+    </div>
+    <!--点击顶部模块显示-->
+    <div class="sysModal black"><!--遮罩层-->
+        <div class="sysModalMain"><!--主题区域显示-->
+            <div class="sysModalHeader">
+                <img src="../com/img/modalBg.png" style="width: 11rem;" alt="">
+                <h4>{{currmsg.title}}</h4>
+                <p>{{currmsg.message}}</p>
+            </div>
+            <div class="sysModalBody">
+                <div ng-if="currmsg.type==1&&currmsg.sType==1" >
+                    <ul id="ul_storage" class="clearfix">
+                        <li ng-repeat="storage in mystorages" class="fl">
+                            <label> <input type="checkbox"  value="{{storage.id}}">{{storage.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sysModalFooter clearfix">
+                <div class="fl" ng-click="off()">关闭</div>
+                <div class="fl"  ng-click="agree()">同意</div>
+                <div class="fl" ng-click="refuse()">拒绝</div>
+            </div>
+            <div class="sysClose" ng-click="off()">&times;</div>
+        </div>
+    </div>
 </body>
 </html>

@@ -11,7 +11,9 @@ if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0
 if(window.user==undefined ||window.user==null){
 	if(window.localStorage.logtime&&(new Date().getTime()-window.localStorage.logtime)/60000>1){
 		checktoken();
-	}
+	}else if(window.user==""){
+        window.user=undefined;
+    }
 	var userjson=window.localStorage.lkuser;
 	if(userjson){window.user=JSON.parse(userjson);userjson=undefined;
 }else{
@@ -58,7 +60,7 @@ function goback() {
 function formatCSTDate(strDate,format){
   return formatDate(new Date(strDate),format);
 }
- 
+
 //格式化日期,
 function formatDate(date,format){
   var paddNum = function(num){
@@ -79,10 +81,9 @@ function formatDate(date,format){
   }
   format || (format = "yyyy-MM-dd hh:mm:ss");
   return format.replace(/([a-z])(\1)*/ig,function(m){return cfg[m];});
-} 
+}
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
 function checktoken(toke,isupdate) {
-    updateUser();
     if (toke == undefined) {
         toke = localStorage.token;
     }
@@ -106,27 +107,7 @@ function checktoken(toke,isupdate) {
         }
     });
 }
-function updateUser(toke) {
-    $.ajax({
-        type: "GET",
-        cache: false,
-        timeout: 5000,
-        dataType: "json",
-        data: {token: toke},
-        url: ER.root + "/i/user/findUser",
-        success: function (data) {
-            if (data && data.id != 0) {
-                window.localStorage.logtime = new Date();
-                window.user = data;
-                window.localStorage.lkuser = JSON.stringify(data);
-            } else {
-                window.localStorage.logtime = undefined;
-                window.user = null;
-                window.localStorage.removeItem("lkuser");
-            }
-        }
-    });
-}
+
 function setTime(obj){if(_sysconfig.countdown==0){obj.removeAttribute("disabled");obj.style.background="#438BCB";obj.innerHTML="获取验证码";_sysconfig.countdown=60;return;}else{if($(obj).siblings("input").val().length==0){/*alert("输入不能为空哦~");*/layer.open({content: '输入不能为空哦~',btn: '确定'});return false;}else{obj.setAttribute("disabled",true);obj.style.background="#ccc";obj.innerHTML="重新发送("+_sysconfig.countdown+")";_sysconfig.countdown--;}}setTimeout(function(){setTime(obj);},1000);};
 var util = {
 	setCookie:function(a,b,c){localStorage.setItem(a, b);},getCookie:function(a) {return localStorage.getItem(a);},  delCookie:function(a) {localStorage.removeItem(a);},
@@ -176,7 +157,7 @@ window.onload = function(){
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
     $("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });//一键回到顶部
-	
+
 	/*检查输入的数字是否为》0   2017-3-13*/
 	$("input[type='number']").blur(function(){
    		if($(this).val()<0){
@@ -199,7 +180,7 @@ window.onload = function(){
 /*联系电话的验证*/
 function checkMobile(str) {
    var  reg = /^1\d{10}$/,//手机号
-   		reg1 = /^0\d{2,3}-?\d{7,8}$/; //座机号 
+   		reg1 = /^0\d{2,3}-?\d{7,8}$/; //座机号
    if (reg.test(str) || reg1.test(str)) {
        return true
    } else {

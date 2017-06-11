@@ -649,27 +649,321 @@ html,body{
 /*
 	系统通知6-6
 */
-
-.sys{
+/*搜索RDC样式*/
+.search{
+	height: 100%;
+	margin:0 0 0 1.5rem;
+	position: relative;
+	line-height: 1.9rem;
+}
+.search input{
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 4px;
+	padding:0 1.4rem 0 10px;
+	box-sizing: border-box;
+	z-index: 0;
+	font-size: 0.7rem;
+}
+.search i{
+	font-size: 0.8rem;
+	color: #438BCB;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	right: 0.5rem;
+	z-index: 1;
+	background-size: cover;
+}
+.searchTop{
+	display: none;
+	position: fixed;
+	top: 2.2rem;
+	left: 0;
+	background-color: #fff;
+	z-index: 10000;
+	margin: 0;
 	padding: 0;
+	height: 100%;
+}
+.searchTop p{
+	font-size: .75rem;
+	line-height: 2;
+	display: none;
+}
+.rdcList{
+	height: 100%;
+	overflow-y: scroll;
+	padding:0 .9rem 1.5rem;
+	box-sizing: border-box;
+}
+.rdcList li{
+	font-size: 0.7rem;
+	line-height: 1.5rem;
+	border-bottom: 1px solid #e6e6e6;
+	color: #666;
+}
+.rdcList li i{
+	font-size: 0.7rem;
+	color: #999;
+	margin-right: .3rem;
+}
+.transion i{
+	font-size: 1.3rem!important;
+}
+.myedit{
+    font-size: .75rem!important;
+}
+.sys{
+	padding: 0 .9rem;
 	box-sizing: border-box;
 	background-color: #fff;
 	margin-bottom: 0.1rem;
-	margin-top:2.2rem;
+	margin-top:2.5rem;
 	font-size: 0.7rem;
 }
-.sys>div{
-	text-align: center;
-	width: 100%;
-	height:auto;
+.allMsg{
 	display: table;
+	width: 100%;
 	table-layout: fixed;
-	position: relative;
-	z-index: 3;
 }
-.sys>div>div{
+.msgStatus{
 	display: table-cell;
-	height: 1.6rem;
-	line-height: 1.6rem;
-	border-bottom: 3px solid #BDBDBD;
+	height: 4rem;
+	text-align: center;
+}
+.msgStatus a{
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: #898989;
+	padding-top: .6rem;
+	box-sizing: border-box;
+	position: relative;
+}
+.msgStatus a>i{
+	display: inline-block;
+	width: 1.8rem;
+	height:1.8rem;
+	background: url("../img/all.png") center no-repeat;
+	background-size: cover;
+}
+.msgStatus a>.noread{
+	background-image: url("../img/noread.png");
+}
+.msgStatus a>.isread{
+	background-image: url("../img/isread.png");
+}
+.msgStatus a>.system{
+	background-image: url("../img/sys.png");
+}
+.msgStatus a>.deal{
+	background-image: url("../img/deal.png");
+}
+.msgStatus a>.isdeal{
+	background-image: url("../img/isdeal.png");
+}
+.msgStatus a>.syswarn{
+	background-image: url("../img/syswarn.png");
+}
+.msgStatus a>.otherwarn{
+	background-image: url("../img/otherwarn.png");
+}
+.newmsg{
+    font-size:.7rem;
+    text-indent: .9rem;
+    margin-top: .3rem;
+}
+.sysInfo{
+    background-color: #fff;
+    margin-top: .3rem;
+}
+.sysInfo>a{
+    display: block;
+    padding: .3rem .9rem;
+    font-size: .7rem;
+    color: #898989;
+}
+.sysInfo>a p{
+    margin: .4rem 0;
+}
+.msgTime{
+    color: #999;
+    font-size: .65rem;
+}
+.checkAll{
+    position: fixed;
+    z-index: 99999;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height:2.2rem;
+    background-color: #f6f5fa;
+    border-top:1px solid #d0d0d0;
+}
+.checkAll label{
+    font-size: .7rem;
+    height: 2.2rem;
+    padding-left: .9rem;
+    line-height: 2.2rem;
+}
+.checkAll button{
+    background-color: #f24445;
+    color:#fff;
+    font-size: .7rem;
+    height: 2.2rem;
+    padding: 0 3rem;
+}
+.check_icon{
+    height: 1rem;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    margin-right: .5rem;
+}
+.check_icon input {
+    width: 100%;
+    height: 100%;
+    margin: 0!important;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    opacity: 0;
+    cursor: pointer;
+    display: block;
+    -webkit-box-sizing: border-box!important;
+    -moz-box-sizing: border-box!important;
+    box-sizing: border-box!important;
+}
+.check_icon i {
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    display: inline-block;
+    background-color: #fff;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #DFDFDF;
+    text-align: center;
+    border-radius: .2rem;
+    margin-right: .2rem;
+}
+.check_icon.on i {
+    background-color: #5eb95e;
+    color: #fff;
+}
+
+.sysModal {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 820;
+}
+
+.sysModalMain {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 14rem;
+    margin-left: -7rem;
+    border-radius: .3rem;
+    background: #fff;
+    color: #000;
+    font-size: .7rem;
+}
+
+.sysModalHeader {
+    width: 12rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sysModalHeader h4 {
+    font-weight: 700;
+    font-size: .75rem;
+}
+
+.sysModalHeader img {
+    border-bottom: 2px solid #696868;
+}
+
+.sysModalBody {
+    min-height: 1rem;
+    padding: .3rem 0;
+}
+
+.sysModalFooter {
+    border-top: 1px solid #c5c5c5;
+    width: 100%;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+}
+
+.sysModalFooter > div {
+    width: 33.3333%;
+    color: #2e8bbb;
+    font-size: .75rem;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.sysModalFooter > div:nth-child(1), .sysModalFooter > div:nth-child(2) {
+    border-right: 1px solid #c5c5c5;
+}
+
+.sysClose {
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #a0cfe7;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid #a0cfe7;
+    text-align: center;
+    cursor: pointer;
+}
+
+.sysFoot .btn-warning {
+    padding: 2px 15px;
+    margin-left: 10px;
+}
+
+.sysFoot {
+    padding-left: 18px;
+}
+
+.sysFoot ul {
+    margin: 0;
+}
+.nowarn{
+    /*padding-top: 5rem;
+    height: 80vh;*/
+    text-align: center;
+}
+#ul_storage{
+    padding: 0 .8rem;
+}
+#ul_storage li{
+    width: 33.3333%;
+    margin-bottom: .4rem;
 }
