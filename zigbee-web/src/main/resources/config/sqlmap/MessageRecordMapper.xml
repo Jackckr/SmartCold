@@ -7,4 +7,7 @@
         VALUES
         (#{uid},#{rdcId},#{type},#{sType},#{title},#{message},#{addTime})
     </insert>
+    <select id="selByUidRdcId" resultType="com.smartcold.zigbee.manage.entity.MessageRecord">
+        SELECT * FROM `rdcauth` WHERE `uid`=#{uid} and `rdcid`=#{rdcId}
+    </select>
 </mapper>

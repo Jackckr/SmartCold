@@ -82,7 +82,7 @@ coldWeb.controller('coldStorageAuth', function ($rootScope, $scope, $cookies, $h
                 data: data
             }).then(function (resp) {
                 $scope.isDisabled = false;
-                alert("提交成功,等待审核");
+                alert(resp.data.message);
                 $state.go('coldStorageComment', {rdcID: $stateParams.rdcID});
             });
         } else {

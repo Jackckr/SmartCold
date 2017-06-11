@@ -92,45 +92,51 @@ public class RdcController {
 	@ResponseBody
 	public Object attestationRdc(int userId,String userName, int rdcId,  int type, MultipartFile authfile) {
 		try {
-			String msg="";
-			if (type==0){
-				String dir =null;String fileName=null;
-				if (authfile != null) {//
-					dir = String.format("%s/rdc/%s", baseDir, rdcId);
-					fileName = String.format("rdc%s_%s_%s.%s", rdcId,userId, new Date().getTime(), "jpg");
-					UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
-					this.ftpService.uploadFile(uploadFileEntity);
-					FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,FileDataMapper.CATEGORY_AUTH_PIC, rdcId, fileName);
-					arrangeFile.setDescription(type+"");
-					this.fileDataDao.saveFileData(arrangeFile);
+			List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByUidRdcId(userId, rdcId);
+			List<MessageRecord> messageRecords = messageRecordMapping.selByUidRdcId(userId, rdcId);
+			if (rdcAuthEntities.size()==0&&messageRecords.size()==0){
+				String msg="";
+				if (type==0){
+					String dir =null;String fileName=null;
+					if (authfile != null) {//
+						dir = String.format("%s/rdc/%s", baseDir, rdcId);
+						fileName = String.format("rdc%s_%s_%s.%s", rdcId,userId, new Date().getTime(), "jpg");
+						UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
+						this.ftpService.uploadFile(uploadFileEntity);
+						FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,FileDataMapper.CATEGORY_AUTH_PIC, rdcId, fileName);
+						arrangeFile.setDescription(type+"");
+						this.fileDataDao.saveFileData(arrangeFile);
+					}
+					RdcAuthEntity auchedata = new RdcAuthEntity();
+					auchedata.setType(type);
+					auchedata.setUid(userId);
+					auchedata.setRdcid(rdcId);
+					if(authfile!=null){
+						auchedata.setImgurl(dir + File.separator + fileName);
+					}
+					this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
+					msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
+				}else {
+					Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
+					MessageRecord msgMessageRecord = new MessageRecord();
+					if(rdc!=null&&rdc.getUserid()!=0){
+						msgMessageRecord.setTid(rdc.getUserid());
+					}
+					msgMessageRecord.setType(1);
+					msgMessageRecord.setsType(type);
+					msgMessageRecord.setUid(userId);
+					msgMessageRecord.setRdcId(rdcId);
+					msgMessageRecord.setTitle("请求冷库认证");
+					msgMessageRecord.setMessage(userName+"请求成为您的"+(type==1?"货主":"维修商")+",请及时处理！");
+					msgMessageRecord.setAddTime(TimeUtil.getDateTime());
+					this.messageRecordMapping.insertMessageRecord(msgMessageRecord);
+					msg="您的申请已提交成功！请耐心等待！";
 				}
-				RdcAuthEntity auchedata = new RdcAuthEntity();
-				auchedata.setType(type);
-				auchedata.setUid(userId);
-				auchedata.setRdcid(rdcId);
-				if(authfile!=null){
-					auchedata.setImgurl(dir + File.separator + fileName);
-				}
-				this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
-				msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
+				this.userMapper.updateTypeById(new UserEntity(userId,type));
+				return new ResultDto(1,msg);
 			}else {
-				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
-				MessageRecord msgMessageRecord = new MessageRecord();
-				if(rdc!=null&&rdc.getUserid()!=0){
-					msgMessageRecord.setTid(rdc.getUserid());
-				}
-				msgMessageRecord.setType(1);
-				msgMessageRecord.setsType(type);
-				msgMessageRecord.setUid(userId);
-				msgMessageRecord.setRdcId(rdcId);
-				msgMessageRecord.setTitle("请求冷库认证");
-				msgMessageRecord.setMessage(userName+"请求成为您的"+(type==1?"货主":"维修商")+",请及时处理！");
-				msgMessageRecord.setAddTime(TimeUtil.getDateTime());
-				this.messageRecordMapping.insertMessageRecord(msgMessageRecord);
-				msg="您的申请已提交成功！请耐心等待！";
+				return new ResultDto(-1,"您已认证过该冷库，请耐心等待！");
 			}
-			this.userMapper.updateTypeById(new UserEntity(userId,type));
-			return new ResultDto(1,msg);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResultDto(0,"");
