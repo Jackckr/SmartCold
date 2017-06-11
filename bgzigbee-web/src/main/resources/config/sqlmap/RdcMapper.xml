@@ -11,7 +11,7 @@
 			    r.audit=#{audit}
 			</if>
 		    <if test="keyword != null">
-		        AND name like "%"#{keyword}"%" or username like "%"#{keyword}"%"
+		        AND (name like "%"#{keyword}"%" or username like "%"#{keyword}"%")
 		    </if>
 		 </where>
          order by `addTime` desc

@@ -8,22 +8,22 @@
         DELETE FROM `shared_info` WHERE `id`=#{id}
     </delete>
     <select id="findShareInfo" resultMap="shareInfo">
-        SELECT * FROM `shared_info`
+        SELECT * FROM `shared_info` AS s LEFT JOIN `rdc` AS r  ON s.`rdcID`=r.`id`
         <where>
             <if test="startTime!=null and startTime!=''">
-                `updateTime` >= #{startTime}
+                s.`updateTime` >= #{startTime}
             </if>
             <if test="endTime!=null and endTime!=''">
-                and `updateTime` &lt;= #{endTime}
+                and s.`updateTime` &lt;= #{endTime}
             </if>
             <if test="type!=null and type!=''">
-                and `typeText`=#{type}
+                and s.`typeText`=#{type}
             </if>
             <if test="keyword !=null and keyword !=''">
-                and `title` like #{keyword} or `detlAddress` like #{keyword} or `note` like #{keyword}
+                and (s.`title` like #{keyword} or s.`detlAddress` like #{keyword} or s.`note` like #{keyword} or r.`name` like #{keyword})
             </if>
         </where>
-        ORDER BY `id` DESC
+        ORDER BY s.`id` DESC
     </select>
     <select id="findShareInfoById" resultMap="shareInfo">
         SELECT * FROM `shared_info` WHERE `id` =#{id}
