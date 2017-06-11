@@ -96,6 +96,7 @@ function searchData() {
 }
 /*冷库修改*/
 function ck(id) {
+    $("#showNameMessage").hide();
     $('#addColdForm').form('clear');
     $.ajax({
         url: "/i/rdc/findRDCDTOByRDCId",
@@ -199,6 +200,7 @@ function sh(id, name, audit) {
 
 /*添加冷库*/
 function addCold() {
+    $("#showNameMessage").hide();
     $('#addColdForm').form('clear');
     loadProvince();
     $("#coldButton").html("添加冷库");
@@ -214,9 +216,6 @@ function addCold() {
 }
 /*检查冷库名字是否重复*/
 var addRdcFlag = true;
-function checkRdcName() {
-
-}
 /*提交冷库验证方法*/
 function coldValidation(honorfiles, files, vo) {
     if (!addRdcFlag) {
@@ -400,6 +399,7 @@ function loadCityByProId(id) {
     });
 }
 //初始化数据
+var saveProvince="";
 $().ready(function () {
     init_table();
 
@@ -420,7 +420,14 @@ $().ready(function () {
     });
     $("#provinceId").combobox({
         onSelect: function (record) {
+            if(saveProvince==""){
+                saveProvince=record.value;
+            }
             loadCityByProId(record.value);
+            if(saveProvince!=record.value){
+                $("#cityId").combobox({value:""});
+                saveProvince=record.value;
+            }
         }
     });
 });//初始化数据
