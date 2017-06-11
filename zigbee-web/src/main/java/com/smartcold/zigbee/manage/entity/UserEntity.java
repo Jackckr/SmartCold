@@ -42,6 +42,13 @@ public class UserEntity {
 
 	private String avatar="app/img/userimg.jpg";//用户头像->add
 
+	public UserEntity(){}
+
+	public UserEntity(int id, Integer type) {
+		this.id = id;
+		this.type = type;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.controller;
 
+import java.io.File;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +11,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.dao.*;
+import com.smartcold.zigbee.manage.dto.*;
+import com.smartcold.zigbee.manage.entity.*;
+import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -24,33 +29,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.smartcold.zigbee.manage.dao.CompanyDeviceMapper;
-import com.smartcold.zigbee.manage.dao.FileDataMapper;
-import com.smartcold.zigbee.manage.dao.RdcExtMapper;
-import com.smartcold.zigbee.manage.dao.RdcMapper;
-import com.smartcold.zigbee.manage.dao.StorageManageTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageRefregMapper;
-import com.smartcold.zigbee.manage.dao.StorageStructureTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageTemperTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
-import com.smartcold.zigbee.manage.dao.UserMapper;
-import com.smartcold.zigbee.manage.dto.BaseDto;
-import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
-import com.smartcold.zigbee.manage.dto.RdcAddDTO;
-import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
-import com.smartcold.zigbee.manage.dto.UploadFileEntity;
-import com.smartcold.zigbee.manage.entity.FileDataEntity;
-import com.smartcold.zigbee.manage.entity.RdcEntity;
-import com.smartcold.zigbee.manage.entity.RdcExtEntity;
-import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.service.impl.WebvistsService;
-import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.SetUtil;
-import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.VerifyUtil;
 
 @Controller
 @RequestMapping(value = "/rdc")
@@ -99,6 +81,61 @@ public class RdcController {
 	
 	@Autowired
 	private UserMapper userMapper;
+
+	@Autowired
+	private RdcauthMapping rdcauthMapping;
+
+	@Autowired
+	private MessageRecordMapping messageRecordMapping;
+
+	@RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
+	@ResponseBody
+	public Object attestationRdc(int userId,String userName, int rdcId,  int type, MultipartFile authfile) {
+		try {
+			String msg="";
+			if (type==0){
+				String dir =null;String fileName=null;
+				if (authfile != null) {//
+					dir = String.format("%s/rdc/%s", baseDir, rdcId);
+					fileName = String.format("rdc%s_%s_%s.%s", rdcId,userId, new Date().getTime(), "jpg");
+					UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
+					this.ftpService.uploadFile(uploadFileEntity);
+					FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,FileDataMapper.CATEGORY_AUTH_PIC, rdcId, fileName);
+					arrangeFile.setDescription(type+"");
+					this.fileDataDao.saveFileData(arrangeFile);
+				}
+				RdcAuthEntity auchedata = new RdcAuthEntity();
+				auchedata.setType(type);
+				auchedata.setUid(userId);
+				auchedata.setRdcid(rdcId);
+				if(authfile!=null){
+					auchedata.setImgurl(dir + File.separator + fileName);
+				}
+				this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
+				msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
+			}else {
+				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
+				MessageRecord msgMessageRecord = new MessageRecord();
+				if(rdc!=null&&rdc.getUserid()!=0){
+					msgMessageRecord.setTid(rdc.getUserid());
+				}
+				msgMessageRecord.setType(1);
+				msgMessageRecord.setsType(type);
+				msgMessageRecord.setUid(userId);
+				msgMessageRecord.setRdcId(rdcId);
+				msgMessageRecord.setTitle("请求冷库认证");
+				msgMessageRecord.setMessage(userName+"请求成为您的"+(type==1?"货主":"维修商")+",请及时处理！");
+				msgMessageRecord.setAddTime(TimeUtil.getDateTime());
+				this.messageRecordMapping.insertMessageRecord(msgMessageRecord);
+				msg="您的申请已提交成功！请耐心等待！";
+			}
+			this.userMapper.updateTypeById(new UserEntity(userId,type));
+			return new ResultDto(1,msg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultDto(0,"");
+		}
+	}
 
     /**
      * 

@@ -68,14 +68,16 @@ coldWeb.controller('coldStorageAuth', function ($rootScope, $scope, $cookies, $h
         if (checkCommit()) {
             $scope.isDisabled = true;
             var data = {
-                authfile0: null,
+                authfile: null,
                 rdcId: $stateParams.rdcID,
-                uid: user.id
+                userId: user.id,
+                userName:user.username,
+                type:user.type
             };
-            data["authfile" + 0] = $scope.totalauthfiles[0];
+            data["authfile"] = $scope.totalauthfiles[0];
 
             Upload.upload({
-                url: '/i/rdc/authRdc',
+                url: '/i/rdc/attestationRdc',
                 headers: {'Content-Transfer-Encoding': 'utf-8'},
                 data: data
             }).then(function (resp) {

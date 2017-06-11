@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.smartcold.zigbee.manage.dao.RdcMapper">
-
+    <resultMap id="BaseResultMap" type="com.smartcold.zigbee.manage.entity.RdcEntity" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        `id`, `name`, `address`,`userid`, `addtime`
+    </sql>
     <select id="findRdcList" parameterType="map" resultType="RdcEntity">
          SELECT * FROM `Rdc` where `latitude`!=0 and `longitude`!=0 order by `addTime` desc
     </select>
@@ -191,4 +199,10 @@
     		<if test="hasCar !=null and  hasCar != ''"> and <if test="hasCar ==1">!</if> ISNULL(t.storagetruck) </if><!-- 有无车辆-->
        ORDER BY r.addTime DESC
 	</select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from Rdc
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 </mapper>

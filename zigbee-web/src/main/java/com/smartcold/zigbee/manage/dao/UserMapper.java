@@ -21,4 +21,6 @@ public interface UserMapper {
 	public int existenceUserName(@Param("username")String username);
 	
 	public void addmsg(@Param("userName")String userName,@Param("telephone")String telephone,@Param("corporateName")String corporateName,@Param("note")String note);
+
+	void updateTypeById(UserEntity userEntity);
 }
