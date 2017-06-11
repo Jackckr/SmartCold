@@ -77,10 +77,10 @@ function init_table() {
         {field: 'id', title: 'ID', sortable: true},
         {field: 'username', title: '用户名', width: 80, align: 'center', sortable: true},
         {field: 'telephone', title: '手机号', width: 80, align: 'center', sortable: true},
-        {field: 'type', title: '用户类型', width: 80, align: 'center', sortable: true, formatter: col_userType},
         {field: 'email', title: '邮箱', width: 80, align: 'center', sortable: true},
-        {field: 'addTime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format},
+        {field: 'type', title: '用户类型', width: 80, align: 'center', sortable: true, formatter: col_userType},
         {field: 'audit', title: '状态', width: 80, align: 'center', sortable: true, formatter: col_audit},
+        {field: 'addTime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format},
         {field: 'hand', title: '操作', width: 100, align: 'center', formatter: col_cellStyler}
     ]];
     initTable("用户管理", "icon-user", "POST", "../../i/user/getUserByFilter", queryParams, '#user_filter', null, col, true, onDblClickRow);

@@ -2,11 +2,8 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;

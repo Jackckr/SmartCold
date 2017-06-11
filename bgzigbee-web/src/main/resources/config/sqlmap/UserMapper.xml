@@ -10,6 +10,8 @@
 		`password`,
 		`telephone`,
 		`email`,
+		`type`,
+		`audit`,
 		`addTime`
 		)
 		VALUE 
@@ -18,6 +20,8 @@
 		#{password},
 		#{telephone},
 		#{email},
+		#{type},
+		#{audit},
 		now()
 		)
     </insert>

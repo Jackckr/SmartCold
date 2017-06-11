@@ -101,6 +101,7 @@ public class AdminController extends BaseController {
 				String cookie = cookieService.insertCookie(adminName);
 			    admin.setAdminpwd(null);
 				request.getSession().setAttribute("admin", admin);
+				admin.setAcl(null);
 //				Blacklist.remove(remoteAddr);
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", admin);
@@ -216,47 +217,52 @@ public class AdminController extends BaseController {
 		if(StringUtil.isNull(alc)){return null;}
 		List<ACLAdminNode> ml=new ArrayList<ACLAdminNode>();
 		ACLAdminNode pml = new ACLAdminNode("0","main_platform",      "链库管理");
-		List<ACLAdminNode> mlList=new ArrayList<ACLAdminNode>();
-		mlList.add(new ACLAdminNode("0_0","icon-user",   "用户管理",      "usermanage.html"       ));
-		mlList.add(new ACLAdminNode("0_1","icon-cold",   "冷库管理",      "rdcmanage.html"        ));
-		mlList.add(new ACLAdminNode("0_2","main_share",  "共享管理",      "rdcShareInfo.html"     ));
-		mlList.add(new ACLAdminNode("0_3","icon-authe",  "认证管理",       ""      ));
-		mlList.add(new ACLAdminNode("0_4","main_infmation", "资讯管理",    ""      ));
-		mlList.add(new ACLAdminNode("0_5","icon-coldcf", "冷库配置"   ,    "storageConfig.html"      ));
-		pml.setChild(mlList);ml.add(pml);
+		List<ACLAdminNode> mlList0=new ArrayList<ACLAdminNode>();
+		mlList0.add(new ACLAdminNode("0_0","icon-user",   "用户管理",      "user_manage.html"       ));
+		mlList0.add(new ACLAdminNode("0_1","icon-cold",   "冷库管理",      "rdc_manage.html"        ));
+		mlList0.add(new ACLAdminNode("0_2","main_share",  "共享管理",      "rdc_ShareInfo.html"     ));
+		mlList0.add(new ACLAdminNode("0_3","icon-authe",  "认证管理",       ""      ));
+		mlList0.add(new ACLAdminNode("0_4","main_infmation", "资讯管理",    ""      ));
+		mlList0.add(new ACLAdminNode("0_5","icon-coldcf", "冷库配置"   ,    "storageConfig.html"      ));
+		pml.setChild(mlList0);ml.add(pml);
 		
-	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");mlList.clear();
-		mlList.add(new ACLAdminNode("1_0","icon-role",    "设备管理",     ""     ));
-		mlList.add(new ACLAdminNode("1_1","icon-role",    "设备查询",     ""     ));
-		mlList.add(new ACLAdminNode("1_2","icon-role",    "设备检测",     ""     ));
-		mlList.add(new ACLAdminNode("1_3","dev_data",     "数据管理",     "dev_data.html" ));
-		mlList.add(new ACLAdminNode("1_4","dev_warning" , "设备告警",     "dev_msg.html"  ));
-		pml.setChild(mlList); ml.add(pml);
+	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");
+	    List<ACLAdminNode> mlList1=new ArrayList<ACLAdminNode>();
+		mlList1.add(new ACLAdminNode("1_0","icon-role",    "设备管理",     ""     ));
+		mlList1.add(new ACLAdminNode("1_1","icon-role",    "设备查询",     ""     ));
+		mlList1.add(new ACLAdminNode("1_2","icon-role",    "设备检测",     ""     ));
+		mlList1.add(new ACLAdminNode("1_3","dev_data",     "数据管理",     "dev_data.html" ));
+		mlList1.add(new ACLAdminNode("1_4","dev_warning" , "设备告警",     "dev_msg.html"  ));
+		pml.setChild(mlList1); ml.add(pml);
 		
-		pml  = new ACLAdminNode("2"  ,"main_360",  "360管理");mlList.clear();
-		mlList.add(new ACLAdminNode("2_0","icon-role",    "集团管理", "" ));
-		mlList.add(new ACLAdminNode("2_1","icon-role",    "权限配置", "" ));
-		mlList.add(new ACLAdminNode("2_2","icon-role",    "360配置",  "" ));
-		mlList.add(new ACLAdminNode("2_3","icon-role",     "报表管理", "" ));
-		mlList.add(new ACLAdminNode("2_4","icon-role" , "关联管理", "" ));
-		pml.setChild(mlList);  ml.add(pml);
+		pml  = new ACLAdminNode("2"  ,"main_360",  "360管理");
+	    List<ACLAdminNode> mlList2=new ArrayList<ACLAdminNode>();
+		mlList2.add(new ACLAdminNode("2_0","icon-role",    "集团管理", "" ));
+		mlList2.add(new ACLAdminNode("2_1","icon-role",    "权限配置", "" ));
+		mlList2.add(new ACLAdminNode("2_2","icon-role",    "360配置",  "" ));
+		mlList2.add(new ACLAdminNode("2_3","icon-role",     "报表管理", "" ));
+		mlList2.add(new ACLAdminNode("2_4","icon-role" , "关联管理", "" ));
+		pml.setChild(mlList2);  ml.add(pml);
 		
-		pml  = new ACLAdminNode("3"  ,"main_coun",  "网站统计");mlList.clear();
-		mlList.add(new ACLAdminNode("3_0","icon-role",    "网站统计", "" ));
-		mlList.add(new ACLAdminNode("3_1","icon-role",    "轨迹分析", "" ));
-		mlList.add(new ACLAdminNode("3_2","icon-role",    "用户体验",  "" ));
-		pml.setChild(mlList);     ml.add(pml);
+		pml  = new ACLAdminNode("3"  ,"main_coun",  "网站统计");
+		 List<ACLAdminNode> mlList3=new ArrayList<ACLAdminNode>();
+		mlList3.add(new ACLAdminNode("3_0","icon-role",    "网站统计", "" ));
+		mlList3.add(new ACLAdminNode("3_1","icon-role",    "轨迹分析", "" ));
+		mlList3.add(new ACLAdminNode("3_2","icon-role",    "用户体验",  "" ));
+		pml.setChild(mlList3);     ml.add(pml);
 		
-		pml  = new ACLAdminNode("4"  ,"main_sys",     "系统管理");mlList.clear();
-		mlList.add(new ACLAdminNode("4_0","icon-role",    "系统消息", "sys_msg.html" ));
-		mlList.add(new ACLAdminNode("4_1","icon-role",    "系统状态", "sys_state.html" ));
-		pml.setChild(mlList);    ml.add(pml);
+		pml  = new ACLAdminNode("4"  ,"main_sys",     "系统管理");
+		 List<ACLAdminNode> mlList4=new ArrayList<ACLAdminNode>();
+		mlList4.add(new ACLAdminNode("4_0","icon-role",    "系统消息", "sys_msg.html" ));
+		mlList4.add(new ACLAdminNode("4_1","icon-role",    "系统状态", "sys_state.html" ));
+		pml.setChild(mlList4);    ml.add(pml);
 		
-		pml  = new ACLAdminNode("5"  ,"main_debug",    "开发人员");mlList.clear();
-		mlList.add(new ACLAdminNode("5_0","icon-role",    "日志查询", "sys_msg.html" ));
-		mlList.add(new ACLAdminNode("5_1","icon-role",    "缓存管理", "sys_state.html" ));
-		mlList.add(new ACLAdminNode("5_2","icon-role",    "系统调度", "sysmessage.html" ));
-		pml.setChild(mlList);      ml.add(pml);
+		pml  = new ACLAdminNode("5"  ,"main_debug",    "开发人员");
+		 List<ACLAdminNode> mlList5=new ArrayList<ACLAdminNode>();
+		mlList5.add(new ACLAdminNode("5_0","icon-role",    "日志查询", "sys_msg.html" ));
+		mlList5.add(new ACLAdminNode("5_1","icon-role",    "缓存管理", "sys_state.html" ));
+		mlList5.add(new ACLAdminNode("5_2","icon-role",    "系统调度", "sysmessage.html" ));
+		pml.setChild(mlList5);      ml.add(pml);
 		
 		List<ACLAdminNode> nml=new ArrayList<ACLAdminNode>();
 		String[] split = alc.split("-");
