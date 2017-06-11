@@ -48,13 +48,9 @@ function ckuid(type) {
 }
 
 function login() {
-    var adds = "127.0.0.1  本地登录";
-    var name = $("#userId");
-    var password = $("#upassword");
-    if (remote_ip_info != null && remote_ip_info != "") {
-        adds = $("#keleyivisitorip").html() + " " + remote_ip_info["province"] + "省" + remote_ip_info["city"] + "市";
-    }
-    $("#uip").val(adds);
+    var adds = "127.0.0.1  本地登录", name = $("#userId"), password = $("#upassword");
+    if (remote_ip_info != null && remote_ip_info != "") { adds = $("#keleyivisitorip").html() + " " + remote_ip_info["province"] + "省" + remote_ip_info["city"] + "市";} $("#uip").val(adds);
+    if(!window.localStorage.lip){window.localStorage.lip=adds;};$("#lip").val(adds);
     if (name.val() == "") {
         name.focus();
         return false;
@@ -67,7 +63,7 @@ function login() {
     $.ajax({
         url: '/i/admin/userlogin',
         type: 'POST',
-        data: $('#sellloginform').serialize(),
+        data:$('#sellloginform').serialize() ,
         error: function() {  clsyle("#ui", 2, '服务异常！'); },
         success: function(data) {
         	if (data.success) {

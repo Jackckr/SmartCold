@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>冷库认证管理</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <style type="text/css"> form tr{height:35px;} .pagination-btn-separator {float: none;} </style>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../app/comm.js"></script>
+    <script type="text/javascript"  src="../app/rdc_authen.js"></script>
+  </head>
+  
+ <body id="maindiv" >
+      <table id="objTable" class="fill"></table>
+    
+    <div class="none">
+	    <div id="user_filter" style="padding:5px 0;">
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_rem'" onclick="delAuthen()">删除</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="reloaddata()">刷新</a>
+	        <div style="display: -webkit-inline-box; float: right;">
+	           <div id="div_st_filter">
+			                           认证类型: 
+					<select id="sel_auth_type" class="easyui-combobox" panelHeight="auto" style="width:120px" >
+						<option value="">====全部====</option>
+						<option value="0">普通用户/360用户</option>
+						<option value="1">货主用户</option>
+						<option value="2">服务商用户</option>
+					</select>
+			        &nbsp;状态: 
+					<select id="sel_auth_state" class="easyui-combobox" panelHeight="auto" style="width:120px"  >
+					    <option value="">====全部====</option>
+						<option value="-1">未通过</option>
+						<option value="0">待审核</option>
+						<option value="1">已审核</option>
+					</select>
+					&nbsp;
+	           </div>
+	        </div>
+	    </div>
+    	
+		 
+	</div>
+ </body>
+</html>

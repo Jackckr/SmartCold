@@ -8,7 +8,7 @@ import java.util.Date;
  *@date:2016-6-22 上午11:02:18
  *@Description: Admin Entity
  */
-public class AdminEntity {
+public class AdminEntity implements Cloneable {
 	private int id;
 	private String adminname;
 	private String adminpwd;
@@ -104,6 +104,15 @@ public class AdminEntity {
 		this.cuttlogininfo = cuttlogininfo;
 	}
 
-	
+	@Override  
+    public AdminEntity clone() {  
+		AdminEntity stu = null;  
+        try{  
+            stu = (AdminEntity)super.clone();  
+        }catch(CloneNotSupportedException e) {  
+            e.printStackTrace();  
+        }  
+        return stu;  
+    } 
 	
 }

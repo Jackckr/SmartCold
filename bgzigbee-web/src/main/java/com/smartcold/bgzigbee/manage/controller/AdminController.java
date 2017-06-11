@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -91,19 +88,19 @@ public class AdminController extends BaseController {
 	 */
 	@RequestMapping(value = "/userlogin",method= RequestMethod.POST)
 	@ResponseBody
-	public Object userlogin(HttpServletRequest request,@RequestParam(value="adminName",required=true) String adminName,@RequestParam(value="adminPwd",required=true) String adminPwd,@RequestParam(value="sik",required=true)  Integer sik,String uip) {
+	public Object userlogin(HttpServletRequest request,@RequestParam(value="adminName",required=true) String adminName,@RequestParam(value="adminPwd",required=true) String adminPwd,@RequestParam(value="sik",required=true)  Integer sik,String lip,String uip) {
 		try {
 			if(sik==null||sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return ResponseData.newFailure("登录过于频繁，请24小时后再试!");}
 			adminPwd = EncodeUtil.encodeByMD5(adminPwd);
 			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd);
 			if (admin != null) {
 				String cookie = cookieService.insertCookie(adminName);
-			    admin.setAdminpwd(null);
-				request.getSession().setAttribute("admin", admin);
-				admin.setAcl(null);
 				admin.setToken(cookie);
 				admin.setCuttlogininfo(uip);
-//				Blacklist.remove(remoteAddr);
+				admin.setLastlogininfo(lip);
+			    admin.setAdminpwd(null);
+				request.getSession().setAttribute("admin", admin.clone());
+				admin.setAcl(null);
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", admin);
 				resdata.put("token", String.format("token=%s", cookie));
@@ -173,7 +170,7 @@ public class AdminController extends BaseController {
 						if(admin==null)return ResponseData.newSuccess(new AdminEntity());
 						admin.setAdminpwd(null);
 						admin.setToken(cookie.getValue());
-						request.getSession().setAttribute("admin", admin);
+						request.getSession().setAttribute("admin", admin.clone());
 						admin.setAcl(null);
 						return ResponseData.newSuccess(admin);
 					}
@@ -224,7 +221,7 @@ public class AdminController extends BaseController {
 		mlList0.add(new ACLAdminNode("0_0","icon-user",   "用户管理",      "user_manage.html"       ));
 		mlList0.add(new ACLAdminNode("0_1","icon-cold",   "冷库管理",      "rdc_manage.html"        ));
 		mlList0.add(new ACLAdminNode("0_2","main_share",  "共享管理",      "rdc_ShareInfo.html"     ));
-		mlList0.add(new ACLAdminNode("0_3","icon-authe",  "认证管理",       ""      ));
+		mlList0.add(new ACLAdminNode("0_3","icon-authe",  "认证管理",      "rdc_authen.html"        ));
 		mlList0.add(new ACLAdminNode("0_4","main_infmation", "资讯管理",    ""      ));
 		mlList0.add(new ACLAdminNode("0_5","icon-coldcf", "冷库配置"   ,    "storageConfig.html"      ));
 		pml.setChild(mlList0);ml.add(pml);
