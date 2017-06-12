@@ -72,10 +72,28 @@ public class AuthenController {
     @ResponseBody
     public TableData<RdcAuthEntity> getAuthRdcList(Integer type,Integer state, String coleam,String colval,int  page,int rows) {
     	PageHelper.startPage(page, rows);
-    	Page<RdcAuthEntity> rdcAuthList  = authenMapper.getRdcAuthList( type,state, coleam, colval);
+    	Page<RdcAuthEntity> rdcAuthList  = this.authenMapper.getRdcAuthList( type,state, coleam, colval);
     	return TableData.newSuccess(new PageInfo<RdcAuthEntity>(rdcAuthList) );
     }
 	
+    /**
+	 * 获得认证列表
+	 * @param type
+	 * @param audit
+	 * @param coleam
+	 * @param colval
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+    @RequestMapping(value = "/updateAuthstate", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean updateAuthstate(Integer id,Integer ishandle,Integer state,String note) {
+    	this.authenMapper.updateAuthstate(id, ishandle, state,note);
+    	return true;
+    }
+	
+    
 	/**
 	 * 冷库认证
 	 * @param request

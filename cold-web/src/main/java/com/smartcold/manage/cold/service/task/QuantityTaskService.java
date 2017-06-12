@@ -109,7 +109,7 @@ public class QuantityTaskService  {
 		if(!taskStatus){return ;}
 		this.delTempfile();
     	this.resetDevStatus();
-    	this.LowbatteryAlarm();//北京中威低电量
+    	this.LowbatteryAlarm();//低电量告警
     	if(errDevList.size()>2000){errDevList.clear();}
     	if(coldStoragecache.size()>2000){coldStoragecache.clear();}
 	}
@@ -195,7 +195,7 @@ public class QuantityTaskService  {
 					msg.append("设备:"+hashMap.get("deviceid")+"电压:"+hashMap.get("value")+",/r/n");
 				}
 					msg.delete(msg.length()-5,msg.length());
-				this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV低电量告警",msg.toString()));//添加至系统通知
+				this.msMappergMapper.addsystemInform(new SystemInformEntity(2,2, null, null, 0, 0, 0,"DEV低电量告警",msg.toString()));//添加至系统通知
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

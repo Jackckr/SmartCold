@@ -11,6 +11,7 @@ public class RdcAuthEntity {
 	private int uid          ;
 	private int type        ;
 	private int rdcid        ;
+	private int ishandle;
 	private int state        ;
 	private String imgurl       ;
 	private String msg         ;
@@ -73,6 +74,12 @@ public class RdcAuthEntity {
 	}
 	public void setAddtime(String addtime) {
 		this.addtime = addtime;
+	}
+	public int getIshandle() {
+		return ishandle;
+	}
+	public void setIshandle(int ishandle) {
+		this.ishandle = ishandle;
 	}
 
 }

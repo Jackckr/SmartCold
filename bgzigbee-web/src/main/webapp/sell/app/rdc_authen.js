@@ -3,29 +3,36 @@ var queryParams = {page: null, rows: null, type: null,state: null};
 var rdc_auth_state = function (i) { switch(i){case -1:return '未通过';case 0:return '待审核';default: return '通过';}};
 var rdc_auth_type = function (i) { switch(i){case 0:return '平台/360用户';case 1:return '货主认证';default: return '维修商认证';}};
 function col_cellStyler(value, row) {
-	if(row.type==0){return ['<button class="btn" onclick="updaterdcAuthen(' , row.id,',',row.state,',',row.rdcid,',',row.uid ,')">审核</button>'  ].join("");}else{return '<button class="btn btn-delete" title="当前认证由冷库主操作，您禁止操作！">无权</button>';}
+	if(row.type==0){return ['<button class="btn" onclick="updaterdcAuthen(' , row.id,',',row.ishandle,',',row.state,',',row.rdcid,',',row.uid ,',\'',row.note,'\')">审核</button>'  ].join("");}else{return '<button class="btn btn-delete" title="当前认证由冷库主操作，您禁止操作！">无权</button>';}
 }
 
-function delAuthen(){}
-
-function updateAuthen(){
-	
-	
+function onDblClickRow(index, field) {
+	updaterdcAuthen(field.id,field.ishandle,field.state,field.rdcid,field.uid,field.note);
 }
-
-function updaterdcAuthen(id,state,rdcId,authUserId){
+function updaterdcAuthen(id,ishandle,state,rdcId,authUserId,note){
+	var but=[];
 	$('#rdc_state_auditForm').form('clear');
-	$('#rdc_state_auditForm').form('load',{id:id,oldstate:state,state:state,rdcId:rdcId,authUserId:authUserId});
-	$('#rdc_state_authendialog').dialog({closed: false});
+	$('#rdc_state_auditForm').form('load',{id:id,oldstate:state,ishandle:ishandle,oldishandle:ishandle,state:state,rdcId:rdcId,authUserId:authUserId,note:note,oldnote:note});
+	if(ishandle==0){but.push({text:'提交',iconCls:'icon-ok',handler:user_upaudit});}
+	but.push({text:'取消',iconCls:'icon-cancel2',handler:function(){$('#rdc_state_authendialog').dialog({closed: true});}});
+	$('#rdc_state_authendialog').dialog({closed: false,buttons: but});
 }
 function user_upaudit(){
 	$('#rdc_state_authendialog').dialog({closed: true});
-    var obj=   getFormData('#dev_msgForm');
-	if(obj.oldstate!=obj.state&&obj.id!=""){$.post('../../i/authen/authRdc', {'userID': id, 'audit': audit}, function () { reloaddata();});}
+    var obj=   getFormData('#rdc_state_auditForm');
+    if(obj.id!=""){
+    		if(obj.oldstate!=obj.state&&obj.state==1){
+    			$.post('../../i/authen/authRdc', {'rdcId': obj.rdcid, 'authUserId': obj.authUserId});//修改
+    		}
+			if(obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note){
+			    $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
+			    reloaddata();
+			}
+    }
 }
 
 
-function onDblClickRow(index, field) {}
+
 //======================================================================格式化col=======================================================
 function init_table() {
     var col = [[
@@ -34,13 +41,15 @@ function init_table() {
         {field: 'rdcid', title: '冷库ID', width: 2, align: 'center', sortable: true},
         {field: 'uid', title: '用户ID', width: 2, align: 'center', sortable: true},
         {field: 'imgurl', title: '证书', width: 5, align: 'center', sortable: true,formatter: tool.col_img},
-        {field: 'msg', title: '认证内容', width: 10, align: 'center', sortable: true},
         {field: 'type', title: '认证类型', width: 5, align: 'center', sortable: true ,formatter: rdc_auth_type},
-        {field: 'state', title: '状态', width: 5, align: 'center', sortable: true ,formatter: rdc_auth_state},
+        {field: 'ishandle', title: '处理状态', width: 5, align: 'center', sortable: true ,formatter: tool.col_isdeal},
+        {field: 'state', title: '审核状态', width: 5, align: 'center', sortable: true ,formatter: rdc_auth_state},
+        {field: 'msg', title: '认证内容', width: 10, align: 'center', sortable: true},
+        {field: 'note', title: '备注', width: 5, align: 'center', sortable: true },
         {field: 'addtime', title: '认证时间', width: 5, align: 'center', sortable: true, formatter: tool.col_format},
         {field: 'hand', title: '操作', width: 5, align: 'center', formatter: col_cellStyler}
     ]];
-    initTable("认证审核", "icon-authe", "POST", "../../i/authen/getAuthRdcList", queryParams, '#user_filter', null, col, true, onDblClickRow);
+    initTable("认证审核", "icon-authe", "POST", "../../i/authen/getAuthRdcList", queryParams, '#div_filter', null, col, true, onDblClickRow);
     crspsh();
 }
 

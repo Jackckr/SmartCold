@@ -232,7 +232,7 @@ public class AdminController extends BaseController {
 		mlList1.add(new ACLAdminNode("1_0","icon-role",    "设备管理",     ""     ));
 		mlList1.add(new ACLAdminNode("1_1","icon-role",    "设备查询",     ""     ));
 		mlList1.add(new ACLAdminNode("1_2","icon-role",    "设备检测",     ""     ));
-		mlList1.add(new ACLAdminNode("1_3","dev_data",     "数据管理",     "dev_data.html" ));
+		mlList1.add(new ACLAdminNode("1_3","dev_data",     "数据查询",     "dev_data.html" ));
 		mlList1.add(new ACLAdminNode("1_4","dev_warning" , "设备告警",     "dev_msg.html"  ));
 		pml.setChild(mlList1); ml.add(pml);
 		

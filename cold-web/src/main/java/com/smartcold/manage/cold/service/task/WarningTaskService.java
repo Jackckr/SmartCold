@@ -108,7 +108,7 @@ public class WarningTaskService  {
 				}else{
 				   double diffTemp=   	maxTempData.getValue()-baseTemp;//
 				   int lavel=  (int) (diffTemp/2);
-				   long croStartTime=cutttTime+(lavel>3 ?3600000:14400000);//1个小时后执行 ：4个小时后执行
+				   long croStartTime=cutttTime+(lavel>3 ?1800000:14400000);//30分钟后执行 ：4个小时后执行
 //				   long croStartTime=cutttTime+30000;//1个小时后执行 ：4个小时后执行
 				   ItemValue overStrtTime =null;
 				   if(TimeUtil.minuteBetween(sttime, maxTempData.getAddtime())>5){

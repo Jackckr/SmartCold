@@ -1,4 +1,4 @@
-﻿var onlyOpenTitle = "首页", areas = "Service", _menus, admin=undefined,usermenus=undefined;
+﻿var onlyOpenTitle = "首页", areas = "Service", _menus, sysuser=undefined,usermenus=undefined;
 function RemoveAccordion(){try{$("#menu .panel-title").each(function(){$("#menu").accordion("remove",$(this).text());	});}catch(e){}}//删除菜单
 function find(menuid){var obj=null;$.each(_menus.menus,function(i,n){$.each(n.menus,function(j,o){if(o.menuid==menuid){obj=o}})});return obj}
 function getIcon(menuid){var icon = 'icon ';$.each(_menus.menus, function(i, n) {$.each(n.menus, function(j, o) {if(o.menuid==menuid){icon += o.icon;} });});return icon;}
@@ -10,9 +10,18 @@ function closeTab(action){var alltabs=$('#tabs').tabs('tabs');var currentTab=$('
 function Time(){t_div=document.getElementById('showtime');var now=new Date();var day="";if(now.getDay()==0)day=" 星期日";if(now.getDay()==1)day=" 星期一";if(now.getDay()==2)day=" 星期二";if(now.getDay()==3)day=" 星期三";if(now.getDay()==4)day=" 星期四";if(now.getDay()==5)day=" 星期五";if(now.getDay()==6)day=" 星期六";t_div.innerHTML=now.getFullYear()+"年"+(now.getMonth()+1)+"月"+now.getDate()+"日 "+now.getHours()+":"+now.getMinutes()+":"+now.getSeconds()+" "+day;setTimeout(Time,1000)}
 function InitLeftMenu(){var selectedPanelname='';$("#menu").accordion({animate:true,fit:true,border:false});$.each(usermenus,function(j,o){var menulist='<ul class="navlist">';if(o.child&&o.child.length>0){$.each(o.child,function(k,p){menulist+='<li><div><a ref="'+p.menuid+'" href="#" rel="'+p.url+'" ><span class="icon '+p.icon+'" > </span><span class="nav">'+p.menuname+'</span></a></div> </li>'})}menulist+='</ul>';$('#menu').accordion('add',{title:o.menuname,content:menulist,border:false,iconCls:'icon '+o.icon});if(j==0){selectedPanelname=o.menuname}});$('#menu').accordion('select',selectedPanelname);$('.navlist li a').click(function(){var tabTitle=$(this).children('.nav').text();var url=$(this).attr("rel");var icon=$(this).find('.icon').attr('class');addTab(tabTitle,url,icon);$('.navlist li div').removeClass("selected");$(this).parent().addClass("selected")}).hover(function(){$(this).parent().addClass("hover")},function(){$(this).parent().removeClass("hover")})}
 //初始化数据
+function logout(){
+	  $http.get('/i/admin/logout').success(function(data,status,config,header){ 
+		  sysuser=undefined;
+		  window.sessionStorage.removeItem(sysadmin);
+		  window.sessionStorage.removeItem(asikey);
+		  document.cookie = data.entity.token;
+	      top.location.href = "http://" + location.host + "/login.html";
+	  });
+}
 $().ready(function() {
 	$.ajax({type: "GET",cache: false,dataType: 'json',url:"/i/admin/findAdmin",success: function(data) { 
-		admin = data.entity;if (admin == null || admin.id == 0) {var url = "http://" + location.host + "/login.html"; top.location.href = url;  }
+		sysuser = data.entity;if (sysuser == null || sysuser.id == 0) {var url = "http://" + location.host + "/login.html"; top.location.href = url;  }
 	   $.ajax({type: "GET",cache: false,dataType: 'json',url:"/i/admin/getUserMenu",success: function(data) { 
 		   usermenus=data;
 		   if(!usermenus){ top.location.href = "login.htm";}	 

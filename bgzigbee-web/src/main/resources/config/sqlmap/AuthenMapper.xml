@@ -11,7 +11,9 @@
   </select>
   
   <update id="updateAuthstate">
-    update rdcauth set `state`=#{state} where id=#{id};
+    update rdcauth set `state`=#{state}
+    <if test="ishandle!=null">,`ishandle`=#{ishandle}</if>
+    <if test="note!=null and note!=''">,`note`=#{note}</if> where id=#{id};
   </update>
   
 </mapper>

@@ -1,10 +1,13 @@
 ﻿var curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize;
 var sys={imgrooturl:"http://139.196.189.93:8089/"};
 if(!window.sessionStorage.asikey){
-	$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
-		window.sessionStorage.sysadmin = data.entity; window.sessionStorage.asikey= window.admin.token;
-	    if (admin == null || admin.id == 0) {var url = "http://" + location.host + "/login.html"; top.location.href = url;  }
-	});
+//	$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
+//		sysuser= data.entity;		window.sessionStorage.sysadmin = data.entity; window.sessionStorage.asikey= window.admin.token;
+//	    if (admin == null || admin.id == 0) {
+//	    	var url = "http://" + location.host + "/login.htm"; 
+	    	top.location.href = window.location.host+"/login.htm"; 
+//	    	}
+//	});
 }
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间
