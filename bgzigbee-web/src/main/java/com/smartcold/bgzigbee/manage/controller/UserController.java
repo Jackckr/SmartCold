@@ -115,6 +115,8 @@ public class UserController extends BaseController {
 		if (StringUtil.isNull(user.getUsername())|| StringUtil.isNull(user.getPassword())) {return new ResultDto(-1, "用户名和密码不能为空");}
 		user.setUsername(URLDecoder.decode(user.getUsername(), "UTF-8"));
 		user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
+		user.setType(0);
+		user.setAudit(0);
 		userDao.insertUser(user);
 		return new BaseDto(0);
 	}
@@ -139,7 +141,7 @@ public class UserController extends BaseController {
 		}
 	}
 
-	@Deprecated
+//	@Deprecated
 	@ResponseBody
 	@RequestMapping(value = "/checkUserName")
 	public Object checkUserName(@RequestParam("value") String username) {

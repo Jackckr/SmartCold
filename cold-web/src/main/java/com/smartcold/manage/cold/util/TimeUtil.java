@@ -28,7 +28,6 @@ public class TimeUtil {
 	
 	
 	
-	
 	public static Long getLongtime(){
 		return Long.parseLong( (System.currentTimeMillis()+"").substring(0, 10));
 	}
@@ -149,6 +148,15 @@ public class TimeUtil {
         return result;
     }
    
+    /**
+     * 获取指定日期的 23：59：59
+     *
+     * @return
+     */
+    public static String getbefDayLast() {
+    	String sourceDateStr = dateToString(getBeforeDay(1), "yyyy-MM-dd");
+    	return sourceDateStr + " 23:59:59";
+    }
     /**
      * 获取指定日期的 23：59：59
      *

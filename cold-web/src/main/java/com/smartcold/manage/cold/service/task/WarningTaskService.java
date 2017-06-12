@@ -34,7 +34,7 @@ public class WarningTaskService  {
 	
 	
 	/**
-	 * 每天凌晨1:30点触发
+	 * 每天凌晨1:10点触发
 	 * Task:刪除临时任务
 	 * 重置dev
 	 */
@@ -54,7 +54,6 @@ public class WarningTaskService  {
 	 * 1.查询当前冷库的基准温度，计算max min 临界值时间温度 
 	*/
 	@Scheduled(cron = "0 0/30 * * * ?")
-//	@Scheduled(cron = "0 0/5 * * * ?")
 	public void checkData() {
 		if(QuartzManager.tempWarningServer==null){QuartzManager.tempWarningServer=this.tempWarningServer;QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;}
 		Date sttime = TimeUtil.getBeforeMinute(30);
