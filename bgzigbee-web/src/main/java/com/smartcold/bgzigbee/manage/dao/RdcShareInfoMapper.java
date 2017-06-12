@@ -12,7 +12,7 @@ import java.util.List;
  * Created by qiangzi on 2017/5/24.
  */
 public interface RdcShareInfoMapper {
-    List<RdcSharedInfoEntity> findShareInfo(@Param("type") String type,@Param("keyword")String keyword,@Param("startTime") Date sTime,@Param("endTime") Date eTime);
+    List<RdcSharedInfoEntity> findShareInfo(@Param("type") String type,@Param("stauts") String stauts,@Param("keyword")String keyword,@Param("startTime") Date sTime,@Param("endTime") Date eTime);
 
     RdcSharedInfoEntity findShareInfoById(Integer id);
 
