@@ -137,8 +137,10 @@ function changstatus(status,ops) {//已处理未处理
     params.page = 1;
     $("#allList").empty();
     allMsgAjax();
-    params.status = -1;
-    allMsgAjax();
+    if(params.status==1){
+        params.status = -1;
+        allMsgAjax();
+    }
 };
 function isRead(isread,ops) {//已读未读
     infoTxt(ops);
@@ -201,6 +203,7 @@ function allMsgAjax() {//全部消息
 }
 /*无限加载*/
 $(window).scroll(function(){
+    if(params.page==1){return}
     var scrollTop = $(this).scrollTop();
     var scrollHeight = $(document).height();
     var windowHeight = $(this).height();
@@ -359,6 +362,7 @@ function changeRdc(id,rdc) {
 };
 function goprev() {
     initAjax();
+    params.page=1;
     togglepage(false);
     $('.myedit').html("编辑");
     $(".editSys,.checkAll").hide();
