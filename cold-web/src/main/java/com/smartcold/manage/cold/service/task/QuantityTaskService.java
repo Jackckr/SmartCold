@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.smartcold.manage.cold.dao.newdb.ColdStorageAnalysisMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
+import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningLogMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.QuantitySetMapper;
@@ -53,6 +54,9 @@ public class QuantityTaskService  {
 	private DeviceObjectMappingMapper deviceMapper;
 	@Autowired
 	private ColdStorageAnalysisMapper storageAnalysisMapper;
+	@Autowired
+	private SysWarningsInfoMapper sysWarningsInfoMapper;
+	
 	/**
 	 * 计算Q
 	 */
@@ -110,6 +114,7 @@ public class QuantityTaskService  {
 		this.delTempfile();
     	this.resetDevStatus();
     	this.LowbatteryAlarm();//低电量告警
+    	this.SummaryTempWarning();//温度统计
     	if(errDevList.size()>2000){errDevList.clear();}
     	if(coldStoragecache.size()>2000){coldStoragecache.clear();}
 	}
@@ -199,6 +204,19 @@ public class QuantityTaskService  {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	//超温统计
+	private void SummaryTempWarning(){
+		List<ColdStorageAnalysisEntity> coldStorageAnalysisList =new ArrayList<ColdStorageAnalysisEntity>();
+		Date date = TimeUtil.getBeforeDay(1);
+		List<HashMap<String, Integer>> tempWanningCoun = this.sysWarningsInfoMapper.getTempWanningCoun(TimeUtil.getbefDayLast());
+		if (SetUtil.isnotNullList(tempWanningCoun)) {
+			for (HashMap<String, Integer> hashMap : tempWanningCoun) {
+				coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(0, hashMap.get("rdcid"), "OverTempCount", hashMap.get("longcou"), date));
+				coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(0, hashMap.get("rdcid"), "OverTempTime", hashMap.get("lontime"), date));
+			}
+			this.storageAnalysisMapper.addColdStorageAnalysis(coldStorageAnalysisList);
 		}
 	}
 	

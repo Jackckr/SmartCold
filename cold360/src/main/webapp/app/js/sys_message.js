@@ -361,8 +361,8 @@ function changeRdc(id,rdc) {
     window.location.reload()
 };
 function goprev() {
-    params.page=1;
     initAjax();
+    params.page=1;
     togglepage(false);
     $('.myedit').html("编辑");
     $(".editSys,.checkAll").hide();

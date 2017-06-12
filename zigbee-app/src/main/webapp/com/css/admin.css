@@ -716,14 +716,22 @@ html,body{
 	font-size: 1.3rem!important;
 }
 .myedit{
-    font-size: .75rem!important;
+	font-size: .75rem!important;
 }
 .sys{
 	padding: 0 .9rem;
 	box-sizing: border-box;
 	background-color: #fff;
 	margin-bottom: 0.1rem;
-	margin-top:2.5rem;
+	margin-top:0;
+	font-size: 0.7rem;
+}
+.sysNo{
+	padding: 2.2rem .9rem;
+	box-sizing: border-box;
+	background-color: #fff;
+	margin-bottom: 0.1rem;
+	margin-top:0;
 	font-size: 0.7rem;
 }
 .allMsg{
@@ -775,195 +783,236 @@ html,body{
 	background-image: url("../img/otherwarn.png");
 }
 .newmsg{
-    font-size:.7rem;
-    text-indent: .9rem;
-    margin-top: .3rem;
+	font-size:.7rem;
+	text-indent: .9rem;
+	margin-top: .3rem;
 }
 .sysInfo{
-    background-color: #fff;
-    margin-top: .3rem;
+	background-color: #fff;
+	margin-bottom: .3rem;
 }
 .sysInfo>a{
-    display: block;
-    padding: .3rem .9rem;
-    font-size: .7rem;
-    color: #898989;
+	display: block;
+	padding: .3rem .9rem;
+	font-size: .7rem;
+	color: #898989;
 }
 .sysInfo>a p{
-    margin: .4rem 0;
+	margin: .4rem 0;
 }
 .msgTime{
-    color: #999;
-    font-size: .65rem;
+	color: #999;
+	font-size: .65rem;
 }
 .checkAll{
-    position: fixed;
-    z-index: 99999;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height:2.2rem;
-    background-color: #f6f5fa;
-    border-top:1px solid #d0d0d0;
+	position: fixed;
+	z-index: 99999;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height:2.2rem;
+	background-color: #f6f5fa;
+	border-top:1px solid #d0d0d0;
 }
 .checkAll label{
-    font-size: .7rem;
-    height: 2.2rem;
-    padding-left: .9rem;
-    line-height: 2.2rem;
+	font-size: .7rem;
+	height: 2.2rem;
+	padding-left: .9rem;
+	line-height: 2.2rem;
 }
 .checkAll button{
-    background-color: #f24445;
-    color:#fff;
-    font-size: .7rem;
-    height: 2.2rem;
-    padding: 0 3rem;
+	background-color: #f24445;
+	color:#fff;
+	font-size: .7rem;
+	height: 2.2rem;
+	padding: 0 3rem;
 }
 .check_icon{
-    height: 1rem;
-    position: relative;
-    padding: 0;
-    overflow: hidden;
-    margin-right: .5rem;
+	height: 1rem;
+	position: relative;
+	padding: 0;
+	overflow: hidden;
+	margin-right: .5rem;
 }
 .check_icon input {
-    width: 100%;
-    height: 100%;
-    margin: 0!important;
-    padding: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 5;
-    opacity: 0;
-    cursor: pointer;
-    display: block;
-    -webkit-box-sizing: border-box!important;
-    -moz-box-sizing: border-box!important;
-    box-sizing: border-box!important;
+	width: 100%;
+	height: 100%;
+	margin: 0!important;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 5;
+	opacity: 0;
+	cursor: pointer;
+	display: block;
+	-webkit-box-sizing: border-box!important;
+	-moz-box-sizing: border-box!important;
+	box-sizing: border-box!important;
 }
 .check_icon i {
-    width: 1rem;
-    height: 1rem;
-    line-height: 1rem;
-    display: inline-block;
-    background-color: #fff;
-    text-align: center;
-    font-size: 0.7rem;
-    color: #DFDFDF;
-    text-align: center;
-    border-radius: .2rem;
-    margin-right: .2rem;
+	width: 1rem;
+	height: 1rem;
+	line-height: 1rem;
+	display: inline-block;
+	background-color: #fff;
+	text-align: center;
+	font-size: 0.7rem;
+	color: #DFDFDF;
+	text-align: center;
+	border-radius: .2rem;
+	margin-right: .2rem;
 }
 .check_icon.on i {
-    background-color: #5eb95e;
-    color: #fff;
+	background-color: #5eb95e;
+	color: #fff;
 }
 
 .sysModal {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 820;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, .6);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10820;
 }
 
 .sysModalMain {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    width: 14rem;
-    margin-left: -7rem;
-    border-radius: .3rem;
-    background: #fff;
-    color: #000;
-    font-size: .7rem;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	width: 14rem;
+	margin-left: -7rem;
+	border-radius: .3rem;
+	background: #fff;
+	color: #000;
+	font-size: .7rem;
 }
 
 .sysModalHeader {
-    width: 12rem;
-    margin: 0 auto;
-    text-align: center;
+	width: 12rem;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .sysModalHeader h4 {
-    font-weight: 700;
-    font-size: .75rem;
+	font-weight: 700;
+	font-size: .75rem;
 }
 
 .sysModalHeader img {
-    border-bottom: 2px solid #696868;
+	border-bottom: 2px solid #696868;
 }
 
 .sysModalBody {
-    min-height: 1rem;
-    padding: .3rem 0;
+	min-height: 1rem;
+	padding: .3rem 0;
 }
 
 .sysModalFooter {
-    border-top: 1px solid #c5c5c5;
-    width: 100%;
-    height: 2rem;
-    line-height: 2rem;
-    text-align: center;
+	border-top: 1px solid #c5c5c5;
+	width: 100%;
+	height: 2rem;
+	line-height: 2rem;
+	text-align: center;
 }
 
 .sysModalFooter > div {
-    width: 33.3333%;
-    color: #2e8bbb;
-    font-size: .75rem;
-    cursor: pointer;
-    box-sizing: border-box;
+	width: 33.3333%;
+	color: #2e8bbb;
+	font-size: .75rem;
+	cursor: pointer;
+	box-sizing: border-box;
 }
 
 .sysModalFooter > div:nth-child(1), .sysModalFooter > div:nth-child(2) {
-    border-right: 1px solid #c5c5c5;
+	border-right: 1px solid #c5c5c5;
 }
 
 .sysClose {
-    position: absolute;
-    top: -1rem;
-    right: -1rem;
-    width: 1.6rem;
-    height: 1.6rem;
-    line-height: 1.6rem;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    background-color: #fff;
-    color: #a0cfe7;
-    font-weight: 700;
-    font-size: 1rem;
-    border: 1px solid #a0cfe7;
-    text-align: center;
-    cursor: pointer;
+	position: absolute;
+	top: -1rem;
+	right: -1rem;
+	width: 1.6rem;
+	height: 1.6rem;
+	line-height: 1.6rem;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	background-color: #fff;
+	color: #a0cfe7;
+	font-weight: 700;
+	font-size: 1rem;
+	border: 1px solid #a0cfe7;
+	text-align: center;
+	cursor: pointer;
 }
 
 .sysFoot .btn-warning {
-    padding: 2px 15px;
-    margin-left: 10px;
+	padding: 2px 15px;
+	margin-left: 10px;
 }
 
 .sysFoot {
-    padding-left: 18px;
+	padding-left: 18px;
 }
 
 .sysFoot ul {
-    margin: 0;
+	margin: 0;
 }
 .nowarn{
-    /*padding-top: 5rem;
-    height: 80vh;*/
-    text-align: center;
+	text-align: center;
 }
 #ul_storage{
-    padding: 0 .8rem;
+	padding: 0 .8rem;
 }
 #ul_storage li{
-    width: 33.3333%;
-    margin-bottom: .4rem;
+	width: 33.3333%;
+	margin-bottom: .4rem;
+}
+.redState{
+	color: #f00!important;
+}
+#noread{
+	display: none;
+	position: absolute;
+	top:.3rem;
+	right: 10%;
+	padding: 1px .2rem;
+	background-color: #f00;
+	-webkit-border-radius:50%;
+	-moz-border-radius:50%;
+	border-radius:50%;
+	color: #fff;
+	font-size: .5rem;
+}
+.searchArea{
+	margin-top: 2.5rem;
+	margin-bottom:.5rem;
+	position: relative;
+	padding:0.3rem .9rem;
+}
+.searchInput{
+	width: 100%;
+	height: 1.6rem;
+	border-radius: 0.8rem;
+	padding-left: 1.6rem;
+	box-sizing: border-box;
+	background-color: #fff;
+	font-size: .7rem;
+	color: #898989;
+}
+.searchArea>i{
+	width: 1rem;
+	height: 1rem;
+	position: absolute;
+	top:50%;
+	margin-top: -.4rem;
+	left:1.3rem;
+	font-size: .8rem;
+	line-height: 1rem;
+	color: #999;
 }
