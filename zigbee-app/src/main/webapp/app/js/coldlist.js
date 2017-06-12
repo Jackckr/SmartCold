@@ -67,7 +67,9 @@ $().ready(function() {
   	  initFilter=function(){
   		   var mtlist=[],stlist=[],prove=[];
   		   $.get(ER.root+'/i/city/findProvinceList',function(data) {
-				 $.each(data, function(i, vo){prove.push("<li value='"+vo.provinceId+"' >"+vo.provinceName+"</li>"); });
+               $.each(data, function (i, vo) {
+                   prove.push("<li value='" + vo.provinceId + "' >" + vo.provinceName + "</li>");
+               });
 				 $("#ul_address_list").append(prove.join("")); 
 				 $("#ul_address_list li").click(function(event) {addfilter(this);});
   		   });

@@ -73,7 +73,30 @@ function formatDate(date,format){
   return format.replace(/([a-z])(\1)*/ig,function(m){return cfg[m];});
 } 
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
-function checktoken(toke){if(toke==undefined){toke=localStorage.token;}$.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:toke}, url:ER.root + "/i/user/findUser",success:function(data) {if (data && data.id != 0) {window.user = data;window.localStorage.lkuser=JSON.stringify(data);} else {window.user = null;window.localStorage.removeItem("lkuser");}} });}
+function checktoken(toke,isupdate) {
+    if (toke == undefined) {
+        toke = localStorage.token;
+    }
+    $.ajax({
+        type: "GET",
+        cache: false,
+        timeout: 5000,
+        dataType: "json",
+        data: {token: toke,isupdate:isupdate},
+        url: ER.root + "/i/user/findUser",
+        success: function (data) {
+            if (data && data.id != 0) {
+                window.localStorage.logtime = new Date();
+                window.user = data;
+                window.localStorage.lkuser = JSON.stringify(data);
+            } else {
+                window.localStorage.logtime = undefined;
+                window.user = null;
+                window.localStorage.removeItem("lkuser");
+            }
+        }
+    });
+}
 function setTime(obj){if(_sysconfig.countdown==0){obj.removeAttribute("disabled");obj.style.background="#438BCB";obj.innerHTML="获取验证码";_sysconfig.countdown=60;return;}else{if($(obj).siblings("input").val().length==0){/*alert("输入不能为空哦~");*/layer.open({content: '输入不能为空哦~',btn: '确定'});return false;}else{obj.setAttribute("disabled",true);obj.style.background="#ccc";obj.innerHTML="重新发送("+_sysconfig.countdown+")";_sysconfig.countdown--;}}setTimeout(function(){setTime(obj);},1000);};
 var util = {
 	setCookie:function(a,b,c){localStorage.setItem(a, b);},getCookie:function(a) {return localStorage.getItem(a);},  delCookie:function(a) {localStorage.removeItem(a);},
