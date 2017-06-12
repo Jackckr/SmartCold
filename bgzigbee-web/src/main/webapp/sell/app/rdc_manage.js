@@ -149,16 +149,16 @@ function ck(id) {
             var filesImg="";
             var arrangePicImg="";
             if(rdc.arrangePic){
-                arrangePicImg="<img src='"+rdc.arrangePic.location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
+                arrangePicImg="<img onclick='showimg(this,\""+rdc.arrangePic.location+"\")' src='"+rdc.arrangePic.location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
             }
             if (rdc.honorPics){
                 for(var i=0;i<rdc.honorPics.length;i++){
-                    honorPicImg+="<img src='"+rdc.honorPics[i].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
+                    honorPicImg+="<img onclick='showimg(this,\""+rdc.honorPics[i].location+"\")' src='"+rdc.honorPics[i].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
                 }
             }
             if(rdc.files){
                 for(var j=0;j<rdc.files.length;j++){
-                    filesImg+="<img src='"+rdc.files[j].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
+                    filesImg+="<img onclick='showimg(this,\""+rdc.files[j].location+"\")' src='"+rdc.files[j].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
                 }
             }
             $("#arrangePicSpan").hide();
