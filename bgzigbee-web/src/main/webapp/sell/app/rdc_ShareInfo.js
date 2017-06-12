@@ -1,4 +1,4 @@
-var  queryParams={type:null,startTime:null, endTime:null,keyword:null};
+var  queryParams={type:null,stauts:null,startTime:null, endTime:null,keyword:null};
 
 
 function getRdcAttr(value) {
@@ -23,9 +23,10 @@ function init_table(){
         {field:'rdcEntity',title:'冷库名称',width:80,align:'center',sortable:true,formatter:getRdcAttr},
         {field:'title',title:'标题',width:80,align:'center',sortable:true},
         {field:'note',title:'内容',width:80,align:'center',sortable:true},
+        {field:'stauts',title:'状态',width:80,align:'center',sortable:true,formatter:isStauts},
         {field:'typeText',title:'共享类型',width:40,align:'center',sortable:true},
         {field:'telephone',title:'联系电话',width:40,align:'center',sortable:true},
-        {field:'detlAddress', title:'详细地址',width:40,align:'center',sortable:true},
+        {field:'detlAddress', title:'出发地-目的地',width:40,align:'center',sortable:true},
         {field:'updatetime',title:'更新时间',width:40,align:'center',sortable:true,formatter:tool.col_format},
         {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler}
     ]];
@@ -97,6 +98,7 @@ function searchData() {
     queryParams.startTime=$("#startTime").val();
     queryParams.endTime=$("#endTime").val();
     queryParams.type=$("#sel_type option:selected").val();
+    queryParams.stauts=$("#sel_stauts option:selected").val();
     queryParams.keyword=$("#search").val();
     reloaddata(queryParams);
 }
@@ -105,6 +107,13 @@ function getRdcAttr(value) {
         return value.name;
     }else {
         return "暂无";
+    }
+}
+function isStauts(value) {
+    if(value==1){
+        return "有效";
+    }else {
+        return "无效";
     }
 }
 /*批量删除*/
@@ -140,19 +149,15 @@ function ck(id) {
         data:{"id":id},
         dataType:"json",
         success:function (data) {
-            $("#share_title").html(data.title);
-            if(data.rdcEntity!=undefined){
-                $("#share_coldName").html(data.rdcEntity.name);
-            }else {
-                $("#share_coldName").html("");
-            }
-            $("#share_type").html(data.typeText);
-            $("#share_pay").html(data.unit1);
-            $("#share_car").html(data.attrvalue);
-            $("#share_address").html(data.detlAddress);
-            $("#share_filings").html(data.bookings);
-            $("#share_phone").html(data.telephone);
-            $("#share_note").html(data.note);
+            $("#share_title").html(data.title!=undefined?data.title:"");
+            $("#share_coldName").html(data.rdcEntity!=undefined?data.rdcEntity.name:"");
+            $("#share_type").html(data.typeText!=undefined?data.typeText:"");
+            $("#validStartTime").html(data.validStartTime!=undefined?data.validStartTime:"");
+            $("#validEndTime").html(data.validEndTime!=undefined?data.validEndTime:"");
+            $("#share_address").html(data.detlAddress!=undefined?data.detlAddress:"");
+            $("#share_filings").html(data.bookings!=undefined?data.bookings:"");
+            $("#share_phone").html(data.telephone!=undefined?data.telephone:"");
+            $("#share_note").html(data.note!=undefined?data.note:"");
         }
     })
     $('#showShareInfo').dialog('open');

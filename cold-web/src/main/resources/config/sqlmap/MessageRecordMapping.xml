@@ -26,19 +26,12 @@
       <if test="stype!=null"> and `stype`=#{stype} </if>
       <if test="state!=null"> and `state`=#{state} </if>
       <if test="isread!=null"> and `isread`=#{isread} </if>
-      <if test="keyword!=null and keyword!=''"> and `title` like CONCAT('%',#{keyword!},'%') or `message` like   CONCAT('%',#{keyword!},'%')   </if>
+      <if test="keyword!=null and keyword!=''"> and (`title` like CONCAT('%',#{keyword},'%') or `message` like   CONCAT('%',#{keyword},'%') )   </if>
       ORDER BY addtime DESC
    </select>
    
    <update id="updateState" parameterType="map">
      update `messagerecord` set  `isread`=#{isread} , `state`=#{state} where `id`=#{id};
    </update>
-  
-    
-
-
-
-   
-    
 
 </mapper>

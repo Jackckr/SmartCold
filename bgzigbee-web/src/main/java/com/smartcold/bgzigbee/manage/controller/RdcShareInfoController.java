@@ -34,6 +34,7 @@ public class RdcShareInfoController {
             String endTime,
             String  keyword,
             String type,
+            String stauts,
             int     page,
             int     rows) {
         if(StringUtil.isnotNull(keyword)){
@@ -50,7 +51,7 @@ public class RdcShareInfoController {
             eTime= TimeUtil.parseYMD(endTime);
         }
         PageHelper.startPage(page, rows);
-        List<RdcSharedInfoEntity> shareInfo = rdcShareInfoMapper.findShareInfo(type,keyword,sTime,eTime);
+        List<RdcSharedInfoEntity> shareInfo = rdcShareInfoMapper.findShareInfo(type,stauts,keyword,sTime,eTime);
         PageInfo pageInfo=new PageInfo(shareInfo);
         return TableData.newSuccess(pageInfo);
     }

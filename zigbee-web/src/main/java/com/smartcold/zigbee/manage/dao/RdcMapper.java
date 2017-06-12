@@ -5,13 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.smartcold.zigbee.manage.entity.Rdc;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
-import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.entity.RdcEntity;
 
@@ -44,5 +40,5 @@ public interface RdcMapper {
 	
 	RdcEntityDTO findRDCEntityDtoByRdcId(@Param("rdcID") int rdcID);
 
-    Rdc selectByPrimaryKey(Integer id);
+    RdcEntity selectByPrimaryKey(Integer id);
 }

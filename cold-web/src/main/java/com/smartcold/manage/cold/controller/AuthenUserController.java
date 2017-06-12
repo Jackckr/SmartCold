@@ -142,6 +142,9 @@ public class AuthenUserController {
 			if(status==-1){
 				this.messageRecordMapping.updateState(id, 1, -1);
 			}else{
+
+				UserEntity user = this.userMapper.findById(userId);
+				if(user==null){return false; }//用户被删除
 				if(stype==1){//申请温度版
 					String item = this.coldstorageTempsetMapper.getItem(rdcId, userId);
 					if(StringUtil.isnotNull(item)){
@@ -177,7 +180,7 @@ public class AuthenUserController {
 				}else{//这是什么鬼
 			
 				}
-				UserEntity user = this.userMapper.findById(userId);
+
 				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 				String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
 			    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();

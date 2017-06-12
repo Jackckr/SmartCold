@@ -180,7 +180,7 @@ coldWeb.factory('naviService', ['$rootScope', '$state', function ($rootScope, $s
 //    },
 //    link: function (scope, elem, attrs) {
 //      elem.css("text-align", "center");
-// 
+//
 //    }
 //  };
 //});
