@@ -218,12 +218,13 @@ public class AdminController extends BaseController {
 		List<ACLAdminNode> ml=new ArrayList<ACLAdminNode>();
 		ACLAdminNode pml = new ACLAdminNode("0","main_platform",      "链库管理");
 		List<ACLAdminNode> mlList0=new ArrayList<ACLAdminNode>();
-		mlList0.add(new ACLAdminNode("0_0","icon-user",   "用户管理",      "user_manage.html"       ));
-		mlList0.add(new ACLAdminNode("0_1","icon-cold",   "冷库管理",      "rdc_manage.html"        ));
-		mlList0.add(new ACLAdminNode("0_2","main_share",  "共享管理",      "rdc_ShareInfo.html"     ));
-		mlList0.add(new ACLAdminNode("0_3","icon-authe",  "认证管理",      "rdc_authen.html"        ));
-		mlList0.add(new ACLAdminNode("0_4","main_infmation", "资讯管理",    ""      ));
-		mlList0.add(new ACLAdminNode("0_5","icon-coldcf", "冷库配置"   ,    "storageConfig.html"      ));
+		mlList0.add(new ACLAdminNode("0_0","icon-user",      "用户管理",      "user_manage.html"       ));
+		mlList0.add(new ACLAdminNode("0_1","icon-cold",      "冷库管理",      "rdc_manage.html"        ));
+		mlList0.add(new ACLAdminNode("0_2","main_share",     "共享管理",      "rdc_ShareInfo.html"     ));
+		mlList0.add(new ACLAdminNode("0_3","main_ad",     "广告管理",         ""     ));
+		mlList0.add(new ACLAdminNode("0_4","icon-authe",     "认证管理",      "rdc_authen.html"        ));
+		mlList0.add(new ACLAdminNode("0_5","main_infmation", "资讯管理",      ""      ));
+		mlList0.add(new ACLAdminNode("0_6","icon-coldcf",    "冷库配置"   ,   "storageConfig.html"      ));
 		pml.setChild(mlList0);ml.add(pml);
 		
 	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");

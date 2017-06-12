@@ -37,7 +37,7 @@ function showmsg(rowid,id,level,tit,msg,isread,state){var data=new Object();data
 function showMsgdialog(data){data.level="L"+data.level;$('#dev_msgForm').form('load',data);$('#dev_msgdialog').dialog({title:data.tit,iconCls:'dev_warning',closed: false});}
 function up_dev_msgstatus(type){//Integer id,Integer state, Integer isRead
 	   $('#dev_msgdialog').dialog('close');
-	   var obj=   getFormData(dev_msgForm);
+	   var obj=   getFormData('#dev_msgForm');
 	   if(obj.id==''||type==0&&obj.isread==1||type==1&&obj.state==1){  return; }
 	   $.ajax({ url: '../../i/systemInform/changeSysMsgStatus',type: 'POST',data:{id:obj.id,isRead:1,state:type}, success: function(data) { 
 		   obj.isread=1; obj.state=type;

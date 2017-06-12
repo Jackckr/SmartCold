@@ -6,9 +6,11 @@
     <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
     <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
     <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <link rel="stylesheet" href="../../comm/imgview/viewer.min.css">
     <style type="text/css"> form tr{height:35px;} .pagination-btn-separator {float: none;} </style>
     <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
     <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../../comm/imgview/viewer.min.js"></script>
     <script type="text/javascript"  src="../app/comm.js"></script>
     <script type="text/javascript"  src="../app/rdc_authen.js"></script>
   </head>
@@ -40,7 +42,24 @@
 	           </div>
 	        </div>
 	    </div>
-    	
+    	<div id="rdc_state_authendialog" class="easyui-dialog"  data-options="title:'审核认证,iconCls:'icon-authe',modal: true,closed: true,width:600,height:180,buttons: [{text:'修改',iconCls:'icon-ok1',handler:updateAuthen},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#rdc_state_authendialog').dialog('close');}}]"  >
+			        <form id="rdc_state_auditForm" style="padding:10px 20px;" >
+			        <table class="fill" >
+			            <tr>
+			                <td>状   态:</td>
+			                <td>
+			                    <input type="hidden" name="id" >
+			                    <input type="hidden" name="rdcId" >
+			                    <input type="hidden" name="authUserId" >
+			                    <input type="hidden" name="oldstate" >
+			                    <label><input type="radio" id="edit_audit_-1" name="state" value="-1" >未通过 </label>  
+			                    <label><input type="radio" id="edit_audit_0"  name="state" value="0"  >待审核   </label>  
+			                    <label><input type="radio" id="edit_audit_1"  name="state" value="1">已通过  </label>  
+			                </td>
+			            </tr>
+			        </table>
+			        </form>
+		</div>
 		 
 	</div>
  </body>

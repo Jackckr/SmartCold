@@ -1,4 +1,5 @@
 ﻿var curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize;
+var sys={imgrooturl:"http://139.196.189.93:8089/"};
 if(!window.sessionStorage.asikey){
 	$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
 		window.sessionStorage.sysadmin = data.entity; window.sessionStorage.asikey= window.admin.token;
@@ -7,6 +8,7 @@ if(!window.sessionStorage.asikey){
 }
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间
+    col_img:function(val){return ['<image  class="icon-tb" src=',sys.imgrooturl+val,' onclick=showimg(this,\'',sys.imgrooturl+val,'\')>'].join(""); },//格式化时间
     col_isred:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已读"></span>':'<span class="icon-tb icon-offline" title="未读"></span>';},
     col_isdeal:function(value,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已处理"></span>':'<span class="icon-tb icon-offline" title="未处理"></span>';},
 };
@@ -19,7 +21,7 @@ function onLoadError(){objTable.datagrid('loadData',{total:0,rows:[]});};
 function getTableChecked(){ return objTable.datagrid('getChecked');}
 function getTableCheckedID(){ var userID =[],checkedItems = objTable.datagrid('getChecked'); $.each(checkedItems, function (index, item) { userID.push(item.id); }); return userID;}
 function getFormData(id){var vo ={},parnArray = $(id).serializeArray();$.each(parnArray,function(index,item){ vo[item.name] = item.value; }); return vo;}
-
+function showimg(em,url){$(em).viewer();}
 function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isautosize,onDblClickRow){
     if(isautosize){ tablesize= stablesize = parseInt((($("#objTable").height() -80) / 26));	}
     if(tablesize<10){tablesize=stablesize=10;}

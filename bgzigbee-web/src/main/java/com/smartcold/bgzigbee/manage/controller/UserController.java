@@ -125,8 +125,8 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object addorupdateUser(UserEntity user) {
 		try {
-			if (StringUtil.isNull(user.getUsername())|| StringUtil.isNull(user.getPassword())) {return new ResultDto(-1, "用户名和密码不能为空");}
-			if(user.getId()==0){
+			if(StringUtil.isNull(user.getUsername())||(user.getId()==0&&StringUtil.isNull(user.getPassword()))){return new ResultDto(-1, "用户名不能为空");}
+			if(user.getId()==0){//添加
 				user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 				userDao.insertUser(user);
 			}else{

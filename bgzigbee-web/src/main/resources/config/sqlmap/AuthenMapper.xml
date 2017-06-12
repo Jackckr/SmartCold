@@ -3,9 +3,11 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.AuthenMapper">
   <select id="getRdcAuthList" parameterType="map" resultType="RdcAuthEntity">
-    select * from `rdcauth` WHERE `type` =#{type} AND `state`=#{type} 
+    select * from `rdcauth` WHERE 1=1 
+     <if test="type!=null"> and `type` =#{type}  </if>
+     <if test="state!=null"> and `state`=#{state}  </if>
      <if test="coleam!=null and coleam !='' and colval!=''">  and  `${coleam}` like "%"#{colval}"%"   </if>
-    ORDER BY `id` DESC; 
+    ORDER BY `id` DESC 
   </select>
   
   <update id="updateAuthstate">

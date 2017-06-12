@@ -1,39 +1,46 @@
 var queryParams = {page: null, rows: null, type: null,state: null};
 //======================================================================格式化col=======================================================
-var col_audit = function (i) { switch(i){case -1:return '未通过';case 0:return '待审核';default: return '通过';}};
-
+var rdc_auth_state = function (i) { switch(i){case -1:return '未通过';case 0:return '待审核';default: return '通过';}};
+var rdc_auth_type = function (i) { switch(i){case 0:return '平台/360用户';case 1:return '货主认证';default: return '维修商认证';}};
 function col_cellStyler(value, row) {
-	return "";
-//	return [
-//	        '<button class="btn" onclick="user_audit(' , row.id,',',row.audit,',\'',row.username, '\')">审核</button>' , 
-//	        '<button class="btn" onclick="user_level(' , row.id,',',row.level,',\'',row.username,'\')">升/降级</button>' , 
-//	        '<button class="btn btn-delete" onclick="goDeleteUser(' , row.id, ',\'',row.username,'\')">删除</button>'
-//	        ].join("");
-	}
-
-function delAuthen(){
-	
+	if(row.type==0){return ['<button class="btn" onclick="updaterdcAuthen(' , row.id,',',row.state,',',row.rdcid,',',row.uid ,')">审核</button>'  ].join("");}else{return '<button class="btn btn-delete" title="当前认证由冷库主操作，您禁止操作！">无权</button>';}
 }
+
+function delAuthen(){}
 
 function updateAuthen(){
 	
+	
 }
+
+function updaterdcAuthen(id,state,rdcId,authUserId){
+	$('#rdc_state_auditForm').form('clear');
+	$('#rdc_state_auditForm').form('load',{id:id,oldstate:state,state:state,rdcId:rdcId,authUserId:authUserId});
+	$('#rdc_state_authendialog').dialog({closed: false});
+}
+function user_upaudit(){
+	$('#rdc_state_authendialog').dialog({closed: true});
+    var obj=   getFormData('#dev_msgForm');
+	if(obj.oldstate!=obj.state&&obj.id!=""){$.post('../../i/authen/authRdc', {'userID': id, 'audit': audit}, function () { reloaddata();});}
+}
+
+
 function onDblClickRow(index, field) {}
 //======================================================================格式化col=======================================================
 function init_table() {
     var col = [[
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},
-        {field: 'rdcid', title: '冷库ID', width: 5, align: 'center', sortable: true},
-        {field: 'uid', title: '用户ID', width: 5, align: 'center', sortable: true},
-        {field: 'img', title: '证书', width: 5, align: 'center', sortable: true},
+        {field: 'rdcid', title: '冷库ID', width: 2, align: 'center', sortable: true},
+        {field: 'uid', title: '用户ID', width: 2, align: 'center', sortable: true},
+        {field: 'imgurl', title: '证书', width: 5, align: 'center', sortable: true,formatter: tool.col_img},
         {field: 'msg', title: '认证内容', width: 10, align: 'center', sortable: true},
-        {field: 'state', title: '状态', width: 5, align: 'center', sortable: true ,formatter: col_audit},
-        {field: 'addtime', title: '认证时间', width: 10, align: 'center', sortable: true, formatter: tool.col_format},
-//        {field: 'hand', title: '操作', width: 100, align: 'center', formatter: col_cellStyler}
+        {field: 'type', title: '认证类型', width: 5, align: 'center', sortable: true ,formatter: rdc_auth_type},
+        {field: 'state', title: '状态', width: 5, align: 'center', sortable: true ,formatter: rdc_auth_state},
+        {field: 'addtime', title: '认证时间', width: 5, align: 'center', sortable: true, formatter: tool.col_format},
+        {field: 'hand', title: '操作', width: 5, align: 'center', formatter: col_cellStyler}
     ]];
-    initTable("认证管理", "icon-authe", "POST", "../../i/authen/getAuthRdcList", queryParams, '#user_filter', null, col, true, onDblClickRow);
-//    objTable.datagrid({singleSelect: true});//设置为单选
+    initTable("认证审核", "icon-authe", "POST", "../../i/authen/getAuthRdcList", queryParams, '#user_filter', null, col, true, onDblClickRow);
     crspsh();
 }
 
@@ -41,7 +48,8 @@ function init_table() {
 //初始化数据
 $().ready(function () {
   init_table();
- 
+   $("#sel_auth_type").combobox({value:"", onChange:function(val){  queryParams.type=val;   reloaddata(queryParams);}  }); 
+   $("#sel_auth_state").combobox({value:"0", onChange:function(val){  queryParams.state=val;   reloaddata(queryParams);}  }); 
 });
 //======================================================================初始化数据=======================================================
 
@@ -61,7 +69,6 @@ function crspsh() {
     }
     $('#mm').html(String.prototype.concat.apply("", muits));
     $('#fddata').searchbox({menu: '#mm'});
-//    $('#seache').appendTo('#div_st_filter');
 } //简单查询
 function finddatatb(value, name) {
     if (value.trim() == "" || name.trim() == "") {value=null,name=null; } objTable.datagrid('reload', {coleam: name, colval: value});
@@ -73,10 +80,7 @@ function chclip(em) {
     $("#seache input[class='textbox-value']").attr("value", "");
     $("#seache input[class='textbox-value']").attr("name", em.id);
     if (em.id == "isread" || em.id == "state") {
-        var id = "#ch" + em.id;
-        var magrlef = '94px';
-        var width = '180px';
-        var html = '<select id="scvlcc"  style="width: ' + width + ' ;height:18px;"></select>';
+        var id = "#ch" + em.id, magrlef = '94px', width = '180px',html = '<select id="scvlcc"  style="width: ' + width + ' ;height:18px;"></select>';
         $("#seache input[placeholder='请输入搜索条件...']").after(html);
         $('#scvlcc').combo({editable: false});
         $("#scvlcc").next().css({'margin-left': magrlef, 'margin-right': '18px', 'padding-bottom': '2px'});
