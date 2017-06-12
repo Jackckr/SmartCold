@@ -13,6 +13,7 @@ public class RdcAuthEntity {
 	private int state        ;
 	private String imgurl       ;
 	private String note         ;
+	private String msg          ;
 	private String addtime      ;
 	
 	
@@ -65,5 +66,10 @@ public class RdcAuthEntity {
 	public void setAddtime(String addtime) {
 		this.addtime = addtime;
 	}
-
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 }

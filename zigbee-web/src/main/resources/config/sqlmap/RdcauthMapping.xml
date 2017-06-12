@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smartcold.zigbee.manage.dao.RdcauthMapping">
     <insert id="insertCertification" parameterType="RdcAuthEntity" useGeneratedKeys="true" keyProperty="id">
-		 INSERT INTO `rdcauth` (`uid`, `type`, `rdcid`, `state`, `note` , `imgurl`, `addtime`) VALUES (#{uid}, #{type}, #{rdcid}, #{state}, #{note} , #{imgurl}, now());
+		 INSERT INTO `rdcauth` (`uid`, `type`, `rdcid`, `state`, `note` , `imgurl`,`msg`, `addtime`) VALUES (#{uid}, #{type}, #{rdcid}, #{state}, #{note} , #{imgurl},#{msg},now());
     </insert>
     <select id="selByUidRdcId" resultType="com.smartcold.zigbee.manage.entity.RdcAuthEntity">
         SELECT * FROM `rdcauth` WHERE `uid`=#{uid} and `rdcid`=#{rdcId}

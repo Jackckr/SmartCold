@@ -111,6 +111,7 @@ public class RdcController {
 					auchedata.setType(type);
 					auchedata.setUid(userId);
 					auchedata.setRdcid(rdcId);
+					auchedata.setMsg(userName+"申请认证冷库！");
 					if(authfile!=null){
 						auchedata.setImgurl(dir + File.separator + fileName);
 					}
