@@ -5,7 +5,7 @@ var rdcId = storages = null;
 var rdcName = $("#rdcName").html();
 var searchContent = $("#searchDara_div>input").val();
 var modestate = ['待处理', '已处理'];
-    modestate[-1]="已拒绝";
+modestate[-1]="已拒绝";
 var txt = "全部";
 var params = {
     userId: user.id,utype: user.type,rdcId: rdcId,
@@ -78,7 +78,7 @@ $.get(ER.coldroot + '/i/rdc/findRDCsByUserid', {userid: user.id}
             params.rdcId = rdcId;
         }
         initAjax();
-
+        counts();
     }
 );
 function infoTxt(ops) {
@@ -91,10 +91,16 @@ function searchSys() {
     $("#allList").empty();
     allMsgAjax();
 }
+function counts() {//统计未读条数
+    /* $.post(ER.coldroot+'/i/messageRecord/getMsgCountByRdcId',{rdcId:rdcId,type:user.type,userId:user.id},function(data){
+     var counts = data;
+     $("#nodeal").html(counts);
+     })*/
+}
 function initAjax(){//初始化加载最新2条数据
     $.ajax({
         type: 'POST',
-        url: ER.coldroot +'/i/messageRecord/getTallMsgByRdcId   ',
+        url: ER.coldroot +'/i/messageRecord/getTallMsgByRdcId',
         data: {
             userId:user.id,
             type:user.type,
@@ -106,13 +112,12 @@ function initAjax(){//初始化加载最新2条数据
             $("#twoList").empty();
             if(data.length){
                 $('.sysNo').hide();
-                $("#noread").show();
-                $("#noread").html(data.length);
+                //$("#nodeal").show();
                 if(data.length>2){
                     data=data.splice(2)
                 }
             }else {
-                $("#noread").hide();
+                //$("#nodeal").hide();
                 $('.sysNo').show();
             }
             $.each(datalist,function (i,value) {
@@ -130,22 +135,18 @@ function initAjax(){//初始化加载最新2条数据
 };
 function changstatus(status,ops) {//已处理未处理
     infoTxt(ops);
-    params.type = null,
-    params.stype = null,
-    params.isRead = null,
+    params.type = null;
+    params.stype = null;
+    params.isRead = null;
     params.status = status;
     params.page = 1;
     $("#allList").empty();
     allMsgAjax();
-    if(params.status==1){
-        params.status = -1;
-        allMsgAjax();
-    }
 };
 function isRead(isread,ops) {//已读未读
     infoTxt(ops);
-    params.type = null,
-    params.stype = null,
+    params.type = null;
+    params.stype = null;
     params.status = null;
     params.isRead = isread;
     params.page = 1;
@@ -154,11 +155,11 @@ function isRead(isread,ops) {//已读未读
 }
 function allmsg(ops) {
     params.type = null,
-    params.stype = null,
-    params.isRead = null,
-    params.status = null,
-    params.page = 1,
-    params.rows = 10;
+        params.stype = null,
+        params.isRead = null,
+        params.status = null,
+        params.page = 1,
+        params.rows = 10;
     infoTxt(ops);
     $("#allList").empty();
     allMsgAjax();
@@ -174,10 +175,10 @@ function allMsgAjax() {//全部消息
         success: function (data) {
             var news=[];
             var datalist = data.data;
-            if(datalist.length){
-                $('.sysNo').hide();
-            }else {
+            if(datalist.length==0&&params.page==1){
                 $('.sysNo').show();
+            }else{
+                $('.sysNo').hide();
             }
             params.totalPages = data.totalPages;
             $.each(datalist,function (i,value) {
@@ -234,17 +235,17 @@ function sysModal(title,message,id,sType,uid,valId,status,step,uType) {
         });
     }
     var modalObj = '<div class="sysModal"><div class="sysModalMain"><div class="sysModalHeader"><img src="../com/img/modalBg.png" style="width: 11rem;height: 5.12rem;" alt="">'+
-            '<h4>'+title+'</h4><p>'+message+'</p></div>'+
-            '<div class="sysModalBody"><div ng-if="currmsg.type==1&&currmsg.sType==1" >'+
-            '<ul id="ul_storage" class="clearfix">'+oLi+'</ul></div></div><div class="sysModalFooter clearfix">'+
-            '<div class="fl" onclick="off()">关闭</div>'+
-            '<div class="fl"  onclick="agree('+sType+','+uid+','+valId+','+step+')">同意</div>'+
-            '<div class="fl" onclick="refuse('+sType+','+uid+','+valId+','+step+')">拒绝</div></div>'+
-            '<div class="sysClose" onclick="off()">&times;</div></div></div>';
+        '<h4>'+title+'</h4><p>'+message+'</p></div>'+
+        '<div class="sysModalBody"><div ng-if="currmsg.type==1&&currmsg.sType==1" >'+
+        '<ul id="ul_storage" class="clearfix">'+oLi+'</ul></div></div><div class="sysModalFooter clearfix">'+
+        '<div class="fl" onclick="off('+sType+','+uid+','+valId+','+step+')">关闭</div>'+
+        '<div class="fl"  onclick="agree('+sType+','+uid+','+valId+','+step+')">同意</div>'+
+        '<div class="fl" onclick="refuse('+sType+','+uid+','+valId+','+step+')">拒绝</div></div>'+
+        '<div class="sysClose" onclick="off('+sType+','+uid+','+valId+','+step+')">&times;</div></div></div>';
     $("body").append(modalObj);
 }
 //同意
-function agree(sType,uid,valId,step,isread) {
+function agree(sType,uid,valId,step) {
     var str = [], oid = "";
     if (sType == 1) {
         $("#ul_storage input[type='checkbox']:checked").each(function () {
@@ -272,8 +273,11 @@ function agree(sType,uid,valId,step,isread) {
             if(step==1){
                 initAjax();
             }else if(step==-1){
+                params.type = null;
+                params.stype = null;
                 params.page = 1;
-                params.isRead = isread;
+                params.isRead = 0;
+                params.status = 0;
                 $("#allList").empty();
                 allMsgAjax();
             };
@@ -298,6 +302,10 @@ function refuse(sType,uid,valId,step) {
             if(step==1){
                 initAjax();
             }else if(step==-1){
+                params.type = null;
+                params.stype = null;
+                params.isRead = 0;
+                params.status = 0;
                 params.page = 1;
                 $("#allList").empty();
                 allMsgAjax();
@@ -306,8 +314,33 @@ function refuse(sType,uid,valId,step) {
         }
     });
 };
-function off() {
-    $(".sysModal").fadeOut();
+function off(sType,uid,valId,step) {
+    $.ajax({
+        type: 'POST',
+        url: ER.coldroot + '/i/authenUser/authorUserByRdcId',
+        data: {
+            id: valId,
+            userId: uid,
+            stype: sType,
+            rdcId: rdcId,
+            status: 0,
+            oids: ''
+        },
+        success:function (data) {
+            if(step==1){
+                initAjax();
+            }else if(step==-1){
+                params.type = null;
+                params.stype = null;
+                params.status = 0;
+                params.page = 1;
+                params.isRead = 0;
+                $("#allList").empty();
+                allMsgAjax();
+            };
+            $(".sysModal").hide();
+        }
+    });
 };
 function findByRdcId(rdcId) {
     $.get(ER.coldroot + '/i/rdc/findRDCByRDCId', {rdcID: rdcId},
@@ -361,8 +394,10 @@ function changeRdc(id,rdc) {
     window.location.reload()
 };
 function goprev() {
-    initAjax();
     params.page=1;
+    params.keyword=null;
+    initAjax();
+    //counts();
     togglepage(false);
     $('.myedit').html("编辑");
     $(".editSys,.checkAll").hide();

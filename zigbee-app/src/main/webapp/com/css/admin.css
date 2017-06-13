@@ -976,7 +976,7 @@ html,body{
 .redState{
 	color: #f00!important;
 }
-#noread{
+.counts{
 	display: none;
 	position: absolute;
 	top:.3rem;
