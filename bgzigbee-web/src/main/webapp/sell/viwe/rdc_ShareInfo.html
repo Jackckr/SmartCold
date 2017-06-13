@@ -11,7 +11,6 @@
     <script type="text/javascript"  src="../app/comm.js"></script>
     <script type="text/javascript"  src="../app/rdc_ShareInfo.js"></script>
 </head>
-</head>
 <body  class="easyui-layout" >
 
 <div  data-options="region:'center'"  >
@@ -22,8 +21,8 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'rdcShare_del'" onclick="delRdcShares()">删除</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="reloaddata()">刷新</a>
         <div style="float: right;">
-            开始时间: <input class="easyui-datebox" id="startTime" style="width:110px"><!--data-options="onSelect:startTime"-->
-            结束时间: <input class="easyui-datebox" id="endTime" style="width:110px">
+            开始时间: <input class="easyui-datebox" id="startTime" style="width:110px" data-options="onSelect:startTime">
+            结束时间: <input class="easyui-datebox" id="endTime" style="width:110px" data-options="onSelect:endTime">
             类型:
             <select id="sel_type" class="easyui-combobox" panelHeight="auto" style="width:100px">
                 <option value="">全部</option>
@@ -39,8 +38,9 @@
                 <option value="0">无效</option>
                 <option value="1">有效</option>
             </select>
-            <input id="search" type="text" class="easyui-textbox" data-options="prompt:'请输入关键字'" style="width:200px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchData()">Search</a>
+            <input id="fddata" class="easyui-searchbox" val="ml" data-options="prompt:'请输入搜索条件...'" style="width:200px;display:inline;"/>
+            <!--<input id="search" type="text" class="easyui-textbox" data-options="prompt:'请输入关键字'" style="width:200px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchData()">Search</a>-->
         </div>
     </div>
 </div>
