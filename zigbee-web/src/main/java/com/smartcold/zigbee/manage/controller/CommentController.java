@@ -3,7 +3,6 @@ package com.smartcold.zigbee.manage.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.io.filefilter.IOFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import com.smartcold.zigbee.manage.service.CommentService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
-import com.smartcold.zigbee.manage.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/comment")

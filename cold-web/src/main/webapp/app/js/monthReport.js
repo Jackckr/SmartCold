@@ -76,6 +76,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	     $scope.toolchart(5,mode.url[0], 'goodsId', '货物因子', 'GoodsLiuTongYinZi', 1, " 月平均货物因子为");//4
 //	     $scope.toolchart(6,mode.url[0], 'ysjRunningTimeId', '压缩机运行时间', 'GoodsLiuTongYinZi', 1, " 压缩机运行时间");//-----没做
 //	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
+//	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
 	};       
 	
 	$scope.initQsis=function(){//8
@@ -146,6 +147,62 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	});
     };
     
+    //
+    $scope.initTempwring=function(){
+    	var oids=[];angular.forEach($rootScope.mystorages,function(storage){ oids.push(storage.id); });oids=oids.join(",");
+    	$http.get('/i/AlarmController/getOverTempByFilter',{params: {rdcId: $scope.rdcId, oids:oids, startTime: $scope.startTime,endTime: $scope.endTime}}).success(function(data,status,config,header){
+    		if(data.success){
+//    			var ldata=[],sdata=[];
+//    			var qesis=data.entity.tbdata;
+//    			$.each(qesis, function(i, vo){  ldata.push(i);  sdata.push(qesis[i][0]); });
+//    		    var myChart = echarts.init(document.getElementById('tempwarningId'));
+//    			var option = {
+//    				tooltip : { trigger : 'axis' },grid : { x:40,y2 : 30, width : '88%' ,height:'67%'},
+//	    			title : { text : '制冷系统运行效率趋势', x : 'center', y : 20 },
+//	    			series : [ {name : '系统效率',type : 'line',data : sdata} ],
+//	    			yAxis : [ {type : 'value',axisLabel : {formatter : '{value}'}}],
+//	    			xAxis : [ {type : 'category',splitLine:{ show:false }, axisLabel : {rotate : '60',interval : 0},data :ldata}]
+//	    		};
+//    			myChart.setOption(option);//title,ldata,xData,seriesdata
+    			
+    			/*告警统计*/
+    	    	var tempwarning = echarts.init(document.getElementById('tempwarningId'));
+    	        // 指定图表的配置项和数据
+    	        var option = {
+//    	    		    backgroundColor:'#f2f2e6',
+    	        	    tooltip: { trigger: 'axis', axisPointer: {type: 'cross',crossStyle: { color: '#999' } }},
+    	        	    legend: {  data:['次数','时长']},
+    	        	    xAxis: [ {
+    	        	            type: 'category',
+    	        	            axisPointer: {type: 'shadow' },
+    	        	            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+    	        	        }
+    	        	    ],
+    	        	    yAxis:[{type:"value",name:"次数/次",min:0,max:250,interval:50,axisLabel:{formatter:"{value}"}},{type:"value",name:"时长/min",min:0,max:25,interval:5,axisLabel:{formatter:"{value}"}}],
+    	        	    series: [
+    	        	        {
+    	        	            name:'次数',
+    	        	            type:'bar',
+    	        	            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+    	        	        },
+    	        	        {
+    	        	            name:'时长',
+    	        	            type:'line',
+    	        	            yAxisIndex: 1,
+    	        	            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+    	        	        }
+    	        	    ]
+    	        	};
+    	        tempwarning.setOption(option);
+    			
+    		}
+    		
+    	});
+    	
+    	
+    	
+    	
+    };
     //============================================================================看不懂==============================================================================
     $scope.initcompruntime=function(){
 			var option6 = {
@@ -203,6 +260,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	    $scope.initWaterCostsis();
     	    $scope.initQEsis();
     	    $scope.initcompruntime();
+    	    $scope.initTempwring();//超温告警
     };
     $scope.initdata();
     function printpage(){
@@ -241,6 +299,9 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 			$('.goTop').hide();
 		}
 	});//一键回到顶部
+	
+	
+	
 	
 	/*告警统计*/
 	var myCharts = echarts.init(document.getElementById('tem_div'));

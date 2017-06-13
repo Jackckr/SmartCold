@@ -22,7 +22,7 @@
 	
 	
 	<select id="getTempWanningCoun" resultType="map">
-	  SELECT `rdcid` ,COUNT(`id`) longcou, SUM(`longtime`) lontime  FROM `syswarningsinfo`  where `type`=1 and `addtime` >#{starttime} GROUP BY `rdcid`;
+	  SELECT `oid` ,COUNT(`id`) longcou, SUM(`longtime`) lontime  FROM `syswarningsinfo`  where `type`=1 and `addtime` >#{starttime} GROUP BY `oid`;
 	</select>
 	
 	<select id="getSysWarningByFilter" parameterType="map" resultType="SysWarningsInfo">
