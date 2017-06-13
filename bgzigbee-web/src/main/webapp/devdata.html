@@ -295,7 +295,7 @@
 			     }
 				
 				if(etime==""||stime==""){alert("请设置时间");return;}
-				$http({method:'POST',url:'/i/Datar/findDataByFilter',
+				$http({method:'POST',url:'/i/Data/findDataByFilter',
 					params:{
 						 pageNum   :     $scope.bigCurrentPage         ,
 						 pageSize  :     $scope.maxSize        ,

@@ -14,8 +14,9 @@ import com.smartcold.bgzigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.bgzigbee.manage.entity.*;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
-
 import com.smartcold.bgzigbee.manage.util.BaiduMapUtil;
+import com.smartcold.bgzigbee.manage.util.StringUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -234,7 +235,7 @@ public class RdcServiceImpl implements RdcService {
                     rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
                 }
             }
-            if(rdcExtEntity.getStoragecapacityheight()!=null){
+            if(StringUtil.isnotNull( rdcExtEntity.getStoragecapacityheight())){
 				String[] capacityheight = rdcExtEntity.getStoragecapacityheight().split(",");// 1:2,2:2,3:2,4:1,5:1
 				if (capacityheight.length > 0){
 					for (int i = 0; i < capacityheight.length; i++) {

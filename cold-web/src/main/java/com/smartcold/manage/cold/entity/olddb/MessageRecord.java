@@ -16,6 +16,7 @@ public class MessageRecord {
     private String title;//消息标题
     private String message;//消息内容
     private int   state       ;
+    private int  isread;
     private int   level       ;
     private String addTime;//消息添加时间
     public Integer getId() {
@@ -85,6 +86,14 @@ public class MessageRecord {
 
 	public int getTid() {
 		return tid;
+	}
+
+	public int getIsread() {
+		return isread;
+	}
+
+	public void setIsread(int isread) {
+		this.isread = isread;
 	}
 
 	public void setTid(int tid) {

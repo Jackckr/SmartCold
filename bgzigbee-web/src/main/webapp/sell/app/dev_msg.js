@@ -1,4 +1,5 @@
 //设置模型
+
 var isredMode=[{val:-1,text:"===全部==="},{val:0,text:"未读"},{val:1,text:"已读"}];//isRead
 var isHandleMode=[{val:-1,text:"===全部==="},{val:0,text:"未处理"},{val:1,text:"已处理"}];//status
 var MsgtypeMode=[{val:-1,text:"===全部==="},{val:0,text:"系统消息"},{val:1,text:"系统通知"},{val:2,text:"系统告警"}];//type
