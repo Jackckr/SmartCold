@@ -27,6 +27,9 @@
     .sysFoot .btn-warning{padding: 2px 15px;margin-left: 10px;}
     .sysFoot{padding-left: 18px;}
     .sysFoot ul{margin: 0;}
+    .searchArea{margin-bottom:10px;position: relative;height: 30px;}
+    .searchInput{width: 50%;height: 30px;border-radius: 4px;padding-right: 1em;box-sizing: border-box;background-color: #fff;font-size: 14px;color: #898989;float: right;text-indent:1em; }
+    .searchArea>i{width: 18px;height: 18px;position: absolute;top:50%;margin-top: -8px; right:5px;font-size: 16px;line-height: 18px;color: #999;}
 </style>
 <!--新设计page-->
 <div class="sysUi">
@@ -52,6 +55,10 @@
 
     </div>
     <div class="sysTable">
+        <div class="searchArea">
+            <input type="text" class="searchInput" ng-keyup="searchSys()" placeholder="搜索消息">
+            <i class="iconfont">&#xe62f;</i>
+        </div>
         <table class="table">
             <thead>
                 <tr class="sysTr">

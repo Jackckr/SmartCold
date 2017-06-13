@@ -20,7 +20,11 @@ coldWeb.controller('message', function( $scope, $rootScope,$http ,$timeout) {
              $rootScope.msgList=data.data;
          });
 	};
-
+    $scope.searchSys = function() {
+        $scope.params.page = 1;
+        $scope.params.keyword = $(".searchInput").val();
+        $scope.initmsg();
+    }
 	$scope.showmsg=function(idex){
 		$scope.currmsg=$rootScope.msgList[idex];
 		if($scope.currmsg.state==1 || $scope.currmsg.state==-1){
