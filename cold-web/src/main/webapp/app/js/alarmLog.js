@@ -91,12 +91,14 @@ coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
 	 //根据rdcid查询该rdc的报警信息
 	$(".mainHeight").height( $(".content-wrapper").height());
 	 $scope.tempwarLog=[];
+	 $scope.model=["详细","关闭"];
 	 var myChart = echarts.init(document.getElementById('tem_div'));
 	$scope.initData=function(){
 		var oids=""; angular.forEach($rootScope.mystorages,function(storage){ oids+=storage.id+",";  });
 		oids=oids.substr(0,oids.length-1);
-		$http.get('i/AlarmController/getOverTempAnalysis', {  params: { "oids": oids  } }).success(function (data) {
+		$http.get('i/AlarmController/getOverTempAnalysis', {  params: {  "rdcId":  $rootScope.rdcId ,"oids": oids  } }).success(function (data) {
 			 $scope.tempwarLog=[];
+			 var tempwaning=[];
            if(data.success){
         	 var datalist=  data.entity,xAxis=[],count=[],time=[];
         	 angular.forEach(datalist,function(item,i){
@@ -107,22 +109,33 @@ coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
         			 var msg=new Object();
         			 msg.time=i;
         			 msg.style="background:#ED3F1D";
-        			 msg.count=item[1];
+        			 msg.isshow=0;
         			 msg.msg="当前所有冷库累计"+item[1]+"次告警,累计时长："+item[0]+"分钟";
-        			 $scope.tempwarLog.push(msg);
+        			 tempwaning.push(msg);
         		 }
         	 });
-        	 if( $scope.tempwarLog.length==0){
+        	 if(tempwaning.length==0){
     			 var msg=new Object();
     			 msg.time=time[7];
     			 msg.msg="暂无告警信息";
     			 msg.count=0;
-    			 $scope.tempwarLog.push(msg);
+    			 tempwaning.push(msg);
     		 }
+        	 $scope.tempwarLog=tempwaning.reverse();
         	 $scope.dwechar(xAxis, count, time); 
            }
 		});
 	}; 
+	
+	//展示详细信息
+	$scope.showdatil=function(obj){
+		if(obj.datilList==undefined){
+			$http.get('i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,time:obj.time  } }).success(function (data) {
+				obj.datilList=data;
+			});
+		}
+		obj.isshow=obj.isshow==1?0:1;
+	};
 	  
 	
 	  $scope.dwechar=function(xAxis,count,time){

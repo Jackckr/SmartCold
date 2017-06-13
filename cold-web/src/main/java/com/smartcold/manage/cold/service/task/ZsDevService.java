@@ -55,6 +55,8 @@ public class ZsDevService  {
 		
 		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
 		
+		
+		
 		public static boolean isRuning() {return isRuning&&errCount<3;}
 		public static void clerCache() {ZsDevService.devTypecache.clear();}
 		public static void setRuning(boolean isRuning) {ZsDevService.isRuning = isRuning;if(isRuning){ZsDevService.errCount=0;}}
@@ -167,10 +169,10 @@ class SubTask implements Runnable {
 			boolean isSaveDU=false;
 			HashMap<String, Object> datas =null;
 			Calendar calendar = Calendar.getInstance();
-			int hours = calendar.get(Calendar.HOUR_OF_DAY); // 时
+			int hours = calendar.get(Calendar.HOUR); // 时
 			int minutes = calendar.get(Calendar.MINUTE);    // 分
 			int seconds = calendar.get(Calendar.SECOND);    // 秒
-			if(hours%6==0&minutes==0&&seconds<30){ isSaveDU=true; System.err.println(TimeUtil.getDateTime()); }
+			if((hours==0||hours%6==0)&minutes==0&&seconds<30){ isSaveDU=true; System.err.println(TimeUtil.getDateTime()); }
 			ArrayList<StorageDataCollectionEntity> dataList = new ArrayList<StorageDataCollectionEntity>();
 			ArrayList<StorageDataCollectionEntity> dusiList = new ArrayList<StorageDataCollectionEntity>();
 		    List<ZSDevDataEntity> parseArray = JSONArray.parseArray(this.devData,ZSDevDataEntity.class);  
