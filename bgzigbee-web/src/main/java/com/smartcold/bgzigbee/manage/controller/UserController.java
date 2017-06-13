@@ -40,7 +40,20 @@ public class UserController extends BaseController {
     	Page<UserEntity> userList  = userDao.findUserByFilter( type, audit, coleam, colval);
     	return TableData.newSuccess(new PageInfo<UserEntity>(userList) );
     }
-	
+
+	@RequestMapping(value = "/getUserList", method = RequestMethod.POST)
+	@ResponseBody
+	public TableData getUserList(
+			String  keyword,
+			int     page,
+			int     rows) {
+		if(!StringUtil.isnotNull(keyword)){keyword=null;}else {keyword="%"+keyword+"%";}
+		PageHelper.startPage(page, rows);
+		Page<UserEntity> allUser = userDao.findAllUser(null, null, keyword);
+		return TableData.newSuccess(new PageInfo<UserEntity>(allUser));
+	}
+
+
 	@Deprecated
 	@RequestMapping(value = "/findUserList", method = RequestMethod.POST)
 	@ResponseBody

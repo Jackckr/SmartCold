@@ -56,7 +56,8 @@ function crspsh() {
     $('#mm').html(String.prototype.concat.apply("", muits));
     $('#fddata').searchbox({menu: '#mm'});
     $('#seache').appendTo('.datagrid-toolbar');
-} //简单查询
+}
+//简单查询
 function finddatatb(value, name) {
     if (value.trim() != "" && name != "") {
         objTable.datagrid('reload', {coleam: name, colval: name});
