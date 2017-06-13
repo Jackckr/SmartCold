@@ -11,13 +11,15 @@ function Time(){t_div=document.getElementById('showtime');var now=new Date();var
 function InitLeftMenu(){var selectedPanelname='';$("#menu").accordion({animate:true,fit:true,border:false});$.each(usermenus,function(j,o){var menulist='<ul class="navlist">';if(o.child&&o.child.length>0){$.each(o.child,function(k,p){menulist+='<li><div><a ref="'+p.menuid+'" href="#" rel="'+p.url+'" ><span class="icon '+p.icon+'" > </span><span class="nav">'+p.menuname+'</span></a></div> </li>'})}menulist+='</ul>';$('#menu').accordion('add',{title:o.menuname,content:menulist,border:false,iconCls:'icon '+o.icon});if(j==0){selectedPanelname=o.menuname}});$('#menu').accordion('select',selectedPanelname);$('.navlist li a').click(function(){var tabTitle=$(this).children('.nav').text();var url=$(this).attr("rel");var icon=$(this).find('.icon').attr('class');addTab(tabTitle,url,icon);$('.navlist li div').removeClass("selected");$(this).parent().addClass("selected")}).hover(function(){$(this).parent().addClass("hover")},function(){$(this).parent().removeClass("hover")})}
 //初始化数据
 function logout(){
-	$.get('/i/admin/logout').success(function(data,status,config,header){ 
-		  sysuser=undefined;
-		  window.sessionStorage.removeItem(sysadmin);
-		  window.sessionStorage.removeItem(asikey);
-		  document.cookie = data.entity.token;
-	      top.location.href = "http://" + location.host + "/login.html";
-	  });
+      $.ajax({ url: '/i/admin/logout',type: 'GET', success: function(data) { 
+    	      sysuser=undefined;
+        	  window.sessionStorage.removeItem("sysadmin");
+        	  window.sessionStorage.removeItem("asikey");
+              top.location.href = "http://" + location.host + "/login.htm";
+	}
+});
+
+      
 }
 $().ready(function() {
 	$.ajax({type: "GET",cache: false,dataType: 'json',url:"/i/admin/findAdmin",success: function(data) { 

@@ -1,7 +1,6 @@
 
 //查询模型
-var userrole=3;
-var reftime=null,cuindex=30,em_diftime=null, queryParams={}, timetypevl=[1,1,3,6,12,24];
+var menuid="1_3",userrole=3,reftime=null,cuindex=30,em_diftime=null, queryParams={}, timetypevl=[1,1,3,6,12,24];
 function initsel_lister(){
 	    em_diftime=$("#em_diftime");
 	    var datatypeMode=[{val:"3",text:"DEV数据"},{val:"2",text:"DEV状态"},{val:"1",text:"AP状态"}];
