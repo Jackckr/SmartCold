@@ -33,8 +33,9 @@
                 <option value="-1">未通过</option>
                 <option value="2">已认证</option>
             </select>
-            <input id="search" type="text" class="easyui-textbox" data-options="prompt:'请输入关键字'" style="width:200px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchData()">Search</a>
+            <input id="fddata" class="easyui-searchbox" val="ml" data-options="prompt:'请输入搜索条件...'" style="width:200px;display:inline;"/>
+            <!--<input id="search" type="text" class="easyui-textbox" data-options="prompt:'请输入关键字'" style="width:200px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchData()">Search</a>-->
         </div>
     </div>
 </div>
@@ -59,7 +60,7 @@
         </table>
     </form>
 </div>
-<div id="addCold" class="easyui-dialog" title="添加冷库" style="width:80%;height:65%"
+<div id="addCold" class="easyui-dialog" title="添加冷库" style="width:90%;height:95%"
      data-options="iconCls:'icon-save',modal:true,closed:true">
         <form id="addColdForm">
             <div style="height: 100%;width: 45%;float: right">

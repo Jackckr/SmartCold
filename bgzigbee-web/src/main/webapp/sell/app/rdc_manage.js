@@ -14,7 +14,7 @@ function getRdcAudit(value) {
 }
 /*加载操作按钮*/
 function cellStyler(value, row) {
-    return '<button class="btn" onclick="sh(' + row.id + ',\'' + row.name + '\',' + row.audit + ')">审核</button><button class="btn btn-info" onclick="rz(' + row.id + ')">认证</button>';
+    return '<button class="btn" onclick="ck(' + row.id + ')">修改</button><button class="btn" onclick="sh(' + row.id + ',\'' + row.name + '\',' + row.audit + ')">审核</button><button class="btn btn-info" onclick="rz(' + row.id + ')">认证</button>';
 }
 /*初始化表格*/
 function init_table() {
@@ -35,65 +35,9 @@ function init_table() {
 
 
 }
-
+//双击编辑用户信息
 function onDblClickRow(index, field) {
-    ck(field);
-}//双击编辑用户信息
-/**
- * 动态组件 无需关心
- */
-function crspsh() {
-    $('.datagrid-toolbar').append("<div id=\"seache\"style=\"margin-top:-24px;float:right;margin-right:20px;\"><input id=\"fddata\"class=\"easyui-searchbox\" val=\"ml\" data-options=\"prompt:'请输入搜索条件...',searcher:finddatatb\"style=\"width:300px;display:inline;\"></input><div id=\"mm\"style=\"width:100px\" ></div></div>");
-    var muits = new Array();
-    var fields = $('#objTable').datagrid('getColumnFields');
-    for (var i = 0; i < fields.length; i++) {
-        var opts = $('#objTable').datagrid('getColumnOption', fields[i]);
-        if (opts.field == 'ck' || opts.hidden || opts.field == 'hand') {
-            continue;
-        }
-        muits.push("<div id='" + fields[i] + "' name='" + fields[i] + "'  onclick='chclip(this);' data-options=\"iconCls:'icon-" + fields[i] + "'\">" + opts.title + "</div>");
-    }
-    $('#mm').html(String.prototype.concat.apply("", muits));
-    $('#fddata').searchbox({menu: '#mm'});
-    $('#seache').appendTo('.datagrid-toolbar');
-}
-//简单查询
-function finddatatb(value, name) {
-    if (value.trim() != "" && name != "") {
-        objTable.datagrid('reload', {coleam: name, colval: name});
-    }
-} //简单查找数据
-function chclip(em) {
-    $("#seache input[placeholder='请输入搜索条件...']").hide();
-    $("#seache span[class='textbox combo']").remove();
-    $("#scvlcc").remove();
-    $("#seache input[class='textbox-value']").attr("value", "");
-    $("#seache input[class='textbox-value']").attr("name", em.id);
-    if (em.id == "isread" || em.id == "state") {
-        var id = "#ch" + em.id;
-        var magrlef = '94px';
-        var width = '180px';
-        var html = '<select id="scvlcc"  style="width: ' + width + ' ;height:18px;"></select>';
-        $("#seache input[placeholder='请输入搜索条件...']").after(html);
-        $('#scvlcc').combo({editable: false});
-        $("#scvlcc").next().css({'margin-left': magrlef, 'margin-right': '18px', 'padding-bottom': '2px'});
-        $(id).appendTo($('#scvlcc').combo('panel'));
-        $(id + ' span').click(function () {
-            $('#scvlcc').combo('setValue', $(this).attr("value")).combo('setText', $(this).text()).combo('hidePanel');
-            $("#seache input[class='textbox-value']").attr("name", em.id);
-            $("#seache input[class='textbox-value']").attr("value", $(this).attr("value"));
-        });
-        setTimeout(function () {
-            $("span[class='textbox combo']").find("input[type='text']").css({'margin-left': '0px'});
-        }, 0);
-    } else {
-        $("#seache input[placeholder='请输入搜索条件...']").show();
-    }
-}
-function searchData() {
-    queryParams.audit = $("#sel_audit option:selected").val();
-    queryParams.keyword = $("#search").val();
-    reloaddata(queryParams);
+    ck(field.id);
 }
 /*冷库修改*/
 function ck(id) {
@@ -102,7 +46,7 @@ function ck(id) {
     $.ajax({
         url: "/i/rdc/findRDCDTOByRDCId",
         type: "get",
-        data: {"rdcID": id.id},
+        data: {"rdcID": id},
         success: function (data) {
             var rdc = data[0];
             loadProvince();
@@ -403,7 +347,8 @@ function loadCityByProId(id) {
 var saveProvince="";
 $().ready(function () {
     init_table();
-
+    $('#sel_audit').combobox({onChange:function(val){ queryParams.audit=val;  reloaddata(queryParams);}});
+    $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
     $("input", $("#name").next("span")).blur(function () {
         var rdcName = $("#name").val();
         if (rdcName != "") {
