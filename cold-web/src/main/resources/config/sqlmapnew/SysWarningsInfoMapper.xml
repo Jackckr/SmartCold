@@ -19,7 +19,7 @@
 	</insert>
 	
 	
-	<select id="getTempWanningCoun" resultMap="map">
+	<select id="getTempWanningCoun" resultType="map">
 	 SELECT `rdcid` ,COUNT(`id`) longcou, SUM(`longtime`) lontime  FROM `syswarningsinfo`  where `type`=1 and `addtime` >#{starttime} GROUP BY `rdcid`;
 	</select>
 	
