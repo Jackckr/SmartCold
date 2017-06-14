@@ -10,6 +10,12 @@
   <sql id="Base_Column_List" >
     id, rdcid, userid, addtime
   </sql>
+  <resultMap id="RUResultMap" type="com.smartcold.bgzigbee.manage.entity.RdcUser">
+    <result property="userid" column="userid"/>
+    <result property="rdcid" column="rdcid"/>
+    <association property="rdc" column="rdcid" select="com.smartcold.bgzigbee.manage.dao.RdcMapper.getRdcById"/>
+    <association property="user" column="userid" select="com.smartcold.bgzigbee.manage.dao.UserMapper.findUserById"/>
+  </resultMap>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -101,5 +107,8 @@
     <include refid="Base_Column_List" />
     from RdcUser
     where userid = #{userid,jdbcType=INTEGER}  and rdcid = #{rdcid,jdbcType=INTEGER}
+  </select>
+  <select id="getByRUID" resultMap="RUResultMap">
+    SELECT * FROM `RdcUser` WHERE `userid`=#{userId}
   </select>
 </mapper>

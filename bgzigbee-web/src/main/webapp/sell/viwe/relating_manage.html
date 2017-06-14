@@ -6,24 +6,30 @@
     <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="../style/icon.css"/>
     <link rel="stylesheet" type="text/css" href="../style/comm.css"/>
-    <link rel="stylesheet" type="text/css" href="../style/main/addRdc.css"/>
     <script type="text/javascript" src="../../comm/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="../../comm/jquery/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../app/comm.js"></script>
     <script type="text/javascript" src="../app/relating_manage.js"></script>
 </head>
 <body class="easyui-layout">
-<div data-options="region:'west',title:'West',split:true" style="width:550px;">
-    <div id="chooseType">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'rdc_add'">添加</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'rdc_del'">删除</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'">刷新</a>
-    </div>
-    <div id="userList"></div>
-    <div id="companyList"></div>
-    <div id="rdcList"></div>
+<!--左侧窗口-->
+<div data-options="region:'west',title:'操作对象',split:true" style="width:550px;">
+    <table id="objTable" class="fill"></table>
 </div>
-<div data-options="region:'center',title:'center title'" style="padding:5px;"></div>
-<div data-options="region:'east',title:'East',split:true" style="width:550px;"></div>
+<div id="div_filter" style="display: none;">
+    <div id="div_filteri" style="padding:2px 5px;">
+        <div style="float:right;">
+            <input id="fddata" class="easyui-searchbox" val="ml" data-options="prompt:'请输入搜索条件...'" style="width:200px;display:inline;"/>
+        </div>
+    </div>
+</div>
+<!--中间窗口-->
+<div data-options="region:'center',title:'已关联'" style="padding:5px;">
+    <table id="objTable1" class="fill"></table>
+</div>
+<!--右侧窗口-->
+<div data-options="region:'east',title:'关联对象',split:true" style="width:550px;">
+    <table id="objTable2" class="fill"></table>
+</div>
 </body>
 </html>

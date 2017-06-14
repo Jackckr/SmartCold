@@ -11,6 +11,10 @@ public class RdcUser {
 
     private Date addtime;
 
+    private RdcEntity rdc;
+
+    private UserEntity user;
+
     public Integer getId() {
         return id;
     }
@@ -41,5 +45,21 @@ public class RdcUser {
 
     public void setAddtime(Date addtime) {
         this.addtime = addtime;
+    }
+
+    public RdcEntity getRdc() {
+        return rdc;
+    }
+
+    public void setRdc(RdcEntity rdc) {
+        this.rdc = rdc;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

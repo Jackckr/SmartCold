@@ -19,6 +19,7 @@ import com.smartcold.bgzigbee.manage.sc360.dao.CompanyUserMapper;
 import com.smartcold.bgzigbee.manage.sc360.entity.Company;
 import com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc;
 import com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser;
+import com.smartcold.bgzigbee.manage.util.TableData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -54,6 +55,13 @@ public class CompanyController extends BaseController {
 
     @Autowired
     private UserMapper userDao;
+
+    @RequestMapping(value = "/getCompanyList", method = RequestMethod.POST)
+    @ResponseBody
+    public TableData getCompanyList(String  keyword,int page, int rows) {
+        PageHelper.startPage(page, rows);
+        return TableData.newSuccess(new PageInfo<Company>(companyDao.findAllCompany(keyword)));
+    }
 
     @RequestMapping(value = "/findCompanyList", method = RequestMethod.POST)
     @ResponseBody

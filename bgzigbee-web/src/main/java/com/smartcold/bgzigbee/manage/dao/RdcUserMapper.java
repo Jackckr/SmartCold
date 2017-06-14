@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.smartcold.bgzigbee.manage.entity.RdcUser;
 
+import java.util.List;
+
 public interface RdcUserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -23,4 +25,6 @@ public interface RdcUserMapper {
     RdcUser findByRdcId(Integer rdcid);
     
     RdcUser findByRUID(@Param("userid")Integer userid,@Param("rdcid")Integer rdcid);
+
+    List<RdcUser> getByRUID(Integer userId);
 }
