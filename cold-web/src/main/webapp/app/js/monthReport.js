@@ -152,51 +152,18 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	var oids=[];angular.forEach($rootScope.mystorages,function(storage){ oids.push(storage.id); });oids=oids.join(",");
     	$http.get('/i/AlarmController/getOverTempByFilter',{params: {rdcId: $scope.rdcId, oids:oids, startTime: $scope.startTime,endTime: $scope.endTime}}).success(function(data,status,config,header){
     		if(data.success){
-//    			var ldata=[],sdata=[];
-//    			var qesis=data.entity.tbdata;
-//    			$.each(qesis, function(i, vo){  ldata.push(i);  sdata.push(qesis[i][0]); });
-//    		    var myChart = echarts.init(document.getElementById('tempwarningId'));
-//    			var option = {
-//    				tooltip : { trigger : 'axis' },grid : { x:40,y2 : 30, width : '88%' ,height:'67%'},
-//	    			title : { text : '制冷系统运行效率趋势', x : 'center', y : 20 },
-//	    			series : [ {name : '系统效率',type : 'line',data : sdata} ],
-//	    			yAxis : [ {type : 'value',axisLabel : {formatter : '{value}'}}],
-//	    			xAxis : [ {type : 'category',splitLine:{ show:false }, axisLabel : {rotate : '60',interval : 0},data :ldata}]
-//	    		};
-//    			myChart.setOption(option);//title,ldata,xData,seriesdata
-    			
-    			/*告警统计*/
+    			var xdata=[],sdata1=[],sdata2=[];
+    			$.each(data.entity, function(i, vo){ xdata.push(i); sdata1.push(vo[0]);sdata2.push(vo[1]);});
     	    	var tempwarning = echarts.init(document.getElementById('tempwarningId'));
-    	        // 指定图表的配置项和数据
     	        var option = {
-//    	    		    backgroundColor:'#f2f2e6',
     	        	    tooltip: { trigger: 'axis', axisPointer: {type: 'cross',crossStyle: { color: '#999' } }},
     	        	    legend: {  data:['次数','时长']},
-    	        	    xAxis: [ {
-    	        	            type: 'category',
-    	        	            axisPointer: {type: 'shadow' },
-    	        	            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-    	        	        }
-    	        	    ],
-    	        	    yAxis:[{type:"value",name:"次数/次",min:0,max:250,interval:50,axisLabel:{formatter:"{value}"}},{type:"value",name:"时长/min",min:0,max:25,interval:5,axisLabel:{formatter:"{value}"}}],
-    	        	    series: [
-    	        	        {
-    	        	            name:'次数',
-    	        	            type:'bar',
-    	        	            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-    	        	        },
-    	        	        {
-    	        	            name:'时长',
-    	        	            type:'line',
-    	        	            yAxisIndex: 1,
-    	        	            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-    	        	        }
-    	        	    ]
+    	        	    xAxis: [ { type: 'category', data: xdata, axisPointer: {type: 'shadow' }} ],
+    	        	    series: [{name:'次数',type:'bar', data:sdata1},{name:'时长',type:'line',yAxisIndex: 1, data:sdata2 }],
+    	        	    yAxis:[{type:"value",name:"次数/次",min:0,max:250,interval:50,axisLabel:{formatter:"{value}"}},{type:"value",name:"时长/min",min:0,max:25,interval:5,axisLabel:{formatter:"{value}"}}]
     	        	};
     	        tempwarning.setOption(option);
-    			
     		}
-    		
     	});
     	
     	
@@ -260,7 +227,14 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	    $scope.initWaterCostsis();
     	    $scope.initQEsis();
     	    $scope.initcompruntime();
-    	    $scope.initTempwring();//超温告警
+    	    $scope.changeStorages=function(){
+    			   if($rootScope.mystorages!=undefined){
+    				   $scope.initTempwring();//超温告警
+    			   }
+    		    };
+    		
+    		  $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
+    	   
     };
     $scope.initdata();
     function printpage(){

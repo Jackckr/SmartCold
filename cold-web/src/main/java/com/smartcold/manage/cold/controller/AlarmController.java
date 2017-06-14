@@ -85,30 +85,21 @@ public class AlarmController extends BaseController {
 	@ResponseBody
 	public ResponseData<LinkedHashMap<String, double[]>> getOverTempByFilter(Integer rdcId,String oids,String startTime,String endTime) {
 		try {
-			int daty=TimeUtil.getDay();
-			if(StringUtil.isNull(oids)){return ResponseData.newFailure();}
+			if(StringUtil.isNull(oids)||StringUtil.isNull(startTime)||StringUtil.isNull(endTime)){return ResponseData.newFailure();}
 			LinkedHashMap<String,double[]> dataHashMap=new LinkedHashMap<String,double[]>();
-			for (int i = 0; i < daty; i++) {
-				Calendar c = Calendar.getInstance(); c.add(Calendar.DAY_OF_MONTH, -daty + i); 
-				dataHashMap.put(TimeUtil.getFormatDate(c.getTime()), new double[]{0,0});
-			}
             List<ColdStorageAnalysisEntity> timeMap = this.alarmMapper.getSumValueByFilter(1, oids, "'OverTempTime','OverTempCount'", startTime, endTime);
             if(SetUtil.isnotNullList(timeMap)){
              for (ColdStorageAnalysisEntity item : timeMap) {
-        			dataHashMap.get(TimeUtil.getFormatDate(item.getDate()))["OverTempTime".equals(item.getKey())?0:1]=item.getValue();
-   			 } 
-           }
-//            long overcount=0, overtime=0;
-//            String time = TimeUtil.getFormatDate(new Date());
-//           List<SysWarningsInfo> overTempDetail = this.getOverTempDetail(rdcId, time);
-//           if(SetUtil.isnotNullList(overTempDetail)){
-//        	   for (SysWarningsInfo sysWarningsInfo : overTempDetail) {
-//        		   overcount++;
-//        		   overtime+=sysWarningsInfo.getLongtime();
-//			   }
-//           }
-//           dataHashMap.put(time,  new double[]{overtime,overcount});
-//           
+            	    String data = TimeUtil.getFormatDate(item.getDate());
+            	    if(dataHashMap.containsKey(data)){
+            	    	dataHashMap.get(data)["OverTempTime".equals(item.getKey())?0:1]=item.getValue();
+            	    }else{
+            	    	double[] temp=new double[]{0,0};
+            	    	temp["OverTempTime".equals(item.getKey())?0:1]=item.getValue();
+            	    	dataHashMap.put(data, temp);
+            	    }
+                }
+            }
 			return ResponseData.newSuccess(dataHashMap);
 		} catch (Exception e) {
 			e.printStackTrace();
