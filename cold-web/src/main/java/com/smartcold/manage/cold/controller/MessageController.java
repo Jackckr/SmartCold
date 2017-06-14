@@ -21,7 +21,7 @@ public class MessageController {
     
 
     @RequestMapping(value = "/getMsgCount",method = RequestMethod.POST)
-    public Integer getMsgCount(int userId,int type,int msgtype, int rdcId, Integer isread,Integer state) {
+    public Integer getMsgCount(int userId,int type,Integer msgtype, int rdcId, Integer isread,Integer state) {
       return this.messageRecordMapping.getMsgCount(rdcId, isread, state);
     }
    

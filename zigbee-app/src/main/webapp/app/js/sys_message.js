@@ -5,8 +5,9 @@ var rdcId = storages = null;
 var rdcName = $("#rdcName").html();
 var searchContent = $("#searchDara_div>input").val();
 var modestate = ['待处理', '已处理'];
-    modestate[-1]="已拒绝";
+modestate[-1]="已拒绝";
 var txt = "全部";
+var news=[];
 var params = {
     userId: user.id,utype: user.type,rdcId: rdcId,
     type: null,stype: null,isRead: null,status: null,
@@ -40,6 +41,8 @@ $(function () {
     });
 
 })
+
+//内页和外页切换
 function togglepage(flag) {
     if(flag){
         $(".nextpage").show();
@@ -57,6 +60,7 @@ $.getUrlParam = function (name) {
     return null;
 }
 var rootRdcId = $.getUrlParam('storageID');
+//获取rdcId
 $.get(ER.coldroot + '/i/rdc/findRDCsByUserid', {userid: user.id}
     ,function (data) {
         if (data && data.length > 0) {
@@ -77,94 +81,109 @@ $.get(ER.coldroot + '/i/rdc/findRDCsByUserid', {userid: user.id}
             }
             params.rdcId = rdcId;
         }
-        initAjax();
+        params.isRead=0;
+        params.status=0;
+        initAjax(1);
         counts();
+        nums();
     }
 );
+//header  文字切换
 function infoTxt(ops) {
     txt = $(ops).children('p').html();
     return txt;
 }
+
+//搜索消息
 function searchSys() {
     params.page = 1;
     params.keyword = $(".searchInput").val();
+    params.isRead=null;
+    params.status=null;
     $("#allList").empty();
-    allMsgAjax();
+    allMsgAjax(-1);
+    $("#infoTxt").html("搜索");
 }
+
 function counts() {//统计未读条数
-   /* $.post(ER.coldroot+'/i/messageRecord/getMsgCountByRdcId',{rdcId:rdcId,type:user.type,userId:user.id},function(data){
+    // $.post(ER.coldroot+'/i/messageRecord/getMsgCountByRdcId',{rdcId:rdcId,type:user.type,userId:user.id},function(data){
+    $.post(ER.coldroot+'/i/MessageController/getMsgCount',{rdcId:rdcId,type:user.type,userId:user.id,state:null,isread:0},function(data){
         var counts = data;
-        $("#nodeal").html(counts);
-    })*/
+        if(counts>0){
+            $("#noread").show();
+            $("#noread").html(counts);
+        }else{
+            $("#noread").hide();
+        }
+
+    })
 }
-function initAjax(){//初始化加载最新2条数据
+
+function nums() {//统计未处理条数
+    $.post(ER.coldroot+'/i/MessageController/getMsgCount',{rdcId:rdcId,type:user.type,userId:user.id,state:0,isread:null},function(data){
+        var nums = data;
+        if(nums>0){
+            $("#nodeal").show();
+            $("#nodeal").html(nums);
+        }else{
+            $("#nodeal").hide();
+        }
+    })
+}
+
+//返回上一步
+function goprev() {
+    params.page=1;
+    params.keyword=null;
+    params.isRead=0;
+    params.status=0;
+    togglepage(false);
+    $('.myedit').html("编辑");
+    $(".editSys,.checkAll").hide();
+    initAjax(1);
+    counts();
+    nums();
+}
+
+//每条list拼接
+function listObj(datalist,inOut){//out:1外部进入//in：-1内部进入
+    news=[];
+    $.each(datalist,function (i,value) {
+        var oState = value.state==0?'<span class="fr redState">'+modestate[value.state]+'</span>':'<span class="fr">'+modestate[value.state]+'</span>';
+        news.push('<li class="sysInfo">'+
+            '<a onclick="sysModal(\''+value.title+'\',\''+value.message+'\','+rdcId+','+value.sType+','+value.uid+','+value.id+','+value.state+','+inOut+','+value.type+','+value.isread+')">'+
+            '<p class="clearfix"><label class="check_icon on fl editSys black" >'+
+            '<input type="checkbox"><i class="iconfont"></i></label>'+
+            '<b class="fl">'+value.title+'</b>'+oState+
+            '<p>'+value.message+'</p>'+
+            '<p class="msgTime">'+value.addTime+'</p></a></li>')
+    });
+}
+
+function initAjax(inOut){//初始化加载最新2条数据
+    isLoadRB=true;
     $.ajax({
         type: 'POST',
-        url: ER.coldroot +'/i/messageRecord/getTallMsgByRdcId',
-        data: {
-            userId:user.id,
-            type:user.type,
-            rdcId:rdcId
-        },
+        url: ER.coldroot +'/i/messageRecord/getMessageList',
+        data: params,
         success: function (data) {
-            var news=[];
-            var datalist = data;
+            var datalist = data.data;
             $("#twoList").empty();
-            if(data.length){
+            var len = datalist.length,j=0;
+            if(len){
                 $('.sysNo').hide();
-                //$("#nodeal").show();
-                if(data.length>2){
-                    data=data.splice(2)
+                if(len>2){
+                    data=datalist.slice(0,2);
+                    listObj(data,inOut);
                 }
             }else {
-                //$("#nodeal").hide();
                 $('.sysNo').show();
             }
-            $.each(datalist,function (i,value) {
-                var oState = value.state==0?'<span class="fr redState">'+modestate[value.state]+'</span>':'<span class="fr">'+modestate[value.state]+'</span>';
-                news.push('<li class="sysInfo">'+
-                    '<a onclick="sysModal(\''+value.title+'\',\''+value.message+'\','+rdcId+','+value.sType+','+value.uid+','+value.id+','+value.state+',1,'+value.type+')"><p class="clearfix"><label class="check_icon on fl editSys black" >'+
-                    '<input type="checkbox"><i class="iconfont"></i></label>'+
-                    '<b class="fl">'+value.title+'</b>'+oState+
-                    '<p>'+value.message+'</p>'+
-                    '<p class="msgTime">'+value.addTime+'</p></a></li>')
-            });
             $("#twoList").append(news.join(""));
         }
     });
 };
-function changstatus(status,ops) {//已处理未处理
-    infoTxt(ops);
-    params.type = null;
-    params.stype = null;
-    params.isRead = null;
-    params.status = status;
-    params.page = 1;
-    $("#allList").empty();
-    allMsgAjax();
-};
-function isRead(isread,ops) {//已读未读
-    infoTxt(ops);
-    params.type = null;
-    params.stype = null;
-    params.status = null;
-    params.isRead = isread;
-    params.page = 1;
-    $("#allList").empty();
-    allMsgAjax();
-}
-function allmsg(ops) {
-    params.type = null,
-    params.stype = null,
-    params.isRead = null,
-    params.status = null,
-    params.page = 1,
-    params.rows = 10;
-    infoTxt(ops);
-    $("#allList").empty();
-    allMsgAjax();
-};
-function allMsgAjax() {//全部消息
+function allMsgAjax(inOut) {//ajax加载消息
     $("#infoTxt").html(txt);
     togglepage(true);
     isLoadRB=true;
@@ -173,7 +192,6 @@ function allMsgAjax() {//全部消息
         url: ER.coldroot +'/i/messageRecord/getMessageList',
         data: params,
         success: function (data) {
-            var news=[];
             var datalist = data.data;
             if(datalist.length==0&&params.page==1){
                 $('.sysNo').show();
@@ -181,40 +199,49 @@ function allMsgAjax() {//全部消息
                 $('.sysNo').hide();
             }
             params.totalPages = data.totalPages;
-            $.each(datalist,function (i,value) {
-                if(value.state==0){
-                    $('.redState').css('color','red');
-                }else{
-                    $('.redState').css('color','#898989');
-                }
-                var oState = value.state==0?'<span class="fr redState">'+modestate[value.state]+'</span>':'<span class="fr">'+modestate[value.state]+'</span>';
-                news.push('<li class="sysInfo">'+
-                    '<a onclick="sysModal(\''+value.title+'\',\''+value.message+'\','+rdcId+','+value.sType+','+value.uid+','+value.id+','+value.state+',-1,'+value.type+',1)">'+
-                    '<p class="clearfix"><label class="check_icon on fl editSys black" >'+
-                    '<input type="checkbox"><i class="iconfont"></i></label>'+
-                    '<b class="fl">'+value.title+'</b>'+oState+
-                    '<p>'+value.message+'</p>'+
-                    '<p class="msgTime">'+value.addTime+'</p></a></li>');
-            });
+            listObj(datalist,inOut);
             $("#allList").append(news.join(""));
             params.page++;
             isLoadRB=false;
         }
     });
 }
+function changeStatus(isread,ops,status) {//已读未读,已处理未处理
+    params = {
+        userId: user.id,utype: user.type,rdcId: rdcId,
+        type: null,stype: null,isRead: isread,status: status,
+        page: 1,rows: 10,total: 1,totalPages: 1,keyword:null
+    };
+    infoTxt(ops);
+    $("#allList").empty();
+    allMsgAjax(-1);
+}
+function allmsg(ops) {//全部消息按钮
+    params = {
+        userId: user.id,utype: user.type,rdcId: rdcId,
+        type: null,stype: null,isRead: null,status: null,
+        page: 1,rows: 10,total: 1,totalPages: 1,keyword:null
+    };
+    infoTxt(ops);
+    $("#allList").empty();
+    allMsgAjax(-1);
+};
+function syswarn() {
+    alert("暂无");
+}
 /*无限加载*/
 $(window).scroll(function(){
-    if(params.page==1){return}
     var scrollTop = $(this).scrollTop();
     var scrollHeight = $(document).height();
     var windowHeight = $(this).height();
     if(scrollTop + windowHeight > scrollHeight-100){
         if(isLoadRB==false&&params.page<=params.totalPages){
-            allMsgAjax();
+            allMsgAjax(-1);
         }
     };
 });
-function sysModal(title,message,id,sType,uid,valId,status,step,uType) {
+//模态框
+function sysModal(title,message,id,sType,uid,valId,status,step,uType,isRead) {
     if (status == 1 || status == -1) {
         alert("该条内容已处理完毕~")
         return
@@ -235,27 +262,29 @@ function sysModal(title,message,id,sType,uid,valId,status,step,uType) {
         });
     }
     var modalObj = '<div class="sysModal"><div class="sysModalMain"><div class="sysModalHeader"><img src="../com/img/modalBg.png" style="width: 11rem;height: 5.12rem;" alt="">'+
-            '<h4>'+title+'</h4><p>'+message+'</p></div>'+
-            '<div class="sysModalBody"><div ng-if="currmsg.type==1&&currmsg.sType==1" >'+
-            '<ul id="ul_storage" class="clearfix">'+oLi+'</ul></div></div><div class="sysModalFooter clearfix">'+
-            '<div class="fl" onclick="off('+sType+','+uid+','+valId+','+step+')">关闭</div>'+
-            '<div class="fl"  onclick="agree('+sType+','+uid+','+valId+','+step+')">同意</div>'+
-            '<div class="fl" onclick="refuse('+sType+','+uid+','+valId+','+step+')">拒绝</div></div>'+
-            '<div class="sysClose" onclick="off('+sType+','+uid+','+valId+','+step+')">&times;</div></div></div>';
+        '<h4>'+title+'</h4><p>'+message+'</p></div>'+
+        '<div class="sysModalBody"><div ng-if="currmsg.type==1&&currmsg.sType==1" >'+
+        '<ul id="ul_storage" class="clearfix">'+oLi+'</ul></div></div><div class="sysModalFooter clearfix">'+
+        '<div class="fl" onclick="handleFn('+sType+','+uid+','+valId+','+step+','+isRead+','+status+',0)">关闭</div>'+
+        '<div class="fl"  onclick="handleFn('+sType+','+uid+','+valId+','+step+','+isRead+','+status+',1)">同意</div>'+
+        '<div class="fl" onclick="handleFn('+sType+','+uid+','+valId+','+step+','+isRead+','+status+',-1)">拒绝</div></div>'+
+        '<div class="sysClose" onclick="handleFn('+sType+','+uid+','+valId+','+step+','+isRead+','+status+',0)">&times;</div></div></div>';
     $("body").append(modalObj);
 }
-//同意
-function agree(sType,uid,valId,step) {
+
+function handleFn(sType,uid,valId,step,isRead,status,onOff) {//0关闭操作，1同意操作，-1拒绝操作
     var str = [], oid = "";
-    if (sType == 1) {
-        $("#ul_storage input[type='checkbox']:checked").each(function () {
-            str.push($(this).val());
-        });
-        if (str.length == 0) {
-            alert("请选择授权的冷库！");
-            return
-        } else {
-            oid = str.toString();
+    if(onOff==1){
+        if (sType == 1) {
+            $("#ul_storage input[type='checkbox']:checked").each(function () {
+                str.push($(this).val());
+            });
+            if (str.length == 0) {
+                alert("请选择授权的冷库！");
+                return
+            } else {
+                oid = str.toString();
+            }
         }
     }
     $.ajax({
@@ -266,79 +295,30 @@ function agree(sType,uid,valId,step) {
             userId: uid,
             stype: sType,
             rdcId: rdcId,
-            status: 1,
+            status: onOff,
             oids: oid
         },
         success:function (data) {
             if(step==1){
-                initAjax();
+                params = {
+                    userId: user.id,utype: user.type,rdcId: rdcId,
+                    type: null,stype: null,isRead: 0,status: 0,
+                    page: 1,rows: 10,total: 1,totalPages: 1,keyword:null
+                };
+                $("#twolist").empty();
+                initAjax(1);
             }else if(step==-1){
-                params.type = null;
-                params.stype = null;
-                params.page = 1;
-                params.isRead = 0;
-                params.status = 0;
+                params = {
+                    userId: user.id,utype: user.type,rdcId: rdcId,
+                    type: null,stype: null,isRead: isRead,status: status,
+                    page: 1,rows: 10,total: 1,totalPages: 1,keyword:null
+                };
                 $("#allList").empty();
-                allMsgAjax();
+                allMsgAjax(-1);
             };
             $(".sysModal").hide();
-        }
-    });
-};
-//拒绝
-function refuse(sType,uid,valId,step) {
-    $.ajax({
-        type: 'POST',
-        url: ER.coldroot + '/i/authenUser/authorUserByRdcId',
-        data: {
-            id: valId,
-            userId: uid,
-            stype: sType,
-            rdcId: rdcId,
-            status: -1,
-            oids: ""
-        },
-        success:function (data) {
-            if(step==1){
-                initAjax();
-            }else if(step==-1){
-                params.type = null;
-                params.stype = null;
-                params.isRead = 0;
-                params.status = 0;
-                params.page = 1;
-                $("#allList").empty();
-                allMsgAjax();
-            };
-            $(".sysModal").hide();
-        }
-    });
-};
-function off(sType,uid,valId,step) {
-    $.ajax({
-        type: 'POST',
-        url: ER.coldroot + '/i/authenUser/authorUserByRdcId',
-        data: {
-            id: valId,
-            userId: uid,
-            stype: sType,
-            rdcId: rdcId,
-            status: 0,
-            oids: ''
-        },
-        success:function (data) {
-            if(step==1){
-                initAjax();
-            }else if(step==-1){
-                params.type = null;
-                params.stype = null;
-                params.status = 0;
-                params.page = 1;
-                params.isRead = 0;
-                $("#allList").empty();
-                allMsgAjax();
-            };
-            $(".sysModal").hide();
+            counts();
+            nums();
         }
     });
 };
@@ -393,16 +373,7 @@ function changeRdc(id,rdc) {
     viewStorage(id);
     window.location.reload()
 };
-function goprev() {
-    params.page=1;
-    params.keyword=null;
-    initAjax();
-    //counts();
-    togglepage(false);
-    $('.myedit').html("编辑");
-    $(".editSys,.checkAll").hide();
-}
-function edit() {
+function edit() {//编辑
     if (flag) {
         $(this).html("完成");
         $(".editSys,.checkAll").show();
