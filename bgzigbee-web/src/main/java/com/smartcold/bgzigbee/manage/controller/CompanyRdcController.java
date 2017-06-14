@@ -2,8 +2,8 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.smartcold.bgzigbee.manage.sc360.dao.CompanyUserMapper;
-import com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser;
+import com.smartcold.bgzigbee.manage.sc360.dao.CompanyRdcMapper;
+import com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc;
 import com.smartcold.bgzigbee.manage.util.TableData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,24 +17,24 @@ import java.util.List;
  * Created by qiangzi on 2017/6/14.
  */
 @Controller
-@RequestMapping(value = "/companyUser")
-public class CompanyUserController {
+@RequestMapping(value = "/companyRdc")
+public class CompanyRdcController {
     @Autowired
-    private CompanyUserMapper companyUserMapper;
+    private CompanyRdcMapper companyRdcMapper;
 
-    @RequestMapping(value = "/getByUserId",method = RequestMethod.POST)
+    @RequestMapping(value = "/getByRdcId",method = RequestMethod.POST)
     @ResponseBody
-    public TableData getByUserId(int userId,int page,int rows){
+    public TableData getByRdcId(int rdcId, int page, int rows){
         PageHelper.startPage(page,rows);
-        List<CompanyUser> companyUsers = companyUserMapper.selectByUid(userId);
-        return TableData.newSuccess(new PageInfo<CompanyUser>(companyUsers));
+        List<CompanyRdc> companyRdcs = companyRdcMapper.findByRdcId(rdcId);
+        return TableData.newSuccess(new PageInfo<CompanyRdc>(companyRdcs));
     }
 
     @RequestMapping(value = "/getByCompanyId",method = RequestMethod.POST)
     @ResponseBody
-    public TableData getByCompanyId(int companyId,int page,int rows){
+    public TableData getByCompanyId(int companyId, int page, int rows){
         PageHelper.startPage(page,rows);
-        List<CompanyUser> companyUsers = companyUserMapper.selectByCId(companyId);
-        return TableData.newSuccess(new PageInfo<CompanyUser>(companyUsers));
+        List<CompanyRdc> companyRdcs = companyRdcMapper.findByCompanyId(companyId);
+        return TableData.newSuccess(new PageInfo<CompanyRdc>(companyRdcs));
     }
 }

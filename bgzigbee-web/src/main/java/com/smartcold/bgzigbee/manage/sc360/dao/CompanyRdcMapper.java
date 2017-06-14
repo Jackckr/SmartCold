@@ -20,4 +20,8 @@ public interface CompanyRdcMapper {
     int updateByPrimaryKey(CompanyRdc record);
     
     List<CompanyRdc> selectByCompId(Integer companyid);
+
+    List<CompanyRdc> findByRdcId(Integer rdcId);
+
+    List<CompanyRdc> findByCompanyId(Integer companyId);
 }
