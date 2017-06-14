@@ -11,6 +11,12 @@
   <sql id="Base_Column_List" >
     id, companyid, rdcid, imgurl, addtime
   </sql>
+  <resultMap id="ByRdcMap" type="com.smartcold.bgzigbee.manage.sc360.entity.CompanyRdc">
+    <result property="companyid" column="companyid"/>
+    <result property="rdcid" column="rdcid"/>
+    <association property="company" column="companyid" select="com.smartcold.bgzigbee.manage.sc360.dao.CompanyMapper.selectByPrimaryKey"/>
+    <association property="rdc" column="rdcid" select="selectRdcById"/>
+  </resultMap>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -103,5 +109,14 @@
     <include refid="Base_Column_List" />
     from CompanyRdc
     where rdcid = #{rdcid,jdbcType=INTEGER}
+  </select>
+    <select id="findByRdcId" resultMap="ByRdcMap">
+      SELECT * FROM `companyrdc` WHERE `rdcid`=#{rdcId}
+    </select>
+  <select id="findByCompanyId" resultMap="ByRdcMap">
+    SELECT * FROM `companyrdc` WHERE `companyid`=#{companyId}
+  </select>
+  <select id="selectRdcById" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
+    SELECT * FROM `smartcold`.`rdc` WHERE `id`=#{id}
   </select>
 </mapper>

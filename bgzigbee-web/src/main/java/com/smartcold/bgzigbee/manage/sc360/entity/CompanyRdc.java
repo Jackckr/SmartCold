@@ -1,5 +1,7 @@
 package com.smartcold.bgzigbee.manage.sc360.entity;
 
+import com.smartcold.bgzigbee.manage.entity.RdcEntity;
+
 import java.util.Date;
 
 public class CompanyRdc {
@@ -12,6 +14,10 @@ public class CompanyRdc {
     private String imgurl;
     
     private Date addtime;
+
+    private Company company;
+
+    private RdcEntity rdc;
 
     public Integer getId() {
         return id;
@@ -54,4 +60,20 @@ public class CompanyRdc {
 	{
 		this.imgurl = imgurl;
 	}
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public RdcEntity getRdc() {
+        return rdc;
+    }
+
+    public void setRdc(RdcEntity rdc) {
+        this.rdc = rdc;
+    }
 }

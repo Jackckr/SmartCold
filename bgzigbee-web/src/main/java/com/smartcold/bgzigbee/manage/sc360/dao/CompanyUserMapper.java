@@ -23,4 +23,6 @@ public interface CompanyUserMapper {
     List<CompanyUser> selectByCompanyId(Integer companyid);
 
     List<CompanyUser> selectByUid(Integer userId);
+
+    List<CompanyUser> selectByCId(Integer companyId);
 }

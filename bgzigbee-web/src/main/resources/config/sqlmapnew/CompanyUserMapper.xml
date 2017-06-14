@@ -104,6 +104,9 @@
     <select id="selectByUid" resultMap="ByUidMap">
       SELECT * FROM `companyuser` WHERE `userid`=#{userId}
     </select>
+  <select id="selectByCId" resultMap="ByUidMap">
+    SELECT * FROM `companyuser` WHERE `companyid`=#{companyId}
+  </select>
   <select id="selectUserById" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
     SELECT ID,`type`,`username` ,`telephone` ,`email` ,`addTime` ,`audit`
 		FROM `smartcold`.`user` WHERE `id` = #{id}
