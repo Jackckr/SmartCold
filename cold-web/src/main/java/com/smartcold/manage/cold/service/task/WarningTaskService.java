@@ -24,7 +24,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-//@Service
+@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -55,7 +55,10 @@ public class WarningTaskService  {
 	*/
 	@Scheduled(cron = "0 0/30 * * * ?")
 	public void checkData() {
-		if(QuartzManager.tempWarningServer==null){QuartzManager.tempWarningServer=this.tempWarningServer;QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;}
+		if(QuartzManager.tempWarningServer==null){
+			QuartzManager.tempWarningServer=this.tempWarningServer;
+			QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
+		}
 		Date sttime = TimeUtil.getBeforeMinute(30);
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);

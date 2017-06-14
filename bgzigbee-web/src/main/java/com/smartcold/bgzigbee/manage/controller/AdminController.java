@@ -259,10 +259,11 @@ public class AdminController extends BaseController {
 		pml.setChild(mlList4);    ml.add(pml);
 		
 		pml  = new ACLAdminNode("5"  ,"main_debug",    "开发人员");
-		 List<ACLAdminNode> mlList5=new ArrayList<ACLAdminNode>();
-		mlList5.add(new ACLAdminNode("5_0","icon-role",    "日志查询", "sys_msg.html" ));
-		mlList5.add(new ACLAdminNode("5_1","icon-role",    "缓存管理", "sys_state.html" ));
-		mlList5.add(new ACLAdminNode("5_2","icon-role",    "系统调度", "sysmessage.html" ));
+	 List<ACLAdminNode> mlList5=new ArrayList<ACLAdminNode>();
+		mlList5.add(new ACLAdminNode("5_0","icon-role",    "接口监控", "bug_port.html" ));
+		mlList5.add(new ACLAdminNode("5_1","icon-role",    "日志查询", "sys_msg.html" ));
+		mlList5.add(new ACLAdminNode("5_2","icon-role",    "缓存管理", "sys_state.html" ));
+		mlList5.add(new ACLAdminNode("5_3","icon-role",    "系统调度", "sysmessage.html" ));
 		pml.setChild(mlList5);      ml.add(pml);
 		
 		List<ACLAdminNode> nml=new ArrayList<ACLAdminNode>();

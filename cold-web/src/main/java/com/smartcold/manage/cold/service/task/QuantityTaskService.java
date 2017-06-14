@@ -127,6 +127,7 @@ public class QuantityTaskService  {
 	 */
 	@Scheduled(cron = "0 30 3 * * ?")
 	public void reckonQuantity() {
+		
 	    boolean taskStatus = quantityMapper.updateTaskStatus(3);
 		if(!taskStatus){return ;}
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
