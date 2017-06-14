@@ -23,10 +23,6 @@
     		
     		text-align: center;    		
     	}
-    	.noAudit>img{
-    		width:216px;
-    		height:180px;
-    	}
     	.noAudit>p{
     		line-height: 1.75;
     		margin: 50px 0;
@@ -34,14 +30,23 @@
     	.noAudit>p>b{
     		font-size: 16px;
     	}
+        .noAudit .btn{
+            width:150px;
+            height: 30px;
+            background: #b5cdff;
+            text-align: center;
+            line-height:30px;
+            border-radius: 4px;
+            padding:0;
+            color: #fff;
+        }
     </style>
   </head>
 	<body>
 		<div class="noAudit">
-			<img src="assets/img/fail.png">
+			<img src="assets/plugins/jquery-step/images/success.png">
 			<p><b> 您提交的申请正在处理中，请您耐心等待！  </b></p>
-			<button class="btn btn-primary" onclick="chanUser();">切换账号</button>
-			
+			<button class="btn" onclick="chanUser();">切换账号</button>
 		</div>
 	</body>
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>

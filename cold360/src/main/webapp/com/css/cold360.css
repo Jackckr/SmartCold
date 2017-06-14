@@ -983,6 +983,16 @@ input[type='radio']:checked{
 	background: url("../img/prev.png") center no-repeat;
 	background-size: cover;
 }
+.rolo_btn{
+	width:50%;
+	margin-left:25%;
+	height: 2.2rem;
+	background: #b5cdff;
+	text-align: center;
+	line-height:2.2rem;
+	border-radius: .2rem;
+	color: #fff;
+}
 .role_div>button:nth-child(2){
 	background-image: url('../img/sub.png');
 }
