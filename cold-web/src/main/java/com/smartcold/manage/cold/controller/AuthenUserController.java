@@ -139,51 +139,51 @@ public class AuthenUserController {
     @ResponseBody
     public boolean authorUserByRdcId(int id,int userId,int stype, int rdcId, int status,String oids) {
     	try {
-			if(status==1){
-				UserEntity user = this.userMapper.findById(userId);
-				if(user==null){return false; }//用户被删除
-				if(stype==1){//申请温度版
-					String item = this.coldstorageTempsetMapper.getItem(rdcId, userId);
-					if(StringUtil.isnotNull(item)){
-						this.coldstorageTempsetMapper.upItem(rdcId, userId, oids);
-					}else{
-						this.coldstorageTempsetMapper.addItem(rdcId, userId, oids);
+			if(status==1&&(stype==1||stype==2)){
+					UserEntity user = this.userMapper.findById(userId);
+					if(user==null){return false; }//用户被删除
+					if(stype==1){//申请温度版
+						String item = this.coldstorageTempsetMapper.getItem(rdcId, userId);
+						if(StringUtil.isnotNull(item)){
+							this.coldstorageTempsetMapper.upItem(rdcId, userId, oids);
+						}else{
+							this.coldstorageTempsetMapper.addItem(rdcId, userId, oids);
+						}
 					}
-				}
-				RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId); // 默认用户账号与管理员账号不会重复
-				if (roleUserByUserId == null) {
-					RoleUser roleUser = new RoleUser();
-					roleUser.setRoleid(2); // op
-					roleUser.setUserid(userId);
-					roleUser.setAddtime(new Date());
-					this.roleUserDao.insertSelective(roleUser);
-				}
-				RdcUser byRdcId = rdcUserMapper.findByUserId(userId);
-				if (byRdcId == null) {
-					RdcUser rdcUser = new RdcUser();
-					rdcUser.setRdcid(rdcId);
-					rdcUser.setUserid(userId);
-					rdcUser.setAddtime(new Date());
-					this.rdcUserMapper.insertSelective(rdcUser);
-				} 
-				if(stype==1||stype==2){
-					int rolid=stype==1?10:9;
-					List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",userId);
-				   if(SetUtil.isnotNullList(useracl)){
-					   this.aclMapper.upuserAcl(userId, rolid, null);
-				   }else{
-					   this.aclMapper.adduserAcl(userId, rolid, null);//采用默认权限。。。
-				   }
-				}else{//这是什么鬼
-			
-				}
+					RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId); // 默认用户账号与管理员账号不会重复
+					if (roleUserByUserId == null) {
+						RoleUser roleUser = new RoleUser();
+						roleUser.setRoleid(2); // op
+						roleUser.setUserid(userId);
+						roleUser.setAddtime(new Date());
+						this.roleUserDao.insertSelective(roleUser);
+					}
+					RdcUser byRdcId = rdcUserMapper.findByUserId(userId);
+					if (byRdcId == null) {
+						RdcUser rdcUser = new RdcUser();
+						rdcUser.setRdcid(rdcId);
+						rdcUser.setUserid(userId);
+						rdcUser.setAddtime(new Date());
+						this.rdcUserMapper.insertSelective(rdcUser);
+					} 
+					if(stype==1||stype==2){
+						int rolid=stype==1?10:9;
+						List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",userId);
+					   if(SetUtil.isnotNullList(useracl)){
+						   this.aclMapper.upuserAcl(userId, rolid, null);
+					   }else{
+						   this.aclMapper.adduserAcl(userId, rolid, null);//采用默认权限。。。
+					   }
+					}else{//这是什么鬼
+				
+					}
 
-				Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
-				String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
-			    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
-				SystemInformEntity sysWarningsInfo=new SystemInformEntity(0, stype, rdcId, null, 0, 0, 0, title, msg);
-				this.msMappergMapper.addsystemInform(sysWarningsInfo);
-				this.messageRecordMapping.updateState(id, 1,1);
+					Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
+					String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
+				    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
+					SystemInformEntity sysWarningsInfo=new SystemInformEntity(0, stype, rdcId, null, 0, 0, 0, title, msg);
+					this.msMappergMapper.addsystemInform(sysWarningsInfo);
+					this.messageRecordMapping.updateState(id, 1,1);
 				
 			}else{
 				this.messageRecordMapping.updateState(id, 1, status);
