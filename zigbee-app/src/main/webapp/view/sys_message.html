@@ -58,12 +58,12 @@
      <section class="sys prevpage">
          <div class="allMsg">
              <div class="msgStatus"><a onclick="allmsg(this)"><i class="all"></i><p class="info">全部</p></a></div>
-             <div class="msgStatus"><a onclick="isRead(0,this)"><i class="noread"></i><p class="info">未读</p><span id="noread"></span></a></div>
+             <div class="msgStatus"><a onclick="isRead(0,this)"><i class="noread"></i><p class="info">未读</p><span class="counts" id="noread"></span></a></div>
              <div class="msgStatus"><a onclick="isRead(1,this)"><i class="isread"></i><p class="info">已读</p></a></div>
              <div class="msgStatus"><a onclick="allmsg(this)"><i class="system"></i><p class="info">系统消息</p></a></div>
          </div>
          <div class="allMsg">
-             <div class="msgStatus"><a onclick="changstatus(0,this)"><i class="deal"></i><p class="info">待处理</p></a></div>
+             <div class="msgStatus"><a onclick="changstatus(0,this)"><i class="deal"></i><p class="info">待处理</p><span class="counts" id="nodeal"></span></a></div>
              <div class="msgStatus"><a onclick="changstatus(1,this)"><i class="isdeal"></i><p class="info">已处理</p></a></div>
              <div class="msgStatus"><a onclick="changstatus(1,this)"><i class="syswarn"></i><p class="info">系统警告</p></a></div>
              <div class="msgStatus"><a onclick="changstatus(1,this)"><i class="otherwarn"></i><p class="info">其他警告</p></a></div>

@@ -895,10 +895,12 @@ input[type='radio']:checked{
 }
 .oH2{
 	text-align: center;
-	font-size:1.2rem;
-	font-style: italic;
-	color: #337ab7;
-	margin: 1rem 0;
+	font-size:1rem;
+	font-weight: 400;
+	height: 2.2rem;
+	line-height: 2.2rem;
+	color: #fff;
+	background-color: #438bcb;
 }
 .role_choose{
 	padding:0.9rem;
@@ -907,49 +909,93 @@ input[type='radio']:checked{
 	margin: .5rem 0;
 	font-size: .75rem;
 	line-height:1.5;
-}
-.rolo_btn{
-	color: #fff;
-	background-color: #337ab7;
-	border-color: #2e6da4;
-	display: inline-block;
-	width: 100%;
 	text-align: center;
-	border-radius: .2rem;
-	padding: 0.5rem;
-	font-size: .8rem;
-	margin-bottom: 1.5rem;
+	font-weight: 400;
 }
-.role_h{
-	background-color: #f0ad4e;
-	border-color: #eea236;
-}
-.role_wx{
-	background-color: #449d44;
-	border-color: #398439;
-}
-.role_home{
-	background-color: #00acd6;
-	border-color: #058fb1;
-}
-.role_prev,.role_next{
-	width: 45%;
+.role_div>div{
+	width: 50%;
+	height: 10rem;
 	padding:.3rem;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.role_div>div>a{
+	display: block;
+	height: 100%;
+	background: url("../img/kz.png") center no-repeat;
+	background-size: cover;
+}
+.role_div>div:nth-child(2)>a{
+	background-image: url("../img/hz.png");
+}
+.role_div>div:nth-child(3)>a{
+	background-image: url("../img/wxs.png");
+}
+.role_div>div:nth-child(4)>a{
+	background-image: url("../img/back.png");
 }
 .role_choose p{
 	font-size: .7rem;
 	line-height: 1.5;
 	font-weight:400;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 1rem;
+}
+.auth_txt>p{
+	border-bottom: 0;
+}
+.role_choose p>i{
+	margin-right: .5rem;
+	width: .75rem;
+	height: .67rem;
+	display: inline-block;
+}
+.camera{
+	background: url("../img/camera.png") center;
+	background-size: cover;
+}
+.upfile{
+	background: url("../img/choice.png") center;
+	background-size: cover;
+}
+.auth_txt>h3{
+	position: relative;
+}
+.auth_txt>h3>span{
+	background-color: #fdfbfc;
+	display: inline-block;
+	padding: 0 .3rem;
+	position: relative;
+	z-index:1;
+	color: #777;
+}
+.auth_txt>h3:before{
+	content: '';
+	position: absolute;
+	top:50%;
+	border-bottom: 1px solid #eee;
+	left:0;
+	width: 100%;
+}
+.role_div>button{
+	width:50%;
+	height: 2.2rem;
+	background: url("../img/prev.png") center no-repeat;
+	background-size: cover;
+}
+.role_div>button:nth-child(2){
+	background-image: url('../img/sub.png');
 }
 .role_img{
 	text-align: center;
-	margin: 1rem 0;
+	margin: 2rem 0;
 }
 .role_img img{
 	width: 7rem;
 }
 .choose_cold{
-	border: 1px solid #00A1CB;
+	border: 1px solid #d1b5fe;
 	border-radius: .2rem;
 	width: 100%;
 	line-height: 2rem;
@@ -958,6 +1004,8 @@ input[type='radio']:checked{
 	appearance: none;
 	text-indent: .5rem;
 	font-size: .75rem;
+	margin-bottom: 1rem;
+	color: #666;
 }
 .pic{
 	display: inline-block;
@@ -999,6 +1047,11 @@ input[type='radio']:checked{
 	font-size:0.75rem;
 	margin: 0.6rem 0 1.5rem;
 }
+.role_div>.oHome{
+	margin-left: 25%;
+	background-image: url('../img/home.png');
+}
+.role_choose #auCode{border-bottom: 0;}
 /*温度报警2017-6-05*/
 #timeline{
 	position: relative;

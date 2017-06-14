@@ -8,19 +8,29 @@
 			`oid`,
 			`type`,
 			`level`,
+			`starttime`,
+			`endtime`,
 			`longtime`,
 			`title`,
 			`warnigmsg`,
 			`addtime`
 		)VALUES
 		 <foreach collection="list" item="model" index="index"  separator="," >  
-		  (#{model.rdcid}, #{model.objid}, #{model.type},#{model.level}, #{model.longtime}, #{model.title}, #{model.warnigmsg}, #{model.addtime})
+		  (#{model.rdcid}, #{model.objid}, #{model.type},#{model.level}, #{model.starttime}, #{model.endtime},#{model.longtime}, #{model.title}, #{model.warnigmsg}, #{model.addtime})
 		 </foreach>
 	</insert>
 	
 	
 	<select id="getTempWanningCoun" resultType="map">
-	 SELECT `rdcid` ,COUNT(`id`) longcou, SUM(`longtime`) lontime  FROM `syswarningsinfo`  where `type`=1 and `addtime` >#{starttime} GROUP BY `rdcid`;
+	  SELECT `oid` ,COUNT(`id`) longcou, SUM(`longtime`) lontime  FROM `syswarningsinfo`  where `type`=1 and `addtime` >#{starttime} GROUP BY `oid`;
+	</select>
+	
+	<select id="getSysWarningByFilter" parameterType="map" resultType="SysWarningsInfo">
+		SELECT * from `syswarningsinfo` where `rdcid`=#{rdcid}
+		<if test="oids!=null and oids!=''"> and `oid` in (${oids}) </if>
+		<if test="type!=null"> and `type`=#{type} </if>
+		<if test="level!=null"> and `level`=#{level} </if>
+		<if test="starttime!=null and starttime!=''"> and `addtime` >#{starttime} and `addtime` &lt;#{endtime} </if>
 	</select>
 	
 </mapper>

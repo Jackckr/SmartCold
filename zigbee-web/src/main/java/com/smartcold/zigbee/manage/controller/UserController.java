@@ -147,8 +147,8 @@ public class UserController extends BaseController {
 		int day=Calendar.getInstance().get(Calendar.DATE);//获取日  
 		if( key==day*2&&("/register.html".equals(reg)||"/registerStep.html".equals(reg))&&StringUtil.isnotNull(telephone)){
 			TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-			String signUpCode = teleVerify.signUpVerify(telephone);
-			return EncodeUtil.encodeByMD5(signUpCode) ;
+			String signUpCode = teleVerify.signUpVerify(telephone);//md5加密
+			return signUpCode;
 		}
 		return null;
 	}

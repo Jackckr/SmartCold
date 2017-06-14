@@ -76,6 +76,7 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 	     $scope.toolchart(5,mode.url[0], 'goodsId', '货物因子', 'GoodsLiuTongYinZi', 1, " 月平均货物因子为");//4
 //	     $scope.toolchart(6,mode.url[0], 'ysjRunningTimeId', '压缩机运行时间', 'GoodsLiuTongYinZi', 1, " 压缩机运行时间");//-----没做
 //	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
+//	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
 	};       
 	
 	$scope.initQsis=function(){//8
@@ -146,6 +147,29 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	});
     };
     
+    //
+    $scope.initTempwring=function(){
+    	var oids=[];angular.forEach($rootScope.mystorages,function(storage){ oids.push(storage.id); });oids=oids.join(",");
+    	$http.get('/i/AlarmController/getOverTempByFilter',{params: {rdcId: $scope.rdcId, oids:oids, startTime: $scope.startTime,endTime: $scope.endTime}}).success(function(data,status,config,header){
+    		if(data.success){
+    			var xdata=[],sdata1=[],sdata2=[];
+    			$.each(data.entity, function(i, vo){ xdata.push(i); sdata1.push(vo[0]);sdata2.push(vo[1]);});
+    	    	var tempwarning = echarts.init(document.getElementById('tempwarningId'));
+    	        var option = {
+    	        	    tooltip: { trigger: 'axis', axisPointer: {type: 'cross',crossStyle: { color: '#999' } }},
+    	        	    legend: {  data:['次数','时长']},
+    	        	    xAxis: [ { type: 'category', data: xdata, axisPointer: {type: 'shadow' }} ],
+    	        	    series: [{name:'次数',type:'bar', data:sdata1},{name:'时长',type:'line',yAxisIndex: 1, data:sdata2 }],
+    	        	    yAxis:[{type:"value",name:"次数/次",min:0,max:250,interval:50,axisLabel:{formatter:"{value}"}},{type:"value",name:"时长/min",min:0,max:25,interval:5,axisLabel:{formatter:"{value}"}}]
+    	        	};
+    	        tempwarning.setOption(option);
+    		}
+    	});
+    	
+    	
+    	
+    	
+    };
     //============================================================================看不懂==============================================================================
     $scope.initcompruntime=function(){
 			var option6 = {
@@ -203,6 +227,14 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
     	    $scope.initWaterCostsis();
     	    $scope.initQEsis();
     	    $scope.initcompruntime();
+    	    $scope.changeStorages=function(){
+    			   if($rootScope.mystorages!=undefined){
+    				   $scope.initTempwring();//超温告警
+    			   }
+    		    };
+    		
+    		  $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
+    	   
     };
     $scope.initdata();
     function printpage(){
@@ -241,6 +273,9 @@ coldWeb.controller('monthReport', function( $scope, $rootScope,$stateParams,$htt
 			$('.goTop').hide();
 		}
 	});//一键回到顶部
+	
+	
+	
 	
 	/*告警统计*/
 	var myCharts = echarts.init(document.getElementById('tem_div'));

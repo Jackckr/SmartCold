@@ -9,7 +9,7 @@
 		<if test="keys !=null">AND `key` in (${keys})</if>
 		<if test="oids !=null">AND `oid` in (${oids}) </if>
 		<if test="startTime != null and endTime!=null" >  AND `date` >= #{startTime} AND `date` <![CDATA[ <= ]]> #{endTime}  </if>
-		GROUP BY `date`,`key`;
+		GROUP BY `date`,`key` ORDER BY `date`;
 	</select>
 	
 	

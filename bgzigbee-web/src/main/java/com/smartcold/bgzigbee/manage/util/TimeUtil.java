@@ -59,6 +59,19 @@ public class TimeUtil {
 			return -1;
 		}
 	}
+	
+	  /** 
+     * 使用参数Format将字符串转为Date 
+     */  
+    public static Date parseYMD(String strDate)  
+    {  
+        try {
+			return datefm.parse(strDate);
+		} catch (ParseException e) {
+			 logger.error("日期转换出错", e);
+		}  
+        return null;
+    } 
     /**
      * Date转String
      *
@@ -85,38 +98,12 @@ public class TimeUtil {
      *
      * @return
      */
-    public static String[] getDayStatTime(Date sourceDate) {
-    	String sourceDateStr = dateToString(sourceDate, "yyyy-MM-dd");
-    	return new String []{sourceDateStr, sourceDateStr + " 00:00:00",sourceDateStr + " 23:59:59"};
-    }
     
-    public static Date getDayStatDate(Date sourceDate) {
-    	String sourceDateStr = dateToString(sourceDate, "yyyy-MM-dd");
-    	 return stringToDate(sourceDateStr + " 00:00:00", "yyyy-MM-dd HH:mm:ss");
-    }
-    /**
-     * 获取指定日期的 23：59：59
-     *
-     * @return
-     */
-    public static Date getDayLastTime(Date sourceDate) {
-        String sourceDateStr = dateToString(sourceDate, "yyyy-MM-dd");
-        String newDateStr = sourceDateStr + " 23:59:59";
-        return stringToDate(newDateStr, "yyyy-MM-dd HH:mm:ss");
-    }
+    public static Date getDayStatDate(Date sourceDate) {return stringToDate( dateToString(sourceDate, "yyyy-MM-dd") + " 00:00:00", "yyyy-MM-dd HH:mm:ss");}
+    public static Date getDayLastTime(Date sourceDate) { return stringToDate(dateToString(sourceDate, "yyyy-MM-dd")+ " 23:59:59", "yyyy-MM-dd HH:mm:ss"); }
+    public static String[] getDayStatTime(Date sourceDate) {String sourceDateStr = dateToString(sourceDate, "yyyy-MM-dd");return new String []{sourceDateStr, sourceDateStr + " 00:00:00",sourceDateStr + " 23:59:59"};  }
 
-    /** 
-     * 使用参数Format将字符串转为Date 
-     */  
-    public static Date parseYMD(String strDate)  
-    {  
-        try {
-			return datefm.parse(strDate);
-		} catch (ParseException e) {
-			 logger.error("日期转换出错", e);
-		}  
-        return null;
-    } 
+  
     /**
      * String转Date
      *
@@ -254,7 +241,7 @@ public class TimeUtil {
 	}
 	
 	public static void main(String[] args) {
-		System.err.println(getBeforeMonthTime(1));
+		System.err.println(getDateTime(cutMonthByDate(-1,new Date())));
 	}
 	
 }

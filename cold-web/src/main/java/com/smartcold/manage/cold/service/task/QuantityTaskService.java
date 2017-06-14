@@ -213,8 +213,8 @@ public class QuantityTaskService  {
 		List<HashMap<String, Integer>> tempWanningCoun = this.sysWarningsInfoMapper.getTempWanningCoun(TimeUtil.getbefDayLast());
 		if (SetUtil.isnotNullList(tempWanningCoun)) {
 			for (HashMap<String, Integer> hashMap : tempWanningCoun) {
-				coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(0, hashMap.get("rdcid"), "OverTempCount", hashMap.get("longcou"), date));
-				coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(0, hashMap.get("rdcid"), "OverTempTime", hashMap.get("lontime"), date));
+				coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, hashMap.get("oid"), "OverTempCount", hashMap.get("longcou"), date));
+				coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, hashMap.get("oid"), "OverTempTime", hashMap.get("lontime"), date));
 			}
 			this.storageAnalysisMapper.addColdStorageAnalysis(coldStorageAnalysisList);
 		}

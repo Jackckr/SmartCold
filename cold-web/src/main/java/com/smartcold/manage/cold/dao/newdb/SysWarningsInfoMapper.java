@@ -22,4 +22,6 @@ public interface SysWarningsInfoMapper {
     void addSyswarningsinfo(List<SysWarningsInfo> data);
 	
     List<HashMap<String, Integer>> getTempWanningCoun(@Param("starttime")String starttime);
+    
+    List<SysWarningsInfo> getSysWarningByFilter(@Param("rdcid")Integer rdcid,@Param("oids")String oids,@Param("type")Integer type,@Param("level")Integer level,@Param("starttime")String starttime,@Param("endtime")String endtime );
 }
