@@ -41,6 +41,8 @@ public class DFSCollectionController extends BaseController {
 	@Autowired
 	private DFSDataCollectionMapper dataservice;
 	
+	public static String dfsdata=null;
+	
 	public static ArrayList<DFSDataCollectionEntity> dataListcache = new ArrayList<DFSDataCollectionEntity>();
 	
 	public static  HashMap<String,HashMap<String,DFSDataCollectionEntity>> configchcateHashMap=new HashMap<String,HashMap<String,DFSDataCollectionEntity>>();
@@ -58,6 +60,7 @@ public class DFSCollectionController extends BaseController {
 	public Object storageDataCollection(@RequestBody String data) {
         try {
 			if(StringUtil.isNull(data)){ return new DataResultDto(500);};
+			DFSCollectionController.dfsdata=data;
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String rdcid = dataCollectionBatchEntity.get("rdcId").toString();
             if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.getConfig(rdcid);}

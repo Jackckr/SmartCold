@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>接口监控</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../app/comm.js"></script>
+    <script type="text/javascript"  src="../app/bug_port.js"></script>
+  </head>
+  </head>
+  <body  >
+	<table id="objTable" class="fill"></table>
+	<div class="none">
+		    <div id="div_filter" style="display: none;">
+				    <div id="div_filteri" style="padding:2px 5px;">
+		               <form id="from_fillter">
+						   <span id="sp_sel_serveradder">服务地址：<select id="sel_serveradder" name="serveradder" class="easyui-combobox" data-options="valueField:'val', textField:'text', panelHeight:'auto'" style="width:150px"></select></span>
+						   <span id="sp_sel_serverport">接    口：<select id="sel_serverport" name="serverport" class="easyui-combobox" data-options="valueField:'val', textField:'text', panelHeight:'auto'" style="width:150px"></select></span>
+						   <span id="sp_txt_dysyud">
+						         <label><input id="txt_refdata"   type="checkbox" name="refdata" value="1" onclick="chref()"> 自动刷新（30秒）</label>
+						    </span>	
+							<a href="#" class="easyui-linkbutton" iconCls="icon_search" onclick="loaddata()">查询</a>
+							<er id="showtime" style="float: right;float: right; padding: 5px 31px 0px 0px;display: none;">离刷新还有<span id="em_diftime">30</span>秒</er>
+				        </form>
+					 </div>
+		    </div>
+	</div>
+  </body>
+</html>

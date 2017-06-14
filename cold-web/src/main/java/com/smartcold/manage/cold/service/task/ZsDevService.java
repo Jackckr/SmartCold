@@ -5,9 +5,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,7 +26,6 @@ import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.ZSDevDataEntity;
 import com.smartcold.manage.cold.util.SetUtil;
-import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
  * 洲斯数据采集定时任务  自带线程同步
@@ -47,46 +46,70 @@ public class ZsDevService  {
 	    @Autowired
 	    private StorageDataCollectionMapper storageDataCollectionDao;
 	    
-	    private static int errCount=0;
-	    public  static String data=null;
+	    public static int errCount=0;
+	    public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
 	    private final static String ZSURL="http://10.46.17.235:9007/v1/channels/datapoints";//
 	    private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 		private static final ExecutorService executorService = Executors.newFixedThreadPool(100, threadFactory);//最多启动一千1000个线程
 		
-		public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
-		
-		
-		
+		/**
+		 * 工具类
+		 * @return
+		 */
 		public static boolean isRuning() {return isRuning&&errCount<3;}
 		public static void clerCache() {ZsDevService.devTypecache.clear();}
 		public static void setRuning(boolean isRuning) {ZsDevService.isRuning = isRuning;if(isRuning){ZsDevService.errCount=0;}}
+		public static  LinkedList<String> dataList=new LinkedList<String>();
+		public static HashMap<String, StorageDataCollectionEntity> msimap=new HashMap<String, StorageDataCollectionEntity>();
+		public static HashMap<String, StorageDataCollectionEntity> bsimap=new HashMap<String, StorageDataCollectionEntity>();
+		public static HashMap<String, StorageDataCollectionEntity> dumap=new HashMap<String, StorageDataCollectionEntity>();
 
 		/**
 		 * 数据抓取30秒
 		 */
 	    @Scheduled(cron="0/30 * * * * ?")
 		public void checkData() {
-	    	if(errCount<3&&isRuning){
-	    		this.saveData();
-	    	}
+	    	if(errCount<3&&isRuning){this.readData();}
 		}
 	    
-	    /**
-	     * 半小时重置错误统计
+	    /*
+	     * 6小时保存一次状态
 	     */
-		@Scheduled(cron = "0 0/30 * * * ?")
-		public void checkStatus() {
-			errCount=0;
+	    @Scheduled(cron = "0 0 */6 * * ?")
+	    public void timer() {
+	    	ZsDevService.errCount=0;
+	    	ArrayList<StorageDataCollectionEntity> apstatusList = new ArrayList<StorageDataCollectionEntity>();
+	    	if(SetUtil.isNotNullMap(msimap)){
+                   for (String key : msimap.keySet()) { 
+                	   apstatusList.add(msimap.get(key)); 
+                	}
+                   msimap.clear();
+                   this.devStatusMapper.addAPStatusList(apstatusList);
+	    	}
+	    	ArrayList<StorageDataCollectionEntity> devstatusList = new ArrayList<StorageDataCollectionEntity>();
+	    	if(SetUtil.isNotNullMap(bsimap)){
+	    		 for (String key : bsimap.keySet()) {  devstatusList.add(bsimap.get(key)); }bsimap.clear();
+	    		 for (String key : dumap.keySet())  {   devstatusList.add(dumap.get(key)); }dumap.clear();
+	    		 this.devStatusMapper.addDevStatusList(devstatusList);
+	    	}
+	    	
+	    }
+		
+		
+		private void addTempData(String data){
+			dataList.push(data);if(dataList.size()>50){dataList.remove(1);}
 		}
+		
 	    /**
 	     * 数据读取
 	     */
-        private void saveData(){
+        private void readData(){
 			boolean isrun=true;
 			while (isrun) {
 				String devdata = getDEVData();
 				if(!"null".equals(devdata)&&devdata.length()>10){
-					data=devdata;
+					addTempData(devdata);
+					
 					this.addextTask(devdata);
 				}else{
 					isrun=false;
@@ -166,15 +189,8 @@ class SubTask implements Runnable {
   public void run() {
 	    if(this.storageDataCollectionDao==null||this.devStatusMapper==null){System.err.println("数据无法保存！");return;}
 	    try {
-			boolean isSaveDU=false;
 			HashMap<String, Object> datas =null;
-			Calendar calendar = Calendar.getInstance();
-			int hours = calendar.get(Calendar.HOUR); // 时
-			int minutes = calendar.get(Calendar.MINUTE);    // 分
-			int seconds = calendar.get(Calendar.SECOND);    // 秒
-			if((hours==0||hours%6==0)&minutes==0&&seconds<30){ isSaveDU=true; System.err.println(TimeUtil.getDateTime()); }
 			ArrayList<StorageDataCollectionEntity> dataList = new ArrayList<StorageDataCollectionEntity>();
-			ArrayList<StorageDataCollectionEntity> dusiList = new ArrayList<StorageDataCollectionEntity>();
 		    List<ZSDevDataEntity> parseArray = JSONArray.parseArray(this.devData,ZSDevDataEntity.class);  
 		    String devid=null;String apid=null;Date date=null; 
 			for (ZSDevDataEntity zsDevDataEntity : parseArray) {
@@ -203,21 +219,12 @@ class SubTask implements Runnable {
 				default:
 					break;
 				}
-				if(isSaveDU){//保存设备电压
-					dusiList.add(new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
-					dusiList.add(new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
-				}
+				ZsDevService.dumap.put(devid, new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
+				ZsDevService.bsimap.put(devid, new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
 			}
+			ZsDevService.msimap.put(apid, new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));
 			if(SetUtil.isnotNullList(dataList)){//保存数据
 				this.storageDataCollectionDao.batchInsert(dataList);
-			}
-			if(isSaveDU){//dev/ap 状态数据
-				ArrayList<StorageDataCollectionEntity> apmsiList = new ArrayList<StorageDataCollectionEntity>();
-				apmsiList.add(new StorageDataCollectionEntity(apid, null,"MSI",datas.get("MSI"), date));//保存AP信号强度
-				this.devStatusMapper.addAPStatusList(apmsiList);
-				if(SetUtil.isnotNullList(dusiList)){
-					this.devStatusMapper.addDevStatusList(dusiList);
-				}
 			}
 		} catch (Exception e) {
 			System.err.println("洲斯接解析口出现异常:"+this.devData);

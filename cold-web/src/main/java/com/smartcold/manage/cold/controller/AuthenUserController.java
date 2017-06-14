@@ -139,10 +139,7 @@ public class AuthenUserController {
     @ResponseBody
     public boolean authorUserByRdcId(int id,int userId,int stype, int rdcId, int status,String oids) {
     	try {
-			if(status==-1){
-				this.messageRecordMapping.updateState(id, 1, -1);
-			}else{
-
+			if(status==1){
 				UserEntity user = this.userMapper.findById(userId);
 				if(user==null){return false; }//用户被删除
 				if(stype==1){//申请温度版
@@ -186,8 +183,10 @@ public class AuthenUserController {
 			    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
 				SystemInformEntity sysWarningsInfo=new SystemInformEntity(0, stype, rdcId, null, 0, 0, 0, title, msg);
 				this.msMappergMapper.addsystemInform(sysWarningsInfo);
-				
 				this.messageRecordMapping.updateState(id, 1,1);
+				
+			}else{
+				this.messageRecordMapping.updateState(id, 1, status);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
