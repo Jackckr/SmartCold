@@ -29,4 +29,12 @@ public class RdcUserController {
         List<RdcUser> rdcUserList = rdcUserMapper.getByRUID(userId);
         return TableData.newSuccess(new PageInfo<RdcUser>(rdcUserList));
     }
+
+    @RequestMapping(value = "/getRdcUserByRdcId",method = RequestMethod.POST)
+    @ResponseBody
+    public Object getRdcUserByRdcId(int rdcId,int page,int rows){
+        PageHelper.startPage(page, rows);
+        List<RdcUser> rdcUserList = rdcUserMapper.getByRdcID(rdcId);
+        return TableData.newSuccess(new PageInfo<RdcUser>(rdcUserList));
+    }
 }

@@ -7,6 +7,12 @@
     <result column="userid" property="userid" jdbcType="INTEGER" />
     <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="ByUidMap" type="com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser">
+    <result property="userid" column="userid"/>
+    <result property="companyid" column="companyid"/>
+    <association property="company" column="companyid" select="com.smartcold.bgzigbee.manage.sc360.dao.CompanyMapper.selectByPrimaryKey"/>
+    <association property="user" column="userid" select="selectUserById"/>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, companyid, userid, addtime
   </sql>
@@ -94,5 +100,12 @@
     <include refid="Base_Column_List" />
     from CompanyUser
     where companyid = #{companyid,jdbcType=INTEGER}
+  </select>
+    <select id="selectByUid" resultMap="ByUidMap">
+      SELECT * FROM `companyuser` WHERE `userid`=#{userId}
+    </select>
+  <select id="selectUserById" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
+    SELECT ID,`type`,`username` ,`telephone` ,`email` ,`addTime` ,`audit`
+		FROM `smartcold`.`user` WHERE `id` = #{id}
   </select>
 </mapper>

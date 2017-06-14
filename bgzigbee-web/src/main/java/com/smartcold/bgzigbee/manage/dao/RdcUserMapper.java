@@ -27,4 +27,6 @@ public interface RdcUserMapper {
     RdcUser findByRUID(@Param("userid")Integer userid,@Param("rdcid")Integer rdcid);
 
     List<RdcUser> getByRUID(Integer userId);
+
+    List<RdcUser> getByRdcID(Integer rdcId);
 }

@@ -111,4 +111,7 @@
   <select id="getByRUID" resultMap="RUResultMap">
     SELECT * FROM `RdcUser` WHERE `userid`=#{userId}
   </select>
+  <select id="getByRdcID" resultMap="RUResultMap">
+    SELECT * FROM `rdcuser` WHERE `rdcid`=#{rdcId}
+  </select>
 </mapper>

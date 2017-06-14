@@ -2,6 +2,7 @@ var  userParams={keyword:null};
 var  rdcParams={keyword:null};
 var  companyParams={keyword:null};
 var  userToRdcParams={userId:null};
+var  rdcToParams={rdcId:null};
 var roleFlag=1;//标记当前角色1.冷库2.用户3.集团
 var saveUserId="";
 var saveRdcId="";
@@ -41,7 +42,7 @@ function userStyler(value,row){
 }
 /*左冷库操作按钮载入*/
 function rdcStyler(value,row){
-    return '<button class="btn" onclick="ck('+ row.id+')">用户关联</button><button class="btn btn-delete" onclick="dl('+ row.id+')">集团关联</button>';
+    return '<button class="btn" onclick="rdcToUser('+ row.id+',\''+row.name+'\')">用户关联</button><button class="btn btn-delete" onclick="rdcToCompany('+ row.id+',\''+row.name+'\')">集团关联</button>';
 }
 /*左集团操作按钮载入*/
 function companyStyler(value,row){
@@ -58,6 +59,10 @@ function userCompanyUnbindStyler(value, row) {
 /*右用户绑定冷库操作按钮载入*/
 function userToRdcStyler(value,row){
     return '<button class="btn" onclick="userBindRdc('+saveUserId+','+ row.id+')">绑定</button>';
+}
+/*右冷库绑定用户操作按钮载入*/
+function rdcToUserStyler(value,row){
+    return '<button class="btn" onclick="userBindRdc('+ row.id+','+saveRdcId+')">绑定</button>';
 }
 /*右用户绑定集团操作按钮载入*/
 function userToCompanyStyler(value, row) {
@@ -95,7 +100,7 @@ function init_company(title,tol,tableId) {
     newInitTable(title,"icon-msgType", "POST", "../../i/company/getCompanyList", companyParams,"#div_filteri",null, col,true, companyOnDblClickRow,tableId);
 }
 /*初始化用户冷库关联表*/
-function init_userToRdc(title, tol, tableId) {
+function init_userToRdc(title, tol, tableId,url,params) {
     var col=[[
         {field:'userid',title:'用户ID',sortable:true},
         {field:'user',title:'用户名', width: 80, align: 'center',sortable:true,formatter:getUserName},
@@ -103,9 +108,19 @@ function init_userToRdc(title, tol, tableId) {
         {field:'rdc',title:'冷库名', width: 80, align: 'center',sortable:true,formatter:getRdcName},
         {field:'hand',title:'操作', width: 80, align: 'center',formatter:tol}
     ]];
-    newInitTable(title,"icon-msgType", "POST", "../../i/rdcUser/getRdcUserByUserId", userToRdcParams,null,null, col,true, null,tableId);
+    newInitTable(title,"icon-msgType", "POST", url, params,null,null, col,true, null,tableId);
 }
-
+/*初始化用户集团关联表*/
+function init_userToCompany(title, tol, tableId) {
+    var col=[[
+        {field:'userid',title:'用户ID',sortable:true},
+        {field:'user',title:'用户名', width: 80, align: 'center',sortable:true,formatter:getUserName},
+        {field:'companyid',title:'集团ID', width: 80, align: 'center',sortable:true},
+        {field:'company',title:'集团名称', width: 80, align: 'center',sortable:true,formatter:getCompanyName},
+        {field:'hand',title:'操作', width: 80, align: 'center',formatter:tol}
+    ]];
+    newInitTable(title,"icon-msgType", "POST", "../../i/companyUser/getByUserId", userToRdcParams,null,null, col,true, null,tableId);
+}
 /*用户双击事件*/
 function userOnDblClickRow(index,field){
 
@@ -158,6 +173,11 @@ function getRdcName(value) {
 function getUserName(value) {
     return value.username;
 }
+/*获得集团名*/
+function getCompanyName(value) {
+    return value.name;
+}
+
 
 
 /*用户关联冷库*/
@@ -165,15 +185,28 @@ function userToRdc(id,username) {
     saveUserId=id;
     userToRdcParams.userId=id;
     init_rdc("请选择关联的冷库",userToRdcStyler,"#objTable2");
-    init_userToRdc("\""+username+"\"所关联的冷库",userRdcUnbindStyler,"#objTable1");
+    init_userToRdc("用户\""+username+"\"所关联的冷库",userRdcUnbindStyler,"#objTable1","../../i/rdcUser/getRdcUserByUserId",userToRdcParams);
 }
 /*用户关联集团*/
 function userToCompany(id,username) {
     saveUserId=id;
     userToRdcParams.userId=id;
     init_company("请选择关联的集团",userToCompanyStyler,"#objTable2");
-    init_userToRdc("\""+username+"\"所关联的集团",userRdcUnbindStyler,"#objTable1");
+    init_userToCompany("用户\""+username+"\"所关联的集团",userCompanyUnbindStyler,"#objTable1");
 }
+/*冷库关联用户*/
+function rdcToUser(id, rdcName) {
+    saveRdcId=id;
+    rdcToParams.rdcId=id;
+    init_user("请选择关联的用户",rdcToUserStyler,"#objTable2");
+    init_userToRdc("冷库\""+rdcName+"\"所关联的用户",userRdcUnbindStyler,"#objTable1","../../i/rdcUser/getRdcUserByRdcId",rdcToParams);
+}
+/*冷库关联集团*/
+function rdcToCompany(id, rdcName) {
+
+}
+
+
 
 
 /*用户绑定冷库*/
