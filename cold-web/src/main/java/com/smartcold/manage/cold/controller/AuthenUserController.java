@@ -58,7 +58,7 @@ public class AuthenUserController {
     @Autowired
     private FtpService ftpService;
     @Autowired
-    private MessageMapper msMappergMapper;
+    private MessageMapper sysMessageMapper;//向后台管理员通知管理信息
     @Autowired
     private FileDataMapper fileDataDao;
     @Autowired
@@ -68,7 +68,7 @@ public class AuthenUserController {
     @Autowired
     private RdcauthMapping rdcauthMapping;
     @Autowired
-    private MessageRecordMapping messageRecordMapping;
+    private MessageRecordMapping messageRecordMapping;//用户消息
     @Autowired
     private  ColdstorageTempsetMapper coldstorageTempsetMapper;
 
@@ -182,7 +182,7 @@ public class AuthenUserController {
 					String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
 				    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();
 					SystemInformEntity sysWarningsInfo=new SystemInformEntity(0, stype, rdcId, null, 0, 0, 0, title, msg);
-					this.msMappergMapper.addsystemInform(sysWarningsInfo);
+					this.sysMessageMapper.addsystemInform(sysWarningsInfo);
 					this.messageRecordMapping.updateState(id, 1,1);
 				
 			}else{
