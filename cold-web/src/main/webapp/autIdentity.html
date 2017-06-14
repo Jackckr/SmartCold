@@ -26,55 +26,59 @@
 	</div>
 	<div class="step-content">
 		<div class="step-list btn_c">
-			<p class="btn_p" ><button type="button" class="btn btn-primary btn-lg" ng-click="setType(0)">我是冷库主</button>       </p>
-			<p class="btn_p" ><button type="button" class="btn btn-warning btn-lg" ng-click="setType(1)">我是货主</button>         </p>
-			<p class="btn_p" ><button type="button" class="btn btn-success btn-lg" ng-click="setType(2)">我是维修商</button>       </p>
+			<div class="pull-left"><a ng-click="setType(0)"></a></div>
+			<div class="pull-left"><a ng-click="setType(1)"></a></div>
+			<div class="pull-left"><a ng-click="setType(2)"></a></div>
 		</div>
 		<div class="step-list">
-				  <div class="coldDiv">
-		                <p>说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！</p>
-		                <strong>选择冷库：</strong>
-		                <select id="rdcShow" class="select_gallery" style="width:50%;"></select>
-		                <div >
-		                    <div ng-if="user.type==0">
-		                        <div class="text-left">
-		                            <h4>温馨提示：</h4>
-		                            <p>1、为提高冷库信息质量，如果您是冷库负责人，请上传该冷库的<b>营业执照</b>。经审核通过后，你的账号即为认证账号，并会成为该冷库的管理者。</p>
-		                            <p>2、认证通过的用户，即可修改对应冷库，同时可以在冷库发布库、仓位、货品交易和租赁信息，同时账号认证，也是接入冷库360的全方位智能管理和云服务的前提。</p>
-		                            <p>3、账号认证时间为1~3工作日，请您耐心等待。</p>
-		                            <p>4、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
-		                        </div>
-		                        <div style="height: 270px;" id="picPut">
-		                            <div  class="col-md-3">
-		                                <img id="img0" style="position:relative;left: 80px;top: 20px;max-height: 250px;max-width: 250px;">
-		                            </div>
-		                            <div class="col-md-8">
-		                                <button class="btn btn-success" ngf-select="addAuthFiles($files)" type="file"
-		                                        ng-model="authfiles"
-		                                        name="authfiles">上传证书
-		                                </button>
-		                                <small class="text-warning" style="margin-left:30px;">*仅1张(必须为.jpg,.png,.jpeg格式)</small>
-		                            </div>
-		                        </div>
-		                        <label ng-repeat="authfile in totalauthfiles"><span
-		                                ng-bind="authfile.name"></span>
-		                            <i class="fa fa-times danger" style="margin-right:10px;color:red;" ng-click="dropauth(authfile)"></i>
-		                        </label>
-		                    </div>
-		                     <div ng-if="user.type!=0">
-		                        <div class="text-left">
-		                            <h4>温馨提示：</h4>
-		                            <p>1、该认证需要库主授权，授权后方可进行操作。</p>
-		                            <p>2、账号认证时间为1~3工作日，请您耐心等待。</p>
-		                            <p>3、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
-		                        </div>
-		                    </div>
-		                    <div class="clearfix btn_c">
-								<span class="btn_prep bp"><button type="button"  class="btn btn-warning">上一步</button></span>
-		                        <span class="btn_back bp"><button type="button" class="btn btn-success" id="attestationRdc" ng-click="submit()">提交</button></span>
-		                    </div>
-		                </div>
-		        </div>
+			  <div class="coldDiv">
+				  <div class="pull-left">
+					  <p>说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！</p>
+					  <strong>选择冷库：</strong>
+					  <select id="rdcShow" class="select_gallery" style="width:50%;"></select>
+					  <div ng-if="user.type==0">
+						  <div class="text-left">
+							  <h4>温馨提示：</h4>
+							  <p>1、为提高冷库信息质量，如果您是冷库负责人，请上传该冷库的<b>营业执照</b>。经审核通过后，你的账号即为认证账号，并会成为该冷库的管理者。</p>
+							  <p>2、认证通过的用户，即可修改对应冷库，同时可以在冷库发布库、仓位、货品交易和租赁信息，同时账号认证，也是接入冷库360的全方位智能管理和云服务的前提。</p>
+							  <p>3、账号认证时间为1~3工作日，请您耐心等待。</p>
+							  <p>4、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
+						  </div>
+
+					  </div>
+					  <div ng-if="user.type!=0">
+						  <div class="text-left">
+							  <p>温馨提示：</p>
+							  <p>1、该认证需要库主授权，授权后方可进行操作。</p>
+							  <p>2、账号认证时间为1~3工作日，请您耐心等待。</p>
+							  <p>3、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
+						  </div>
+					  </div>
+				  </div>
+				  <div class="pull-left" ng-if="user.type==0">
+					  <div class="dotbg">
+						  <div class="upbg"></div>
+						  <p>*仅一张(必须为.jpg,.png,.jpeg格式)</p>
+						  <label for="">
+							  <input type="file" ngf-select="addAuthFiles($files)" ng-model="authfiles" name="authfiles" value="">上传营业执照
+						  </label>
+					  </div>
+					  <div class="imgcontainer">
+						  <img id="img0">
+						  <label ng-repeat="authfile in totalauthfiles">
+							  <!--<span ng-bind="authfile.name"></span>-->
+							  <i class="fa fa-times danger" ng-click="dropauth(authfile)"></i>
+						  </label>
+					  </div>
+				  </div>
+
+				  <div class="pull-left" style="width: 100%">
+					  <div class="clearfix btn_c">
+						  <span class="btn_prep bp"><button type="button" class="preBtn">上一步</button></span>
+						  <span class="btn_back bp"><button type="button" id="attestationRdc" ng-click="submit()">提交</button type="button"></span>
+					  </div>
+				  </div>
+			</div>
 		</div>
 		<div class="step-list">
 			<div class="apply-finish text-center">
@@ -86,7 +90,7 @@
 					<p id="auCode">
 						尊敬的用户，您已提交成功，受理编号为<span id="proNo">LS23423432</span>。
 					</p>
-					<p class="btn_p"><a href="login.html" class="btn btn-success">返回登录页</a>       </p>
+					<p class="btn_p"><a href="login.html" class="btn gohome">返回登录页</a></p>
 				</div>
 			</div>
 		</div>
