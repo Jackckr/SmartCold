@@ -1078,7 +1078,7 @@ input[type='radio']:checked{
 }
 .timeline-block{
 	position: relative;
-	margin: .5rem 0;
+	margin: .5rem 0 2.3rem;
 }
 .timeline-txt {
 	position: absolute;
@@ -1121,10 +1121,23 @@ input[type='radio']:checked{
 	padding: 0;
 	color: #438BCB;
 	font-size: .7rem;
+	font-weight: 400;
 }
 .timeline-content-more{
-	display: none;
-	margin-top: 10px;
+	margin-top: .5rem;
+	font-size: .65rem;
+}
+.timeline-content-more li{
+	margin-bottom: .2rem;
+	border-bottom: .1rem dashed #efefef;
+}
+.timeline-content-more li p:nth-child(1){
+	color: #ec594a;
+}
+.timeline-content-more li p:nth-child(2),
+.timeline-content-more li p:nth-child(3){
+	font-size: .6rem;
+	color: #777;
 }
 
 
