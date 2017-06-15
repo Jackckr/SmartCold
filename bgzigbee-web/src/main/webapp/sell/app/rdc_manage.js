@@ -295,15 +295,12 @@ function dl() {
             if (r) {
                 $.ajax({
                     type: 'POST',
-                    url: '../../i/rdc/deleteByRdcIDs',
+                    url: '../../i/rdc/delByRdcIDs',
                     traditional: true,
                     data: {'rdcIDs': rdcIDs},
                     success: function (data) {
-                        if (data.status == 0) {
-                            reloaddata();
-                        } else {
-                            $.messager.alert('错误', '删除冷库失败！', 'error');
-                        }
+                        $.messager.alert('提示', data.message, 'info');
+                        reloaddata();
                     }
                 });
             }
@@ -347,6 +344,7 @@ function loadCityByProId(id) {
 var saveProvince="";
 $().ready(function () {
     init_table();
+    parent.sysuser.type==3?$("#delButton").show():$("#delButton").hide()
     $('#sel_audit').combobox({onChange:function(val){ queryParams.audit=val;  reloaddata(queryParams);}});
     $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
     $("input", $("#name").next("span")).blur(function () {

@@ -617,6 +617,26 @@ public class RdcController {
 		return new BaseDto(0);
 	}
 
+
+	@RequestMapping(value = "/delByRdcIDs")
+	@ResponseBody
+	public Object delByRdcIDs(Integer[] rdcIDs) {
+		ArrayList<Integer> donotDel=new ArrayList<Integer>();
+		for (Integer rdcID : rdcIDs) {
+			List<RdcUser> byRdcID = rdcUserDao.getByRdcID(rdcID);
+			if (byRdcID.size()==0){
+				rdcService.deleteByRdcId(rdcID);
+			}else {
+				donotDel.add(rdcID);
+			}
+		}
+		if(donotDel.size()!=0){
+			return new ResultDto(0,"冷库id为"+donotDel.toString()+"的有关联用户，不能删除，请确认！");
+		}
+		return new ResultDto(1,"删除成功！");
+	}
+
+	/*改版完成后删除*/
 	@ResponseBody
 	@RequestMapping(value = "/deleteByRdcIDs")
 	public Object deleteByRdcIDs(Integer[] rdcIDs) {
