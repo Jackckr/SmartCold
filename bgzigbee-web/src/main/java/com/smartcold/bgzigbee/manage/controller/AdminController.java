@@ -242,7 +242,7 @@ public class AdminController extends BaseController {
 		mlList2.add(new ACLAdminNode("2_1","icon-role",    "权限配置", "" ));
 		mlList2.add(new ACLAdminNode("2_2","icon-role",    "360配置",  "" ));
 		mlList2.add(new ACLAdminNode("2_3","icon-role",     "报表管理", "" ));
-		mlList2.add(new ACLAdminNode("2_4","icon-role" , "关联管理", "relating_manage.html" ));
+		mlList2.add(new ACLAdminNode("2_4","main_relating" , "关联管理", "relating_manage.html" ));
 		pml.setChild(mlList2);  ml.add(pml);
 		
 		pml  = new ACLAdminNode("3"  ,"main_coun",  "网站统计");

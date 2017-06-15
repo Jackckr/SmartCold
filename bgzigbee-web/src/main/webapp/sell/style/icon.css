@@ -45,6 +45,8 @@
 .main_share {background: url(img/icons.png) no-repeat scroll -1440px -455px rgba(0, 0, 0, 0);}/*共享*/
 .main_infmation {background: url(img/icons.png) no-repeat scroll -631px -571px rgba(0, 0, 0, 0);}/*资讯*/
 
+.main_relating {background: url(img/icons.png) no-repeat scroll -1141px -629px rgba(0, 0, 0, 0);}/*关联管理*/
+
 .dev_warning {background: url(img/icons.png) no-repeat scroll -1082px -30px rgba(0, 0, 0, 0);}/*设备告警*/
 .dev_data {background: url(img/icons.png) no-repeat scroll -990px -29px rgba(0, 0, 0, 0);}/*设备数据*/
 
