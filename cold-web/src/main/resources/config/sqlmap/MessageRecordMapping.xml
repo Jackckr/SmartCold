@@ -14,6 +14,13 @@
    <select id="getMsgCountByRdcId" parameterType="Integer" resultType="Integer">
      SELECT COUNT(`id`) from `messagerecord` where `rdcid`=#{rdcId}  <if test="type!=0"> and `type`!=1 </if> and `isread`=0;
    </select>
+    <select id="getMsgCount" parameterType="Integer" resultType="Integer">
+     SELECT COUNT(`id`) from `messagerecord` where `rdcid`=#{rdcId} 
+     <if test="state!=null">  and  `state`=#{state} </if> 
+     <if test="isread!=null">   and `isread`=#{isread};</if>
+   </select>
+   
+   
    <select id="getTallMsgByRdcId" parameterType="java.lang.Integer" resultType="MessageRecord">
      SELECT * from `messagerecord` where `rdcid`=#{rdcId} and `isread`=0 
      <if test="type!=0"> and `type`!=1 </if>
