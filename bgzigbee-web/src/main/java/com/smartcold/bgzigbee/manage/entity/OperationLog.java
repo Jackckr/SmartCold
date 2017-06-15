@@ -16,7 +16,13 @@ public class OperationLog {
     private String requestUrl;
 
     private String content;
-    
+
+    private Integer type;
+
+    private Integer stype;
+
+    private String mapper;
+
     public OperationLog() {
 	}
     
@@ -94,5 +100,29 @@ public class OperationLog {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStype() {
+        return stype;
+    }
+
+    public void setStype(Integer stype) {
+        this.stype = stype;
+    }
+
+    public String getMapper() {
+        return mapper;
+    }
+
+    public void setMapper(String mapper) {
+        this.mapper = mapper;
     }
 }
