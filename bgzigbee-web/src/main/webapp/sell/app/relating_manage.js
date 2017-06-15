@@ -39,6 +39,11 @@ function cleanSearch() {
     params.keyword="";
     $("#fddata").textbox("setValue","");
 }
+/*清空中右窗口*/
+function cleanWindow() {
+    $("#centerWindow").empty().append("<table id='objTable1' class='fill'></table>");
+    $("#eastWindow").empty().append("<table id='objTable2' class='fill'></table>");
+}
 
 /*左用户操作按钮载入*/
 function userStyler(value,row){
@@ -178,18 +183,21 @@ function companyOnDblClickRow(index,field){
 /*切换用户表*/
 function changeUserTable(){
     cleanSearch();
+    cleanWindow();
     init_user("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",userStyler,"#objTable","#div_filteri");
     roleFlag=2;
 }
 /*切换冷库表*/
 function changeRdcTable(){
     cleanSearch();
+    cleanWindow();
     init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
     roleFlag=1;
 }
 /*切换集团表*/
 function changeCompanyTable(){
     cleanSearch();
+    cleanWindow();
     init_company("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>集团</button>",companyStyler,"#objTable","#div_filteri");
     roleFlag=3;
 }
