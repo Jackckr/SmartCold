@@ -26,6 +26,9 @@
     delete from RdcUser
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByURId">
+    DELETE FROM `rdcuser` WHERE `userid`=#{userid} and `rdcid`=#{rdcid}
+  </delete>
   <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.entity.RdcUser" >
     insert into RdcUser (id, rdcid, userid, 
       addtime)

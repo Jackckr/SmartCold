@@ -29,4 +29,6 @@ public interface RdcUserMapper {
     List<RdcUser> getByRUID(Integer userId);
 
     List<RdcUser> getByRdcID(Integer rdcId);
+
+    void deleteByURId(@Param("userid")Integer userid,@Param("rdcid")Integer rdcid);
 }
