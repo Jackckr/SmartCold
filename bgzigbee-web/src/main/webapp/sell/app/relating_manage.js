@@ -27,7 +27,7 @@ function newInitTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isa
         pageList:[tablesize,10,50,100,200,500],
         toolbar:toptol,
         columns:col,
-        onLoadError:onLoadError,
+        onLoadError:clearTable,
         onDblClickRow:onDblClickRow
     });
     if(fottol){
@@ -302,7 +302,7 @@ function companyToRdc(id, companyName) {
 
 /*用户绑定冷库*/
 function userBindRdc(userId,rdcId,username,rdcName) {
-    $.messager.confirm('提示','如果已有绑定冷库会将该冷库替换，确认和\''+rdcName+'\'绑定?',function(r){
+    $.messager.confirm('提示','确认和冷库\''+rdcName+'\'绑定?',function(r){
         if (r){
             $.ajax({
                 url:"/i/rdcUser/insertRdcUser",
@@ -318,7 +318,7 @@ function userBindRdc(userId,rdcId,username,rdcName) {
 }
 /*用户冷库解绑*/
 function userRdcUnbind(userId,rdcId,username,rdcName){
-    $.messager.confirm('提示','确认和\''+rdcName+'\'解绑?',function(r){
+    $.messager.confirm('提示','确认和冷库\''+rdcName+'\'解绑?',function(r){
         if (r){
             $.ajax({
                 url:"/i/rdcUser/delRdcUser",

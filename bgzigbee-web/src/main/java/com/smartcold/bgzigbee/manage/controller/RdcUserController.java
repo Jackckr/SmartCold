@@ -50,7 +50,7 @@ public class RdcUserController {
     public Object insertRdcUser(int rdcId, int userId) {
         RoleUser roleUser= roleUserMapper.getRoleUserByUserId(userId);
         RdcUser byRUID = rdcUserMapper.findByRUID(userId, rdcId);
-        RdcUser byUserId = rdcUserMapper.findByUserId(userId);
+        //RdcUser byUserId = rdcUserMapper.findByUserId(userId);
         if(roleUser!=null && roleUser.getRoleid()==2){
             return new ResultDto(0,"绑定失败，改用为集团用户不得关联冷库！");
         }
@@ -63,16 +63,16 @@ public class RdcUserController {
                 roleUserMapper.insertSelective(doAddRoleUser);
             }
             RdcUser rdcUser = new RdcUser();
-            if(byUserId!=null){
+            /*if(byUserId!=null){
                 rdcUser.setRdcid(rdcId);
                 rdcUser.setId(byUserId.getId());
                 rdcUserMapper.updateByPrimaryKeySelective(rdcUser);
-            }else {
+            }else {*/
                 rdcUser.setRdcid(rdcId);
                 rdcUser.setUserid(userId);
                 rdcUser.setAddtime(new Date());
                 rdcUserMapper.insertSelective(rdcUser);
-            }
+            //}
             return new ResultDto(1,"绑定成功！");
         }
         return new ResultDto(0,"绑定失败，该用户已和该冷库成立绑定关系!");
