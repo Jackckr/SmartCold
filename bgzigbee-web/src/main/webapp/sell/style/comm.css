@@ -40,3 +40,7 @@
 }
 .messager-body er,er{color: red;}
 .textbox,.l-btn {margin-left:2px; -webkit-border-radius: 0px; border-radius: 0px; }
+.fl{float: left;}
+.fr{float: right;}
+.clearfix:after{visibility:hidden;display:block;font-size:0;content: " ";clear:both;height:0;}
+.clearfix{*zoom:1;}

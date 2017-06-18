@@ -909,3 +909,19 @@ legend{
 	font-size: 2em;
 	color: #f4f4f4;	
 }
+.warnUl{
+	padding-left: 0;
+}
+.warnUl li{
+	border-bottom: 1px dashed #777;
+}
+.warnUl li p:nth-child(1){
+	color: #ec594a;
+}
+.warnUl li p{
+	margin-bottom: 0;
+	margin-top:5px;
+}
+.warnUl li p>span{
+	padding-right: 20px;
+}

@@ -21,11 +21,17 @@
 			<div class="timeline-content">
 				<div class="timeline-title">
 					<h4 class="pull-left">{{obj.msg}}</h4>
-					<h4  class="pull-right"><button class="show-more btn btn-info btn-xs" ng-click="showdatil(obj)">{{model[obj.isshow]}}</button></h4>
+					<h4  class="pull-right"><button class="show-more btn btn-info btn-xs" ng-click="showdatil(obj)" ng-init="model[obj.isshow]='详细'">{{model[obj.isshow]}}</button></h4>
 				</div>
 				<div ng-if="obj.isshow==1">
-				   <ul>
-				     <li ng-repeat="obj in obj.datilList">{{obj.warnigmsg+" 开始超温时间："+obj.starttime+" 结束时间："+obj.endtime}}</li>
+				   <ul class="warnUl">
+					   <li ng-repeat="obj in obj.datilList">
+						   <p>{{$index+1+'、'+obj.warnigmsg}}</p>
+						   <p class="clearfix">
+							   <span class="pull-left">{{"开始超温时间："+obj.starttime}}</span>
+							   <span class="pull-left">{{"结束超温时间："+obj.endtime}}</span>
+						   </p>
+					   </li>
 				   </ul>
 				</div>
 			</div>

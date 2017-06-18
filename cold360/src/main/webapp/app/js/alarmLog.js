@@ -15,8 +15,8 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
     })
     $scope.initData=function(){
         var oids=""; angular.forEach($rootScope.mystorages,function(storage){ oids+=storage.id+",";  });
-        oids=oids.substr(0,oids.length-1);
-        $http.get(ER.coldroot +'/i/AlarmController/getOverTempAnalysis', {  params: { "oids": oids  } }).success(function (data) {
+        oids=oids.substr(0,oids.length-1);$scope.model=["详细","关闭"];
+        $http.get(ER.coldroot +'/i/AlarmController/getOverTempAnalysis', {  params: { "oids": oids ,"rdcId": $rootScope.rdcId } }).success(function (data) {
             $scope.tempwarLog=[];
             if(data.success){
                 var datalist=  data.entity,xAxis=[],count=[],time=[];
@@ -117,12 +117,21 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
             });
         }
     };
+    //展示详细信息
+    $scope.showdatil=function(obj){
+        if(obj.datilList==undefined){
+            $http.get(ER.coldroot + '/i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,time:obj.time  } }).success(function (data) {
+                obj.datilList=data;
+            });
+        }
+        obj.isshow=obj.isshow==1?0:1;
+    };
     $scope.dwechar=function(xAxis,count,time){
 
         // 指定图表的配置项和数据
         var option = {
             legend: { data:['告警次数','告警时长'] },
-            tooltip: {  trigger: 'axis', axisPointer: { type: 'cross', crossStyle: { color: '#999'  }}  },
+            tooltip: {  trigger: 'axis', axisPointer: { type: 'cross', crossStyle: { color: '#999'  }} ,textStyle: {  fontSize: 13} },
             grid:{
                 x:"40",
                 x2:'40'
@@ -138,7 +147,7 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
                 {
                     type: 'value',
                     name: '次数/次',
-                    min: 0,max: 250,interval: 50,
+                    min: 0,max: 20,interval: 1,
                     axisLabel: { formatter: '{value}' }
                 },
                 {
@@ -146,7 +155,7 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
                     name: '时长/min',
                     min: 0,
                     max: 240,
-                    interval: 48,
+                    interval: 30,
                     axisLabel: {
                         formatter: '{value}'
                     }

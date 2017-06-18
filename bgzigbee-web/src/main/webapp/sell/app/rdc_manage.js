@@ -49,73 +49,39 @@ function ck(id) {
         data: {"rdcID": id},
         success: function (data) {
             var rdc = data[0];
-            loadProvince();
-            loadCityByProId(rdc.provinceId);
-            $("#name").textbox("setValue", rdc.name);
-            $("#provinceId").combobox({value: rdc.provinceId});
-            $("#cityId").combobox({value: rdc.cityId});
-            $("#manageType").combobox({value: rdc.manageType});
-            $("#address").textbox("setValue", rdc.address);
-            $("#area").textbox("setValue", rdc.area);
-            $("#storageType").combobox({value: rdc.storageType});
-            $("#temperType").combobox({value: rdc.temperType});
-            $("#structure").combobox({value: rdc.structure});
-            $("#lihuoRoom").combobox({value: rdc.lihuoRoom});
-            $("#platform").combobox({value: rdc.platform});
-            $("#storageRefreg").combobox({value: rdc.storageRefreg});
-            $("#lihuoTemperCtr").combobox({value: rdc.lihuoTemperCtr});
-            $("#temperRecord").combobox({value: rdc.temperRecord});
-            $("#coldTruck1").textbox("setValue", rdc.coldTruck1);
-            $("#coldTruck2").textbox("setValue", rdc.coldTruck2);
-            $("#coldTruck3").textbox("setValue", rdc.coldTruck3);
-            $("#coldTruck4").textbox("setValue", rdc.coldTruck4);
-            $("#phoneNum").textbox("setValue", rdc.phoneNum);
+            if(rdc==null){return;}
+            rdc.id=id;
+            rdc.rdcId=id;
             if (rdc.remark == "undefined") {
                 rdc.remark = "";
-            }
-            $("#remark").textbox("setValue", rdc.remark);
-            $("#capacity1").textbox("setValue", rdc.capacity1);
-            $("#capacity2").textbox("setValue", rdc.capacity2);
-            $("#capacity3").textbox("setValue", rdc.capacity3);
-            $("#capacity4").textbox("setValue", rdc.capacity4);
-            $("#capacity5").textbox("setValue", rdc.capacity5);
-            $("#height1").textbox("setValue", rdc.height1);
-            $("#height2").textbox("setValue", rdc.height2);
-            $("#height3").textbox("setValue", rdc.height3);
-            $("#height4").textbox("setValue", rdc.height4);
-            $("#height5").textbox("setValue", rdc.height5);
+            };
             if (rdc.facility == "undefined") {
                 rdc.facility = "";
-            }
-            $("#facility").textbox("setValue", rdc.facility);
-            $("#lihuoArea").textbox("setValue", rdc.lihuoArea);
+            };
             $("#coldButton").html("修改冷库信息");
             var honorPicImg="";
             var filesImg="";
-            var arrangePicImg="";
-            if(rdc.arrangePic){
-                arrangePicImg="<img onclick='showimg(this,\""+rdc.arrangePic.location+"\")' src='"+rdc.arrangePic.location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
-            }
             if (rdc.honorPics){
                 for(var i=0;i<rdc.honorPics.length;i++){
                     honorPicImg+="<img onclick='showimg(this,\""+rdc.honorPics[i].location+"\")' src='"+rdc.honorPics[i].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
                 }
             }
-            if(rdc.files){
-                for(var j=0;j<rdc.files.length;j++){
-                    filesImg+="<img onclick='showimg(this,\""+rdc.files[j].location+"\")' src='"+rdc.files[j].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
+            if(rdc.storagePics){
+                for(var j=0;j<rdc.storagePics.length;j++){
+                    filesImg+="<img onclick='showimg(this,\""+rdc.storagePics[j].location+"\")' src='"+rdc.storagePics[j].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
                 }
             }
-            $("#arrangePicSpan").hide();
-            $("#honorfilesSpan").hide();
-            $("#filesSpan").hide();
+            loadProvince();
+            loadCityByProId(rdc.provinceId);
+            $("#provinceId").combobox({value: rdc.provinceId});
+            $("#cityId").combobox({value: rdc.cityId});
+            $('#addColdForm').form('load',rdc);
             $("#arrangePicDiv").show();
             $("#honorfilesDiv").show();
             $("#filesDiv").show();
-            $("#arrangePicImg").empty().append(arrangePicImg);
             $("#honorfilesImg").empty().append(honorPicImg);
             $("#filesImg").empty().append(filesImg);
-            $("#coldButton").attr("onclick", "doUpdateCold(" + id.id + ")");
+            $("#coldButton").attr("onclick", "doUpdateCold()");
             $('#addCold').dialog('open');
         }
     });
@@ -249,7 +215,7 @@ function addColdSubmit() {
     }
 }
 /*提交修改冷库信息*/
-function doUpdateCold(id) {
+function doUpdateCold() {
     var honorfiles = $("input[name=honorfiles]").prop("files");
     var arrangePic = $("input[name=arrangePic]");
     var files = $("input[name=files]").prop("files");
@@ -259,7 +225,7 @@ function doUpdateCold(id) {
         vo[item.name] = item.value;
     });
     var flag = coldValidation(honorfiles, files, vo);
-    vo.rdcId = id;
+  //  vo.rdcId = id;
     if (flag) {
         var formdata = new FormData();
         $.each(honorfiles, function (index, item) {
@@ -295,15 +261,12 @@ function dl() {
             if (r) {
                 $.ajax({
                     type: 'POST',
-                    url: '../../i/rdc/deleteByRdcIDs',
+                    url: '../../i/rdc/delByRdcIDs',
                     traditional: true,
                     data: {'rdcIDs': rdcIDs},
                     success: function (data) {
-                        if (data.status == 0) {
-                            reloaddata();
-                        } else {
-                            $.messager.alert('错误', '删除冷库失败！', 'error');
-                        }
+                        $.messager.alert('提示', data.message, 'info');
+                        reloaddata();
                     }
                 });
             }
@@ -324,6 +287,7 @@ function loadProvince() {
             }
             $("#provinceId").empty().append(option);
             $("#provinceId").combobox({});
+
         }
     });
 }
@@ -347,9 +311,10 @@ function loadCityByProId(id) {
 var saveProvince="";
 $().ready(function () {
     init_table();
+    parent.sysuser.type==3?$("#delButton").show():$("#delButton").hide()
     $('#sel_audit').combobox({onChange:function(val){ queryParams.audit=val;  reloaddata(queryParams);}});
     $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
-    $("input", $("#name").next("span")).blur(function () {
+    $("#name").blur(function () {
         var rdcName = $("#name").val();
         if (rdcName != "") {
             $.ajax({

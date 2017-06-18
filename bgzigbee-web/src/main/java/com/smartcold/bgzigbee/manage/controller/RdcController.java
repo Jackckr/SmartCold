@@ -9,9 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
+import com.smartcold.bgzigbee.manage.dao.*;
 import com.smartcold.bgzigbee.manage.dto.*;
+import com.smartcold.bgzigbee.manage.entity.*;
+import com.smartcold.bgzigbee.manage.entity.OperationLog;
 import com.smartcold.bgzigbee.manage.util.*;
 
 import org.slf4j.Logger;
@@ -33,31 +37,6 @@ import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.smartcold.bgzigbee.manage.dao.ACLMapper;
-import com.smartcold.bgzigbee.manage.dao.CompanyDeviceMapper;
-import com.smartcold.bgzigbee.manage.dao.FileDataMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcAuthLogMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcExtMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcMapper;
-import com.smartcold.bgzigbee.manage.dao.RdcUserMapper;
-import com.smartcold.bgzigbee.manage.dao.RoleUserMapper;
-import com.smartcold.bgzigbee.manage.dao.SpiderCollectionConfigMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageHonorMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageManageTypeMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageRefregMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageStructureTypeMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageTemperTypeMapper;
-import com.smartcold.bgzigbee.manage.dao.StorageTypeMapper;
-import com.smartcold.bgzigbee.manage.dao.UserMapper;
-import com.smartcold.bgzigbee.manage.entity.AdminEntity;
-import com.smartcold.bgzigbee.manage.entity.FileDataEntity;
-import com.smartcold.bgzigbee.manage.entity.RdcAuthLogEntity;
-import com.smartcold.bgzigbee.manage.entity.RdcEntity;
-import com.smartcold.bgzigbee.manage.entity.RdcExtEntity;
-import com.smartcold.bgzigbee.manage.entity.RdcUser;
-import com.smartcold.bgzigbee.manage.entity.RoleUser;
-import com.smartcold.bgzigbee.manage.entity.SpiderCollectionConfigEntity;
-import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.enums.UserVersion;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
@@ -127,6 +106,9 @@ public class RdcController {
 
 	@Autowired
 	private RoleUserMapper roleUserDao;
+
+	@Autowired
+	private OperationLogMapper operationLogMapper;
 //	private static HashMap<String , Object> cache=new HashMap<String, Object>();
 
 	
@@ -617,6 +599,42 @@ public class RdcController {
 		return new BaseDto(0);
 	}
 
+
+	@RequestMapping(value = "/delByRdcIDs")
+	@ResponseBody
+	public Object delByRdcIDs(Integer[] rdcIDs,HttpSession session) {
+		ArrayList<Integer> donotDel=new ArrayList<Integer>();
+		ArrayList<RdcEntity> rdcEntities = new ArrayList<RdcEntity>();
+		for (Integer rdcID : rdcIDs) {
+			List<RdcUser> byRdcID = rdcUserDao.getByRdcID(rdcID);
+			if (byRdcID.size()==0){
+				RdcEntity rdc = rdcDao.getRdcById(rdcID);
+				rdcEntities.add(rdc);
+				rdcService.deleteByRdcId(rdcID);
+			}else {
+				donotDel.add(rdcID);
+			}
+		}
+		if(rdcEntities.size()!=0){
+			String delRdcJson = gson.toJson(rdcEntities);
+			AdminEntity admin = (AdminEntity) session.getAttribute("admin");
+			OperationLog operationLog = new OperationLog();
+			operationLog.setName("删除冷库");
+			operationLog.setAddtime(new Date());
+			operationLog.setAdminId(admin.getId());
+			operationLog.setContent("删除冷库");
+			operationLog.setType(3);
+			operationLog.setStype(1);
+			operationLog.setMapper(delRdcJson);
+			operationLogMapper.insert(operationLog);
+		}
+		if(donotDel.size()!=0){
+			return new ResultDto(0,"冷库id为"+donotDel.toString()+"的有关联用户，不能删除，请确认！");
+		}
+		return new ResultDto(1,"删除成功！");
+	}
+
+	/*改版完成后删除*/
 	@ResponseBody
 	@RequestMapping(value = "/deleteByRdcIDs")
 	public Object deleteByRdcIDs(Integer[] rdcIDs) {

@@ -224,6 +224,14 @@ public class CompanyController extends BaseController {
             for (CompanyUser companyUser : companyUsers) {
                 if (companyUser.getUserid().equals(userId)) {
                     companyUserDao.deleteByPrimaryKey(companyUser.getId());
+                    List<CompanyUser> companyUsers1 = companyUserDao.selectByUid(userId);
+                    if(companyUsers1.size()==0){
+                        RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId);
+                        RoleUser roleUser = new RoleUser();
+                        roleUser.setId(roleUserByUserId.getId());
+                        roleUser.setRoleid(1);
+                        roleUserDao.updateByPrimaryKeySelective(roleUser);
+                    }
                 }
             }
         }

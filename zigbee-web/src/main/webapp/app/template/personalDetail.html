@@ -67,8 +67,11 @@
 		  		</div>
 		  		<div class="lines">
 		  			<span>邮箱：</span>
-		  			 <input type="text" class="newTel" ng-model="email" onblur="isEmail(this.value)">
+		  			 <input type="text" class="newTel" ng-model="email" ng-blur="isEmail()">
 		  		</div>
+				<div class="lines" ng-if="flag_email==false&&email!=''">
+					<p style="color: #f00;padding-left: 120px;">{{warnEmail}}</p>
+				</div>
 				<div class="lines">
 		  			<span>性别：</span>
 		  			 <label>
