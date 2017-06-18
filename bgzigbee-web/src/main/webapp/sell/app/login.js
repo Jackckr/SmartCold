@@ -82,4 +82,11 @@ function login() {
     });
 
 }
+$(document).on({
+    keyup: function (e) {
+        if (e.keyCode == '13') {
+            login();
+        }
+    }
+});
 
