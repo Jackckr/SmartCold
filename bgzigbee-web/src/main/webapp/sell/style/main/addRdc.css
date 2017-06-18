@@ -1,31 +1,99 @@
-﻿@charset "utf-8";
-.oDiv {
-    margin-bottom: 20px;
-    text-align: left;
-    width: 500px;
+﻿#addCold{
+    padding: 15px 5%;
 }
-.oDiv em{
+#coldButton{
+    width: 50%;
+    border-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+}
+#coldButton:hover{
+    background-color: #00a7d0;
+    color: #fff;
+}
+.formCtr b{
     color: red;
+    font-size: 16px;
 }
-.oDiv>label>span{
+.formCtr em{
+    color: #f00;
+}
+.formCtr{
     display: inline-block;
-    width: 120px;
-    text-align: left;
+    width:47%;
 }
-.labels>div{
-    height:30px;
+.formCtr:nth-child(2n+1){
+    margin-right: 3%;
 }
-.labels label{
+.formTitle{
+    margin-bottom:5px;
+}
+.formContain{
+    margin-bottom: 10px;
+    width: 100%;
+}
+.formContain input,
+.formContain select,
+.formContain textarea{
+    width: 100%;
+    border: 1px solid #95B8E7;
+    background-color: #fff;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.formContain input{
+    height: 28px;
+    line-height: 28px;
+}
+.formContain .textbox.combo input{
+    height: 26px!important;
+    line-height: 26px!important;
+    box-sizing: border-box;
+}
+.formContain .textbox{
+    margin-left: 0;
+    box-sizing: border-box;
+}
+.formContain .textbox.combo{
+    width: 100% !important;
+    box-sizing: border-box;
+}
+.formContain textarea{
+    min-height: 26px;
+    resize: vertical;
+}
+.input_group{
+    height:24px;
     float: left;
+    margin:0 15px 10px 0;
 }
-.labels label>input{
-    width: 100px;
-    float: right;
+.bgFl,.bgFr,.bgCenter{
+    border:1px solid #95B8E7;
+    box-sizing: border-box;
+    height: 28px;
+    line-height:28px;
 }
-.oDiv select,
-.oDiv>label>input{
-    width: 300px!important;
+.bgFr,.bgFl{
+    background-color: #ecf4ff;
 }
-.labels>div{
-    margin-left: 50px;
+.bgFl{
+    width: 66px;
+    border-right: 0;
+    text-align: right;
+    padding-right: 5px;
+}
+.bgFr{
+    width: 46px;
+    text-align: center;
+    border-left: 0;
+}
+.bgCenter{
+    width: 50px!important;
+    text-align: center;
+}
+.bgFr + .bgCenter{
+    border-left:0;
 }
