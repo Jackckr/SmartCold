@@ -38,6 +38,8 @@ public class UtilController extends BaseController {
 	 public Object getconfig(String toke,String rdcid){if(StringUtil.verifyToken(toke)&&StringUtil.isnotNull(rdcid)){ return  DFSCollectionController.configchcateHashMap.get(rdcid);} return -1; }
 	 
 	//=====================================================洲斯数据接口管理==========================================================================================================================
+	 @RequestMapping("/getZSDevStatssaveTime")//
+	 public String getZSDevStatssaveTime()  {	return ZsDevService.saveTime;}
 	 @RequestMapping("/getZSserStatus")//获得洲斯服务状态
 	 public Boolean getZSserStatus()  {	return ZsDevService.isRuning();}
 	 @RequestMapping("/setZSserStatus")//修改服务状态

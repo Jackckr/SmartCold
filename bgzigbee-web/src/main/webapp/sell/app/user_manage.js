@@ -41,9 +41,9 @@ function saveUser(){
 	var userfrom=$('#userForm');
 	if (! userfrom.form('validate')) {  return;}
 	var data=$('#userForm').serialize();
-    $.ajax({type: 'POST', url: '../../i/user/addorupdateUser',data:data,
+    $.ajax({type: 'POST', url: '../../i/deviceObjectMapping/replacedev',data:data,
         success: function(data) { 
-        	if(data.status==0){$('#userdialog').dialog({closed: true});reloaddata();}
+        	if(data.status==0){$('#dev_replacedialog').dialog({closed: true});}
 		}
     });
 }

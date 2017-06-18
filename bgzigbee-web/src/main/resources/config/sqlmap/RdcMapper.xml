@@ -3,6 +3,10 @@
 
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcMapper">
 
+    <select id="getRdcByName" parameterType="map" resultType="map">
+      SELECT `id`,`name` text FROM `rdc`  <if test="keyword!=null and keyword!=''"> WHERE  `name`  like "%"#{keyword}"%" </if> ORDER BY `id` desc LIMIT 20;
+    </select>
+
     <select id="findRdcList" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
          SELECT r.*,u.username as username
          FROM `Rdc` as r LEFT JOIN user u on r.userid=u.id

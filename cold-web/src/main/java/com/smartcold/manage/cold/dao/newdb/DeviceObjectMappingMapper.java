@@ -31,4 +31,6 @@ public interface DeviceObjectMappingMapper {
 	
 	public List<HashMap<String, Object>> getBJLowPower( @Param("starttime")String starttime);
 	public List<HashMap<String, Object>> getZSLowPower( @Param("starttime")String starttime);
+	
+	
 }

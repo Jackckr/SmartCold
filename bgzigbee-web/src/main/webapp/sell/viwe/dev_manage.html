@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>设备管理</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <style type="text/css">
+     form tr{height:35px;}
+     form tr input{height:22px;width: 100%;}
+    .pagination-btn-separator {float: none;}
+    #left_dev_rdc_filter{padding: 0px;}
+    .textbox, .l-btn {margin: 0px; }
+    .tree-file { background:url('../style/icons/4.png') no-repeat;}
+    #rdc_tree li{margin-bottom: 5px;}
+    </style>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../app/comm.js"></script>
+    <script type="text/javascript"  src="../app/dev_manage.js"></script>
+  </head>
+  
+<body class="easyui-layout">
+	<div data-options="region:'west',split:true,title:'360冷库'" style="width:300px;">
+	   <div id="left_dev_rdc_filter"><input class="easyui-searchbox" data-options="searcher:doSearch" style="width:100%;margin-right: 5px;"></div>
+	   <div id="left_dev_rdc_tree" >
+		      <ul id="objtree" class="easyui-tree" ></ul>
+	   </div>
+	</div>
+	<div data-options="region:'center',title:'Center'">
+	   <table id="objTable" class="fill"></table>
+	</div>
+	<div class="none">
+		<div id="tabl_tool" style="padding:5px;">
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'dev_replace'" onclick="$('#dev_replaceForm').form('clear');$('#dev_replacedialog').dialog('open');">设备更换</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="reloaddata()">刷新</a>
+		</div>
+	    <div id="dev_replacedialog" class="easyui-dialog"  data-options="title:'设备更换',iconCls:'dev_replace',modal: true,closed: true,width:490,height:260,buttons: [{text:'替换',iconCls:'icon-ok',handler:replace_dev},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#dev_replacedialog').dialog('close');}}]"  >
+			        <form id="dev_replaceForm" style="padding:10px 20px;" >
+			        <table class="fill" >
+			             <tr>
+			                  <td colspan="2"><er>警告:操作不当可能引起数据丢失风险！请谨慎操作！</er></td>
+			            </tr>
+			            <tr>
+			                <td width="80">管理口令:</td>
+			                <td>
+			                    <input type="text" name="admintokn" class="easyui-validatebox textbox" style="width: 100px"  data-options="required:true" onblur="chektoken(this.value)">
+			                    <input id="txt_systokn" type="text" name="token" class="easyui-validatebox textbox"  data-options="required:true,validType:'cksystoken(this.value)'" style="width: 236px;background-color: #cccccc;">
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>旧设备编号:</td>
+			                <td>
+			                    <input type="text" name="olddevno" class="easyui-validatebox textbox" data-options="required:true,validType:'ckdevno(this.value)'">
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>新设备编号:</td>
+			                <td>
+			                   <input type="text" name="newdevno" class="easyui-validatebox textbox" data-options="required:true,validType:'ckdevno(this.value)'">
+			                </td>
+			            </tr>
+			        </table>
+			        </form>
+		 </div>
+	</div>
+</body>
+</html>

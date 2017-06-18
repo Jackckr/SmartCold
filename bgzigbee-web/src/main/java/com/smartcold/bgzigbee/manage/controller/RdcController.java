@@ -721,17 +721,17 @@ public class RdcController {
 				roleUserDao.insertSelective(roleUser);
 			}
 //
-//			RdcUser byRdcId = rdcUserDao.findByRdcId(rdcId);//邏輯修改
-//			if (byRdcId == null) {
+			RdcUser byRdcId = rdcUserDao.findByRdcId(rdcId);//邏輯修改
+			if (byRdcId == null) {
 				RdcUser rdcUser = new RdcUser();
 				rdcUser.setRdcid(rdcId);
 				rdcUser.setUserid(authUserId);
 				rdcUser.setAddtime(new Date());
 				rdcUserDao.insertSelective(rdcUser);
-//			} else {
-//				byRdcId.setUserid(authUserId);
-//				rdcUserDao.updateByPrimaryKeySelective(byRdcId);
-//			}
+			} else {
+				byRdcId.setUserid(authUserId);
+				rdcUserDao.updateByPrimaryKeySelective(byRdcId);
+			}
 			UserEntity user = this.userDao.findUserById(authUserId);
 			if(user.getType()==UserVersion.MaintVERSION.getType()){//维修商
 			   List<HashMap<String, Object>> useracl = this.aclMapper.getNACLByID("ACL_USER","UID",authUserId);
@@ -748,6 +748,11 @@ public class RdcController {
 			return new ResultDto(-1, "冷库认证审核失败！请稍后重试！");
 		}
 	}
-
+	//new sys 获得热电厂Tree
+	@RequestMapping(value = "/getRdcTree", method = RequestMethod.POST)
+	@ResponseBody
+	public List<HashMap<String, Object>> getRdcTree(String keyword){
+		return this.rdcDao.getRdcByName(keyword);
+	}
 	
 }

@@ -15,10 +15,10 @@
     
     <select id="findInfoByfilter" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity" >
            select *  from `deviceobjectmapping` d WHERE 1=1 
-         <if test="type!=null and type!=''"> and d.`type` in(${type})</if> 
+         <if test="type!=null "> and d.`type` in(${type})</if> 
+         <if test="status !=null "> and d.`status` = #{status} </if> 
          <if test="oid !=null and oid !=''"> and d.`oid`  in(${oid})</if>  
-         <if test="status !=null and status !=''"> and d.`status` = #{status} </if> 
-         <if test="rdcid !=null and rdcid !=''"> and d.`rdcid`  in(${rdcid})</if> 
+         <if test="rdcid !=null and rdcid !=''"> and d.`rdcid`=#{rdcid}</if> 
     </select>
     
     <select id="findInfoByDeviceId" resultType="DeviceObjectMappingEntity" parameterType="map">
@@ -69,5 +69,5 @@
     <select id="getZSLowPower" resultType="map" parameterType="map">
      SELECT `deviceid` ,`value`  from devstatus where   `key`='DU' and `value`&lt;4 and LENGTH(`deviceid`)>8 and `addtime` >'2017-6-1 11:55:03' GROUP BY `deviceid`   ;
     </select>
-    
+   
 </mapper>

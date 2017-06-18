@@ -158,7 +158,7 @@ public class AdminController extends BaseController {
 	@ResponseBody
 	public Object findAdmin(HttpServletRequest request) {
 		AdminEntity admin = (AdminEntity)request.getSession().getAttribute("admin");
-		if(admin!=null&&admin.getId()!=0){return ResponseData.newSuccess(admin);}
+		if(admin!=null&&admin.getId()!=0){AdminEntity newdmin=admin.clone();newdmin.setAcl(null);  return ResponseData.newSuccess(newdmin);}
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
@@ -207,14 +207,13 @@ public class AdminController extends BaseController {
 	@RequestMapping(value = "/getUserMenu")
 	public List<ACLAdminNode> getUserMenu(HttpServletRequest request) {
 		AdminEntity admin = (AdminEntity)request.getSession().getAttribute("admin");
-		if(admin!=null&&admin.getId()!=0){
+		if(admin!=null&&admin.getId()!=0&&StringUtil.isnotNull(admin.getAcl())){
 			return getml(admin.getAcl());
 		}
 		return null;
 	}
 	
 	public List<ACLAdminNode> getml(String alc) {
-		if(StringUtil.isNull(alc)){return null;}
 		List<ACLAdminNode> ml=new ArrayList<ACLAdminNode>();
 		ACLAdminNode pml = new ACLAdminNode("0","main_platform",      "链库管理");
 		List<ACLAdminNode> mlList0=new ArrayList<ACLAdminNode>();
@@ -229,11 +228,12 @@ public class AdminController extends BaseController {
 		
 	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");
 	    List<ACLAdminNode> mlList1=new ArrayList<ACLAdminNode>();
-		mlList1.add(new ACLAdminNode("1_0","icon-role",    "设备管理",     ""     ));
+		mlList1.add(new ACLAdminNode("1_0","dev_mang",    "设备管理",     "dev_manage.html"     ));
 		mlList1.add(new ACLAdminNode("1_1","icon-role",    "设备查询",     ""     ));
 		mlList1.add(new ACLAdminNode("1_2","icon-role",    "设备检测",     ""     ));
 		mlList1.add(new ACLAdminNode("1_3","dev_data",     "数据查询",     "dev_data.html" ));
-		mlList1.add(new ACLAdminNode("1_4","dev_warning" , "设备告警",     "dev_msg.html"  ));
+		mlList1.add(new ACLAdminNode("1_4","idev_port" ,   "数据监控",       "bug_port.html"  ));
+		mlList1.add(new ACLAdminNode("1_5","dev_warning" , "设备告警",     "dev_msg.html"  ));
 		pml.setChild(mlList1); ml.add(pml);
 		
 		pml  = new ACLAdminNode("2"  ,"main_360",  "360管理");
@@ -259,7 +259,7 @@ public class AdminController extends BaseController {
 		pml.setChild(mlList4);    ml.add(pml);
 		
 		pml  = new ACLAdminNode("5"  ,"main_debug",    "开发人员");
-	 List<ACLAdminNode> mlList5=new ArrayList<ACLAdminNode>();
+	    List<ACLAdminNode> mlList5=new ArrayList<ACLAdminNode>();
 		mlList5.add(new ACLAdminNode("5_0","icon-role",    "接口监控", "bug_port.html" ));
 		mlList5.add(new ACLAdminNode("5_1","icon-role",    "日志查询", "sys_msg.html" ));
 		mlList5.add(new ACLAdminNode("5_2","icon-role",    "缓存管理", "sys_state.html" ));
@@ -271,21 +271,24 @@ public class AdminController extends BaseController {
 		String pacl=split[0];
 		String[] cacl=split[1].split("@");
 		int index=0,sindex=0,mlsize=ml.size();
-		if(pacl.length()!=cacl.length){System.err.println("无效权限！");return null;}
+//		if(pacl.length()!=cacl.length){System.err.println("无效权限！");return null;}
 		for (char fix : pacl.toCharArray()) {
 			index=Integer.parseInt(fix+"");
 			if(index<mlsize){
 				ACLAdminNode aclAdminNode = ml.get(index);
 				List<ACLAdminNode> child = aclAdminNode.getChild();
 				List<ACLAdminNode> nchild = new ArrayList<ACLAdminNode>();
-				for (char sfix : cacl[index].toCharArray()) {
-					sindex=Integer.parseInt(sfix+"");
-					if(sindex<child.size()){
-						nchild.add(child.get(sindex));
-					}
-			    }
-				aclAdminNode.setChild(nchild);
-				nml.add(aclAdminNode);
+				if(StringUtil.isnotNull(cacl[index])){
+					for (char sfix : cacl[index].toCharArray()) {
+						sindex=Integer.parseInt(sfix+"");
+						if(sindex<child.size()){
+							nchild.add(child.get(sindex));
+						}
+				    }
+					aclAdminNode.setChild(nchild);
+					nml.add(aclAdminNode);
+				}
+				
 			}
 		}
 		return nml;

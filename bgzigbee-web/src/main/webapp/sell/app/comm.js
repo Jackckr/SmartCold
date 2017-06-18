@@ -1,14 +1,5 @@
-﻿var curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize;
-var sys={imgrooturl:"http://139.196.189.93:8089/"};
-if(!window.sessionStorage.asikey){
-//	$.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/admin/findAdmin'}).success(function(data){
-//		sysuser= data.entity;		window.sessionStorage.sysadmin = data.entity; window.sessionStorage.asikey= window.admin.token;
-//	    if (admin == null || admin.id == 0) {
-//	    	var url = "http://" + location.host + "/login.htm"; 
-	    	top.location.href = window.location.host+"/login.htm"; 
-//	    	}
-//	});
-}
+﻿if(!window.sessionStorage.asikey){window.location.href = window.location.host+"/login.htm"; }//||parent.sysuser==undefined||parent.sysuser.token==undefined
+var curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize,systoken=undefined,sys={imgrooturl:"http://139.196.189.93:8089/"};
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间
     col_img:function(val){return ['<image  class="icon-tb" src=',sys.imgrooturl+val,' onclick=showimg(this,\'',sys.imgrooturl+val,'\')>'].join(""); },//格式化时间
@@ -20,11 +11,12 @@ function msgShow(title, msgString, msgType) { $.messager.alert(title, msgString,
 function initTree(url,onSelect){objtree=$('#objtree').tree({url:url,method:'post',animate:true,lines:true, onSelect:onSelect});};
 function reloaddata(){ objTable.datagrid("reload");};
 function reloaddata(queryParams){objTable.datagrid( { queryParams:queryParams });};
-function onLoadError(){objTable.datagrid('loadData',{total:0,rows:[]});};
+function clearTable(){	objTable.datagrid("loadData",{ total:0,rows:[]});}
 function getTableChecked(){ return objTable.datagrid('getChecked');}
 function getTableCheckedID(){ var userID =[],checkedItems = objTable.datagrid('getChecked'); $.each(checkedItems, function (index, item) { userID.push(item.id); }); return userID;}
 function getFormData(id){var vo ={},parnArray = $(id).serializeArray();$.each(parnArray,function(index,item){ vo[item.name] = item.value; }); return vo;}
 function showimg(em,url){$(em).viewer();}
+function chektoken(val){if(val.length==8||val.length==9){$.get("../../i/util/gettoke", { token: val },function(data){systoken=data;$("#txt_systokn").val(systoken);});}else{systoken=undefined;$("#txt_systokn").val("");}  }
 function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isautosize,onDblClickRow){
     if(isautosize){ tablesize= stablesize = parseInt((($("#objTable").height() -80) / 26));	}
     if(tablesize<10){tablesize=stablesize=10;}
@@ -44,7 +36,7 @@ function initTable(title,iconCls,method,url,queryParams,toptol,fottol,col,isauto
       pageList:[tablesize,10,50,100,200,500],
       toolbar:toptol,
       columns:col,
-      onLoadError:onLoadError,
+      onLoadError:clearTable,
       onDblClickRow:onDblClickRow
    });
    if(fottol){
@@ -196,10 +188,22 @@ $.extend($.fn.validatebox.defaults.rules, {
             }
         },
         message: '两次输入的密码不一致！'
-    }
+    },
+    ckdevno: {
+    	 validator: function (value) {
+          return value.length==6||value.length==8;
+         },
+         message: '设备编号不正确！设备编码长度为6或者8位!'
+    },
+    cksystoken: {
+   	 validator: function (value) {
+         return value.length==32&&value==systoken;
+        },
+        message: '口令不正确！'
+   }
 });
 
 
 //日期——多语言
 if(Date.prototype.Format==undefined){Date.prototype.Format=function(fmt){var o={"M+":this.getMonth()+1,"d+":this.getDate(),"h+":this.getHours(),"m+":this.getMinutes(),"s+":this.getSeconds(),"q+":Math.floor((this.getMonth()+3)/3),"S":this.getMilliseconds()};if(/(y+)/.test(fmt))fmt=fmt.replace(RegExp.$1,(this.getFullYear()+"").substr(4-RegExp.$1.length));for(var k in o)if(new RegExp("("+k+")").test(fmt))fmt=fmt.replace(RegExp.$1,(RegExp.$1.length==1)?(o[k]):(("00"+o[k]).substr((""+o[k]).length)));return fmt;};};
-if($.fn.pagination){$.fn.pagination.defaults.beforePageText='第';$.fn.pagination.defaults.afterPageText='共{pages}页';$.fn.pagination.defaults.displayMsg='当前显示{from}到{to}条记录,共{total}条记录';}if($.fn.datagrid){$.fn.datagrid.defaults.loadMsg='正在处理，请稍待。。。'}if($.fn.treegrid&&$.fn.datagrid){$.fn.treegrid.defaults.loadMsg=$.fn.datagrid.defaults.loadMsg}if($.messager){$.messager.defaults.ok='确定';$.messager.defaults.cancel='取消'}$.map(['validatebox','textbox','filebox','searchbox','combo','combobox','combogrid','combotree','datebox','datetimebox','numberbox','spinner','numberspinner','timespinner','datetimespinner'],function(plugin){if($.fn[plugin]){$.fn[plugin].defaults.missingMessage='该输入项为必输项'}});if($.fn.validatebox){$.fn.validatebox.defaults.rules.email.message='请输入有效的电子邮件地址';$.fn.validatebox.defaults.rules.url.message='请输入有效的URL地址';$.fn.validatebox.defaults.rules.length.message='输入内容长度必须介于{0}和{1}之间';$.fn.validatebox.defaults.rules.remote.message='该用户名已存在！';}if($.fn.calendar){$.fn.calendar.defaults.weeks=['日','一','二','三','四','五','六'];$.fn.calendar.defaults.months=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']}if($.fn.datebox){$.fn.datebox.defaults.currentText='今天';$.fn.datebox.defaults.closeText='关闭';$.fn.datebox.defaults.okText='确定';$.fn.datebox.defaults.formatter=function(date){var y=date.getFullYear();var m=date.getMonth()+1;var d=date.getDate();return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)};$.fn.datebox.defaults.parser=function(s){if(!s)return new Date();var ss=s.split('-');var y=parseInt(ss[0],10);var m=parseInt(ss[1],10);var d=parseInt(ss[2],10);if(!isNaN(y)&&!isNaN(m)&&!isNaN(d)){return new Date(y,m-1,d)}else{return new Date()}}}if($.fn.datetimebox&&$.fn.datebox){$.extend($.fn.datetimebox.defaults,{currentText:$.fn.datebox.defaults.currentText,closeText:$.fn.datebox.defaults.closeText,okText:$.fn.datebox.defaults.okText})}if($.fn.datetimespinner){$.fn.datetimespinner.defaults.selections=[[0,4],[5,7],[8,10],[11,13],[14,16],[17,19]]}
+if($.fn.pagination){$.fn.pagination.defaults.beforePageText='第';$.fn.pagination.defaults.afterPageText='共{pages}页';$.fn.pagination.defaults.displayMsg='当前显示{from}到{to}条记录,共{total}条记录';}if($.fn.datagrid){$.fn.datagrid.defaults.loadMsg='正在处理，请稍待。。。';}if($.fn.treegrid&&$.fn.datagrid){$.fn.treegrid.defaults.loadMsg=$.fn.datagrid.defaults.loadMsg}if($.messager){$.messager.defaults.ok='确定';$.messager.defaults.cancel='取消'}$.map(['validatebox','textbox','filebox','searchbox','combo','combobox','combogrid','combotree','datebox','datetimebox','numberbox','spinner','numberspinner','timespinner','datetimespinner'],function(plugin){if($.fn[plugin]){$.fn[plugin].defaults.missingMessage='该输入项为必输项'}});if($.fn.validatebox){$.fn.validatebox.defaults.rules.email.message='请输入有效的电子邮件地址';$.fn.validatebox.defaults.rules.url.message='请输入有效的URL地址';$.fn.validatebox.defaults.rules.length.message='输入内容长度必须介于{0}和{1}之间';$.fn.validatebox.defaults.rules.remote.message='该用户名已存在！';}if($.fn.calendar){$.fn.calendar.defaults.weeks=['日','一','二','三','四','五','六'];$.fn.calendar.defaults.months=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']}if($.fn.datebox){$.fn.datebox.defaults.currentText='今天';$.fn.datebox.defaults.closeText='关闭';$.fn.datebox.defaults.okText='确定';$.fn.datebox.defaults.formatter=function(date){var y=date.getFullYear();var m=date.getMonth()+1;var d=date.getDate();return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)};$.fn.datebox.defaults.parser=function(s){if(!s)return new Date();var ss=s.split('-');var y=parseInt(ss[0],10);var m=parseInt(ss[1],10);var d=parseInt(ss[2],10);if(!isNaN(y)&&!isNaN(m)&&!isNaN(d)){return new Date(y,m-1,d)}else{return new Date()}}}if($.fn.datetimebox&&$.fn.datebox){$.extend($.fn.datetimebox.defaults,{currentText:$.fn.datebox.defaults.currentText,closeText:$.fn.datebox.defaults.closeText,okText:$.fn.datebox.defaults.okText})}if($.fn.datetimespinner){$.fn.datetimespinner.defaults.selections=[[0,4],[5,7],[8,10],[11,13],[14,16],[17,19]]}

@@ -16,9 +16,8 @@ import java.util.List;
  **/
 public class StringUtil
 {
-
 	public static final String	EMPTY_STRING	= "";
-
+	
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)
 	 * 
@@ -266,5 +265,14 @@ public class StringUtil
 				return sortField + " DESC";
 			}
 		}
+	}
+	
+	
+	public synchronized static boolean verifyToken(String token){
+		   if(isnotNull(token)){
+			   String mdtokn = EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
+			   return mdtokn.equals(token);
+		   }
+		   return false;
 	}
 }

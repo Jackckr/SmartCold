@@ -24,7 +24,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-@Service
+//@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -103,7 +103,7 @@ public class WarningTaskService  {
 		    				job.setTask(true);
 		    			}
 		    		}else if (downMint<0) {
-		    			job.setCroStartTime(job.getCroStartTime()+30000);//过期后立即启动
+		    			job.setCroStartTime(new Date().getTime()+30000);//过期后立即启动
 					}
 		    		QuartzManager.upJob(key, job);
 		    		System.err.println("更新任务。。。。。。。。。。");

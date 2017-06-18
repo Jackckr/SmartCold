@@ -174,10 +174,7 @@ public class AuthenUserController {
 					   }else{
 						   this.aclMapper.adduserAcl(userId, rolid, null);//采用默认权限。。。
 					   }
-					}else{//这是什么鬼
-				
 					}
-
 					Rdc rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 					String title=stype==1?"冷库绑定货主通知":"冷库认证服务商通知";
 				    String msg="用户:"+user.getUsername()+"绑定冷库:"+rdc.getName();

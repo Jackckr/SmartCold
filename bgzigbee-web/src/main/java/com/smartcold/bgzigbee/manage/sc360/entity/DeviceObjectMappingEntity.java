@@ -17,6 +17,11 @@ public class DeviceObjectMappingEntity {
 	private int status;
 
 	private Date addtime;
+	
+   private double du;//电压
+   private double bsi;//信号强度
+   private boolean isrdcid;//是否有效管理
+	
 
 	public int getId() {
 		return id;
@@ -73,4 +78,30 @@ public class DeviceObjectMappingEntity {
 	public void setAddtime(Date addtime) {
 		this.addtime = addtime;
 	}
+
+	public double getDu() {
+		return du;
+	}
+
+	public void setDu(double du) {
+		this.du = du;
+	}
+
+	public double getBsi() {
+		return bsi;
+	}
+
+	public void setBsi(double bsi) {
+		this.bsi = bsi;
+	}
+
+	public boolean isIsrdcid() {
+		return isrdcid;
+	}
+
+	public void setIsrdcid(boolean isrdcid) {
+		this.isrdcid = isrdcid;
+	}
+	
+	
 }

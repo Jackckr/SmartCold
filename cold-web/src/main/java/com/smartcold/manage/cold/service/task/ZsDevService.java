@@ -26,6 +26,7 @@ import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.ZSDevDataEntity;
 import com.smartcold.manage.cold.util.SetUtil;
+import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
  * 洲斯数据采集定时任务  自带线程同步
@@ -34,7 +35,7 @@ import com.smartcold.manage.cold.util.SetUtil;
  * 数据存在重复（准备处理）
  * 
  **/
-@Service
+//@Service
 public class ZsDevService  {
 	
 	
@@ -56,6 +57,7 @@ public class ZsDevService  {
 		 * 工具类
 		 * @return
 		 */
+		public static  String saveTime=null;
 		public static boolean isRuning() {return isRuning&&errCount<3;}
 		public static void clerCache() {ZsDevService.devTypecache.clear();}
 		public static void setRuning(boolean isRuning) {ZsDevService.isRuning = isRuning;if(isRuning){ZsDevService.errCount=0;}}
@@ -73,22 +75,20 @@ public class ZsDevService  {
 		}
 	    
 	    /*
-	     * 6小时保存一次状态
+	     * 6小时保存一次状态（延迟15秒）
 	     */
-	    @Scheduled(cron = "0 0 */6 * * ?")
-	    public void timer() {
+	    @Scheduled(cron = "15 0 */6 * * ?")
+	    public  void timer() {
 	    	ZsDevService.errCount=0;
-	    	ArrayList<StorageDataCollectionEntity> apstatusList = new ArrayList<StorageDataCollectionEntity>();
+	    	saveTime=TimeUtil.getDateTime();
 	    	if(SetUtil.isNotNullMap(msimap)){
-                   for (String key : msimap.keySet()) { 
-                	   apstatusList.add(msimap.get(key)); 
-                	}
-                   msimap.clear();
+	    		ArrayList<StorageDataCollectionEntity> apstatusList = new ArrayList<StorageDataCollectionEntity>();
+                   for (String key : msimap.keySet()) {   apstatusList.add(msimap.get(key)); }msimap.clear();
                    this.devStatusMapper.addAPStatusList(apstatusList);
 	    	}
-	    	ArrayList<StorageDataCollectionEntity> devstatusList = new ArrayList<StorageDataCollectionEntity>();
 	    	if(SetUtil.isNotNullMap(bsimap)){
-	    		 for (String key : bsimap.keySet()) {  devstatusList.add(bsimap.get(key)); }bsimap.clear();
+	    		 ArrayList<StorageDataCollectionEntity> devstatusList = new ArrayList<StorageDataCollectionEntity>();
+	    		 for (String key : bsimap.keySet()) {   devstatusList.add(bsimap.get(key)); }bsimap.clear();
 	    		 for (String key : dumap.keySet())  {   devstatusList.add(dumap.get(key)); }dumap.clear();
 	    		 this.devStatusMapper.addDevStatusList(devstatusList);
 	    	}
@@ -96,7 +96,7 @@ public class ZsDevService  {
 	    }
 		
 		
-		private void addTempData(String data){
+		private synchronized void addTempData(String data){
 			dataList.push(data);if(dataList.size()>50){dataList.remove(1);}
 		}
 		
@@ -116,8 +116,7 @@ public class ZsDevService  {
 				}
 			}
 		}
-		
-		/**
+        /**
 		 * 添加线程队列
 		 * @param arrayList
 		 */
@@ -125,7 +124,9 @@ public class ZsDevService  {
 			 SubTask subTask=new SubTask(data, this.storageDataCollectionDao,this.devStatusMapper,this.devMapper);
 			 ZsDevService.executorService.submit(subTask);
 		}
-		
+	    /**
+	     * 读取数据
+	     */
 	    public static String getDEVData() {
 	        String result = "";
 	        BufferedReader in = null;
@@ -154,7 +155,9 @@ public class ZsDevService  {
 	        }
 	        return result;
 	    }
-	   
+	    
+		
+		
 }
 
 class SubTask implements Runnable {

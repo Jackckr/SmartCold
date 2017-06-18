@@ -13,6 +13,8 @@ public interface RdcMapper {
 	Page<RdcEntity> findRdcList(@Param("audit")Integer audit, @Param("keyword")String keyword);
 
 	List<RdcEntity> findRDCByRDCId(@Param("rdcID") int rdcID);
+	
+	List<HashMap<String,Object>> getRdcByName(@Param("keyword")String keyword);
 
 	int insertRdc(RdcEntity rdc);
 
@@ -37,4 +39,6 @@ public interface RdcMapper {
 	void upRdcMangConfig(@Param("id")Integer id ,@Param("rdcid")Integer rdcid ,@Param("muid")String muid,@Param("uuid")String uuid,@Param("mtelephone")String mtelephone,@Param("uTelephone")String uTelephone,@Param("aTelephone")String aTelephone);
 
 	RdcEntity getRdcById (Integer id);
+	
+	
 }

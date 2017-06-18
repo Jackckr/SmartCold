@@ -8,8 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * 
+
+/*
+ * Copyright (C) DCIS 版权所有
+ * 功能描述: TimeUtil 工具类,具类, 提供静态工具方法 操作字符串
+ * Create on MaQiang 2016-6-25 09:28:36
  */
 public class TimeUtil {
 
@@ -23,87 +26,44 @@ public class TimeUtil {
 	public static String  getDateTime(Date date){return	TimeUtil.dateFormat.format(date);}
 	public static String  getFormatDate(Date date){return	TimeUtil.datefm.format(date);}
 	
-	/**
-	 * 获得16进制 Linux时间
-	 * @return
-	 */
-	public static String getHextime(){
-		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
-	}
-	
-	
+	public static Long getLongtime(){return System.currentTimeMillis()/1000;}//获得时间戳
+	public static String getHextime(){return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();}//获得16进制 Linux时间
 
-	/**
-	 * 计算两个日期之间相差的天数
-	 * 
-	 * @param smdate
-	 *            较小的时间
-	 * @param bdate
-	 *            较大的时间
-	 * @return 相差天数
-	 * @throws ParseException
-	 */
-	public static int daysBetween(Date smdate, Date bdate) {
+    /*
+     * yyyy-MM-dd
+     */
+	public static Date parseYMD(String strDate) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			smdate = dateFormat.parse(dateFormat.format(smdate));
-			bdate = dateFormat.parse(dateFormat.format(bdate));
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(smdate);
-			long time1 = cal.getTimeInMillis();
-			cal.setTime(bdate);
-			long time2 = cal.getTimeInMillis();
-			long between_days = (time2 - time1) / (1000 * 3600 * 24);
-			return Integer.parseInt(String.valueOf(between_days));
-		} catch (Exception e) {
-			return -1;
-		}
-	}
-	
-	  /** 
-     * 使用参数Format将字符串转为Date 
-     */  
-    public static Date parseYMD(String strDate)  
-    {  
-        try {
 			return datefm.parse(strDate);
 		} catch (ParseException e) {
-			 logger.error("日期转换出错", e);
-		}  
-        return null;
-    } 
-    /**
-     * Date转String
-     *
-     * @param date
-     * @param pattern
-     * @return
-     */
-    public static String dateToString(Date date, String pattern) {
-        String result = "";
-        if ("".equals(pattern)) {
-            pattern = "yyyy-MM-dd";
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        try {
-            result = sdf.format(date);
-        } catch (Exception e) {
-            logger.error("日期转换出错", e);
-        }
-        return result;
-    }
-   
-    /**
-     * 获取指定日期的 00：00：00
-     *
-     * @return
-     */
-    
-    public static Date getDayStatDate(Date sourceDate) {return stringToDate( dateToString(sourceDate, "yyyy-MM-dd") + " 00:00:00", "yyyy-MM-dd HH:mm:ss");}
-    public static Date getDayLastTime(Date sourceDate) { return stringToDate(dateToString(sourceDate, "yyyy-MM-dd")+ " 23:59:59", "yyyy-MM-dd HH:mm:ss"); }
-    public static String[] getDayStatTime(Date sourceDate) {String sourceDateStr = dateToString(sourceDate, "yyyy-MM-dd");return new String []{sourceDateStr, sourceDateStr + " 00:00:00",sourceDateStr + " 23:59:59"};  }
+			logger.error("日期转换出错", e);
+		}
+		return null;
+	}
 
-  
+	public static String dateToString(Date date, String pattern) {
+		if ("".equals(pattern)) {
+			pattern = "yyyy-MM-dd";
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		try {
+			return sdf.format(date);
+		} catch (Exception e) {
+			logger.error("日期转换出错", e);
+		}
+		return null;
+	}
+
+	public static Date stringToDate(String datetime) {
+		Date date = new Date();
+		try {
+			date = dateFormat.parse(datetime);
+		} catch (ParseException e) {
+			logger.error("日期转换出错", e);
+		}
+		return date;
+	}
+	
     /**
      * String转Date
      *
@@ -122,7 +82,18 @@ public class TimeUtil {
         return date;
     }
 
-  
+    public static int getDay() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+    public static int getDateHour() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    } 
+    public static int getDateMinute() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.MINUTE);
+    }
     /**
      * 获取日期的小时
      *
@@ -217,31 +188,19 @@ public class TimeUtil {
 		return datebefore;
 	}
 	/**
-	 * 获得month前的月份的第一天
+	 * 获得month前的月份的第一天 or 最后一天
 	 * @param month
 	 * @return
 	 */
-	public static String getBeforeMonthTime(int month) {
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.MONTH, -month); 
-		c.set(Calendar.DAY_OF_MONTH, 1);
-		return datefm.format( c.getTime())+" 00:00:00" ;
-	}
+	public static String getBeforeMonthTime(int month) {Calendar c = Calendar.getInstance();c.add(Calendar.MONTH, -month); c.set(Calendar.DAY_OF_MONTH, 1);return datefm.format( c.getTime())+" 00:00:00" ;}
+	public static String getEndMonthTime(int month) {Calendar c = Calendar.getInstance();c.add(Calendar.MONTH, -month);c.set(Calendar.DATE, 1);c.roll(Calendar.DATE, -1);return datefm.format(c.getTime())+" 23:59:59";}//获得month前的月份的最后一天
 	/**
-	 * 获得month前的月份的最后一天
-	 * @param month
+	 * 获得时间的开始和结束时间
+	 * @param sourceDate
 	 * @return
 	 */
-	public static String getEndMonthTime(int month) {
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.MONTH, -month);
-		c.set(Calendar.DATE, 1);
-		c.roll(Calendar.DATE, -1);
-		return datefm.format(c.getTime())+" 23:59:59";
-	}
-	
-	public static void main(String[] args) {
-		System.err.println(getDateTime(cutMonthByDate(-1,new Date())));
-	}
+	public static Date getDayStatDate(Date sourceDate) {return stringToDate( dateToString(sourceDate, "yyyy-MM-dd") + " 00:00:00", "yyyy-MM-dd HH:mm:ss");}
+    public static Date getDayLastTime(Date sourceDate) { return stringToDate(dateToString(sourceDate, "yyyy-MM-dd")+ " 23:59:59", "yyyy-MM-dd HH:mm:ss"); }
+    public static String[] getDayStatTime(Date sourceDate) {String sourceDateStr = dateToString(sourceDate, "yyyy-MM-dd");return new String []{sourceDateStr, sourceDateStr + " 00:00:00",sourceDateStr + " 23:59:59"};  }
 	
 }
