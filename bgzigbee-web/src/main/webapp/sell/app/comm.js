@@ -3,6 +3,7 @@ var curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize,sys
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间
     col_img:function(val){return ['<image  class="icon-tb" src=',sys.imgrooturl+val,' onclick=showimg(this,\'',sys.imgrooturl+val,'\')>'].join(""); },//格式化时间
+    col_state:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" ></span>':'<span class="icon-tb icon-offline" ></span>';},
     col_isred:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已读"></span>':'<span class="icon-tb icon-offline" title="未读"></span>';},
     col_isdeal:function(value,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已处理"></span>':'<span class="icon-tb icon-offline" title="未处理"></span>';},
 };

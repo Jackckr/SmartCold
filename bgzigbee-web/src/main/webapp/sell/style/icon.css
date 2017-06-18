@@ -1,5 +1,7 @@
 ﻿@charset "utf-8";
 .panel-icon, .panel-tool { height: 20px;}
+.l-btn-icon { width: 20px; height: 20px;}
+
 .icon{ background:url(img/icons.png)  no-repeat scroll -601px -2px rgba(0, 0, 0, 0);width:20px; margin-right:5px; line-height:20px; display:inline-block;}    /*默认图标*/
 .icon-reload{background:url('icons/refresh.gif') no-repeat;}                         /*默认刷新*/
 .icon_search,.icon-search{background:url('icons/search.png' ) no-repeat;}                         /*默认搜索*/
@@ -42,7 +44,7 @@
 .main_debug {background: url(img/icons.png) no-repeat scroll -1172px -62px rgba(0, 0, 0, 0);}/*服务管理*/
 .main_ad {background: url(img/icons.png) no-repeat scroll -781px -569px rgba(0, 0, 0, 0);}/*服务管理*/
 
-.main_share {background: url(img/icons.png) no-repeat scroll -1440px -455px rgba(0, 0, 0, 0);}/*共享*/
+.main_share {background: url(img/icons.png) no-repeat scroll -1440px -452px rgba(0, 0, 0, 0);}/*共享*/
 .main_infmation {background: url(img/icons.png) no-repeat scroll -631px -571px rgba(0, 0, 0, 0);}/*资讯*/
 
 .dev_warning {background: url(img/icons.png) no-repeat scroll -1082px -30px rgba(0, 0, 0, 0);}/*设备告警*/

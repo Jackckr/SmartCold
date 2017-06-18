@@ -4,8 +4,10 @@
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcMapper">
 
     <select id="getRdcByName" parameterType="map" resultType="map">
-      SELECT `id`,`name` text FROM `rdc`  <if test="keyword!=null and keyword!=''"> WHERE  `name`  like "%"#{keyword}"%" </if> ORDER BY `id` desc LIMIT 20;
-    </select>
+       SELECT `id`,`name` text FROM  `rdc`   where
+       <if test="keyword != null">  (name like "%"#{keyword}"%" or id like "%"#{keyword}"%") AND </if>   id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping GROUP BY `rdcid` )  LIMIT 20;
+   </select>
+    
 
     <select id="findRdcList" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
          SELECT r.*,u.username as username

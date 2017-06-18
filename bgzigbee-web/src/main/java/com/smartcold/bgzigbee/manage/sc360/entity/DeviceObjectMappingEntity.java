@@ -2,6 +2,8 @@ package com.smartcold.bgzigbee.manage.sc360.entity;
 
 import java.util.Date;
 
+import com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity;
+
 public class DeviceObjectMappingEntity {
 
 	private int id;
@@ -18,8 +20,8 @@ public class DeviceObjectMappingEntity {
 
 	private Date addtime;
 	
-   private double du;//电压
-   private double bsi;//信号强度
+   private StorageDataCollectionEntity du;//电压
+   private StorageDataCollectionEntity bsi;//信号强度
    private boolean isrdcid;//是否有效管理
 	
 
@@ -79,22 +81,25 @@ public class DeviceObjectMappingEntity {
 		this.addtime = addtime;
 	}
 
-	public double getDu() {
+	
+
+	public StorageDataCollectionEntity getDu() {
 		return du;
 	}
 
-	public void setDu(double du) {
+	public void setDu(StorageDataCollectionEntity du) {
 		this.du = du;
 	}
 
-	public double getBsi() {
+	public StorageDataCollectionEntity getBsi() {
 		return bsi;
 	}
 
-	public void setBsi(double bsi) {
+	public void setBsi(StorageDataCollectionEntity bsi) {
 		this.bsi = bsi;
 	}
 
+	
 	public boolean isIsrdcid() {
 		return isrdcid;
 	}

@@ -51,6 +51,10 @@
       </set>
       where id = #{id};
     </update>
+    
+    <select id="getDevstatusByKey" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity">
+     select * from devstatus where deviceid=#{deviceid} and `key`=#{key} ORDER BY id desc LIMIT 1;
+    </select>
   
 <!-- 	<update id="upDeviceObjectStatus" parameterType="map" > -->
 <!-- 	    update deviceobjectmapping set `status`=#{status} where rdcid=#{rdcid} and deviceid in(${deviceids}); -->

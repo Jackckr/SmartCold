@@ -749,7 +749,7 @@ public class RdcController {
 		}
 	}
 	//new sys 获得热电厂Tree
-	@RequestMapping(value = "/getRdcTree", method = RequestMethod.POST)
+	@RequestMapping(value = "/getRdcTree")
 	@ResponseBody
 	public List<HashMap<String, Object>> getRdcTree(String keyword){
 		return this.rdcDao.getRdcByName(keyword);

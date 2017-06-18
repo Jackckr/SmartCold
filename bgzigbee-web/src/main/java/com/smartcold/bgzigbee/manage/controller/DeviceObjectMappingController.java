@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
+import com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity;
 import com.smartcold.bgzigbee.manage.sc360.dao.DeviceObjectMappingMapper;
 import com.smartcold.bgzigbee.manage.sc360.entity.DeviceObjectMappingEntity;
 import com.smartcold.bgzigbee.manage.util.SetUtil;
@@ -45,7 +46,7 @@ public class DeviceObjectMappingController {
         }
         return new ResultDto(-1, "删除失败");
     }
-    
+    //==================================================================================================dev设备管理start========================================================================================================
     /**
      * 更换dev
      * 1.更新dev编号
@@ -59,6 +60,8 @@ public class DeviceObjectMappingController {
     public Object replacedev(String token,String olddevno,String newdevno){
 	      try {
 			if(StringUtil.verifyToken(token)&&StringUtil.isnotNull(olddevno)&&StringUtil.isnotNull(newdevno)){
+				//替换业务
+				
 				
 				 return new ResultDto(0, "更换设备成功！");
 			  }
@@ -77,24 +80,21 @@ public class DeviceObjectMappingController {
      * @return
      */
     @RequestMapping("/getDevStatusByRdcId")
-    public Object replacedev(String token,Integer rdcId){
-		  if(StringUtil.verifyToken(token)){
+    public Object getDevStatusByRdcId(String token,Integer rdcId){
+//		  if(StringUtil.verifyToken(token)){
 			List<DeviceObjectMappingEntity> devList = this.deviceObjectMappingMapper.findInfoByfilter(null,null,null,rdcId);
 			if(SetUtil.isnotNullList(devList)){
 				for (DeviceObjectMappingEntity dev : devList) {
-					dev.setDu( this.deviceObjectMappingMapper.getDevstatusByKey(dev.getDeviceid(), "DU"));
-					dev.setBsi( this.deviceObjectMappingMapper.getDevstatusByKey(dev.getDeviceid(), "BSI"));
-					
-					
-					
+					StorageDataCollectionEntity du = this.deviceObjectMappingMapper.getDevstatusByKey(dev.getDeviceid(), "DU");
+					if(du!=null){
+						StorageDataCollectionEntity bsi = this.deviceObjectMappingMapper.getDevstatusByKey(dev.getDeviceid(), "BSI");
+						dev.setDu(du);
+						dev.setBsi(bsi);
+					}
 				}
-				
-				
-				
 			}
-			  
-		  }
-          return null;
+//		  }
+          return devList;
     	
     } 
     

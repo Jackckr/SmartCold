@@ -1,7 +1,7 @@
 var oldrdc=undefined, queryParams = {page: null, rows: null, keyword: null};
 function opendevdialog(){$('#dev_replaceForm').form('clear');$('#dev_replacedialog').dialog('open');}
 function doSearch(value){objtree.tree({url:'../../i/rdc/getRdcTree?keyword='+value,method:'post'});}
-function onSelect(node){if(node.id!=oldrdc){oldrdc=node.id;queryParams.rdcId=oldrdc;objTable.datagrid( {url:url, queryParams:queryParams });}}
+function onSelect(node){if(node.id!=oldrdc){oldrdc=node.id;queryParams.rdcId=oldrdc;objTable.datagrid( {url:"../../i/deviceObjectMapping/getDevStatusByRdcId", queryParams:queryParams });}}
 
 function onDblClickRow(index, row){
 	
@@ -12,6 +12,11 @@ function col_cellStyler(){
 	
 	
 }
+
+function col_du(value,row,index){if(value!=null){return value.value;} return null;}
+function col_bsi(value,row,index){if(value!=null){return value.value;} return null;}
+function col_state(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" ></span>':'<span class="icon-tb icon-offline" > </span>';};
+
 function replace_dev(){//更换设备
 	var repldefvrom=$('#dev_replaceForm');
 	if (! repldefvrom.form('validate')) {  return;}
@@ -28,24 +33,19 @@ function replace_dev(){//更换设备
 
 
 function init_table() {
-	
-	  var tool  = [{text:'清除无效设备',iconCls:'dev_del',handler:opendevdialog},{text:'更换设备',iconCls:'dev_replace',handler:opendevdialog},{text:'刷新',iconCls:'pagination-load',handler:reloaddata}];
-	
+	var tool  = [{text:'清除无效设备',iconCls:'dev_del',handler:opendevdialog},{text:'更换设备',iconCls:'dev_replace',handler:opendevdialog},{text:'刷新',iconCls:'pagination-load',handler:reloaddata}];
     var col = [[
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},
         {field: 'deviceid', title: '设备编号', width: 80, align: 'center', sortable: true},
         {field: 'type', title: '设备类型', width: 80, align: 'center', sortable: true},
-        {field: 'DU', title: '电压', width: 80, align: 'center', sortable: true},
-        {field: 'BSI', title: '信号强度', width: 80, align: 'center', sortable: true},
-        {field: 'state', title: '状态', width: 80, align: 'center', sortable: true},
+        {field: 'du', title: '电压', width: 80, align: 'center', sortable: true, formatter: col_du},
+        {field: 'bsi', title: '信号强度', width: 80, align: 'center', sortable: true, formatter: col_bsi},
+        {field: 'status', title: '状态', width: 80, align: 'center', sortable: true,formatter:col_state},
         {field: 'joinst', title: '关联状态', width: 80, align: 'center', sortable: true},
-        {field: 'addTime', title: '添加时间', width: 80, align: 'center', sortable: true},
+        {field: 'addtime', title: '添加时间', width: 80, align: 'center', sortable: true,formatter:tool.col_format},
         {field: 'hand', title: '操作', width: 100, align: 'center', formatter: col_cellStyler}
     ]];
-    
-  
-    
    objTable=$('#objTable').datagrid({
         title:"设备管理",
         iconCls: "dev_mang",
