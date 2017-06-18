@@ -276,12 +276,13 @@ function checkUserName(){
 				$(".userMsg").html("");
 				victdata.userName=true;
 			}
+			checkinfo();
 		});
 	    }else{
 	         victdata.userName=false;
 		      $(".userMsg").html("用户名不能包含中文和特殊字符，长度在6到16位之间~");
+		      checkinfo();
 	    }
-	    setTimeout("checkinfo()",0);
 };
 
 	function checkcode(em) {
