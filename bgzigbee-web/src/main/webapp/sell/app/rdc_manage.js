@@ -63,12 +63,12 @@ function ck(id) {
             var filesImg="";
             if (rdc.honorPics){
                 for(var i=0;i<rdc.honorPics.length;i++){
-                    honorPicImg+="<img onclick='showimg(this,\""+rdc.honorPics[i].location+"\")' src='"+rdc.honorPics[i].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
+                    honorPicImg+="<div class='imgBox'><img onclick='showimg(this,\""+rdc.honorPics[i].location+"\")' src='"+rdc.honorPics[i].location+"'><i class='imgClose' onclick='deleteImg(this)'>&times;</i></div>";
                 }
             }
             if(rdc.storagePics){
                 for(var j=0;j<rdc.storagePics.length;j++){
-                    filesImg+="<img onclick='showimg(this,\""+rdc.storagePics[j].location+"\")' src='"+rdc.storagePics[j].location+"' style='max-width: 100px;max-height: 100px;margin-left: 10px'>";
+                    filesImg+="<div class='imgBox'><img onclick='showimg(this,\""+rdc.storagePics[j].location+"\")' src='"+rdc.storagePics[j].location+"'><i class='imgClose' onclick='deleteImg(this)'>&times;</i></div>";
                 }
             }
             loadProvince();
@@ -85,6 +85,9 @@ function ck(id) {
             $('#addCold').dialog('open');
         }
     });
+}
+function deleteImg(ops){
+    alert('删除图片完善中,请等待')
 }
 /*冷库审核*/
 function rdc_upaudit() {
