@@ -286,6 +286,9 @@ em {
 .black {
     display: none;
 }
+.step-list .pull-left a{
+    cursor: pointer;
+}
 
 
 
