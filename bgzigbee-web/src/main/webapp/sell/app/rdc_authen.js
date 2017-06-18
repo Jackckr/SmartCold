@@ -3,7 +3,7 @@ var queryParams = {page: null, rows: null, type: null,state: null};
 var rdc_auth_state = function (i) { switch(i){case -1:return '未通过';case 0:return '待审核';default: return '通过';}};
 var rdc_auth_type = function (i) { switch(i){case 0:return '平台/360用户';case 1:return '货主认证';default: return '维修商认证';}};
 function col_cellStyler(value, row) {
-	if(row.type==0){return ['<button class="btn" onclick="updaterdcAuthen(' , row.id,',',row.ishandle,',',row.state,',',row.rdcid,',',row.uid ,',\'',row.note,'\')">',row.ishandle==0?'审核':'查看','</button>'  ].join("");}else{return '<button class="btn btn-delete" title="当前认证由冷库主操作，您禁止操作！">无权</button>';}
+	if(row.type==0){return ['<button class="btn ',row.ishandle==0?"":"btn-info",' " onclick="updaterdcAuthen(' , row.id,',',row.ishandle,',',row.state,',',row.rdcid,',',row.uid ,',\'',row.note,'\')">',row.ishandle==0?'审核':'查看','</button>'  ].join("");}else{return '<button class="btn btn-delete" title="当前认证由冷库主操作，您禁止操作！">无权</button>';}
 }
 
 function onDblClickRow(index, field) {
@@ -22,7 +22,7 @@ function user_upaudit(){
     var obj=   getFormData('#rdc_state_auditForm');
     if(obj.id!=""){
     		if(obj.oldstate!=obj.state&&obj.state==1){
-    			if(!obj.rdcId&&obj.authUserId){
+    			if(obj.rdcId!=undefined&&obj.authUserId!=undefined){
     				$.post('../../i/authen/authRdc', {'rdcId': obj.rdcId, 'authUserId': obj.authUserId});//修改
     			}
     		}
