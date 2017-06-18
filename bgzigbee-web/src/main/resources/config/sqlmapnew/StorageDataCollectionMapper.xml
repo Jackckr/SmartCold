@@ -11,14 +11,14 @@
 	    <if test="apid != null and apid!=''"> and  `apid`  = #{apid}  </if>
 	    <if test="deviceid != null and deviceid!=''"> AND `deviceid` = #{deviceid} </if>
 	    <if test="key != null and key!=''"> AND `key` in(${key})  </if>
-	    <if test="desc"> ORDER BY `id` desc </if>
+	    <if test="desc"> ORDER BY `addtime` desc </if>
 	</select>
 	
 	<select id="findAPByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity"> 
 	   SELECT * FROM `apstatus` where `apid`=#{apid} 
 	    <if test="startTime != null and startTime!=''"> AND `addtime` > #{startTime} AND `addtime` &lt; #{endTime}</if>
 	    <if test="key != null and key!=''"> AND `key` in(${key}) </if> 
-	    <if test="desc">  ORDER BY `id` desc </if>
+	    <if test="desc">  ORDER BY `addtime` desc </if>
 	</select> 
 	<select id="findDVByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.StorageDataCollectionEntity"> 
 	   SELECT * FROM `devstatus` where 1=1
@@ -26,6 +26,6 @@
 	    <if test="apid != null and apid!=''"> and  `apid`  = #{apid}  </if>
 	    <if test="deviceid != null and deviceid!=''"> AND `deviceid` = #{deviceid}  </if>
 	    <if test="key != null and key!=''">  AND `key` in(${key})  </if> 
-	    <if test="desc"> ORDER BY `id` desc </if>
+	    <if test="desc"> ORDER BY `addtime` desc </if>
 	</select> 
 </mapper>
