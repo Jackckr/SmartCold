@@ -39,11 +39,16 @@ function cleanSearch() {
     params.keyword="";
     $("#fddata").textbox("setValue","");
 }
-/*清空中右窗口*/
-function cleanWindow() {
-    $("#centerWindow").empty().append("<table id='objTable1' class='fill'></table>");
-    $("#eastWindow").empty().append("<table id='objTable2' class='fill'></table>");
+/*隐藏中右窗口*/
+function hideWindow() {
+    $("#objTable1-dg,#objTable2-dg").hide();
 }
+/*显示中右窗口*/
+function showWindow() {
+    $("#objTable1-dg,#objTable2-dg").show();
+}
+
+
 
 /*左用户操作按钮载入*/
 function userStyler(value,row){
@@ -183,21 +188,21 @@ function companyOnDblClickRow(index,field){
 /*切换用户表*/
 function changeUserTable(){
     cleanSearch();
-    cleanWindow();
+    hideWindow();
     init_user("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",userStyler,"#objTable","#div_filteri");
     roleFlag=2;
 }
 /*切换冷库表*/
 function changeRdcTable(){
     cleanSearch();
-    cleanWindow();
+    hideWindow();
     init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
     roleFlag=1;
 }
 /*切换集团表*/
 function changeCompanyTable(){
     cleanSearch();
-    cleanWindow();
+    hideWindow();
     init_company("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>集团</button>",companyStyler,"#objTable","#div_filteri");
     roleFlag=3;
 }
@@ -233,6 +238,7 @@ function getCompanyName(value) {
 /*用户关联冷库*/
 function userToRdc(id,username) {
     cleanSearch();
+    showWindow();
     saveUser.id=id;
     saveUser.username=username;
     userToRdcParams.userId=id;
@@ -242,6 +248,7 @@ function userToRdc(id,username) {
 /*用户关联集团*/
 function userToCompany(id,username) {
     cleanSearch();
+    showWindow();
     saveUser.id=id;
     saveUser.username=username;
     userToRdcParams.userId=id;
@@ -251,6 +258,7 @@ function userToCompany(id,username) {
 /*冷库关联用户*/
 function rdcToUser(id, rdcName) {
     cleanSearch();
+    showWindow();
     saveRdc.id=id;
     saveRdc.rdcName=rdcName;
     rdcToParams.rdcId=id;
@@ -260,6 +268,7 @@ function rdcToUser(id, rdcName) {
 /*冷库关联集团*/
 function rdcToCompany(id, rdcName) {
     cleanSearch();
+    showWindow();
     saveRdc.id=id;
     saveRdc.rdcName=rdcName;
     rdcToParams.rdcId=id;
@@ -269,6 +278,7 @@ function rdcToCompany(id, rdcName) {
 /*集团关联用户*/
 function companyToUser(id, companyName) {
     cleanSearch();
+    showWindow();
     saverCompany.id=id;
     saverCompany.companyName=companyName;
     companyToParams.companyId=id;
@@ -278,6 +288,7 @@ function companyToUser(id, companyName) {
 /*集团关联冷库*/
 function companyToRdc(id, companyName) {
     cleanSearch();
+    showWindow();
     saverCompany.id=id;
     saverCompany.companyName=companyName;
     companyToParams.companyId=id;
