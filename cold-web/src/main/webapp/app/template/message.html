@@ -4,9 +4,10 @@
     .sysTab .iconfont{font-size: 2.5em;color: #2393cb;}
     .sysTab p{font-size: 14px;}
     .sysTab ul{padding:0;}
-    .sysTab li{float: left;padding-top: 10px;width: 33%;box-sizing: border-box;text-align: center;cursor: pointer;position: relative;}
+    #ul_msgtype li.active{color:#2393cb;}
+    .sysTab li{float: left;padding-top: 10px;width: 25%;box-sizing: border-box;text-align: center;cursor: pointer;position: relative;}
     .dotCount{position: absolute;top:12px;right:45px;font-size: 12px;background-color: #f00;color: #fff;padding: 0 5px;border-radius: 50%;}
-    .sysTab li:nth-child(1):before, .sysTab li:nth-child(2):before{content: '';width: 2px;height: 46px;background-color: #f1f1f1;position: absolute;top:22px;right: 0;}
+    .sysTab li:nth-child(1):before, .sysTab li:nth-child(2):before, .sysTab li:nth-child(3):before{content: '';width: 2px;height: 46px;background-color: #f1f1f1;position: absolute;top:22px;right: 0;}
     @media (max-width: 768px){.sysTab{width: 100%;}} .sysTable{padding: 20px;background-color: #fff;-webkit-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);-moz-box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);}
     .sysTable tbody{}
     .sysTable tbody td{text-align: center;border-top: 0;border-bottom: 1px solid #dbdee5;}
@@ -33,23 +34,25 @@
 </style>
 <!--新设计page-->
 <div class="sysUi">
-    <div class="clearfix">
+    <div class="clearfix" id="ul_msgtype">
         <div class="pull-left sysTab">
             <ul class="clearfix">
-                <li ng-click="allmsg($event)"><i class="iconfont">&#xe808;</i><p>全部消息</p>
+                <li ng-click="allmsg($event)"><i class="iconfont">&#xe808;</i><p>全部消息</p></li>
+                <li ng-click="syswarn()"><i class="iconfont">&#xe6ef;</i><p>系统消息</p></li>
+                <li ng-click="changstatus(0,$event,0)"><i class="iconfont">&#xe7fd;</i><p>未读</p>
                     <span class="dotCount" ng-if="notReadMessage>0">{{notReadMessage}}</span>
                 </li>
-                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe7fd;</i><p>未读消息</p></li>
-                <li ng-click="changstatus(1,$event)"><i class="iconfont">&#xe802;</i><p>已读消息</p></li>
+                <li ng-click="changstatus(0,$event,null)"><i class="iconfont">&#xe670;</i><p>待处理</p>
+                    <span class="dotCount" ng-if="notDealMessage>0">{{notDealMessage}}</span>
+                </li>
             </ul>
         </div>
         <div class="pull-right sysTab">
             <ul class="clearfix">
-                <li ng-click="allmsg($event)"><i class="iconfont">&#xe6ef;</i><p>系统消息</p>
-                    <span class="dotCount" ng-if="notReadMessage>0">{{notReadMessage}}</span>
-                </li>
-                <li ng-click="changstatus(0,$event)"><i class="iconfont">&#xe806;</i><p>系统警告</p></li>
-                <li ng-click="changstatus(1,$event)"><i class="iconfont">&#xe6e5;</i><p>其他告警</p></li>
+                <li ng-click="changstatus(null,$event,1)"><i class="iconfont">&#xe802;</i><p>已读</p></li>
+                <li ng-click="changstatus(1,$event,1)"><i class="iconfont">&#xe646;</i><p>已处理</p></li>
+                <li ng-click="syswarn()"><i class="iconfont">&#xe806;</i><p>系统警告</p></li>
+                <li ng-click="syswarn()"><i class="iconfont">&#xe6e5;</i><p>其他告警</p></li>
             </ul>
         </div>
 
