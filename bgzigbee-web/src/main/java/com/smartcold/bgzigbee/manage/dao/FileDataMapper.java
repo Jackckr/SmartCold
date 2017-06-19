@@ -24,6 +24,9 @@ public interface FileDataMapper {
  public static final String CATEGORY_HONOR_PIC = "honorPic";
   //认证图片
  public static final String CATEGORY_AUTH_PIC = "authPic";
+ //用户头像
+ public static final String CATEGORY_AVATAR_PIC = "userPic";
+
 
  public int deleteByBelongIdAndCategory(@Param("belongid")int belongid, @Param("category")String category);
 

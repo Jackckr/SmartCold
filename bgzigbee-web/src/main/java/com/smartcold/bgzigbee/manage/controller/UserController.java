@@ -3,6 +3,7 @@ package com.smartcold.bgzigbee.manage.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import com.smartcold.bgzigbee.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -31,7 +32,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserMapper userDao;
-	
+	@Autowired
+	private UserService userService;
+
 	 //
     @RequestMapping(value = "/getUserByFilter", method = RequestMethod.POST)
     @ResponseBody
@@ -73,7 +76,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object deleteUser(int userID) {
-		 userDao.deleteUser(userID);
+		 userService.deleteUserById(userID);
 		 return new BaseDto(0);
 	}
 	
@@ -82,7 +85,7 @@ public class UserController extends BaseController {
 	public Object deleteByUserIDs(Integer[] userIDs) {
 	   if(userIDs!=null&&userIDs.length>0){
 			for (Integer userID : userIDs) {
-				userDao.deleteUser(userID);
+				userService.deleteUserById(userID);
 			}
 			return new BaseDto(1);
 		}
