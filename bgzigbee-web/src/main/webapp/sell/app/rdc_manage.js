@@ -18,9 +18,6 @@ function cellStyler(value, row) {
 }
 /*初始化表格*/
 function init_table() {
-    var tol = [
-        {'iconCls': 'icon_rem', 'handler': '', 'text': '删除'},
-        "-", {'iconCls': 'icon-reload', 'handler': 'reloaddata', 'text': '刷新'}, "-"];
     var col = [[
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},
@@ -318,7 +315,7 @@ $().ready(function () {
     $(".combo").click(function(){
         $(this).prev().combobox("showPanel");
     })
-    parent.sysuser.type==3?$("#delButton").show():$("#delButton").hide()
+    parent.sysuser.role==3?$("#delButton").show():$("#delButton").hide()
     $('#sel_audit').combobox({onChange:function(val){ queryParams.audit=val;  reloaddata(queryParams);}});
     $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
     $("#name").blur(function () {
