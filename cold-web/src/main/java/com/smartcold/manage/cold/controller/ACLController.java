@@ -40,9 +40,6 @@ public class ACLController extends BaseController {
 		 respData.put("nacl", ruacl);
 		 respData.put("aclml", allaclNode);
 		 return respData;
-		 
 	}
-
-	
 	
 }
