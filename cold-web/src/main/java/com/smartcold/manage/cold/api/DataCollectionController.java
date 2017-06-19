@@ -112,7 +112,7 @@ public class DataCollectionController extends BaseController {
 							}
 						}
 					}
-					if(SetUtil.isNullList(apsatusList)){
+					if(SetUtil.isnotNullList(apsatusList)){
 						this.devplset.addAPStatusList(apsatusList);
 					}
 					if(SetUtil.isnotNullList(devsatusList)){
