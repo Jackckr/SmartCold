@@ -131,14 +131,19 @@ public class CompanyController extends BaseController {
                 }
             });
             if (rdcIds.contains(rdcId)) {
-                return new BaseDto(0);
+                return new BaseDto(2);
             }
         }
-        CompanyRdc companyRdc = new CompanyRdc();
-        companyRdc.setCompanyid(companyId);
-        companyRdc.setRdcid(rdcId);
-        companyRdc.setAddtime(new Date());
-        companyRdcDao.insertSelective(companyRdc);
+        CompanyRdc companyRdc1 = companyRdcDao.selectByRdcId(rdcId);
+        if (companyRdc1==null){
+            CompanyRdc companyRdc = new CompanyRdc();
+            companyRdc.setCompanyid(companyId);
+            companyRdc.setRdcid(rdcId);
+            companyRdc.setAddtime(new Date());
+            companyRdcDao.insertSelective(companyRdc);
+        }else {
+            return new BaseDto(1);
+        }
         return new BaseDto(0);
     }
 
@@ -190,7 +195,7 @@ public class CompanyController extends BaseController {
                 }
             });
             if (userIds.contains(userId)) {
-                return new BaseDto(0);
+                return new BaseDto(2);
             }
         }
         // 升级账号 并绑定
@@ -207,12 +212,16 @@ public class CompanyController extends BaseController {
             roleUser.setAddtime(new Date());
             roleUserDao.insertSelective(roleUser);
         }
-
-        CompanyUser companyuser = new CompanyUser();
-        companyuser.setCompanyid(companyId);
-        companyuser.setUserid(userId);
-        companyuser.setAddtime(new Date());
-        companyUserDao.insertSelective(companyuser);
+        List<CompanyUser> companyUsers1 = companyUserDao.selectByUid(userId);
+        if (companyUsers1==null||companyUsers1.size()==0){
+            CompanyUser companyuser = new CompanyUser();
+            companyuser.setCompanyid(companyId);
+            companyuser.setUserid(userId);
+            companyuser.setAddtime(new Date());
+            companyUserDao.insertSelective(companyuser);
+        }else {
+            return new BaseDto(1);
+        }
         return new BaseDto(0);
     }
 

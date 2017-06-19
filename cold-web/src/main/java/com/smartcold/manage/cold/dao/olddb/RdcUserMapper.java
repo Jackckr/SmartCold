@@ -2,6 +2,8 @@ package com.smartcold.manage.cold.dao.olddb;
 
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
 
+import java.util.List;
+
 public interface RdcUserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +18,6 @@ public interface RdcUserMapper {
     int updateByPrimaryKey(RdcUser record);
 
     RdcUser findByUserId(Integer userid);
+
+    List<RdcUser> findsByUserId(Integer userid);
 }
