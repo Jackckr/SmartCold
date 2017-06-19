@@ -52,6 +52,7 @@
     height: 26px!important;
     line-height: 26px!important;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .formContain .textbox{
     margin-left: 0;

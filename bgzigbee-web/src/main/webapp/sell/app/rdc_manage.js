@@ -118,6 +118,7 @@ function addCold() {
     $('#addColdForm').form('clear');
     loadProvince();
     $("#coldButton").html("添加冷库");
+    $("#coldButton").attr("onclick", "addColdSubmit()");
     $('#addCold').dialog('open');
     $("#provinceId").combobox({value: ""});
     $("#cityId").combobox({value: ""});
@@ -314,6 +315,9 @@ function loadCityByProId(id) {
 var saveProvince="";
 $().ready(function () {
     init_table();
+    $(".combo").click(function(){
+        $(this).prev().combobox("showPanel");
+    })
     parent.sysuser.type==3?$("#delButton").show():$("#delButton").hide()
     $('#sel_audit').combobox({onChange:function(val){ queryParams.audit=val;  reloaddata(queryParams);}});
     $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
