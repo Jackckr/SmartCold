@@ -6,7 +6,24 @@ var tool={
     col_state:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" ></span>':'<span class="icon-tb icon-offline" ></span>';},
     col_isred:function(value ,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已读"></span>':'<span class="icon-tb icon-offline" title="未读"></span>';},
     col_isdeal:function(value,row,index){return value=="1"?'<span class="icon-tb icon-online" title="已处理"></span>':'<span class="icon-tb icon-offline" title="未处理"></span>';},
+    setimg : function(em, imgid, callback) {
+		var oFile = $(em)[0].files[0];
+		var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
+		var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
+		if (!rFilter.test(oFile.type)) {
+			layer.open({content : "格式错误~请选择格式为" + msg + "的图片~",btn : '确定'}); return;
+		}else if(oFile.size > 10485760){
+    		layer.open({content : "最大只能上传10M的图片",btn : '确定'}); return;
+		}
+		var oImage = document.getElementById(imgid);
+		var oReader = new FileReader();
+		oReader.onload = function(e) {oImage.src = e.target.result;};  oReader.readAsDataURL(oFile);
+		if (callback != null) {callback();}
+	},
 };
+
+
+
 function alert_infomsg(msg){ $.messager.alert('提示', msg, 'info');}
 function msgShow(title, msgString, msgType) { $.messager.alert(title, msgString, msgType);}
 function initTree(url,onSelect){objtree=$('#objtree').tree({url:url,method:'post',animate:true,lines:true, onSelect:onSelect});};

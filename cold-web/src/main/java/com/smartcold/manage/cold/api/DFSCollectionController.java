@@ -43,8 +43,6 @@ public class DFSCollectionController extends BaseController {
 	
 	public static String dfsdata=null;
 	
-	public static ArrayList<DFSDataCollectionEntity> dataListcache = new ArrayList<DFSDataCollectionEntity>();
-	
 	public static  HashMap<String,HashMap<String,DFSDataCollectionEntity>> configchcateHashMap=new HashMap<String,HashMap<String,DFSDataCollectionEntity>>();
 	
 	
