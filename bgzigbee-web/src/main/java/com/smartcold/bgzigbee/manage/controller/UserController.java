@@ -145,6 +145,7 @@ public class UserController extends BaseController {
 				user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 				userDao.insertUser(user);
 			}else{
+				//
 				userDao.updateUser(user);
 			}
 			return new BaseDto(0);

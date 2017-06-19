@@ -1,4 +1,4 @@
-﻿if(!window.sessionStorage.asikey||parent.sysuser==undefined||parent.sysuser.token==undefined){window.location.href = window.location.host+"/login.htm"; }//
+﻿if(!window.sessionStorage.asikey||parent.sysuser==undefined||parent.sysuser.token==undefined){window.location.href = window.location.host+"/login.htm"; }else{sysuser=parent.sysuser;}
 var curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize,systoken=undefined,sys={imgrooturl:"http://139.196.189.93:8089/"};
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间
@@ -220,7 +220,6 @@ $.extend($.fn.validatebox.defaults.rules, {
         message: '口令不正确！'
    }
 });
-
 
 //日期——多语言
 if(Date.prototype.Format==undefined){Date.prototype.Format=function(fmt){var o={"M+":this.getMonth()+1,"d+":this.getDate(),"h+":this.getHours(),"m+":this.getMinutes(),"s+":this.getSeconds(),"q+":Math.floor((this.getMonth()+3)/3),"S":this.getMilliseconds()};if(/(y+)/.test(fmt))fmt=fmt.replace(RegExp.$1,(this.getFullYear()+"").substr(4-RegExp.$1.length));for(var k in o)if(new RegExp("("+k+")").test(fmt))fmt=fmt.replace(RegExp.$1,(RegExp.$1.length==1)?(o[k]):(("00"+o[k]).substr((""+o[k]).length)));return fmt;};};

@@ -17,21 +17,6 @@ import org.springframework.scheduling.annotation.Scheduled;
  **/
 //@Service
 public class WLXDevService  {
-		/**
-		 * 数据抓取30秒
-		 */
-	    @Scheduled(cron="0/30 * * * * ?")
-		public void checkData() {
-//	    	this.readData();
-		}
-	    
-	    /*
-	     * 6小时保存一次状态（延迟15秒）
-	     */
-	    @Scheduled(cron = "15 0 */6 * * ?")
-	    public  void timer() {
-	    	
-	    }
 		
 		private String initConnect(){
 			StringBuffer result = new StringBuffer();
@@ -67,9 +52,6 @@ public class WLXDevService  {
 			WLXDevService service=new WLXDevService();
 			String initConnect = service.initConnect();
 			System.err.println(initConnect);
-			
-			
-			
 		}
 	    
 	

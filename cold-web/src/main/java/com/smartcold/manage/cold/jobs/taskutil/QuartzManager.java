@@ -3,6 +3,7 @@ package com.smartcold.manage.cold.jobs.taskutil;
 import static org.quartz.JobBuilder.newJob;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -16,6 +17,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.service.TempWarningService;
 import com.smartcold.manage.cold.service.task.QuartzJobFactory;
@@ -32,7 +34,8 @@ public class QuartzManager {
     public static TempWarningService tempWarningServer;
 	public static SysWarningsInfoMapper sysWarningsInfoMapper;
     //当前任务
-	private static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
+	public static LinkedList<String> logs=Lists.newLinkedList();
+	public static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
 	
     /** 
      * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名 
@@ -209,7 +212,8 @@ public class QuartzManager {
             Scheduler sched = gSchedulerFactory.getScheduler();    
             if (!sched.isShutdown()) {    
                 sched.shutdown();    
-            }    
+            }   
+            tempListen.clear();
         } catch (Exception e) {    
             throw new RuntimeException(e);    
         }    
