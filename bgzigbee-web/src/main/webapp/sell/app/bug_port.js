@@ -90,6 +90,10 @@ var refdata=function(){
  
 function getdata(){
 	   $.ajax({ url:servermode[queryParams.urlindex]+serportmode[queryParams.portinedx],type: 'POST', success: function(data) { 
+		   if(data==null||data==""){
+			   clearTable();
+			   return;
+		   }
 		   var rowdata={};//{ “total”:”30″,rows:[] }
 		   if(queryParams.portinedx==0){
 			   var tempdata=JSON.parse(data);
