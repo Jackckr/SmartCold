@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,15 @@ public class RdcServiceImpl implements RdcService {
 
 	@Override
 	public List<Rdc> findRdcByUserid(int userid) {
-		RdcUser rdcUser = rdcUserDao.findByUserId(userid);
-		if (rdcUser == null) {
+		List<RdcUser> rdcUser = rdcUserDao.findsByUserId(userid);
+		List<Rdc> rdcList = new ArrayList<>();
+		if (rdcUser == null || rdcUser.size()==0) {
 			return Lists.newArrayList();
 		} else {
-			return rdcDao.findRDCByRDCId(rdcUser.getRdcid());
+			for(RdcUser rdcUserItem:rdcUser){
+				rdcList.add(rdcDao.selectByPrimaryKey(rdcUserItem.getRdcid()));
+			}
+			return rdcList;
 		}
 	}
 

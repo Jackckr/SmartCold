@@ -309,7 +309,7 @@ function userBindRdc(userId,rdcId,username,rdcName) {
                 type:"POST",
                 data:{"userId":userId,"rdcId":rdcId},
                 success:function (data) {
-                    $.messager.alert('提示',data.message);
+                    $.messager.alert('提示',data.message,'info');
                     roleFlag==2?userToRdc(userId,username):rdcToUser(rdcId,rdcName);
                 }
             });
@@ -325,7 +325,7 @@ function userRdcUnbind(userId,rdcId,username,rdcName){
                 type:"POST",
                 data:{"userId":userId,"rdcId":rdcId},
                 success:function (data) {
-                    $.messager.alert('提示',"解绑成功！");
+                    $.messager.alert('提示',"解绑成功！",'info');
                     roleFlag==2?userToRdc(userId,username):rdcToUser(rdcId,rdcName);
                 }
             });
@@ -341,7 +341,9 @@ function userBindCompany(userId,companyId,username,companyName) {
                 type:"POST",
                 data:{"userId":userId,"companyId":companyId},
                 success:function (data) {
-                    $.messager.alert('提示',"绑定成功！\""+username+"\"已成为\""+companyName+"\"的集团用户！");
+                    var message=data.status==1?"绑定失败！该用户已经绑定集团不得再次绑定":"绑定成功！\""+username+"\"已成为\""+companyName+"\"的集团用户！";
+                    if (data.status==2){message="绑定失败！该用户和集团\""+companyName+"\"已成立绑定关系";}
+                    $.messager.alert('提示',message,'info');
                     roleFlag==2?userToCompany(userId,username):companyToUser(companyId,companyName);
                 }
             });
@@ -357,7 +359,7 @@ function userCompanyUnbind(userId,companyId,username,companyName) {
                 type:"POST",
                 data:{"userId":userId,"companyId":companyId},
                 success:function (data) {
-                    $.messager.alert('提示',"解绑成功！");
+                    $.messager.alert('提示',"解绑成功！",'info');
                     roleFlag==2?userToCompany(userId,username):companyToUser(companyId,companyName);
                 }
             });
@@ -373,7 +375,9 @@ function rdcBindCompany(rdcId, companyId,rdcName,companyName) {
                 type:"POST",
                 data:{"rdcId":rdcId,"companyId":companyId},
                 success:function (data) {
-                    $.messager.alert('提示',"绑定成功！");
+                    var message=data.status==1?"绑定失败！该冷库已经绑定集团不得再次绑定":"绑定成功！\""+rdcName+"\"已成为\""+companyName+"\"的集团用户！"
+                    if (data.status==2){message="绑定失败！该冷库和集团\""+companyName+"\"已成立绑定关系";}
+                    $.messager.alert('提示',message,'info');
                     roleFlag==1?rdcToCompany(rdcId,rdcName):companyToRdc(companyId,companyName);
                 }
             });
@@ -389,7 +393,7 @@ function rdcCompanyUnbind(rdcId, companyId,rdcName,companyName) {
                 type:"POST",
                 data:{"rdcId":rdcId,"companyId":companyId},
                 success:function (data) {
-                    $.messager.alert('提示',"解绑成功！");
+                    $.messager.alert('提示',"解绑成功！",'info');
                     roleFlag==1?rdcToCompany(rdcId,rdcName):companyToRdc(companyId,companyName);
                 }
             });

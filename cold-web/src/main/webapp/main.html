@@ -162,7 +162,7 @@
 		<aside id="lefaside" class="main-sidebar hide">        
 			<section class="sidebar">
 				<div>
-					<select ng-if="user.role == 2" class="form-control"
+					<select ng-if="user.role == 2 || user.role==1" class="form-control"
 						ng-options="rdc.name for rdc in vm.allUserRdcs"
 						ng-model="vm.choserdc" ng-change="initAllByRdcId(vm.choserdc.id)"></select>
 				</div>
@@ -173,7 +173,7 @@
 					match-class="highlight"
 					input-class="form-control form-control-small"></div>
 				<ul class="sidebar-menu text-white my_sidebar">
-					<li ng-if="user.role == 3 || user.role == 1"><a
+					<li ng-if="user.role == 3"><a
 						class="text-white omg" style="font-family: cursive;"
 						title="{{vm.choserdc.name}}" ng-bind="vm.choserdc.name"></a></li>
 				</ul>
