@@ -122,7 +122,7 @@ public class AuthenController {
 			RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(authUserId); // 默认用户账号与管理员账号不会重复
 			if (roleUserByUserId == null) {
 				RoleUser roleUser = new RoleUser();
-				roleUser.setRoleid(2); // op
+				roleUser.setRoleid(1); // op
 				roleUser.setUserid(authUserId);
 				roleUser.setAddtime(new Date());
 				roleUserDao.insertSelective(roleUser);
@@ -136,10 +136,10 @@ public class AuthenController {
 				rdcUser.setAddtime(new Date());
 				rdcUserDao.insertSelective(rdcUser);
 			}
-//			else {
-//				byRdcId.setUserid(authUserId);
-//				rdcUserDao.updateByPrimaryKeySelective(byRdcId);
-//			}
+			else {
+				byRdcId.setUserid(authUserId);
+				rdcUserDao.updateByPrimaryKeySelective(byRdcId);
+			}
 				
 			UserEntity user = this.userDao.findUserById(authUserId);
 			if(user.getType()==UserVersion.MaintVERSION.getType()){//维修商

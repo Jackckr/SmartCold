@@ -1,4 +1,4 @@
-﻿if(!window.sessionStorage.asikey){window.location.href = window.location.host+"/login.htm"; }//||parent.sysuser==undefined||parent.sysuser.token==undefined
+﻿if(!window.sessionStorage.asikey||parent.sysuser==undefined||parent.sysuser.token==undefined){window.location.href = window.location.host+"/login.htm"; }//
 var curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize,systoken=undefined,sys={imgrooturl:"http://139.196.189.93:8089/"};
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间

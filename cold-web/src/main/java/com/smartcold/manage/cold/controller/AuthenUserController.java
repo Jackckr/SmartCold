@@ -153,7 +153,7 @@ public class AuthenUserController {
 					RoleUser roleUserByUserId = roleUserDao.getRoleUserByUserId(userId); // 默认用户账号与管理员账号不会重复
 					if (roleUserByUserId == null) {
 						RoleUser roleUser = new RoleUser();
-						roleUser.setRoleid(2); // op
+						roleUser.setRoleid(1); // op
 						roleUser.setUserid(userId);
 						roleUser.setAddtime(new Date());
 						this.roleUserDao.insertSelective(roleUser);
