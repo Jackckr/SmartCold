@@ -161,7 +161,10 @@ public class RdcServiceImpl implements RdcService {
 						String[] temps = location.split("_");
 						int userId = Integer.parseInt(temps[1]);
 						rdcAuthDTO.setUserId(userId);
-						rdcAuthDTO.setUserName(userDao.findUserById(userId).getUsername());
+						UserEntity userById = userDao.findUserById(userId);
+						if(userById!=null){
+							rdcAuthDTO.setUserName(userById.getUsername());
+						}
 					}
 					rdcAuthDTOs.add(rdcAuthDTO);
 				}

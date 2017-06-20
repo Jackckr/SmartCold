@@ -288,7 +288,7 @@
         <div class="formCtr" style="width: 100%">
             <div class="formTitle">资质荣誉图：<small style="color: #af0c03;">*最多八张</small></div>
             <div class="formContain" id="honorfilesSpan">
-                <input type="file" name="honorfiles" multiple>
+                <input id="honorFile" type="file" onchange="picChange(this,1)" name="honorfiles" multiple>
             </div>
             <label id="honorfilesDiv">
                 <span>资质荣誉图：</span>
@@ -298,7 +298,7 @@
         <div class="formCtr" style="width: 100%;margin-left: 0;">
             <div class="formTitle">冷库图片：<small style="color: #af0c03;">*最多五张</small></div>
             <div class="formContain" id="filesSpan">
-                <input type="file" name="files" multiple>
+                <input type="file" name="files" onchange="picChange(this,2)" multiple>
             </div>
             <label id="filesDiv">
                 <span>冷库图片：</span>

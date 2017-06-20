@@ -1,5 +1,27 @@
 /*过滤参数*/
 var queryParams = {audit: null, keyword: null};
+var honorPicsArr=[];
+var storagePicsArr=[];
+var honorOriginalLength=0;
+var storageOriginalLength=0;
+
+var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
+var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
+
+
+/*设置图片*/
+function setPic() {
+    for(var i=honorPicsArr.length-1;i>=honorOriginalLength;i--){
+        var oFile = honorPicsArr[i];
+        var oImage = document.getElementById('honorPic'+i);
+        eval("var oImage"+i+"=oImage;var oReader"+i+" = new FileReader();oReader"+i+".onload = function(e) {oImage"+i+".src = e.target.result;};oReader"+i+".readAsDataURL(oFile);");
+    }
+    for(var j=storagePicsArr.length-1;j>=storageOriginalLength;j--){
+        var file = storagePicsArr[j];
+        var image = document.getElementById('storagePic'+j);
+        eval("var image"+j+"=image;var oReader"+j+" = new FileReader();oReader"+j+".onload = function(e) {image"+j+".src = e.target.result;};oReader"+j+".readAsDataURL(file);");
+    }
+}
 
 function getRdcAudit(value) {
     if (value == 0)
@@ -36,8 +58,58 @@ function init_table() {
 function onDblClickRow(index, field) {
     ck(field.id);
 }
+
+/*显示已选图片*/
+function showSelectPic() {
+    var honorPicImg="";
+    var filesImg="";
+    for(var i=0;i<honorOriginalLength;i++){
+        honorPicImg+="<div class='imgBox'><img onclick='showimg(this,\""+honorPicsArr[i].location+"\")' src='"+honorPicsArr[i].location+"'><i class='imgClose' onclick='deleteImg("+i+",1)'>&times;</i></div>";
+    }
+    for(var j=0;j<storageOriginalLength;j++){
+        filesImg+="<div class='imgBox'><img onclick='showimg(this,\""+storagePicsArr[j].location+"\")' src='"+storagePicsArr[j].location+"'><i class='imgClose' onclick='deleteImg("+j+",2)'>&times;</i></div>";
+    }
+    if(honorPicsArr.length!=honorOriginalLength){
+        for(var i=honorPicsArr.length-1;i>=honorOriginalLength;i--){
+            honorPicImg+="<div class='imgBox'><img id='honorPic"+i+"' onclick='showimg(this)'><i class='imgClose' onclick='deleteImg("+i+",1)'>&times;</i></div>";
+        }
+    }
+    if(storagePicsArr.length!=storageOriginalLength){
+        for(var j=storagePicsArr.length-1;j>=storageOriginalLength;j--){
+            filesImg+="<div class='imgBox'><img id='storagePic"+j+"' onclick='showimg(this)'><i class='imgClose' onclick='deleteImg("+j+",2)'>&times;</i></div>";
+        }
+    }
+    $("#filesImg").empty().append(filesImg);
+    $("#honorfilesImg").empty().append(honorPicImg);
+    setPic();
+}
+
+/*图片选中*/
+function picChange(e,flag) {
+    var files = e.files;
+    for(var i=0;i<files.length;i++){
+        if (!rFilter.test(files[i].type)) {
+            alert("格式错误~请选择格式为" + msg + "的图片~"); return;
+        }else if(files[i].size > 10485760){
+            alert("最大只能上传10M的图片"); return;
+        }
+        flag==1?honorPicsArr.push(files[i]):storagePicsArr.push(files[i]);
+    }
+    showSelectPic();
+}
+/*图片删除*/
+function deleteImg(index,flag){
+    flag==1?honorPicsArr.splice(index,1):storagePicsArr.splice(index,1);
+    if(index<honorOriginalLength && flag==1) { honorOriginalLength--;};
+    if(index<storageOriginalLength && flag==2) { storageOriginalLength--;};
+    showSelectPic();
+}
 /*冷库修改*/
 function ck(id) {
+    honorOriginalLength=0;
+    storageOriginalLength=0;
+    honorPicsArr=[];
+    storagePicsArr=[];
     $("#showNameMessage").hide();
     $('#addColdForm').form('clear');
     $.ajax({
@@ -56,35 +128,31 @@ function ck(id) {
                 rdc.facility = "";
             };
             $("#coldButton").html("修改冷库信息");
-            var honorPicImg="";
-            var filesImg="";
             if (rdc.honorPics){
+                honorOriginalLength=rdc.honorPics.length;
                 for(var i=0;i<rdc.honorPics.length;i++){
-                    honorPicImg+="<div class='imgBox'><img onclick='showimg(this,\""+rdc.honorPics[i].location+"\")' src='"+rdc.honorPics[i].location+"'><i class='imgClose' onclick='deleteImg(this)'>&times;</i></div>";
+                    honorPicsArr.push(rdc.honorPics[i]);
                 }
             }
             if(rdc.storagePics){
+                storageOriginalLength=rdc.storagePics.length;
                 for(var j=0;j<rdc.storagePics.length;j++){
-                    filesImg+="<div class='imgBox'><img onclick='showimg(this,\""+rdc.storagePics[j].location+"\")' src='"+rdc.storagePics[j].location+"'><i class='imgClose' onclick='deleteImg(this)'>&times;</i></div>";
+                    storagePicsArr.push(rdc.storagePics[j]);
                 }
             }
+            showSelectPic();
             loadProvince();
             loadCityByProId(rdc.provinceId);
             $("#provinceId").combobox({value: rdc.provinceId});
             $("#cityId").combobox({value: rdc.cityId});
             $('#addColdForm').form('load',rdc);
-            $("#arrangePicDiv").show();
+            /*$("#arrangePicDiv").show();
             $("#honorfilesDiv").show();
-            $("#filesDiv").show();
-            $("#honorfilesImg").empty().append(honorPicImg);
-            $("#filesImg").empty().append(filesImg);
+            $("#filesDiv").show();*/
             $("#coldButton").attr("onclick", "doUpdateCold()");
             $('#addCold').dialog('open');
         }
     });
-}
-function deleteImg(ops){
-    alert('删除图片完善中,请等待')
 }
 /*冷库审核*/
 function rdc_upaudit() {
@@ -111,6 +179,12 @@ function sh(id, name, audit) {
 
 /*添加冷库*/
 function addCold() {
+    honorPicsArr=[];
+    storagePicsArr=[];
+    honorOriginalLength=0;
+    storageOriginalLength=0;
+    $("#honorfilesImg").empty();
+    $("#filesImg").empty();
     $("#showNameMessage").hide();
     $('#addColdForm').form('clear');
     loadProvince();
@@ -119,27 +193,27 @@ function addCold() {
     $('#addCold').dialog('open');
     $("#provinceId").combobox({value: ""});
     $("#cityId").combobox({value: ""});
-    $("#arrangePicSpan").show();
+    /*$("#arrangePicSpan").show();
     $("#honorfilesSpan").show();
     $("#filesSpan").show();
     $("#honorfilesDiv").hide();
     $("#arrangePicDiv").hide();
-    $("#filesDiv").hide();
+    $("#filesDiv").hide();*/
 }
 /*检查冷库名字是否重复*/
 var addRdcFlag = true;
 /*提交冷库验证方法*/
-function coldValidation(honorfiles, files, vo) {
+function coldValidation(vo) {
     if (!addRdcFlag) {
         alert("冷库名已存在!请更换!");
         return false;
     }
-    if (honorfiles.length > 5) {
-        alert("资质荣誉图,最多上传五张图片");
+    if (honorPicsArr.length > 8) {
+        alert("资质荣誉图,最多上传八张图片");
         return false;
     }
-    if (files.length > 8) {
-        alert("冷库图片,最多上传八张图片");
+    if (storagePicsArr.length > 5) {
+        alert("冷库图片,最多上传五张图片");
         return false;
     }
     if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.area.trim() == ""
@@ -179,24 +253,24 @@ function coldValidation(honorfiles, files, vo) {
 }
 /*提交冷库信息*/
 function addColdSubmit() {
-    var honorfiles = $("input[name=honorfiles]").prop("files");
-    var arrangePic = $("input[name=arrangePic]");
-    var files = $("input[name=files]").prop("files");
+    //var honorfiles = $("input[name=honorfiles]").prop("files");
+    //var arrangePic = $("input[name=arrangePic]");
+    //var files = $("input[name=files]").prop("files");
     var parnArray = $("#addColdForm").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
         vo[item.name] = item.value;
     });
-    var flag = coldValidation(honorfiles, files, vo);
+    var flag = coldValidation(vo);
     if (flag) {
         var formdata = new FormData();
-        $.each(honorfiles, function (index, item) {
+        $.each(honorPicsArr, function (index, item) {
             formdata.append('honor' + index, item);
         });
-        $.each(arrangePic, function (index, item) {
+        /*$.each(arrangePic, function (index, item) {
             formdata.append('arrangePics', item.files[0]);
-        });
-        $.each(files, function (index, item) {
+        });*/
+        $.each(storagePicsArr, function (index, item) {
             formdata.append('file' + (index + 1), item);
         });
 
@@ -217,31 +291,31 @@ function addColdSubmit() {
 }
 /*提交修改冷库信息*/
 function doUpdateCold() {
-    var honorfiles = $("input[name=honorfiles]").prop("files");
-    var arrangePic = $("input[name=arrangePic]");
-    var files = $("input[name=files]").prop("files");
+    //var honorfiles = $("input[name=honorfiles]").prop("files");
+    //var arrangePic = $("input[name=arrangePic]");
+    //var files = $("input[name=files]").prop("files");
     var parnArray = $("#addColdForm").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
         vo[item.name] = item.value;
     });
-    var flag = coldValidation(honorfiles, files, vo);
+    var flag = coldValidation(vo);
   //  vo.rdcId = id;
     if (flag) {
         var formdata = new FormData();
-        $.each(honorfiles, function (index, item) {
+        $.each(honorPicsArr, function (index, item) {
             formdata.append('honor' + index, item);
         });
-        $.each(arrangePic, function (index, item) {
+        /*$.each(arrangePic, function (index, item) {
             formdata.append('arrangePics', item.files[0]);
-        });
-        $.each(files, function (index, item) {
+        });*/
+        $.each(storagePicsArr, function (index, item) {
             formdata.append('file' + (index + 1), item);
         });
 
         formdata.append("empStr", JSON.stringify(vo));
         $.ajax({
-            url: "/i/rdc/updateRdc",
+            url: "/i/rdc/newUpdateRdc",
             data: formdata,
             processData: false,
             contentType: false,
