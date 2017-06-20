@@ -78,7 +78,7 @@ public class WarningTaskService  {
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
 			key=colditem.getId();//冷库id
 			if(Blacklist.contains(key)){continue;}if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
-		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;colditem.setBaseTemp(baseTemp);//计算基线温度
+		    baseTemp=0;//	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;colditem.setBaseTemp(baseTemp);//计算基线温度
 			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0, colditem.getDeviceid(),starttime, endtime);//获得最低温度
 			if(minTempData==null){ Blacklist.add(key);  continue;	}//故障  没数据
 			ScheduleJob job = QuartzManager.getJob(key);  long cutttTime=System.currentTimeMillis();
