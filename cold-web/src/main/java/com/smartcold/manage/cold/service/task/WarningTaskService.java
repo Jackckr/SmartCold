@@ -14,6 +14,7 @@ import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
 import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
 import com.smartcold.manage.cold.service.TempWarningService;
+import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 
@@ -24,7 +25,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-//@Service
+@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -34,6 +35,7 @@ public class WarningTaskService  {
 	private static int excute=0;
 	
     private static 	List<ColdStorageSetEntity> allMonitorTempSet=Lists.newArrayList();
+    private static 	List<Integer> Blacklist=Lists.newArrayList();
 	
 	
 	/**
@@ -43,9 +45,11 @@ public class WarningTaskService  {
 	 */
 	@Scheduled(cron = "0 10 1 * * ?")
 	public void delTempTask() {
+		Blacklist.clear();
 		QuartzManager.logs.clear();
 		QuartzManager.shutdownJobs();
 		QuartzManager.logs.add(TimeUtil.getDateTime()+" 清空任务");
+		System.err.println(TimeUtil.getDateTime()+" 清空任务");
 	}
 	
 	/**
@@ -59,24 +63,53 @@ public class WarningTaskService  {
 	public void checkData() {
 		excute++;
 		if(QuartzManager.logs.size()>100){	QuartzManager.logs.clear();}
-		QuartzManager.tempWarningServer=this.tempWarningServer;
-		QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
+		if(QuartzManager.tempWarningServer==null){
+			QuartzManager.tempWarningServer=this.tempWarningServer;
+			QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
+		}
 		Date sttime = TimeUtil.getBeforeMinute(10);
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
-		if(allMonitorTempSet.size()==0||excute>3){
+		if(allMonitorTempSet.size()==0||excute>6){
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		}
 		int key=0;float baseTemp=0;
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
-			key=colditem.getId(); baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;//基线温度
-			ItemValue maxTempData = this.tempWarningServer.getMAITempData(key, 0, colditem.getDeviceid(),starttime, endtime);//升溫后最小值
-			if(maxTempData==null){continue;	}//故障  没数据
-			ItemValue minTempData = this.tempWarningServer.getMAITempData(key, 1,colditem.getDeviceid(),TimeUtil.getDateTime(maxTempData.getAddtime()),  endtime);
-			if(minTempData==null){minTempData=maxTempData;}
-			ScheduleJob job = QuartzManager.getJob(key);
-		    double	lastminval= minTempData.getValue()-baseTemp;
-		    long cutttTime=System.currentTimeMillis();
+			key=colditem.getId();//冷库id
+			if(Blacklist.contains(key)){continue;}if(StringUtil.isnotNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
+		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;colditem.setBaseTemp(baseTemp);//计算基线温度
+			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0, colditem.getDeviceid(),starttime, endtime);//获得最低温度
+			if(minTempData==null){ Blacklist.add(key);  continue;	}//故障  没数据
+			ScheduleJob job = QuartzManager.getJob(key);  long cutttTime=System.currentTimeMillis();
+			if(minTempData.getValue()<baseTemp){
+				if(job==null){
+				   continue; //
+				 }else{
+					if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
+						  QuartzManager.removeJob(key);
+						  System.err.println(TimeUtil.getDateTime()+" 移除任务监听:"+key);
+					}
+//					else{
+//						 job.setCroStartTime(cutttTime+30000);//半分钟后执行
+//						 job.setEndTime(new Date());
+//						 job.setTask(true);
+//						 QuartzManager.upJob(key,  job);// 
+//						 QuartzManager.logs.add(TimeUtil.getDateTime()+" 更新任务:"+key);
+//						 System.err.println(TimeUtil.getDateTime()+" 半分钟后执行任务:"+key);
+//				   }
+				} 
+			}else {
+				if(job==null){
+					   continue; //
+					 }else{
+						 
+					 }
+				
+				
+			}
+			
+			
+			
 			
 		}
 	}	

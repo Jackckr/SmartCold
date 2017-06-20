@@ -19,7 +19,7 @@ public interface TempWarningMapper {
 	List<ColdStorageSetEntity> getAllMonitorTempSet();
 	//2.
 	// 获得最大/最小溫度/开始时间
-	ItemValue getMAITempData(@Param("table")String table,@Param("mv")String mv,@Param("deviceid")String deviceid, @Param("oid") Integer oid,   @Param("starttime")String starttime, @Param("endtime")String endtime);
+	ItemValue getMAITempData(@Param("table")String table,@Param("mv")String mv,@Param("deviceid")String deviceid, @Param("tids") String tids,   @Param("starttime")String starttime, @Param("endtime")String endtime);
 	//3.获得超温开始时间
 	ItemValue getOverStrtTime(@Param("table")String table,@Param("deviceid")String deviceid, @Param("oid") Integer oid,   @Param("minTemp")float minTemp,  @Param("starttime")String starttime, @Param("endtime")String endtime);
 	//4.获得超温数据进行分析

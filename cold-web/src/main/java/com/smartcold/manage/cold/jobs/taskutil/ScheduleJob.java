@@ -1,7 +1,9 @@
 package com.smartcold.manage.cold.jobs.taskutil;
 
 import java.util.Date;
+import java.util.LinkedList;
 
+import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.service.TempWarningService;
@@ -17,6 +19,7 @@ public class ScheduleJob {
 	private Long croStartTime;//任務启动时间
 	private Long addTime;
 	private int level;
+	private LinkedList<Integer> levels=Lists.newLinkedList();
 	//附加值
 	private float baseTemp ;
 	private int  warcount;//累计错误次数
@@ -47,7 +50,8 @@ public class ScheduleJob {
 		return level;
 	}
 	public void setLevel(int level) {
-		this.level = level;
+			this.level = level;
+			levels.push(level);
 	}
 	public void setOid(int oid) {
 		this.oid = oid;
@@ -87,24 +91,24 @@ public class ScheduleJob {
 	public void setWarcount(int warcount) {
 		this.warcount = warcount;
 	}
-	public double getMaxval() {
-		return maxval;
-	}
-	public void setMaxval(double maxval) {
-		if(maxval>this.maxval){
-			this.maxval = maxval;
-			this.level=(int) ((maxval-baseTemp)/2);
-		}
-	}
+//	public double getMaxval() {
+//		return maxval;
+//	}
+//	public void setMaxval(double maxval) {
+//		if(maxval>this.maxval){
+//			this.maxval = maxval;
+////			this.level=(int) ((maxval-baseTemp)/2);
+//		}
+//	}
 	
-	public double getMinval() {
-		return minval;
-	}
-	public void setMinval(double minval) {
-		if(minval<this.minval){
-			this.minval = minval;
-		}
-	}
+//	public double getMinval() {
+//		return minval;
+//	}
+//	public void setMinval(double minval) {
+//		if(minval<this.minval){
+//			this.minval = minval;
+//		}
+//	}
 	public boolean isTask() {
 		return isTask;
 	}

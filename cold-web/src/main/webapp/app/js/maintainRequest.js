@@ -123,6 +123,7 @@ coldWeb.controller('maintainRequest', function($rootScope, $scope, $state, $stat
 			$("#wx").val($scope.maintenance.repairtime.slice(0,19));
 			$("#orderTime").val($scope.maintenance.bookingtime.slice(0,19));
 			$scope.nwardata = JSON.parse($scope.maintenance.faultmapper);
+			
 			angular.forEach($scope.maintenance.servertype.split(","), function(obj, i) {
 				$("#ck_server" + obj).attr("checked", true);
 			});
