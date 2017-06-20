@@ -49,10 +49,9 @@ public class QuartzJobFactory implements Job {
 				int Lv[] = { 0, 0, 0, 0, 0 }, Tv[] = { 240,180,120,60,30 };// 各个级别出现的次数// 各个级别错误告警时间
 				ColdStorageSetEntity colditem = job.getColdStorageSetEntity();
 				QuartzManager.removeJob(key);// 清除任务
-				double basTemp = job.getBaseTemp();
-				String devid=colditem.getDeviceid();
+				double basTemp = colditem.getBaseTemp();
 				String starttime=TimeUtil.getDateTime(job.getStartTime());
-				List<ItemValue> tempList = tempWarningServer.getOverTempList(colditem.getId(), null,devid,starttime,TimeUtil.getDateTime());// 获得所有超温数据
+				List<ItemValue> tempList = tempWarningServer.getOverTempList(colditem.getTids(), null,colditem.getDeviceid(),starttime,TimeUtil.getDateTime());// 获得所有超温数据
 				if (SetUtil.isnotNullList(tempList) && tempList.size() > 5) {//过滤掉坏的数据
 					List<SysWarningsInfo> warningList = new ArrayList<SysWarningsInfo>();
 						for (ItemValue temp : tempList) {
