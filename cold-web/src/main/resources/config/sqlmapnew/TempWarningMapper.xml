@@ -16,43 +16,36 @@
 			`smartcold`.`coldstorageset` cs 
 		WHERE
 			cs.`startTemperature` != 0
-		AND cs.`tempdiff` != 0  ;
+		AND cs.`tempdiff` != 0  and cs.id=21;
 	</select>
 	
 	<select id="getMAITempData" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
 	     SELECT `id`,  `value` , <if test="table=='storagedatacollection'">`time`</if> `addtime`  FROM `${table}` where 
 	     <if test="deviceid!=null and deviceid!=''">`deviceid` in (#{deviceid}) and </if>
-	     <if test="deviceid==null or deviceid==''"> `oid` in ${tids} and </if>
+	     <if test="deviceid==null or deviceid==''"> `oid` in (${tids}) and </if>
 	      `key` ='Temp' and `addtime` >#{starttime} and `addtime` &lt;#{endtime}
 	      and `value`=(SELECT ${mv} `value`   FROM `${table}`   where
-	        <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
-	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>   `key` ='Temp' and  `addtime` >#{starttime} and `addtime` &lt;#{endtime})  LIMIT 1
+	        <if test="deviceid!=null and deviceid!=''"> `deviceid` in (#{deviceid}) and </if>
+	     <if test="deviceid==null or deviceid==''"> `oid` in (${tids}) and </if>   `key` ='Temp' and  `addtime` >#{starttime} and `addtime` &lt;#{endtime})  LIMIT 1
 	      ; 
 	</select>	
 
 	<select id="getOverStrtTime" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
 	     SELECT MIN(`id`) id, `value`  ,<if test="table=='storagedatacollection'">`time`</if> `addtime` FROM ${table} where 
-	     <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
-	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>
+	     <if test="deviceid!=null and deviceid!=''">`deviceid` in (${deviceid}) and </if>
+	     <if test="deviceid==null or deviceid==''"> `oid` in (${tids}) and </if>
 	      `value`>#{minTemp} and  `key` ='Temp'  and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
 	</select>	
 	
 	<select id="getOverTempList" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
 	     SELECT `id`,  `value` ,<if test="table=='storagedatacollection'">`time`</if> `addtime` FROM ${table} where 
-	     <if test="deviceid!=null and deviceid!=''">`deviceid` =#{deviceid} and </if>
-	     <if test="deviceid==null or deviceid==''"> `oid` = #{oid} and </if>
+	     <if test="deviceid!=null and deviceid!=''">`deviceid` in (${deviceid})  and </if>
+	     <if test="deviceid==null or deviceid==''"> `oid` in (${tids})  and </if>
 	     <if test="minTemp!=null ">  `value`>#{minTemp} and</if>
 	       `key` ='Temp'  and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
 	</select>	
 	
 	
-	<select id="getOverTempByDevId" parameterType="map" resultType="StorageKeyValue" >
-	     SELECT * FROM `storagedatacollection`  where `deviceid` =#{deviceid} and `key` ='Temp' 
-	     <if test="minvalue!=null">  and `value`   &gt;#{minvalue}</if>    
-	     <if test="maxvalue!=null">  and `value`   &lt;#{maxvalue}</if>    
-	     <if test="starttime!=null"> and `addtime` &gt;#{starttime}</if>    
-	     <if test="endtime!=null">   and `addtime` &lt;#{endtime}</if>; 
-	</select>	
 	
 	
 	

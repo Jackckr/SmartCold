@@ -97,7 +97,7 @@ public class AuthenUserController {
 			        auchedata.setType(type);
 			        auchedata.setUid(userId);
 			        auchedata.setRdcid(rdcId);
-			        auchedata.setMsg(userName+"认证冷库"+rdc.getName()+"!请及时处理！");
+			        auchedata.setMsg("360:"+userName+"认证冷库"+rdc.getName()+"!请及时处理！");
 			        if(authfile!=null){
 			         auchedata.setImgurl(dir + File.separator + fileName);
 			        }

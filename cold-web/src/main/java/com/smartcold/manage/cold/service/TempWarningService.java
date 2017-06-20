@@ -21,8 +21,8 @@ public interface TempWarningService {
 	//2.获得最大温度dev
 	ItemValue getMAITempData(String tids,int typpe,String deviceid,String starttime,String endtime);
 	//3.超温后获得超温时间
-	ItemValue getOverStrtTime(int oid,float mintemp, String deviceid,String starttime,String endtime);
+	ItemValue getOverStrtTime(String tids,float mintemp, String deviceid,String starttime,String endtime);
 	
-	List<ItemValue> getOverTempList(int oid,Float mintemp, String deviceid,String starttime,String endtime);
+	List<ItemValue> getOverTempList(String tids,Float mintemp, String deviceid,String starttime,String endtime);
 		
 }

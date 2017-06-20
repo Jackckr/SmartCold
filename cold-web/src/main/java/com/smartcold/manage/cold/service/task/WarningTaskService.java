@@ -59,6 +59,7 @@ public class WarningTaskService  {
 	 * 定时定点监听
 	 * 1.查询当前冷库的基准温度，计算max min 临界值时间温度 
 	*/
+//	@Scheduled(cron = "0 0/10 * * * ?")
 	@Scheduled(cron = "0 0/10 * * * ?")
 	public void checkData() {
 		excute++;
@@ -76,7 +77,7 @@ public class WarningTaskService  {
 		int key=0;float baseTemp=0;
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
 			key=colditem.getId();//冷库id
-			if(Blacklist.contains(key)){continue;}if(StringUtil.isnotNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
+			if(Blacklist.contains(key)){continue;}if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
 		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;colditem.setBaseTemp(baseTemp);//计算基线温度
 			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0, colditem.getDeviceid(),starttime, endtime);//获得最低温度
 			if(minTempData==null){ Blacklist.add(key);  continue;	}//故障  没数据
@@ -84,33 +85,44 @@ public class WarningTaskService  {
 			if(minTempData.getValue()<baseTemp){
 				if(job==null){
 				   continue; //
-				 }else{
-					if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
+				 }else	if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
 						  QuartzManager.removeJob(key);
 						  System.err.println(TimeUtil.getDateTime()+" 移除任务监听:"+key);
-					}
-//					else{
-//						 job.setCroStartTime(cutttTime+30000);//半分钟后执行
-//						 job.setEndTime(new Date());
-//						 job.setTask(true);
-//						 QuartzManager.upJob(key,  job);// 
-//						 QuartzManager.logs.add(TimeUtil.getDateTime()+" 更新任务:"+key);
-//						 System.err.println(TimeUtil.getDateTime()+" 半分钟后执行任务:"+key);
-//				   }
-				} 
+				}else{
+					System.err.println("进入未知逻辑");
+				}
 			}else {
+				int lavel = (int) Math.rint(minTempData.getValue()- baseTemp+0.5 )/ 2;
+				if(lavel>5){lavel=5;}//判断当前冷库超温级别
 				if(job==null){
-					   continue; //
-					 }else{
-						 
+					 ItemValue  overStrtTime = this.tempWarningServer.getOverStrtTime(colditem.getTids(), baseTemp, colditem.getDeviceid(), starttime, endtime);
+					 if(overStrtTime==null){continue; }else{
+						  long croStartTime=cutttTime+(lavel>4 ?1800000:14400000);//30分钟后执行 ：4个小时后执行
+						  String jobName=croStartTime+"_job";//延迟一个小时执行
+						   job = new ScheduleJob(key,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);
+						   job.setStartTime(overStrtTime.getAddtime());
+						   job.setTask(false);
+						   job.setWarcount(1);
+						   job.setLevel(lavel);
+						   job.setColdStorageSetEntity(colditem);
+		           		   QuartzManager.addJob(key,  job);// 
+		           	       QuartzManager.logs.add(TimeUtil.getDateTime()+" 添加任务："+key); 
+		           	       System.err.println(TimeUtil.getDateTime()+" 添加任务："+key); 
 					 }
-				
-				
+				 }else{
+					 job.setLevel(lavel);
+				     job.setWarcount(job.getWarcount()+1);
+					 job.setEndTime(new Date());
+					 long downMint = TimeUtil.getDownMint(job.getCroStartTime());
+					 if((downMint<0||job.getLevel()==5&&job.getWarcount()>=3)||(job.getLevel()==4&&job.getWarcount()>=6)||(job.getLevel()==3&&job.getWarcount()>=12)||(job.getLevel()==2&&job.getWarcount()>=18)||(job.getLevel()==1&&job.getWarcount()>=24)){
+						 job.setTask(true);
+						 job.setCroStartTime(cutttTime+30000);//半分钟后执行
+					 }
+		    		 QuartzManager.upJob(key, job);
+		    		 QuartzManager.logs.add(TimeUtil.getDateTime()+" 更新任务"+key+"剩余时间："+downMint);
+		    		 System.err.println(TimeUtil.getDateTime()+" 更新任务"+key+"剩余时间："+downMint);
+				 }
 			}
-			
-			
-			
-			
 		}
 	}	
 }
