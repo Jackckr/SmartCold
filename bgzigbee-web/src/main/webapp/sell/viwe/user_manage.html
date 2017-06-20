@@ -19,15 +19,13 @@
  <body id="maindiv" >
       <table id="objTable" class="fill"></table>
     
-    <div class="none">
-	    <div id="user_filter" style="padding:5px 0;">
-	               
-			
+    <div style="display: none;">
+	    <div id="user_filter" class="clearfix" style="padding:5px 0;">
 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_add'" onclick="adduser();">添加</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_edit'" onclick="edituser()">编辑</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'user_del'" onclick="deleteUsers()">删除</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="reloaddata()">刷新</a>
-	        <div style="display: -webkit-inline-box; float: right;">
+	        <div style="display: inline-block; float: right;">
 	           <div id="div_st_filter">
 			                           类型: 
 					<select id="sel_user_type" class="easyui-combobox" panelHeight="auto" style="width:120px" >

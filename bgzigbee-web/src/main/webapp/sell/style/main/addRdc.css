@@ -6,6 +6,10 @@
     border-radius: 4px;
     height: 30px;
     line-height: 30px;
+    background-color: #00a7d0;
+    color: #fff;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 }
 #coldButton:hover{
     background-color: #00a7d0;

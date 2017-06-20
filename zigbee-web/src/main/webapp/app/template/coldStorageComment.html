@@ -1,3 +1,12 @@
+<style>
+    .numobj>span{
+        width: 100px;
+        text-align: right;
+        display: inline-block;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+</style>
 <div>
     <section>
         <div class="row" style="height: 75px;width: 100%"></div>
@@ -137,10 +146,12 @@
                                             <td>冷库容积</td>
                                             <td>
                                                 <ul>
-                                                    <li>
-                                                        12度至25度:{{capacity1 * height1}}立方米&nbsp;&nbsp;&nbsp;12度至-2度:{{capacity2 * height2}}立方米&nbsp;&nbsp;&nbsp;
-                                                        -15度至-22度:{{capacity3 * height3}}立方米&nbsp;&nbsp;&nbsp;
-                                                        -22至-30度:{{capacity4 * height4}}立方米&nbsp;&nbsp;&nbsp;-30度以下:{{capacity5 * height5}}立方米
+                                                    <li style="line-height: 20px;">
+                                                        <p class="numobj"><span>12&nbsp;~&nbsp;25℃：</span>{{capacity1 * height1}}m³</p>
+                                                        <p class="numobj"><span>-2&nbsp;~&nbsp;12℃：</span>{{capacity2 * height2}}m³</p>
+                                                        <p class="numobj"><span>-22&nbsp;~&nbsp;-15℃：</span>{{capacity3 * height3}}m³</p>
+                                                        <p class="numobj"><span>-30&nbsp;~&nbsp;-22℃：</span>{{capacity4 * height4}}m³</p>
+                                                        <p class="numobj"><span><-30℃：</span>{{capacity5 * height5}}m³</p>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -277,9 +288,11 @@
                                             <td>冷藏车数量</td>
                                             <td>
                                                 <ul>
-                                                    <li>
-                                                        ●＜1.8T:{{coldTruck1}}辆&nbsp;&nbsp;&nbsp;●1.8～6T:{{coldTruck2}}辆&nbsp;&nbsp;&nbsp;●6～14T:{{coldTruck3}}辆&nbsp;&nbsp;&nbsp;●＞14T:{{coldTruck4}}辆
-
+                                                    <li style="line-height: 20px;">
+                                                        <p class="numobj"><span>＜1.8T:</span>{{coldTruck1}}辆</p>
+                                                        <p class="numobj"><span>1.8&nbsp;～&nbsp;6T:</span>{{coldTruck2}}辆</p>
+                                                        <p class="numobj"><span>6&nbsp;～&nbsp;14T:</span>{{coldTruck3}}辆</p>
+                                                        <p class="numobj"><span>＞14T:</span>{{coldTruck4}}辆</p>
                                                     </li>
                                                 </ul>
                                             </td>
