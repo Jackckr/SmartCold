@@ -15,6 +15,127 @@
     <script type="text/javascript" src="com/js/TouchSlide.1.1.source.js"></script>
     <script type="text/javascript" src="com/js/common.js?as=13"></script>
     <script src="bower_components/angular/angular.min.js"></script>
+	<style>
+		.ring{
+			position: fixed;
+			top:60px;
+			left: 50%;
+			z-index:99999999;
+			margin-left: -75px;
+			width: 150px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			border-radius: 3px;
+			color: #555;
+			cursor: pointer;
+			background-color: #f4f4f4;
+		}
+		.ring i{
+			color: #f99852;
+			font-size: 20px;
+			-webkit-animation:oroll 3s infinite ease-in-out;
+			-moz-animation:oroll 3s infinite ease-in-out;
+			-ms-animation:oroll 3s infinite ease-in-out;
+			animation:oroll 3s infinite ease-in-out;
+		}
+		@keyframes oroll {
+			0%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+			25%{
+				-webkit-transform: rotateZ(135deg);
+				-moz-transform: rotateZ(135deg);
+				-ms-transform: rotateZ(135deg);
+				transform: rotateZ(135deg);
+			}
+			50%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+			75%{
+				-webkit-transform: rotateZ(45deg);
+				-moz-transform: rotateZ(45deg);
+				-ms-transform: rotateZ(45deg);
+				transform: rotateZ(45deg);
+			}
+			100%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+		}
+		@-webkit-keyframes oroll {
+			0%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+			25%{
+				-webkit-transform: rotateZ(135deg);
+				-moz-transform: rotateZ(135deg);
+				-ms-transform: rotateZ(135deg);
+				transform: rotateZ(135deg);
+			}
+			50%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+			75%{
+				-webkit-transform: rotateZ(45deg);
+				-moz-transform: rotateZ(45deg);
+				-ms-transform: rotateZ(45deg);
+				transform: rotateZ(45deg);
+			}
+			100%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+		}
+		@-moz-keyframes oroll {
+			0%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+			25%{
+				-webkit-transform: rotateZ(135deg);
+				-moz-transform: rotateZ(135deg);
+				-ms-transform: rotateZ(135deg);
+				transform: rotateZ(135deg);
+			}
+			50%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+			75%{
+				-webkit-transform: rotateZ(45deg);
+				-moz-transform: rotateZ(45deg);
+				-ms-transform: rotateZ(45deg);
+				transform: rotateZ(45deg);
+			}
+			100%{
+				-webkit-transform: rotateZ(90deg);
+				-moz-transform: rotateZ(90deg);
+				-ms-transform: rotateZ(90deg);
+				transform: rotateZ(90deg);
+			}
+		}
+	</style>
 </head>
 <body >
 <!-- header -->
@@ -170,6 +291,10 @@
             </a>
         </li>
     </ul>
+	<div class="ring">
+		<i class="iconfont">&#xe6f0;</i>
+		<span>21</span>
+	</div>
 </div>   
 <div hidden="true" id="allmap"></div> 
 <!-- footer end-->
