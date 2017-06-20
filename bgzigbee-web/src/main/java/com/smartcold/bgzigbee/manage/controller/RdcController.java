@@ -426,23 +426,25 @@ public class RdcController {
 	public Object newUpdate(HttpServletRequest request, @RequestParam(required = false) MultipartFile file0,
 						 @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 						 @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-						 @RequestParam(required = false) MultipartFile arrangePics, RdcAddDTO rdcAddDTO,
 						 @RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
 						 @RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
 						 @RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
-						 @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7
-			, String empStr)
-			throws Exception {
+						 @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7,
+							RdcAddDTO rdcAddDTO, String empStr,String ids) throws Exception {
 		if (!StringUtils.isEmpty(empStr)) {
 			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
 		}
+
 		MultipartFile[] files = { file4, file3, file2, file1, file0 };
 		MultipartFile[] honorfiles = { honor7, honor6, honor5, honor4, honor3, honor2, honor1, honor0 };
-		MultipartFile arrangePic = arrangePics;
+		if(!StringUtils.isEmpty(ids)){
+			String[] delIds=ids.split(",");
+			for (String delId:delIds){
+				fileDataDao.deleteById(Integer.parseInt(delId));
+			}
+		}
 
 		int rdcId = rdcAddDTO.getRdcId();
-		fileDataDao.deleteByBelongIdAndCategory(rdcId,FileDataMapper.CATEGORY_STORAGE_PIC);
-		fileDataDao.deleteByBelongIdAndCategory(rdcId,FileDataMapper.CATEGORY_HONOR_PIC);
 		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
 
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
@@ -525,15 +527,6 @@ public class RdcController {
 		}
 		if (!honorFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(honorFiles);
-		}
-		// save arrangePic
-		if (arrangePic != null) {
-			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
-			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
-			ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
-					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
-			fileDataDao.saveFileData(arrangeFile);
 		}
 		if (haveRdcExt)
 			rdcExtDao.updateRdcExt(rdcExtEntity);

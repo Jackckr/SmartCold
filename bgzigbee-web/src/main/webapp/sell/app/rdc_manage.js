@@ -4,6 +4,7 @@ var honorPicsArr=[];
 var storagePicsArr=[];
 var honorOriginalLength=0;
 var storageOriginalLength=0;
+var ids="";
 
 var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
@@ -64,10 +65,10 @@ function showSelectPic() {
     var honorPicImg="";
     var filesImg="";
     for(var i=0;i<honorOriginalLength;i++){
-        honorPicImg+="<div class='imgBox'><img onclick='showimg(this,\""+honorPicsArr[i].location+"\")' src='"+honorPicsArr[i].location+"'><i class='imgClose' onclick='deleteImg("+i+",1)'>&times;</i></div>";
+        honorPicImg+="<div class='imgBox'><img onclick='showimg(this,\""+honorPicsArr[i].location+"\")' src='"+honorPicsArr[i].location+"'><i class='imgClose' onclick='deleteImg("+i+",1,"+honorPicsArr[i].id+")'>&times;</i></div>";
     }
     for(var j=0;j<storageOriginalLength;j++){
-        filesImg+="<div class='imgBox'><img onclick='showimg(this,\""+storagePicsArr[j].location+"\")' src='"+storagePicsArr[j].location+"'><i class='imgClose' onclick='deleteImg("+j+",2)'>&times;</i></div>";
+        filesImg+="<div class='imgBox'><img onclick='showimg(this,\""+storagePicsArr[j].location+"\")' src='"+storagePicsArr[j].location+"'><i class='imgClose' onclick='deleteImg("+j+",2,"+storagePicsArr[j].id+")'>&times;</i></div>";
     }
     if(honorPicsArr.length!=honorOriginalLength){
         for(var i=honorPicsArr.length-1;i>=honorOriginalLength;i--){
@@ -98,10 +99,11 @@ function picChange(e,flag) {
     showSelectPic();
 }
 /*图片删除*/
-function deleteImg(index,flag){
+function deleteImg(index,flag,delId){
     flag==1?honorPicsArr.splice(index,1):storagePicsArr.splice(index,1);
     if(index<honorOriginalLength && flag==1) { honorOriginalLength--;};
     if(index<storageOriginalLength && flag==2) { storageOriginalLength--;};
+    if(delId){ids+=delId+",";}
     showSelectPic();
 }
 /*冷库修改*/
@@ -271,7 +273,7 @@ function addColdSubmit() {
             formdata.append('arrangePics', item.files[0]);
         });*/
         $.each(storagePicsArr, function (index, item) {
-            formdata.append('file' + (index + 1), item);
+            formdata.append('file' + index, item);
         });
 
         formdata.append("empStr", JSON.stringify(vo));
@@ -304,16 +306,22 @@ function doUpdateCold() {
     if (flag) {
         var formdata = new FormData();
         $.each(honorPicsArr, function (index, item) {
-            formdata.append('honor' + index, item);
+            if(honorOriginalLength<=index){
+                formdata.append('honor' + index, item);
+            }
         });
         /*$.each(arrangePic, function (index, item) {
             formdata.append('arrangePics', item.files[0]);
         });*/
         $.each(storagePicsArr, function (index, item) {
-            formdata.append('file' + (index + 1), item);
+            if(storageOriginalLength<=index){
+                formdata.append('file'+index, item);
+            }
         });
 
         formdata.append("empStr", JSON.stringify(vo));
+        formdata.append("ids",ids.substring(0,ids.length-1));
+        ids="";
         $.ajax({
             url: "/i/rdc/newUpdateRdc",
             data: formdata,
