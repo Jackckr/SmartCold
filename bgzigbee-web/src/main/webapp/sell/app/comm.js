@@ -25,6 +25,7 @@ var tool={
 
 
 function alert_infomsg(msg){ $.messager.alert('提示', msg, 'info');}
+function alert_errmsg(msg){ $.messager.alert('错误', msg, 'error');}
 function msgShow(title, msgString, msgType) { $.messager.alert(title, msgString, msgType);}
 function initTree(url,onSelect){objtree=$('#objtree').tree({url:url,method:'post',animate:true,lines:true, onSelect:onSelect});};
 function reloaddata(){ objTable.datagrid("reload");};

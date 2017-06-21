@@ -262,7 +262,7 @@ ul,li {
 	border-radius: 3px;
 }
 .alarm_bg{
-	width: 0px;
+	width: 270px;
 	height: 100px;
 	background: url(../../assets/img/alarm.png);
 	background-size: cover;
@@ -272,7 +272,7 @@ ul,li {
 
 .remain{
 	display: inline-block;
-	width: 0px;
+	width:270px;
 	line-height: 120px;
 	height: 120px;
 	text-align: center;

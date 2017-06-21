@@ -92,9 +92,9 @@ function picChange(e,flag) {
     var files = e.files;
     for(var i=0;i<files.length;i++){
         if (!rFilter.test(files[i].type)) {
-            alert("格式错误~请选择格式为" + msg + "的图片~"); return;
+        	alert_errmsg("格式错误~请选择格式为" + msg + "的图片~"); return;
         }else if(files[i].size > 10485760){
-            alert("最大只能上传10M的图片"); return;
+        	alert_errmsg("最大只能上传10M的图片"); return;
         }
         flag==1?honorPicsArr.push(files[i]):storagePicsArr.push(files[i]);
     }
@@ -223,26 +223,26 @@ var addRdcFlag = true;
 /*提交冷库验证方法*/
 function coldValidation(vo) {
     if (!addRdcFlag) {
-        alert("冷库名已存在!请更换!");
+    	alert_errmsg("冷库名已存在!");
         return false;
     }
     if (honorPicsArr.length > 8) {
-        alert("资质荣誉图,最多上传八张图片");
+    	alert_errmsg("资质荣誉图,最多上传八张图片");
         return false;
     }
     if (storagePicsArr.length > 5) {
-        alert("冷库图片,最多上传五张图片");
+    	alert_errmsg("冷库图片,最多上传五张图片");
         return false;
     }
     if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.area.trim() == ""
         || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == "") {
-        alert("请完善冷库信息！");
+    	alert_errmsg("请完善冷库信息！");
         return false;
     }
     var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,10}$/;
     var countRex = /^[0-9]\d*$/;
     if (!areaRex.test(vo.area)) {
-        alert("面积输入有误！");
+    	alert_errmsg("面积输入有误！");
         return false;
     }
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||
@@ -250,21 +250,21 @@ function coldValidation(vo) {
         vo.capacity5 != "" && !areaRex.test(vo.capacity5) || vo.height1 != "" && !areaRex.test(vo.height1) ||
         vo.height2 != "" && !areaRex.test(vo.height2) || vo.height3 != "" && !areaRex.test(vo.height3) ||
         vo.height4 != "" && !areaRex.test(vo.height4) || vo.height5 != "" && !areaRex.test(vo.height5)) {
-        alert("冷库容积输入有误！");
+    	alert_errmsg("冷库容积输入有误！");
         return false;
     }
     if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
         vo.coldTruck3 != "" && !countRex.test(vo.coldTruck3) || vo.coldTruck4 != "" && !countRex.test(vo.coldTruck4)) {
-        alert("冷藏车数量输入有误！");
+    	alert_errmsg("冷藏车数量输入有误！");
         return false;
     }
     if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
-        alert("理货区面积输入有误！");
+    	alert_errmsg("理货区面积输入有误！");
         return false;
     }
     var phoneNumRex = /^1[34578]\d{9}$/;
     if (!phoneNumRex.test(vo.phoneNum)) {
-        alert("联系电话输入有误！");
+    	alert_errmsg("联系电话输入有误！");
         return false;
     }
     return true;
@@ -274,13 +274,13 @@ function addColdSubmit() {
     //var honorfiles = $("input[name=honorfiles]").prop("files");
     //var arrangePic = $("input[name=arrangePic]");
     //var files = $("input[name=files]").prop("files");
+    $('#coldButton').linkbutton('disable');
     var parnArray = $("#addColdForm").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
         vo[item.name] = item.value;
     });
     var flag = coldValidation(vo);
-    $('#coldButton').linkbutton('disable');
     if (flag) {
         var formdata = new FormData();
         $.each(honorPicsArr, function (index, item) {
@@ -301,8 +301,8 @@ function addColdSubmit() {
             contentType: false,
             type: 'POST',
             success: function (data) {
-                alert("添加成功！");
                 $('#coldButton').linkbutton('enable');
+            	alert_infomsg("添加成功！");
                 $('#addCold').dialog('close');
                 reloaddata();
             }
@@ -350,8 +350,8 @@ function doUpdateCold() {
             contentType: false,
             type: 'POST',
             success: function (data) {
-                alert("修改成功！");
                 $('#coldButton').linkbutton('enable');
+            	alert_infomsg("修改成功！");
                 $('#addCold').dialog('close');
                 reloaddata();
             }
