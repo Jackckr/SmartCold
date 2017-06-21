@@ -148,7 +148,8 @@ public class UserController extends BaseController {
 				user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 				userDao.insertUser(user);
 			}else{
-				//
+				//修改
+				user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 				userDao.updateUser(user);
 			}
 			return new BaseDto(0);
