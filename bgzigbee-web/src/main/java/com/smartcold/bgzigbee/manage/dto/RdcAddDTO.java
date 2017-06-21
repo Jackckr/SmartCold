@@ -48,7 +48,7 @@ public class RdcAddDTO {
 
 	private int lihuoRoom;
 
-	private int lihuoArea;
+	private float lihuoArea;
 
 	private int lihuoTemperCtr;
 
@@ -56,16 +56,16 @@ public class RdcAddDTO {
 
 	private int temperRecord;
 
-	private int capacity1;//冷库容积-面积
-	private int capacity2;
-	private int capacity3;
-	private int capacity4;
-	private int capacity5;
-	private int height1;//冷库容积-面积
-	private int height2;
-	private int height3;
-	private int height4;
-	private int height5;
+	private float capacity1;//冷库容积-面积
+	private float capacity2;
+	private float capacity3;
+	private float capacity4;
+	private float capacity5;
+	private float height1;//冷库容积-面积
+	private float height2;
+	private float height3;
+	private float height4;
+	private float height5;
 
 	private String facility;
 
@@ -97,43 +97,43 @@ public class RdcAddDTO {
 
 	private List<RdcAuthDTO> authPics;
 
-	public int getHeight1() {
+	public float getHeight1() {
 		return height1;
 	}
 
-	public void setHeight1(int height1) {
+	public void setHeight1(float height1) {
 		this.height1 = height1;
 	}
 
-	public int getHeight2() {
+	public float getHeight2() {
 		return height2;
 	}
 
-	public void setHeight2(int height2) {
+	public void setHeight2(float height2) {
 		this.height2 = height2;
 	}
 
-	public int getHeight3() {
+	public float getHeight3() {
 		return height3;
 	}
 
-	public void setHeight3(int height3) {
+	public void setHeight3(float height3) {
 		this.height3 = height3;
 	}
 
-	public int getHeight4() {
+	public float getHeight4() {
 		return height4;
 	}
 
-	public void setHeight4(int height4) {
+	public void setHeight4(float height4) {
 		this.height4 = height4;
 	}
 
-	public int getHeight5() {
+	public float getHeight5() {
 		return height5;
 	}
 
-	public void setHeight5(int height5) {
+	public void setHeight5(float height5) {
 		this.height5 = height5;
 	}
 
@@ -330,11 +330,11 @@ public class RdcAddDTO {
 		this.lihuoRoom = lihuoRoom;
 	}
 
-	public int getLihuoArea() {
+	public float getLihuoArea() {
 		return lihuoArea;
 	}
 
-	public void setLihuoArea(int lihuoArea) {
+	public void setLihuoArea(float lihuoArea) {
 		this.lihuoArea = lihuoArea;
 	}
 
@@ -362,43 +362,43 @@ public class RdcAddDTO {
 		this.temperRecord = temperRecord;
 	}
 
-	public int getCapacity1() {
+	public float getCapacity1() {
 		return capacity1;
 	}
 
-	public void setCapacity1(int capacity1) {
+	public void setCapacity1(float capacity1) {
 		this.capacity1 = capacity1;
 	}
 
-	public int getCapacity2() {
+	public float getCapacity2() {
 		return capacity2;
 	}
 
-	public void setCapacity2(int capacity2) {
+	public void setCapacity2(float capacity2) {
 		this.capacity2 = capacity2;
 	}
 
-	public int getCapacity3() {
+	public float getCapacity3() {
 		return capacity3;
 	}
 
-	public void setCapacity3(int capacity3) {
+	public void setCapacity3(float capacity3) {
 		this.capacity3 = capacity3;
 	}
 
-	public int getCapacity4() {
+	public float getCapacity4() {
 		return capacity4;
 	}
 
-	public void setCapacity4(int capacity4) {
+	public void setCapacity4(float capacity4) {
 		this.capacity4 = capacity4;
 	}
 
-	public int getCapacity5() {
+	public float getCapacity5() {
 		return capacity5;
 	}
 
-	public void setCapacity5(int capacity5) {
+	public void setCapacity5(float capacity5) {
 		this.capacity5 = capacity5;
 	}
 

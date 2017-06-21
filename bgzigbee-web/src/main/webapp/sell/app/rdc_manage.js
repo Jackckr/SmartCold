@@ -239,10 +239,10 @@ function coldValidation(vo) {
     	alert_errmsg("请完善冷库信息！");
         return false;
     }
-    var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,10}$/;
+    var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
     var countRex = /^[0-9]\d*$/;
     if (!areaRex.test(vo.area)) {
-    	alert_errmsg("面积输入有误！");
+    	alert_errmsg("面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||
@@ -250,7 +250,7 @@ function coldValidation(vo) {
         vo.capacity5 != "" && !areaRex.test(vo.capacity5) || vo.height1 != "" && !areaRex.test(vo.height1) ||
         vo.height2 != "" && !areaRex.test(vo.height2) || vo.height3 != "" && !areaRex.test(vo.height3) ||
         vo.height4 != "" && !areaRex.test(vo.height4) || vo.height5 != "" && !areaRex.test(vo.height5)) {
-    	alert_errmsg("冷库容积输入有误！");
+    	alert_errmsg("冷库容积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
     if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
@@ -259,7 +259,7 @@ function coldValidation(vo) {
         return false;
     }
     if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
-    	alert_errmsg("理货区面积输入有误！");
+    	alert_errmsg("理货区面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
     var phoneNumRex = /^1[34578]\d{9}$/;
