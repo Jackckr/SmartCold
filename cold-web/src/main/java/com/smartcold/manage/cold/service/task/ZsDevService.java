@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -20,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
@@ -38,7 +35,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 数据存在重复（准备处理）
  * 
  **/
-@Service
+//@Service
 public class ZsDevService  {
 	
 	
