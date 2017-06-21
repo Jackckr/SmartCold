@@ -114,7 +114,7 @@ function refresh() {
     $('#fddata').searchbox('setValue', '');
     queryParams.keyword="";
     $("#sel_audit").combobox({value:"8"});
-    queryParams.type="";
+    queryParams.audit="";
     reloaddata();
 }
 
