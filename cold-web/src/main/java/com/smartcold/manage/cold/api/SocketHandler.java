@@ -24,7 +24,7 @@ import com.smartcold.manage.cold.util.socket.entity.APInfo;
 import com.smartcold.manage.cold.util.socket.entity.DevStateInfo;
 
 /**
- * 沈阳设备数据 
+ * 沈阳设备数据  
  * @author Administrator
  *
  */

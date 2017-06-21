@@ -39,9 +39,9 @@ coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams
                     freeCnt = freeCnt + 1;
                 }
             }
-            $scope.coldCnt = coldCnt;
-            $scope.defrostCnt = defrostCnt;
-            $scope.freeCnt = freeCnt;
+            $scope.coldCnt = coldCnt;//制冷
+            $scope.defrostCnt = defrostCnt;//化霜
+            $scope.freeCnt = freeCnt;//待机
         })
     }
     $scope.load();

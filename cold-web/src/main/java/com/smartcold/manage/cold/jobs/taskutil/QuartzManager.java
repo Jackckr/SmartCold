@@ -235,7 +235,7 @@ public class QuartzManager {
 		return QuartzManager.tempListen.get(key);
 	}
     
-    public static void upJob(int key,ScheduleJob job){
+    public static synchronized void upJob(int key,ScheduleJob job){
     	QuartzManager.tempListen.remove(key);
     	QuartzManager.tempListen.put(key, job);
     	if(job.isTask()){
@@ -262,6 +262,7 @@ public class QuartzManager {
 	 * @param oid
 	 */
 	public static synchronized void removeJob(int key){
+		logs.add("异常任务："+key);
 		if(QuartzManager.tempListen.containsKey(key)){
 			ScheduleJob job = QuartzManager.tempListen.get(key);
 			if(job.isTask()){//如果是任务 删除定时任务

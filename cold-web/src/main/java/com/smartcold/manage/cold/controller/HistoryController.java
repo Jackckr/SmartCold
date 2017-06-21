@@ -141,7 +141,7 @@ public class HistoryController extends BaseController {
 					Date sttime = TimeUtil.dateFormat.parse(startTime);
 					Date edTime = TimeUtil.dateFormat.parse(endTime);
 					int daysBetween = TimeUtil.daysBetween(sttime, edTime);
-					if(daysBetween>4){return ResponseData.newFailure("时间范围最大为3天~"); }
+					if(daysBetween>90){return ResponseData.newFailure("时间范围最大为3个月~"); }
 					HashMap<String, Object> restData = new HashMap<String, Object>();
 					LinkedList<HashMap<String, Object>> restList = new LinkedList<HashMap<String, Object>>();
 					LinkedList<List<StorageKeyValue>> xtemp = new LinkedList<List<StorageKeyValue>>();

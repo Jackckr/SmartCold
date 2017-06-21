@@ -27,25 +27,25 @@
 						  <span><span class="form-control sl_group_obj" ng-click='slgroupsl()'>{{sltit}}</span><i class="sl_drop" ng-click='slgroupsl()'>▼</i></span>
 						  <div id="filter_div" class="pull-left sl_drop_data" ng-show="showobjgroup">
 						     <ul id="ul_key_list" class="ul_key_list">
-						       <li  kval="0"  ng-click="showkeyli($event)" class="select">冷库温度</li>
-						       <li  kval="1"  ng-click="showkeyli($event)">冷库电量</li>
-						       <li  kval="2"  ng-click="showkeyli($event)">冷　库　门</li>
-						       <li  kval="3"  ng-click="showkeyli($event)">月　台　门</li>
-						       <li  kval="4"  ng-click="showkeyli($event)">压缩 机组</li>
-						       <li  kval="5"  ng-click="showkeyli($event)">压缩 机-排气温度</li>
+						       <li ng-disabled="!aclmap[10]" style="{{aclmap[10]?'':'background-color: #cccccc; color: #eee; cursor: default;'}}"  disid="{{aclmap[10]}}" kval="0"  ng-click="showkeyli($event)" class="select">冷库温度</li>
+						       <li ng-disabled="!aclmap[21]" style="{{aclmap[21]?'':'background-color: #cccccc; color: #eee; cursor: default;'}}"  disid="{{aclmap[21]}}" kval="1"  ng-click="showkeyli($event)">冷库电量</li>
+						       <li ng-disabled="!aclmap[31]" style="{{aclmap[31]?'':'background-color: #cccccc; color: #eee; cursor: default;'}}"  disid="{{aclmap[31]}}" kval="2"  ng-click="showkeyli($event)">冷　库　门</li>
+						       <li ng-disabled="!aclmap[32]" style="{{aclmap[32]?'':'background-color: #cccccc; color: #eee; cursor: default;'}}"  disid="{{aclmap[32]}}" kval="3"  ng-click="showkeyli($event)">月　台　门</li>
+						       <li ng-disabled="!aclmap[61]" style="{{aclmap[61]?'':'background-color: #cccccc; color: #eee; cursor: default;'}}"  disid="{{aclmap[61]}}" kval="4"  ng-click="showkeyli($event)">压缩 机组</li>
+						       <li ng-disabled="!aclmap[61]" style="{{aclmap[61]?'':'background-color: #cccccc; color: #eee; cursor: default;'}}"  disid="{{aclmap[61]}}" kval="5"  ng-click="showkeyli($event)">压缩 机-排气温度</li>
 						     </ul>
 						     <div id="val_list_div">
 					            <ul id="Temp_ul_0" > <!-- 	初始化冷库 -->
-						          <li ng-repeat="obj in coldstorageTemp" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						          <li ng-repeat="obj in coldstorageTemp" oid="{{obj.id}}" ng-click="selkeyvl($event)" >{{obj.name}}</li>
 						        </ul>
 					            <ul id="Temp_ul_1"   class="hide"><!--  初始化电量 -->
-						          <li ng-repeat="obj in powers"     oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						          <li ng-repeat="obj in powers"     oid="{{obj.id}}" ng-click="selkeyvl($event)" >{{obj.name}}</li>
 						        </ul>
 					            <ul id="Temp_ul_2"   class="hide"><!--  冷库门 -->
-						          <li ng-repeat="obj in coldstoragedoor"     oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{prove[obj.coldStorageId]+"-"+obj.name}}</li>
+						          <li ng-repeat="obj in coldstoragedoor"     oid="{{obj.id}}" ng-click="selkeyvl($event)" >{{prove[obj.coldStorageId]+"-"+obj.name}}</li>
 						        </ul>
 						        <ul id="Temp_ul_3"   class="hide"> <!-- 初始化月台门 -->
-						          <li ng-repeat="obj in platformDoors" oid="{{obj.id}}"  ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						          <li ng-repeat="obj in platformDoors" oid="{{obj.id}}"  ng-click="selkeyvl($event)" >{{obj.name}}</li>
 						       </ul>
 						       <ul id="Temp_ul_4"  class="hide"> <!-- 初始化压缩机组-->
 							         <div>
@@ -53,14 +53,14 @@
 										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('lowPress','低压' ,'kPa')">低压</label>
 										    <label class="checkbox-inline"><input type="radio" name="cmsbkey" ng-click="chPress('liquidLevel','液位','mm' )">液位</label>
 							        </div>
-						           <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" class="select">{{obj.name}}</li>
+						           <li ng-repeat="obj in compressorGroups" oid="{{obj.id}}" ng-click="selkeyvl($event)" >{{obj.name}}</li>
 						       </ul>
 						       <ul id="Temp_ul_5" class="hide" key="exTemp"> <!-- 初始化压缩机-->
 							        <div>
 										   <label class="checkbox-inline" ng-repeat="obj in compressorGroups"><input type="radio"  name="cmptkey" value="{{obj.id}}"  ng-click="chexTemp($event)">{{obj.name}}</label>
 							        </div>
 							        <span  ng-repeat="(key,value) in  compressorGroups" id="Temp_ul_5_key_span_{{value.id}}" class="hide"> 
-						                <li ng-repeat="obj in  value.compressors"  ng-click="selkeyvl($event)" oid="{{obj.id}}"  class="select">{{obj.name}}</li>
+						                <li ng-repeat="obj in  value.compressors"  ng-click="selkeyvl($event)" oid="{{obj.id}}"  >{{obj.name}}</li>
                 					</span> 
 						       </ul>
 						     </div>

@@ -1,14 +1,8 @@
 package com.smartcold.manage.cold.jobs.taskutil;
 
 import java.util.Date;
-import java.util.LinkedList;
 
-import com.google.common.collect.Lists;
-import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
-import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
-import com.smartcold.manage.cold.service.TempWarningService;
-import com.smartcold.manage.cold.util.TimeUtil;
 /*
  * Copyright (C) DCIS 版权所有
  * 功能描述: QuartzJobFactory 
@@ -21,13 +15,11 @@ public class ScheduleJob {
 	private Long croStartTime;//任務启动时间
 	private Long addTime;
 	private int level;
-//	private int oldelev;
-//	private int Lv[] = { 0, 0, 0, 0, 0 };
 	//附加值
 	private int  warcount;//累计超温次数
     private boolean isTask;
     private Date startTime;//起始报警开始时间
-    private Date endTime;//结束报警时间
+//    private Date endTime;//结束报警时间
 	private ColdStorageSetEntity coldStorageSetEntity;
 	
 	public ScheduleJob() {
@@ -50,16 +42,6 @@ public class ScheduleJob {
 	}
 	public void setLevel(int level) {
 	    	this.level=level;
-//			if (level > 4) {level = 4;}
-//			for (int i = 0; i <=level; i++) {
-//				 Lv[i] ++;
-//			}
-//			if (level<oldelev) {//降级高于当前温度
-//				for (int i = 4; i >oldelev; i--) {//从高到低算
-//	            	 Lv[i] = 0;
-//				}// 升级
-//			}
-//			oldelev = level;
 	}
 	
 	public void setOid(int oid) {
@@ -94,15 +76,6 @@ public class ScheduleJob {
 	public void setWarcount(int warcount) {
 		this.warcount = warcount;
 	}
-//	public double getMaxval() {
-//		return maxval;
-//	}
-//	public void setMaxval(double maxval) {
-//		if(maxval>this.maxval){
-//			this.maxval = maxval;
-////			this.level=(int) ((maxval-baseTemp)/2);
-//		}
-//	}
 	
 //	public double getMinval() {
 //		return minval;
@@ -124,12 +97,12 @@ public class ScheduleJob {
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-	public Date getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
+//	public Date getEndTime() {
+//		return endTime;
+//	}
+//	public void setEndTime(Date endTime) {
+//		this.endTime = endTime;
+//	}
 	public Long getAddTime() {
 		return addTime;
 	}

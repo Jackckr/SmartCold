@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.api.DFSCollectionController;
+import com.smartcold.manage.cold.api.DataCollectionController;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
 import com.smartcold.manage.cold.service.task.ZsDevService;
+import com.smartcold.manage.cold.util.CacheManager;
 import com.smartcold.manage.cold.util.EncodeUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
@@ -27,9 +29,11 @@ import com.smartcold.manage.cold.util.TimeUtil;
 @RequestMapping(value = "/util")
 public class UtilController extends BaseController {
 	
-	
+	//=====================================================北京中威=========================================================================================================================
+	@RequestMapping("/getZWData") 
+	public Object getZWData()  {return CacheManager.zwdataList;}
 	//=====================================================丹弗斯数据接口管理=========================================================================================================================
-	@RequestMapping("/getDFSData") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
+	@RequestMapping("/getDFSData")
 	public String getDFSData()  {return DFSCollectionController.dfsdata;}
 	 @RequestMapping(value = "/gettoke")
 	 public String gettoke(String toke){if(("admin"+TimeUtil.getDateHour()).equals(toke)){ return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDay());}return null;}
@@ -55,7 +59,7 @@ public class UtilController extends BaseController {
 	 @RequestMapping("/getSYSMemory") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
 	 public Long [] getSYSMemory()  { Runtime runtime = Runtime.getRuntime();return new Long []{runtime.totalMemory()/1048576,runtime.maxMemory()/1048576,runtime.freeMemory()/1048576};}
 	 //============================
-	 @RequestMapping("/getTempJobLog") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
+	 @RequestMapping("/getTempJobLog") 
 	 public Object getTempJobLog()  {return QuartzManager.logs;}
 	 @RequestMapping("/getTempJobList") 
 	 public Object getTempJobList(){return  QuartzManager.tempListen;}
