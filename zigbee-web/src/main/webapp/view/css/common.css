@@ -1,0 +1,53 @@
+/*
+*   lianku new version style
+*   author:wellsea
+*   date:2017-06-20插件
+*/
+/* 初始化 */
+body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p,
+dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside,
+details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0;padding: 0; border: none;box-sizing: border-box;}
+body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #656565; background-color: #F7F7F7;}
+em, i{font-style: normal;}
+strong{font-weight: normal;}
+input,textarea,select{width: 100%; height: 34px; padding: 3px 8px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-appearance: none; appearance: none;}
+a{text-decoration: none; color: #969696; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
+a{text-decoration: none; color: #4F4F4F;}
+a:link{color: #656565; text-decoration: none;}
+a:visited{color: #656565;}
+a:hover{color: #656565; text-decoration: none;}
+a:active{color: #656565;}
+table{border: solid 1px #e8eef4; border-collapse: collapse;}
+table td{padding: 5px; border: solid 1px #e8eef4;}
+table th{padding: 6px 5px; text-align: left; background-color: #e8eef4; border: solid 1px #e8eef4;}
+ul, ol{list-style: none;}
+h1, h2, h3, h4, h5, h6{font-size: 100%; font-family: Microsoft YaHei;}
+img{border: none;width: 100%;height:100%;}
+/* 设置HTML5元素为块 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block; }
+
+/*清浮动*/
+.clearfix:after{content: ""; display: block; visibility: hidden; height: 0; clear: both;}
+.clearfix{zoom: 1;}
+.fl{float: left;}
+.fr{float: right;}
+/*连续英文、数字换行*/
+.wordwrap { word-break: break-all; word-wrap: break-word; }
+/*单行文字超出显示省略号*/
+.omg{overflow: hidden; text-overflow: ellipsis; white-space:nowrap;}
+/*iconfot 字体*/
+@font-face {
+    font-family: 'iconfont';
+    src: url('../plugins/fonts/iconfont.eot');
+    src: url('../plugins/fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('../plugins/fonts/iconfont.woff') format('woff'),
+    url('../plugins/fonts/iconfont.ttf') format('truetype'),
+    url('../plugins/fonts/iconfont.svg#iconfont') format('svg');
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
