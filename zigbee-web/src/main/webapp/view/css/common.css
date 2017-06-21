@@ -7,7 +7,7 @@
 body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p,
 dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside,
 details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0;padding: 0; border: none;box-sizing: border-box;}
-body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #656565; background-color: #F7F7F7;}
+body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #656565;}
 em, i{font-style: normal;}
 strong{font-weight: normal;}
 input,textarea,select{width: 100%; height: 34px; padding: 3px 8px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-appearance: none; appearance: none;}
@@ -35,6 +35,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .wordwrap { word-break: break-all; word-wrap: break-word; }
 /*单行文字超出显示省略号*/
 .omg{overflow: hidden; text-overflow: ellipsis; white-space:nowrap;}
+/*文字对齐*/
+.txt-center{text-align: center;}
+.txt-left{text-align: left;}
+.txt-right{text-align: right;}
 /*iconfot 字体*/
 @font-face {
     font-family: 'iconfont';
@@ -50,4 +54,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
+}
+html,body,header{
+    width: 100%;
+    height: 100%;
+    min-width: 750px;
 }
