@@ -162,6 +162,7 @@ function listObj(datalist,inOut){//out:1外部进入//in：-1内部进入
 
 function initAjax(inOut){//初始化加载最新2条数据
     isLoadRB=true;
+    news=[];
     $.ajax({
         type: 'POST',
         url: ER.coldroot +'/i/messageRecord/getMessageList',
