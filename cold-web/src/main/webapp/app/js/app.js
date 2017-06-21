@@ -72,9 +72,12 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         		     $rootScope.rdcId = rdcId;window.sessionStorage.smrdcId=rdcId;//缓存rdcid
 		        	 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
 		        			    $rootScope.aclml=data.aclml;
+		        			    $rootScope.aclmap={};
 					      		$("#lfmenu .quanxian").attr("disabled",true).removeClass("quanxian").removeClass("hide");
 					      		angular.forEach(data.aclml,function(obj,i){ 
+					      			$rootScope.aclmap[obj.id]=obj.acl;
 					      			if(obj.acl){
+					      				
 					      				if(!obj.hasnode){  
 					      					// 技术原因，无法处理
 //					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });

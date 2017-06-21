@@ -49,7 +49,6 @@ public class WarningTaskService  {
 		QuartzManager.logs.clear();
 		QuartzManager.shutdownJobs();
 		QuartzManager.logs.add(TimeUtil.getDateTime()+" 清空任务");
-		System.err.println(TimeUtil.getDateTime()+" 清空任务");
 	}
 	
 	/**
@@ -59,26 +58,24 @@ public class WarningTaskService  {
 	 * 定时定点监听
 	 * 1.查询当前冷库的基准温度，计算max min 临界值时间温度 
 	*/
-//	@Scheduled(cron = "0 0/10 * * * ?")
 	@Scheduled(cron = "0 0/10 * * * ?")
 	public void checkData() {
 		excute++;
 		if(QuartzManager.logs.size()>100){	QuartzManager.logs.clear();}
-		if(QuartzManager.tempWarningServer==null){
-			QuartzManager.tempWarningServer=this.tempWarningServer;
-			QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
-		}
 		Date sttime = TimeUtil.getBeforeMinute(10);
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
 		if(allMonitorTempSet.size()==0||excute>6){
+			QuartzManager.tempWarningServer=this.tempWarningServer;
+			QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		}
 		int key=0;float baseTemp=0;
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
 			key=colditem.getId();//冷库id
 			if(Blacklist.contains(key)){continue;}if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
-		    baseTemp=0;//	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;colditem.setBaseTemp(baseTemp);//计算基线温度
+		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;
+		    colditem.setBaseTemp(baseTemp);//计算基线温度
 			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0, colditem.getDeviceid(),starttime, endtime);//获得最低温度
 			if(minTempData==null){ Blacklist.add(key);  continue;	}//故障  没数据
 			ScheduleJob job = QuartzManager.getJob(key);  long cutttTime=System.currentTimeMillis();
@@ -87,7 +84,7 @@ public class WarningTaskService  {
 				   continue; //
 				 }else	if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
 						  QuartzManager.removeJob(key);
-						  System.err.println(TimeUtil.getDateTime()+" 移除任务监听:"+key);
+						  QuartzManager.logs.add(TimeUtil.getDateTime()+" 移除任务监听:"+key);
 				}else{
 					System.err.println("进入未知逻辑");
 				}
@@ -98,7 +95,7 @@ public class WarningTaskService  {
 					 ItemValue  overStrtTime = this.tempWarningServer.getOverStrtTime(colditem.getTids(), baseTemp, colditem.getDeviceid(), starttime, endtime);
 					 if(overStrtTime==null){continue; }else{
 						  long croStartTime=cutttTime+(lavel>4 ?1800000:14400000);//30分钟后执行 ：4个小时后执行
-						  String jobName=croStartTime+"_job";//延迟一个小时执行
+						  String jobName=croStartTime+"_job";//
 						   job = new ScheduleJob(key,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);
 						   job.setStartTime(overStrtTime.getAddtime());
 						   job.setTask(false);
@@ -107,12 +104,10 @@ public class WarningTaskService  {
 						   job.setColdStorageSetEntity(colditem);
 		           		   QuartzManager.addJob(key,  job);// 
 		           	       QuartzManager.logs.add(TimeUtil.getDateTime()+" 添加任务："+key); 
-		           	       System.err.println(TimeUtil.getDateTime()+" 添加任务："+key); 
 					 }
 				 }else{
 					 job.setLevel(lavel);
 				     job.setWarcount(job.getWarcount()+1);
-					 job.setEndTime(new Date());
 					 long downMint = TimeUtil.getDownMint(job.getCroStartTime());
 					 if((downMint<0||job.getLevel()==5&&job.getWarcount()>=3)||(job.getLevel()==4&&job.getWarcount()>=6)||(job.getLevel()==3&&job.getWarcount()>=12)||(job.getLevel()==2&&job.getWarcount()>=18)||(job.getLevel()==1&&job.getWarcount()>=24)){
 						 job.setTask(true);
@@ -120,7 +115,6 @@ public class WarningTaskService  {
 					 }
 		    		 QuartzManager.upJob(key, job);
 		    		 QuartzManager.logs.add(TimeUtil.getDateTime()+" 更新任务"+key+"剩余时间："+downMint);
-		    		 System.err.println(TimeUtil.getDateTime()+" 更新任务"+key+"剩余时间："+downMint);
 				 }
 			}
 		}

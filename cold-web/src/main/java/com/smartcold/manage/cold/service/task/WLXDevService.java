@@ -2,8 +2,12 @@ package com.smartcold.manage.cold.service.task;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -18,34 +22,50 @@ import org.springframework.scheduling.annotation.Scheduled;
 //@Service
 public class WLXDevService  {
 		
+	
+ 	public static String httpPost(String urlStr, Map<String, Object> params) {
+ 		URL connect;
+ 		StringBuffer data = new StringBuffer();
+ 		try {
+ 			connect = new URL(urlStr);
+ 			HttpURLConnection connection = (HttpURLConnection) connect.openConnection();
+ 			connection.setRequestMethod("POST");
+ 			connection.setDoOutput(true);
+ 			connection.setDoInput(true);
+ 			connection.setUseCaches(false);// post不能使用缓存
+ 			connection.setInstanceFollowRedirects(true);
+ 			connection.setRequestProperty("accept", "*/*");
+ 			connection.setRequestProperty("connection", "Keep-Alive");
+ 			connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+ 			OutputStreamWriter paramout = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+ 			String paramsStr = ""; // 拼接Post 请求的参数
+ 			for (String param : params.keySet()) {
+ 				paramsStr += "&" + param + "=" + params.get(param);
+ 			}
+ 			if (!paramsStr.isEmpty()) {
+ 				paramsStr = paramsStr.substring(1);
+ 			}
+ 			paramout.write(paramsStr);
+ 			paramout.flush();
+ 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+ 			String line;
+ 			while ((line = reader.readLine()) != null) {
+ 				data.append(line);
+ 			}
+ 			paramout.close();
+ 			reader.close();
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+ 		return data.toString();
+ 	}
+ 	
+	
 		private String initConnect(){
-			StringBuffer result = new StringBuffer();
-	        BufferedReader in = null;
-	        try {
-	        	String line; 
-	        	URL realUrl = new URL("https://wlx.cheqianzi.net/wlx/user/02/login"); // 打开和URL之间的连接
-	 		    URLConnection connection = realUrl.openConnection();  // 设置通用的请求属性
-	 		    connection.setRequestProperty("accept", "*/*");
-	 		    connection.setRequestProperty("connection", "Keep-Alive");
-	 		    connection.setRequestProperty("user-agent",  "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-	 		   connection.setRequestProperty("account", "liankur");
-	 		   connection.setRequestProperty("passwd", "liankur");
-	            connection.connect(); // 建立实际的连接
-	            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-	            while ((line = in.readLine()) != null) {
-	                result.append(line);
-	            }
-	        } catch (Exception e) {
-	        	e.printStackTrace();
-	            System.out.println("座头鲸接口请求出现异常！。。。。");
-	        } finally { // 使用finally块来关闭输入流
-	            try {
-	                if (in != null) {
-	                	in.close();
-	                }
-	            } catch (Exception e2) { e2.printStackTrace(); }
-	        }
-			return result.toString();
+	 		  Map<String, Object> params  =new HashMap<String, Object>();
+	 		  params.put("account", "liankur");
+	 		  params.put("passwd", "liankur");
+	 		  return httpPost("https://wlx.cheqianzi.net/service-api/wlx/user/02/login",params);
 		}
 		
 		public static void main(String[] args) {

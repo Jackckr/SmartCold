@@ -7,7 +7,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 	$scope.rdcid=window.sessionStorage.smrdcId,$scope.showobjgroup=false,$scope.coldstoragedoor=null;
 	$scope.end  = baseTools.getFormatTimeString(),$scope.begin= baseTools.formatTime(stdate),$scope.picktime = $scope.begin + ' - ' + $scope.end;
 	function gettitval(val){if(val!=undefined&&val!=""){if($scope.sl_index!=2&&$scope.sl_index!=3){return val+$scope.typemode.unit[$scope.sl_index]; }else{return val==0?"关":"开";}}else{return "-";}}
-    $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:2},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{
+    $("#reservationtime").daterangepicker({maxDate:moment(),dateLimit:{days:90},showDropdowns:true,showWeekNumbers:false,timePicker:true,timePickerIncrement:1,timePicker12Hour:false,ranges:{
     "今日":[moment().startOf("day"),moment()],
     "昨日":[moment().subtract("days",1).startOf("day"),moment().subtract("days",1).endOf("day")],
     "最近3天":[moment().subtract("days",3),moment()],
@@ -44,7 +44,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 		if($scope.oids&&$scope.oids.length>0){
 			bothTime = $scope.picktime.split(" - ");
 			$scope.begin = bothTime[0],$scope.end = bothTime[1];
-			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3天！");return;}
+			if($scope.checktime($scope.begin , $scope.end )){alert("查询区间时间最大为3个月！");return;}
 			lineChart.showLoading({text: '数据加载中……' }); 
 			lineChart.clear(); 
 			$.ajax({
@@ -99,8 +99,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 
 	//********************************************************************事件START**********************************************************************
 	$scope.checktime=function(startDate,endDate){
-		var catime =new Date(endDate).getTime()-new Date(startDate).getTime();  
-	    return catime > 259900000; 
+		  return Math.abs(startDate - endDate)/(1000*60*60*24)<90;     
 	 };
 	 $scope.slgroupsl=function(e){//点击下拉框事件
 		 $scope.showobjgroup=!$scope.showobjgroup;}
@@ -123,8 +122,9 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
     	 if(em.hasClass("select")){em.removeClass("select"); }else{ em.addClass("select");}
 	 };
 	 $scope.showkeyli=function($event){//点击标题导航
+			 var em=$($event.target),key=em.attr("kval"),disid=em.attr("disid") ;
+			 if(disid=="false"){return;}
 		$("#ul_key_list li").removeClass("select");
-		var em=$($event.target),key=em.attr("kval");
 		em.addClass("select");$scope.sl_index=key;
 		$("#val_list_div ul").addClass("hide");
 		$("#Temp_ul_"+key).removeClass("hide");

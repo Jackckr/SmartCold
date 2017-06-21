@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +23,7 @@ import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.util.CacheManager;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
@@ -43,6 +43,7 @@ public class DataCollectionController extends BaseController {
 	
 	@Autowired
 	private StorageDataCollectionMapper storageDataCollectionDao;
+	
 
 	
 
@@ -58,6 +59,7 @@ public class DataCollectionController extends BaseController {
 	public Object storageDataCollection(@RequestBody String data, HttpServletResponse response) {
 		try {
 			if(StringUtil.isNull(data)){new DataResultDto(500);}
+			CacheManager.addZWTempData(data);
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataCollectionBatchEntity.containsKey("infos")){
 				String apID = dataCollectionBatchEntity.get("apID").toString();
@@ -74,7 +76,7 @@ public class DataCollectionController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到DEV数据解析异常：\r\n"+data);
+			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到北京中威DEV数据解析异常：\r\n"+data);
 			return new DataResultDto(500);
 		}
 		return new DataResultDto(200);
@@ -126,22 +128,23 @@ public class DataCollectionController extends BaseController {
 		return resMap;
 	}  
 
+	
 
-	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
-	@ResponseBody
-	public Object findLastNDataByApid(String apid, String deviceid, String key, int n) {
-		Date startTime=null;if(n==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
-		return storageDataCollectionDao.findLastNPoint(apid, deviceid, key, n,startTime);
-	}
-
-	@RequestMapping(value = "/findByTime", method = RequestMethod.GET)
-	@ResponseBody
-	public Object findByTime(String apid, String deviceid, String key,
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-
-		return storageDataCollectionDao.findByTime(apid, deviceid, key, startTime, endTime ,"DESC");
-	}
+//	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Object findLastNDataByApid(String apid, String deviceid, String key, int n) {
+//		Date startTime=null;if(n==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
+//		return storageDataCollectionDao.findLastNPoint(apid, deviceid, key, n,startTime);
+//	}
+//
+//	@RequestMapping(value = "/findByTime", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Object findByTime(String apid, String deviceid, String key,
+//			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+//			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+//
+//		return storageDataCollectionDao.findByTime(apid, deviceid, key, startTime, endTime ,"DESC");
+//	}
 	
 
 

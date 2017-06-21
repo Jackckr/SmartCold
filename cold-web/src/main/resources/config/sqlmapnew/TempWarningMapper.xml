@@ -16,7 +16,7 @@
 			`smartcold`.`coldstorageset` cs 
 		WHERE
 			cs.`startTemperature` != 0
-		AND cs.`tempdiff` != 0  and cs.id=21;
+		AND cs.`tempdiff` != 0  and cs.RDCID=1655;
 	</select>
 	
 	<select id="getMAITempData" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
@@ -44,11 +44,5 @@
 	     <if test="minTemp!=null ">  `value`>#{minTemp} and</if>
 	       `key` ='Temp'  and `addtime` >#{starttime} and `addtime` &lt;#{endtime}; 
 	</select>	
-	
-	
-	
-	
-	
-	
 	
 </mapper>

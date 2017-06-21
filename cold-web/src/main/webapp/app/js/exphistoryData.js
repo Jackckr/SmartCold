@@ -153,8 +153,9 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
     	 if(em.hasClass("select")){em.removeClass("select"); }else{ em.addClass("select");}
 	 };
 	 $scope.showkeyli=function($event){//点击标题导航
-		$("#ul_key_list li").removeClass("select");
-		var em=$($event.target),key=em.attr("kval");
+		var em=$($event.target),key=em.attr("kval"),disid=em.attr("disid") ;
+		 if(disid=="false"){return;}
+		 $("#ul_key_list li").removeClass("select");
 		em.addClass("select");$scope.sl_index=key;
 		$("#val_list_div ul").addClass("hide");
 		$("#Temp_ul_"+key).removeClass("hide");

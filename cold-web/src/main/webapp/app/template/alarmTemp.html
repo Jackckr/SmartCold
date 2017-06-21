@@ -21,7 +21,7 @@
 			<div class="timeline-content">
 				<div class="timeline-title">
 					<h4 class="pull-left">{{obj.msg}}</h4>
-					<h4  class="pull-right"><button class="show-more btn btn-info btn-xs" ng-click="showdatil(obj)" ng-init="model[obj.isshow]='详细'">{{model[obj.isshow]}}</button></h4>
+					<h4  class="pull-right" ng-if="obj.count!=0"><button class="show-more btn btn-info btn-xs" ng-click="showdatil(obj)" ng-init="model[obj.isshow]='详细'">{{model[obj.isshow]}}</button></h4>
 				</div>
 				<div ng-if="obj.isshow==1">
 				   <ul class="warnUl">
