@@ -44,53 +44,58 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	};
 	
 	 $scope.loadTemp = function () {
+		 alert($scope.startTime);
 	    	if($scope.oids.length==0){return;};
 	    	var maxTime=endDate.getTime();
 	        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
-	        	var yData = [], tempMap = result.tempMap,systime=result.systime;
+	        	var xdata=[],yData = [], tempMap = result.tempMap,systime=result.systime;
 	            var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
 	            $scope.cuttstorage.datumTemp=datumTemp;
-	        	var i= 0,tempList=newdata = [],vo=cuttime=null; 
+	        	var i= 0,tempList=[],newdata = [],vo=cuttime=null; 
 	            for(var key in tempMap) { 
 	             	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
 	                 if( tempList.length>0){
 		                 for ( i = 0; i < tempList.length; i++) {
 							 vo=tempList[i];
-							 cuttime=new Date(vo.addtime).getTime();
-		                	 newdata.push({ x: cuttime,y: vo.value});
+							 cuttime=baseTools.formatTime(vo.addtime);//new Date().getTime();
+							 xdata.push(cuttime);
+		                	 newdata.push(vo.value);//{ x: cuttime,y: 
 						}
-		                if( systime-cuttime>1800000&&systime-maxTime<1200000){//大于半个小时。。提醒
-		                	newdata.push({ x: maxTime,y:null}); 
-		                }   
+//		                if( systime-cuttime>1800000&&systime-maxTime<1200000){//大于半个小时。。提醒
+//		                	newdata.push({ x: maxTime,y:null}); 
+//		                }   
 	                 }else{
-	                	 newdata.push({ x: firstDate.getTime(),y:null});
-	                	 newdata.push({ x: maxTime,y:null});
+	                	 newdata.push({ x:  baseTools.formatTime($scope.startTime),y:null});
+	                	 newdata.push({ x: baseTools.formatTime($scope.endTime),y:null});
 	                 }
 	                yData.push({"name": key, "data": newdata});
 	            } 
-	            yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data: [{x: firstDate.getTime(),y: datumTemp},{x: endDate.getTime(),y: datumTemp}]});//处理基准温度
-	            $scope.initHighchart(datumTemp,yData);
+	            yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data: [{x:firstDate ,y: datumTemp},{x:endDate,y: datumTemp}]});//处理基准温度
+	            $scope.initHighchart(datumTemp,xdata,yData);
 	          });
 	         
 	    };
-	    $scope.initHighchart=function(datumTemp,yData ){
-	           new Highcharts.Chart({
-	        	  series: yData,
-	              legend: { enabled: false },
-	              exporting: {enabled: false},
-	              credits: { enabled: false },
-	              plotOptions: { series: { marker: { enabled: false } }},
-	              title: { text: '' },
-	              xAxis: {  type: 'datetime', tickPixelInterval: 150,  },
-	              yAxis: {title: {text: '温度(℃)' }, plotLines: [{value: 0,width: 1, color: '#808080' },  { color: 'red',   dashStyle: 'solid',   value: datumTemp, width: 2, label: {  text: '基准温度(' + datumTemp + '℃)',align: 'right',   x: 0   }  }] },
-	              tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2); } },
-	              chart: {
-	                  type: 'spline',
-	                  renderTo: 'temperatureChart',
-	                  animation: Highcharts.svg, // don't animate in old IE
-	                  marginRight: 10,
-	              }
-	          });
+	    $scope.initHighchart=function(datumTemp,xdata,yData ){
+	    	var chart = new Highcharts.Chart('temperatureChart', {
+	    	    title: { text: null,  },
+	    	    subtitle: {  text: null,  },
+	    	    xAxis: {  categories: xdata },
+	    	    yAxis: {
+	    	        title: {text: '温度 (°C)' },
+	    	        plotLines: [{ value: 0, width: 1,   color: '#808080' }]
+	    	    },
+	    	    tooltip: {
+	    	        valueSuffix: '°C'
+	    	    },
+	    	    legend: {
+//	    	        layout: 'vertical',
+//	    	        align: 'right',
+//	    	        verticalAlign: 'middle',
+//	    	        borderWidth: 0
+	    	    },
+	    	    series: yData
+	    	});
+	         
 	    };
 	    
 	$scope.dwrtemplin=function(){

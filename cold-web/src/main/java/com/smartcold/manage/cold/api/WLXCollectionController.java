@@ -56,6 +56,7 @@ public class WLXCollectionController extends BaseController {
 	public Object wlxDataCollection(@RequestBody String data, HttpServletResponse response) {
 		try {
 			if(StringUtil.isNull(data)){new DataResultDto(500);}
+			System.err.println("收到座头鲸数据："+data);
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataCollectionBatchEntity.containsKey("infos")){
 				String apID = dataCollectionBatchEntity.get("apID").toString();
@@ -78,7 +79,23 @@ public class WLXCollectionController extends BaseController {
 		return new DataResultDto(200);
 	} 
 	
-	
+//	public static void main(String[] args) {
+//      String data="{\"apID\":\"0000000080908090\",\"infos\":[{\"devID\":\"1000000080908090\",\"Temp\":\"22.0\",\"time\":\"1498116189\"}{\"devID\":\"2000000080908090\",\"Temp\":\"14.0\",\"time\":\"1498116189\"}]}";
+//      Gson gson = new Gson();
+//      Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
+//		if(dataCollectionBatchEntity.containsKey("infos")){
+//			String apID = dataCollectionBatchEntity.get("apID").toString();
+//			ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
+//			for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
+//				Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
+//				String deviceId = info.remove("devID").toString();
+//				for (Entry<String, String> item : info.entrySet()) {
+//					arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+//				}
+//			}
+//			System.err.println("sdf");
+//		}
+//	}
 	
 
 }
