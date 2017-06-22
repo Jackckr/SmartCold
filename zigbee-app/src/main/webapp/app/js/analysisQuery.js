@@ -296,8 +296,10 @@ app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, 
         var $index = '';
         /*选择一级项目*/
         $(".project .default").click(function () {
+            var em=$(this),disid=em.attr("disid") ;
+            if(disid=="false"){return;}
             $index = $(this).index();
-            $(this).addClass('defaultSelect').siblings().removeClass('defaultSelect');
+            em.addClass('defaultSelect').siblings().removeClass('defaultSelect');
             $scope.sl_index = $(".defaultSelect").attr("kval");
             if ($scope.sl_index == 5) {//处理特殊情况
                 var chptkey = $('#Temp_ul_5 input[name="cmptkey"]:checked').val();//获得选择的压缩机组

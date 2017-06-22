@@ -26,15 +26,15 @@
 						  <span style="position:relative;display: inline-block;"><span class="form-control sl_group_obj" ng-click='slgroupsl()'>{{sltit}}</span><i class="sl_drop" ng-click='slgroupsl()'>▼</i></span>
 						  <div id="filter_div" class="pull-left sl_drop_data" ng-show="showobjgroup">
 						     <ul id="ul_key_list" class="ul_key_list">
-						       <li class="select" ng-click="showkeyli($event,0,0)">日耗电量</li>
-						       <li ng-click="showkeyli($event,1,0)">日耗水量</li>
-						       <li ng-click="showkeyli($event,2,1)">冷  库  门</li>
-						       <li ng-click="showkeyli($event,3,1)">温度分析</li>
-						       <li ng-click="showkeyli($event,4,1)">热　　量</li>
-						       <li ng-click="showkeyli($event,5,1)">冷风机</li>
-						       <li ng-click="showkeyli($event,6,0)">系统效率</li>
-						       <li ng-click="showkeyli($event,7,0)">货物因子</li>
-						       <li ng-click="showkeyli($event,8,1)">制冷运行分析</li> 
+						       <li ng-disabled="!aclmap[20]" style="{{aclmap[20]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[20]}}" class="select" ng-click="showkeyli($event,0,0)">日耗电量</li>
+						       <li ng-disabled="!aclmap[20]" style="{{aclmap[20]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[20]}}" ng-click="showkeyli($event,1,0)">日耗水量</li>
+						       <li ng-disabled="!aclmap[121]" style="{{aclmap[121]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[121]}}" ng-click="showkeyli($event,2,1)">冷  库  门</li>
+						       <li ng-disabled="!aclmap[110]" style="{{aclmap[110]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[110]}}" ng-click="showkeyli($event,3,1)">温度分析</li>
+						       <li ng-disabled="!aclmap[123]" style="{{aclmap[123]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[123]}}" ng-click="showkeyli($event,4,1)">热　　量</li>
+						       <li ng-disabled="!aclmap[62]" style="{{aclmap[62]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[62]}}" ng-click="showkeyli($event,5,1)">冷风机</li>
+						       <li ng-disabled="!aclmap[132]" style="{{aclmap[132]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[132]}}" ng-click="showkeyli($event,6,0)">系统效率</li>
+						       <li ng-disabled="!aclmap[122]" style="{{aclmap[122]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[122]}}" ng-click="showkeyli($event,7,0)">货物因子</li>
+						       <li ng-disabled="!aclmap[130]" style="{{aclmap[130]?'':'background-color: #cccccc; color: #eee; cursor: default;pointer-events: none!important;'}}"  disid="{{aclmap[130]}}" ng-click="showkeyli($event,8,1)">制冷运行分析</li>
 						     </ul>
 						  </div>
 						</div>

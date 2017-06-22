@@ -206,7 +206,9 @@ app.controller('analysisReport', function ($scope, $location, $http, $rootScope,
 
     $scope.showkeyli = function ($event, index, urlid) {//  urlid==0->单key  1:多key
         $scope.slindex = index, $scope.urlid = urlid;
-        $($event.target).addClass('defaultSelect').siblings().removeClass('defaultSelect');
+        var em=$($event.target),disid=em.attr("disid") ;
+        if(disid=="false"){return;};
+        em.addClass('defaultSelect').siblings().removeClass('defaultSelect');
         $scope.sltit = $event.target.innerText;
         $scope.showobjgroup = false;
         $scope.getsldata();
