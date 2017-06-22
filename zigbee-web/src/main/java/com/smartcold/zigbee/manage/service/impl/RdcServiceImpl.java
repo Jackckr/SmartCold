@@ -237,15 +237,15 @@ public class RdcServiceImpl implements RdcService {
                 for (int i = 0; i < capacity.length; i++) {
                     String[] capacityItem = capacity[i].split(":");
                     if (capacityItem[0].equalsIgnoreCase("1")) {
-                        rdcAddDTO.setCapacity1(Integer.parseInt(capacityItem[1]));
+                        rdcAddDTO.setCapacity1(Float.parseFloat(capacityItem[1]));
                     } else if (capacityItem[0].equalsIgnoreCase("2")) {
-                        rdcAddDTO.setCapacity2(Integer.parseInt(capacityItem[1]));
+                        rdcAddDTO.setCapacity2(Float.parseFloat(capacityItem[1]));
                     } else if (capacityItem[0].equalsIgnoreCase("3")) {
-                        rdcAddDTO.setCapacity3(Integer.parseInt(capacityItem[1]));
+                        rdcAddDTO.setCapacity3(Float.parseFloat(capacityItem[1]));
                     } else if (capacityItem[0].equalsIgnoreCase("4")) {
-                        rdcAddDTO.setCapacity4(Integer.parseInt(capacityItem[1]));
+                        rdcAddDTO.setCapacity4(Float.parseFloat(capacityItem[1]));
                     } else if (capacityItem[0].equalsIgnoreCase("5")) {
-                        rdcAddDTO.setCapacity5(Integer.parseInt(capacityItem[1]));
+                        rdcAddDTO.setCapacity5(Float.parseFloat(capacityItem[1]));
                     }
                 }
             }
@@ -256,15 +256,15 @@ public class RdcServiceImpl implements RdcService {
                        for (int i = 0; i < capacityheight.length; i++) {
                            String[] capacityheightItem = capacityheight[i].split(":");
                            if (capacityheightItem[0].equalsIgnoreCase("1")) {
-                               rdcAddDTO.setHeight1(Integer.parseInt(capacityheightItem[1]));
+                               rdcAddDTO.setHeight1(Float.parseFloat(capacityheightItem[1]));
                            } else if (capacityheightItem[0].equalsIgnoreCase("2")) {
-                               rdcAddDTO.setHeight2(Integer.parseInt(capacityheightItem[1]));
+                               rdcAddDTO.setHeight2(Float.parseFloat(capacityheightItem[1]));
                            } else if (capacityheightItem[0].equalsIgnoreCase("3")) {
-                               rdcAddDTO.setHeight3(Integer.parseInt(capacityheightItem[1]));
+                               rdcAddDTO.setHeight3(Float.parseFloat(capacityheightItem[1]));
                            } else if (capacityheightItem[0].equalsIgnoreCase("4")) {
-                               rdcAddDTO.setHeight4(Integer.parseInt(capacityheightItem[1]));
+                               rdcAddDTO.setHeight4(Float.parseFloat(capacityheightItem[1]));
                            } else if (capacityheightItem[0].equalsIgnoreCase("5")) {
-                               rdcAddDTO.setHeight5(Integer.parseInt(capacityheightItem[1]));
+                               rdcAddDTO.setHeight5(Float.parseFloat(capacityheightItem[1]));
                            }
                        }
                    }
