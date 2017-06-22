@@ -29,11 +29,15 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	
 	$scope.initTemp=function(){
 			if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
-		   		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;$scope.names=$rootScope.Tempset[$scope.storageID].names;$scope.loadTemp();
+		   		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;
+		   		 $scope.names=$rootScope.Tempset[$scope.storageID].names;
+		   		 $scope.loadTemp();
 		   	}else{
 		   		 $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.cuttstorage.id}}).success(function (data) {if(data){
-		   		    	 	angular.forEach(data,function(obj,i){$scope.oids.push(obj.id);$scope.names.push(obj.name);});
-		   		    	 	 $rootScope.Tempset[$scope.cuttstorage.id]={oids:$scope.oids,names:$scope.names};
+		   		    	var oids=[],names=[];
+		   			      angular.forEach(data,function(obj,i){oids.push(obj.id);names.push(obj.name);  });
+		   		    	 	 $rootScope.Tempset[$scope.cuttstorage.id]={oids:oids,names:names};
+		   		    	      $scope.oids=oids; $scope.names=names;
 		   		    	   	 $scope.loadTemp();
 		   		 };});	
 		   	};
@@ -85,7 +89,6 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	                  renderTo: 'temperatureChart',
 	                  animation: Highcharts.svg, // don't animate in old IE
 	                  marginRight: 10,
-	                  backgroundColor: {  linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},stops: [ [0, 'rgb(210, 214, 222)'],[1, 'rgb(210, 214, 222)'] ]  }, borderColor: '#d2d6de', borderWidth: 2, className: 'dark-container', plotBackgroundColor: 'rgba(210, 214, 222, .1)',  plotBorderColor: '#d2d6de', plotBorderWidth: 1
 	              }
 	          });
 	    };
