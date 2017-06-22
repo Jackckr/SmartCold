@@ -1,5 +1,5 @@
 checkLogin();
-app.controller('analysisTemperature', function ($scope, $location, $http, $rootScope, userService) {
+app.controller('analysisTemperature', function ($scope, $location, $http,$timeout, $rootScope, userService) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 
@@ -125,7 +125,85 @@ app.controller('analysisTemperature', function ($scope, $location, $http, $rootS
                 chart.setOption($scope.getEchartSingleOption("30日超温时间", xData, yData, "时间", "m", "超温时间", "bar"));
             })
         });
+    };
+
+    $scope.overTemperatureTime = function() {
+        $scope.showMap = new Object();
+        var endTime = new Date(), startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+        $http.get(ER.coldroot + '/i/coldStorage/findAnalysisByRdcidKeysDate', {
+            params: {
+                "startTime": formatTime(startTime),
+                "endTime": formatTime(endTime),
+                "rdcid": $scope.rdcId,
+                'keys': 'OverTempL1Time,OverTempL2Time,OverTempL3Time'
+            }
+        }).success(function (data) {
+            $scope.data = data;
+            angular.forEach(data, function (storage, key) {
+                $timeout(function () {
+                    xData = [], series = [], chartId = key + "_Chart";
+
+                    if ($scope.swiper < $scope.mystorages.length) {
+                        var innerHTML = '<div class="swiper-slide">' +
+                            '<p class="actually">' + key + '</p>' +
+                            '<div id=' + chartId + '></div> ';
+                        $("#chartView").last().append(innerHTML);
+                        $scope.swiper += 1;
+                    }
+
+                    if (storage.OverTempL1Time && storage.OverTempL2Time && storage.OverTempL3Time) {
+                        var L1 = [], L2 = [], L3 = [], totaL1time = 0, totaL2time = 0, totaL3time = 0;
+                        angular.forEach(storage.OverTempL1Time, function (item) {
+                            xData.unshift(formatTime(item['date']).split(" ")[0]);
+                            L1.unshift(item.value);
+                            totaL1time += item.value;
+                        });
+                        angular.forEach(storage.OverTempL2Time, function (item) {
+                            L2.unshift(item.value);
+                            totaL2time += item.value;
+                        });
+                        angular.forEach(storage.OverTempL3Time, function (item) {
+                            L3.unshift(item.value);
+                            totaL3time += item.value;
+                        });
+                        series.push({name: '危险超温告警', type: 'bar', data: L1});
+                        series.push({name: '严重超温告警', type: 'bar', data: L2});
+                        series.push({name: '正常超温告警', type: 'bar', data: L2});
+                        $scope.showMap.key = [totaL1time, totaL2time, totaL3time];
+                    }
+                    var chart = echarts.init(document.getElementById(chartId));
+                    angular.forEach(storage['ChaoWenYinZi'], function (item, index) {
+                        yData1.unshift(storage['ChaoWenYinZi'][index]['value'])
+                        yData2.unshift(storage['MaxTemp'][index]['value'])
+                        xData.unshift(formatTime(item['date']).split(" ")[0])
+                    });
+                    var option = {
+                        backgroundColor: '#D2D6DE',
+                        tooltip: {
+                            trigger: 'axis',
+                            textStyle: {
+                                fontSize: 12
+                            }
+                        },
+                        title: {
+                            text: '30日超温时间因子',
+                            textStyle: {
+                                fontSize: ".75rem",
+                                fontWeight: '400'
+                            }
+                        },
+                        legend: {data: ['危险超温告警', '严重超温告警', '正常超温告警']},
+                        xAxis: [{type: 'category', data: xData}],
+                        yAxis: [{type: 'value'}],
+                        series: series
+                    };
+                    chart.setOption(option);
+               }, 0);
+            });
+        });
     }
+
+
 
     $scope.drawOverTemperatureYZ = function () {
         var endTime = new Date();

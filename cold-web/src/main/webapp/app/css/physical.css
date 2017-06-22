@@ -950,9 +950,12 @@ legend{
 .coldName li.currentCold{
 	background-color: #f40;
 }
-.version_choice li label{
-	padding: 0;
+.coldName .grey{
+	background: grey;
+	color: #cccccc;
+	cursor: not-allowed;
 }
+/*摇摆的铃铛*/
 .ring{
 	position: fixed;
 	top:15px;

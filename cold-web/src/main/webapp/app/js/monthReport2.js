@@ -20,7 +20,9 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 		$scope.pysicaldata=data.entity;
 	}});
 	
-	$scope.changestorage=function(index,storageid){
+	$scope.changestorage=function(index,storageid,$event){
+		var em=$($event.target);
+		em.addClass('currentCold').siblings().removeClass('currentCold');
 		$scope.cuttstorage=$rootScope.mystorages[index];
 		$scope.initTemp();
 		$scope.dwrtemplin();
@@ -44,7 +46,7 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	};
 	
 	 $scope.loadTemp = function () {
-		 alert($scope.startTime);
+		// alert($scope.startTime);
 	    	if($scope.oids.length==0){return;};
 	    	var maxTime=endDate.getTime();
 	        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {

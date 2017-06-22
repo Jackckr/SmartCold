@@ -3,8 +3,8 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
-var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-//var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"};
+// var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){
@@ -186,15 +186,4 @@ function checkMobile(str) {
        return false
    }
 }
-/*
- * vConsole:一个轻量、可拓展、针对手机网页的前端开发者调试面板。
- * 引入 dist/vconsole.min.js 到项目中：
- * <script type="text/javascript" src="../com/js/vConsole-2.4.0/dist/vconsole.min.js" ></script> 
- * <script>
-	console.log('Hello world');
-	// 然后点击右下角 vConsole 按钮即可查看到 log
-	</script>
- * 
-*/
-
 

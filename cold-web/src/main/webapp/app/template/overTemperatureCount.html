@@ -1,3 +1,4 @@
+<style>.alert{padding: 8px;}</style>
 <div class="page-content">
     <div class="page-header">
 
@@ -22,11 +23,11 @@
                         </div>
                     </div>
                      <div class="box-body">
-                        <div class="">
-                        <span>危险告警次数:{{showMap.key[0]}}次</span>
-                        <span>严重告警次数:{{showMap.key[1]}}次</span>
-                        <span>正常告警次数:{{showMap.key[2]}}次</span>
-                        </div>
+                         <div class="clearfix text-center">
+                             <div class="alert alert-danger col-lg-4 col-md-4 col-sm-4">危险告警次数:{{showMap.key[0]}}次</div>
+                             <div class="alert alert-warning col-lg-4 col-md-4 col-sm-4">严重告警:{{showMap.key[1]}}分钟</div>
+                             <div class="alert alert-info col-lg-4 col-md-4 col-sm-4">正常告警:{{showMap.key[2]}}分钟</div>
+                         </div>
                     </div>
                 </div><!-- 2 -->
 
