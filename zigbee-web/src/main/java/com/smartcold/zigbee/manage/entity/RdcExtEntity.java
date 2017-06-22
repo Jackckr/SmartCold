@@ -30,7 +30,7 @@ public class RdcExtEntity {
 
     private byte storagelihuocontrol;
 
-    private int storagelihuoarea;
+    private float storagelihuoarea;
 
     private byte storagerefreg;
 
@@ -165,11 +165,11 @@ public class RdcExtEntity {
         this.storagelihuocontrol = storagelihuocontrol;
     }
 
-    public int getStoragelihuoarea() {
+    public float getStoragelihuoarea() {
         return storagelihuoarea;
     }
 
-    public void setStoragelihuoarea(int storagelihuoarea) {
+    public void setStoragelihuoarea(float storagelihuoarea) {
         this.storagelihuoarea = storagelihuoarea;
     }
 

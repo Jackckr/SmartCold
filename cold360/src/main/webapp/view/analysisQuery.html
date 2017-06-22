@@ -122,12 +122,12 @@
         <p><strong>请选择需要查询的项目：</strong></p>
 
         <div class="project clearfix">
-            <div kval="0" class="default">冷库温度</div>
-            <div kval="1" class="default" ng-hide="user.type==1||user.type==2">冷库电量</div>
-            <div kval="2" class="default" ng-hide="user.type==1||user.type==2">冷库门</div>
-            <div kval="3" class="default" ng-hide="user.type==1||user.type==2">月台门</div>
-            <div kval="4" class="default" ng-hide="user.type==1||user.type==2">压缩机组</div>
-            <div kval="5" class="default" ng-hide="user.type==1||user.type==2">压缩机-排气温度</div>
+            <div kval="0" ng-disabled="!aclmap[10]" style="{{aclmap[10]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[10]}}" class="default">冷库温度</div>
+            <div kval="1" ng-disabled="!aclmap[21]" style="{{aclmap[21]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[21]}}" class="default" ng-hide="user.type==1||user.type==2">冷库电量</div>
+            <div kval="2" ng-disabled="!aclmap[31]" style="{{aclmap[31]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[31]}}" class="default" ng-hide="user.type==1||user.type==2">冷库门</div>
+            <div kval="3" ng-disabled="!aclmap[32]" style="{{aclmap[32]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[32]}}" class="default" ng-hide="user.type==1||user.type==2">月台门</div>
+            <div kval="4" ng-disabled="!aclmap[61]" style="{{aclmap[61]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[61]}}" class="default" ng-hide="user.type==1||user.type==2">压缩机组</div>
+            <div kval="5" ng-disabled="!aclmap[61]" style="{{aclmap[61]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[61]}}" class="default" ng-hide="user.type==1||user.type==2">压缩机-排气温度</div>
         </div>
         <p><strong>您所选的项目是：</strong></p>
 

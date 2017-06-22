@@ -5,6 +5,8 @@ var storagePicsArr=[];
 var honorOriginalLength=0;
 var storageOriginalLength=0;
 var ids="";
+var saveRdcName="";
+
 
 var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
@@ -106,6 +108,16 @@ function deleteImg(index,flag,delId){
     if(delId){ids+=delId+",";}
     showSelectPic();
 }
+
+/*刷新*/
+function refresh() {
+    $('#fddata').searchbox('setValue', '');
+    queryParams.keyword="";
+    $("#sel_audit").combobox({value:"8"});
+    queryParams.audit="";
+    reloaddata();
+}
+
 /*冷库修改*/
 function ck(id) {
     honorOriginalLength=0;
@@ -121,6 +133,7 @@ function ck(id) {
         success: function (data) {
             var rdc = data[0];
             if(rdc==null){return;}
+            saveRdcName=rdc.name;
             rdc.id=id;
             rdc.rdcId=id;
             if (rdc.remark == "undefined") {
@@ -130,6 +143,7 @@ function ck(id) {
                 rdc.facility = "";
             };
             $("#coldButton").html("修改冷库信息");
+            $('#addCold').panel({title: "修改冷库"});
             if (rdc.honorPics){
                 honorOriginalLength=rdc.honorPics.length;
                 for(var i=0;i<rdc.honorPics.length;i++){
@@ -185,12 +199,14 @@ function addCold() {
     storagePicsArr=[];
     honorOriginalLength=0;
     storageOriginalLength=0;
+    saveRdcName="";
     $("#honorfilesImg").empty();
     $("#filesImg").empty();
     $("#showNameMessage").hide();
     $('#addColdForm').form('clear');
     loadProvince();
     $("#coldButton").html("添加冷库");
+    $('#addCold').panel({title: "添加冷库"});
     $("#coldButton").attr("onclick", "addColdSubmit()");
     $('#addCold').dialog('open');
     $("#provinceId").combobox({value: ""});
@@ -223,10 +239,10 @@ function coldValidation(vo) {
     	alert_errmsg("请完善冷库信息！");
         return false;
     }
-    var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,10}$/;
+    var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
     var countRex = /^[0-9]\d*$/;
     if (!areaRex.test(vo.area)) {
-    	alert_errmsg("面积输入有误！");
+    	alert_errmsg("面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||
@@ -234,7 +250,7 @@ function coldValidation(vo) {
         vo.capacity5 != "" && !areaRex.test(vo.capacity5) || vo.height1 != "" && !areaRex.test(vo.height1) ||
         vo.height2 != "" && !areaRex.test(vo.height2) || vo.height3 != "" && !areaRex.test(vo.height3) ||
         vo.height4 != "" && !areaRex.test(vo.height4) || vo.height5 != "" && !areaRex.test(vo.height5)) {
-    	alert_errmsg("冷库容积输入有误！");
+    	alert_errmsg("冷库容积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
     if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
@@ -243,7 +259,7 @@ function coldValidation(vo) {
         return false;
     }
     if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
-    	alert_errmsg("理货区面积输入有误！");
+    	alert_errmsg("理货区面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
     var phoneNumRex = /^1[34578]\d{9}$/;
@@ -258,6 +274,7 @@ function addColdSubmit() {
     //var honorfiles = $("input[name=honorfiles]").prop("files");
     //var arrangePic = $("input[name=arrangePic]");
     //var files = $("input[name=files]").prop("files");
+    $('#coldButton').linkbutton('disable');
     var parnArray = $("#addColdForm").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
@@ -284,11 +301,14 @@ function addColdSubmit() {
             contentType: false,
             type: 'POST',
             success: function (data) {
+                $('#coldButton').linkbutton('enable');
             	alert_infomsg("添加成功！");
                 $('#addCold').dialog('close');
                 reloaddata();
             }
         });
+    }else {
+        $('#coldButton').linkbutton('enable');
     }
 }
 /*提交修改冷库信息*/
@@ -296,6 +316,7 @@ function doUpdateCold() {
     //var honorfiles = $("input[name=honorfiles]").prop("files");
     //var arrangePic = $("input[name=arrangePic]");
     //var files = $("input[name=files]").prop("files");
+    $('#coldButton').linkbutton('disable');
     var parnArray = $("#addColdForm").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
@@ -329,11 +350,14 @@ function doUpdateCold() {
             contentType: false,
             type: 'POST',
             success: function (data) {
+                $('#coldButton').linkbutton('enable');
             	alert_infomsg("修改成功！");
                 $('#addCold').dialog('close');
                 reloaddata();
             }
         });
+    }else {
+        $('#coldButton').linkbutton('enable');
     }
 }
 //批量删除冷库
@@ -402,6 +426,10 @@ $().ready(function () {
     $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
     $("#name").blur(function () {
         var rdcName = $("#name").val();
+        if(saveRdcName==rdcName){
+            $("#showNameMessage").hide();
+            return;
+        }
         if (rdcName != "") {
             $.ajax({
                 url: "/i/rdc/checkName", type: "get", data: {"value": rdcName}, success: function (data) {

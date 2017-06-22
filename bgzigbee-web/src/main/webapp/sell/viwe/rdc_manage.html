@@ -22,7 +22,7 @@
     <div id="div_filteri" style="padding:2px 5px;">
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'rdc_add'" onclick="addCold()">添加</a>
         <a id="delButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'rdc_del'" onclick="dl()">删除</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="reloaddata()">刷新</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="refresh()">刷新</a>
         <div style="float: right">
             状态:
             <select id="sel_audit" class="easyui-combobox" panelHeight="auto" style="width:100px">
@@ -63,7 +63,7 @@
      data-options="iconCls:'icon-save',modal:true,closed:true">
     <form id="addColdForm">
         <div class="formCtr">
-            <div class="formTitle">名称：<b>*</b><em id="showNameMessage" style="display: none"> 用户名已经被注册 </em></div>
+            <div class="formTitle">名称：<b>*</b><em id="showNameMessage" style="display: none"> 冷库名已经被注册 </em></div>
             <input type="hidden" name="id">
             <input type="hidden" name="rdcId">
             <div class="formContain">
