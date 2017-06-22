@@ -4,202 +4,149 @@
  * 月分析报表
  */
 coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
-	$scope.isnotprint=true;$scope.isloaderr=false;//当前是否是打印状态和加载状态
-	$scope.rdcId = $stateParams.rdcId;
-	$("#loding").show(); $scope.loadindex=0;//已完成加载数据
-	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
-	$("#date04").jeDate({isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
+	  $scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
 	
+	$scope.rdcId = $stateParams.rdcId;$scope.isnotprint=true;
+	$("#date04").jeDate({isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
 	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
 	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
-	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); $scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-	//数据模型
-	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
-			  val:[[75,120],[2,5],[0.1,0.15],[30,50],[3,5], [25,50], [],[],[5,10,20]],
-			  tmg:[",温控",",温控",",温控",",开门操作",",开门操作",",货物流通情况",",温控",",温控",",温控",],
-			  msg:[["优良","一般","不理想"],["优良","一般","不理想"], ["优良","一般","不理想"],["优良","一般","不理想"],["规范","一般","频繁"],["优良","一般","不理想"],[],[], [0,1,2,3]]};
-	//===================================================================================工具类start==================================================================================
-	var util = {
-			getMsg:function(index,avgval){var vls=mode.val[index];for (var i = 0; i < vls.length; i++) {if(avgval<=vls[i]){ return mode.msg[index][i]; }}return mode.msg[index][mode.msg[index].length-1];},
-			getpieoption:function(title,ldata,sData){return {title :{ text: title,  x:'center', y : 10 },tooltip:{trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)" },legend: {x:'right',orient:'vertical',y: 30,data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData}]};},
-			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { x:40,y2 : 30, width : '88%' ,height:'67%'},legend : { data : ldata, y : 35 },title : { text : title, x : 'center', y : 5 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
+	$scope.endTime=baseTools.formatTime(endDate);
+	$scope.startTime= baseTools.formatTime(firstDate);
+	$scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+
+	$scope.oids=[],$scope.names=[];//当前登陆tempid;
+	
+	$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
+		$scope.pysicaldata=data.entity;
+	}});
+	
+	$scope.changestorage=function(index,storageid){
+		$scope.cuttstorage=$rootScope.mystorages[index];
+		$scope.initTemp();
+		$scope.dwrtemplin();
+		$scope.initTempWarningmsg();
 	};
-	//===================================================================================工具类end==================================================================================
-	//1.系统评分
-	$scope.pysical=function(){
-		//获得分析结果
-
-		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){
-			++$scope.loadindex;$scope.pysicaldata=data.entity;
-		}});
+	
+	$scope.initTemp=function(){
+			if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
+		   		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;$scope.names=$rootScope.Tempset[$scope.storageID].names;$scope.loadTemp();
+		   	}else{
+		   		 $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.cuttstorage.id}}).success(function (data) {if(data){
+		   		    	 	angular.forEach(data,function(obj,i){$scope.oids.push(obj.id);$scope.names.push(obj.name);});
+		   		    	 	 $rootScope.Tempset[$scope.cuttstorage.id]={oids:$scope.oids,names:$scope.names};
+		   		    	   	 $scope.loadTemp();
+		   		 };});	
+		   	};
 	};
-
-	//==========================================================================================================================================================
-    $scope.disposeChart=function(){
-    	if($scope.charArray!=null){
-    		angular.forEach($scope.charArray,function(item){
-        		item.clear();//销毁对象并设为null
-        		 $("#"+item.dom.id).empty();
-        	});
-    	}
-    	$scope.loadindex=0;$scope.isloaderr=false;
-        window.CollectGarbage && CollectGarbage();//清理内存
-    };
-
-    $scope.initdata=function(){
-		$scope.disposeChart();
-		$scope.pysical();
-		$scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
-        $("#loding").hide();
-    };
-    $scope.initdata();
-    function printpage(){
-    	$(".chartPart").css('border',0);
-    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").addClass('font10');
-    	$.print('#print');}
-    function chanpangstatus(){
-    	$scope.isnotprint=true;
-    	$(".chartPart").css('border','1px solid #eee');
-    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
-    }
-    $scope.getreport=function(){
-    	var newDate=$("#date04").val().split("-");
-    	if(newDate.length!=2){ return; }
-    	var firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);
-    	firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
-    	var endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); 
-    	endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
-    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
-    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-    	if(newtime==$scope.timeuRange){return;} $scope.timeuRange=newtime;
-    	 $scope.initdata();
-    };
-	$scope.Preview=function(){ //打印预览
-		  $scope.isnotprint=false;
-		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });
-		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
+	
+	 $scope.loadTemp = function () {
+	    	if($scope.oids.length==0){return;};
+	    	var maxTime=endDate.getTime();
+	        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
+	        	var yData = [], tempMap = result.tempMap,systime=result.systime;
+	            var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
+	            $scope.cuttstorage.datumTemp=datumTemp;
+	        	var i= 0,tempList=newdata = [],vo=cuttime=null; 
+	            for(var key in tempMap) { 
+	             	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
+	                 if( tempList.length>0){
+		                 for ( i = 0; i < tempList.length; i++) {
+							 vo=tempList[i];
+							 cuttime=new Date(vo.addtime).getTime();
+		                	 newdata.push({ x: cuttime,y: vo.value});
+						}
+		                if( systime-cuttime>1800000&&systime-maxTime<1200000){//大于半个小时。。提醒
+		                	newdata.push({ x: maxTime,y:null}); 
+		                }   
+	                 }else{
+	                	 newdata.push({ x: firstDate.getTime(),y:null});
+	                	 newdata.push({ x: maxTime,y:null});
+	                 }
+	                yData.push({"name": key, "data": newdata});
+	            } 
+	            yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data: [{x: firstDate.getTime(),y: datumTemp},{x: endDate.getTime(),y: datumTemp}]});//处理基准温度
+	            $scope.initHighchart(datumTemp,yData);
+	          });
+	         
+	    };
+	    $scope.initHighchart=function(datumTemp,yData ){
+	           new Highcharts.Chart({
+	        	  series: yData,
+	              legend: { enabled: false },
+	              exporting: {enabled: false},
+	              credits: { enabled: false },
+	              plotOptions: { series: { marker: { enabled: false } }},
+	              title: { text: '' },
+	              xAxis: {  type: 'datetime', tickPixelInterval: 150,  },
+	              yAxis: {title: {text: '温度(℃)' }, plotLines: [{value: 0,width: 1, color: '#808080' },  { color: 'red',   dashStyle: 'solid',   value: datumTemp, width: 2, label: {  text: '基准温度(' + datumTemp + '℃)',align: 'right',   x: 0   }  }] },
+	              tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2); } },
+	              chart: {
+	                  type: 'spline',
+	                  renderTo: 'temperatureChart',
+	                  animation: Highcharts.svg, // don't animate in old IE
+	                  marginRight: 10,
+	                  backgroundColor: {  linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},stops: [ [0, 'rgb(210, 214, 222)'],[1, 'rgb(210, 214, 222)'] ]  }, borderColor: '#d2d6de', borderWidth: 2, className: 'dark-container', plotBackgroundColor: 'rgba(210, 214, 222, .1)',  plotBorderColor: '#d2d6de', plotBorderWidth: 1
+	              }
+	          });
+	    };
+	    
+	$scope.dwrtemplin=function(){
+		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'OverTempL1Time,OverTempL2Time,OverTempL3Time,OverTempL1Count,OverTempL2Count,OverTempL3Count', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
+			if(data&&data.OverTempL1Time){
+				var xdata=[],l1time=[],l1tailtime=0, l1tailcount=0,l2tailcount=0,l3tailcount=0, l1count=[],l2time=[],l2count=[],l3time=[],l3count=[];
+				angular.forEach(data.OverTempL2Time, function(obj,i){ l2time.unshift(obj.value);});
+				angular.forEach(data.OverTempL3Time, function(obj,i){ l3time.unshift(obj.value);});
+				angular.forEach(data.OverTempL2Count,function(obj,i){l2count.unshift(obj.value);l2tailcount+=obj.value;});
+				angular.forEach(data.OverTempL3Count,function(obj,i){l3count.unshift(obj.value);l3tailcount+=obj.value;});
+				angular.forEach(data.OverTempL1Count,function(obj,i){l1count.unshift(obj.value); l1tailcount+=obj.value;});
+				angular.forEach(data.OverTempL1Time,function(obj,i){xdata.unshift(baseTools.formatTime(obj.date).split(" ")[0]);l1time.unshift(obj.value);l1tailtime+=obj.value;});
+		    	var score=100-l1tailcount*10-l2tailcount/4*5-l3tailcount/8*2;
+				$scope.cuttstorage.l1tailtime=l1tailtime;
+				$scope.cuttstorage.l1tailcount=l1tailcount;
+				$scope.cuttstorage.score=score<35?35:score;
+				$('#tempwarning').highcharts({
+			        title: { text: null},
+			        xAxis: [{  categories: xdata, crosshair: true }],
+			        yAxis: [ { title: { text: '危险告警时长(min)', } },  { title: { text: '危险告次数 (次)' }, opposite: true }],
+			        tooltip: { shared: true },
+			        legend: { verticalAlign: 'top' },
+			        series: [
+			                 { name: '危险告警时长', type: 'column', yAxis: 1, data: l1time,tooltip: {  valueSuffix: ' min' } },
+			                 { name: '严重告警时长', type: 'column', yAxis: 1, data: l2time,tooltip: {  valueSuffix: ' min' } },
+			                 { name: '正常告警时长', type: 'column', yAxis: 1, data: l3time,tooltip: {  valueSuffix: ' min' } },
+			                 { name: '危险告警次数', type: 'spline', data: l1count, tooltip: { valueSuffix: '次' }},
+			                 { name: '严重告警次数', type: 'spline', data: l2count, tooltip: { valueSuffix: '次' }},
+			                 { name: '正常告警次数', type: 'spline', data: l3count, tooltip: { valueSuffix: '次' }}
+			                ]
+			    });
+			}
+		});
+	};
+		
+	$scope.initTempWarningmsg=function(){
+		$http.get('/i/AlarmController/getOverTempByTime', { params: {rdcId:$scope.rdcId,  oid:$scope.cuttstorage.id,level:1, startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
+			$scope.warninglist=data;
+		});
+	};
+	
+	 $scope.initdata=function(){
+			$scope.cuttstorage=$rootScope.mystorages[0];
+			$scope.initTemp();	
+			$scope.dwrtemplin();
+			$scope.initTempWarningmsg();
 	 };
-	 $('.goTop').click(function(event) {
-			$('html,body').stop().animate({'scrollTop':0}, 200);
-	});
-	$(window).scroll(function(event) {
-		if ($(window).scrollTop() >= $(window).height()) {
-			$('.goTop').show();
-		} else {
-			$('.goTop').hide();
-		}
-	});//一键回到顶部
-	
-	
-	/*月度曲线图*/
-	var myCharts = echarts.init(document.getElementById('monthlyChart'));
-    // 指定图表的配置项和数据
-    var option = {
-    	    tooltip: {
-    	        trigger: 'axis',
-    	        axisPointer: {
-    	            type: 'cross',
-    	            crossStyle: {
-    	                color: '#999'
-    	            }
-    	        }
-    	    },
-    	    legend: {
-    	        data:['次数']
-    	    },
-    	    xAxis: [
-    	        {
-    	            type: 'category',
-    	            data: ['1','4','7','10','13','16','19','22','25','28','31'],
-    	            axisPointer: {
-    	                type: 'shadow'
-    	            }
-    	        }
-    	    ],
-    	    yAxis: [
-    	        {
-    	            type: 'value',
-    	            name: '次数/次',
-    	            min: 0,
-    	            max: 250,
-    	            interval: 50,
-    	            axisLabel: {
-    	                formatter: '{value}'
-    	            }
-    	        }
-    	    ],
-    	    series: [
-    	        {
-    	            name:'次数',
-    	            type:'line',
-    	            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0]
-    	        }
-    	    ]
-    	};
+	 
+	if($rootScope.mystorages==undefined){
+		  $scope.changeStorages=function(){
+			   if($rootScope.mystorages!=undefined){
+				   initdatawatch();
+				   $scope.initdata();
+			   }
+		    };
+		  initdatawatch= $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
+	}else{
+		$scope.initdata();
+	}
+	  
 
-    // 超温时间及次数统计表
-    var myCharts1 = echarts.init(document.getElementById('doublechart'));
-    var option1 = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross',
-                crossStyle: {
-                    color: '#999'
-                }
-            }
-        },
-        legend: {
-            data:['次数','时长']
-        },
-        xAxis: [
-            {
-                type: 'category',
-                data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-                axisPointer: {
-                    type: 'shadow'
-                }
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                name: '次数/次',
-                min: 0,
-                max: 250,
-                interval: 50,
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            },
-            {
-                type: 'value',
-                name: '时长/min',
-                min: 0,
-                max: 25,
-                interval: 5,
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            }
-        ],
-        series: [
-            {
-                name:'次数',
-                type:'line',
-                data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-            },
-            {
-                name:'时长',
-                type:'line',
-                yAxisIndex: 1,
-                data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-            }
-        ]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myCharts.setOption(option);
-    myCharts1.setOption(option1);
-    window.onresize = myCharts.resize;
 });

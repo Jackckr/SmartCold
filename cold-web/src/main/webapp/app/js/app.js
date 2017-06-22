@@ -273,11 +273,16 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/cpswaterCost/{groupID}',
     	controller: 'cpswaterCost',
         templateUrl: 'app/template/waterCostGroup.html'
-    }).state('overTemperature',{
-    	url:'/overTemperature/{rdcId}',
-    	controller: 'overTemperature',
-        templateUrl: 'app/template/overTemperature.html'
-    }).state('overTemperatureYZ',{
+    }).state('overTemperatureTime',{
+    	url:'/overTemperatureTime/{rdcId}',
+    	controller: 'overTemperatureTime',
+        templateUrl: 'app/template/overTemperatureTime.html'
+    }).state('overTemperatureCount',{
+    	url:'/overTemperatureCount/{rdcId}',
+    	controller: 'overTemperatureCount',
+        templateUrl: 'app/template/overTemperatureCount.html'
+    })
+    .state('overTemperatureYZ',{
     	url:'/overTemperatureYZ/{rdcId}',
     	controller: 'overTemperatureYZ',
         templateUrl: 'app/template/overTemperatureYZ.html'

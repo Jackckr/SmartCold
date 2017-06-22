@@ -92,11 +92,10 @@ public class QuartzJobFactory implements Job {
 						}
 					}
 					if(SetUtil.isnotNullList(warningList)){
-						QuartzManager.logs.add("保存超温告警："+key+"条目："+warningList.size());
+						QuartzManager.logs.add(key+"保存超温告警："+key+"条目："+warningList.size()+":"+TimeUtil.getDateTime());
 						sysWarningsInfoMapper.addSyswarningsinfo(warningList);
 					}
 				}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("温度数据检查执行异常===" + e.getMessage());

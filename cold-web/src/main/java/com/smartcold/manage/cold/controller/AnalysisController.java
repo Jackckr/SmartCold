@@ -3,17 +3,20 @@ package com.smartcold.manage.cold.controller;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -505,5 +508,12 @@ public class AnalysisController {
 		String mode[][] = modeList.toArray(new String[modeList.size()][]);
 		ExportExcelUtil.expExcel(response, fileName, title, mode, colmode, shelName, expdata);
 	}
+	
+	@RequestMapping(value = "/getAnalysisDataByKey", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getAnalysisDataByKey(int type, int oid, String keys,@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		return this.coldStorageAnalysisService.findValueByDateKeys(type, oid, Arrays.asList(keys.split(",")), startTime, endTime);
+	}
+	
 
 }

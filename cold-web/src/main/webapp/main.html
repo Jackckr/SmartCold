@@ -32,7 +32,7 @@
 	<div class="wrapper">
 		<!-- Main Header -->
 		<header class="main-header">
-			<div class="ring">
+			<div class="ring hide">
 				<span class="ringBox"><i class="iconfont">&#xe6f0;</i></span>
 				<span ng-bind-html="notReadMessage"></span>
 			</div>
@@ -302,7 +302,8 @@
 									class="menu-title">温度分析</span><i
 									class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTemperature/{{rdcId}}"><i class="fa fa-circle-o"></i>超温时长统计</a></li>
+									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTemperatureTime/{{rdcId}}"><i class="fa fa-circle-o"></i>超温时长统计</a></li>
+									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTemperatureCount/{{rdcId}}"><i class="fa fa-circle-o"></i>超温时次数统计</a></li>
 									<li id="ml_acl112" onclick="activeLi(this)"><a href="#/overTemperatureYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>超温因子统计</a></li>
 									<li id="ml_acl113" onclick="activeLi(this)"><a href="#/BWYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>保温因子统计</a></li>
 									<li id="ml_acl114" onclick="activeLi(this)"><a href="#/WDZQYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>温度周期因子统计</a></li>
@@ -340,9 +341,9 @@
 							<li id="ml_acl140" onclick="activeLi(this)"><a
 								href="#/reportsAnalysis/{{rdcId}}"><i class="icon iconfont"></i><span
 									class="menu-title">报表功能</span></a></li>
-							<li id="ml_acl150" onclick="activeLi(this)"><a
-								href="#/monthReport/{{rdcId}}"><i class="icon iconfont"></i><span
-									class="menu-title">分析报告</span></a></li>
+<!-- 							<li id="ml_acl150" onclick="activeLi(this)"><a -->
+<!-- 								href="#/monthReport/{{rdcId}}"><i class="icon iconfont"></i><span -->
+<!-- 									class="menu-title">分析报告</span></a></li> -->
 							<li id="ml_acl150" onclick="activeLi(this)"><a
 									href="#/monthReport2/{{rdcId}}"><i class="icon iconfont"></i><span
 									class="menu-title">分析报告2</span></a></li>

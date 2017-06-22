@@ -117,5 +117,15 @@ public class AlarmController extends BaseController {
 		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 1, null, starttime, endtime);
 	}
 	
+	/**
+	 * @param rdcId:冷库ID
+	 * @return
+	 */
+	@RequestMapping(value = "/getOverTempByTime")
+	@ResponseBody
+	public List<SysWarningsInfo> getOverTempByTime(int rdcId,int oid,int level,String starttime,String endtime) {
+		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, oid+"", 1, 1, starttime, endtime);
+	}
+	
 
 }

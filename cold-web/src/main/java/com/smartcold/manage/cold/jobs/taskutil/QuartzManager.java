@@ -262,7 +262,7 @@ public class QuartzManager {
 	 * @param oid
 	 */
 	public static synchronized void removeJob(int key){
-		logs.add("异常任务："+key);
+		logs.add("移除任务任务："+key);
 		if(QuartzManager.tempListen.containsKey(key)){
 			ScheduleJob job = QuartzManager.tempListen.get(key);
 			if(job.isTask()){//如果是任务 删除定时任务
