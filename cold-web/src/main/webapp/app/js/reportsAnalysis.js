@@ -179,9 +179,11 @@ coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$root
 	//********************************************************************事件START**********************************************************************
 	$scope.slgroupsl=function(e){$scope.showobjgroup=!$scope.showobjgroup;};
 	$scope.showkeyli=function($event,index,urlid){//  urlid==0->单key  1:多key
+        var em=$($event.target),disid=em.attr("disid") ;
+        if(disid=="false"){return;}
 		$scope.slindex=index,$scope.urlid=urlid;
 		$("#ul_key_list li").removeClass("select");
-		$($event.target).addClass("select");
+        em.addClass("select");
 		$scope.sltit=$event.target.innerText;
 		$scope.showobjgroup=false; 
 		$scope.getsldata();

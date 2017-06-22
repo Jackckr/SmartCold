@@ -96,10 +96,11 @@ app.service('userService', function($rootScope,  $http) {
         $rootScope.rdcId = rootRdcId;
         $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
             $rootScope.aclml=data.aclml;
+            $rootScope.aclmap={};
             $rootScope.pagstate=[];
-
             $("body .role_limit").attr("disabled",true).removeClass("role_limit").removeClass("role_hide");
             angular.forEach(data.aclml,function(obj,i){
+                $rootScope.aclmap[obj.id]=obj.acl;
                 if(obj.acl){
                     if(!obj.hasnode){
                         // 技术原因，无法处理

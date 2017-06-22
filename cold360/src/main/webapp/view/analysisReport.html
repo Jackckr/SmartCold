@@ -86,15 +86,15 @@
 		<div class="filter">
 			<p><strong>请选择需要查询的项目：</strong></p>
 			<div class="project clearfix">
-				<div ng-click="showkeyli($event,0,0)" class="default">日耗电量</div>
-				<div ng-click="showkeyli($event,1,0)" class="default">日耗水量</div>
-				<div ng-click="showkeyli($event,2,1)" class="default">冷  库  门</div>
-				<div ng-click="showkeyli($event,3,1)" class="default">温度分析</div>
-				<div ng-click="showkeyli($event,4,1)" class="default">热　　量</div>
-				<div ng-click="showkeyli($event,5,1)" class="default">冷风机</div>
-				<div ng-click="showkeyli($event,6,0)" class="default">系统效率</div>
-				<div ng-click="showkeyli($event,7,0)" class="default">货物因子</div>
-				<div ng-click="showkeyli($event,8,1)" class="default">制冷运行分析</div>
+                <div ng-disabled="!aclmap[20]" style="{{aclmap[20]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[20]}}" ng-click="showkeyli($event,0,0)" class="default">日耗电量</div>
+                <div ng-disabled="!aclmap[20]" style="{{aclmap[20]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[20]}}" ng-click="showkeyli($event,1,0)" class="default">日耗水量</div>
+                <div ng-disabled="!aclmap[121]" style="{{aclmap[121]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[121]}}" ng-click="showkeyli($event,2,1)" class="default">冷  库  门</div>
+                <div ng-disabled="!aclmap[110]" style="{{aclmap[110]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[110]}}" ng-click="showkeyli($event,3,1)" class="default">温度分析</div>
+                <div ng-disabled="!aclmap[123]" style="{{aclmap[123]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[123]}}" ng-click="showkeyli($event,4,1)" class="default">热　　量</div>
+                <div ng-disabled="!aclmap[62]" style="{{aclmap[62]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[62]}}" ng-click="showkeyli($event,5,1)" class="default">冷风机</div>
+                <div ng-disabled="!aclmap[130]" style="{{aclmap[130]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[130]}}" ng-click="showkeyli($event,6,0)" class="default">系统效率</div>
+                <div ng-disabled="!aclmap[122]" style="{{aclmap[122]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[122]}}" ng-click="showkeyli($event,7,0)" class="default">货物因子</div>
+                <div ng-disabled="!aclmap[130]" style="{{aclmap[130]?'':'background: grey!important; color: #ccc!important;pointer-events: none!important;'}}"  disid="{{aclmap[130]}}" ng-click="showkeyli($event,8,1)" class="default">制冷运行分析</div>
 			</div>	
 			<p><strong>请选择时间范围</strong></p>
             <p>开始时间<input class="datainp" id="startTime" type="text" placeholder="请选择开始时间" ng-model="begin" readonly></p>
