@@ -38,6 +38,8 @@ public class WarningTaskService  {
     private static 	List<Integer> Blacklist=Lists.newArrayList();
 	
 	
+
+
 	/**
 	 * 每天凌晨1:10点触发
 	 * Task:刪除临时任务

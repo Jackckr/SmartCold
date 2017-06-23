@@ -44,7 +44,6 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	};
 	
 	 $scope.loadTemp = function () {
-		 alert($scope.startTime);
 	    	if($scope.oids.length==0){return;};
 	    	var maxTime=endDate.getTime();
 	        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {

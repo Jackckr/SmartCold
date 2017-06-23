@@ -38,6 +38,12 @@ public class QuartzJobFactory implements Job {
 		try {
 			 TempWarningService tempWarningServer=QuartzManager.tempWarningServer;
 			 SysWarningsInfoMapper sysWarningsInfoMapper=QuartzManager.sysWarningsInfoMapper;
+			 
+			 
+			 
+			 
+			 
+			 
 			if(tempWarningServer==null||sysWarningsInfoMapper==null){System.err.println("警告！无服务！");return;}
 			int key = (int) context.getMergedJobDataMap().get("sid");
 			ScheduleJob job = QuartzManager.getJob(key);
