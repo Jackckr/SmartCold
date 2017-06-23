@@ -60,6 +60,8 @@ public class UtilController extends BaseController {
 	 //============================
 	 @RequestMapping("/getTempJobLog") 
 	 public Object getTempJobLog()  {return QuartzManager.logs;}
+	 @RequestMapping("/getTempJobSavelogs") 
+	 public Object getTempJobSavelogs()  {return QuartzManager.savelogs;}
 	 @RequestMapping("/getTempJobList") 
 	 public Object getTempJobList(){return  QuartzManager.tempListen;}
 	 

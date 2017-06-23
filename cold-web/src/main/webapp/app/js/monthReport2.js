@@ -20,7 +20,9 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 		$scope.pysicaldata=data.entity;
 	}});
 	
-	$scope.changestorage=function(index,storageid){
+	$scope.changestorage=function(index,storageid,$event){
+		var em=$($event.target);
+		em.addClass('currentCold').siblings().removeClass('currentCold');
 		$scope.cuttstorage=$rootScope.mystorages[index];
 		$scope.initTemp();
 		$scope.dwrtemplin();

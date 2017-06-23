@@ -3,6 +3,7 @@ package com.smartcold.manage.cold.jobs.taskutil;
 import static org.quartz.JobBuilder.newJob;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import org.quartz.CronScheduleBuilder;
@@ -18,8 +19,6 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.google.common.collect.Lists;
-import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
-import com.smartcold.manage.cold.service.TempWarningService;
 import com.smartcold.manage.cold.service.task.QuartzJobFactory;
   
 /*
@@ -31,10 +30,9 @@ public class QuartzManager {
     private static SchedulerFactory gSchedulerFactory = new StdSchedulerFactory();    
     private static String JOB_GROUP_NAME = "MY_JOBGROUP_NAME";    
     private static String TRIGGER_GROUP_NAME = "MY_TRIGGERGROUP_NAME";    
-    public static TempWarningService tempWarningServer;
-	public static SysWarningsInfoMapper sysWarningsInfoMapper;
     //当前任务
 	public static LinkedList<String> logs=Lists.newLinkedList();
+	public static LinkedHashMap<String, Object> savelogs=new LinkedHashMap<String, Object>();
 	public static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
 	
     /** 

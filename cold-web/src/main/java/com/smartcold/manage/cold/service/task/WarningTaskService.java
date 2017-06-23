@@ -1,19 +1,27 @@
 package com.smartcold.manage.cold.service.task;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
+import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
 import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
 import com.smartcold.manage.cold.service.TempWarningService;
+import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
@@ -38,7 +46,14 @@ public class WarningTaskService  {
     private static 	List<Integer> Blacklist=Lists.newArrayList();
 	
 	
+    private static HashSet<Integer> extsid=new HashSet<Integer>();
 
+    
+    
+    
+	public synchronized static void addExtsid(int key) {extsid.add(key);}
+	public synchronized static void clerextsid() {extsid.clear();}
+	public synchronized static HashSet<Integer> getExtsid() {return extsid;}
 
 	/**
 	 * 每天凌晨1:10点触发
@@ -52,6 +67,15 @@ public class WarningTaskService  {
 		QuartzManager.shutdownJobs();
 		QuartzManager.logs.add(TimeUtil.getDateTime()+" 清空任务");
 	}
+	
+	/**
+	 * 数据抓取30秒
+	 */
+    @Scheduled(cron="0/30 * * * * ?")
+	public void checkTempWning() {
+    	excute();
+	}
+    
 	
 	/**
 	 * 单任务模式
@@ -68,8 +92,6 @@ public class WarningTaskService  {
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
 		if(allMonitorTempSet.size()==0||excute>6){
-			QuartzManager.tempWarningServer=this.tempWarningServer;
-			QuartzManager.sysWarningsInfoMapper=this.sysWarningsInfoMapper;
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		}
 		int key=0;float baseTemp=0;
@@ -78,7 +100,12 @@ public class WarningTaskService  {
 			if(Blacklist.contains(key)){continue;}if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
 		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;
 		    colditem.setBaseTemp(baseTemp);//计算基线温度
-			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0, colditem.getDeviceid(),starttime, endtime);//获得最低温度
+		    String deviceid = colditem.getDeviceid();
+		    if(StringUtil.isnotNull(deviceid)){
+		    	String[] split = deviceid.split(",");
+		    	 String newdeviceid="";for (String dev : split) {newdeviceid+="'"+dev+",";}newdeviceid=newdeviceid.substring(0,newdeviceid.length()-1);colditem.setDeviceid(newdeviceid);
+		    }
+			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0,colditem.getDeviceid(),starttime, endtime);//获得最低温度
 			if(minTempData==null){ Blacklist.add(key);  continue;	}//故障  没数据
 			ScheduleJob job = QuartzManager.getJob(key);  long cutttTime=System.currentTimeMillis();
 			if(minTempData.getValue()<baseTemp){
@@ -121,4 +148,85 @@ public class WarningTaskService  {
 			}
 		}
 	}	
+	
+	
+	public void excute(){
+	 if(extsid.size()>0){
+		   try {
+			HashMap<Integer, SysWarningsInfo> allWarningList=new HashMap<Integer, SysWarningsInfo>();
+			   LinkedList<Integer> newextsid=new LinkedList<Integer>();newextsid.addAll(extsid);clerextsid();
+			   QuartzManager.logs.add("开始温度检查："+newextsid);
+			   for (Integer key : newextsid) {
+					ScheduleJob job = QuartzManager.getJob(key);
+					if (job == null) {return;}
+					QuartzManager.removeJob(key);// 清除任务
+					int oldelev = 0;
+					boolean isreturn=false;
+					Date Lt[] = { null, null, null, null, null, null, null };  // 各个级别报警开始时间
+					int Lv[] = { 0, 0, 0, 0, 0 }, Tv[] = { 240,180,120,60,30 };// 各个级别出现的次数// 各个级别错误告警时间
+					ColdStorageSetEntity colditem = job.getColdStorageSetEntity();
+					double basTemp = colditem.getBaseTemp();
+					String starttime=TimeUtil.getDateTime(job.getStartTime());
+					List<ItemValue> tempList = tempWarningServer.getOverTempList(colditem.getTids(), null,colditem.getDeviceid(),starttime,TimeUtil.getDateTime());// 获得所有超温数据
+					if (SetUtil.isnotNullList(tempList) && tempList.size() > 5) {//过滤掉坏的数据
+							for (ItemValue temp : tempList) {
+								if(isreturn){break;}
+								if(temp.getValue()<basTemp){ Lv =new int[]{ 0, 0, 0, 0, 0 };continue;}//温度恢复后
+								int leve = (int) Math.floor(temp.getValue() - basTemp+0.5 )/ 2;
+								if (leve > 4) {leve = 4;}
+								for (int i = 0; i <=leve; i++) {//记录同级超温次数
+									 Lv[i] ++;//Lv[i] =
+									if (Lt[i] == null) {Lt[i] = temp.getAddtime();}
+								}
+								if (leve<oldelev) {//降级高于当前温度
+									if(oldelev>2){
+										for (int i = 4; i >oldelev; i--) {//从高到低算
+											double overtime = Tv[i];//不同级别超温数据不定
+											long minuteBetween = TimeUtil.minuteBetween(Lt[i],temp.getAddtime());
+							                 if(minuteBetween >=overtime){
+							                	 allWarningList.put(colditem.getId(), new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,1, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(temp.getAddtime()),minuteBetween,colditem.getName()+"超温" , colditem.getName()+"发生超温1级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
+							            		 isreturn=true;
+							            		 break;
+							            	 }
+							            	 Lv[i] = 0;Lt[i] = null;//计算完成后重置
+										}// 升级
+									}
+								} 
+							    oldelev = leve;
+							}
+							if(!isreturn){//没有高级报警4~5  
+								Date endtime=tempList.get(tempList.size()-1).getAddtime();
+								for (int i = 4; i>=0;i--) {//记录同级超温次数
+									if(Lv[i]>0){
+										double overtime = Tv[i];//不同级别超温数据不定
+										long minuteBetween = TimeUtil.minuteBetween(Lt[i],endtime)+1;
+						                 if(minuteBetween >=overtime){
+						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:0, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
+						            		 break;
+						            	 }
+									}
+								}
+							}
+							
+						}
+			  }
+			   if(SetUtil.isNotNullMap(allWarningList)){
+				   List<SysWarningsInfo> warningList=new ArrayList<SysWarningsInfo>();  for (Integer key : allWarningList.keySet()) {warningList.add(allWarningList.get(key));}
+				   if( QuartzManager.savelogs.size()>50){
+					   QuartzManager.savelogs.clear();
+				   }
+				   QuartzManager.savelogs.put(TimeUtil.getDateTime(),JSONObject.toJSONString(warningList));
+					this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+		
+	
+		
+		
+	}
 }

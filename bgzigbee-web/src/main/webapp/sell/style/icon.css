@@ -54,8 +54,11 @@
 .dev_mang {background: url(img/icons.png) no-repeat scroll -1112px -30px rgba(0, 0, 0, 0);}/*设备告警*/
 .dev_data {background: url(img/icons.png) no-repeat scroll -990px -29px rgba(0, 0, 0, 0);}/*设备数据*/
 .dev_port {background: url(img/icons.png) no-repeat scroll -149px -450px rgba(0, 0, 0, 0);}/*数据监控*/
+
 .dev_replace {background: url(img/icons.png) no-repeat scroll -839px -30px rgba(0, 0, 0, 0);}/*设备更换*/
 .dev_del {background: url(img/icons.png) no-repeat scroll -1023px -30px rgba(0, 0, 0, 0);}/*设备删除*/
+.dev_charge {background: url(img/icons.png) no-repeat scroll -1200px -30px rgba(0, 0, 0, 0);}/*设备充电*/
+.dev_token {background: url(img/icons.png) no-repeat scroll -1050px -511px rgba(0, 0, 0, 0);}/*设备充电*/
 
 /*=====================================用户图标=====================================================*/
 .user_audit{background: url(img/icons.png) no-repeat scroll -961px -659px rgba(0, 0, 0, 0);}

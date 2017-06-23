@@ -107,7 +107,6 @@ public class CronExpConversion {
              */
             cronEx = (commons + dayOfMonth + " " + month + " " + CronExpConversion.specialCharacters.get(CronExpConversion._ANY) + " ").trim();
         }
-        System.out.println(cronEx);
         return cronEx;
     }
 }

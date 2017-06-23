@@ -11,7 +11,7 @@
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px" >
 	<div class="page-header row" style="padding: 5px 0px">
 	  <div class="col-lg-4">
-	  	&nbsp;&nbsp;月报表--新版
+	  	&nbsp;&nbsp;月度报表
 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button>
 	  <button class="btn btn-info myPrint" onclick="pdfFn()"> 导出PDF </button>
 	  </div>
@@ -25,17 +25,17 @@
 		<div class="clearfix">
 			<span class="pull-left">选择版本</span>
 			<ul class="coldName version_choice clearfix pull-left">
-				<li><label class="checkbox-inline">温度版</label></li>
-				<li><label class="checkbox-inline">基本版</label></li>
-				<li><label class="checkbox-inline">聪慧版</label></li>
-				<li><label class="checkbox-inline">智能版</label></li>
-				<li><label class="checkbox-inline">维护版</label></li>
+				<li class="currentCold">温度版</li>
+				<li class="grey">基本版</li>
+				<li class="grey">聪慧版</li>
+				<li class="grey">智能版</li>
+				<li class="grey">维护版</li>
 			</ul>
 		</div>
 		<div class="clearfix">
 			<span class="pull-left">选择冷库</span>
 			<ul class="coldName clearfix pull-left">
-				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id)"><label class="checkbox-inline">{{storage.name}}</label></li>
+				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id,$event)">{{storage.name}}</li>
 			</ul>
 		</div>
 	</div>

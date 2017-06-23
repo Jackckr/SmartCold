@@ -94,7 +94,7 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 	    		 	    content: '密码重置成功咯~'
 	    		 	    ,btn: '确定'
 	    		 	  });
-            		window.location.href = "login.html";
+            		window.location.href = "../index.html";
             	}else{
             		$("#mention2").html("修改失败~请稍后重试~");
             	} }

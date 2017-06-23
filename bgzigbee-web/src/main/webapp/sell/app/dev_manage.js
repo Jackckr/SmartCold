@@ -33,7 +33,7 @@ function replace_dev(){//更换设备
 
 
 function init_table() {
-	var tool  = [{text:'清除无效设备',iconCls:'dev_del',handler:opendevdialog},{text:'更换设备',iconCls:'dev_replace',handler:opendevdialog},{text:'刷新',iconCls:'pagination-load',handler:reloaddata}];
+//	var tool  = [{text:'清除无效设备',iconCls:'dev_del',handler:opendevdialog},{text:'设备充电',iconCls:'dev_replace',handler:opendevdialog},{text:'更换设备',iconCls:'dev_replace',handler:opendevdialog},{text:'刷新',iconCls:'pagination-load',handler:reloaddata}];
     var col = [[
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},
@@ -56,16 +56,19 @@ function init_table() {
         remoteSort: false,
         striped:true,
         rownumbers:true,
-        toolbar:tool,
+        toolbar:'#tabl_tool',
         columns:col,
         onLoadError:clearTable,
         onDblClickRow:onDblClickRow
      });
 }
 
-
-$().ready(function () {
+function initData(){
 	init_table();
 	initTree('../../i/rdc/getRdcTree', onSelect);
 	$("#_easyui_textbox_input1").keyup(function(){doSearch(this.value);});
+}
+$().ready(function () {
+
+ 
 });
