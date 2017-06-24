@@ -73,6 +73,7 @@ public class QuantityTaskService  {
 	private static ArrayList<String> errDevList=new ArrayList<String>(); 
 	private static HashMap<String, String[]> coldStoragecache=new HashMap<String, String[]>();//
 	
+	
 	/**
 	 * 5分钟执行一次
 	 * Task:检查数据是否执行报警 
@@ -179,7 +180,7 @@ public class QuantityTaskService  {
 						continue;
 					}
 					Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "Temp", startTime, endTime);//keyval.get(obj.getType())
-					if(size>0){devmapid.append(obj.getId()+",");devid.append(obj.getDeviceid()+",");}
+					if(size>0){devmapid.append(obj.getId()+",");devid.append("'"+obj.getDeviceid()+"',");}
 				}
 				if(devmapid.length()>0){
 					this.deviceMapper.resetDevByID(devmapid.substring(0, devmapid.length()-1));

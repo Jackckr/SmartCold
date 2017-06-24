@@ -31,8 +31,6 @@ public class QuartzManager {
     private static String JOB_GROUP_NAME = "MY_JOBGROUP_NAME";    
     private static String TRIGGER_GROUP_NAME = "MY_TRIGGERGROUP_NAME";    
     //当前任务
-	public static LinkedList<String> logs=Lists.newLinkedList();
-	public static LinkedHashMap<String, Object> savelogs=new LinkedHashMap<String, Object>();
 	public static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
 	
     /** 
@@ -260,7 +258,6 @@ public class QuartzManager {
 	 * @param oid
 	 */
 	public static synchronized void removeJob(int key){
-		logs.add("移除任务任务："+key);
 		if(QuartzManager.tempListen.containsKey(key)){
 			ScheduleJob job = QuartzManager.tempListen.get(key);
 			if(job.isTask()){//如果是任务 删除定时任务

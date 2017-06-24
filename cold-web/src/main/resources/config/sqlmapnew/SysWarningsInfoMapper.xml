@@ -15,7 +15,7 @@
 			`warnigmsg`,
 			`addtime`
 		)VALUES
-		 <foreach collection="list" item="model" index="index"  separator="," >  
+		 <foreach collection="list" item="model" separator="," >  
 		  (#{model.rdcid}, #{model.objid}, #{model.type},#{model.level}, #{model.starttime}, #{model.endtime},#{model.longtime}, #{model.title}, #{model.warnigmsg}, #{model.addtime})
 		 </foreach>
 	</insert>

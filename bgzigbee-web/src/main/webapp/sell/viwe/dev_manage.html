@@ -21,7 +21,8 @@
     <script type="text/javascript"  src="../app/dev_manage.js"></script>
   </head>
   
-<body class="easyui-layout">
+<body class="easyui-layout ">
+  <div id="" class="fill none">
 	<div data-options="region:'west',split:true,title:'360冷库'" style="width:300px;">
 	   <div id="left_dev_rdc_filter"><input class="easyui-searchbox" data-options="searcher:doSearch" style="width:100%;margin-right: 5px;"></div>
 	   <div id="left_dev_rdc_tree" >
@@ -30,6 +31,7 @@
 	</div>
 	<div data-options="region:'center',title:'Center'">
 	   <table id="objTable" class="fill"></table>
+	</div>
 	</div>
 	<div class="none">
 		<div id="tabl_tool" style="padding:5px;">

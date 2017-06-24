@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smartcold.manage.cold.api.DFSCollectionController;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
+import com.smartcold.manage.cold.service.task.WarningTaskService;
 import com.smartcold.manage.cold.service.task.ZsDevService;
 import com.smartcold.manage.cold.util.CacheManager;
 import com.smartcold.manage.cold.util.EncodeUtil;
@@ -58,11 +59,9 @@ public class UtilController extends BaseController {
 	 @RequestMapping("/getSYSMemory") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
 	 public Long [] getSYSMemory()  { Runtime runtime = Runtime.getRuntime();return new Long []{runtime.totalMemory()/1048576,runtime.maxMemory()/1048576,runtime.freeMemory()/1048576};}
 	 //============================
-	 @RequestMapping("/getTempJobLog") 
-	 public Object getTempJobLog()  {return QuartzManager.logs;}
-	 @RequestMapping("/getTempJobSavelogs") 
-	 public Object getTempJobSavelogs()  {return QuartzManager.savelogs;}
 	 @RequestMapping("/getTempJobList") 
 	 public Object getTempJobList(){return  QuartzManager.tempListen;}
+	 @RequestMapping("/getTempJobBlacklist") 
+	 public Object getTempJobBlacklist(){return  WarningTaskService.Blacklist;}
 	 
 }

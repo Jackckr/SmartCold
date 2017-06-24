@@ -7,13 +7,14 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
@@ -24,6 +25,7 @@ import com.smartcold.manage.cold.service.TempWarningService;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
+
 
 
 /**
@@ -41,16 +43,10 @@ public class WarningTaskService  {
 	private SysWarningsInfoMapper sysWarningsInfoMapper;
  
 	private static int excute=0;
-	
     private static 	List<ColdStorageSetEntity> allMonitorTempSet=Lists.newArrayList();
-    private static 	List<Integer> Blacklist=Lists.newArrayList();
-	
+    public static 	List<Integer> Blacklist=Lists.newArrayList();
 	
     private static HashSet<Integer> extsid=new HashSet<Integer>();
-
-    
-    
-    
 	public synchronized static void addExtsid(int key) {extsid.add(key);}
 	public synchronized static void clerextsid() {extsid.clear();}
 	public synchronized static HashSet<Integer> getExtsid() {return extsid;}
@@ -60,12 +56,10 @@ public class WarningTaskService  {
 	 * Task:刪除临时任务
 	 * 重置dev
 	 */
-	@Scheduled(cron = "0 10 1 * * ?")
+	@Scheduled(cron = "0 5 1 * * ?")
 	public void delTempTask() {
 		Blacklist.clear();
-		QuartzManager.logs.clear();
 		QuartzManager.shutdownJobs();
-		QuartzManager.logs.add(TimeUtil.getDateTime()+" 清空任务");
 	}
 	
 	/**
@@ -87,11 +81,11 @@ public class WarningTaskService  {
 	@Scheduled(cron = "0 0/10 * * * ?")
 	public void checkData() {
 		excute++;
-		if(QuartzManager.logs.size()>100){	QuartzManager.logs.clear();}
 		Date sttime = TimeUtil.getBeforeMinute(10);
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
 		if(allMonitorTempSet.size()==0||excute>6){
+			Blacklist.clear();
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		}
 		int key=0;float baseTemp=0;
@@ -100,20 +94,19 @@ public class WarningTaskService  {
 			if(Blacklist.contains(key)){continue;}if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
 		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;
 		    colditem.setBaseTemp(baseTemp);//计算基线温度
-		    String deviceid = colditem.getDeviceid();
+		    String deviceid = colditem.getDeviceids();
 		    if(StringUtil.isnotNull(deviceid)){
 		    	String[] split = deviceid.split(",");
-		    	 String newdeviceid="";for (String dev : split) {newdeviceid+="'"+dev+",";}newdeviceid=newdeviceid.substring(0,newdeviceid.length()-1);colditem.setDeviceid(newdeviceid);
+		    	 String newdeviceid="";for (String dev : split) {newdeviceid+="'"+dev+"',";}newdeviceid=newdeviceid.substring(0,newdeviceid.length()-1);colditem.setDeviceids(newdeviceid);
 		    }
-			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0,colditem.getDeviceid(),starttime, endtime);//获得最低温度
-			if(minTempData==null){ Blacklist.add(key);  continue;	}//故障  没数据
+			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0,colditem.getDeviceids(),starttime, endtime);//获得最低温度
+			if(minTempData==null){ Blacklist.add(key);continue;	}//故障  没数据
 			ScheduleJob job = QuartzManager.getJob(key);  long cutttTime=System.currentTimeMillis();
 			if(minTempData.getValue()<baseTemp){
 				if(job==null){
 				   continue; //
 				 }else	if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
 						  QuartzManager.removeJob(key);
-						  QuartzManager.logs.add(TimeUtil.getDateTime()+" 移除任务监听:"+key);
 				}else{
 					System.err.println("进入未知逻辑");
 				}
@@ -121,8 +114,10 @@ public class WarningTaskService  {
 				int lavel = (int) Math.rint(minTempData.getValue()- baseTemp+0.5 )/ 2;
 				if(lavel>5){lavel=5;}//判断当前冷库超温级别
 				if(job==null){
-					 ItemValue  overStrtTime = this.tempWarningServer.getOverStrtTime(colditem.getTids(), baseTemp, colditem.getDeviceid(), starttime, endtime);
-					 if(overStrtTime==null){continue; }else{
+					 ItemValue  overStrtTime = this.tempWarningServer.getOverStrtTime(colditem.getTids(), baseTemp, colditem.getDeviceids(), starttime, endtime);
+					 if(overStrtTime==null){
+						 overStrtTime=minTempData;
+					 }
 						  long croStartTime=cutttTime+(lavel>4 ?1800000:14400000);//30分钟后执行 ：4个小时后执行
 						  String jobName=croStartTime+"_job";//
 						   job = new ScheduleJob(key,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);
@@ -132,8 +127,7 @@ public class WarningTaskService  {
 						   job.setLevel(lavel);
 						   job.setColdStorageSetEntity(colditem);
 		           		   QuartzManager.addJob(key,  job);// 
-		           	       QuartzManager.logs.add(TimeUtil.getDateTime()+" 添加任务："+key); 
-					 }
+					 
 				 }else{
 					 job.setLevel(lavel);
 				     job.setWarcount(job.getWarcount()+1);
@@ -143,19 +137,17 @@ public class WarningTaskService  {
 						 job.setCroStartTime(cutttTime+30000);//半分钟后执行
 					 }
 		    		 QuartzManager.upJob(key, job);
-		    		 QuartzManager.logs.add(TimeUtil.getDateTime()+" 更新任务"+key+"剩余时间："+downMint);
 				 }
 			}
 		}
 	}	
 	
 	
-	public void excute(){
+	private  void excute(){
 	 if(extsid.size()>0){
 		   try {
 			HashMap<Integer, SysWarningsInfo> allWarningList=new HashMap<Integer, SysWarningsInfo>();
 			   LinkedList<Integer> newextsid=new LinkedList<Integer>();newextsid.addAll(extsid);clerextsid();
-			   QuartzManager.logs.add("开始温度检查："+newextsid);
 			   for (Integer key : newextsid) {
 					ScheduleJob job = QuartzManager.getJob(key);
 					if (job == null) {return;}
@@ -167,7 +159,7 @@ public class WarningTaskService  {
 					ColdStorageSetEntity colditem = job.getColdStorageSetEntity();
 					double basTemp = colditem.getBaseTemp();
 					String starttime=TimeUtil.getDateTime(job.getStartTime());
-					List<ItemValue> tempList = tempWarningServer.getOverTempList(colditem.getTids(), null,colditem.getDeviceid(),starttime,TimeUtil.getDateTime());// 获得所有超温数据
+					List<ItemValue> tempList = tempWarningServer.getOverTempList(colditem.getTids(), null,colditem.getDeviceids(),starttime,TimeUtil.getDateTime());// 获得所有超温数据
 					if (SetUtil.isnotNullList(tempList) && tempList.size() > 5) {//过滤掉坏的数据
 							for (ItemValue temp : tempList) {
 								if(isreturn){break;}
@@ -212,11 +204,7 @@ public class WarningTaskService  {
 			  }
 			   if(SetUtil.isNotNullMap(allWarningList)){
 				   List<SysWarningsInfo> warningList=new ArrayList<SysWarningsInfo>();  for (Integer key : allWarningList.keySet()) {warningList.add(allWarningList.get(key));}
-				   if( QuartzManager.savelogs.size()>50){
-					   QuartzManager.savelogs.clear();
-				   }
-				   QuartzManager.savelogs.put(TimeUtil.getDateTime(),JSONObject.toJSONString(warningList));
-					this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
+					   this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
 				}
 		} catch (Exception e) {
 			e.printStackTrace();

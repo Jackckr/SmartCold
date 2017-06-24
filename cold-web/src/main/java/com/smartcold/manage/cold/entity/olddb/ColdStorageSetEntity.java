@@ -30,7 +30,7 @@ public class ColdStorageSetEntity {
 	private float overtempdelay;
 
 	private String tids;//附加属性:温度id 
-	private String deviceid;//附加属性
+	private String deviceids;//附加属性
 	private double baseTemp;//附加属性 :基准温度
 	
 	public int getId() {
@@ -111,11 +111,12 @@ public class ColdStorageSetEntity {
 	public void setTids(String tids) {
 		this.tids = tids;
 	}
-	public String getDeviceid() {
-		return deviceid;
+	
+	public String getDeviceids() {
+		return deviceids;
 	}
-	public void setDeviceid(String deviceid) {
-		this.deviceid = deviceid;
+	public void setDeviceids(String deviceids) {
+		this.deviceids = deviceids;
 	}
 	public double getBaseTemp() {
 		return baseTemp;
