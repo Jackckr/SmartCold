@@ -20,11 +20,11 @@ a:active{color: #656565;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
 table th{padding: 6px 5px; text-align: left; background-color: #e8eef4; border: solid 1px #e8eef4;}
-ul, ol{list-style: none;}
+ul, ol,dl,li{list-style: none;}
 h1, h2, h3, h4, h5, h6{font-size: 100%; font-family: Microsoft YaHei;}
 img{border: none;width: 100%;height:100%;}
 /* 设置HTML5元素为块 */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;  }
 
 /*清浮动*/
 .clearfix:after{content: ""; display: block; visibility: hidden; height: 0; clear: both;}
@@ -59,4 +59,16 @@ html,body,header{
     width: 100%;
     height: 100%;
     min-width: 750px;
+}
+/*颜色 背景*/
+/*<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>*/
+.approve{
+    color: #54c849;
+    font-weight:400;
+}
+.approve i{
+    margin-right: 5px;
+}
+.orange{
+    color: #f57e1e;
 }
