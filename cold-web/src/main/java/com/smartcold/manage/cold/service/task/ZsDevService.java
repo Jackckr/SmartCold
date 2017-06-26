@@ -97,8 +97,9 @@ public class ZsDevService  {
 		
 		
 		private synchronized void addTempData(String data){
-			dataList.push(data);if(dataList.size()>30){
-				for (int i = 0; i <15; i++) {dataList.remove(i);}
+			dataList.push(data);
+			if(dataList.size()>30){
+				dataList.clear();
 			}
 		}
 		

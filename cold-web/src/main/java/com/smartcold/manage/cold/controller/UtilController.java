@@ -59,9 +59,12 @@ public class UtilController extends BaseController {
 	 @RequestMapping("/getSYSMemory") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
 	 public Long [] getSYSMemory()  { Runtime runtime = Runtime.getRuntime();return new Long []{runtime.totalMemory()/1048576,runtime.maxMemory()/1048576,runtime.freeMemory()/1048576};}
 	 //============================
-	 @RequestMapping("/getTempJobList") 
+	 @RequestMapping("/getTempJobList") //获得当前正在监听的冷库
 	 public Object getTempJobList(){return  QuartzManager.tempListen;}
-	 @RequestMapping("/getTempJobBlacklist") 
+	 @RequestMapping("/getTempJobBlacklist") //获得加入黑名单冷库
 	 public Object getTempJobBlacklist(){return  WarningTaskService.Blacklist;}
+	 @RequestMapping("/getColdStatus") //判断指定冷库是否超温
+	 public boolean getColdStatus(int oid )	{	 return  QuartzManager.tempListen.containsKey(oid);
+		 }
 	 
 }

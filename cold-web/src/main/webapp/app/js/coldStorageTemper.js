@@ -8,6 +8,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     $scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']; 
     Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
     $scope.oids=[],$scope.names=[];
+    $scope.startTime = new Date( new Date().getTime() - 1.5 * 60 * 60 * 1000); 
     $scope.getTempset = function () {
     	if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
     		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;$scope.names=$rootScope.Tempset[$scope.storageID].names;$scope.load();
@@ -28,20 +29,19 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     $scope.load = function () {
     	if($scope.oids.length==0){return;};
     	$scope.curtemper = [];
-        var endTime =  new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000), maxTime=endTime.getTime();
+        var endTime =  new Date(), startTime=$scope.startTime,maxTime=endTime.getTime();
         $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
         	var yData = [], tempMap = result.tempMap,systime=result.systime;
             var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
-        	var i= 0,tempList=newdata = [],vo=cuttime=null; 
+        	var i= 0,tempList=newdata = [],vo=cuttime=null;
+        	$scope.startTime=endTime;
             for(var key in tempMap) { 
              	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
                  if( tempList.length>0){
 	                 for ( i = 0; i < tempList.length; i++) {
 						 vo=tempList[i];
-//						 if(i>0){ lasttime=newdata[newdata.length-1].x;}
 						 cuttime=new Date(vo.addtime).getTime();
-//	                	 if(cuttime-lasttime>120000){ newdata.push({ x: lasttime+60000,y: null });} //修正中间数据短传问题1
 	                	 newdata.push({ x: cuttime,y: vo.value });
 					}
 	                if( systime-cuttime>1800000&&systime-maxTime<1200000){//大于半个小时。。提醒
@@ -60,10 +60,9 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             $scope.initHighchart(datumTemp,yData);
             if( $scope.isErr){ $("#mgs_div1").removeClass("hidden");}else{ $("#mgs_div1").addClass("hidden");}
           });
-         
+        $http.get('/i/util/getColdStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
     };
-
-    $scope.initHighchart=function(datumTemp,yData ){
+    $scope.initHighchart1=function(datumTemp,yData ){
            new Highcharts.Chart({
         	  series: yData,
               legend: { enabled: false },
@@ -83,8 +82,81 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
               }
           });
     };
+    
+  function  activeLastPointToolip(chart) {
+        var points = chart.series[0].points;
+        chart.tooltip.refresh(points[points.length -1]);
+    }
+//    $scope.refdata=function(chart,series){
+//         setInterval(function () {
+//             
+//             var endTime =  new Date(),startTime=$scope.startTime;
+//             $http.get('/i/util/getColdStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
+//             $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
+//            	 $scope.startTime=endTime;
+//            	  alert(result);
+//            	  
+//            		var x = (new Date()).getTime(),  y = Math.random();
+//                    series[0].addPoint([x, y], true, true);
+//                    activeLastPointToolip(chart);
+//         	});
+//         }, 3000);
+//    };
+  
+    
+    $scope.initHighchart=function(datumTemp,yData ){
+    	$('#temperatureChart').highcharts({
+    	    chart: {
+    	    	type: 'spline',
+    	        animation: Highcharts.svg,
+    	        marginRight: 10,
+    	        events: {
+    	            load: function () {
+    	            	 setInterval(function () {
+    	            		 var chart = this,series = this.series ;
+    	                     var endTime =  new Date(),startTime=$scope.startTime;
+    	                     $http.get('/i/util/getColdStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
+    	                     $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
+    	                    	 $scope.startTime=endTime;
+    	                    		var x = (new Date()).getTime(),  y = Math.random();
+    	                            series[0].addPoint([x, y], true, true);
+    	                            activeLastPointToolip(chart);
+    	                 	});
+    	                 }, 30000);
+    	            }
+    	        },
+    	        backgroundColor: {  linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},stops: [ [0, 'rgb(210, 214, 222)'],[1, 'rgb(210, 214, 222)'] ]  }, borderColor: '#d2d6de', borderWidth: 2, className: 'dark-container', plotBackgroundColor: 'rgba(210, 214, 222, .1)',  plotBorderColor: '#d2d6de', plotBorderWidth: 1
+    	    },
+    	    title: { text: '动态模拟实时数据'},
+    	    xAxis: { type: 'datetime',  tickPixelInterval: 150  },
+    	    yAxis: {
+    	        title: {
+    	            text: '值'
+    	        },
+    	        plotLines: [{
+    	            value: 0,
+    	            width: 1,
+    	            color: '#808080'
+    	        }]
+    	    },
+    	    tooltip: {
+    	        formatter: function () {
+    	            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2);
+    	        }
+    	    },
+    	    legend: {enabled: false },
+    	    exporting: { enabled: false  },
+    	    series: yData
+    	}, function(c) {   activeLastPointToolip(c);});
+    	
+    	
+    };
+    
+    
+    
+    
     $scope.getTempset(); 
-    clearInterval($rootScope.timeTicket);
-    $rootScope.timeTicket = setInterval(function () { $scope.load(); }, 30000);
-    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
+//    clearInterval($rootScope.timeTicket);
+//    $rootScope.timeTicket = setInterval(function () { $scope.test(); }, 30000);
+//    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
 });

@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
@@ -95,7 +92,7 @@ public class WarningTaskService  {
 		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;
 		    colditem.setBaseTemp(baseTemp);//计算基线温度
 		    String deviceid = colditem.getDeviceids();
-		    if(StringUtil.isnotNull(deviceid)){
+		    if(StringUtil.isnotNull(deviceid)&&deviceid.indexOf("'")==-1){
 		    	String[] split = deviceid.split(",");
 		    	 String newdeviceid="";for (String dev : split) {newdeviceid+="'"+dev+"',";}newdeviceid=newdeviceid.substring(0,newdeviceid.length()-1);colditem.setDeviceids(newdeviceid);
 		    }
@@ -203,7 +200,7 @@ public class WarningTaskService  {
 						}
 			  }
 			   if(SetUtil.isNotNullMap(allWarningList)){
-				   List<SysWarningsInfo> warningList=new ArrayList<SysWarningsInfo>();  for (Integer key : allWarningList.keySet()) {warningList.add(allWarningList.get(key));}
+			   List<SysWarningsInfo> warningList=new ArrayList<SysWarningsInfo>();  for (Integer key : allWarningList.keySet()) {warningList.add(allWarningList.get(key));}
 					   this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
 				}
 		} catch (Exception e) {

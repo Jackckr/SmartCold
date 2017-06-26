@@ -1,15 +1,14 @@
 package com.smartcold.manage.cold.controller;
 
-import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
-import com.smartcold.manage.cold.dto.ResultDto;
-import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
-import com.smartcold.manage.cold.service.task.ZsDevService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
+import com.smartcold.manage.cold.dto.ResultDto;
+import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 
 /**
  * Created by corly on 16-8-22.

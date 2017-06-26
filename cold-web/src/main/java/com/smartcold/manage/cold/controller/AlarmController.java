@@ -15,6 +15,7 @@ import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
+import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -116,6 +117,9 @@ public class AlarmController extends BaseController {
 		String starttime=time+" 00:00:00",endtime=time+" 23:59:59";
 		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 1, null, starttime, endtime);
 	}
+	
+
+	
 	
 	/**
 	 * @param rdcId:冷库ID

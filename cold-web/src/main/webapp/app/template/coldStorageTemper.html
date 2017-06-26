@@ -1,10 +1,16 @@
+<style>
+
+        @-webkit-keyframes magentaPulse {
+            from {background-color: #630030; -webkit-box-shadow: 0 0 9px #333; !imporeat}
+            50% {background-color: #a9014b; -webkit-box-shadow: 0 0 18px #a9014b; }
+            to {background-color: #630030; -webkit-box-shadow: 0 0 9px #333; }
+        }
+        .wiltrue{-webkit-animation-iteration-count: infinite;}
+        .magentaPulse.wiltrue{-webkit-animation-name:magentaPulse;-webkit-animation-duration:3s;}
+</style>
 <div class="page-content">
-    <div class="page-header">
-
-    </div>
-
+    <div class="page-header"> </div>
     <section class="content">
-        
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-12 bounceInLeft animated">
                 <!-- AREA CHART -->
@@ -59,6 +65,12 @@
            <div class="alert alert-info alert-dismissable fadeInUp animated">
 				<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
 				当前冷库没有配置温度信息！
+			</div>
+        </div>    
+         <div id="mgs_div3" ng-if="isOverTemp" class="magentaPulse wiltrue" >
+           <div class="alert  alert-dismissable fadeInUp animated">
+				<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
+				当前冷库正在超温！请注意检查！
 			</div>
         </div>    
 
