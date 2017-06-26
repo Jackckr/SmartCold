@@ -68,5 +68,14 @@ $(function () {
  *点击banner 图上筛选条件js
  */
 function activeA(ops) {
-    $(ops).addClass('activeA').siblings().removeClass('activeA')
+    var oIndex=$(ops).index() ;
+    $(ops).addClass('activeA').siblings().removeClass('activeA');
+    $('.filterTxt').show()
+        .children('li').eq(oIndex).show()
+        .siblings('li').hide();
 }
+$(".arealist li").click(function () {//点击之后跳转到冷库商情
+    $(this).addClass('activeLi').siblings().removeClass('activeLi');
+    $(".filterTxt").hide();
+    alert('在这里要做跳转咯');
+})

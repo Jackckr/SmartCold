@@ -1138,6 +1138,8 @@ input[type='radio']:checked{
 	font-size: .6rem;
 	color: #777;
 }
-
+.alert{
+	font-size: .7rem;
+}
 
 

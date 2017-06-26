@@ -69,7 +69,7 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
                     if ($scope.swiper < $scope.mystorages.length) {
                         var innerHTML = '<div class="swiper-slide">' +
                             '<p class="actually">' + key + '</p>' +
-                            '<div id=' + chartId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-xs-4 col-xs-4 col-xs-4">危险告警:'+$scope.showMap.key[0]+'次</div> <div class="alert alert-warning col-xs-4 col-xs-4 col-xs-4">严重告警:'+$scope.showMap.key[1]+'次</div> <div class="alert alert-info col-xs-4 col-xs-4 col-xs-4">正常告警:'+$scope.showMap.key[2]+'次</div> </div> </div>';
+                            '<div id=' + chartId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-xs-4 col-xs-4 col-xs-4"><p>危险告警:</p>'+$scope.showMap.key[0]+'次</div> <div class="alert alert-warning col-xs-4 col-xs-4 col-xs-4"><p>严重告警:</p>'+$scope.showMap.key[1]+'次</div> <div class="alert alert-info col-xs-4 col-xs-4 col-xs-4"><p>正常告警:</p>'+$scope.showMap.key[2]+'次</div> </div> </div>';
                         $("#chartView").last().append(innerHTML);
                         $scope.swiper += 1;
                     }
@@ -203,7 +203,7 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
                     if ($scope.swiper < $scope.mystorages.length) {
                         var innerHTML = '<div class="swiper-slide">' +
                             '<p class="actually">' + key + '</p>' +
-                            '<div id=' + mainId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-xs-4 col-xs-4 col-xs-4">危险告警:'+$scope.showMap.key[0]+'分钟</div> <div class="alert alert-warning col-xs-4 col-xs-4 col-xs-4">严重告警:'+$scope.showMap.key[1]+'分钟</div> <div class="alert alert-info col-xs-4 col-xs-4 col-xs-4">正常告警:'+$scope.showMap.key[2]+'分钟</div> </div> </div> ';
+                            '<div id=' + mainId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-xs-4 col-xs-4 col-xs-4"><p>危险告警:</p>'+$scope.showMap.key[0]+'分钟</div> <div class="alert alert-warning col-xs-4 col-xs-4 col-xs-4"><p>严重告警:</p>'+$scope.showMap.key[1]+'分钟</div> <div class="alert alert-info col-xs-4 col-xs-4 col-xs-4"><p>正常告警:</p>'+$scope.showMap.key[2]+'分钟</div> </div> </div> ';
                         $("#chartView").last().append(innerHTML);
                         $scope.swiper += 1;
                     }
