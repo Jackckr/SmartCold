@@ -2,6 +2,7 @@ package com.smartcold.manage.cold.controller;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.newdb.AlarmMapper;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
@@ -42,6 +44,55 @@ public class AlarmController extends BaseController {
 	private SysWarningsInfoMapper syswarninginfoMapper;
 	@Autowired
 	private ColdStorageAnalysisService coldStorageAnalysisService;
+	
+	
+	
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param type:
+	 * @param rdcId
+	 * @return
+	 */
+	@RequestMapping(value = "/getAlarmMsg")
+	@ResponseBody
+	public  HashMap<String, Object> getAlarmMsg(int userId,int type,int rdcId) {
+		 List<SysWarningsInfo> warningsInfos=Lists.newArrayList();
+		 warningsInfos.add(new SysWarningsInfo(1063,32,1,1,"2017-6-26 13:26:32","2017-6-26 13:04:36",30,"冷库1超温","","2017-6-26 13:05:40"));
+		HashMap<String, Object> reasHashMap=new HashMap<String, Object>();
+		reasHashMap.put("alarmCount", 1);
+		reasHashMap.put("alarmMsg", warningsInfos);
+		return null;    
+	}
+	
+	/**
+	 * @param rdcId:冷库ID
+	 * @return
+	 */
+	@RequestMapping(value = "/getOverTempDetail")
+	@ResponseBody
+	public List<SysWarningsInfo> getOverTempDetail(Integer rdcId,String time) {
+		String starttime=time+" 00:00:00",endtime=time+" 23:59:59";
+		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 1, null, starttime, endtime);
+	}
+	
+
+	
+	
+	/**
+	 * @param rdcId:冷库ID
+	 * @return
+	 */
+	@RequestMapping(value = "/getOverTempByTime")
+	@ResponseBody
+	public List<SysWarningsInfo> getOverTempByTime(int rdcId,int oid,int level,String starttime,String endtime) {
+		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, oid+"", 1, 1, starttime, endtime);
+	}
+	
+	
+	
+	
 	/**
 	 * @param rdcId:冷库ID
 	 * @return
@@ -107,29 +158,7 @@ public class AlarmController extends BaseController {
 		}
 	}
 	
-	/**
-	 * @param rdcId:冷库ID
-	 * @return
-	 */
-	@RequestMapping(value = "/getOverTempDetail")
-	@ResponseBody
-	public List<SysWarningsInfo> getOverTempDetail(Integer rdcId,String time) {
-		String starttime=time+" 00:00:00",endtime=time+" 23:59:59";
-		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 1, null, starttime, endtime);
-	}
 	
-
-	
-	
-	/**
-	 * @param rdcId:冷库ID
-	 * @return
-	 */
-	@RequestMapping(value = "/getOverTempByTime")
-	@ResponseBody
-	public List<SysWarningsInfo> getOverTempByTime(int rdcId,int oid,int level,String starttime,String endtime) {
-		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, oid+"", 1, 1, starttime, endtime);
-	}
 	
 
 }

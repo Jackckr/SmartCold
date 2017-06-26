@@ -47,6 +47,17 @@ public class TempController {
 	public Object ios_getTempByTime(int oid, String oids,String names, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 		return this.getTempByTime(oid,StringUtil.getIdS(oids) , StringUtil.splitfhString(names), key, startTime, endTime);
 	}
+	
+	@RequestMapping("/getTempref")
+	public Object getRefTemp(int oid, int [] oids,String []names, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		if(oid==0||StringUtil.isNull(key)||oids==null || names==null||names.length!=oids.length){return null;};
+		Map<String, List<StorageKeyValue>> tempMap =this.multiValueService.findMultiValueByTime(StorageType.TEMPE.getType(), key,oids,names, startTime,endTime);
+		NewStorageTempDto storageTempDto = new NewStorageTempDto();
+		storageTempDto.setTempMap(tempMap);
+		storageTempDto.setSystime(new Date().getTime());
+		return storageTempDto;
+	}
+	
 	@RequestMapping("/getTempByTime")
 	public Object getTempByTime(int oid, int [] oids,String []names, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 		if(oid==0||StringUtil.isNull(key)||oids==null || names==null||names.length!=oids.length){return null;};
@@ -60,5 +71,6 @@ public class TempController {
 		storageTempDto.setSystime(new Date().getTime());
 		return storageTempDto;
 	}
+
 	
 }

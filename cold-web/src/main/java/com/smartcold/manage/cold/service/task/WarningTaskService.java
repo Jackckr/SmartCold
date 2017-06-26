@@ -102,10 +102,14 @@ public class WarningTaskService  {
 			if(minTempData.getValue()<baseTemp){
 				if(job==null){
 				   continue; //
-				 }else	if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
+				 }else{
+					 if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
 						  QuartzManager.removeJob(key);
-				}else{
-					System.err.println("进入未知逻辑");
+					 }else{
+						 job.setTask(true);
+						 job.setCroStartTime(cutttTime+30000);//半分钟后执行
+		    		     QuartzManager.upJob(key, job);
+					}
 				}
 			}else {
 				int lavel = (int) Math.rint(minTempData.getValue()- baseTemp+0.5 )/ 2;
@@ -115,16 +119,15 @@ public class WarningTaskService  {
 					 if(overStrtTime==null){
 						 overStrtTime=minTempData;
 					 }
-						  long croStartTime=cutttTime+(lavel>4 ?1800000:14400000);//30分钟后执行 ：4个小时后执行
-						  String jobName=croStartTime+"_job";//
-						   job = new ScheduleJob(key,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);
-						   job.setStartTime(overStrtTime.getAddtime());
-						   job.setTask(false);
-						   job.setWarcount(1);
-						   job.setLevel(lavel);
-						   job.setColdStorageSetEntity(colditem);
-		           		   QuartzManager.addJob(key,  job);// 
-					 
+					 long croStartTime=cutttTime+(lavel>4 ?1800000:14400000);//30分钟后执行 ：4个小时后执行
+					 String jobName=croStartTime+"_job";//
+					 job = new ScheduleJob(key,"MY_JOBGROUP_NAME", jobName, croStartTime,cutttTime);
+					 job.setStartTime(overStrtTime.getAddtime());
+					 job.setTask(false);
+					 job.setWarcount(1);
+					 job.setLevel(lavel);
+					 job.setColdStorageSetEntity(colditem);
+	           		 QuartzManager.addJob(key,  job);// 
 				 }else{
 					 job.setLevel(lavel);
 				     job.setWarcount(job.getWarcount()+1);
