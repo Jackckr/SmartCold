@@ -122,6 +122,19 @@ function imgBoxHide(){
         }
     }, false);
 }
+/*监控铃铛报警信息*/
+function getAlarmBillCount() {
+    $.ajax({url:ER.coldroot+"/i/AlarmController/getAlarmMsg",type:"post",data:{"userId":window.user.id,"type":window.user.type,"rdcId":window.rdcId,"isgetMsg":false},
+        success:function (data) {
+            if(data && data.alarmCount!=0){
+                $("#alarmBill").show();
+                $("#alarmBillCount").html(data.alarmCount);
+            }else {
+                $("#alarmBill").hide();
+            }
+        }
+    });
+}
 /**
  * 事件
  */
@@ -131,6 +144,7 @@ window.onload = function(){
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
     $("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });//一键回到顶部
+
 };
 
 

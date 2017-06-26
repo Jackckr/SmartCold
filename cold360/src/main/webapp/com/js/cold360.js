@@ -94,6 +94,8 @@ var app = angular.module('app', []);
 app.service('userService', function($rootScope,  $http) {
     initAllByRdcId= function(rootRdcId){
         $rootScope.rdcId = rootRdcId;
+        window.rdcId=rootRdcId;
+        getAlarmBillCount();
         $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
             $rootScope.aclml=data.aclml;
             $rootScope.aclmap={};

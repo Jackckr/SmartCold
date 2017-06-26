@@ -130,6 +130,7 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
     
     $scope.initchData = function (storageID,olds,names,startTime,endTime) {
     	if(olds.length==0){return;};
+        $http.get(ER.coldroot +'/i/util/getColdStatus', { params: {"oid": storageID}}).success(function (result) {$scope.isOverTemp=result; });
         $http.get(ER.coldroot +'/i/temp/getTempByTime', { params: {"oid": storageID, oids:olds,names:names, 'key':'Temp', "startTime": formatTime(startTime), "endTime": formatTime(endTime)}}).success(function (result) {
             var name = result.name;
         	var curtemper=[], yData = [], maxTime=endTime.getTime(), tempMap = result.tempMap,systime=result.systime;
@@ -189,7 +190,9 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
 			  
 		  });
     };
-    
+    $scope.close=function () {
+        $scope.isOverTemp=false;
+    }
 
     function clearSwiper() {
         $scope.swiper = 0;
