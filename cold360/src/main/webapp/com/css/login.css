@@ -256,6 +256,9 @@ input[type='radio']:checked{
 /*
 *逸励实业css
 */
+.yiLi{
+	display: none;
+}
 .yiLi header h1{
 	display: inline-block;
 	margin: 1rem;

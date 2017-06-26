@@ -6,10 +6,10 @@ $(function () {
         var sTop = document.body.scrollTop || document.documentElement.scrollTop;
         var oTop = 86;
         if(sTop>oTop){
-            $('header').addClass('fixed');
+            $('.header').addClass('fixed');
             $(".banner").css('marginTop',oTop);
         }else{
-            $('header').removeClass('fixed');
+            $('.header').removeClass('fixed');
             $(".banner").css('marginTop',0);
         }
     });
@@ -22,7 +22,7 @@ $(function () {
     function nextFn(event) {
         $('.imgList li').eq(num).stop().fadeOut(1000);
         num++;
-        if(num>2){
+        if(num>3){
             num=0;
         }
         $('.dianList li').eq(num).addClass('current').siblings().removeClass('current');
@@ -31,8 +31,10 @@ $(function () {
     }
     timer=setInterval(nextFn, 3000);
     $('.banner').hover(function() {
+        $(".leftBtn,.rightBtn").show();
         clearInterval(timer);
     }, function() {
+        $(".leftBtn,.rightBtn").hide();
         clearInterval(timer);
         timer=setInterval(nextFn, 3000);
     });
@@ -46,6 +48,25 @@ $(function () {
         num=i;
 
     });
+    $('.rightBtn').click(nextFn);
+    //单击左按钮：切上一张
+    $('.leftBtn').click(function(event) {
+        $('.imgList li').eq(num).stop().fadeOut(1000);
+        num--;
+        if(num<0){
+            num=3;
+        }
+        $('.dianList li').eq(num).addClass('current').siblings().removeClass('current');
+        $('.imgList li').eq(num).addClass('current').siblings().removeClass('current');
+        $('.imgList li').eq(num).stop().fadeIn(1000);
 
+    });
 
-})
+});
+
+/*
+ *点击banner 图上筛选条件js
+ */
+function activeA(ops) {
+    $(ops).addClass('activeA').siblings().removeClass('activeA')
+}
