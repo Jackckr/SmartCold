@@ -73,3 +73,171 @@ html,body,header{
 .orange{
     color: #f57e1e;
 }
+/*公共头部和版权*/
+.header{
+    width: 100%;
+    height: 116px;
+    background: #2763cc;
+}
+.footer{
+    width: 100%;
+    padding: 30px 5% 0;
+    background-color: #2e3033;
+}
+.section{
+    width: 90%;
+    margin: 15px auto;
+    background-color: #fff;
+    position: relative;
+}
+.hotLine{
+    padding: 0 5%;
+    height: 30px;
+    line-height: 28px;
+    background-color: #363636;
+    color: #e8eef4;
+    font-size: 12px;
+}
+.hotLine a{
+    color: #e8eef4;
+    margin-left: 30px;
+}
+.hotLine a i{
+    font-size: 12px;
+    margin-left:5px;
+}
+.nav{
+    width: 90%;
+    height: 86px;
+    margin:0 auto;
+}
+.nav h1>a{
+    display: block;
+    width: 300px;
+    height: 100%;
+    background: url("../img/logo.png") left center no-repeat;
+    color: #fff;
+    text-indent: 150px;
+    font-size: 20px;
+    line-height:86px;
+}
+.nav h1{
+    display: inline-block;
+    height: 86px;
+    width: 300px;
+}
+.navLogin li,
+.navUl li{
+    float: left;
+    height: 86px;
+}
+.navUl li a:hover,
+.navSmall:hover{
+    background-color: #186eff;
+}
+.navUl li a,
+.navLogin li a{
+    display: block;
+    height: 86px;
+    width: 94px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    line-height: 86px;
+}
+.navLogin li a{
+    text-align: right;
+}
+.navUl{
+    margin-right: 30px;
+}
+.navSmall{
+    display: none;
+}
+.navLogin i{font-size: 18px}
+.navSmall span{
+    display: block;
+    text-align: center;
+    width: 100px;
+    height: 86px;
+    line-height: 86px;
+    color: #fff;
+}
+.navUlList{
+    position: fixed;
+    left: 0;
+    top: 116px;
+    display: none;
+    box-shadow: 0 2px 5px #333;
+    background-color: rgba(0,0,0,.65);
+    z-index:99;
+}
+.navUlList li a{
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    width: 100vw;
+    text-align: right;
+    padding-right: 20vw;
+    color: #fff;
+}
+.navUlList li a:hover{
+    background: #186eff;
+}
+.fixed{
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 10000;
+}
+/*版权信息css*/
+#QRcode{
+    padding: 20px 5%;
+}
+#QRcode ul>li{
+    width: 25%;
+    color: #fff;
+    text-align: center;
+}
+#QRcode ul>li:nth-child(1),
+#QRcode ul>li:nth-child(2),
+#QRcode ul>li:nth-child(3){
+    border-right: 1px solid #414245;
+    box-sizing: border-box;
+}
+#QRcode ul>li>div,#QRcode ul>li>ol{
+    display: inline-block;
+    padding: 0 20px;
+}
+#QRcode ul>li>div>i{
+    font-size: 4em;
+}
+#QRcode ul>li>ol>li{
+    padding: 5px;
+}
+#QRcode ul>li>ol a{
+    color: #949596;
+}
+#QRcode dl{
+}
+#QRcode dl li{
+    width: 50%;
+    margin-bottom: 20px;
+}
+#QRcode dl li:last-child{
+    padding-right: 5%;
+}
+#QRcode dl li p{
+    line-height:2.2;
+}
+#QRcode dl li p a{
+    color: #f57e1e;
+}
+.codeImg{
+    text-align: center;
+    display: inline-block;
+    width: 30%;
+}
+.codeImg img{
+    width: 100px;
+}

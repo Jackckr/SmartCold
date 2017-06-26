@@ -1,0 +1,48 @@
+/*
+*   lianku new version style
+*   author:wellsea
+*   date:2017-06-26
+*   mark:所有媒体查询文件都在此处
+*   媒体查询兼容性：i9+
+*/
+
+
+@media only screen and (max-width: 1300px){
+    .navUl{
+        display: none;
+    }
+    .navSmall{
+        display: block;
+        cursor: pointer;
+        text-align: left;
+        position: relative;
+    }
+    .navUl li a, .navLogin li a{
+        width: 70px;
+        text-align: center;
+    }
+    .imglist,.txtlist{
+        width: 100%;
+    }
+    .codeImg img{
+        width: 50px;
+    }
+    .leftList,.rightList,.list3,.list2,.list1{
+        width: 100%;
+    }
+    .filterTxt{
+        top:100%;
+        left:0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
