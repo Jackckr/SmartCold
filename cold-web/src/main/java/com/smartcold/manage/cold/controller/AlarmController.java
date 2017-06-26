@@ -57,12 +57,14 @@ public class AlarmController extends BaseController {
 	 */
 	@RequestMapping(value = "/getAlarmMsg")
 	@ResponseBody
-	public  HashMap<String, Object> getAlarmMsg(int userId,int type,int rdcId) {
-		 List<SysWarningsInfo> warningsInfos=Lists.newArrayList();
-		 warningsInfos.add(new SysWarningsInfo(1063,32,1,1,"2017-6-26 13:26:32","2017-6-26 13:04:36",30,"冷库1超温","","2017-6-26 13:05:40"));
+	public  HashMap<String, Object> getAlarmMsg(int userId,int type,int rdcId,Boolean isgetMsg) {
 		HashMap<String, Object> reasHashMap=new HashMap<String, Object>();
 		reasHashMap.put("alarmCount", 1);
-		reasHashMap.put("alarmMsg", warningsInfos);
+		if(isgetMsg!=null&&isgetMsg){
+			List<SysWarningsInfo> warningsInfos=Lists.newArrayList();
+			warningsInfos.add(new SysWarningsInfo(1063,32,1,1,"2017-6-26 13:26:32","2017-6-26 13:04:36",30,"冷库1超温","","2017-6-26 13:05:40"));
+			reasHashMap.put("alarmMsg", warningsInfos);
+		}
 		return null;    
 	}
 	
