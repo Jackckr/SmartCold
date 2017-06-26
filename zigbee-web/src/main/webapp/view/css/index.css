@@ -10,6 +10,7 @@
 }
 .footer{
     width: 100%;
+    padding: 30px 5% 0;
     background-color: #2e3033;
 }
 .section{
@@ -188,6 +189,7 @@
     position: absolute;
     bottom: 0;
     left: 5%;
+    z-index:11;
     border-bottom: 2px solid #186eff;
     border-top: 2px solid #186eff;
     width: 310px;
@@ -298,6 +300,7 @@
 }
 .txtlist{
     width: 40%;
+    margin-top:15px ;
     border:1px solid #f2f2f2;
 }
 .imglist li{
@@ -317,7 +320,8 @@
     overflow: hidden;
 }
 .imglist li:hover{
-    border-color: #ff9342;
+    border-color: #f57e1e;
+    position: relative;
 }
 .img>img:hover{
     transform: scale(1.2);
@@ -370,7 +374,152 @@
 .price{
     color: #f57e1e;
 }
-.
+.imgTxtList h3{
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+}
+.txtlist li>a{
+    display: block;
+    width: 100%;
+    padding: 15px 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    border-bottom: 1px solid #f2f2f2;
+}
+.txtlist li>a:hover{
+    color: #f57e1e;
+}
+.txtlist a span{
+    display: inline-block;
+    margin-right:1em;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 16px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #4286ff;
+}
+.imgTxtList a.fr{
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    background-color: #4286ff;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+}
+.imgTxtList a.fr i{
+    font-size: 12px;
+}
+.adDouble{
+    margin: 32px 0;
+}
+.adDouble ul li{
+    float: left;
+    width: 50%;
+    height: 80px;
+    overflow: hidden;
+    text-align: center;
+}
+.adDouble ul li a{
+    display: inline-block;
+    padding: 0;
+    width: 204px;
+    height: 80px;
+}
+.chartList li{
+    margin-right: 0;
+    margin-left: 1%;
+}
+.adOne ul li{
+    width: 100%;
+    padding: 10px;
+}
+.adOne ul li a{
+    width: 100%;
+}
+.leftList,.rightList{
+    float: left;
+}
+.leftList{
+    width:40%;
+}
+.rightList{
+    width:60%;
+}
+/*ad*/
+.adbanner{
+    padding: 30px 5%;
+    position: relative;
+}
+.lists{
+    width: 100%;
+    height: 151px;
+    overflow: hidden;
+    position: relative;
+}
+.lists ul {
+    width: 9999px;
+    height: 151px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.lists ul li{
+    float: left;
+    width: 300px;
+    padding:0 10px;
+    margin-right: 1px;
+}
+.lists ul li a{
+    border:2px solid #f9f9fb;
+    padding: 3px;
+    display: inline-block;
+}
+.adbanner i{
+    width: 26px;
+    height: 62px;
+    position: absolute;
+    top: 50%;
+    margin-top: -31px;
+    color: #cccccc;
+    text-align: center;;
+    font-size: 24px;
+    line-height: 62px;
+    cursor: pointer;
+}
+i.left{left: 20px;}
+i.right{right: 20px;}
+.adbanner i:hover{color: #4790ff;}
+.list3,.list2,.list1{
+    width: 32.333%;
+    float: left;
+    margin-right: 1.5%;
+}
+.list3{
+    margin-right: 0;
+}
+.list2 .imglist{
+    width: 100%;
+}
+.list2 .imglist li{
+    float: left;
+    width: 50%;
+    padding: 14px 0;
+    text-align: center;
+    vertical-align: middle;
+    height: inherit;
+    margin: 0;
+}
+.list2 .imglist li a{
+    width: 186px;
+    height:117px;
+    display: inline-block;
+}
 /*版权信息css*/
 #QRcode{
     padding: 20px 5%;
@@ -400,10 +549,10 @@
     color: #949596;
 }
 #QRcode dl{
-    margin-top: 30px;
 }
 #QRcode dl li{
     width: 50%;
+    margin-bottom: 20px;
 }
 #QRcode dl li:last-child{
     padding-right: 5%;
@@ -446,10 +595,23 @@
         display: block;
         cursor: pointer;
         text-align: left;
-        margin-right: 20px;
         position: relative;
     }
-    #QRcode dl li,.imglist,.txtlist{
+    .navUl li a, .navLogin li a{
+        width: 60px;
+        text-align: center;
+    }
+    .imglist,.txtlist{
         width: 100%;
+    }
+    .codeImg img{
+        width: 50px;
+    }
+    .leftList,.rightList,.list3,.list2,.list1{
+        width: 100%;
+    }
+    .filterTxt{
+        top:100%;
+        left:0;
     }
 }

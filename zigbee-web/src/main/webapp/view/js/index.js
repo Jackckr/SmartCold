@@ -62,6 +62,38 @@ $(function () {
 
     });
 
+    /*广告小轮播*/
+    var counts=0;
+    var mytimer;
+    var myclone=$('.lists ul li:lt(4)').clone(true);
+    $('.lists ul').append(myclone)
+    function mynext(){
+        counts++;
+        if (counts>4) {
+            $('.lists ul').css('left', 0);
+            counts=1;
+        };
+        var moves=counts*-1200;
+        $('.lists ul').stop().animate({'left': moves}, 300)
+    }
+    $('.adbanner .right').click(mynext);
+    mytimer=setInterval(mynext,4000);
+    $('.lists').hover(function() {
+        clearInterval(mytimer);
+    }, function() {
+        clearInterval(mytimer);
+        mytimer=setInterval(mynext,4800);
+    });
+    $('.adbanner .left').click(function(){
+        counts--;
+        if (counts<0) {
+            $('.lists ul').css('left', -4800);
+            counts=3;
+        };
+        var moves=counts*-1200;
+        $('.lists ul').stop().animate({'left': moves},300)
+    })
+
 });
 
 /*
