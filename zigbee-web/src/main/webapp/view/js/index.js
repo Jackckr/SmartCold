@@ -1,18 +1,5 @@
 $(function () {
-    $('.navSmall').hover(function() {//导航下拉菜单
-        $(this).children('ul').stop().toggle();
-    });
-    $(document).scroll(function () {//吸附导航
-        var sTop = document.body.scrollTop || document.documentElement.scrollTop;
-        var oTop = 86;
-        if(sTop>oTop){
-            $('.header').addClass('fixed');
-            $(".banner").css('marginTop',oTop);
-        }else{
-            $('.header').removeClass('fixed');
-            $(".banner").css('marginTop',0);
-        }
-    });
+
     $('.imgList li:first').show();
     $('.dianList li:last').css('margin-right', 0);
     //自定义一个变量，用来模拟不断改变的下标，默认值要和页面一致
@@ -22,7 +9,7 @@ $(function () {
     function nextFn(event) {
         $('.imgList li').eq(num).stop().fadeOut(1000);
         num++;
-        if(num>3){
+        if(num>2){
             num=0;
         }
         $('.dianList li').eq(num).addClass('current').siblings().removeClass('current');

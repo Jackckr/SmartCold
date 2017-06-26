@@ -14,3 +14,17 @@ var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
 if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
     window.location.href="http://m.liankur.com"; /* 链接到不同的网址  这个是手机的 */
 }
+$('.navSmall').hover(function() {//导航下拉菜单
+    $(this).children('ul').stop().toggle();
+});
+$(document).scroll(function () {//吸附导航
+    var sTop = document.body.scrollTop || document.documentElement.scrollTop;
+    var oTop = 86;
+    if(sTop>oTop){
+        $('.header').addClass('fixed');
+        $(".banner").css('marginTop',oTop);
+    }else{
+        $('.header').removeClass('fixed');
+        $(".banner").css('marginTop',0);
+    }
+});
