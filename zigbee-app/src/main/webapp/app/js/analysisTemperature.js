@@ -140,10 +140,11 @@ app.controller('analysisTemperature', function ($scope, $location, $http,$timeou
                     }
 
                     var option = {
+                        backgroundColor: '#D2D6DE',
                         legend: {data:['危险超温告警','严重超温告警','正常超温告警']},
                         tooltip : { trigger: 'axis' },
                         toolbox: {
-                            show : true,
+                            show : false,
                             feature : {  dataView : {show: true, readOnly: false}, magicType : {show: true, type: ['line', 'bar']},restore : {show: true}, saveAsImage : {show: true}}
                         },
                         calculable : true,
@@ -155,7 +156,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http,$timeou
                     if ($scope.swiper < $scope.mystorages.length) {
                         var innerHTML = '<div class="swiper-slide">' +
                             '<p class="actually">' + key + '</p>' +
-                            '<div id=' + mainId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-lg-4 col-md-4 col-sm-4">危险告警:'+$scope.showMap.key[0]+'分钟</div> <div class="alert alert-warning col-lg-4 col-md-4 col-sm-4">严重告警:'+$scope.showMap.key[1]+'分钟</div> <div class="alert alert-info col-lg-4 col-md-4 col-sm-4">正常告警:'+$scope.showMap.key[2]+'分钟</div> </div> </div> ';
+                            '<div id=' + mainId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-xs-4 col-xs-4 col-xs-4">危险告警:'+$scope.showMap.key[0]+'分钟</div> <div class="alert alert-warning col-xs-4 col-xs-4 col-xs-4">严重告警:'+$scope.showMap.key[1]+'分钟</div> <div class="alert alert-info col-xs-4 col-xs-4 col-xs-4">正常告警:'+$scope.showMap.key[2]+'分钟</div> </div> </div> ';
                         $("#chartView").last().append(innerHTML);
                         $scope.swiper += 1;
                     }
@@ -204,7 +205,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http,$timeou
                     if ($scope.swiper < $scope.mystorages.length) {
                         var innerHTML = '<div class="swiper-slide">' +
                             '<p class="actually">' + key + '</p>' +
-                            '<div id=' + chartId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-lg-4 col-md-4 col-sm-4">危险告警:'+$scope.showMap.key[0]+'次</div> <div class="alert alert-warning col-lg-4 col-md-4 col-sm-4">严重告警:'+$scope.showMap.key[1]+'次</div> <div class="alert alert-info col-lg-4 col-md-4 col-sm-4">正常告警:'+$scope.showMap.key[2]+'次</div> </div> </div>';
+                            '<div id=' + chartId + '></div><div class="box-body"><div class="clearfix text-center"> <div class="alert alert-danger col-xs-4 col-xs-4 col-xs-4">危险告警:'+$scope.showMap.key[0]+'次</div> <div class="alert alert-warning col-xs-4 col-xs-4 col-xs-4">严重告警:'+$scope.showMap.key[1]+'次</div> <div class="alert alert-info col-xs-4 col-xs-4 col-xs-4">正常告警:'+$scope.showMap.key[2]+'次</div> </div> </div>';
                         $("#chartView").last().append(innerHTML);
                         $scope.swiper += 1;
                     }
@@ -222,13 +223,6 @@ app.controller('analysisTemperature', function ($scope, $location, $http,$timeou
                                 fontSize: 12
                             }
                         },
-                        title: {
-                            text: '30日超温时间因子',
-                            textStyle: {
-                                fontSize: ".75rem",
-                                fontWeight: '400'
-                            }
-                        },
                         legend: {data: ['危险超温告警', '严重超温告警', '正常超温告警']},
                         xAxis: [{type: 'category', data: xData}],
                         yAxis: [{type: 'value'}],
@@ -238,7 +232,7 @@ app.controller('analysisTemperature', function ($scope, $location, $http,$timeou
                }, 0);
             });
         });
-    }
+    };
 
 
 
