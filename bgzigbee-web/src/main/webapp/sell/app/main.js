@@ -1,4 +1,4 @@
-﻿var onlyOpenTitle = "首页",  _menus, sysuser=undefined,usermenus=undefined;
+﻿var onlyOpenTitle = "首页",  _menus, sysuser=undefined,usermenus=undefined,web_version='1_1_0';
 function RemoveAccordion(){try{$("#menu .panel-title").each(function(){$("#menu").accordion("remove",$(this).text());	});}catch(e){}}//删除菜单
 function find(menuid){var obj=null;$.each(_menus.menus,function(i,n){$.each(n.menus,function(j,o){if(o.menuid==menuid){obj=o}})});return obj}
 function getIcon(menuid){var icon = 'icon ';$.each(_menus.menus, function(i, n) {$.each(n.menus, function(j, o) {if(o.menuid==menuid){icon += o.icon;} });});return icon;}
