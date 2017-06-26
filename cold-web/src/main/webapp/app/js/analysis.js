@@ -69,7 +69,7 @@ coldWeb.controller('overTemperatureCount', function($rootScope, $scope,$timeout,
 						series.push({name:'危险超温告警次数', type:'bar',  data:L1});
 						series.push({name:'严重超温告警次数', type:'bar',  data:L2});
 						series.push({name:'正常超温告警次数', type:'bar',  data:L2});
-						$scope.showMap.key=[totaL1time,totaL2time,totaL3time];
+						$scope.showMap.key=[L1.length,L2.length,L3.length];
 					}
 	               var chart = echarts.init(document.getElementById(chartId));
 						option = {
