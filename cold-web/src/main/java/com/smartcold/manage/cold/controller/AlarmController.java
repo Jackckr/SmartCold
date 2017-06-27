@@ -17,7 +17,6 @@ import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
-import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -65,7 +64,7 @@ public class AlarmController extends BaseController {
 			warningsInfos.add(new SysWarningsInfo(1063,32,1,1,"2017-6-26 13:26:32","2017-6-26 13:04:36",30,"冷库1超温","","2017-6-26 13:05:40"));
 			reasHashMap.put("alarmMsg", warningsInfos);
 		}
-		return null;    
+		return reasHashMap;    
 	}
 	
 	/**

@@ -86,6 +86,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         }
        	if(isadd){
        		var bastempLine=series[series.length-1];
+//       		bastempLine.addPoint([ $scope.startTime.getTime()-30000 ,  $scope.datumTemp], false, false);
        		bastempLine.addPoint([series[0].data[0].x,  $scope.datumTemp], false, false);
        		bastempLine.addPoint([endTime.getTime(),  $scope.datumTemp], true, true);
        	}    
@@ -95,7 +96,11 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     
     $scope.initHighchart=function(datumTemp,yData ){
     	$('#temperatureChart').highcharts({
-    	    title: { text: ''  },
+    		 legend: { enabled: false },
+           exporting: {enabled: false},
+           credits: { enabled: false },
+           plotOptions: { series: { marker: { enabled: false } }},
+           title: { text: '' },
     	    chart: {
     	    	type: 'spline',
     	        animation: Highcharts.svg,
@@ -116,8 +121,10 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	});
     };
     
+    
+    
     $scope.getTempset(); 
-    clearInterval($rootScope.timeTicket);
-    $rootScope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
-    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
+    clearInterval($scope.timeTicket);
+    $scope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
+    $scope.$on('$destroy',function(){ clearInterval($scope.timeTicket);  });
 });

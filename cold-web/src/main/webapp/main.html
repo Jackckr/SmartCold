@@ -32,9 +32,9 @@
 	<div class="wrapper">
 		<!-- Main Header -->
 		<header class="main-header">
-			<div class="ring hide">
+			<div class="ring" ng-if="alarmMsgCount.alarmCount>0" ng-click="toalarmTemp()">
 				<span class="ringBox"><i class="iconfont">&#xe6f0;</i></span>
-				<span ng-bind-html="notReadMessage"></span>
+				<span>{{alarmMsgCount.alarmCount}}</span>
 			</div>
 			<a href="#/cold360Physical" class="logo"> 
 				<span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span> 
@@ -76,10 +76,10 @@
 						<li class="dropdown notifications-menu">
 							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fa fa-bell-o"
-								style="color: #fff"></i> <span class="label label-warning">0</span>
+								style="color: #fff"></i> <span class="label label-warning">{{alarmMsgCount.alarmCount}}</span>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="header">您有10条报警信息</li>
+								<li class="header">您有{{alarmMsgCount.alarmCount}}条最新报警信息</li>
 								<li>
 									<!-- Inner Menu: contains the notifications -->
 									<ul class="menu">
@@ -88,7 +88,7 @@
 										<!-- end notification -->
 									</ul>
 								</li>
-								<li class="footer"><a href="#/warningMsg">浏览全部</a></li>
+								<li class="footer"><a href="#/alarmTemp">浏览全部</a></li>
 							</ul>
 						</li>
 						<!-- Tasks Menu -->
@@ -486,7 +486,7 @@
 		document.write("<scr"+"ipt src=\"app/js/analysis.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/alarmLog.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/waterCostGroup.js\"></sc"+"ript>");
-		document.write("<scr"+"ipt src=\"app/js/monthReport.js\"></sc"+"ript>");
+// 		document.write("<scr"+"ipt src=\"app/js/monthReport.js\"></sc"+"ript>");
         document.write("<scr"+"ipt src=\"app/js/monthReport2.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/baoyangWeixiuApply.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/baoyangWeixiuRecords.js\"></sc"+"ript>");
