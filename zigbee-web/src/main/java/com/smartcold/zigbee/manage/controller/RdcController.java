@@ -726,6 +726,24 @@ public class RdcController {
 		return ResponseData.newSuccess(data);
 	}
 
+	@RequestMapping(value = "/newGetRDCList")
+	@ResponseBody
+	public ResponseData<RdcEntityDTO> newGetRDCList(String isKey, String keyword,String provinceid,String managementType,String storageType,String storagetempertype,String sqm,String hasCar,String orderBy,int pageNum,int pageSize) {
+		WebvistsService.addCount(1);//統計次數
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+		if(StringUtil.isnotNull(isKey)){managementType=storageType= storagetempertype=sqm=hasCar=null;}
+		filter.put("hasCar", hasCar);
+		filter.put("orderBy", orderBy);
+		filter.put("keyword", keyword);
+		filter.put("provinceid", provinceid);
+		filter.put("sqm", getSqmFilter(sqm));
+		filter.put("storageType", storageType);//存放类型
+		filter.put("managementType", managementType);//经营类型
+		filter.put("storagetempertype", storagetempertype);//温度类型
+		PageInfo<RdcEntityDTO> data = this.rdcService.getRDCList(pageNum, pageSize, filter);
+		return ResponseData.newSuccess(data);
+	}
+
 	@RequestMapping(value = "/runLngLat", method = RequestMethod.GET)
 	@ResponseBody
 	public void runLngLat() {
