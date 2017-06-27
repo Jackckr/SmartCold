@@ -10,3 +10,4 @@ $(".moreBtn").click(function() {
 $(".typeList li").click(function () {
     $(this).toggleClass('activeType');
 });
+jQuery(".picScroll-left").slide({easing:"linear",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true,vis:5});
