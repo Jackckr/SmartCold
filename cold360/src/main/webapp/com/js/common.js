@@ -122,15 +122,41 @@ function imgBoxHide(){
         }
     }, false);
 }
+/*监控铃铛报警信息*/
+function getAlarmBillCount() {
+    if(!window.localStorage.intervalTime || new Date().getTime()-window.localStorage.intervalTime>=300000){
+        window.localStorage.intervalTime=new Date().getTime();
+        $.ajax({url:ER.coldroot+"/i/AlarmController/getAlarmMsg",type:"post",data:{"userId":window.user.id,"type":window.user.type,"rdcId":window.rdcId,"isgetMsg":false},
+            success:function (data) {
+                window.localStorage.alarmCount=data.alarmCount;
+                if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
+                    $("#alarmBill").show();
+                    $("#alarmBillCount").html(window.localStorage.alarmCount);
+                }else {
+                    $("#alarmBill").hide();
+                }
+            }
+        });
+    }
+    if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
+        $("#alarmBill").show();
+        $("#alarmBillCount").html(window.localStorage.alarmCount);
+    }else {
+        $("#alarmBill").hide();
+    }
+}
 /**
  * 事件
  */
+var isClick=0;//判断是否点击
 window.onload = function(){
 	getmsg();
+	//$("body").append('<div id="alarmBill" style="height:40px;width:50px;position: relative;left: 200px;top: -525px;z-index: 100;opacity: 0.5;"><i class="fa fa-bell-o fa-2x" style="color: red;margin-top: 9px"></i><span id="alarmBillCount" class="badge" style="float: right;margin-right:2px;margin-top: -38px">21</span></div>');
 	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
     $("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });//一键回到顶部
+
 };
 
 

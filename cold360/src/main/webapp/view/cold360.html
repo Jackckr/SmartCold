@@ -72,7 +72,15 @@
         <!-- Add Arrows -->
         <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
         <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
+        <div class="row" style="margin-top: 20px">
+            <!--<div class="col-xs-12" ng-show="{{isOverTemp}}" style="background-color: red;height: 20px">当前冷库正在超温！</div>-->
+            <div class="alert alert-danger oAlert" ng-show="isOverTemp" style="width: 100%;">
+                <button type="button" class="close fr" data-dismiss="alert"aria-hidden="true" ng-click="close()">&times;</button>
+                当前冷库正在超温！
+            </div>
+        </div>
   </div>
+
 	<!--rdc列表-------------------------------------------------->
 	 <section class="searchTop">
 	 	<ul class="rdcList">

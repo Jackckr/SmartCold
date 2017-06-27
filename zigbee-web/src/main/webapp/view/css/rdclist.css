@@ -5,9 +5,84 @@
 *   mark:cold list
 */
 
+.oFilter .select{
+    width: 20%;
+}
 
-
-
+.oFilter .search{
+    width: 40%;
+    position: relative;
+    margin-right: 10px;
+}
+.search span{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border:1px solid #186eff;
+    border-left:0;
+    line-height: 1.42857143;
+}
+.search input{
+    padding-left: 30px;
+    width: 50%;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-color:#186eff;
+}
+.search i{
+    position: absolute;
+    top:12px;
+    left:10px;
+    cursor: pointer;
+}
+/*筛选条件*/
+.oType{
+    padding:15px 20px;
+    border: 1px solid #eeeeee;
+    background-color: #fbfbfb;
+    border-top: 2px solid #186eff;
+    position: relative;
+}
+.typeList{
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+.typeList span{
+    width: 120px;
+    text-align: right;
+    padding: 3px 15px ;
+}
+.typeList ul{
+    padding-left: 150px;
+}
+.typeList ul li{
+    padding: 3px 15px ;
+    margin: 5px 10px 5px 0;
+    cursor: pointer;
+}
+.typeList ul li:hover{
+    color: #186eff;
+}
+.typeList ul li.activeType{
+    color: #fff;
+    background-color:#186eff;
+    border-radius: 2px;
+}
+.moreBtn{
+    position: absolute;
+    bottom: -30px;
+    left:50%;
+    margin-left: -70px;
+    width: 140px;
+    height: 30px;
+    line-height: 30px;
+    color: #ff4400;
+    text-align: center;
+    background-color: #eee;
+    cursor: pointer;
+    border:1px solid #d0d0d0;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+}
 
 
 
