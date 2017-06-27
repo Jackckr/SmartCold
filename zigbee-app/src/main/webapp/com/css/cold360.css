@@ -1141,8 +1141,130 @@ input[type='radio']:checked{
 }
 .alert{
 	font-size: .7rem;
+	padding: .3rem!important;
+	margin-bottom: 1.5rem!important;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	text-align: center;
+	box-sizing: border-box;
+	float: left;
+	width: 33.33%;
+}
+.alert-danger{
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+.alert-warning {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+.alert-info {
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+.alert .close{
+	color: #000;
+	font-size: 1rem;
+	background: #ddd;
+	border-radius: 50%;
+	width: 1rem;
+	height: 1rem;
+}
+#alarmBill{
+	height: 2rem;
+	line-height: 2rem;
+	width: 6rem;
+	position: fixed;
+	left: 50%;
+	margin-left: -3rem;
+	top: 4rem;
+	z-index: 100;
+	background: rgba(0,0,0,0.5);
+	text-align: center;
+	border-radius: .2rem;
+}
+#alarmBill i{
+	color: red;
+	margin-top: 1rem;
+	font-size: 1.5rem;
+	animation:ring 2s infinite;
+	-moz-animation:ring 2s infinite; /* Firefox */
+	-webkit-animation:ring 2s infinite; /* Safari and Chrome */
+	-ms-animation:ring 2s infinite; /* Opera */
+}
+@keyframes ring
+{
+	0%   {color:red;}
+	50%  {color: yellow;}
+	100% {color: #ff2b5b;}
 }
 
+@-moz-keyframes ring /* Firefox */
+{
+	0%   {color:red;}
+	50%  {color: yellow;}
+	100% {color: #ff2b5b;}
+}
+
+@-webkit-keyframes ring /* Safari and Chrome */
+{
+	0%   {color:red;}
+	50%  {color: yellow;}
+	100% {color: #ff2b5b;}
+}
+
+@-ms-keyframes ring /* Opera */
+{
+	0%   {color:red;}
+	50%  {color: yellow;}
+	100% {color: #ff2b5b;}
+}
+#alarmBillCount{
+	font-size: 1rem;
+	color: #fff;
+}
+.oAlert{
+	background:red;
+	color: #fff;
+	animation:myfirst 5s infinite;
+	-moz-animation:myfirst 5s infinite; /* Firefox */
+	-webkit-animation:myfirst 5s infinite; /* Safari and Chrome */
+	-ms-animation:myfirst 5s infinite; /* Opera */
+}
+@keyframes myfirst
+{
+	0%   {background:red;}
+	25%  {background: #10ff33;}
+	50%  {background: #09e1ff;}
+	100% {background: #ff2b5b;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+	0%   {background:red;}
+	25%  {background: #10ff33;}
+	50%  {background: #09e1ff;}
+	100% {background: #ff2b5b;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+	0%   {background:red;}
+	25%  {background: #10ff33;}
+	50%  {background: #09e1ff;}
+	100% {background: #ff2b5b;}
+}
+
+@-ms-keyframes myfirst /* Opera */
+{
+	0%   {background:red;}
+	25%  {background: #10ff33;}
+	50%  {background: #09e1ff;}
+	100% {background: #ff2b5b;}
+}
 
 
 
