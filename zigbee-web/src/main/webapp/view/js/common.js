@@ -28,3 +28,19 @@ $(document).scroll(function () {//吸附导航
         $(".banner").css('marginTop',0);
     }
 });
+/*获取用户对象*/
+function findUser() {
+    $.ajax({url:"/i/user/findUser",type:"get",dataType:"json",success:function (data) {
+        if (data.username){
+            window.sessionStorage.user=data;
+            $("#loginUser").show().html(data.username);
+            $("#noLoginUser").hide();
+        }else {
+            $("#noLoginUser").show();
+            $("#loginUser").hide();
+        }
+    }});
+}
+$(function () {
+    findUser();
+});
