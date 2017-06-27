@@ -10,7 +10,7 @@ details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin
 body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #656565;}
 em, i{font-style: normal;}
 strong{font-weight: normal;}
-input,textarea,select{width: 100%; height: 34px; padding: 3px 8px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-appearance: none; appearance: none;}
+input,textarea,select{width: 100%;padding: 8px 15px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; }
 a{text-decoration: none; color: #969696; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
 a{text-decoration: none; color: #4F4F4F;}
 a:link{color: #656565; text-decoration: none;}
@@ -72,6 +72,17 @@ html,body,header{
 }
 .orange{
     color: #f57e1e;
+}
+.oBtn{
+    padding: 8px 24px;
+    color: #fff;
+    background-color: #186efe;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 1.42857143;
+}
+.hide{
+    display: none;
 }
 /*公共头部和版权*/
 .header{

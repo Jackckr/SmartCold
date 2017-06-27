@@ -82,7 +82,6 @@ $(function() {
         observer: true,//修改swiper自己或子元素时，自动初始化swiper
         observeParents: true//修改swiper的父元素时，自动初始化swiper
     });
-
 });
 /**
  *
@@ -101,6 +100,7 @@ app.service('userService', function($rootScope,  $http) {
             $rootScope.aclmap={};
             $rootScope.pagstate=[];
             $("body .role_limit").attr("disabled",true).removeClass("role_limit").removeClass("role_hide");
+
             angular.forEach(data.aclml,function(obj,i){
                 $rootScope.aclmap[obj.id]=obj.acl;
                 if(obj.acl){
@@ -119,6 +119,11 @@ app.service('userService', function($rootScope,  $http) {
                 }
             });
         });
-    }
+    };
+    $("body").append('<div id="alarmBill" style="display: none;"><i class="iconfont">&#xe7ad;</i><span id="alarmBillCount"></span></div>');
+    $("#alarmBill").click(function () {
+        $("#alarmBill").remove();
+        window.location.href='alarmLog.html';
+    })
 })
 

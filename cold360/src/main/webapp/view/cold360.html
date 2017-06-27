@@ -9,8 +9,6 @@
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
     <link rel="stylesheet" href="../com/css/cold360.css" />
-    <link rel="stylesheet" href="../com/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../com/css/font-awesome.min.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
@@ -76,8 +74,8 @@
         <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
         <div class="row" style="margin-top: 20px">
             <!--<div class="col-xs-12" ng-show="{{isOverTemp}}" style="background-color: red;height: 20px">当前冷库正在超温！</div>-->
-            <div class="alert alert-danger alert-dismissable fadeInUp animated" ng-show="isOverTemp">
-                <button type="button" class="close" data-dismiss="alert"aria-hidden="true" ng-click="close()">&times;</button>
+            <div class="alert alert-danger oAlert" ng-show="isOverTemp" style="width: 100%;">
+                <button type="button" class="close fr" data-dismiss="alert"aria-hidden="true" ng-click="close()">&times;</button>
                 当前冷库正在超温！
             </div>
         </div>
