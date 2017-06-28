@@ -148,7 +148,7 @@ html,body,header{
     height: 86px;
     width: 300px;
 }
-.navLogin ul li,
+.navLogin li,
 .navUl li{
     float: left;
     height: 86px;
@@ -158,7 +158,7 @@ html,body,header{
     background-color: #186eff;
 }
 .navUl li a,
-.navLogin ul li a{
+.navLogin li a{
     display: block;
     height: 86px;
     width: 80px;
@@ -167,7 +167,7 @@ html,body,header{
     color: #fff;
     line-height: 86px;
 }
-.navLogin ul li a{
+.navLogin li a{
     text-align: right;
 }
 .navUl{
