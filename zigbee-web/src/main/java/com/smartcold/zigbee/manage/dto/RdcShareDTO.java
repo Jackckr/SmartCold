@@ -55,11 +55,13 @@ public class RdcShareDTO {
 	private String address;//地址
 	private String detlAddress;//详细地址
 	private String coldtype;
+	private String rdcSqm;//冷库总面积
 	private int audit;//审核状态：-1未通过，0待审核，1通过审核
 	private  List<String> files;//图片组
 	private  List<FileDataEntity> fileList;//图片组
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	private int istemperaturestandard;
+	private int rdcscore;
 	public int getId() {
 		return id;
 	}
@@ -321,11 +323,9 @@ public class RdcShareDTO {
 	public void setDetlAddress(String detlAddress) {
 		this.detlAddress = detlAddress;
 	}
-
 	public int getAudit() {
 		return audit;
 	}
-
 	public void setAudit(int audit) {
 		this.audit = audit;
 	}
@@ -335,12 +335,22 @@ public class RdcShareDTO {
 	public void setFileList(List<FileDataEntity> fileList) {
 		this.fileList = fileList;
 	}
-
 	public int getIstemperaturestandard() {
 		return istemperaturestandard;
 	}
-
 	public void setIstemperaturestandard(int istemperaturestandard) {
 		this.istemperaturestandard = istemperaturestandard;
+	}
+	public String getRdcSqm() {
+		return rdcSqm;
+	}
+	public void setRdcSqm(String rdcSqm) {
+		this.rdcSqm = rdcSqm;
+	}
+	public int getRdcscore() {
+		return rdcscore;
+	}
+	public void setRdcscore(int rdcscore) {
+		this.rdcscore = rdcscore;
 	}
 }

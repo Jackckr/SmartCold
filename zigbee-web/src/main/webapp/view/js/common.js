@@ -41,6 +41,17 @@ function findUser() {
         }
     }});
 }
+/*判断数组中是否有重复元素*/
+Array.prototype.contains = function (obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 $(function () {
     findUser();
 });

@@ -354,7 +354,38 @@ public class ShareRdcController  {
 	public Object getSERdc(Integer dataType,Integer typeCode) {
 		return rdcShareMapper.getNewSERDCListByID(dataType,typeCode);
 	}
-
+	/**
+	 * 获得改版首页共享列表
+	 * @param request
+	 * @param type->  null：不限  1：出租/出售 2：求租/求购
+	 * @param orderBy 排序
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param sqm 面积-> rcd r
+	 * @param provinceid 区域 -> rcd r
+	 * @param keyword 支持关键字搜索-> rcd r
+	 * @param managetype 经营类型  -> rdcext t
+	 * @param storagetempertype 温度类型 -> rdcext t
+	 * @return
+	 */
+	@RequestMapping(value = "/newGetSERDCList")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> newGetSERDCList(String rdcID,String datatype,String goodSaveType,String istemperaturestandard,String audit, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+ 		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("type", type);
+		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2
+		filter.put("rdcID", rdcID);
+		filter.put("datatype",datatype);//必须
+		filter.put("sqm", getSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
+		filter.put("keyword", keyword);
+		filter.put("provinceid", provinceid);
+		filter.put("managetype", managetype);
+		filter.put("storagetempertype", storagetempertype);
+		filter.put("istemperaturestandard", istemperaturestandard);
+		filter.put("goodSaveType", goodSaveType);
+		filter.put("audit", audit);
+		PageInfo<RdcShareDTO> data = this.rdcShareService.newGetSERDCList(pageNum, pageSize, filter);
+		return ResponseData.newSuccess(data);
+	}
 	
 	//------------------------------------------------------------------------------------免费发布消息-------------------------------------------------------
 	/**

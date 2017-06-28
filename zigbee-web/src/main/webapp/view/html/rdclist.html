@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <link rel="shortcut icon" href="../img/favicon.ico" />
     <!--引入样式包-->
+    <link rel="stylesheet" href="../plugins/fonts/layui.css"/>
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/rdclist.css" />
     <link rel="stylesheet" href="../css/media.css" />
-    <link rel="stylesheet" href="../plugins/fonts/layui.css"/>
 </head>
 <body>
 <!--header 导航栏-->
@@ -56,76 +56,76 @@
     </div>
 </div>
 <div class="section clearfix oFilter">
-    <select name="" id="" class="select fl">
+    <select id="provinceList" class="select fl">
         <option value="北京">北京</option>
         <option value="上海">上海</option>
         <option value="天津">天津</option>
     </select>
     <button class="oBtn fr">添加冷库</button>
     <div class="search fr">
-        <input type="text" class="fl" placeholder="请输入关键字……">
+        <input id="keyword" type="text" class="fl" placeholder="请输入关键字……">
         <i class="iconfont">&#xe609;</i>
-        <span class="oBtn fl">搜索</span>
+        <span class="oBtn fl" id="search">搜索</span>
     </div>
 </div>
 <div class="section oType">
     <div class="typeList clearfix">
         <span class="fl">经营类型:</span>
         <ul class="clearfix">
-            <li class="fl activeType">不限</li>
-            <li class="fl">产地型</li>
-            <li class="fl">市场型</li>
-            <li class="fl">仓储型</li>
-            <li class="fl">配送型</li>
-            <li class="fl">生产型</li>
-            <li class="fl">中央厨房</li>
-            <li class="fl">医药型</li>
-            <li class="fl">其他</li>
+            <li type="manage" value="0" class="fl activeType">不限</li>
+            <li type="manage" value="1" class="fl">产地型</li>
+            <li type="manage" value="2" class="fl">市场型</li>
+            <li type="manage" value="3" class="fl">仓储型</li>
+            <li type="manage" value="4" class="fl">配送型</li>
+            <li type="manage" value="5" class="fl">生产型</li>
+            <li type="manage" value="6" class="fl">中央厨房</li>
+            <li type="manage" value="7" class="fl">医药型</li>
+            <li type="manage" value="8" class="fl">其他</li>
         </ul>
     </div>
     <div class="typeList clearfix">
         <span class="fl">冷库温度类型:</span>
         <ul class="clearfix">
-            <li class="fl activeType">不限</li>
-            <li class="fl">冷藏库</li>
-            <li class="fl">冷冻库</li>
-            <li class="fl">超低温库</li>
-            <li class="fl">恒温库</li>
-            <li class="fl">多温区库</li>
+            <li type="temp" value="0" class="fl activeType">不限</li>
+            <li type="temp" value="1" class="fl">冷藏库</li>
+            <li type="temp" value="2" class="fl">冷冻库</li>
+            <li type="temp" value="3" class="fl">超低温库</li>
+            <li type="temp" value="4" class="fl">恒温库</li>
+            <li type="temp" value="5" class="fl">多温区库</li>
         </ul>
     </div>
     <div class="typeList clearfix">
         <span class="fl">温度达标情况:</span>
         <ul class="clearfix">
-            <li class="fl activeType">不限</li>
-            <li class="fl">已达标</li>
-            <li class="fl">未达标</li>
+            <li type="tempStandard" value="-1" class="fl activeType">不限</li>
+            <li type="tempStandard" value="1" class="fl">已达标</li>
+            <li type="tempStandard" value="0" class="fl">未达标</li>
         </ul>
     </div>
     <div class="moreType hide">
         <div class="typeList clearfix">
             <span class="fl">冷库认证情况:</span>
             <ul class="clearfix">
-                <li class="fl activeType">不限</li>
-                <li class="fl">已认证</li>
-                <li class="fl">未认证</li>
+                <li type="isAudit" value="-3" class="fl activeType">不限</li>
+                <li type="isAudit" value="2" class="fl">已认证</li>
+                <li type="isAudit" value="-2" class="fl">未认证</li>
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">商品存放形式:</span>
             <ul class="clearfix">
-                <li class="fl activeType">不限</li>
-                <li class="fl">货架存放</li>
-                <li class="fl">非货架存放</li>
+                <li type="goodSave" value="0" class="fl activeType">不限</li>
+                <li type="goodSave" value="1" class="fl">货架存放</li>
+                <li type="goodSave" value="2" class="fl">非货架存放</li>
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">冷库总面积:</span>
             <ul class="clearfix">
-                <li class="fl activeType">不限</li>
-                <li class="fl"><1000㎡</li>
-                <li class="fl">1000~3000㎡</li>
-                <li class="fl">3000~5000㎡</li>
+                <li type="rdcSqm" value="0" class="fl activeType">不限</li>
+                <li type="rdcSqm" value="1" class="fl"><1000㎡</li>
+                <li type="rdcSqm" value="2" class="fl">1000~3000㎡</li>
+                <li type="rdcSqm" value="3" class="fl">3000~5000㎡</li>
             </ul>
         </div>
         <div class="typeList clearfix">
@@ -165,7 +165,7 @@
     </div>
 </div>
 <!--rdclist -->
-<ul class="rdcCol section">
+<ul id="rdcRentList" class="rdcCol section">
     <li>
         <div class="rdcImg">
             <a href="javascript:;"><img src="../img/demo1.png" alt=""></a>
@@ -463,8 +463,8 @@
         </li>
     </dl>
 </div>
-<script src="../plugins/layui.all.js"></script>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/layui.all.js"></script>
 <script src="../plugins/jquery.SuperSlide.2.1.1.js"></script>
 <script src="../js/common.js"></script>
 <script src="../js/rdclist.js"></script>
