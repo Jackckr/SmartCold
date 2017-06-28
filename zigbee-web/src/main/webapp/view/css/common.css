@@ -29,8 +29,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /*清浮动*/
 .clearfix:after{content: ""; display: block; visibility: hidden; height: 0; clear: both;}
 .clearfix{zoom: 1;}
-.fl{float: left;}
-.fr{float: right;}
+.fl{float: left;*display: inline-block;}
+.fr{float: right;*display: inline-block;}
 /*连续英文、数字换行*/
 .wordwrap { word-break: break-all; word-wrap: break-word; }
 /*单行文字超出显示省略号*/
@@ -90,6 +90,7 @@ html,body,header{
     border-radius: 4px;
     cursor: pointer;
     line-height: 1.42857143;
+    text-align: center;
 }
 .hide{
     display: none;
@@ -285,4 +286,33 @@ html,body,header{
 }
 .codeImg img{
     width: 100px;
+}
+/*上传图片按钮样式*/
+.ofile {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+
+.ofile input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%!important;
+}
+
+.ofile:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
 }
