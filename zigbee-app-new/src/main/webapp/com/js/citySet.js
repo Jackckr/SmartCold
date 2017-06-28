@@ -4,16 +4,16 @@
     Iput.show({ id: ths, event: e, content: dal,width:"470"});
     $("#cColse").click(function () {
         Iput.colse();
-        $("#city").siblings('i').html('&#xe62d;');
+        $("#city").siblings('i').html('&#xe604;');
     });
     var tb_province = [];
     var b = province;
-    
+
     for (var i = 0;i<b.length;  i++) {
     	 tb_province.push('<a data-level="0" data-id="' + b[i]['provinceId'] + '" data-name="' + b[i]['provinceName'] + '">' + b[i]['provinceName'] + '</a>');
     }
     $("#_citys0").append(tb_province.join(""));
-    
+
     if(window.localStorage.appLocalprovince){
     	 $("#_citys0 a[data-id="+window.localStorage.appLocalprovince+"]").addClass("citysselect");//设置默认样式
     }
@@ -86,15 +86,15 @@
     	            }
     	            var bc = $("#hcity").val();
     	            ths.value = bc+ "-" + $(this).data("name");
-    	
+
 //    	            var ar = getArea($(this));
     	            $("._citys1").hide();
     	            $("._citys1:eq(2)").show();
-    	                        
+
     	            var bp = $("#hproper").val();
     	            ths.innerHTML=bp;
     	            Iput.colse();
-    	            $("#city").siblings('i').html('&#xe62d;');
+    	            $("#city").siblings('i').html('&#xe604;');
     	            window.localStorage.appLocalCity =JSON.stringify({cityID:$(this).data("id"),cityName:bp});
     	        });
          

@@ -17,6 +17,9 @@ if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE 
 $('.navSmall').hover(function() {//导航下拉菜单
     $(this).children('ul').stop().toggle();
 });
+$("#loginUser").hover(function () {
+    $(this).children('dl').stop().toggle();
+})
 $(document).scroll(function () {//吸附导航
     var sTop = document.body.scrollTop || document.documentElement.scrollTop;
     var oTop = 86;

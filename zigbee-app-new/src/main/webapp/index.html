@@ -19,15 +19,97 @@
 		<div class="oCity">
 			<a id="hf_addres" class="city clearfix" href="javascript:;">
                 <span class="nav-city omg fl" id="city"></span>
-                <i class="iconfont fl">&#xe62d;</i>
+                <i class="iconfont fl">&#xe603;</i>
             </a>
-			<a id="hf_back" class="black"><i class="iconfont" style="margin-top:.2rem;">&#xe60e;</i></a>
+			<a id="hf_back" class="black"><i class="iconfont" style="margin-top:.2rem;">&#xe603;</i></a>
 		</div>
 		<div>首页</div>
 		<div class="logo">
 			<img src="com/img/lg.png" alt="">
 		</div>
 	</header>
+    <section id="maindiv" class="banner">
+        <!-- banner主要代码 Start ================================ -->
+        <div id="focus" class="focus">
+            <div class="hd">
+                <ul></ul>
+            </div>
+            <div class="bd">
+                <ul>
+                    <li><img src="com/img/banner1.png"/></li>
+                    <li><img src="com/img/banner0.jpg"/></li>
+                    <li><img src="com/img/banner1.jpg"/></li>
+                    <li><img src="com/img/banner2.jpg"/></li>
+                </ul>
+            </div>
+        </div>
+        <!--这段js代码位置请不要变动，请配合，谢谢啦^_^-->
+        <script type="text/javascript">
+            TouchSlide({
+                slideCell:"#focus",
+                titCell:".hd ul",
+                mainCell:".bd ul",
+                effect:"leftLoop",
+                autoPlay:true,//自动播放
+                autoPage:true,//自动分页
+                delayTime:2000,
+                interTime:4000
+                //switchLoad:"_src" //切换加载，真实图片路径为"_src"
+            });
+        </script>
+    </section>
+    <ul class="oModel clearfix">
+        <li><a href="view/storehouse.html"><img src="com/img/cz.png">
+            <p>出租冷库</p>
+        </a></li>
+        <li><a href="view/storehouse.html"><img src="com/img/xz.png">
+            <p>寻租冷库</p>
+        </a></li>
+        <li><a href="view/coldlist.html"><img src="com/img/zy.png">
+            <p>冷库资源</p>
+        </a></li>
+        <li><a href="view/coldlist.html"><img src="com/img/db.png">
+            <p>达标冷库</p>
+        </a></li>
+        <li><a href="view/map.html"><img src="com/img/map.png">
+            <p>冷库地图</p>
+        </a></li>
+        <li><a href="view/cold360.html"><img src="com/img/360.png">
+            <p>冷库360</p>
+        </a></li>
+        <li><a href="view/goodslist.html"><img src="com/img/cs.png">
+            <p>出售货源</p>
+        </a></li>
+        <li><a href="view/goodslist.html"><img src="com/img/qg.png">
+            <p>求购货源</p>
+        </a></li>
+    </ul>
+    <footer>
+        <div class="active">
+            <a href="index.html">
+                <i class="iconfont">&#xe601;</i>
+                <p>首页</p>
+            </a>
+        </div>
+        <div>
+            <a href="view/release.html">
+                <i class="iconfont">&#xe614;</i>
+                <p>发布</p>
+            </a>
+        </div>
+        <div>
+            <a href="view/messages.html">
+                <i class="iconfont">&#xe6ea;</i>
+                <p>消息</p>
+            </a>
+        </div>
+        <div>
+            <a href="view/user.html">
+                <i class="iconfont">&#xe600;</i>
+                <p>我的</p>
+            </a>
+        </div>
+    </footer>
     <script type="text/javascript" src="com/js/Popt.js"></script>
     <script type="text/javascript" src="com/js/citySet.js"></script>
     <script type="text/javascript" src="app/js/home.js"></script>
