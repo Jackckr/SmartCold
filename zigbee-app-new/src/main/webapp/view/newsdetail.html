@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="newsdetail">
+	<head>
+		<meta charset="UTF-8">
+	    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+	    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+	    <title ng-bind="informationDetail.title"></title>
+	    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+	    <script type="text/javascript" src="../com/js/common.js"></script>
+        <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+ 		<script type="text/javascript" src="../app/js/newsDetail.js"></script>
+	    <style>
+	    	.subTitle{
+	    		font-size: .75rem;
+	    		padding: .3rem 0;
+	    		background: #fff;
+			    z-index: 1;
+			    position: relative;
+	    	}
+	    	.title_h3{
+	    		font-size: .9rem;
+	    	}
+	    	.subTitle img{
+	    		width: 2rem;
+	    		height: 2rem;
+	    		border-radius: 50%;
+	    		float: left;
+	    		margin-right: .3rem;
+	    		background: #eee;
+	    	}
+	    	.subTitle span{
+	    		color: #999;
+	    		font-size: .7rem
+	    	}
+	    	.newsInfo{
+	    		font-size: .75rem;
+	    		text-indent: 2em;
+	    		line-height: 1.75;
+	    	}
+	    	body{
+	    		background: #fff;
+	    		overflow-x:hidden;
+	    	}
+	    	#infoContent p,#infoContent pre{
+	    		text-indent:2em;
+	    	}
+	    	#infoContent *{
+	    		font-size:.75rem!important;
+	    		word-break:break-all;
+	    		word-wrap:break-word; 
+	    		line-height: 1.75!important;
+	    		color:#333;
+	    	}
+	    	#infoContent img{
+	    		max-width:100%;
+	    		max-height:10rem;
+	    	}
+	    	#infoContent table,#infoContent th,#infoContent tr,#infoContent td{
+	    		border:1px solid #ccc;
+	    		border-collapse: 0;
+	    		border-spacing:0;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<header>
+        	<div class="area fl"><a href="news.html"><i class="iconfont">&#xe60e;</i></a></div>
+        	<div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
+        	<div class="txt"></div>
+	    </header>
+	    <article style="margin-top:2.5rem;padding: 0 .9rem;">
+	    	 <h3 class="title_h3">{{informationDetail.title}}</h3>
+	    	<div class="subTitle clearfix">
+<!-- 	    		 <img ng-src="{{informationDetail.coverpic}}"/>  -->
+				<img src="../com/img/logo_news.png"/>
+	    		<p class="omg">链库</p>
+	    		 <span>{{informationDetail.posttime}}</span> 
+	    	</div>
+	    	<div id="infoContent">
+	    	</div>
+	    </article>
+	</body>
+</html>

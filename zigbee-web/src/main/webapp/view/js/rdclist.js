@@ -14,7 +14,11 @@ $(".typeList li").click(function () {
         $(this).addClass('activeType').siblings('li').removeClass('activeType');
     }else{
         $(this).toggleClass('activeType');
-        $(this).parent().children().eq(0).removeClass('activeType');
+        if($(this).hasClass('activeType')==false && $(this).siblings('li').hasClass('activeType')==false){
+            $(this).parent().children().eq(0).addClass('activeType');
+        }else{
+            $(this).parent().children().eq(0).removeClass('activeType');
+        }
     }
 });
 jQuery(".picScroll-left").slide({easing:"linear",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true,vis:5});
