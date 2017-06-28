@@ -83,10 +83,135 @@
     border-bottom-right-radius: 24px;
     border-bottom-left-radius: 24px;
 }
-
-
-
-
+/*ad banner*/
+.picScroll-left{ overflow:hidden; position:relative;margin-top: 50px;}
+.picScroll-left .prev,.picScroll-left .next{position: absolute;top:40px;right: 2%;overflow:hidden;cursor:pointer;z-index:2;}
+.picScroll-left .next{left:2%;right: auto;}
+.picScroll-left .prev i,.picScroll-left .next i{font-size: 3em!important;}
+.picScroll-left .prev i:hover,.picScroll-left .next i:hover{color: #186efe;}
+.picScroll-left .bd{ width: 80%;margin: 0 auto;overflow:hidden;}
+.picScroll-left .bd ul{ overflow:hidden; zoom:1; }
+.picScroll-left .bd ul li{ margin:0 8px; float:left; _display:inline; overflow:hidden; text-align:center;padding:2px;border:1px solid #d4d4d4;  }
+.picScroll-left .pic img{height:120px; display:inline-block; }
+.picScroll-left .bd ul li:hover{ border-color:#f40;  }
+/*rdclist css*/
+.rdcCol>li{
+    overflow: hidden;
+    zoom: 1;
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+.rdcCol>li:hover{
+    border-color: #186eff;
+}
+.rdcCol>li>div{
+    float:left;
+    _display:inline;
+    height: 150px;
+}
+.rdcCol{
+    margin: 20px auto;
+}
+.rdcImg{
+    position: relative;
+    margin-right: 10px;
+}
+.rdcImg a{
+    display: block;
+}
+.rdcImg img{
+    width: 281px;
+    height:150px;
+}
+.rdcImg>i{
+    position: absolute;
+    top: 0;
+    left: -4px;
+    z-index: 1;
+    width: 100px;
+    height: 31px;
+    background: url(../img/lt.png) no-repeat center;
+    background-size: cover;
+    text-align: center;
+    color: #fff;
+    line-height: 26px;
+    font-size: 12px;
+}
+.rdcInfo{
+    width: 40%;
+    line-height: 2.2;
+}
+.rdcName a{
+    display: inline-block;
+    color: #306dc2;
+    font-weight: 700;
+}
+.infoPercenty{
+    font-size: 12px;
+    display: inline-block;
+    margin: 0 15px;
+}
+.infoPercenty b,
+.rdcPosition i{
+    color: #306dc2;
+}
+.stars li{
+    float: left;
+    margin: 0 3px;
+    color: #f57f1f;
+}
+.stars li i{
+    font-size: 14px;
+}
+.rdcArea span{
+    margin: 5px 3px;
+}
+.rdcApprove b{
+    margin-right: 10px;
+}
+.rdcPrice{
+    width: 20%;
+    padding: 30px 5px;
+}
+.rdcPrice .rdcPriceNum{
+    font-size: 2em;
+}
+.rdcBtn{
+    width: 120px;
+    word-wrap: break-word;
+    padding-top: 40px;
+}
+.rdcBtn button{
+    padding: 3px 0;
+    width: 120px;
+    display: inline-block;
+    border: 1px solid #306dc2;
+    text-align: center;
+    background-color: #fff;
+    border-radius:3px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.rdcBtn button i{
+    margin-right: 10px;
+    font-size: 18px;
+}
+.rdcBtn .collect{
+    color: #f57f1f;
+    border-color: #f57f1f;
+}
+.rdcBtn .ask{
+    color: #186eff;
+    border-color: #186eff;
+}
+.rdcBtn .look{
+    background-color: #186eff;
+    color: #fff;
+}
+.rdcBtn .look i{
+    color: #fff;
+}
 
 
 

@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.dao;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -75,8 +76,7 @@ public interface RdcShareMapper {
 	  * @return
 	  */
 	 public Page<RdcShareDTO> getSEListByRdcID(Map<String, Object> parameters);
-    
-  
-  
+
+	 List<RdcShareDTO> getNewSERDCListByID(@Param("dataType")Integer dataType,@Param("typeCode") Integer typeCode);
   
 }

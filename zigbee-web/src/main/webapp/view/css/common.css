@@ -67,11 +67,18 @@ html,body,header{
     color: #54c849;
     font-weight:400;
 }
-.approve i{
+.approve i,.reachStand i{
     margin-right: 5px;
+}
+.reachStand{
+    color: #f57f1f;
+    font-weight:400;
 }
 .orange{
     color: #f57e1e;
+}
+.blue{
+    color: #2763cc;
 }
 .oBtn{
     padding: 8px 24px;

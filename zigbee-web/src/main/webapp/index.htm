@@ -27,9 +27,12 @@
     </div>
     <div class="nav">
         <h1 class="fl"><a href="liankur.com">找冷库&nbsp;&nbsp;上链库</a></h1>
-        <ul class="fr navLogin">
+        <ul id="noLoginUser" class="fr navLogin">
             <li><a href="javascript:;"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
             <li><a href="javascript:;"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+        </ul>
+        <ul id="loginUser" class="fr navLogin" style="display: none">
+            hahha
         </ul>
         <div class="navSmall fr"><!--小屏幕显示-->
             <span><i class="iconfont">&#xe62d;</i></span>
@@ -181,7 +184,7 @@
         出租冷库
     </h1>
     <div class="clearfix">
-        <ul class="fl imglist">
+        <ul class="fl imglist" id="rightRdcLeaseUl">
             <li class="fl">
                 <div class="lt">温度达标冷库</div>
                 <a href="javascript:;">
@@ -304,7 +307,7 @@
                 需求报价动态
                 <a href="javascript:;" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
             </h3>
-            <ul>
+            <ul id="leftRdcLeaseUl">
                 <li><a href="javascript:;">
                     <span>1</span>
                         [上海国通冷库] 有6300㎡冷库可用来出租，联系电话[180****4501]
@@ -351,7 +354,7 @@
                     需求
                     <a href="javascript:;" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
                 </h3>
-                <ul>
+                <ul id="rdcRentUl">
                     <li><a href="javascript:;">
                         <span>1</span>
                         [长沙] 雨花区湘情冻货商行冷仓求租，联系电话[180****4501]
@@ -443,7 +446,7 @@
         </h1>
         <div class="clearfix">
             <div class="fl txtlist" style="width: 100%;">
-                <ul>
+                <ul id="shopInfoUl">
                     <li><a href="javascript:;">
                         <span>1</span>
                         [长沙] 雨花区湘情冻货商行冷仓求租，联系电话[180****4501]
@@ -500,7 +503,7 @@
         </h1>
         <div class="clearfix">
             <div class="fl txtlist" style="width: 100%;">
-                <ul>
+                <ul id="buyShopUl">
                     <li><a href="javascript:;">
                         <span>1</span>
                         [长沙] 雨花区湘情冻货商行冷仓求租，联系电话[180****4501]
@@ -610,6 +613,7 @@
 <script src="view/plugins/echarts.min.js"></script>
 <script src="view/js/common.js"></script>
 <script src="view/js/index.js"></script>
+<script src="view/js/main.js"></script>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main1'));

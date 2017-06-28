@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.dao.RdcShareMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,8 +42,9 @@ public class ShareRdcController  {
 	
 	@Resource(name="docLibraryService")
 	private DocLibraryService docLibraryService;
-	
 
+	@Autowired
+	private RdcShareMapper rdcShareMapper;
 	/**
 	 * @author MaQiang
 	 * @date 2016年6月28日16:00:58
@@ -344,7 +347,13 @@ public class ShareRdcController  {
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSERDCList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
-	
+
+	/*获得出租冷库最新12条信息*/
+	@RequestMapping(value = "/getSERdc")
+	@ResponseBody
+	public Object getSERdc(Integer dataType,Integer typeCode) {
+		return rdcShareMapper.getNewSERDCListByID(dataType,typeCode);
+	}
 
 	
 	//------------------------------------------------------------------------------------免费发布消息-------------------------------------------------------

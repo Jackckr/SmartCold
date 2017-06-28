@@ -34,6 +34,16 @@
         top:100%;
         left:0;
     }
+    .rdcCol>li .rdcImg{
+        width: 35%;
+        overflow: hidden;
+    }
+    .rdcCol>li .rdcInfo{
+        width: 60%;
+    }
+    .rdcCol>li .rdcPrice,.rdcCol>li .rdcBtn{
+        width: 50%;
+    }
 }
 
 

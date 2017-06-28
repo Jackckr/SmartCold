@@ -59,6 +59,7 @@ public class RdcShareDTO {
 	private  List<String> files;//图片组
 	private  List<FileDataEntity> fileList;//图片组
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
+	private int istemperaturestandard;
 	public int getId() {
 		return id;
 	}
@@ -334,5 +335,12 @@ public class RdcShareDTO {
 	public void setFileList(List<FileDataEntity> fileList) {
 		this.fileList = fileList;
 	}
-	
+
+	public int getIstemperaturestandard() {
+		return istemperaturestandard;
+	}
+
+	public void setIstemperaturestandard(int istemperaturestandard) {
+		this.istemperaturestandard = istemperaturestandard;
+	}
 }
