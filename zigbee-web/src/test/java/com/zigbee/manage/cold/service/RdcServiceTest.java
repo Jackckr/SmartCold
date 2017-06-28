@@ -18,7 +18,7 @@ import java.util.List;
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-04-29 00:16)
  */
-/*@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:config/spring/local/appcontext*.xml"})
 public class RdcServiceTest {
@@ -37,4 +37,4 @@ public class RdcServiceTest {
             }
         }));
     }
-}*/
+}

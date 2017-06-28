@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by sunqiunian on 16/2/25.
  */
-/*@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:config/spring/local/appcontext*.xml"})
 public class CommentServiceTest {
@@ -36,4 +36,4 @@ public class CommentServiceTest {
             }
         }));
     }
-}*/
+}

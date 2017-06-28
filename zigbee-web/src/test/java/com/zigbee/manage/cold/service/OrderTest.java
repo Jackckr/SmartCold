@@ -10,7 +10,7 @@ import java.util.List;
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-06-25 11:40)
  */
-/*public class OrderTest {
+public class OrderTest {
     public static void main(String[] args) {
         List<Integer> rdcEntityDTOList = Lists.newArrayList();
         rdcEntityDTOList.add(1);
@@ -28,4 +28,4 @@ import java.util.List;
             System.out.println(p);
         }
     }
-}*/
+}
