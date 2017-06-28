@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -329,8 +328,8 @@ public class AnalysisController {
 					for (String sdkey : tempData.keySet()) {//String, Object[]
 						Object[] keydata = tempData.get(sdkey);
 						for (int i =2; i < keydata.length; i++) {
-							if((i+1)%3==0&&0!=(Double)keydata[i-2]&&0!=(Double)keydata[i-1]){
-								keydata[i]=	((Double)keydata[i-2]/(Double)keydata[i-1])*60;
+							if(keydata[i-1]!=null&&  (i+1)%3==0&&0!=(Double)keydata[i-2]&&0!=(Double)keydata[i-1]){
+								keydata[i]=	Double.parseDouble(dfformat.format(((Double)keydata[i-2]/(Double)keydata[i-1])*60));
 							}
 						}
 					}
@@ -368,7 +367,7 @@ public class AnalysisController {
 	 */
 	@RequestMapping(value = "/expSISAnalysisData")
 	@ResponseBody
-	public void expSISAnalysisData(HttpServletRequest request, HttpServletResponse response,  Boolean isexpt,int rdcid, int index,Integer urlid, Integer type, String confdata, String key,@RequestParam(value = "unit[]", required = false) Integer[] unit, String startTime, String endTime,String fileName, String title ) {
+	public void expSISAnalysisData(HttpServletRequest request, HttpServletResponse response,  Boolean isexpt,int rdcid, int index,Integer urlid, Integer type, String confdata, String key,Integer[] unit, String startTime, String endTime,String fileName, String title ) {
 		try {
 			if(StringUtil.isnotNull(fileName)){
 				 ResponseData<HashMap<String, Object>> expdata = this.getCasesTotalSISAnalysis(request, response, true, rdcid, index, urlid, type, confdata, key, unit, startTime, endTime);

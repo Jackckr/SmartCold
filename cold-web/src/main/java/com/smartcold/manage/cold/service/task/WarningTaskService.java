@@ -41,7 +41,8 @@ public class WarningTaskService  {
  
 	private static int excute=0;
     private static 	List<ColdStorageSetEntity> allMonitorTempSet=Lists.newArrayList();
-    public static 	List<Integer> Blacklist=Lists.newArrayList();
+    public static 	HashSet<Integer> Blacklist=new HashSet<Integer>();
+    public static 	HashMap<Integer,Integer> extBlacklist=new HashMap<Integer,Integer>();
 	
     private static HashSet<Integer> extsid=new HashSet<Integer>();
 	public synchronized static void addExtsid(int key) {extsid.add(key);}
@@ -58,6 +59,12 @@ public class WarningTaskService  {
 		Blacklist.clear();
 		QuartzManager.shutdownJobs();
 	}
+	@Scheduled(cron = "0 5 1  ? * 7")
+	public void delBlacklist() {
+		extBlacklist.clear();
+		System.err.println("今天周天 我要清除任务");
+	}
+
 	
 	/**
 	 * 数据抓取30秒
@@ -67,7 +74,16 @@ public class WarningTaskService  {
     	excute();
 	}
     
-	
+	private void addAlercoun(int key){
+		if(extBlacklist.containsKey(key)){
+			Integer count = extBlacklist.get(key);
+			if(count<6){
+				extBlacklist.put(key, count++);
+			}
+		}else{
+			extBlacklist.put(key, 1);
+		}
+	}
 	/**
 	 * 单任务模式
 	 * 检查温度报警
@@ -88,7 +104,8 @@ public class WarningTaskService  {
 		int key=0;float baseTemp=0;
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
 			key=colditem.getId();//冷库id
-			if(Blacklist.contains(key)){continue;}if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
+			if(Blacklist.contains(key)||extBlacklist.containsKey(key)&&extBlacklist.get(key)>5){continue;}
+			if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
 		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;
 		    colditem.setBaseTemp(baseTemp);//计算基线温度
 		    String deviceid = colditem.getDeviceids();
@@ -146,7 +163,7 @@ public class WarningTaskService  {
 	private  void excute(){
 	 if(extsid.size()>0){
 		   try {
-			HashMap<Integer, SysWarningsInfo> allWarningList=new HashMap<Integer, SysWarningsInfo>();
+		   	HashMap<Integer, SysWarningsInfo> allWarningList=new HashMap<Integer, SysWarningsInfo>();
 			   LinkedList<Integer> newextsid=new LinkedList<Integer>();newextsid.addAll(extsid);clerextsid();
 			   for (Integer key : newextsid) {
 					ScheduleJob job = QuartzManager.getJob(key);
@@ -194,7 +211,7 @@ public class WarningTaskService  {
 										long minuteBetween = TimeUtil.minuteBetween(Lt[i],endtime)+1;
 						                 if(minuteBetween >=overtime){
 						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:0, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
-						            		 break;
+						                	 break;
 						            	 }
 									}
 								}
@@ -203,9 +220,21 @@ public class WarningTaskService  {
 						}
 			  }
 			   if(SetUtil.isNotNullMap(allWarningList)){
-			   List<SysWarningsInfo> warningList=new ArrayList<SysWarningsInfo>();  for (Integer key : allWarningList.keySet()) {warningList.add(allWarningList.get(key));}
-					   this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
-				}
+				   List<SysWarningsInfo> warningList=new ArrayList<SysWarningsInfo>(); 
+				    for (Integer key : allWarningList.keySet()) {
+					    addAlercoun(key);
+					    newextsid.remove(key);
+					    warningList.add(allWarningList.get(key));
+					 }
+					 this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
+					 
+			    }
+			    if(SetUtil.isnotNullList(newextsid)){
+			    	for (Integer integer : newextsid) {
+			    		extBlacklist.remove(integer);
+					}
+			    }
+			   
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

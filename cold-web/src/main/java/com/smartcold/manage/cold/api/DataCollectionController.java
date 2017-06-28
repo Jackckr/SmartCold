@@ -128,24 +128,4 @@ public class DataCollectionController extends BaseController {
 		return resMap;
 	}  
 
-	
-
-//	@RequestMapping(value = "/findLastNDataByApid", method = RequestMethod.GET)
-//	@ResponseBody
-//	public Object findLastNDataByApid(String apid, String deviceid, String key, int n) {
-//		Date startTime=null;if(n==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
-//		return storageDataCollectionDao.findLastNPoint(apid, deviceid, key, n,startTime);
-//	}
-//
-//	@RequestMapping(value = "/findByTime", method = RequestMethod.GET)
-//	@ResponseBody
-//	public Object findByTime(String apid, String deviceid, String key,
-//			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
-//			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-//
-//		return storageDataCollectionDao.findByTime(apid, deviceid, key, startTime, endTime ,"DESC");
-//	}
-	
-
-
 }

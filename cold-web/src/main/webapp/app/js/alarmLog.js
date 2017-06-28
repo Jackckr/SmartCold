@@ -155,14 +155,15 @@ coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
 		    	        {
 		    	            type: 'value',
 		    	            name: '次数/次',
-		    	            min: 0,max: 20,interval: 1,
+//		    	            min: 0,max: 20,
+		    	            interval: 30,
 		    	            axisLabel: { formatter: '{value}' }
 		    	        },
 		    	        {
 		    	            type: 'value',
 		    	            name: '时长/min',
-		    	            min: 0,
-		    	            max: 240,
+//		    	            min: 0,
+//		    	            max: 240,
 		    	            interval: 30,
 		    	            axisLabel: {
 		    	                formatter: '{value}'
