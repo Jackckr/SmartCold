@@ -1,0 +1,585 @@
+checkLogin();
+app.controller('monitorFacility', function ($scope, $location, $http, $rootScope, $sce,userService) {
+    $http.defaults.withCredentials = true;
+    $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+
+    $scope.user = window.user;
+    $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?filter=";
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    var rootRdcId = $.getUrlParam('storageID');
+    $http.get(ER.coldroot + '/i/rdc/findRDCsByUserid?userid=' + window.user.id).success(function (data) {
+        if (data && data.length > 0) {
+            $scope.storages = data;
+            if (!rootRdcId) {
+                if (window.localStorage.rdcId) {
+                	initAllByRdcId(window.localStorage.rdcId);
+                    findByRdcId(window.localStorage.rdcId);
+                } else {
+                    $scope.currentRdc = $scope.storages[0];
+                    $scope.rdcId = $scope.storages[0].id;
+                    $scope.rdcName = $scope.storages[0].name;
+                    $scope.viewStorage($scope.storages[0].id);
+                }
+            } else {
+            	initAllByRdcId(rootRdcId);
+                findByRdcId(rootRdcId)
+            }
+        }
+    });
+
+    function findByRdcId(rootRdcId) {
+        $http.get(ER.coldroot + '/i/rdc/findRDCByRDCId?rdcID=' + rootRdcId).success(function (data) {
+            $scope.currentRdc = data[0];
+            $scope.rdcName = data[0].name;
+            $scope.rdcId = data[0].id;
+            $scope.viewStorage($scope.rdcId);
+        });
+    }
+
+    $scope.viewStorage = function (rdcId) {
+        window.localStorage.rdcId = $scope.rdcId;
+        //根据rdcid查询该rdc的报警信息
+        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
+            "rdcId": rdcId
+        }
+        }).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.alarmTotalCnt = data.length;
+            }
+        });
+        $http.get(ER.coldroot + '/i/platformDoor/findByRdcId?rdcId=' + $scope.rdcId).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.platformDoors = data;
+            }
+        })
+        $http.get(ER.coldroot + '/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
+            if (data && data.length > 0) {
+                $scope.mystorages = data;
+                for (var i = 0; i < $scope.mystorages.length; i++) {
+                    $scope.drawDoor($scope.mystorages[i]);
+                }
+            }
+        });
+        $(".one").show();
+        $(".two").hide();
+        $('.searchTop').hide();
+    }
+
+    $scope.searchRdcs = function (searchContent) {
+        // 超管特殊处理
+        if ($scope.user.roleid == 3) {
+            $http.get(ER.coldroot + '/i/rdc/searchRdc?type=1&filter=' + searchContent).success(function (data) {
+                if (data && data.length > 0) {
+                    $scope.storages = data;
+                }
+            });
+        }
+    }
+    $scope.changeRdc = function (rdc) {
+        clearSwiper();
+        $scope.rdcId = rdc.id;
+        $scope.rdcName = rdc.name;
+        $scope.searchContent = "";
+        $scope.viewStorage(rdc.id);
+        initAllByRdcId(rdc.id);
+    }
+
+    $scope.goTempture = function () {
+        window.location.href='cold360.html?storageID=' + $scope.rdcId;
+    }
+    $scope.goElectric = function () {
+        window.location.href='monitorElectric.html?storageID=' + $scope.rdcId;
+    }
+    $scope.goOtherMonitor = function () {
+        window.location.href='monitorCooling.html?storageID=' + $scope.rdcId;
+    }
+    var getFormatTimeString = function (delta) {
+        delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
+        return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
+    }
+
+    var formatTime = function (timeString) {
+        if (typeof(timeString) == "string") {
+            return new Date(Date.parse(timeString) + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        } else {
+            return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "")
+        }
+    }
+
+    function formatTimeToDay(timeString){
+        return formatTime(timeString.substring(0,10)).substring(0,10)
+    }
+
+    $scope.swiper = 0;
+    $scope.defaltswiper = 0;
+
+    $scope.drawDoor = function (storage) {
+
+        $http.get(ER.coldroot + '/i/coldStorageDoor/findByStorageId?storageID=' + storage.id).success(function (data) {
+            if (data.length > 0) {
+                $scope.coldStorageDoors=data;
+                if($scope.coldStorageDoors){
+                    angular.forEach($scope.coldStorageDoors,function(obj,i){
+                        var doorId = obj.id;
+                        $http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
+                            params: {
+                                "oid": doorId,
+                                type: 2,
+                                key: 'Switch'
+                            }
+                        }).success(function (result) {
+                            var data = [];
+                            for (var i = 0; i < result.length; i++) {
+                                var val = Date.parse(result[i].addtime);
+                                var newDate = new Date(val).getTime();
+                                data.push({
+                                    x: newDate,
+                                    y: result[i].value
+                                });
+                            }
+
+                            // 冷库门开关监控
+                            Highcharts.setOptions({
+                                global: {
+                                    useUTC: false
+                                }
+                            });
+
+                            var mainId = 'door' + doorId;
+                            if ($scope.swiper < $scope.coldStorageDoors.length * $scope.mystorages.length) {
+                                if($scope.coldStorageDoors.length==1){
+                                    $scope.doorName= storage.name
+                                }else{
+                                    $scope.doorName= storage.name+'·'+obj.name
+                                }
+                                var innerHTML = '<div class="swiper-slide">' +
+                                    '<p class="actually">' +$scope.doorName+ '</p>' +
+                                    '<div id=' + mainId + '></div> ';
+                                $("#chartView").last().append(innerHTML);
+                                $scope.swiper += 1;
+                            }
+
+                            $('#' + mainId).highcharts({
+                                chart: {type: 'area'},
+                                title: {text: '冷库门开关监控',style: { fontSize:'0.7rem'}},
+                                xAxis: {type: 'datetime',tickPixelInterval: 200},
+                                yAxis: {
+                                    allowDecimals: false,
+                                    labels: {
+                                        formatter: function () {
+                                            return this.value===0?"关":"开";
+                                        }
+                                    },
+                                    title: {text: 'DoorState(0关1开)'},
+                                    plotLines: [{value: 0,width: 1,color: '#808080'}],
+                                    max: 1,
+                                    min: 0,
+                                },
+                                tooltip: {
+                                    formatter: function () {
+                                        var state =this.y === 1? '冷库处于开门状态': '冷库处于关门状态';
+                                        return '<b>' + this.series.name + '</b><br/>' +
+                                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                            state;
+                                    }
+                                },
+                                legend: {enabled: false},
+                                exporting: {enabled: false},
+                                credits: {enabled: false },
+                                plotOptions: {  area: {stacking: 'percent',marker: { enabled: false}} },
+                                series: [{
+                                    name: 'DoorState',
+                                    data: data
+                                }]
+                            });
+                        });
+                    });
+                }
+            } else {
+                var mainId = 'defalt' + $scope.defaltswiper;
+                if ($scope.swiper < $scope.mystorages.length) {
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">' + storage.name + '</p>' +
+                        '<div id=' + mainId + '></div> ';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.defaltswiper += 1;
+                    $scope.swiper += 1;
+                }
+            }
+        })
+    }
+
+    $scope.drawFlatform = function (door) {
+        var doorId = door.id;
+        $http.get(ER.coldroot + '/i/baseInfo/getKeyValueData', {
+            params: {
+                "oid": doorId,
+                type: 11,
+                key: 'Switch'
+            }
+        }).success(function (result) {
+            var data = [];
+            for (var i = 0; i < result.length; i++) {
+                var val = Date.parse(result[i].addtime);
+                var newDate = new Date(val).getTime();
+                data.push({
+                    x: newDate,
+                    y: result[i].value
+                });
+            }
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
+
+            var mainId = 'platform' + doorId;
+            if ($scope.swiper < $scope.platformDoors.length) {
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">' + door.name + '</p>' +
+                    '<div id=' + mainId + '></div> ';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper += 1;
+            }
+
+            $('#' + mainId).highcharts({
+                chart: {type: 'area'},
+                title: {text: '月台门开关监控'},
+                xAxis: {type: 'datetime',tickPixelInterval: 200 },
+                yAxis: {
+                    allowDecimals: false,
+                    labels: {
+                        formatter: function () {
+                            return this.value===0?"关":"开";
+                        }
+                    },
+                    title: { text: 'DoorState(0关1开)' },
+                    plotLines: [{value: 0,width: 1,color: '#808080'}],
+                    max: 1,
+                    min: 0,
+                },
+                tooltip: {
+                    formatter: function () {
+                        var state =this.y === 1? '月台门于开门状态': '月台门处于关门状态';
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            state;
+                    }
+                },
+                legend: {enabled: false},
+                exporting: {enabled: false},
+                credits: {enabled: false},
+                plotOptions: {  area: {stacking: 'percent',marker: { enabled: false}} },
+                series: [{
+                    name: 'DoorState',
+                    data: data
+                }]
+            });
+        })
+    }
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    $scope.drawInOutGoods = function (storage) {
+        var totalTime = 10;
+        var series = []
+        var time = []
+        var timeMap = {}
+        var legend = []
+        for(var i=0; i< totalTime;i++){
+            xTime = formatTimeToDay(getFormatTimeString(-i* 24 * 60 * 60 * 1000))
+            time.unshift(xTime)
+            timeMap[xTime] = totalTime - i - 1
+        }
+        var startDate = formatTimeToDay(getFormatTimeString(-10 * 24 * 60 * 60 * 1000))
+        var endDate = getFormatTimeString();
+        var url = ER.coldroot + "/i/other/findGoodsByDate?coldstorageId=" + storage.id +
+            "&startCollectionTime=" + startDate + "&endCollectionTime=" + endDate;
+        $http.get(url).success(function (data) {
+            if (Object.keys(data).length > 0) {
+                var mainId = "barChart" + storage.id;
+                var barId = "#" + mainId;
+                if ($scope.swiper < $scope.mystorages.length) {
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">' + storage.name + '</p>' +
+                        '<div id=' + mainId + '></div> ';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper += 1;
+                }
+
+                angular.forEach(data,function(yData,key){
+                    outData = {name:key+'出货量',type:'bar',data:new Array(totalTime+1).join("-").split("")};
+                    inData = {name:key+'进货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}
+                    inTemp = {name:key+'进货温度',type:'line',yAxisIndex: 1,data:new Array(totalTime+1).join("-").split("")}
+                    legend.push(key+'出货量',key+'进货量',key+'进货温度');
+                    angular.forEach(yData,function(item){
+                        var date = new Date(item.date);
+                        var dateStr = date.Format("yyyy-MM-dd");
+                        outData.data[timeMap[dateStr]] = item['outputQUantity'];
+                        inData.data[timeMap[dateStr]] = item['inputQuantity'];
+                        inTemp.data[timeMap[dateStr]] = item['inputTemperature'];
+                    })
+                    series.push(outData,inData,inTemp)
+                })
+                barOption = {
+                	backgroundColor: '#D2D6DE',
+                    tooltip : {
+                        trigger: 'axis',
+                        textStyle:{
+                        	fontSize:12
+                        }
+                    },
+                    title:{
+                    	text:'日均货物流通监控',
+                    	textStyle:{
+                        	fontSize:13,
+                        	fontWeight:'400'
+                        }
+                    },
+                    legend: {
+                        data:legend,
+                        y:'bottom',
+                    },
+                    grid:{
+                    	x:40,
+                    	y:50,
+                    	x2:40,
+                    	y2:100,
+                    	width:"75%",
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : time
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '货物量(kg)',
+                            axisLabel : {
+                                formatter: '{value}'
+                            }
+                        },
+                        {
+                            type : 'value',
+                            name : '温度(°C)',
+                            axisLabel : {
+                                formatter: '{value}'
+                            }
+                        }
+                    ],
+                    series : series
+                };
+                var barChart = echarts.init($(barId).get(0));
+                barChart.setOption(barOption);
+            }
+        })
+    }
+
+    $scope.drawOther = function () {
+
+        var keyDescribleMap = {
+            forkLift: "叉车日耗能", windScreen: "风幕机日耗能",
+            pressurePlatform: "液压平台日耗能", chargingPile: "充电桩日耗能"
+        }
+        url = ER.coldroot + "/i/other/findOtherDeviceCosts?rdcId=" + $scope.rdcId + "&startTime="
+            + getFormatTimeString(-30 * 24 * 60 * 60 * 1000) + "&endTime=" + getFormatTimeString()
+        $http.get(url).success(function (data) {
+            $scope.otherInfos = data;
+            angular.forEach(data, function (infos, key) {
+                var mainId = key + "Chart";
+                var chartId = "#" + mainId;
+                if ($scope.swiper < 4) {
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">' + keyDescribleMap[key] + '</p>' +
+                        '<div id=' + mainId + '></div> ';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper += 1;
+                }
+
+                var chart = echarts.init($(chartId).get(0));
+                var xData = []
+                var yData = []
+                angular.forEach(infos, function (info) {
+                    yData.push(info.cost.toFixed(2))
+                    xData.push(formatTime(info.time))
+                })
+                chart.setOption($scope.creatOption("", xData, yData,
+                    "耗能", "kW.h", keyDescribleMap[key], "line"))
+            })
+        })
+    }
+    var watch =$scope.$watch('mystorages', $scope.inintData,true);//监听冷库变化
+    $scope.colors=['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4','#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']; 
+    $scope.drawLight = function () { //照明
+    	$("#light_group").children("div").first().addClass("active");
+    	$scope.isshow=true;
+	    $scope.coldlightGroups=[];
+		   if($scope.mystorages!=undefined){
+			   watch();
+			   $http.get(ER.coldroot + '/i/lightGroupController/findByRdcId', {params: {rdcId:$scope.rdcId}} ).success(function(data, status, headers, config) {   
+				   if(data.length>0){
+				      $scope.isshow=false;
+				      angular.forEach($scope.mystorages,function(item){ 
+						   var lightGroups=[];
+						   angular.forEach(data,function(obj){  if(obj.coldStorageId==item.id){ lightGroups.push(obj); } }); 
+						   item.lightGroups=lightGroups;
+					   }); 
+				      
+				      angular.forEach($scope.mystorages,function(item){ 
+						  if(item.lightGroups.length>0){ $scope.coldlightGroups.push(item);} 
+					   }); 
+				   }
+			   });
+		   }
+    }
+
+    $scope.activeEnergy = 'storageDoor';
+    $scope.storageDoorFacility = function () {//冷库门
+        clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
+        $scope.activeEnergy = 'storageDoor';
+        if ($scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawDoor($scope.mystorages[i]);
+            }
+        }
+    }
+
+    $scope.platformDoorFacility = function () {//月台门
+        clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
+        $scope.activeEnergy = 'platformDoor';
+        if ($scope.platformDoors && $scope.platformDoors.length > 0) {
+            for (var i = 0; i < $scope.platformDoors.length; i++) {
+                $scope.drawFlatform($scope.platformDoors[i]);
+            }
+        }
+    }
+
+    $scope.goodsInOutOther = function () {//货物
+        clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
+        $scope.activeEnergy = 'drawInOutGoods';
+        if ($scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawInOutGoods($scope.mystorages[i]);
+            }
+        }
+    }
+    
+    $scope.lightGroup = function () {//照明
+    	$(".light_hide").hide();
+    	$(".light_show").show();
+        clearSwiper();
+        $scope.activeEnergy = 'drawLight';
+        $scope.drawLight();
+    }
+
+    $scope.otherFacilityFacility = function () {//其他设施
+        clearSwiper();
+        $(".light_hide").show();
+    	$(".light_show").hide();
+        $scope.activeEnergy = 'otherFacility';
+        $scope.drawOther();
+    }
+    function clearSwiper() {
+        $("div").remove(".swiper-slide");
+        $scope.swiper = 0;
+        $scope.defaltswiper = 0;
+    }
+
+    $scope.creatOption = function (title, xData, yData, yName, yUnit, lineName, type) {
+        var option = {
+            backgroundColor: '#D2D6DE',
+            tooltip: {
+                trigger: 'axis',
+                textStyle:{
+                	fontSize:12
+                }
+            },
+            title: {
+                text: title,
+                x: 'center',
+                textStyle: {
+                    fontSize: 16,
+                    fontWeight: 400,
+                    color: '#333'          // 主标题文字颜色
+                },
+            },
+            calculable: true,
+            grid: {
+                x: 55,
+                y: 60,
+                x2: 75,
+                /*y2: 60,*/
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xData
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: yName + "(" + yUnit + ")"
+                }
+            ],
+            series: [
+                {
+                    name: lineName,
+                    type: type,
+                    data: yData,
+                }
+            ]
+        };
+        return option
+    }
+
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () {
+        if ($scope.activeEnergy == 'storageDoor' && $scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawDoor($scope.mystorages[i]);
+            }
+        }
+        if ($scope.activeEnergy == 'platformDoor' && $scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawFlatform($scope.mystorages[i]);
+            }
+        }
+        if ($scope.activeEnergy == 'drawInOutGoods' && $scope.mystorages && $scope.mystorages.length > 0) {
+            for (var i = 0; i < $scope.mystorages.length; i++) {
+                $scope.drawInOutGoods($scope.mystorages[i]);
+            }
+        }
+        if ($scope.activeEnergy == 'drawLight') {
+        	 $scope.drawLight();
+        }
+        if ($scope.activeEnergy == 'otherFacility') {
+            $scope.drawOther();
+        }
+    }, 30000);
+});

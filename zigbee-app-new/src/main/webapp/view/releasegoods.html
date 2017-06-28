@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>发布货品</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+	<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
+	<script type="text/javascript" src="../com/datepicker/date.js"></script>
+	<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
+	<script type="text/javascript" src="../com/js/common.js"></script>
+	<script type="text/javascript" src="../com/js/layer.js"></script>
+	<script src="../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript"
+		src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+	<script type="text/javascript" src="../app/js/releaseStorageList.js"></script>
+</head>
+<body ng-app="app" ng-controller="ctrl">
+  <script>
+        $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:8}});
+    	$(function() {
+			$('.toggle').children('div').click(function(){
+				$(this).addClass('current').siblings().removeClass('current');
+				if($(this).index()==1){
+				    window.flag2 = 1;
+				    $('#name').attr('placeholder','货品求货')
+                    $(".bossToggle").hide();
+                    
+					/*$(".main").show();
+					$('.coldlist').hide();*/
+				}else{
+				window.flag2 = 0;
+				$('#name').attr('placeholder','货品出货')
+                    $(".bossToggle").show();
+					/*$(".main").hide();
+					$('.coldlist').show();*/
+				}
+			});
+            $('.radiocar button').click(function(event){
+                $(".main").show();
+                $('.coldlist').hide();
+                $(this).parent().hide()
+            });
+            /*date*/
+			 $('#sttime').date();
+			 $('#endtime').date();
+		});
+    </script>
+    <!-- header -->
+        <header>
+        	
+            <div class="area fl">
+                <a href="release.html"><i class="iconfont">&#xe60e;</i></a>
+            </div>
+            <div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
+            <div class="txt">
+                发布货品
+            </div>
+        </header>
+    <!-- header end-->
+    <section class="toggle clearfix">
+    	<div class="rent current fl"><i class="iconfont">&#xe64e;</i>出售</div>
+    	<div class="offer fl"><i class="iconfont">&#xe64f;</i>求购</div>
+    </section>
+     <div class="radiocar">
+        <button class="mybtn">不关联库发布</button>
+     </div>
+    <!--coldlist-->
+    <div class="coldlist" style="margin-bottom: 3rem;">
+      <div class="nodata" style="background:#F6F5FA;">
+			<p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
+			<p class="sorry">
+				<button class="mybtn" onclick="location.href='releasekutable.html'">添加冷库信息</button>
+		</div>
+       <div>
+			<ul id="ul_rdcsL_list" class="imgTable"></ul>
+			<a id="loading" href="javascript:;" onclick="getPageData();"></a>
+		</div>
+    </div>
+    <section class="main maindetail black">
+       	<form id="release_item_from" name="itemform" >
+       	 <input type="hidden" id="dataType" ng-model="dataType" value="1">
+			      <input type="hidden" id="typeCode" ng-model="typeCode" value="1">
+			      <input type="hidden" id="typeText" ng-model="typeText" value="出售">
+			      <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
+            <ul class="houseinfo">
+                <li>
+                    <label for="name">描述</label><em>*</em>
+                    <input type="text" ng-model="title"  id="name" placeholder="货品出售"/>
+                </li>
+                <li class="bossToggle">
+                    <label for="boss">供应商</label>
+                    <input type="text" ng-model="unit1" id="boss"/>
+                </li>
+                 <li class="offershow">
+                    <label for="province">省</label><em>*</em>
+                    <div class="mySelect">
+                    	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
+                                    ng-change="provinceSelected(provinceId)"
+                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                    </div>
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
+                 <li class="offershow">
+                    <label for="city">市</label><em>*</em>
+                    <div class="mySelect">
+	                    <select id="city" ng-model="cityId" name="cityid"
+                                    ng-disabled="editable" ng-change="citySelected(cityId)"
+                                    ng-options="x.cityID as x.cityName for x in citys"></select>
+	                </div>
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
+                <li>
+                    <label for="category">品类</label><em>*</em>
+                    <div class="mySelect">
+	                    <select id="category" id="good_type" name="codeLave11" ng-model="codeLave11">
+	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
+	                    </select>
+	                </div>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="num">数量</label><em>*</em>
+                    <input type="number" id="num" placeholder="吨" ng-model="sqm"/>
+                </li>
+                <li>
+                    <label for="price">单价</label>
+                    <input type="number" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
+                </li>
+                <li>
+					<label for="time">有效开始时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" placeholder="请选择开始时间" id="sttime" class="kbtn"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
+				
+				<li>
+					<label for="time">有效结束时间</label><em>*</em>
+					<div class="mySelect">
+						<input type="text" placeholder="请选择结束时间" id="endtime" class="kbtn"/>
+					</div>
+					<i class="iconfont fr">&#xe63a;</i>
+				</li>
+                <li>
+                    <label for="phone">联系电话</label><em>*</em>
+                    <input type="text" id="phone" ng-model="telephone" />
+                </li>
+                <li>
+                    <label for="note">备注</label>
+                    <input type="text" ng-model="note" id="note" placeholder="（选填）"/>
+                </li>
+                <li>
+                    <label class="pic">
+		    			<input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
+				 </label> <span id="">上传图片<small class="text-warning" style="width: 100px">(最多十张)</small></span><br>
+	             <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
+                </li>
+            </ul>
+        </form>
+        <button class="mybtn" ng-click="goodSubmit()" >确认发布</button>
+    </section>
+    <div id="datePlugin"></div>
+</body>
+<script type="text/javascript" src="../app/js/releasestorage.js"></script>
+</html>

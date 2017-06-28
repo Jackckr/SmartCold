@@ -213,28 +213,42 @@ html,body,header{
     z-index: 10000;
 }
 #loginUser{
-    width: 260px;
+    width: 100px;
     height:86px;
     cursor: pointer;
+    position: relative;
+    display: none;
+    text-align: center;
+    z-index:1;
+}
+#loginUser .nameDiv{
+    height: 100%;
     line-height: 86px;
-}
-#loginUser div:first-child{
-    width: 150px;
-}
-#loginUser a{
-    color: #fff;
-    display: block;
+    cursor: pointer;
 }
 #loginUser img{
+    vertical-align:middle ;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    position: relative;
-    top: -23px;
 }
-#loginUser span{
-    display: inline-block;
-    width: 60px;
+#loginUser dl{
+    position: absolute;
+    top:100%;
+    right:0;
+    width: 100px;
+}
+#loginUser dl li a{
+    display: block;
+    padding: 8px 15px;
+    width: auto;
+    color: #fff;
+    cursor: pointer;
+    background-color: rgba(0,0,0,.6);
+}
+#loginUser dl li a:hover{
+    color: #fff;
+    background: #186eff;
 }
 /*版权信息css*/
 #QRcode{

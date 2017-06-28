@@ -1,0 +1,275 @@
+@charset "utf-8";
+
+/* 禁用iPhone中Safari的字号自动调整 */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    font-size: 40px;
+    min-width: 320px;
+    max-width: 1025px;
+    margin: 0 auto;
+}
+/* 去除iPhone中默认的input样式 */
+input[type="submit"], input[type="reset"], input[type="button"], input {
+    /* -webkit-appearance: none; */
+    resize: none;
+}
+input,button{
+    outline: none;
+}
+/* 取消链接高亮  */
+body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 设置HTML5元素为块 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+/* 图片自适应 */
+img {
+    width: 100%;
+    height: 100%;
+    width: auto\9; /* ie8 */
+    -ms-interpolation-mode: bicubic;/*为了照顾ie图片缩放失真*/
+}
+
+/* 初始化 */
+body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+body {
+    font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif;
+    color: #555;
+    background-color: #F6F5FA;
+    font-size: 0.7rem;
+}
+em, i {
+    font-style: normal;
+}
+strong {
+    font-weight: normal;
+}
+.clearfix:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+}
+.clearfix {
+    zoom: 1;
+}
+a {
+    text-decoration: none!important;
+    color: #969696;
+    font-family: Helvetica,Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;
+}
+a:hover {
+    text-decoration: none;
+}
+ul, ol {
+    list-style: none;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-family: Helvetica,Microsoft YaHei,'宋体';
+}
+img {
+    border: none;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.omg{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@font-face {font-family: 'iconfont';
+    src: url('../iconfont/iconfont.eot'); /* IE9*/
+    src: url('../iconfont/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../iconfont/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('../iconfont/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../iconfont/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:1.2rem;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+/*初始化*/
+#PoPy{top:2.2rem!important;left: 0!important;width: 100%!important;background-color: #fff!important;box-shadow:0 6px 10px #656363;}
+._citys { width: 100%; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative; box-sizing: border-box;}
+._citys span { color: #4287ff; height: 1rem; width: 1rem; font-size:0.8rem; line-height: 0.95rem; text-align: center; border-radius: 3px; position: absolute; right: 0.9rem; top: 0.5rem; border: 1px solid #4287ff; cursor: pointer; }
+._citys0 { width: 100%; display: inline-block; border-bottom: 0.1rem solid #4287ff; padding: 0; margin: 0;}
+._citys0 li { display: inline-block; line-height: 1.4rem; font-size: 0.7rem; color: #888; width: 4rem;text-align: center; cursor: pointer; }
+.citySel { background-color: #4287ff; color: #fff !important; }
+._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
+._citys1 a { width: 4rem; height: 1.5rem; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 0.5rem; margin-top: 0.4rem; line-height: 1.5rem; text-align: center; cursor: pointer; font-size:0.7rem; overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;}
+._citys1 a:hover { color: #fff; background-color: #4287ff; }
+.AreaS { background-color: #4287ff !important; color: #fff !important; }
+.citysselect {
+    color: #fff !important;
+    background-color: #4287ff !important;
+}
+/*touchslide=================================================*/
+.banner{
+    width: 100%;
+    height: 8.375rem;
+}
+.focus{
+    width:100%;
+    height: 8rem;
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+}
+.focus .hd{
+    width:100%;
+    height:0.5rem;
+    position:absolute;
+    z-index:1;
+    bottom:5px;
+    text-align:center;
+}
+.focus .hd ul {
+    display: inline-block;
+    height: 0.5rem;
+    font-size: 0;
+    vertical-align: top;
+}
+.focus .hd ul li{
+    display:inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    -webkit-border-radius:50%;
+    border-radius:50%;
+    background:#000;
+    opacity: 0.3;
+    margin:0 5px;
+    text-indent: -99rem;
+}
+.focus .hd ul .on{
+    background:#007AFF;
+    opacity: 1;
+}
+.focus .bd li{
+    width:100%;
+    height:8rem;
+    background-size: cover;
+}
+.focus .bd li img{
+    width:100%;
+    height:100%;
+    background:url(../img/load.gif) center center no-repeat;
+}
+/* touchslide css -------------------------------------- */
+.black{
+    display: none;
+}
+header{
+    width: 100%;
+    display: flex;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    background-color: #4287ff;
+    overflow: hidden;
+    color: #fff;
+    font-size: .75rem;
+}
+header>div{
+    flex:1;
+    text-align: center;
+}
+header>div>img{
+    width: 3rem;
+    height: auto;
+    vertical-align: middle;
+}
+.oCity{
+}
+.city{
+    display: block;
+    height: 100%;
+    color: #fff;
+    line-height: 2.2rem;
+}
+.city i{
+    width: 20%;
+}
+.nav-city{
+    width: 70%;
+    color: #fff;
+    line-height: 2.2rem;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    margin-right: .2rem;
+    margin-left: .2rem;
+    font-size: .7rem;
+}
+.area i{
+    color: #fff;
+    padding-right:0.3rem;
+    font-size: 0.75rem;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+/*八大模块*/
+.oModel li{
+    float: left;
+    width: 50%;
+    padding: 0.2rem 0;
+}
+.oModel li a,footer>div>a{
+    display: block;
+    text-align: center;
+    color: #656565;
+}
+footer>div>a p{
+    font-size: .635rem;
+}
+.oModel li a img{
+    width: 2.2324rem;
+    height: 2.2rem;
+}
+/*footer*/
+footer{
+    display: flex;
+    height: 2.45rem;
+    background: rgba(255,255,255,.9);
+    border-top: 1px solid #ccc;
+}
+footer>div{
+    flex: 1;
+    text-align: center;
+}
+footer>div.active>a{
+    color: #4287ff;
+}
+header,footer{
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top:0;
+    z-index:999;
+}
+footer{
+    top:auto;
+    bottom: 0;
+}
+body{
+    padding: 2.2rem 0 2.45rem 0;
+}
