@@ -95,7 +95,6 @@ public class DFSCollectionController extends BaseController {
 								default:
 									break;
 								}
-					    		
 					  }
 					 newdata.setValue(val);//更新数据
 					 newdata.setTime( info.get("lasttime"));
@@ -106,6 +105,19 @@ public class DFSCollectionController extends BaseController {
 						 dataList = new ArrayList<DFSDataCollectionEntity>();
 						 dataList.add(newdata);
 						 tempMap.put(table, dataList);
+					}
+					if("isRunning,isDefrosting".indexOf(newdata.getKey())>-1){
+						DFSDataCollectionEntity clone  = (DFSDataCollectionEntity) newdata.clone();
+						if(clone!=null){
+							if("isRunning".equals(newdata.getKey())){
+								clone.setKey("isDefrosting");
+								clone.setValue(0);
+							}else{
+								clone.setKey("isRunning");
+								clone.setValue(0);
+							}
+							tempMap.get(table).add(clone);
+						}
 					}
 			}
 			if(SetUtil.isNotNullMap(tempMap)){

@@ -67,10 +67,16 @@
 				当前冷库没有配置温度信息！
 			</div>
         </div>    
-         <div id="mgs_div3" ng-if="isOverTemp" class="magentaPulse wiltrue" >
+         <div id="mgs_div3" ng-if="isOverTemp.isAlarm" class="magentaPulse wiltrue" >
            <div class="alert  alert-dismissable fadeInUp animated">
 				<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
 				当前冷库正在超温！请注意检查！
+			</div>
+        </div>    
+         <div id="mgs_div4" ng-if="isOverTemp.isBlack" class="magentaPulse wiltrue" >
+           <div class="alert  alert-dismissable fadeInUp animated">
+				<button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button>
+				 由于该冷库长时超温,系统自动静默！
 			</div>
         </div>    
 

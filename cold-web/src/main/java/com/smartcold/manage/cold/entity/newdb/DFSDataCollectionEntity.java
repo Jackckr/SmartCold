@@ -2,7 +2,7 @@ package com.smartcold.manage.cold.entity.newdb;
 
 import java.util.Date;
 
-public class DFSDataCollectionEntity {
+public class DFSDataCollectionEntity implements Cloneable {
 
 	private int oid;
 	private String table;//指向映射表
@@ -71,7 +71,15 @@ public class DFSDataCollectionEntity {
 		this.addtime = addtime;
 	}
 
-
+	public Object clone() {  
+		DFSDataCollectionEntity o = null;  
+        try {  
+            o = (DFSDataCollectionEntity) super.clone();  
+        } catch (CloneNotSupportedException e) {  
+            e.printStackTrace();  
+        }  
+        return o;  
+    }  
 
 
 }

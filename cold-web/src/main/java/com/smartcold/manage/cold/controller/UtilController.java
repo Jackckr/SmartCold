@@ -63,8 +63,11 @@ public class UtilController extends BaseController {
 	 public Object getTempJobList(){return  QuartzManager.tempListen;}
 	 @RequestMapping("/getTempJobBlacklist") //获得加入黑名单冷库
 	 public Object getTempJobBlacklist(){return  WarningTaskService.Blacklist;}
+	 @RequestMapping("/getRunBlacklist") //获得加入黑名单冷库
+	 public Object getRunBlacklist(){return  WarningTaskService.extBlacklist;}
 	 @RequestMapping("/getColdStatus") //判断指定冷库是否超温
-	 public boolean getColdStatus(int oid )	{	 return  QuartzManager.tempListen.containsKey(oid);
-		 }
+	 public boolean getColdStatus(int oid )	{ return QuartzManager.tempListen.containsKey(oid);}
+	 @RequestMapping("/getColdAlarmStatus") //判断指定冷库是否超温
+	 public HashMap<String, Boolean> getColdAlarmStatus(int oid )	{ HashMap<String, Boolean> tempHashMap=new HashMap<String, Boolean>();tempHashMap.put("isAlarm",  QuartzManager.tempListen.containsKey(oid));tempHashMap.put("isBlack",  WarningTaskService.extBlacklist.containsKey(oid));	 return   tempHashMap;}
 	 
 }
