@@ -21,22 +21,23 @@ jQuery(".picScroll-left").slide({easing:"linear",mainCell:".bd ul",autoPage:true
 
 /*功能组件*/
 var pagination={pageCount:-1,oldPageCount:-1};
-var screenParam={sqm:null,audit:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,datatype:3,type:1,pageNum:1,pageSize:5};
+var screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,datatype:3,type:1,pageNum:1,pageSize:5};
 var storageManage=[];
 var storageTemp=[];
 var tempStandard=[];
 var audit=[];
 var goodSave=[];
 var rdcSqm=[];
+var hasCar=[];
 /*初始化出租冷库列表*/
 function getRdcRentList() {
     var rdcRentInfo=[];
-    $.ajax({url:"/i/ShareRdcController/newGetSERDCList",async:false,type:"post",data:screenParam,success:function (data) {
+    $.ajax({url:"/i/rdc/newGetRdcList",async:false,type:"post",data:screenParam,success:function (data) {
         pagination.pageCount=data.totalPages;
         if(pagination.pageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage();}
         var rdcRentList=data.data;
         rdcRentList.forEach(function (rdcRent, index) {
-            rdcRentInfo.push('<li><div class="rdcImg"><a href="javascript:;"><img src="/'+rdcRent.logo+'" alt=""></a>');
+            rdcRentInfo.push('<li><div class="rdcImg"><a href="javascript:;"><img src="'+rdcRent.logo+'" alt=""></a>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<i>温度达标冷库</i>');}
             rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="javascript:;">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>72%</b></span><ul class="stars clearfix fl">');
             for(var i=0;i<5;i++){
@@ -49,7 +50,9 @@ function getRdcRentList() {
             rdcRentInfo.push('</ul></div><div class="rdcApprove">');
             rdcRent.audit==2?rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>'):rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
-            rdcRentInfo.push(' <i>3号库实时温度：-17.6℃</i></div><div class="rdcArea"><span>总面积'+rdcRent.rdcSqm+'㎡</span>|<span>'+rdcRent.codeLave1+'</span><span>'+rdcRent.codeLave2+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.detlAddress+'</b></div></div><div class="rdcPrice"><p>可用面积<i class="orange">'+rdcRent.sqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p></div><div class="rdcBtn"><button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button><button class="look"><i class="iconfont">&#xe610;</i>查看</button></div></li>');
+            rdcRentInfo.push(' <i>3号库实时温度：-17.6℃</i></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+rdcRent.tempTypeStr+'</span><span>'+rdcRent.manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
+            if(rdcRent.datatype==3&&rdcRent.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.rentSqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无出租单价</h3>');}
+            rdcRentInfo.push('</div><div class="rdcBtn"><button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button><button class="look"><i class="iconfont">&#xe610;</i>查看</button></div></li>');
         });
         $("#rdcRentList").empty().append(rdcRentInfo.join(''));
     }});
@@ -176,6 +179,18 @@ function getRdcSqm() {
     }
     getRdcRentList();
 }
+/*获得冷藏车情况*/
+function getHasCar() {
+    if($(this).val()==-1){
+        hasCar.splice(0,hasCar.length);
+        screenParam.hasCar=null;
+    }else {
+        var index = hasCar.contains($(this).val());
+        index==-1?hasCar.push($(this).val()):hasCar.splice(index,1);
+        screenParam.hasCar=hasCar.join();
+    }
+    getRdcRentList();
+}
 $(function () {
     getRdcRentList();
     getProvinceList();
@@ -185,8 +200,9 @@ $(function () {
     $("li[type=tempStandard]").bind('click',getTempStandard);
     $("li[type=isAudit]").bind('click',getAudit);
     $("li[type=goodSave]").bind('click',getGoodSave);
+    $("li[type=hasCar]").bind('click',getGoodSave);
     $("#search").bind('click',getKeyword);
     $("#keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
-    $("li[type=rdcSqm]").bind('click',getRdcSqm);
+    $("li[type=rdcSqm]").bind('click',getHasCar);
 });
 

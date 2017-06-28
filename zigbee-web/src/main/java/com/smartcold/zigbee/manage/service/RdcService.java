@@ -57,4 +57,6 @@ public interface RdcService {
 	  * @return
 	  */
 	 public PageInfo<RdcEntityDTO> getRDCList(int pageNum,int pageSize,HashMap<String, Object> filter);
+
+	public PageInfo<RdcEntityDTO> newGetRdcList(int pageNum,int pageSize,HashMap<String, Object> filter);
 }

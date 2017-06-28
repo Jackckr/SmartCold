@@ -584,4 +584,11 @@ public class RdcServiceImpl implements RdcService {
 		return this.rdcDao.findRDCById(rdcID);
 	}
 
+    @Override
+    public PageInfo<RdcEntityDTO> newGetRdcList(int pageNum, int pageSize,HashMap<String, Object> parameters) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<RdcEntityDTO> serdcList = this.rdcDao.getNewRdcList(parameters);
+        return new PageInfo<RdcEntityDTO>(serdcList);
+    }
+
 }

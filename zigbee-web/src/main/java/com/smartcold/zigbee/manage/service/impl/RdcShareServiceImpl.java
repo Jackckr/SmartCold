@@ -120,20 +120,6 @@ public class RdcShareServiceImpl implements RdcShareService {
 
 
 	/**
-	 * 获得首页改版仓库共享信息
-	 * @param pageNum
-	 * @param pageSize
-	 * @param filter
-	 * @return
-	 */
-	@Override
-	public PageInfo<RdcShareDTO> newGetSERDCList(int pageNum, int pageSize,HashMap<String, Object> parameters) {
-		PageHelper.startPage(pageNum, pageSize);
-		Page<RdcShareDTO> serdcList = this.rdcShareMapper.getNewSERDCListByPage(parameters);
-		return new PageInfo<RdcShareDTO>(serdcList);
-	}
-
-	/**
 	   * 获得关联库全部信息
 	   * @param filter
 	   * @return
