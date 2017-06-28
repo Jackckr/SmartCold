@@ -120,7 +120,7 @@ public class QuantityTaskService  {
 		this.delTempfile();
     	this.resetDevStatus();
     	this.LowbatteryAlarm();//低电量告警
-    	this.SummaryTempWarning();//温度统计
+    	
     	if(errDevList.size()>2000){errDevList.clear();}
     	if(coldStoragecache.size()>2000){coldStoragecache.clear();}
 	}
@@ -143,6 +143,7 @@ public class QuantityTaskService  {
 	    this.setQblower(time, dateTime);//6 Q风
 		this.setQForklift(time,dateTime,startTime,endtime);//3 Q叉,4 Q照
 		this.setQctdoor(time, dateTime, startTime, endtime);//Q門
+		this.SummaryTempWarning(time, dateTime, startTime, endtime);//温度统计
 	}
   
 	
@@ -214,18 +215,16 @@ public class QuantityTaskService  {
 		}
 	}
 	//超温统计
-	private void SummaryTempWarning(){
-		List<ColdStorageAnalysisEntity> coldStorageAnalysisList =new ArrayList<ColdStorageAnalysisEntity>();
-		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(1));
-		Date dateTime = TimeUtil.parseYMD(time);
-		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
+	private void SummaryTempWarning(String time, Date dateTime,String startTime,String endTime){
+		System.err.println("开始执行错误统计=======================");
 		double totalcount=0;double totaltime=0;
+		List<ColdStorageAnalysisEntity> coldStorageAnalysisList =new ArrayList<ColdStorageAnalysisEntity>();
 		List<ColdStorageSetEntity> findAllColdStorage = this.coldStorageSetMapper.findAllColdStorage();
 		for (ColdStorageSetEntity coldStorage : findAllColdStorage) {
 			totalcount=0; totaltime=0;
-			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 1, dateTime, startTime, endtime, totalcount,totaltime,new String[]{"OverTempL1Count", "OverTempL1Time"},coldStorageAnalysisList);
-			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 2, dateTime, startTime, endtime, totalcount,totaltime,new String[]{"OverTempL2Count", "OverTempL2Time"},coldStorageAnalysisList);
-			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 3, dateTime, startTime, endtime, totalcount,totaltime,new String[]{"OverTempL3Count", "OverTempL3Time"},coldStorageAnalysisList);
+			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 1, dateTime, startTime, endTime, totalcount,totaltime,new String[]{"OverTempL1Count", "OverTempL1Time"},coldStorageAnalysisList);
+			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 2, dateTime, startTime, endTime, totalcount,totaltime,new String[]{"OverTempL2Count", "OverTempL2Time"},coldStorageAnalysisList);
+			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 3, dateTime, startTime, endTime, totalcount,totaltime,new String[]{"OverTempL3Count", "OverTempL3Time"},coldStorageAnalysisList);
 			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(), "OverTempCount", totalcount, dateTime));
 			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(),"OverTempTime", totaltime, dateTime));
 		}

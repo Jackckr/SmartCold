@@ -63,14 +63,14 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
             $scope.initHighchart($scope.datumTemp,yData);
             if( $scope.isErr){ $("#mgs_div1").removeClass("hidden");}else{ $("#mgs_div1").addClass("hidden");}
           });
-        $http.get('/i/util/getColdStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
+        $http.get('http://139.224.16.238/i/util/getColdStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
     };
 
     $scope.refdata=function(){
     	var series =  $scope.chart.series ;
         var endTime =  new Date(),startTime=$scope.startTime;
         $http.get('/i/util/getColdStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
-        $http.get('/i/temp/getTempref', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
+        $http.get('http://139.224.16.238/i/util/getColdStatus', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
        	  $scope.startTime=endTime;
          var isadd=false,	tempMap = result.tempMap,index=0;//systime=result.systime,
        	 for(var key in tempMap) { 

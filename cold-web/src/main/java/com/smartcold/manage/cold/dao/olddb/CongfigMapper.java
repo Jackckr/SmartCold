@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
+
 
 public interface CongfigMapper {
 	//1.获得常规配置
@@ -19,7 +21,7 @@ public interface CongfigMapper {
 	public List<HashMap<String, Object>>  getEvaporativeMappingByRdcId(@Param("rdcId") String rdcId);
 	//冷凝系统风机
 	public List<HashMap<String, Object>>  getEBMappingByRdcId         (@Param("rdcId") String rdcId);
-
-	
+	//获得其他配置（单位转换，值类型转换）
+	public List<ConversionEntity>  getOHMappingByRdcId         (@Param("rdcId") String rdcId);
 	
 }

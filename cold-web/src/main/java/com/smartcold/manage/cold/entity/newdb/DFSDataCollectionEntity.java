@@ -10,6 +10,7 @@ public class DFSDataCollectionEntity {
 	private Object value;
 	private String time;//采集时间
 	private Date addtime;
+	
 
 	public DFSDataCollectionEntity() {
 

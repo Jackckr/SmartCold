@@ -20,6 +20,7 @@ import com.smartcold.manage.cold.dao.newdb.DFSDataCollectionMapper;
 import com.smartcold.manage.cold.dao.olddb.CongfigMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.DFSDataCollectionEntity;
+import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
 import com.smartcold.manage.cold.enums.SetTables;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -42,7 +43,7 @@ public class DFSCollectionController extends BaseController {
 	private DFSDataCollectionMapper dataservice;
 	
 	public static String dfsdata=null;
-	
+	public static  HashMap<String,HashMap<String, ConversionEntity>> unitConversMap=new HashMap<String,HashMap<String, ConversionEntity>>();
 	public static  HashMap<String,HashMap<String,DFSDataCollectionEntity>> configchcateHashMap=new HashMap<String,HashMap<String,DFSDataCollectionEntity>>();
 	
 	
@@ -61,16 +62,42 @@ public class DFSCollectionController extends BaseController {
 			DFSCollectionController.dfsdata=data;
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String rdcid = dataCollectionBatchEntity.get("rdcId").toString();
-            if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.getConfig(rdcid);}
+            if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.getConfig(rdcid); this.getConver(rdcid); }
 			HashMap<String, DFSDataCollectionEntity> config = configchcateHashMap.get(rdcid);
+			HashMap<String, ConversionEntity> unitConvers = unitConversMap.get(rdcid);
 		    if(config==null){return new DataResultDto(200);}
-		    String table =null;
-		    ArrayList<DFSDataCollectionEntity> dataList = null;
+		    ArrayList<DFSDataCollectionEntity> dataList = null;String val =null;
+		    String table =null;  String[] key_val =null;DFSDataCollectionEntity newdata=null;ConversionEntity conversionEntity=null;
 		    HashMap<String, ArrayList<DFSDataCollectionEntity>> tempMap=new HashMap<String, ArrayList<DFSDataCollectionEntity>>();
 		    for (Map<String, String> info :  ((List<Map<String, String>>) dataCollectionBatchEntity.get("infos"))) {
-				DFSDataCollectionEntity newdata = config.get(info.get("tagname"));
-				if(newdata!=null){
-					 newdata.setValue(info.get("currentvalue"));//更新数据
+		    	String name = info.get("tagname");
+		    	  newdata = config.get(name);
+		    	if(newdata==null){continue;}
+		    	 val = info.get("currentvalue");
+				    if(unitConvers.containsKey(name)){
+					    		 conversionEntity= unitConvers.get(name);
+					    		switch (conversionEntity.getType()) {
+								case 1://换算
+									info.put("currentvalue", (Integer.parseInt(val)*Double.parseDouble(conversionEntity.getMapping()))+"");
+									break;
+								case 2://switch
+									 key_val = conversionEntity.getUnit().get(val);
+									newdata.setKey(key_val[0]);
+									newdata.setValue(key_val[1]);
+									break;
+				                case 3://指向
+				                	ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
+				                	key_val = conversionEntity2.getUnit().get(val);
+				                    newdata = new DFSDataCollectionEntity();
+									newdata.setKey(key_val[0]);
+									newdata.setValue(key_val[1]);
+									break;	
+								default:
+									break;
+								}
+					    		
+					  }
+					 newdata.setValue(val);//更新数据
 					 newdata.setTime( info.get("lasttime"));
 					 table = newdata.getTable();
 					if(tempMap.containsKey(table)){
@@ -80,7 +107,6 @@ public class DFSCollectionController extends BaseController {
 						 dataList.add(newdata);
 						 tempMap.put(table, dataList);
 					}
-				}
 			}
 			if(SetUtil.isNotNullMap(tempMap)){
 				for (String key : tempMap.keySet()) {
@@ -118,6 +144,32 @@ public class DFSCollectionController extends BaseController {
 		}
 	}
 	
+	
+	
+	private void getConver(String rdcId){
+		HashMap<String , ConversionEntity> unithMap=new HashMap<String , ConversionEntity>();
+		List<ConversionEntity> conversList = this.congfigMapper.getOHMappingByRdcId(rdcId);
+		if(SetUtil.isnotNullList(conversList)){
+			   for (ConversionEntity conversionEntity : conversList) {
+			    	if(2==conversionEntity.getType()){
+			    		HashMap<String, String[]> temp=new HashMap<String, String[]>();
+			    		Map<String, String> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(conversionEntity.getMapping(), new TypeToken<Map<String, String>>() {}.getType());
+						    for (String key : dataCollectionBatchEntity.keySet()) {
+						    	temp.put(key, dataCollectionBatchEntity.get(key).split("-"));
+							}
+						    conversionEntity.setUnit(temp);
+						    unithMap.put(conversionEntity.getName(), conversionEntity);
+			    	}else{
+			    		unithMap.put(conversionEntity.getName(), conversionEntity);
+			    	}
+			    	
+				}
+			    unitConversMap.put(rdcId, unithMap);
+		}
+	}
+	
+	
+	
 	/**
 	 * 初始化Mapp配置
 	 * @param rdcId
@@ -133,7 +185,7 @@ public class DFSCollectionController extends BaseController {
 					String mapper = hashMap.get("mapping")+"";
 					Map<String, String> info = DFSCollectionController.gson.fromJson(mapper, new TypeToken<Map<String, String>>() {}.getType());
 					for (Entry<String, String> keyMap : info.entrySet()) {
-						tempMap.put(keyMap.getValue(), new DFSDataCollectionEntity(oid,item.getTable().replace("set", ""),keyMap.getKey()));
+						tempMap.put( keyMap.getValue(), new DFSDataCollectionEntity(oid,item.getTable().replace("set", ""),keyMap.getKey()));
 						++index;
 					}
 				}
