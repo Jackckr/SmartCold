@@ -1,0 +1,72 @@
+/*
+*   lianku new version style
+*   author:wellsea
+*   date:2017-06-26
+*   mark:cold list
+*/
+.rdcInfo {
+    padding: 8px;
+    border: 1px solid #ccc;
+    position: relative;
+}
+.rdcInfoLeft,.rdcInfoRight{
+    float: left;
+    margin-bottom: 20px;
+}
+ .rdcInfoRight{
+     padding-left: 20px;
+     margin-right: 110px;
+ }
+.rdcInfoRight h2{
+    font-size: 18px;
+}
+.rdcInfoRight table{
+    table-layout: fixed;
+    border: none;
+}
+.rdcInfoRight table td{
+    text-align: left;
+    padding: 10px 0;
+    min-width: 200px;
+    max-width: 300px;
+    border: none;
+}
+.rdcInfoRight table td.orange b{
+    font-size: 16px;
+}
+.rdcInfoRight table td button{
+    width: 266px;
+    background-color:#f57f1f;
+    margin-left: 100px;
+}
+.rdcCode{
+    position: absolute;
+    top:10px;
+    right: 8px;
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #eee;
+    text-align: center;
+    font-size: 12px;
+}
+.rdcInfoTxt table,.rdcInfoTxt table caption{
+    width: 100%;
+    border:1px solid #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.rdcInfoTxt table caption{
+    background-color:#f4f4f4;
+    font-weight: 700;
+    text-align: left;
+    padding: 8px 20px;
+    border-bottom: 0;
+}
+.rdcInfoTxt table td{
+    padding: 5px 0 5px 20px;
+    border: none;
+}
+.rdcInfoTxt table td>span{
+    color: #868686;
+}

@@ -6,7 +6,7 @@
 /* 初始化 */
 body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p,
 dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside,
-details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0;padding: 0; border: none;box-sizing: border-box;}
+details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0;padding: 0; border: none;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box;}
 body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #656565;}
 em, i{font-style: normal;}
 strong{font-weight: normal;}
@@ -64,15 +64,18 @@ html,body,header{
 /*颜色 背景*/
 /*<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>*/
 .approve{
-    color: #54c849;
-    font-weight:400;
+    font-size: 12px!important;
+    color: #54c849!important;
+    font-weight:400!important;
 }
 .approve i,.reachStand i{
     margin-right: 5px;
+    font-size: 14px!important;
 }
 .reachStand{
-    color: #f57f1f;
-    font-weight:400;
+    font-size: 12px!important;
+    color: #f57f1f!important;
+    font-weight:400!important;
 }
 .orange{
     color: #f57e1e;
@@ -157,7 +160,7 @@ html,body,header{
 .navLogin li a{
     display: block;
     height: 86px;
-    width: 94px;
+    width: 80px;
     text-align: center;
     font-size: 16px;
     color: #fff;
@@ -207,6 +210,30 @@ html,body,header{
     top:0;
     left: 0;
     z-index: 10000;
+}
+#loginUser{
+    width: 260px;
+    height:86px;
+    cursor: pointer;
+    line-height: 86px;
+}
+#loginUser div:first-child{
+    width: 150px;
+}
+#loginUser a{
+    color: #fff;
+    display: block;
+}
+#loginUser img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    top: -23px;
+}
+#loginUser span{
+    display: inline-block;
+    width: 60px;
 }
 /*版权信息css*/
 #QRcode{

@@ -44,6 +44,9 @@
     .rdcCol>li .rdcPrice,.rdcCol>li .rdcBtn{
         width: 50%;
     }
+    .rdcInfoRight table td{
+        max-width: inherit;
+    }
 }
 
 
