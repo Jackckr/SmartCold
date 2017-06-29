@@ -41,6 +41,8 @@ function getRdcRentList() {
         if(pagination.pageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage();}
         var rdcRentList=data.data;
         rdcRentList.forEach(function (rdcRent, index) {
+            var tempTypeStr=rdcRent.tempTypeStr?rdcRent.tempTypeStr:"";
+            var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
             rdcRentInfo.push('<li><div class="rdcImg"><a href="../html/rdcinfo.html?'+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<i>温度达标冷库</i>');}
             rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="../html/rdcinfo.html?'+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>72%</b></span><ul class="stars clearfix fl">');
@@ -54,7 +56,7 @@ function getRdcRentList() {
             rdcRentInfo.push('</ul></div><div class="rdcApprove">');
             rdcRent.audit==2?rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>'):rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
-            rdcRentInfo.push(' <a onclick="realTimeTem('+rdcRent.id+',\''+rdcRent.name+'\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+rdcRent.tempTypeStr+'</span><span>'+rdcRent.manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
+            rdcRentInfo.push(' <a onclick="realTimeTem('+rdcRent.id+',\''+rdcRent.name+'\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+tempTypeStr+'</span><span>'+manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
             if(rdcRent.datatype==3&&rdcRent.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.rentSqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
             rdcRentInfo.push('</div><div class="rdcBtn"><button class="collect"><i class="iconfont orange">&#xe634;</i>收藏</button><button class="look"><a href="../html/rdcinfo.html?'+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
@@ -216,10 +218,10 @@ $(function () {
     $("li[type=tempStandard]").bind('click',getTempStandard);
     $("li[type=isAudit]").bind('click',getAudit);
     $("li[type=goodSave]").bind('click',getGoodSave);
-    $("li[type=hasCar]").bind('click',getGoodSave);
+    $("li[type=hasCar]").bind('click',getHasCar);
     $("#search").bind('click',getKeyword);
     $("#keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
-    $("li[type=rdcSqm]").bind('click',getHasCar);
+    $("li[type=rdcSqm]").bind('click',getRdcSqm);
     $(".collect").click(function () {
         var olike = $(this).children('i');
         if(olike.hasClass('isLike')){//已收藏

@@ -148,6 +148,7 @@
 
     <select id="getNewRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO">
         SELECT
+        r.id,
         r.name,
         r.address,
         r.sqm,
@@ -177,7 +178,7 @@
             <if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>
             <if test="audit !=null and audit!=''"> and r.audit in (${audit})</if>
             <if test="goodSaveType !=null and goodSaveType!=''">and t.storagetype in (${goodSaveType})</if>
-            <if test="hasCar !=null and  hasCar != ''"> and <if test="hasCar ==1">!</if> ISNULL(t.storagetruck) </if>
+            <if test="hasCar !=null and  hasCar != ''"> and t.hastruck in(${hasCar}) </if>
         </where>
         ORDER BY
         r.id DESC
