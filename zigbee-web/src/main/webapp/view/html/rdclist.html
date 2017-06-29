@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <link rel="shortcut icon" href="../img/favicon.ico" />
     <!--引入样式包-->
+    <link rel="stylesheet" href="../plugins/css/layui.css"/>
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/rdclist.css" />
     <link rel="stylesheet" href="../css/media.css" />
-    <link rel="stylesheet" href="../plugins/fonts/layui.css"/>
 </head>
 <body>
 <!--header 导航栏-->
@@ -27,113 +27,119 @@
         </div>
     </div>
     <div class="nav">
-        <h1 class="fl"><a href="liankur.com">找冷库&nbsp;&nbsp;上链库</a></h1>
-        <ul class="fr navLogin">
-            <li><a href="javascript:;"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
-            <li><a href="javascript:;"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+        <h1 class="fl"><a href="../../index.htm" target="_blank">找冷库&nbsp;&nbsp;上链库</a></h1>
+        <ul id="noLoginUser" class="fr navLogin">
+            <li><a href="login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
+            <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
         </ul>
+        <div id="loginUser" class="fr">
+            <div class="nameDiv">
+                <img src="">
+            </div>
+            <dl class="hide">
+                <li><a href="usercenter.html">个人中心</a></li>
+                <li><a onclick="logout()">退出</a></li>
+            </dl>
+        </div>
         <div class="navSmall fr"><!--小屏幕显示-->
             <span><i class="iconfont">&#xe62d;</i></span>
             <ul class="navUlList">
                 <li><a href="../../index.htm">首　　页</a></li>
-                <li><a href="rdclist.html">冷库商情</a></li>
-                <li><a href="javascript:;">冷库价格</a></li>
-                <li><a href="javascript:;">需求匹配</a></li>
-                <li><a href="javascript:;">温度追溯</a></li>
-                <li><a href="javascript:;">冷库360</a></li>
-                <li><a href="javascript:;">企业专区</a></li>
+                <li class="activeNav"><a href="rdclist.html">冷库商情</a></li>
+                <li><a href="rdcprice.html">冷库价格</a></li>
+                <li><a href="rdcmatch.html">需求匹配</a></li>
+                <li><a href="rdctrace.html">温度追溯</a></li>
+                <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                <li><a href="rdccooperation.html">企业专区</a></li>
             </ul>
         </div>
         <ul class="fr navUl">
-            <li><a href="../../index.htm">首页</a></li>
-            <li><a href="rdclist.html">冷库商情</a></li>
-            <li><a href="javascript:;">冷库价格</a></li>
-            <li><a href="javascript:;">需求匹配</a></li>
-            <li><a href="javascript:;">温度追溯</a></li>
-            <li><a href="javascript:;">冷库360</a></li>
-            <li><a href="javascript:;">企业专区</a></li>
+            <li><a href="../../index.htm">首　　页</a></li>
+            <li class="activeNav"><a href="rdclist.html">冷库商情</a></li>
+            <li><a href="rdcprice.html">冷库价格</a></li>
+            <li><a href="rdcmatch.html">需求匹配</a></li>
+            <li><a href="rdctrace.html">温度追溯</a></li>
+            <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+            <li><a href="rdccooperation.html">企业专区</a></li>
         </ul>
     </div>
 </div>
 <div class="section clearfix oFilter">
-    <select name="" id="" class="select fl">
-        <option value="北京">北京</option>
-        <option value="上海">上海</option>
-        <option value="天津">天津</option>
+    <select id="provinceList" class="select fl">
     </select>
-    <button class="oBtn fr">添加冷库</button>
+    <a href="rdcaddcold.html" class="oBtn fr">添加冷库</a>
     <div class="search fr">
-        <input type="text" class="fl" placeholder="请输入关键字……">
+        <input id="keyword" type="text" class="fl" placeholder="请输入关键字……">
         <i class="iconfont">&#xe609;</i>
-        <span class="oBtn fl">搜索</span>
+        <span class="oBtn fl" id="search">搜索</span>
     </div>
 </div>
 <div class="section oType">
     <div class="typeList clearfix">
         <span class="fl">经营类型:</span>
         <ul class="clearfix">
-            <li class="fl activeType">不限</li>
-            <li class="fl">产地型</li>
-            <li class="fl">市场型</li>
-            <li class="fl">仓储型</li>
-            <li class="fl">配送型</li>
-            <li class="fl">生产型</li>
-            <li class="fl">中央厨房</li>
-            <li class="fl">医药型</li>
-            <li class="fl">其他</li>
+            <li type="manage" value="0" class="fl activeType">不限</li>
+            <li type="manage" value="1" class="fl">产地型</li>
+            <li type="manage" value="2" class="fl">市场型</li>
+            <li type="manage" value="3" class="fl">仓储型</li>
+            <li type="manage" value="4" class="fl">配送型</li>
+            <li type="manage" value="5" class="fl">生产型</li>
+            <li type="manage" value="6" class="fl">中央厨房</li>
+            <li type="manage" value="7" class="fl">医药型</li>
+            <li type="manage" value="8" class="fl">其他</li>
         </ul>
     </div>
     <div class="typeList clearfix">
         <span class="fl">冷库温度类型:</span>
         <ul class="clearfix">
-            <li class="fl activeType">不限</li>
-            <li class="fl">冷藏库</li>
-            <li class="fl">冷冻库</li>
-            <li class="fl">超低温库</li>
-            <li class="fl">恒温库</li>
-            <li class="fl">多温区库</li>
+            <li type="temp" value="0" class="fl activeType">不限</li>
+            <li type="temp" value="1" class="fl">冷藏库</li>
+            <li type="temp" value="2" class="fl">冷冻库</li>
+            <li type="temp" value="3" class="fl">超低温库</li>
+            <li type="temp" value="4" class="fl">恒温库</li>
+            <li type="temp" value="5" class="fl">多温区库</li>
         </ul>
     </div>
     <div class="typeList clearfix">
         <span class="fl">温度达标情况:</span>
         <ul class="clearfix">
-            <li class="fl activeType">不限</li>
-            <li class="fl">已达标</li>
-            <li class="fl">未达标</li>
+            <li type="tempStandard" value="-1" class="fl activeType">不限</li>
+            <li type="tempStandard" value="1" class="fl">已达标</li>
+            <li type="tempStandard" value="0" class="fl">未达标</li>
         </ul>
     </div>
     <div class="moreType hide">
         <div class="typeList clearfix">
             <span class="fl">冷库认证情况:</span>
             <ul class="clearfix">
-                <li class="fl activeType">不限</li>
-                <li class="fl">已认证</li>
-                <li class="fl">未认证</li>
+                <li type="isAudit" value="-3" class="fl activeType">不限</li>
+                <li type="isAudit" value="2" class="fl">已认证</li>
+                <li type="isAudit" value="-2" class="fl">未认证</li>
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">商品存放形式:</span>
             <ul class="clearfix">
-                <li class="fl activeType">不限</li>
-                <li class="fl">货架存放</li>
-                <li class="fl">非货架存放</li>
+                <li type="goodSave" value="0" class="fl activeType">不限</li>
+                <li type="goodSave" value="1" class="fl">货架存放</li>
+                <li type="goodSave" value="2" class="fl">非货架存放</li>
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">冷库总面积:</span>
             <ul class="clearfix">
-                <li class="fl activeType">不限</li>
-                <li class="fl"><1000㎡</li>
-                <li class="fl">1000~3000㎡</li>
-                <li class="fl">3000~5000㎡</li>
+                <li type="rdcSqm" value="0" class="fl activeType">不限</li>
+                <li type="rdcSqm" value="1" class="fl"><1000㎡</li>
+                <li type="rdcSqm" value="2" class="fl">1000~3000㎡</li>
+                <li type="rdcSqm" value="3" class="fl">3000~5000㎡</li>
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">配备冷藏车情况:</span>
             <ul class="clearfix">
-                <li class="fl activeType">不限</li>
-                <li class="fl">有</li>
-                <li class="fl">无</li>
+                <li type="hasCar" value="-1" class="fl activeType">不限</li>
+                <li type="hasCar" value="1" class="fl">有</li>
+                <li type="hasCar" value="0" class="fl">无</li>
             </ul>
         </div>
     </div>
@@ -165,229 +171,9 @@
     </div>
 </div>
 <!--rdclist -->
-<ul class="rdcCol section">
-    <li>
-        <div class="rdcImg">
-            <a href="javascript:;"><img src="../img/demo1.png" alt=""></a>
-            <i>温度达标冷库</i>
-        </div>
-        <div class="rdcInfo">
-            <div class="rdcTxt clearfix">
-                <span class="rdcName omg fl"><a href="javascript:;">国药控股福州五六有限公司</a></span>
-                <span class="infoPercenty fl">信息完整度:<b>72%</b></span>
-                <ul class="stars clearfix fl">
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                </ul>
-            </div>
-            <div class="rdcApprove">
-                <b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>
-                <b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>
-                <i>3号库实时温度：-17.6℃</i>
-            </div>
-            <div class="rdcArea">
-                <span>总面积22500㎡</span>|
-                <span>建筑标准</span>
-                <span>单层库</span>
-            </div>
-            <div class="rdcPosition">
-                <b><i class="iconfont">&#xe648;</i>
-                    佛山市 邓城区
-                </b>
-            </div>
-        </div>
-        <div class="rdcPrice">
-            <p>可用面积<i class="orange">6500</i>㎡</p>
-            <p class="rdcPriceNum blue">30.00</p>
-            <p>元/㎡/天</p>
-        </div>
-        <div class="rdcBtn">
-            <button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button>
-            <!--<button class="ask"><i class="iconfont blue">&#xe66e;</i>咨询</button>-->
-            <button class="look"><i class="iconfont">&#xe610;</i>查看</button>
-        </div>
-    </li>
-    <li>
-        <div class="rdcImg">
-            <a href="javascript:;"><img src="../img/demo2.png" alt=""></a>
-            <i>温度达标冷库</i>
-        </div>
-        <div class="rdcInfo">
-            <div class="rdcTxt clearfix">
-                <span class="rdcName omg fl"><a href="javascript:;">国药控股福州五六有限公司</a></span>
-                <span class="infoPercenty fl">信息完整度:<b>72%</b></span>
-                <ul class="stars clearfix fl">
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                </ul>
-            </div>
-            <div class="rdcApprove">
-                <b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>
-                <b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>
-                <i>3号库实时温度：-17.6℃</i>
-            </div>
-            <div class="rdcArea">
-                <span>总面积22500㎡</span>|
-                <span>建筑标准</span>
-                <span>单层库</span>
-            </div>
-            <div class="rdcPosition">
-                <b><i class="iconfont">&#xe648;</i>
-                    佛山市 邓城区
-                </b>
-            </div>
-        </div>
-        <div class="rdcPrice">
-            <p>可用面积<i class="orange">6500</i>㎡</p>
-            <p class="rdcPriceNum blue">30.00</p>
-            <p>元/㎡/天</p>
-        </div>
-        <div class="rdcBtn">
-            <button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button>
-            <!--<button class="ask"><i class="iconfont blue">&#xe66e;</i>咨询</button>-->
-            <button class="look"><i class="iconfont">&#xe610;</i>查看</button>
-        </div>
-    </li>
-    <li>
-        <div class="rdcImg">
-            <a href="javascript:;"><img src="../img/demo2.png" alt=""></a>
-            <i>温度达标冷库</i>
-        </div>
-        <div class="rdcInfo">
-            <div class="rdcTxt clearfix">
-                <span class="rdcName omg fl"><a href="javascript:;">国药控股福州五六有限公司</a></span>
-                <span class="infoPercenty fl">信息完整度:<b>72%</b></span>
-                <ul class="stars clearfix fl">
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                </ul>
-            </div>
-            <div class="rdcApprove">
-                <b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>
-                <b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>
-                <i>3号库实时温度：-17.6℃</i>
-            </div>
-            <div class="rdcArea">
-                <span>总面积22500㎡</span>|
-                <span>建筑标准</span>
-                <span>单层库</span>
-            </div>
-            <div class="rdcPosition">
-                <b><i class="iconfont">&#xe648;</i>
-                    佛山市 邓城区
-                </b>
-            </div>
-        </div>
-        <div class="rdcPrice">
-            <p>可用面积<i class="orange">6500</i>㎡</p>
-            <p class="rdcPriceNum blue">30.00</p>
-            <p>元/㎡/天</p>
-        </div>
-        <div class="rdcBtn">
-            <button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button>
-            <!--<button class="ask"><i class="iconfont blue">&#xe66e;</i>咨询</button>-->
-            <button class="look"><i class="iconfont">&#xe610;</i>查看</button>
-        </div>
-    </li>
-    <li>
-        <div class="rdcImg">
-            <a href="javascript:;"><img src="../img/demo2.png" alt=""></a>
-            <i>温度达标冷库</i>
-        </div>
-        <div class="rdcInfo">
-            <div class="rdcTxt clearfix">
-                <span class="rdcName omg fl"><a href="javascript:;">国药控股福州五六有限公司</a></span>
-                <span class="infoPercenty fl">信息完整度:<b>72%</b></span>
-                <ul class="stars clearfix fl">
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                </ul>
-            </div>
-            <div class="rdcApprove">
-                <b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>
-                <b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>
-                <i>3号库实时温度：-17.6℃</i>
-            </div>
-            <div class="rdcArea">
-                <span>总面积22500㎡</span>|
-                <span>建筑标准</span>
-                <span>单层库</span>
-            </div>
-            <div class="rdcPosition">
-                <b><i class="iconfont">&#xe648;</i>
-                    佛山市 邓城区
-                </b>
-            </div>
-        </div>
-        <div class="rdcPrice">
-            <p>可用面积<i class="orange">6500</i>㎡</p>
-            <p class="rdcPriceNum blue">30.00</p>
-            <p>元/㎡/天</p>
-        </div>
-        <div class="rdcBtn">
-            <button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button>
-            <!--<button class="ask"><i class="iconfont blue">&#xe66e;</i>咨询</button>-->
-            <button class="look"><i class="iconfont">&#xe610;</i>查看</button>
-        </div>
-    </li>
-    <li>
-        <div class="rdcImg">
-            <a href="javascript:;"><img src="../img/demo2.png" alt=""></a>
-            <i>温度达标冷库</i>
-        </div>
-        <div class="rdcInfo">
-            <div class="rdcTxt clearfix">
-                <span class="rdcName omg fl"><a href="javascript:;">国药控股福州五六有限公司</a></span>
-                <span class="infoPercenty fl">信息完整度:<b>72%</b></span>
-                <ul class="stars clearfix fl">
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe60c;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                    <li><i class="iconfont">&#xe604;</i></li>
-                </ul>
-            </div>
-            <div class="rdcApprove">
-                <b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>
-                <b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>
-                <i>3号库实时温度：-17.6℃</i>
-            </div>
-            <div class="rdcArea">
-                <span>总面积22500㎡</span>|
-                <span>建筑标准</span>
-                <span>单层库</span>
-            </div>
-            <div class="rdcPosition">
-                <b><i class="iconfont">&#xe648;</i>
-                    佛山市 邓城区
-                </b>
-            </div>
-        </div>
-        <div class="rdcPrice">
-            <p>可用面积<i class="orange">6500</i>㎡</p>
-            <p class="rdcPriceNum blue">30.00</p>
-            <p>元/㎡/天</p>
-        </div>
-        <div class="rdcBtn">
-            <button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button>
-            <!--<button class="ask"><i class="iconfont blue">&#xe66e;</i>咨询</button>-->
-            <button class="look"><i class="iconfont">&#xe610;</i>查看</button>
-        </div>
-    </li>
+<ul id="rdcRentList" class="rdcCol section">
 </ul>
-<div id="demo2"></div>
+<div id="demo2" class="txt-center section"></div>
 <!--版权区域-->
 <div class="footer" id="QRcode">
     <!--<ul class="clearfix">
@@ -438,6 +224,7 @@
     </ul>-->
     <dl class="clearfix">
         <li class="fl">
+            <p><a href="aboutlianku.html">关于链库</a></p>
             <p>©2016 Smartcold    沪ICP备 16004753</p>
             <p>为了您可以获取更佳的浏览效果</p>
             <p>本站推荐使用
@@ -463,8 +250,8 @@
         </li>
     </dl>
 </div>
-<script src="../plugins/layui.all.js"></script>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/layui.all.js"></script>
 <script src="../plugins/jquery.SuperSlide.2.1.1.js"></script>
 <script src="../js/common.js"></script>
 <script src="../js/rdclist.js"></script>

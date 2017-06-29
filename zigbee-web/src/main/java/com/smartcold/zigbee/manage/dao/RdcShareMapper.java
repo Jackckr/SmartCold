@@ -78,5 +78,5 @@ public interface RdcShareMapper {
 	 public Page<RdcShareDTO> getSEListByRdcID(Map<String, Object> parameters);
 
 	 List<RdcShareDTO> getNewSERDCListByID(@Param("dataType")Integer dataType,@Param("typeCode") Integer typeCode);
-  
+
 }

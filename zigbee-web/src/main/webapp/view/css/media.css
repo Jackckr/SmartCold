@@ -21,6 +21,9 @@
         width: 70px;
         text-align: center;
     }
+    .filterBox>ul>li.activeA:before{
+        border: none;
+    }
     .imglist,.txtlist{
         width: 100%;
     }
@@ -43,6 +46,9 @@
     }
     .rdcCol>li .rdcPrice,.rdcCol>li .rdcBtn{
         width: 50%;
+    }
+    .rdcInfoRight table td{
+        max-width: inherit;
     }
 }
 

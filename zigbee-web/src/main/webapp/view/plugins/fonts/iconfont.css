@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1498549691897'); /* IE9*/
-  src: url('iconfont.eot?t=1498549691897#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1498549691897') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1498549691897') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1498549691897#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1498711621056'); /* IE9*/
+  src: url('iconfont.eot?t=1498711621056#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1498711621056') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1498711621056') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1498711621056#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -142,6 +142,10 @@
 .icon-zhuce1:before { content: "\e6d2"; }
 
 .icon-icon_jiage:before { content: "\e60b"; }
+
+.icon-icon-29:before { content: "\e634"; }
+
+.icon-shoucanged:before { content: "\e637"; }
 
 .icon-verification-full:before { content: "\e64e"; }
 

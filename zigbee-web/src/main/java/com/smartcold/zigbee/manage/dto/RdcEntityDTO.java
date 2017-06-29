@@ -53,8 +53,23 @@ public class RdcEntityDTO {
 
     private int pageview;
     
-    private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
-    
+    private String logo = "/app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
+
+    private int istemperaturestandard;
+
+    private String tempTypeStr;
+
+    private String manageTypeStr;
+
+    private int rdcscore;
+
+    private int audit;
+    /*==============================共享信息==================================================*/
+    private double rentSqm;
+    private int datatype;
+    private int typecode;
+    private double unitPrice;
+    private int shareStauts;
 	public FileDataEntity getStoragePic() {
 		return storagePic;
 	}
@@ -244,4 +259,84 @@ public class RdcEntityDTO {
 	public void setLogo(String logo) {
 		this.logo = FtpService.READ_URL+ logo;
 	}
+
+    public int getIstemperaturestandard() {
+        return istemperaturestandard;
+    }
+
+    public void setIstemperaturestandard(int istemperaturestandard) {
+        this.istemperaturestandard = istemperaturestandard;
+    }
+
+    public String getTempTypeStr() {
+        return tempTypeStr;
+    }
+
+    public void setTempTypeStr(String tempTypeStr) {
+        this.tempTypeStr = tempTypeStr;
+    }
+
+    public String getManageTypeStr() {
+        return manageTypeStr;
+    }
+
+    public void setManageTypeStr(String manageTypeStr) {
+        this.manageTypeStr = manageTypeStr;
+    }
+
+    public int getDatatype() {
+        return datatype;
+    }
+
+    public void setDatatype(int datatype) {
+        this.datatype = datatype;
+    }
+
+    public int getTypecode() {
+        return typecode;
+    }
+
+    public void setTypecode(int typecode) {
+        this.typecode = typecode;
+    }
+
+    public int getRdcscore() {
+        return rdcscore;
+    }
+
+    public void setRdcscore(int rdcscore) {
+        this.rdcscore = rdcscore;
+    }
+
+    public double getRentSqm() {
+        return rentSqm;
+    }
+
+    public void setRentSqm(double rentSqm) {
+        this.rentSqm = rentSqm;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public int getAudit() {
+        return audit;
+    }
+
+    public void setAudit(int audit) {
+        this.audit = audit;
+    }
+
+    public int getShareStauts() {
+        return shareStauts;
+    }
+
+    public void setShareStauts(int shareStauts) {
+        this.shareStauts = shareStauts;
+    }
 }

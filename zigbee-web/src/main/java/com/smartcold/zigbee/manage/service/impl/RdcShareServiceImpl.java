@@ -118,6 +118,7 @@ public class RdcShareServiceImpl implements RdcShareService {
 		return new PageInfo<RdcShareDTO>(serdcList);
 	}
 
+
 	/**
 	   * 获得关联库全部信息
 	   * @param filter

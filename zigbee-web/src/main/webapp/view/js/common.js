@@ -17,6 +17,9 @@ if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE 
 $('.navSmall').hover(function() {//导航下拉菜单
     $(this).children('ul').stop().toggle();
 });
+$("#loginUser").hover(function () {
+    $(this).children('dl').stop().toggle();
+})
 $(document).scroll(function () {//吸附导航
     var sTop = document.body.scrollTop || document.documentElement.scrollTop;
     var oTop = 86;
@@ -33,7 +36,8 @@ function findUser() {
     $.ajax({url:"/i/user/findUser",type:"get",dataType:"json",success:function (data) {
         if (data.username){
             window.sessionStorage.user=data;
-            $("#loginUser").show().html(data.username);
+            // $("#loginUser").show().find('.username').html(data.username);
+            $("#loginUser").show().find('img').attr('src',data.avatar);
             $("#noLoginUser").hide();
         }else {
             $("#noLoginUser").show();
@@ -41,6 +45,23 @@ function findUser() {
         }
     }});
 }
+/*登出系统*/
+function logout() {
+    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
+    window.sessionStorage.user=null;//清除系统user;
+    window.location.href="../../index.htm";
+};
+/*判断数组中是否有重复元素*/
+Array.prototype.contains = function (obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 $(function () {
     findUser();
 });

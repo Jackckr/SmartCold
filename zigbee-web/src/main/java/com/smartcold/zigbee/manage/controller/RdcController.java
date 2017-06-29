@@ -726,24 +726,6 @@ public class RdcController {
 		return ResponseData.newSuccess(data);
 	}
 
-	@RequestMapping(value = "/newGetRDCList")
-	@ResponseBody
-	public ResponseData<RdcEntityDTO> newGetRDCList(String isKey, String keyword,String provinceid,String managementType,String storageType,String storagetempertype,String sqm,String hasCar,String orderBy,int pageNum,int pageSize) {
-		WebvistsService.addCount(1);//統計次數
-		HashMap<String, Object> filter=new HashMap<String, Object>();
-		if(StringUtil.isnotNull(isKey)){managementType=storageType= storagetempertype=sqm=hasCar=null;}
-		filter.put("hasCar", hasCar);
-		filter.put("orderBy", orderBy);
-		filter.put("keyword", keyword);
-		filter.put("provinceid", provinceid);
-		filter.put("sqm", getSqmFilter(sqm));
-		filter.put("storageType", storageType);//存放类型
-		filter.put("managementType", managementType);//经营类型
-		filter.put("storagetempertype", storagetempertype);//温度类型
-		PageInfo<RdcEntityDTO> data = this.rdcService.getRDCList(pageNum, pageSize, filter);
-		return ResponseData.newSuccess(data);
-	}
-
 	@RequestMapping(value = "/runLngLat", method = RequestMethod.GET)
 	@ResponseBody
 	public void runLngLat() {
@@ -777,5 +759,54 @@ public class RdcController {
 		rdcEntity.setAudit(0);
 		rdcMapper.updateRdc(rdcEntity);
 		return new BaseDto(0);
+	}
+
+	/**
+	 * 获得改版首页共享列表
+	 * @param request
+	 * @param type->  null：不限  1：出租/出售 2：求租/求购
+	 * @param orderBy 排序
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param sqm 面积-> rcd r
+	 * @param provinceid 区域 -> rcd r
+	 * @param keyword 支持关键字搜索-> rcd r
+	 * @param managetype 经营类型  -> rdcext t
+	 * @param storagetempertype 温度类型 -> rdcext t
+	 * @return
+	 */
+	@RequestMapping(value = "/newGetRdcList")
+	@ResponseBody
+	public ResponseData<RdcEntityDTO> newGetRdcList(String hasCar,String goodSaveType,String istemperaturestandard,String audit, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("type", type);
+		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2
+		filter.put("sqm", getTotalSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
+		filter.put("keyword", keyword);
+		filter.put("provinceid", provinceid);
+		filter.put("managetype", managetype);
+		filter.put("storagetempertype", storagetempertype);
+		filter.put("istemperaturestandard", istemperaturestandard);
+		filter.put("goodSaveType", goodSaveType);
+		filter.put("audit", audit);
+		filter.put("hasCar",hasCar);
+		PageInfo<RdcEntityDTO> data = this.rdcService.newGetRdcList(pageNum, pageSize, filter);
+		return ResponseData.newSuccess(data);
+	}
+	private static String getTotalSqmFilter(String sqm)
+	{
+		StringBuffer sqlfilter=new StringBuffer("(");
+		if(StringUtil.isnotNull(sqm)){
+			String filter[]=sqm.split(",");
+			for (String betdata : filter) {
+				String betsmdata[]=	betdata.split("~");
+				if(betsmdata.length==2){
+					sqlfilter.append(" r.sqm BETWEEN "+betsmdata[0]+" AND "+betsmdata[1] +" or");
+				}else{
+					sqlfilter.append(" r.sqm  "+betsmdata[0]+" or");
+				}
+			}
+			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
+		}
+		return "";
 	}
 }

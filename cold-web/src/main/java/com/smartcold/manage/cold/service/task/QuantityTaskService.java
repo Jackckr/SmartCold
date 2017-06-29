@@ -300,9 +300,9 @@ public class QuantityTaskService implements TaskService {
 					}
 					if(objname!=null){
 						if(coldNameMap.containsKey(key)){//存在报警
-							coldNameMap.put(key, coldNameMap.get(key)+","+obj.getDeviceid())	;
+							coldNameMap.put(key, coldNameMap.get(key)+",'"+obj.getDeviceid()+"'")	;
 						}else{
-							coldNameMap.put(key, objname[1]+";"+obj.getDeviceid());
+							coldNameMap.put(key, objname[1]+";'"+obj.getDeviceid()+"'");
 						}
 					}else{
 						if(!errDevList.contains(obj.getDeviceid())){

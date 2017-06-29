@@ -139,7 +139,43 @@
 	        <if test="rdcID !=0"> and r.id = ${rdcID} </if> <!--  关键字 -->
         ORDER BY r.addTime DESC
 	</select>
-    
+
+    <select id="getNewRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO">
+        SELECT
+        r.name,
+        r.address,
+        r.sqm,
+        r.audit,
+        r.istemperaturestandard,
+        st.type tempTypeStr,
+        sm.type manageTypeStr,
+        s.datatype,
+        s.typecode,
+        s.sqm rentSqm,
+        s.unitPrice,
+        s.stauts shareStauts,
+        t.rdcscore,
+        (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category ='honorPic' ORDER BY id DESC LIMIT 1 ) as logo
+        FROM
+        rdc r
+        LEFT JOIN shared_info s ON s.rdcID = r.id
+        LEFT JOIN rdcext t on r.id=t.RDCID
+        LEFT JOIN storagetempertype st on st.id=t.storagetempertype
+        LEFT JOIN storagemanagetype sm on sm.id=t.managetype
+        <where>
+            <if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
+            <if test="keyword !=null and  keyword != ''"> and r.name like '%${keyword}%' </if>
+            <if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if>
+            <if test="managetype !=null and  managetype != ''"> and t.manageType IN  (${managetype})</if>
+            <if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype in (${storagetempertype})</if>
+            <if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>
+            <if test="audit !=null and audit!=''"> and r.audit in (${audit})</if>
+            <if test="goodSaveType !=null and goodSaveType!=''">and t.storagetype in (${goodSaveType})</if>
+            <if test="hasCar !=null and  hasCar != ''"> and <if test="hasCar ==1">!</if> ISNULL(t.storagetruck) </if>
+        </where>
+        ORDER BY
+        r.id DESC
+    </select>
     
 	<select id="findRDCByUserId" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
 			 SELECT

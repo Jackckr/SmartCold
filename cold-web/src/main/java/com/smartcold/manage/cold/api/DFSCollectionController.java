@@ -71,7 +71,7 @@ public class DFSCollectionController extends BaseController {
 		    HashMap<String, ArrayList<DFSDataCollectionEntity>> tempMap=new HashMap<String, ArrayList<DFSDataCollectionEntity>>();
 		    for (Map<String, String> info :  ((List<Map<String, String>>) dataCollectionBatchEntity.get("infos"))) {
 		    	String name = info.get("tagname");
-		    	System.err.println("采集标签名称"+name);
+//		    	System.err.println("采集标签名称"+name);
 		    	  newdata = config.get(name);
 		    	if(newdata==null){continue;}
 		    	 val = info.get("currentvalue");
@@ -81,13 +81,13 @@ public class DFSCollectionController extends BaseController {
 									switch (conversionEntity.getType()) {
 									case 1://换算
 										info.put("currentvalue", (Double.parseDouble(val)*Double.parseDouble(conversionEntity.getMapping()))+"");
-								        System.err.println("进入液位转换");
+								        System.err.println("进入液位转换:"+val+":"+info.get("currentvalue"));
 										break;
 									case 2://switch
 										 key_val = conversionEntity.getUnit().get(val);
 										newdata.setKey(key_val[0]);
 										newdata.setValue(key_val[1]);
-								        System.err.println("进入风机转换1");
+								        System.err.println("进入风机转换1："+key_val+"转换后："+val+":"+key_val[1] );
 										break;
 									case 3://指向
 										ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
@@ -95,7 +95,7 @@ public class DFSCollectionController extends BaseController {
 									    newdata = new DFSDataCollectionEntity();
 										newdata.setKey(key_val[0]);
 										newdata.setValue(key_val[1]);
-									    System.err.println("进入风机转换1");
+										 System.err.println("进入风机转换2："+key_val+"转换后："+val+":"+key_val[1] );
 										break;	
 									default:
 										break;

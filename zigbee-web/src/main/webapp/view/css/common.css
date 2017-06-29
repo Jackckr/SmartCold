@@ -6,16 +6,15 @@
 /* 初始化 */
 body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p,
 dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside,
-details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0;padding: 0; border: none;box-sizing: border-box;}
+details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0;padding: 0; border: none;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box;}
 body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #656565;}
 em, i{font-style: normal;}
 strong{font-weight: normal;}
 input,textarea,select{width: 100%;padding: 8px 15px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; }
-a{text-decoration: none; color: #969696; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
-a{text-decoration: none; color: #4F4F4F;}
+a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
 a:link{color: #656565; text-decoration: none;}
 a:visited{color: #656565;}
-a:hover{color: #656565; text-decoration: none;}
+a:hover{color: #306dc2; text-decoration: none;}
 a:active{color: #656565;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
@@ -29,8 +28,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /*清浮动*/
 .clearfix:after{content: ""; display: block; visibility: hidden; height: 0; clear: both;}
 .clearfix{zoom: 1;}
-.fl{float: left;}
-.fr{float: right;}
+.fl{float: left;*display: inline-block;}
+.fr{float: right;*display: inline-block;}
 /*连续英文、数字换行*/
 .wordwrap { word-break: break-all; word-wrap: break-word; }
 /*单行文字超出显示省略号*/
@@ -64,15 +63,18 @@ html,body,header{
 /*颜色 背景*/
 /*<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>*/
 .approve{
-    color: #54c849;
-    font-weight:400;
+    font-size: 12px!important;
+    color: #54c849!important;
+    font-weight:400!important;
 }
 .approve i,.reachStand i{
     margin-right: 5px;
+    font-size: 14px!important;
 }
 .reachStand{
-    color: #f57f1f;
-    font-weight:400;
+    font-size: 12px!important;
+    color: #f57f1f!important;
+    font-weight:400!important;
 }
 .orange{
     color: #f57e1e;
@@ -82,11 +84,12 @@ html,body,header{
 }
 .oBtn{
     padding: 8px 24px;
-    color: #fff;
+    color: #fff!important;
     background-color: #186efe;
     border-radius: 4px;
     cursor: pointer;
     line-height: 1.42857143;
+    text-align: center;
 }
 .hide{
     display: none;
@@ -150,14 +153,16 @@ html,body,header{
     height: 86px;
 }
 .navUl li a:hover,
-.navSmall:hover{
+.navSmall:hover,
+.navUl li.activeNav a,
+.navUlList li.activeNav{
     background-color: #186eff;
 }
 .navUl li a,
 .navLogin li a{
     display: block;
     height: 86px;
-    width: 94px;
+    width: 80px;
     text-align: center;
     font-size: 16px;
     color: #fff;
@@ -207,6 +212,44 @@ html,body,header{
     top:0;
     left: 0;
     z-index: 10000;
+}
+#loginUser{
+    width: 100px;
+    height:86px;
+    cursor: pointer;
+    position: relative;
+    display: none;
+    text-align: center;
+    z-index:1;
+}
+#loginUser .nameDiv{
+    height: 100%;
+    line-height: 86px;
+    cursor: pointer;
+}
+#loginUser img{
+    vertical-align:middle ;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+#loginUser dl{
+    position: absolute;
+    top:100%;
+    right:0;
+    width: 100px;
+}
+#loginUser dl li a{
+    display: block;
+    padding: 8px 15px;
+    width: auto;
+    color: #fff;
+    cursor: pointer;
+    background-color: rgba(0,0,0,.6);
+}
+#loginUser dl li a:hover{
+    color: #fff;
+    background: #186eff;
 }
 /*版权信息css*/
 #QRcode{
@@ -258,4 +301,33 @@ html,body,header{
 }
 .codeImg img{
     width: 100px;
+}
+/*上传图片按钮样式*/
+.ofile {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+
+.ofile input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%!important;
+}
+
+.ofile:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
 }

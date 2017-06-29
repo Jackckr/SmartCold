@@ -32,7 +32,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-@Service
+//@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -210,7 +210,7 @@ public class WarningTaskService  {
 										double overtime = Tv[i];//不同级别超温数据不定
 										long minuteBetween = TimeUtil.minuteBetween(Lt[i],endtime)+1;
 						                 if(minuteBetween >=overtime){
-						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:0, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
+						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:3, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
 						                	 break;
 						            	 }
 									}

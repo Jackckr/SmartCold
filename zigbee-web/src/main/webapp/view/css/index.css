@@ -131,13 +131,27 @@
 .filterBox>ul>li.activeA>a i:first-child{
     color: #f58b34!important;
 }
+.filterBox>ul>li{
+    position: relative;
+}
+.filterBox>ul>li.activeA:before{
+    content: '';
+    width: 2px;
+    height: 38px;
+    position: absolute;
+    top:0;
+    right: -2px;
+    border-right:4px solid #fff;
+    z-index:1;
+}
 .filterTxt{
     position: absolute;
     top:-2px;
     left: 100%;
     height: 160px;
-    width: 320px;
+    width: 310px;
     background-color: #fff;
+    border:1px solid #f58b34;
     display: none;
 }
 .filterTxt>li li{
@@ -151,8 +165,6 @@
     background: #f58b34;
 }
 .filterTxt>li h3{
-    background-color: #f58b34;
-    color: #fff;
     height: 40px;
     line-height:40px;
 }
@@ -190,7 +202,7 @@
 }
 .imglist li{
     width: 32%;
-    height: 236px;
+    height: 250px;
     margin-right: 1%;
     margin-bottom: 15px;
     padding-bottom:10px;
@@ -256,6 +268,7 @@
 .price,.city{
     padding: 8px 5px;
 }
+
 .price{
     color: #f57e1e;
 }

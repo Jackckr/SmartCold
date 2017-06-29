@@ -41,4 +41,6 @@ public interface RdcMapper {
 	RdcEntityDTO findRDCEntityDtoByRdcId(@Param("rdcID") int rdcID);
 
     RdcEntity selectByPrimaryKey(Integer id);
+
+    Page<RdcEntityDTO> getNewRdcList(Map<String, Object> parameters);
 }
