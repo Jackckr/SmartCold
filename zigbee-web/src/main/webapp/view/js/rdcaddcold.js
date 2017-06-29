@@ -13,7 +13,7 @@ function storagePicChange(e) {
     var files = e.files;
     for(var i=0;i<files.length;i++){
         if (!rFilter.test(files[i].type)) {
-            layer.alert('格式错误~请选择格式为" + msg + "的图片~！', {icon: 2}); showSelectPics(storagePicsArr,storagePicsArrOriginal,"storage",$("#storagePics")); return;
+            layer.alert('格式错误~请选择格式为'+ msg +'的图片~！', {icon: 2}); showSelectPics(storagePicsArr,storagePicsArrOriginal,"storage",$("#storagePics")); return;
         }else if(files[i].size > 10485760){
             layer.alert('最大只能上传10M的图片！', {icon: 2});showSelectPics(storagePicsArr,storagePicsArrOriginal,"storage",$("#storagePics"));return;
         }else if(storagePicsArr.length>=5) {
@@ -28,7 +28,7 @@ function honorPicChange(e) {
     var files = e.files;
     for(var i=0;i<files.length;i++){
         if (!rFilter.test(files[i].type)) {
-            layer.alert('格式错误~请选择格式为" + msg + "的图片~！', {icon: 2}); showSelectPics(honorPicsArr,honorPicsArrOriginal,"honor",$("#honorPics")); return;
+            layer.alert('格式错误~请选择格式为'+ msg +'的图片~！', {icon: 2}); showSelectPics(honorPicsArr,honorPicsArrOriginal,"honor",$("#honorPics")); return;
         }else if(files[i].size > 10485760){
             layer.alert('最大只能上传10M的图片！', {icon: 2});showSelectPics(honorPicsArr,honorPicsArrOriginal,"honor",$("#honorPics"));return;
         }else if(honorPicsArr.length>=8) {
@@ -41,7 +41,7 @@ function honorPicChange(e) {
 /*认证图片change*/
 function auditPicChange(e) {
     if (!rFilter.test(e.files[0].type)) {
-        layer.alert('格式错误~请选择格式为" + msg + "的图片~！', {icon: 2}); showSelectPics(auditPic,auditPicOriginal,"audit",$("#auditPic")); return;
+        layer.alert('格式错误~请选择格式为'+ msg +'的图片~！', {icon: 2}); showSelectPics(auditPic,auditPicOriginal,"audit",$("#auditPic")); return;
     }else if(e.files[0].size > 10485760){
         layer.alert('最大只能上传10M的图片！', {icon: 2});showSelectPics(auditPic,auditPicOriginal,"audit",$("#auditPic"));return;
     }
@@ -51,7 +51,7 @@ function auditPicChange(e) {
 /*达标图片change*/
 function standPicChange(e) {
     if (!rFilter.test(e.files[0].type)) {
-        layer.alert('格式错误~请选择格式为" + msg + "的图片~！', {icon: 2}); showSelectPics(standPic,standPicOriginal,"standard",$("#standardPic")); return;
+        layer.alert('格式错误~请选择格式为' + msg + '的图片~！', {icon: 2}); showSelectPics(standPic,standPicOriginal,"standard",$("#standardPic")); return;
     }else if(e.files[0].size > 10485760){
         layer.alert('最大只能上传10M的图片！', {icon: 2});showSelectPics(standPic,standPicOriginal,"standard",$("#standardPic"));return;
     }
@@ -95,6 +95,7 @@ function delstandard(index) {
 }
 /*提交冷库信息*/
 function addColdSubmit() {
+    var ii = layer.load();
     var parnArray = $("#submitRdc").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
@@ -126,9 +127,13 @@ function addColdSubmit() {
             contentType: false,
             type: 'POST',
             success: function (data) {
-
+                layer.close(ii);
+                layer.alert(data.message, {icon: 1});
+                window.location.href="/view/html/rdclist.html";
             }
         });
+    }else {
+        layer.close(ii);
     }
 }
 /*获得所有的省市*/
