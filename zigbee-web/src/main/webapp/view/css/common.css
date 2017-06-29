@@ -153,7 +153,9 @@ html,body,header{
     height: 86px;
 }
 .navUl li a:hover,
-.navSmall:hover{
+.navSmall:hover,
+.navUl li.activeNav a,
+.navUlList li.activeNav{
     background-color: #186eff;
 }
 .navUl li a,

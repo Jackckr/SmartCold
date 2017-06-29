@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>链库-冷库商情</title>
+    <title>链库-个人中心</title>
     <meta charset="utf-8" name="keywords" content="链库,冷链物流,冷库360,冷库监控,冷库智能管理,冷库能效评估"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <link rel="shortcut icon" href="../img/favicon.ico" />
     <!--引入样式包-->
-    <link rel="stylesheet" href="../plugins/css/layui.css"/>
     <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/rdclist.css" />
     <link rel="stylesheet" href="../css/media.css" />
 </head>
 <body>
@@ -45,7 +43,7 @@
             <span><i class="iconfont">&#xe62d;</i></span>
             <ul class="navUlList">
                 <li><a href="../../index.htm">首　　页</a></li>
-                <li class="activeNav"><a href="rdclist.html">冷库商情</a></li>
+                <li><a href="rdclist.html">冷库商情</a></li>
                 <li><a href="rdcprice.html">冷库价格</a></li>
                 <li><a href="rdcmatch.html">需求匹配</a></li>
                 <li><a href="rdctrace.html">温度追溯</a></li>
@@ -55,7 +53,7 @@
         </div>
         <ul class="fr navUl">
             <li><a href="../../index.htm">首　　页</a></li>
-            <li class="activeNav"><a href="rdclist.html">冷库商情</a></li>
+            <li><a href="rdclist.html">冷库商情</a></li>
             <li><a href="rdcprice.html">冷库价格</a></li>
             <li><a href="rdcmatch.html">需求匹配</a></li>
             <li><a href="rdctrace.html">温度追溯</a></li>
@@ -64,116 +62,9 @@
         </ul>
     </div>
 </div>
-<div class="section clearfix oFilter">
-    <select id="provinceList" class="select fl">
-    </select>
-    <a href="rdcaddcold.html" class="oBtn fr">添加冷库</a>
-    <div class="search fr">
-        <input id="keyword" type="text" class="fl" placeholder="请输入关键字……">
-        <i class="iconfont">&#xe609;</i>
-        <span class="oBtn fl" id="search">搜索</span>
-    </div>
+<div class="section clearfix">
+    个人中心--开发中....
 </div>
-<div class="section oType">
-    <div class="typeList clearfix">
-        <span class="fl">经营类型:</span>
-        <ul class="clearfix">
-            <li type="manage" value="0" class="fl activeType">不限</li>
-            <li type="manage" value="1" class="fl">产地型</li>
-            <li type="manage" value="2" class="fl">市场型</li>
-            <li type="manage" value="3" class="fl">仓储型</li>
-            <li type="manage" value="4" class="fl">配送型</li>
-            <li type="manage" value="5" class="fl">生产型</li>
-            <li type="manage" value="6" class="fl">中央厨房</li>
-            <li type="manage" value="7" class="fl">医药型</li>
-            <li type="manage" value="8" class="fl">其他</li>
-        </ul>
-    </div>
-    <div class="typeList clearfix">
-        <span class="fl">冷库温度类型:</span>
-        <ul class="clearfix">
-            <li type="temp" value="0" class="fl activeType">不限</li>
-            <li type="temp" value="1" class="fl">冷藏库</li>
-            <li type="temp" value="2" class="fl">冷冻库</li>
-            <li type="temp" value="3" class="fl">超低温库</li>
-            <li type="temp" value="4" class="fl">恒温库</li>
-            <li type="temp" value="5" class="fl">多温区库</li>
-        </ul>
-    </div>
-    <div class="typeList clearfix">
-        <span class="fl">温度达标情况:</span>
-        <ul class="clearfix">
-            <li type="tempStandard" value="-1" class="fl activeType">不限</li>
-            <li type="tempStandard" value="1" class="fl">已达标</li>
-            <li type="tempStandard" value="0" class="fl">未达标</li>
-        </ul>
-    </div>
-    <div class="moreType hide">
-        <div class="typeList clearfix">
-            <span class="fl">冷库认证情况:</span>
-            <ul class="clearfix">
-                <li type="isAudit" value="-3" class="fl activeType">不限</li>
-                <li type="isAudit" value="2" class="fl">已认证</li>
-                <li type="isAudit" value="-2" class="fl">未认证</li>
-            </ul>
-        </div>
-        <div class="typeList clearfix">
-            <span class="fl">商品存放形式:</span>
-            <ul class="clearfix">
-                <li type="goodSave" value="0" class="fl activeType">不限</li>
-                <li type="goodSave" value="1" class="fl">货架存放</li>
-                <li type="goodSave" value="2" class="fl">非货架存放</li>
-            </ul>
-        </div>
-        <div class="typeList clearfix">
-            <span class="fl">冷库总面积:</span>
-            <ul class="clearfix">
-                <li type="rdcSqm" value="0" class="fl activeType">不限</li>
-                <li type="rdcSqm" value="1" class="fl"><1000㎡</li>
-                <li type="rdcSqm" value="2" class="fl">1000~3000㎡</li>
-                <li type="rdcSqm" value="3" class="fl">3000~5000㎡</li>
-            </ul>
-        </div>
-        <div class="typeList clearfix">
-            <span class="fl">配备冷藏车情况:</span>
-            <ul class="clearfix">
-                <li type="hasCar" value="-1" class="fl activeType">不限</li>
-                <li type="hasCar" value="1" class="fl">有</li>
-                <li type="hasCar" value="0" class="fl">无</li>
-            </ul>
-        </div>
-    </div>
-    <div class="moreBtn">
-        <span>更多筛选</span>
-        <i class="iconfont">&#xe62e;</i>
-    </div>
-</div>
-<!--广告轮播-->
-<div class="section">
-    <div class="picScroll-left">
-        <a class="next"><i class="iconfont">&#xe60e;</i></a>
-        <a class="prev"><i class="iconfont">&#xe60d;</i></a>
-        <div class="bd">
-            <ul class="picList">
-                <li><div class="pic"><a href="javascript:;"><img src="../img/yiteng.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/yilike.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/yili.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/beiyuan.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/360.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/yiteng.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/yilike.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/yili.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/beiyuan.png" /></a></div></li>
-                <li><div class="pic"><a href="javascript:;"><img src="../img/360.png" /></a></div></li>
-            </ul>
-
-        </div>
-    </div>
-</div>
-<!--rdclist -->
-<ul id="rdcRentList" class="rdcCol section">
-</ul>
-<div id="demo2" class="txt-center section"></div>
 <!--版权区域-->
 <div class="footer" id="QRcode">
     <!--<ul class="clearfix">
@@ -251,10 +142,7 @@
     </dl>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
-<script src="../plugins/layui.all.js"></script>
-<script src="../plugins/jquery.SuperSlide.2.1.1.js"></script>
 <script src="../js/common.js"></script>
-<script src="../js/rdclist.js"></script>
 <script>
 
 </script>

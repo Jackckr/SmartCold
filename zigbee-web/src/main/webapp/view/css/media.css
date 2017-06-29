@@ -21,6 +21,9 @@
         width: 70px;
         text-align: center;
     }
+    .filterBox>ul>li.activeA:before{
+        border: none;
+    }
     .imglist,.txtlist{
         width: 100%;
     }
