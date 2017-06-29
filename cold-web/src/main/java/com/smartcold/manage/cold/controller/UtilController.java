@@ -69,5 +69,6 @@ public class UtilController extends BaseController {
 	 public boolean getColdStatus(int oid )	{ return QuartzManager.tempListen.containsKey(oid);}
 	 @RequestMapping("/getColdAlarmStatus") //判断指定冷库是否超温
 	 public HashMap<String, Boolean> getColdAlarmStatus(int oid )	{ HashMap<String, Boolean> tempHashMap=new HashMap<String, Boolean>();tempHashMap.put("isAlarm",  QuartzManager.tempListen.containsKey(oid));tempHashMap.put("isBlack",  WarningTaskService.extBlacklist.containsKey(oid));	 return   tempHashMap;}
-	 
+
+	
 }

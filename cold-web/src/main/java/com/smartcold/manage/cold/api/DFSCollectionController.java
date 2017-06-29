@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.controller.BaseController;
 import com.smartcold.manage.cold.dao.newdb.DFSDataCollectionMapper;
@@ -46,7 +47,6 @@ public class DFSCollectionController extends BaseController {
 	public static  HashMap<String,HashMap<String, ConversionEntity>> unitConversMap=new HashMap<String,HashMap<String, ConversionEntity>>();
 	public static  HashMap<String,HashMap<String,DFSDataCollectionEntity>> configchcateHashMap=new HashMap<String,HashMap<String,DFSDataCollectionEntity>>();
 	
-	
 	/**
 	 *http DEV数据上传接口
 	 * @param data
@@ -71,29 +71,38 @@ public class DFSCollectionController extends BaseController {
 		    HashMap<String, ArrayList<DFSDataCollectionEntity>> tempMap=new HashMap<String, ArrayList<DFSDataCollectionEntity>>();
 		    for (Map<String, String> info :  ((List<Map<String, String>>) dataCollectionBatchEntity.get("infos"))) {
 		    	String name = info.get("tagname");
+		    	System.err.println("采集标签名称"+name);
 		    	  newdata = config.get(name);
 		    	if(newdata==null){continue;}
 		    	 val = info.get("currentvalue");
 				    if(unitConvers.containsKey(name)){
-					    		 conversionEntity= unitConvers.get(name);
-					    		switch (conversionEntity.getType()) {
-								case 1://换算
-									info.put("currentvalue", (Integer.parseInt(val)*Double.parseDouble(conversionEntity.getMapping()))+"");
-									break;
-								case 2://switch
-									 key_val = conversionEntity.getUnit().get(val);
-									newdata.setKey(key_val[0]);
-									newdata.setValue(key_val[1]);
-									break;
-				                case 3://指向
-				                	ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
-				                	key_val = conversionEntity2.getUnit().get(val);
-				                    newdata = new DFSDataCollectionEntity();
-									newdata.setKey(key_val[0]);
-									newdata.setValue(key_val[1]);
-									break;	
-								default:
-									break;
+					    		 try {
+									conversionEntity= unitConvers.get(name);
+									switch (conversionEntity.getType()) {
+									case 1://换算
+										info.put("currentvalue", (Double.parseDouble(val)*Double.parseDouble(conversionEntity.getMapping()))+"");
+								        System.err.println("进入液位转换");
+										break;
+									case 2://switch
+										 key_val = conversionEntity.getUnit().get(val);
+										newdata.setKey(key_val[0]);
+										newdata.setValue(key_val[1]);
+								        System.err.println("进入风机转换1");
+										break;
+									case 3://指向
+										ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
+										key_val = conversionEntity2.getUnit().get(val);
+									    newdata = new DFSDataCollectionEntity();
+										newdata.setKey(key_val[0]);
+										newdata.setValue(key_val[1]);
+									    System.err.println("进入风机转换1");
+										break;	
+									default:
+										break;
+									}
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
 								}
 					  }
 					 newdata.setValue(val);//更新数据
@@ -128,6 +137,7 @@ public class DFSCollectionController extends BaseController {
 			}
 			return new DataResultDto(200);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("丹弗斯数据解析异常："+data+"\r\n"+e.getMessage());
 			return new DataResultDto(500);
 		}
@@ -159,24 +169,29 @@ public class DFSCollectionController extends BaseController {
 	
 	
 	private void getConver(String rdcId){
-		HashMap<String , ConversionEntity> unithMap=new HashMap<String , ConversionEntity>();
-		List<ConversionEntity> conversList = this.congfigMapper.getOHMappingByRdcId(rdcId);
-		if(SetUtil.isnotNullList(conversList)){
-			   for (ConversionEntity conversionEntity : conversList) {
-			    	if(2==conversionEntity.getType()){
-			    		HashMap<String, String[]> temp=new HashMap<String, String[]>();
-			    		Map<String, String> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(conversionEntity.getMapping(), new TypeToken<Map<String, String>>() {}.getType());
-						    for (String key : dataCollectionBatchEntity.keySet()) {
-						    	temp.put(key, dataCollectionBatchEntity.get(key).split("-"));
-							}
-						    conversionEntity.setUnit(temp);
-						    unithMap.put(conversionEntity.getName(), conversionEntity);
-			    	}else{
-			    		unithMap.put(conversionEntity.getName(), conversionEntity);
-			    	}
-			    	
-				}
-			    unitConversMap.put(rdcId, unithMap);
+		try {
+			HashMap<String , ConversionEntity> unithMap=new HashMap<String , ConversionEntity>();
+			List<ConversionEntity> conversList = this.congfigMapper.getOHMappingByRdcId(rdcId);
+			if(SetUtil.isnotNullList(conversList)){
+				   for (ConversionEntity conversionEntity : conversList) {
+				    	if(2==conversionEntity.getType()){
+				    		HashMap<String, String[]> temp=new HashMap<String, String[]>();
+				    		Map<String, String> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(conversionEntity.getMapping(), new TypeToken<Map<String, String>>() {}.getType());
+							    for (String key : dataCollectionBatchEntity.keySet()) {
+							    	temp.put(key, dataCollectionBatchEntity.get(key).split("-"));
+								}
+							    conversionEntity.setUnit(temp);
+							    unithMap.put(conversionEntity.getName(), conversionEntity);
+				    	}else{
+				    		unithMap.put(conversionEntity.getName(), conversionEntity);
+				    	}
+				    	
+					}
+				    unitConversMap.put(rdcId, unithMap);
+			}
+		} catch (JsonSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

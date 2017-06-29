@@ -69,7 +69,7 @@ public class StorageServiceImpl implements StorageService {
 	
 	@Override
 	public List<StorageKeyValue> findByNums(int type, int oid, String key, int nums) {
-		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
+		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(10);}else{startTime=TimeUtil.getBeforeHOUR(2);}
 		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
 		if (SetUtil.isnotNullList(deviceList)) {
 			return storageDataCollectionDao.findLastNPoint(null, deviceList.get(0).getDeviceid(), key, nums,startTime);
@@ -82,7 +82,7 @@ public class StorageServiceImpl implements StorageService {
 
 	@Override
 	public List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums) {
-		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(5);}else{startTime=TimeUtil.getBeforeHOUR(2);}
+		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(10);}else{startTime=TimeUtil.getBeforeHOUR(2);}
 		List<DeviceObjectMappingEntity> deviceList =deviceObjectMappingDao.findByTypeOid(stype.getType(), oid);
 		if (SetUtil.isnotNullList(deviceList)) {
 			return storageDataCollectionDao.findLastNPoint(null,  deviceList.get(0).getDeviceid(), key, nums,startTime);

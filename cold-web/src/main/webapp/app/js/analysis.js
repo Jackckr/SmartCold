@@ -1,6 +1,6 @@
 coldWeb.controller('overTemperatureTime', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
    	$scope.load = function(){
-   		$scope.rdcId = $stateParams.rdcId,  $scope.showMap=new Object();
+   		$scope.rdcId = $stateParams.rdcId,  $scope.showMap=new Array();
 		var endTime = new Date(),startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
         $http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
             params: {
@@ -22,7 +22,7 @@ coldWeb.controller('overTemperatureTime', function($rootScope, $scope,$timeout, 
 						series.push({name:'危险超温告警', type:'bar',  data:L1});
 						series.push({name:'严重超温告警', type:'bar',  data:L2});
 						series.push({name:'正常超温告警', type:'bar',  data:L2});
-						$scope.showMap.key=[totaL1time,totaL2time,totaL3time];
+						$scope.showMap[key]=[totaL1time,totaL2time,totaL3time];
 					}
 	               var chart = echarts.init(document.getElementById(chartId));
 						option = {
@@ -63,13 +63,16 @@ coldWeb.controller('overTemperatureCount', function($rootScope, $scope,$timeout,
 					xData = [],series = [], chartId = key + "_Chart";
 					if(storage.OverTempL1Count&&storage.OverTempL2Count&&storage.OverTempL3Count){
 						var L1=[],L2=[],L3=[],totaL1time=0,totaL2time=0,totaL3time=0;
-						angular.forEach(storage.OverTempL1Count,function(item){xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]);L1.unshift(item.value);totaL1time+=item.value;});
+						angular.forEach(storage.OverTempL1Count,function(item){
+							xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]);
+							L1.unshift(item.value);
+							totaL1time+=item.value;});
 						angular.forEach(storage.OverTempL2Count,function(item){L2.unshift(item.value );totaL2time+=item.value;});
 						angular.forEach(storage.OverTempL3Count,function(item){L3.unshift(item.value);totaL3time+=item.value;});
 						series.push({name:'危险超温告警次数', type:'bar',  data:L1});
 						series.push({name:'严重超温告警次数', type:'bar',  data:L2});
 						series.push({name:'正常超温告警次数', type:'bar',  data:L2});
-						$scope.showMap.key=[L1.length,L2.length,L3.length];
+						$scope.showMap[key]=[totaL1time,totaL2time,totaL3time];
 					}
 	               var chart = echarts.init(document.getElementById(chartId));
 						option = {

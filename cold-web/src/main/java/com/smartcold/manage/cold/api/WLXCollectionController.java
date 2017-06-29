@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,9 @@ public class WLXCollectionController extends BaseController {
 					Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
 					String deviceId = info.remove("devID").toString();
 					for (Entry<String, String> item : info.entrySet()) {
-						arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+						if(StringUtil.isnotNull(item.getValue())){
+							arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+						}
 					}
 				}
 				if(SetUtil.isnotNullList(arrayList)){
@@ -72,9 +75,11 @@ public class WLXCollectionController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到座头鲸DEV数据解析异常：\r\n"+data);
 			return new DataResultDto(500);
 		}
 		return new DataResultDto(200);
 	} 
+	
 }
