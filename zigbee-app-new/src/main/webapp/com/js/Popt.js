@@ -58,7 +58,7 @@ var Iput = {
         if ($a) {
             if (Iput.get(Iput.confg.idIframe)) {
                 Iput.colse();
-                $("#city").siblings('i').html('&#xe62d;')
+                $("#city").siblings('i').html('&#xe604;')
             }
             $a.appendChild($c);
             if ($c) {
@@ -150,22 +150,22 @@ var Iput = {
         }
     },
     $colse: function () { Iput.colse();
-        $("#city").siblings('i').html('&#xe62d;') },
+        $("#city").siblings('i').html('&#xe604;') },
     hide: function (e) {//点击任何处关闭层
         e = window.event || e;
         var srcElement = e.srcElement || e.target;
         if (Iput.confg.event == undefined) {//输入时用,般在没传入Iput.confg.event请况下使用
             Iput.colse();
-            $("#city").siblings('i').html('&#xe62d;')
+            $("#city").siblings('i').html('&#xe604;')
         }
         else {
             var a = Iput.confg.event.srcElement || Iput.confg.event.target;
             var b = Iput.get(Iput.confg.pop);
             if (a != srcElement) { Iput.colse();
-                $("#city").siblings('i').html('&#xe62d;') }
+                $("#city").siblings('i').html('&#xe604;') }
             if (b != null) {
                 if (b != srcElement && a != srcElement) { Iput.colse();
-                    $("#city").siblings('i').html('&#xe62d;') }
+                    $("#city").siblings('i').html('&#xe604;') }
             }
         }
         if (Iput.get(Iput.confg.idIframe)) {

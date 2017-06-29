@@ -60,7 +60,7 @@ $().ready(function() {
 	function initevg(){
 		 $("#searchdiv").keyup(function(event){seachList(this);});
 		 $("#del_hist").click(function (e) {$("#ul_hoist").empty();  util.delCookie("mianshdt"); });
-		 $("#city").click(function (e) {if(province){SelCity(this,e,province);$("#city").siblings('i').html('&#xe62e;');} });
+		 $("#city").click(function (e) {if(province){SelCity(this,e,province);$("#city").siblings('i').html('&#xe604;');} });
 		$("#searchdivi").click(function() {
 			var key = $("#searchdiv").val().trim();
 			$("#searchdiv").val("");

@@ -41,9 +41,9 @@ function getRdcRentList() {
         if(pagination.pageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage();}
         var rdcRentList=data.data;
         rdcRentList.forEach(function (rdcRent, index) {
-            rdcRentInfo.push('<li><div class="rdcImg"><a href="javascript:;"><img src="'+rdcRent.logo+'" alt=""></a>');
+            rdcRentInfo.push('<li><div class="rdcImg"><a href="../html/rdcinfo.html?'+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<i>温度达标冷库</i>');}
-            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="javascript:;">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>72%</b></span><ul class="stars clearfix fl">');
+            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="../html/rdcinfo.html?'+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>72%</b></span><ul class="stars clearfix fl">');
             for(var i=0;i<5;i++){
                 if(i<rdcRent.rdcscore){
                     rdcRentInfo.push('<li><i class="iconfont">&#xe60c;</i></li>');
@@ -54,12 +54,24 @@ function getRdcRentList() {
             rdcRentInfo.push('</ul></div><div class="rdcApprove">');
             rdcRent.audit==2?rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>'):rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
-            rdcRentInfo.push(' <i>3号库实时温度：-17.6℃</i></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+rdcRent.tempTypeStr+'</span><span>'+rdcRent.manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
-            if(rdcRent.datatype==3&&rdcRent.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.rentSqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无出租单价</h3>');}
-            rdcRentInfo.push('</div><div class="rdcBtn"><button class="collect"><i class="iconfont orange">&#xe639;</i>收藏</button><button class="look"><i class="iconfont">&#xe610;</i>查看</button></div></li>');
+            rdcRentInfo.push(' <a onclick="realTimeTem('+rdcRent.id+',\''+rdcRent.name+'\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+rdcRent.tempTypeStr+'</span><span>'+rdcRent.manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
+            if(rdcRent.datatype==3&&rdcRent.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.rentSqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
+            rdcRentInfo.push('</div><div class="rdcBtn"><button class="collect"><i class="iconfont orange">&#xe634;</i>收藏</button><button class="look"><a href="../html/rdcinfo.html?'+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
         $("#rdcRentList").empty().append(rdcRentInfo.join(''));
     }});
+}
+/*点击查看实时库温*/
+function realTimeTem(rdcId,rdcName) {
+    layer.open({
+        type: 1 //Page层类型
+        ,area: ['500px', '300px']
+        ,title: rdcName+'实时库温'
+        ,shade: 0.6 //遮罩透明度
+        ,maxmin: true //允许全屏最小化
+        ,anim: 2 //0-6的动画形式，-1不开启
+        ,content: '<div style="padding:50px;">'+rdcName+'还没有加入冷库360，请致电400-853-5606联系~</div>'
+    });
 }
 /*刷新分页*/
 function flushPage() {
@@ -208,5 +220,17 @@ $(function () {
     $("#search").bind('click',getKeyword);
     $("#keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
     $("li[type=rdcSqm]").bind('click',getHasCar);
+    $(".collect").click(function () {
+        var olike = $(this).children('i');
+        if(olike.hasClass('isLike')){//已收藏
+            olike.html("&#xe634;");
+            olike.removeClass('isLike');
+            console.log(34)
+        }else {//未收藏
+            olike.html("&#xe637;");
+            olike.addClass('isLike');
+            console.log(37)
+        }
+    })
 });
 

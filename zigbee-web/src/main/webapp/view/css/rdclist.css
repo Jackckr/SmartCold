@@ -119,10 +119,30 @@
 }
 .rdcImg a{
     display: block;
+    width: 290px;
+    height:160px;
+    padding: 5px;
+    display: table;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
 }
 .rdcImg img{
-    width: 281px;
-    height:150px;
+    vertical-align: middle;
+    transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;	/* Firefox 4 */
+    -webkit-transition: all 1.5s ease;	/* Safari 和 Chrome */
+    -ms-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+.rdcImg img:hover{
+    transform: scale(1.2);
+    -ms-transform: scale(1.2);	/* IE 9 */
+    -webkit-transform: scale(1.2);	/* Safari 和 Chrome */
+    -o-transform: scale(1.2);	/* Opera */
+    -moz-transform: scale(1.2);	/* Firefox */
 }
 .rdcImg>i{
     position: absolute;
@@ -174,6 +194,18 @@
     width: 20%;
     padding: 30px 5px;
 }
+.rdcPrice h3{
+    font-weight: 700;
+    width: 50px;
+    color: #999;
+    line-height: 1.8;
+    letter-spacing: 3px;
+    display: inline-block;
+    font-size: 16px;
+    word-wrap: break-word;
+    white-space: normal;
+    word-break: break-all;
+}
 .rdcPrice .rdcPriceNum{
     font-size: 2em;
 }
@@ -192,10 +224,12 @@
     border-radius:3px;
     cursor: pointer;
     margin-bottom: 10px;
+    margin-right: 5px;
 }
 .rdcBtn button i{
-    margin-right: 10px;
     font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .rdcBtn .collect{
     color: #f57f1f;
@@ -210,6 +244,10 @@
     color: #fff;
 }
 .rdcBtn .look i{
+    color: #fff;
+}
+.rdcBtn .look a{
+    display: block;
     color: #fff;
 }
 

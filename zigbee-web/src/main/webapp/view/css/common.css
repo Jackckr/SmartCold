@@ -11,11 +11,10 @@ body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #65
 em, i{font-style: normal;}
 strong{font-weight: normal;}
 input,textarea,select{width: 100%;padding: 8px 15px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; }
-a{text-decoration: none; color: #969696; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
-a{text-decoration: none; color: #4F4F4F;}
+a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
 a:link{color: #656565; text-decoration: none;}
 a:visited{color: #656565;}
-a:hover{color: #656565; text-decoration: none;}
+a:hover{color: #306dc2; text-decoration: none;}
 a:active{color: #656565;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
@@ -85,7 +84,7 @@ html,body,header{
 }
 .oBtn{
     padding: 8px 24px;
-    color: #fff;
+    color: #fff!important;
     background-color: #186efe;
     border-radius: 4px;
     cursor: pointer;

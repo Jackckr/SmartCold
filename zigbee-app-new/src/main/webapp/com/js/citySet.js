@@ -4,7 +4,7 @@
     Iput.show({ id: ths, event: e, content: dal,width:"470"});
     $("#cColse").click(function () {
         Iput.colse();
-        $("#city").siblings('i').html('&#xe604;');
+        $("#city").siblings('i').html('&#xe603;');
     });
     var tb_province = [];
     var b = province;
@@ -94,7 +94,7 @@
     	            var bp = $("#hproper").val();
     	            ths.innerHTML=bp;
     	            Iput.colse();
-    	            $("#city").siblings('i').html('&#xe604;');
+    	            $("#city").siblings('i').html('&#xe603;');
     	            window.localStorage.appLocalCity =JSON.stringify({cityID:$(this).data("id"),cityName:bp});
     	        });
          

@@ -36,7 +36,7 @@ function findUser() {
     $.ajax({url:"/i/user/findUser",type:"get",dataType:"json",success:function (data) {
         if (data.username){
             window.sessionStorage.user=data;
-            $("#loginUser").show().find('.username').html(data.username);
+            // $("#loginUser").show().find('.username').html(data.username);
             $("#loginUser").show().find('img').attr('src',data.avatar);
             $("#noLoginUser").hide();
         }else {

@@ -178,9 +178,23 @@ img {
 .black{
     display: none;
 }
+.flex{
+    display: -webkit-flex;
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+
+}
+.item{
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+}
 header{
     width: 100%;
-    display: flex;
     height: 2.2rem;
     line-height: 2.2rem;
     background-color: #4287ff;
@@ -189,7 +203,6 @@ header{
     font-size: .75rem;
 }
 header>div{
-    flex:1;
     text-align: center;
 }
 header>div>img{
@@ -206,10 +219,9 @@ header>div>img{
     line-height: 2.2rem;
 }
 .city i{
-    width: 20%;
+    vertical-align: middle;
 }
 .nav-city{
-    width: 70%;
     color: #fff;
     line-height: 2.2rem;
     display: inline-block;
@@ -238,8 +250,8 @@ header>div>img{
     text-align: center;
     color: #656565;
 }
-footer>div>a p{
-    font-size: .635rem;
+footer>div>a p,.oModel li p{
+    font-size: .65rem;
 }
 .oModel li a img{
     width: 2.2324rem;
@@ -247,13 +259,11 @@ footer>div>a p{
 }
 /*footer*/
 footer{
-    display: flex;
     height: 2.45rem;
     background: rgba(255,255,255,.9);
     border-top: 1px solid #ccc;
 }
 footer>div{
-    flex: 1;
     text-align: center;
 }
 footer>div.active>a{
