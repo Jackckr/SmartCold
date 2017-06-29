@@ -14,7 +14,7 @@ input,textarea,select{width: 100%;padding: 8px 15px; font-size: 14px; line-heigh
 a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
 a:link{color: #656565; text-decoration: none;}
 a:visited{color: #656565;}
-a:hover{color: #306dc2; text-decoration: none;}
+a:hover{color: #656565; text-decoration: none;}
 a:active{color: #656565;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
@@ -93,6 +93,21 @@ html,body,header{
 }
 .hide{
     display: none;
+}
+.flex{
+    display: -webkit-flex;
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+
+}
+.item{
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
 }
 /*公共头部和版权*/
 .header{

@@ -92,20 +92,6 @@ img {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-@font-face {font-family: 'iconfont';
-    src: url('../iconfont/iconfont.eot'); /* IE9*/
-    src: url('../iconfont/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../iconfont/iconfont.woff') format('woff'), /* chrome、firefox */
-    url('../iconfont/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('../iconfont/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
-}
-.iconfont{
-    font-family:"iconfont" !important;
-    font-size:1.2rem;font-style:normal;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: 0.2px;
-    -moz-osx-font-smoothing: grayscale;
-}
 /*初始化*/
 #PoPy{top:2.2rem!important;left: 0!important;width: 100%!important;background-color: #fff!important;box-shadow:0 6px 10px #656363;}
 ._citys { width: 100%; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative; box-sizing: border-box;}
@@ -193,18 +179,7 @@ img {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
 }
-header{
-    width: 100%;
-    height: 2.2rem;
-    line-height: 2.2rem;
-    background-color: #4287ff;
-    overflow: hidden;
-    color: #fff;
-    font-size: .75rem;
-}
-header>div{
-    text-align: center;
-}
+
 header>div>img{
     width: 3rem;
     height: auto;
@@ -258,28 +233,11 @@ footer>div>a p,.oModel li p{
     height: 2.2rem;
 }
 /*footer*/
-footer{
-    height: 2.45rem;
-    background: rgba(255,255,255,.9);
-    border-top: 1px solid #ccc;
-}
-footer>div{
-    text-align: center;
-}
-footer>div.active>a{
-    color: #4287ff;
-}
-header,footer{
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top:0;
-    z-index:999;
-}
-footer{
-    top:auto;
-    bottom: 0;
-}
-body{
-    padding: 2.2rem 0 2.45rem 0;
-}
+
+/*1.出租冷库css======================================================================*/
+
+
+/*3.冷库资源css======================================================================*/
+/*4.达标冷库css======================================================================*/
+/*5.出售货源css======================================================================*/
+/*6.求购冷库css======================================================================*/

@@ -116,14 +116,14 @@ section{
 	color:#F39826 ;
 }
 .right i{
-	color:#438BCA ;
+	color:#4287ff ;
 }
 .iconTxt{
 	font-size: 0.8rem;
 	margin-top: 0.3rem;
 }
 /*.grid_kid.share_cold i{
-	color:#438BCA;
+	color:#4287ff;
 }
 .grid_kid.share_goods i{
 	color:#F39826;
@@ -281,12 +281,12 @@ input[type='radio']:checked:after{
 	transform: translate(-50%,-50%);
 	width: 70%;
 	height: 70%;
-	background-color: #438BCB;
+	background-color: #4287ff;
 	border-radius: 50%;
 	border: 0;
 }
 input[type='radio']:checked{
-	border-color: #438BCB;
+	border-color: #4287ff;
 }
 .iconfont.fr{
 	display: inline-block;
@@ -410,8 +410,8 @@ form+.mybtn,.next+.mybtn{
 	line-height: 2.1rem;
 }
 .toggle>.current{
-	color: #438BCB;
-	border-bottom: 3px solid #438BCB;
+	color: #4287ff;
+	border-bottom: 3px solid #4287ff;
 }
 /*图文列表*/
 .coldlist{
@@ -480,7 +480,7 @@ form+.mybtn,.next+.mybtn{
 	text-align: center;
 	line-height: 1.2rem;
 	color: #fff;
-	background-color: #428BCA;
+	background-color: #4287ff;
 	border-radius: 3px;
 	margin-right: 0.9rem;
 	position: absolute;
@@ -627,8 +627,8 @@ em{
 	border-bottom: .15rem solid transparent;
 }
 .tabBox .hd ul li.on a {
-	color: #438BCB;
-	border-bottom: .15rem solid #438BCB;
+	color: #4287ff;
+	border-bottom: .15rem solid #4287ff;
 }		
 .tabBox .bd ul {
 	padding: .3rem .9rem;
@@ -727,7 +727,7 @@ em{
 	text-align: center;
 }
 .weekBox li.active{
-	background: #438BCB;
+	background: #4287ff;
 	color:#fff;
 }
 .weekBox li:first-child{

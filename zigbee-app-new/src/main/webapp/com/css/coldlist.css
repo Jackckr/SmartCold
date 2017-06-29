@@ -5,7 +5,7 @@
 header{
 	width: 100%;
 	height: 2.2rem;
-	background-color: #438BCB;
+	background-color: #4287ff;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -78,7 +78,7 @@ section{
 	border-right: 0;
 }
 .current{
-	color: #438BCB!important;
+	color: #4287ff!important;
 }
 .droplist>a>i{
 	display: inline-block;
@@ -119,7 +119,7 @@ section{
 	position: relative;
 }
 .active{
-	background-color:#438BCB;
+	background-color:#4287ff;
 	color: #fff;
 }
 .footer>.active{
@@ -136,7 +136,7 @@ section{
 	display: inline-block;
 	width:0.45rem;
 	height: 0.6rem;
-	background: url(../img/gpy.gif) no-repeat center;
+	background: red;
 	background-size: cover;
 }
 .imgCell .ellipsis{
@@ -202,7 +202,7 @@ section{
 	text-align: center;
 	line-height: 1.2rem;
 	color: #fff;
-	background-color: #428BCA;
+	background-color: #4287ff;
 	border-radius: 3px;
 	margin-right: 0.9rem;
 	position: absolute;
@@ -225,7 +225,7 @@ section{
 	margin-bottom: 0.3rem;
 }
 .rent .btn{
-	background-color: #438BCB;
+	background-color: #4287ff;
 	color: #fff;
 }
 .rent button{
@@ -381,7 +381,7 @@ section{
 }
 .nextList li .numl{
 	width: 3rem;
-	color: #438BCB;
+	color: #4287ff;
 }
 .more{
 	margin-top: .4rem;
@@ -433,7 +433,7 @@ section{
 	margin-left: 2.8rem;
 }
 .commentArea>li:nth-child(2) .ellipsis{
-	color: #428BCA;
+	color: #4287ff;
 	font-size: 0.7rem;
 }
 .commentArea .imglist>li{
@@ -501,7 +501,7 @@ section{
 	box-sizing: border-box;
 	line-height: 1.6rem;
 	margin-top: 0.2rem;
-	background-color: #438BCB;
+	background-color: #4287ff;
 	font-size: 0.7rem;
 	color: #fff;
 	text-align: center;
@@ -596,7 +596,7 @@ section{
 }
 .search i{
 	font-size: 0.8rem;
-	color: #438BCB;
+	color: #4287ff;
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
@@ -654,9 +654,118 @@ section{
 	height:2rem;
 	line-height:2rem;
 	text-align:center;
-	background:#438BCB;
+	background:#4287ff;
 	font-size:.75rem;
 }
 #searchDara_div{
 	margin-right: 0;
+}
+/*
+* 链库改版样式
+*2017-6-29
+**/
+/*2.求租冷库css======================================================================*/
+.lookRdc .coldlist{
+	margin-top: 2.4rem;
+}
+.lookRdc .coldlist li{
+	border-top: .08rem solid #e4eeff;
+	border-bottom: .08rem solid #eee;
+	margin-bottom: .6rem;
+}
+.lookRdc .coldlist li a{
+	padding: .15rem 0;
+}
+.lookRdc .coldlist li a>span{
+	float: left;
+	width: 2.2rem;
+	height: 2.2rem;
+	padding: .2rem;
+	line-height: 1.2;
+	text-align: center;
+	margin: 0 0.5rem 0 0.25rem;
+	border-radius: .6em;
+	background: #4287ff;
+	font-size: .75rem;
+	font-weight:700;
+	color: #fff;
+	word-break: break-all;
+	word-wrap: break-word;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.lookRdc .coldlist li a div>.green,
+.lookRdc .coldlist li a div>.orange{
+	background-color: transparent;
+	bottom: auto;
+	top: 1.5rem;
+	height: auto;
+	line-height: normal;
+	width: auto;
+}
+.lookRdc .coldlist li a div .orange{
+	font-size: .7rem;
+}
+.lookRdc .coldlist li a div .orange i{
+	font-size: .7rem;
+	margin-right: .2rem;
+}
+.lookRdc .coldlist li a .flex{
+	margin-top: .5rem;
+	font-size: .7rem;
+	text-align: center;
+}
+.lookRdc .coldlist li a .flex p{
+	color: #999;
+}
+.lookRdc .coldlist li a .flex h4{
+	font-weight: 400;
+}
+.lookRdc .coldlist li a .flex .item:nth-child(1),
+.lookRdc .coldlist li a .flex .item:nth-child(2){
+	border-right: .08rem solid #eee;
+}
+.lookRdc .nodata img{
+	width: 6.5rem;
+	height: 7.587rem;
+}
+/*出租冷库============================================================*/
+.rentRdc .imgCell{
+	padding: 0.2rem 0 0;
+}
+.rentRdc .coldlist li a{
+	padding: .15rem .9rem;
+	box-sizing: border-box;
+}
+.btnFn{
+	border-top: .5px solid #eee;
+	margin-top: .3rem;
+}
+.rentRdc .coldlist li .btnFn a{
+	width: 4rem;
+	text-align: center;
+	font-size: .6rem;
+	color: #c0c0c0;
+	padding: 0.3rem 0;
+}
+.btnFn a i,.rentRdc .position i{
+	font-size: .65rem;
+	margin-right: .2rem;
+}
+.rentRdc .coldlist li a p.orange{
+	font-size: .8rem;
+	top:1.2rem;
+}
+.rentRdc .coldlist li a p.orange span{
+	font-size: .6rem;
+	color: #999;
+}
+.rentRdc .coldlist li a>span{
+	background-color: transparent;
+	padding: 0;
+	overflow: hidden;
+	border-radius: .2rem;
+}
+.rentRdc .coldlist li a .flex{
+	margin-top: 1.2rem;
 }
