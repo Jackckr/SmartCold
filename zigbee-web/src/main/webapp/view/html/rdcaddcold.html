@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <link rel="shortcut icon" href="../img/favicon.ico" />
     <!--引入样式包-->
+    <link rel="stylesheet" href="../plugins/css/layui.css"/>
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/rdcinfo.css" />
     <link rel="stylesheet" href="../css/media.css" />
@@ -64,7 +65,7 @@
     </div>
 </div>
 <div class="section rdcAdd">
-    <form action="" onsubmit="return false">
+    <form id="submitRdc" onsubmit="return false">
         <table>
             <caption>添加冷库 (带*为必填项)</caption>
             <tbody>
@@ -76,10 +77,6 @@
                 <td>省：<b class="blue">*</b></td>
                 <td>
                     <select name="provinceId" id="provinceId" required name="province" id="province">
-                        <option value="北京">北京</option>
-                        <option value="北京">北京</option>
-                        <option value="北京">北京</option>
-                        <option value="北京">北京</option>
                     </select>
                 </td>
             </tr>
@@ -87,11 +84,7 @@
                 <td>市：<b class="blue">*</b></td>
                 <td>
                     <select required name="cityId" id="cityId">
-                        <option value="北京">北京</option>
-                        <option value="北京">北京</option>
-                        <option value="北京">北京</option>
-                        <option value="北京">北京</option>
-                    </selectrequired>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -104,45 +97,45 @@
             </tr>
             <tr>
                 <td>可出租面积：<b class="blue">*</b></td>
-                <td><input type="number" placeholder="请输入冷库可出租面积(只能输数字)/㎡,没有填写0" required></td>
+                <td><input name="rentSqm" type="number" placeholder="请输入冷库可出租面积(只能输数字)/㎡,没有填写0" required></td>
             </tr>
             <tr>
                 <td>冷库净高：<b class="blue">*</b></td>
-                <td><input type="number" placeholder="请输入冷库净高(只能输数字)/m" required></td>
+                <td><input name="height" id="rdcHeight" type="number" placeholder="请输入冷库净高(只能输数字)/m" required></td>
             </tr>
             <tr>
                 <td>经营类型：<b class="blue">*</b></td>
                 <td>
-                    <select required>
-                        <option>产地型</option>
-                        <option>市场型</option>
-                        <option>仓储型</option>
-                        <option>配送型</option>
-                        <option>生产型</option>
-                        <option>中央厨房</option>
-                        <option>医药型</option>
-                        <option>其他</option>
+                    <select name="manageType" id="manageType" required>
+                        <option value="1">产地型</option>
+                        <option value="2">市场型</option>
+                        <option value="3">仓储型</option>
+                        <option value="4">配送型</option>
+                        <option value="5">生产型</option>
+                        <option value="6">中央厨房</option>
+                        <option value="7">医药型</option>
+                        <option value="8">其他</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>商品存放类型：<b class="blue">*</b></td>
                 <td>
-                    <select required>
-                        <option>货架存放</option>
-                        <option>非货架存放</option>
+                    <select name="storageType" id="storageType" required>
+                        <option value="1">货架存放</option>
+                        <option value="2">非货架存放</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>温度类型：<b class="blue">*</b></td>
                 <td>
-                    <select  placeholder="可多选" required>
-                        <option>冷藏库</option>
-                        <option>冷冻库</option>
-                        <option>超低温库</option>
-                        <option>恒温库</option>
-                        <option>多温区库</option>
+                    <select name="temperType" id="temperType"  placeholder="可多选" required>
+                        <option value="1">冷藏库</option>
+                        <option value="2">冷冻库</option>
+                        <option value="3">超低温库</option>
+                        <option value="4">恒温库</option>
+                        <option value="5">多温区库</option>
                     </select>
                 </td>
             </tr>
@@ -150,14 +143,14 @@
             <tr>
                 <td>冷库图片：<b class="blue">*</b></td>
                 <td class="rdcImg">
-                    <a href="javascript:;" class="ofile"><input type="file" required>上传图片</a>
+                    <a href="javascript:;" class="ofile"><input onchange="storagePicChange(this)" type="file" id="storageFile" multiple>上传图片</a>
                     <span>最多五张(要去：上传3-5张实体图片，且不能一张图片重复上传，图片每张小于10M)</span>
                 </td>
             </tr>
             <tr class="imgTd">
                 <td colspan="2">
-                    <ul class="clearfix">
-                        <li class="imgBox">
+                    <ul class="clearfix" id="storagePics">
+                        <!--<li class="imgBox">
                             <img src="../img/demo1.png" alt="">
                             <i>&times;</i>
                         </li>
@@ -176,47 +169,44 @@
                         <li class="imgBox">
                             <img src="../img/ad1.png" alt="">
                             <i>&times;</i>
-                        </li>
+                        </li>-->
                     </ul>
-                </td>
-            </tr>
-            <tr>
-                <td>冷库认证：<b class="blue">*</b></td>
-                <td class="rdcImg">
-                    <a href="javascript:;" class="ofile"><input type="file" required>上传图片</a>
-                    <span>请上传企业营业执照图片，小于10M</span>
-                    <p class="blue">冷库认证通过之后，将显示绿色盾牌标识，提高信任度和搜索排名</p>
                 </td>
             </tr>
             <tr>
                 <td>冷链委温度达标冷库：<b class="blue">*</b></td>
                 <td class="rdcImg">
                     <div>
-                        <label><input type="radio" name="temStand">是</label>
-                        <label><input type="radio" name="temStand">愿意申报</label>
-                        <label><input type="radio" name="temStand">否</label>
+                        <label><input value="1" type="radio" name="temStand">是</label>
+                        <label><input value="0" type="radio" onclick="delstandard()"  name="temStand">愿意申报</label>
+                        <label><input value="0" type="radio" onclick="delstandard()" name="temStand">否</label>
                     </div>
                     <ul>
                         <li>
-                            <a href="javascript:;" class="ofile"><input type="file" required>上传图片</a>
+                            <a href="javascript:;" class="ofile"><input id="storageStandPic" type="file" onchange="standPicChange(this)">上传图片</a>
                             <span>请上传温度达标冷库认证铜牌或证书，小于10M</span>
                         </li>
                         <li class="hide">
-                            <a href="javascript:;" class="ofile"><input type="file" required>上传图片</a>
                             <span>请拨打010-88120448 或者400-1234567 申报</span>
                         </li>
                     </ul>
                     <div>
                         <span>是否愿意公开冷库温度曲线</span>
-                        <label><input type="radio" name="openLIne">是</label>
-                        <label><input type="radio" name="openLIne">否</label>
+                        <label><input value="1" type="radio" name="openLIne">是</label>
+                        <label><input value="0" type="radio" name="openLIne">否</label>
                     </div>
+                </td>
+            </tr>
+            <tr class="imgTd">
+                <td colspan="2">
+                    <ul class="clearfix" id="standardPic">
+                    </ul>
                 </td>
             </tr>
             <!--上传图片end-->
             <tr>
                 <td>联系电话：<b class="blue">*</b></td>
-                <td><input type="tel" placeholder="请输入联系电话" required></td>
+                <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum" required></td>
             </tr>
             <tr><td colspan="2"><div class="oBtn moreBtn">更多信息+</div></td></tr>
             </tbody>
@@ -226,108 +216,136 @@
             <tr>
                 <td>冷藏车数量：</td>
                 <td class="oTd">
-                          <div class="oInline"><span class="compare"><1.8T</span><input type="number"><span class="oUnit">辆</span>
-                    </div><div class="oInline"><span class="compare">1.8~6T</span><input type="number"><span class="oUnit">辆</span>
-                    </div><div class="oInline"><span class="compare">6~14T</span><input type="number"><span class="oUnit">辆</span>
-                    </div><div class="oInline"><span class="compare"><14T</span><input type="number"><span class="oUnit">辆</span>
+                          <div class="oInline"><span class="compare"><1.8T</span><input name="coldTruck1" id="coldTruck1" type="number"><span class="oUnit">辆</span>
+                    </div><div class="oInline"><span class="compare">1.8~6T</span><input name="coldTruck2" id="coldTruck2" type="number"><span class="oUnit">辆</span>
+                    </div><div class="oInline"><span class="compare">6~14T</span><input name="coldTruck3" id="coldTruck3" type="number"><span class="oUnit">辆</span>
+                    </div><div class="oInline"><span class="compare"><14T</span><input name="coldTruck4" id="coldTruck4" type="number"><span class="oUnit">辆</span>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>备注：</td>
                 <td>
-                    <textarea placeholder="备注"></textarea>
+                    <textarea placeholder="备注" name="remark" id="remark"></textarea>
                 </td>
             </tr>
             <tr>
-                <td>备注：</td>
+                <td>建筑结构：</td>
                 <td>
-                    <select>
-                        <option value="土建型">土建型</option>
-                        <option value="钢结构型">钢结构型</option>
+                    <select name="structure" id="structure">
+                        <option value=""></option>
+                        <option value="1">土建型</option>
+                        <option value="2">钢结构型</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>有无封闭月台：</td>
                 <td>
-                    <select>
-                        <option value="有">有</option>
-                        <option value="无">无</option>
+                    <select name="platform" id="platform">
+                        <option value=""></option>
+                        <option value="1">有</option>
+                        <option value="2">无</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>有无理货区：</td>
                 <td>
-                    <select>
-                        <option value="有">有</option>
-                        <option value="无">无</option>
+                    <select name="lihuoRoom" id="lihuoRoom">
+                        <option value=""></option>
+                        <option value="1">有</option>
+                        <option value="2">无</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>理货区面积：</td>
                 <td>
-                    <input type="number" placeholder="请输入冷库面积(只能输数字)/㎡">
+                    <input name="lihuoArea" id="lihuoArea" type="number" placeholder="请输入冷库面积(只能输数字)/㎡">
                 </td>
             </tr>
             <tr>
                 <td>理货区有无温控：</td>
                 <td>
-                    <select>
-                        <option value="有">有</option>
-                        <option value="无">无</option>
+                    <select name="lihuoTemperCtr" id="lihuoTemperCtr">
+                        <option value=""></option>
+                        <option value="1">有</option>
+                        <option value="2">无</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>制冷剂类型：</td>
                 <td>
-                    <select>
-                        <option value="氨制冷">氨制冷</option>
-                        <option value="氟利昂制冷">氟利昂制冷</option>
-                        <option value="氨氟都有">氨氟都有</option>
-                        <option value="其他">其他</option>
+                    <select name="storageRefreg" id="storageRefreg">
+                        <option value=""></option>
+                        <option value="1">氨制冷</option>
+                        <option value="2">氟利昂制冷</option>
+                        <option value="3">氨氟都有</option>
+                        <option value="4">其他</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>有无温度记录：</td>
                 <td>
-                    <select>
-                        <option value="有">有</option>
-                        <option value="无">无</option>
+                    <select name="temperRecord" id="temperRecord">
+                        <option value=""></option>
+                        <option value="1">有</option>
+                        <option value="2">无</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>周边设施：</td>
                 <td>
-                    <textarea placeholder="周边设施"></textarea>
+                    <textarea placeholder="周边设施" name="facility" id="facility"></textarea>
                 </td>
             </tr>
             <tr>
                 <td>冷库容积：</td>
                 <td class="oTd oC">
-                      <div class="oInline"><span class="compare">12~25℃</span><input type="number"><span class="oUnit">面积/㎡</span><input type="number"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-2~12℃</span><input type="number"><span class="oUnit">面积/㎡</span><input type="number"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-22~-15℃</span><input type="number"><span class="oUnit">面积/㎡</span><input type="number"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-30~-22℃</span><input type="number"><span class="oUnit">面积/㎡</span><input type="number"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare"><-30℃</span><input type="number"><span class="oUnit">面积/㎡</span><input type="number"><span class="oUnit">高/m</span>
+                      <div class="oInline"><span class="compare">12~25℃</span><input type="number" name="capacity1" id="capacity1"><span class="oUnit">面积/㎡</span><input type="number" name="height1" id="height1"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">-2~12℃</span><input type="number" name="capacity2" id="capacity2"><span class="oUnit">面积/㎡</span><input type="number" name="height2" id="height2"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">-22~-15℃</span><input type="number" name="capacity3" id="capacity3"><span class="oUnit">面积/㎡</span><input type="number" name="height3" id="height3"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">-30~-22℃</span><input type="number" name="capacity4" id="capacity4"><span class="oUnit">面积/㎡</span><input type="number" name="height4" id="height4"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare"><-30℃</span><input type="number" name="capacity5" id="capacity5"><span class="oUnit">面积/㎡</span><input type="number" name="height5" id="height5"><span class="oUnit">高/m</span>
                 </div>
+                </td>
+            </tr>
+            <tr>
+                <td>冷库认证：</td>
+                <td class="rdcImg">
+                    <a href="javascript:;" class="ofile"><input type="file" id="authPic" onchange="auditPicChange(this)">上传图片</a>
+                    <span>请上传企业营业执照图片，小于10M</span>
+                    <p class="blue">冷库认证通过之后，将显示绿色盾牌标识，提高信任度和搜索排名</p>
+                </td>
+            </tr>
+            <tr class="imgTd">
+                <td colspan="2">
+                    <ul class="clearfix" id="auditPic">
+
+                    </ul>
                 </td>
             </tr>
             <tr>
                 <td>资质荣誉图：</td>
                 <td class="rdcImg">
-                    <a href="javascript:;" class="ofile"><input type="file" required>上传图片</a>
+                    <a href="javascript:;" class="ofile"><input type="file" id="honorFile" onchange="honorPicChange(this)" multiple>上传图片</a>
                     <span>最多八张(每张小于10M)</span>
+                </td>
+            </tr>
+            <tr class="imgTd">
+                <td colspan="2">
+                    <ul class="clearfix" id="honorPics">
+
+                    </ul>
                 </td>
             </tr>
             </tbody>
             <tfoot>
-            <tr><td colspan="2"><button class="oBtn">提交</button></td></tr>
+            <tr><td colspan="2"><button class="oBtn" onclick="addColdSubmit()">提交</button></td></tr>
             </tfoot>
         </table>
     </form>
@@ -363,8 +381,10 @@
     </dl>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/layui.all.js"></script>
 <script src="../plugins/bannerFocus/foucs.js"></script>
 <script src="../js/common.js"></script>
+<script src="../js/rdcaddcold.js"></script>
 <script>
     $(function () {
         $(".moreBtn").click(function () {

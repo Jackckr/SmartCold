@@ -53,7 +53,10 @@
         `powerConsume`,
         `userid`,
         `longitude`,
-        `latitude`
+        `latitude`,
+        `height`,
+        `rentSqm`,
+        `openLIne`
         )
         VALUES
         (
@@ -76,7 +79,10 @@
         #{powerConsume},
         #{userid},
         #{longitude},
-        #{latitude}
+        #{latitude},
+        #{height},
+        #{rentSqm},
+        #{openLIne}
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >

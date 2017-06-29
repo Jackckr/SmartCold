@@ -104,6 +104,13 @@ public class RdcAddDTO {
 
 	private Integer audit;
 
+	private float height;
+
+	private float rentSqm;
+
+	private int openLIne;
+
+
 	public float getHeight1() {
 		return height1;
 	}
@@ -526,5 +533,29 @@ public class RdcAddDTO {
 
 	public void setAudit(Integer audit) {
 		this.audit = audit;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public float getRentSqm() {
+		return rentSqm;
+	}
+
+	public void setRentSqm(float rentSqm) {
+		this.rentSqm = rentSqm;
+	}
+
+	public int getOpenLIne() {
+		return openLIne;
+	}
+
+	public void setOpenLIne(int openLIne) {
+		this.openLIne = openLIne;
 	}
 }

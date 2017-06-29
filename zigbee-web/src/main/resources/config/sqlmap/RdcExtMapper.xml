@@ -35,7 +35,8 @@
         `facility`,
         `honorpiclocation`,
         `arrangepiclocation`,
-        `storagepiclocation`
+        `storagepiclocation`,
+        `hastruck`
         )
         VALUES
         (
@@ -60,7 +61,8 @@
         #{facility},
         #{honorpiclocation},
         #{arrangepiclocation},
-        #{storagepiclocation}
+        #{storagepiclocation},
+        #{hastruck}
         );
     </insert>
 

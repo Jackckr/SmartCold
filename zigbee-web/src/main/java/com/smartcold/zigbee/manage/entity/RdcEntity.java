@@ -47,6 +47,12 @@ public class RdcEntity {
     private double latitude;
 
     private Integer audit;
+
+    private float height;
+
+    private float rentSqm;
+
+    private int openLIne;
 	
 	public int getUserId() {
 		return userid;
@@ -230,5 +236,29 @@ public class RdcEntity {
 
     public void setAudit(Integer audit) {
         this.audit = audit;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getRentSqm() {
+        return rentSqm;
+    }
+
+    public void setRentSqm(float rentSqm) {
+        this.rentSqm = rentSqm;
+    }
+
+    public int getOpenLIne() {
+        return openLIne;
+    }
+
+    public void setOpenLIne(int openLIne) {
+        this.openLIne = openLIne;
     }
 }
