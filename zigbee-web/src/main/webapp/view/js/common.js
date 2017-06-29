@@ -45,6 +45,12 @@ function findUser() {
         }
     }});
 }
+/*登出系统*/
+function logout() {
+    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
+    window.sessionStorage.user=null;//清除系统user;
+    window.location.href="../../index.htm";
+};
 /*判断数组中是否有重复元素*/
 Array.prototype.contains = function (obj) {
     var i = this.length;
