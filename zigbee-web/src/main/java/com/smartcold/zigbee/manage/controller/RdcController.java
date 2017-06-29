@@ -459,6 +459,8 @@ public class RdcController {
 		if (rdcAddDTO.getAddress()!=null) {
 			rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
 		}
+		int rdcInfoIntegrity = getRdcInfoIntegrity(rdcAddDTO);
+		rdcEntity.setInfoIntegrity(rdcInfoIntegrity);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
@@ -947,5 +949,33 @@ public class RdcController {
 			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
 		}
 		return "";
+	}
+
+	private int getRdcInfoIntegrity(RdcAddDTO rdcAddDTO){
+		int infoIntegrity=54;
+		if (rdcAddDTO.getColdTruck1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck4()!=0){infoIntegrity+=2;}
+		if (!StringUtil.isNull(rdcAddDTO.getRemark())){infoIntegrity+=2;}
+		if (rdcAddDTO.getStructure()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getPlatform()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoRoom()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoArea()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoTemperCtr()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getStorageRefreg()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getTemperRecord()!=0){infoIntegrity+=2;}
+		if (!StringUtil.isNull(rdcAddDTO.getFacility())){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity4()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity5()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight4()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight5()!=0){infoIntegrity+=2;}
+		return infoIntegrity;
 	}
 }

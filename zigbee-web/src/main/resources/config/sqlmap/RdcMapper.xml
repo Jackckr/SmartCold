@@ -56,7 +56,8 @@
         `latitude`,
         `height`,
         `rentSqm`,
-        `openLIne`
+        `openLIne`,
+        `infoIntegrity`
         )
         VALUES
         (
@@ -82,7 +83,8 @@
         #{latitude},
         #{height},
         #{rentSqm},
-        #{openLIne}
+        #{openLIne},
+        #{infoIntegrity}
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >
@@ -154,6 +156,7 @@
         r.sqm,
         r.audit,
         r.istemperaturestandard,
+        r.infoIntegrity,
         st.type tempTypeStr,
         sm.type manageTypeStr,
         s.datatype,

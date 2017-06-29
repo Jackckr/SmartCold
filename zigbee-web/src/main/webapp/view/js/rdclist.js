@@ -45,7 +45,7 @@ function getRdcRentList() {
             var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
             rdcRentInfo.push('<li><div class="rdcImg"><a href="../html/rdcinfo.html?'+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<i>温度达标冷库</i>');}
-            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="../html/rdcinfo.html?'+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>72%</b></span><ul class="stars clearfix fl">');
+            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="../html/rdcinfo.html?'+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>'+rdcRent.infoIntegrity+'%</b></span><ul class="stars clearfix fl">');
             for(var i=0;i<5;i++){
                 if(i<rdcRent.rdcscore){
                     rdcRentInfo.push('<li><i class="iconfont">&#xe60c;</i></li>');

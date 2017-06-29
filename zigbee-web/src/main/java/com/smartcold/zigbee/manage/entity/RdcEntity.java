@@ -53,6 +53,8 @@ public class RdcEntity {
     private float rentSqm;
 
     private int openLIne;
+
+    private int infoIntegrity;
 	
 	public int getUserId() {
 		return userid;
@@ -260,5 +262,13 @@ public class RdcEntity {
 
     public void setOpenLIne(int openLIne) {
         this.openLIne = openLIne;
+    }
+
+    public int getInfoIntegrity() {
+        return infoIntegrity;
+    }
+
+    public void setInfoIntegrity(int infoIntegrity) {
+        this.infoIntegrity = infoIntegrity;
     }
 }
