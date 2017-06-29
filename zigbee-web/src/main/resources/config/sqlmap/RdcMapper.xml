@@ -53,7 +53,11 @@
         `powerConsume`,
         `userid`,
         `longitude`,
-        `latitude`
+        `latitude`,
+        `height`,
+        `rentSqm`,
+        `openLIne`,
+        `infoIntegrity`
         )
         VALUES
         (
@@ -76,7 +80,11 @@
         #{powerConsume},
         #{userid},
         #{longitude},
-        #{latitude}
+        #{latitude},
+        #{height},
+        #{rentSqm},
+        #{openLIne},
+        #{infoIntegrity}
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >
@@ -142,11 +150,13 @@
 
     <select id="getNewRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO">
         SELECT
+        r.id,
         r.name,
         r.address,
         r.sqm,
         r.audit,
         r.istemperaturestandard,
+        r.infoIntegrity,
         st.type tempTypeStr,
         sm.type manageTypeStr,
         s.datatype,
@@ -171,7 +181,7 @@
             <if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>
             <if test="audit !=null and audit!=''"> and r.audit in (${audit})</if>
             <if test="goodSaveType !=null and goodSaveType!=''">and t.storagetype in (${goodSaveType})</if>
-            <if test="hasCar !=null and  hasCar != ''"> and <if test="hasCar ==1">!</if> ISNULL(t.storagetruck) </if>
+            <if test="hasCar !=null and  hasCar != ''"> and t.hastruck in(${hasCar}) </if>
         </where>
         ORDER BY
         r.id DESC

@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -114,7 +115,7 @@ public class RdcController {
 
 	@RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
 	@ResponseBody
-	public Object attestationRdc(int userId,String userName, int rdcId,  int type, MultipartFile authfile) {
+	public ResultDto attestationRdc(int userId,String userName, int rdcId,  int type, MultipartFile authfile) {
 		try {
 			List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByUidRdcId(userId, rdcId);
 			List<MessageRecord> messageRecords = messageRecordMapping.selByUidRdcId(userId, rdcId);
@@ -428,6 +429,146 @@ public class RdcController {
 		rdcExtDao.insertRdcExt(rdcExtEntity);
 
 		return new BaseDto(0);
+	}
+
+	@RequestMapping(value = "/newAddRdc", method = RequestMethod.POST)
+	@ResponseBody
+	public Object newAddRdc(HttpServletRequest request,
+					  @RequestParam(required = false) MultipartFile honor0, @RequestParam(required = false) MultipartFile honor1,
+					  @RequestParam(required = false) MultipartFile honor2, @RequestParam(required = false) MultipartFile honor3,
+					  @RequestParam(required = false) MultipartFile honor4, @RequestParam(required = false) MultipartFile honor5,
+					  @RequestParam(required = false) MultipartFile honor6, @RequestParam(required = false) MultipartFile honor7,
+					  @RequestParam(required = false) MultipartFile file0,@RequestParam(required = false) MultipartFile standPic,
+					  @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
+					  @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
+					  @RequestParam(required = false) MultipartFile auditPic,String empStr,String userStr) throws Exception {
+		RdcAddDTO rdcAddDTO=null;
+		UserEntity userEntity=null;
+		if (!StringUtils.isEmpty(empStr)) {
+			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
+		}
+		if (!StringUtils.isEmpty(userStr)) {
+			userEntity= JSONObject.parseObject(userStr, UserEntity.class);
+		}
+		MultipartFile[] files = {file4, file3, file2, file1, file0};
+		MultipartFile[] honorfiles = {honor7, honor6,honor5, honor4,honor3, honor2,honor1, honor0};
+		RdcEntity rdcEntity = new RdcEntity();
+		if (rdcAddDTO.getName()!=null) {
+			rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
+		}
+		if (rdcAddDTO.getAddress()!=null) {
+			rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
+		}
+		int rdcInfoIntegrity = getRdcInfoIntegrity(rdcAddDTO);
+		rdcEntity.setInfoIntegrity(rdcInfoIntegrity);
+		rdcEntity.setSqm(rdcAddDTO.getArea());
+		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
+		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
+		rdcEntity.setCityid(rdcAddDTO.getCityId());
+		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
+		rdcEntity.setHeight(rdcAddDTO.getHeight());
+		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
+		rdcEntity.setOpenLIne(rdcAddDTO.getOpenLIne());
+		if (rdcAddDTO.getRemark()!=null) {
+			rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
+		}
+		if(rdcAddDTO.getUserId()!=0){
+			rdcEntity.setUserId(rdcAddDTO.getUserId());
+		}else{
+			UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+			if (user!=null) {
+				rdcEntity.setUserId(user.getId());
+			}else{
+				return new BaseDto(-1);
+			}
+		}
+		rdcEntity.setType(0);
+		rdcEntity.setStoragetype("");
+		rdcEntity.setColdtype("");
+		rdcEntity.setContact("");
+		rdcEntity.setPosition("");
+		rdcEntity.setPowerConsume(0);
+		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
+		if(!SetUtil.isNullMap(lngLatMap)){
+			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
+			rdcEntity.setLatitude(Double.parseDouble(lngLatMap.get("lat")));
+		}
+
+		rdcMapper.insertRdc(rdcEntity);
+
+		// 插入rdc表,返回对应的ID
+		RdcExtEntity rdcExtEntity = new RdcExtEntity();
+		int totalColdTruck=rdcAddDTO.getColdTruck1()+rdcAddDTO.getColdTruck2()+rdcAddDTO.getColdTruck3()+rdcAddDTO.getColdTruck4();
+		rdcExtEntity.setHastruck(totalColdTruck==0?2:1);
+		rdcExtEntity.setRDCID(rdcEntity.getId()); // 由上面返回
+		rdcExtEntity.setStoragestruct((byte)rdcAddDTO.getStructure());
+		rdcExtEntity.setManagetype((byte) rdcAddDTO.getManageType());
+		rdcExtEntity.setStoragetype((byte) rdcAddDTO.getStorageType());
+		rdcExtEntity.setStorageplatform((byte) rdcAddDTO.getPlatform());
+		rdcExtEntity.setStorageplatformtype((byte) 1); // 后续添加
+		rdcExtEntity.setStorageislihuo((byte) rdcAddDTO.getLihuoRoom());
+		rdcExtEntity.setStoragelihuocontrol((byte) rdcAddDTO.getLihuoTemperCtr());
+		rdcExtEntity.setStoragelihuoarea(rdcAddDTO.getLihuoArea());
+		rdcExtEntity.setStoragerefreg((byte) rdcAddDTO.getStorageRefreg());
+		rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
+		String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
+				+ rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity5();
+		String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
+				+ rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
+		rdcExtEntity.setStoragecapacity(capacity);
+		rdcExtEntity.setStoragecapacityheight(capacityheight);
+		String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
+				+ rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
+		rdcExtEntity.setStoragetruck(truck);
+		rdcExtEntity.setStoragetempertype((byte) rdcAddDTO.getTemperType());
+		if (rdcAddDTO.getFacility()!=null) {
+			rdcExtEntity.setFacility(URLDecoder.decode(rdcAddDTO.getFacility(), "UTF-8"));
+		}
+
+		rdcExtEntity.setCompanydevice((byte) rdcAddDTO.getCompanyDevice());
+
+		rdcExtEntity.setCompanystaff((byte) 0);
+		rdcExtEntity.setStorageheight((byte) 0);
+		// 图片上传
+		String dir = String.format("%s/rdc/%s", baseDir, rdcEntity.getId());
+		List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
+		for (MultipartFile file : files) {
+			if (file == null) {
+				continue;
+			}
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
+			storageFiles.add(fileDataEntity);
+		}
+		if (!storageFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(storageFiles);
+		}
+		// save honorPic
+		List<FileDataEntity> honorFiles = new ArrayList<FileDataEntity>();
+		for (MultipartFile file : honorfiles) {
+			if (file == null) {
+				continue;
+			}
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
+			honorFiles.add(fileDataEntity);
+		}
+		if (!honorFiles.isEmpty()) {
+			fileDataDao.saveFileDatas(honorFiles);
+		}
+		ResultDto resultDto =new ResultDto(0,"添加成功！");
+		if (auditPic != null && userEntity!=null && userEntity.getType()!=1&&userEntity.getType()!=2) {
+			ResultDto resultDto1 = attestationRdc(userEntity.getId(), userEntity.getUsername(), rdcEntity.getId(), userEntity.getType(), auditPic);
+			resultDto.setMessage("添加成功！"+resultDto1.getMessage());
+		}
+		rdcExtDao.insertRdcExt(rdcExtEntity);
+		return resultDto;
 	}
 
 	@RequestMapping(value = "/updateRdc", method = RequestMethod.POST)
@@ -808,5 +949,33 @@ public class RdcController {
 			return sqlfilter.substring(0, sqlfilter.length()-2)+")";
 		}
 		return "";
+	}
+
+	private int getRdcInfoIntegrity(RdcAddDTO rdcAddDTO){
+		int infoIntegrity=54;
+		if (rdcAddDTO.getColdTruck1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck4()!=0){infoIntegrity+=2;}
+		if (!StringUtil.isNull(rdcAddDTO.getRemark())){infoIntegrity+=2;}
+		if (rdcAddDTO.getStructure()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getPlatform()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoRoom()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoArea()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoTemperCtr()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getStorageRefreg()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getTemperRecord()!=0){infoIntegrity+=2;}
+		if (!StringUtil.isNull(rdcAddDTO.getFacility())){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity4()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity5()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight4()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight5()!=0){infoIntegrity+=2;}
+		return infoIntegrity;
 	}
 }

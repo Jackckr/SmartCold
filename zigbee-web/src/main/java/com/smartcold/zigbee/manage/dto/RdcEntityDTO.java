@@ -64,6 +64,8 @@ public class RdcEntityDTO {
     private int rdcscore;
 
     private int audit;
+
+    private int infoIntegrity;
     /*==============================共享信息==================================================*/
     private double rentSqm;
     private int datatype;
@@ -338,5 +340,13 @@ public class RdcEntityDTO {
 
     public void setShareStauts(int shareStauts) {
         this.shareStauts = shareStauts;
+    }
+
+    public int getInfoIntegrity() {
+        return infoIntegrity;
+    }
+
+    public void setInfoIntegrity(int infoIntegrity) {
+        this.infoIntegrity = infoIntegrity;
     }
 }

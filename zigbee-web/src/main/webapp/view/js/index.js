@@ -86,6 +86,10 @@ $(function () {
 /*
  *点击banner 图上筛选条件js
  */
+$('.filter').mouseleave(function () {
+    $('.filter ul li').removeClass('activeA');
+    $('.filterTxt').hide();
+});
 function activeA(ops) {
     var oIndex=$(ops).index() ;
     $(ops).addClass('activeA').siblings().removeClass('activeA');

@@ -60,6 +60,8 @@ public class RdcExtEntity {
 
     private int rdcrecommendpercent;
 
+    private int hastruck;
+
     public int getPageview() {
 		return pageview;
 	}
@@ -276,4 +278,12 @@ public class RdcExtEntity {
 	public void setStoragecapacityheight(String storagecapacityheight) {
 		this.storagecapacityheight = storagecapacityheight;
 	}
+
+    public int getHastruck() {
+        return hastruck;
+    }
+
+    public void setHastruck(int hastruck) {
+        this.hastruck = hastruck;
+    }
 }
