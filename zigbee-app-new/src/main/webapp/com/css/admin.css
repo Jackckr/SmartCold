@@ -1068,7 +1068,7 @@ html,body{
 	padding: .5rem 0;
 	text-align: center;
 	width: 100%;
-	background: url("../img/userbg.jpg") center no-repeat;
+	background: url(../img/userbg.jpg) center no-repeat;
 	-webkit-background-size:cover;
 	background-size: cover;
 }

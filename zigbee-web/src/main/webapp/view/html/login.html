@@ -9,8 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <link rel="shortcut icon" href="../img/favicon.ico" />
     <!--引入样式包-->
+    <link rel="stylesheet" href="../plugins/css/layui.css" />
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/media.css" />
+    <link rel="stylesheet" href="../css/login.css" />
 </head>
 <body>
 <!--header 导航栏-->
@@ -62,8 +64,48 @@
         </ul>
     </div>
 </div>
-<div class="section clearfix">
-    登录--开发中....
+<div class="section">
+
+    <div class="loginDiv">
+        <div class="loginBg"></div>
+
+        <div class="login">
+            <h2>用户名密码登录</h2>
+            <form class="layui-form layui-form-pane" action="/i/user/login">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="iconfont">&#xe63d;</i></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="iconfont">&#xe69c;</i></label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-mid layui-word-aux fl">
+                        <a href="javascript:alert('进行中')">忘记密码</a>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux fr">
+                        <a href="javascript:alert('进行中')">注册</a>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo2">登录</button>
+                </div>
+                <!--<div class="layui-form-item" pane="">
+                    <label class="layui-form-label">单选框</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="男" title="男" checked="">
+                        <input type="radio" name="sex" value="女" title="女">
+                        <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+                    </div>
+                </div>-->
+            </form>
+        </div>
+    </div>
 </div>
 <!--版权区域-->
 <div class="footer" id="QRcode">
@@ -142,9 +184,9 @@
     </dl>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
 <script>
-
 </script>
 </body>
 </html>
