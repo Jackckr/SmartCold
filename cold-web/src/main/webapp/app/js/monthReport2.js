@@ -5,20 +5,52 @@
  */
 coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
 	  $scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
-	
+	  $scope.isreportMoth=true;
 	$scope.rdcId = $stateParams.rdcId;$scope.isnotprint=true;
 	$("#date04").jeDate({isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
-	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
+	$("#date05").jeDate({  isinitVal:true, initAddVal:[-7], festival: true, format: 'YYYY-MM-DD',maxDate: $.nowDate(-7),});
+	var firstDate = new Date(); 
+	firstDate.setMonth(firstDate.getMonth()-1);
+	firstDate.setDate(1);
+	firstDate.setHours(0);
+	firstDate.setMinutes(0);
+	firstDate.setSeconds(0);//设置上月的第一天
 	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
 	$scope.endTime=baseTools.formatTime(endDate);
 	$scope.startTime= baseTools.formatTime(firstDate);
 	$scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 
 	$scope.oids=[],$scope.names=[];//当前登陆tempid;
-	
 	$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
 		$scope.pysicaldata=data.entity;
 	}});
+	
+	$scope.getreport=function(){
+		if($scope.isreportMoth){
+			var newDate=$("#date04").val().split("-");
+	    	if(newDate.length!=2){ return; }
+	    	var firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);
+	    	firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
+	    	var endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); 
+	    	endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
+	    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
+	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+	    	if(newtime==$scope.timeuRange){return;} $scope.timeuRange=newtime;
+		}else{
+			var newDate=$("#date05").val();
+	    	var firstDate = new Date(newDate+' 00:00:00'), endDate =  new Date(newDate+' 23:59:59');  
+	    	endDate.setDate(firstDate.getDate()+7);
+	    	$scope.endTime= baseTools.formatTime(endDate); 
+	    	$scope.startTime= baseTools.formatTime(firstDate); 
+	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+	    	if(newtime==$scope.timeuRange){return;}
+	    	$scope.timeuRange=newtime;
+		}
+		 $scope.initdata();
+	};
+	
+	
+	
 	
 	$scope.changestorage=function(index,storageid,$event){
 		var em=$($event.target);

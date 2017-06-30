@@ -17,8 +17,15 @@
 	  </div>
 	  <div class="col-lg-4"></div>
 	  	<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
-	  	     <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
-	      <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
+	  	  <button class="btn btn-info myPrint" ng-click="isreportMoth=true" >月报</button>
+	      <button class="btn btn-info myPrint" ng-click="isreportMoth=false" >周报</button>
+	  	     <span ng-show="isreportMoth">
+	  	        <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
+	  	    </span>
+	  	   <span ng-show="!isreportMoth">
+	  	                        开始时间：<input class="datainp wicon" id="date05" type="text"  readonly>
+	  	    </span>
+	           <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
 	  	</div>
 	</div>
 	<div class="version">
@@ -106,7 +113,7 @@
 					</thead>
 					<tbody>
 					<tr ng-repeat="item in warninglist" class="success">
-						<td>{{$index}}</td>
+						<td>{{$index+1}}</td>
 						<td>{{item.level}}</td>
 						<td>{{item.warnigmsg}}</td>
 						<td>{{item.starttime.substring(0,19)}}</td>

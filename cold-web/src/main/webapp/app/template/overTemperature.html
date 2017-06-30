@@ -1,8 +1,6 @@
 <style>.alert{padding: 8px;}</style>
 <div class="page-content">
-    <div class="page-header">
-
-    </div>
+    <div class="page-header"></div>
 
     <section class="content">
         <div class="row">
@@ -11,7 +9,7 @@
                 <!-- Storage CHART -->
                 <div class="box bg-gray" >
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;日超温告警次数汇总</h3>
+                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;日超时长</h3>
                         <div class="box-tools pull-right">
 			                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -21,16 +19,8 @@
                         <div class="chart">
                             <div id="{{key}}_Chart" style="height:300px;"></div>
                         </div>
-                    </div>
-                     <div class="box-body">
-                         <div class="clearfix text-center">
-                             <div class="alert alert-danger col-lg-4 col-md-4 col-sm-4">危险告警次数:{{showMap[key][0]}}次</div>
-                             <div class="alert alert-warning col-lg-4 col-md-4 col-sm-4">严重告警:{{showMap[key][1]}}次</div>
-                             <div class="alert alert-info col-lg-4 col-md-4 col-sm-4">正常告警:{{showMap[key][2]}}次</div>
-                         </div>
-                    </div>
-                </div><!-- 2 -->
-
+                    </div>                 
+                </div>
             </div>
         </div>
     </section>

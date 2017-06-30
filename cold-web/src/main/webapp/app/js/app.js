@@ -283,7 +283,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('overTemperatureTime',{
     	url:'/overTemperatureTime/{rdcId}',
     	controller: 'overTemperatureTime',
-        templateUrl: 'app/template/overTemperatureTime.html'
+    	templateUrl: 'app/template/overTemperatureTime.html'
+    }).state('overTemperature',{
+    	url:'/overTemperature/{rdcId}',
+    	controller: 'overTemperature',
+        templateUrl: 'app/template/overTemperature.html'
     }).state('overTemperatureCount',{
     	url:'/overTemperatureCount/{rdcId}',
     	controller: 'overTemperatureCount',

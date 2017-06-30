@@ -29,6 +29,7 @@ import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.Rdc;
 import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
 import com.smartcold.manage.cold.service.StorageService;
+import com.smartcold.manage.cold.service.TaskService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -41,7 +42,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 2016年9月27日11:55:45
  **/
 @Service
-public class QuantityTaskService  {
+public class QuantityTaskService implements TaskService {
 
 	@Autowired
 	private RdcMapper rdcMapper;
@@ -120,7 +121,6 @@ public class QuantityTaskService  {
 		this.delTempfile();
     	this.resetDevStatus();
     	this.LowbatteryAlarm();//低电量告警
-    	
     	if(errDevList.size()>2000){errDevList.clear();}
     	if(coldStoragecache.size()>2000){coldStoragecache.clear();}
 	}
@@ -216,37 +216,40 @@ public class QuantityTaskService  {
 	}
 	//超温统计
 	private void SummaryTempWarning(String time, Date dateTime,String startTime,String endTime){
-		System.err.println("开始执行错误统计=======================");
-		double totalcount=0;double totaltime=0;
+		double [] totaldata ={0,0};
 		List<ColdStorageAnalysisEntity> coldStorageAnalysisList =new ArrayList<ColdStorageAnalysisEntity>();
 		List<ColdStorageSetEntity> findAllColdStorage = this.coldStorageSetMapper.findAllColdStorage();
 		for (ColdStorageSetEntity coldStorage : findAllColdStorage) {
-			totalcount=0; totaltime=0;
-			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 1, dateTime, startTime, endTime, totalcount,totaltime,new String[]{"OverTempL1Count", "OverTempL1Time"},coldStorageAnalysisList);
-			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 2, dateTime, startTime, endTime, totalcount,totaltime,new String[]{"OverTempL2Count", "OverTempL2Time"},coldStorageAnalysisList);
-			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 3, dateTime, startTime, endTime, totalcount,totaltime,new String[]{"OverTempL3Count", "OverTempL3Time"},coldStorageAnalysisList);
-			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(), "OverTempCount", totalcount, dateTime));
-			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(),"OverTempTime", totaltime, dateTime));
+//		 if(1600==coldStorage.getRdcId()&&99==coldStorage.getId()){
+			totaldata =new double[]{0,0};
+			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 1, dateTime, startTime, endTime, totaldata,new String[]{"OverTempL1Count", "OverTempL1Time"},coldStorageAnalysisList);
+			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 2, dateTime, startTime, endTime, totaldata,new String[]{"OverTempL2Count", "OverTempL2Time"},coldStorageAnalysisList);
+			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 3, dateTime, startTime, endTime, totaldata,new String[]{"OverTempL3Count", "OverTempL3Time"},coldStorageAnalysisList);
+			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(), "OverTempCount", totaldata[0], dateTime));
+			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(),"OverTempTime", totaldata[1], dateTime));
+			}
+//		}
+		if(SetUtil.isnotNullList(coldStorageAnalysisList)){
+			this.storageAnalysisMapper.addColdStorageAnalysis(coldStorageAnalysisList);
 		}
-		this.storageAnalysisMapper.addColdStorageAnalysis(coldStorageAnalysisList);
 		
 		
 	}
 	
-	private void tempWrningAanins(int rdcid,int oid,int type,int level,Date dateTime,String startTime,String endtime,Double totalcount,Double totaltime,String key[], List<ColdStorageAnalysisEntity> coldStorageAnalysisList){
+	private void tempWrningAanins(int rdcid,int oid,int type,int level,Date dateTime,String startTime,String endtime,double [] totaldata,String key[], List<ColdStorageAnalysisEntity> coldStorageAnalysisList){
 		int count=0;double tailtime=0;
 		List<SysWarningsInfo> sysWarningList = this.sysWarningsInfoMapper.getSysWarningByFilter(rdcid,oid+"",type,level,startTime,endtime);
 		 if(SetUtil.isnotNullList(sysWarningList)){
 			 for (SysWarningsInfo sysWarningsInfo : sysWarningList) {
 				 count++;
-				 tailtime=sysWarningsInfo.getLongtime();
+				 tailtime+=sysWarningsInfo.getLongtime();
 			 }
 		 }
-		 totalcount+=count; totaltime+=tailtime;
+		 totaldata[0]+=count; totaldata[1]+=tailtime;
 		 coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, oid, key[0], count, dateTime));
-		 coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, oid, key[0], tailtime, dateTime));
+		 coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, oid, key[1], tailtime, dateTime));
 	}
-	
+
 	
 	/**
 	 * 删除文件夹
@@ -297,9 +300,9 @@ public class QuantityTaskService  {
 					}
 					if(objname!=null){
 						if(coldNameMap.containsKey(key)){//存在报警
-							coldNameMap.put(key, coldNameMap.get(key)+","+obj.getDeviceid())	;
+							coldNameMap.put(key, coldNameMap.get(key)+",'"+obj.getDeviceid()+"'")	;
 						}else{
-							coldNameMap.put(key, objname[1]+";"+obj.getDeviceid());
+							coldNameMap.put(key, objname[1]+";'"+obj.getDeviceid()+"'");
 						}
 					}else{
 						if(!errDevList.contains(obj.getDeviceid())){
@@ -655,6 +658,14 @@ public class QuantityTaskService  {
 		List<WarningsLog> errInfoList=new ArrayList<WarningsLog>();
 		errInfoList.add(new WarningsLog(-1,type,msg));
 		this.warningLogMapper.addWarningLog(errInfoList);
+	}
+
+	@Override
+	public void runTask(int day) {
+		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(day));
+		Date dateTime = TimeUtil.parseYMD(time);
+		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
+		SummaryTempWarning(time, dateTime, startTime, endtime);
 	}
 	
 	
