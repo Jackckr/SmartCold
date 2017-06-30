@@ -54,6 +54,15 @@ body{
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
 }
+.item>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: .1rem;
+    box-sizing: border-box;
+    position: relative;
+}
 .orange{
     color: #ffaf39!important;
 }
