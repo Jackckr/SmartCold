@@ -18,9 +18,9 @@ public interface CongfigMapper {
 	//4.单体压缩机机的配置                                            
 	public List<HashMap<String, Object>>  getCompreMappingByRdcId     (@Param("rdcId") String rdcId);
 	//冷凝系统水泵
-	public List<HashMap<String, Object>>  getEvaporativeMappingByRdcId(@Param("rdcId") String rdcId);
+	public List<HashMap<String, Object>>  getEvaporativewatersetByRdcId(@Param("rdcId") String rdcId);
 	//冷凝系统风机
-	public List<HashMap<String, Object>>  getEBMappingByRdcId         (@Param("rdcId") String rdcId);
+	public List<HashMap<String, Object>>  getEvaporativeblowersetByRdcId         (@Param("rdcId") String rdcId);//evaporativewaterset
 	//获得其他配置（单位转换，值类型转换）
 	public List<ConversionEntity>  getOHMappingByRdcId         (@Param("rdcId") String rdcId);
 	

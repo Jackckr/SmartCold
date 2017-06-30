@@ -66,81 +66,94 @@ public class DFSCollectionController extends BaseController {
 			HashMap<String, DFSDataCollectionEntity> config = configchcateHashMap.get(rdcid);
 			HashMap<String, ConversionEntity> unitConvers = unitConversMap.get(rdcid);
 		    if(config==null){return new DataResultDto(200);}
-		    ArrayList<DFSDataCollectionEntity> dataList = null;String val =null;
-		    String table =null;  String[] key_val =null;DFSDataCollectionEntity newdata=null;ConversionEntity conversionEntity=null;
+		    ArrayList<DFSDataCollectionEntity> dataList = null;
+		    String table =null;  DFSDataCollectionEntity newdata=null;
 		    HashMap<String, ArrayList<DFSDataCollectionEntity>> tempMap=new HashMap<String, ArrayList<DFSDataCollectionEntity>>();
 		    for (Map<String, String> info :  ((List<Map<String, String>>) dataCollectionBatchEntity.get("infos"))) {
 		    	String name = info.get("tagname");
-//		    	System.err.println("采集标签名称"+name);
-		    	  newdata = config.get(name);
-		    	if(newdata==null){continue;}
-		    	 val = info.get("currentvalue");
-				    if(unitConvers.containsKey(name)){
-					    		 try {
-									conversionEntity= unitConvers.get(name);
-									switch (conversionEntity.getType()) {
-									case 1://换算
-										info.put("currentvalue", (Double.parseDouble(val)*Double.parseDouble(conversionEntity.getMapping()))+"");
-								        System.err.println("进入液位转换:"+val+":"+info.get("currentvalue"));
-										break;
-									case 2://switch
-										 key_val = conversionEntity.getUnit().get(val);
-										newdata.setKey(key_val[0]);
-										newdata.setValue(key_val[1]);
-								        System.err.println("进入风机转换1："+key_val+"转换后："+val+":"+key_val[1] );
-										break;
-									case 3://指向
-										ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
-										key_val = conversionEntity2.getUnit().get(val);
-									    newdata = new DFSDataCollectionEntity();
-										newdata.setKey(key_val[0]);
-										newdata.setValue(key_val[1]);
-										 System.err.println("进入风机转换2："+key_val+"转换后："+val+":"+key_val[1] );
-										break;	
-									default:
-										break;
-									}
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-					  }
-					 newdata.setValue(val);//更新数据
-					 newdata.setTime( info.get("lasttime"));
-					 table = newdata.getTable();
-					if(tempMap.containsKey(table)){
-						tempMap.get(table).add(newdata);
-					}else{
-						 dataList = new ArrayList<DFSDataCollectionEntity>();
-						 dataList.add(newdata);
-						 tempMap.put(table, dataList);
-					}
-					if("isRunning,isDefrosting".indexOf(newdata.getKey())>-1){
-						DFSDataCollectionEntity clone  = (DFSDataCollectionEntity) newdata.clone();
-						if(clone!=null){
-							if("isRunning".equals(newdata.getKey())){
-								clone.setKey("isDefrosting");
-								clone.setValue(0);
-							}else{
-								clone.setKey("isRunning");
-								clone.setValue(0);
-							}
-							tempMap.get(table).add(clone);
+		    	newdata = config.get(name);
+		    	if(newdata==null){System.err.println("未配置========================："+name); continue;}
+		    	if(unitConvers.containsKey(name)){
+		    		System.err.println("进入转换========================"+name);
+				      counsValue(unitConvers, newdata, info, name);//  加入转换对象
+		    	}
+				 newdata.setValue(info.get("currentvalue"));//更新数据
+				 newdata.setTime( info.get("lasttime"));
+				 table = newdata.getTable();
+				 if(StringUtil.isnotNull(table)){
+					 if(tempMap.containsKey(table)){
+							tempMap.get(table).add(newdata);
+						}else{
+							 dataList = new ArrayList<DFSDataCollectionEntity>();
+							 dataList.add(newdata);
+							 tempMap.put(table, dataList);
 						}
-					}
+						if("isRunning,isDefrosting".indexOf(newdata.getKey())>-1){
+							DFSDataCollectionEntity clone  = (DFSDataCollectionEntity) newdata.clone();
+							if(clone!=null){
+								if("isRunning".equals(newdata.getKey())){
+									clone.setKey("isDefrosting");
+									clone.setValue(0);
+								}else{
+									clone.setKey("isRunning");
+									clone.setValue(0);
+								}
+								tempMap.get(table).add(clone);
+							}
+						}
+				 }else{
+					 System.err.println("未知保存对象"+gson.toJson(newdata));
+				 }
 			}
 			if(SetUtil.isNotNullMap(tempMap)){
 				for (String key : tempMap.keySet()) {
-					ArrayList<DFSDataCollectionEntity> dataList1 = tempMap.get(key);
-					this.dataservice.adddataList(key, dataList1);
+					this.dataservice.adddataList(key,  tempMap.get(key));
 				}
 			}
 			return new DataResultDto(200);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("丹弗斯数据解析异常："+data+"\r\n"+e.getMessage());
-			return new DataResultDto(500);
+			return new DataResultDto(200);
 		}
+	}
+
+	private void counsValue(HashMap<String, ConversionEntity> unitConvers,DFSDataCollectionEntity newdata, Map<String, String> info,String name) {
+		String val=null;String[] key_val =null;ConversionEntity conversionEntity=null;
+			 val = info.get("currentvalue");
+		    		 try {
+						conversionEntity= unitConvers.get(name);
+						switch (conversionEntity.getType()) {
+						case 1://换算
+							val= (Double.parseDouble(val)*Double.parseDouble(conversionEntity.getMapping()))+"";
+							info.put("currentvalue", val);
+							break;
+						case 2://switch
+							 key_val = conversionEntity.getUnit().get(val);
+							 if(key_val!=null){
+								    newdata.setKey(key_val[0]);
+									newdata.setValue(key_val[1]);
+							 }else{
+								 System.err.println("进入风机转换1：转换异常"+val);
+							 }
+							break;
+						case 3://指向
+							ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
+							key_val = conversionEntity2.getUnit().get(val);
+							if(key_val!=null){
+								newdata = new DFSDataCollectionEntity();
+								newdata.setKey(key_val[0]);
+								newdata.setValue(key_val[1]);
+							}else{
+								 System.err.println("进入风机转换2：转换异常"+val);
+							}
+							break;	
+						default:
+							break;
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 	} 
 	
 	/**
@@ -158,9 +171,9 @@ public class DFSCollectionController extends BaseController {
 		case "compressorset":
 			return this.congfigMapper.getCompreMappingByRdcId(rdcId);
 		case "evaporativewaterset":
-			return this.congfigMapper.getEvaporativeMappingByRdcId(rdcId);
+			return this.congfigMapper.getEvaporativewatersetByRdcId(rdcId);
 		case "evaporativeblowerset":
-			return this.congfigMapper.getEvaporativeMappingByRdcId(rdcId);
+			return this.congfigMapper.getEvaporativeblowersetByRdcId(rdcId);
 		default:
 			return this.congfigMapper.getObjMappingByRdcId(table, rdcId);
 		}
@@ -224,7 +237,5 @@ public class DFSCollectionController extends BaseController {
 			DFSCollectionController.configchcateHashMap.put(rdcId, null);
 		}
 	}
-	
-	
 	
 }

@@ -36,7 +36,7 @@
 	
 	<select id="findLastNPoint" parameterType="map" resultMap="dataResultMap">
 	    SELECT * FROM storagedatacollection
-	    WHERE  `addtime` >#{startTime}
+	    WHERE  `time` >#{startTime}
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>
@@ -46,7 +46,7 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if> 
-	    ORDER BY time DESC LIMIT #{limit} 
+	    ORDER BY `time` DESC LIMIT #{limit} 
 	</select>
 	
 	<select id="findByTime" parameterType="map" resultMap="dataResultMap">
@@ -61,7 +61,7 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
-	    AND time > #{startTime} AND time &lt; #{endTime}  order by `time` ${orderBy}   
+	    AND `time` > #{startTime} AND `time` &lt; #{endTime}  order by `time` ${orderBy}   
 	</select>
 	
 	<select id="findByTimeFormat" parameterType="map" resultMap="dataResultMap">

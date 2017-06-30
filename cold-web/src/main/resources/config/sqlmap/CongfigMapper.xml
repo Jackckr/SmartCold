@@ -18,11 +18,11 @@
 	<select id="getCompreMappingByRdcId" parameterType="map" resultType="map">
 	 SELECt * from `compressorset` a LEFT JOIN `compressorgroupset` b on a.compressorgroupid=b.id and b.rdcid=#{rdcId} and a.`mapping`!='{}' and a.`mapping` is not null;
 	</select>
-	<select id="getEvaporativeMappingByRdcId" parameterType="map" resultType="map">
-	SELECt a.`id`,a.`mapping` from `evaporativewaterset` a LEFT JOIN `evaporativeset` b on a.evaporativeid=b.id and b.rdcid=#{rdcId} and a.`mapping`!='{}' and a.`mapping` is not null;
+	<select id="getEvaporativewatersetByRdcId" parameterType="map" resultType="map">
+        SELECT * FROM `evaporativewaterset` where `evaporativeid` in(SELECT `id`  FROM `evaporativeset`  where `rdcid` =#{rdcId})  and `mapping`!='{}' and `mapping` is not null;
 	</select>
-	<select id="getEBMappingByRdcId" parameterType="map" resultType="map">
-	SELECt a.`id`,a.`mapping` from `evaporativeblowerset` a LEFT JOIN `evaporativeset` b on a.evaporativeid=b.id and b.rdcid=#{rdcId} and a.`mapping`!='{}' and a.`mapping` is not null;
+	<select id="getEvaporativeblowersetByRdcId" parameterType="map" resultType="map">
+	   SELECT `id` ,`mapping`  FROM `evaporativeblowerset` where `evaporativeid` in(SELECT `id`  FROM `evaporativeset`  where `rdcid` =#{rdcId})  and `mapping`!='{}' and `mapping` is not null;
 	</select>
 
 </mapper>
