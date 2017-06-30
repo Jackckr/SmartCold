@@ -44,7 +44,7 @@ body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, d
 body {
     font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体',Tahoma, Arial, sans-serif;
     color: #555;
-    background-color: #F6F5FA;
+    background-color: #fafcff;
     font-size: 0.7rem;
 }
 em, i {

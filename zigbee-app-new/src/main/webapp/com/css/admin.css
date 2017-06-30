@@ -4,6 +4,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
  	white-space: nowrap;
+	line-height:2;
 }
 .mylogin{
 	background:transparent;
@@ -538,6 +539,7 @@ html,body{
 .messageList{
 	border-bottom: 1px solid #eee;
 	padding:.7rem 0;
+	position: relative;
 }
 #ul_msgsL_list .messageList{
 	padding:0;
@@ -1015,4 +1017,48 @@ html,body{
 	font-size: .8rem;
 	line-height: 1rem;
 	color: #999;
+}
+/*新版消息*/
+
+.deleteAll{
+	position: fixed;
+	bottom: 0;
+	left:0;
+	height: 2.45rem;
+	width: 100%;
+	background-color: #ff3a32;
+	color: #fff;
+	text-align: center;
+	line-height: 2.45rem;
+	font-size: .75rem;
+	z-index:1099;
+	display: none;
+}
+.oDelete{
+	display: none;
+	position: absolute;
+	top:0;
+	right: 0;
+	width: 5rem;
+	height: 100%;
+	background-color: #ff3a32;
+	color: #fff;
+	text-align: center;
+	line-height:4.6;
+	font-size: .75rem;
+	z-index:1;
+}
+.obody{
+	padding:0 0 2.5rem;
+	margin-top: .3rem;
+	background-color: transparent;
+}
+.obody #ul_msgsL_list .messageList{
+	padding: .7rem .9rem;
+	margin-bottom: .4rem;
+	border-top: .1rem solid #c7dcff;
+	background-color: #fff;
+}
+.obody #ul_msgsL_list .messageList>a{
+	padding: 0;
 }
