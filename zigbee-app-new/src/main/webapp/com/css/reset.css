@@ -60,6 +60,9 @@ body{
 .green{
     color: #4bce6f!important;
 }
+.blue{
+    color: #4287ff!important;
+}
 @font-face {font-family: 'iconfont';
     src: url('../iconfont/iconfont.eot'); /* IE9*/
     src: url('../iconfont/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */

@@ -24,6 +24,9 @@
     .filterBox>ul>li.activeA:before{
         border: none;
     }
+}
+@media only screen and (max-width: 980px){
+
     .imglist,.txtlist{
         width: 100%;
     }

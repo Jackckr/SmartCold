@@ -53,7 +53,7 @@ public class RdcEntityDTO {
 
     private int pageview;
     
-    private String logo = "/app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
+    private String logo = "http://139.196.189.93:8089/app/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 
     private int istemperaturestandard;
 

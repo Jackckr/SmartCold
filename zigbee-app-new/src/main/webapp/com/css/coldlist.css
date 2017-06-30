@@ -127,7 +127,6 @@ section{
 }
 /*图文列表*/
 .coldlist{
-	background-color: #fff;
 }
 .two{
 	display: none;
@@ -165,9 +164,12 @@ section{
 }
 /*黄色星星*/
 .imgCell{
-	border-bottom: 4px solid #F5F5F9;
-	padding:0.2rem 0.9rem; 
+	border-bottom: 0.5px solid #eee;
+	border-top: 0.5px solid #fdfdfd;
+	padding:0.2rem 0.9rem;
 	position: relative;
+	background-color: #fff;
+	margin: 0.5rem 0;
 }
 .imgCell:last-child{
 	border-bottom: 0;
@@ -676,7 +678,7 @@ section{
 .lookRdc .coldlist li a{
 	padding: .15rem 0;
 }
-.lookRdc .coldlist li a>span{
+.lookRdc .coldlist li a>span,.rdcstand .coldlist li a>span{
 	float: left;
 	width: 2.2rem;
 	height: 2.2rem;
@@ -768,4 +770,58 @@ section{
 }
 .rentRdc .coldlist li a .flex{
 	margin-top: 1.2rem;
+}
+.rentRdc .coldlist li a .ellipsis{
+	width: 9rem;
+	display: inline-block;
+}
+.rentRdc .coldlist li a .ellipsis+em{
+	color:#999;
+	font-size: .6rem;
+	margin-left: .2rem;
+	float: right;
+}
+/*冷库资源css==============================================================*/
+.rdclist .fixtop{
+	margin-top: 2.5rem;
+}
+.rdclist .coldlist li a .star,
+.rdclist .coldlist li a .star i,
+.rdclist .coldlist li a .position i{
+	font-size: .6rem;
+}
+.rdclist .coldlist li .grab{
+	bottom: .5rem;
+	width: 3rem;
+}
+.rdclist .coldlist .imgCell a>img{
+	width: 4rem;
+	height: 3rem;
+	line-height: normal;
+	max-width: 100%;
+	margin: 0;
+}
+.rdclist .coldlist .imgCell a>img+div{
+	padding-left: 4.2rem;
+}
+/*达标冷库css==============================================*/
+.rdcstand .fixtop{
+	margin-top: .4rem;
+}
+.rdcstand .coldlist li a .star{
+	margin-top: .3rem;
+	padding-left: 3rem;
+}
+.rdcstand .coldlist li .grab{
+	bottom: .4rem;
+}
+.rdcstand .coldlist li a>span{
+	background-color: #2eb05f;
+}
+.tj{
+	position: absolute;
+	font-size: 2rem;
+	color: #f00;
+	top:0;
+	right: 0;
 }

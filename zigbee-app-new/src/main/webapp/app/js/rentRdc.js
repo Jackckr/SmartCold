@@ -115,16 +115,17 @@ $().ready(function () {
     };
     function gethtml(rdc) {
         var approve=''
-        if(rdc.audit==1){
+        rdc.percent='82%';
+        if(rdc.audit==2){
             approve='<i class="iconfont green">&#xe6ac;</i>已认证<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库'
         }else if(rdc.audit==0){
-            approve='<i class="iconfont green">&#xe63b;</i>未认证<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库'
+            approve='<i class="iconfont orange">&#xe63b;</i>未认证<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库'
         };
         var score = [
-            '<li class="imgCell"><a href="storehousedetail.html?id='+rdc.id+'"><span><img src="'+rdc.logo+'" alt=""></span><div>'+
-            '<p class="ellipsis">'+rdc.title+'</p><p class="position omg">'+approve+'</p>'+
+            '<li class="imgCell"><a href="storehousedetail.html?id='+rdc.id+'"  onclick="getSoll()"><span><img src="'+rdc.logo+'" alt=""></span><div>'+
+            '<p class="ellipsis">'+rdc.name+'</p><em>信息完整度<i class="blue">'+rdc.percent+'</i></em><p class="position omg">'+approve+'</p>'+
             '<p class="grab orange">'+rdc.unitPrice+'<br><span>元/㎡/天</span></p></div><div class="flex"><div class="item"><h4>'+rdc.sqm+'㎡</h4>'+
-            '<p>总面积</p></div><div class="item"><h4>'+rdc.sqm+'㎡</h4><p>可用面积</p></div><div class="item"><h4>'+rdc.delAddress+'</h4><p>地址</p></div></div></a>'+
+            '<p>总面积</p></div><div class="item"><h4>'+rdc.sqm+'㎡</h4><p>可租面积</p></div><div class="item"><h4>'+rdc.delAddress+'</h4><p>地址</p></div></div></a>'+
             '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
             '<a class="fr"><i class="iconfont">&#xe605;</i>收藏</a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
         ];

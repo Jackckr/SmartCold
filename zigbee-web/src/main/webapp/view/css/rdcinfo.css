@@ -97,7 +97,8 @@
     font-size: 16px;
 }
 .rdcAdd input, .rdcAdd textarea,.rdcAdd select{
-    width: 80%;
+   /* width: 80%;*/
+    width: 330px;
     margin-left: 3%;
 }
 .rdcImg div{

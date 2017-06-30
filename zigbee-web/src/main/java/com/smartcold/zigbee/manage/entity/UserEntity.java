@@ -40,7 +40,7 @@ public class UserEntity {
 
 	private Date UpdateTime;
 
-	private String avatar="app/img/userimg.jpg";//用户头像->add
+	private String avatar="http://139.196.189.93:8089/app/userimg.jpg";//用户头像->add
 
 	public UserEntity(){}
 
