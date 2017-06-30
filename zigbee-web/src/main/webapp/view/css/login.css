@@ -1,41 +1,23 @@
 /*登录注册css*/
-body{
-    padding: 130px 0 220px 0;
-}
-.header,.footer{
-    position: absolute;
-    top:0;
-    left:0;
-}
-.footer{
-    top: auto;
-    bottom: 0;
-}
-.loginDiv{
-    position: relative;
-    height: 100%;
+.section{
+    min-height: 360px;
 }
 .loginBg{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 433.5px;
-    height: 181.5px;
-    background: url("../img/loginbg.png") no-repeat left center;
+    float: left;
+    width: 620.8px;/*w/h=2.388*/
+    height: 260px;
+    background: url("../img/loginbg.png") no-repeat center center;
     background-size: cover;
 }
 .login{
-    position: absolute;
-    top: 50%;
-    right: 0;
-    z-index:1;
+    float: right;
     width: 400px;
 }
 .login h2{
     color: #64a9d2;
     line-height: 3;
     border-bottom:  1px solid #64a9d2;
-    margin-bottom: 2em;
+    margin-bottom: 10px;
 }
 .layui-form-pane .layui-form-label{
     border: 1px solid #e6e6e6;
