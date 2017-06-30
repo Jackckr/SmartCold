@@ -55,6 +55,8 @@ public class RdcEntity {
     private int openLIne;
 
     private int infoIntegrity;
+
+    private int istemperaturestandard;
 	
 	public int getUserId() {
 		return userid;
@@ -270,5 +272,13 @@ public class RdcEntity {
 
     public void setInfoIntegrity(int infoIntegrity) {
         this.infoIntegrity = infoIntegrity;
+    }
+
+    public int getIstemperaturestandard() {
+        return istemperaturestandard;
+    }
+
+    public void setIstemperaturestandard(int istemperaturestandard) {
+        this.istemperaturestandard = istemperaturestandard;
     }
 }

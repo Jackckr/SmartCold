@@ -31,6 +31,12 @@ $(document).scroll(function () {//吸附导航
         $(".banner").css('marginTop',0);
     }
 });
+/*获取URL参数*/
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
 /*获取用户对象*/
 function findUser() {
     $.ajax({url:"/i/user/findUser",type:"get",dataType:"json",success:function (data) {

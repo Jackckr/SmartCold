@@ -71,42 +71,42 @@
             <tbody>
             <tr>
                 <td>名称：<b class="blue">*</b></td>
-                <td><input type="text" name="name" id="name" placeholder="请输入冷库名称" required></td>
+                <td><input type="text" name="name" id="name" placeholder="请输入冷库名称" ></td>
             </tr>
             <tr>
                 <td>省：<b class="blue">*</b></td>
                 <td>
-                    <select name="provinceId" id="provinceId" required name="province" id="province">
+                    <select name="provinceId" id="provinceId"  name="province" id="province">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>市：<b class="blue">*</b></td>
                 <td>
-                    <select required name="cityId" id="cityId">
+                    <select  name="cityId" id="cityId">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>地理位置：<b class="blue">*</b></td>
-                <td><input name="address" id="address" type="text" placeholder="请输入冷库地址" required></td>
+                <td><input name="address" id="address" type="text" placeholder="请输入冷库地址" ></td>
             </tr>
             <tr>
                 <td>总面积：<b class="blue">*</b></td>
-                <td><input name="area" id="area" type="number" placeholder="请输入冷库面积(只能输数字)/㎡" required></td>
+                <td><input name="area" id="area" type="number" placeholder="请输入冷库面积(只能输数字)/㎡" ></td>
             </tr>
             <tr>
                 <td>可出租面积：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" placeholder="请输入冷库可出租面积(只能输数字)/㎡,没有填写0" required></td>
+                <td><input name="rentSqm" type="number" placeholder="请输入冷库可出租面积(只能输数字)/㎡,没有填写0" ></td>
             </tr>
             <tr>
                 <td>冷库净高：<b class="blue">*</b></td>
-                <td><input name="height" id="rdcHeight" type="number" placeholder="请输入冷库净高(只能输数字)/m" required></td>
+                <td><input name="height" id="rdcHeight" type="number" placeholder="请输入冷库净高(只能输数字)/m" ></td>
             </tr>
             <tr>
                 <td>经营类型：<b class="blue">*</b></td>
                 <td>
-                    <select name="manageType" id="manageType" required>
+                    <select name="manageType" id="manageType" >
                         <option value="1">产地型</option>
                         <option value="2">市场型</option>
                         <option value="3">仓储型</option>
@@ -121,7 +121,7 @@
             <tr>
                 <td>商品存放类型：<b class="blue">*</b></td>
                 <td>
-                    <select name="storageType" id="storageType" required>
+                    <select name="storageType" id="storageType" >
                         <option value="1">货架存放</option>
                         <option value="2">非货架存放</option>
                     </select>
@@ -130,7 +130,7 @@
             <tr>
                 <td>温度类型：<b class="blue">*</b></td>
                 <td>
-                    <select name="temperType" id="temperType"  placeholder="可多选" required>
+                    <select name="temperType" id="temperType"  placeholder="可多选" >
                         <option value="1">冷藏库</option>
                         <option value="2">冷冻库</option>
                         <option value="3">超低温库</option>
@@ -206,7 +206,7 @@
             <!--上传图片end-->
             <tr>
                 <td>联系电话：<b class="blue">*</b></td>
-                <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum" required></td>
+                <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum" ></td>
             </tr>
             <tr><td colspan="2"><div class="oBtn moreBtn">更多信息+</div></td></tr>
             </tbody>
@@ -259,7 +259,7 @@
                     </select>
                 </td>
             </tr>
-            <tr>
+            <tr id="lihuoAreaTr" style="display: none">
                 <td>理货区面积：</td>
                 <td>
                     <input name="lihuoArea" id="lihuoArea" type="number" placeholder="请输入冷库面积(只能输数字)/㎡">
@@ -306,11 +306,11 @@
             <tr>
                 <td>冷库容积：</td>
                 <td class="oTd oC">
-                      <div class="oInline"><span class="compare">12~25℃</span><input type="number" name="capacity1" id="capacity1"><span class="oUnit">面积/㎡</span><input type="number" name="height1" id="height1"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-2~12℃</span><input type="number" name="capacity2" id="capacity2"><span class="oUnit">面积/㎡</span><input type="number" name="height2" id="height2"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-22~-15℃</span><input type="number" name="capacity3" id="capacity3"><span class="oUnit">面积/㎡</span><input type="number" name="height3" id="height3"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-30~-22℃</span><input type="number" name="capacity4" id="capacity4"><span class="oUnit">面积/㎡</span><input type="number" name="height4" id="height4"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare"><-30℃</span><input type="number" name="capacity5" id="capacity5"><span class="oUnit">面积/㎡</span><input type="number" name="height5" id="height5"><span class="oUnit">高/m</span>
+                      <div class="oInline"><span class="compare">8~25℃</span><input type="number" name="capacity1" id="capacity1"><span class="oUnit">面积/㎡</span><input type="number" name="height1" id="height1"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">2~8℃</span><input type="number" name="capacity2" id="capacity2"><span class="oUnit">面积/㎡</span><input type="number" name="height2" id="height2"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">-2~-18℃</span><input type="number" name="capacity3" id="capacity3"><span class="oUnit">面积/㎡</span><input type="number" name="height3" id="height3"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">-18~-30℃</span><input type="number" name="capacity4" id="capacity4"><span class="oUnit">面积/㎡</span><input type="number" name="height4" id="height4"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare"><-50℃</span><input type="number" name="capacity5" id="capacity5"><span class="oUnit">面积/㎡</span><input type="number" name="height5" id="height5"><span class="oUnit">高/m</span>
                 </div>
                 </td>
             </tr>

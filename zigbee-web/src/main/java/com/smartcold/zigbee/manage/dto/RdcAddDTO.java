@@ -110,6 +110,11 @@ public class RdcAddDTO {
 
 	private int openLIne;
 
+	private int infoIntegrity;
+
+	private int istemperaturestandard;
+
+	private Double unitPrice;
 
 	public float getHeight1() {
 		return height1;
@@ -557,5 +562,29 @@ public class RdcAddDTO {
 
 	public void setOpenLIne(int openLIne) {
 		this.openLIne = openLIne;
+	}
+
+	public int getInfoIntegrity() {
+		return infoIntegrity;
+	}
+
+	public void setInfoIntegrity(int infoIntegrity) {
+		this.infoIntegrity = infoIntegrity;
+	}
+
+	public int getIstemperaturestandard() {
+		return istemperaturestandard;
+	}
+
+	public void setIstemperaturestandard(int istemperaturestandard) {
+		this.istemperaturestandard = istemperaturestandard;
+	}
+
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 }
