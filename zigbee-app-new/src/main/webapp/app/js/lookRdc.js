@@ -135,7 +135,7 @@ $().ready(function () {
             '<p class="ellipsis">'+rdc.title+'</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>'+rdc.sqm+'㎡</p><span class="grab green">['+showTime+']</span>'+
             '</div><div class="flex"><div class="item"><h4>'+daysRound+'天</h4>'+
             '<p>租期</p></div><div class="item"><h4>'+rdc.validEndTime+'</h4><p>报价截止日</p>'+
-            '</div><div class="item"><h4>'+rdc.id+'</h4><p>发布者</p></div></div></a></li>'
+            '</div><div class="item"><h4 class="omg">'+rdc.id+'</h4><p>发布者</p></div></div></a></li>'
         ];
         return score.join("");
     }

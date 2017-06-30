@@ -722,6 +722,7 @@ section{
 }
 .lookRdc .coldlist li a .flex h4{
 	font-weight: 400;
+	width: 5rem;
 }
 .lookRdc .coldlist li a .flex .item:nth-child(1),
 .lookRdc .coldlist li a .flex .item:nth-child(2){

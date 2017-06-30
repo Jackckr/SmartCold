@@ -104,10 +104,18 @@ $().ready(function() {
   	
   	function gethtml(rdc){
         var approve='';
-        if(rdc.audit==2&&rdc.istemperaturestandard==1){
-            approve='<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-        }else if(rdc.audit!=2||rdc.istemperaturestandard==0){
-            approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
+        if(rdc.audit==2){
+        	if(rdc.istemperaturestandard==1){
+                approve='<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+			}else{
+                approve='<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+			}
+        }else if(rdc.audit!=2){
+            if(rdc.istemperaturestandard==1){
+                approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+            }else{
+                approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
+            }
         };
   		 var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'" onclick="getSoll()"><img class="fl" src="'+rdc.logo+'">' +
 		 '<div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p>' +
