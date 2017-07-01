@@ -16,8 +16,7 @@ public class UserEntity {
 
 	private String email;
 
-	
-	
+	private Integer vipType;
 	public UserEntity() {
 		super();
 	}
@@ -94,5 +93,12 @@ public class UserEntity {
 	public void setType(int type) {
 		this.type = type;
 	}
-	
+
+	public Integer getVipType() {
+		return vipType;
+	}
+
+	public void setVipType(Integer vipType) {
+		this.vipType = vipType;
+	}
 }

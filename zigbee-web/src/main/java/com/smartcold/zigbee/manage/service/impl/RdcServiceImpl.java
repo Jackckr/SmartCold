@@ -176,6 +176,8 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setInfoIntegrity(rdcEntity.getInfoIntegrity());
             rdcAddDTO.setIstemperaturestandard(rdcEntity.getIstemperaturestandard());
             rdcAddDTO.setRentSqm(rdcEntity.getRentSqm());
+            rdcAddDTO.setHeight(rdcEntity.getHeight());
+            rdcAddDTO.setOpenLIne(rdcEntity.getOpenLIne());
         }
 
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0 && !CollectionUtils.isEmpty(rdcExtByRDCId)

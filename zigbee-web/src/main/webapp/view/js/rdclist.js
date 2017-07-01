@@ -58,10 +58,15 @@ function getRdcRentList() {
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
             rdcRentInfo.push(' <a onclick="realTimeTem('+rdcRent.id+',\''+rdcRent.name+'\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+tempTypeStr+'</span><span>'+manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
             if(rdcRent.datatype==3&&rdcRent.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.rentSqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
-            rdcRentInfo.push('</div><div class="rdcBtn"><button class="collect"><i class="iconfont orange">&#xe634;</i>收藏</button><button class="look"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
+            rdcRentInfo.push('</div><div class="rdcBtn"><button onclick="updateRdc('+rdcRent.id+')" class="collect"><i class="iconfont orange">&#xe634;</i>收藏</button><button class="look"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
         $("#rdcRentList").empty().append(rdcRentInfo.join(''));
     }});
+}
+/*进入修改rdc*/
+function updateRdc(rdcId) {
+    sessionStorage.submitRdcStatus=1;
+    window.location.href="/view/html/rdcaddcold.html?rdcId="+rdcId;
 }
 /*点击查看实时库温*/
 function realTimeTem(rdcId,rdcName) {
@@ -214,6 +219,10 @@ function getHasCar() {
         screenParam.hasCar=hasCar.join();
     }
     getRdcRentList();
+}
+/*更改为添加状态*/
+function getAddStatus() {
+    sessionStorage.submitRdcStatus=0;
 }
 $(function () {
     getRdcRentList();

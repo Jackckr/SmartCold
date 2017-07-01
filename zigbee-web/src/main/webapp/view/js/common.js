@@ -1,6 +1,14 @@
 /**
  * Created by wellsea on 6/21/0021.
  */
+
+if(sessionStorage.lkuser&&new Date().getTime()-sessionStorage.longtime<(30*60*1000)){
+    window.lkuser=JSON.parse(sessionStorage.lkuser);
+}else{
+    findUser();
+}
+
+sessionStorage.submitRdcStatus=1;/*0.添加冷库1.修改冷库*/
 var sUserAgent = navigator.userAgent.toLowerCase();
 var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
 var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
@@ -40,12 +48,15 @@ function getUrlParam(name) {
 /*获取用户对象*/
 function findUser() {
     $.ajax({url:"/i/user/findUser",type:"get",dataType:"json",success:function (data) {
-        if (data.username){
-            window.sessionStorage.user=data;
+        if (data.username&&data.id!=0){
+            window.lkuser=data;
+            window.sessionStorage.lkuser=JSON.stringify(data);
+            window.sessionStorage.longtime=new Date().getTime();
             // $("#loginUser").show().find('.username').html(data.username);
             $("#loginUser").show().find('img').attr('src',data.avatar);
             $("#noLoginUser").hide();
         }else {
+            window.sessionStorage.removeItem("lkuser");//清除系统user;
             $("#noLoginUser").show();
             $("#loginUser").hide();
         }
@@ -54,7 +65,7 @@ function findUser() {
 /*登出系统*/
 function logout() {
     $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
-    window.sessionStorage.user=null;//清除系统user;
+    window.sessionStorage.removeItem("lkuser");//清除系统user;
     window.location.href="../../index.htm";
 };
 /*判断数组中是否有重复元素*/
@@ -67,7 +78,17 @@ Array.prototype.contains = function (obj) {
     }
     return -1;
 }
+/*将所有数据赋值给form表单*/
+function getDataToForm(inputArr,data) {
+    var nameArr=[];
+    $.each(inputArr,function (index,item) {
+        if (nameArr.contains($(item).attr("name"))==-1){
+            nameArr.push($(item).attr("name"));
+            var val= eval("data."+$(item).attr("name"));
+            $(item).val(val);
+        }
+    });
+}
 
 $(function () {
-    findUser();
 });

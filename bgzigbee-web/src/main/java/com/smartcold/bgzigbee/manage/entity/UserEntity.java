@@ -23,6 +23,8 @@ public class UserEntity {
 	private Date UpdateTime;
 
 	private Integer audit;
+
+	private Integer vipType;
 	
 	public int getId() {
 		return id;
@@ -107,6 +109,12 @@ public class UserEntity {
 	public void setAudit(Integer audit) {
 		this.audit = audit;
 	}
-	
 
+	public Integer getVipType() {
+		return vipType;
+	}
+
+	public void setVipType(Integer vipType) {
+		this.vipType = vipType;
+	}
 }
