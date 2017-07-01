@@ -79,4 +79,7 @@ public interface RdcShareMapper {
 
 	 List<RdcShareDTO> getNewSERDCListByID(@Param("dataType")Integer dataType,@Param("typeCode") Integer typeCode);
 
+	 /*通过rdcId获取出租价格*/
+	 Double getUnitPriceByRdcId(int rdcId);
+
 }

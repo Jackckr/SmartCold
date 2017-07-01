@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.smartcold.zigbee.manage.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -21,15 +22,6 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.smartcold.zigbee.manage.dao.CityListMapper;
-import com.smartcold.zigbee.manage.dao.CommentMapper;
-import com.smartcold.zigbee.manage.dao.FileDataMapper;
-import com.smartcold.zigbee.manage.dao.RdcExtMapper;
-import com.smartcold.zigbee.manage.dao.RdcMapper;
-import com.smartcold.zigbee.manage.dao.StorageHonorMapper;
-import com.smartcold.zigbee.manage.dao.StorageManageTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageTemperTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddressDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
@@ -90,6 +82,10 @@ public class RdcServiceImpl implements RdcService {
 
     @Autowired
 	private FtpService ftpService;
+
+    @Autowired
+    private RdcShareMapper rdcShareMapper;
+
     @Override
     public List<RdcEntity> findRdcList() {
         return rdcDao.findRdcList();
@@ -159,8 +155,10 @@ public class RdcServiceImpl implements RdcService {
     public List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID) {
         List<RdcEntity> rdcByRDCId = rdcDao.findRDCByRDCId(rdcID);
         List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcID);
+        Double unitPrice = rdcShareMapper.getUnitPriceByRdcId(rdcID);
         List<RdcAddDTO> result = Lists.newArrayList();
         RdcAddDTO rdcAddDTO = new RdcAddDTO();
+        rdcAddDTO.setUnitPrice(unitPrice);
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0) {
             RdcEntity rdcEntity = rdcByRDCId.get(0);
             rdcAddDTO.setAddress(rdcEntity.getAddress());
@@ -174,6 +172,10 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setTonnage(rdcEntity.getCapacity());
             rdcAddDTO.setAudit(rdcEntity.getAudit());
             rdcAddDTO.setUserid(rdcEntity.getUserid());
+            rdcAddDTO.setRdcId(rdcID);
+            rdcAddDTO.setInfoIntegrity(rdcEntity.getInfoIntegrity());
+            rdcAddDTO.setIstemperaturestandard(rdcEntity.getIstemperaturestandard());
+            rdcAddDTO.setRentSqm(rdcEntity.getRentSqm());
         }
 
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0 && !CollectionUtils.isEmpty(rdcExtByRDCId)

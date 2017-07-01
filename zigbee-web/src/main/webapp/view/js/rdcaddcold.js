@@ -96,6 +96,7 @@ function delstandard(index) {
 /*提交冷库信息*/
 function addColdSubmit() {
     var ii = layer.load();
+    layer.close(ii);
     var parnArray = $("#submitRdc").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
@@ -128,8 +129,9 @@ function addColdSubmit() {
             type: 'POST',
             success: function (data) {
                 layer.close(ii);
-                layer.alert(data.message, {icon: 1});
-                window.location.href="/view/html/rdclist.html";
+                layer.alert(data.message, {icon: 1},function () {
+                    window.location.href="/view/html/rdclist.html";
+                });
             }
         });
     }else {
@@ -171,7 +173,8 @@ function coldValidation(vo) {
         return false;
     }
     if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.area.trim() == ""
-        || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == ""|| !vo.openLIne) {
+        || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == ""||vo.rentSqm.trim()==""||
+        vo.height.trim()=="" || vo.phoneNum.trim() == ""|| !vo.openLIne) {
         layer.alert('请完善冷库信息！', {icon: 2});
         return false;
     }
@@ -206,6 +209,10 @@ function coldValidation(vo) {
         layer.alert('理货区面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
+    if(vo.area-vo.rentSqm<0){
+        layer.alert('冷库的可出租面积不能大于冷库的总面积！', {icon: 2});
+        return false;
+    }
     var phoneNumRex =  /^1[34578]\d{9}$/;
     var cellPhoneRex=/^0{1}\d{2,3}-{1}\d{7,8}$/;
     if (!phoneNumRex.test(vo.phoneNum)&&!cellPhoneRex.test(vo.phoneNum)) {
@@ -227,9 +234,19 @@ function checkRdcName() {
         });
     }
 }
+/*动态显示理货区面积*/
+function changeIsLiHuoArea() {
+    if($(this).val()==1){
+        $("#lihuoAreaTr").show();
+    }else {
+        $("#lihuoAreaTr").hide();
+        $("#lihuoArea").val("");
+    }
+}
 $(function () {
     getProvinceList();
     getCityListByProId();
     $("#provinceId").bind("change",getCityListByProId);
     $("#name").bind("blur",checkRdcName);
+    $("#lihuoRoom").bind("change",changeIsLiHuoArea);
 });

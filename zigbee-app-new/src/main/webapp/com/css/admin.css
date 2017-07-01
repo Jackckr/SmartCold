@@ -4,6 +4,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
  	white-space: nowrap;
+	line-height:2;
 }
 .mylogin{
 	background:transparent;
@@ -538,6 +539,7 @@ html,body{
 .messageList{
 	border-bottom: 1px solid #eee;
 	padding:.7rem 0;
+	position: relative;
 }
 #ul_msgsL_list .messageList{
 	padding:0;
@@ -1015,4 +1017,105 @@ html,body{
 	font-size: .8rem;
 	line-height: 1rem;
 	color: #999;
+}
+/*新版消息*/
+
+.deleteAll{
+	position: fixed;
+	bottom: 0;
+	left:0;
+	height: 2.45rem;
+	width: 100%;
+	background-color: #ff3a32;
+	color: #fff;
+	text-align: center;
+	line-height: 2.45rem;
+	font-size: .75rem;
+	z-index:1099;
+	display: none;
+}
+.oDelete{
+	display: none;
+	position: absolute;
+	top:0;
+	right: 0;
+	width: 5rem;
+	height: 100%;
+	background-color: #ff3a32;
+	color: #fff;
+	text-align: center;
+	line-height:4.6;
+	font-size: .75rem;
+	z-index:1;
+}
+.obody{
+	padding:0 0 2.5rem;
+	margin-top: .3rem;
+	background-color: transparent;
+}
+.obody #ul_msgsL_list .messageList{
+	padding: .7rem .9rem;
+	margin-bottom: .4rem;
+	border-top: .1rem solid #c7dcff;
+	background-color: #fff;
+}
+.obody #ul_msgsL_list .messageList>a{
+	padding: 0;
+}
+/*新个人中心css*/
+.topImg{
+	height: 8rem;
+	padding: .5rem 0;
+	text-align: center;
+	width: 100%;
+	background: url(../img/userbg.jpg) center no-repeat;
+	-webkit-background-size:cover;
+	background-size: cover;
+}
+.userPic {
+	margin-bottom:.3rem ;
+	position: relative;
+}
+.userPic img{
+	width: 4rem;
+	height: 4rem;
+	border: 0.2rem solid #fff;
+	border-radius: 50%;
+}
+.topImg .userName{
+	font-size: .8rem;
+	color: #000000;
+}
+.newUser .myicon,
+.newUser .list .rightArrow,
+.newUser .list .name,
+.newUser .list_name{
+	height: 2.2rem;
+	line-height: 2.2rem;
+}
+.goApprove{
+	margin-top: .3rem;
+}
+.goApprove span{
+	color: #fff;
+	display: inline-block;
+	width: 4rem;
+	font-size: .6rem;
+	padding:0 .5rem 0 0.1rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	background-color: #498bff;
+	border-radius: 0.8rem;
+}
+.goApprove i{
+	color: #ff8800;
+	font-size: .5rem;
+	margin-right: 1rem;
+	background-color: #fff;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	display: inline-block;
+	width: .8rem;
+	height: .8rem;
+	line-height: 1rem;
 }

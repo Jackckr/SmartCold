@@ -22,7 +22,7 @@ $().ready(function() {
       else if(msg.msgcategory==2){
     	  if(msg.url==undefined||msg.url=="") {	      msg.url = "user-myorder.html";}
       }
-   	  var news=['<li class="messageList clearfix" onclick="updatestatus('+msg.id+',\''+msg.url+'\');" ><a href="#"><div class="messageImg fl">',msg.isread==0?'<b class="redDot"></b>':"" ,'<i class="iconfont">&#xe7ec;</i></div> <div class="messageInfo"><p class="fr">',msg.informtime.substring(0,19),'</p><p class="newsTitle">',mode.titl[msg.msgcategory],'</p><p class="newsTitle">',msg.msgdata,'</p></div></a></li>'];
+   	  var news=['<li class="messageList clearfix"><div class="oDelete">删除</div><a onclick="updatestatus('+msg.id+',\''+msg.url+'\');"><div class="messageImg fl">',msg.isread==0?'<b class="redDot"></b>':"" ,'<i class="iconfont">&#xe7ec;</i></div> <div class="messageInfo"><p class="fr">',msg.informtime.substring(0,19),'</p><p class="newsTitle">',mode.titl[msg.msgcategory],'</p><p class="newsTitle omg">',msg.msgdata,'</p></div></a></li>'];
    	  return news.join("");
    }
   function getPageData(){//启用无限加载
@@ -42,4 +42,16 @@ $().ready(function() {
   	};
   	getPageData();
   	initevg();
-});	
+});
+var flag=true;
+function deleteShow(ops) {
+    if (flag) {
+        $(ops).html("完成");
+        $(".deleteAll,.oDelete").show();
+        flag = false;
+    } else {
+        $(ops).html("编辑");
+        $(".deleteAll,.oDelete").hide();
+        flag = true;
+    };
+}
