@@ -67,6 +67,8 @@ public class WLXCollectionController extends BaseController {
 					for (Entry<String, String> item : info.entrySet()) {
 						if(StringUtil.isnotNull(item.getValue())){
 							arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
+						}else{
+							System.err.println("系统检测到座头鲸数据不完整！"+gson.toJson(item));
 						}
 					}
 				}

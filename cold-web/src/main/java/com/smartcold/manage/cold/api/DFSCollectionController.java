@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,11 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.controller.BaseController;
 import com.smartcold.manage.cold.dao.newdb.DFSDataCollectionMapper;
+import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
 import com.smartcold.manage.cold.dao.olddb.CongfigMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.DFSDataCollectionEntity;
+import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
 import com.smartcold.manage.cold.enums.SetTables;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -39,6 +42,8 @@ public class DFSCollectionController extends BaseController {
 	
 	@Autowired
 	private CongfigMapper congfigMapper;
+	@Autowired
+	private WarningsInfoMapper warningsInfoMapper;
 	
 	@Autowired
 	private DFSDataCollectionMapper dataservice;
@@ -60,6 +65,7 @@ public class DFSCollectionController extends BaseController {
         try {
 			if(StringUtil.isNull(data)){ return new DataResultDto(500);};
 			DFSCollectionController.dfsdata=data;
+			Date date = new Date();
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String rdcid = dataCollectionBatchEntity.get("rdcId").toString();
             if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.getConfig(rdcid); this.getConver(rdcid); }
@@ -68,17 +74,18 @@ public class DFSCollectionController extends BaseController {
 		    if(config==null){return new DataResultDto(200);}
 		    ArrayList<DFSDataCollectionEntity> dataList = null;
 		    String table =null;  DFSDataCollectionEntity newdata=null;
+		    ArrayList<WarningsInfo> wardataList = new ArrayList<WarningsInfo>();
 		    HashMap<String, ArrayList<DFSDataCollectionEntity>> tempMap=new HashMap<String, ArrayList<DFSDataCollectionEntity>>();
 		    for (Map<String, String> info :  ((List<Map<String, String>>) dataCollectionBatchEntity.get("infos"))) {
 		    	String name = info.get("tagname");
-		    	newdata = config.get(name);
-		    	if(newdata==null){System.err.println("未配置========================："+name); continue;}
+		    	if(name.indexOf("警")>-1){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));continue;}
+		    	newdata = config.get(name);if(newdata==null){ continue;}
 		    	if(unitConvers.containsKey(name)){
-		    		System.err.println("进入转换========================"+name);
 				      counsValue(unitConvers, newdata, info, name);//  加入转换对象
+		    	}else{
+		    		 newdata.setValue(info.get("currentvalue"));
+					 newdata.setTime( info.get("lasttime"));
 		    	}
-				 newdata.setValue(info.get("currentvalue"));//更新数据
-				 newdata.setTime( info.get("lasttime"));
 				 table = newdata.getTable();
 				 if(StringUtil.isnotNull(table)){
 					 if(tempMap.containsKey(table)){
@@ -110,15 +117,24 @@ public class DFSCollectionController extends BaseController {
 					this.dataservice.adddataList(key,  tempMap.get(key));
 				}
 			}
+			if(SetUtil.isnotNullList(wardataList)){
+				this.warningsInfoMapper.addwarningsinfos(wardataList);
+			}
 			return new DataResultDto(200);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("丹弗斯数据解析异常："+data+"\r\n"+e.getMessage());
 			return new DataResultDto(200);
 		}
 	}
 
-	private void counsValue(HashMap<String, ConversionEntity> unitConvers,DFSDataCollectionEntity newdata, Map<String, String> info,String name) {
+	/**
+	 * 根据配置进行转换
+	 * @param unitConvers
+	 * @param newdata
+	 * @param info
+	 * @param name
+	 */
+	private static void counsValue(HashMap<String, ConversionEntity> unitConvers,DFSDataCollectionEntity newdata, Map<String, String> info,String name) {
 		String val=null;String[] key_val =null;ConversionEntity conversionEntity=null;
 			 val = info.get("currentvalue");
 		    		 try {
@@ -126,7 +142,7 @@ public class DFSCollectionController extends BaseController {
 						switch (conversionEntity.getType()) {
 						case 1://换算
 							val= (Double.parseDouble(val)*Double.parseDouble(conversionEntity.getMapping()))+"";
-							info.put("currentvalue", val);
+							newdata.setValue(val);
 							break;
 						case 2://switch
 							 key_val = conversionEntity.getUnit().get(val);
@@ -141,7 +157,6 @@ public class DFSCollectionController extends BaseController {
 							ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
 							key_val = conversionEntity2.getUnit().get(val);
 							if(key_val!=null){
-								newdata = new DFSDataCollectionEntity();
 								newdata.setKey(key_val[0]);
 								newdata.setValue(key_val[1]);
 							}else{
@@ -153,6 +168,7 @@ public class DFSCollectionController extends BaseController {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
+						System.err.println("转换出错！");
 					}
 	} 
 	
@@ -180,30 +196,27 @@ public class DFSCollectionController extends BaseController {
 	}
 	
 	
-	
+	/**
+	 * 初始化类型转换配置
+	 * @param rdcId
+	 */
 	private void getConver(String rdcId){
 		try {
 			HashMap<String , ConversionEntity> unithMap=new HashMap<String , ConversionEntity>();
-			List<ConversionEntity> conversList = this.congfigMapper.getOHMappingByRdcId(rdcId);
+			List<ConversionEntity> conversList = this.congfigMapper.getOHMappingByRdcId(0,rdcId);
 			if(SetUtil.isnotNullList(conversList)){
 				   for (ConversionEntity conversionEntity : conversList) {
 				    	if(2==conversionEntity.getType()){
 				    		HashMap<String, String[]> temp=new HashMap<String, String[]>();
 				    		Map<String, String> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(conversionEntity.getMapping(), new TypeToken<Map<String, String>>() {}.getType());
-							    for (String key : dataCollectionBatchEntity.keySet()) {
-							    	temp.put(key, dataCollectionBatchEntity.get(key).split("-"));
-								}
-							    conversionEntity.setUnit(temp);
-							    unithMap.put(conversionEntity.getName(), conversionEntity);
+						    for (String key : dataCollectionBatchEntity.keySet()) {temp.put(key, dataCollectionBatchEntity.get(key).split("-"));}  conversionEntity.setUnit(temp);unithMap.put(conversionEntity.getName(), conversionEntity);
 				    	}else{
 				    		unithMap.put(conversionEntity.getName(), conversionEntity);
 				    	}
-				    	
 					}
 				    unitConversMap.put(rdcId, unithMap);
 			}
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -238,4 +251,5 @@ public class DFSCollectionController extends BaseController {
 		}
 	}
 	
+
 }

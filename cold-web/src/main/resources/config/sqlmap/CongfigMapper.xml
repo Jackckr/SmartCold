@@ -4,8 +4,9 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.CongfigMapper">
 	<select id="getOHMappingByRdcId" parameterType="map" resultType="com.smartcold.manage.cold.entity.olddb.ConversionEntity">
-	  select * from conversionset where rdcId=#{rdcId};
+	  select * from conversionset where `kv`=#{kv} and `oid`=#{oid};
 	</select>
+	
 	<select id="getObjMappingByRdcId" parameterType="map" resultType="map">
 	  SELECT id,mapping from `${table}` where `rdcid`=#{rdcId} and `mapping`!='{}' and `mapping` is not null;
 	</select>

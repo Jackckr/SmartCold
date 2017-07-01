@@ -56,7 +56,7 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 		CompressorGroupSetEntity compressorGroup = compressGroupSetDao.findById(groupid);
 		List<CompressorSetEntity> compressors = compressorSetDao.findCompressorByGroupid(groupid);
 		double waterCost = 0;
-		Date startTime=TimeUtil.getBeforeMinute(5);
+		Date startTime=TimeUtil.getBeforeMinute(30);
 		CompressorGroupWaterCostEntity entity = new CompressorGroupWaterCostEntity();
 		for (CompressorSetEntity compressor : compressors) {
 			// 在这里可以防止compressorGroup不为null

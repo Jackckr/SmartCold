@@ -32,7 +32,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-//@Service
+@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -93,6 +93,7 @@ public class WarningTaskService  {
 	*/
 	@Scheduled(cron = "0 0/10 * * * ?")
 	public void checkData() {
+		System.gc();
 		excute++;
 		Date sttime = TimeUtil.getBeforeMinute(10);
 		String endtime =TimeUtil.getDateTime();
@@ -227,7 +228,6 @@ public class WarningTaskService  {
 					    warningList.add(allWarningList.get(key));
 					 }
 					 this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
-					 
 			    }
 			    if(SetUtil.isnotNullList(newextsid)){
 			    	for (Integer integer : newextsid) {

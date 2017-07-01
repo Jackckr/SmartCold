@@ -162,6 +162,9 @@
     width: 40%;
     line-height: 2.2;
 }
+.rdcApprove a:hover{
+    color: #306dc2;
+}
 .rdcName a{
     display: inline-block;
     color: #306dc2;

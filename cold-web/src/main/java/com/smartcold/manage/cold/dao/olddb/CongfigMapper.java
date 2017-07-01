@@ -22,6 +22,8 @@ public interface CongfigMapper {
 	//冷凝系统风机
 	public List<HashMap<String, Object>>  getEvaporativeblowersetByRdcId         (@Param("rdcId") String rdcId);//evaporativewaterset
 	//获得其他配置（单位转换，值类型转换）
-	public List<ConversionEntity>  getOHMappingByRdcId         (@Param("rdcId") String rdcId);
+	
+	public List<ConversionEntity>  getOHMappingByRdcId(@Param("kv")int kv,@Param("oid") String oid);
+	
 	
 }

@@ -1,5 +1,7 @@
 checkLogin();
 app.controller('monitorTemperature',function ($scope, $location, $http, $rootScope, userService) {
+	   $scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']; 
+	    Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
 	$scope.user = user;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};

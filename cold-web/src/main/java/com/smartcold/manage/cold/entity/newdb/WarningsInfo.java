@@ -18,6 +18,21 @@ public class WarningsInfo {
 
 	private Date addtime;
 
+	
+	
+	
+	public WarningsInfo() {
+		super();
+	}
+
+	public WarningsInfo(String warningname, int rdcId, int level, Date addtime) {
+		super();
+		this.warningname = warningname;
+		this.rdcId = rdcId;
+		this.level = level;
+		this.addtime = addtime;
+	}
+
 	public int getId() {
 		return id;
 	}

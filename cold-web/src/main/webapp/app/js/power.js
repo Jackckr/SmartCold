@@ -26,7 +26,7 @@ coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseT
 			})
 			var currentPower = '';
             if (data.length > 0) {
-                currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value  * powerSet.radio).toFixed(1) : '';
+                currentPower = data[0] ? parseFloat(data[0].value  * powerSet.radio).toFixed(1) : '';
             };
             $scope.currentPower = currentPower;
 			option = baseTools.getEchartSingleOption('', xData, yData, '电量', 'kW.h', '电量', 'line', parseInt(yData[0]));
