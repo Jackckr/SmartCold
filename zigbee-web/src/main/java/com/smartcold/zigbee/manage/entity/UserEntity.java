@@ -42,6 +42,7 @@ public class UserEntity {
 
 	private String avatar="http://139.196.189.93:8089/app/userimg.jpg";//用户头像->add
 
+	private Integer vipType;
 	public UserEntity(){}
 
 	public UserEntity(int id, Integer type) {
@@ -192,6 +193,12 @@ public class UserEntity {
 	public void setAvatar(String avatar) {
 		this.avatar =  avatar;
 	}
-	
-	
+
+	public Integer getVipType() {
+		return vipType;
+	}
+
+	public void setVipType(Integer vipType) {
+		this.vipType = vipType;
+	}
 }

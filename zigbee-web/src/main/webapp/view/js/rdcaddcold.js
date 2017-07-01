@@ -6,6 +6,8 @@ var honorPicsArrOriginal=0;
 var storagePicsArrOriginal=0;
 var auditPicOriginal=0;
 var standPicOriginal=0;
+var addRdcFlag = true;
+var delIds=[];
 var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
 /*冷库图片change*/
@@ -62,7 +64,7 @@ function standPicChange(e) {
 function showSelectPics(arr,Original,imgId,mark) {
     var storagePicImg=[];
     for(var i=0;i<Original;i++){
-        storagePicImg.push('<li class="imgBox"><img src="'+arr[i]+'" alt=""><i onclick="del'+imgId+'('+i+')">&times;</i></li>');
+        storagePicImg.push('<li class="imgBox"><img src="'+arr[i].location+'" alt=""><i onclick="del'+imgId+'('+i+','+arr[i].id+')">&times;</i></li>');
     }
     if(arr.length!=Original){
         for(var i=Original;i<arr.length;i++){
@@ -77,12 +79,14 @@ function showSelectPics(arr,Original,imgId,mark) {
     }
 }
 /*删除显示图片*/
-function delstorage(index) {
+function delstorage(index,id) {
     storagePicsArr.splice(index,1);
+    if(id){delIds.push(id);storagePicsArrOriginal--;}
     showSelectPics(storagePicsArr,storagePicsArrOriginal,"storage",$("#storagePics"));
 }
-function delhonor(index) {
+function delhonor(index,id) {
     honorPicsArr.splice(index,1);
+    if(id){delIds.push(id);honorPicsArrOriginal--;}
     showSelectPics(honorPicsArr,honorPicsArrOriginal,"honor",$("#honorPics"));
 }
 function delaudit(index) {
@@ -96,7 +100,6 @@ function delstandard(index) {
 /*提交冷库信息*/
 function addColdSubmit() {
     var ii = layer.load();
-    layer.close(ii);
     var parnArray = $("#submitRdc").serializeArray();
     var vo = {};
     $.each(parnArray, function (index, item) {
@@ -120,9 +123,76 @@ function addColdSubmit() {
 
 
         formdata.append("empStr", JSON.stringify(vo));
-        formdata.append("user",JSON.stringify(window.sessionStorage.user));
+        formdata.append("user",JSON.stringify(window.lkuser));
         $.ajax({
             url: "/i/rdc/newAddRdc",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (data) {
+                layer.close(ii);
+                layer.alert(data.message, {icon: 1},function () {
+                    window.location.href="/view/html/rdclist.html";
+                });
+            }
+        });
+    }else {
+        layer.close(ii);
+    }
+}
+/*获得修改冷库信息*/
+function getFormValue(rdcId) {
+    $("#submitTitle").html("修改冷库 (带*为必填项)");
+    $("#submitButton").empty().append('<td colspan="2"><button class="oBtn" onclick="updateColdSubmit()">提交</button></td>')
+    $("#submitRdc").append('<input type="hidden" name="rdcId" value="'+rdcId+'"/>');
+    $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId},success:function (data) {
+        var rdc=data[0];
+        initCityList(rdc.provinceId);
+        getDataToForm($("#submitRdc [name]").not("[name=openLIne]"),rdc);
+        if(rdc.openLIne){$("#submitRdc input[name=openLIne][value='"+rdc.openLIne+"']").attr("checked","checked");}
+        if (rdc.audit==2){$("#coldAudit").hide();}
+        if (rdc.istemperaturestandard==1){$("#tempStandDiv,#tempStandUl").hide();}
+        storagePicsArrOriginal=rdc.storagePics.length;
+        honorPicsArrOriginal=rdc.honorPics.length;
+        $.each(rdc.storagePics,function (index, item) {
+            storagePicsArr.push(item);
+        });
+        $.each(rdc.honorPics,function (index, item) {
+            honorPicsArr.push(item);
+        });
+        showSelectPics(storagePicsArr,storagePicsArrOriginal,"storage",$("#storagePics"));
+        showSelectPics(honorPicsArr,honorPicsArrOriginal,"honor",$("#honorPics"));
+    }});
+}
+/*提交修改冷库信息*/
+function updateColdSubmit() {
+    var ii = layer.load();
+    var parnArray = $("#submitRdc").serializeArray();
+    var vo = {};
+    $.each(parnArray, function (index, item) {
+        vo[item.name] = item.value;
+    });
+    var flag = coldValidation(vo);
+    if(flag){
+        var formdata = new FormData();
+        $.each(storagePicsArr, function (index, item) {
+            formdata.append('file' + index, item);
+        });
+        $.each(honorPicsArr, function (index, item) {
+            formdata.append('honor' + index, item);
+        });
+        $.each(standPic, function (index, item) {
+            formdata.append('standPic', item);
+        });
+        $.each(auditPic, function (index, item) {
+            formdata.append('auditPic', item);
+        });
+        formdata.append("empStr", JSON.stringify(vo));
+        formdata.append("user",JSON.stringify(window.lkuser));
+        formdata.append("delIds",delIds.join());
+        $.ajax({
+            url: "/i/rdc/newUpdateRdc",
             data: formdata,
             processData: false,
             contentType: false,
@@ -148,11 +218,9 @@ function getProvinceList() {
         $("#provinceId").empty().append(provinceList.join(''));
     }});
 }
-/*通过省市id获得城市*/
-function getCityListByProId() {
+/*初始化城市列表*/
+function initCityList(proId) {
     var cityList=[];
-    var proId;
-    $("#provinceId").val()?proId=$("#provinceId").val():proId=1;
     $.ajax({url:"/i/city/findCitysByProvinceId",type:"get",data:{"provinceID":proId},success:function (data) {
         data.forEach(function (val, index) {
             cityList.push('<option value="'+val.cityID+'">'+val.cityName+'</option>');
@@ -160,8 +228,12 @@ function getCityListByProId() {
         $("#cityId").empty().append(cityList.join(''));
     }});
 }
-/*检查冷库名字是否重复*/
-var addRdcFlag = true;
+/*通过省市id获得城市*/
+function getCityListByProId(id) {
+    var proId;
+    $("#provinceId").val()?proId=$("#provinceId").val():proId=1;
+    initCityList(proId);
+}
 /*提交冷库验证方法*/
 function coldValidation(vo) {
     if (!addRdcFlag) {
@@ -249,4 +321,7 @@ $(function () {
     $("#provinceId").bind("change",getCityListByProId);
     $("#name").bind("blur",checkRdcName);
     $("#lihuoRoom").bind("change",changeIsLiHuoArea);
+    if(sessionStorage.submitRdcStatus==1){
+        getFormValue(getUrlParam("rdcId"));
+    }
 });
