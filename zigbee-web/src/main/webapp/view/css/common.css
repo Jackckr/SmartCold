@@ -121,8 +121,13 @@ html,body,header{
     background-color: #2e3033;
 }
 .section{
+<<<<<<< HEAD
     width: 1210px;
     /*width: 90%;*/
+=======
+    /*width: 1210px;*/
+    width: 90%;
+>>>>>>> da16c17437f57f47c95388f4f3dac0ab886165d6
     margin: 15px auto;
     background-color: #fff;
     position: relative;

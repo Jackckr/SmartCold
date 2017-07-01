@@ -1,0 +1,43 @@
+/*登录注册css*/
+.section{
+    min-height: 360px;
+}
+.loginBg{
+    float: left;
+    width: 620.8px;/*w/h=2.388*/
+    height: 260px;
+    background: url("../img/loginbg.png") no-repeat center center;
+    background-size: cover;
+}
+.login{
+    float: right;
+    width: 400px;
+}
+.login h2{
+    color: #64a9d2;
+    line-height: 3;
+    border-bottom:  1px solid #64a9d2;
+    margin-bottom: 10px;
+}
+.layui-form-pane .layui-form-label{
+    border: 1px solid #e6e6e6;
+    border-right: 0;
+    box-sizing: border-box;
+    padding: 8px 15px;
+    width: 75px;
+    color: #c5c5c5;
+}
+.layui-form-pane .layui-form-label>i{
+    font-size: 20px;
+}
+.layui-form-pane .layui-input-block{
+    margin-left: 75px;
+}
+.layui-btn{
+    width:100%;
+    background-color: #4090db;
+    border-color: #4090db;
+}
+.layui-form-item{
+    margin-bottom: 20px;
+}

@@ -1,4 +1,5 @@
 var  queryParams={urlindex:1,portinedx:1};
+if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true,contentType: "application/json; charset=utf-8"}});}//支持ajax跨域
 var servermode=['http://139.196.41.18/','http://139.224.16.238/'],serportmode=["i/util/getDFSData","i/util/getZSData","i/util/getZsDevStatus?type=1","i/util/getZsDevStatus?type=2","i/util/getZsDevStatus?type=3"];
 var serverMode=[{val:0,text:"服务器1"},{val:1,text:"服务器2"}],serverport=[{text:"洲斯数据接口",val:1},{text:"洲斯AP状态",val:2},{text:"洲斯DEV信号状态",val:3},{text:"洲斯DEV电池状态",val:4}];
 if(parent.sysuser.type>1){serverport.unshift(	{text:"丹弗斯数据接口",val:0});}

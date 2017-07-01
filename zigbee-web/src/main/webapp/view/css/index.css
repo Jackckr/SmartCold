@@ -202,7 +202,11 @@
 }
 .imglist li{
     width: 32%;
+<<<<<<< HEAD
+   /* height: 250px;*/
+=======
     height: 237px;
+>>>>>>> da16c17437f57f47c95388f4f3dac0ab886165d6
     margin-right: 1%;
     margin-bottom: 15px;
     padding-bottom:10px;

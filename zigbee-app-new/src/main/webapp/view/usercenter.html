@@ -6,11 +6,13 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>我的</title>
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../com/js/layer.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../app/js/usercenter.js" ></script>
 </head>
@@ -20,100 +22,86 @@
     		我的
     	</div>
     </header>
-    <div id="userinfo" ng-cloak>
-	    <section class="clearfix" ng-show="userinfo.id" onclick="location.href='personal.html'">
-	    	<div class="img fl">
-	    		<img ng-src="{{userinfo.avatar}}"/>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="nameinfo omg">{{(userinfo.username=="" || userinfo.username == undefined)?userinfo.nickname:userinfo.username}}</p>
-	    		<p class="position omg">
-	    			<i class="iconfont">&#xe66e;</i>{{userinfo.address}}
-	    		</p>
-	    	</div>
-	    </section>
-	    <section class="clearfix" ng-if="!userinfo.id">    
-	    	<div class="img fl">
-	    		<img src="../com/img/success.png"/>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	        <div class="name nameLogin" onclick="gologin();">点此登录</div>
-	    </section>
-    </div>
-    <ul class="list list_icon">
-    	<li class="clearfix" ng-login="user-mycold.html">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6d3;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的冷库</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" ng-login="user-myrelease.html">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe666;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的发布</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" ng-login="user-myorder.html">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6a4;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的联络单</p>
-	    	</div>
-    	</li>
-    	<li class="clearfix" ng-login="user-comment.html">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6b7;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">我的点评</p>
-	    	</div>
-    	</li>
-		<li class="clearfix" ng-login="sys_message.html">
-			<div class="myicon fl">
-				<i class="iconfont">&#xe71c;</i>
+	<div class="newUser" id="userinfo" ng-cloak>
+		<div class="topImg">
+			<div class="userPic">
+				<img id="user_img" ng-src="{{userinfo.avatar}}" ng-show="userinfo.id">
+				<img src="http://139.196.189.93:8089/app/userimg.jpg" ng-hide="userinfo.id">
+				<input id="headImg" type="file" name=""  value="" />
 			</div>
-			<div class="rightArrow fr">
-				<a href=""><i class="iconfont">&#xe60d;</i></a>
-			</div>
-			<div class="name">
-				<p class="list_name">系统通知</p>
-			</div>
-		</li>
-    	
-    	<li class="clearfix" onclick="location.href='customer.html'">
-    		<div class="myicon fl">
-	    		<i class="iconfont">&#xe6d1;</i>
-	    	</div>
-	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
-	    	</div>
-	    	<div class="name">
-	    		<p class="list_name">联系我们</p>
-	    	</div>
-    	</li>
-    </ul>
+			<p class="userName">{{(userinfo.username=="" || userinfo.username == undefined)?userinfo.nickname:userinfo.username}}</p>
+			<p class="goApprove"><span><i class="iconfont">&#xe61c;</i>去认证</span></p>
+		</div>
+		<ul class="list list_icon">
+			<li class="clearfix" ng-login="user-mycold.html">
+				<div class="myicon fl">
+					<i class="iconfont" style="color: #4a7de4;">&#xe662;</i>
+				</div>
+				<div class="rightArrow fr">
+					<a href=""><i class="iconfont">&#xe697;</i></a>
+				</div>
+				<div class="name">
+					<p class="list_name">我的冷库</p>
+				</div>
+			</li>
+			<li class="clearfix" ng-login="user-myrelease.html">
+				<div class="myicon fl">
+					<i class="iconfont" style="color: #ff4d43;">&#xe608;</i>
+				</div>
+				<div class="rightArrow fr">
+					<a href=""><i class="iconfont">&#xe697;</i></a>
+				</div>
+				<div class="name">
+					<p class="list_name">我的货源</p>
+				</div>
+			</li>
+			<li class="clearfix" ng-login="user-myorder.html">
+				<div class="myicon fl">
+					<i class="iconfont" style="color: #fdc54b;">&#xe60c;</i>
+				</div>
+				<div class="rightArrow fr">
+					<a href=""><i class="iconfont">&#xe697;</i></a>
+				</div>
+				<div class="name">
+					<p class="list_name">我的收藏</p>
+				</div>
+			</li>
+			<li class="clearfix" ng-login="personal.html">
+				<div class="myicon fl">
+					<i class="iconfont" style="color: #4acf4a">&#xe607;</i>
+				</div>
+				<div class="rightArrow fr">
+					<a href=""><i class="iconfont">&#xe697;</i></a>
+				</div>
+				<div class="name">
+					<p class="list_name">个人设置</p>
+				</div>
+			</li>
+			<li class="clearfix" ng-login="sys_message.html">
+				<div class="myicon fl">
+					<i class="iconfont" style="color: #ff4d43;">&#xe609;</i>
+				</div>
+				<div class="rightArrow fr">
+					<a href=""><i class="iconfont">&#xe697;</i></a>
+				</div>
+				<div class="name">
+					<p class="list_name">系统通知</p>
+				</div>
+			</li>
+			<li class="clearfix" onclick="location.href='customer.html'">
+				<div class="myicon fl">
+					<i class="iconfont" style="color: #20bbd7;">&#xe69c;</i>
+				</div>
+				<div class="rightArrow fr">
+					<a href=""><i class="iconfont">&#xe697;</i></a>
+				</div>
+				<div class="name">
+					<p class="list_name">联系我们</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+
 	<footer class="flex black">
 		<div class="item">
 			<a href="../index.html">

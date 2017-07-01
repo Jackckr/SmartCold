@@ -22,9 +22,11 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
+import com.smartcold.manage.cold.dao.olddb.CongfigMapper;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
 import com.smartcold.manage.cold.entity.newdb.ZSDevDataEntity;
+import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
@@ -35,9 +37,12 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 数据存在重复（准备处理）
  * 
  **/
-//@Service
+@Service
 public class ZsDevService  {
 	    private static boolean isRuning=true;
+	    
+		@Autowired
+		private CongfigMapper congfigMapper;
 		@Autowired
 		private DevStatusMapper devStatusMapper;
 	    @Autowired
@@ -46,7 +51,7 @@ public class ZsDevService  {
 	    private StorageDataCollectionMapper storageDataCollectionDao;
 	    
 	    public static int errCount=0;
-	    public static HashMap<String, Integer> devTypecache=new HashMap<String, Integer>();
+	    public static HashMap<String, CoeffMode> devTypecache=new HashMap<String, CoeffMode>();
 	    private final static String ZSURL="http://10.46.17.235:9007/v1/channels/datapoints";//
 	    private static final ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("Orders-%d").setDaemon(true).build();
 		private static final ExecutorService executorService = Executors.newFixedThreadPool(100, threadFactory);//最多启动一千1000个线程
@@ -57,19 +62,20 @@ public class ZsDevService  {
 		 */
 		public static  String saveTime=null;
 		public static boolean isRuning() {return isRuning&&errCount<3;}
-		public static void clerCache() {ZsDevService.devTypecache.clear();}
+		public static void clerCache() {ZsDevService.devTypecache.clear(); }
 		public static void setRuning(boolean isRuning) {ZsDevService.isRuning = isRuning;if(isRuning){ZsDevService.errCount=0;}}
 		public static  LinkedList<String> dataList=new LinkedList<String>();
 		public static HashMap<String, StorageDataCollectionEntity> msimap=new HashMap<String, StorageDataCollectionEntity>();
 		public static HashMap<String, StorageDataCollectionEntity> bsimap=new HashMap<String, StorageDataCollectionEntity>();
 		public static HashMap<String, StorageDataCollectionEntity> dumap=new HashMap<String, StorageDataCollectionEntity>();
-
 		/**
 		 * 数据抓取30秒
 		 */
 	    @Scheduled(cron="0/30 * * * * ?")
 		public void checkData() {
-	    	if(errCount<3&&isRuning){this.readData();}
+	    	if(errCount<3&&isRuning){
+	    		this.readData();
+	    	}
 		}
 	    
 	    /*
@@ -95,10 +101,7 @@ public class ZsDevService  {
 		
 		
 		private synchronized void addTempData(String data){
-			dataList.push(data);
-			if(dataList.size()>30){
-				dataList.clear();
-			}
+			dataList.push(data);if(dataList.size()>30){dataList.clear();}
 		}
 		
 	    /**
@@ -110,7 +113,6 @@ public class ZsDevService  {
 				String devdata = getDEVData();
 				if(!"null".equals(devdata)&&devdata.length()>10){
 					addTempData(devdata);
-					
 					this.addextTask(devdata);
 				}else{
 					isrun=false;
@@ -122,9 +124,11 @@ public class ZsDevService  {
 		 * @param arrayList
 		 */
 		public  void addextTask(String data ){
-			 SubTask subTask=new SubTask(data, this.storageDataCollectionDao,this.devStatusMapper,this.devMapper);
+			 SubTask subTask=new SubTask(data,this.congfigMapper, this.storageDataCollectionDao,this.devStatusMapper,this.devMapper);
 			 ZsDevService.executorService.submit(subTask);
 		}
+		
+		
 	    /**
 	     * 读取数据
 	     */
@@ -156,33 +160,75 @@ public class ZsDevService  {
 	        }
 	        return result.toString();
 	    }
+	    
+	    
 }
+class CoeffMode{
+	private int type;
+	private Double coefficient;
+	
+	public CoeffMode(int type, Double coefficient) {
+		super();
+		this.type = type;
+		this.coefficient = coefficient;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public Double getCoefficient() {
+		return coefficient;
+	}
+	public void setCoefficient(Double coefficient) {
+		this.coefficient = coefficient;
+	}
+}
+
+
 
 class SubTask implements Runnable {
   private String  devData;
+  private CongfigMapper congfigMapper;
   private DevStatusMapper devStatusMapper;
   private DeviceObjectMappingMapper devMapper;
   private StorageDataCollectionMapper storageDataCollectionDao;
   
-  public SubTask(String devData,StorageDataCollectionMapper storageDataCollectionDao,DevStatusMapper devStatusMapper,DeviceObjectMappingMapper devMapper) { 
+  public SubTask(String devData,CongfigMapper congfigMapper,StorageDataCollectionMapper storageDataCollectionDao,DevStatusMapper devStatusMapper,DeviceObjectMappingMapper devMapper) { 
 	  this.devData= devData;
 	  this.devMapper=devMapper;
+	  this.congfigMapper=congfigMapper;
 	  this.devStatusMapper=devStatusMapper;
       this.storageDataCollectionDao=storageDataCollectionDao;
   }
   
   
-  public  Integer getDevType(String devID){
+  private Double getCoefficient(String devID){
+	  List<ConversionEntity> conversList = this.congfigMapper.getOHMappingByRdcId(1,devID);
+	  if(SetUtil.isnotNullList(conversList)){
+		return  Double.parseDouble(conversList.get(0).getMapping());
+	  }
+	  return 1.00;
+  }
+  
+  public  CoeffMode getDevType(String devID){
 	  if(ZsDevService.devTypecache.containsKey(devID)){
 		  return ZsDevService.devTypecache.get(devID);
 	  }else{
 		  DeviceObjectMappingEntity devObj = this.devMapper.findInfoByDeviceId(devID);
 		  	if(devObj!=null){
+		  		double coefficient=1;
 		  		int type = devObj.getType();
-		  		ZsDevService.devTypecache.put(devID, type);
-		  		return type;
+		  		if(type==10){coefficient =this.getCoefficient(devID);}
+		  		CoeffMode coeffMode = new CoeffMode(type, coefficient);
+		  		ZsDevService.devTypecache.put(devID,coeffMode);
+		  		return coeffMode;
+		  	}else{
+		  		CoeffMode coeffMode = new CoeffMode(-1, 1.00);
+		  		ZsDevService.devTypecache.put(devID,coeffMode);
+		  		return coeffMode;
 		  	}
-		  	return null;
 	  }
   }
   
@@ -197,11 +243,11 @@ class SubTask implements Runnable {
 			for (ZSDevDataEntity zsDevDataEntity : parseArray) {
 				datas=zsDevDataEntity.getDatas();
 				devid=zsDevDataEntity.getDevid();
-				Integer type = this.getDevType(devid);//无效设备
-				if(type==null||type==-1){continue;}//无效设备
+				CoeffMode coeffMode = this.getDevType(devid);
+				if(coeffMode==null||coeffMode.getType()==-1){continue;}//无效设备
 				apid=(String) datas.get("apid");
 				date =new Date((Integer)datas.get("time")*1000L);
-				switch (type) {
+				switch (coeffMode.getType()) {
 				case 18://温度
 					 dataList.add(new StorageDataCollectionEntity(apid, devid,"Temp",  datas.get("Temp"), date));
 					break;
@@ -212,10 +258,10 @@ class SubTask implements Runnable {
 					 dataList.add(new StorageDataCollectionEntity(apid, devid,"AU",  datas.get("AU"),date));
 					 dataList.add(new StorageDataCollectionEntity(apid, devid,"BU",  datas.get("BU"),date));
 					 dataList.add(new StorageDataCollectionEntity(apid, devid,"CU",  datas.get("CU"),date));
-					 dataList.add(new StorageDataCollectionEntity(apid, devid,"AI",  datas.get("AI"),date));
-					 dataList.add(new StorageDataCollectionEntity(apid, devid,"BI",  datas.get("BI"),date));
-					 dataList.add(new StorageDataCollectionEntity(apid, devid,"CI",  datas.get("CI"),date));
-					 dataList.add(new StorageDataCollectionEntity(apid, devid,"PWC", datas.get("PWC"), date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"AI",  Double.parseDouble(datas.get("AI")+"")*coeffMode.getCoefficient(),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"BI",  Double.parseDouble(datas.get("BI") +"")*coeffMode.getCoefficient(),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"CI",  Double.parseDouble(datas.get("CI") +"")*coeffMode.getCoefficient(),date));
+					 dataList.add(new StorageDataCollectionEntity(apid, devid,"PWC", Double.parseDouble(datas.get("PWC")+"")*coeffMode.getCoefficient(), date));
 					break;
 				default:
 					break;

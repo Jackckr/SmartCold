@@ -9,8 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <link rel="shortcut icon" href="../img/favicon.ico" />
     <!--引入样式包-->
+    <link rel="stylesheet" href="../plugins/css/layui.css" />
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/media.css" />
+    <link rel="stylesheet" href="../css/login.css" />
 </head>
 <body>
 <!--header 导航栏-->
@@ -62,8 +64,39 @@
         </ul>
     </div>
 </div>
-<div class="section clearfix">
-    登录--开发中....
+<div class="section">
+    <div class="loginDiv clearfix">
+        <div class="loginBg"></div>
+
+        <div class="login">
+            <h2>用户名密码登录</h2>
+            <form class="layui-form layui-form-pane" action="/i/user/login">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="iconfont">&#xe63d;</i></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="iconfont">&#xe69c;</i></label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password"lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin: 0;">
+                    <div class="layui-form-mid layui-word-aux fl">
+                        <a href="javascript:alert('进行中')">忘记密码</a>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux fr">
+                        <a href="javascript:alert('进行中')">注册</a>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit="" lay-filter="lianku">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!--版权区域-->
 <div class="footer" id="QRcode">
@@ -142,8 +175,40 @@
     </dl>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
 <script>
+    layui.use(['form'], function(){
+        var form = layui.form(),layer = layui.layer;
+        //自定义验证规则
+        form.verify({
+            username: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    return '用户名不能有特殊字符';
+                }
+                if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+                if(/^\d+\d+\d$/.test(value)){
+                    return '用户名不能全为数字';
+                }
+            }
+            //我们既支持上述函数式的方式，也支持下述数组的形式
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            ,pass: [
+                /^[\S]{4,12}$/
+                ,'密码必须4到12位，且不能出现空格'
+            ]
+        });
+
+        //监听提交
+        form.on('submit(lianku)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            });
+            return false;
+        });
+    });
 
 </script>
 </body>

@@ -53,6 +53,9 @@ public class UtilController extends BaseController {
 	 public LinkedList<String> getZSData()  {return ZsDevService.dataList;}
 	 @RequestMapping(value = "/del_devcache")//删除缓存
 	 public Object deldevcache(String toke){if(StringUtil.verifyToken(toke)){ZsDevService.clerCache();	return true;}return -1;}
+	 
+	 
+	 
 	 @RequestMapping(value = "/getZsDevStatus")
 	 public  HashMap<String, StorageDataCollectionEntity>  getZsDevStatus(int type){ switch (type) {case 1: return ZsDevService.msimap;case 2: return ZsDevService.bsimap;case 3: return ZsDevService.dumap;default:return null;}}
 	 //=====================================================系统接口管理==========================================================================================================================

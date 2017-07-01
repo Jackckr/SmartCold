@@ -16,7 +16,19 @@
 	SELECT `key` ,sum(`value`)  value FROM `coldstorageanalysis` where oid=#{rdcId} and `key` in('HighPressWarningCount','PowerWarningCount','OilWarningCount','LowWarningCount')  and  `date` BETWEEN #{stTime} and #{edTime} GROUP BY `key` ;
 </select>
 
-
+	<insert id="addwarningsinfos" parameterType="WarningsInfo">
+		INSERT INTO `warningsinfo` (
+			`rdcid`       ,
+			`objid`       ,
+			`refrsysid`   ,
+			`level`       ,
+			`warningname` ,
+			`addtime`
+		)VALUES
+		 <foreach collection="list" item="model" separator="," >  
+		  (#{model.rdcId}, #{model.objId}, #{model.refrsysId},#{model.level},  #{model.warningname},#{model.addtime})
+		 </foreach>
+	</insert>
 
 
 
