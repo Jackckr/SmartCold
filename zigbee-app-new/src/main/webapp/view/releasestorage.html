@@ -124,11 +124,9 @@ $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:7}}
 					
 				<li><label>数/质/量</label> 
 				<em>*</em>
-					<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"/>
-					<label><input type="radio"  value="元/天·平方米" ng-model="unit" name="unit" 
-					checked="checked"  />平方米</label>
-					<label><input type="radio"  ng-model="unit" name="unit" 
-					value="元/天·吨" />吨</label>
+					<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"unit1/>
+					<label><input type="radio"  value="元/天·平方米" ng-model="unit" name="unit"  checked="checked"  />平方米</label>
+					<label><input type="radio"  ng-model="unit" name="unit"  value="元/天·吨" />吨</label>
 			   		<label><input type="radio"  value="元/天·其他"  ng-model="unit" name="unit" />其他</label>
 				</li>
 			    

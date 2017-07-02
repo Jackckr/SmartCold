@@ -123,7 +123,7 @@ $().ready(function () {
         };
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id='+rdc.id+'"  onclick="getSoll()"><span><img src="'+rdc.logo+'" alt=""></span><div>'+
-            '<p class="ellipsis">'+rdc.name+'</p><em>信息完整度<i class="blue">'+rdc.percent+'</i></em><p class="position omg">'+approve+'</p>'+
+            '<p class="ellipsis">'+rdc.title+'</p><em>信息完整度<i class="blue">'+rdc.percent+'</i></em><p class="position omg">'+approve+'</p>'+
             '<p class="grab orange">'+rdc.unitPrice+'<br><span>元/㎡/天</span></p></div><div class="flex"><div class="item"><h4>'+rdc.sqm+'㎡</h4>'+
             '<p>总面积</p></div><div class="item"><h4>'+rdc.sqm+'㎡</h4><p>可租面积</p></div><div class="item"><h4 class="omg">'+rdc.detlAddress+'</h4><p>地址</p></div></div></a>'+
             '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
@@ -135,7 +135,7 @@ $().ready(function () {
     function getPageData() {//启用无限加载
         isLoadRB = true;
         var _filter = getFilter(currentPage, maxSize);
-        $.post(ER.root + "/i/ShareRdcController/getSERDCList", _filter, function (data) {
+        $.post(ER.root + "/i/ShareRdcController/newGetSERDCList", _filter, function (data) {
             if (data.success && data.data.length > 0) {
                 totalPages = data.totalPages;
                 currentPage++;

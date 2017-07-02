@@ -763,7 +763,7 @@ section{
 	font-size: .6rem;
 	color: #999;
 }
-.rentRdc .coldlist li a>span{
+.rentRdc.lookRdc .coldlist li a>span{
 	background-color: transparent;
 	padding: 0;
 	overflow: hidden;

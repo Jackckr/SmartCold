@@ -173,7 +173,6 @@ input[type="text"]:disabled{
 	color: #999;
 	vertical-align: middle;
 }
-}
 .houseinfo>li label>.pic{
 	width:2rem;
 	height:2rem;
@@ -422,7 +421,7 @@ form+.mybtn,.next+.mybtn{
 	display: inline-block;
 	width:0.45rem;
 	height: 0.6rem;
-	background: url(../img/gpy.gif) no-repeat center;
+	background: #eee;
 	background-size: cover;
 }
 .imgCell .ellipsis{
@@ -555,7 +554,7 @@ form+.mybtn,.next+.mybtn{
 .pic{
 	display: inline-block;
 	width: 1.5rem;
-	height: 1.5rem;
+	height:1.5rem;
 	margin-top:0.3rem;
 	border: 3px dotted #ccc;
 	background: url(../img/plus.png) no-repeat center;
