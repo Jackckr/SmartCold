@@ -1044,9 +1044,8 @@ public class RdcController {
 	 */
 	@RequestMapping(value = "/newGetRdcList")
 	@ResponseBody
-	public ResponseData<RdcEntityDTO> newGetRdcList(String hasCar,String goodSaveType,String istemperaturestandard,String audit, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+	public ResponseData<RdcEntityDTO> newGetRdcList(String hasCar,String goodSaveType,String istemperaturestandard,String audit, String keyword,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
 		HashMap<String, Object> filter=new HashMap<String, Object>();
-		filter.put("type", type);
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2
 		filter.put("sqm", getTotalSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
 		filter.put("keyword", keyword);
@@ -1060,8 +1059,7 @@ public class RdcController {
 		PageInfo<RdcEntityDTO> data = this.rdcService.newGetRdcList(pageNum, pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
-	private static String getTotalSqmFilter(String sqm)
-	{
+	private static String getTotalSqmFilter(String sqm) {
 		StringBuffer sqlfilter=new StringBuffer("(");
 		if(StringUtil.isnotNull(sqm)){
 			String filter[]=sqm.split(",");

@@ -144,7 +144,7 @@ function addColdSubmit() {
 /*获得修改冷库信息*/
 function getFormValue(rdcId) {
     $("#submitTitle").html("修改冷库 (带*为必填项)");
-    $("#submitButton").empty().append('<td colspan="2"><button class="oBtn" onclick="updateColdSubmit()">提交</button></td>')
+    $("#submitButton").empty().append('<td colspan="2"><button class="oBtn" onclick="updateColdSubmit()">提交</button></td>');
     $("#submitRdc").append('<input type="hidden" name="rdcId" value="'+rdcId+'"/>');
     $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId},success:function (data) {
         var rdc=data[0];

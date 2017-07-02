@@ -79,4 +79,6 @@ public interface RdcShareService {
 		 */
 	  	public PageInfo<RdcShareDTO> getSERDCList(int pageNum,int pageSize,HashMap<String, Object> filter);
 
+
+	    public PageInfo<RdcShareDTO> newGetSERDCList(int pageNum,int pageSize,HashMap<String, Object> filter);
 }
