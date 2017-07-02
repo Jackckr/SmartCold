@@ -125,20 +125,20 @@
         <li class="rdcImg">
             <label>冷链委温度达标库<em>*</em></label>
             <div id="tempStandDiv">
-                <label><input value="1" type="radio" name="temStand">是</label>
-                <label><input value="0" type="radio" onclick="delstandard()" name="temStand">愿意申报</label>
-                <label><input value="0" type="radio" onclick="delstandard()" name="temStand">否</label>
+                <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="isJoinStand">是</label>
+                <label><input ng-value="2" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="isJoinStand">愿意申报</label>
+                <label><input ng-value="3" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="isJoinStand">否</label>
             </div>
             <ul id="tempStandUl">
                 <li class="black">
                     <label class="pic">
-                        <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="false"
-                               name="files">
+                        <input type="file" ngf-select="addTempStandPic($files)" ng-model="tempStandfile" ngf-multiple="false"
+                               name="tempStandfile">
                     </label>
                     <output class="img_list">
-                                <span ng-repeat="file in totalfiles">
-                                    <img class="thumb" ngf-src="file" title="{{file.name}}">
-                                    <i ng-click="drop(file)">×</i>
+                                <span ng-repeat="tempStand in tempStandPic">
+                                    <img class="thumb" ngf-src="tempStand" title="{{tempStand}}">
+                                    <i ng-click="droptempStandPic()">×</i>
                                 </span>
                     </output>
                     <label style="font-size: .5rem">
@@ -151,8 +151,8 @@
             </ul>
             <div>
                 <span>是否愿意公开冷库温度曲线</span>
-                <label><input value="1" type="radio" name="openLIne">是</label>
-                <label><input value="2" type="radio" name="openLIne">否</label>
+                <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
+                <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
             </div>
         </li>
         <li>
@@ -210,7 +210,7 @@
             </div>
             <i class="iconfont fr moreinfo">&#xe60d;</i>
         </li>
-        <li>
+        <li ng-show="{{islihuoRoom}}">
             <label for="cleanarea">理货区面积</label>
             <div class="mySelect">
                 <input type="number" ng-model="lihuoArea" placeholder="面积" style="font-size: 0.75rem;text-indent: 1em;">
@@ -297,12 +297,12 @@
         <li>
             <label>冷库认证</label>
             <label class="pic">
-                <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="false" name="files">
+                <input type="file" ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false" name="auditfile">
             </label>
             <output class="img_list">
-						<span ng-repeat="file in totalfiles">
-							<img class="thumb" ngf-src="file" title="{{file.name}}">
-							<i ng-click="drop(file)">×</i>
+						<span ng-repeat="audit in auditPic">
+							<img class="thumb" ngf-src="audit" title="{{audit}}">
+							<i ng-click="dropAuditPic(audit)">×</i>
 						</span>
             </output>
             <label style="font-size: .5rem;line-height: 1.7;">

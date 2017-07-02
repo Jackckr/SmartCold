@@ -156,6 +156,7 @@ function getFormValue(rdcId) {
         if(rdc.isJoinStand==2){$("#li2").show()}
         if (rdc.audit==2){$("#coldAudit").hide();}
         if (rdc.istemperaturestandard==1){$("#tempStandDiv,#tempStandUl").hide();}
+        if(rdc.lihuoRoom==1){$("#lihuoAreaTr").show();}
         storagePicsArrOriginal=rdc.storagePics.length;
         honorPicsArrOriginal=rdc.honorPics.length;
         $.each(rdc.storagePics,function (index, item) {
