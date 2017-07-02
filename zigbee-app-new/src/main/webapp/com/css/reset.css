@@ -54,8 +54,6 @@ body{
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
 }
-<<<<<<< HEAD
-=======
 .item>a{
     display: block;
     width: 100%;
@@ -65,7 +63,6 @@ body{
     box-sizing: border-box;
     position: relative;
 }
->>>>>>> da16c17437f57f47c95388f4f3dac0ab886165d6
 .orange{
     color: #ffaf39!important;
 }
