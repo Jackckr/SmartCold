@@ -82,4 +82,6 @@ public interface RdcShareMapper {
 	 /*通过rdcId获取出租价格*/
 	 Double getUnitPriceByRdcId(int rdcId);
 
+	 Page<RdcShareDTO> getNewSERDCListByPage(Map<String, Object> parameters);
+
 }

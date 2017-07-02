@@ -8,7 +8,6 @@ if(sessionStorage.lkuser&&new Date().getTime()-sessionStorage.longtime<(30*60*10
     findUser();
 }
 
-sessionStorage.submitRdcStatus=1;/*0.添加冷库1.修改冷库*/
 var sUserAgent = navigator.userAgent.toLowerCase();
 var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
 var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
