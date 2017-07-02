@@ -2,7 +2,6 @@ var oldrdc=undefined, queryParams = {page: null, rows: null, keyword: null};
 function opendevdialog(){$('#dev_replaceForm').form('clear');$('#dev_replacedialog').dialog('open');}
 function doSearch(value){objtree.tree({url:'../../i/rdc/getRdcTree?keyword='+value,method:'post'});}
 function onSelect(node){if(node.id!=oldrdc){oldrdc=node.id;queryParams.rdcId=oldrdc;objTable.datagrid( {url:"../../i/deviceObjectMapping/getDevStatusByRdcId", queryParams:queryParams });}}
-
 function onDblClickRow(index, row){
 	
 	
@@ -69,6 +68,5 @@ function initData(){
 	$("#_easyui_textbox_input1").keyup(function(){doSearch(this.value);});
 }
 $().ready(function () {
-
- 
+	initData();
 });

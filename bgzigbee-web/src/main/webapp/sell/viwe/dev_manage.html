@@ -21,17 +21,16 @@
     <script type="text/javascript"  src="../app/dev_manage.js"></script>
   </head>
 <body class="easyui-layout ">
-  <div id="" class="fill none">
 	<div data-options="region:'west',split:true,title:'360冷库'" style="width:300px;">
 	   <div id="left_dev_rdc_filter"><input class="easyui-searchbox" data-options="searcher:doSearch" style="width:100%;margin-right: 5px;"></div>
 	   <div id="left_dev_rdc_tree" >
 		      <ul id="objtree" class="easyui-tree" ></ul>
 	   </div>
 	</div>
-	<div data-options="region:'center',title:'Center'">
+	<div data-options="region:'center'">
 	   <table id="objTable" class="fill"></table>
 	</div>
-	</div>
+	<!-- 隐藏区域内容 -->
 	<div class="none">
 		<div id="tabl_tool" style="padding:5px;">
 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'dev_del'" onclick="">删除设备</a>
@@ -68,7 +67,7 @@
 			        </form>
 		 </div>
 		 
-		    <div id="dev_chargedialog" class="easyui-dialog"  data-options="title:'设备充电',iconCls:'dev_replace',modal: true,closed: true,width:490,height:260,buttons: [{text:'确定',iconCls:'icon-ok',handler:replace_dev},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#dev_replacedialog').dialog('close');}}]"  >
+		    <div id="dev_chargedialog" class="easyui-dialog"  data-options="title:'设备充电',iconCls:'dev_charge',modal: true,closed: true,width:490,height:220,buttons: [{text:'确定',iconCls:'icon-ok',handler:replace_dev},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#dev_chargedialog').dialog('close');}}]"  >
 			        <form id="dev_chargeForm" style="padding:10px 20px;" >
 			        <table class="fill" >
 			            <tr>

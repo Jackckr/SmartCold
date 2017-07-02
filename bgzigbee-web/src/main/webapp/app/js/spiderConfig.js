@@ -709,6 +709,15 @@ coldWeb.controller('spiderConfig', function ($rootScope, $scope, $state, $cookie
 	}
 	
 	$scope.realSaveStorage = function(){
+		
+		url = '/i/coldStorage/updateMapping?coldStorageId=' + $scope.vm.choseStorage.id 
+		+ '&mapping=' + JSON.stringify($scope.vm.choseStorage.mapping);
+		$http.post(url).success(function(data,status,config,headers){
+			if(data.status == -1){
+				alert(data.message);
+			}
+		});
+		
 		angular.forEach($scope.tempSets,function(item){$scope.realSaveTemp(item);});
 		$scope.refTempset();
 		
