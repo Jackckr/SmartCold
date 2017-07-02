@@ -228,6 +228,8 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 cityId : $scope.cityId,
                 address : encodeURI($scope.address,"UTF-8"),
                 area : $scope.area,
+                rentSqm:$scope.rentSqm,
+                height:$scope.height,
                 manageType : $scope.manageType,
                 storageType : $scope.storageType,
                 temperType : $scope.temperType,
@@ -267,7 +269,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 data["honor" + j] = $scope.totalhonorfiles[j];
             }
             Upload.upload({
-                url: ER.root+'/i/rdc/addRdc',
+                url: ER.root+'/i/rdc/newAddRdc',
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },
                 withCredentials : true,
                 data: data
