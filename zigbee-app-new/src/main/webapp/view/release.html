@@ -4,78 +4,89 @@
     <meta charset="UTF-8">
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>信息发布</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-    <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/newRelease.css">
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript"> $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:-6}}); </script>
+    <script type="text/javascript"> $.ajax({
+        url: ER.root + "/i/UtilController/setVisited",
+        type: "POST",
+        data: {type: -6}
+    }); </script>
 </head>
 <body>
-    <!-- header -->
-        <header>
-        	<div class="area fl">
-                <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
-            </div>
-            <div class="txt">
-                信息发布
-            </div>
-        </header>
-    <!-- header end-->
-    
-    <section class="grid grid_4">
-        <div class="grid_kid">
-            <a ng-login="releasekutable.html">
-                <i class="iconfont blueI">&#xe669;</i>
-                <p class="info">冷库</p>
-            </a>
+<!-- header -->
+<header>
+    <div class="txt">信息发布</div>
+</header>
+<!-- header end-->
+<ul class="releaseModel">
+    <li><a href="releasekutable.html">
+        <div class="fl">
+            <p>1</p>
+            <h3>冷库基本信息</h3>
         </div>
-        <div class="grid_kid">
-            <a ng-login="releasestorage.html">                  
-                <i class="iconfont redI">&#xe661;</i>
-                <p class="info">仓位</p>                  
-            </a>
+        <div class="fr"></div>
+    </a></li>
+    <li><a href="releaserentstorage.html">
+        <div class="fl">
+            <p>2</p>
+            <h3>出租冷库信息</h3>
         </div>
-        <div class="grid_kid">
-            <a ng-login="releasegoods.html">                   
-                <i class="iconfont goldI">&#xe667;</i>
-                <p class="info">货品</p>
-            </a>
+        <div class="fr"></div>
+    </a></li>
+    <li><a href="releaseapplystorage.html">
+        <div class="fl">
+            <p>3</p>
+            <h3>求租基本信息</h3>
         </div>
-        <div class="grid_kid">
-            <a ng-login="releasecoldtransport.html">
-                <i class="iconfont blueI">&#xe66b;</i>
-                <p class="info">冷运</p>              
-            </a>
+        <div class="fr"></div>
+    </a></li>
+    <li><a href="releasesalegoods.html">
+        <div class="fl">
+            <p>4</p>
+            <h3>出售货品信息</h3>
         </div>
-    </section>
+        <div class="fr"></div>
+    </a></li>
+    <li><a href="releasebuygoods.html">
+        <div class="fl">
+            <p>5</p>
+            <h3>求购货品信息</h3>
+        </div>
+        <div class="fr"></div>
+    </a></li>
+</ul>
+<footer class="flex black">
+    <div class="item">
+        <a href="../index.html">
+            <i class="iconfont">&#xe601;</i>
+            <p>首页</p>
+        </a>
+    </div>
+    <div class="item active">
+        <a href="release.html">
+            <i class="iconfont">&#xe614;</i>
+            <p>发布</p>
+        </a>
+    </div>
+    <div class="item" id="msgTotalNumReset">
+        <a href="messages.html">
+            <i class="iconfont">&#xe6ea;</i>
+            <p>消息</p>
+        </a>
+    </div>
+    <div class="item">
+        <a href="usercenter.html">
+            <i class="iconfont">&#xe600;</i>
+            <p>我的</p>
+        </a>
+    </div>
+</footer>
 
-    <!--<ul class="footer">
-        <li>           
-            <a href="../index.html">
-                <i class="iconfont">&#xe65a;</i>
-                <p class="info">首页</p>
-            </a>
-        </li>
-        <li>          
-             <a href="news.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p>
-            </a>
-        </li>
-        <li class="active">            
-            <a href="">
-                <i class="iconfont">&#xe71c;</i>
-                <p class="info">消息</p>
-            </a>
-        </li>
-        <li>            
-            <a href="user.html">
-                <i class="iconfont">&#xe6fd;</i>
-                <p class="info">我的</p>
-            </a>
-        </li>
-    </ul>-->
 </body>
 </html>

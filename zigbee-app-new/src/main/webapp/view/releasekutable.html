@@ -2,277 +2,328 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-   <!--  <meta http-equiv="refresh" content="10"> -->
+    <!--  <meta http-equiv="refresh" content="10"> -->
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>发布库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
-    <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/release.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/newRelease.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/reset.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
-    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
-    <script type="text/javascript" src="../com/js/prettify.js" ></script>
+    <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
+    <script type="text/javascript" src="../com/js/prettify.js"></script>
     <script src="../bower_components/angular/angular.min.js"></script>
     <script src="../bower_components/ng-remote-validate/release/ngRemoteValidate.0.6.1.min.js"></script>
     <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script type="text/javascript" src="../app/js/coldStorageAdd.js"></script>
-    <script type="text/javascript">
-    </script>
 </head>
-<body ng-app="rdcadd"  ng-controller="coldStorageAdd">
-    <!-- header -->
-        <header>
-        	
-            <div class="area fl">
-                <a href="release.html"><i class="iconfont">&#xe60e;</i></a>
+<body ng-app="rdcadd" ng-controller="coldStorageAdd">
+<!-- header -->
+<header>
+    <div class="area fl">
+        <a href="release.html"><i class="iconfont">&#xe602;</i></a>
+    </div>
+    <div class="zoom fr"><a href="../index.html"><i class="iconfont">&#xe639;</i></a></div>
+    <div class="txt">
+        冷库基本信息
+    </div>
+</header>
+<!-- header end-->
+<section class="releaseCold">
+    <div class="releaseImg"></div>
+    <ul class="houseinfo">
+        <li>
+            <label for="name">名称<em>*</em></label>
+            <form name="rdcForm" class="fr" style="width:85%;">
+                <input type="text" ng-model="name" ng-disabled="editable" name="name"
+                       ng-remote-validate="http://liankur.com/i/rdc/checkName"
+                       ng-remote-method="GET" placeholder="请输入冷库名称">
+                <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;float:right;"
+                    ng-bind="againTxt='冷库名已被用'"></em>
+            </form>
+        </li>
+        <li>
+            <label for="province">省<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="provinceId" ng-disabled="editable"
+                        ng-change="provinceSelected(provinceId)"
+                        ng-options="x.provinceId as x.provinceName for x in provinces"></select>
             </div>
-            <div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
-            <div class="txt">
-                发布库
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="city">市<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="cityId"
+                        ng-change="citySelected(cityId)"
+                        ng-options="x.cityID as x.cityName for x in citys"></select>
             </div>
-        </header>
-    <!-- header end-->
-    <section class="main" style="margin-bottom:0;">
-            <ul class="houseinfo">
-                <li>
-                    <label for="name">名称<em>*</em></label>
-                    <form name="rdcForm" class="fr" style="width:85%;"> 
-	                    <input type="text" ng-model="name" ng-disabled="editable" name="name"
-	                                   ng-remote-validate="http://liankur.com/i/rdc/checkName"
-	                                   ng-remote-method="GET" placeholder="请输入冷库名称">
-	                    <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;float:right;" ng-bind="againTxt='冷库名已被用'"></em>
-                    </form>
-                </li>
-                <li>
-                    <label for="province">省<em>*</em></label>
-                    <div class="mySelect">
-                         <select ng-model="provinceId" ng-disabled="editable"
-                                    ng-change="provinceSelected(provinceId)"
-                                    ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>                    
-                </li>
-                <li>
-                    <label for="city">市<em>*</em></label>
-                    <div class="mySelect">
-                        <select ng-model="cityId"
-                                ng-change="citySelected(cityId)"
-                                ng-options="x.cityID as x.cityName for x in citys"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="geographic">地理位置<em>*</em></label>
-                    <input type="text"  ng-model="address" placeholder="请输入地理位置" />
-                </li>
-                <li>
-                    <label for="area">面积<em>*</em></label>
-                    <input type="number"  ng-model="area" placeholder="冷库面积(㎡)" />
-                </li>
-                <li>
-                    <label for="operateType">冷库经营类型<em>*</em></label>                    
-                    <div class="mySelect">
-                        <select ng-model="manageType"
-                                    ng-change="ManageTypeSelected(manageType)"
-                                    ng-options="x.id as x.type for x in manageTypes"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="storageType">商品存放类型<em>*</em></label>                    
-                    <div class="mySelect">
-                        <select ng-model="storageType"
-                                    ng-change="StorageTypeSelected(storageType)"
-                                    ng-options="x.id as x.type for x in storageTypes"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="temperatureType">冷库温度类型<em>*</em></label>                    
-                    <div class="mySelect">
-                        <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li class="number tac">
-                	<label>冷藏车数量</label> 
-                    <div>
-                        <div>
-                            <span><1.8T</span>
-                            <input type="number" ng-model="coldTruck1"><span>辆</span>
-                        </div>
-                        <div>
-                        	<span>1.8T-6T</span>
-                        	<input type="number" ng-model="coldTruck2"><span>辆</span>
-                        </div>
-                        <div>
-                       		 <span>6T-14T</span>
-                        	 <input type="number" ng-model="coldTruck3"><span>辆</span>
-                        </div>
-                        <div>
-                        	<span>>14T</span>
-                        	<input type="number" ng-model="coldTruck4"><span>辆</span>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <label for="phone">联系电话<em>*</em></label>
-                    <input type="number"  ng-model="phoneNum" placeholder="请输入联系方式"/>
-                </li>
-                <li>
-                    <label for="note">备注</label>
-                    <input type="text"  ng-model="remark"  placeholder="选填"/>
-                </li>
-                
-            </ul>
-            <ul class="houseinfo black">
-                <li>
-                    <label for="structure">建筑结构</label>                    
-                    <div class="mySelect">
-                        <select ng-model="structure"
-                                        ng-options="x.id as x.type for x in structures"></select>
-                    </div>
- 					<i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="moon">是否有封闭月台</label>                    
-                    <div class="mySelect">
-                        <select ng-model="platform"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="cleanroom">是否有理货区</label>
-                    <div class="mySelect">
-                        <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                     </div>  
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>                 
-                </li>
-                <li>
-                    <label for="cleanarea">理货区面积</label>                    
-                    <div class="mySelect">
-                        <input type="number" ng-model="lihuoArea" placeholder="面积" style="font-size: 0.75rem;text-indent: 1em;">
-                    </div>
-<!--                     <i class="iconfont fr moreinfo">&#xe60d;</i> -->
-                </li>
-                <li>
-                    <label for="temperatureTypeCtr">有无温控</label>                    
-                    <div class="mySelect">
-                        <select ng-model="lihuoTemperCtr"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="cryogen">制冷剂类型</label>                    
-                    <div class="mySelect">
-                        <select ng-model="storageRefreg"
-                                        ng-change="StorageRefregSelected(storageRefreg)"
-                                        ng-options="x.id as x.type for x in storageRefregs"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li>
-                    <label for="temperatureRecord">有无温度记录</label>                    
-                    <div class="mySelect">
-                        <select ng-model="temperRecord"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
-                </li>
-                <li class="number">
-                	<label style="white-space: nowrap;">冷库容量</label>
-                    <div>
-					<div>
-						<span class="nowrap">12~25℃</span><input type="number"
-							ng-model="capacity1"><span class="nowrap">面积㎡</span><input
-							type="number" ng-model="height1"><span class="nowrap fr">高m</span>
-					</div>
-					<div>
-						<span class="nowrap">12~-2℃</span><input type="number"
-							ng-model="capacity2"><span class="nowrap">面积㎡</span><input
-							type="number" ng-model="height2"><span class="nowrap fr">高m</span>
-					</div>
-                        <div>
-						<span class="nowrap">-15~-22℃</span><input type="number"
-							ng-model="capacity3"><span class="nowrap">面积㎡</span><input
-							type="number" ng-model="height3"><span class="nowrap fr">高m</span>
-					</div>
-                        <div>
-						<span class="nowrap">-22~-30℃</span><input type="number"
-							ng-model="capacity4"><span class="nowrap">面积㎡</span><input
-							type="number" ng-model="height4"><span class="nowrap fr">高m</span>
-					</div>
-                        <div>
-						<span class="nowrap">&lt;-30℃</span><input type="number"
-							ng-model="capacity5"><span class="nowrap">面积㎡</span><input
-							type="number" ng-model="height5"><span class="nowrap fr">高m</span>
-					</div>
-                        <!-- <div style="width: auto"></div> -->
-                    </div>
-                </li>
-                <li>
-                    <label>周边设施：</label>
-                    <div class="mySelect">
-                        <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
-                    </div>
-                </li>
-                 <li>
-                    <label>资质荣誉图：<small class="text-warning">*最多八张</small></label>
-                   <label class="pic">
-                            <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles" ngf-multiple="true" name="honorfiles">                       
-                    </label> 
-                    <output class="img_list">
-						<span ng-repeat="honorfile in totalhonorfiles"><img
-							class="thumb" ngf-src="honorfile" title="{{honorfile}}"><i
-							ng-click="drophonor(honorfile)">×</i></span>
-					</output>               
-                </li>
-<!--                 <li> -->
-<!--                     <label ng-repeat="honorfile in totalhonorfiles" style="margin-left:20px"> -->
-<!--                         <span ng-bind="honorfile.name"></span> -->
-<!--                         <i class="fa fa-times danger" style="margin-right:10px;color:red;" ng-click="drophonor(honorfile)"></i> -->
-<!--                     </label> -->
-<!--                 </li> -->
-                <li>
-                    <label>功能平面布置图：</label>
-                   <label class="pic">
-                      <input type="file" ng-model="arrangePic" name="arrangePic"  ngf-select="addArrangePic($files)">
- 					</label>
- 					<output class="img_list">
-						<span ng-repeat="arrangePic in arrangePics">
-							<img class="thumb" ngf-src="arrangePic" title="{{arrangePic.name}}">
-							<i ng-click="dropArrangePic(arrangePic)">×</i>
-						</span>
-					</output>
-                </li>
-                <li>
-                    <label>冷库图片：<small class="text-warning">*最多五张</small></label>
-                    <label class="pic">
-                    	<input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
-					</label>           
-                    <output class="img_list">
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="geographic">地理位置<em>*</em></label>
+            <input type="text" ng-model="address" placeholder="请输入地理位置"/>
+        </li>
+        <li>
+            <label for="area">总面积<em>*</em></label>
+            <input type="number" ng-model="area" placeholder="冷库面积(㎡)"/>
+        </li>
+        <li>
+            <label for="area">可出租面积<em>*</em></label>
+            <input type="number" ng-model="rentSqm" placeholder="可出租面积(㎡)"/>
+        </li>
+        <li>
+            <label for="area">冷库净高<em>*</em></label>
+            <input type="number" ng-model="height" placeholder="冷库净高(m)"/>
+        </li>
+        <li>
+            <label for="operateType">经营类型<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="manageType"
+                        ng-change="ManageTypeSelected(manageType)"
+                        ng-options="x.id as x.type for x in manageTypes"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="storageType">商品存放类型<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="storageType"
+                        ng-change="StorageTypeSelected(storageType)"
+                        ng-options="x.id as x.type for x in storageTypes"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="temperatureType">温度类型<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label>冷库图片<em>*</em></label>
+            <label class="pic">
+                <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files">
+            </label>
+            <output class="img_list">
 						<span ng-repeat="file in totalfiles">
 							<img class="thumb" ngf-src="file" title="{{file.name}}">
 							<i ng-click="drop(file)">×</i>
 						</span>
-					</output>
+            </output>
+            <label style="font-size: .5rem">
+                <small class="text-warning">上传3-5张实体图片，不能重复上传，每张小于10M</small>
+            </label>
+        </li>
+        <li class="rdcImg">
+            <label>冷链委温度达标库<em>*</em></label>
+            <div id="tempStandDiv">
+                <label><input value="1" type="radio" name="temStand">是</label>
+                <label><input value="0" type="radio" onclick="delstandard()" name="temStand">愿意申报</label>
+                <label><input value="0" type="radio" onclick="delstandard()" name="temStand">否</label>
+            </div>
+            <ul id="tempStandUl">
+                <li class="black">
+                    <label class="pic">
+                        <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="false"
+                               name="files">
+                    </label>
+                    <output class="img_list">
+                                <span ng-repeat="file in totalfiles">
+                                    <img class="thumb" ngf-src="file" title="{{file.name}}">
+                                    <i ng-click="drop(file)">×</i>
+                                </span>
+                    </output>
+                    <label style="font-size: .5rem">
+                        <small class="text-warning">请上传温度达标冷库认证铜牌或证书，小于10M</small>
+                    </label>
                 </li>
-<!--                 <li> -->
-<!--                     <label ng-repeat="file in totalfiles" style="margin-left:20px"> -->
-<!--                         <span ng-bind="file.name"></span> -->
-<!--                         <i class="fa fa-times danger" style="margin-right:1px;color:red;" ng-click="drop(file)"></i> -->
-<!--                     </label> -->
-<!--                 </li> -->
-             </ul>
-            <!--双箭头下拉-->
-            <div class="next"><i class="iconfont">&#xe649;</i></div>
-            <button class="mybtn" ng-click="submit()">确认发布</button>
-    </section>
+                <li class="black">
+                    <span>请拨打010-88120448 或者400-1234567 申报</span>
+                </li>
+            </ul>
+            <div>
+                <span>是否愿意公开冷库温度曲线</span>
+                <label><input value="1" type="radio" name="openLIne">是</label>
+                <label><input value="2" type="radio" name="openLIne">否</label>
+            </div>
+        </li>
+        <li>
+            <label for="phone">联系电话<em>*</em></label>
+            <input type="number" ng-model="phoneNum" placeholder="请输入联系方式"/>
+        </li>
+    </ul>
+    <ul class="houseinfo black">
+        <li>
+            <label for="note">备注</label>
+            <input type="text" ng-model="remark" placeholder="选填"/>
+        </li>
+        <li class="number tac">
+            <label>冷藏车数量</label>
+            <div>
+                <div>
+                    <span><1.8T</span>
+                    <input type="number" ng-model="coldTruck1"><span>辆</span>
+                </div>
+                <div>
+                    <span>1.8T-6T</span>
+                    <input type="number" ng-model="coldTruck2"><span>辆</span>
+                </div>
+                <div>
+                    <span>6T-14T</span>
+                    <input type="number" ng-model="coldTruck3"><span>辆</span>
+                </div>
+                <div>
+                    <span>>14T</span>
+                    <input type="number" ng-model="coldTruck4"><span>辆</span>
+                </div>
+            </div>
+        </li>
+        <li>
+            <label for="structure">建筑结构</label>
+            <div class="mySelect">
+                <select ng-model="structure"
+                        ng-options="x.id as x.type for x in structures"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="moon">是否有封闭月台</label>
+            <div class="mySelect">
+                <select ng-model="platform"
+                        ng-options="x.id as x.name for x in haveOrNots"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="cleanroom">是否有理货区</label>
+            <div class="mySelect">
+                <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
+                        ng-options="x.id as x.name for x in haveOrNots"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="cleanarea">理货区面积</label>
+            <div class="mySelect">
+                <input type="number" ng-model="lihuoArea" placeholder="面积" style="font-size: 0.75rem;text-indent: 1em;">
+            </div>
+        </li>
+        <li>
+            <label for="temperatureTypeCtr">有无温控</label>
+            <div class="mySelect">
+                <select ng-model="lihuoTemperCtr"
+                        ng-options="x.id as x.name for x in haveOrNots"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="cryogen">制冷剂类型</label>
+            <div class="mySelect">
+                <select ng-model="storageRefreg"
+                        ng-change="StorageRefregSelected(storageRefreg)"
+                        ng-options="x.id as x.type for x in storageRefregs"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li>
+            <label for="temperatureRecord">有无温度记录</label>
+            <div class="mySelect">
+                <select ng-model="temperRecord"
+                        ng-options="x.id as x.name for x in haveOrNots"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe60d;</i>
+        </li>
+        <li class="number">
+            <label style="white-space: nowrap;">冷库容量</label>
+            <div>
+                <div>
+                    <span class="nowrap">8~25℃</span><input type="number"
+                                                            ng-model="capacity1"><span class="nowrap">面积㎡</span><input
+                        type="number" ng-model="height1"><span class="nowrap fr">高m</span>
+                </div>
+                <div>
+                    <span class="nowrap">2~8℃</span><input type="number"
+                                                           ng-model="capacity2"><span class="nowrap">面积㎡</span><input
+                        type="number" ng-model="height2"><span class="nowrap fr">高m</span>
+                </div>
+                <div>
+                    <span class="nowrap">-2~-18℃</span><input type="number"
+                                                              ng-model="capacity3"><span class="nowrap">面积㎡</span><input
+                        type="number" ng-model="height3"><span class="nowrap fr">高m</span>
+                </div>
+                <div>
+                    <span class="nowrap">-18~-30℃</span><input type="number"
+                                                               ng-model="capacity4"><span
+                        class="nowrap">面积㎡</span><input
+                        type="number" ng-model="height4"><span class="nowrap fr">高m</span>
+                </div>
+                <div>
+                    <span class="nowrap">&lt;-50℃</span><input type="number"
+                                                               ng-model="capacity5"><span
+                        class="nowrap">面积㎡</span><input
+                        type="number" ng-model="height5"><span class="nowrap fr">高m</span>
+                </div>
+                <!-- <div style="width: auto"></div> -->
+            </div>
+        </li>
+        <li>
+            <label>周边设施：</label>
+            <div class="mySelect">
+                <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
+            </div>
+        </li>
+        <li>
+            <label>资质荣誉图：
+                <small class="text-warning">*最多八张</small>
+            </label>
+            <label class="pic">
+                <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles" ngf-multiple="true"
+                       name="honorfiles">
+            </label>
+            <output class="img_list">
+						<span ng-repeat="honorfile in totalhonorfiles"><img
+                                class="thumb" ngf-src="honorfile" title="{{honorfile}}"><i
+                                ng-click="drophonor(honorfile)">×</i></span>
+            </output>
+        </li>
+        <li>
+            <label>冷库认证</label>
+            <label class="pic">
+                <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="false" name="files">
+            </label>
+            <output class="img_list">
+						<span ng-repeat="file in totalfiles">
+							<img class="thumb" ngf-src="file" title="{{file.name}}">
+							<i ng-click="drop(file)">×</i>
+						</span>
+            </output>
+            <label style="font-size: .5rem;line-height: 1.7;">
+                <small class="text-warning">请上传企业营业执照,冷库认证通过之后，将显示绿色盾牌标识，提高信任度和搜索排名</small>
+            </label>
+        </li>
+    </ul>
+    <!--双箭头下拉-->
+    <div class="next"><i class="iconfont">&#xe649;</i></div>
+    <button class="mybtn" ng-click="submit()">确认发布</button>
+</section>
+<script>
+    $(function () {
+        $('.rdcImg').children('div').eq(0).children('label').click(function () {
+            var oLabel = $(this).index();
+            if (oLabel != 2) {
+                $(this).parent().siblings('ul').show().children('li').eq(oLabel).show().siblings('li').hide();
+            } else {
+                $(this).parent().siblings('ul').hide();
+            }
+        })
+    })
+</script>
 </body>
