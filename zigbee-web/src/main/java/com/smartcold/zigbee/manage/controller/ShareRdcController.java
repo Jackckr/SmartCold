@@ -218,7 +218,27 @@ public class ShareRdcController  {
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
-	
+
+
+	@RequestMapping(value = "/newGetSEListByUID")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> newGetSEListByUID(HttpServletRequest request,Integer uid) {
+		if(uid==null||uid==0){
+			UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
+			if(user!=null&&user.getId()!=0){
+				uid=user.getId();
+			}else{
+				return ResponseData.newFailure("会话超时，请重新登录！~");
+			}
+		}
+		this.getPageInfo(request);
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("sstauts", 1);//必须
+		filter.put("releaseID", uid);//必须
+		filter.put("datatype",1);
+		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
+		return ResponseData.newSuccess(data);
+	}
 	
 	/**
 	 * 根据冷库id获得关联发布信息
