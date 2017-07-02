@@ -469,6 +469,7 @@ public class RdcController {
 		rdcEntity.setHeight(rdcAddDTO.getHeight());
 		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
 		rdcEntity.setOpenLIne(rdcAddDTO.getOpenLIne());
+		rdcEntity.setIsJoinStand(rdcAddDTO.getIsJoinStand());
 		if (rdcAddDTO.getRemark()!=null) {
 			rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		}
@@ -612,6 +613,9 @@ public class RdcController {
 		rdcEntity.setHeight(rdcAddDTO.getHeight());
 		rdcEntity.setOpenLIne(rdcAddDTO.getOpenLIne());
 		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
+		rdcEntity.setIsJoinStand(rdcAddDTO.getIsJoinStand());
+		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
+		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
 		if(SetUtil.isNotNullMap(lngLatMap)){
 			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
