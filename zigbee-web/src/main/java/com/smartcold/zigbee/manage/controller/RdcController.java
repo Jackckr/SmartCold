@@ -441,8 +441,7 @@ public class RdcController {
 					  @RequestParam(required = false) MultipartFile file0,@RequestParam(required = false) MultipartFile standPic,
 					  @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 					  @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-					  @RequestParam(required = false) MultipartFile auditPic,String empStr,String userStr) throws Exception {
-		RdcAddDTO rdcAddDTO=null;
+					  @RequestParam(required = false) MultipartFile auditPic,String empStr,String userStr,RdcAddDTO rdcAddDTO) throws Exception {
 		UserEntity userEntity=null;
 		if (!StringUtils.isEmpty(empStr)) {
 			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
