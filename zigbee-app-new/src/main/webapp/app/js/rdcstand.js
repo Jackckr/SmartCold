@@ -101,13 +101,25 @@ $().ready(function() {
 		var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
 		localStorage.list_cache_coldlist=JSON.stringify({totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html(),scrollHeight:scrollHeight});
   	};
-  	
+    collect=function(ops) {
+        var em = $(ops);
+        if(em.hasClass('noCollect')){
+            em.removeClass('noCollect').addClass('hasCollect');
+            em.children('i').html('&#xe60c;');
+            em.children('em').html('已收藏');
+        }else{
+            em.addClass('noCollect').removeClass('hasCollect');
+            em.children('i').html('&#xe605;');
+            em.children('em').html('收藏');
+        }
+    };
   	function gethtml(rdc){
          var approve='<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库';
   		 var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
 		 '<div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p>' +
-		 '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>'];
-  		 	 // for ( var i = 1; i <= 5; i++) { score.push(i<=rdc.score?'<li class="filled">★</li>':"<li>★</li>"); } score.push('</ul></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button></li>');
+		 '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button>' +
+		 '<div class="btnFn clearfix"><a href="colddetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
+         '<a class="fr noCollect" onclick="collect(this)"><i class="iconfont">&#xe605;</i><em>收藏</em></a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
         return score.join("");
   	}
   	function getPageData(){//启用无限加载

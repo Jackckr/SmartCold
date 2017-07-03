@@ -68,7 +68,7 @@ $().ready(function() {
   		    var adds=$("#ul_hascar_list li.active").attr("value");////地区
   			var gdty=$("#ul_goodtype_list li.active").attr("value");//商品类型
   			var keyword=$("#searchDara_div input").val().trim();////关键字搜索
-  		    var _options={provinceid:adds, goodtype: gdty,type:type,datatype:1,rdcID:rdcid,keyword:keyword};
+  		    var _options={provinceid:adds, goodtype: gdty,typeCode:2,dataType:1,rdcID:rdcid,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
@@ -101,18 +101,32 @@ $().ready(function() {
             rdc.username=rdc.id
         }
         var score = [
-            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>出售货源</span><div>'+
+            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求购货源</span><div>'+
             '<p class="ellipsis">'+rdc.title+'</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>'+rdc.sqm+'吨</p><span class="grab green">['+showTime+']</span>'+
             '</div><div class="flex"><div class="item"><h4>'+daysRound+'天</h4>'+
             '<p>有效期</p></div><div class="item"><h4>'+rdc.validEndTime+'</h4><p>报价截止日</p>'+
-            '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a></li>'
+            '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a>' +
+			'<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
+            '<a class="fr noCollect" onclick="collect(this)"><i class="iconfont">&#xe605;</i><em>收藏</em></a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
         ];
   		  return score.join("");
   	}
+    collect=function(ops) {
+        var em = $(ops);
+        if(em.hasClass('noCollect')){
+            em.removeClass('noCollect').addClass('hasCollect');
+            em.children('i').html('&#xe60c;');
+            em.children('em').html('已收藏');
+        }else{
+            em.addClass('noCollect').removeClass('hasCollect');
+            em.children('i').html('&#xe605;');
+            em.children('em').html('收藏');
+        }
+    };
   	function getPageData(){//启用无限加载
   		   isLoadRB=true;
   		   var _filter=  getFilter(currentPage,maxSize);
-  		   $.post(ER.root+"/i/ShareRdcController/getSEGDList", _filter, function(data) {	
+  		   $.post(ER.root+"/i/ShareRdcController/newGetSERDCList", _filter, function(data) {
   	   	          if(data.success&&data.data.length>0){
   	   	        	  totalPages=data.totalPages;
   	   	         	  currentPage++; var html=[];var   rdcsList = data.data;//
