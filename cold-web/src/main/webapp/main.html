@@ -306,8 +306,6 @@
 									<li id="ml_acl112" onclick="activeLi(this)"><a href="#/overTemperatureYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>超温因子统计</a></li>
 									<li id="ml_acl113" onclick="activeLi(this)"><a href="#/BWYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>保温因子统计</a></li>
 									<li id="ml_acl114" onclick="activeLi(this)"><a href="#/WDZQYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>温度周期因子统计</a></li>
-									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTemperatureCount/{{rdcId}}"><i class="fa fa-circle-o"></i>超温告警次数统计</a></li>
-									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTemperatureTime/{{rdcId}}"><i class="fa fa-circle-o"></i>超温告警时长统计</a></li>
 								</ul></li>
 							<!-- 运管分析 -->
 							<li id="ml_acl120"><a href="#"><i class="icon iconfont"></i><span
@@ -351,11 +349,13 @@
 							class="icon iconfont" style="color:#ffffff"></i> <span
 							class="menu-title text-white" style="font-size: large">报警管理</span></a>
 						<ul id="mlul3" class="treeview-menu">
-							<li id="ml_acl211" onclick="activeLi(this)"><a 	href="#/alarmTemp"><i class="icon iconfont"></i><span class="menu-title">温度告警</span></a></li>
+							<li id="ml_acl211" onclick="activeLi(this)"><a 	href="#/alarmTemp"><i class="icon iconfont"></i><span class="menu-title">温度报警</span></a></li>
 <!-- 							<li id="ml_acl212" onclick="activeLi(this)"><a 	href="#/alarmLog"><i class="icon iconfont"></i><span class="menu-title">运管告警</span></a></li> -->
 <!-- 							<li id="ml_acl213" onclick="activeLi(this)"><a 	href="#/alarmLog"><i class="icon iconfont"></i><span class="menu-title">制冷告警</span></a></li> -->
 							<li id="ml_acl210" onclick="activeLi(this)"><a 	href="#/alarmLog"><i class="icon iconfont"></i><span class="menu-title">报警日志</span></a></li>
-							<li id="ml_acl215" onclick="activeLi(this)"><a  href="#/warncoldAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>告警统计</a></li>
+<!-- 							<li id="ml_acl215" onclick="activeLi(this)"><a  href="#/warncoldAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>告警统计</a></li> -->
+								<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTemperatureCount/{{rdcId}}"><i class="fa fa-circle-o"></i>超温报警次数统计</a></li>
+									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTemperatureTime/{{rdcId}}"><i class="fa fa-circle-o"></i>超温报警时长统计</a></li>
 						</ul></li>
 					<li id="ml_acl300" class="treeview"><a href="#/about"><i
 							class="icon iconfont" style="color:#ffffff"></i> <span
