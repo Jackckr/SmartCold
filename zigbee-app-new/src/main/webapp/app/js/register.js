@@ -14,7 +14,7 @@ angular.module('myapp', []).controller('oregister',function($http, $location, $s
 			$.post( ER.root+"/i/user/existenceUserName", {userName: $scope.telephone}, function(data) {
                 victdata.extname=!data;
                 $("#mention1").html(data?"该手机已经注册~":"");
-                $("#but_vercode").attr("disabled", data).css("background-color", data ?  "#cccccc":"#438BCB" );
+                $("#but_vercode").attr("disabled", data).css("background-color", data ?  "#cccccc":"#4287ff" );
 			});//
 		}else{
 			 victdata.victtl=false;

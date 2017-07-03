@@ -5,9 +5,10 @@ body{
 	width: 100%;
 	height: 100%;
     background: #F4F8FB;
+	padding:0;
 }
 .login{
-	margin-top: 2rem;
+	margin-top: 1rem;
     padding: 0 0.9rem;
     box-sizing: border-box;
 }
@@ -42,6 +43,18 @@ body{
 	margin: 1.5rem auto 0.5rem;
 	font-size: 0.8rem;
 }
+#btn_login,#app_but1{
+	background: -webkit-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Safari 5.1 - 6.0 */
+	background: -ms-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* ie */
+	background: -moz-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Firefox 3.6 - 15 */
+	background: linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* 标准的语法 */
+	-webkit-border-radius: 1rem;
+	border-radius: 1rem;
+	margin-top: 0;
+}
+#app_but1{
+	margin-top: 1.5rem;
+}
 .register{
 	height: 2rem;
 	margin-top: 0.5rem;
@@ -56,28 +69,26 @@ body{
 .register div a{
 	display: block;
 	font-size: .8rem;
-	color: #8D8D8E;
+	color: #6ab3de;
 }
 footer{
 	width: 100%;
-	margin-top: 2rem;
     padding: 0 0.9rem;
     box-sizing: border-box;
 }
 .line{
-	width: 60%;
-	margin: 0 auto 1.5rem;
+	margin: 0 auto 1rem;
 	border-bottom: 1px solid #E1E4E5;
 	text-align: center;
 }
 .line span{
 	display: inline-block;
-	font-size: .8rem;
+	font-size: .6rem;
 	color: #8D8D8E;
-	padding: 0.5rem 2rem;
+	padding: 0.5rem;
 	background-color: #F4F8FB;
 	position: relative;
-	top: 1rem;
+	top: .9rem;
 }
 .three{
 	height:2.5rem;
@@ -89,22 +100,13 @@ footer{
 }
 .three>div a{
 	display: inline-block;
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 4.5rem;
+	height: 4.5rem;
 	background-color: #F1594B;
 	border-radius: 50%;
 	line-height: 2.5rem;
 	text-align: center;
 	color: #fff;
-}
-.three>div:nth-child(2) a{
-	background-color: #F39826;
-}
-.three>div:nth-child(3) a{
-	background-color: #448BCB;
-}
-.three>div a i{
-	font-size: 1.5rem;
 }
 /*注册*/
 header{
@@ -131,6 +133,10 @@ section{
 }
 section .inputBd input{
 	text-indent: 0;
+	padding-left: 2rem;
+}
+#code2{
+	padding: 0.8rem 5.5rem  0.8rem 2rem;
 }
 #yzm{
 	padding-right: 4rem;
@@ -145,8 +151,8 @@ section .inputBd input{
 	right: 0.2rem;
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
-	font-size: 0.8rem;
-	color: #448BCB!important;
+	font-size: 0.7rem;
+	color: #4287ff!important;
 	padding:0.3rem 0.5rem;
 	border-radius:4px;
 	color:#333;
@@ -252,4 +258,18 @@ input[type='radio']:checked{
 .check_icon.on i {
 	background-color: #5eb95e;
 	color: #fff;
+}
+/*新版登录*/
+.loginBg{
+	text-align: center;
+}
+.loginBg h1{
+	display: inline-block;
+	background: url("../img/newlogin.png") no-repeat center;
+	background-size: cover;
+	width: 5.551rem;
+	height:2rem;
+}
+#regAgreement{
+	color:#55adf2;
 }

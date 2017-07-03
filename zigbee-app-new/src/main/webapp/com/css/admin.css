@@ -321,10 +321,14 @@ section.show{
 	position: relative;
 }
 .editarea .input{
-	padding:0 0 2px 3.5rem;
+	padding:0 0 2px 2rem;
 	height: 2rem;
 	color: #333;
 	box-sizing: border-box;
+}
+.editarea span{
+	width: 2rem;
+	text-align: center;
 }
 .bd{
 	border-bottom: 1px solid #eee;	
@@ -398,7 +402,6 @@ section.show{
 	margin-bottom: 0;
 }
 .inputs .tel:last-child{
-	border-bottom: 0;
 	position:relative;
 }
 .tel i{
@@ -429,6 +432,8 @@ section.show{
 	width: 90%;
 	margin: 0.5rem 5%;
 	box-sizing: border-box;
+}
+#app_but1{
 }
 .show1,.show2{
 	display: none;
@@ -1118,4 +1123,14 @@ html,body{
 	width: .8rem;
 	height: .8rem;
 	line-height: 1rem;
+}
+.loginBg{
+	text-align: center;
+}
+.loginBg h1{
+	display: inline-block;
+	background: url("../img/newlogin.png") no-repeat center;
+	background-size: cover;
+	width: 5.551rem;
+	height:2rem;
 }
