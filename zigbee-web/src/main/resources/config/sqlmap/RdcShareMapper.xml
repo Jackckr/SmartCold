@@ -325,6 +325,9 @@
 		  <set > 
 								<if test=" rdcID         !=0">                          rdcID           =#{rdcID            }  ,</if>
 								<if test=" releaseID     !=0">	                        releaseID       =#{releaseID        }  ,</if>
+			                    <if test=" rentdate      !=null and rentdate  !=''">	rentdate       =#{rentdate        }  ,</if>
+			                    <if test=" username      !=null and username  !=''">	username       =#{username        }  ,</if>
+			                    <if test=" publishunit   !=null and publishunit  !=''">	publishunit       =#{publishunit        }  ,</if>
 								<if test=" codeLave1     !=null and codeLave1  !=''">	codeLave1       =#{codeLave1        }  ,</if>
 								<if test=" codeLave2     !=null and codeLave1  !=''">	codeLave2       =#{codeLave2        }  ,</if>
 								<if test=" codeLave3     !=null and codeLave2  !=''">	codeLave3       =#{codeLave3        }  ,</if>

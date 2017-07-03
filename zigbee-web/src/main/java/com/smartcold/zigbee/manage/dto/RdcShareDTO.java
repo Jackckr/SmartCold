@@ -42,6 +42,7 @@ public class RdcShareDTO {
 	private String updatetime; // 最后更新时间
 	private int rentdate; //租期
 	private String username;//发布者
+	private int publishunit;//发布物品单位
 	//->拓展字段  ->车
 	
 	private int stprovinceID;
@@ -379,5 +380,13 @@ public class RdcShareDTO {
 
 	public void setInfoIntegrity(int infoIntegrity) {
 		this.infoIntegrity = infoIntegrity;
+	}
+
+	public int getPublishunit() {
+		return publishunit;
+	}
+
+	public void setPublishunit(int publishunit) {
+		this.publishunit = publishunit;
 	}
 }

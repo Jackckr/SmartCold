@@ -453,7 +453,7 @@ public class ShareRdcController  {
 	
 	@RequestMapping(value="shareFreeReleaseForIos")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> shareFreeReleaseForIos(HttpServletRequest request, RdcShareDTO	rdcShareDTO,Integer uid){
+	public ResponseData<RdcShareDTO> shareFreeReleaseForIos(HttpServletRequest request, RdcShareDTO	 rdcShareDTO,Integer uid){
 		 String data = JSON.toJSONString(rdcShareDTO);
 		 return shareFreeRelease(request, data, uid);
 	}

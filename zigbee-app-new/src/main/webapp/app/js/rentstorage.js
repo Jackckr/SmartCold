@@ -52,7 +52,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
             $scope.tocityId = data[0].cityID;
         });
     };
-
+    $scope.rentDateSelected = function () {   };
+    //租期类型
+    $scope.rentDateTypes = [{id:1,type:"1个月以下"},{id:2,type:"1~3个月"},{id:3,type:"3~6个月"},{id:4,type:"6~9个月"},{id:5,type:"1年以上"},{id:6,type:"两年以上"},{id:7,type:"三年以上"},{id:8,type:"五年以上"}];
+    $scope.rentdate=$scope.rentDateTypes[0].id;
     // 获取商品温度类型
     $http.get(ER.root + '/i/rdc/findAllTemperType').success(function (data) {
         $scope.temperTypes = data;
@@ -135,6 +138,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') {
             return false;
         }
+        if ($scope.rentdate == undefined || $scope.rentdate == '') {
+            return false;
+        }
         if ($scope.validStartTime == undefined || $scope.validStartTime == '') {
             return false;
         }
@@ -187,11 +193,14 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 cityid: $scope.cityId,
                 codeLave2: $scope.temperType,
               //  codeLave1: $scope.storageType,
+                rentdate:$scope.rentdate,
+                publishunit:3,
+                username:window.user.username,
                 unit: $scope.unit,
                 sqm: $scope.sqm,
-                unitPrice: $scope.unitprice,
                 validStartTime: $scope.validStartTime,
                 validEndTime: $scope.validEndTime,
+                unitPrice: $scope.unitprice,
                 telephone: $scope.telephone.trim(),
                 note: $scope.note,
                 dataType: 3,

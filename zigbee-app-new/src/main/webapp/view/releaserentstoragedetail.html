@@ -107,6 +107,13 @@
 
             <li><label for="price">单价</label><em>*</em>
                 <input type="number" id="price" name="unitPrice" placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
+            <li><label for="rentdate">租期</label><em>*</em>
+                <div class="mySelect">
+                    <select id="rentdate" ng-model="rentdate" name="rentdate"
+                            ng-change="rentDateSelected(rentdate)"
+                            ng-options="x.id as x.type for x in rentDateTypes"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe60d;</i></li>
             <li>
                 <label for="time">有效开始时间</label><em>*</em>
                 <div class="mySelect">
