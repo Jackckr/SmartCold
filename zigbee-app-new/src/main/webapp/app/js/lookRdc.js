@@ -180,7 +180,6 @@ $().ready(function () {
         }
         initFilter();
         initevg();
-
     };
     searchFilter = function () {//搜索
         if ($("#searchDara_div input").val().trim() != "") {
