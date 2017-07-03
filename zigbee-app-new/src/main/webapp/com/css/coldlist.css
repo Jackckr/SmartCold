@@ -34,7 +34,6 @@ header>div>a>.iconfont{
 section{
 	margin: 2.2rem 0 0.1rem;
 	height: 2rem;
-	background-color: #fff;
 	display: table;
 	table-layout: fixed;
 	width:100%;
@@ -47,6 +46,7 @@ section{
 	left: 0;
 	z-index: 3;
 	border-bottom: 1px solid #CACACA;
+	background-color: #fff;
 }
 .droplist{
 	display: table-cell;
@@ -165,11 +165,16 @@ section{
 /*黄色星星*/
 .imgCell{
 	border-bottom: 0.5px solid #eee;
-	border-top: 0.5px solid #fdfdfd;
-	padding:0.2rem 0.9rem;
+	border-top: .08rem solid #e4eeff;
 	position: relative;
 	background-color: #fff;
 	margin: 0.5rem 0;
+}
+.coldlist .imgCell>a{
+	padding:0.2rem 0.9rem!important;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .imgCell:last-child{
 	border-bottom: 0;
@@ -671,8 +676,8 @@ section{
 	margin-top: 2.4rem;
 }
 .lookRdc .coldlist li{
-	border-top: .08rem solid #e4eeff;
-	border-bottom: .08rem solid #eee;
+/*
+	border-bottom: .08rem solid #eee;*/
 	margin-bottom: .6rem;
 }
 .lookRdc .coldlist li a{
@@ -744,12 +749,12 @@ section{
 	border-top: .5px solid #eee;
 	margin-top: .3rem;
 }
-.rentRdc .coldlist li .btnFn a{
+.btnFn a{
 	width: 4rem;
 	text-align: center;
 	font-size: .6rem;
 	color: #c0c0c0;
-	padding: 0.3rem 0;
+	padding: 0.3rem 0!important;
 }
 .btnFn a i,.rentRdc .position i{
 	font-size: .65rem;
@@ -792,7 +797,7 @@ section{
 	font-size: .6rem;
 }
 .rdclist .coldlist li .grab{
-	bottom: .5rem;
+	bottom: 2rem;
 	width: 3rem;
 }
 .rdclist .coldlist .imgCell a>img{
@@ -814,7 +819,6 @@ section{
 	padding-left: 3rem;
 }
 .rdcstand .coldlist li .grab{
-	bottom: .4rem;
 }
 .rdcstand .coldlist li a>span{
 	background-color: #2eb05f;
@@ -825,4 +829,39 @@ section{
 	color: #f00;
 	top:0;
 	right: 0;
+}
+.hasCollect{
+	color: #ff8800!important;
+}
+/*冷库详情改版css*/
+.rdcpadding{
+	padding:0.3rem .9rem;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border-bottom: .3rem solid #f1f1f1;
+}
+div.rdcpadding:last-child{
+
+}
+.rdcDetailName h1{
+	font-size: .8rem;
+	margin: .2rem;
+}
+.rdcDetailName h1 i{
+	font-size: .6rem;
+}
+.rdcpadding span{
+	color: #989898;
+	display: inline-block;
+	padding-right:.5rem;;
+	text-align: right;
+	width: 4rem;
+	letter-spacing: -0.5px;
+}
+.rdcDetailMainInfo{
+	border-bottom-width: 1px;
+}
+.rdcDetailOtherInfo p{
+	margin: .2rem 0;
 }

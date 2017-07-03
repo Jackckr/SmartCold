@@ -91,8 +91,8 @@ $().ready(function () {
         var adds = $("#ul_hascar_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
         var _options = {
-            type: type,
-            datatype: 3,
+            typeCode: 2,
+            dataType: 3,
             rdcID: rdcid,
             sqm: sqm,
             managetype: sety,
@@ -142,10 +142,24 @@ $().ready(function () {
             '<p class="ellipsis">'+rdc.title+'</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>'+rdc.sqm+'㎡</p><span class="grab green">['+showTime+']</span>'+
             '</div><div class="flex"><div class="item"><h4>'+daysRound+'天</h4>'+
             '<p>租期</p></div><div class="item"><h4>'+rdc.validEndTime+'</h4><p>报价截止日</p>'+
-            '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a></li>'
+            '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a>' +
+            '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
+            '<a class="fr noCollect" onclick="collect(this)"><i class="iconfont">&#xe605;</i><em>收藏</em></a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
         ];
         return score.join("");
     }
+    collect=function(ops) {
+        var em = $(ops);
+        if(em.hasClass('noCollect')){
+            em.removeClass('noCollect').addClass('hasCollect');
+            em.children('i').html('&#xe60c;');
+            em.children('em').html('已收藏');
+        }else{
+            em.addClass('noCollect').removeClass('hasCollect');
+            em.children('i').html('&#xe605;');
+            em.children('em').html('收藏');
+        }
+    };
 
     function getPageData() {//启用无限加载
         isLoadRB = true;
