@@ -108,7 +108,7 @@ img {
 }
 .mybtn{
 	padding:0.4rem 0.8rem;
-	background-color: #4287ff;
+	background: #4287ff;
 	font-size: 0.7rem;
 	color: #fff;
 	text-align: center;
@@ -189,7 +189,7 @@ img {
   	z-index:20;
   	background: rgba(0,0,0,.5); 
   }
-  .gray{background-color: gray;}
+  .gray{background: gray;}
 
   /* 公共头部和底部样式 */
   header{

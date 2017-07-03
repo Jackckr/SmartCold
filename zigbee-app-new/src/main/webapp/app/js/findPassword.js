@@ -11,7 +11,7 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 				$.post( ER.root+"/i/user/existenceUserName", {userName: $scope.telephone}, function(data) {
 	                if(data){
 	                	$("#mention1").html("");
-	                	$("#but_vercode").attr("disabled", !ct).css("background-color", ct ? "#438BCB" : "#cccccc");
+	                	$("#but_vercode").attr("disabled", !ct).css("background-color", ct ? "#4287ff" : "#cccccc");
 					}else{
 						$("#mention1").html("系统未找到该用户信息！");
 					}
@@ -41,17 +41,7 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 		var ct = $scope.verrcode&& $scope.mtvarcode&& ($scope.mtvarcode.toLowerCase() == $scope.verrcode.toLowerCase());
 		$("#app_but1").attr("disabled", !ct);
 		if (ct) {$("#app_but1").removeClass("gray");} else {$("#app_but1").addClass("gray");}
-	} 
-//	 else {
-//		$http.get(ER.root+ "/i/ShareRdcController/sharvistCode",{params : {key : 'user_findwpd',telephone :$scope.telephone,yzm : $scope.verrcode}}).success(function(data) {
-//			if (data) {
-//				$("#app_but1").attr("disabled", false);
-//				$("#app_but1").removeClass("gray");
-//			} else {
-//				$("#app_but1").attr("disabled", true);$("#app_but1").addClass("gray");
-//			}
-//		});
-//	}
+	}
    };
    $scope.checkData=function ($event){
 	   var password = $("#txt_password").val().trim();
