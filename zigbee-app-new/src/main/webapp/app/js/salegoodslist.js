@@ -6,7 +6,7 @@ $().ready(function() {
       var isLoadRB=false;  
       var rdcid=getUrlParam("rdcid");
 	  var ul_select=$("#ul_goodlist_list");
-	  var type=1, totalPages=  currentPage=  1;  // 当前页//rental_type:出租类型:1:出租 2:求租
+	  var typeCode=1, totalPages=  currentPage=  1;  // 当前页//rental_type:出租类型:1:出租 2:求租
       gosharedile=function(sharid){//共享详情
     	 window.location.href ="storehousedetail.html?id="+sharid; 
       };
@@ -68,7 +68,7 @@ $().ready(function() {
   		    var adds=$("#ul_hascar_list li.active").attr("value");////地区
   			var gdty=$("#ul_goodtype_list li.active").attr("value");//商品类型
   			var keyword=$("#searchDara_div input").val().trim();////关键字搜索
-  		    var _options={provinceid:adds, goodtype: gdty,type:type,datatype:1,rdcID:rdcid,keyword:keyword};
+  		    var _options={provinceid:adds, goodtype: gdty,typeCode:1,dataType:1,rdcID:rdcid,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	};
@@ -112,7 +112,7 @@ $().ready(function() {
   	function getPageData(){//启用无限加载
   		   isLoadRB=true;
   		   var _filter=  getFilter(currentPage,maxSize);
-  		   $.post(ER.root+"/i/ShareRdcController/getSEGDList", _filter, function(data) {	
+  		   $.post(ER.root+"/i/ShareRdcController/newGetSERDCList", _filter, function(data) {
   	   	          if(data.success&&data.data.length>0){
   	   	        	  totalPages=data.totalPages;
   	   	         	  currentPage++; var html=[];var   rdcsList = data.data;//

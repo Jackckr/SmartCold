@@ -91,8 +91,8 @@ $().ready(function () {
         var adds = $("#ul_hascar_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
         var _options = {
-            type: type,
-            datatype: 3,
+            typeCode: type,
+            dataType: 3,
             rdcID: rdcid,
             sqm: sqm,
             managetype: sety,
@@ -115,15 +115,22 @@ $().ready(function () {
     };
     function gethtml(rdc) {
         var approve=''
-        rdc.percent='82%';
         if(rdc.audit==2){
-            approve='<i class="iconfont green">&#xe6ac;</i>已认证<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库'
-        }else if(rdc.audit==0){
-            approve='<i class="iconfont orange">&#xe63b;</i>未认证<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库'
+            if(rdc.istemperaturestandard==1){
+                approve='<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+            }else{
+                approve='<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+            }
+        }else if(rdc.audit!=2){
+            if(rdc.istemperaturestandard==1){
+                approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+            }else{
+                approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
+            }
         };
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id='+rdc.id+'"  onclick="getSoll()"><span><img src="'+rdc.logo+'" alt=""></span><div>'+
-            '<p class="ellipsis">'+rdc.title+'</p><em>信息完整度<i class="blue">'+rdc.percent+'</i></em><p class="position omg">'+approve+'</p>'+
+            '<p class="ellipsis">'+rdc.title+'</p><em>信息完整度<i class="blue">'+rdc.infoIntegrity+'%</i></em><p class="position omg">'+approve+'</p>'+
             '<p class="grab orange">'+rdc.unitPrice+'<br><span>元/㎡/天</span></p></div><div class="flex"><div class="item"><h4>'+rdc.sqm+'㎡</h4>'+
             '<p>总面积</p></div><div class="item"><h4>'+rdc.sqm+'㎡</h4><p>可租面积</p></div><div class="item"><h4 class="omg">'+rdc.detlAddress+'</h4><p>地址</p></div></div></a>'+
             '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
