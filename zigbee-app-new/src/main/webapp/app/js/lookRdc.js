@@ -128,14 +128,21 @@ $().ready(function () {
         if(showDate>=30){
             showTime=Math.floor(showDate/30)+'个月前发布';
         }else{
-            showTime=showDate+'天前发布';
+            if(showDate>1){
+                showTime=showDate+'天前发布';
+            }else{
+                showTime='刚刚发布';
+            }
+        }
+        if(rdc.username==undefined){
+            rdc.username=rdc.id
         }
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求租冷库</span><div>'+
             '<p class="ellipsis">'+rdc.title+'</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>'+rdc.sqm+'㎡</p><span class="grab green">['+showTime+']</span>'+
             '</div><div class="flex"><div class="item"><h4>'+daysRound+'天</h4>'+
             '<p>租期</p></div><div class="item"><h4>'+rdc.validEndTime+'</h4><p>报价截止日</p>'+
-            '</div><div class="item"><h4 class="omg">'+rdc.id+'</h4><p>发布者</p></div></div></a></li>'
+            '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a></li>'
         ];
         return score.join("");
     }
@@ -143,7 +150,7 @@ $().ready(function () {
     function getPageData() {//启用无限加载
         isLoadRB = true;
         var _filter = getFilter(currentPage, maxSize);
-        $.post(ER.root + "/i/ShareRdcController/getSERDCList", _filter, function (data) {
+        $.post(ER.root + "/i/ShareRdcController/newGetSERDCList", _filter, function (data) {
             if (data.success && data.data.length > 0) {
                 totalPages = data.totalPages;
                 currentPage++;
@@ -173,7 +180,6 @@ $().ready(function () {
         }
         initFilter();
         initevg();
-
     };
     searchFilter = function () {//搜索
         if ($("#searchDara_div input").val().trim() != "") {

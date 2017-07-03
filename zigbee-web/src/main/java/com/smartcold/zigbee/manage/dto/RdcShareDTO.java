@@ -40,6 +40,9 @@ public class RdcShareDTO {
 	private int stauts; // 当前消息是否有效 0：无效 1：有效
 	private String addtime; // 添加时间
 	private String updatetime; // 最后更新时间
+	private int rentdate; //租期
+	private String username;//发布者
+	private int publishunit;//发布物品单位
 	//->拓展字段  ->车
 	
 	private int stprovinceID;
@@ -62,6 +65,7 @@ public class RdcShareDTO {
 	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	private int istemperaturestandard;
 	private int rdcscore;
+	private int infoIntegrity;
 	public int getId() {
 		return id;
 	}
@@ -352,5 +356,37 @@ public class RdcShareDTO {
 	}
 	public void setRdcscore(int rdcscore) {
 		this.rdcscore = rdcscore;
+	}
+
+	public int getRentdate() {
+		return rentdate;
+	}
+
+	public void setRentdate(int rentdate) {
+		this.rentdate = rentdate;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public int getInfoIntegrity() {
+		return infoIntegrity;
+	}
+
+	public void setInfoIntegrity(int infoIntegrity) {
+		this.infoIntegrity = infoIntegrity;
+	}
+
+	public int getPublishunit() {
+		return publishunit;
+	}
+
+	public void setPublishunit(int publishunit) {
+		this.publishunit = publishunit;
 	}
 }

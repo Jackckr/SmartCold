@@ -1,0 +1,79 @@
+/*新版发布*/
+.releaseModel li{
+    margin-bottom: .2rem;
+    padding: .3rem .9rem;
+}
+.releaseModel li a{
+    display: block;
+    background-color: #fff;
+    padding: 0 1rem;
+    height:4rem;
+    -webkit-box-shadow: 0 1px 2px rgba(204, 204, 204, 0.53);
+    -moz-box-shadow: 0 1px 2px rgba(204, 204, 204, 0.53);
+    -ms-box-shadow: 0 1px 2px rgba(204, 204, 204, 0.53);
+    box-shadow: 0 1px 2px rgba(204, 204, 204, 0.53);
+}
+.releaseModel li a div.fr,.releaseImg{
+    margin: .5rem auto 0;
+    width: 4.05rem;
+    height: 3rem;
+    background: url("../img/r1.png") no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    background-size: cover;
+}
+.releaseImg{
+    width: 8.1rem;
+    height: 6rem;
+}
+.releaseModel li a div.fl{
+    padding: .5rem 0 0 1rem;
+}
+.releaseModel li a div.fl p{
+    color: #fff;
+    font-size: .7rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    text-align: center;
+    background: -webkit-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Safari 5.1 - 6.0 */
+    background: -ms-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* ie */
+    background: -moz-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* 标准的语法 */
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    margin-bottom: .6rem;
+}
+.releaseModel li a div.fl h3{
+    font-size: .7rem;
+}
+.releaseModel li:nth-child(2) a div.fr{
+    background-image: url("../img/r2.png");
+}
+.releaseModel li:nth-child(3) a div.fr{
+    background-image: url("../img/r3.png");
+}
+.releaseModel li:nth-child(4) a div.fr{
+    background-image: url("../img/r4.png");
+}
+.releaseModel li:nth-child(5) a div.fr{
+    background-image: url("../img/r5.png");
+}
+/*发布冷库css*/
+.releaseCold{
+    margin: 0;
+}
+.houseinfo>li{
+    border-bottom-color: #c1b9f9;
+}
+.houseinfo>li.rdcImg{
+    font-size: .6rem;
+    line-height:1.7;
+}
+#tempStandDiv{
+    margin-top: 0.5rem;
+}
+.position>i{
+    font-size: .6rem;
+}

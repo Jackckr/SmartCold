@@ -262,7 +262,59 @@
 		ORDER BY
 		s.updatetime DESC limit 0,12
 	</select>
-	<select id="getUnitPriceByRdcId" resultType="java.lang.Double">
+	<select id="getNewSERDCListByPage" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+		SELECT
+		s.id,
+		s.rdcID,
+		s.releaseID,
+		s.title,
+		s.typeCode,
+		s.dataType,
+		s.typeText,
+		s.unitPrice,
+		s.telephone,
+		s.unit,
+		s.sqm,
+		s.detlAddress,
+		s.rentdate,
+		s.username,
+		st.type codeLave2,
+		sm.type codeLave1,
+		t.rdcscore,
+		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
+		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
+		r.audit,
+		r.istemperaturestandard,
+		r.address,
+		r.name,
+		r.coldtype,
+		r.sqm rdcSqm,
+		r.infoIntegrity,
+		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) as logo
+		FROM
+		shared_info s
+		LEFT JOIN rdc r ON s.rdcID = r.id
+		LEFT JOIN rdcext t on s.rdcID=t.RDCID
+		LEFT JOIN storagetempertype st on st.id=s.codeLave2
+		LEFT JOIN storagemanagetype sm on sm.id=s.codeLave1
+		<where>
+			<if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
+			<if test="keyword !=null and  keyword != ''"> and r.name like '%${keyword}%' </if>
+			<if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if>
+			<if test="managetype !=null and  managetype != ''"> and t.manageType IN  (${managetype})</if>
+			<if test="storagetempertype !=null and  storagetempertype != ''"> and t.codeLave2 in (${storagetempertype})</if>
+			<if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>
+			<if test="audit !=null and audit!=''"> and r.audit in (${audit})</if>
+			<if test="goodSaveType !=null and goodSaveType!=''">and t.storagetype in (${goodSaveType})</if>
+			<if test="dataType != null and dataType!=''">and s.dataType=#{dataType}</if>
+			<if test="typeCode !=null and typeCode!=''">and s.typeCode=#{typeCode}</if>
+		</where>
+		GROUP BY
+		s.id
+		ORDER BY
+		s.updatetime DESC
+	</select>
+    <select id="getUnitPriceByRdcId" resultType="java.lang.Double">
 		SELECT unitPrice FROM `shared_info` WHERE 	`rdcId`=#{rdcId} and `datatype`=3 and `typecode`=1 order by `id` desc limit 0,1
 	</select>
 	<insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
@@ -273,6 +325,9 @@
 		  <set > 
 								<if test=" rdcID         !=0">                          rdcID           =#{rdcID            }  ,</if>
 								<if test=" releaseID     !=0">	                        releaseID       =#{releaseID        }  ,</if>
+			                    <if test=" rentdate      !=null and rentdate  !=''">	rentdate       =#{rentdate        }  ,</if>
+			                    <if test=" username      !=null and username  !=''">	username       =#{username        }  ,</if>
+			                    <if test=" publishunit   !=null and publishunit  !=''">	publishunit       =#{publishunit        }  ,</if>
 								<if test=" codeLave1     !=null and codeLave1  !=''">	codeLave1       =#{codeLave1        }  ,</if>
 								<if test=" codeLave2     !=null and codeLave1  !=''">	codeLave2       =#{codeLave2        }  ,</if>
 								<if test=" codeLave3     !=null and codeLave2  !=''">	codeLave3       =#{codeLave3        }  ,</if>

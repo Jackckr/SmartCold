@@ -23,14 +23,19 @@
     	</div>
     </header>
 	<div class="newUser" id="userinfo" ng-cloak>
-		<div class="topImg">
+		<div class="topImg" ng-show="userinfo.id">
 			<div class="userPic">
-				<img id="user_img" ng-src="{{userinfo.avatar}}" ng-show="userinfo.id">
-				<img src="http://139.196.189.93:8089/app/userimg.jpg" ng-hide="userinfo.id">
+				<img id="user_img" ng-src="{{userinfo.avatar}}">
 				<input id="headImg" type="file" name=""  value="" />
 			</div>
 			<p class="userName">{{(userinfo.username=="" || userinfo.username == undefined)?userinfo.nickname:userinfo.username}}</p>
 			<p class="goApprove"><span><i class="iconfont">&#xe61c;</i>去认证</span></p>
+		</div>
+		<div class="topImg" ng-hide="userinfo.id">
+			<div class="userPic">
+				<img src="http://139.196.189.93:8089/app/userimg.jpg">
+			</div>
+			<p><a href="login.html" style="font-weight: 700;color: #000;">未登录</a></p>
 		</div>
 		<ul class="list list_icon">
 			<li class="clearfix" ng-login="user-mycold.html">

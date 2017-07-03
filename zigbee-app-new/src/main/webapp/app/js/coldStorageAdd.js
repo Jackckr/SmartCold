@@ -2,7 +2,7 @@ checkLogin();
 angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldStorageAdd', function($scope,$http, Upload){
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	$scope.phoneNum = parseFloat(window.user.telephone.trim());
-	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 0,name: "无"}];
+	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 2,name: "无"}];
     // 获取省列表
 	$.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:6}});
     $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
@@ -60,7 +60,8 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     $scope.capacity5 = 0;
     $scope.totalfiles = [];
     $scope.totalhonorfiles = [];
-    $scope.arrangePics = [];
+    $scope.tempStandPic = [];
+    $scope.auditPic = [];
     $scope.addFiles = function (files) {
     	for(var j=0,fileLen=files.length;j<fileLen;j++){
     		var _file=files[j].name;
@@ -87,7 +88,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         }
         $scope.totalfiles = $scope.totalfiles.concat(files);
     }
-    $scope.addArrangePic= function (files) {
+    $scope.addTempStandPic= function (files) {
     	for(var j=0,fileLen=files.length;j<fileLen;j++){
     		var _file=files[j].name;
     		var i=_file.lastIndexOf('.');
@@ -103,7 +104,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         		return false
         	}
     	}
-    	if($scope.arrangePics.length + files.length > 1){
+    	if($scope.tempStandPic.length + files.length > 1){
             //alert("最多上传八张图片");
         	layer.open({
                 content: '只能上传一张图片哦'
@@ -111,7 +112,33 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
               });
             return;
         }
-        $scope.arrangePics = $scope.arrangePics.concat(files);
+        $scope.tempStandPic = $scope.tempStandPic.concat(files);
+    }
+    $scope.addAuditPic= function (files) {
+        for(var j=0,fileLen=files.length;j<fileLen;j++){
+            var _file=files[j].name;
+            var i=_file.lastIndexOf('.');
+            var len=_file.length;
+            var extEndName=_file.substring(i+1, len);
+            var extName="GIF,BMP,JPG,JPEG,PNG";
+            //首先对格式进行验证
+            if(extName.indexOf(extEndName.toUpperCase())==-1) {
+                layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+                return false
+            }else if(files[j].size > 10485760){
+                layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+                return false
+            }
+        }
+        if($scope.auditPic.length + files.length > 1){
+            //alert("最多上传八张图片");
+            layer.open({
+                content: '只能上传一张图片哦'
+                ,btn: '确定'
+            });
+            return;
+        }
+        $scope.auditPic = $scope.auditPic.concat(files);
     }
     $scope.addHonorFiles = function (files) {
     	for(var j=0,fileLen=files.length;j<fileLen;j++){
@@ -146,12 +173,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             }
         })
     }
-    $scope.dropArrangePic = function(file){
-        angular.forEach($scope.arrangePics,function(item, key){
-            if(item == file){
-                $scope.arrangePics.splice(key,1);
-            }
-        })
+    $scope.dropAuditPic = function(){
+        $scope.auditPic.splice(0,1);
+    }
+    $scope.droptempStandPic = function(){
+        $scope.tempStandPic.splice(0,1);
     }
     $scope.drophonor = function(honorfile){
         angular.forEach($scope.totalhonorfiles,function(item, key){
@@ -190,19 +216,79 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;
         }
+        if ($scope.height == undefined || $scope.height == '') {
+            flag = false;
+        }
+        if ($scope.rentSqm == undefined || $scope.rentSqm == '') {
+            flag = false;
+        }
+        if ($scope.isJoinStand == undefined || $scope.isJoinStand == '') {
+            flag = false;
+        }
+        if ($scope.openLIne == undefined || $scope.openLIne == '') {
+            flag = false;
+        }
         return flag;
+    }
+    $scope.ChangLihuoState=function (val) {
+        if(val==2){
+            $scope.islihuoRoom==false;
+        }else {
+            $scope.islihuoRoom==true;
+        }
     }
     $scope.submit = function(){
     	if(checkMobile($scope.phoneNum.toString().trim()) == false){
 			layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
 			return false
 		}
+		if($scope.totalfiles.length<3){
+            layer.open({content:'冷库图片至少上传3张！',btn: '确定'});
+            return false
+        }
         if (checkInput()){
-        	if(parseFloat($scope.area).toFixed(2).length>11){
-				layer.open({content:'面积不合法哦~',btn: '确定'});return;
-	        }else if($scope.phoneNum.toString().trim().length != 11){
+            if($scope.area-$scope.rentSqm<0){
+                layer.open({content:'总面积不能小于可出租面积！',btn: '确定'});
+                return false
+            }
+            if($scope.isJoinStand==1&&$scope.tempStandPic.length<1){
+                layer.open({content:'请上传冷库温度达标认证图！',btn: '确定'});
+                return false;
+            }
+            if($scope.phoneNum.toString().trim().length != 11){
 	        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
 	        }
+            var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
+            var countRex = /^[0-9]\d*$/;
+            if (!areaRex.test($scope.area)) {
+                layer.open({content:'面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+                return false;
+            }
+            if (!areaRex.test($scope.rentSqm)) {
+                layer.open({content:'可出租面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+                return false;
+            }
+            if (!areaRex.test($scope.height)) {
+                layer.open({content:'冷库净高度输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+                return false;
+            }
+            if ($scope.capacity1!=undefined &&$scope.capacity1 != "" && !areaRex.test($scope.capacity1) ||$scope.capacity2!=undefined && $scope.capacity2 != "" && !areaRex.test($scope.capacity2) ||
+                $scope.capacity3!=undefined &&$scope.capacity3 != "" && !areaRex.test($scope.capacity3) ||$scope.capacity4!=undefined && $scope.capacity4 != "" && !areaRex.test($scope.capacity4) ||
+                $scope.capacity5!=undefined && $scope.capacity5 != "" && !areaRex.test($scope.capacity5) ||$scope.height1!=undefined && $scope.height1 != "" && !areaRex.test($scope.height1) ||
+                $scope.height2!=undefined && $scope.height2 != "" && !areaRex.test($scope.height2) ||$scope.height3!=undefined &&  $scope.height3 != "" && !areaRex.test($scope.height3) ||
+                $scope.height4!=undefined && $scope.height4 != "" && !areaRex.test($scope.height4) ||$scope.height5!=undefined &&  $scope.height5 != "" && !areaRex.test($scope.height5)) {
+                layer.open({content:'冷库容积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+                return false;
+            }
+            if ($scope.coldTruck1!=undefined&&$scope.coldTruck1 != "" && !countRex.test($scope.coldTruck1) ||$scope.coldTruck2!=undefined&& $scope.coldTruck2 != "" && !countRex.test($scope.coldTruck2) ||
+                $scope.coldTruck3!=undefined&&$scope.coldTruck3 != "" && !countRex.test($scope.coldTruck3) ||$scope.coldTruck4!=undefined&& $scope.coldTruck4 != "" && !countRex.test($scope.coldTruck4)) {
+                layer.open({content:'冷藏车数量输入有误！',btn: '确定'});
+                return false;
+            }
+            if ($scope.lihuoArea != undefined &&$scope.lihuoArea != "" && !areaRex.test($scope.lihuoArea)) {
+                layer.open({content:'理货区面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+                return false;
+            }
         	layer.open({
         		type: 2
         		,content: '努力加载中~~~'
@@ -228,6 +314,10 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 cityId : $scope.cityId,
                 address : encodeURI($scope.address,"UTF-8"),
                 area : $scope.area,
+                rentSqm:$scope.rentSqm,
+                height:$scope.height,
+                openLIne:$scope.openLIne,
+                isJoinStand:$scope.isJoinStand,
                 manageType : $scope.manageType,
                 storageType : $scope.storageType,
                 temperType : $scope.temperType,
@@ -258,7 +348,8 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 height5 : $scope.height5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 userid : window.user.id,
-                arrangePics : $scope.arrangePic,
+                standPic:null,
+                auditPic:null
             }
             for(var i = 0; i < $scope.totalfiles.length; i++){
                 data["file" + i] = $scope.totalfiles[i];
@@ -266,8 +357,10 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             for(var j = 0; j < $scope.totalhonorfiles.length; j++){
                 data["honor" + j] = $scope.totalhonorfiles[j];
             }
+            data["standPic"]=$scope.tempStandPic[0];
+            data["auditPic"]=$scope.auditPic[0]
             Upload.upload({
-                url: ER.root+'/i/rdc/addRdc',
+                url: ER.root+'/i/rdc/newAddRdc',
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },
                 withCredentials : true,
                 data: data

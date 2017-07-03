@@ -57,7 +57,8 @@
         `height`,
         `rentSqm`,
         `openLIne`,
-        `infoIntegrity`
+        `infoIntegrity`,
+        `isJoinStand`
         )
         VALUES
         (
@@ -84,12 +85,16 @@
         #{height},
         #{rentSqm},
         #{openLIne},
-        #{infoIntegrity}
+        #{infoIntegrity},
+        #{isJoinStand}
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >
         update Rdc
         <set >
+            <if test="name != null" >
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
             <if test="address != null" >
                 address = #{address,jdbcType=VARCHAR},
             </if>
@@ -131,6 +136,15 @@
             </if>
             <if test="rentSqm != null" >
                 `rentSqm` = #{rentSqm,jdbcType=FLOAT},
+            </if>
+            <if test="isJoinStand != null" >
+                `isJoinStand` = #{isJoinStand,jdbcType=INTEGER},
+            </if>
+            <if test="provinceid != null" >
+                `provinceid` = #{provinceid,jdbcType=INTEGER},
+            </if>
+            <if test="cityid != null" >
+                `cityid` = #{cityid,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -177,7 +191,7 @@
         s.unitPrice,
         s.stauts shareStauts,
         t.rdcscore,
-        (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category ='honorPic' ORDER BY id DESC LIMIT 1 ) as logo
+        (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category IN ('honorPic','storagePic') ORDER BY id DESC LIMIT 1 ) as logo
         FROM
         rdc r
         LEFT JOIN shared_info s ON s.rdcID = r.id
@@ -192,6 +206,8 @@
             <if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype in (${storagetempertype})</if>
             <if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>
             <if test="audit !=null and audit!=''"> and r.audit in (${audit})</if>
+            <if test="dataType !=null and dataType!=''"> and s.dataType=#{dataType}</if>
+            <if test="typeCode !=null and typeCode!=''"> and s.typeCode=#{typeCode}</if>
             <if test="goodSaveType !=null and goodSaveType!=''">and t.storagetype in (${goodSaveType})</if>
             <if test="hasCar !=null and  hasCar != ''"> and t.hastruck in(${hasCar}) </if>
         </where>

@@ -4,7 +4,7 @@ var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 // var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.114:8080",coldroot:"http://www.smartcold.org.cn"};
+var ER = {root:"http://192.168.1.117:8081",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){
@@ -37,6 +37,15 @@ function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(
 function goback() {
 	if (typeof ios_gohome == 'function') {
 		ios_gohome();return;
+	}
+	if(localStorage){
+		if(localStorage.list_cache_storehouse){
+            localStorage.removeItem("list_cache_storehouse")
+		}else if(localStorage.list_cache_goodlist){
+            localStorage.removeItem("list_cache_goodlist")
+		}else if(localStorage.list_cache_coldlist){
+            localStorage.removeItem("list_cache_coldlist")
+		}
 	}
 	if (window.location.pathname.indexOf("login.html")!=-1 ) {
 		if( window.location.hash.indexOf("user-") != -1){
@@ -152,7 +161,7 @@ function checkNum(){
 }
 window.onload = function(){
 	getmsg();
-	$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe607;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe60d;"); } });
+	//$(".mySelect select").bind({ click:function(event) { $(this).parent().siblings("i").html("&#xe603;"); },change:function(event) { $(this).parent().siblings("i").html("&#xe697;"); } });
     $(".next").click(function() { if ($(this).prev().hasClass("black")) {$(this).prev().removeClass("black"); $(this).children().html("&#xe64c;");} else { $(this).prev().addClass("black");$(this).children().html("&#xe68b;");}});
     $("[ng-login]").click(function(){if(window.user){location.href= $(this).attr("ng-login");}else{var whref=window.location.href;window.location.href = "login.html#" +whref.substring(0,whref.lastIndexOf("/")+1)+$(this).attr("ng-login");}});
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});$('.goTop').click(function(event) {$('html,body').stop().animate({'scrollTop':0}, 800); });//一键回到顶部

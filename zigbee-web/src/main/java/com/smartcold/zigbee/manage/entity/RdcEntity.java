@@ -57,6 +57,8 @@ public class RdcEntity {
     private int infoIntegrity;
 
     private int istemperaturestandard;
+
+    private int isJoinStand;
 	
 	public int getUserId() {
 		return userid;
@@ -280,5 +282,13 @@ public class RdcEntity {
 
     public void setIstemperaturestandard(int istemperaturestandard) {
         this.istemperaturestandard = istemperaturestandard;
+    }
+
+    public int getIsJoinStand() {
+        return isJoinStand;
+    }
+
+    public void setIsJoinStand(int isJoinStand) {
+        this.isJoinStand = isJoinStand;
     }
 }

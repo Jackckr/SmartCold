@@ -25,7 +25,7 @@ jQuery(".picScroll-left").slide({easing:"linear",mainCell:".bd ul",autoPage:true
 
 /*功能组件*/
 var pagination={pageCount:-1,oldPageCount:-1};
-var screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,datatype:3,type:1,pageNum:1,pageSize:5};
+var screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,pageNum:1,pageSize:5};
 var storageManage=[];
 var storageTemp=[];
 var tempStandard=[];
@@ -65,7 +65,7 @@ function getRdcRentList() {
 }
 /*进入修改rdc*/
 function updateRdc(rdcId) {
-    sessionStorage.submitRdcStatus=1;
+    window.sessionStorage.submitRdcStatus=1;
     window.location.href="/view/html/rdcaddcold.html?rdcId="+rdcId;
 }
 /*点击查看实时库温*/
@@ -222,7 +222,7 @@ function getHasCar() {
 }
 /*更改为添加状态*/
 function getAddStatus() {
-    sessionStorage.submitRdcStatus=0;
+    window.sessionStorage.submitRdcStatus=0;
 }
 $(function () {
     getRdcRentList();

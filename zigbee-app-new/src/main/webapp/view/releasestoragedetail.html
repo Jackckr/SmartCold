@@ -9,10 +9,12 @@
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 <title>发布仓位</title>
-<link rel="stylesheet" type="text/css" href="../com/css/common.css">
-	    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
-<link rel="stylesheet" type="text/css" href="../com/css/release.css">
-<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+	<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/release.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/newRelease.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
@@ -52,10 +54,8 @@
 <body ng-app="app" ng-controller="ctrl">
 	<!-- header -->
 	<header>
-
 		<div class="area fl">
-			<a onclick="goback()"><i class="iconfont">&#xe60e;</i>
-			</a>
+			<a onclick="goback()"><i class="iconfont">&#xe602;</i></a>
 		</div>
 		<div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
 		<div class="txt">发布仓位</div>
@@ -119,13 +119,13 @@
                                     ng-change="TemperTypeSelected(temperType)"
                                     ng-options="x.id as x.type for x in temperTypes"></select>
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-				<li><label>数/质/量</label> <em>*</em>
-				<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"/>
-				<label><input type="radio" name="quality" ng-model="unit" name="unit"
-					value="元/天·吨" />吨</label>&nbsp;&nbsp;
-			    <label><input type="radio" name="quality" value="元/天·平方米" ng-model="unit" name="unit"
-					checked />平方米</label>&nbsp;&nbsp;
-			    <label><input type="radio" name="quality" value="元/天·其他"  ng-model="unit" name="unit" />其他</label> </li>
+				<li>
+					<label>数/质/量</label> <em>*</em>
+					<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"/>
+					<label><input type="radio" name="quality" ng-model="unit" name="unit" value="元/天·吨" />吨</label>&nbsp;&nbsp;
+					<label><input type="radio" name="quality" value="元/天·平方米" ng-model="unit" name="unit" checked />平方米</label>&nbsp;&nbsp;
+					<label><input type="radio" name="quality" value="元/天·其他"  ng-model="unit" name="unit" />其他</label>
+				</li>
 					
 				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
 					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>

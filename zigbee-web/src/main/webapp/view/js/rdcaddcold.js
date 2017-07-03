@@ -89,12 +89,12 @@ function delhonor(index,id) {
     if(id){delIds.push(id);honorPicsArrOriginal--;}
     showSelectPics(honorPicsArr,honorPicsArrOriginal,"honor",$("#honorPics"));
 }
-function delaudit(index) {
-    auditPic.splice(index,1);
+function delaudit() {
+    auditPic.splice(0,1);
     showSelectPics(auditPic,auditPicOriginal,"audit",$("#auditPic"));
 }
-function delstandard(index) {
-    standPic.splice(index,1);
+function delstandard() {
+    standPic.splice(0,1);
     showSelectPics(standPic,standPicOriginal,"standard",$("#standardPic"));
 }
 /*提交冷库信息*/
@@ -144,15 +144,19 @@ function addColdSubmit() {
 /*获得修改冷库信息*/
 function getFormValue(rdcId) {
     $("#submitTitle").html("修改冷库 (带*为必填项)");
-    $("#submitButton").empty().append('<td colspan="2"><button class="oBtn" onclick="updateColdSubmit()">提交</button></td>')
+    $("#submitButton").empty().append('<td colspan="2"><button class="oBtn" onclick="updateColdSubmit()">提交</button></td>');
     $("#submitRdc").append('<input type="hidden" name="rdcId" value="'+rdcId+'"/>');
     $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId},success:function (data) {
         var rdc=data[0];
         initCityList(rdc.provinceId);
-        getDataToForm($("#submitRdc [name]").not("[name=openLIne]"),rdc);
+        getDataToForm($("#submitRdc [name]").not("[name=openLIne],[name=isJoinStand]"),rdc);
         if(rdc.openLIne){$("#submitRdc input[name=openLIne][value='"+rdc.openLIne+"']").attr("checked","checked");}
+        if(rdc.isJoinStand){$("#submitRdc input[name=isJoinStand][value='"+rdc.isJoinStand+"']").attr("checked","checked");}
+        if(rdc.isJoinStand==1){$("#li1").show()}
+        if(rdc.isJoinStand==2){$("#li2").show()}
         if (rdc.audit==2){$("#coldAudit").hide();}
         if (rdc.istemperaturestandard==1){$("#tempStandDiv,#tempStandUl").hide();}
+        if(rdc.lihuoRoom==1){$("#lihuoAreaTr").show();}
         storagePicsArrOriginal=rdc.storagePics.length;
         honorPicsArrOriginal=rdc.honorPics.length;
         $.each(rdc.storagePics,function (index, item) {
@@ -221,7 +225,7 @@ function getProvinceList() {
 /*初始化城市列表*/
 function initCityList(proId) {
     var cityList=[];
-    $.ajax({url:"/i/city/findCitysByProvinceId",type:"get",data:{"provinceID":proId},success:function (data) {
+    $.ajax({url:"/i/city/findCitysByProvinceId",async: false,type:"get",data:{"provinceID":proId},success:function (data) {
         data.forEach(function (val, index) {
             cityList.push('<option value="'+val.cityID+'">'+val.cityName+'</option>');
         });
@@ -285,6 +289,10 @@ function coldValidation(vo) {
         layer.alert('冷库的可出租面积不能大于冷库的总面积！', {icon: 2});
         return false;
     }
+    if(vo.isJoinStand==1&&standPic.length<1){
+        layer.alert('请上传冷库温度达标认证图！', {icon: 2});
+        return false;
+    }
     var phoneNumRex =  /^1[34578]\d{9}$/;
     var cellPhoneRex=/^0{1}\d{2,3}-{1}\d{7,8}$/;
     if (!phoneNumRex.test(vo.phoneNum)&&!cellPhoneRex.test(vo.phoneNum)) {
@@ -324,4 +332,17 @@ $(function () {
     if(sessionStorage.submitRdcStatus==1){
         getFormValue(getUrlParam("rdcId"));
     }
+    $(".moreBtn").click(function () {
+        var flag=$(".moreInfo").is(":hidden");
+        $(this).html( flag ?  "收起--" : "更多信息+");
+        $(".moreInfo").toggle();
+    });
+    $('.rdcImg').children('div').eq(0).children('label').click(function () {
+        var oLabel = $(this).index();
+        if(oLabel!=2){
+            $(this).parent().siblings('ul').show().children('li').eq(oLabel).show().siblings('li').hide();
+        }else{
+            $(this).parent().siblings('ul').hide();
+        }
+    })
 });

@@ -115,6 +115,7 @@ public class RdcAddDTO {
 	private int istemperaturestandard;
 
 	private Double unitPrice;
+	private int isJoinStand;
 
 	public float getHeight1() {
 		return height1;
@@ -586,5 +587,13 @@ public class RdcAddDTO {
 
 	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
+	}
+
+	public int getIsJoinStand() {
+		return isJoinStand;
+	}
+
+	public void setIsJoinStand(int isJoinStand) {
+		this.isJoinStand = isJoinStand;
 	}
 }

@@ -218,7 +218,27 @@ public class ShareRdcController  {
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
-	
+
+
+	@RequestMapping(value = "/newGetSEListByUID")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> newGetSEListByUID(HttpServletRequest request,Integer uid) {
+		if(uid==null||uid==0){
+			UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
+			if(user!=null&&user.getId()!=0){
+				uid=user.getId();
+			}else{
+				return ResponseData.newFailure("会话超时，请重新登录！~");
+			}
+		}
+		this.getPageInfo(request);
+		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("sstauts", 1);//必须
+		filter.put("releaseID", uid);//必须
+		filter.put("datatype",1);
+		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
+		return ResponseData.newSuccess(data);
+	}
 	
 	/**
 	 * 根据冷库id获得关联发布信息
@@ -357,7 +377,38 @@ public class ShareRdcController  {
 	public Object getSERdc(Integer dataType,Integer typeCode) {
 		return rdcShareMapper.getNewSERDCListByID(dataType,typeCode);
 	}
-
+	/**
+	 * 获得改版首页共享列表
+	 * @param request
+	 * @param type->  null：不限  1：出租/出售 2：求租/求购
+	 * @param orderBy 排序
+	 * @param datatype 数据类型  1：货品 2：配送  3：仓库
+	 * @param sqm 面积-> rcd r
+	 * @param provinceid 区域 -> rcd r
+	 * @param keyword 支持关键字搜索-> rcd r
+	 * @param managetype 经营类型  -> rdcext t
+	 * @param storagetempertype 温度类型 -> rdcext t
+	 * @return
+	 */
+	@RequestMapping(value = "/newGetSERDCList")
+	@ResponseBody
+	public ResponseData<RdcShareDTO> newGetSERDCList(String rdcID,String dataType,String goodSaveType,String istemperaturestandard,String audit, String keyword,String typeCode,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+ 		HashMap<String, Object> filter=new HashMap<String, Object>();
+		filter.put("typeCode", typeCode);
+		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2
+		filter.put("rdcID", rdcID);
+		filter.put("dataType",dataType);//必须
+		filter.put("sqm",  getSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
+		filter.put("keyword", keyword);
+		filter.put("provinceid", provinceid);
+		filter.put("managetype", managetype);
+		filter.put("storagetempertype", storagetempertype);
+		filter.put("istemperaturestandard", istemperaturestandard);
+		filter.put("goodSaveType", goodSaveType);
+		filter.put("audit", audit);
+		PageInfo<RdcShareDTO> data = this.rdcShareService.newGetSERDCList(pageNum, pageSize, filter);
+		return ResponseData.newSuccess(data);
+	}
 	
 	//------------------------------------------------------------------------------------免费发布消息-------------------------------------------------------
 	/**
@@ -402,7 +453,7 @@ public class ShareRdcController  {
 	
 	@RequestMapping(value="shareFreeReleaseForIos")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> shareFreeReleaseForIos(HttpServletRequest request, RdcShareDTO	rdcShareDTO,Integer uid){
+	public ResponseData<RdcShareDTO> shareFreeReleaseForIos(HttpServletRequest request, RdcShareDTO	 rdcShareDTO,Integer uid){
 		 String data = JSON.toJSONString(rdcShareDTO);
 		 return shareFreeRelease(request, data, uid);
 	}

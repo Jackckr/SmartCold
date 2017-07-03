@@ -441,8 +441,7 @@ public class RdcController {
 					  @RequestParam(required = false) MultipartFile file0,@RequestParam(required = false) MultipartFile standPic,
 					  @RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 					  @RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-					  @RequestParam(required = false) MultipartFile auditPic,String empStr,String userStr) throws Exception {
-		RdcAddDTO rdcAddDTO=null;
+					  @RequestParam(required = false) MultipartFile auditPic,String empStr,String userStr,RdcAddDTO rdcAddDTO) throws Exception {
 		UserEntity userEntity=null;
 		if (!StringUtils.isEmpty(empStr)) {
 			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
@@ -469,6 +468,7 @@ public class RdcController {
 		rdcEntity.setHeight(rdcAddDTO.getHeight());
 		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
 		rdcEntity.setOpenLIne(rdcAddDTO.getOpenLIne());
+		rdcEntity.setIsJoinStand(rdcAddDTO.getIsJoinStand());
 		if (rdcAddDTO.getRemark()!=null) {
 			rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		}
@@ -604,6 +604,7 @@ public class RdcController {
 		int rdcInfoIntegrity = getRdcInfoIntegrity(rdcAddDTO);
 		rdcEntity.setInfoIntegrity(rdcInfoIntegrity);
 		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
+		rdcEntity.setName(rdcAddDTO.getName());
 		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
@@ -612,6 +613,9 @@ public class RdcController {
 		rdcEntity.setHeight(rdcAddDTO.getHeight());
 		rdcEntity.setOpenLIne(rdcAddDTO.getOpenLIne());
 		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
+		rdcEntity.setIsJoinStand(rdcAddDTO.getIsJoinStand());
+		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
+		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
 		if(SetUtil.isNotNullMap(lngLatMap)){
 			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
@@ -1044,9 +1048,8 @@ public class RdcController {
 	 */
 	@RequestMapping(value = "/newGetRdcList")
 	@ResponseBody
-	public ResponseData<RdcEntityDTO> newGetRdcList(String hasCar,String goodSaveType,String istemperaturestandard,String audit, String keyword,String type,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+	public ResponseData<RdcEntityDTO> newGetRdcList(String hasCar,String goodSaveType,String istemperaturestandard,String audit, String keyword,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
 		HashMap<String, Object> filter=new HashMap<String, Object>();
-		filter.put("type", type);
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2
 		filter.put("sqm", getTotalSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
 		filter.put("keyword", keyword);
@@ -1060,8 +1063,7 @@ public class RdcController {
 		PageInfo<RdcEntityDTO> data = this.rdcService.newGetRdcList(pageNum, pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
-	private static String getTotalSqmFilter(String sqm)
-	{
+	private static String getTotalSqmFilter(String sqm) {
 		StringBuffer sqlfilter=new StringBuffer("(");
 		if(StringUtil.isnotNull(sqm)){
 			String filter[]=sqm.split(",");
