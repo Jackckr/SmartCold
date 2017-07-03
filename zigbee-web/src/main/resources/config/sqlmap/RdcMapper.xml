@@ -92,6 +92,9 @@
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >
         update Rdc
         <set >
+            <if test="name != null" >
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
             <if test="address != null" >
                 address = #{address,jdbcType=VARCHAR},
             </if>

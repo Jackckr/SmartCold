@@ -604,6 +604,7 @@ public class RdcController {
 		int rdcInfoIntegrity = getRdcInfoIntegrity(rdcAddDTO);
 		rdcEntity.setInfoIntegrity(rdcInfoIntegrity);
 		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
+		rdcEntity.setName(rdcAddDTO.getName());
 		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());
