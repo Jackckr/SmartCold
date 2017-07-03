@@ -19,6 +19,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     	$scope.provinces = data;  
     	
     });
+    //租期类型
+    $scope.rentDateTypes = [{id:1,type:"1个月以下"},{id:2,type:"1~3个月"},{id:3,type:"3~6个月"},{id:4,type:"6~9个月"},{id:5,type:"1年以上"},{id:6,type:"两年以上"},{id:7,type:"三年以上"},{id:8,type:"五年以上"}];
+    $scope.rentdate=$scope.rentDateTypes[0].id;
     // 根据省ID查询城市列表
     $scope.provinceSelected = function () {
         $http.get(ER.root+'/i/city/findCitysByProvinceId', {  params: {  "provinceID": $scope.provinceId }  }).success(function (data) {
@@ -97,6 +100,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') { return false;  }
         if ($scope.validStartTime == undefined || $scope.validStartTime == '') {  return false;  }
         if ($scope.validEndTime == undefined || $scope.validEndTime == '') {  return false;  }
+        if ($scope.rentdate == undefined || $scope.rentdate == '') {return false;}
         return true;
     }
 
@@ -138,6 +142,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					uid:window.user.id,
 					provinceid : $scope.provinceId,
 					cityid : $scope.cityId,
+                    rentdate:$scope.rentdate,
+                    publishunit:3,
+                    username:window.user.username,
 					codeLave2 : $scope.temperType,
 					//codeLave1:$scope.storageType,
 					unit : $scope.unit,
