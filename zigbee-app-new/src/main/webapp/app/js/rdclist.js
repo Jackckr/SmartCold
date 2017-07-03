@@ -129,10 +129,10 @@ $().ready(function() {
                 approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
             }
         };
-  		 var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'" onclick="getSoll()"><img class="fl" src="'+rdc.logo+'">' +
+  		 var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><img class="fl" src="'+rdc.logo+'">' +
 		 '<div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p>' +
-		 '<div class="star">'+approve+'</div></div></a><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button>' +
-		 '<div class="btnFn clearfix"><a href="colddetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
+		 '<div class="star">'+approve+'</div></div></a>' +
+		 '<div class="btnFn clearfix"><a href="rdcdetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
         '<a class="fr noCollect" onclick="collect(this)"><i class="iconfont">&#xe605;</i><em>收藏</em></a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
         return score.join("");
   	}

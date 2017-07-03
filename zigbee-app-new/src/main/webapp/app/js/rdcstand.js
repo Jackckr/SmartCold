@@ -115,10 +115,10 @@ $().ready(function() {
     };
   	function gethtml(rdc){
          var approve='<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库';
-  		 var score=['<li class="imgCell" ><a href="colddetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
+  		 var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
 		 '<div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p>' +
-		 '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i><button class="grab" onclick="gosharedile('+rdc.id+');" >详情</button>' +
-		 '<div class="btnFn clearfix"><a href="colddetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
+		 '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i>' +
+		 '<div class="btnFn clearfix"><a href="rdcdetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
          '<a class="fr noCollect" onclick="collect(this)"><i class="iconfont">&#xe605;</i><em>收藏</em></a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
         return score.join("");
   	}
