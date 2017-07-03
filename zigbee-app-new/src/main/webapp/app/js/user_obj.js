@@ -112,7 +112,9 @@ var gethtml = function(obj) {
 };
 var getPageData = function() {// 启用无限加载
 	isLoadRB = true;//
-	var _filter = {pageNum : currentPage,pageSize : maxSize,userID : window.user.id,uid: window.user.id};
+	var dt="";
+	if(dataType!=-1){dt=dataType;}
+	var _filter = {pageNum : currentPage,pageSize : maxSize,userID : window.user.id,uid: window.user.id,username:window.user.username, dataType:dt};
 	$.get(ER.root + urlset[type][2], _filter, function(data) {
 		if (data.success && data.data.length > 0) {
 			totalPages = data.totalPages;

@@ -131,6 +131,7 @@
 		<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>  <!-- 关键字 -->
 		<if test="provinceid !=null and  provinceid != ''"> and s.provinceid = #{provinceid} </if> <!-- 区域 -->
 		<if test="goodtype !=null and  goodtype != ''"> and s.codeLave1 in (${goodtype})</if> <!-- 品类类型 -->
+		<if test="username !=null and  username != ''"> and s.username = #{username}</if>
 		GROUP BY
 		s.id
 		ORDER BY
