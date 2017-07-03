@@ -85,8 +85,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 typeCode : $scope.typeCode,
                 typeText : $scope.typeText,
                 rdcID : $scope.rdcID,
-                detlAddress:$scope.rdcAddress
-
+                detlAddress:$scope.rdcAddress,
+                publishunit:$scope.publishunit,
+                username:window.user.username,
+                unit:"元/吨"
             };
             var sdata  = JSON.stringify(simdata);
             var data = {data:sdata, "files":null};
