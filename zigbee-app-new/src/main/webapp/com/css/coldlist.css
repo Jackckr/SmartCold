@@ -842,11 +842,11 @@ section{
 	border-bottom: .3rem solid #f1f1f1;
 }
 div.rdcpadding:last-child{
-
+border-bottom: 0;
 }
 .rdcDetailName h1{
 	font-size: .8rem;
-	margin: .2rem;
+	margin: .2rem 0 1rem;
 }
 .rdcDetailName h1 i{
 	font-size: .6rem;
