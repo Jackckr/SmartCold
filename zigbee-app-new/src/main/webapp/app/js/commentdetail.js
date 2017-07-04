@@ -80,7 +80,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    			,shadeClose:false
 	                ,yes:function(){
 	                	if(data!=null&&data!=undefined)
-	    		    	   window.location.href ="colddetail.html?id="+rdcid;
+	    		    	   window.location.href ="rdcdetail.html?id="+rdcid;
 	                }
 		    	});
 	        }, function (resp) {
