@@ -101,12 +101,6 @@
                     <label class="pic">
                         <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files" accept="image/png,image/gif,image/jpeg" >
                     </label>
-                    <output class="img_list">
-						<span ng-repeat="file in totalfiles">
-							<img class="thumb" ngf-src="file" title="{{file.name}}">
-							<i ng-click="drop(file)">×</i>
-						</span>
-                    </output>
                     <label style="font-size: .5rem">
                         <small class="text-warning">上传3-5张实体图片，不能重复上传，每张小于10M</small>
                     </label>
@@ -204,7 +198,7 @@
                      </div>  
                      <i class="iconfont fr moreinfo">&#xe60d;</i>                 
                 </li>
-                <li>
+                <li ng-show="islihuoRoom">
                     <label for="cleanarea">理货区面积</label>                    
                     <div class="mySelect">
                         <input type="number" ng-model="lihuoArea">
@@ -311,6 +305,7 @@
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript">
 checkLogin();
+var delIds=[];
 $(function () {
     $('.rdcImg').children('div').eq(0).children('label').click(function () {
         var oLabel = $(this).index();
@@ -323,11 +318,20 @@ $(function () {
 })
  var app = angular.module("app", ["remoteValidation","ngFileUpload"]);
  app.controller("coldStorageEdit", function ($scope,$http, Upload) {
+     $scope.ChangLihuoState=function (val) {
+         if(val==2){
+             $scope.islihuoRoom=false;
+         }else {
+             $scope.islihuoRoom=true;
+         }
+     }
     $scope.editable = true;
     $scope.isDisabled = false;
     $scope.totalfiles = [];
     $scope.totalhonorfiles = [];
-    $scope.haveOrNots = [{id: 0,name: "无"},{ id: 1,name: "有"}];
+    $scope.tempStandPic = [];
+    $scope.auditPic = [];
+    $scope.haveOrNots = [{id: 2,name: "无"},{ id: 1,name: "有"}];
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
     // 获取省列表
     $http.get(ER.root+"/i/city/findProvinceList").success(function (data) {
@@ -344,6 +348,7 @@ $(function () {
 
     $scope.citySelected = function () {
     };
+
 
     // 获取冷库经营类型
     $http.get(ER.root+"/i/rdc/findAllManageType").success(function (data) {
@@ -401,9 +406,6 @@ $(function () {
     $scope.StorageRefregSelected = function () {
     };
 
-    $scope.ChangLihuoState = function () {
-        $scope.hasLihuoRoom = !$scope.hasLihuoRoom;
-    };
 
 
     $scope.rdcId =getUrlParam("id");
@@ -428,15 +430,9 @@ $(function () {
 	        $scope.platform = data[0].platform;
 	        $scope.lihuoRoom = data[0].lihuoRoom;
 	        $scope.arrangePic = data[0].arrangepiclocation;
-	        $scope.arrangePicShow = data[0].arrangePic;
 	        $scope.storagePicShow = data[0].storagePics;
 	        $scope.honorPicShow = data[0].honorPics;
 	        $scope.storagePic = angular.fromJson( data[0].storagePicLocation);
-	        if($scope.lihuoRoom === 0){
-	            $scope.hasLihuoRoom = true;
-	        } else {
-	            $scope.hasLihuoRoom = false;
-	        }
 	        $scope.lihuoArea = data[0].lihuoArea;
 	        $scope.lihuoTemperCtr = data[0].lihuoTemperCtr;
 	        $scope.storageRefreg = data[0].storageRefreg;
@@ -456,6 +452,13 @@ $(function () {
 	        $scope.coldTruck3 = data[0].coldTruck3;
 	        $scope.coldTruck4 = data[0].coldTruck4;
 	        $scope.facility = data[0].facility;
+	        $scope.openLIne=data[0].openLIne;
+	        $scope.isJoinStand=data[0].isJoinStand;
+	        $scope.rentSqm=data[0].rentSqm;
+	        $scope.height=data[0].height;
+	        if($scope.lihuoRoom==1){
+                $scope.islihuoRoom=true;
+            }
 	        if($scope.remark=="undefined")
 	        $scope.remark = "";
 	        if($scope.facility=="undefined")
@@ -474,7 +477,6 @@ $(function () {
 		  });
 	     return ;
 	   }
-	    
     $scope.drop = function(file){
         angular.forEach($scope.totalfiles,function(item, key){
             if(item == file){
@@ -482,6 +484,12 @@ $(function () {
             }
         });
     };
+     $scope.dropAuditPic = function(){
+         $scope.auditPic.splice(0,1);
+     }
+     $scope.droptempStandPic = function(){
+         $scope.tempStandPic.splice(0,1);
+     }
     $scope.dropcutt = function(file){//删除平面图
 //         angular.forEach($scope.totalfiles,function(item, key){
 //             if(item == file){
@@ -540,7 +548,58 @@ $(function () {
         }
         return flag;
     }
-    
+     $scope.addTempStandPic= function (files) {
+         for(var j=0,fileLen=files.length;j<fileLen;j++){
+             var _file=files[j].name;
+             var i=_file.lastIndexOf('.');
+             var len=_file.length;
+             var extEndName=_file.substring(i+1, len);
+             var extName="GIF,BMP,JPG,JPEG,PNG";
+             //首先对格式进行验证
+             if(extName.indexOf(extEndName.toUpperCase())==-1) {
+                 layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+                 return false
+             }else if(files[j].size > 10485760){
+                 layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+                 return false
+             }
+         }
+         if($scope.tempStandPic.length + files.length > 1){
+             //alert("最多上传八张图片");
+             layer.open({
+                 content: '只能上传一张图片哦'
+                 ,btn: '确定'
+             });
+             return;
+         }
+         $scope.tempStandPic = $scope.tempStandPic.concat(files);
+     }
+     $scope.addAuditPic= function (files) {
+         for(var j=0,fileLen=files.length;j<fileLen;j++){
+             var _file=files[j].name;
+             var i=_file.lastIndexOf('.');
+             var len=_file.length;
+             var extEndName=_file.substring(i+1, len);
+             var extName="GIF,BMP,JPG,JPEG,PNG";
+             //首先对格式进行验证
+             if(extName.indexOf(extEndName.toUpperCase())==-1) {
+                 layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+                 return false
+             }else if(files[j].size > 10485760){
+                 layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+                 return false
+             }
+         }
+         if($scope.auditPic.length + files.length > 1){
+             //alert("最多上传八张图片");
+             layer.open({
+                 content: '只能上传一张图片哦'
+                 ,btn: '确定'
+             });
+             return;
+         }
+         $scope.auditPic = $scope.auditPic.concat(files);
+     }
     $scope.addFiles = function (files) {
     	for(var j=0,fileLen=files.length;j<fileLen;j++){
     		var _file=files[j].name;
@@ -623,6 +682,10 @@ $(function () {
 				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
 				return false
 			}
+            if($scope.isJoinStand==1&&$scope.tempStandPic.length<1){
+                layer.open({content:'请上传冷库温度达标认证图！',btn: '确定'});
+                return false;
+            }
         	layer.open({
         		type: 2
         		,content: '努力加载中~~~'
@@ -679,8 +742,15 @@ $(function () {
                 height4 : $scope.height4,
                 height5 : $scope.height5,
                 facility : $scope.structure == undefined ? "" : encodeURI($scope.facility, "UTF-8"),
-                arrangePics : $scope.arrangePic,
-                rdcId:  $scope.rdcId
+                rdcId:  $scope.rdcId,
+                userid : window.user.id,
+                rentSqm:$scope.rentSqm,
+                height:$scope.height,
+                openLIne:$scope.openLIne,
+                isJoinStand:$scope.isJoinStand,
+                standPic:null,
+                auditPic:null,
+                delIds:delIds.join()
             };
             for(var i = 0; i < $scope.totalfiles.length; i++){
                 data["file" + i] = $scope.files[i];
@@ -688,9 +758,10 @@ $(function () {
             for(var j = 0; j < $scope.totalhonorfiles.length; j++){
                 data["honor" + j] = $scope.totalhonorfiles[j];
             }
-
+            data["standPic"]=$scope.tempStandPic[0];
+            data["auditPic"]=$scope.auditPic[0];
             Upload.upload({
-                url: ER.root+"/i/rdc/updateRdc",
+                url: ER.root+'/i/rdc/newUpdateRdc',
                 headers :{ "Content-Transfer-Encoding": "utf-8" },
                 data: data
             }).then(function (resp) {
@@ -750,50 +821,16 @@ $(function () {
     };
 
     $scope.deletePic = function(filedata){
-        var r = confirm("删除图片?");
-        if(r){
-            $http({
-                method:"DELETE",
-                url:ER.root+"/i/rdc/deleteStoragePic",
-                params:filedata
-            }).success(function(){
-                var index = $scope.storagePicShow.indexOf(filedata);
-                if(index>=0)
-                    $scope.storagePicShow.splice(index,1);
-                else{
-                    $scope.arrangePicShow = null;
-                }
-            });
-        }
-    };
-  $scope.deletecarrangePic = function(filedata,st){
-        var r =st?true: confirm("删除平面图?");
-        if(r){
-            $http({
-                method:"DELETE",
-                url:ER.root+"/i/rdc/deleteStoragePic",
-                params:filedata
-            }).success(function(){
-                    $scope.arrangePicShow = null;
-            });
-        }
+        delIds.push(filedata.id);
+        var index = $scope.storagePicShow.indexOf(filedata);
+        if(index>=0)
+            $scope.storagePicShow.splice(index,1);
     };
     $scope.deleteHonorPic = function(filedata){
-        var r = confirm("删除荣誉图片?");
-        if(r){
-            $http({
-                method:"DELETE",
-                url:ER.root+"/i/rdc/deleteStoragePic",
-                params:filedata
-            }).success(function(){
-                var index = $scope.honorPicShow.indexOf(filedata);
-                if(index>=0)
-                    $scope.honorPicShow.splice(index,1);
-                else{
-                    $scope.arrangePicShow = null;
-                }
-            });
-        }
+        delIds.push(filedata.id);
+        var index = $scope.honorPicShow.indexOf(filedata);
+        if(index>=0)
+            $scope.honorPicShow.splice(index,1);
     };
 });
 </script>
