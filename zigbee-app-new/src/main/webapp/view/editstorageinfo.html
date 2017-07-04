@@ -89,7 +89,7 @@ $(function() {
                  </li>
 				<li ng-if="typeCode==2"><label>求租面积</label>
 					<em>*</em>
-					<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/>
+					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/>
 				</li>
 
 				<li><label ng-if="typeCode==2">求租库型</label>
@@ -103,7 +103,7 @@ $(function() {
 						   
 					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
 				<li ng-if="typeCode==1"><label>可租面积</label> <em>*</em>
-					<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/></li>
+					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/></li>
 				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
 					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
 				<li><label for="rentdate">租期</label><em>*</em>
@@ -128,7 +128,7 @@ $(function() {
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
-				<li  ng-if="typeCode==2"><label for="name">存放产品</label> <em>*</em><input type="text" id="title" ng-model="title"
+				<li  ng-if="typeCode==2"><label for="name">存放产品</label> <em>*</em><input type="text" id="title" ng-model="$parent.title"
 																						 placeholder="存放产品" /></li>
 				<li><label for="phone">联系电话</label>
 				<em>*</em>
