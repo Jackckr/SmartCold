@@ -8,11 +8,13 @@
 	content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。" />
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-<title>发布仓位</title>
+<title>发布货品信息修改</title>
 <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/reset.css">
 <link rel="stylesheet" type="text/css" href="../com/css/release.css">
 <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/newRelease.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
@@ -33,12 +35,11 @@ $(function() {
 <body ng-app="app" ng-controller="ctrl">
 	<!-- header -->
 	<header>
-
 		<div class="area fl">
-			<a onclick="goback()"><i class="iconfont">&#xe60e;</i>
-			</a>
+			<a onclick="goback()"><i class="iconfont">&#xe602;</i></a>
 		</div>
-		<div class="txt">发布货品信息修改</div>
+		<div class="txt" ng-if="typeCode==1">出售货品信息修改</div>
+		<div class="txt" ng-if="typeCode==2">求购货品信息修改</div>
 	</header>
 	
 	<section class="main maindetail" style="margin-top:2.5rem">
@@ -64,16 +65,21 @@ $(function() {
 			</li>
 		</ul>
     </div>
+		<div class="releaseImg" style="background-image: url('../com/img/r5.png');" ng-hide="rdcsharedto.rdcID"></div>
 			<form id="release_item_from" name="itemform" >
             <ul class="houseinfo">
-                <li>
-                    <label for="name">描述</label><em>*</em>
-                    <input type="text" ng-model="title"  id="name" placeholder="货品出售"/>
+                <li ng-if="typeCode==1">
+                    <label >货品名称</label><em>*</em>
+                    <input type="text" ng-model="$parent.title"  placeholder="货品名称"/>
                 </li>
-                <li class="bossToggle" ng-if="rdcsharedto.typeCode==1">
+				<li ng-if="typeCode==2">
+					<label >求购产品</label><em>*</em>
+					<input type="text" ng-model="$parent.title"  placeholder="求购产品"/>
+				</li>
+               <!-- <li class="bossToggle" ng-if="rdcsharedto.typeCode==1">
                     <label for="boss">供应商</label>
                     <input type="text" ng-model="unit1" id="boss"/>
-                </li>
+                </li>-->
                  <li class="offershow" ng-hide="rdcsharedto.rdcID">
                     <label for="province">省</label><em>*</em>
                     <div class="mySelect">
@@ -101,16 +107,24 @@ $(function() {
 	                </div>
                     <i class="iconfont fr moreinfo">&#xe60d;</i>
                 </li>
-                <li>
-                    <label for="num">数量</label><em>*</em>
-                    <input type="number" id="num" placeholder="吨" ng-model="sqm"/>
+                <li ng-if="typeCode==2">
+                    <label for="num">求购数量</label><em>*</em>
+                    <input type="number"  placeholder="吨" ng-model="$parent.sqm" style="min-width:6rem;width:6rem;"/>
+					<label><input type="radio"  value="1" ng-model="$parent.publishunit" name="publishunit"  checked="checked"  />Kg</label>
+					<label><input type="radio"  ng-model="publishunit" name="$parent.publishunit"  value="2" />吨</label>
                 </li>
+				<li ng-if="typeCode==1">
+					<label for="num">货品总量</label><em>*</em>
+					<input type="number" placeholder="吨" ng-model="$parent.sqm" style="min-width:6rem;width:6rem;"/>
+					<label><input type="radio"  value="1" ng-model="$parent.publishunit" name="publishunit"  checked="checked"  />Kg</label>
+					<label><input type="radio"  ng-model="publishunit" name="$parent.publishunit"  value="2" />吨</label>
+				</li>
                 <li>
                     <label for="price">单价</label>
                     <input type="number" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
                 </li>
                 <li>
-					<label for="time">有效开始时间</label><em>*</em>
+					<label for="sttime">有效开始时间</label><em>*</em>
 					<div class="mySelect">
 						<input type="text" placeholder="请选择开始时间" ng-model="validStartTime" id="sttime" class="kbtn"/>
 					</div>
@@ -118,7 +132,7 @@ $(function() {
 				</li>
 				
 				<li>
-					<label for="time">有效结束时间</label><em>*</em>
+					<label for="endtime">有效结束时间</label><em>*</em>
 					<div class="mySelect">
 						<input type="text" placeholder="请选择结束时间" id="endtime" ng-model="validEndTime" class="kbtn"/>
 					</div>

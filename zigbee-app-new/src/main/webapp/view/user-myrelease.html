@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	<title>我的发布</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
@@ -18,40 +19,40 @@
 <body  ng-app="app" ng-controller="ctrl">
     <header>
     	<div class="area fl">
-    		<a  href="usercenter.html"><i class="iconfont">&#xe60e;</i></a>
+    		<a  href="usercenter.html"><i class="iconfont">&#xe602;</i></a>
     	</div>
     	<div class="txt">
     		我的发布
     	</div>
     </header>
 <!--     <section id="user_info" class="clearfix"></section> -->
-    <ul id="ul_rdcsL_list" class="commentList"></ul>
+    <ul id="ul_rdcsL_list" style="margin-top: 0;" class="commentList"></ul>
     <div id="" class="nodata black" style="margin-top: 0;"> <img src="../com/img/nodata.jpg" alt=""><p>您还没有发布过信息哦~~</p></div>
-    <ul class="footer">
-        <li>           
+    <footer class="flex black">
+        <div class="item">
             <a href="../index.html">
-                <i class="iconfont">&#xe65a;</i>
-                <p class="info">首页</p>
+                <i class="iconfont">&#xe601;</i>
+                <p>首页</p>
             </a>
-        </li>
-        <li>          
-             <a href="news.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p>
+        </div>
+        <div class="item">
+            <a href="release.html">
+                <i class="iconfont">&#xe614;</i>
+                <p>发布</p>
             </a>
-        </li>
-        <li id="msgTotalNumReset">            
+        </div>
+        <div class="item" id="msgTotalNumReset">
             <a href="messages.html">
-                <i class="iconfont">&#xe71c;</i>
-                <p class="info">消息</p>
+                <i class="iconfont">&#xe6ea;</i>
+                <p>消息</p>
             </a>
-        </li>
-        <li class="active">            
-            <a href="user.html">
-                <i class="iconfont">&#xe6fd;</i>
-                <p class="info">我的</p>
+        </div>
+        <div class="item active">
+            <a href="usercenter.html">
+                <i class="iconfont">&#xe600;</i>
+                <p>我的</p>
             </a>
-        </li>
-    </ul>
+        </div>
+    </footer>
 </body>
 </html>
