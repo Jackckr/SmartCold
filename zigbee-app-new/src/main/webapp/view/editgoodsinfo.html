@@ -110,18 +110,18 @@ $(function() {
                 <li ng-if="typeCode==2">
                     <label for="num">求购数量</label><em>*</em>
                     <input type="number"  placeholder="吨" ng-model="$parent.sqm" style="min-width:6rem;width:6rem;"/>
-					<label><input type="radio"  value="1" ng-model="$parent.publishunit" name="publishunit"  checked="checked"  />Kg</label>
-					<label><input type="radio"  ng-model="publishunit" name="$parent.publishunit"  value="2" />吨</label>
+					<label><input type="radio"  value="1" ng-model="$parent.publishunit" name="publishunit"/>Kg</label>
+					<label><input type="radio"  ng-model="$parent.publishunit" name="publishunit"  value="2"/>吨</label>
                 </li>
 				<li ng-if="typeCode==1">
 					<label for="num">货品总量</label><em>*</em>
 					<input type="number" placeholder="吨" ng-model="$parent.sqm" style="min-width:6rem;width:6rem;"/>
-					<label><input type="radio"  value="1" ng-model="$parent.publishunit" name="publishunit"  checked="checked"  />Kg</label>
-					<label><input type="radio"  ng-model="publishunit" name="$parent.publishunit"  value="2" />吨</label>
+					<label><input type="radio"  value="1" ng-model="$parent.publishunit" name="publishunit"  />Kg</label>
+					<label><input type="radio"  ng-model="$parent.publishunit" name="publishunit"  value="2" />吨</label>
 				</li>
                 <li>
                     <label for="price">单价</label>
-                    <input type="number" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
+                    <input type="number" ng-model="unitprice" id="price" placeholder="面议"/>
                 </li>
                 <li>
 					<label for="sttime">有效开始时间</label><em>*</em>

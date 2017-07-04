@@ -143,6 +143,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	 $scope.attrvalue1= $scope.rdcsharedto.attrvalue1;
 	    	 $scope.attrvalue2= $scope.rdcsharedto.attrvalue2;
 	    	 $scope.rentdate=$scope.rdcsharedto.rentdate;
+	    	 $scope.publishunit=$scope.rdcsharedto.publishunit;
 	    	 if($scope.totalfiles==undefined){ $scope.totalfiles = []; }
 	    	 $scope.provinceSelected();
 	    	 $scope.stprovinceSelected();
@@ -457,8 +458,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					sqm:$scope.sqm,
 					telephone:$scope.telephone.trim(),
 					note : $scope.note,
-					detlAddress:$scope.detlAddress
-					
+					detlAddress:$scope.detlAddress,
+					username:window.user.username,
+                    publishunit:$scope.publishunit
 			};
 			var sdata  = JSON.stringify(simdata);
 			var data = {data:sdata, "files":$scope.totalfiles};
@@ -469,11 +471,11 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	layer.closeAll();
 		    	layer.open({
-				    content: resp.data.message
+				    content: "修改成功！"
 				    ,btn: '确定'
 				    ,shadeClose:false
 				    ,yes:function(){
-				    	window.location.href ="goodslist.html"; 
+				    	window.location.href ="user-myrelease.html";
 				    }
 				  });
 		    }, function (resp) {
@@ -549,7 +551,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    }).then(function (resp) {
 		    	layer.closeAll();
 		    	layer.open({
-				    content: resp.data.message
+				    content: "修改成功！"
 				    ,btn: '确定'
 				    ,shadeClose:false
 				    ,yes:function(){
