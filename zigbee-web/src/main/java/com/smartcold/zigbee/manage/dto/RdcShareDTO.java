@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
@@ -43,6 +44,7 @@ public class RdcShareDTO {
 	private int rentdate; //租期
 	private String username;//发布者
 	private int publishunit;//发布物品单位
+	private List<Integer> collectUserIds;//收藏的用户id
 	//->拓展字段  ->车
 	
 	private int stprovinceID;
@@ -388,5 +390,13 @@ public class RdcShareDTO {
 
 	public void setPublishunit(int publishunit) {
 		this.publishunit = publishunit;
+	}
+
+	public List<Integer> getCollectUserIds() {
+		return collectUserIds;
+	}
+
+	public void setCollectUserIds(List<Integer> collectUserIds) {
+		this.collectUserIds = collectUserIds;
 	}
 }

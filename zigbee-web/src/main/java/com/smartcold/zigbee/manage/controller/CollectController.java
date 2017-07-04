@@ -47,10 +47,10 @@ public class CollectController {
         return new PageInfo<CollectEntity>(rdcCollect);
     }
 
-    @RequestMapping(value = "delCollectById")
+    @RequestMapping(value = "/delCollectById")
     @ResponseBody
-    public ResultDto delById(int collectId){
-        collectMapper.delByCollect(collectId);
+    public ResultDto delById(int collectId,int uid,int collectType){
+        collectMapper.delByCollect(collectId,uid,collectType);
         return new ResultDto(1,"取消收藏成功！");
     }
 }
