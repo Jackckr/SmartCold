@@ -100,10 +100,14 @@ $().ready(function() {
         if(rdc.username==undefined){
             rdc.username=rdc.id
         }
+        var usefulDate = rentDate[rdc.rentdate];
+        if(rdc.rentdate==undefined || rdc.rentdate==null || rdc.rentdate==0){
+            usefulDate = daysRound+'天'
+        }
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求购货源</span><div>'+
             '<p class="ellipsis">'+rdc.title+'</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>'+rdc.sqm+'吨</p><span class="grab green">['+showTime+']</span>'+
-            '</div><div class="flex"><div class="item"><h4>'+daysRound+'天</h4>'+
+            '</div><div class="flex"><div class="item"><h4>'+usefulDate+'</h4>'+
             '<p>有效期</p></div><div class="item"><h4>'+rdc.validEndTime+'</h4><p>报价截止日</p>'+
             '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a>' +
 			'<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+

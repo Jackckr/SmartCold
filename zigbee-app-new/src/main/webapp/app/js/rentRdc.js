@@ -128,11 +128,14 @@ $().ready(function () {
                 approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
             }
         };
+        if(rdc.rdcSqm==undefined){
+            rdc.rdcSqm=rdc.sqm
+        }
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id='+rdc.id+'"  onclick="getSoll()"><span><img src="'+rdc.logo+'" alt=""></span><div>'+
-            '<p class="ellipsis">'+rdc.title+'</p><em>信息完整度<i class="blue">'+rdc.infoIntegrity+'</i></em><p class="position omg">'+approve+'</p>'+
+            '<p class="ellipsis">'+rdc.title+'</p><em>信息完整度<i class="blue">'+rdc.infoIntegrity+'%</i></em><p class="position omg">'+approve+'</p>'+
             '<p class="grab orange">'+rdc.unitPrice+'<br><span>元/㎡/天</span></p></div><div class="flex"><div class="item"><h4>'+rdc.sqm+'㎡</h4>'+
-            '<p>总面积</p></div><div class="item"><h4>'+rdc.sqm+'㎡</h4><p>可租面积</p></div><div class="item"><h4 class="omg">'+rdc.detlAddress+'</h4><p>地址</p></div></div></a>'+
+            '<p>总面积</p></div><div class="item"><h4>'+rdc.rdcSqm+'㎡</h4><p>可租面积</p></div><div class="item"><h4 class="omg">'+rdc.detlAddress+'</h4><p>地址</p></div></div></a>'+
             '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
             '<a class="fr noCollect" onclick="collect(this)"><i class="iconfont">&#xe605;</i><em>收藏</em></a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
         ];

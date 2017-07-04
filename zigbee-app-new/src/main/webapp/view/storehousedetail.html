@@ -2,7 +2,7 @@
 <html ng-app="app"  ng-controller="storehousedetail" on-finish-render-filters>
 	<head>
 		<meta charset="UTF-8">
-		<title ng-bind="appmode[0].title[datatype]"></title>
+		<title>{{vo.typeText}}详情</title>
 	    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
 	    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
 	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
@@ -27,7 +27,7 @@
 	        	<div class="zoom fr">
 	        		<a href="../index.html"><i class="iconfont">&#xe65a;</i></a>
 	        	</div>
-	        	<div class="txt">{{appmode[0].title[datatype]}}</div>
+	        	<div class="txt">{{vo.typeText}}详情</div>
 		    </header>
 		<!-- header end-->
 		<div class="rdcpadding" ng-if="vo.files">
@@ -38,8 +38,7 @@
 		</div>
 		<div class="rdcpadding rdcDetailName">
 			<h1>{{vo.title}}
-				<span ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></span>
-				<span ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></span>
+
 			</h1>
 			<div class="flex">
 				<div class="item"><span>联系电话</span><b class="blue">{{vo.telephone}}</b></div>
@@ -57,38 +56,53 @@
 		</div>
 		<!-- ======================================================================================= 冷仓信息共享-->
 		<div  ng-if="vo.dataType==3">
-			<div class="rdcpadding rdcDetailMainInfo">
+			<!--<div class="rdcpadding rdcDetailMainInfo">
 				<div class="flex">
 					<div class="item">
-						<span>{{appmode[datatype].lab[0][0]}}</span>
-						{{vo.sqm+vo.unit}}
+						<span></span>
+
 					</div>
 				</div>
-			</div>
+			</div>-->
 			<div class="rdcpadding" ng-hide="(vo.name==null&&vo.name=='')&&(vo.detlAddress==''&&vo.detlAddress==undefined)">
 				<div class="flex"  ng-if="vo.name!=null&&vo.name!=''">
 					<div class="item flex">
-						<span class="item">冷库名称</span>
+						<span class="item">关联冷库</span>
 						<p class="item">{{vo.name}}</p>
+					</div>
+				</div>
+				<div class="flex" ng-if="vo.audit==2||vo.istemperaturestandard==1">
+					<div class="item flex">
+						<span class="item"></span>
+						<p class="item" ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></p>
+						<p class="item" ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></p>
 					</div>
 				</div>
 				<div class="flex" ng-if="vo.detlAddress!=''&&vo.detlAddress!=undefined">
 					<div class="item flex">
-						<span class="item">地理位置</span>
+						<span class="item">地址</span>
 						<p class="item">{{vo.detlAddress}}</p>
+					</div>
+				</div>
+				<div class="flex" ng-if="vo.infoIntegrity">
+					<div class="item flex">
+						<span class="item">信息完整度</span>
+						<p class="item">{{vo.infoIntegrity}}%</p>
 					</div>
 				</div>
 			</div>
 			<div class="rdcpadding rdcDetailOtherInfo">
 				<h2>
 					<i class="iconfont blue">&#xe60b;</i>
-					&nbsp;{{appmode[0].title[datatype]}}
+					&nbsp;其他
 				</h2>
+				<p><span>{{vo.typeText}}面积</span>{{vo.sqm+vo.unit}}</p>
+				<p><span>{{appmode[datatype].lab[1][0]}}</span>{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}<em ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</em></p>
+				<p ng-hide="rentDate[vo.rentdate]==''"><span>有效期</span>{{rentDate[vo.rentdate]}}</p>
 				<p><span>开始时间</span>{{vo.validStartTime |date:"yyyy-MM-dd" }}</p>
 				<p><span>结束时间</span>{{vo.validEndTime |date:"yyyy-MM-dd" }}</p>
 				<p ng-if="vo.codeLave1!=''&&vo.codeLave1!=undefined"><span>经营类型</span>{{vo.codeLave1}}</p>
 				<p ng-if="vo.codeLave2!=''&&vo.codeLave2!=undefined"><span>温度类型</span>{{vo.codeLave2}}</p>
-				<p><span>{{appmode[datatype].lab[1][0]}}</span>{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}<span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span></p>
 				<div class="flex"><span class="item">备注</span><p class="item">{{vo.note?vo.note:'无'}}</p></div>
 			</div>
 		</div>
@@ -99,48 +113,53 @@
 				<div class="flex">
 					<div class="item">
 						<span>{{appmode[datatype].lab[0][0]}}</span>
-						{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}
+						<!--{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}-->
+						{{vo.sqm}}吨
 					</div>
 				</div>
 				<div class="flex">
 					<div class="item">
 						<span>{{appmode[datatype].lab[1][0]}}</span>
 						{{vo.unitPrice==undefined||vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}{{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}
-						<span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span>
-					</div>
-				</div>
-				<div class="flex">
-					<div class="item" ng-if="vo.unitPrice">
-						<span>有效开始时间</span>
-						{{vo.validStartTime |date:"yyyy-MM-dd" }}
-					</div>
-				</div>
-				<div class="flex">
-					<div class="item">
-						<span>有效结束时间</span>
-						{{vo.validEndTime |date:"yyyy-MM-dd" }}
+						<!--<span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span>-->
 					</div>
 				</div>
 			</div>
 			<div class="rdcpadding" ng-hide="(vo.name==null&&vo.name=='')&&(vo.detlAddress==''&&vo.detlAddress==undefined)">
 				<div class="flex"  ng-if="vo.rdcID!=0">
 					<div class="item flex">
-						<span class="item">冷库名称</span>
+						<span class="item">关联冷库</span>
 						<p class="item">{{vo.name}}</p>
+					</div>
+				</div>
+				<div class="flex" ng-if="vo.audit==2||vo.istemperaturestandard==1">
+					<div class="item flex">
+						<span class="item"></span>
+						<p class="item" ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></p>
+						<p class="item" ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></p>
 					</div>
 				</div>
 				<div class="flex" ng-if="vo.detlAddress!=''&&vo.detlAddress!=undefined">
 					<div class="item flex">
-						<span class="item">地理位置</span>
+						<span class="item">地址</span>
 						<p class="item">{{vo.detlAddress}}</p>
+					</div>
+				</div>
+				<div class="flex" ng-if="vo.infoIntegrity">
+					<div class="item flex">
+						<span class="item">信息完整度</span>
+						<p class="item">{{vo.infoIntegrity}}%</p>
 					</div>
 				</div>
 			</div>
 			<div class="rdcpadding rdcDetailOtherInfo">
 				<h2>
 					<i class="iconfont blue">&#xe60b;</i>
-					&nbsp;{{appmode[0].title[datatype]}}
+					其他
 				</h2>
+				<p ng-hide="rentDate[vo.rentdate]==''"><span>有效期</span>{{rentDate[vo.rentdate]}}</p>
+				<p><span>开始时间</span>{{vo.validStartTime |date:"yyyy-MM-dd" }}</p>
+				<p><span>结束时间</span>{{vo.validEndTime |date:"yyyy-MM-dd" }}</p>
 				<p ng-if="vo.unit1!=''&&vo.unit1!=undefined"><span>供应商</span>{{vo.unit1}}</p>
 				<p ng-if="vo.codeLave1!=''&&vo.codeLave1!=undefined"><span>品类</span>{{vo.codeLave1}}</p>
 				<div class="flex"><span class="item">备注</span><p class="item">{{vo.note?vo.note:'无'}}</p></div>

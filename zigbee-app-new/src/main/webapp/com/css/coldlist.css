@@ -862,6 +862,6 @@ border-bottom: 0;
 .rdcDetailMainInfo{
 	border-bottom-width: 1px;
 }
-.rdcDetailOtherInfo p{
-	margin: .2rem 0;
+.rdcDetailOtherInfo>p,.rdcpadding .item{
+	margin-top:.2rem;
 }

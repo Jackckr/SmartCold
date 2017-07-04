@@ -61,6 +61,7 @@
 		}
 		
 	};
+     $scope.rentDate=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];
 	 $scope.getOrder=function () {  
 			if(window.user!=undefined&&window.user.id!=0){
 	    		if(user.telephone!=''&&user.telephone!=undefined){
