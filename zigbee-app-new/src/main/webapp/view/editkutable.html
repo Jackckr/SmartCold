@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="rdcImg">
+                <li class="rdcImg" ng-show="tempStandLi">
                     <label>冷链委温度达标库<em>*</em></label>
                     <div id="tempStandDiv">
                         <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="isJoinStand">是</label>
@@ -278,7 +278,7 @@
                             </div>
                     </div>
                 </li>
-                <li>
+                <li ng-show="auditLi">
                     <label>冷库认证</label>
                     <label class="pic">
                         <input type="file" ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false" name="auditfile">
@@ -456,9 +456,9 @@ $(function () {
 	        $scope.isJoinStand=data[0].isJoinStand;
 	        $scope.rentSqm=data[0].rentSqm;
 	        $scope.height=data[0].height;
-	        if($scope.lihuoRoom==1){
-                $scope.islihuoRoom=true;
-            }
+	        if($scope.lihuoRoom==1){$scope.islihuoRoom=true;}
+            if(data[0].istemperaturestandard==1){$scope.tempStandLi=false;}else {$scope.tempStandLi=true;}
+            if(data[0].audit==2){$scope.auditLi=false;}else{$scope.auditLi=true;}
 	        if($scope.remark=="undefined")
 	        $scope.remark = "";
 	        if($scope.facility=="undefined")
