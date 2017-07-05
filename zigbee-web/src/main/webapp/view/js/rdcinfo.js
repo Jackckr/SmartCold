@@ -23,11 +23,35 @@ function getRdcInfo() {
     var bigImg=[];
     var baseInfo=[];
     var otherInfo=[];
-    var manageType=["","产地型","市场型","仓储型","配送型","生产型","中央厨房","医药型","其它"];
-    var tempType=["","冷藏库","冷冻库","超低温库","恒温库","多温区库"];
-    var refreg=["","氨制冷","氟利昂制冷","氨氟都有","其他"];
-    var struct=["","土建型","钢结构型"];
-    var saveType=["","货架存放","非货架存放"];
+    var manageType=[""];
+    $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            manageType.push(val.type);
+        });}});
+    var tempType=[""];
+    $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            tempType.push(val.type);
+        });
+    }});
+    var refreg=[""];
+    $.ajax({url:"/i/rdc/findAllStorageRefreg",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            refreg.push(val.type);
+        });
+    }});
+    var struct=[""];
+    $.ajax({url:"/i/rdc/findAllStorageStructureType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            struct.push(val.type);
+        });
+    }});
+    var saveType=[""];
+    $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            saveType.push(val.type);
+        });
+    }});
     var isHave=["","有","无"];
     $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId},success:function (data) {
         var rdc=data[0];
