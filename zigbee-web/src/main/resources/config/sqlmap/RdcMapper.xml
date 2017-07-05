@@ -201,6 +201,7 @@
         LEFT JOIN storagetempertype st on st.id=t.storagetempertype
         LEFT JOIN storagemanagetype sm on sm.id=t.managetype
         <where>
+            r.audit!=-1
             <if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
             <if test="keyword !=null and  keyword != ''"> and r.name like '%${keyword}%' </if>
             <if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if>

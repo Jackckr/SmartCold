@@ -36,7 +36,7 @@
             <ul class="houseinfo">
                 <li>
                     <label for="name">名称<em>*</em></label>
-                    <input type="text" ng-model="name" ng-disabled="editable" name="name"
+                    <input type="text" ng-model="name" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET">
                             <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;display: none;">冷库名已被用</em>
