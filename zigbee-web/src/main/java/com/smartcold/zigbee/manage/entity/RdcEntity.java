@@ -62,7 +62,7 @@ public class RdcEntity {
 
     private int isJoinStand;
 
-    private String logo;
+    private String logo="http://139.196.189.93:8089/app/rdcHeader.jpg";
 	
 	public int getUserId() {
 		return userid;
