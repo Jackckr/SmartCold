@@ -36,12 +36,18 @@
 </div>
 <!--new=========================================-->
 <div class="rdcpadding rdcDetailName">
-    <h1>{{vo.name}}
-        <span ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></span>
-        <span ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></span>
-    </h1>
+    <h1>{{vo.name}}</h1>
     <div class="flex">
-        <div class="item"><span>联系电话</span><b class="blue">{{vo.phoneNum}}</b></div>
+        <div class="item">
+            <em ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></em>
+            <em ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></em>
+        </div>
+    </div>
+    <div class="flex">
+        <div class="item"><span>联系电话</span><b class="blue">
+            <a href="login.html" class="blue" ng-if="checkUserLogin()==false">登录后显示</a>
+            <em ng-if="checkUserLogin()">{{vo.phoneNum}}</em>
+        </b></div>
         <div class="item">
             <ul class='star fl' value="{{vo.score}}">
                 <li class="{{vo.score>=1?'filled':''}}">★</li>
@@ -85,20 +91,33 @@
     </div>
 </div>
 <div class="rdcpadding rdcDetailOtherInfo">
+
     <h2>
         <i class="iconfont blue">&#xe60b;</i>
-        &nbsp;冷库信息
+        &nbsp;冷库信息<span class="fr blue" ng-click="on_off($event)">展开</span>
     </h2>
     <p><span>经营类型</span>{{manageType[vo.manageType]}}</p>
     <p><span>温度类型</span>{{tempType[vo.temperType]}}</p>
     <p><span>存放类型</span>{{saveType[vo.storageType]}}</p>
-    <p><span>冷藏车数量</span></p>
-    <p ng-if="vo.coldTruck1>0"><span>小于&nbsp;1.8T:</span>{{vo.coldTruck1}}辆</p>
-    <p ng-if="vo.coldTruck2>0"><span>1.8T&nbsp;~&nbsp;6T:</span>{{vo.coldTruck2}}辆</p>
-    <p ng-if="vo.coldTruck3>0"><span>6T&nbsp;~&nbsp;14T:</span>{{vo.coldTruck3}}辆</p>
-    <p ng-if="vo.coldTruck4>0"><span>大于&nbsp;&nbsp;14T:</span>{{vo.coldTruck4}}辆</p>
-    <p ng-if="vo.structure"><span>建筑结构</span>{{struct[vo.structure]}}</p>
-    <div ng-if="vo.facility" class="flex"><span class="item">周边设施</span><p class="item">{{vo.facility}}</p></div>
+    <div ng-if="oSwitch">
+        <p ng-hide="vo.coldTruck1==0&&vo.coldTruck2==0&&vo.coldTruck3==0&&vo.coldTruck4==0"><span>冷藏车数量</span></p>
+        <p ng-if="vo.coldTruck1>0"><span>小于&nbsp;1.8T:</span>{{vo.coldTruck1}}辆</p>
+        <p ng-if="vo.coldTruck2>0"><span>1.8T&nbsp;~&nbsp;6T:</span>{{vo.coldTruck2}}辆</p>
+        <p ng-if="vo.coldTruck3>0"><span>6T&nbsp;~&nbsp;14T:</span>{{vo.coldTruck3}}辆</p>
+        <p ng-if="vo.coldTruck4>0"><span>大于&nbsp;&nbsp;14T:</span>{{vo.coldTruck4}}辆</p>
+        <p ng-if="vo.structure"><span>建筑结构</span>{{struct[vo.structure]}}</p>
+        <p ng-if="vo.platform"><span>有无月台</span>{{vo.platform==1?'有':'无'}}</p>
+        <p ng-if="vo.lihuoRoom"><span>有无理货区</span>{{vo.lihuoRoom==1?'有':'无'}}</p>
+        <p ng-if="vo.lihuoRoom==1"><span>理货区面积</span>{{vo.lihuoArea==0?'未填写':vo.lihuoArea}}</p>
+        <p ng-if="vo.lihuoRoom"><span>有无温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>
+        <p ng-hide="vo.coldTruck1==0&&vo.coldTruck2==0&&vo.coldTruck3==0&&vo.coldTruck4==0"><span>冷库容积</span></p>
+        <p ng-if="vo.capacity1*vo.height1>0"><span>8&nbsp;~&nbsp;25℃:</span>{{vo.capacity1*vo.height1}}m³</p>
+        <p ng-if="vo.capacity2*vo.height2>0"><span>2&nbsp;~&nbsp;8℃:</span>{{vo.capacity2*vo.height2}}m³</p>
+        <p ng-if="vo.capacity3*vo.height3>0"><span>-2&nbsp;~&nbsp;-18℃:</span>{{vo.capacity3*vo.height3}}m³</p>
+        <p ng-if="vo.capacity4*vo.height4>0"><span>-18&nbsp;~&nbsp;-30℃:</span>{{vo.capacity4*vo.height4}}m³</p>
+        <p ng-if="vo.capacity5*vo.height5>0"><span>小于&nbsp;-50℃:</span>{{vo.capacity5*vo.height5}}m³</p>
+        <div ng-if="vo.facility" class="flex"><span class="item">周边设施</span><p class="item">{{vo.facility}}</p></div>
+    </div>
 </div>
 
 <!--<div class="rdcpadding">
@@ -157,7 +176,7 @@
                             <li class="filled">★</li>
                             <li class="filled">★</li>
                         </ul>
-                        <button class="grab">立即抢单</button>
+                        <!--<button class="grab">立即抢单</button>-->
                     </div>
                 </a>
             </li>
@@ -185,7 +204,7 @@
                             <li class="filled">★</li>
                             <li class="filled">★</li>
                         </ul>
-                        <button class="grab">立即抢单</button>
+                        <!--<button class="grab">立即抢单</button>-->
                     </div>
                 </a>
             </li>
@@ -213,7 +232,7 @@
                             <li class="filled">★</li>
                             <li class="filled">★</li>
                         </ul>
-                        <button class="grab">立即抢单</button>
+                       <!-- <button class="grab">立即抢单</button>-->
                     </div>
                 </a>
             </li>
