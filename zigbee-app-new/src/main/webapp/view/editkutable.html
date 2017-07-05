@@ -340,11 +340,7 @@ $(function () {
     $scope.provinceSelected = function () {
         $http.get(ER.root+"/i/city/findCitysByProvinceId", {params: {"provinceID": $scope.provinceId} }).success(function (data) {
             $scope.citys = data;
-            $scope.cityId = data[0].cityID;
         });
-    };
-
-    $scope.citySelected = function () {
     };
 
 
@@ -415,6 +411,7 @@ $(function () {
 	        $scope.name = data[0].name;
 	        $scope.address = data[0].address;
 	        $scope.provinceId = data[0].provinceId;
+            $scope.provinceSelected();
 	        $scope.cityId = data[0].cityId;
 	        $scope.area = data[0].area;
 	        $scope.manageType = data[0].manageType;
@@ -461,11 +458,6 @@ $(function () {
 	        $scope.remark = "";
 	        if($scope.facility=="undefined")
 	        $scope.facility = "";
-	        // 根据省ID查询城市列表
-	        $http.get(ER.root+"/i/city/findCitysByProvinceId", { params: { "provinceID": $scope.provinceId}}).success(function (data) {
-	            $scope.citys = data;
-	            $scope.cityId = data[0].cityID;
-	        });
 	     });
 	   }else{
 	     //alert("非法访问！");
