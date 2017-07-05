@@ -18,10 +18,9 @@
 </head>
 <body ng-app="app"  ng-controller="usercl" >
     <header>
-    	<div class="txt">
-    		我的
-    	</div>
-    </header>
+		<div class="zoom fr" ng-if="user" ng-click="loginout()"><a><i class="iconfont">&#xe616;</i></a></div>
+		<div class="txt">我的</div>
+	</header>
 	<div class="newUser" id="userinfo" ng-cloak>
 		<div class="topImg" ng-show="userinfo.id">
 			<div class="userPic">
