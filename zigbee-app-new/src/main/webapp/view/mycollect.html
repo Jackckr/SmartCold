@@ -13,8 +13,7 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
         <script type="text/javascript" src="../com/js/layer.js"></script>
-    <script type="text/javascript" src="../app/js/user_obj.js" ></script>
-    <script type="text/javascript">var type=2,dataType=-1; checkLogin(null,initdata);</script>
+    <script type="text/javascript" src="../app/js/mycollect.js" ></script>
 </head>
 <body  >
     <header>
@@ -27,11 +26,11 @@
     </header>
 <!--     <section class="clearfix"  id="user_info"> </section> -->
     <div class="flex oCollect">
-        <div class="item txt-center collectActive">冷库收藏</div>
-        <div class="item txt-center">需求收藏</div>
+        <div class="item txt-center collectActive" onclick="getCollectRdc()">冷库收藏</div>
+        <div class="item txt-center" onclick="getCollectShare()">需求收藏</div>
     </div>
     <ul id="ul_rdcsL_list" style="margin-top: 0;" class="commentList"></ul>
-    <div id="" class="nodata black" style="margin-top: 0"> <img src="../com/img/nodata.jpg" alt=""><p>您还没有联络单信息哦~~</p></div>
+    <div id="" class="nodata black" style="margin-top: 0"> <img src="../com/img/nodata.jpg" alt=""><p>您还没有收藏~~</p></div>
     <footer class="flex black">
         <div class="item">
             <a href="../index.html">

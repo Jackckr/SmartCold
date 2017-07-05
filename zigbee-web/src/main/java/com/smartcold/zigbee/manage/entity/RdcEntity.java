@@ -59,6 +59,8 @@ public class RdcEntity {
     private int istemperaturestandard;
 
     private int isJoinStand;
+
+    private String logo;
 	
 	public int getUserId() {
 		return userid;
@@ -290,5 +292,13 @@ public class RdcEntity {
 
     public void setIsJoinStand(int isJoinStand) {
         this.isJoinStand = isJoinStand;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

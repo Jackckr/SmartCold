@@ -272,8 +272,9 @@
 	</select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
-        <include refid="Base_Column_List" />
-        from Rdc
+        <include refid="Base_Column_List" />,
+        (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category IN ('honorPic','storagePic') ORDER BY id DESC LIMIT 1 ) as logo
+        from Rdc r
         where id = #{id,jdbcType=INTEGER}
     </select>
 </mapper>
