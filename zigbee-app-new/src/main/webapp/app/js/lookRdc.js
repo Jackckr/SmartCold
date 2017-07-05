@@ -14,6 +14,10 @@ $().ready(function () {
     $(".cancel").click(function () {
         $(".one").show();
         $(".two").hide();
+        currentPage = 1;
+        ul_select.empty();
+        $("#searchDara_div input").val(null);
+        getPageData();
     });
     gosharedile = function (sharid) {//共享详情
         window.location.href = "storehousedetail.html?id=" + sharid;

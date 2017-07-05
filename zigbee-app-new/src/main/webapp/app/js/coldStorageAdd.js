@@ -232,9 +232,9 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     }
     $scope.ChangLihuoState=function (val) {
         if(val==2){
-            $scope.islihuoRoom==false;
+            $scope.islihuoRoom=false;
         }else {
-            $scope.islihuoRoom==true;
+            $scope.islihuoRoom=true;
         }
     }
     $scope.submit = function(){

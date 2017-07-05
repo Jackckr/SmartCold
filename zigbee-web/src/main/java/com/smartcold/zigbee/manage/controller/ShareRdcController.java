@@ -393,7 +393,9 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value = "/newGetSERDCList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> newGetSERDCList(String rdcID,String dataType,String goodSaveType,String istemperaturestandard,String audit, String keyword,String typeCode,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+	public ResponseData<RdcShareDTO> newGetSERDCList(String rdcID,String dataType,String goodSaveType,String istemperaturestandard,
+													 String audit, String keyword,String typeCode,String provinceid, String managetype,
+													 String storagetempertype,String sqm,int pageNum,int pageSize) {
  		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("typeCode", typeCode);
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2

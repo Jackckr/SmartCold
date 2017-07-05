@@ -15,7 +15,14 @@ $().ready(function() {
       };
       initevg=function(){
         $(".transion").click(function(){$(".one").hide();$(".two").show();});
-  		$(".cancel").click(function(){$(".one").show();$(".two").hide();});
+          $(".cancel").click(function () {
+              $(".one").show();
+              $(".two").hide();
+              currentPage = 1;
+              ul_select.empty();
+              $("#searchDara_div input").val(null);
+              getPageData();
+          });
    		$(".droplist a").click(function(e){//条件过滤
    			$(this).children('i').addClass('current').html('&#xe62e;');
    			$(this).addClass('current').next('.listcontain').fadeIn().parent().siblings().children('a').removeClass('current').children('i').removeClass('current').html('&#xe62d;').parent().siblings('.listcontain').hide();
