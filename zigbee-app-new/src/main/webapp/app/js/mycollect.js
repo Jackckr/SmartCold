@@ -16,36 +16,43 @@ $().ready(function () {
     };
     function gethtml(item,index) {
         var obj;
+        localStorage.gowhere='collect';
         switch (index){
             case 1:
                 obj=item.rdcShareDTO;
                 return [
-                "<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
+                "<li class='clearfix' ><div class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
                 obj.logo, "'/></div><p class='company'>", obj.title,
                 "</p><p class='position'>", obj.typeText,
-                "</p></div><p class='btnGroup'><button onclick='editshareinfo(", obj.id,",",obj.dataType,
-                ")'>修改</button><button onclick='delrdc(", obj.id,
-                ",this);'>删除</button></p></li>" ].join("");
+                "</p></div><p class='btnGroup'><a href='storehousedetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+index+","+obj.id+")'>取消收藏</button></p></li>" ].join("");
                 break;
             case 2:
                 obj=item.rdcEntity;
                 return [
-                    "<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'><img src='"+obj.logo+"'/></div><p class='company'>", obj.name,
+                    "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='"+obj.logo+"'/></div><p class='company'>", obj.name,
                     "</p><p class='position'><i class='iconfont'>&#xe66e;</i>",
                     obj.address,
-                    "</p></div><p class='btnGroup'><button onclick='editinfo(", obj.id,
-                    ")'>修改</button><button onclick='delrdc(", obj.id,
-                    ",this);'>删除</button></p></li>" ].join("");
+                    "</p></div><p class='btnGroup'><a href='rdcdetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+index+","+obj.id+")'>取消收藏</button></p></li>" ].join("");
                 break;
         }
 
     }
-    getCollectShare=function () {
+    cancelCollect = function (index,id) {
+        $.post(ER.root+"/i/collect/delCollectById",{uid:window.user.id,collectId:id,collectType:2},function (data) {
+            ul_select.empty();
+            currentPage=1;
+            flag=index;
+            initData();
+        });
+    }
+    getCollectShare=function (ops) {
+        $(ops).addClass('collectActive').siblings().removeClass('collectActive');
         ul_select.empty();
         flag=1;currentPage=1;
         initData();
     }
-    getCollectRdc=function () {
+    getCollectRdc=function (ops) {
+        $(ops).addClass('collectActive').siblings().removeClass('collectActive');
         ul_select.empty();
         flag=2;currentPage=1;
         initData();

@@ -64,6 +64,7 @@ var initevg = function() {
 	});
 };
 var gethtml = function(obj) {
+    localStorage.gowhere='collect';
 	switch (type) {
 	case 0:
 		return [

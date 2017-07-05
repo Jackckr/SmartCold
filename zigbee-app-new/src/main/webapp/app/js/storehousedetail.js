@@ -72,20 +72,25 @@
      };
      $scope.goWhere = function () {
 		 if($scope.checkUserLogin()){
-             checkLocal();
-		 	if($scope.datatype==3){//出租求租
-                if($scope.vo.typeCode==1){
-                    location.href='rentstorage.html'
-                }else{
-                    location.href='lookstorage.html'
-                }
-			}else if($scope.datatype==1){//出售求购
-                if($scope.vo.typeCode==1){
-                    location.href='buygoodslist.html'
-                }else{
-                    location.href='salegoodslist.html'
+		 	if(localStorage.gowhere){
+                goback();
+			}else{
+                checkLocal();
+                if($scope.datatype==3){//出租求租
+                    if($scope.vo.typeCode==1){
+                        location.href='rentstorage.html'
+                    }else{
+                        location.href='lookstorage.html'
+                    }
+                }else if($scope.datatype==1){//出售求购
+                    if($scope.vo.typeCode==1){
+                        location.href='buygoodslist.html'
+                    }else{
+                        location.href='salegoodslist.html'
+                    }
                 }
 			}
+
 		 }else{
 		 	goback();
 		 }
