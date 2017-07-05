@@ -61,6 +61,35 @@
 		}
 		
 	};
+
+     $scope.checkUserLogin = function () {
+         if(window.user!=null&&window.user!=undefined){
+             return true
+         }else{
+         	localStorage.oURL=document.URL;
+             return false
+         };
+     };
+     $scope.goWhere = function () {
+		 if($scope.checkUserLogin()){
+             checkLocal();
+		 	if($scope.datatype==3){//出租求租
+                if($scope.vo.typeCode==1){
+                    location.href='rentstorage.html'
+                }else{
+                    location.href='lookstorage.html'
+                }
+			}else if($scope.datatype==1){//出售求购
+                if($scope.vo.typeCode==1){
+                    location.href='buygoodslist.html'
+                }else{
+                    location.href='salegoodslist.html'
+                }
+			}
+		 }else{
+		 	goback();
+		 }
+     };
      $scope.rentDate=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];
 	 $scope.getOrder=function () {  
 			if(window.user!=undefined&&window.user.id!=0){

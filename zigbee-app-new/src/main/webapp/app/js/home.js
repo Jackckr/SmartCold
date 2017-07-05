@@ -4,6 +4,7 @@ function gordclist() {var key=$("#searchdiv").val().trim();   window.localStorag
 function gosharlist(){var key=$("#searchdiv").val().trim();   window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/coldlist.html?key="+key;   };
 function goshkeylist(em){var key=$(em).attr("value");  window.localStorage.setItem("shdatakey", key); $("#searchdiv").val("");  window.location.href ="view/searchList.html?key="+key;};
 $().ready(function() {
+    checkLocal();
 	var province=null,sccsize=0,shear=false;
 	if(window.localStorage.appLocalCity ){
     	 document.getElementById ("city").innerHTML =JSON.parse(window.localStorage.appLocalCity).cityName;

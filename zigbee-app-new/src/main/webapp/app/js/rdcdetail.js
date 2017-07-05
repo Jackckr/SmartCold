@@ -35,12 +35,28 @@
          $scope.struct=["","土建型","钢结构型"];
          $scope.saveType=["","货架存放","非货架存放"];
          $scope.isHave=["","有","无"];
+         $scope.oSwitch=false;
+         $scope.on_off=function($event){
+         	if($scope.oSwitch){
+                $scope.oSwitch=false;
+                $event.target.innerText='展开';
+			}else{
+                $scope.oSwitch=true;
+                $event.target.innerText='收起';
+			}
+		 };
+         $scope.checkUserLogin = function () {
+             if(window.user!=null&&window.user!=undefined){
+                 return true
+             }else{
+                 return false
+             };
+         };
 		$scope.initdata=function(){
 	       //获得数据
 	    	$http.get(ER.root+'/i/rdc/findRDCDTOByRDCId', { params: {"rdcID": id}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 	    		if(data){
 	    			$scope.vo=data[0];
-	    			tel();
 	    			$scope.auth_show = ($scope.isLogin(user) && $scope.vo.audit !== 2);
     			}else{
 	    			//alert(data.message);

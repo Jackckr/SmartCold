@@ -44,12 +44,12 @@ body{
 	font-size: 0.8rem;
 }
 #btn_login,#app_but1{
-	background: -webkit-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Safari 5.1 - 6.0 */
-	background: -ms-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* ie */
-	background: -moz-linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Firefox 3.6 - 15 */
-	background: linear-gradient(rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* 标准的语法 */
-	-webkit-border-radius: 1rem;
-	border-radius: 1rem;
+	background: -webkit-linear-gradient(left,rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Safari 5.1 - 6.0 */
+	background: -ms-linear-gradient(rgba(left,52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* ie */
+	background: -moz-linear-gradient(right,rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to left,rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* 标准的语法 */
+	-webkit-border-radius: .4rem;
+	border-radius: .4rem;
 	margin-top: 0;
 }
 #app_but1{
@@ -249,14 +249,14 @@ input[type='radio']:checked{
 	display: inline-block;
 	background-color: #fff;
 	text-align: center;
-	font-size: 0.7rem;
+	font-size: 0.6rem;
 	color: #DFDFDF;
 	text-align: center;
 	float: left;
-	border-radius: .2rem;
+	border-radius: 50%;
 }
 .check_icon.on i {
-	background-color: #5eb95e;
+	background-color: #55adf2;
 	color: #fff;
 }
 /*新版登录*/
