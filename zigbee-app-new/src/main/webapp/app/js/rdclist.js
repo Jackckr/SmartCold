@@ -101,13 +101,23 @@ $().ready(function() {
 		var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
 		localStorage.list_cache_coldlist=JSON.stringify({totalPages:totalPages,currentPage:currentPage,html:$("#ul_rdcsL_list").html(),scrollHeight:scrollHeight});
   	};
-    collect=function(ops) {
+    collect=function(ops,id) {
+        if(!(window.user && window.user.id!=0)){
+            layer.open({content: "请登入后收藏！", btn: '确定'});
+            return;
+        }
         var em = $(ops);
         if(em.hasClass('noCollect')){
+            $.post(ER.root+"/i/collect/addCollectRdc",{uid:window.user.id,collectId:id,collectType:1},function (data) {
+
+            });
             em.removeClass('noCollect').addClass('hasCollect');
             em.children('i').html('&#xe60c;');
             em.children('em').html('已收藏');
         }else{
+            $.post(ER.root+"/i/collect/delCollectById",{uid:window.user.id,collectId:id,collectType:1},function (data) {
+
+            });
             em.addClass('noCollect').removeClass('hasCollect');
             em.children('i').html('&#xe605;');
             em.children('em').html('收藏');
@@ -129,11 +139,19 @@ $().ready(function() {
                 approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
             }
         };
+        var collectWords='<a class="fr noCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+        if(rdc.collectUserIds && window.user){
+            for(var i=0;i<rdc.collectUserIds.length;i++){
+                if(rdc.collectUserIds[i]==window.user.id){
+                    collectWords='<a class="fr hasCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+                }
+            }
+        }
   		 var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><img class="fl" src="'+rdc.logo+'">' +
 		 '<div><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p>' +
 		 '<div class="star">'+approve+'</div></div></a>' +
 		 '<div class="btnFn clearfix"><a href="rdcdetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
-        '<a class="fr noCollect" onclick="collect(this)"><i class="iconfont">&#xe605;</i><em>收藏</em></a><a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
+        collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
         return score.join("");
   	}
   	function getPageData(){//启用无限加载

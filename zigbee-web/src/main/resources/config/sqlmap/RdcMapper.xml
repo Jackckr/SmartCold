@@ -173,8 +173,11 @@
 	        <if test="rdcID !=0"> and r.id = ${rdcID} </if> <!--  关键字 -->
         ORDER BY r.addTime DESC
 	</select>
-
-    <select id="getNewRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO">
+    <resultMap id="rdcLidMap" type="com.smartcold.zigbee.manage.dto.RdcEntityDTO">
+        <result property="id" column="id"/>
+        <collection property="collectUserIds" column="id" select="com.smartcold.zigbee.manage.dao.CollectMapper.getUsersIdByRdcId"/>
+    </resultMap>
+    <select id="getNewRdcList" parameterType="map" resultMap="rdcLidMap">
         SELECT
         r.id,
         r.name,

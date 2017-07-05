@@ -1,5 +1,7 @@
 package com.smartcold.zigbee.manage.entity;
 
+import com.smartcold.zigbee.manage.service.FtpService;
+
 import java.util.Date;
 
 public class RdcEntity {
@@ -299,6 +301,6 @@ public class RdcEntity {
     }
 
     public void setLogo(String logo) {
-        this.logo = logo;
+        this.logo = FtpService.READ_URL+ logo;
     }
 }

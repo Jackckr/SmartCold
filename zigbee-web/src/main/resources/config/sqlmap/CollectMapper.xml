@@ -20,6 +20,9 @@
         SELECT * FROM `collect` WHERE `collectType`=2 AND `uid`=#{uid}
     </select>
     <select id="getUsersIdByColId" resultType="java.lang.Integer">
-        SELECT uid FROM collect WHERE collectId=#{colId}
+        SELECT `uid` FROM `collect` WHERE `collectId`=#{colId} and `collectType`=2
+    </select>
+    <select id="getUsersIdByRdcId" resultType="java.lang.Integer">
+        SELECT `uid` FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1
     </select>
 </mapper>

@@ -19,4 +19,6 @@ public interface CollectMapper {
     Page<CollectEntity> getSharedCollectByUid(Integer uid);
 
     List<Integer> getUsersIdByColId(Integer colId);
+
+    List<Integer> getUsersIdByRdcId(Integer rdcId);
 }
