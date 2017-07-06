@@ -18,10 +18,9 @@
 </head>
 <body ng-app="app"  ng-controller="usercl" >
     <header>
-    	<div class="txt">
-    		我的
-    	</div>
-    </header>
+		<div class="zoom fr" ng-if="user" ng-click="loginout()"><a><i class="iconfont">&#xe616;</i></a></div>
+		<div class="txt">我的</div>
+	</header>
 	<div class="newUser" id="userinfo" ng-cloak>
 		<div class="topImg" ng-show="userinfo.id">
 			<div class="userPic">
@@ -29,7 +28,10 @@
 				<input id="headImg" type="file" name=""  value="" />
 			</div>
 			<p class="userName">{{(userinfo.username=="" || userinfo.username == undefined)?userinfo.nickname:userinfo.username}}</p>
-			<p class="goApprove"><span><i class="iconfont">&#xe61c;</i>去认证</span></p>
+			<p class="goApprove" ng-if="user.vipType==0"><a href="approve.html"><i class="iconfont">&#xe61c;</i>去认证</a></p>
+			<div  ng-if="user.vipType!=0">
+				<p class="goApprove"><a href="javascript:;"><i class="iconfont">&#xe61c;</i>已认证</a></p>
+			</div>
 		</div>
 		<div class="topImg" ng-hide="userinfo.id">
 			<div class="userPic">
@@ -49,6 +51,17 @@
 					<p class="list_name">我的冷库</p>
 				</div>
 			</li>
+			<li class="clearfix" ng-login="user-mycoldpublish.html">
+				<div class="myicon fl">
+					<i class="iconfont" style="color: #00d042;">&#xe60b;</i>
+				</div>
+				<div class="rightArrow fr">
+					<a href=""><i class="iconfont">&#xe697;</i></a>
+				</div>
+				<div class="name">
+					<p class="list_name">出租/求租</p>
+				</div>
+			</li>
 			<li class="clearfix" ng-login="user-myrelease.html">
 				<div class="myicon fl">
 					<i class="iconfont" style="color: #ff4d43;">&#xe608;</i>
@@ -60,7 +73,7 @@
 					<p class="list_name">我的货源</p>
 				</div>
 			</li>
-			<li class="clearfix" ng-login="user-myorder.html">
+			<li class="clearfix" ng-login="mycollect.html">
 				<div class="myicon fl">
 					<i class="iconfont" style="color: #fdc54b;">&#xe60c;</i>
 				</div>
@@ -82,7 +95,8 @@
 					<p class="list_name">个人设置</p>
 				</div>
 			</li>
-			<li class="clearfix" ng-login="sys_message.html">
+			<!--暂时隐藏  7.11全球峰会之后放到360内部，替换分析模块2017-07-04-->
+			<!--<li class="clearfix" ng-login="sys_message.html">
 				<div class="myicon fl">
 					<i class="iconfont" style="color: #ff4d43;">&#xe609;</i>
 				</div>
@@ -92,7 +106,7 @@
 				<div class="name">
 					<p class="list_name">系统通知</p>
 				</div>
-			</li>
+			</li>-->
 			<li class="clearfix" onclick="location.href='customer.html'">
 				<div class="myicon fl">
 					<i class="iconfont" style="color: #20bbd7;">&#xe69c;</i>

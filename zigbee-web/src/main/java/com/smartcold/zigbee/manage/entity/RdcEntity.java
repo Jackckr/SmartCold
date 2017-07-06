@@ -1,5 +1,7 @@
 package com.smartcold.zigbee.manage.entity;
 
+import com.smartcold.zigbee.manage.service.FtpService;
+
 import java.util.Date;
 
 public class RdcEntity {
@@ -59,6 +61,8 @@ public class RdcEntity {
     private int istemperaturestandard;
 
     private int isJoinStand;
+
+    private String logo="http://139.196.189.93:8089/app/rdcHeader.jpg";
 	
 	public int getUserId() {
 		return userid;
@@ -290,5 +294,13 @@ public class RdcEntity {
 
     public void setIsJoinStand(int isJoinStand) {
         this.isJoinStand = isJoinStand;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = FtpService.READ_URL+ logo;
     }
 }

@@ -85,10 +85,10 @@
 		</div>
     </div>
     <section class="main maindetail black">
-        <div class="releaseImg" style="background-image: url('../com/img/r4.png');"></div>
+        <div class="releaseImg" style="background-image: url('../com/img/r5.png');"></div>
        	<form id="release_item_from" name="itemform" >
        	 <input type="hidden" id="dataType" ng-model="dataType" value="1">
-			      <input type="hidden" id="typeCode" ng-model="typeCode" value="1">
+			      <input type="hidden" id="typeCode" ng-model="typeCode" value="2">
 			      <input type="hidden" id="typeText" ng-model="typeText" value="求购">
 			      <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
             <input type="hidden" id="goods_types" ng-model="rdcflag" value="2">
@@ -108,7 +108,7 @@
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                  <li class="offershow">
                     <label for="city">市</label><em>*</em>
@@ -117,7 +117,7 @@
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                 <li>
                     <label for="category">品类</label><em>*</em>
@@ -126,17 +126,17 @@
 	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
 	                    </select>
 	                </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="num">货品总量</label><em>*</em>
                     <input type="number" id="num"  ng-model="sqm" style="min-width:6rem;width:6rem;"/>
-                    <label><input type="radio"  value="Kg" ng-model="unit" name="unit"  checked="checked"  />Kg</label>
-                    <label><input type="radio"  ng-model="unit" name="unit"  value="吨" />吨</label>
+                    <label><input type="radio"  value="1" ng-model="unit" name="unit"  checked="checked"  />Kg</label>
+                    <label><input type="radio"  ng-model="unit" name="unit"  value="2" />吨</label>
                 </li>
                 <li>
                     <label for="price">售价</label>
-                    <input type="number" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
+                    <input type="number" ng-model="unitprice" id="price" placeholder="（元）默认为：面议"/>
                 </li>
                 <li>
 					<label for="time">有效开始时间</label><em>*</em>

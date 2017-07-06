@@ -212,6 +212,65 @@ function updateColdSubmit() {
         layer.close(ii);
     }
 }
+
+// 获取冷库经营类型
+function getStorageManage() {
+    var manageList=[];
+    $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            manageList.push('<option value="'+val.id+'">'+val.type+'</option>');
+        });
+        $("#manageType").empty().append(manageList.join(''));
+    }});
+}
+
+// 获取冷库结构类型
+function getStructures() {
+    var structures=[];
+    $.ajax({url:"/i/rdc/findAllStorageStructureType",type:"get",success:function (data) {
+        structures.push('<option value="0"></option>');
+        data.forEach(function (val, index) {
+            structures.push('<option value="'+val.id+'">'+val.type+'</option>');
+        });
+        $("#structure").empty().append(structures.join(''));
+    }});
+}
+
+// 获取冷库温度类型
+function getTemperTypes() {
+    var temperTypes=[];
+    $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            temperTypes.push('<option value="'+val.id+'">'+val.type+'</option>');
+        });
+        $("#temperType").empty().append(temperTypes.join(''));
+    }});
+}
+
+// 获取商品存放类型
+function getStorageTypes() {
+    var storageTypes=[];
+    $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            storageTypes.push('<option value="'+val.id+'">'+val.type+'</option>');
+        });
+        $("#storageType").empty().append(storageTypes.join(''));
+    }});
+}
+
+// 制冷剂类型
+function getStorageRefregs() {
+    var storageRefregs=[];
+    $.ajax({url:"/i/rdc/findAllStorageRefreg",type:"get",success:function (data) {
+        storageRefregs.push('<option value="0"></option>');
+        data.forEach(function (val, index) {
+            storageRefregs.push('<option value="'+val.id+'">'+val.type+'</option>');
+        });
+        $("#storageRefreg").empty().append(storageRefregs.join(''));
+    }});
+}
+
+
 /*获得所有的省市*/
 function getProvinceList() {
     var provinceList=[];
@@ -324,6 +383,11 @@ function changeIsLiHuoArea() {
     }
 }
 $(function () {
+    getStorageManage();
+    getStructures();
+    getTemperTypes();
+    getStorageTypes();
+    getStorageRefregs();
     getProvinceList();
     getCityListByProId();
     $("#provinceId").bind("change",getCityListByProId);

@@ -28,4 +28,5 @@ $(function(){
 		$('.wanted').click(function(){
 			$(this).addClass('btn').siblings('.rentKId').removeClass('btn');
 		})
-})
+});
+var rentDate=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];

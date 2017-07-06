@@ -60,7 +60,7 @@
                             ng-change="provinceSelected(provinceId)"
                             ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                 </div>
-                <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+                <i class="iconfont fr moreinfo">&#xe697;</i></li>
             <li><label for="city">市</label>
                 <em>*</em>
                 <div class="mySelect">
@@ -68,15 +68,10 @@
                             ng-disabled="editable" ng-change="citySelected(cityId)"
                             ng-options="x.cityID as x.cityName for x in citys"></select>
                 </div>
-                <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+                <i class="iconfont fr moreinfo">&#xe697;</i></li>
             <li><label>求租面积</label>
                 <em>*</em>
-                <input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/>
-                <!--<label><input type="radio" value="元/天·平方米" ng-model="unit" name="unit"
-                              checked="checked"/>平方米</label>
-                <label><input type="radio" ng-model="unit" name="unit"
-                              value="元/天·吨"/>吨</label>
-                <label><input type="radio" value="元/天·其他" ng-model="unit" name="unit"/>其他</label>-->
+                <input type="number" id="sqm" ng-model="sqm"  placeholder="㎡"/>
             </li>
             <li><label>求租库型</label>
                 <em>*</em>
@@ -85,7 +80,7 @@
                             ng-change="TemperTypeSelected(temperType)"
                             ng-options="x.id as x.type for x in temperTypes"></select>
                 </div>
-                <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+                <i class="iconfont fr moreinfo">&#xe697;</i></li>
 
             <!--<li><label for="storageType">经营类型</label>
                 <em>*</em>
@@ -94,7 +89,7 @@
                             ng-change="StorageTypeSelected(storageType)"
                             ng-options="x.id as x.type for x in storageTypes"></select>
                 </div>
-                <i class="iconfont fr moreinfo">&#xe60d;</i></li>-->
+                <i class="iconfont fr moreinfo">&#xe697;</i></li>-->
 
 
 
@@ -106,7 +101,7 @@
                             ng-change="rentDateSelected(rentdate)"
                             ng-options="x.id as x.type for x in rentDateTypes"></select>
                 </div>
-                <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+                <i class="iconfont fr moreinfo">&#xe697;</i></li>
             <li>
                 <label for="sttime">有效开始时间</label><em>*</em>
                 <div class="mySelect">

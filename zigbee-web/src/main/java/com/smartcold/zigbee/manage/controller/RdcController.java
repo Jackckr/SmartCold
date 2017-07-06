@@ -581,8 +581,7 @@ public class RdcController {
 			@RequestParam(required = false) MultipartFile file0,@RequestParam(required = false) MultipartFile standPic,
 			@RequestParam(required = false) MultipartFile file1, @RequestParam(required = false) MultipartFile file2,
 			@RequestParam(required = false) MultipartFile file3, @RequestParam(required = false) MultipartFile file4,
-			@RequestParam(required = false) MultipartFile auditPic,String empStr,String userStr,String delIds) throws Exception {
-		RdcAddDTO rdcAddDTO=null;
+			@RequestParam(required = false) MultipartFile auditPic,String empStr,String userStr,String delIds,RdcAddDTO rdcAddDTO) throws Exception {
 		UserEntity userEntity=null;
 		if (!StringUtils.isEmpty(empStr)) {
 			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
@@ -604,7 +603,8 @@ public class RdcController {
 		int rdcInfoIntegrity = getRdcInfoIntegrity(rdcAddDTO);
 		rdcEntity.setInfoIntegrity(rdcInfoIntegrity);
 		String address = URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8");
-		rdcEntity.setName(rdcAddDTO.getName());
+		String name=URLDecoder.decode(rdcAddDTO.getName(), "UTF-8");
+		rdcEntity.setName(name);
 		rdcEntity.setAddress(address);
 		rdcEntity.setSqm(rdcAddDTO.getArea());
 		rdcEntity.setCapacity(rdcAddDTO.getTonnage());

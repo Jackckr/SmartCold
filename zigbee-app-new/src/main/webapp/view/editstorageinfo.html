@@ -8,11 +8,13 @@
 	content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。" />
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-<title>发布仓位</title>
+<title>发布仓库信息修改</title>
 <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/reset.css">
 <link rel="stylesheet" type="text/css" href="../com/css/release.css">
 <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/newRelease.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
@@ -33,13 +35,12 @@ $(function() {
 <body ng-app="app" ng-controller="ctrl">
 	<!-- header -->
 	<header>
-
 		<div class="area fl">
-			<a onclick="goback()"><i class="iconfont">&#xe60e;</i>
-			</a>
+			<a onclick="goback()"><i class="iconfont">&#xe602;</i></a>
 		</div>
 		<div class="zoom fr"> <a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
-		<div class="txt">发布仓库信息修改</div>
+		<div class="txt" ng-if="typeCode==1">出租仓库信息修改</div>
+		<div class="txt" ng-if="typeCode==2">求租仓库信息修改</div>
 	</header>
 	
 	<section class="main maindetail" style="margin-top:2.5rem">
@@ -62,39 +63,38 @@ $(function() {
 					</div> </a></li>
 		</ul>
     </div>
+		<div class="releaseImg" style="background-image:url('../com/img/r3.png');" ng-if="typeCode==2"></div>
 		<form id="release_item_from" name="itemform" >
 			<ul class="houseinfo">
-				<li><label for="name">描述</label> <em>*</em><input type="text" id="name" ng-model="title"
-					placeholder="求租仓位" /></li>
-					
-				 <li class="offershow" ng-if="typeCode==2">
+				<li  ng-if="typeCode==1"><label for="name">描述</label> <em>*</em><input type="text" id="name" ng-model="$parent.title"
+					placeholder="出租仓位" /></li>
+
+				<li ng-if="typeCode==2" style="border: 0;line-height: 0"><label>求租地区</label></li>
+				<li class="offershow" ng-if="typeCode==2">
                     <label for="province">省</label><em>*</em>
                     <div class="mySelect">
-                    	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
+                    	<select id="province" ng-model="$parent.provinceId" ng-disabled="editable" name="provinceId"
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                  <li class="offershow"  ng-if="typeCode==2">
                     <label for="city">市</label><em>*</em>
                     <div class="mySelect">
-	                    <select id="city" ng-model="cityId" name="cityid" val="{{cityId}}"
+	                    <select id="city" ng-model="$parent.cityId" name="cityid" val="{{cityId}}"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
-				<li ng-if="rdcdto==null||rdcdto==undefined"><label for="manageType">经营类型</label>
-				<em>*</em>
-					<div class="mySelect">
-<!-- 					<select ng-model="manageType" ng-change="ManageTypeSelected(manageType)"  ng-options="x.id as x.type for x in manageTypes"></select> -->
-                         <select id="manageType" ng-model="manageType" val="{{manageType}}">
-                         	<option ng-repeat="x in manageTypes" value="{{x.id}}">{{x.type}}</option>
-                         </select>   
-					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-					
-				<li><label for="temperatureType">冷库温度类型</label>
+				<li ng-if="typeCode==2"><label>求租面积</label>
+					<em>*</em>
+					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/>
+				</li>
+
+				<li><label ng-if="typeCode==2">求租库型</label>
+					<label ng-if="typeCode==1">冷库温度类型</label>
 				<em>*</em>
 					<div class="mySelect">
 <!-- 						   <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select> -->
@@ -102,20 +102,18 @@ $(function() {
 						   	  <option ng-repeat="x in temperTypes" value="{{x.id}}">{{x.type}}</option>
 						   </select>
 						   
-					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
-					
-				<li><label>数/质/量</label> 
-				<em>*</em>
-					<input type="number" id="sqm" ng-model="sqm" style="min-width:4rem;width:4rem;"/>
-					<label><input type="radio" name="quality" ng-model="unit" name="unit"
-					value="元/天·吨" />吨</label>
-			    	<label><input type="radio" name="quality" value="元/天·平方米" ng-model="unit" name="unit" 
-					checked />平方米 </label>
-			   		<label><input type="radio" name="quality" value="元/天·其他"  ng-model="unit" name="unit" />其他</label>
-				</li>
-			    
+					</div> <i class="iconfont fr moreinfo">&#xe697;</i></li>
+				<li ng-if="typeCode==1"><label>可租面积</label> <em>*</em>
+					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/></li>
 				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
 					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
+				<li><label for="rentdate">租期</label><em>*</em>
+					<div class="mySelect">
+						<select id="rentdate" ng-model="rentdate" name="rentdate"
+								ng-change="rentDateSelected(rentdate)"
+								ng-options="x.id as x.type for x in rentDateTypes"></select>
+					</div>
+					<i class="iconfont fr moreinfo">&#xe697;</i></li>
 				<li>
 					<label for="time">有效开始时间</label><em>*</em>
 					<div class="mySelect">
@@ -131,13 +129,15 @@ $(function() {
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
+				<li  ng-if="typeCode==2"><label for="name">存放产品</label> <em>*</em><input type="text" id="title" ng-model="$parent.title"
+																						 placeholder="存放产品" /></li>
 				<li><label for="phone">联系电话</label>
 				<em>*</em>
 				<input type="text" name="telephone"
 					id="phone"  ng-model="telephone"/></li>
-				<li><label for="note">备注</label> <input type="text" id="note"
+				<li ng-if="typeCode==1"><label for="note">备注</label> <input type="text" id="note"
 					placeholder="（选填）" ng-model="note" name="note"/></li>
-				<li><label class="pic"> <input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
+				<li  ng-if="typeCode==1"><label class="pic"> <input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
 				 </label> <span id="">上传图片<small class="text-warning">*最多十张</small></span><br>
 	            <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
 			</ul>

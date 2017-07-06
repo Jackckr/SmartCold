@@ -29,7 +29,9 @@ public interface RdcMapper {
 	int deleteByRdcID(int rdcID);
 	
 	int changeAudit(@Param("rdcID") int rdcID,@Param("audit") int audit);
-	
+
+	int changeStand(@Param("rdcID") int rdcID,@Param("stand") int stand);
+
 	List<HashMap<String, String>> getRdcMangConfig(@Param("rdcid")Integer rdcid );
 	
 	List<HashMap<String, String>> getRdcMangtlConfig(@Param("rdcid")Integer rdcid );

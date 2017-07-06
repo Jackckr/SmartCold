@@ -2,6 +2,7 @@ package com.smartcold.bgzigbee.manage.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Date;
 
 import com.smartcold.bgzigbee.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,5 +176,15 @@ public class UserController extends BaseController {
 		if(StringUtil.isNull(username)){return true;}
 	    return this.userDao.findUserByName(username)==null? true:false;
 	}
-	
+
+	@ResponseBody
+	@RequestMapping(value = "/auditVipUser")
+	public ResultDto auditVipUser(int userId,int vipType) {
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(userId);
+		userEntity.setVipType(vipType);
+		userEntity.setUpdateTime(new Date());
+		userDao.updateUser(userEntity);
+		return new ResultDto(1,"认证成功！");
+	}
 }

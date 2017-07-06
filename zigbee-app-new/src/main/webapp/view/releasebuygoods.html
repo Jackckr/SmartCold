@@ -42,8 +42,27 @@
         </header>
     <!-- header end-->
     <!--coldlist-->
+  <div class="coldlist" style="margin-bottom: 0">
+      <ul class="imgTable">
+          <li class="imgCell"><a href="javascript:;"><img class="fl" ng-src="{{rdcdto.logo}}">
+              <div class="">
+                  <p class='ellipsis'>{{rdcdto.name}}</p>
+                  <p class='position'>
+                      <i class="iconfont">&#xe66e;</i> {{rdcdto.address}}
+                  </p>
+                  <ul class='star'>
+                      <li class="filled">★</li>
+                      <li class="filled">★</li>
+                      <li class="filled">★</li>
+                      <li class="filled">★</li>
+                      <li>★</li>
+                  </ul>
+              </div>
+          </a></li>
+      </ul>
+  </div>
     <section class="main maindetail">
-        <div class="releaseImg" style="background-image: url('../com/img/r5.png');"></div>
+
        	<form id="release_item_from" name="itemform" >
        	 <input type="hidden" id="dataType" ng-model="dataType" value="1">
 			      <input type="hidden" id="typeCode" ng-model="typeCode" value="1">
@@ -61,7 +80,7 @@
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                  <li class="offershow">
                     <label for="city">市</label><em>*</em>
@@ -70,7 +89,7 @@
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>-->
                 <li>
                     <label for="category">品类</label><em>*</em>
@@ -79,7 +98,7 @@
 	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
 	                    </select>
 	                </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="num">求购数量</label><em>*</em>
@@ -89,7 +108,7 @@
                 </li>
                 <li>
                     <label for="price">单价</label><em>*</em>
-                    <input type="number" ng-model="unitprice" id="price" placeholder="元/吨（面议）"/>
+                    <input type="number" ng-model="unitprice" id="price" placeholder="（元）默认为：面议"/>
                 </li>
                 <li>
 					<label for="time">有效开始时间</label><em>*</em>
@@ -114,12 +133,12 @@
                     <label for="note">备注</label>
                     <input type="text" ng-model="note" id="note" placeholder="（选填）"/>
                 </li>
-               <!-- <li>
+                <li>
                     <label class="pic">
 		    			<input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"  ngf-multiple="true" name="files"  />
 				 </label> <span id="">上传图片<small class="text-warning" style="width: 100px">(最多十张)</small></span><br>
 	             <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles"><img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span></output>
-                </li>-->
+                </li>
             </ul>
         </form>
         <button class="mybtn" ng-click="goodSubmit()" >确认发布</button>

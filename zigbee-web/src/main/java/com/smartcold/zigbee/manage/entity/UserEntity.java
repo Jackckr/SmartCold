@@ -35,6 +35,10 @@ public class UserEntity {
 	private Integer hometownid;//家乡->add
 	
 	private String hometown;//家乡->add:无意义，仅显示
+
+	private String idCard;//身份证号
+
+	private String companyName;//用户企业名
 	
 	private Date addTime;
 
@@ -200,5 +204,21 @@ public class UserEntity {
 
 	public void setVipType(Integer vipType) {
 		this.vipType = vipType;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 }

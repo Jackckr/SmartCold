@@ -769,6 +769,13 @@ public class RdcController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/changeStand", method = RequestMethod.POST)
+	public Object changeStand(int rdcID, int stand) {
+		rdcDao.changeStand(rdcID, stand);
+		return new BaseDto(0);
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/changeAudits", method = RequestMethod.POST)
 	public Object changeAudits(int[] rdcIDs, int audit) {
 		for (int rdcID : rdcIDs)

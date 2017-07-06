@@ -232,9 +232,9 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     }
     $scope.ChangLihuoState=function (val) {
         if(val==2){
-            $scope.islihuoRoom==false;
+            $scope.islihuoRoom=false;
         }else {
-            $scope.islihuoRoom==true;
+            $scope.islihuoRoom=true;
         }
     }
     $scope.submit = function(){
@@ -358,7 +358,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 data["honor" + j] = $scope.totalhonorfiles[j];
             }
             data["standPic"]=$scope.tempStandPic[0];
-            data["auditPic"]=$scope.auditPic[0]
+            data["auditPic"]=$scope.auditPic[0];
             Upload.upload({
                 url: ER.root+'/i/rdc/newAddRdc',
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },

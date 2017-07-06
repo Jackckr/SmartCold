@@ -1,0 +1,120 @@
+.oCollect {
+    height: 2rem;
+    border-bottom: 1px solid #00acd6;
+    line-height: 2rem;
+}
+
+.oCollect div {
+    background-color: #fff;
+}
+
+.oCollect div:first-child {
+    border-right: 1px solid #00acd6;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.oCollect .collectActive {
+    color: #00acd6;
+}
+.person{
+    margin: 0 0 1rem;
+}
+.person .item {
+    padding: 0 .2rem;
+}
+.person .flex,
+.person li,
+.person h2
+{
+    padding:.2rem .9rem;
+}
+.person h2{
+    margin-top: .5rem;
+}
+.person li{
+    border-bottom: 1px solid #ccc;
+    height: 1.4rem;
+    line-height: 1.4rem;
+}
+.person li span{
+    width: 3rem;
+    display: inline-block;
+    text-align: center;
+}
+.person li div{
+    height: 100%;
+}
+.person li input{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: .7rem;
+}
+.pic {
+    display: inline-block;
+    width: 100%;
+    height:4rem;
+    margin-top: 0.3rem;
+    border: 1px dotted #ccc;
+    position: relative;
+    background-color: #eee;
+}
+.pic .files {
+    width: 0;
+    height: 0;
+    z-index:3;
+}
+.pic i{
+    position: absolute;
+    width: 100%;
+    height:100%;
+    top:0;
+    left: 0;
+    color: #00acd6;
+    font-size: 2.5rem;
+    text-align: center;
+    line-height: 8rem;
+    z-index: 1;
+}
+.pic img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 2;
+}
+.startApprove{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 0.8rem;
+}
+p{
+    font-size: .6rem;
+    color: #888;
+    text-align: center;
+    line-height: 3;
+}
+.flex label{
+    height: 8rem;
+}
+.mybtn{
+    width: 100%;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    padding: 0;
+    background: -webkit-linear-gradient(left,rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Safari 5.1 - 6.0 */
+    background: -ms-linear-gradient(left,rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* ie */
+    background: -moz-linear-gradient(right,rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to left,rgba(52, 193, 255, 0.8),rgba(105, 114, 254, .8)); /* 标准的语法 */
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}

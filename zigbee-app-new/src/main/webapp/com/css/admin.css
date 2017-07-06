@@ -1101,7 +1101,7 @@ html,body{
 .goApprove{
 	margin-top: .3rem;
 }
-.goApprove span{
+.goApprove a{
 	color: #fff;
 	display: inline-block;
 	width: 4rem;
@@ -1133,4 +1133,25 @@ html,body{
 	background-size: cover;
 	width: 5.551rem;
 	height:2rem;
+}
+.oCollect{
+	height: 2rem;
+	border-bottom: 1px solid #00acd6;
+	line-height: 2rem;
+}
+.oCollect div{
+	background-color: #fff;
+}
+.oCollect div:first-child{
+	border-right: 1px solid #00acd6;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.oCollect .collectActive{
+	color: #00acd6;
+}
+.oCollect+.commentList{
+	border-top: .5rem solid #f6f5fa;
 }

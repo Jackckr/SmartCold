@@ -1,21 +1,33 @@
 var queryParams = {page: null, rows: null, type: null,state: null};
 //======================================================================格式化col=======================================================
 var rdc_auth_state = function (i) { switch(i){case -1:return '未通过';case 0:return '待审核';default: return '通过';}};
-var rdc_auth_type = function (i) { switch(i){case 0:return '平台/360用户';case 1:return '货主认证';default: return '维修商认证';}};
+var rdc_auth_type = function (i) { switch(i){case 0:return '平台/360用户';case 1:return '货主认证';case 3:return '普通vip';case 4:return'企业vip';default: return '维修商认证';}};
 function col_cellStyler(value, row) {
-	if(row.type==0){return ['<button class="btn ',row.ishandle==0?"":"btn-info",' " onclick="updaterdcAuthen(' , row.id,',',row.ishandle,',',row.state,',',row.rdcid,',',row.uid ,',\'',row.note,'\')">',row.ishandle==0?'审核':'查看','</button>'  ].join("");}else{return '<button class="btn btn-delete" title="当前认证由冷库主操作，您禁止操作！">无权</button>';}
+	if(row.type==0||row.type==3||row.type==4){//3.认证普通vip4.认证企业vip
+	    return ['<button class="btn ',row.ishandle==0?"":"btn-info",' " onclick="updaterdcAuthen(' , row.id,',',row.ishandle,',',row.state,',',row.rdcid,',',row.uid ,',\'',row.note,'\','+row.type+')">',row.ishandle==0?'审核':'查看','</button>'  ].join("");
+	}else{
+	    return '<button class="btn btn-delete" title="当前认证由冷库主操作，您禁止操作！">无权</button>';}
 }
 
 function onDblClickRow(index, field) {
-	updaterdcAuthen(field.id,field.ishandle,field.state,field.rdcid,field.uid,field.note);
+	updaterdcAuthen(field.id,field.ishandle,field.state,field.rdcid,field.uid,field.note,field.type);
 }
-function updaterdcAuthen(id,ishandle,state,rdcId,authUserId,note){
-	var but=[];
-	$('#rdc_state_auditForm').form('clear');
-	$('#rdc_state_auditForm').form('load',{id:id,oldstate:state,ishandle:ishandle,oldishandle:ishandle,state:state,rdcId:rdcId,authUserId:authUserId,note:note,oldnote:note});
-	if(ishandle==0){but.push({text:'提交',iconCls:'icon-ok',handler:user_upaudit});}
-	but.push({text:'取消',iconCls:'icon-cancel2',handler:function(){$('#rdc_state_authendialog').dialog({closed: true});}});
-	$('#rdc_state_authendialog').dialog({closed: false,buttons: but});
+function updaterdcAuthen(id,ishandle,state,rdcId,authUserId,note,type){
+    if(type==0){
+        var but=[];
+        $('#rdc_state_auditForm').form('clear');
+        $('#rdc_state_auditForm').form('load',{id:id,oldstate:state,ishandle:ishandle,oldishandle:ishandle,state:state,rdcId:rdcId,authUserId:authUserId,note:note,oldnote:note});
+        if(ishandle==0){but.push({text:'提交',iconCls:'icon-ok',handler:user_upaudit});}
+        but.push({text:'取消',iconCls:'icon-cancel2',handler:function(){$('#rdc_state_authendialog').dialog({closed: true});}});
+        $('#rdc_state_authendialog').dialog({closed: false,buttons: but});
+    }else if(type==3||type==4){//3.普通vip用户认证4.企业vip用户认证
+        var but=[];
+        $('#rdc_state_auditForm').form('clear');
+        $('#rdc_state_auditForm').form('load',{id:id,oldstate:state,ishandle:ishandle,oldishandle:ishandle,state:state,rdcId:rdcId,authUserId:authUserId,note:note,oldnote:note,type:type});
+        if(ishandle==0){but.push({text:'提交',iconCls:'icon-ok',handler:userAudit});}
+        but.push({text:'取消',iconCls:'icon-cancel2',handler:function(){$('#rdc_state_authendialog').dialog({closed: true});}});
+        $('#rdc_state_authendialog').dialog({closed: false,buttons: but});
+    }
 }
 function user_upaudit(){
 	$('#rdc_state_authendialog').dialog({closed: true});
@@ -33,6 +45,22 @@ function user_upaudit(){
     }
 }
 
+function userAudit() {
+    $('#rdc_state_authendialog').dialog({closed: true});
+    var obj= getFormData('#rdc_state_auditForm');
+    if(obj.id!=""){
+        if(obj.oldstate!=obj.state&&obj.state==1){
+            if(obj.rdcId!=undefined&&obj.authUserId!=undefined){
+                var vipType=obj.type==3?1:2;
+                $.post('../../i/user/auditVipUser', {'userId': obj.authUserId,'vipType':vipType});//修改
+            }
+        }
+        if(obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note){
+            $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
+            reloaddata();
+        }
+    }
+}
 
 
 //======================================================================格式化col=======================================================

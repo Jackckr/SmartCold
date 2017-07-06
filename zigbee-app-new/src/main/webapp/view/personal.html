@@ -9,6 +9,7 @@
      <title>我的</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
@@ -19,17 +20,17 @@
 </head>
 <body ng-app="app"  ng-controller="personal" ng-cloak>
     <header>
-    	<div class="area fl"><a onclick="goback()"><i class="iconfont">&#xe60e;</i></a></div>
+    	<div class="area fl"><a onclick="goback()"><i class="iconfont">&#xe602;</i></a></div>
     	<div class="txt">我的</div>
     </header>
 
-    <ul class="list adminInfo" style="margin-top: 2.3rem;">
+    <ul class="list adminInfo" >
     	<li class="clearfix" onclick="location.href='editname.html'">
     		<div class="myicon fl">
 	    		<span class="fl">昵称</span>
 	    	</div>
 	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    		<a href=""><i class="iconfont">&#xe697;</i></a>
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name omg">{{userinfo.nickname}}</p>
@@ -40,7 +41,7 @@
 	    		<span>性别</span>
 	    	</div>
 	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    		<a href=""><i class="iconfont">&#xe697;</i></a>
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name set">
@@ -57,7 +58,7 @@
 	    		<span>家乡</span>
 	    	</div>
 	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    		<a href=""><i class="iconfont">&#xe697;</i></a>
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name set">
@@ -70,7 +71,7 @@
 	    		<span>常居地</span>
 	    	</div>
 	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    		<a href=""><i class="iconfont">&#xe697;</i></a>
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name set">
@@ -83,7 +84,7 @@
 	    		<span>手机号</span> 
 	    	</div>
 	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    		<a href=""><i class="iconfont">&#xe697;</i></a>
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name">{{userinfo.telephone}}</p>
@@ -94,40 +95,40 @@
 	    		<span>密码</span>
 	    	</div>
 	    	<div class="rightArrow fr">
-	    		<a href=""><i class="iconfont">&#xe60d;</i></a>
+	    		<a href=""><i class="iconfont">&#xe697;</i></a>
 	    	</div>
 	    	<div class="name">
 	    		<p class="list_name set">修改</p>
 	    	</div>
     	</li>
     </ul>
-    <button class="mybtn" ng-click="logout();">退出登录</button>
-    <ul class="footer">
-        <li>           
-            <a href="../index.html">
-                <i class="iconfont">&#xe65a;</i>
-                <p class="info">首页</p>
-            </a>
-        </li>
-         <li>         
-            <a href="news.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p>
-            </a>
-        </li>
-        <li>            
-            <a href="messages.html">
-                <i class="iconfont">&#xe71c;</i>
-                <p class="info">消息</p>
-            </a>
-        </li>
-        <li class="active">            
-            <a href="user.html">
-                <i class="iconfont">&#xe6fd;</i>
-                <p class="info">我的</p>
-            </a>
-        </li>
-    </ul>
+    <button class="mybtn"&#xe697;>退出登录</button>
+	<footer class="flex black">
+		<div class="item">
+			<a href="../index.html">
+				<i class="iconfont">&#xe601;</i>
+				<p>首页</p>
+			</a>
+		</div>
+		<div class="item">
+			<a href="release.html">
+				<i class="iconfont">&#xe614;</i>
+				<p>发布</p>
+			</a>
+		</div>
+		<div class="item" id="msgTotalNumReset">
+			<a href="messages.html">
+				<i class="iconfont">&#xe6ea;</i>
+				<p>消息</p>
+			</a>
+		</div>
+		<div class="item active">
+			<a href="usercenter.html">
+				<i class="iconfont">&#xe600;</i>
+				<p>我的</p>
+			</a>
+		</div>
+	</footer>
 
 </body>
 </html>

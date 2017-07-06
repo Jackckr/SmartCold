@@ -222,7 +222,7 @@ public class ShareRdcController  {
 
 	@RequestMapping(value = "/newGetSEListByUID")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> newGetSEListByUID(HttpServletRequest request,Integer uid) {
+	public ResponseData<RdcShareDTO> newGetSEListByUID(HttpServletRequest request,Integer uid,String dataType,String username) {
 		if(uid==null||uid==0){
 			UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
 			if(user!=null&&user.getId()!=0){
@@ -235,7 +235,8 @@ public class ShareRdcController  {
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("sstauts", 1);//必须
 		filter.put("releaseID", uid);//必须
-		filter.put("datatype",1);
+		filter.put("datatype",dataType);
+		filter.put("username",username);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.getSEGDList(this.pageNum, this.pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
@@ -392,7 +393,9 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value = "/newGetSERDCList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> newGetSERDCList(String rdcID,String dataType,String goodSaveType,String istemperaturestandard,String audit, String keyword,String typeCode,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+	public ResponseData<RdcShareDTO> newGetSERDCList(String goodtype,String rdcID,String dataType,String goodSaveType,String istemperaturestandard,
+													 String audit, String keyword,String typeCode,String provinceid, String managetype,
+													 String storagetempertype,String sqm,int pageNum,int pageSize) {
  		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("typeCode", typeCode);
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2
@@ -406,6 +409,7 @@ public class ShareRdcController  {
 		filter.put("istemperaturestandard", istemperaturestandard);
 		filter.put("goodSaveType", goodSaveType);
 		filter.put("audit", audit);
+		filter.put("goodtype", goodtype);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.newGetSERDCList(pageNum, pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}

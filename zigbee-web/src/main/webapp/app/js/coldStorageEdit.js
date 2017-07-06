@@ -19,7 +19,7 @@ coldWeb.controller('coldStorageEdit', function ($rootScope, $scope, $state, $coo
     $scope.arrangePics = [];
     $scope.haveOrNots = [];
     $scope.haveOrNots.push({
-        id: 0,
+        id: 2,
         name: "无",
     });
     $scope.haveOrNots.push({

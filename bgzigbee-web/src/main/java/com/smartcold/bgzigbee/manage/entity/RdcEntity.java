@@ -51,6 +51,8 @@ public class RdcEntity {
 	private double longitude;
 
 	private double latitude;
+
+	private int istemperaturestandard;
 	
 	public String getUsername() {
 		return username;
@@ -242,5 +244,13 @@ public class RdcEntity {
 
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
+	}
+
+	public int getIstemperaturestandard() {
+		return istemperaturestandard;
+	}
+
+	public void setIstemperaturestandard(int istemperaturestandard) {
+		this.istemperaturestandard = istemperaturestandard;
 	}
 }

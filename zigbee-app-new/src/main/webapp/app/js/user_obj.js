@@ -1,4 +1,4 @@
-var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该联络单信息吗？" ,"确定要删除该评价吗？"] ,["colddetail.html?id=","storehousedetail.html?id=","orderdetail.html?id="]];
+var mode = [ [ 'rdcID', "rdcID", "orderID" ],[ "确定要删除该冷库吗？", "确定要删除该数据吗？", "确定要删除该联络单信息吗？" ,"确定要删除该评价吗？"] ,["rdcdetail.html?id=","storehousedetail.html?id=","orderdetail.html?id="]];
 var urlset = [
 		[ "editkutable.html?id=", "/i/rdc/deleteByRdcID","/i/rdc/findRDCDTOByUserId" ],// type=0:我的冷库 
 		[ "editshareinfo.html?id=", "/i/ShareRdcController/delShareInfoByUid","/i/ShareRdcController/newGetSEListByUID" ],//1：我的发布//
@@ -64,6 +64,7 @@ var initevg = function() {
 	});
 };
 var gethtml = function(obj) {
+    localStorage.gowhere='collect';
 	switch (type) {
 	case 0:
 		return [
@@ -112,7 +113,9 @@ var gethtml = function(obj) {
 };
 var getPageData = function() {// 启用无限加载
 	isLoadRB = true;//
-	var _filter = {pageNum : currentPage,pageSize : maxSize,userID : window.user.id,uid: window.user.id};
+	var dt="";
+	if(dataType!=-1){dt=dataType;}
+	var _filter = {pageNum : currentPage,pageSize : maxSize,userID : window.user.id,uid: window.user.id,username:window.user.username, dataType:dt};
 	$.get(ER.root + urlset[type][2], _filter, function(data) {
 		if (data.success && data.data.length > 0) {
 			totalPages = data.totalPages;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smartcold.zigbee.manage.dao.CollectMapper" >
+    <resultMap id="getByRdc" type="com.smartcold.zigbee.manage.entity.CollectEntity">
+        <association property="rdcEntity" column="collectId" select="com.smartcold.zigbee.manage.dao.RdcMapper.selectByPrimaryKey"/>
+    </resultMap>
+    <resultMap id="getByShared" type="com.smartcold.zigbee.manage.entity.CollectEntity">
+        <association property="rdcShareDTO" column="collectId" select="com.smartcold.zigbee.manage.dao.RdcShareMapper.getSEByID"/>
+    </resultMap>
+    <insert id="insertByCollect">
+        INSERT INTO `collect` (`uid`,`collectId`,`collectType`) VALUES (#{uid},#{collectId},#{collectType})
+    </insert>
+    <delete id="delByCollect">
+        DELETE FROM `collect` WHERE `collectId`=#{collectId} and `uid`=#{uid} and `collectType`=#{collectType}
+    </delete>
+    <select id="getRdcCollectByUid" resultMap="getByRdc">
+        SELECT * FROM `collect` WHERE `collectType`=1 AND `uid`=#{uid}
+    </select>
+    <select id="getSharedCollectByUid" resultMap="getByShared">
+        SELECT * FROM `collect` WHERE `collectType`=2 AND `uid`=#{uid}
+    </select>
+    <select id="getUsersIdByColId" resultType="java.lang.Integer">
+        SELECT `uid` FROM `collect` WHERE `collectId`=#{colId} and `collectType`=2
+    </select>
+    <select id="getUsersIdByRdcId" resultType="java.lang.Integer">
+        SELECT `uid` FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1
+    </select>
+</mapper>

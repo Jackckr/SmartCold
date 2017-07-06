@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
@@ -66,6 +67,8 @@ public class RdcEntityDTO {
     private int audit;
 
     private int infoIntegrity;
+
+    private List<Integer> collectUserIds;//收藏的用户id
     /*==============================共享信息==================================================*/
     private double rentSqm;
     private int datatype;
@@ -348,5 +351,13 @@ public class RdcEntityDTO {
 
     public void setInfoIntegrity(int infoIntegrity) {
         this.infoIntegrity = infoIntegrity;
+    }
+
+    public List<Integer> getCollectUserIds() {
+        return collectUserIds;
+    }
+
+    public void setCollectUserIds(List<Integer> collectUserIds) {
+        this.collectUserIds = collectUserIds;
     }
 }

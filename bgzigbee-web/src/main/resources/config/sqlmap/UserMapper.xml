@@ -95,11 +95,12 @@
 	         <if test="email      !=null and email    !=''">   email   =#{email     },</if>
 	         <if test="type      !=null ">   type   =#{type},</if>
 	         <if test="audit      !=null ">   audit   =#{audit}</if>
+	         <if test="vipType      !=null ">   vipType   =#{vipType}</if>
 <!-- 	         <if test="avatar     !=null and avatar   !=''">   avatar  =#{avatar    },</if> -->
 <!-- 	         <if test="addTime    !=null and addTime  !=''">addTime    =#{addTime   },</if> -->
 <!-- 	         <if test="updateTime !=null and updateTime!=''">updateTime=#{updateTime}</if> -->
         </set>
-        where id = ${id}
+        where id = #{id}
     </update>
 	
 </mapper>
