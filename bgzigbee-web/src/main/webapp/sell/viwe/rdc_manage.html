@@ -59,6 +59,27 @@
         </table>
     </form>
 </div>
+<div id="rdc_standdialog" class="easyui-dialog"  data-options="title:'冷库审核',iconCls:'rdc_audit',modal: true,closed: true,buttons: [{text:'修改',iconCls:'icon-ok1',handler:rdc_upstand},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#rdc_standdialog').dialog('close');}}]" style="width: 600px;height: 180px" >
+    <form id="rdc_standForm" style="padding:10px 20px;" >
+        <table class="fill" >
+            <tr style="height: 50px">
+                <td>冷库名:</td>
+                <td>
+                    <input type="text" name="rdcName" disabled="disabled" style="border: none; background-color: transparent; color: red;">
+                </td>
+            </tr>
+            <tr>
+                <td>状   态:</td>
+                <td>
+                    <input type="hidden" name="id">
+                    <label><input type="radio" id="edit_stand_-1" name="stand" value="-1" >未达标 </label>
+                    <label><input type="radio" id="edit_stand_0"  name="stand" value="0"  >待审核   </label>
+                    <label><input type="radio" id="edit_stand_1" name="stand" value="1">已达标  </label>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 <div id="addCold" class="easyui-dialog" title="添加冷库" style="width:60%;height:95%;min-width: 540px;"
      data-options="iconCls:'icon-save',modal:true,closed:true">
     <form id="addColdForm">
@@ -98,15 +119,7 @@
             <div class="formTitle">冷库经营类型：<b>*</b></div>
             <div class="formContain">
                 <select class="easyui-combobox" name="manageType" id="manageType">
-                    <option value="0"> </option>
-                    <option value="1">产地型</option>
-                    <option value="2">市场型</option>
-                    <option value="3">仓储型</option>
-                    <option value="4">配送型</option>
-                    <option value="5">生产型</option>
-                    <option value="6">中央厨房</option>
-                    <option value="7">医药型</option>
-                    <option value="8">其它</option>
+
                 </select>
             </div>
         </div>
@@ -114,9 +127,7 @@
             <div class="formTitle">商品存放类型：<b>*</b></div>
             <div class="formContain">
                 <select class="easyui-combobox" name="storageType" id="storageType">
-                    <option value="0"> </option>
-                    <option value="1">货架存放</option>
-                    <option value="2">非货架存放</option>
+
                 </select>
             </div>
         </div>
@@ -124,12 +135,7 @@
             <div class="formTitle">冷库温度类型：<b>*</b></div>
             <div class="formContain">
                 <select class="easyui-combobox" name="temperType" id="temperType">
-                    <option value="0"></option>
-                    <option value="1">冷藏库</option>
-                    <option value="2">冷冻库</option>
-                    <option value="3">超低温库</option>
-                    <option value="4">恒温库</option>
-                    <option value="5">多温区库</option>
+
                 </select>
             </div>
         </div>
@@ -144,9 +150,7 @@
             <div class="formTitle">建筑结构：</div>
             <div class="formContain">
                 <select class="easyui-combobox" name="structure" id="structure">
-                    <option value="0"></option>
-                    <option value="1">土建型</option>
-                    <option value="2">钢结构型</option>
+
                 </select>
             </div>
         </div>
@@ -190,11 +194,7 @@
             <div class="formTitle">制冷剂类型：</div>
             <div class="formContain">
                 <select class="easyui-combobox" name="storageRefreg" id="storageRefreg">
-                    <option value="0"></option>
-                    <option value="1">氨制冷</option>
-                    <option value="2">氟利昂制冷</option>
-                    <option value="3">氨氟都有</option>
-                    <option value="4">其他</option>
+
                 </select>
             </div>
         </div>

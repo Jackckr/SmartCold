@@ -39,7 +39,7 @@ function getRdcAudit(value) {
 }
 /*加载操作按钮*/
 function cellStyler(value, row) {
-    return '<button class="btn" onclick="ck(' + row.id + ')">修改</button><button class="btn" onclick="sh(' + row.id + ',\'' + row.name + '\',' + row.audit + ')">审核</button><button class="btn btn-info" onclick="rz(' + row.id + ')">认证</button>';
+    return '<button class="btn" onclick="ck(' + row.id + ')">修改</button><button class="btn" onclick="sh(' + row.id + ',\'' + row.name + '\',' + row.audit + ')">审核</button><button class="btn btn-info" onclick="stand(' + row.id + ',\'' + row.name + '\',' + row.istemperaturestandard + ')">达标</button>';
 }
 /*初始化表格*/
 function init_table() {
@@ -191,6 +191,29 @@ function sh(id, name, audit) {
         rdcName: name
     });
     $('#rdc_auditdialog').dialog({closed: false});
+}
+
+function stand(id, name, stand) {
+    $("#rdc_standForm").form('load', {
+        id: id,
+        stand: stand,
+        rdcName: name
+    });
+    $('#rdc_standdialog').dialog({closed: false});
+}
+
+function rdc_upstand() {
+    $('#rdc_standdialog').dialog({closed: true});
+    $.ajax({
+        url: "/i/rdc/changeStand",
+        type: "POST",
+        traditional: true,
+        data: {
+            "rdcID": $("#rdc_standForm input[name='id']").val(),
+            "stand": $("#rdc_standForm input[name='stand']:checked").val()
+        }
+    });
+    reloaddata();
 }
 
 /*添加冷库*/
@@ -398,6 +421,63 @@ function loadProvince() {
         }
     });
 }
+// 获取冷库经营类型
+function getStorageManage() {
+    var manageList=[];
+    $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            manageList.push({"text": val.type, "value":val.id});
+        });
+        $("#manageType").combobox("loadData", manageList);
+    }});
+}
+
+// 获取冷库结构类型
+function getStructures() {
+    var structures=[];
+    $.ajax({url:"/i/rdc/findAllStorageStructureType",type:"get",success:function (data) {
+        structures.push({"text": "", "value":0});
+        data.forEach(function (val, index) {
+            structures.push({"text": val.type, "value":val.id});
+        });
+        $("#structure").combobox("loadData", structures);
+    }});
+}
+
+// 获取冷库温度类型
+function getTemperTypes() {
+    var temperTypes=[];
+    $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            temperTypes.push({"text": val.type, "value":val.id});
+        });
+        $("#temperType").combobox("loadData", temperTypes);
+    }});
+}
+
+// 获取商品存放类型
+function getStorageTypes() {
+    var storageTypes=[];
+    $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            storageTypes.push({"text": val.type, "value":val.id});
+        });
+        $("#storageType").empty().combobox("loadData", storageTypes);
+    }});
+}
+
+// 制冷剂类型
+function getStorageRefregs() {
+    var storageRefregs=[];
+    $.ajax({url:"/i/rdc/findAllStorageRefreg",type:"get",success:function (data) {
+        storageRefregs.push({"text": "", "value":0});
+        data.forEach(function (val, index) {
+            storageRefregs.push({"text": val.type, "value":val.id});
+        });
+        $("#storageRefreg").empty().combobox("loadData", storageRefregs);
+    }});
+}
+
 /*通过省id加载市*/
 function loadCityByProId(id) {
     $.ajax({
@@ -417,6 +497,11 @@ function loadCityByProId(id) {
 //初始化数据
 var saveProvince="";
 $().ready(function () {
+    getStorageManage();
+    getStructures();
+    getTemperTypes();
+    getStorageTypes();
+    getStorageRefregs();
     init_table();
     $(".combo").click(function(){
         $(this).prev().combobox("showPanel");

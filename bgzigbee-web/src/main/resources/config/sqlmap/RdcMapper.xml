@@ -170,4 +170,8 @@
 		update rdc set audit=#{audit}
 		where id=#{rdcID}
 	</update>
+	<update id="changeStand">
+		update `rdc` set `istemperaturestandard`=#{stand}
+		where id=#{rdcID}
+	</update>
 </mapper>

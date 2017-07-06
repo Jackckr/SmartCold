@@ -53,6 +53,8 @@ public class RdcEntityDTO {
     private Integer userid;
     
     private String username;
+
+    private int istemperaturestandard;
 	
 	public String getUsername() {
 		return username;
@@ -253,5 +255,13 @@ public class RdcEntityDTO {
 
     public void setUserCommentCount(int userCommentCount) {
         this.userCommentCount = userCommentCount;
+    }
+
+    public int getIstemperaturestandard() {
+        return istemperaturestandard;
+    }
+
+    public void setIstemperaturestandard(int istemperaturestandard) {
+        this.istemperaturestandard = istemperaturestandard;
     }
 }
