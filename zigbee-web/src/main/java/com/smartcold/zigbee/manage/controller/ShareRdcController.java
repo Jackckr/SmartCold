@@ -393,7 +393,7 @@ public class ShareRdcController  {
 	 */
 	@RequestMapping(value = "/newGetSERDCList")
 	@ResponseBody
-	public ResponseData<RdcShareDTO> newGetSERDCList(String rdcID,String dataType,String goodSaveType,String istemperaturestandard,
+	public ResponseData<RdcShareDTO> newGetSERDCList(String goodtype,String rdcID,String dataType,String goodSaveType,String istemperaturestandard,
 													 String audit, String keyword,String typeCode,String provinceid, String managetype,
 													 String storagetempertype,String sqm,int pageNum,int pageSize) {
  		HashMap<String, Object> filter=new HashMap<String, Object>();
@@ -409,6 +409,7 @@ public class ShareRdcController  {
 		filter.put("istemperaturestandard", istemperaturestandard);
 		filter.put("goodSaveType", goodSaveType);
 		filter.put("audit", audit);
+		filter.put("goodtype", goodtype);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.newGetSERDCList(pageNum, pageSize, filter);
 		return ResponseData.newSuccess(data);
 	}
