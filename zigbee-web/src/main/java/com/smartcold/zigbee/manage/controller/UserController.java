@@ -112,8 +112,13 @@ public class UserController extends BaseController {
 	public ResultDto isSubmitAuditUser(int userId){
 		List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByAuditUid(userId);
 		int result=0;
-		if(rdcAuthEntities!=null){
-			result=rdcAuthEntities.size()==0?0:1;
+		if(rdcAuthEntities!=null&&rdcAuthEntities.size()!=0){
+			result=2;
+			if(rdcAuthEntities.get(0).getState()==-1){
+				result=-1;
+			}else if (rdcAuthEntities.get(0).getState()==1){
+				result=1;
+			}
 		}
 		return new ResultDto(result,"");
 	}
