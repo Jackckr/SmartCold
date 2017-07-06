@@ -189,6 +189,7 @@ input[type="text"]:disabled{
     line-height: 2rem;
 }
 .mySelect textarea{
+	background: transparent;
 	width:120%;
 	height:2.5rem;
 	vertical-align:middle;

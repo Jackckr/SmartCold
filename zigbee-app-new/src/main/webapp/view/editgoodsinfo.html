@@ -87,7 +87,7 @@ $(function() {
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                  <li class="offershow" ng-hide="rdcsharedto.rdcID">
                     <label for="city">市</label><em>*</em>
@@ -96,7 +96,7 @@ $(function() {
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                 <li>
                     <label for="category">品类</label><em>*</em>
@@ -105,7 +105,7 @@ $(function() {
 	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
 	                    </select>
 	                </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li ng-if="typeCode==2">
                     <label for="num">求购数量</label><em>*</em>

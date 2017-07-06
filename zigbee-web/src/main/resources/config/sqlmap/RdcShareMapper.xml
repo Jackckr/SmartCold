@@ -283,6 +283,7 @@
 		s.detlAddress,
 		s.rentdate,
 		s.username,
+		s.publishunit,
 		st.type codeLave2,
 		sm.type codeLave1,
 		t.rdcscore,

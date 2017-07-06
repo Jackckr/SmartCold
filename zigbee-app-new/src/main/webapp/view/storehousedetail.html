@@ -117,13 +117,13 @@
 					<div class="item">
 						<span>{{appmode[datatype].lab[0][0]}}</span>
 						<!--{{vo.sqm}}{{vo.unit!=null?vo.unit.substr(4):appmode[datatype].lab[0][1] }}-->
-						{{vo.sqm}}吨
+						{{vo.sqm}}{{oUnit[vo.publishunit]}}
 					</div>
 				</div>
 				<div class="flex">
 					<div class="item">
 						<span>{{appmode[datatype].lab[1][0]}}</span>
-						{{vo.unitPrice==undefined||vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}{{vo.unit!=null?vo.unit:appmode[datatype].lab[1][1] }}
+						{{vo.unitPrice==undefined||vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}{{vo.publishunit!=null?'元/'+oUnit[vo.publishunit]:appmode[datatype].lab[1][1] }}
 						<!--<span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span>-->
 					</div>
 				</div>

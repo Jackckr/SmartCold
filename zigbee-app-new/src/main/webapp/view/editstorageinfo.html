@@ -66,27 +66,27 @@ $(function() {
 		<div class="releaseImg" style="background-image:url('../com/img/r3.png');" ng-if="typeCode==2"></div>
 		<form id="release_item_from" name="itemform" >
 			<ul class="houseinfo">
-				<li  ng-if="typeCode==1"><label for="name">描述</label> <em>*</em><input type="text" id="name" ng-model="title"
+				<li  ng-if="typeCode==1"><label for="name">描述</label> <em>*</em><input type="text" id="name" ng-model="$parent.title"
 					placeholder="出租仓位" /></li>
 
 				<li ng-if="typeCode==2" style="border: 0;line-height: 0"><label>求租地区</label></li>
 				<li class="offershow" ng-if="typeCode==2">
                     <label for="province">省</label><em>*</em>
                     <div class="mySelect">
-                    	<select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
+                    	<select id="province" ng-model="$parent.provinceId" ng-disabled="editable" name="provinceId"
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                  <li class="offershow"  ng-if="typeCode==2">
                     <label for="city">市</label><em>*</em>
                     <div class="mySelect">
-	                    <select id="city" ng-model="cityId" name="cityid" val="{{cityId}}"
+	                    <select id="city" ng-model="$parent.cityId" name="cityid" val="{{cityId}}"
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
 				<li ng-if="typeCode==2"><label>求租面积</label>
 					<em>*</em>
@@ -102,7 +102,7 @@ $(function() {
 						   	  <option ng-repeat="x in temperTypes" value="{{x.id}}">{{x.type}}</option>
 						   </select>
 						   
-					</div> <i class="iconfont fr moreinfo">&#xe60d;</i></li>
+					</div> <i class="iconfont fr moreinfo">&#xe697;</i></li>
 				<li ng-if="typeCode==1"><label>可租面积</label> <em>*</em>
 					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/></li>
 				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
@@ -113,7 +113,7 @@ $(function() {
 								ng-change="rentDateSelected(rentdate)"
 								ng-options="x.id as x.type for x in rentDateTypes"></select>
 					</div>
-					<i class="iconfont fr moreinfo">&#xe60d;</i></li>
+					<i class="iconfont fr moreinfo">&#xe697;</i></li>
 				<li>
 					<label for="time">有效开始时间</label><em>*</em>
 					<div class="mySelect">

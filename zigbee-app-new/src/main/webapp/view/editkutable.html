@@ -46,14 +46,14 @@
                     <div class="mySelect">
                          <select ng-model="provinceId"  ng-change="provinceSelected(provinceId)"  ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>                    
+                    <i class="iconfont fr moreinfo">&#xe697;</i>                    
                 </li>
                 <li>
                     <label for="city">市<em>*</em></label>
                     <div class="mySelect">
                         <select ng-model="cityId" ng-change="citySelected(cityId)" ng-options="x.cityID as x.cityName for x in citys"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="geographic">地理位置<em>*</em></label>
@@ -78,7 +78,7 @@
                                     ng-change="ManageTypeSelected(manageType)"
                                     ng-options="x.id as x.type for x in manageTypes"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="storageType">商品存放类型<em>*</em></label>                    
@@ -87,14 +87,14 @@
                                     ng-change="StorageTypeSelected(storageType)"
                                     ng-options="x.id as x.type for x in storageTypes"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="temperatureType">温度类型<em>*</em></label>
                     <div class="mySelect">
                         <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li style="border:0;">
                     <label>冷库图片<em>*</em></label>
@@ -180,7 +180,7 @@
                         <select ng-model="structure"
                                         ng-options="x.id as x.type for x in structures"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="moon">是否有封闭月台</label>                    
@@ -188,7 +188,7 @@
                         <select ng-model="platform"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="cleanroom">是否有理货区</label>
@@ -196,7 +196,7 @@
                         <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                      </div>  
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>                 
+                     <i class="iconfont fr moreinfo">&#xe697;</i>                 
                 </li>
                 <li ng-show="islihuoRoom">
                     <label for="cleanarea">理货区面积</label>                    
@@ -208,7 +208,7 @@
                         <select ng-model="lihuoTemperCtr"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="cryogen">制冷剂类型</label>                    
@@ -217,7 +217,7 @@
                                         ng-change="StorageRefregSelected(storageRefreg)"
                                         ng-options="x.id as x.type for x in storageRefregs"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="temperatureRecord">有无温度记录</label>                    
@@ -225,7 +225,7 @@
                         <select ng-model="temperRecord"
                                         ng-options="x.id as x.name for x in haveOrNots"></select>
                     </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li class="number">
                      <label>冷库容积</label>
@@ -536,6 +536,7 @@ $(function () {
         if ($scope.phoneNum == undefined || $scope.phoneNum == "") {
             flag = false;
         }
+
         return flag;
     }
      $scope.addTempStandPic= function (files) {
@@ -684,6 +685,10 @@ $(function () {
             }
             if (!areaRex.test($scope.rentSqm)) {
                 layer.open({content:'可出租面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+                return false;
+            }
+            if($scope.rentSqm>$scope.area){
+                layer.open({content:'可出租面积不能超过总面积~',btn: '确定'});
                 return false;
             }
             if (!areaRex.test($scope.height)) {

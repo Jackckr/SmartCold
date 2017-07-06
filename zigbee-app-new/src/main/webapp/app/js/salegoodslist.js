@@ -140,9 +140,10 @@ $().ready(function () {
                 }
             }
         }
+        var unit=['吨','Kg','吨'];
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>出售货源</span><div>' +
-            '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + '吨</p><span class="grab green">[' + showTime + ']</span>' +
+            '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + unit[rdc.publishunit]+'</p><span class="grab green">[' + showTime + ']</span>' +
             '</div><div class="flex"><div class="item"><h4>' + usefulDate + '</h4>' +
             '<p>有效期</p></div><div class="item"><h4>' + rdc.validEndTime + '</h4><p>报价截止日</p>' +
             '</div><div class="item"><h4 class="omg">' + rdc.username + '</h4><p>发布者</p></div></div></a>' +

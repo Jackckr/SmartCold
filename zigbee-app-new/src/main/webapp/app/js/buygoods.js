@@ -17,8 +17,31 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     $scope.typeCode = document.getElementById('typeCode').value;
     $scope.typeText = document.getElementById('typeText').value;
     $scope.rdcflag= document.getElementById('rdcflag').value;
-
-
+    $scope.totalfiles = [];
+    $scope.addFiles = function (files) {
+        for(var j=0,fileLen=files.length;j<fileLen;j++){
+            var _file=files[j].name;
+            var i=_file.lastIndexOf('.');
+            var len=_file.length;
+            var extEndName=_file.substring(i+1, len);
+            var extName="GIF,BMP,JPG,JPEG,PNG";
+            //首先对格式进行验证
+            if(extName.indexOf(extEndName.toUpperCase())==-1) {
+                layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
+                return false
+            }else if(files[j].size > 10485760){
+                layer.open({content: "最大只能上传10M的图片",btn: '确定'});
+                return false
+            }
+        }
+        if(files.length==0){return;};
+        var allfiles = $scope.totalfiles.concat(files);
+        if(allfiles.length>10){/*alert("最多选择10张！")*/ layer.open({content: '最多选择10张哦',btn: '确定'});return;}
+        $scope.totalfiles=allfiles;
+    };
+    $scope.drophonor = function(honorfile){
+        angular.forEach($scope.totalfiles,function(item, key){  if(item == honorfile){  $scope.totalfiles.splice(key,1);  return false; }  });
+    };
     function checkGoodsSubmit(){ // 检查必须填写项    货品
         if ($scope.title == undefined || $scope.title == '' ) {  return false; }
         if ($scope.unitprice == undefined || $scope.unitprice == '') { return false; }
@@ -39,7 +62,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
             $scope.typeCode = 2;
             $scope.typeText = "求购";
         }
-        if($scope.rdcflag==1)
+        if($scope.rdcflag==0)
         {
             $scope.rdcID = $scope.rdcdto.rdcID;
             $scope.provinceId=$scope.rdcdto.provinceid;

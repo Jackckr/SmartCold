@@ -46,7 +46,7 @@ ul,li{ list-style: none;list-style-type:none;}
 }
 #dateconfirm{
     position: absolute;
-    background: #438BCB;
+    background: #4287ff;
     left:20px;
     color:#fff;
 }
@@ -60,7 +60,7 @@ ul,li{ list-style: none;list-style-type:none;}
 #dateshadow{display: none;position: fixed;z-index: 9998;width: 100%;height: 100%;top:0;left:0;background: #000; filter:alpha(Opacity=50);-moz-opacity:0.5;opacity: 0.5;}
 #datePage{font-size: 22px; border-radius: 3px; position:fixed;top:110px;MARGIN-RIGHT: auto;vertical-align:middle;
 MARGIN-LEFT: auto;width: 80%;;height: 240px;background: #FFFFFF;z-index:9999999;}
-#datetitle{width: 100%;height: 50px;background: #438BCB;text-align: center;color: #fff;line-height: 50px;font-size: 20px;}
+#datetitle{width: 100%;height: 50px;background: #4287ff;text-align: center;color: #fff;line-height: 50px;font-size: 20px;}
 #datemark{font-size: 18px;left:5%;width: 90%;height: 20px;border: 1px solid #CCFF80;background:-webkit-gradient(linear, 0 0, 0 100%, from(#f7fcf0), to(#c4fdb3));position:absolute;top:108px;}
 #timemark{font-size: 18px;left:5%;width: 90%;height: 20px;border: 1px solid #CCFF80;background:-webkit-gradient(linear, 0 0, 0 100%, from(#f7fcf0), to(#c4fdb3));position:absolute;top:242px;}
 #datescroll{background: #F8F8F8;width:94%; margin:10px 3%;border: 1px solid #E0E0E0;border-radius: 4px;height: 120px;text-align: center;line-height: 40px;}

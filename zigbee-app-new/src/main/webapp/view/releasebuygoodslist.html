@@ -85,7 +85,7 @@
 		</div>
     </div>
     <section class="main maindetail black">
-        <div class="releaseImg" style="background-image: url('../com/img/r4.png');"></div>
+        <div class="releaseImg" style="background-image: url('../com/img/r5.png');"></div>
        	<form id="release_item_from" name="itemform" >
        	 <input type="hidden" id="dataType" ng-model="dataType" value="1">
 			      <input type="hidden" id="typeCode" ng-model="typeCode" value="2">
@@ -108,7 +108,7 @@
                                     ng-change="provinceSelected(provinceId)"
                                     ng-options="x.provinceId as x.provinceName for x in provinces"></select>
                     </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                  <li class="offershow">
                     <label for="city">市</label><em>*</em>
@@ -117,7 +117,7 @@
                                     ng-disabled="editable" ng-change="citySelected(cityId)"
                                     ng-options="x.cityID as x.cityName for x in citys"></select>
 	                </div>
-                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                     <i class="iconfont fr moreinfo">&#xe697;</i>
                  </li>
                 <li>
                     <label for="category">品类</label><em>*</em>
@@ -126,7 +126,7 @@
 	                       <option ng-repeat="x in  good_type" value="{{x.type_code}}">{{x.type_name}}</option>
 	                    </select>
 	                </div>
-                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                    <i class="iconfont fr moreinfo">&#xe697;</i>
                 </li>
                 <li>
                     <label for="num">货品总量</label><em>*</em>
