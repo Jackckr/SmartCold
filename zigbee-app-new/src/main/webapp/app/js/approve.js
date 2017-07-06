@@ -99,24 +99,23 @@ angular.module('app', ['ngFileUpload']).controller('approve', function ($scope, 
                 idCard:$scope.idCard,
                 realname:$scope.realName,
                 type:userFlag,
-                companyName:company
+                companyName:company,
+                authfile:null
             };
-            var sdata = JSON.stringify(simdata);
-            var data = {data: sdata, "authfile": $scope.totalfiles};
+            simdata["authfile"] = $scope.totalfiles[0];
             Upload.upload({
                 url: ER.root + "/i/user/attestationUser",
                 headers: {'Content-Transfer-Encoding': 'utf-8'},
-                data: data
+                data: simdata
             }).then(function (resp) {
                 layer.closeAll();
                 layer.open({
                     content: resp.data.message
                     , btn: '确定'
                     , shadeClose: false
-                    , yes: function () {
-                        if (data != null && data != undefined)
-                            checktoken();
-                            window.location.href = "usercenter.html";
+                    , yes: function (data) {
+                        checktoken(null,true);
+                        window.location.href = "usercenter.html";
                     }
                 });
             }, function (resp) {

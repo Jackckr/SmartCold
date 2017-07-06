@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
@@ -75,11 +76,7 @@ public class UserController extends BaseController {
 	}
 	@RequestMapping(value = "/attestationUser",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultDto attestationUser(String data,MultipartFile authfile){
-		UserEntity u=null;
-		if (!StringUtils.isEmpty(data)) {
-			u= JSONObject.parseObject(data, UserEntity.class);
-		}
+	public ResultDto attestationUser(UserEntity u,@RequestParam(required = false) MultipartFile authfile){
 		UserEntity userEntity = userDao.findUserById(u.getId());
 		String fileDataType=u.getType()==1?FileDataMapper.CATEGORY_USERAUTH_PIC:FileDataMapper.CATEGORY_UPAUTH_PIC;
 		int authType=u.getType()==1?3:4;
