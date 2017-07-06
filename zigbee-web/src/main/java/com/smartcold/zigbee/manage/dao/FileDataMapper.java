@@ -27,6 +27,10 @@ public interface FileDataMapper {
 	static final String CATEGORY_AVATAR_PIC = "userPic";
 	//认证图片
 	static final String CATEGORY_AUTH_PIC = "authPic";
+	//认证普通用户身份证图片
+	static final String CATEGORY_USERAUTH_PIC="userAuthPic";
+	//认证企业级用户证件
+	static final String CATEGORY_UPAUTH_PIC="userCompanyAuthPic";
 
 	List<FileDataEntity> findByBelongIdAndCategory(@Param("belongid")int belongid, @Param("category")String category);
 	
