@@ -28,7 +28,12 @@
 				<input id="headImg" type="file" name=""  value="" />
 			</div>
 			<p class="userName">{{(userinfo.username=="" || userinfo.username == undefined)?userinfo.nickname:userinfo.username}}</p>
-			<p class="goApprove"><a href="approve.html"><i class="iconfont">&#xe61c;</i>去认证</a></p>
+			<p class="goApprove" ng-if="user.vipType==0"><a href="approve.html"><i class="iconfont">&#xe61c;</i>去认证</a></p>
+			<div  ng-if="user.vipType!=0">
+				<p class="userName" ng-if="user.vipType==1">个人</p>
+				<p class="userName" ng-if="user.vipType==2">企业</p>
+				<p class="goApprove"><a href="javascript:;"><i class="iconfont">&#xe61c;</i>已认证</a></p>
+			</div>
 		</div>
 		<div class="topImg" ng-hide="userinfo.id">
 			<div class="userPic">

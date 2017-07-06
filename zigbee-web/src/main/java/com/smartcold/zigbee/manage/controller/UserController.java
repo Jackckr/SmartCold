@@ -10,11 +10,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smartcold.zigbee.manage.dao.RdcauthMapping;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,31 +75,35 @@ public class UserController extends BaseController {
 	}
 	@RequestMapping(value = "/attestationUser",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultDto attestationUser(int userId,int type,String idCard,String realName,String companyName,MultipartFile authfile){
-		UserEntity userEntity = userDao.findUserById(userId);
-		String fileDataType=type==1?FileDataMapper.CATEGORY_USERAUTH_PIC:FileDataMapper.CATEGORY_UPAUTH_PIC;
-		int authType=type==1?3:4;
-		String authMsg=type==1?"普通级vip用户":"企业级vip用户";
+	public ResultDto attestationUser(String data,MultipartFile authfile){
+		UserEntity u=null;
+		if (!StringUtils.isEmpty(data)) {
+			u= JSONObject.parseObject(data, UserEntity.class);
+		}
+		UserEntity userEntity = userDao.findUserById(u.getId());
+		String fileDataType=u.getType()==1?FileDataMapper.CATEGORY_USERAUTH_PIC:FileDataMapper.CATEGORY_UPAUTH_PIC;
+		int authType=u.getType()==1?3:4;
+		String authMsg=u.getType()==1?"普通级vip用户":"企业级vip用户";
 		String dir =null;String fileName=null;String msg="";
 		if (authfile != null) {//
-			dir = String.format("%s/user/%s", "picture", userId);
-			fileName = String.format("user%s_%s.%s",userId, new Date().getTime(), "jpg");
+			dir = String.format("%s/user/%s", "picture", u.getId());
+			fileName = String.format("user%s_%s.%s",u.getId(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, authfile, dir);
 			this.ftpService.uploadFile(uploadFileEntity);
-			FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,fileDataType, userId, fileName);
+			FileDataEntity arrangeFile = new FileDataEntity(authfile.getContentType(), dir + "/" + fileName,fileDataType, u.getId(), fileName);
 			this.fileDataDao.saveFileData(arrangeFile);
 		}
 		RdcAuthEntity auchedata = new RdcAuthEntity();
 		auchedata.setType(authType);
-		auchedata.setUid(userId);
+		auchedata.setUid(u.getId());
 		auchedata.setMsg(userEntity.getUsername()+"请求认证\""+authMsg+"\",请及时处理！");
 		if(authfile!=null){
 			auchedata.setImgurl(dir + File.separator + fileName);
 		}
 		this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
-		if(StringUtil.isnotNull(idCard)){userEntity.setIdCard(idCard);}
-		if(StringUtil.isnotNull(realName)){userEntity.setRealname(realName);}
-		if(StringUtil.isnotNull(companyName)){userEntity.setCompanyName(companyName);}
+		if(StringUtil.isnotNull(u.getIdCard())){userEntity.setIdCard(u.getIdCard());}
+		if(StringUtil.isnotNull(u.getRealname())){userEntity.setRealname(u.getRealname());}
+		if(StringUtil.isnotNull(u.getCompanyName())){userEntity.setCompanyName(u.getCompanyName());}
 		userDao.updateUser(userEntity);
 		msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
 		return new ResultDto(1,msg);

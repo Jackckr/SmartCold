@@ -511,6 +511,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				return false
 			}
 			if(checkStorageSubmit()){
+				if($scope.rdcsharedto.rdcSqm<$scope.sqm){
+                    layer.open({content:'可出租面积不能大于关联冷库的总面积~',btn: '确定'});return;
+				}
 				if($scope.sqm.length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
 		        }else if(parseFloat($scope.unitprice).toFixed(2).length>11){

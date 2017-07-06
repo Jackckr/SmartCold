@@ -77,9 +77,9 @@
     top:0;
     left: 0;
     color: #00acd6;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     text-align: center;
-    line-height: 4rem;
+    line-height: 8rem;
     z-index: 1;
 }
 .pic img{
@@ -103,7 +103,7 @@ p{
     text-align: center;
     line-height: 3;
 }
-.firm .flex label{
+.flex label{
     height: 8rem;
 }
 .mybtn{

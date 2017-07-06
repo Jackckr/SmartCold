@@ -1,6 +1,7 @@
 var app = angular.module('app', []);
 app.controller('usercl', function($http, $location,$scope) {
     $scope.user=window.user;
+    localStorage.usercenter='usercenter';
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	 $scope.initdata=function(){
 		 if(window.user!=null){ $scope.userinfo=window.user;return;};
