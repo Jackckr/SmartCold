@@ -64,10 +64,10 @@
     </delete>
     
     <select id="getBJLowPower" resultType="map" parameterType="map">
-     SELECT `deviceid` ,`value`  from devstatus where   `key`='DU' and `value`&lt;3 and LENGTH(`deviceid`)&lt;8 and `addtime` >'2017-6-1 11:55:03' GROUP BY `deviceid`   ;
+     SELECT `deviceid` ,`value`  from devstatus where   `key`='DU' and `value`&lt;3 and LENGTH(`deviceid`)&lt;8 and `addtime` >#{starttime} GROUP BY `deviceid`   ;
     </select>
     <select id="getZSLowPower" resultType="map" parameterType="map">
-     SELECT `deviceid` ,`value`  from devstatus where   `key`='DU' and `value`&lt;4 and LENGTH(`deviceid`)>8 and `addtime` >'2017-6-1 11:55:03' GROUP BY `deviceid`   ;
+     SELECT `deviceid` ,`value`  from devstatus where   `key`='DU' and `value`&lt;4 and LENGTH(`deviceid`)>8 and `addtime` >#{starttime} GROUP BY `deviceid`   ;
     </select>
    
 </mapper>

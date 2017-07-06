@@ -28,7 +28,7 @@ coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $loc
 					/*添加动画*/
 					angular.forEach(storage['ChaoWenShiJian'],function(item){
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
-						yData.unshift(item['value'] / 60)
+						yData.unshift(item['value'] / 60);
 					})
 					chart.setOption(baseTools.getEchartSingleOption("", 
 							xData, yData, "时间", "m", "超温时间", "bar",0,1500));
@@ -36,7 +36,46 @@ coldWeb.controller('overTemperature', function($rootScope, $scope,$timeout, $loc
 			})
 		})
 	}
-	
+	$scope.load();
+});
+coldWeb.controller('overTempCount', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
+	$scope.load = function(){
+		$scope.rdcId = $stateParams.rdcId;
+		$scope.showMap = {}
+		var endTime = new Date();
+        var startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
+            params: {
+            	"startTime": baseTools.formatTime(startTime),
+            	"endTime": baseTools.formatTime(endTime),
+                "rdcid": $scope.rdcId,
+                'keys':'OverTempCount'
+            } 
+		}).success(function(data,status,config,header){
+			$scope.data = data;
+			angular.forEach(data,function(storage,key){
+				$timeout(function(){					
+					xData = []
+					yData = []
+					var chartId = key + "_Chart"
+					var chart = echarts.init(document.getElementById(chartId));
+					$scope.showMap[chartId] = storage['OverTempCount'].length;
+					/*添加动画2016-12-29*/
+					if($scope.showMap[chartId]!=0){
+						$('.animated:odd').addClass('bounceInLeft');
+						$('.animated:even').addClass('bounceInRight');
+					}
+					/*添加动画*/
+					angular.forEach(storage['OverTempCount'],function(item){
+						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]);
+						yData.unshift(item['value'] );
+					});
+					chart.setOption(baseTools.getEchartSingleOption("", 
+							xData, yData, "次数", "次", "超温次数", "bar",0,100));
+				},0);
+			})
+		})
+	}
 	$scope.load();
 });
 
@@ -62,9 +101,9 @@ coldWeb.controller('overTemperatureTime', function($rootScope, $scope,$timeout, 
 						angular.forEach(storage.OverTempL1Time,function(item){xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]);L1.unshift(item.value);totaL1time+=item.value;});
 						angular.forEach(storage.OverTempL2Time,function(item){L2.unshift(item.value );totaL2time+=item.value;});
 						angular.forEach(storage.OverTempL3Time,function(item){L3.unshift(item.value);totaL3time+=item.value;});
-						series.push({name:'危险超温告警', type:'bar',  data:L1});
-						series.push({name:'严重超温告警', type:'bar',  data:L2});
-						series.push({name:'正常超温告警', type:'bar',  data:L3});
+						series.push({name:'危险超温告警', type:'bar',  data:L1,color:'#dd4b39'});
+						series.push({name:'严重超温告警', type:'bar',  data:L2,color:'#f39c12'});
+						series.push({name:'正常超温告警', type:'bar',  data:L3,color:'#00c0ef'});
 						$scope.showMap[key]=[totaL1time,totaL2time,totaL3time];
 					}
 	               var chart = echarts.init(document.getElementById(chartId));
@@ -112,9 +151,9 @@ coldWeb.controller('overTemperatureCount', function($rootScope, $scope,$timeout,
 							totaL1time+=item.value;});
 						angular.forEach(storage.OverTempL2Count,function(item){L2.unshift(item.value );totaL2time+=item.value;});
 						angular.forEach(storage.OverTempL3Count,function(item){L3.unshift(item.value);totaL3time+=item.value;});
-						series.push({name:'危险超温告警次数', type:'bar',  data:L1});
-						series.push({name:'严重超温告警次数', type:'bar',  data:L2});
-						series.push({name:'正常超温告警次数', type:'bar',  data:L3});
+						series.push({name:'危险超温告警次数', type:'bar',  data:L1,color:'#dd4b39'});
+						series.push({name:'严重超温告警次数', type:'bar',  data:L2,color:'#f39c12'});
+						series.push({name:'正常超温告警次数', type:'bar',  data:L3,color:'#00c0ef'});
 						$scope.showMap[key]=[totaL1time,totaL2time,totaL3time];
 					}
 	               var chart = echarts.init(document.getElementById(chartId));

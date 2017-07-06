@@ -544,8 +544,10 @@ html, body {
 	font-size: 24px;
 }
 .print_name>div{
-	width:50%;
-	height: 40px;
+	width:40%;
+	margin-right:1%;
+	height: 34px;
+	line-height:32px;
 	font-size: 12px;
 }
 .print_name>div>input{

@@ -78,19 +78,19 @@
 										style="width: 350px;" id="reservationtime" ng-model="picktime">
 								</div>
 							</div>
-							<div class="form-group">
-							   <label>时间间隔：</label>
-								<div class="btn-group">
-									<button type="button" class="btn btn-default dropdown-toggle" style="width: 120px;" data-toggle="dropdown">{{intervaltimeTxt}}<span class="caret"></span></button>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#"  ng-click="chinvtime(1,'默认30秒')">默认30秒</a></li>
-										<li><a href="#"  ng-click="chinvtime(2,'60秒')">60秒</a></li>
-										<li><a href="#"  ng-click="chinvtime(3,'90秒')">90秒</a></li>
-										<li class="divider"></li>
-										<li><a href="#" ng-click="chinvtime(4,'2分钟')">2分钟</a></li>
-										<li><a href="#" ng-click="chinvtime(6,'3分钟')">3分钟</a></li>
-										<li><a href="#" ng-click="chinvtime(8,'4分钟')">4分钟</a></li>
-										<li><a href="#" ng-click="chinvtime(10,'5分钟')">5分钟</a></li>
+<!-- 							<div class="form-group"> -->
+<!-- 							   <label>时间间隔：</label> -->
+<!-- 								<div class="btn-group"> -->
+<!-- 									<button type="button" class="btn btn-default dropdown-toggle" style="width: 120px;" data-toggle="dropdown">{{intervaltimeTxt}}<span class="caret"></span></button> -->
+<!-- 									<ul class="dropdown-menu" role="menu"> -->
+<!-- 										<li><a href="#"  ng-click="chinvtime(1,'默认30秒')">默认30秒</a></li> -->
+<!-- 										<li><a href="#"  ng-click="chinvtime(2,'60秒')">60秒</a></li> -->
+<!-- 										<li><a href="#"  ng-click="chinvtime(3,'90秒')">90秒</a></li> -->
+<!-- 										<li class="divider"></li> -->
+<!-- 										<li><a href="#" ng-click="chinvtime(4,'2分钟')">2分钟</a></li> -->
+<!-- 										<li><a href="#" ng-click="chinvtime(6,'3分钟')">3分钟</a></li> -->
+<!-- 										<li><a href="#" ng-click="chinvtime(8,'4分钟')">4分钟</a></li> -->
+<!-- 										<li><a href="#" ng-click="chinvtime(10,'5分钟')">5分钟</a></li> -->
 <!-- 										<li class="divider"></li> -->
 <!-- 										<li> -->
 <!-- 											<div class="col-lg-12"> -->
@@ -103,9 +103,9 @@
 <!-- 											    </div> -->
 <!-- 											</div> -->
 <!-- 										</li> -->
-									</ul>
-								</div>
-							</div>
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							<div class="form-group">
 <!-- 								<button type="submit" class="btn btn-default" ng-click="search()">查询</button> -->
 								<button id="but_expdata" type="button" class="btn btn-success" ng-click="expdata()">导出</button>

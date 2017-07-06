@@ -6,33 +6,87 @@
 
 <style>
 	.jedateblue .jedatebot .jedatebtn span{  width:46%!important;  }
+	.coldName li { background: none; }
+	.coldName li {
+    list-style-type: none;
+    border: 2px solid #ccc;
+    margin-top: 5px;
+    cursor: pointer;
+    padding: 3px 20px;
+   }
+	
+
+.coldName li.select:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: url(../assets/img/icon-right.png);
+}
+	.coldName li.select {
+    border-color: #0095ff!important;
+    padding: 3px 20px;
+    position: relative;
+}
+.box {
+    border: 1px solid #ccc;
+}
+.print_name>div{
+	border-bottom:1px solid #666;
+}
+	.print_name>div>span{
+	height:22px;
+	display:inline-block;
+	position: relative;
+	}
+	.print_name>div>span:before{
+		content: "";
+		width: 100%;
+		height: 6px;
+		position: absolute;
+		bottom: -12px;
+		left: 0;
+	background: #fff;
+		
+	}
+	.warnmsgs{
+		position: relative;
+		margin-top: -40px;
+		left: 20px;
+		float: left;
+	}
+	.warnmsgs er{
+	color: red;
+	}
 	.chart_gap>p>span{width: auto;}
 </style>
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px" >
 	<div class="page-header row" style="padding: 5px 0px">
 	  <div class="col-lg-4">
-	  	&nbsp;&nbsp;月度报表
+	  	&nbsp;&nbsp;{{isreportMoth?titmode[0]:titmode[1]}}报表
 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button>
-	  <button class="btn btn-info myPrint" onclick="pdfFn()"> 导出PDF </button>
+	  <button class="btn btn-info myPrint" ng-click="exppdf()"> 导出PDF </button>
 	  </div>
 	  <div class="col-lg-4"></div>
 	  	<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
-	  	  <button class="btn btn-info myPrint" ng-click="isreportMoth=true" >月报</button>
+	  	  <button class="btn btn-info myPrint" ng-click="isreportMoth=true" class="">月报</button>
 	      <button class="btn btn-info myPrint" ng-click="isreportMoth=false" >周报</button>
 	  	     <span ng-show="isreportMoth">
 	  	        <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
 	  	    </span>
 	  	   <span ng-show="!isreportMoth">
-	  	                        开始时间：<input class="datainp wicon" id="date05" type="text"  readonly>
+	  	                 <input class="datainp wicon" id="date05" type="text"  readonly>
 	  	    </span>
 	           <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
 	  	</div>
 	</div>
 	<div class="version">
 		<div class="clearfix">
-			<span class="pull-left">选择版本</span>
+			<span class="pull-left" style="margin-top: 11px;">选择版本</span>
 			<ul class="coldName version_choice clearfix pull-left">
-				<li class="currentCold">温度版</li>
+				<li class="select">温度版</li>
 				<li class="grey">基本版</li>
 				<li class="grey">聪慧版</li>
 				<li class="grey">智能版</li>
@@ -40,13 +94,15 @@
 			</ul>
 		</div>
 		<div class="clearfix">
-			<span class="pull-left">选择冷库</span>
+			<span class="pull-left" style="margin-top: 11px;">选择冷库</span>
 			<ul class="coldName clearfix pull-left">
-				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id,$event)">{{storage.name}}</li>
+				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id,$event)" class="{{$index==0?'select':'' }} " >{{storage.name}}</li>
 			</ul>
 		</div>
 	</div>
 	<div id="print" ng-show="!isloaderr">
+	  <div id="page1" >
+	  
 		<div class="print_header">
 	        <h3>
 	            <img src="../../assets/img/logo_home.png" class="lianku_logo fl"><span class="fr">冷库360在线管理系统</span>
@@ -55,31 +111,31 @@
 	    </div>
 	    <!-- 报表标题  -->
 	    <div class="print_title">
-	    	<h2 class="tac"><strong>冷库综合运行系统月度分析报告</strong></h2>
+	    	<h2 class="tac"><strong>冷库综合运行系统{{isreportMoth?titmode[0]:titmode[1]}}分析报告</strong></h2>
 	    	<div class="print_name clearfix">
 	    		<div class="pull-left">
-	    			<span>客户名称：</span><input type="text" value="{{pysicaldata.compName}}" readonly="readonly">
+	    			<span>客户名称：</span>{{pysicaldata.compName}}
 	    		</div>
-	    		<div class="pull-left">
-	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}" readonly="readonly">
+	    		<div class="pull-right">
+	    			<span>RDC(冷库)名称：</span>{{vm.choserdc.name}}
 	    		</div>
 	    		<div class="pull-left input-group date">
-	    			<span>分析周期：</span> <input type="text" value="{{timeuRange}}" readonly="readonly">
+	    			<span>分析周期：</span>{{timeuRange}}
 	    		</div>
-				<div class="pull-left">
-					<span>{{cuttstorage.name}}（基准温度℃）：</span> <input type="text" value="{{cuttstorage.datumTemp}}">
+				<div class="pull-right">
+					<span>{{cuttstorage.name}}（基准温度℃）：{{cuttstorage.datumTemp}}
 				</div>
 				<div class="pull-left">
-					<span>月度危险告警次数：</span> <input type="text" value="{{cuttstorage.l1tailcount}}">
+					<span>{{isreportMoth?titmode[0]:titmode[1]}}危险告警次数：</span>{{cuttstorage.l1tailcount}}次
 				</div>
-				<div class="pull-left">
-					<span>月度危险告警时间：</span> <input type="text"  value="{{cuttstorage.l1tailtime}}min">
+				<div class="pull-right">
+					<span>{{isreportMoth?titmode[0]:titmode[1]}}危险告警时长：</span>{{cuttstorage.l1tailtime}}min
 				</div>
 	    	</div>
 	    </div>
 	    <!-- 月度曲线图 -->
 	    <div class="print_part chart_gap">
-	    	<p class="tac"><span class="bgBlue">月度温度曲线图</span></p>
+	    	<p class="tac"><span class="bgBlue">{{isreportMoth?titmode[0]:titmode[1]}}温度曲线图</span></p>
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="temperatureChart" class="chartHight" ng-show="isnotprint"></div>
@@ -89,7 +145,20 @@
 	    </div>
 	    <!-- 超温时间及次数统计表 -->
 	    <div class="print_part chart_gap">
-	    	<p class="tac"><span class="bgGold">超温时间及次数统计表</span></p>
+	    	<p class="tac"><span class="bgGold">超温时长及次数统计表</span></p>
+	    	<div>
+	    		<div class="chartPart">
+	    			<div id="tempovertime" class="chartHight" ng-show="isnotprint"></div>
+	    			<div id="tempovertime_img"  ng-show="!isnotprint"></div>
+	    	     	<span class="warnmsgs"> 超温总时长：<er>{{sumDatavalue[0][0]}}</er>分钟     　 超温总次数：<er>{{sumDatavalue[0][1]}} </er>  </span>
+	    		</div>
+	    	</div>
+	    </div>
+	   </div>
+	   <div id="page2">
+	    <!-- 超温时间及次数统计表 -->
+	    <div class="print_part chart_gap">
+	    	<p class="tac"><span class="bgGold">超温报警时长及次数统计表</span></p>
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="tempwarning" class="chartHight" ng-show="isnotprint"></div>
@@ -98,48 +167,66 @@
 	    	</div>
 	    </div>
 
-		<!-- 本月温度超标一级报警信息记录明细 -->
-		<div class="print_part chart_gap">
-			<p class="tac"><span class="bgRed">本月温度超标一级报警信息记录明细</span></p>
-			<div class="table-responsive" style="border: 1px solid #eee;">
-				<table class="table">
-					<thead>
-					<tr class="success">
-						<th>序号</th>
-						<th>级别</th>
-						<th>报警信息</th>
-						<th>报警时间</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr ng-repeat="item in warninglist" class="success">
-						<td>{{$index+1}}</td>
-						<td>{{item.level}}</td>
-						<td>{{item.warnigmsg}}</td>
-						<td>{{item.starttime.substring(0,19)}}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+		
+		
+<!-- 		 <div class="col-lg-12 col-md-12 col-sm-12 zoomIn animated"> -->
+                <!-- LINE CHART -->
+                <div class="box ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{isreportMoth?titmode[0]:titmode[1]}}温度超标报警明细</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+			                 <div class="table-responsive" style="border: 1px solid #eee;">
+							<table class="table">
+								<thead>
+								<tr class="success">
+									<th>序号</th>
+									<th>级别</th>
+									<th>报警信息</th>
+									<th>报警时间</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr ng-repeat="item in warninglist" class="success">
+									<td>{{$index+1}}</td>
+									<td>{{item.level}}</td>
+									<td>{{item.warnigmsg}}</td>
+									<td>{{item.starttime.substring(0,19)}}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+<!--             </div>/.col (RIGHT) -->
+		
 		<!--DC（冷库）系统给出本月评分分值-->
 		<div class="print_part chart_gap">
 			<p class="tac"><span class="bgGreen">综合评分</span></p>
-			<div class="h4">DC（冷库）系统给出本月评分分值<span style="text-decoration: underline">{{cuttstorage.score}}</span>分</div>
+			<div class="h4">360系统给出本{{isreportMoth?titmode[0]:titmode[1]}}评分分值<span style="text-decoration: underline">{{cuttstorage.score}}</span>分</div>
 		</div>
 
 		<!--结论-->
 		<div class="print_part chart_gap">
-			<p class="tac"><span class="bgGold">结论</span></p>
-			<div class="h4" ng-if="cuttstorage.score>90">本月冷库温度完全达标，能够保证库内货品质量安全。	</div>			
-			<div class="h4" ng-if="cuttstorage.score>70&&cuttstorage.score<90">本月冷库温度指标良好，但有一定改善空间。				</div>	
-			<div class="h4" ng-if="cuttstorage.score>50&&cuttstorage.score<70">本月冷库温度指标较低，存在影响库内货品质量安全的隐患。	</div>				
-			<div class="h4" ng-if="cuttstorage.score<50">本月冷库温度指标很糟糕，严重影响了食品质量安全。		</div>			
+			<p class="tac" ><span class="bgGold">结论</span></p>
+			<div class="h4" ng-show="cuttstorage.score>90&&!note" ng-click="note=true"> {{isreportMoth?titmode[0]:titmode[1]}}库温度完全达标，能够保证库内货品质量安全。</div>		
+			<div class="h4" ng-show="cuttstorage.score>70&&cuttstorage.score<90&&!note" ng-click="note=true">本{{isreportMoth?titmode[0]:titmode[1]}}冷库温度指标良好，但有一定改善空间。				</div>	
+			<div class="h4" ng-show="cuttstorage.score>50&&cuttstorage.score<70&&!note"ng-click="note=true">本{{isreportMoth?titmode[0]:titmode[1]}}冷库温度指标较低，存在影响库内货品质量安全的隐患。	</div>				
+			<div class="h4" ng-show="cuttstorage.score<50&&!note" ng-click="note=true">本{{isreportMoth?titmode[0]:titmode[1]}}冷库温度指标很糟糕，严重影响了食品质量安全。		</div>	
+			<div ng-if="note">
+			     <textarea style="width: 100%; height: 150px;"></textarea>	
+			</div>
+			 	
 		</div>
+		
 	</div>
-	
+	</div>
 	<div class="col-lg-12 text-center" ng-show="isloaderr">
-	  <div class="alert alert-info text-center">没有查到当前月份的分析数据哦</div>
+	  <div class="alert alert-info text-center">没有查到当前{{isreportMoth?titmode[0]:titmode[1]}}份的分析数据哦</div>
    </div>
 	
 	
@@ -157,46 +244,18 @@
                                 正在生成报表，请稍后！
       </div>
 </div>
-
-<script>
-        /*
-        * html2canvas 是将当前页面转换成图片；
-
-		 $('#print') 是要转换为图片的页面范围；
-
-		 height:5000,这个高度要根据页面的大小灵活调整；
-
-		 var doc = new jsPDF('p', 'px','a3'); p：横向，a3：纸张大小，默认是a4;
-
-		 doc.addImage(imgData, 'PNG', -9, 0,650,1500);将转换后的图片放到pdf文档上，后面四个参数可根据实际效果灵活调整；
-
-		 doc.addPage(); 一页pdf显示不完整的时候，新增一页；
-        * */
-        function pdfFn(){
-            /*var w = $("#print").width();
-            var h = $("#print").height();
-            console.log(w+'---'+h)
-
-			//要将 canvas 的宽高设置成容器宽高的 2 倍
-            var canvas = document.createElement("canvas");
-            canvas.width = w * 2;
-            canvas.height = h * 2;
-            canvas.style.width = w + "px";
-            canvas.style.height = h + "px";
-            var context = canvas.getContext("2d");
-			//然后将画布缩放，将图像放大两倍画到画布上
-            context.scale(2,2);*/
-            html2canvas($('#print'), {
-                //canvas: canvas,
-                onrendered: function(canvas) {
-                    var imgData = canvas.toDataURL('img/notice/png');
-                    var doc = new jsPDF('p','mm','a4');
-                    //第一列 左右边距  第二列上下边距  第三列是图片左右拉伸  第四列 图片上下拉伸
-                    doc.addImage(imgData, 'PNG', 5, 5,190,280);
-                    /*doc.addPage();
-                    doc.addImage(imgData, 'PNG', 5, 5,190,280);*/
-                    doc.save('report.pdf');
-                }
-            });
-        }
+<<script type="text/javascript">
+// function exppdf(){
+// 	  html2canvas($('#print'), {
+//           canvas: canvas,
+//           onrendered: function(canvas) {
+//               var imgData = canvas.toDataURL('img/notice/png');
+//               var doc = new jsPDF('p','mm','a3');
+//               doc.addImage(imgData, 'PNG', 5, 5,190,280);
+//               doc.save($scope.cuttstorage.name+'report.pdf');
+//           }
+//       });
+// }
 </script>
+
+

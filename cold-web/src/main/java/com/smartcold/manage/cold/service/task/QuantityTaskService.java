@@ -220,7 +220,6 @@ public class QuantityTaskService implements TaskService {
 		List<ColdStorageAnalysisEntity> coldStorageAnalysisList =new ArrayList<ColdStorageAnalysisEntity>();
 		List<ColdStorageSetEntity> findAllColdStorage = this.coldStorageSetMapper.findAllColdStorage();
 		for (ColdStorageSetEntity coldStorage : findAllColdStorage) {
-//		 if(1600==coldStorage.getRdcId()&&99==coldStorage.getId()){
 			totaldata =new double[]{0,0};
 			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 1, dateTime, startTime, endTime, totaldata,new String[]{"OverTempL1Count", "OverTempL1Time"},coldStorageAnalysisList);
 			this.tempWrningAanins(coldStorage.getRdcId(), coldStorage.getId(), 1, 2, dateTime, startTime, endTime, totaldata,new String[]{"OverTempL2Count", "OverTempL2Time"},coldStorageAnalysisList);
@@ -228,7 +227,6 @@ public class QuantityTaskService implements TaskService {
 			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(), "OverTempCount", totaldata[0], dateTime));
 			coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(),"OverTempTime", totaldata[1], dateTime));
 			}
-//		}
 		if(SetUtil.isnotNullList(coldStorageAnalysisList)){
 			this.storageAnalysisMapper.addColdStorageAnalysis(coldStorageAnalysisList);
 		}
