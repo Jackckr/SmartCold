@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>用户认证</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../com/css/approve.css">
+    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/common.js"></script>
+    <script>
+        function approve(ops) {
+            var oIndex = $(ops).index();
+            $(ops).addClass('collectActive').siblings().removeClass('collectActive');
+            $(".approveBox").children('.person').eq(oIndex).show().siblings().hide();
+        }
+    </script>
+</head>
+<body>
+<header>
+    <div class="area fl">
+        <a href="usercenter.html"><i class="iconfont">&#xe602;</i></a>
+    </div>
+    <div class="txt">用户认证</div>
+</header>
+<div class="flex oCollect">
+    <div class="item txt-center collectActive" onclick="approve(this)">个人用户</div>
+    <div class="item txt-center" onclick="approve(this)">企业用户</div>
+</div>
+<div class="approveBox">
+    <!--个人认证=======================-->
+    <div class="person owner">
+        <ul>
+            <li class="flex">
+                <span>个人姓名</span>
+                <div class="item">
+                    <input type="text" placeholder="请输入个人姓名">
+                </div>
+            </li>
+            <li class="flex">
+                <span>身份证号</span>
+                <div class="item">
+                    <input type="number" placeholder="请输入18位身份证号码">
+                </div>
+            </li>
+        </ul>
+        <h2>请上传身份证照片：</h2>
+        <div class="flex">
+            <div class="item txt-center">
+                <label class="pic">
+                    <input type="file" class="files" name="files1">
+                    <i class="iconfont">&#xe67e;</i>
+                    <img src="../com/img/banner0.jpg" alt="">
+                </label>
+                <p>身份证正面</p>
+            </div>
+            <div class="item txt-center">
+                <label class="pic">
+                    <input type="file" class="files" name="files2">
+                    <i class="iconfont">&#xe67e;</i>
+                </label>
+                <p>身份证反面</p>
+            </div>
+            <div class="item txt-center">
+                <label class="pic">
+                    <input type="file" class="files" name="files3">
+                    <i class="iconfont">&#xe67e;</i>
+                </label>
+                <p>手持身份证</p>
+            </div>
+        </div>
+    </div>
+    <!--企业认证=============================-->
+    <div class="person firm black">
+        <ul>
+            <li class="flex">
+                <span>企业名称</span>
+                <div class="item">
+                    <input type="text" placeholder="请输入企业名称">
+                </div>
+            </li>
+        </ul>
+        <h2>请上传营业执照照片：</h2>
+        <div class="flex">
+            <div class="item txt-center">
+                <label class="pic">
+                    <input type="file" class="files" name="files1">
+                    <i class="iconfont">&#xe67e;</i>
+                    <img src="../com/img/banner0.jpg" alt="">
+                </label>
+                <p>营业执照</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="startApprove">
+    <p>您提交的资料只会用于认证审核，请放心。</p>
+    <button class="mybtn">提交认证</button>
+</div>
+</body>
+</html>

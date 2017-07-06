@@ -1101,7 +1101,7 @@ html,body{
 .goApprove{
 	margin-top: .3rem;
 }
-.goApprove span{
+.goApprove a{
 	color: #fff;
 	display: inline-block;
 	width: 4rem;
