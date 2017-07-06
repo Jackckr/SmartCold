@@ -49,8 +49,8 @@ public class CollectController {
 
     @RequestMapping(value = "/delCollectById")
     @ResponseBody
-    public ResultDto delById(int collectId,int uid,int collectType){
-        collectMapper.delByCollect(collectId,uid,collectType);
+    public ResultDto delById(int collectId){
+        collectMapper.delByCollect(collectId);
         return new ResultDto(1,"取消收藏成功！");
     }
 }

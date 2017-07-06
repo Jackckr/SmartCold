@@ -7,4 +7,7 @@
     <select id="selByUidRdcId" resultType="com.smartcold.zigbee.manage.entity.RdcAuthEntity">
         SELECT * FROM `rdcauth` WHERE `uid`=#{uid} and `rdcid`=#{rdcId}
     </select>
+    <select id="selByAuditUid" resultType="com.smartcold.zigbee.manage.entity.RdcAuthEntity">
+        SELECT * FROM `rdcauth` WHERE `uid`=#{userId} and `type`=3 or `type`=4
+    </select>
 </mapper>

@@ -80,7 +80,7 @@ public class UserController extends BaseController {
 		UserEntity userEntity = userDao.findUserById(u.getId());
 		String fileDataType=u.getType()==1?FileDataMapper.CATEGORY_USERAUTH_PIC:FileDataMapper.CATEGORY_UPAUTH_PIC;
 		int authType=u.getType()==1?3:4;
-		String authMsg=u.getType()==1?"普通级vip用户":"企业级vip用户";
+		String authMsg=u.getType()==1?"\"普通级vip用户\"(姓名："+userEntity.getRealname()+"身份证："+userEntity.getIdCard()+")":"\"企业级vip用户\"(企业名："+userEntity.getCompanyName()+")";
 		String dir =null;String fileName=null;String msg="";
 		if (authfile != null) {//
 			dir = String.format("%s/user/%s", "picture", u.getId());
@@ -93,7 +93,7 @@ public class UserController extends BaseController {
 		RdcAuthEntity auchedata = new RdcAuthEntity();
 		auchedata.setType(authType);
 		auchedata.setUid(u.getId());
-		auchedata.setMsg(userEntity.getUsername()+"请求认证\""+authMsg+"\",请及时处理！");
+		auchedata.setMsg(userEntity.getUsername()+"请求认证"+authMsg+"，请及时处理！");
 		if(authfile!=null){
 			auchedata.setImgurl(dir + File.separator + fileName);
 		}
@@ -107,6 +107,16 @@ public class UserController extends BaseController {
 	}
 
 
+	@RequestMapping(value = "/isSubmitAuditUser",method = RequestMethod.POST)
+	@ResponseBody
+	public ResultDto isSubmitAuditUser(int userId){
+		List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByAuditUid(userId);
+		int result=0;
+		if(rdcAuthEntities!=null){
+			result=rdcAuthEntities.size()==0?0:1;
+		}
+		return new ResultDto(result,"");
+	}
 
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

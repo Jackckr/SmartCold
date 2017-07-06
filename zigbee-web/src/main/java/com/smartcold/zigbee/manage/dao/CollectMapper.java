@@ -12,7 +12,7 @@ import java.util.List;
 public interface CollectMapper {
     void insertByCollect(CollectEntity collectEntity);
 
-    void delByCollect(@Param("collectId") int collectId,@Param("uid") int uid,@Param("collectType") int collectType);
+    void delByCollect(int collectId);
 
     Page<CollectEntity> getRdcCollectByUid(Integer uid);
 

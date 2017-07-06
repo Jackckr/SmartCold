@@ -17,4 +17,6 @@ public interface RdcauthMapping {
 
     /*通过userId和rdcid查询认证*/
     List<RdcAuthEntity> selByUidRdcId(@Param("uid") Integer uid, @Param("rdcId") Integer rdcId);
+
+    List<RdcAuthEntity> selByAuditUid(int userId);
 }

@@ -11,7 +11,7 @@
         INSERT INTO `collect` (`uid`,`collectId`,`collectType`) VALUES (#{uid},#{collectId},#{collectType})
     </insert>
     <delete id="delByCollect">
-        DELETE FROM `collect` WHERE `collectId`=#{collectId} and `uid`=#{uid} and `collectType`=#{collectType}
+        DELETE FROM `collect` WHERE `id`=#{collectId}
     </delete>
     <select id="getRdcCollectByUid" resultMap="getByRdc">
         SELECT * FROM `collect` WHERE `collectType`=1 AND `uid`=#{uid}

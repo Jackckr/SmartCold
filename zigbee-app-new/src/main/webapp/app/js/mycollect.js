@@ -20,25 +20,29 @@ $().ready(function () {
         switch (index){
             case 1:
                 obj=item.rdcShareDTO;
+                if(!obj){
+                    return ["<li class='clearfix' >该内容已被删除！<button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></li>" ].join("");
+                }
                 return [
                 "<li class='clearfix' ><div class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
                 obj.logo, "'/></div><p class='company'>", obj.title,
                 "</p><p class='position'>", obj.typeText,
-                "</p></div><p class='btnGroup'><a href='storehousedetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+index+","+obj.id+")'>取消收藏</button></p></li>" ].join("");
-                break;
+                "</p></div><p class='btnGroup'><a href='storehousedetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
             case 2:
                 obj=item.rdcEntity;
+                if(!obj){
+                    return ["<li class='clearfix' >该内容已被删除！<button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></li>" ].join("");
+                }
                 return [
                     "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='"+obj.logo+"'/></div><p class='company'>", obj.name,
                     "</p><p class='position'><i class='iconfont'>&#xe66e;</i>",
                     obj.address,
-                    "</p></div><p class='btnGroup'><a href='rdcdetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+index+","+obj.id+")'>取消收藏</button></p></li>" ].join("");
-                break;
+                    "</p></div><p class='btnGroup'><a href='rdcdetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
         }
 
     }
-    cancelCollect = function (index,id) {
-        $.post(ER.root+"/i/collect/delCollectById",{uid:window.user.id,collectId:id,collectType:2},function (data) {
+    cancelCollect = function (id,index) {
+        $.post(ER.root+"/i/collect/delCollectById",{collectId:id},function (data) {
             ul_select.empty();
             currentPage=1;
             flag=index;
