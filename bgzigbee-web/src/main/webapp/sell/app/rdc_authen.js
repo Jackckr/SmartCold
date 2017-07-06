@@ -1,7 +1,7 @@
 var queryParams = {page: null, rows: null, type: null,state: null};
 //======================================================================格式化col=======================================================
 var rdc_auth_state = function (i) { switch(i){case -1:return '未通过';case 0:return '待审核';default: return '通过';}};
-var rdc_auth_type = function (i) { switch(i){case 0:return '平台/360用户';case 1:return '货主认证';default: return '维修商认证';}};
+var rdc_auth_type = function (i) { switch(i){case 0:return '平台/360用户';case 1:return '货主认证';case 3:return '普通vip';case 4:return'企业vip';default: return '维修商认证';}};
 function col_cellStyler(value, row) {
 	if(row.type==0||row.type==3||row.type==4){//3.认证普通vip4.认证企业vip
 	    return ['<button class="btn ',row.ishandle==0?"":"btn-info",' " onclick="updaterdcAuthen(' , row.id,',',row.ishandle,',',row.state,',',row.rdcid,',',row.uid ,',\'',row.note,'\','+row.type+')">',row.ishandle==0?'审核':'查看','</button>'  ].join("");
