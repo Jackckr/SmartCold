@@ -760,6 +760,9 @@ section{
 	font-size: .65rem;
 	margin-right: .2rem;
 }
+.btnFn a.fr:last-child{
+	display: none;
+}
 .rentRdc .coldlist li a p.orange{
 	font-size: .8rem;
 	top:1.2rem;

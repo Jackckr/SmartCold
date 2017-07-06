@@ -36,6 +36,7 @@
          $scope.saveType=["","货架存放","非货架存放"];
          $scope.isHave=["","有","无"];
          $scope.oSwitch=false;
+         $scope.user=window.user;
          $scope.on_off=function($event){
          	if($scope.oSwitch){
                 $scope.oSwitch=false;

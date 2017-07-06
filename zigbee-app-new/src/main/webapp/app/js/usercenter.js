@@ -3,8 +3,15 @@ app.controller('usercl', function($http, $location,$scope) {
     $scope.user=window.user;
     localStorage.usercenter='usercenter';
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+
 	 $scope.initdata=function(){
-		 if(window.user!=null){ $scope.userinfo=window.user;return;};
+		 if(window.user!=null){ 
+		     $scope.userinfo=window.user;
+             $http.post(ER.root+"/i/user/isSubmitAuditUser", {id:window.user.id}).then(function (data) {
+                 $scope.checkState=data;
+             });
+		     return;
+		 };
 		 $http.get(ER.root+"/i/user/findUser", {params: {token:util.getCookie('token')}}).success(function(data) {  
 			 if(data.id!=0){$scope.userinfo=window.user= data; 
 				window.localStorage.lkuser=JSON.stringify(data);
