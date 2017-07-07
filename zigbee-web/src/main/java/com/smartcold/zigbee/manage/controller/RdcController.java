@@ -118,7 +118,7 @@ public class RdcController {
 	public ResultDto attestationRdc(int userId,String userName, int rdcId,  int type, MultipartFile authfile) {
 		try {
 			List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByUidRdcId(userId, rdcId);
-			if (rdcAuthEntities.get(0).getState()!=0){
+			if (rdcAuthEntities==null||rdcAuthEntities.size()==0||rdcAuthEntities.get(0).getState()!=0){
 				RdcEntity rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 				String msg="";
 				if (type==0){
