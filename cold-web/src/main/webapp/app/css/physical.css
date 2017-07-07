@@ -829,12 +829,12 @@ legend{
 	background-color: transparent!important;
 }
 /*温度报警2017-5-18*/
-#timeline{
+.ovtimeline{
 	position: relative;
     margin-top: 2em;
     margin-bottom: 2em;
 }
-#timeline::before {
+.ovtimeline::before {
   /* this is the vertical line */
   content: '';
   position: absolute;

@@ -97,34 +97,47 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	
 	 $scope.loadTemp = function () {
 	    	if($scope.oids.length==0){ $("#loding").hide();return;};
-	        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
-	        	var xdata=[],yData = [],jxData=[],jxData1=[],jxData2=[], tempMap = result.tempMap;
-	            var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff), datumTemp1 =  datumTemp+2, datumTemp2 = datumTemp-2;//基准温度
-	            $scope.cuttstorage.datumTemp=datumTemp;
-	        	var i= 0,tempList=[],newdata = [],vo=cuttime=null; 
-	            for(var key in tempMap) { 
-	             	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
-	                 if( tempList.length>0){
-		                 for ( i = 0; i < tempList.length; i++) {
-							 vo=tempList[i];
-							 cuttime=baseTools.formatTime(vo.addtime);//new Date().getTime();
-							 xdata.push(cuttime);
-		                	 newdata.push(vo.value);//{ x: cuttime,y: 
-		                	 jxData.push(datumTemp); jxData1.push(datumTemp1); jxData2.push(datumTemp2);
-						}
-	                 }else{
-	                	 xdata.push($scope.startTime); xdata.push($scope.endTime);
-	                	 newdata.push(null); newdata.push(null);
-	                	 jxData.push(datumTemp); jxData.push(datumTemp); jxData1.push(datumTemp1); jxData1.push(datumTemp1); jxData2.push(datumTemp2); jxData2.push(datumTemp2);
-	                 }
-	                yData.push({"name": key, "data": newdata});
-	            } 
-	           
-	            yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData});//处理基准温度
-	            yData.push({ name: '报警基线', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData1,dashStyle:'dash'});//处理基准温度
-	            yData.push({ name: ' ', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData2,dashStyle:'dash'});//处理基准温度
-	            $scope.initHighchart(datumTemp,xdata,yData);
-	          });
+	    	if($scope.isreportMoth){
+	    		alert($("#date04").val());
+		         $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
+		        	
+		          });
+		         
+	    	}else{
+	    		
+		        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
+		        	var xdata=[],yData = [],jxData=[],jxData1=[],jxData2=[], tempMap = result.tempMap;
+		            var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff), datumTemp1 =  datumTemp+2, datumTemp2 = datumTemp-2;//基准温度
+		            $scope.cuttstorage.datumTemp=datumTemp;
+		        	var i= 0,tempList=[],newdata = [],vo=cuttime=null; 
+		            for(var key in tempMap) { 
+		             	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
+		                 if( tempList.length>0){
+			                 for ( i = 0; i < tempList.length; i++) {
+								 vo=tempList[i];
+								 cuttime=baseTools.formatTime(vo.addtime);//new Date().getTime();
+								 xdata.push(cuttime);
+			                	 newdata.push(vo.value);//{ x: cuttime,y: 
+			                	 jxData.push(datumTemp); jxData1.push(datumTemp1); jxData2.push(datumTemp2);
+							}
+		                 }else{
+		                	 xdata.push($scope.startTime); xdata.push($scope.endTime);
+		                	 newdata.push(null); newdata.push(null);
+		                	 jxData.push(datumTemp); jxData.push(datumTemp); jxData1.push(datumTemp1); jxData1.push(datumTemp1); jxData2.push(datumTemp2); jxData2.push(datumTemp2);
+		                 }
+		                yData.push({"name": key, "data": newdata});
+		            } 
+		           
+		            yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData});//处理基准温度
+		            yData.push({ name: '报警基线', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData1,dashStyle:'dash'});//处理基准温度
+		            yData.push({ name: ' ', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData2,dashStyle:'dash'});//处理基准温度
+		            $scope.initHighchart(datumTemp,xdata,yData);
+		          });
+	    		
+	    	}
+	    	
+	    	
+	    
 	         
 	    };
 
@@ -136,7 +149,7 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	    	 $scope.charArray[0]= new Highcharts.Chart('temperatureChart', {
 	    	    title: { text: null,  },
 	    	    subtitle: {  text: null,  },
-	    	    xAxis: {  categories: xdata },
+	    	    xAxis: {  categories: xdata, tickInterval: 86400000, dateTimeLabelFormats: { week: '%Y-%m-%d'}},
 	    	    yAxis: { title: {text: '温度 (°C)' },  plotLines: [{ value: 0, width: 1,   color: '#808080' }] },
 	    	    tooltip: {  valueSuffix: '°C' },
 	    	    series: yData,
@@ -180,9 +193,9 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	
     
 	$scope.overTempAndCount=function(){
-		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'ChaoWenShiJian,OverTempCount,', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
+		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'ChaoWenShiJian,ChaoWenCiShu,', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
 		   var  val=0, ccount=0,ctime=0;
-			var otlist=	data['ChaoWenShiJian'],oclist=	data['OverTempCount'];
+			var otlist=	data['ChaoWenShiJian'],oclist=	data['ChaoWenCiShu'];
 		     var xAxis=[],count=[],time=[];
 			 angular.forEach(otlist,function(item){ 
 				    val=parseFloat((item['value'] / 60).toFixed());
@@ -195,6 +208,7 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 			 $scope.dwoverTempAndCount(xAxis, count, time);
 		});
 	};
+	
 	 $scope.dwoverTempAndCount=function(xAxis,count,time){
 		 $scope.charArray[3]= $('#tempovertime').highcharts({
 		        chart: { zoomType: 'xy' },

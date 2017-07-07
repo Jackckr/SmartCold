@@ -107,7 +107,7 @@ public class AlarmController extends BaseController {
 	@ResponseBody
 	public ResponseData<LinkedHashMap<String, double[]>> getOverTempAnalysis(Integer rdcId,String oids) {
 			if(StringUtil.isNull(oids)){return ResponseData.newFailure();}
-	        return  this.getOverTempByFilter(rdcId, oids, TimeUtil.getDateTime(TimeUtil.getBeforeDay(6)),  TimeUtil.getDateTime());
+	        return  this.getOverTempByFilter(rdcId, oids, TimeUtil.getDateTime(TimeUtil.getBeforeDay(7)),  TimeUtil.getDateTime());
 	}
 	
 	
