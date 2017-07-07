@@ -79,7 +79,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      			if(obj.acl){
 					      				
 					      				if(!obj.hasnode){  
-					      					// 技术原因，无法处理
+					      					// 技术原因，无法处理(本想动态创建coldWeb)
 //					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
 					      				}
 					      			}else{
@@ -280,22 +280,26 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/cpswaterCost/{groupID}',
     	controller: 'cpswaterCost',
         templateUrl: 'app/template/waterCostGroup.html'
-    }).state('overTemperatureTime',{
-    	url:'/overTemperatureTime/{rdcId}',
-    	controller: 'overTemperatureTime',
-    	templateUrl: 'app/template/overTemperatureTime.html'
-    }).state('overTemperature',{
-    	url:'/overTemperature/{rdcId}',
-    	controller: 'overTemperature',
-        templateUrl: 'app/template/overTemperature.html'
-    }).state('overTemperatureCount',{
-    	url:'/overTemperatureCount/{rdcId}',
-    	controller: 'overTemperatureCount',
-        templateUrl: 'app/template/overTemperatureCount.html'
-    }).state('overTempCount',{
-    	url:'/overTempCount/{rdcId}',
-    	controller: 'overTempCount',
-        templateUrl: 'app/template/overTempCount.html'
+    })
+//    .state('overTemperatureTime',{
+//    	url:'/overTemperatureTime/{rdcId}',
+//    	controller: 'overTemperatureTime',
+//    	templateUrl: 'app/template/overTemperatureTime.html'
+//    })
+//    .state('overTemperature',{
+//    	url:'/overTemperature/{rdcId}',
+//    	controller: 'overTemperature',
+//        templateUrl: 'app/template/overTemperature.html'
+//    })
+//    .state('overTemperatureCount',{
+//    	url:'/overTemperatureCount/{rdcId}',
+//    	controller: 'overTemperatureCount',
+//        templateUrl: 'app/template/overTemperatureCount.html'
+//    })
+    .state('overTempCountAndTime',{
+    	url:'/overTempCountAndTime/{rdcId}',
+    	controller: 'overTempCountAndTime',
+        templateUrl: 'app/template/overTempCountAndTime.html'
     })
     .state('overTemperatureYZ',{
     	url:'/overTemperatureYZ/{rdcId}',

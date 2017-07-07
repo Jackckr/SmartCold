@@ -33,7 +33,7 @@
 			<p class="goApprove" ng-if="user.vipType==0&&checkState==-1"><a href="approve.html"><i class="iconfont">&#xe61c;</i>未通过</a></p>
 			<p class="goApprove" ng-if="user.vipType!=0&&checkState==1"><a href="javascript:;"><i class="iconfont">&#xe61c;</i>已认证</a></p>
 		</div>
-		<div class="topImg" ng-hide="userinfo.id">
+		<div class="topImg" ng-if="userinfo.id==undefined||userinfo.id==null">
 			<div class="userPic">
 				<img src="http://139.196.189.93:8089/app/userimg.jpg">
 			</div>

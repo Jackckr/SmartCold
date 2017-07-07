@@ -14,14 +14,12 @@ import com.smartcold.manage.cold.dao.newdb.StorageKeyValueMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcUserMapper;
-import com.smartcold.manage.cold.dao.olddb.TempSetMapper;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageDoorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.RdcUser;
-import com.smartcold.manage.cold.entity.olddb.TempSetEntity;
 import com.smartcold.manage.cold.enums.StorageType;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.service.StorageService;
@@ -31,8 +29,6 @@ import com.smartcold.manage.cold.util.TimeUtil;
 @Service
 public class StorageServiceImpl implements StorageService {
 
-	@Autowired
-	private TempSetMapper tempSetMapper;
 	
 	@Autowired
 	private RdcUserMapper rdcUserDao;

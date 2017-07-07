@@ -53,9 +53,11 @@
 	}
 	.warnmsgs{
 		position: relative;
-		margin-top: -40px;
+		margin-top: -42px;
 		left: 20px;
 		float: left;
+		    font-weight: 900;
+    color: #333333;
 	}
 	.warnmsgs er{
 	color: red;
@@ -150,7 +152,7 @@
 	    		<div class="chartPart">
 	    			<div id="tempovertime" class="chartHight" ng-show="isnotprint"></div>
 	    			<div id="tempovertime_img"  ng-show="!isnotprint"></div>
-	    	     	<span class="warnmsgs"> 超温总时长：<er>{{sumDatavalue[0][0]}}</er>分钟     　 超温总次数：<er>{{sumDatavalue[0][1]}} </er>  </span>
+	    	     	<span class="warnmsgs">{{isreportMoth?titmode[0]:titmode[1]}} 超温总时长：<er>{{sumDatavalue[0][1]}}</er>分钟      超温总次数：<er>{{sumDatavalue[0][0]}} </er>次  </span>
 	    		</div>
 	    	</div>
 	    </div>

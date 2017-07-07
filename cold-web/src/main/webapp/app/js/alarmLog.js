@@ -88,125 +88,63 @@ coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
 });
 //温度告警
 coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
-	 //根据rdcid查询该rdc的报警信息
-	$(".mainHeight").height( $(".content-wrapper").height());
-	 $scope.tempwarLog=[];
-	 $scope.model=["详细","关闭"];
-	 var myChart = echarts.init(document.getElementById('tem_div'));
+	$(".mainHeight").height( $(".content-wrapper").height());//	 //根据rdcid查询该rdc的报警信息
+	$scope.tempwarLog={}, $scope.model=["详细","关闭"];
 	$scope.initData=function(){
-		var oids=""; angular.forEach($rootScope.mystorages,function(storage){ oids+=storage.id+",";  });
-		oids=oids.substr(0,oids.length-1);
-		$http.get('i/AlarmController/getOverTempAnalysis', {  params: {  "rdcId":  $rootScope.rdcId ,"oids": oids  } }).success(function (data) {
-			 $scope.tempwarLog=[];
-			 var tempwaning=[];
-           if(data.success){
-        	 var datalist=  data.entity,xAxis=[],count=[],time=[];
-        	 angular.forEach(datalist,function(item,i){
-        		 xAxis.push(i); 
-        		 time.push(item[0]);
-        		 count.push(item[1]);
-        		 if(item[1]>0){
-        			 var msg=new Object();
-        			 msg.time=i;
-        			 msg.style="background:#ED3F1D";
-        			 msg.isshow=0;
-        			 msg.msg="当前所有冷库累计"+item[1]+"次告警,累计时长："+item[0]+"分钟";
-        			 tempwaning.push(msg);
-        		 }
-        	 });
-        	 if(tempwaning.length==0){
-    			 var msg=new Object();
-    			 msg.time=time[7];
-    			 msg.msg="暂无告警信息";
-    			 msg.count=0;
-    			 tempwaning.push(msg);
-    		 }
-        	 $scope.tempwarLog=tempwaning.reverse();
-        	 $scope.dwechar(xAxis, count, time); 
-           }
-		});
+		 angular.forEach($rootScope.mystorages,function(storage){
+			 $scope.initcharData(storage);
+		 });
 	}; 
+	$scope.initcharData=function(storage){
+		$http.get('i/AlarmController/getOverTempAnalysis', {  params: {  "rdcId":  $rootScope.rdcId ,"oids": storage.id  } }).success(function (data) {
+	         var tempwaning=[], datalist=  data.entity,xAxis=[],count=[],time=[];
+	       	 angular.forEach(datalist,function(item,i){
+	       		 xAxis.push(i); 
+	       		 time.push(item[0]);
+	       		 count.push(item[1]);
+	       		 if(item[1]>0){ tempwaning.push({time:i,style:'background:#ED3F1D',isshow:0,msg:"当前所有冷库累计"+item[1]+"次告警,累计时长："+item[0]+"分钟"}); }
+	       	 });
+	       	 if(tempwaning.length==0){
+	   			 tempwaning.push({time:time[7],msg:storage.name+'暂无告警信息',count:0});
+	   		 }
+	       	 $scope.tempwarLog[storage.id  ]=tempwaning.reverse();
+	       	 $scope.dwechar("tem_div_"+storage.id  ,xAxis, count, time); 
+		});
+	};
 	
 	//展示详细信息
 	$scope.showdatil=function(obj){
-		if(obj.datilList==undefined){
-			$http.get('i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,time:obj.time  } }).success(function (data) {
-				obj.datilList=data;
-			});
-		}
+		if(obj.datilList==undefined){$http.get('i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,time:obj.time  } }).success(function (data) {obj.datilList=data;});}
 		obj.isshow=obj.isshow==1?0:1;
 	};
-	  
-	
-	  $scope.dwechar=function(xAxis,count,time){
-		  
-		  // 指定图表的配置项和数据
-		    var option = {
-		    		legend: { data:['告警次数','告警时长'] },
-		    	    tooltip: {  trigger: 'axis', axisPointer: { type: 'cross', crossStyle: { color: '#999'  }}  },
-		    	    xAxis: [
-		    	        {
-		    	            type: 'category',
-		    	            axisPointer: {  type: 'shadow' },
-		    	            data: xAxis
-		    	        }
-		    	    ],
-		    	    yAxis: [
-		    	        {
-		    	            type: 'value',
-		    	            name: '次数/次',
-//		    	            min: 0,max: 20,
-		    	            interval: 30,
-		    	            axisLabel: { formatter: '{value}' }
-		    	        },
-		    	        {
-		    	            type: 'value',
-		    	            name: '时长/min',
-//		    	            min: 0,
-//		    	            max: 240,
-		    	            interval: 30,
-		    	            axisLabel: {
-		    	                formatter: '{value}'
-		    	            }
-		    	        }
-		    	    ],
-		    	    plotOptions: {
-		                column: {
-		                    pointPadding: 0.2,
-		                    borderWidth: 0
-		                }
-		            },
-		    	    series: [
-		    	        {
-		    	            name:'告警次数',
-		    	            type:'bar',
-		    	            data:count
-		    	        },
-		    	        {
-		    	            name:'告警时长',
-		    	            type:'line',
-		    	            yAxisIndex: 1,
-		    	            data:time
-		    	        }
-		    	    ]
-		    	};
 
-		    // 使用刚指定的配置项和数据显示图表。
-		    myChart.setOption(option);
-		  
-		  
-	  }
-	  
+    $scope.dwechar=function(emid, xAxis,count,time){
+	    var option = {
+	    		legend: { data:['告警次数','告警时长'] },
+	    	    tooltip: {  trigger: 'axis', axisPointer: { type: 'cross', crossStyle: { color: '#999'  }}  },
+	    	    xAxis: [  {  type: 'category', axisPointer: {  type: 'shadow' }, data: xAxis } ],
+	    	    yAxis: [{ type: 'value',  name: '次数/次',  interval: 30, axisLabel: { formatter: '{value}' } }, {type: 'value', name: '时长/min', interval: 30,axisLabel: {  formatter: '{value}' } }],
+	    	    plotOptions: { column: {  pointPadding: 0.2, borderWidth: 0  }  },
+	    	    series: [
+	    	        { name:'告警次数', type:'bar',   data:count  },
+	    	        {   name:'告警时长', type:'line', yAxisIndex: 1,  data:time }
+	    	    ]
+	    	};
+		 
+		var myChart = echarts.init(document.getElementById(emid));
+	    myChart.setOption(option);
+   };
 	
-	  $scope.changeStorages=function(){
-		   if($rootScope.mystorages!=undefined){
-			   $scope.initData();
-		   }
-	    };
-	
-	  $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
-  
-    window.onresize = myChart.resize;
-   // $(".show-more").click(function(){	$(this).parents(".timeline-title").next(".timeline-content-more").toggle(); })
+  if($rootScope.mystorages==undefined){
+		  $scope.changeStorages=function(){
+			   if($rootScope.mystorages!=undefined){
+				   initdatawatch();//销毁监听
+				   $scope.initData();
+			   }
+		   };
+		  initdatawatch= $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
+	}else{
+		$scope.initData();
+	}
 });
 

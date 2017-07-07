@@ -61,7 +61,11 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
-	    AND `time` > #{startTime} AND `time` &lt; #{endTime}  order by `time` ${orderBy}   
+	    AND `time` > #{startTime} AND `time` &lt; #{endTime} 
+	    <if test="orderBy==null or orderBy=='' or orderBy=='DESC'">
+	       order by `time` ${orderBy}   
+	    </if>
+	  
 	</select>
 	
 	<select id="findByTimeFormat" parameterType="map" resultMap="dataResultMap">
@@ -76,7 +80,10 @@
 	    <if test="key != null">
 		    AND `key` = #{key} 
 	    </if>
-	    AND time >= #{startTime} AND time &lt;= #{endTime} ORDER BY  `time` ${orderBy} 
+	    AND time >= #{startTime} AND time &lt;= #{endTime} 
+	      <if test="orderBy==null or orderBy=='' or orderBy=='DESC'">
+	       order by `time` ${orderBy}   
+	    </if>
 	</select>
 <!-- 	<select id="findByTimeFormat1" parameterType="map" resultMap="dataResultMap"> -->
 <!-- 	    SELECT avg(`value`) value,DATE_FORMAT(`time`, #{dateFormat})  as grouptime ,time FROM storagedatacollection   -->

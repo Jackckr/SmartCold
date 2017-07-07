@@ -19,15 +19,18 @@ import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.MessageMapper;
 import com.smartcold.manage.cold.dao.olddb.QuantitySetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.dao.olddb.TempSetMapper;
 import com.smartcold.manage.cold.dao.olddb.UtilMapper;
 import com.smartcold.manage.cold.entity.comm.ItemObject;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.newdb.WarningsLog;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.Rdc;
 import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
+import com.smartcold.manage.cold.entity.olddb.TempSetEntity;
 import com.smartcold.manage.cold.service.StorageService;
 import com.smartcold.manage.cold.service.TaskService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
@@ -46,6 +49,7 @@ public class QuantityTaskService implements TaskService {
 
 	@Autowired
 	private RdcMapper rdcMapper;
+
 	@Autowired
 	private UtilMapper utilMapper;
 	@Autowired
@@ -62,6 +66,10 @@ public class QuantityTaskService implements TaskService {
 	private ColdStorageAnalysisMapper storageAnalysisMapper;
 	@Autowired
 	private SysWarningsInfoMapper sysWarningsInfoMapper;
+	
+	
+	@Autowired
+	private TempSetMapper tempSetMapper;
 	
 	/**
 	 * 计算Q
@@ -663,9 +671,47 @@ public class QuantityTaskService implements TaskService {
 		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(day));
 		Date dateTime = TimeUtil.parseYMD(time);
 		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
-		SummaryTempWarning(time, dateTime, startTime, endtime);
+		SummaryoverTempCpunt(time, dateTime, startTime, endtime);
 	}
 	
-	
+	//超温统计
+	public void SummaryoverTempCpunt(String time, Date dateTime,String startTime,String endTime){
+		Date pstringToDate = TimeUtil.stringToDate(startTime);
+		Date pendTime = TimeUtil.stringToDate(endTime);
+		List<ColdStorageAnalysisEntity> coldStorageAnalysisList =new ArrayList<ColdStorageAnalysisEntity>();
+		List<ColdStorageSetEntity> findAllColdStorage = this.coldStorageSetMapper.findAllColdStorage();
+	     int overTempCount=0;int minTempCount=0;boolean isoverFlow=false;
+		for (ColdStorageSetEntity coldStorage : findAllColdStorage) {
+			if(coldStorage.getId()==391||coldStorage.getId()==392){
+				overTempCount=0;minTempCount=0;isoverFlow=false;
+				double baseTemp=coldStorage.getStartTemperature()+coldStorage.getTempdiff()/2;
+				List<TempSetEntity> tempsetList = this.tempSetMapper.getTempsetBycoldstorageid(coldStorage.getId());
+				if(SetUtil.isnotNullList(tempsetList)){
+					  for (TempSetEntity tempSetEntity : tempsetList) {
+						   List<StorageKeyValue> findByTime = this.storageService.findByTime(18, tempSetEntity.getId(), "Temp", pstringToDate, pendTime, null);
+						   if (SetUtil.isnotNullList(findByTime)) {
+							   for (StorageKeyValue storageKeyValue : findByTime) {
+							   if(storageKeyValue.getValue()>baseTemp){
+								   if(!isoverFlow){
+									   isoverFlow=true;
+									   overTempCount++;
+								   }
+							   }else{
+								   isoverFlow=false;
+							   }
+						   	}
+						}
+					   if(minTempCount==0||overTempCount<minTempCount){
+						   minTempCount=  overTempCount;
+					   }
+					}
+					 coldStorageAnalysisList.add(new ColdStorageAnalysisEntity(1, coldStorage.getId(),"ChaoWenCiShu", minTempCount, dateTime));
+				}
+			}
+		}
+		if(SetUtil.isnotNullList(coldStorageAnalysisList)){
+			this.storageAnalysisMapper.addColdStorageAnalysis(coldStorageAnalysisList);
+		}
+	}
 	
 }

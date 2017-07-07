@@ -1086,6 +1086,8 @@ html,body{
 	height: 4rem;
 	border: 0.2rem solid #fff;
 	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	overflow: hidden;
 }
 .topImg .userName{
 	font-size: .8rem;
