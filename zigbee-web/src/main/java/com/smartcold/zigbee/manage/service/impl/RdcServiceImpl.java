@@ -146,24 +146,32 @@ public class RdcServiceImpl implements RdcService {
     }
 
     @Override
-    public List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID) {
+    public List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID,UserEntity user) {
         List<RdcEntity> rdcByRDCId = rdcDao.findRDCByRDCId(rdcID);
         List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcID);
         Double unitPrice = rdcShareMapper.getUnitPriceByRdcId(rdcID);
-        List<RdcAuthEntity> rdcAuthList = rdcauthMapping.selAuditRdcId(rdcID);
-        List<RdcAuthEntity> rdcStandList = rdcauthMapping.selStandRdcId(rdcID);
         List<RdcAddDTO> result = Lists.newArrayList();
         RdcAddDTO rdcAddDTO = new RdcAddDTO();
         rdcAddDTO.setUnitPrice(unitPrice);
-        if (rdcAuthList != null && rdcAuthList.size() != 0) {
-            rdcAddDTO.setAuditType(2);
-            if (rdcAuthList.get(0).getState() == 1) {
-                rdcAddDTO.setAuditType(1);
-            } else if (rdcAuthList.get(0).getState() == -1) {
-                rdcAddDTO.setAuditType(-1);
-                rdcAddDTO.setAuditMsg(rdcAuthList.get(0).getNote());
+        RdcEntity rdcEntity = rdcByRDCId.get(0);
+        if(user!=null){
+            List<RdcAuthEntity> rdcAuthList = rdcauthMapping.selAuditRdcId(rdcID,user.getId());
+            if (rdcAuthList != null && rdcAuthList.size() != 0) {
+                rdcAddDTO.setAuditType(2);
+                if (rdcAuthList.get(0).getState() == 1) {
+                    rdcAddDTO.setAuditType(1);
+                } else if (rdcAuthList.get(0).getState() == -1) {
+                    rdcAddDTO.setAuditType(-1);
+                    rdcAddDTO.setAuditMsg(rdcAuthList.get(0).getNote());
+                }
+            }else {
+                if(rdcEntity.getAudit()==2&&rdcEntity.getUserId()==user.getId()){
+                    rdcAddDTO.setAuditType(1);
+                }
             }
         }
+
+        List<RdcAuthEntity> rdcStandList = rdcauthMapping.selStandRdcId(rdcID);
         if (rdcStandList != null && rdcStandList.size() != 0) {
             rdcAddDTO.setStandType(2);
             if (rdcStandList.get(0).getState() == 1) {
@@ -174,7 +182,6 @@ public class RdcServiceImpl implements RdcService {
             }
         }
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0) {
-            RdcEntity rdcEntity = rdcByRDCId.get(0);
             rdcAddDTO.setAddress(rdcEntity.getAddress());
             rdcAddDTO.setArea(rdcEntity.getSqm());
             rdcAddDTO.setCityId(rdcEntity.getCityid());

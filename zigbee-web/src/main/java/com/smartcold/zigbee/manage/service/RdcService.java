@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.smartcold.zigbee.manage.dto.*;
+import com.smartcold.zigbee.manage.entity.UserEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.Page;
@@ -23,7 +24,7 @@ public interface RdcService {
 
 	List<RdcDTO> findAllRdcDtos();
 
-	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID);
+	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID, UserEntity user);
 
 	List<RdcEntityDTO> findRdcDTOList();
 	
