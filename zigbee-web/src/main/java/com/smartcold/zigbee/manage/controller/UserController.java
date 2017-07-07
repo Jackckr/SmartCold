@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smartcold.zigbee.manage.dao.RdcauthMapping;
+import com.smartcold.zigbee.manage.dao.RoleUserMapper;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,8 @@ public class UserController extends BaseController {
 	private FtpService ftpService;
 	@Autowired
 	private FileDataMapper fileDataDao;
+	@Autowired
+	private RoleUserMapper roleUserMapper;
 	@Autowired
 	private RdcauthMapping rdcauthMapping;
 	@Resource(name="docLibraryService")
@@ -119,6 +123,14 @@ public class UserController extends BaseController {
 			}else if (rdcAuthEntities.get(0).getState()==1){
 				result=1;
 			}
+		}
+		List<HashMap<String, Object>> hashMaps = roleUserMapper.selByUserId(userId);
+		if(hashMaps !=null && hashMaps.size()!=0){
+			result=1;
+			UserEntity userEntity = new UserEntity();
+			userEntity.setId(userId);
+			userEntity.setVipType(2);
+			userDao.updateUser(userEntity);
 		}
 		return new ResultDto(result,"");
 	}
