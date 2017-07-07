@@ -326,6 +326,8 @@ public class RdcController {
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
+		rdcEntity.setHeight(rdcAddDTO.getHeight());
+		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
 		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		AdminEntity user = (AdminEntity) request.getSession().getAttribute("admin");
@@ -455,6 +457,8 @@ public class RdcController {
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
+		rdcEntity.setHeight(rdcAddDTO.getHeight());
+		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
 		if (SetUtil.isNotNullMap(lngLatMap)) {

@@ -22,6 +22,7 @@
      $(".myphone").hide();     
      app.controller('colddetail', function($http, $location,$scope) { 
     	$scope.rdcid=id;
+    	$scope.user=window.user;
 		$scope.datatype=1;
 		$http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	    $scope.appmode=[{},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}]; 
@@ -36,6 +37,7 @@
          $scope.saveType=["","货架存放","非货架存放"];
          $scope.isHave=["","有","无"];
          $scope.oSwitch=false;
+         $scope.user=window.user;
          $scope.on_off=function($event){
          	if($scope.oSwitch){
                 $scope.oSwitch=false;

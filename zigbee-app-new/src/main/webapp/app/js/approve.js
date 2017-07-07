@@ -61,74 +61,56 @@ angular.module('app', ['ngFileUpload']).controller('approve', function ($scope, 
             return false
         }
     };
-    function checkSubmit(userFlag){
+
+    $scope.submitOwner = function (userFlag,$event) {
+        var company='';
         if(userFlag==1){//个人
-            if(!$scope.realName){
-                layer.open({content: '请输入真实姓名', btn: '确定'});
-                return false
-            }
-            $scope.idCheck();
-            if(!$scope.totalfiles){
-                layer.open({content: '请上传身份证正面照', btn: '确定'});
-                return false
-            }
+            if(!$scope.realName){layer.open({content: '请输入真实姓名', btn: '确定'});return false}
+            if(!$scope.idCard || !/(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test($scope.idCard)){layer.open({content: '身份证号格式错误', btn: '确定'});return false}
+            if(!$scope.totalfiles){layer.open({content: '请上传身份证正面照', btn: '确定'});return false}
+            company=null;
         }else{//企业
-            if(!$scope.companyName){
-                layer.open({content: '请输入企业名称', btn: '确定'});
-                return false
-            }
-            if(!$scope.totalfiles){
-                layer.open({content: '请上传营业执照', btn: '确定'});
-                return false
-            }
+            if(!$scope.companyName){layer.open({content: '请输入企业名称', btn: '确定'});return false}
+            if(!$scope.totalfiles){layer.open({content: '请上传营业执照', btn: '确定'});return false}
+            company=$scope.companyName;
+            $scope.idCard=null;
+            $scope.realName=null;
         }
-        return true
-    }
-    $scope.submitOwner = function (userFlag) {
-        if (checkSubmit(userFlag)) {
-            var company='';
-            if(userFlag==1){//个人
-                company=null;
-            }else{//企业
-                company=$scope.companyName;
-                $scope.idCard=null;
-                $scope.realName=null;
-            }
-            var simdata = {
-                id:$scope.user.id,
-                idCard:$scope.idCard,
-                realname:$scope.realName,
-                type:userFlag,
-                companyName:company,
-                authfile:null
-            };
-            simdata["authfile"] = $scope.totalfiles[0];
-            Upload.upload({
-                url: ER.root + "/i/user/attestationUser",
-                headers: {'Content-Transfer-Encoding': 'utf-8'},
-                data: simdata
-            }).then(function (resp) {
-                layer.closeAll();
-                layer.open({
-                    content: resp.data.message
-                    , btn: '确定'
-                    , shadeClose: false
-                    , yes: function (data) {
-                        checktoken(null,true);
-                        window.location.href = "usercenter.html";
-                    }
-                });
-            }, function (resp) {
-                console.log('Error status: ' + resp.status);
-            }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.name);
+        $($event.target).attr('disabled',true).css('background','grey!important');
+        var simdata = {
+            id:$scope.user.id,
+            idCard:$scope.idCard,
+            realname:$scope.realName,
+            type:userFlag,
+            companyName:company,
+            authfile:null
+        };
+        layer.open({
+            type: 2
+            ,content: '努力加载中~~~'
+            ,shadeClose:false
+        });
+        simdata["authfile"] = $scope.totalfiles[0];
+        Upload.upload({
+            url: ER.root + "/i/user/attestationUser",
+            headers: {'Content-Transfer-Encoding': 'utf-8'},
+            data: simdata
+        }).then(function (resp) {
+            layer.closeAll();
+            layer.open({
+                content: resp.data.message
+                , btn: '确定'
+                , shadeClose: false
+                , yes: function (data) {
+                    window.location.href = "usercenter.html";
+                }
             });
-        }
-        else {
-            //alert("请填写标记*的必选项在提交!");
-            layer.open({content: '信息未填完整~', btn: '确定'});
-        }
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.name);
+        });
     };
 });
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smartcold.zigbee.manage.dao.RdcauthMapping;
+import com.smartcold.zigbee.manage.dao.RoleUserMapper;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,8 @@ public class UserController extends BaseController {
 	@Autowired
 	private FileDataMapper fileDataDao;
 	@Autowired
+	private RoleUserMapper roleUserMapper;
+	@Autowired
 	private RdcauthMapping rdcauthMapping;
 	@Resource(name="docLibraryService")
 	private DocLibraryService docLibraryService;
@@ -80,7 +84,7 @@ public class UserController extends BaseController {
 		UserEntity userEntity = userDao.findUserById(u.getId());
 		String fileDataType=u.getType()==1?FileDataMapper.CATEGORY_USERAUTH_PIC:FileDataMapper.CATEGORY_UPAUTH_PIC;
 		int authType=u.getType()==1?3:4;
-		String authMsg=u.getType()==1?"普通级vip用户":"企业级vip用户";
+		String authMsg=u.getType()==1?"\"普通级vip用户\"(姓名："+u.getRealname()+"身份证："+u.getIdCard()+")":"\"企业级vip用户\"(企业名："+u.getCompanyName()+")";
 		String dir =null;String fileName=null;String msg="";
 		if (authfile != null) {//
 			dir = String.format("%s/user/%s", "picture", u.getId());
@@ -93,7 +97,7 @@ public class UserController extends BaseController {
 		RdcAuthEntity auchedata = new RdcAuthEntity();
 		auchedata.setType(authType);
 		auchedata.setUid(u.getId());
-		auchedata.setMsg(userEntity.getUsername()+"请求认证\""+authMsg+"\",请及时处理！");
+		auchedata.setMsg(userEntity.getUsername()+"请求认证"+authMsg+"，请及时处理！");
 		if(authfile!=null){
 			auchedata.setImgurl(dir + File.separator + fileName);
 		}
@@ -107,6 +111,29 @@ public class UserController extends BaseController {
 	}
 
 
+	@RequestMapping(value = "/isSubmitAuditUser")
+	@ResponseBody
+	public ResultDto isSubmitAuditUser(Integer userId){
+		List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByAuditUid(userId);
+		int result=0;
+		if(rdcAuthEntities!=null&&rdcAuthEntities.size()!=0){
+			result=2;
+			if(rdcAuthEntities.get(0).getState()==-1){
+				result=-1;
+			}else if (rdcAuthEntities.get(0).getState()==1){
+				result=1;
+			}
+		}
+		List<HashMap<String, Object>> hashMaps = roleUserMapper.selByUserId(userId);
+		if(hashMaps !=null && hashMaps.size()!=0){
+			result=1;
+			UserEntity userEntity = new UserEntity();
+			userEntity.setId(userId);
+			userEntity.setVipType(2);
+			userDao.updateUser(userEntity);
+		}
+		return new ResultDto(result,"");
+	}
 
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -128,14 +155,14 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token,Boolean isupdate) {
 		UserEntity user =new UserEntity();
-		if(isupdate==null||!isupdate){
+		/*if(isupdate==null||!isupdate){
 			 user = (UserEntity)request.getSession().getAttribute("user");
 			if(user!=null){
 			   return user;
 			}else{
 				user =new UserEntity();
 			}
-		}
+		}*/
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();
 			if(cookies!=null&&cookies.length>0){

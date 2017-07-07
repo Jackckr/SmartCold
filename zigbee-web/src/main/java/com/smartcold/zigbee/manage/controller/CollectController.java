@@ -49,8 +49,18 @@ public class CollectController {
 
     @RequestMapping(value = "/delCollectById")
     @ResponseBody
-    public ResultDto delById(int collectId,int uid,int collectType){
-        collectMapper.delByCollect(collectId,uid,collectType);
+    public ResultDto delById(int collectId){
+        collectMapper.delById(collectId);
+        return new ResultDto(1,"取消收藏成功！");
+    }
+    @RequestMapping(value = "/delByCollect")
+    @ResponseBody
+    public ResultDto delByCollect(int collectId,int collectType,int uid){
+        CollectEntity collectEntity = new CollectEntity();
+        collectEntity.setUid(uid);
+        collectEntity.setCollectId(collectId);
+        collectEntity.setCollectType(collectType);
+        collectMapper.delByCollect(collectEntity);
         return new ResultDto(1,"取消收藏成功！");
     }
 }

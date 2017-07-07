@@ -321,13 +321,13 @@ section.show{
 	position: relative;
 }
 .editarea .input{
-	padding:0 0 2px 2rem;
+	padding:0 0 2px 3.5rem;
 	height: 2rem;
 	color: #333;
 	box-sizing: border-box;
 }
 .editarea span{
-	width: 2rem;
+	/*width: 2rem;*/
 	text-align: center;
 }
 .bd{
@@ -375,7 +375,7 @@ section.show{
 .inputs{
 	padding: 0 0.9rem;
 	margin: 2.5rem 0 0.5rem;
-	background-color: #fff;
+	background-color: #F4F8FB;
 	width:100%;
 	box-sizing: border-box;
 }
@@ -1086,6 +1086,8 @@ html,body{
 	height: 4rem;
 	border: 0.2rem solid #fff;
 	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	overflow: hidden;
 }
 .topImg .userName{
 	font-size: .8rem;
@@ -1154,4 +1156,7 @@ html,body{
 }
 .oCollect+.commentList{
 	border-top: .5rem solid #f6f5fa;
+}
+.zoom>a{
+	font-size: .75rem;
 }

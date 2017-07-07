@@ -124,7 +124,7 @@
         </li>
         <li class="rdcImg">
             <label>冷链委温度达标库<em>*</em></label>
-            <div id="tempStandDiv">
+            <div id="tempStandDiv" style="display: inline-block">
                 <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="isJoinStand">是</label>
                 <label><input ng-value="2" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="isJoinStand">愿意申报</label>
                 <label><input ng-value="3" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="isJoinStand">否</label>
@@ -149,11 +149,16 @@
                     <span>请拨打010-88120448 或者400-1234567 申报</span>
                 </li>
             </ul>
-            <div>
+           <!-- <div>
                 <span>是否愿意公开冷库温度曲线</span>
                 <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
                 <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
-            </div>
+            </div>-->
+        </li>
+        <li>
+            <label>是否愿意公开冷库温度曲线<em>*</em></label>
+            <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
+            <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
         </li>
         <li>
             <label for="phone">联系电话<em>*</em></label>

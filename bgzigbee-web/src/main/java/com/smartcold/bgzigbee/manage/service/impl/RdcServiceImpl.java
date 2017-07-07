@@ -148,6 +148,8 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setRemark(rdcEntity.getCommit());
             rdcAddDTO.setTelphoneNum(rdcEntity.getPhone());
             rdcAddDTO.setTonnage(rdcEntity.getCapacity());
+            rdcAddDTO.setHeight(rdcEntity.getHeight());
+            rdcAddDTO.setRentSqm(rdcEntity.getRentSqm());
             List<FileDataEntity> authFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_AUTH_PIC);
 			if (authFiles!=null&&!CollectionUtils.isEmpty(authFiles)) {
 				List<RdcAuthDTO> rdcAuthDTOs = Lists.newArrayList();

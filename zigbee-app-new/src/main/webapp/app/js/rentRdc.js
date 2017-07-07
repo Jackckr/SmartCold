@@ -33,11 +33,11 @@ $().ready(function () {
             $('.listcontain').hide();
             $(this).hide();
         });
-        $("#searchDara_div i").click(function (e) {//搜索
+        /*$("#searchDara_div i").click(function (e) {//搜索
             currentPage = 1;
             ul_select.empty();
             getPageData();
-        });
+        });*/
         $(window).scroll(function () {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
@@ -156,7 +156,7 @@ $().ready(function () {
     }
     collect=function(ops,id) {
         if(!(window.user && window.user.id!=0)){
-            layer.open({content: "请登入后收藏！", btn: '确定'});
+            checkLogin();
             return;
         }
         var em = $(ops);
@@ -168,7 +168,7 @@ $().ready(function () {
             em.children('i').html('&#xe60c;');
             em.children('em').html('已收藏');
         }else{
-            $.post(ER.root+"/i/collect/delCollectById",{uid:window.user.id,collectId:id,collectType:2},function (data) {
+            $.post(ER.root+"/i/collect/delByCollect",{uid:window.user.id,collectId:id,collectType:2},function (data) {
 
             });
             em.addClass('noCollect').removeClass('hasCollect');
@@ -176,7 +176,11 @@ $().ready(function () {
             em.children('em').html('收藏');
         }
     };
-    function getPageData() {//启用无限加载
+    function getPageData(search) {//启用无限加载
+        if(search==1){
+            currentPage = 1;
+            ul_select.empty();
+        }
         isLoadRB = true;
         var _filter = getFilter(currentPage, maxSize);
         $.post(ER.root + "/i/ShareRdcController/newGetSERDCList", _filter, function (data) {
@@ -211,11 +215,11 @@ $().ready(function () {
         initevg();
 
     };
-    searchFilter = function () {//搜索
+    searchFilter = function (search) {//搜索
         if ($("#searchDara_div input").val().trim() != "") {
             currentPage = 1;
             ul_select.empty();
-            getPageData();
+            getPageData(search);
         }
     };
     searchFilters = function () {//搜索

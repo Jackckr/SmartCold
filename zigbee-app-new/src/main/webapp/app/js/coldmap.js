@@ -62,7 +62,7 @@ app.controller('coldmap', function ($http) {
             var marker = new BMap.Marker(address, "");
 
             marker.addEventListener("click", function () {
-                window.location.href = "colddetail.html?id=" + add.id;
+                window.location.href = "rdcdetail.html?id=" + add.id;
             });
             markers.push(marker);
         }

@@ -155,7 +155,7 @@ $().ready(function () {
 
     collect = function (ops, id) {
         if (!(window.user && window.user.id != 0)) {
-            layer.open({content: "请登入后收藏！", btn: '确定'});
+            checkLogin();
             return;
         }
         var em = $(ops);
@@ -171,7 +171,7 @@ $().ready(function () {
             em.children('i').html('&#xe60c;');
             em.children('em').html('已收藏');
         } else {
-            $.post(ER.root + "/i/collect/delCollectById", {
+            $.post(ER.root + "/i/collect/delByCollect", {
                 uid: window.user.id,
                 collectId: id,
                 collectType: 2

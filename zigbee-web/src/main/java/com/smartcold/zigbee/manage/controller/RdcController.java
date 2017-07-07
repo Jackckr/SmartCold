@@ -118,8 +118,7 @@ public class RdcController {
 	public ResultDto attestationRdc(int userId,String userName, int rdcId,  int type, MultipartFile authfile) {
 		try {
 			List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByUidRdcId(userId, rdcId);
-			List<MessageRecord> messageRecords = messageRecordMapping.selByUidRdcId(userId, rdcId);
-			if (rdcAuthEntities.size()==0&&messageRecords.size()==0){
+			if (rdcAuthEntities==null||rdcAuthEntities.size()==0||rdcAuthEntities.get(0).getState()!=0){
 				RdcEntity rdc = this.rdcMapper.selectByPrimaryKey(rdcId);
 				String msg="";
 				if (type==0){
@@ -446,6 +445,7 @@ public class RdcController {
 		if (!StringUtils.isEmpty(empStr)) {
 			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
 		}
+		userEntity=userMapper.findUserById(rdcAddDTO.getUserId());
 		if (!StringUtils.isEmpty(userStr)) {
 			userEntity= JSONObject.parseObject(userStr, UserEntity.class);
 		}
@@ -567,6 +567,21 @@ public class RdcController {
 			ResultDto resultDto1 = attestationRdc(userEntity.getId(), userEntity.getUsername(), rdcEntity.getId(), userEntity.getType(), auditPic);
 			resultDto.setMessage("添加成功！"+resultDto1.getMessage());
 		}
+		if(rdcAddDTO.getIsJoinStand()==1&&standPic!=null){
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, standPic, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(standPic.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_STAND_PIC, rdcEntity.getId(), fileName);
+			fileDataDao.saveFileData(fileDataEntity);
+			RdcAuthEntity auchedata = new RdcAuthEntity();
+			auchedata.setType(5);//达标
+			auchedata.setUid(rdcAddDTO.getUserid());
+			auchedata.setRdcid(rdcEntity.getId());
+			auchedata.setMsg("冷库\""+rdcEntity.getName()+"\"请求认证达标冷库，请及时处理！");
+			auchedata.setImgurl(dir + File.separator + fileName);
+			this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
+		}
 		rdcExtDao.insertRdcExt(rdcExtEntity);
 		return resultDto;
 	}
@@ -586,6 +601,7 @@ public class RdcController {
 		if (!StringUtils.isEmpty(empStr)) {
 			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
 		}
+		userEntity=userMapper.findUserById(rdcAddDTO.getUserId());
 		if (!StringUtils.isEmpty(userStr)) {
 			userEntity= JSONObject.parseObject(userStr, UserEntity.class);
 		}
@@ -688,6 +704,21 @@ public class RdcController {
 		}
 		if (!honorFiles.isEmpty()) {
 			fileDataDao.saveFileDatas(honorFiles);
+		}
+		if(rdcAddDTO.getIsJoinStand()==1&&standPic!=null){
+			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
+			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, standPic, dir);
+			ftpService.uploadFile(uploadFileEntity);
+			FileDataEntity fileDataEntity = new FileDataEntity(standPic.getContentType(), dir + "/" + fileName,
+					FileDataMapper.CATEGORY_STAND_PIC, rdcEntity.getId(), fileName);
+			fileDataDao.saveFileData(fileDataEntity);
+			RdcAuthEntity auchedata = new RdcAuthEntity();
+			auchedata.setType(5);//达标
+			auchedata.setUid(rdcAddDTO.getUserid());
+			auchedata.setRdcid(rdcEntity.getId());
+			auchedata.setMsg("冷库\""+rdcEntity.getName()+"\"请求认证达标冷库，请及时处理！");
+			auchedata.setImgurl(dir + File.separator + fileName);
+			this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
 		}
 		ResultDto resultDto =new ResultDto(0,"修改成功！");
 		if (auditPic != null && userEntity!=null && userEntity.getType()!=1&&userEntity.getType()!=2) {

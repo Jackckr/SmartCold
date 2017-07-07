@@ -91,6 +91,10 @@ public class RdcAddDTO {
 	
 	private FileDataEntity arrangePic;
 
+	private float rentSqm;
+
+	private float height;
+
 	private List<FileDataEntity> storagePics;
 
 	private List<FileDataEntity> honorPics;
@@ -496,5 +500,21 @@ public class RdcAddDTO {
 
 	public void setAuthPics(List<RdcAuthDTO> authPics) {
 		this.authPics = authPics;
+	}
+
+	public float getRentSqm() {
+		return rentSqm;
+	}
+
+	public void setRentSqm(float rentSqm) {
+		this.rentSqm = rentSqm;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
 	}
 }

@@ -41,12 +41,17 @@
         <div class="item">
             <em ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></em>
             <em ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></em>
+            <em ng-if="vo.audit!=2">
+                <i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>
+                <a class="blue" ng-if="vo.audit!=2 && user.vipType!=0" href="coldStorageAuth.html?id={{rdcid}}" style="font-size: .6rem">认证该冷库</a>
+            </em>
         </div>
     </div>
-    <div class="flex">
+    <div class="flex" ng-if="user&&user.vipType!=0">
         <div class="item"><span>联系电话</span><b class="blue">
-            <a href="login.html" class="blue" ng-if="checkUserLogin()==false">登录后显示</a>
-            <em ng-if="checkUserLogin()">{{vo.phoneNum}}</em>
+            <!--<a href="login.html" class="blue" ng-if="checkUserLogin()==false">登录后显示</a>
+            <a href="login.html" class="grey" ng-if="user.vipType==0">实名认证后可见</a>-->
+            <em ng-if="user.vipType!=0">{{vo.phoneNum}}</em>
         </b></div>
         <div class="item">
             <ul class='star fl' value="{{vo.score}}">
@@ -60,7 +65,7 @@
         </div>
     </div>
 </div>
-<div class="rdcpadding rdcDetailMainInfo">
+<div class="rdcpadding rdcDetailMainInfo" ng-if="user&&user.vipType!=0">
     <div class="flex">
         <div class="item">
             <span>总面积</span>
@@ -82,7 +87,7 @@
         </div>
     </div>
 </div>
-<div class="rdcpadding">
+<div class="rdcpadding" ng-if="user">
     <div class="flex">
         <div class="item flex">
             <span class="item">地址</span>
@@ -90,8 +95,13 @@
         </div>
     </div>
 </div>
-<div class="rdcpadding rdcDetailOtherInfo">
-
+<div class="rdcpadding" ng-if="user&&user.vipType==0">
+    <h1>认证用户方可看到更多信息！<b><a href="approve.html" class="blue">去实名认证</a></b></h1>
+</div>
+<div class="rdcpadding" ng-show="user==null">
+    <h1>登录之后可看到更多信息！<b><a href="login.html" class="blue">去登录</a></b></h1>
+</div>
+<div class="rdcpadding rdcDetailOtherInfo" ng-if="user&&user.vipType!=0">
     <h2>
         <i class="iconfont blue">&#xe60b;</i>
         &nbsp;冷库信息<span class="fr blue" ng-click="on_off($event)">展开</span>
@@ -159,12 +169,12 @@
 <section class="more" ng-if="rdctotal">
     <ul class="listDad clearfix">
         <li class="fl">仓位&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
-        <li class="fr"><a href="storehouse.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
+        <li class="fr"><a href="rentstorage.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
             <li class="imgCell" ng-repeat="rdc in rdcList">
-                <a href="storehousedetail.html?id={{rdc.id}}">
+                <a href="rentstorage.html?id={{rdc.id}}">
                     <img class="fl" ng-src="{{rdc.logo}}">
                     <div>
                         <p class='ellipsis'>【{{rdc.typeText}}】 {{rdc.title}} </p>
@@ -187,7 +197,7 @@
 <section class="more" ng-if="gdtotal">
     <ul class="listDad clearfix">
         <li class="fl">货品&nbsp;(<span id="num">{{gdtotal}}</span>)</li>
-        <li class="fr"><a href="goodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
+        <li class="fr"><a href="salegoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
@@ -215,7 +225,7 @@
 <section class="more" ng-if="pstotal">
     <ul class="listDad clearfix">
         <li class="fl">车辆&nbsp;(<span id="num">{{pstotal}}</span>)</li>
-        <li class="fr"><a href="coldtransportlist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
+        <li class="fr"><a href="coldtransportlist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
@@ -244,7 +254,7 @@
 <section class="more" ng-if="evatotal">
     <ul class="listDad clearfix">
         <li class="fl">用户点评&nbsp;(<span id="num">{{evatotal}}</span>)</li>
-        <li class="fr"><a href="comment_list.html?id={{rdcid}}"><i class="iconfont">&#xe60d;</i></a></li>
+        <li class="fr"><a href="comment_list.html?id={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <ul class="borderlist clearfix black">
         <li><span>全部</span>&nbsp;(<span id="num">642</span>)</li>
