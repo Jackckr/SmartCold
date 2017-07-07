@@ -4,12 +4,12 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 animated"ng-repeat="(key,dt) in data">
+            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 animated" ng-repeat="storage in mystorages">
 
                 <!-- Storage CHART -->
                 <div class="box bg-gray" >
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;日超次数</h3>
+                        <h3 class="box-title">{{storage.name}}&nbsp;&nbsp;&nbsp;&nbsp;超温时长及次数统计</h3>
                         <div class="box-tools pull-right">
 			                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -17,7 +17,7 @@
                     </div>
                     <div class="box-body">
                         <div class="chart">
-                            <div id="{{key}}_Chart" style="height:300px;"></div>
+                            <div id="Chart_{{storage.id}}" style="height:300px;"></div>
                         </div>
                     </div>                 
                 </div>
