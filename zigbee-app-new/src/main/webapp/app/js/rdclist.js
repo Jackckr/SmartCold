@@ -122,7 +122,7 @@ $().ready(function() {
             em.children('i').html('&#xe60c;');
             em.children('em').html('已收藏');
         }else{
-            $.post(ER.root+"/i/collect/delCollectById",{uid:window.user.id,collectId:id,collectType:1},function (data) {
+            $.post(ER.root+"/i/collect/delByCollect",{uid:window.user.id,collectId:id,collectType:1},function (data) {
 
             });
             em.addClass('noCollect').removeClass('hasCollect');

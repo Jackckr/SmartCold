@@ -10,8 +10,11 @@
     <insert id="insertByCollect">
         INSERT INTO `collect` (`uid`,`collectId`,`collectType`) VALUES (#{uid},#{collectId},#{collectType})
     </insert>
-    <delete id="delByCollect">
+    <delete id="delById">
         DELETE FROM `collect` WHERE `id`=#{collectId}
+    </delete>
+    <delete id="delByCollect">
+        DELETE FROM `collect` WHERE `uid`=#{uid} and `collectId`=#{collectId} and `collectType`=#{collectType}
     </delete>
     <select id="getRdcCollectByUid" resultMap="getByRdc">
         SELECT * FROM `collect` WHERE `collectType`=1 AND `uid`=#{uid}
