@@ -258,7 +258,8 @@ function coldValidation(vo) {
         return false;
     }
     if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.area.trim() == ""
-        || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == "") {
+        || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == ""
+        ||vo.rentSqm.trim()==""||vo.height.trim()=="") {
     	alert_errmsg("请完善冷库信息！");
         return false;
     }
@@ -268,6 +269,8 @@ function coldValidation(vo) {
     	alert_errmsg("面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
+    if(!areaRex.test(vo.rentSqm)){alert_errmsg("可出租面积输入有误！(小数点后最多保留两位，如：15.28)");}
+    if(!areaRex.test(vo.height)){alert_errmsg("冷库净高度！(小数点后最多保留两位，如：15.28)");}
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||
         vo.capacity3 != "" && !areaRex.test(vo.capacity3) || vo.capacity4 != "" && !areaRex.test(vo.capacity4) ||
         vo.capacity5 != "" && !areaRex.test(vo.capacity5) || vo.height1 != "" && !areaRex.test(vo.height1) ||
@@ -283,6 +286,10 @@ function coldValidation(vo) {
     }
     if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
     	alert_errmsg("理货区面积输入有误！(小数点后最多保留两位，如：15.28)");
+        return false;
+    }
+    if (vo.rentSqm-vo.sqm>0) {
+        alert_errmsg("可出租面积不能大于总面积！");
         return false;
     }
     var phoneNumRex = /^1[34578]\d{9}$/;

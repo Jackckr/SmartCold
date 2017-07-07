@@ -53,6 +53,10 @@ public class RdcEntity {
 	private double latitude;
 
 	private int istemperaturestandard;
+
+	private float height;
+
+	private float rentSqm;
 	
 	public String getUsername() {
 		return username;
@@ -252,5 +256,21 @@ public class RdcEntity {
 
 	public void setIstemperaturestandard(int istemperaturestandard) {
 		this.istemperaturestandard = istemperaturestandard;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public float getRentSqm() {
+		return rentSqm;
+	}
+
+	public void setRentSqm(float rentSqm) {
+		this.rentSqm = rentSqm;
 	}
 }

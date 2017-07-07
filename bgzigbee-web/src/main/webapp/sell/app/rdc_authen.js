@@ -40,6 +40,7 @@ function user_upaudit(){
 	$('#rdc_state_authendialog').dialog({closed: true});
     var obj=   getFormData('#rdc_state_auditForm');
     if(obj.id!=""){
+        if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
     		if(obj.oldstate!=obj.state&&obj.state==1){
     			if(obj.rdcId!=undefined&&obj.authUserId!=undefined){
     				$.post('../../i/authen/authRdc', {'rdcId': obj.rdcId, 'authUserId': obj.authUserId});//修改
@@ -56,6 +57,7 @@ function userAudit() {
     $('#rdc_state_authendialog').dialog({closed: true});
     var obj= getFormData('#rdc_state_auditForm');
     if(obj.id!=""){
+        if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
         if(obj.oldstate!=obj.state&&obj.state==1){
             if(obj.authUserId!=undefined){
                 var vipType=obj.type==3?1:2;
@@ -73,6 +75,7 @@ function rdcStandAudit() {
     $('#rdc_state_authendialog').dialog({closed: true});
     var obj= getFormData('#rdc_state_auditForm');
     if(obj.id!=""){
+        if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
         if(obj.oldstate!=obj.state&&(obj.state==1||obj.state==-1)){
             if(obj.rdcId!=undefined){
                 var standType=obj.state==1?1:2;

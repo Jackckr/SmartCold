@@ -40,8 +40,8 @@ import com.smartcold.zigbee.manage.util.StringUtil;
  */
 @Service
 public class RdcServiceImpl implements RdcService {
-	private final static Logger log = LoggerFactory.getLogger(RdcServiceImpl.class);
-	
+    private final static Logger log = LoggerFactory.getLogger(RdcServiceImpl.class);
+
     private static final int goodCommentGrade = 4;
 
     @Autowired
@@ -72,7 +72,7 @@ public class RdcServiceImpl implements RdcService {
     private StorageHonorMapper storageHonorDao;
 
     @Autowired
-	private FtpService ftpService;
+    private FtpService ftpService;
 
     @Autowired
     private RdcShareMapper rdcShareMapper;
@@ -155,13 +155,23 @@ public class RdcServiceImpl implements RdcService {
         List<RdcAddDTO> result = Lists.newArrayList();
         RdcAddDTO rdcAddDTO = new RdcAddDTO();
         rdcAddDTO.setUnitPrice(unitPrice);
-        if(rdcAuthList!=null && rdcAuthList.size()!=0){
+        if (rdcAuthList != null && rdcAuthList.size() != 0) {
             rdcAddDTO.setAuditType(2);
-            if(rdcAuthList.get(0).getState()==1){rdcAddDTO.setAuditType(1);}else if(rdcAuthList.get(0).getState()==-1){rdcAddDTO.setAuditType(-1);}
+            if (rdcAuthList.get(0).getState() == 1) {
+                rdcAddDTO.setAuditType(1);
+            } else if (rdcAuthList.get(0).getState() == -1) {
+                rdcAddDTO.setAuditType(-1);
+                rdcAddDTO.setAuditMsg(rdcAuthList.get(0).getNote());
+            }
         }
-        if(rdcStandList!=null && rdcStandList.size()!=0){
+        if (rdcStandList != null && rdcStandList.size() != 0) {
             rdcAddDTO.setStandType(2);
-            if(rdcStandList.get(0).getState()==1){rdcAddDTO.setStandType(1);}else if(rdcStandList.get(0).getState()==-1){rdcAddDTO.setStandType(-1);}
+            if (rdcStandList.get(0).getState() == 1) {
+                rdcAddDTO.setStandType(1);
+            } else if (rdcStandList.get(0).getState() == -1) {
+                rdcAddDTO.setStandType(-1);
+                rdcAddDTO.setStandMsg(rdcStandList.get(0).getNote());
+            }
         }
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0) {
             RdcEntity rdcEntity = rdcByRDCId.get(0);
@@ -226,7 +236,7 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setHonorPics(honorFiles);
 
             String[] truck = rdcExtEntity.getStoragetruck().split(",");// 1:2,2:2,3:2,4:1,5:1
-            if (truck.length > 0){
+            if (truck.length > 0) {
                 for (int i = 0; i < truck.length; i++) {
                     String[] truckItem = truck[i].split(":");
                     if (truckItem[0].equalsIgnoreCase("1")) {
@@ -242,7 +252,7 @@ public class RdcServiceImpl implements RdcService {
             }
 
             String[] capacity = rdcExtEntity.getStoragecapacity().split(",");// 1:2,2:2,3:2,4:1,5:1
-            if (capacity.length > 0){
+            if (capacity.length > 0) {
                 for (int i = 0; i < capacity.length; i++) {
                     String[] capacityItem = capacity[i].split(":");
                     if (capacityItem[0].equalsIgnoreCase("1")) {
@@ -259,26 +269,26 @@ public class RdcServiceImpl implements RdcService {
                 }
             }
             String stdata = rdcExtEntity.getStoragecapacityheight();
-            if(StringUtil.isnotNull(stdata)){
-            	   String[] capacityheight =stdata.split(",");// 1:2,2:2,3:2,4:1,5:1
-                   if (capacityheight.length > 0){
-                       for (int i = 0; i < capacityheight.length; i++) {
-                           String[] capacityheightItem = capacityheight[i].split(":");
-                           if (capacityheightItem[0].equalsIgnoreCase("1")) {
-                               rdcAddDTO.setHeight1(Float.parseFloat(capacityheightItem[1]));
-                           } else if (capacityheightItem[0].equalsIgnoreCase("2")) {
-                               rdcAddDTO.setHeight2(Float.parseFloat(capacityheightItem[1]));
-                           } else if (capacityheightItem[0].equalsIgnoreCase("3")) {
-                               rdcAddDTO.setHeight3(Float.parseFloat(capacityheightItem[1]));
-                           } else if (capacityheightItem[0].equalsIgnoreCase("4")) {
-                               rdcAddDTO.setHeight4(Float.parseFloat(capacityheightItem[1]));
-                           } else if (capacityheightItem[0].equalsIgnoreCase("5")) {
-                               rdcAddDTO.setHeight5(Float.parseFloat(capacityheightItem[1]));
-                           }
-                       }
-                   }
+            if (StringUtil.isnotNull(stdata)) {
+                String[] capacityheight = stdata.split(",");// 1:2,2:2,3:2,4:1,5:1
+                if (capacityheight.length > 0) {
+                    for (int i = 0; i < capacityheight.length; i++) {
+                        String[] capacityheightItem = capacityheight[i].split(":");
+                        if (capacityheightItem[0].equalsIgnoreCase("1")) {
+                            rdcAddDTO.setHeight1(Float.parseFloat(capacityheightItem[1]));
+                        } else if (capacityheightItem[0].equalsIgnoreCase("2")) {
+                            rdcAddDTO.setHeight2(Float.parseFloat(capacityheightItem[1]));
+                        } else if (capacityheightItem[0].equalsIgnoreCase("3")) {
+                            rdcAddDTO.setHeight3(Float.parseFloat(capacityheightItem[1]));
+                        } else if (capacityheightItem[0].equalsIgnoreCase("4")) {
+                            rdcAddDTO.setHeight4(Float.parseFloat(capacityheightItem[1]));
+                        } else if (capacityheightItem[0].equalsIgnoreCase("5")) {
+                            rdcAddDTO.setHeight5(Float.parseFloat(capacityheightItem[1]));
+                        }
+                    }
+                }
             }
-         
+
 
             if (!StringUtils.isEmpty(rdcExtEntity.getHonorpiclocation())) {
                 String[] honorpiclocation = rdcExtEntity.getHonorpiclocation().split(",");
@@ -408,7 +418,7 @@ public class RdcServiceImpl implements RdcService {
         return addFileData(rdcScoreDTOs);
     }
 
-//    @Scheduled(cron = "0 */10 * * * ?")
+    //    @Scheduled(cron = "0 */10 * * * ?")
     @Scheduled(cron = "0 0 5 * * ?")
     @Override
     public void sumRdcsScore() {
@@ -475,12 +485,12 @@ public class RdcServiceImpl implements RdcService {
         }
     }
 
-	@Override
-	public PageInfo<RdcEntityDTO> getRDCList(int pageNum, int pageSize,HashMap<String, Object> filter) {
-		PageHelper.startPage(pageNum, pageSize);
-		Page<RdcEntityDTO> serdcList = this.rdcDao.getRDCList(filter);
-		return new PageInfo<RdcEntityDTO>(serdcList);
-	}
+    @Override
+    public PageInfo<RdcEntityDTO> getRDCList(int pageNum, int pageSize, HashMap<String, Object> filter) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<RdcEntityDTO> serdcList = this.rdcDao.getRDCList(filter);
+        return new PageInfo<RdcEntityDTO>(serdcList);
+    }
 
     @Override
     public List<RdcAddressDTO> findAllRdcAddressDtos() {
@@ -532,27 +542,27 @@ public class RdcServiceImpl implements RdcService {
     }
 
     @Override
-	public boolean deleteByRdcId(int rdcID) {
-		//删除rdcext表中的数据
-		int nums = rdcExtDao.deleteByRdcID(rdcID);
-		log.info("delete "+nums+" rows rdcExt by rdcID:"+rdcID);
-		nums = rdcDao.deleteByRdcID(rdcID);
-		log.info("delete "+nums+" rows rdc by rdcID:"+rdcID);
-		//删除图片
-		List<FileDataEntity> fileDataEntities = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
-		List<FileDataEntity> arrangePic = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
-		if (!CollectionUtils.isEmpty(arrangePic)) {
-			fileDataEntities.addAll(arrangePic);
-		}
-		for(FileDataEntity item: fileDataEntities){
-			ftpService.deleteByLocation(item.getLocation());
-		}
-		nums = fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
-		nums += fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
-		log.info("delete "+nums+" rows FileData by rdcID:"+rdcID);
-		return true;
-	}
-    
+    public boolean deleteByRdcId(int rdcID) {
+        //删除rdcext表中的数据
+        int nums = rdcExtDao.deleteByRdcID(rdcID);
+        log.info("delete " + nums + " rows rdcExt by rdcID:" + rdcID);
+        nums = rdcDao.deleteByRdcID(rdcID);
+        log.info("delete " + nums + " rows rdc by rdcID:" + rdcID);
+        //删除图片
+        List<FileDataEntity> fileDataEntities = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+        List<FileDataEntity> arrangePic = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+        if (!CollectionUtils.isEmpty(arrangePic)) {
+            fileDataEntities.addAll(arrangePic);
+        }
+        for (FileDataEntity item : fileDataEntities) {
+            ftpService.deleteByLocation(item.getLocation());
+        }
+        nums = fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
+        nums += fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+        log.info("delete " + nums + " rows FileData by rdcID:" + rdcID);
+        return true;
+    }
+
     @Override
     public Map<String, String> geocoderLatitude(RdcEntity rdc) {
         Map<String, String> result = Maps.newHashMap();
@@ -581,20 +591,20 @@ public class RdcServiceImpl implements RdcService {
         return null;
     }
 
-	@Override
-	public PageInfo<RdcEntityDTO> findRDCDTOByUserId(int userID,int pageNum,int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
-		Page<RdcEntityDTO> rdcList = this.rdcDao.findRDCByUserId(userID,null);
-		return new PageInfo<RdcEntityDTO>(rdcList);
-	}
-
-	@Override
-	public List<HashMap<String, Object>> findRDCById(int rdcID) {
-		return this.rdcDao.findRDCById(rdcID);
-	}
+    @Override
+    public PageInfo<RdcEntityDTO> findRDCDTOByUserId(int userID, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<RdcEntityDTO> rdcList = this.rdcDao.findRDCByUserId(userID, null);
+        return new PageInfo<RdcEntityDTO>(rdcList);
+    }
 
     @Override
-    public PageInfo<RdcEntityDTO> newGetRdcList(int pageNum, int pageSize,HashMap<String, Object> parameters) {
+    public List<HashMap<String, Object>> findRDCById(int rdcID) {
+        return this.rdcDao.findRDCById(rdcID);
+    }
+
+    @Override
+    public PageInfo<RdcEntityDTO> newGetRdcList(int pageNum, int pageSize, HashMap<String, Object> parameters) {
         PageHelper.startPage(pageNum, pageSize);
         Page<RdcEntityDTO> serdcList = this.rdcDao.getNewRdcList(parameters);
         return new PageInfo<RdcEntityDTO>(serdcList);

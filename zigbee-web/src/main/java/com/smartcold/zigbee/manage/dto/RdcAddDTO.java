@@ -118,8 +118,10 @@ public class RdcAddDTO {
 	private int isJoinStand;
 
 	private int auditType;//认证申请后的状态
+	private String auditMsg;//认证申请后的信息
 
 	private int standType;//达标申请后的状态
+	private String standMsg;//达标申请后的信息
 
 	public float getHeight1() {
 		return height1;
@@ -615,5 +617,21 @@ public class RdcAddDTO {
 
 	public void setStandType(int standType) {
 		this.standType = standType;
+	}
+
+	public String getAuditMsg() {
+		return auditMsg;
+	}
+
+	public void setAuditMsg(String auditMsg) {
+		this.auditMsg = auditMsg;
+	}
+
+	public String getStandMsg() {
+		return standMsg;
+	}
+
+	public void setStandMsg(String standMsg) {
+		this.standMsg = standMsg;
 	}
 }
