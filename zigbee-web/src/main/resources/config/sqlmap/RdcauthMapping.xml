@@ -8,7 +8,7 @@
         SELECT * FROM `rdcauth` WHERE `uid`=#{uid} and `rdcid`=#{rdcId} and `type`=0 order by `id` desc
     </select>
     <select id="selByAuditUid" resultType="com.smartcold.zigbee.manage.entity.RdcAuthEntity">
-        SELECT * FROM `rdcauth` WHERE `uid`=#{userId} and `type`=3 or `type`=4 order by `id` desc
+        SELECT * FROM `rdcauth` WHERE `uid`=#{userId} and (`type`=3 or `type`=4) order by `id` desc
     </select>
     <select id="selAuditRdcId" resultType="com.smartcold.zigbee.manage.entity.RdcAuthEntity">
         SELECT * FROM `rdcauth` WHERE `rdcid`=#{rdcId} and `type`=0 order by `id` desc

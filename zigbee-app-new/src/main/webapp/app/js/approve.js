@@ -62,7 +62,7 @@ angular.module('app', ['ngFileUpload']).controller('approve', function ($scope, 
         }
     };
 
-    $scope.submitOwner = function (userFlag) {
+    $scope.submitOwner = function (userFlag,$event) {
         var company='';
         if(userFlag==1){//个人
             if(!$scope.realName){layer.open({content: '请输入真实姓名', btn: '确定'});return false}
@@ -76,6 +76,7 @@ angular.module('app', ['ngFileUpload']).controller('approve', function ($scope, 
             $scope.idCard=null;
             $scope.realName=null;
         }
+        $($event.target).attr('disabled',true).css('background','grey!important');
         var simdata = {
             id:$scope.user.id,
             idCard:$scope.idCard,

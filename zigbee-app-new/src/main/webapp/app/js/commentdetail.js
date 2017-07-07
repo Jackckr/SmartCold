@@ -85,10 +85,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    	});
 	        }, function (resp) {
 	            console.log('Error status: ' + resp.status);
-	        }, function (evt) {
-	            //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	            //console.log('progress: ' + progressPercentage + '% ' + evt.name);
-	        });
+	        }, function (evt) {});
 		}
 	    	else{
 	    		layer.open({content: '评论内容不能为空或者特殊字符~',btn: '确定'});return;
@@ -165,7 +162,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		    			,shadeClose:false
 		                ,yes:function(){
 		                	if(data!=null&&data!=undefined)
-		    		    	   window.location.href ="colddetail.html?id="+rdcid;
+		    		    	   window.location.href ="rdcdetail.html?id="+rdcid;
 		                }
 			    	});
 	                $scope.isDisabled = false;

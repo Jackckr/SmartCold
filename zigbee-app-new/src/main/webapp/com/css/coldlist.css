@@ -842,7 +842,7 @@ section{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	border-bottom: .3rem solid #f1f1f1;
+	border-bottom: .3rem solid #f6f6f6;
 }
 div.rdcpadding:last-child{
 border-bottom: 0;
