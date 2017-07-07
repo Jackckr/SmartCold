@@ -121,7 +121,7 @@
                 </li>
                 <li class="rdcImg">
                     <label>冷链委温度达标库<em>*</em></label>
-                    <label ng-if="standType==-1" class="orange">未通过</label>
+                    <label ng-if="standType==-1" style="font-size: .6rem;" class="orange">未通过。如有疑问，请拨打400-8535606</label>
                     <label ng-if="standType==1" class="orange">已通过</label>
                     <label ng-if="standType==2" class="orange">审核中</label>
                     <div id="tempStandDiv" ng-if="standType==0" style="display: inline-block">
@@ -281,7 +281,7 @@
                 </li>
                 <li>
                     <label>冷库认证</label>
-                    <label ng-if="auditType==-1" class="orange">未通过</label>
+                    <label ng-if="auditType==-1" style="font-size: .6rem;" class="orange">未通过。如有疑问，请拨打400-8535606</label>
                     <label ng-if="auditType==1" class="orange">已通过</label>
                     <label ng-if="auditType==2" class="orange">审核中</label>
                     <label class="pic" ng-if="auditType==0">
@@ -293,7 +293,7 @@
 							<i ng-click="dropAuditPic(audit)">×</i>
 						</span>
                     </output>
-                    <label style="font-size: .5rem;line-height: 1.7;">
+                    <label style="font-size: .5rem;line-height: 1.7;" ng-if="auditType==0">
                         <small class="text-warning">请上传企业营业执照,冷库认证通过之后，将显示绿色盾牌标识，提高信任度和搜索排名</small>
                     </label>
                 </li>

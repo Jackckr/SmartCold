@@ -166,12 +166,12 @@
 <section class="more" ng-if="rdctotal">
     <ul class="listDad clearfix">
         <li class="fl">仓位&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
-        <li class="fr"><a href="storehouse.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
+        <li class="fr"><a href="rentstorage.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
             <li class="imgCell" ng-repeat="rdc in rdcList">
-                <a href="storehousedetail.html?id={{rdc.id}}">
+                <a href="rentstorage.html?id={{rdc.id}}">
                     <img class="fl" ng-src="{{rdc.logo}}">
                     <div>
                         <p class='ellipsis'>【{{rdc.typeText}}】 {{rdc.title}} </p>
@@ -194,7 +194,7 @@
 <section class="more" ng-if="gdtotal">
     <ul class="listDad clearfix">
         <li class="fl">货品&nbsp;(<span id="num">{{gdtotal}}</span>)</li>
-        <li class="fr"><a href="goodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
+        <li class="fr"><a href="salegoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
