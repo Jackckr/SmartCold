@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.smartcold.zigbee.manage.dao.*;
+import com.smartcold.zigbee.manage.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -27,16 +28,6 @@ import com.smartcold.zigbee.manage.dto.RdcAddressDTO;
 import com.smartcold.zigbee.manage.dto.RdcDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.RdcScoreDTO;
-import com.smartcold.zigbee.manage.entity.CityListEntity;
-import com.smartcold.zigbee.manage.entity.CommentEntity;
-import com.smartcold.zigbee.manage.entity.FileDataEntity;
-import com.smartcold.zigbee.manage.entity.MessageEntity;
-import com.smartcold.zigbee.manage.entity.RdcEntity;
-import com.smartcold.zigbee.manage.entity.RdcExtEntity;
-import com.smartcold.zigbee.manage.entity.StorageHonorEntity;
-import com.smartcold.zigbee.manage.entity.StorageManageTypeEntity;
-import com.smartcold.zigbee.manage.entity.StorageTemperTypeEntity;
-import com.smartcold.zigbee.manage.entity.StorageTypeEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.util.BaiduMapUtil;
@@ -85,6 +76,9 @@ public class RdcServiceImpl implements RdcService {
 
     @Autowired
     private RdcShareMapper rdcShareMapper;
+
+    @Autowired
+    private RdcauthMapping rdcauthMapping;
 
     @Override
     public List<RdcEntity> findRdcList() {
@@ -156,9 +150,19 @@ public class RdcServiceImpl implements RdcService {
         List<RdcEntity> rdcByRDCId = rdcDao.findRDCByRDCId(rdcID);
         List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcID);
         Double unitPrice = rdcShareMapper.getUnitPriceByRdcId(rdcID);
+        List<RdcAuthEntity> rdcAuthList = rdcauthMapping.selAuditRdcId(rdcID);
+        List<RdcAuthEntity> rdcStandList = rdcauthMapping.selStandRdcId(rdcID);
         List<RdcAddDTO> result = Lists.newArrayList();
         RdcAddDTO rdcAddDTO = new RdcAddDTO();
         rdcAddDTO.setUnitPrice(unitPrice);
+        if(rdcAuthList!=null && rdcAuthList.size()!=0 && rdcAuthList.get(0).getState()!=0){
+            rdcAddDTO.setAuditType(2);
+            if(rdcAuthList.get(0).getState()==1){rdcAddDTO.setAuditType(1);}else if(rdcAuthList.get(0).getState()==-1){rdcAddDTO.setAuditType(-1);}
+        }
+        if(rdcStandList!=null && rdcStandList.size()!=0 &&rdcStandList.get(0).getState()!=0){
+            rdcAddDTO.setStandType(2);
+            if(rdcStandList.get(0).getState()==1){rdcAddDTO.setStandType(1);}else if(rdcStandList.get(0).getState()==-1){rdcAddDTO.setStandType(-1);}
+        }
         if (!CollectionUtils.isEmpty(rdcByRDCId) && rdcByRDCId.size() > 0) {
             RdcEntity rdcEntity = rdcByRDCId.get(0);
             rdcAddDTO.setAddress(rdcEntity.getAddress());

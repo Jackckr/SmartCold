@@ -17,6 +17,10 @@ public interface RdcauthMapping {
 
     /*通过userId和rdcid查询认证*/
     List<RdcAuthEntity> selByUidRdcId(@Param("uid") Integer uid, @Param("rdcId") Integer rdcId);
-
+    /*通过用户id查询改用申请的认证*/
     List<RdcAuthEntity> selByAuditUid(int userId);
+    /*通过冷库id查询该冷库申请的认证*/
+    List<RdcAuthEntity> selAuditRdcId(int rdcId);
+    /*通过冷库id查询该冷库申请的达标认证*/
+    List<RdcAuthEntity> selStandRdcId(int rdcId);
 }
