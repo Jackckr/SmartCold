@@ -85,6 +85,11 @@ angular.module('app', ['ngFileUpload']).controller('approve', function ($scope, 
             companyName:company,
             authfile:null
         };
+        layer.open({
+            type: 2
+            ,content: '努力加载中~~~'
+            ,shadeClose:false
+        });
         simdata["authfile"] = $scope.totalfiles[0];
         Upload.upload({
             url: ER.root + "/i/user/attestationUser",
