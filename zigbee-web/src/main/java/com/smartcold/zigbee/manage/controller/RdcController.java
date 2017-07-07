@@ -445,6 +445,7 @@ public class RdcController {
 		if (!StringUtils.isEmpty(empStr)) {
 			rdcAddDTO= JSONObject.parseObject(empStr, RdcAddDTO.class);
 		}
+		userEntity=userMapper.findUserById(rdcAddDTO.getUserId());
 		if (!StringUtils.isEmpty(userStr)) {
 			userEntity= JSONObject.parseObject(userStr, UserEntity.class);
 		}
