@@ -155,11 +155,11 @@ public class RdcServiceImpl implements RdcService {
         List<RdcAddDTO> result = Lists.newArrayList();
         RdcAddDTO rdcAddDTO = new RdcAddDTO();
         rdcAddDTO.setUnitPrice(unitPrice);
-        if(rdcAuthList!=null && rdcAuthList.size()!=0 && rdcAuthList.get(0).getState()!=0){
+        if(rdcAuthList!=null && rdcAuthList.size()!=0){
             rdcAddDTO.setAuditType(2);
             if(rdcAuthList.get(0).getState()==1){rdcAddDTO.setAuditType(1);}else if(rdcAuthList.get(0).getState()==-1){rdcAddDTO.setAuditType(-1);}
         }
-        if(rdcStandList!=null && rdcStandList.size()!=0 &&rdcStandList.get(0).getState()!=0){
+        if(rdcStandList!=null && rdcStandList.size()!=0){
             rdcAddDTO.setStandType(2);
             if(rdcStandList.get(0).getState()==1){rdcAddDTO.setStandType(1);}else if(rdcStandList.get(0).getState()==-1){rdcAddDTO.setStandType(-1);}
         }

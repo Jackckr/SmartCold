@@ -119,15 +119,18 @@
                         </div>
                     </div>
                 </li>
-                <li class="rdcImg" ng-show="tempStandLi">
+                <li class="rdcImg">
                     <label>冷链委温度达标库<em>*</em></label>
-                    <div id="tempStandDiv">
-                        <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="isJoinStand">是</label>
-                        <label><input ng-value="2" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="isJoinStand">愿意申报</label>
-                        <label><input ng-value="3" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="isJoinStand">否</label>
+                    <label ng-if="standType==-1" class="orange">未通过</label>
+                    <label ng-if="standType==1" class="orange">已通过</label>
+                    <label ng-if="standType==2" class="orange">审核中</label>
+                    <div id="tempStandDiv" ng-if="standType==0" style="display: inline-block">
+                        <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="$parent.isJoinStand">是</label>
+                        <label><input ng-value="2" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="$parent.isJoinStand">愿意申报</label>
+                        <label><input ng-value="3" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="$parent.isJoinStand">否</label>
                     </div>
-                    <ul id="tempStandUl">
-                        <li class="black">
+                    <ul id="tempStandUl" ng-if="standType==0">
+                        <li ng-if="isJoinStand==1">
                             <label class="pic">
                                 <input type="file" ngf-select="addTempStandPic($files)" ng-model="tempStandfile" ngf-multiple="false"
                                        name="tempStandfile">
@@ -142,15 +145,15 @@
                                 <small class="text-warning">请上传温度达标冷库认证铜牌或证书，小于10M</small>
                             </label>
                         </li>
-                        <li class="black">
+                        <li ng-if="isJoinStand==2">
                             <span>请拨打010-88120448 或者400-1234567 申报</span>
                         </li>
                     </ul>
-                    <div>
-                        <span>是否愿意公开冷库温度曲线</span>
-                        <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
-                        <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
-                    </div>
+                </li>
+                <li>
+                    <label>是否愿意公开冷库温度曲线<em>*</em></label>
+                    <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
+                    <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
                 </li>
                 <li>
                     <label for="phone">联系电话<em>*</em></label>
@@ -276,9 +279,12 @@
                             </div>
                     </div>
                 </li>
-                <li ng-show="auditLi">
+                <li>
                     <label>冷库认证</label>
-                    <label class="pic">
+                    <label ng-if="auditType==-1" class="orange">未通过</label>
+                    <label ng-if="auditType==1" class="orange">已通过</label>
+                    <label ng-if="auditType==2" class="orange">审核中</label>
+                    <label class="pic" ng-if="auditType==0">
                         <input type="file" ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false" name="auditfile">
                     </label>
                     <output class="img_list">
@@ -451,9 +457,11 @@ $(function () {
 	        $scope.isJoinStand=data[0].isJoinStand;
 	        $scope.rentSqm=data[0].rentSqm;
 	        $scope.height=data[0].height;
+	        $scope.auditType=data[0].auditType;
+	        $scope.standType=data[0].standType;
 	        if($scope.lihuoRoom==1){$scope.islihuoRoom=true;}
-            if(data[0].istemperaturestandard==1){$scope.tempStandLi=false;}else {$scope.tempStandLi=true;}
-            if(data[0].audit==2){$scope.auditLi=false;}else{$scope.auditLi=true;}
+           /* if(data[0].istemperaturestandard==1){$scope.tempStandLi=false;}else {$scope.tempStandLi=true;}
+            if(data[0].audit==2){$scope.auditLi=false;}else{$scope.auditLi=true;}*/
 	        if($scope.remark=="undefined")
 	        $scope.remark = "";
 	        if($scope.facility=="undefined")
@@ -673,7 +681,7 @@ $(function () {
 				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
 				return false
 			}
-            if($scope.isJoinStand==1&&$scope.tempStandPic.length<1){
+            if($scope.isJoinStand==1&&$scope.tempStandPic.length<1&&$scope.standType==0){
                 layer.open({content:'请上传冷库温度达标认证图！',btn: '确定'});
                 return false;
             }

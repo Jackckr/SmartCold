@@ -33,11 +33,11 @@ $().ready(function () {
             $('.listcontain').hide();
             $(this).hide();
         });
-        $("#searchDara_div i").click(function (e) {//搜索
+        /*$("#searchDara_div i").click(function (e) {//搜索
             currentPage = 1;
             ul_select.empty();
             getPageData();
-        });
+        });*/
         $(window).scroll(function () {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
@@ -176,7 +176,11 @@ $().ready(function () {
             em.children('em').html('收藏');
         }
     };
-    function getPageData() {//启用无限加载
+    function getPageData(search) {//启用无限加载
+        if(search==1){
+            currentPage = 1;
+            ul_select.empty();
+        }
         isLoadRB = true;
         var _filter = getFilter(currentPage, maxSize);
         $.post(ER.root + "/i/ShareRdcController/newGetSERDCList", _filter, function (data) {
@@ -211,11 +215,11 @@ $().ready(function () {
         initevg();
 
     };
-    searchFilter = function () {//搜索
+    searchFilter = function (search) {//搜索
         if ($("#searchDara_div input").val().trim() != "") {
             currentPage = 1;
             ul_select.empty();
-            getPageData();
+            getPageData(search);
         }
     };
     searchFilters = function () {//搜索

@@ -1155,3 +1155,6 @@ html,body{
 .oCollect+.commentList{
 	border-top: .5rem solid #f6f5fa;
 }
+.zoom>a{
+	font-size: .75rem;
+}
