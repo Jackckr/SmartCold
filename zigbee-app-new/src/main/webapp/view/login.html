@@ -104,7 +104,7 @@
                                 util.setCookie("username", userName, "d7");
                                 window.localStorage.lkuser = JSON.stringify(userdata);
                                 window.localStorage.logtime = new Date().getTime();
-// 						window.sessionStorage.lkuser=window.localStorage.lkuser; 
+                                $.get(ER.root + "/i/user/isSubmitAuditUser", {userId: userdata.id},function (data) {checkState = data.status;});
                                 util.setCookie("token", token, "d7");
                                 if (window.location.hash != "") {
                                     backUrl = window.location.hash.substring(1);
