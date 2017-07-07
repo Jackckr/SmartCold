@@ -107,10 +107,10 @@ public class UserController extends BaseController {
 	}
 
 
-	@RequestMapping(value = "/isSubmitAuditUser",method = RequestMethod.POST)
+	@RequestMapping(value = "/isSubmitAuditUser")
 	@ResponseBody
-	public ResultDto isSubmitAuditUser(Integer id){
-		List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByAuditUid(id);
+	public ResultDto isSubmitAuditUser(Integer userId){
+		List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByAuditUid(userId);
 		int result=0;
 		if(rdcAuthEntities!=null&&rdcAuthEntities.size()!=0){
 			result=2;

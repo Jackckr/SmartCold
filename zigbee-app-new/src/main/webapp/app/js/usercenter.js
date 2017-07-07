@@ -7,7 +7,7 @@ app.controller('usercl', function($http, $location,$scope) {
 	 $scope.initdata=function(){
 		 if(window.user!=null){ 
 		     $scope.userinfo=window.user;
-             $http.post(ER.root+"/i/user/isSubmitAuditUser", {id:window.user.id}).then(function (data) {
+             $http.get(ER.root+"/i/user/isSubmitAuditUser", {params:{userId:window.user.id}}).success(function (data) {
                  $scope.checkState=data;
              });
 		     return;
