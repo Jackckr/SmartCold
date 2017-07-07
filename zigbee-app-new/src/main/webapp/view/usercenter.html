@@ -27,11 +27,11 @@
 				<img id="user_img" ng-src="{{userinfo.avatar}}">
 				<input id="headImg" type="file" name=""  value="" />
 			</div>
-			<p class="userName">{{(userinfo.username=="" || userinfo.username == undefined)?userinfo.nickname:userinfo.username}}</p>
-			<p class="goApprove" ng-if="user.vipType==0"><a href="approve.html"><i class="iconfont">&#xe61c;</i>去认证</a></p>
-			<div  ng-if="user.vipType!=0">
-				<p class="goApprove"><a href="javascript:;"><i class="iconfont">&#xe61c;</i>已认证</a></p>
-			</div>
+			<p class="userName" ng-bind="usernameObj"></p>
+			<p class="goApprove" ng-if="user.vipType==0&&checkState==0"><a href="approve.html"><i class="iconfont">&#xe61c;</i>去认证</a></p>
+			<p class="goApprove" ng-if="user.vipType==0&&checkState==2"><a href="javascript:;"><i class="iconfont">&#xe61c;</i>审核中</a></p>
+			<p class="goApprove" ng-if="user.vipType==0&&checkState==-1"><a href="approve.html"><i class="iconfont">&#xe61c;</i>未通过</a></p>
+			<p class="goApprove" ng-if="user.vipType!=0&&checkState==1"><a href="javascript:;"><i class="iconfont">&#xe61c;</i>已认证</a></p>
 		</div>
 		<div class="topImg" ng-hide="userinfo.id">
 			<div class="userPic">

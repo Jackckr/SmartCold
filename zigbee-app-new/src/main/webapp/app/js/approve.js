@@ -114,7 +114,6 @@ angular.module('app', ['ngFileUpload']).controller('approve', function ($scope, 
                     , btn: '确定'
                     , shadeClose: false
                     , yes: function (data) {
-                        checktoken(null,true);
                         window.location.href = "usercenter.html";
                     }
                 });

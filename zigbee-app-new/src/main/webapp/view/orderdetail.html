@@ -8,6 +8,7 @@
 	<title>我的联络单</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/reset.css">
 	<link rel="stylesheet" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/admin.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
@@ -80,11 +81,11 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 	<body  ng-app="app"  ng-controller="orderdetail" ng-cloak on-finish-render-filters>
 	    <header>
 	    	<div class="area fl">
-	    		<a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+	    		<a onclick="goback()"><i class="iconfont">&#xe602;</i></a>
 	    	</div>
 	    	<div class="txt">我的联络单</div>
 	    </header>
-	    <section id="sec_content" class="content "><!--  -->
+	    <section id="sec_content" class="content " style="margin: 0;"><!--  -->
 	    	<p class="order">
 		   		<span class="num">联络单号：{{orders.orderid}}</span>
 		    </p>
@@ -140,31 +141,31 @@ app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 
 			</ul>
 			<button id="app_order" class="mybtn" ng-click="getTeleNum();"  >获取联系方式</button>
 	    </section>
-	    <ul class="footer">
-        <li>           
-            <a href="../index.html">
-                <i class="iconfont">&#xe65a;</i>
-                <p class="info">首页</p>
-            </a>
-        </li>
-        <li>         
-            <a href="news.html">
-                <i class="iconfont">&#xe6f8;</i>
-                <p class="info">资讯</p>
-            </a>
-        </li>
-        <li id="msgTotalNumReset">            
-            <a href="messages.html">
-                <i class="iconfont">&#xe71c;</i>
-                <p class="info">消息</p>
-            </a>
-        </li>
-        <li class="active">            
-            <a href="user.html">
-                <i class="iconfont">&#xe6fd;</i>
-                <p class="info">我的</p>
-            </a>
-        </li>
-    </ul>
+		<footer class="flex black">
+			<div class="item">
+				<a href="../index.html">
+					<i class="iconfont">&#xe601;</i>
+					<p>首页</p>
+				</a>
+			</div>
+			<div class="item">
+				<a href="release.html">
+					<i class="iconfont">&#xe614;</i>
+					<p>发布</p>
+				</a>
+			</div>
+			<div class="item active" id="msgTotalNumReset">
+				<a href="messages.html">
+					<i class="iconfont">&#xe6ea;</i>
+					<p>消息</p>
+				</a>
+			</div>
+			<div class="item ">
+				<a href="usercenter.html">
+					<i class="iconfont">&#xe600;</i>
+					<p>我的</p>
+				</a>
+			</div>
+		</footer>
 	</body>
 </html>

@@ -21,7 +21,7 @@ $().ready(function () {
             case 1:
                 obj=item.rdcShareDTO;
                 if(!obj){
-                    return ["<li class='clearfix' >该内容已被删除！<button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></li>" ].join("");
+                    return ["<li class='clearfix'><div class='clearfix'><p class='company'>该内容已被删除!</p><p class='btnGroup'><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
                 }
                 return [
                 "<li class='clearfix' ><div class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
@@ -31,7 +31,7 @@ $().ready(function () {
             case 2:
                 obj=item.rdcEntity;
                 if(!obj){
-                    return ["<li class='clearfix' >该内容已被删除！<button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></li>" ].join("");
+                    return ["<li class='clearfix'><div class='clearfix'><p class='company'>该内容已被删除!</p><p class='btnGroup'><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
                 }
                 return [
                     "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='"+obj.logo+"'/></div><p class='company'>", obj.name,
