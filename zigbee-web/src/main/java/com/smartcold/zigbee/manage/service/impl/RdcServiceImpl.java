@@ -174,7 +174,7 @@ public class RdcServiceImpl implements RdcService {
         List<RdcAuthEntity> rdcStandList = rdcauthMapping.selStandRdcId(rdcID);
         if (rdcStandList != null && rdcStandList.size() != 0) {
             rdcAddDTO.setStandType(2);
-            if (rdcStandList.get(0).getState() == 1) {
+            if (rdcStandList.get(0).getState() == 1 || rdcEntity.getIstemperaturestandard()==1) {
                 rdcAddDTO.setStandType(1);
             } else if (rdcStandList.get(0).getState() == -1) {
                 rdcAddDTO.setStandType(-1);
