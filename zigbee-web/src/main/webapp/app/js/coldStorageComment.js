@@ -131,25 +131,31 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 }
             }*/
             $scope.platform = data[0].platform;
-            if ($scope.platform === 0){
+            if ($scope.platform === 2){
                 $scope.platform = "无";
-            } else {
+            }else if($scope.platform === 0){
+                $scope.platform = "";
+            }else {
                 $scope.platform = "有";
             }
             $scope.lihuoRoom = data[0].lihuoRoom;
-            if ($scope.lihuoRoom === 0) {
+            if ($scope.lihuoRoom === 2) {
                 $scope.lihuoRoom = "无";
                 $scope.hasLihuoRoom = true;
-            } else {
+            }else if($scope.lihuoRoom === 0){
+                $scope.lihuoRoom = "";
+            }else {
                 $scope.lihuoRoom = "有";
                 $scope.hasLihuoRoom = false;
             }
 
             $scope.lihuoArea = data[0].lihuoArea;
             $scope.lihuoTemperCtr = data[0].lihuoTemperCtr;
-            if ($scope.lihuoTemperCtr === 0){
+            if ($scope.lihuoTemperCtr === 2){
                 $scope.lihuoTemperCtr = "无";
-            } else {
+            }else if($scope.lihuoTemperCtr === 0){
+                $scope.lihuoTemperCtr = "";
+            }else {
                 $scope.lihuoTemperCtr = "有";
             }
             $scope.storageRefreg = data[0].storageRefreg;
@@ -160,9 +166,11 @@ coldWeb.controller('coldStorageComment', function ($rootScope, $scope, $cookies,
                 }
             }
             $scope.temperRecord = data[0].temperRecord;
-            if ($scope.temperRecord === 0){
+            if ($scope.temperRecord === 2){
                 $scope.temperRecord = "无";
-            } else {
+            }else if($scope.temperRecord === 0){
+                $scope.temperRecord = "";
+            }else {
                 $scope.temperRecord = "有";
             }
             $scope.capacity1 = data[0].capacity1;
