@@ -57,6 +57,8 @@ public class RdcEntity {
 	private float height;
 
 	private float rentSqm;
+
+	private int infoIntegrity;
 	
 	public String getUsername() {
 		return username;
@@ -272,5 +274,13 @@ public class RdcEntity {
 
 	public void setRentSqm(float rentSqm) {
 		this.rentSqm = rentSqm;
+	}
+
+	public int getInfoIntegrity() {
+		return infoIntegrity;
+	}
+
+	public void setInfoIntegrity(int infoIntegrity) {
+		this.infoIntegrity = infoIntegrity;
 	}
 }

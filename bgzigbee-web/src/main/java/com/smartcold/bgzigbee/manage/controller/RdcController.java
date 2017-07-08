@@ -316,6 +316,8 @@ public class RdcController {
 		MultipartFile[] honorfiles = { honor7, honor6, honor5, honor4, honor3, honor2, honor1, honor0 };
 		MultipartFile arrangePic = arrangePics;
 		RdcEntity rdcEntity = new RdcEntity();
+		int rdcInfoIntegrity = getRdcInfoIntegrity(rdcAddDTO);
+		rdcEntity.setInfoIntegrity(rdcInfoIntegrity);
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		if (!rdcService.isNameUnique(rdcEntity.getName())) {
 			return null;
@@ -448,7 +450,8 @@ public class RdcController {
 
 		int rdcId = rdcAddDTO.getRdcId();
 		RdcEntity rdcEntity = rdcDao.findRDCByRDCId(rdcId).get(0);
-
+		int rdcInfoIntegrity = getRdcInfoIntegrity(rdcAddDTO);
+		rdcEntity.setInfoIntegrity(rdcInfoIntegrity);
 		rdcEntity.setName(URLDecoder.decode(rdcAddDTO.getName(), "UTF-8"));
 		rdcEntity.setAddress(URLDecoder.decode(rdcAddDTO.getAddress(), "UTF-8"));
 		rdcEntity.setSqm(rdcAddDTO.getArea());
@@ -898,6 +901,35 @@ public class RdcController {
 	@ResponseBody
 	public List<HashMap<String, Object>> getRdcTree(String keyword){
 		return this.rdcDao.getRdcByName(keyword);
+	}
+
+
+	private int getRdcInfoIntegrity(RdcAddDTO rdcAddDTO){
+		int infoIntegrity=54;
+		if (rdcAddDTO.getColdTruck1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getColdTruck4()!=0){infoIntegrity+=2;}
+		if (!StringUtil.isNull(rdcAddDTO.getRemark())){infoIntegrity+=2;}
+		if (rdcAddDTO.getStructure()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getPlatform()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoRoom()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoArea()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getLihuoTemperCtr()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getStorageRefreg()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getTemperRecord()!=0){infoIntegrity+=2;}
+		if (!StringUtil.isNull(rdcAddDTO.getFacility())){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity4()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getCapacity5()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight1()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight2()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight3()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight4()!=0){infoIntegrity+=2;}
+		if (rdcAddDTO.getHeight5()!=0){infoIntegrity+=2;}
+		return infoIntegrity;
 	}
 	
 }

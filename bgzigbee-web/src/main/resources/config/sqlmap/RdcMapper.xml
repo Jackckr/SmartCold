@@ -72,7 +72,8 @@
         `commit`,
         `powerConsume`,
         `heigth`,
-        `rentSqm`
+        `rentSqm`,
+        `infoIntegrity`
         )
         VALUES
         (
@@ -94,7 +95,8 @@
         #{commit},
         #{powerConsume},
         #{height},
-        #{rentSqm}
+        #{rentSqm},
+        #{infoIntegrity}
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.bgzigbee.manage.entity.RdcEntity" >
@@ -162,6 +164,9 @@
 			</if>
 			<if test="rentSqm != null" >
 				rentSqm = #{rentSqm,jdbcType=REAL},
+			</if>
+			<if test="infoIntegrity != null">
+				infoIntegrity = #{infoIntegrity,jdbcType=INTEGER},
 			</if>
         </set>
         where id = #{id,jdbcType=INTEGER}
