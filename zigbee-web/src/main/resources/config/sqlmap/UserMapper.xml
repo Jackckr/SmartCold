@@ -39,6 +39,7 @@
 	         <if test="telephone  !=null and telephone!=''">telephone  =#{telephone },</if>
 	         <if test="realname   !=null and realname !=''"> realname  =#{realname  },</if>
 	         <if test="nickname   !=null and nickname !=''"> nickname  =#{nickname  },</if> 
+	         <if test="vipType   !=null and vipType !=''"> vipType  =#{vipType  },</if>
 	         <if test="idCard   !=null and idCard !=''"> idCard  =#{idCard },</if>
 	         <if test="email      !=null and email    !=''">   email   =#{email     },</if>
 <!-- 	         realname  =#{realname  }, nickname  =#{nickname  }, email   =#{email     }, -->

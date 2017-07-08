@@ -139,6 +139,7 @@ public class UserController extends BaseController {
 			UserEntity userEntity = new UserEntity();
 			userEntity.setId(userId);
 			userEntity.setVipType(2);
+			userEntity.setAvatar(null);
 			userDao.updateUser(userEntity);
 		}
 		return new ResultDto(result,msg);
