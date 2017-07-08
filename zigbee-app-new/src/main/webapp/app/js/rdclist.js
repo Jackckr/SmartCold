@@ -100,7 +100,7 @@ $().ready(function() {
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   			var adds=$("#ul_address_list li.active").attr("value");////地区
   			var keyword=$("#searchDara_div input").val().trim();////关键字搜索
-  		    var _options={ sqm:sqm, storagetempertype: smty,managementType:sety,provinceid:adds,keyword:keyword};
+  		    var _options={ sqm:sqm, storagetempertype: smty,managetype:sety,provinceid:adds,keyword:keyword};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	 };
