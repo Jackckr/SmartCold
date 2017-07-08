@@ -94,7 +94,7 @@ function formatDate(date,format){
   return format.replace(/([a-z])(\1)*/ig,function(m){return cfg[m];});
 }
 function getFont(){ screenWidth = oHtml.clientWidth;screenHeight = oHtml.clientHeight;if(screenWidth>screenHeight){screenWidth=screenHeight;}if(screenWidth>=1024){oHtml.style.fontSize="54.61333333333333px";}else{if(screenWidth<=320){oHtml.style.fontSize="17.06666666666667px";}else{oHtml.style.fontSize=screenWidth/(750/40)+"px";}}};
-function checktoken(toke,isupdate) {
+function checktoken(toke,isupdate,callback) {
     if (toke == undefined) {
         toke = localStorage.token;
     }
@@ -115,6 +115,9 @@ function checktoken(toke,isupdate) {
                 window.user = null;
                 window.localStorage.removeItem("lkuser");
             }
+            if(callback){
+            	callback();
+			}
         }
     });
 }
