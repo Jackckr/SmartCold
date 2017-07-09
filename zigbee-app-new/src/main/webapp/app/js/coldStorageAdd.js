@@ -238,6 +238,10 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         }
     }
     $scope.submit = function(){
+        if($scope.rdcForm.name.$error.ngRemoteValidate){
+            layer.open({content:'该冷库名已被占用，请重新输入~',btn: '确定'});
+            return false
+        }
     	if(checkMobile($scope.phoneNum.toString().trim()) == false){
 			layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
 			return false

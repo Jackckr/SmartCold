@@ -20,7 +20,7 @@
     <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
     <script type="text/javascript" src="../com/js/prettify.js" ></script>
 </head>
-<body ng-app="app" ng-cloak>
+<body ng-app="app"  ng-controller="coldStorageEdit" ng-cloak>
     <!-- header -->
         <header>
 
@@ -32,14 +32,15 @@
     <!-- header end-->
     <section class="releaseCold">
         <div class="releaseImg"></div>
-        <form ng-controller="coldStorageEdit" name="rdcForm">
+        <form name="rdcForm">
             <ul class="houseinfo">
-                <li>
+                <li style="position: relative;">
                     <label for="name">名称<em>*</em></label>
                     <input type="text" ng-model="name" name="name"
                                    ng-remote-validate="http://liankur.com/i/rdc/checkName"
                                    ng-remote-method="GET">
-                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;display: none;">冷库名已被用</em>
+                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;position: absolute;top: 0;right: 0;"
+                                ng-bind="againTxt='冷库名已被用'"></em>
                 </li>
                 <li>
                     <label for="province">省<em>*</em></label>
@@ -677,6 +678,10 @@ $(function () {
     };
 
     $scope.submit = function(){
+    if($scope.rdcForm.name.$error.ngRemoteValidate){
+        layer.open({content:'该冷库名已被占用，请重新输入~',btn: '确定'});
+        return false
+    }
     if(checkCommit()){
         if (checkInput()){
         	if(checkMobile($scope.phoneNum.toString().trim()) == false){
