@@ -65,24 +65,14 @@
 </div>
 <div class="rdcpadding rdcDetailMainInfo" ng-if="user&&user.vipType!=0">
     <div class="flex">
-        <div class="item">
-            <span>总面积</span>
-            {{vo.area}}㎡
-        </div>
-        <div class="item">
-            <span>空置面积</span>
-            {{vo.rentSqm}}㎡
-        </div>
+        <div class="item"><span>总面积</span>{{vo.area}}㎡</div>
+        <div class="item"><span>空置面积</span>{{vo.rentSqm}}㎡</div>
     </div>
     <div class="flex">
-        <div class="item" ng-if="vo.unitPrice">
-            <span>价格</span>
-            {{vo.unitPrice}}元/㎡/天
-        </div>
-        <div class="item">
-            <span>信息完整度</span>
-            {{vo.infoIntegrity}}%
-        </div>
+        <div class="item" ng-if="vo.unitPrice"><span>价格</span>{{vo.unitPrice}}元/㎡/天</div>
+    </div>
+    <div class="flex">
+        <div class="item"><span>信息完整度</span>{{vo.infoIntegrity}}%</div>
     </div>
 </div>
 <div class="rdcpadding" ng-if="user">
