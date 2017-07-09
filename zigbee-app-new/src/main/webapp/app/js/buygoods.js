@@ -114,7 +114,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 unit:"元/吨"
             };
             var sdata  = JSON.stringify(simdata);
-            var data = {data:sdata, "files":null};
+            var data = {data:sdata, "files":$scope.totalfiles};
             Upload.upload({
                 url: ER.root+"/i/ShareRdcController/shareFreeRelease",
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },
