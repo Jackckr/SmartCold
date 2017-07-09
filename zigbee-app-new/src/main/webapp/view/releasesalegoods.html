@@ -26,6 +26,7 @@
 <body ng-app="app" ng-controller="ctrl">
   <script>
         $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:8}});
+        localStorage.oURL=document.URL;
     	$(function() {
 			/*$('.toggle').children('div').click(function(){
 				$(this).addClass('current').siblings().removeClass('current');

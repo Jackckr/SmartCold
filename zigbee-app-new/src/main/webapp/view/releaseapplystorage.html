@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script>
         $.ajax({url: ER.root + "/i/UtilController/setVisited", type: "POST", data: {type: 7}});
+        localStorage.oURL=document.URL;
         $(function () {
             /*date*/
             $('#sttime').date();

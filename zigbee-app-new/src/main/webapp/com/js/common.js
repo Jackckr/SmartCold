@@ -1,5 +1,6 @@
 "use strict";
 var oHtml = document.documentElement;
+
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
@@ -19,6 +20,7 @@ if(window.user==undefined ||window.user==null){
 	 window.user=null;
 	}
 }
+
 function backDropTop(ops){$('.topFirst').hide();}
 function tourl(url){window.location.href =url;}//去指定的url
 function gohome(){window.location.href ="../index.html";};//去首页

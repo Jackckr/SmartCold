@@ -24,7 +24,7 @@
 <body>
 <header>
     <div class="area fl">
-        <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
+        <a href="../index.html" onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
     </div>
 </header>
 <div class="loginBg">
@@ -120,10 +120,10 @@
                                 if (window.location.hash != "") {
                                     backUrl = window.location.hash.substring(1);
                                 } else {
-                                    if(localStorage.oURL){
+                                    console.log(localStorage.oURL!=''||localStorage.oURL!=undefined||localStorage.oURL!=null)
+                                    console.log(localStorage.oURL);
+                                    if(localStorage.oURL!=''||localStorage.oURL!=undefined||localStorage.oURL!=null){
                                         backUrl=localStorage.oURL;
-                                    }if(localStorage.usercenter){
-                                        backUrl='usercenter.html';
                                     }else{
                                         backUrl = "../index.html";
                                     };

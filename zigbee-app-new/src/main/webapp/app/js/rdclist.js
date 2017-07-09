@@ -2,7 +2,7 @@
  * 冷库列表
  */
 $().ready(function() { 
-	  var maxSize=10;
+	  var maxSize=10; localStorage.isStand=0;
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
