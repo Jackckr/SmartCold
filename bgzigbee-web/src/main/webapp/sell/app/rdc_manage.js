@@ -284,6 +284,10 @@ function coldValidation(vo) {
     	alert_errmsg("冷藏车数量输入有误！");
         return false;
     }
+    if(vo.lihuoRoom==1&&vo.lihuoArea.trim()==""){
+        alert_errmsg("请输入理货区面积！");
+        return false;
+    }
     if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
     	alert_errmsg("理货区面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
@@ -292,8 +296,9 @@ function coldValidation(vo) {
         alert_errmsg("可出租面积不能大于总面积！");
         return false;
     }
-    var phoneNumRex = /^1[34578]\d{9}$/;
-    if (!phoneNumRex.test(vo.phoneNum)) {
+    var phoneNumRex =  /^1[34578]\d{9}$/;
+    var cellPhoneRex=/^0{1}\d{2,3}-{1}\d{7,8}$/;
+    if (!phoneNumRex.test(vo.phoneNum)&&!cellPhoneRex.test(vo.phoneNum)) {
     	alert_errmsg("联系电话输入有误！");
         return false;
     }
