@@ -144,14 +144,16 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			    });
 	            $scope.isDisabled = true;
 	            var data = {
-	                authfile0: null,
+                    authfile: null,
 	                rdcId: rdcid,
-	                uid:window.user.id
+	                userId:window.user.id,
+					userName:window.user.username,
+					type:window.user.type
 	            }
-	            data["authfile" + 0] = $scope.totalauthfiles[0];
+	            data["authfile"] = $scope.totalauthfiles[0];
 
 	            Upload.upload({
-	                url:  ER.root+'/i/rdc/authRdc',
+	                url:  ER.root+'/i/rdc/attestationRdc',
 	                headers: {'Content-Transfer-Encoding': 'utf-8'},
 	                data: data
 	            }).then(function (resp) {

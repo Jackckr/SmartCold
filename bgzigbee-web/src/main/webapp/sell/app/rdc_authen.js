@@ -46,7 +46,7 @@ function user_upaudit(){
     				$.post('../../i/authen/authRdc', {'rdcId': obj.rdcId, 'authUserId': obj.authUserId});//修改
     			}
     		}
-			if(obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note){
+			if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
 			    $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
 			    reloaddata();
 			}
@@ -64,7 +64,7 @@ function userAudit() {
                 $.post('../../i/user/auditVipUser', {'userId': obj.authUserId,'vipType':vipType});//修改
             }
         }
-        if(obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note){
+        if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
             $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
             reloaddata();
         }
@@ -82,7 +82,7 @@ function rdcStandAudit() {
                 $.post('../../i/rdc/changeStand', {'rdcID': obj.rdcId,'stand':standType});//修改
             }
         }
-        if(obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note){
+        if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
             $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
             reloaddata();
         }

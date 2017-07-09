@@ -115,13 +115,22 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public ResultDto isSubmitAuditUser(Integer userId){
 		List<RdcAuthEntity> rdcAuthEntities = rdcauthMapping.selByAuditUid(userId);
+		UserEntity user= userDao.findUserById(userId);
+		String msg="";
 		int result=0;
 		if(rdcAuthEntities!=null&&rdcAuthEntities.size()!=0){
 			result=2;
 			if(rdcAuthEntities.get(0).getState()==-1){
 				result=-1;
+				msg=rdcAuthEntities.get(0).getNote();
 			}else if (rdcAuthEntities.get(0).getState()==1){
 				result=1;
+			}
+		}else {
+			if (user.getVipType()>0){
+				result=1;
+			}else {
+				result=0;
 			}
 		}
 		List<HashMap<String, Object>> hashMaps = roleUserMapper.selByUserId(userId);
@@ -130,9 +139,10 @@ public class UserController extends BaseController {
 			UserEntity userEntity = new UserEntity();
 			userEntity.setId(userId);
 			userEntity.setVipType(2);
+			userEntity.setAvatar(null);
 			userDao.updateUser(userEntity);
 		}
-		return new ResultDto(result,"");
+		return new ResultDto(result,msg);
 	}
 
 

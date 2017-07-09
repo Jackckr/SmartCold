@@ -11,7 +11,12 @@ app.controller('usercl', function ($http, $location, $scope) {
             $scope.usernameObj=($scope.userinfo.username=='' || $scope.userinfo.username == undefined)?$scope.userinfo.nickname:$scope.userinfo.username;
             $http.get(ER.root + "/i/user/isSubmitAuditUser", {params: {userId: window.user.id}}).success(function (data) {
                 //返回值 // -1：未通过   // 0：未审核过   // 1：已通过   // 2：审核中
-                $scope.checkState = data.status;
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.user = window.user;
+                        $scope.checkState = data.status;
+                    });
+                }, 200);
             });
             return;
         };

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -219,8 +220,9 @@ public class RdcController {
 
 	@RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findRDCDTOByRDCId(@RequestParam int rdcID) {
-		return rdcService.findRDCDTOByRDCId(rdcID);
+	public Object findRDCDTOByRDCId(@RequestParam int rdcID, HttpSession session) {
+		UserEntity user =(UserEntity)session.getAttribute("user");
+		return rdcService.findRDCDTOByRDCId(rdcID,user);
 	}
 
 	@RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)

@@ -189,10 +189,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
             var simdata = {
                 title: $scope.title,
                 uid: window.user.id,
-                provinceid: $scope.provinceId,
+                provinceid: $scope.rdcdto.provinceid,
                 cityid: $scope.cityId,
                 codeLave2: $scope.temperType,
-              //  codeLave1: $scope.storageType,
+                codeLave1: $scope.rdcdto.codeLave1,
                 rentdate:$scope.rentdate,
                 publishunit:3,
                 username:window.user.username,

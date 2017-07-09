@@ -306,9 +306,9 @@
 		<where>
 			<if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
 			<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>
-			<if test="provinceid !=null and  provinceid != ''"> and (r.provinceid = #{provinceid} or s.provinceid=#{provinceid})</if>
-			<if test="managetype !=null and  managetype != ''"> and t.manageType IN  (${managetype})</if>
-			<if test="storagetempertype !=null and  storagetempertype != ''"> and t.codeLave2 in (${storagetempertype})</if>
+			<if test="provinceid !=null and  provinceid != ''"> and s.provinceid=#{provinceid}</if>
+			<if test="managetype !=null and  managetype != ''"> and s.codeLave1 IN  (${managetype})</if>
+			<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in (${storagetempertype})</if>
 			<if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>
 			<if test="audit !=null and audit!=''"> and r.audit in (${audit})</if>
 			<if test="goodSaveType !=null and goodSaveType!=''">and t.storagetype in (${goodSaveType})</if>
