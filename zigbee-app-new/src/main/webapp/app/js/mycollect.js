@@ -24,8 +24,7 @@ $().ready(function () {
                     return ["<li class='clearfix'><div class='clearfix'><p class='company'>该内容已被删除!</p><p class='btnGroup'><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
                 }
                 return [
-                "<li class='clearfix' ><div class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
-                obj.logo, "'/></div><p class='company'>", obj.title,
+                "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='", obj.logo, "'/></div><p class='company'>", obj.title,
                 "</p><p class='position'>", obj.typeText,
                 "</p></div><p class='btnGroup'><a href='storehousedetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
             case 2:

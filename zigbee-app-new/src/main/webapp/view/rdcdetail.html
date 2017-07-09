@@ -22,7 +22,7 @@
 <body class="rdcDetail">
 <!-- header -->
 <header>
-    <div class="area fl"><a href="rdclist.html"><i class="iconfont">&#xe602;</i></a></div>
+    <div class="area fl"><a ng-click="goWhere()"><i class="iconfont">&#xe602;</i></a></div>
     <div class="zoom fr"><a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
     <div class="txt">冷库详情</div>
 </header>
@@ -108,6 +108,8 @@
         <p ng-if="vo.lihuoRoom"><span>有无理货区</span>{{vo.lihuoRoom==1?'有':'无'}}</p>
         <p ng-if="vo.lihuoRoom==1"><span>理货区面积</span>{{vo.lihuoArea==0?'未填写':vo.lihuoArea}}</p>
         <p ng-if="vo.lihuoRoom"><span>有无温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>
+        <p ng-if="vo.storageRefreg"><span>制冷剂类型</span>{{refreg[vo.storageRefreg]}}</p>
+        <p ng-if="vo.temperRecord"><span>温度记录</span>{{isHave[vo.temperRecord]}}</p>
         <p ng-hide="vo.coldTruck1==0&&vo.coldTruck2==0&&vo.coldTruck3==0&&vo.coldTruck4==0"><span>冷库容积</span></p>
         <p ng-if="vo.capacity1*vo.height1>0"><span>8&nbsp;~&nbsp;25℃:</span>{{(vo.capacity1*vo.height1).toFixed(2)}}m³</p>
         <p ng-if="vo.capacity2*vo.height2>0"><span>2&nbsp;~&nbsp;8℃:</span>{{(vo.capacity2*vo.height2).toFixed(2)}}m³</p>
@@ -115,6 +117,7 @@
         <p ng-if="vo.capacity4*vo.height4>0"><span>-18&nbsp;~&nbsp;-30℃:</span>{{(vo.capacity4*vo.height4).toFixed(2)}}m³</p>
         <p ng-if="vo.capacity5*vo.height5>0"><span>小于&nbsp;-50℃:</span>{{(vo.capacity5*vo.height5).toFixed(2)}}m³</p>
         <div ng-if="vo.facility&&vo.facility!='undefined'" class="flex"><span class="item">周边设施</span><p class="item">{{vo.facility}}</p></div>
+        <div ng-if="vo.remark" class="flex"><span class="item">备注</span><p class="item">{{vo.remark}}</p></div>
     </div>
 </div>
 

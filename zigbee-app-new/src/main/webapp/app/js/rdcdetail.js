@@ -9,6 +9,7 @@
 		 $(".myphonedis").show();
 	 };
  }
+ localStorage.oURL=document.URL;
 
  if(id==null||id==''){
 	 	$(document.body).html("");
@@ -53,6 +54,23 @@
              }else{
                  return false
              };
+         };
+         $scope.goWhere = function () {
+             if($scope.checkUserLogin()){//登录
+                 if(localStorage.gowhere){//从我的html跳转而来
+                     goback();
+                 }else{//
+                     if(localStorage.isStand==0){
+                         location.href='rdclist.html'
+                     }else if(localStorage.isStand==1){
+                         location.href='rdcstand.html'
+                     }else if(localStorage.isStand==2){
+                         location.href='user-mycold.html'
+                     }
+				 }
+             }else{//未登录
+                 goback();
+             }
          };
 		$scope.initdata=function(){
 	       //获得数据
